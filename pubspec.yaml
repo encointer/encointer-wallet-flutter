@@ -13,7 +13,6 @@ description: EncointerWallet made with Flutter.
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 version: 0.7.6+763
 
-
 environment:
   sdk: ">=2.2.0 <3.0.0"
 
