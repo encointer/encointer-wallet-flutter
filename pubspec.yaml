@@ -1,5 +1,5 @@
 name: polka_wallet
-description: PolkaWallet made with Flutter.
+description: EncointerWallet made with Flutter.
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -85,7 +85,7 @@ flutter:
   assets:
     # js service
     - lib/js_service_kusama/dist/main.js
-    - lib/js_service_acala/dist/main.js
+    - lib/js_service_encointer/dist/main.js
 
     # images
     ## images - settings
@@ -110,8 +110,8 @@ flutter:
     - assets/images/public/Governance_indigo.png
     - assets/images/public/Profile_indigo.png
     - assets/images/public/Staking_indigo.png
-    - assets/images/public/Acala_indigo.png
-    - assets/images/public/Acala_dark.png
+    - assets/images/public/Ceremonies_indigo.png
+    - assets/images/public/Ceremonies_dark.png
     - assets/images/acala/exchange.svg
     - assets/images/acala/loan.svg
     - assets/images/acala/loan-start.svg

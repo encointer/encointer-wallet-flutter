@@ -36,6 +36,7 @@ const Map<String, String> enHome = {
   'copy': 'Copy to clipboard',
   'setting.network': 'Select Wallet',
   'acala': 'Acala',
+  'encointer': 'Encointer',
   'update': 'Check Update',
   'update.latest': 'Your App is the newest version.',
   'update.up': 'New version found, update now?',

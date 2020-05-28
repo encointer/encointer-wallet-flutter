@@ -85,6 +85,7 @@ const Map<String, String> enDex = {
   'homa.redeem.era': 'Current Era',
   'homa.redeem.period': 'Unbonding Period',
   'homa.redeem.day': 'Days',
+  'encointer.registering': 'Registering',
 };
 
 const Map<String, String> zhDex = {

@@ -39,7 +39,7 @@ class _AssetsState extends State<Assets> {
   bool _preclaimChecking = false;
 
   Future<void> _fetchBalance() async {
-    if (store.settings.endpoint.info == networkEndpointAcala.info) {
+    if (store.settings.endpoint.info == networkEndpointEncointerGesell.info) {
       await Future.wait([
         webApi.assets.fetchBalance(store.account.currentAccount.pubKey),
       ]);
@@ -50,6 +50,7 @@ class _AssetsState extends State<Assets> {
       ]);
     }
   }
+
 
   Future<String> _checkPreclaim() async {
     setState(() {
@@ -125,10 +126,10 @@ class _AssetsState extends State<Assets> {
 
     AccountData acc = store.account.currentAccount;
 
-    bool isAcala = store.settings.endpoint.info == networkEndpointAcala.info;
     bool isKusama = store.settings.endpoint.info == networkEndpointKusama.info;
     bool isPolkadot =
         store.settings.endpoint.info == networkEndpointPolkadot.info;
+    bool isEncointer = store.settings.endpoint.info == networkEndpointEncointerGesell.info;
 
     return RoundedCard(
       margin: EdgeInsets.fromLTRB(16, 4, 16, 0),
@@ -139,7 +140,7 @@ class _AssetsState extends State<Assets> {
             leading: AddressIcon('', pubKey: acc.pubKey),
             title: Text(Fmt.accountName(context, acc)),
             subtitle: Text(network),
-            trailing: isAcala
+            trailing: isEncointer
                 ? GestureDetector(
                     child: Padding(
                       padding: EdgeInsets.all(4),
@@ -153,7 +154,7 @@ class _AssetsState extends State<Assets> {
                                   size: 20,
                                 ),
                           Text(
-                            I18n.of(context).acala['faucet.title'],
+                            I18n.of(context).encointer['faucet.title'],
                             style: TextStyle(
                               fontSize: 13,
                               color: Theme.of(context).primaryColor,
@@ -164,7 +165,7 @@ class _AssetsState extends State<Assets> {
                     ),
                     onTap: () {
                       if (acc.address != '') {
-                        _getTokensFromFaucet();
+                        //_getTokensFromFaucet();
                       }
                     },
                   )
@@ -205,7 +206,7 @@ class _AssetsState extends State<Assets> {
             title: Text(Fmt.address(store.account.currentAddress)),
             trailing: IconButton(
               icon: Image.asset(
-                  'assets/images/assets/qrcode_${isAcala ? 'indigo' : isKusama ? 'pink800' : 'pink'}.png'),
+                  'assets/images/assets/qrcode_${isEncointer ? 'indigo' : isKusama ? 'pink800' : 'pink'}.png'),
               onPressed: () {
                 if (acc.address != '') {
                   Navigator.pushNamed(context, ReceivePage.route);
@@ -236,11 +237,11 @@ class _AssetsState extends State<Assets> {
         int decimals = store.settings.networkState.tokenDecimals;
         String networkName = store.settings.networkName ?? '';
 
-        bool isAcala =
-            store.settings.endpoint.info == networkEndpointAcala.info;
+        bool isEncointer =
+            store.settings.endpoint.info == networkEndpointEncointerGesell.info;
 
         List<String> currencyIds = [];
-        if (isAcala && networkName != null) {
+        if (isEncointer && networkName != null) {
           if (store.settings.networkConst['currencyIds'] != null) {
             currencyIds.addAll(
                 List<String>.from(store.settings.networkConst['currencyIds']));
@@ -295,8 +296,7 @@ class _AssetsState extends State<Assets> {
                     Column(
                       children: currencyIds.map((i) {
 //                  print(store.assets.balances[i]);
-                        String token =
-                            i == acala_stable_coin ? acala_stable_coin_view : i;
+                        String token = i;
                         return RoundedCard(
                           margin: EdgeInsets.only(top: 16),
                           child: ListTile(
@@ -321,39 +321,6 @@ class _AssetsState extends State<Assets> {
                         );
                       }).toList(),
                     ),
-                    isAcala && store.acala.airdrops.keys.length > 0
-                        ? Padding(
-                            padding: EdgeInsets.only(top: 24),
-                            child: BorderedTitle(
-                              title: I18n.of(context).acala['airdrop'],
-                            ),
-                          )
-                        : Container(),
-                    isAcala && store.acala.airdrops.keys.length > 0
-                        ? Column(
-                            children: store.acala.airdrops.keys.map((i) {
-                              return RoundedCard(
-                                margin: EdgeInsets.only(top: 16),
-                                child: ListTile(
-                                  leading: Container(
-                                    width: 36,
-                                    child: Image.asset(
-                                        'assets/images/assets/$i.png'),
-                                  ),
-                                  title: Text(i),
-                                  trailing: Text(
-                                    Fmt.token(store.acala.airdrops[i],
-                                        decimals: decimals),
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20,
-                                        color: Colors.black54),
-                                  ),
-                                ),
-                              );
-                            }).toList(),
-                          )
-                        : Container(),
                     Container(
                       padding: EdgeInsets.only(bottom: 32),
                     ),

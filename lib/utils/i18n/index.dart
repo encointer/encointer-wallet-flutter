@@ -81,7 +81,7 @@ class I18n {
     return _localizedValues[locale.languageCode]['gov'];
   }
 
-  Map<String, String> get acala {
+  Map<String, String> get encointer {
     return _localizedValues[locale.languageCode]['acala'];
   }
 }

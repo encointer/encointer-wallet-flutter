@@ -84,18 +84,18 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
-  final _$acalaAtom = Atom(name: '_AppStore.acala');
+  final _$encointerAtom = Atom(name: '_AppStore.encointer');
 
   @override
-  AcalaStore get acala {
-    _$acalaAtom.reportRead();
-    return super.acala;
+  EncointerStore get encointer {
+    _$encointerAtom.reportRead();
+    return super.encointer;
   }
 
   @override
-  set acala(AcalaStore value) {
-    _$acalaAtom.reportWrite(value, super.acala, () {
-      super.acala = value;
+  set encointer(EncointerStore value) {
+    _$encointerAtom.reportWrite(value, super.encointer, () {
+      super.encointer = value;
     });
   }
 
@@ -129,7 +129,7 @@ account: ${account},
 assets: ${assets},
 staking: ${staking},
 gov: ${gov},
-acala: ${acala},
+encointer: ${encointer},
 isReady: ${isReady}
     ''';
   }

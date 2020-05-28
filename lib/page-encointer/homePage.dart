@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:polka_wallet/page-acala/acalaEntry.dart';
+import 'package:polka_wallet/page-encointer/encointerEntry.dart';
 import 'package:polka_wallet/page/assets/index.dart';
 import 'package:polka_wallet/page/profile/index.dart';
 import 'package:polka_wallet/service/notification.dart';
@@ -7,18 +7,18 @@ import 'package:polka_wallet/store/app.dart';
 
 import 'package:polka_wallet/utils/i18n/index.dart';
 
-class AcalaHomePage extends StatefulWidget {
-  AcalaHomePage(this.store);
+class EncointerHomePage extends StatefulWidget {
+  EncointerHomePage(this.store);
 
   static final String route = '/';
   final AppStore store;
 
   @override
-  _AcalaHomePageState createState() => new _AcalaHomePageState(store);
+  _EncointerHomePageState createState() => new _EncointerHomePageState(store);
 }
 
-class _AcalaHomePageState extends State<AcalaHomePage> {
-  _AcalaHomePageState(this.store);
+class _EncointerHomePageState extends State<EncointerHomePage> {
+  _EncointerHomePageState(this.store);
 
   final AppStore store;
 
@@ -28,7 +28,7 @@ class _AcalaHomePageState extends State<AcalaHomePage> {
 
   final List<String> _tabList = [
     'Assets',
-    'Acala',
+    'Ceremonies',
 //    'Governance',
     'Profile',
   ];
@@ -41,7 +41,7 @@ class _AcalaHomePageState extends State<AcalaHomePage> {
                   ? 'assets/images/public/${i}_indigo.png'
                   : 'assets/images/public/${i}_dark.png'),
               title: Text(
-                tabs[i.toLowerCase()] ?? 'Acala',
+                tabs[i.toLowerCase()] ?? 'Cermonies',
                 style: TextStyle(
                     fontSize: 14,
                     color: _tabList[activeItem] == i
@@ -57,7 +57,7 @@ class _AcalaHomePageState extends State<AcalaHomePage> {
       case 0:
         return Assets(store);
       case 1:
-        return AcalaEntry(store);
+        return EncointerEntry(store);
 //      case 2:
 //        return Governance(store);
       default:

@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:polka_wallet/common/consts/settings.dart';
-import 'package:polka_wallet/service/substrateApi/acala/apiAcala.dart';
+import 'package:polka_wallet/service/substrateApi/encointer/apiEncointer.dart';
 import 'package:polka_wallet/service/substrateApi/apiAccount.dart';
 import 'package:polka_wallet/service/substrateApi/apiAssets.dart';
 import 'package:polka_wallet/service/substrateApi/apiGov.dart';
@@ -23,7 +23,7 @@ class Api {
 
   ApiAccount account;
 
-  ApiAcala acala;
+  ApiEncointer encointer;
 
   ApiAssets assets;
   ApiStaking staking;
@@ -39,7 +39,7 @@ class Api {
   void init() {
     account = ApiAccount(this);
 
-    acala = ApiAcala(this);
+    encointer = ApiEncointer(this);
 
     assets = ApiAssets(this);
     staking = ApiStaking(this);
@@ -67,8 +67,9 @@ class Api {
       if (viewState.type == WebViewState.finishLoad) {
         String network = 'kusama';
         print('webview loaded for network $network');
-        if (store.settings.endpoint.info.contains('acala')) {
-          network = 'acala';
+
+        if (store.settings.endpoint.info.contains('encointer')) {
+          network = 'encointer';
         }
         DefaultAssetBundle.of(context)
             .loadString('lib/js_service_$network/dist/main.js')
@@ -197,7 +198,7 @@ class Api {
 
     // fetch account balance
     if (store.account.accountList.length > 0) {
-      if (store.settings.endpoint.info == networkEndpointAcala.info) {
+      if (store.settings.endpoint.info == networkEndpointEncointerGesell.info) {
         await assets.fetchBalance(store.account.currentAccount.pubKey);
         return;
       }

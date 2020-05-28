@@ -103,8 +103,8 @@ class _AssetPageState extends State<AssetPage>
   List<Widget> _buildTxList() {
     List<Widget> res = [];
     final String token = ModalRoute.of(context).settings.arguments;
-    if (store.settings.endpoint.info == networkEndpointAcala.info) {
-      List<TransferData> ls = store.acala.txsTransfer.reversed.toList();
+    if (store.settings.endpoint.info == networkEndpointEncointerGesell.info) {
+      List<TransferData> ls = store.encointer.txsTransfer.reversed.toList();
       ls.retainWhere((i) => i.token.toUpperCase() == token.toUpperCase());
       res.addAll(ls.map((i) {
         return TransferListItem(
@@ -258,7 +258,7 @@ class _AssetPageState extends State<AssetPage>
                         child: Row(
                           children: <Widget>[
                             BorderedTitle(
-                              title: I18n.of(context).acala['loan.txs'],
+                              title: I18n.of(context).encointer['loan.txs'],
                             )
                           ],
                         ),
