@@ -49,12 +49,6 @@ List<EndpointData> networkEndpoints = [
     'value': 'wss://cc3-5.kusama.network/',
   }),
   networkEndpointEncointerGesell,
-  EndpointData.fromJson(const {
-    'info': 'nctr-gsl',
-    'ss58': 42,
-    'text': 'Encointer Gesell (Hosted by Encointer Association)',
-    'value': 'wss://gesell.encointer.org',
-  }),
 ];
 
 const network_ss58_map = {
