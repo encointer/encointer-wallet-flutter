@@ -18,7 +18,7 @@ EndpointData networkEndpointEncointerGesell = EndpointData.fromJson(const {
   'info': 'nctr-gsl',
   'ss58': 42,
   'text': 'Encointer Gesell (Hosted by Encointer Association)',
-  'value': 'ws://gesell.encointer.org',
+  'value': 'wss://gesell.encointer.org',
 });
 
 List<EndpointData> networkEndpoints = [

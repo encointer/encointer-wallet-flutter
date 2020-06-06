@@ -47,6 +47,11 @@ class _AssetPageState extends State<AssetPage>
     webApi.assets.fetchBalance(pubKey);
     Map res = {"transfers": []};
 
+    if (store.settings.endpoint.info != networkEndpointEncointerGesell.info) {
+      webApi.staking.fetchAccountStaking(pubKey);
+      res = await webApi.assets.updateTxs(_txsPage);
+    }
+
     if (res['transfers'] == null ||
         res['transfers'].length < tx_list_page_size) {
       setState(() {
