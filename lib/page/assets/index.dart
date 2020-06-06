@@ -74,7 +74,7 @@ class _AssetsState extends State<Assets> {
     setState(() {
       _faucetSubmitting = true;
     });
-    String res = await webApi.acala.fetchFaucet();
+/*    String res = await webApi.encointer.fetchFaucet();
 
     Timer(Duration(seconds: 3), () {
       String dialogContent = I18n.of(context).acala['faucet.ok'];
@@ -116,7 +116,9 @@ class _AssetsState extends State<Assets> {
         },
       );
     });
+  */
   }
+
 
   Widget _buildTopCard(BuildContext context) {
     var dic = I18n.of(context).assets;

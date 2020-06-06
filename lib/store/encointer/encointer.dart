@@ -59,13 +59,13 @@ abstract class _EncointerStore with Store {
   @action
   Future<void> _cacheTxs(List list, String cacheKey) async {
     String pubKey = rootStore.account.currentAccount.pubKey;
-    List cached = await LocalStorage.getAccountCache(pubKey, cacheKey);
+    List cached = await rootStore.localStorage.getAccountCache(pubKey, cacheKey);
     if (cached != null) {
       cached.addAll(list);
     } else {
       cached = list;
     }
-    LocalStorage.setAccountCache(pubKey, cacheKey, cached);
+    rootStore.localStorage.setAccountCache(pubKey, cacheKey, cached);
   }
 
 

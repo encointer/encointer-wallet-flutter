@@ -33,7 +33,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   final List<EndpointData> networks = [
     networkEndpointPolkadot,
     networkEndpointKusama,
-    networkEndpointAcala,
+    networkEndpointEncointerGesell,
   ];
 
   EndpointData _selectedNetwork;
@@ -44,8 +44,8 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     store.assets.clearTxs();
     store.assets.loadAccountCache();
 
-    if (store.settings.endpoint.info == networkEndpointAcala.info) {
-      store.acala.loadCache();
+    if (store.settings.endpoint.info == networkEndpointEncointerGesell.info) {
+      store.encointer.loadCache();
     } else {
       // refresh user's staking info if network is kusama or polkadot
       store.staking.clearState();

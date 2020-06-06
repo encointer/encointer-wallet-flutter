@@ -47,11 +47,6 @@ class _AssetPageState extends State<AssetPage>
     webApi.assets.fetchBalance(pubKey);
     Map res = {"transfers": []};
 
-    if (store.settings.endpoint.info != networkEndpointAcala.info) {
-      webApi.staking.fetchAccountStaking(pubKey);
-      res = await webApi.assets.updateTxs(_txsPage);
-    }
-
     if (res['transfers'] == null ||
         res['transfers'].length < tx_list_page_size) {
       setState(() {
@@ -133,7 +128,7 @@ class _AssetPageState extends State<AssetPage>
     final String symbol = store.settings.networkState.tokenSymbol;
     final String token = ModalRoute.of(context).settings.arguments;
     final bool isBaseToken = token == symbol;
-    final isAcala = store.settings.endpoint.info == networkEndpointAcala.info;
+    final isEncointer = store.settings.endpoint.info == networkEndpointEncointerGesell.info;
 
     final dic = I18n.of(context).assets;
 
@@ -242,7 +237,7 @@ class _AssetPageState extends State<AssetPage>
                     ],
                   ),
                 ),
-                !isAcala
+                !isEncointer
                     ? TabBar(
                         labelColor: Colors.black87,
                         labelStyle: TextStyle(fontSize: 18),
