@@ -31,10 +31,37 @@
         "VerifiedLinked"
       ]
     },
-    "CurrencyPropertiesType": {
-      "name_utf8": "Text",
-      "demurrage_per_block": "i128"
+    "ClaimOfAttendance": {
+      "claimant_public": "AccountId",
+      "ceremony_index": "CeremonyIndexType",
+      "currency_identifier": "CurrencyIdentifier",
+      "meetup_index": "MeetupIndexType",
+      "location": "Location",
+      "timestamp": "Moment",
+      "number_of_participants_confirmed": "u32"
     },
-    "Attestation": "Vec<u8>",
-    "ProofOfAttendance": "Vec<u8>"
+    "Attestation": {
+      "claim": "ClaimOfAttendance",
+      "signature": "Signature",
+      "public": "AccountId"
+    },
+    "ProofOfAttendance": {
+      "prover_public": "AccountId",
+      "ceremony_index": "CeremonyIndexType",
+      "currency_identifier": "CurrencyIdentifier",
+      "attendee_public": "AccountId",
+      "attendee_signature": "Signature"
+    },
+    "ShardIdentifier": "Hash",
+    "Request": {
+      "shard": "ShardIdentifier",
+      "cyphertext": "Vec<u8>"
+    },
+    "Enclave": {
+      "pubkey": "AccountId",
+      "mrenclave": "Hash",
+      "timestamp": "u64",
+      "url": "Text"
+    },
+    "Weight": "u32"
 }
