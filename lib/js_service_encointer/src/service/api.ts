@@ -1,8 +1,5 @@
 import { ApiOptions } from '@polkadot/api/types';
 
-export const defaultOptions: ApiOptions = {
-  types: enointerTypes,
-};
 
 const encointerTypes {
   Address: 'AccountId',
@@ -67,4 +64,8 @@ const encointerTypes {
   },
   // substrate
   Weight: 'u32'
+};
+
+export const defaultOptions: ApiOptions = {
+  types: encointerTypes
 };

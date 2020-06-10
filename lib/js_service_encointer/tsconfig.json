@@ -11,5 +11,5 @@
     ]
   },
   "exclude": ["node_modules"],
-  "files": ["service/api.ts"]
+  "files": ["src/service/api.ts"]
 }
