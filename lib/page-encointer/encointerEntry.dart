@@ -86,10 +86,12 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
 
   @override
   Widget build(BuildContext context) {
-    _updateData();
+    _refreshData();
     return Container(
         color: const Color(0xFFFFFE306),
-        child: Text(store.encointer.currentPhase.toString())
+        child: Observer(
+          builder: (_) => Text(store.encointer.currentPhase.toString())
+        )
     );
   }
 }
