@@ -66,11 +66,13 @@ class Api {
     _web.onStateChanged.listen((viewState) async {
       if (viewState.type == WebViewState.finishLoad) {
         String network = 'kusama';
-        print('webview loaded for network $network');
 
-        if (store.settings.endpoint.info.contains('encointer')) {
+        if (store.settings.endpoint.info.contains('nctr-gsl')) {
           network = 'encointer';
         }
+
+        print('webview loaded for network $network');
+
         DefaultAssetBundle.of(context)
             .loadString('lib/js_service_$network/dist/main.js')
             .then((String js) {
