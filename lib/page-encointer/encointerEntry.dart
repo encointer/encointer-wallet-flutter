@@ -95,26 +95,14 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
     webApi.encointer.fetchCurrentPhase();
 
     if (!store.settings.loading) {
-      print('Subscribing');
-
-      webApi.subscribeMessage(
-          'encointerScheduler', 'currentPhase', [], _currentPhaseSubscribeChannel, (data) {
-        var phase = getEnumFromString(
-            CeremonyPhase.values, data.values.toList()[0].toString().toUpperCase());
-        print("Phase enum subscription: " + phase.toString());
-        store.encointer.setCurrentPhase(phase);
-      });
+      print('Subscribing to current phase');
+      webApi.encointer.subscribeCurrentPhase();
     }
-    print('Subscribed');
-
-//    WidgetsBinding.instance.addPostFrameCallback((_) {
-//      globalCeremonyPhaseChangeKey.currentState.show();
-//    });
   }
 
   @override
   void dispose() {
-    webApi.unsubscribeMessage(_currentPhaseSubscribeChannel);
+    webApi.encointer.unsubscribeCurrentPhase();
     super.dispose();
   }
 

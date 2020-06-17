@@ -16,6 +16,8 @@ class ApiEncointer {
   final Api apiRoot;
   final store = globalAppStore;
 
+  final String _currentPhaseSubscribeChannel = 'currentPhase';
+
   Future<void> fetchCurrentPhase() async {
     Map res = await apiRoot.evalJavascript('encointer.fetchCurrentPhase(api)');
 
@@ -23,5 +25,18 @@ class ApiEncointer {
         CeremonyPhase.values, res.values.toList()[0].toString().toUpperCase());
     print("Phase enum: " + phase.toString());
     store.encointer.setCurrentPhase(phase);
+  }
+
+  Future<void> subscribeCurrentPhase() async {
+    apiRoot.subscribeMessage('encointerScheduler', 'currentPhase', [], _currentPhaseSubscribeChannel, (data) {
+      var phase = getEnumFromString(
+          CeremonyPhase.values, data.values.toList()[0].toString().toUpperCase());
+      print("Phase enum subscription: " + phase.toString());
+      store.encointer.setCurrentPhase(phase);
+    });
+  }
+
+  void unsubscribeCurrentPhase() {
+    webApi.unsubscribeMessage(_currentPhaseSubscribeChannel);
   }
 }
