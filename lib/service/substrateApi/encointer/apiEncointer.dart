@@ -37,6 +37,6 @@ class ApiEncointer {
   }
 
   void unsubscribeCurrentPhase() {
-    webApi.unsubscribeMessage(_currentPhaseSubscribeChannel);
+    apiRoot.unsubscribeMessage(_currentPhaseSubscribeChannel);
   }
 }
