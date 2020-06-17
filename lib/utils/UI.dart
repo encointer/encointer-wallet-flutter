@@ -226,3 +226,7 @@ final GlobalKey<RefreshIndicatorState> globalDexLiquidityRefreshKey =
 // acala homa page:
 final GlobalKey<RefreshIndicatorState> globalHomaRefreshKey =
     new GlobalKey<RefreshIndicatorState>();
+
+// encointerCeremoniesPage
+final GlobalKey<RefreshIndicatorState> globalCeremonyPhaseChangeKey =
+new GlobalKey<RefreshIndicatorState>();

@@ -18,8 +18,6 @@ class ApiEncointer {
 
   Future<void> fetchCurrentPhase() async {
     Map res = await apiRoot.evalJavascript('encointer.fetchCurrentPhase(api)');
-    print("Fetched phase: " + res.values.toString());
-    print("Fetched phase: " + res.keys.toString());
 
     var phase = getEnumFromString(
         CeremonyPhase.values, res.values.toList()[0].toString().toUpperCase());

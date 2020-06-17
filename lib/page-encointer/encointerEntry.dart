@@ -7,6 +7,9 @@ import 'package:polka_wallet/page-encointer/registering/registeringPage.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
+import 'package:polka_wallet/utils/UI.dart';
+
+import 'package:polka_wallet/store/encointer/types/encointerTypes.dart';
 
 class EncointerEntry extends StatelessWidget {
   EncointerEntry(this.store);
@@ -65,6 +68,8 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
 
   final AppStore store;
 
+  final String _currentPhaseSubscribeChannel = 'currentPhase';
+
   TabController _tabController;
   int _txsPage = 0;
   bool _isLastPage = false;
@@ -73,7 +78,6 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
   Future<void> _updateData() async {
     String pubKey = store.account.currentAccount.pubKey;
     await webApi.assets.fetchBalance(pubKey);
-    await webApi.encointer.fetchCurrentPhase();
   }
 
   Future<void> _refreshData() async {
@@ -85,13 +89,56 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
   }
 
   @override
+  void initState() {
+    super.initState();
+    // get current phase before we subscribe
+    webApi.encointer.fetchCurrentPhase();
+
+    if (!store.settings.loading) {
+      print('Subscribing');
+
+      webApi.subscribeMessage(
+          'encointerScheduler', 'currentPhase', [], _currentPhaseSubscribeChannel, (data) {
+        var phase = getEnumFromString(
+            CeremonyPhase.values, data.values.toList()[0].toString().toUpperCase());
+        print("Phase enum subscription: " + phase.toString());
+        store.encointer.setCurrentPhase(phase);
+      });
+    }
+    print('Subscribed');
+
+//    WidgetsBinding.instance.addPostFrameCallback((_) {
+//      globalCeremonyPhaseChangeKey.currentState.show();
+//    });
+  }
+
+  @override
+  void dispose() {
+    webApi.unsubscribeMessage(_currentPhaseSubscribeChannel);
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    _refreshData();
+//    _refreshData();
     return Container(
         color: const Color(0xFFFFFE306),
         child: Observer(
           builder: (_) => Text(store.encointer.currentPhase.toString())
         )
     );
+//
+//    return Observer(
+//      builder: (_) {
+//      CeremonyPhase phase = store.encointer.currentPhase;
+//      return RefreshIndicator(
+//      key: globalCeremonyPhaseChangeKey,
+//        onRefresh: null,
+//        child:  Container(
+//        color: const Color(0xFFFFFE306),
+//        child: Text(store.encointer.currentPhase.toString())
+//        )
+//      );
+//    });
   }
 }
