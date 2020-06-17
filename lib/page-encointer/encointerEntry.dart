@@ -72,7 +72,8 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
 
   Future<void> _updateData() async {
     String pubKey = store.account.currentAccount.pubKey;
-    webApi.assets.fetchBalance(pubKey);
+    await webApi.assets.fetchBalance(pubKey);
+    await webApi.encointer.fetchCurrentPhase();
   }
 
   Future<void> _refreshData() async {
@@ -85,9 +86,10 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
 
   @override
   Widget build(BuildContext context) {
+    _updateData();
     return Container(
         color: const Color(0xFFFFFE306),
-        child: Text('TODO display current phase here. ')
+        child: Text(store.encointer.currentPhase.toString())
     );
   }
 }
