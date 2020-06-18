@@ -39,4 +39,12 @@ class ApiEncointer {
   void unsubscribeCurrentPhase() {
     apiRoot.unsubscribeMessage(_currentPhaseSubscribeChannel);
   }
+
+  Future<Map> fetchCurrencyIdentifiers() async {
+    Map res = await apiRoot.evalJavascript('encointer.fetchCurrencyIdentifiers(api)');
+
+    print("CID: " + res.toString());
+    return res;
+//    store.encointer.setCurrentPhase(phase);
+  }
 }
