@@ -8,6 +8,7 @@ import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/utils/UI.dart';
+import 'package:polka_wallet/common/components/roundedButton.dart';
 
 import 'package:polka_wallet/store/encointer/types/encointerTypes.dart';
 
@@ -18,7 +19,9 @@ class EncointerEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Map dic = I18n.of(context).encointer;
+    final Map dic = I18n
+        .of(context)
+        .encointer;
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(
@@ -33,7 +36,9 @@ class EncointerEntry extends StatelessWidget {
                     dic['encointer'] ?? 'Encointer Platform',
                     style: TextStyle(
                       fontSize: 20,
-                      color: Theme.of(context).cardColor,
+                      color: Theme
+                          .of(context)
+                          .cardColor,
                       fontWeight: FontWeight.w500,
                     ),
                   )
@@ -41,7 +46,7 @@ class EncointerEntry extends StatelessWidget {
               ),
             ),
             Expanded(
-              child: Text('Hello World')
+                child: Text('Hello World')
             ),
             PhaseAwareBox(store)
           ],
@@ -88,6 +93,10 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
     await _updateData();
   }
 
+  void _register_participant() {
+    print("Register Pariticipant Pressed");
+  }
+
   @override
   void initState() {
     super.initState();
@@ -111,22 +120,18 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
 //    _refreshData();
     return Container(
         color: const Color(0xFFFFFE306),
-        child: Observer(
-          builder: (_) => Text(store.encointer.currentPhase.toString())
-        )
+        child: Column(
+            children: <Widget>[
+              Observer(
+                  builder: (_) => Text(store.encointer.currentPhase.toString())
+              ),
+              RoundedButton(
+                  text: "Register Participant for Ceremony",
+                  onPressed: store.encointer.currentPhase == CeremonyPhase.REGISTERING ?
+                  () => _register_participant() : null
+              ),
+            ]
+        ),
     );
-//
-//    return Observer(
-//      builder: (_) {
-//      CeremonyPhase phase = store.encointer.currentPhase;
-//      return RefreshIndicator(
-//      key: globalCeremonyPhaseChangeKey,
-//        onRefresh: null,
-//        child:  Container(
-//        color: const Color(0xFFFFFE306),
-//        child: Text(store.encointer.currentPhase.toString())
-//        )
-//      );
-//    });
   }
 }
