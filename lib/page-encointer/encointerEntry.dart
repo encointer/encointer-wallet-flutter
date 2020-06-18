@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -9,6 +11,7 @@ import 'package:polka_wallet/utils/i18n/index.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/utils/UI.dart';
 import 'package:polka_wallet/common/components/roundedButton.dart';
+import 'package:polka_wallet/page/account/txConfirmPage.dart';
 
 import 'package:polka_wallet/store/encointer/types/encointerTypes.dart';
 
@@ -93,8 +96,33 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
     await _updateData();
   }
 
-  void _register_participant() {
-    print("Register Pariticipant Pressed");
+  Future<void> _onSubmit() async {
+    var cids = await webApi.encointer.fetchCurrencyIdentifiers();
+    var cid0 = cids.values.toList()[0][0];
+    print("Cids: " + cid0.toString());
+    final Map dic = I18n.of(context).assets;
+    final String pubKey = widget.store.account.currentAccount.pubKey;
+    final String accountId = widget.store.account.pubKeyAddressMap[0][pubKey];
+    var args = {
+      "title": 'register_participant',
+      "txInfo": {
+        "module": 'encointerCeremonies',
+        "call": 'registerParticipant',
+      },
+      "detail": jsonEncode({
+        "cid": cid0,
+        "proof": {},
+      }),
+      "params": [
+        cid0,
+        "",
+      ],
+      'onFinish': (BuildContext txPageContext, Map res) {
+        Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
+        globalBalanceRefreshKey.currentState.show();
+      }
+    };
+    Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
   }
 
   @override
@@ -128,7 +156,7 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
               RoundedButton(
                   text: "Register Participant for Ceremony",
                   onPressed: store.encointer.currentPhase == CeremonyPhase.REGISTERING ?
-                  () => _register_participant() : null
+                  () => _onSubmit() :  () => _onSubmit() // for testing always allow sending
               ),
             ]
         ),
