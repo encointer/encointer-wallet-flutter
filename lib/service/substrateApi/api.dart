@@ -29,7 +29,7 @@ class Api {
   ApiStaking staking;
   ApiGovernance gov;
 
-  Map<String, Function> _msgHandlers = {};
+  Map<String, Function> msgHandlers = {};
   Map<String, Completer> _msgCompleters = {};
   FlutterWebviewPlugin _web;
   int _evalJavascriptUID = 0;
@@ -49,7 +49,7 @@ class Api {
   }
 
   Future<void> launchWebview({bool customNode = false}) async {
-    _msgHandlers = {'txStatusChange': store.account.setTxStatus};
+    msgHandlers = {'txStatusChange': store.account.setTxStatus};
 
     _evalJavascriptUID = 0;
     _msgCompleters = {};
@@ -104,8 +104,8 @@ class Api {
                     _msgCompleters.remove(path);
                   }
                 }
-                if (_msgHandlers[path] != null) {
-                  Function handler = _msgHandlers[path];
+                if (msgHandlers[path] != null) {
+                  Function handler = msgHandlers[path];
                   handler(msg['data']);
                 }
               });
@@ -238,7 +238,7 @@ class Api {
     String channel,
     Function callback,
   ) async {
-    _msgHandlers[channel] = callback;
+    msgHandlers[channel] = callback;
     evalJavascript(
         'settings.subscribeMessage("$section", "$method", ${jsonEncode(params)}, "$channel")');
   }

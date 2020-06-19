@@ -16,8 +16,6 @@ class ApiEncointer {
   final Api apiRoot;
   final store = globalAppStore;
 
-  final String _currentPhaseSubscribeChannel = 'currentPhase';
-
   Future<void> fetchCurrentPhase() async {
     Map res = await apiRoot.evalJavascript('encointer.fetchCurrentPhase(api)');
 
@@ -27,24 +25,28 @@ class ApiEncointer {
     store.encointer.setCurrentPhase(phase);
   }
 
-  Future<void> subscribeCurrentPhase() async {
-    apiRoot.subscribeMessage('encointerScheduler', 'currentPhase', [], _currentPhaseSubscribeChannel, (data) {
-      var phase = getEnumFromString(
-          CeremonyPhase.values, data.values.toList()[0].toString().toUpperCase());
-      print("Phase enum subscription: " + phase.toString());
-      store.encointer.setCurrentPhase(phase);
-    });
+  Future<void> subscribeCurrentPhase(String channel, Function callback) async {
+    apiRoot.msgHandlers[channel] = callback;
+    apiRoot.evalJavascript(
+        'encointer.subscribeCurrentPhase(api, $channel)');
   }
 
-  void unsubscribeCurrentPhase() {
-    apiRoot.unsubscribeMessage(_currentPhaseSubscribeChannel);
+  Future<void> subscribeTimestamp() async {
+    apiRoot.msgHandlers["unsubtimestamp"] = (data) => {
+      print("timestamp" + data.toString())
+    };
+    await apiRoot.evalJavascript(
+        'encointer.subscribeTimestamp(api)');
+  }
+
+  void unsubscribeCurrentPhase(String channel) {
+    apiRoot.unsubscribeMessage(channel);
+    apiRoot.unsubscribeMessage("unsubtimestamp");
   }
 
   Future<Map> fetchCurrencyIdentifiers() async {
     Map res = await apiRoot.evalJavascript('encointer.fetchCurrencyIdentifiers(api)');
-
     print("CID: " + res.toString());
     return res;
-//    store.encointer.setCurrentPhase(phase);
   }
 }
