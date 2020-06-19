@@ -100,9 +100,6 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
     var cids = await webApi.encointer.fetchCurrencyIdentifiers();
     var cid0 = cids.values.toList()[0][0];
     print("Cids: " + cid0.toString());
-    final Map dic = I18n.of(context).assets;
-    final String pubKey = widget.store.account.currentAccount.pubKey;
-    final String accountId = widget.store.account.pubKeyAddressMap[0][pubKey];
     var args = {
       "title": 'register_participant',
       "txInfo": {
@@ -115,7 +112,7 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
       }),
       "params": [
         cid0,
-        "",
+        null,
       ],
       'onFinish': (BuildContext txPageContext, Map res) {
         Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
