@@ -97,32 +97,6 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
     await _updateData();
   }
 
-  Future<void> _onSubmit() async {
-    var cids = await webApi.encointer.fetchCurrencyIdentifiers();
-    var cid0 = cids.values.toList()[0][0];
-    print("Cids: " + cid0.toString());
-    var args = {
-      "title": 'register_participant',
-      "txInfo": {
-        "module": 'encointerCeremonies',
-        "call": 'registerParticipant',
-      },
-      "detail": jsonEncode({
-        "cid": cid0,
-        "proof": {},
-      }),
-      "params": [
-        cid0,
-        null,
-      ],
-      'onFinish': (BuildContext txPageContext, Map res) {
-        Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
-        globalBalanceRefreshKey.currentState.show();
-      }
-    };
-    Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
-  }
-
   @override
   void initState() {
     super.initState();
@@ -152,19 +126,21 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
   Widget build(BuildContext context) {
 //    _refreshData();
     return Container(
-        color: const Color(0xFFFFFE306),
-        child: Column(
-            children: <Widget>[
-              Observer(
-                  builder: (_) => Text(store.encointer.currentPhase.toString())
-              ),
-              RoundedButton(
-                  text: "Register Participant for Ceremony",
-                  onPressed: store.encointer.currentPhase == CeremonyPhase.REGISTERING ?
-                  () => _onSubmit() :  () => _onSubmit() // for testing always allow sending
-              ),
-            ]
-        ),
+      color: const Color(0xFFFFFE306),
+      child: Observer(
+          builder: (_) => _getPhaseView(store.encointer.currentPhase)
+      ),
     );
+  }
+
+  Widget _getPhaseView(CeremonyPhase phase) {
+    switch (phase) {
+      case CeremonyPhase.REGISTERING:
+        return RegisteringPage(store);
+      case CeremonyPhase.ASSIGNING:
+        return RegisteringPage(store);
+      case CeremonyPhase.ATTESTING:
+        return RegisteringPage(store);
+    }
   }
 }

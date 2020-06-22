@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:polka_wallet/common/components/infoItem.dart';
+import 'package:polka_wallet/common/components/roundedButton.dart';
 import 'package:polka_wallet/common/components/roundedCard.dart';
 import 'package:polka_wallet/common/consts/settings.dart';
 import 'package:polka_wallet/page/account/txConfirmPage.dart';
@@ -37,17 +38,49 @@ class _RegisteringPageState extends State<RegisteringPage> {
     super.initState();
   }
 
+  Future<void> _onSubmit() async {
+    var cids = await webApi.encointer.fetchCurrencyIdentifiers();
+    var cid0 = cids.values.toList()[0][0];
+    print("Cids: " + cid0.toString());
+    var args = {
+      "title": 'register_participant',
+      "txInfo": {
+        "module": 'encointerCeremonies',
+        "call": 'registerParticipant',
+      },
+      "detail": jsonEncode({
+        "cid": cid0,
+        "proof": {},
+      }),
+      "params": [
+        cid0,
+        null,
+      ],
+      'onFinish': (BuildContext txPageContext, Map res) {
+        Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
+        globalBalanceRefreshKey.currentState.show();
+      }
+    };
+    Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
+  }
+
   @override
   Widget build(BuildContext context) {
     final Map dic = I18n.of(context).encointer;
     final int decimals = encointer_token_decimals;
-    return Scaffold(
-      backgroundColor: Theme.of(context).cardColor,
-      appBar: AppBar(title: Text(dic['encointer.registering']), centerTitle: true),
-      body: SafeArea(
-          child: Text('Hello World')
-      ),
-    );
+    return Container(
+          child: Column(
+              children: <Widget>[
+                Observer(
+                    builder: (_) => Text(store.encointer.currentPhase.toString())
+                ),
+                RoundedButton(
+                    text: "Register Participant for Ceremony",
+                    onPressed: () => _onSubmit() // for testing always allow sending
+                ),
+              ]
+          ),
+      );
   }
 
 }
