@@ -77,6 +77,7 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
   final AppStore store;
 
   final String _currentPhaseSubscribeChannel = 'currentPhase';
+  final String _timeStampSubscribeChannel = 'timestampChannel';
 
   TabController _tabController;
   int _txsPage = 0;
@@ -127,7 +128,7 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
     super.initState();
     // get current phase before we subscribe
 
-    webApi.encointer.subscribeTimestamp();
+    webApi.encointer.subscribeTimestamp(_timeStampSubscribeChannel);
     webApi.encointer.fetchCurrentPhase();
 
     if (!store.settings.loading) {
@@ -144,6 +145,7 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
   @override
   void dispose() {
     webApi.encointer.unsubscribeCurrentPhase(_currentPhaseSubscribeChannel);
+    webApi.encointer.unsubscribeTimestamp(_timeStampSubscribeChannel);
     super.dispose();
   }
 

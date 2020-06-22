@@ -14,7 +14,7 @@ description: EncointerWallet made with Flutter.
 version: 0.7.6+763
 
 environment:
-  sdk: ">=2.1.0 <3.0.0"
+  sdk: ">=2.2.0 <3.0.0"
 
 dependencies:
   # intl - format numbers
