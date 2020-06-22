@@ -32,19 +32,9 @@ class ApiEncointer {
   }
 
   Future<void> subscribeTimestamp(String channel) async {
-    apiRoot.msgHandlers[channel] = (data) => {
-      print(data.toString())
-    };
+    apiRoot.msgHandlers[channel] = (data) => {}; // we get logs in the message handler
     await apiRoot.evalJavascript(
         'encointer.subscribeTimestamp("$channel")');
-  }
-
-  void unsubscribeCurrentPhase(String channel) {
-    apiRoot.unsubscribeMessage(channel);
-  }
-
-  void unsubscribeTimestamp(String channel) {
-    apiRoot.unsubscribeMessage(channel);
   }
 
   Future<Map> fetchCurrencyIdentifiers() async {
