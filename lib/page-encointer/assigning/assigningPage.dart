@@ -14,20 +14,20 @@ import 'package:polka_wallet/utils/UI.dart';
 import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
 
-class AttestingPage extends StatefulWidget {
-  AttestingPage(this.store);
+class AssigningPage extends StatefulWidget {
+  AssigningPage(this.store);
 
   static const String route = '/encointer/registering';
   final AppStore store;
 
   @override
-  _AttestingPageState createState() => _AttestingPageState(store);
+  _AssigningPageState createState() => _AssigningPageState(store);
 
 
 }
 
-class _AttestingPageState extends State<AttestingPage> {
-  _AttestingPageState(this.store);
+class _AssigningPageState extends State<AssigningPage> {
+  _AssigningPageState(this.store);
 
   final AppStore store;
 
@@ -36,11 +36,8 @@ class _AttestingPageState extends State<AttestingPage> {
   @override
   void initState() {
     webApi.encointer.fetchParticipantIndex();
+    webApi.encointer.fetchParticipantCount();
     super.initState();
-  }
-
-  void _startMeetup() {
-    print("Start Meetup Pressed");
   }
 
   @override
@@ -56,14 +53,10 @@ class _AttestingPageState extends State<AttestingPage> {
             store.encointer.participantIndex != 0 ? Text("You are registered for CID: " +
                 Fmt.currencyIdentifier(store.encointer.chosenCid)) : Text("You are not registered for a ceremony..."),
             Text("Number of participants:"),
-            store.encointer.participantIndex != 0 ? Text("unimplemented") : Text(""),
+            store.encointer.participantIndex != 0 ? Text(store.encointer.participantCount.toString()) : Text(""),
             Text("Next Ceremony Will Take Place on:"),
             Observer(
                 builder: (_) => Text(new DateTime.fromMillisecondsSinceEpoch(store.encointer.nextMeetupTime).toIso8601String())
-            ),
-            RoundedButton(
-                text: "start meetup",
-                onPressed: () => _startMeetup() // for testing always allow sending
             ),
           ]
       ),

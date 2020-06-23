@@ -14,20 +14,20 @@ import 'package:polka_wallet/utils/UI.dart';
 import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
 
-class AssigningPage extends StatefulWidget {
-  AssigningPage(this.store);
+class AttestingPage extends StatefulWidget {
+  AttestingPage(this.store);
 
   static const String route = '/encointer/registering';
   final AppStore store;
 
   @override
-  _AssigningPageState createState() => _AssigningPageState(store);
+  _AttestingPageState createState() => _AttestingPageState(store);
 
 
 }
 
-class _AssigningPageState extends State<AssigningPage> {
-  _AssigningPageState(this.store);
+class _AttestingPageState extends State<AttestingPage> {
+  _AttestingPageState(this.store);
 
   final AppStore store;
 
@@ -36,7 +36,12 @@ class _AssigningPageState extends State<AssigningPage> {
   @override
   void initState() {
     webApi.encointer.fetchParticipantIndex();
+    webApi.encointer.fetchParticipantCount();
     super.initState();
+  }
+
+  void _startMeetup() {
+    print("Start Meetup Pressed");
   }
 
   @override
@@ -52,10 +57,14 @@ class _AssigningPageState extends State<AssigningPage> {
             store.encointer.participantIndex != 0 ? Text("You are registered for CID: " +
                 Fmt.currencyIdentifier(store.encointer.chosenCid)) : Text("You are not registered for a ceremony..."),
             Text("Number of participants:"),
-            store.encointer.participantIndex != 0 ? Text(store.encointer.numberOfParticipants.toString()) : Text(""),
+            store.encointer.participantIndex != 0 ? Text(store.encointer.participantCount.toString()) : Text(""),
             Text("Next Ceremony Will Take Place on:"),
             Observer(
                 builder: (_) => Text(new DateTime.fromMillisecondsSinceEpoch(store.encointer.nextMeetupTime).toIso8601String())
+            ),
+            RoundedButton(
+                text: "start meetup",
+                onPressed: () => _startMeetup() // for testing always allow sending
             ),
           ]
       ),

@@ -56,6 +56,13 @@ class ApiEncointer {
     store.encointer.setParticipantIndex(pIndex);
   }
 
+  Future<void> fetchParticipantCount() async {
+    var cid = store.encointer.chosenCid;
+    var pIndex = await apiRoot.evalJavascript('encointer.fetchParticipantCount("$cid")');
+    print("Participant Index: " + pIndex.toString());
+    store.encointer.setParticipantIndex(pIndex);
+  }
+
   Future<void> subscribeCurrentPhase(String channel, Function callback) async {
     apiRoot.msgHandlers[channel] = callback;
     apiRoot.evalJavascript(
