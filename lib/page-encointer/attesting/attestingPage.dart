@@ -13,6 +13,7 @@ import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/utils/UI.dart';
 import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
+import 'package:polka_wallet/page-encointer/attesting/meetupPage.dart';
 
 class AttestingPage extends StatefulWidget {
   AttestingPage(this.store);
@@ -42,6 +43,7 @@ class _AttestingPageState extends State<AttestingPage> {
 
   Widget _startMeetup(BuildContext context) {
     print("Start Meetup Pressed");
+    Navigator.of(context).pushNamed(MeetupPage.route);
   }
 
   @override
@@ -64,7 +66,7 @@ class _AttestingPageState extends State<AttestingPage> {
             ),
             RoundedButton(
                 text: "start meetup",
-                onPressed: () => _startMeetup() // for testing always allow sending
+                onPressed: () => _startMeetup(context) // for testing always allow sending
             ),
           ]
       ),
