@@ -32,7 +32,7 @@ class ApiEncointer {
   }
 
   Future<void> fetchNextMeetupTime() async {
-    var address = store.account.currentAddress;
+    var address = store.account.currentAccountPubKey;
     var cid = store.encointer.chosenCid;
     var time = await apiRoot.evalJavascript('encointer.fetchNextMeetupTime("$cid", "$address")');
     print("Next Meetup Time: " + time.toString());
@@ -40,7 +40,7 @@ class ApiEncointer {
   }
 
   Future<void> fetchNextMeetupLocation() async {
-    var address = store.account.currentAddress;
+    var address = store.account.currentAccountPubKey;
     var cid = store.encointer.chosenCid;
     Location loc = await apiRoot.evalJavascript('encointer.fetchNextMeetupLocation("$cid", "$address")');
     print("Next Meetup Location: lon: " + loc.lon.toString() + " lat: " + loc.lat.toString());
@@ -48,7 +48,7 @@ class ApiEncointer {
   }
 
   Future<void> fetchParticipantIndex() async {
-    var address = store.account.currentAddress;
+    var address = store.account.currentAccountPubKey;
     var cid = store.encointer.chosenCid;
     print("Fetching participant index for " + address);
     var pIndex = await apiRoot.evalJavascript('encointer.fetchParticipantIndex("$cid", "$address")');
