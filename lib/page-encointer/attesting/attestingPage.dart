@@ -17,7 +17,7 @@ import 'package:polka_wallet/utils/i18n/index.dart';
 class AttestingPage extends StatefulWidget {
   AttestingPage(this.store);
 
-  static const String route = '/encointer/registering';
+  static const String route = '/encointer/attesting';
   final AppStore store;
 
   @override
@@ -40,7 +40,7 @@ class _AttestingPageState extends State<AttestingPage> {
     super.initState();
   }
 
-  void _startMeetup() {
+  Widget _startMeetup(BuildContext context) {
     print("Start Meetup Pressed");
   }
 

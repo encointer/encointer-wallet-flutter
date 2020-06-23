@@ -7,6 +7,10 @@ import 'package:polka_wallet/common/components/willPopScopWrapper.dart';
 import 'package:polka_wallet/common/consts/settings.dart';
 import 'package:polka_wallet/page-encointer/homePage.dart';
 import 'package:polka_wallet/page-encointer/registering/registeringPage.dart';
+import 'package:polka_wallet/page-encointer/registering/registerParticipantPanel.dart';
+import 'package:polka_wallet/page-encointer/attesting/attestingPage.dart';
+import 'package:polka_wallet/page-encointer/attesting/meetupPage.dart';
+import 'package:polka_wallet/page-encointer/assigning/assigningPage.dart';
 import 'package:polka_wallet/page/account/scanPage.dart';
 import 'package:polka_wallet/page/account/txConfirmPage.dart';
 import 'package:polka_wallet/page/assets/asset/assetPage.dart';
@@ -255,6 +259,10 @@ class _WalletAppState extends State<WalletApp> {
 
         // encointer
         RegisteringPage.route: (_) => RegisteringPage(_appStore),
+        RegisterParticipantPanel.route: (_) => RegisterParticipantPanel(_appStore),
+        AssigningPage.route: (_) => AssigningPage(_appStore),
+        AttestingPage.route: (_) => AttestingPage(_appStore),
+        MeetupPage.route: (_) => MeetupPage(_appStore),
       },
     );
   }

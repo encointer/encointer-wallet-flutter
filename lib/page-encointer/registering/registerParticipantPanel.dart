@@ -17,7 +17,7 @@ import 'package:polka_wallet/utils/i18n/index.dart';
 class RegisterParticipantPanel extends StatefulWidget {
   RegisterParticipantPanel(this.store);
 
-  static const String route = '/encointer/registering';
+  static const String route = '/encointer/registerParticipantPanel';
   final AppStore store;
 
   @override

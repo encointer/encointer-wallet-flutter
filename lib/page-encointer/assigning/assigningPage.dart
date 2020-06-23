@@ -17,7 +17,7 @@ import 'package:polka_wallet/utils/i18n/index.dart';
 class AssigningPage extends StatefulWidget {
   AssigningPage(this.store);
 
-  static const String route = '/encointer/registering';
+  static const String route = '/encointer/assigning';
   final AppStore store;
 
   @override
