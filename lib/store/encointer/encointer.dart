@@ -31,6 +31,12 @@ abstract class _EncointerStore with Store {
   var nextMeetupLocation = Location(0, 0);
 
   @observable
+  List<dynamic> currencyIdentifiers = ["0xf26bfaa0feee0968ec0637e1933e64cd1947294d3b667d43b76b3915fc330b53"];
+
+  @observable
+  var chosenCid = "0xf26bfaa0feee0968ec0637e1933e64cd1947294d3b667d43b76b3915fc330b53";
+
+  @observable
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
 
   @action
@@ -51,6 +57,16 @@ abstract class _EncointerStore with Store {
   @action
   void setNextMeetupTime(int time) {
     nextMeetupTime = time;
+  }
+
+  @action
+  void setCurrencyIdentifiers(cids) {
+    currencyIdentifiers = cids;
+  }
+
+  @action
+  void setChosenCid(cid) {
+    chosenCid = cid;
   }
 
   @action

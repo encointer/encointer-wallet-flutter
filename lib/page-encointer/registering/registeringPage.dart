@@ -35,16 +35,12 @@ class _RegisteringPageState extends State<RegisteringPage> {
 
   @override
   void initState() {
-    webApi.encointer.fetchCurrentCeremonyIndex();
+    webApi.encointer.fetchCurrencyIdentifiers();
     webApi.encointer.fetchNextMeetupTime();
-//    webApi.encointer.fetchNextMeetupLocation();
     super.initState();
   }
 
   Future<void> _onSubmit() async {
-    var cids = await webApi.encointer.fetchCurrencyIdentifiers();
-    var cid0 = cids.values.toList()[0][0];
-    print("Cids: " + cid0.toString());
     var args = {
       "title": 'register_participant',
       "txInfo": {
@@ -52,11 +48,11 @@ class _RegisteringPageState extends State<RegisteringPage> {
         "call": 'registerParticipant',
       },
       "detail": jsonEncode({
-        "cid": cid0,
+        "cid": store.encointer.chosenCid,
         "proof": {},
       }),
       "params": [
-        cid0,
+        store.encointer.chosenCid,
         null,
       ],
       'onFinish': (BuildContext txPageContext, Map res) {
@@ -71,11 +67,30 @@ class _RegisteringPageState extends State<RegisteringPage> {
   Widget build(BuildContext context) {
     final Map dic = I18n.of(context).encointer;
     final int decimals = encointer_token_decimals;
-    return Container(
+    return SafeArea(
           child: Column(
               children: <Widget>[
                 Observer(
                     builder: (_) => Text(store.encointer.currentPhase.toString())
+                ),
+                Text("Currency Identifier:"),
+                DropdownButton<dynamic>(
+                  value: store.encointer.chosenCid,
+                  icon: Icon(Icons.arrow_downward),
+                  iconSize: 16,
+                  elevation: 16,
+                  onChanged: (newValue) {
+                    setState(() {
+                      store.encointer.chosenCid = newValue;
+                    });
+                  },
+                  items: store.encointer.currencyIdentifiers
+                      .map<DropdownMenuItem<dynamic>>((value) =>
+                      DropdownMenuItem<dynamic>(
+                      value: value,
+                    child: Text(Fmt.currencyIdentifier(value)),
+                  )
+                  ).toList(),
                 ),
                 RoundedButton(
                     text: "Register Participant for Ceremony",
@@ -83,7 +98,7 @@ class _RegisteringPageState extends State<RegisteringPage> {
                 ),
                 Text("Next Ceremony Will Take Place on:"),
                 Observer(
-                    builder: (_) => Text(store.encointer.nextMeetupTime.toString())
+                    builder: (_) => Text(new DateTime.fromMillisecondsSinceEpoch(store.encointer.nextMeetupTime).toIso8601String())
                 ),
               ]
           ),

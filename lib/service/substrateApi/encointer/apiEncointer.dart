@@ -33,7 +33,7 @@ class ApiEncointer {
 
   Future<void> fetchNextMeetupTime() async {
     var address = store.account.currentAddress;
-    var cid = store.encointer.currentCeremonyIndex;
+    var cid = store.encointer.chosenCid;
     var time = await apiRoot.evalJavascript('encointer.fetchNextMeetupTime("$cid", "$address")');
     print("Next Meetup Time: " + time.toString());
     store.encointer.setNextMeetupTime(time);
@@ -41,7 +41,7 @@ class ApiEncointer {
 
   Future<void> fetchNextMeetupLocation() async {
     var address = store.account.currentAddress;
-    var cid = store.encointer.currentCeremonyIndex;
+    var cid = store.encointer.chosenCid;
     Location loc = await apiRoot.evalJavascript('encointer.fetchNextMeetupLocation($cid, $address)');
     print("Next Meetup Location: " + loc.toString());
     store.encointer.setNextMeetupLocation(loc);
@@ -59,9 +59,10 @@ class ApiEncointer {
         'encointer.subscribeTimestamp("$channel")');
   }
 
-  Future<Map> fetchCurrencyIdentifiers() async {
-    Map res = await apiRoot.evalJavascript('encointer.fetchCurrencyIdentifiers()');
-    print("CID: " + res.toString());
-    return res;
+  Future<List<dynamic>> fetchCurrencyIdentifiers() async {
+    Map<String, dynamic> res = await apiRoot.evalJavascript('encointer.fetchCurrencyIdentifiers()');
+    print("CID: " + res['cids'].toString());
+    store.encointer.setCurrencyIdentifiers(res['cids']);
+    return res['cids'];
   }
 }

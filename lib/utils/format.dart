@@ -25,6 +25,10 @@ class Fmt {
     return addr.substring(0, pad) + '...' + addr.substring(addr.length - pad);
   }
 
+  static String currencyIdentifier(String cid, {int pad = 8}) {
+    return address(cid, pad: pad);
+  }
+
   /// number transform 1:
   /// from raw <String> of Api data to <BigInt>
   static BigInt balanceInt(String raw) {
