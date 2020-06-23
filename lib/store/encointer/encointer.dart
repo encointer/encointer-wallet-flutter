@@ -31,6 +31,12 @@ abstract class _EncointerStore with Store {
   var nextMeetupLocation = Location(0, 0);
 
   @observable
+  var participantIndex = 0;
+
+  @observable
+  var numberOfParticipants = 0;
+
+  @observable
   List<dynamic> currencyIdentifiers = ["0xf26bfaa0feee0968ec0637e1933e64cd1947294d3b667d43b76b3915fc330b53"];
 
   @observable
@@ -67,6 +73,16 @@ abstract class _EncointerStore with Store {
   @action
   void setChosenCid(cid) {
     chosenCid = cid;
+  }
+
+  @action
+  void setParticipantIndex(int pIndex) {
+    participantIndex = pIndex;
+  }
+
+  @action
+  void setNumberOfParticipants(int pIndex) {
+    participantIndex = pIndex;
   }
 
   @action

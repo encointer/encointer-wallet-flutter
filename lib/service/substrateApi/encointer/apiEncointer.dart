@@ -42,9 +42,18 @@ class ApiEncointer {
   Future<void> fetchNextMeetupLocation() async {
     var address = store.account.currentAddress;
     var cid = store.encointer.chosenCid;
-    Location loc = await apiRoot.evalJavascript('encointer.fetchNextMeetupLocation($cid, $address)');
-    print("Next Meetup Location: " + loc.toString());
+    Location loc = await apiRoot.evalJavascript('encointer.fetchNextMeetupLocation("$cid", "$address")');
+    print("Next Meetup Location: lon: " + loc.lon.toString() + " lat: " + loc.lat.toString());
     store.encointer.setNextMeetupLocation(loc);
+  }
+
+  Future<void> fetchParticipantIndex() async {
+    var address = store.account.currentAddress;
+    var cid = store.encointer.chosenCid;
+    print("Fetching participant index for " + address);
+    var pIndex = await apiRoot.evalJavascript('encointer.fetchParticipantIndex("$cid", "$address")');
+    print("Participant Index: " + pIndex.toString());
+    store.encointer.setParticipantIndex(pIndex);
   }
 
   Future<void> subscribeCurrentPhase(String channel, Function callback) async {
