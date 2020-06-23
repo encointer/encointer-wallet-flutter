@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:polka_wallet/common/components/roundedCard.dart';
 import 'package:polka_wallet/page-encointer/registering/registeringPage.dart';
 import 'package:polka_wallet/page-encointer/registering/assigningPage.dart';
+import 'package:polka_wallet/page-encointer/registering/attestingPage.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
@@ -141,7 +142,7 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
       case CeremonyPhase.ASSIGNING:
         return AssigningPage(store);
       case CeremonyPhase.ATTESTING:
-        return RegisteringPage(store);
+        return AttestingPage(store);
     }
   }
 }
