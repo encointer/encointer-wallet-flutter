@@ -45,6 +45,10 @@
     "webpack-cli": "^3.3.10"
   },
   "eslintConfig": {
+    "globals": {
+      "api": true,
+      "send": true
+    },
     "extends": [
       "standard",
       "plugin:jest/recommended"
