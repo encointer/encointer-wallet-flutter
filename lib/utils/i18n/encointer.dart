@@ -7,6 +7,7 @@ const Map<String, String> enNctr = {
   'faucet.limit': 'Exceeds daily limit.',
   'faucet.error': 'Request error, try again later.',
   'encointer.registering': 'Registering',
+  'loan.txs': 'History',
 };
 
 const Map<String, String> zhNctr = {
@@ -18,4 +19,5 @@ const Map<String, String> zhNctr = {
   'faucet.limit': '每天领取次数有限哦。',
   'faucet.error': '可能领取姿势不太对，等会儿再试试吧。',
   'encointer.registering': 'Registering',
+  'loan.txs': 'History',
 };
