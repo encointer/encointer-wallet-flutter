@@ -37,6 +37,7 @@ class _RegisteringPageState extends State<RegisteringPage> {
   void initState() {
     webApi.encointer.fetchCurrencyIdentifiers();
     webApi.encointer.fetchNextMeetupTime();
+    webApi.encointer.fetchParticipantIndex();
     super.initState();
   }
 
@@ -58,6 +59,7 @@ class _RegisteringPageState extends State<RegisteringPage> {
       'onFinish': (BuildContext txPageContext, Map res) {
         Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
         globalBalanceRefreshKey.currentState.show();
+        globalCeremonyRegistrationRefreshKey.currentState.show();
       }
     };
     Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
@@ -67,7 +69,10 @@ class _RegisteringPageState extends State<RegisteringPage> {
   Widget build(BuildContext context) {
     final Map dic = I18n.of(context).encointer;
     final int decimals = encointer_token_decimals;
-    return SafeArea(
+    return RefreshIndicator(
+        key: globalBalanceRefreshKey,
+        onRefresh: webApi.encointer.fetchParticipantIndex,
+        child: SafeArea(
           child: Column(
               children: <Widget>[
                 Observer(
@@ -92,6 +97,8 @@ class _RegisteringPageState extends State<RegisteringPage> {
                   )
                   ).toList(),
                 ),
+                store.encointer.participantIndex != 0 ?
+                Text("Registered for cid: " + store.encointer.chosenCid) :
                 RoundedButton(
                     text: "Register Participant for Ceremony",
                     onPressed: () => _onSubmit() // for testing always allow sending
@@ -102,7 +109,8 @@ class _RegisteringPageState extends State<RegisteringPage> {
                 ),
               ]
           ),
-      );
+      ),
+    );
   }
 
 }

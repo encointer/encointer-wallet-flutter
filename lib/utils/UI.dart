@@ -230,3 +230,5 @@ final GlobalKey<RefreshIndicatorState> globalHomaRefreshKey =
 // encointerCeremoniesPage
 final GlobalKey<RefreshIndicatorState> globalCeremonyPhaseChangeKey =
 new GlobalKey<RefreshIndicatorState>();
+final GlobalKey<RefreshIndicatorState> globalCeremonyRegistrationRefreshKey =
+new GlobalKey<RefreshIndicatorState>();
