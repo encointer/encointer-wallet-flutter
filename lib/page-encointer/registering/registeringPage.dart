@@ -35,6 +35,9 @@ class _RegisteringPageState extends State<RegisteringPage> {
 
   @override
   void initState() {
+    webApi.encointer.fetchCurrentCeremonyIndex();
+    webApi.encointer.fetchNextMeetupTime();
+//    webApi.encointer.fetchNextMeetupLocation();
     super.initState();
   }
 
@@ -77,6 +80,10 @@ class _RegisteringPageState extends State<RegisteringPage> {
                 RoundedButton(
                     text: "Register Participant for Ceremony",
                     onPressed: () => _onSubmit() // for testing always allow sending
+                ),
+                Text("Next Ceremony Will Take Place on:"),
+                Observer(
+                    builder: (_) => Text(store.encointer.nextMeetupTime.toString())
                 ),
               ]
           ),

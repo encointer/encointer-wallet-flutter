@@ -25,6 +25,28 @@ class ApiEncointer {
     store.encointer.setCurrentPhase(phase);
   }
 
+  Future<void> fetchCurrentCeremonyIndex() async {
+    var c_index = await apiRoot.evalJavascript('encointer.fetchCurrentCeremonyIndex()');
+    print("Current Ceremony index: " + c_index.toString());
+    store.encointer.setCurrentCeremonyIndex(c_index);
+  }
+
+  Future<void> fetchNextMeetupTime() async {
+    var address = store.account.currentAddress;
+    var cid = store.encointer.currentCeremonyIndex;
+    var time = await apiRoot.evalJavascript('encointer.fetchNextMeetupTime("$cid", "$address")');
+    print("Next Meetup Time: " + time.toString());
+    store.encointer.setNextMeetupTime(time);
+  }
+
+  Future<void> fetchNextMeetupLocation() async {
+    var address = store.account.currentAddress;
+    var cid = store.encointer.currentCeremonyIndex;
+    Location loc = await apiRoot.evalJavascript('encointer.fetchNextMeetupLocation($cid, $address)');
+    print("Next Meetup Location: " + loc.toString());
+    store.encointer.setNextMeetupLocation(loc);
+  }
+
   Future<void> subscribeCurrentPhase(String channel, Function callback) async {
     apiRoot.msgHandlers[channel] = callback;
     apiRoot.evalJavascript(

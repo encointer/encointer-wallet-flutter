@@ -22,11 +22,35 @@ abstract class _EncointerStore with Store {
   CeremonyPhase currentPhase = CeremonyPhase.REGISTERING;
 
   @observable
+  var currentCeremonyIndex = 0;
+
+  @observable
+  var nextMeetupTime = 0;
+
+  @observable
+  var nextMeetupLocation = Location(0, 0);
+
+  @observable
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
 
   @action
   void setCurrentPhase(CeremonyPhase phase) {
     currentPhase = phase;
+  }
+
+  @action
+  void setCurrentCeremonyIndex(index) {
+    currentCeremonyIndex = index;
+  }
+
+  @action
+  void setNextMeetupLocation(Location location) {
+    nextMeetupLocation = location;
+  }
+
+  @action
+  void setNextMeetupTime(int time) {
+    nextMeetupTime = time;
   }
 
   @action
