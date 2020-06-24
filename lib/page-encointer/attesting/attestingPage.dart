@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
 import 'package:polka_wallet/common/components/infoItem.dart';
 import 'package:polka_wallet/common/components/roundedButton.dart';
 import 'package:polka_wallet/common/components/roundedCard.dart';
@@ -32,6 +33,14 @@ class _AttestingPageState extends State<AttestingPage> {
 
   final AppStore store;
 
+  @observable
+  var _amountAttendees;
+
+  @action
+  setAmountAttendees(amount) {
+    _amountAttendees = amount;
+  }
+
   String _tab = 'DOT';
 
   @override
@@ -41,8 +50,9 @@ class _AttestingPageState extends State<AttestingPage> {
     super.initState();
   }
 
-  Widget _startMeetup(BuildContext context) {
-    Navigator.of(context).pushNamed(MeetupPage.route);
+  Future<void> _startMeetup(BuildContext context) async {
+    var amount = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConfirmAttendeesDialog()));
+    setAmountAttendees(amount);
   }
 
   @override

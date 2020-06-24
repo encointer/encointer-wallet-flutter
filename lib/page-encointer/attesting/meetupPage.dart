@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
-import 'package:polka_wallet/page-encointer/attesting/confirmAttendeesDialog.dart';
 
 class MeetupPage extends StatefulWidget {
   MeetupPage(this.store);
