@@ -8,6 +8,7 @@ const Map<String, String> enNctr = {
   'faucet.error': 'Request error, try again later.',
   'encointer.registering': 'Registering',
   'loan.txs': 'History',
+  'ceremony': 'Encointer Ceremony',
 };
 
 const Map<String, String> zhNctr = {
@@ -20,4 +21,5 @@ const Map<String, String> zhNctr = {
   'faucet.error': '可能领取姿势不太对，等会儿再试试吧。',
   'encointer.registering': 'Registering',
   'loan.txs': 'History',
+  'ceremony': 'Encointer Ceremony',
 };

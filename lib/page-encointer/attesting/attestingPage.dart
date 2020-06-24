@@ -42,7 +42,6 @@ class _AttestingPageState extends State<AttestingPage> {
   }
 
   Widget _startMeetup(BuildContext context) {
-    print("Start Meetup Pressed");
     Navigator.of(context).pushNamed(MeetupPage.route);
   }
 

@@ -3,22 +3,14 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:polka_wallet/common/components/infoItem.dart';
-import 'package:polka_wallet/common/components/roundedButton.dart';
-import 'package:polka_wallet/common/components/roundedCard.dart';
-import 'package:polka_wallet/common/consts/settings.dart';
-import 'package:polka_wallet/page/account/txConfirmPage.dart';
-import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
-import 'package:polka_wallet/utils/UI.dart';
-import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
+import 'package:polka_wallet/page-encointer/attesting/confirmAttendeesDialog.dart';
 
 class MeetupPage extends StatefulWidget {
   MeetupPage(this.store);
 
-  static const String route = '/encointer/attesting/';
+  static const String route = '/encointer/meetup/';
   final AppStore store;
 
   @override
@@ -29,6 +21,7 @@ class _MeetupPageState extends State<MeetupPage> {
   _MeetupPageState(this.store);
 
   final AppStore store;
+  var _amountAttendees;
 
   @override
   void initState() {
@@ -39,7 +32,11 @@ class _MeetupPageState extends State<MeetupPage> {
   Widget build(BuildContext context) {
     final Map dic = I18n.of(context).encointer;
     return Scaffold(
-        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          title: Text(dic['ceremony']),
+          centerTitle: true,
+        ),
+        backgroundColor:Theme.of(context).canvasColor,
         body: SafeArea(
           child: Column(
               children: <Widget>[
