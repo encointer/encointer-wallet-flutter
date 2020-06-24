@@ -10,10 +10,10 @@ import 'package:polka_wallet/common/consts/settings.dart';
 import 'package:polka_wallet/page/account/txConfirmPage.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
-import 'package:polka_wallet/utils/UI.dart';
-import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
 import 'package:polka_wallet/page-encointer/attesting/meetupPage.dart';
+import 'package:polka_wallet/page-encointer/common/CeremonyOverviewPanel.dart';
+import 'package:polka_wallet/page-encointer/attesting/confirmAttendeesDialog.dart';
 
 class AttestingPage extends StatefulWidget {
   AttestingPage(this.store);
@@ -52,17 +52,7 @@ class _AttestingPageState extends State<AttestingPage> {
     return SafeArea(
       child: Column(
           children: <Widget>[
-            Observer(
-                builder: (_) => Text(store.encointer.currentPhase.toString())
-            ),
-            store.encointer.participantIndex != 0 ? Text("You are registered for CID: " +
-                Fmt.currencyIdentifier(store.encointer.chosenCid)) : Text("You are not registered for a ceremony..."),
-            Text("Number of participants:"),
-            store.encointer.participantIndex != 0 ? Text(store.encointer.participantCount.toString()) : Text(""),
-            Text("Next Ceremony Will Take Place on:"),
-            Observer(
-                builder: (_) => Text(new DateTime.fromMillisecondsSinceEpoch(store.encointer.nextMeetupTime).toIso8601String())
-            ),
+            CeremonyOverviewPanel(store),
             RoundedButton(
                 text: "start meetup",
                 onPressed: () => _startMeetup(context) // for testing always allow sending
