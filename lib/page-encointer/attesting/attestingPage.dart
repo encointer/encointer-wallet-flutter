@@ -51,6 +51,34 @@ class _AttestingPageState extends State<AttestingPage> {
   Future<void> _startMeetup(BuildContext context) async {
     var amount = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConfirmAttendeesDialog()));
     setAmountAttendees(amount);
+    _submitClaim(_amountAttendees);
+    }
+
+  Future<void> _submitClaim(participants) async {
+    var claim = await webApi.encointer.getClaimOfAttendance(participants);
+    print("Claim: " + claim.toString());
+
+//    var args = {
+//      "title": 'register_attestations',
+//      "txInfo": {
+//        "module": 'encointerCeremonies',
+//        "call": 'registerAttestations',
+//      },
+//      "detail": jsonEncode({
+//        "attestations": store.encointer.chosenCid,
+//        "proof": {},
+//      }),
+//      "params": [
+//        store.encointer.chosenCid,
+//        null,
+//      ],
+//      'onFinish': (BuildContext txPageContext, Map res) {
+//        Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
+//        globalBalanceRefreshKey.currentState.show();
+//        globalCeremonyRegistrationRefreshKey.currentState.show();
+//      }
+//    };
+//    Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
   }
 
   @override

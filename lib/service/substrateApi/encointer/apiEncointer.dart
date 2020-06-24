@@ -32,6 +32,9 @@ class ApiEncointer {
   }
 
   Future<void> fetchNextMeetupTime() async {
+    if (store.encointer.currencyIdentifiers == null) {
+      return;
+    }
     var cid = store.encointer.chosenCid ?? store.encointer.currencyIdentifiers[0];
     var loc = jsonEncode({
       "lat": store.encointer.nextMeetupLocation.lat,
@@ -85,7 +88,9 @@ class ApiEncointer {
   }
 
   Future<void> subscribeTimestamp(String channel) async {
-    apiRoot.msgHandlers[channel] = (data) => {}; // we get logs in the message handler
+    apiRoot.msgHandlers[channel] = (data) => {
+      store.encointer.setTimestamp(data)
+    };
     await apiRoot.evalJavascript(
         'encointer.subscribeTimestamp("$channel")');
   }
@@ -95,5 +100,19 @@ class ApiEncointer {
     print("CID: " + res['cids'].toString());
     store.encointer.setCurrencyIdentifiers(res['cids']);
     return res['cids'];
+  }
+
+  Future<dynamic> getClaimOfAttendance(participants) async{
+    var account = store.account.currentAddress;
+    var cIndex = store.encointer.currentCeremonyIndex;
+    var cid = store.encointer.chosenCid;
+    var mIndex = store.encointer.meetupIndex;
+    var loc = jsonEncode({
+      "lat": store.encointer.nextMeetupLocation.lat,
+      "lon": store.encointer.nextMeetupLocation.lon,
+    });
+    var time =  store.encointer.timeStamp;
+    var claim = await apiRoot.evalJavascript('encointer.getClaimOfAttendance("$account", "$cIndex", "$cid", "$mIndex", $loc, "$time", "$participants")');
+    return claim;
   }
 }

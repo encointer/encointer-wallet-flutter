@@ -40,10 +40,13 @@ abstract class _EncointerStore with Store {
   var participantCount = 0;
 
   @observable
-  List<dynamic> currencyIdentifiers = ["0x0"];
+  var timeStamp = 0;
 
   @observable
-  var chosenCid;
+  List<dynamic> currencyIdentifiers = ["0xf26bfaa0feee0968ec0637e1933e64cd1947294d3b667d43b76b3915fc330b53"];
+
+  @observable
+  var chosenCid = "0xf26bfaa0feee0968ec0637e1933e64cd1947294d3b667d43b76b3915fc330b53";
 
   @observable
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
@@ -91,6 +94,11 @@ abstract class _EncointerStore with Store {
   @action
   void setParticipantCount(int pCount) {
     participantCount = pCount;
+  }
+
+  @action
+  void setTimestamp(int timestamp) {
+    timestamp = timestamp;
   }
 
   @action
