@@ -35,9 +35,15 @@ class _AssigningPageState extends State<AssigningPage> {
 
   @override
   void initState() {
-    webApi.encointer.fetchParticipantIndex();
-    webApi.encointer.fetchParticipantCount();
+    _refreshData();
     super.initState();
+  }
+
+  Future<void> _refreshData() async {
+    await webApi.encointer.fetchParticipantIndex();
+    await webApi.encointer.fetchParticipantCount();
+    await webApi.encointer.fetchMeetupIndex();
+    await webApi.encointer.fetchNextMeetupTime();
   }
 
   @override

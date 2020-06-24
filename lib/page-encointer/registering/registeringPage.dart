@@ -37,25 +37,22 @@ class _RegisteringPageState extends State<RegisteringPage> {
 
   @override
   void initState() {
-    webApi.encointer.fetchCurrencyIdentifiers();
-    webApi.encointer.fetchNextMeetupTime();
-    webApi.encointer.fetchParticipantIndex();
+    _refresh();
     super.initState();
   }
 
   Future<void> _refresh() async {
-      webApi.encointer.fetchParticipantIndex();
-      setState(() {});
+     webApi.encointer.fetchCurrencyIdentifiers();
+     webApi.encointer.fetchCurrentCeremonyIndex();
+     webApi.encointer.fetchNextMeetupTime();
+     webApi.encointer.fetchParticipantIndex();
   }
 
   @override
   Widget build(BuildContext context) {
     final Map dic = I18n.of(context).encointer;
     final int decimals = encointer_token_decimals;
-    return RefreshIndicator(
-        key: globalBalanceRefreshKey,
-        onRefresh: _refresh,
-        child: SafeArea(
+    return  SafeArea(
           child: Column(
               children: <Widget>[
                 Observer(
@@ -70,8 +67,7 @@ class _RegisteringPageState extends State<RegisteringPage> {
                 ),
               ]
           ),
-      ),
-    );
+      );
   }
 
 }

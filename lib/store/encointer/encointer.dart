@@ -28,6 +28,9 @@ abstract class _EncointerStore with Store {
   var nextMeetupTime = 0;
 
   @observable
+  var meetupIndex = 0;
+
+  @observable
   var nextMeetupLocation = Location(0, 0);
 
   @observable
@@ -37,10 +40,10 @@ abstract class _EncointerStore with Store {
   var participantCount = 0;
 
   @observable
-  List<dynamic> currencyIdentifiers = ["0xf26bfaa0feee0968ec0637e1933e64cd1947294d3b667d43b76b3915fc330b53"];
+  List<dynamic> currencyIdentifiers = ["0x0"];
 
   @observable
-  var chosenCid = "0xf26bfaa0feee0968ec0637e1933e64cd1947294d3b667d43b76b3915fc330b53";
+  var chosenCid;
 
   @observable
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
@@ -63,6 +66,11 @@ abstract class _EncointerStore with Store {
   @action
   void setNextMeetupTime(int time) {
     nextMeetupTime = time;
+  }
+
+  @action
+  void setMeetupIndex(int index) {
+    meetupIndex = index;
   }
 
   @action

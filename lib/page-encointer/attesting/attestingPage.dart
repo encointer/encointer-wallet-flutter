@@ -45,8 +45,6 @@ class _AttestingPageState extends State<AttestingPage> {
 
   @override
   void initState() {
-    webApi.encointer.fetchParticipantIndex();
-    webApi.encointer.fetchParticipantCount();
     super.initState();
   }
 

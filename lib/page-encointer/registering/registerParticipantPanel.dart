@@ -33,10 +33,12 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
 
   @override
   void initState() {
-    webApi.encointer.fetchCurrencyIdentifiers();
-    webApi.encointer.fetchParticipantIndex();
-    webApi.encointer.fetchNextMeetupTime();
+    _refreshData();
     super.initState();
+  }
+
+  Future<void> _refreshData() async {
+    await webApi.encointer.fetchCurrencyIdentifiers();
   }
 
   Future<void> _submit() async {
