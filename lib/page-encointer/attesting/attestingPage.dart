@@ -59,9 +59,17 @@ class _AttestingPageState extends State<AttestingPage> {
         _amountAttendees);
     print("Claim: " + claimHex);
 
+//    var meetupRegistry = await webApi.encointer.fetchMeetupRegistry();
+    var meetupRegistry = List.filled(amount, store.account.currentAccountPubKey);
+
+    var args = {
+      'qrCodeData': claimHex,
+      'meetupRegistry': meetupRegistry,
+      'confirmedParticipants': amount
+    };
+
 //    _showPasswordDialog(context, claimHex);
-    Navigator.pushNamed(
-        context, QrCodeClaim.route, arguments: { 'qrCodeData': claimHex});
+    Navigator.pushNamed(context, MeetupPage.route, arguments: args);
   }
 
   Future<void> _submitClaim(BuildContext context, String claimHex, String password) async {

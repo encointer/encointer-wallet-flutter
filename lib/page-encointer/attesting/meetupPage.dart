@@ -2,8 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
+import 'package:polka_wallet/common/components/BorderedTitle.dart';
+import 'package:polka_wallet/common/components/addressIcon.dart';
+import 'package:polka_wallet/common/components/roundedCard.dart';
 import 'package:polka_wallet/store/app.dart';
+import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
 
 class MeetupPage extends StatefulWidget {
@@ -22,6 +27,47 @@ class _MeetupPageState extends State<MeetupPage> {
   final AppStore store;
   var _amountAttendees;
 
+
+  void _scanQrCode(int index) {
+    print("scanQrCode clicked at index: " + index.toString());
+  }
+
+  List<Widget> _buildAccountList(List<String> accounts) {
+    return accounts
+        .asMap()
+        .map((i, account) => MapEntry(i, _buildCard(i, account)))
+        .values
+        .toList();
+  }
+
+  Widget _buildCard(int index, String account) {
+    final Map dic = I18n.of(context).encointer;
+
+    return RoundedCard(
+        border: Border.all(color: Theme.of(context).cardColor),
+        margin: EdgeInsets.only(bottom: 16),
+        child: Column(
+            children: <Widget>[
+              ListTile(
+                leading: AddressIcon('', pubKey: account),
+                title:  Text(Fmt.address(account)),
+                onTap: () => _scanQrCode(index),
+              ),
+              CheckboxListTile(
+                  title: Text(dic['you.attested']),
+                  value: timeDilation != 1.0,
+                  onChanged: (bool value) {
+                    setState(() {});
+                  }),
+              CheckboxListTile(
+                  title: Text(dic['other.attested']),
+                  value: timeDilation != 1.0,
+                  onChanged: (bool value) {})
+            ]
+        )
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -30,6 +76,11 @@ class _MeetupPageState extends State<MeetupPage> {
   @override
   Widget build(BuildContext context) {
     final Map dic = I18n.of(context).encointer;
+
+    final Map<String, dynamic> args = ModalRoute.of(context).settings.arguments;
+    String qrCodeData = args['qrCodeData'];
+    List<String> meetupRegistry = args['meetupRegistry'];
+
     return Scaffold(
         appBar: AppBar(
           title: Text(dic['ceremony']),
@@ -58,13 +109,10 @@ class _MeetupPageState extends State<MeetupPage> {
                   ),
                 ),
                 Expanded(
-                  child: new TextField(
-                    decoration: new InputDecoration(labelText: "Enter the amount of participants number"),
-                    keyboardType: TextInputType.number,
-                    inputFormatters: <TextInputFormatter>[
-                      WhitelistingTextInputFormatter.digitsOnly
-                    ], // Only numbers can be entered
-                  ),
+                  child: ListView(
+                    padding: EdgeInsets.only(left: 16, right: 16),
+                    children: _buildAccountList(meetupRegistry),
+                  ), // Only numbers can be entered
                 ),
               ]
           ),

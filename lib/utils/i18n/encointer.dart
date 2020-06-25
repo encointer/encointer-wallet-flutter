@@ -9,7 +9,9 @@ const Map<String, String> enNctr = {
   'encointer.registering': 'Registering',
   'loan.txs': 'History',
   'ceremony': 'Encointer Ceremony',
-  'claim.qr' : 'Claim'
+  'claim.qr' : 'Claim',
+  'you.attested' : 'You attested other',
+  'other.attested': 'Other attested you'
 };
 
 const Map<String, String> zhNctr = {
