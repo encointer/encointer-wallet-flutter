@@ -10,6 +10,7 @@ import 'package:polka_wallet/page-encointer/registering/registeringPage.dart';
 import 'package:polka_wallet/page-encointer/registering/registerParticipantPanel.dart';
 import 'package:polka_wallet/page-encointer/attesting/attestingPage.dart';
 import 'package:polka_wallet/page-encointer/attesting/meetupPage.dart';
+import 'package:polka_wallet/page-encointer/attesting/qrCodeClaim.dart';
 import 'package:polka_wallet/page-encointer/assigning/assigningPage.dart';
 import 'package:polka_wallet/page/account/scanPage.dart';
 import 'package:polka_wallet/page/account/txConfirmPage.dart';
@@ -263,6 +264,7 @@ class _WalletAppState extends State<WalletApp> {
         AssigningPage.route: (_) => AssigningPage(_appStore),
         AttestingPage.route: (_) => AttestingPage(_appStore),
         MeetupPage.route: (_) => MeetupPage(_appStore),
+        QrCodeClaim.route: (_) => QrCodeClaim(_appStore),
       },
     );
   }
