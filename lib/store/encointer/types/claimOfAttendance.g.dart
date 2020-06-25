@@ -22,12 +22,12 @@ ClaimOfAttendance _$ClaimOfAttendanceFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$ClaimOfAttendanceToJson(ClaimOfAttendance instance) =>
     <String, dynamic>{
-      'claimant_public': instance.claimant_public,
+      'claimant_public': instance.claimantPublic,
       'ceremonyIndex': instance.ceremonyIndex,
-      'currency_identifier': instance.currency_identifier,
+      'currency_identifier': instance.currencyIdentifier,
       'meetupIndex': instance.meetupIndex,
       'location': instance.location?.toJson(),
       'timestamp': instance.timestamp,
       'number_of_participants_confirmed':
-          instance.number_of_participants_confirmed,
+          instance.numberOfParticipantsConfirmed,
     };

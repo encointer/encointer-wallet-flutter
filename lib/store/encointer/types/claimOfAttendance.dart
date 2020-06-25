@@ -5,18 +5,18 @@ import 'package:polka_wallet/store/encointer/types/location.dart';
 
 part 'claimOfAttendance.g.dart';
 
-@JsonSerializable(explicitToJson: true) // explicit = true as we have nested Json with location
+@JsonSerializable(explicitToJson: true, fieldRename: FieldRename.snake) // explicit = true as we have nested Json with location
 class ClaimOfAttendance {
-  ClaimOfAttendance(this.claimant_public, this.ceremonyIndex, this.currency_identifier,
-      this.meetupIndex, this.location, this.timestamp, this.number_of_participants_confirmed);
+  ClaimOfAttendance(this.claimantPublic, this.ceremonyIndex, this.currencyIdentifier,
+      this.meetupIndex, this.location, this.timestamp, this.numberOfParticipantsConfirmed);
 
-  String claimant_public;
+  String claimantPublic;
   int ceremonyIndex;
-  String currency_identifier;
+  String currencyIdentifier;
   int meetupIndex;
   Location location;
   int timestamp;
-  int number_of_participants_confirmed;
+  int numberOfParticipantsConfirmed;
 
   factory ClaimOfAttendance.fromJson(Map<String, dynamic> json) =>
       _$ClaimOfAttendanceFromJson(json);
