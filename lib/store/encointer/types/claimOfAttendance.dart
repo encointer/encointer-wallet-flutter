@@ -5,7 +5,9 @@ import 'package:polka_wallet/store/encointer/types/location.dart';
 
 part 'claimOfAttendance.g.dart';
 
-@JsonSerializable(explicitToJson: true, fieldRename: FieldRename.snake) // explicit = true as we have nested Json with location
+// explicit = true as we have nested Json with location
+// field rename such that the fields match the ones defined in the runtime
+@JsonSerializable(explicitToJson: true, fieldRename: FieldRename.snake)
 class ClaimOfAttendance {
   ClaimOfAttendance(this.claimantPublic, this.ceremonyIndex, this.currencyIdentifier,
       this.meetupIndex, this.location, this.timestamp, this.numberOfParticipantsConfirmed);
