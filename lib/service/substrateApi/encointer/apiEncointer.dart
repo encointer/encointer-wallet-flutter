@@ -93,6 +93,15 @@ class ApiEncointer {
     store.encointer.setParticipantIndex(pIndex);
   }
 
+  Future<dynamic> fetchMeetupRegistry() async {
+    var cIndex = store.encointer.currentCeremonyIndex;
+    var cid = store.encointer.chosenCid;
+    var mIndex = store.encointer.meetupIndex;
+    var meetupRegistry = await apiRoot.evalJavascript('encointer.fetchMeetupRegistry("$cid", "$cIndex", "$mIndex")');
+    print("Participant Index: " + meetupRegistry.toString());
+    return meetupRegistry;
+  }
+
   Future<void> subscribeCurrentPhase(String channel, Function callback) async {
     apiRoot.msgHandlers[channel] = callback;
     apiRoot.evalJavascript(
