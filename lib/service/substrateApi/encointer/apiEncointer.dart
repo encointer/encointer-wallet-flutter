@@ -6,9 +6,21 @@ import 'package:polka_wallet/common/consts/settings.dart';
 import 'package:polka_wallet/service/faucet.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
+import 'package:polka_wallet/store/encointer/types/claimOfAttendance.dart';
+import 'package:polka_wallet/store/encointer/types/location.dart';
 import 'package:polka_wallet/utils/format.dart';
 
 import 'package:polka_wallet/store/encointer/types/encointerTypes.dart';
+
+/// Api to interface with the `js_encointer_service.js`
+///
+/// Note: If a call fails on the js side, the corresponding message completer will not be
+/// freed. This means that the same call cannot be launched a second time as from the dart
+/// side if allow multiple==false in evalJavascript, which is the default.
+///
+/// NOTE: In this case a `hot_restart` instead of `hot_reload` is needed in order to clear that cache.
+///
+/// NOTE: If the js-code was changed a rebuild of the application is needed to update the code.
 
 class ApiEncointer {
   ApiEncointer(this.apiRoot);
@@ -102,17 +114,26 @@ class ApiEncointer {
     return res['cids'];
   }
 
-  Future<dynamic> getClaimOfAttendance(participants) async{
-    var account = store.account.currentAddress;
-    var cIndex = store.encointer.currentCeremonyIndex;
-    var cid = store.encointer.chosenCid;
-    var mIndex = store.encointer.meetupIndex;
-    var loc = jsonEncode({
-      "lat": store.encointer.nextMeetupLocation.lat,
-      "lon": store.encointer.nextMeetupLocation.lon,
-    });
-    var time =  store.encointer.timeStamp;
-    var claim = await apiRoot.evalJavascript('encointer.getClaimOfAttendance("$account", "$cIndex", "$cid", "$mIndex", $loc, "$time", "$participants")');
-    return claim;
+  Future<dynamic> getClaimOfAttendance(participants) async {
+    var claim = jsonEncode(ClaimOfAttendance(
+        store.account.currentAccountPubKey,
+        store.encointer.currentCeremonyIndex,
+        store.encointer.chosenCid,
+        store.encointer.meetupIndex,
+        store.encointer.nextMeetupLocation,
+        store.encointer.timeStamp,
+        participants
+    ));
+    print(claim);
+    var claimHex = await apiRoot.evalJavascript('encointer.getClaimOfAttendance("$claim")');
+    return claimHex;
+  }
+
+  Future<dynamic> attestClaimOfAttendance(ClaimOfAttendance claimHex) async{
+    var pubKey = store.account.currentAccountPubKey;
+    print("Public key:" + pubKey);
+    var claimJson = jsonEncode(claimHex);
+    var att = await apiRoot.evalJavascript('encointer.attestClaimOfAttendance("$claimJson", "$pubKey", "123Welcome")');
+    return att;
   }
 }

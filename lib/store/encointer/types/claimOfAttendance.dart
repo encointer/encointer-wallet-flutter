@@ -7,19 +7,16 @@ part 'claimOfAttendance.g.dart';
 
 @JsonSerializable(explicitToJson: true) // explicit = true as we have nested Json with location
 class ClaimOfAttendance {
-  ClaimOfAttendance(this.address, this.ceremonyIndex, this.cid,
-      this.meetupIndex, this.loc, this.time, this.participantCount);
+  ClaimOfAttendance(this.claimant_public, this.ceremonyIndex, this.currency_identifier,
+      this.meetupIndex, this.location, this.timestamp, this.number_of_participants_confirmed);
 
-  String address;
+  String claimant_public;
   int ceremonyIndex;
-  int cid;
+  String currency_identifier;
   int meetupIndex;
-  Location loc;
-  int time;
-  int participantCount;
-
-  Map<String, dynamic> encoding = Map<String, dynamic>();
-  Map<String, dynamic> meta = Map<String, dynamic>();
+  Location location;
+  int timestamp;
+  int number_of_participants_confirmed;
 
   factory ClaimOfAttendance.fromJson(Map<String, dynamic> json) =>
       _$ClaimOfAttendanceFromJson(json);

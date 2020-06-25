@@ -11,6 +11,7 @@ import 'package:polka_wallet/common/consts/settings.dart';
 import 'package:polka_wallet/page/account/txConfirmPage.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
+import 'package:polka_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
 import 'package:polka_wallet/page-encointer/attesting/meetupPage.dart';
 import 'package:polka_wallet/page-encointer/common/CeremonyOverviewPanel.dart';
@@ -55,8 +56,12 @@ class _AttestingPageState extends State<AttestingPage> {
     }
 
   Future<void> _submitClaim(participants) async {
-    var claim = await webApi.encointer.getClaimOfAttendance(participants);
-    print("Claim: " + claim.toString());
+    var claimHex = await webApi.encointer.getClaimOfAttendance(participants);
+    print("Claim: " + claimHex.toString());
+    var claimObj = ClaimOfAttendance.fromJson(claimHex);
+    print("Claim: " + claimHex.toString());
+    var att = await webApi.encointer.attestClaimOfAttendance(claimObj);
+    print("att: " + att.toString());
 
 //    var args = {
 //      "title": 'register_attestations',
@@ -65,17 +70,13 @@ class _AttestingPageState extends State<AttestingPage> {
 //        "call": 'registerAttestations',
 //      },
 //      "detail": jsonEncode({
-//        "attestations": store.encointer.chosenCid,
-//        "proof": {},
+//        "attestations": [att],
 //      }),
 //      "params": [
-//        store.encointer.chosenCid,
-//        null,
+//        [att], // we usually supply a list of attestations
 //      ],
 //      'onFinish': (BuildContext txPageContext, Map res) {
 //        Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
-//        globalBalanceRefreshKey.currentState.show();
-//        globalCeremonyRegistrationRefreshKey.currentState.show();
 //      }
 //    };
 //    Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);

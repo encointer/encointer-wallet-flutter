@@ -8,29 +8,26 @@ part of 'claimOfAttendance.dart';
 
 ClaimOfAttendance _$ClaimOfAttendanceFromJson(Map<String, dynamic> json) {
   return ClaimOfAttendance(
-    json['address'] as String,
+    json['claimant_public'] as String,
     json['ceremonyIndex'] as int,
-    json['cid'] as int,
+    json['currency_identifier'] as String,
     json['meetupIndex'] as int,
-    json['loc'] == null
+    json['location'] == null
         ? null
-        : Location.fromJson(json['loc'] as Map<String, dynamic>),
-    json['time'] as int,
-    json['participantCount'] as int,
-  )
-    ..encoding = json['encoding'] as Map<String, dynamic>
-    ..meta = json['meta'] as Map<String, dynamic>;
+        : Location.fromJson(json['location'] as Map<String, dynamic>),
+    json['timestamp'] as int,
+    json['number_of_participants_confirmed'] as int,
+  );
 }
 
 Map<String, dynamic> _$ClaimOfAttendanceToJson(ClaimOfAttendance instance) =>
     <String, dynamic>{
-      'address': instance.address,
+      'claimant_public': instance.claimant_public,
       'ceremonyIndex': instance.ceremonyIndex,
-      'cid': instance.cid,
+      'currency_identifier': instance.currency_identifier,
       'meetupIndex': instance.meetupIndex,
-      'loc': instance.loc?.toJson(),
-      'time': instance.time,
-      'participantCount': instance.participantCount,
-      'encoding': instance.encoding,
-      'meta': instance.meta,
+      'location': instance.location?.toJson(),
+      'timestamp': instance.timestamp,
+      'number_of_participants_confirmed':
+          instance.number_of_participants_confirmed,
     };
