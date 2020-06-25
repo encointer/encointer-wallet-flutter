@@ -1,14 +1,10 @@
+import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
 
 enum CeremonyPhase {
   REGISTERING,
   ASSIGNING,
   ATTESTING
-}
-
-class Location {
-  Location(this.lon, this.lat);
-  final double lon;
-  final double lat;
 }
 
 T getEnumFromString<T>(Iterable<T> values, String value) {
