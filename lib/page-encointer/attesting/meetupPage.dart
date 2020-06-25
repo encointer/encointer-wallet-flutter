@@ -6,6 +6,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:polka_wallet/common/components/BorderedTitle.dart';
 import 'package:polka_wallet/common/components/addressIcon.dart';
+import 'package:polka_wallet/common/components/roundedButton.dart';
 import 'package:polka_wallet/common/components/roundedCard.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/utils/format.dart';
@@ -53,16 +54,34 @@ class _MeetupPageState extends State<MeetupPage> {
                 title:  Text(Fmt.address(account)),
                 onTap: () => _scanQrCode(index),
               ),
-              CheckboxListTile(
-                  title: Text(dic['you.attested']),
-                  value: timeDilation != 1.0,
-                  onChanged: (bool value) {
-                    setState(() {});
-                  }),
-              CheckboxListTile(
-                  title: Text(dic['other.attested']),
-                  value: timeDilation != 1.0,
-                  onChanged: (bool value) {})
+              Padding(
+                  padding: EdgeInsets.only(right: 10),
+                  child: Row(
+                  children: <Widget> [
+                    Flexible(
+                        child: Column(
+                            children: <Widget> [
+                              CheckboxListTile(
+                                  title: Text(dic['you.attested']),
+                                  value: timeDilation != 1.0,
+                                  onChanged: (bool value) {
+                                    setState(() {});
+                                  }),
+                              CheckboxListTile(
+                                  title: Text(dic['other.attested']),
+                                  value: timeDilation != 1.0,
+                                  onChanged: (bool value) {
+                                  })
+                            ]
+                        )
+                    ),
+                    RoundedButton(
+                      text: I18n.of(context).home['ok'],
+                      onPressed: () {},
+                    ),
+                  ]
+              )
+              )
             ]
         )
     );
