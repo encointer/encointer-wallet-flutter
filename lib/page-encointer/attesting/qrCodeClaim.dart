@@ -16,9 +16,10 @@ class QrCodeClaim extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String codeAddress =
-        'substrate:${store.account.currentAddress}:${store.account.currentAccount.pubKey}:${store.account.currentAccount.name}';
     Color themeColor = Theme.of(context).primaryColor;
+
+    final Map<String, dynamic> args = ModalRoute.of(context).settings.arguments;
+    String qrCodeData = args['qrCodeData'];
 
     bool isKusama = store.settings.endpoint.info == networkEndpointKusama.info;
     bool isEncointer = store.settings.endpoint.info == networkEndpointEncointerGesell.info;
@@ -57,7 +58,7 @@ class QrCodeClaim extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        store.account.currentAccount.name,
+                        I18n.of(context).encointer['claim.qr'],
                         style: Theme.of(context).textTheme.headline4,
                       ),
                       Container(
@@ -68,7 +69,7 @@ class QrCodeClaim extends StatelessWidget {
                         ),
                         margin: EdgeInsets.fromLTRB(48, 24, 48, 24),
                         child: QrImage(
-                          data: codeAddress,
+                          data: qrCodeData,
                           size: 200,
                           embeddedImage:
                               AssetImage('assets/images/public/app.png'),
@@ -78,7 +79,7 @@ class QrCodeClaim extends StatelessWidget {
                       ),
                       Container(
                         width: 160,
-                        child: Text(store.account.currentAddress),
+                        child: Text(qrCodeData),
                       ),
                       Container(
                         width: MediaQuery.of(context).size.width / 2,

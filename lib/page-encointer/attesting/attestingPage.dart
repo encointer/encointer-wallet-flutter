@@ -9,6 +9,7 @@ import 'package:polka_wallet/common/components/passwordInputDialog.dart';
 import 'package:polka_wallet/common/components/roundedButton.dart';
 import 'package:polka_wallet/common/components/roundedCard.dart';
 import 'package:polka_wallet/common/consts/settings.dart';
+import 'package:polka_wallet/page-encointer/attesting/qrCodeClaim.dart';
 import 'package:polka_wallet/page/account/txConfirmPage.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
@@ -51,13 +52,17 @@ class _AttestingPageState extends State<AttestingPage> {
   }
 
   Future<void> _startMeetup(BuildContext context) async {
-    var amount = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConfirmAttendeesDialog()));
+    var amount = await Navigator.of(context).push(
+        MaterialPageRoute(builder: (context) => ConfirmAttendeesDialog()));
     setAmountAttendees(amount);
-    var claimHex = await webApi.encointer.getClaimOfAttendance(_amountAttendees);
+    var claimHex = await webApi.encointer.getClaimOfAttendance(
+        _amountAttendees);
     print("Claim: " + claimHex);
 
-    _showPasswordDialog(context, claimHex);
-    }
+//    _showPasswordDialog(context, claimHex);
+    Navigator.pushNamed(
+        context, QrCodeClaim.route, arguments: { 'qrCodeData': claimHex});
+  }
 
   Future<void> _submitClaim(BuildContext context, String claimHex, String password) async {
     var att = await webApi.encointer.attestClaimOfAttendance(claimHex, password);
