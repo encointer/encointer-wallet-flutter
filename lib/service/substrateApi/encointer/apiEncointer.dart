@@ -125,15 +125,14 @@ class ApiEncointer {
         participants
     ));
     print(claim);
-    var claimHex = await apiRoot.evalJavascript('encointer.getClaimOfAttendance("$claim")');
+    var claimHex = await apiRoot.evalJavascript('encointer.getClaimOfAttendance($claim)');
     return claimHex;
   }
 
-  Future<dynamic> attestClaimOfAttendance(ClaimOfAttendance claimHex) async{
+  Future<dynamic> attestClaimOfAttendance(String claimHex, String password) async{
     var pubKey = store.account.currentAccountPubKey;
     print("Public key:" + pubKey);
-    var claimJson = jsonEncode(claimHex);
-    var att = await apiRoot.evalJavascript('encointer.attestClaimOfAttendance("$claimJson", "$pubKey", "123Welcome")');
+    var att = await apiRoot.evalJavascript('encointer.attestClaimOfAttendance("$claimHex", "$pubKey", "$password")');
     return att;
   }
 }

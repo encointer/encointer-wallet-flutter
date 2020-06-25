@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
 import 'package:polka_wallet/common/components/infoItem.dart';
+import 'package:polka_wallet/common/components/passwordInputDialog.dart';
 import 'package:polka_wallet/common/components/roundedButton.dart';
 import 'package:polka_wallet/common/components/roundedCard.dart';
 import 'package:polka_wallet/common/consts/settings.dart';
@@ -52,15 +53,14 @@ class _AttestingPageState extends State<AttestingPage> {
   Future<void> _startMeetup(BuildContext context) async {
     var amount = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConfirmAttendeesDialog()));
     setAmountAttendees(amount);
-    _submitClaim(_amountAttendees);
+    var claimHex = await webApi.encointer.getClaimOfAttendance(_amountAttendees);
+    print("Claim: " + claimHex);
+
+    _showPasswordDialog(context, claimHex);
     }
 
-  Future<void> _submitClaim(participants) async {
-    var claimHex = await webApi.encointer.getClaimOfAttendance(participants);
-    print("Claim: " + claimHex.toString());
-    var claimObj = ClaimOfAttendance.fromJson(claimHex);
-    print("Claim: " + claimHex.toString());
-    var att = await webApi.encointer.attestClaimOfAttendance(claimObj);
+  Future<void> _submitClaim(BuildContext context, String claimHex, String password) async {
+    var att = await webApi.encointer.attestClaimOfAttendance(claimHex, password);
     print("att: " + att.toString());
 
 //    var args = {
@@ -82,6 +82,18 @@ class _AttestingPageState extends State<AttestingPage> {
 //    Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
   }
 
+  Future<void> _showPasswordDialog(BuildContext context, String claimHex) async {
+    showCupertinoDialog(
+      context: context,
+      builder: (_) {
+        return PasswordInputDialog(
+          title: Text(I18n.of(context).home['unlock']),
+          onOk: (password) => _submitClaim(context, claimHex, password),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final Map dic = I18n.of(context).encointer;
@@ -98,7 +110,6 @@ class _AttestingPageState extends State<AttestingPage> {
       ),
     );
   }
-
 }
 
 
