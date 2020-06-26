@@ -34,20 +34,21 @@ class ConfirmAttendeesDialog extends StatelessWidget {
                     ],
                   ),
                 ),
-                Expanded(
+                Flexible(
                   child: RoundedCard(
                     margin: EdgeInsets.fromLTRB(16, 12, 16, 24),
                     padding: EdgeInsets.only(top: 8, bottom: 8),
                     child: GridView.count(
                       // Create a grid with 2 columns.
                       crossAxisCount: 2,
-                      childAspectRatio: 3/2,
-                      children: List.generate(12, (index) {
+                      childAspectRatio: 4/2,
+                      children: List.generate(10, (index) {
+                        var value = index +3;
                         return Center(
                             child: CupertinoButton(
-                                child: Text(index.toString()),
+                                child: Text(value.toString()),
                                 onPressed: () {
-                                  Navigator.of(context).pop(index);
+                                  Navigator.of(context).pop(value);
                                 }
                             )
                         );
