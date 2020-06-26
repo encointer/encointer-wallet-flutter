@@ -8,7 +8,7 @@ import 'package:polka_wallet/utils/format.dart';
 
 // TODO: scan image failed
 class ScanQrCode extends StatelessWidget {
-  ScanQrCode(this.onScan);
+  ScanQrCode({this.onScan});
   static final String route = '/meetup/scan';
   final GlobalKey<QrcodeReaderViewState> _qrViewKey = GlobalKey();
 
@@ -32,8 +32,16 @@ class ScanQrCode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> args = ModalRoute.of(context).settings.arguments;
-    Function onScan = args['onScan'];
+//    Function onScan = args['onScan'];
 
+    Future onScan(String data) async {
+      if (data != null) {
+        print(data);
+        Navigator.of(context).pop(data);
+      } else {
+        _qrViewKey.currentState.startScan();
+      }
+    }
     return Scaffold(
       body: FutureBuilder<bool>(
         future: canOpenCamera(),
