@@ -45,6 +45,7 @@ class _AssigningPageState extends State<AssigningPage> {
     await webApi.encointer.fetchParticipantCount();
     await webApi.encointer.fetchMeetupIndex();
     await webApi.encointer.fetchNextMeetupTime();
+    await webApi.encointer.fetchNextMeetupLocation();
   }
 
   @override

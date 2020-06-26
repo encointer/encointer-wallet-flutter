@@ -36,6 +36,7 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
+  flutter_map: ^0.9.0
   ota_update: ^2.2.1
   flutter_downloader: ^1.4.4
   path_provider:
