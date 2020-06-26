@@ -12,6 +12,8 @@ import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
 
+import 'attestationCard.dart';
+
 class MeetupPage extends StatefulWidget {
   MeetupPage(this.store);
 
@@ -33,58 +35,11 @@ class _MeetupPageState extends State<MeetupPage> {
     print("scanQrCode clicked at index: " + index.toString());
   }
 
-  List<Widget> _buildAccountList(List<String> accounts) {
-    return accounts
-        .asMap()
-        .map((i, account) => MapEntry(i, _buildCard(i, account)))
+  List<Widget> _buildAccountList() {
+    return store.encointer.attestations
+        .map((i, _) => MapEntry(i, AttestationCard(store, i)))
         .values
         .toList();
-  }
-
-  Widget _buildCard(int index, String account) {
-    final Map dic = I18n.of(context).encointer;
-
-    return RoundedCard(
-        border: Border.all(color: Theme.of(context).cardColor),
-        margin: EdgeInsets.only(bottom: 16),
-        child: Column(
-            children: <Widget>[
-              ListTile(
-                leading: AddressIcon('', pubKey: account),
-                title:  Text(Fmt.address(account)),
-                onTap: () => _scanQrCode(index),
-              ),
-              Padding(
-                  padding: EdgeInsets.only(right: 10),
-                  child: Row(
-                  children: <Widget> [
-                    Flexible(
-                        child: Column(
-                            children: <Widget> [
-                              CheckboxListTile(
-                                  title: Text(dic['you.attested']),
-                                  value: timeDilation != 1.0,
-                                  onChanged: (bool value) {
-                                    setState(() {});
-                                  }),
-                              CheckboxListTile(
-                                  title: Text(dic['other.attested']),
-                                  value: timeDilation != 1.0,
-                                  onChanged: (bool value) {
-                                  })
-                            ]
-                        )
-                    ),
-                    RoundedButton(
-                      text: I18n.of(context).home['ok'],
-                      onPressed: () {},
-                    ),
-                  ]
-              )
-              )
-            ]
-        )
-    );
   }
 
   @override
@@ -98,7 +53,7 @@ class _MeetupPageState extends State<MeetupPage> {
 
     final Map<String, dynamic> args = ModalRoute.of(context).settings.arguments;
     String qrCodeData = args['qrCodeData'];
-    List<String> meetupRegistry = args['meetupRegistry'];
+//    List<String> meetupRegistry = args['meetupRegistry'];
 
     return Scaffold(
         appBar: AppBar(
@@ -130,7 +85,7 @@ class _MeetupPageState extends State<MeetupPage> {
                 Expanded(
                   child: ListView(
                     padding: EdgeInsets.only(left: 16, right: 16),
-                    children: _buildAccountList(meetupRegistry),
+                    children: _buildAccountList(),
                   ), // Only numbers can be entered
                 ),
               ]

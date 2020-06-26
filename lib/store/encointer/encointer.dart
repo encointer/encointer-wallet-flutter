@@ -1,5 +1,6 @@
 import 'package:mobx/mobx.dart';
 import 'package:polka_wallet/common/consts/settings.dart';
+import 'package:polka_wallet/store/encointer/types/attestationState.dart';
 import 'package:polka_wallet/store/encointer/types/encointerTypes.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/store/assets/types/transferData.dart';
@@ -18,6 +19,10 @@ abstract class _EncointerStore with Store {
 
   final AppStore rootStore;
   final String cacheTxsTransferKey = 'transfer_txs';
+
+  // Note: In synchronous code, every modification of an @obervable is tracked by mobx and
+  // fires a reaction. However, modifications in asynchronous code must be wrapped in
+  // a @action block to fire a reaction.
 
   @observable
   CeremonyPhase currentPhase = CeremonyPhase.REGISTERING;
@@ -48,6 +53,9 @@ abstract class _EncointerStore with Store {
 
   @observable
   var chosenCid = "0xf26bfaa0feee0968ec0637e1933e64cd1947294d3b667d43b76b3915fc330b53";
+
+  @observable
+  Map<int, AttestationState> attestations = Map<int, AttestationState>();
 
   @observable
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
@@ -140,7 +148,6 @@ abstract class _EncointerStore with Store {
     }
     rootStore.localStorage.setAccountCache(pubKey, cacheKey, cached);
   }
-
 
   @action
   Future<void> loadCache() async {

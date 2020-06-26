@@ -13,6 +13,7 @@ import 'package:polka_wallet/page-encointer/attesting/qrCodeClaim.dart';
 import 'package:polka_wallet/page/account/txConfirmPage.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
+import 'package:polka_wallet/store/encointer/types/attestationState.dart';
 import 'package:polka_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
 import 'package:polka_wallet/page-encointer/attesting/meetupPage.dart';
@@ -61,15 +62,22 @@ class _AttestingPageState extends State<AttestingPage> {
 
 //    var meetupRegistry = await webApi.encointer.fetchMeetupRegistry();
     var meetupRegistry = List.filled(amount, store.account.currentAccountPubKey);
+    store.encointer.attestations = _buildAttestationStateMap(meetupRegistry);
 
     var args = {
       'qrCodeData': claimHex,
-      'meetupRegistry': meetupRegistry,
+//      'meetupRegistry': meetupRegistry,
       'confirmedParticipants': amount
     };
 
 //    _showPasswordDialog(context, claimHex);
     Navigator.pushNamed(context, MeetupPage.route, arguments: args);
+  }
+
+  Map<int, AttestationState> _buildAttestationStateMap(List<String> pubKeys) {
+    return pubKeys
+        .asMap()
+        .map((i, key) => MapEntry(i, AttestationState(key)));
   }
 
   Future<void> _submitClaim(BuildContext context, String claimHex, String password) async {
