@@ -9,9 +9,9 @@ part of 'claimOfAttendance.dart';
 ClaimOfAttendance _$ClaimOfAttendanceFromJson(Map<String, dynamic> json) {
   return ClaimOfAttendance(
     json['claimant_public'] as String,
-    json['ceremonyIndex'] as int,
+    json['ceremony_index'] as int,
     json['currency_identifier'] as String,
-    json['meetupIndex'] as int,
+    json['meetup_index'] as int,
     json['location'] == null
         ? null
         : Location.fromJson(json['location'] as Map<String, dynamic>),
@@ -23,9 +23,9 @@ ClaimOfAttendance _$ClaimOfAttendanceFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$ClaimOfAttendanceToJson(ClaimOfAttendance instance) =>
     <String, dynamic>{
       'claimant_public': instance.claimantPublic,
-      'ceremonyIndex': instance.ceremonyIndex,
+      'ceremony_index': instance.ceremonyIndex,
       'currency_identifier': instance.currencyIdentifier,
-      'meetupIndex': instance.meetupIndex,
+      'meetup_index': instance.meetupIndex,
       'location': instance.location?.toJson(),
       'timestamp': instance.timestamp,
       'number_of_participants_confirmed':

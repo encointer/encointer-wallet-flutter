@@ -71,6 +71,23 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
+  final _$myMeetupRegistryIndexAtom =
+      Atom(name: '_EncointerStore.myMeetupRegistryIndex');
+
+  @override
+  int get myMeetupRegistryIndex {
+    _$myMeetupRegistryIndexAtom.reportRead();
+    return super.myMeetupRegistryIndex;
+  }
+
+  @override
+  set myMeetupRegistryIndex(int value) {
+    _$myMeetupRegistryIndexAtom.reportWrite(value, super.myMeetupRegistryIndex,
+        () {
+      super.myMeetupRegistryIndex = value;
+    });
+  }
+
   final _$nextMeetupLocationAtom =
       Atom(name: '_EncointerStore.nextMeetupLocation');
 
@@ -160,6 +177,21 @@ mixin _$EncointerStore on _EncointerStore, Store {
   set chosenCid(String value) {
     _$chosenCidAtom.reportWrite(value, super.chosenCid, () {
       super.chosenCid = value;
+    });
+  }
+
+  final _$attestationsAtom = Atom(name: '_EncointerStore.attestations');
+
+  @override
+  Map<int, AttestationState> get attestations {
+    _$attestationsAtom.reportRead();
+    return super.attestations;
+  }
+
+  @override
+  set attestations(Map<int, AttestationState> value) {
+    _$attestationsAtom.reportWrite(value, super.attestations, () {
+      super.attestations = value;
     });
   }
 
@@ -261,6 +293,17 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
+  void setMyMeetupRegistryIndex(int index) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(
+        name: '_EncointerStore.setMyMeetupRegistryIndex');
+    try {
+      return super.setMyMeetupRegistryIndex(index);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setCurrencyIdentifiers(dynamic cids) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.setCurrencyIdentifiers');
@@ -322,12 +365,14 @@ currentPhase: ${currentPhase},
 currentCeremonyIndex: ${currentCeremonyIndex},
 nextMeetupTime: ${nextMeetupTime},
 meetupIndex: ${meetupIndex},
+myMeetupRegistryIndex: ${myMeetupRegistryIndex},
 nextMeetupLocation: ${nextMeetupLocation},
 participantIndex: ${participantIndex},
 participantCount: ${participantCount},
 timeStamp: ${timeStamp},
 currencyIdentifiers: ${currencyIdentifiers},
 chosenCid: ${chosenCid},
+attestations: ${attestations},
 txsTransfer: ${txsTransfer}
     ''';
   }

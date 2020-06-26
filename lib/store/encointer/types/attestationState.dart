@@ -2,6 +2,7 @@
 import 'package:mobx/mobx.dart';
 import 'package:polka_wallet/common/components/passwordInputDialog.dart';
 
+import 'attestation.dart';
 import 'claimOfAttendance.dart';
 
 @observable
@@ -52,10 +53,4 @@ class AttestationState {
     _otherAttestedYou = !otherAttestedYou;
   }
 
-}
-
-class Attestation {
-  ClaimOfAttendance claim;
-  String signature;
-  String publicKey;
 }

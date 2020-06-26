@@ -79,10 +79,6 @@ class QrCode extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        width: 160,
-                        child: Text(qrCodeData),
-                      ),
-                      Container(
                         width: MediaQuery.of(context).size.width / 2,
                         padding: EdgeInsets.only(top: 16, bottom: 32),
                         child: RoundedButton(
