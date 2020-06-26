@@ -71,7 +71,6 @@ class _AttestingPageState extends State<AttestingPage> {
 
     var args = {
       'claim': claimHex,
-//      'meetupRegistry': meetupRegistry,
       'confirmedParticipants': amount
     };
 

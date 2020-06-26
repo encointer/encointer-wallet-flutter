@@ -8,7 +8,9 @@ import 'package:polka_wallet/common/components/BorderedTitle.dart';
 import 'package:polka_wallet/common/components/addressIcon.dart';
 import 'package:polka_wallet/common/components/roundedButton.dart';
 import 'package:polka_wallet/common/components/roundedCard.dart';
+import 'package:polka_wallet/page/account/txConfirmPage.dart';
 import 'package:polka_wallet/store/app.dart';
+import 'package:polka_wallet/utils/UI.dart';
 import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
 
@@ -42,6 +44,33 @@ class _MeetupPageState extends State<MeetupPage> {
             )))
         .values
         .toList();
+  }
+
+  Future<void> _submit(BuildContext context) async {
+    var attestations = store.encointer.attestations
+
+
+    .map((key, value) => MapEntry(key, value.otherAttestation))
+        .values
+        .toList();
+    var args = {
+      "title": 'register_attestations',
+      "txInfo": {
+        "module": 'encointerCeremonies',
+        "call": 'registerAttestations',
+      },
+      "detail": jsonEncode({
+        "attestations": attestations,
+      }),
+      "params": [
+        attestations,
+      ],
+      'onFinish': (BuildContext txPageContext, Map res) {
+        Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
+        globalBalanceRefreshKey.currentState.show();
+      }
+    };
+    Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
   }
 
   @override
@@ -89,6 +118,10 @@ class _MeetupPageState extends State<MeetupPage> {
                     children: _buildAttestationCardList(claim),
                   ), // Only numbers can be entered
                 ),
+                RoundedButton(
+                  text: dic['meetup.complete'],
+                  onPressed: () =>  _submit(context)
+                )
               ]
           ),
         )
