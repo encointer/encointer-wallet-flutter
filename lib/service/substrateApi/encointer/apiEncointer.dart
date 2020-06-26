@@ -141,7 +141,7 @@ class ApiEncointer {
   Future<dynamic> attestClaimOfAttendance(String claimHex, String password) async{
     var pubKey = store.account.currentAccountPubKey;
     print("Public key:" + pubKey);
-    var att = await apiRoot.evalJavascript('encointer.attestClaimOfAttendance("$claimHex", "$pubKey", "$password")');
+    var att = await apiRoot.evalJavascript('account.attestClaimOfAttendance("$claimHex", "$pubKey", "$password")');
     return att;
   }
 }

@@ -13,6 +13,7 @@ import 'package:polka_wallet/common/components/roundedCard.dart';
 import 'package:polka_wallet/page-encointer/attesting/qrCode.dart';
 import 'package:polka_wallet/page-encointer/attesting/scanQrCode.dart';
 import 'package:polka_wallet/page/account/scanPage.dart';
+import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
@@ -70,7 +71,10 @@ class _AttestationCardState extends State<AttestationCard> {
   }
 
   void onScan(String data) async {
-    print(data);
+    print("Claim received by qrCode:" + data);
+    var attestation = await webApi.encointer.attestClaimOfAttendance(data, "123qwe");
+
+    print("Attestation: " +  attestation.toString());
   }
 
   _revertAttestation() {
