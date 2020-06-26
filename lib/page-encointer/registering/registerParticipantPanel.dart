@@ -80,7 +80,9 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
                 elevation: 16,
                 onChanged: (newValue) {
                   setState(() {
-                    store.encointer.chosenCid = newValue;
+                    if (store.encointer.participantIndex == 0) {
+                      store.encointer.chosenCid = newValue;
+                    }
                   });
                 },
                 items: store.encointer.currencyIdentifiers

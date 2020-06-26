@@ -58,8 +58,6 @@ class _RegisteringPageState extends State<RegisteringPage> {
                 Observer(
                     builder: (_) => Text(store.encointer.currentPhase.toString())
                 ),
-                store.encointer.participantIndex != 0 ?
-                Text("Registered for cid: " + Fmt.currencyIdentifier(store.encointer.chosenCid)) :
                 RegisterParticipantPanel(store),
                 Text("Next Ceremony Will Take Place on:"),
                 Observer(
