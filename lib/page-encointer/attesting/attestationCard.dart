@@ -58,6 +58,7 @@ class _AttestationCardState extends State<AttestationCard> {
       'qrCodeData': widget.claim
       };
       await Navigator.of(context).pushNamed(QrCode.route, arguments: args);
+      await Navigator.of(context).pushNamed(ScanQrCode.route, arguments: { 'onScan' : onScan });
     } else {
       await Navigator.of(context).pushNamed(ScanQrCode.route, arguments: { 'onScan' : onScan });
       var args = {
@@ -68,7 +69,7 @@ class _AttestationCardState extends State<AttestationCard> {
     }
   }
 
-  Future onScan(String data) async {
+  void onScan(String data) async {
     print(data);
   }
 

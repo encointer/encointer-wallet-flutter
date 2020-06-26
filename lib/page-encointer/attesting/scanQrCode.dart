@@ -32,11 +32,11 @@ class ScanQrCode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> args = ModalRoute.of(context).settings.arguments;
-//    Function onScan = args['onScan'];
+    Function onScan = args['onScan'];
 
-    Future onScan(String data) async {
+    Future _onScan(String data) async {
       if (data != null) {
-        print(data);
+        onScan(data);
         Navigator.of(context).pop(data);
       } else {
         _qrViewKey.currentState.startScan();
@@ -58,7 +58,7 @@ class ScanQrCode extends StatelessWidget {
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                 ),
-                onScan: onScan);
+                onScan: _onScan);
           } else {
             return Container();
           }
