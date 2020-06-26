@@ -68,8 +68,9 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
 
   @override
   Widget build(BuildContext context) {
-    return  SafeArea(
-        child: Column(
+    // only build dropdown after we have fetched the currency identifiers
+    return  FutureBuilder(
+        builder: (context, _currencyIdentifiers) => Column(
             children: <Widget>[
               Text("Currency Identifiers:"),
               DropdownButton<dynamic>(
@@ -90,12 +91,19 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
                     )
                 ).toList(),
               ),
-              RoundedButton(
-                  text: "Register Participant for Ceremony",
-                  onPressed: () => _submit()
-              ),
-             ]
+              Observer(
+                  builder: (_) => store.encointer.participantIndex == 0 ?
+                  RoundedButton(
+                      text: "Register Participant for Ceremony",
+                      onPressed: () => _submit()
+                  ): RoundedButton(
+                      text: "Unregister for: " + Fmt.currencyIdentifier(store.encointer.chosenCid).toString(),
+                      onPressed: () => {}
+                  )
+              )
+            ]
         ),
+      future: webApi.encointer.fetchCurrencyIdentifiers(),
     );
   }
 
