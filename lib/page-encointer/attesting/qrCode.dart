@@ -8,8 +8,8 @@ import 'package:polka_wallet/utils/UI.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-class QrCodeClaim extends StatelessWidget {
-  QrCodeClaim(this.store);
+class QrCode extends StatelessWidget {
+  QrCode(this.store);
 
   static final String route = '/encointer/attestation/qrCodeClaim';
   final AppStore store;

@@ -10,7 +10,7 @@ import 'package:polka_wallet/common/components/BorderedTitle.dart';
 import 'package:polka_wallet/common/components/addressIcon.dart';
 import 'package:polka_wallet/common/components/roundedButton.dart';
 import 'package:polka_wallet/common/components/roundedCard.dart';
-import 'package:polka_wallet/page-encointer/attesting/qrCodeClaim.dart';
+import 'package:polka_wallet/page-encointer/attesting/qrCode.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
@@ -56,8 +56,10 @@ class _AttestationCardState extends State<AttestationCard> {
       "title": 'Your Claim',
       'qrCodeData': widget.claim
       };
-      Navigator.of(context).pushNamed(QrCodeClaim.route, arguments: args);
+      Navigator.of(context).pushNamed(QrCode.route, arguments: args);
     }
+
+
 
 
   }
