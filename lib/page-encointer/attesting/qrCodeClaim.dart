@@ -19,6 +19,7 @@ class QrCodeClaim extends StatelessWidget {
     Color themeColor = Theme.of(context).primaryColor;
 
     final Map<String, dynamic> args = ModalRoute.of(context).settings.arguments;
+    String title = args['title'];
     String qrCodeData = args['qrCodeData'];
 
     bool isKusama = store.settings.endpoint.info == networkEndpointKusama.info;
@@ -58,7 +59,7 @@ class QrCodeClaim extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        I18n.of(context).encointer['claim.qr'],
+                        title,
                         style: Theme.of(context).textTheme.headline4,
                       ),
                       Container(
@@ -85,9 +86,8 @@ class QrCodeClaim extends StatelessWidget {
                         width: MediaQuery.of(context).size.width / 2,
                         padding: EdgeInsets.only(top: 16, bottom: 32),
                         child: RoundedButton(
-                          text: I18n.of(context).assets['copy'],
-                          onPressed: () => UI.copyAndNotify(
-                              context, store.account.currentAddress),
+                          text: I18n.of(context).assets['done?'],
+                          onPressed: () => Navigator.pop(context),
                         ),
                       )
                     ],

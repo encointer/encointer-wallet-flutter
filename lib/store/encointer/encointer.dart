@@ -37,6 +37,9 @@ abstract class _EncointerStore with Store {
   var meetupIndex = 0;
 
   @observable
+  var myMeetupRegistryIndex = 0;
+
+  @observable
   var nextMeetupLocation = Location(0, 0);
 
   @observable
@@ -83,6 +86,11 @@ abstract class _EncointerStore with Store {
   @action
   void setMeetupIndex(int index) {
     meetupIndex = index;
+  }
+
+  @action
+  void setMyMeetupRegistryIndex(int index) {
+    myMeetupRegistryIndex = index;
   }
 
   @action

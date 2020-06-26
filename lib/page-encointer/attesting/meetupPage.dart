@@ -30,14 +30,16 @@ class _MeetupPageState extends State<MeetupPage> {
   final AppStore store;
   var _amountAttendees;
 
-
-  void _scanQrCode(int index) {
-    print("scanQrCode clicked at index: " + index.toString());
-  }
-
-  List<Widget> _buildAccountList() {
+  List<Widget> _buildAttestationCardList(String claim) {
     return store.encointer.attestations
-        .map((i, _) => MapEntry(i, AttestationCard(store, i)))
+        .map((i, _) => MapEntry(
+            i,
+            AttestationCard(
+              store,
+              myMeetupRegistryIndex: store.encointer.myMeetupRegistryIndex,
+              otherMeetupRegistryIndex: i,
+              claim: claim,
+            )))
         .values
         .toList();
   }
@@ -52,8 +54,7 @@ class _MeetupPageState extends State<MeetupPage> {
     final Map dic = I18n.of(context).encointer;
 
     final Map<String, dynamic> args = ModalRoute.of(context).settings.arguments;
-    String qrCodeData = args['qrCodeData'];
-//    List<String> meetupRegistry = args['meetupRegistry'];
+    String claim = args['claim'];
 
     return Scaffold(
         appBar: AppBar(
@@ -85,7 +86,7 @@ class _MeetupPageState extends State<MeetupPage> {
                 Expanded(
                   child: ListView(
                     padding: EdgeInsets.only(left: 16, right: 16),
-                    children: _buildAccountList(),
+                    children: _buildAttestationCardList(claim),
                   ), // Only numbers can be entered
                 ),
               ]

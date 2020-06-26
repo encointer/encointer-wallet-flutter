@@ -61,11 +61,16 @@ class _AttestingPageState extends State<AttestingPage> {
     print("Claim: " + claimHex);
 
 //    var meetupRegistry = await webApi.encointer.fetchMeetupRegistry();
-    var meetupRegistry = List.filled(amount, store.account.currentAccountPubKey);
+    var meetupRegistry = List.filled(amount, '0x44495e0e8733d0b65ea1333c8bf7f4c54dc9f580b38aaadc3d771c771fb70260');
+    meetupRegistry[0] = '0x11195e0e8733d0b65ea1333c8bf7f4c54dc9f580b38aaadc3d771c771fb70260';
+    meetupRegistry[1] = store.account.currentAccountPubKey;
+    meetupRegistry[2] = '0x22295e0e8733d0b65ea1333c8bf7f4c54dc9f580b38aaadc3d771c771fb70260';
+    meetupRegistry[3] = '0x33395e0e8733d0b65ea1333c8bf7f4c54dc9f580b38aaadc3d771c771fb70260';
+    meetupRegistry[4] = '0x44495e0e8733d0b65ea1333c8bf7f4c54dc9f580b38aaadc3d771c771fb70260';
     store.encointer.attestations = _buildAttestationStateMap(meetupRegistry);
 
     var args = {
-      'qrCodeData': claimHex,
+      'claim': claimHex,
 //      'meetupRegistry': meetupRegistry,
       'confirmedParticipants': amount
     };
@@ -75,9 +80,15 @@ class _AttestingPageState extends State<AttestingPage> {
   }
 
   Map<int, AttestationState> _buildAttestationStateMap(List<String> pubKeys) {
-    return pubKeys
-        .asMap()
-        .map((i, key) => MapEntry(i, AttestationState(key)));
+    final map = Map<int, AttestationState>();
+    pubKeys.asMap().forEach(
+        (i, key) => !(key == store.account.currentAccountPubKey)
+            ? map.putIfAbsent(i, () => AttestationState(key))
+            : store.encointer.myMeetupRegistryIndex = i // track our index as it defines if we must show our qr-code first
+        );
+
+    print(store.encointer.myMeetupRegistryIndex);
+    return map;
   }
 
   Future<void> _submitClaim(BuildContext context, String claimHex, String password) async {
