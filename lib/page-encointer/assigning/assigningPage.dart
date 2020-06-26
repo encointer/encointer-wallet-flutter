@@ -7,6 +7,7 @@ import 'package:polka_wallet/common/components/infoItem.dart';
 import 'package:polka_wallet/common/components/roundedButton.dart';
 import 'package:polka_wallet/common/components/roundedCard.dart';
 import 'package:polka_wallet/common/consts/settings.dart';
+import 'package:polka_wallet/page-encointer/common/CeremonyOverviewPanel.dart';
 import 'package:polka_wallet/page/account/txConfirmPage.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
@@ -53,17 +54,7 @@ class _AssigningPageState extends State<AssigningPage> {
     return SafeArea(
       child: Column(
           children: <Widget>[
-            Observer(
-                builder: (_) => Text(store.encointer.currentPhase.toString())
-            ),
-            store.encointer.participantIndex != 0 ? Text("You are registered for CID: " +
-                Fmt.currencyIdentifier(store.encointer.chosenCid)) : Text("You are not registered for a ceremony..."),
-            Text("Number of participants:"),
-            store.encointer.participantIndex != 0 ? Text(store.encointer.participantCount.toString()) : Text(""),
-            Text("Next Ceremony Will Take Place on:"),
-            Observer(
-                builder: (_) => Text(new DateTime.fromMillisecondsSinceEpoch(store.encointer.nextMeetupTime).toIso8601String())
-            ),
+            CeremonyOverviewPanel(store),
           ]
       ),
     );
