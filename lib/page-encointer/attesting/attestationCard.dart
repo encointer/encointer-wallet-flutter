@@ -11,6 +11,7 @@ import 'package:polka_wallet/common/components/addressIcon.dart';
 import 'package:polka_wallet/common/components/roundedButton.dart';
 import 'package:polka_wallet/common/components/roundedCard.dart';
 import 'package:polka_wallet/page-encointer/attesting/qrCode.dart';
+import 'package:polka_wallet/page/account/scanPage.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
@@ -48,20 +49,26 @@ class _AttestationCardState extends State<AttestationCard> {
     super.initState();
   }
 
-  _performAttestation() {
+  _performAttestation() async {
     print("performing attestation");
-
     if (widget.myMeetupRegistryIndex < widget.otherMeetupRegistryIndex) {
       var args = {
       "title": 'Your Claim',
       'qrCodeData': widget.claim
       };
-      Navigator.of(context).pushNamed(QrCode.route, arguments: args);
+      await Navigator.of(context).pushNamed(QrCode.route, arguments: args);
+    } else {
+      await Navigator.of(context).pushNamed(ScanPage.route, arguments: { 'onScan' : onScan });
+      var args = {
+        "title": 'Your Claim',
+        'qrCodeData': widget.claim
+      };
+      await Navigator.of(context).pushNamed(QrCode.route, arguments: args);
     }
+  }
 
-
-
-
+  Future onScan(String data) async {
+    print(data);
   }
 
   _revertAttestation() {
