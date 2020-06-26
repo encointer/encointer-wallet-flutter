@@ -11,7 +11,9 @@ const Map<String, String> enNctr = {
   'ceremony': 'Encointer Ceremony',
   'claim.qr' : 'Claim',
   'you.attested' : 'You attested other',
-  'other.attested': 'Other attested you'
+  'other.attested' : 'Other attested you',
+  'attestation.perform': 'attest',
+  'attestation.revert': 'revert'
 };
 
 const Map<String, String> zhNctr = {

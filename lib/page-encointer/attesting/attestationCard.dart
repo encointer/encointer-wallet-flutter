@@ -68,19 +68,19 @@ class _AttestationCardState extends State<AttestationCard> {
                             child: Column(
                                 children: <Widget>[
                                   Observer(
-                                  builder: (_) => CheckboxListTile(
-                                      title: Text(dic['you.attested']),
-                                      value: store.encointer.attestations[meetupRegistryIndex].attestedOther,
-                                      selected: store.encointer.attestations[meetupRegistryIndex].attestedOther,
-                                      onChanged: (bool value) {
-                                        setState(() {
-                                          attestation.switchState();
-                                        });
-                                      }),
+                                    builder: (_) => CheckboxListTile(
+                                        title: Text(dic['you.attested']),
+                                        value: store.encointer.attestations[meetupRegistryIndex].attestedOther,
+                                        selected: store.encointer.attestations[meetupRegistryIndex].attestedOther,
+                                        onChanged: (bool value) {
+                                          setState(() {
+                                            attestation.switchState();
+                                          });
+                                        }),
                                   ),
                                   Observer(
                                     builder: (_) => CheckboxListTile(
-                                        title: Text(dic['you.attested']),
+                                        title: Text(dic['other.attested']),
                                         value: store.encointer.attestations[meetupRegistryIndex].attestedOther,
                                         selected: store.encointer.attestations[meetupRegistryIndex].attestedOther,
                                         onChanged: (bool value) {
@@ -90,17 +90,30 @@ class _AttestationCardState extends State<AttestationCard> {
                                 ]
                             )
                         ),
-                        RoundedButton(
-                          text: I18n
-                              .of(context)
-                              .home['ok'],
-                          onPressed: () {},
-                        ),
+                        Observer(
+                          builder: (_) => RoundedButton(
+                            text:  store.encointer.attestations[meetupRegistryIndex].complete ?
+                            dic['attestation.revert'] : dic['attestation.perform'],
+                            onPressed:
+                            store.encointer.attestations[meetupRegistryIndex].complete ?
+                                () => _performAttestation() :
+                                () => _revertAttestation(),
+
+                          ),
+                        )
                       ]
                   )
               )
             ]
         )
     );
+  }
+
+  _revertAttestation() {
+    print("performing attestation");
+  }
+
+  _performAttestation() {
+    print("reverting attestation");
   }
 }
