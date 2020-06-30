@@ -34,6 +34,8 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     networkEndpointPolkadot,
     networkEndpointKusama,
     networkEndpointEncointerGesell,
+    networkEndpointEncointerGesellDev,
+    networkEndpointEncointerCantillon,
   ];
 
   EndpointData _selectedNetwork;
@@ -44,7 +46,9 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     store.assets.clearTxs();
     store.assets.loadAccountCache();
 
-    if (store.settings.endpoint.info == networkEndpointEncointerGesell.info) {
+    if (store.settings.endpoint.info == networkEndpointEncointerGesell.info ||
+        store.settings.endpoint.info == networkEndpointEncointerGesellDev.info ||
+        store.settings.endpoint.info == networkEndpointEncointerCantillon.info) {
       store.encointer.loadCache();
     } else {
       // refresh user's staking info if network is kusama or polkadot
@@ -57,6 +61,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     setState(() {
       _networkChanging = true;
     });
+
     store.settings.setEndpoint(_selectedNetwork);
 
     store.settings.loadNetworkStateCache();
@@ -64,7 +69,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
 
     store.gov.setReferendums([]);
     _loadAccountCache();
-
+    webApi.closeWebView();
     webApi.launchWebview();
     changeTheme();
     if (mounted) {
@@ -106,7 +111,10 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   List<Widget> _buildAccountList() {
     Color primaryColor = Theme.of(context).primaryColor;
     bool isKusama = store.settings.endpoint.info == networkEndpointKusama.info;
-    bool isEncointer = store.settings.endpoint.info == networkEndpointEncointerGesell.info;
+    bool isEncointer = (store.settings.endpoint.info == networkEndpointEncointerGesell.info ||
+        store.settings.endpoint.info == networkEndpointEncointerGesellDev.info ||
+        store.settings.endpoint.info == networkEndpointEncointerCantillon.info
+    );
     List<Widget> res = [
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

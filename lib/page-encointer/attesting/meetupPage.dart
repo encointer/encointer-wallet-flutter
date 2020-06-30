@@ -100,7 +100,7 @@ class _MeetupPageState extends State<MeetupPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        dic['encointer'] ?? 'Encointer Platform',
+                        dic['encointer'] ?? 'Encointer Ceremony',
                         style: TextStyle(
                           fontSize: 20,
                           color: Theme

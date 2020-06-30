@@ -67,7 +67,9 @@ class Api {
       if (viewState.type == WebViewState.finishLoad) {
         String network = 'kusama';
 
-        if (store.settings.endpoint.info.contains('nctr-gsl')) {
+        if (store.settings.endpoint.info.contains('nctr-gsl') ||
+            store.settings.endpoint.info.contains('nctr-gsl-dev') ||
+            store.settings.endpoint.info.contains('nctr-cln')) {
           network = 'encointer';
         }
 
@@ -200,7 +202,11 @@ class Api {
 
     // fetch account balance
     if (store.account.accountList.length > 0) {
-      if (store.settings.endpoint.info == networkEndpointEncointerGesell.info) {
+      bool isEncointer = store.settings.endpoint.info == networkEndpointEncointerGesell.info ||
+              store.settings.endpoint.info == networkEndpointEncointerGesellDev.info ||
+              store.settings.endpoint.info == networkEndpointEncointerCantillon.info;
+
+      if (isEncointer) {
         await assets.fetchBalance(store.account.currentAccount.pubKey);
         return;
       }
@@ -246,4 +252,11 @@ class Api {
   Future<void> unsubscribeMessage(String channel) async {
     _web.evalJavascript('unsub$channel()');
   }
+
+  Future<void> closeWebView() async {
+    print("closing webview");
+    _web.close();
+    _web = null;
+  }
+
 }

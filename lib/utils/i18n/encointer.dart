@@ -1,5 +1,5 @@
 const Map<String, String> enNctr = {
-  'encointer': 'Encointer Platform',
+  'encointer': 'Encointer Ceremony',
   'txs.action': 'Action',
   'faucet.title': 'Faucet',
   'faucet.brief': 'Get test Tokens of Acala testnet.',

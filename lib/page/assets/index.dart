@@ -39,7 +39,11 @@ class _AssetsState extends State<Assets> {
   bool _preclaimChecking = false;
 
   Future<void> _fetchBalance() async {
-    if (store.settings.endpoint.info == networkEndpointEncointerGesell.info) {
+    bool isEncointer = store.settings.endpoint.info == networkEndpointEncointerGesell.info ||
+            store.settings.endpoint.info == networkEndpointEncointerGesellDev.info ||
+            store.settings.endpoint.info == networkEndpointEncointerCantillon.info;
+
+    if (isEncointer) {
       await Future.wait([
         webApi.assets.fetchBalance(store.account.currentAccount.pubKey),
       ]);
@@ -131,7 +135,9 @@ class _AssetsState extends State<Assets> {
     bool isKusama = store.settings.endpoint.info == networkEndpointKusama.info;
     bool isPolkadot =
         store.settings.endpoint.info == networkEndpointPolkadot.info;
-    bool isEncointer = store.settings.endpoint.info == networkEndpointEncointerGesell.info;
+    bool isEncointer = store.settings.endpoint.info == networkEndpointEncointerGesell.info ||
+        store.settings.endpoint.info == networkEndpointEncointerGesellDev.info ||
+        store.settings.endpoint.info == networkEndpointEncointerCantillon.info;
 
     return RoundedCard(
       margin: EdgeInsets.fromLTRB(16, 4, 16, 0),
@@ -240,7 +246,9 @@ class _AssetsState extends State<Assets> {
         String networkName = store.settings.networkName ?? '';
 
         bool isEncointer =
-            store.settings.endpoint.info == networkEndpointEncointerGesell.info;
+            store.settings.endpoint.info == networkEndpointEncointerGesell.info ||
+            store.settings.endpoint.info == networkEndpointEncointerGesellDev.info ||
+            store.settings.endpoint.info == networkEndpointEncointerCantillon.info;
 
         List<String> currencyIds = [];
         if (isEncointer && networkName != null) {

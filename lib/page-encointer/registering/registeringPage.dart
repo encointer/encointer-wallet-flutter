@@ -56,9 +56,16 @@ class _RegisteringPageState extends State<RegisteringPage> {
           child: Column(
               children: <Widget>[
                 Observer(
-                    builder: (_) => Text(store.encointer.currentPhase.toString())
+                    builder: (_) => Container(
+                        padding: EdgeInsets.all(16),
+                        color: Colors.greenAccent,
+                        child: Text(store.encointer.currentPhase.toString())
+                    ),
                 ),
-                RegisterParticipantPanel(store),
+                Container(
+                  padding: EdgeInsets.fromLTRB(0, 32, 0, 32),
+                  child: RegisterParticipantPanel(store),
+                ),
                 Text("Next Ceremony Will Take Place on:"),
                 Observer(
                     builder: (_) => Text(new DateTime.fromMillisecondsSinceEpoch(store.encointer.nextMeetupTime).toIso8601String())

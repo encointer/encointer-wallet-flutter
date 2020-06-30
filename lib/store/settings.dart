@@ -210,7 +210,7 @@ abstract class _NetworkState {
   String endpoint = '';
   int ss58Format = 0;
   int tokenDecimals = 0;
-  String tokenSymbol = '';
+  String tokenSymbol = 'DOT';
 }
 
 @JsonSerializable()

@@ -47,7 +47,8 @@ class _AssetPageState extends State<AssetPage>
     webApi.assets.fetchBalance(pubKey);
     Map res = {"transfers": []};
 
-    if (store.settings.endpoint.info != networkEndpointEncointerGesell.info) {
+    if (store.settings.endpoint.info == networkEndpointKusama.info ||
+        store.settings.endpoint.info == networkEndpointPolkadot.info) {
       webApi.staking.fetchAccountStaking(pubKey);
       res = await webApi.assets.updateTxs(_txsPage);
     }
@@ -103,7 +104,9 @@ class _AssetPageState extends State<AssetPage>
   List<Widget> _buildTxList() {
     List<Widget> res = [];
     final String token = ModalRoute.of(context).settings.arguments;
-    if (store.settings.endpoint.info == networkEndpointEncointerGesell.info) {
+    if (store.settings.endpoint.info == networkEndpointEncointerGesell.info ||
+        store.settings.endpoint.info == networkEndpointEncointerGesellDev.info ||
+        store.settings.endpoint.info == networkEndpointEncointerCantillon.info) {
       List<TransferData> ls = store.encointer.txsTransfer.reversed.toList();
       ls.retainWhere((i) => i.token.toUpperCase() == token.toUpperCase());
       res.addAll(ls.map((i) {
@@ -133,7 +136,9 @@ class _AssetPageState extends State<AssetPage>
     final String symbol = store.settings.networkState.tokenSymbol;
     final String token = ModalRoute.of(context).settings.arguments;
     final bool isBaseToken = token == symbol;
-    final isEncointer = store.settings.endpoint.info == networkEndpointEncointerGesell.info;
+    final isEncointer = store.settings.endpoint.info == networkEndpointEncointerGesell.info ||
+        store.settings.endpoint.info == networkEndpointEncointerGesellDev.info ||
+        store.settings.endpoint.info == networkEndpointEncointerCantillon.info;
 
     final dic = I18n.of(context).assets;
 

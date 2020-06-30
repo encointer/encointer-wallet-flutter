@@ -72,12 +72,12 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
     return  FutureBuilder(
         builder: (context, _currencyIdentifiers) => Column(
             children: <Widget>[
-              Text("Currency Identifiers:"),
+              Text("Choose currency:"),
               DropdownButton<dynamic>(
                 value: store.encointer.chosenCid,
                 icon: Icon(Icons.arrow_downward),
-                iconSize: 16,
-                elevation: 16,
+                iconSize: 32,
+                elevation: 32,
                 onChanged: (newValue) {
                   setState(() {
                     if (store.encointer.participantIndex == 0) {

@@ -21,6 +21,20 @@ EndpointData networkEndpointEncointerGesell = EndpointData.fromJson(const {
   'value': 'wss://gesell.encointer.org',
 });
 
+EndpointData networkEndpointEncointerGesellDev = EndpointData.fromJson(const {
+  'info': 'nctr-gsl-dev',
+  'ss58': 42,
+  'text': 'Encointer Gesell Local Devnet',
+  'value': 'ws://192.168.1.36:9941',
+});
+
+EndpointData networkEndpointEncointerCantillon = EndpointData.fromJson(const {
+  'info': 'nctr-cln',
+  'ss58': 42,
+  'text': 'Encointer Cantillon (Hosted by Encointer Association)',
+  'value': 'wss://cantillon.encointer.org',
+});
+
 List<EndpointData> networkEndpoints = [
   networkEndpointPolkadot,
   EndpointData.fromJson(const {
@@ -49,10 +63,15 @@ List<EndpointData> networkEndpoints = [
     'value': 'wss://cc3-5.kusama.network/',
   }),
   networkEndpointEncointerGesell,
+  networkEndpointEncointerGesellDev,
+  networkEndpointEncointerCantillon,
 ];
 
 const network_ss58_map = {
   'encointer': 42,
+  'nctr-gsl': 42,
+  'nctr-cln': 42,
+  'nctr-gsl-dev': 42,
   'kusama': 2,
   'substrate': 42,
   'polkadot': 0,

@@ -38,7 +38,7 @@ class EncointerEntry extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    dic['encointer'] ?? 'Encointer Platform',
+                    dic['encointer'] ?? 'Encointer Ceremony',
                     style: TextStyle(
                       fontSize: 20,
                       color: Theme
@@ -128,7 +128,19 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
   Widget build(BuildContext context) {
 //    _refreshData();
     return Container(
-      color: const Color(0xFFFFFE306),
+      alignment: Alignment.topCenter,
+      padding: EdgeInsets.all(16),
+      margin: EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black12,
+            blurRadius: 8.0, // has the effect of softening the shadow
+            spreadRadius: 2.0, // ha
+          )
+        ],
+      ),
       child: Observer(
           builder: (_) => _getPhaseView(store.encointer.currentPhase)
       ),
@@ -136,16 +148,14 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
   }
 
   Widget _getPhaseView(CeremonyPhase phase) {
+    //return AttestingPage(store);
     switch (phase) {
       case CeremonyPhase.REGISTERING:
-        return AttestingPage(store);
-//        return RegisteringPage(store);
+        return RegisteringPage(store);
       case CeremonyPhase.ASSIGNING:
-        return AttestingPage(store);
-//        return AssigningPage(store);
+        return AssigningPage(store);
       case CeremonyPhase.ATTESTING:
         return AttestingPage(store);
-//        return AttestingPage(store);
     }
   }
 }
