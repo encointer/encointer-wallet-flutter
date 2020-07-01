@@ -1,14 +1,20 @@
 {
-  "name": "polkadot-js-service",
+  "name": "encointer-js-service",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "clean": "rm -rf dist/*",
     "lint": "eslint src/**.js",
     "build": "webpack -p --mode production",
     "build-dev": "webpack -d --mode development",
     "test": "jest --watch"
+  },
+  "exports": {
+    ".": ".src/index.js",
+    "./service/": "./src/service/",
+    "./types": "./src/config/types.js"
   },
   "resolutions": {
     "@polkadot/api": "~1.10.1",
