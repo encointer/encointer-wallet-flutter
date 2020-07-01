@@ -72,35 +72,14 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
     return  FutureBuilder(
         builder: (context, _currencyIdentifiers) => Column(
             children: <Widget>[
-              Text("Choose currency:"),
-              DropdownButton<dynamic>(
-                value: store.encointer.chosenCid,
-                icon: Icon(Icons.arrow_downward),
-                iconSize: 32,
-                elevation: 32,
-                onChanged: (newValue) {
-                  setState(() {
-                    if (store.encointer.participantIndex == 0) {
-                      store.encointer.chosenCid = newValue;
-                    }
-                  });
-                },
-                items: store.encointer.currencyIdentifiers
-                    .map<DropdownMenuItem<dynamic>>((value) =>
-                    DropdownMenuItem<dynamic>(
-                      value: value,
-                      child: Text(Fmt.currencyIdentifier(value)),
-                    )
-                ).toList(),
-              ),
               Observer(
                   builder: (_) => store.encointer.participantIndex == 0 ?
                   RoundedButton(
                       text: "Register Participant",
                       onPressed: () => _submit()
                   ): RoundedButton(
-                      text: "Unregister for: " + Fmt.currencyIdentifier(store.encointer.chosenCid).toString(),
-                      onPressed: () => {}
+                      text: "Unregister", //for: " + Fmt.currencyIdentifier(store.encointer.chosenCid).toString(),
+                      onPressed: null
                   )
               )
             ]

@@ -128,7 +128,19 @@ class _AttestationCardState extends State<AttestationCard> {
         margin: EdgeInsets.only(bottom: 16),
         child: Column(children: <Widget>[
           ListTile(
-            leading: AddressIcon(attestation.pubKey, size: 64),
+            leading: Container(
+              margin: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(8.0),
+              //color: Colors.lime,
+              decoration: BoxDecoration(
+                  color: Colors.yellow,
+                  border: Border.all(
+                    color: Colors.blue,
+                  ),
+                  borderRadius: BorderRadius.all(Radius.circular(20))
+              ),
+              child: Text(otherIndex.toString())   //AddressIcon(attestation.pubKey, size: 64),
+            ),
             title: Text(Fmt.address(attestation.pubKey)),
             onTap: () => _scanQrCode(otherIndex),
           ),

@@ -55,13 +55,6 @@ class _RegisteringPageState extends State<RegisteringPage> {
     return  SafeArea(
           child: Column(
               children: <Widget>[
-                Observer(
-                    builder: (_) => Container(
-                        padding: EdgeInsets.all(16),
-                        color: Colors.greenAccent,
-                        child: Text(store.encointer.currentPhase.toString())
-                    ),
-                ),
                 Container(
                   padding: EdgeInsets.fromLTRB(0, 32, 0, 32),
                   child: RegisterParticipantPanel(store),

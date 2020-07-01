@@ -34,12 +34,19 @@ class _CeremonyOverviewPanelState extends State<CeremonyOverviewPanel> {
 
   @override
   void initState() {
-    webApi.encointer.fetchParticipantIndex();
-    webApi.encointer.fetchParticipantCount();
-    webApi.encointer.fetchMeetupIndex();
+    _refreshData();
     super.initState();
   }
 
+  Future<void> _refreshData() async {
+    await webApi.encointer.fetchCurrencyIdentifiers();
+    await webApi.encointer.fetchCurrentCeremonyIndex();
+    await webApi.encointer.fetchParticipantIndex();
+    await webApi.encointer.fetchParticipantCount();
+    await webApi.encointer.fetchMeetupIndex();
+    await webApi.encointer.fetchNextMeetupTime();
+    await webApi.encointer.fetchNextMeetupLocation();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,49 +55,50 @@ class _CeremonyOverviewPanelState extends State<CeremonyOverviewPanel> {
     return RoundedCard(
       child: Column(
           children: <Widget>[
-            Observer(
-                builder: (_) => Text(store.encointer.currentPhase.toString())
+            Text("Choose currency:"),
+            DropdownButton<dynamic>(
+              value: store.encointer.chosenCid,
+              icon: Icon(Icons.arrow_downward),
+              iconSize: 32,
+              elevation: 32,
+              onChanged: (newValue) {
+                setState(() {
+                  //if (store.encointer.participantIndex == 0) {
+                    store.encointer.chosenCid = newValue;
+                    _refreshData();
+                  //}
+                });
+              },
+              items: store.encointer.currencyIdentifiers
+                  .map<DropdownMenuItem<dynamic>>((value) =>
+                  DropdownMenuItem<dynamic>(
+                    value: value,
+                    child: Text(Fmt.currencyIdentifier(value)),
+                  )
+              ).toList(),
             ),
-            store.encointer.participantIndex != 0 ? Text("You are registered for CID: " +
-                Fmt.currencyIdentifier(store.encointer.chosenCid)) : Text("You are not registered for a ceremony..."),
-            Text("Number of participants:"),
-            store.encointer.participantIndex != 0 ? Text(store.encointer.participantCount.toString()) : Text(""),
-//            Container(
-//              child:  FlutterMap(
-//                options: new MapOptions(
-//                  center: new LatLng(51.5, -0.09),
-//                  zoom: 13.0,
-//                ),
-//                layers: [
-//                  new TileLayerOptions(
-//                    urlTemplate: "https://api.tiles.mapbox.com/v4/"
-//                        "{id}/{z}/{x}/{y}@2x.png?access_token={accessToken}",
-//                    additionalOptions: {
-//                      'accessToken': '<PUT_ACCESS_TOKEN_HERE>',
-//                      'id': 'mapbox.streets',
-//                    },
-//                  ),
-//                  new MarkerLayerOptions(
-//                    markers: [
-//                      new Marker(
-//                        width: 80.0,
-//                        height: 80.0,
-//                        point: new LatLng(51.5, -0.09),
-//                        builder: (ctx) =>
-//                        new Container(
-//                          child: new FlutterLogo(),
-//                        ),
-//                      ),
-//                    ],
-//                  ),
-//                ],
-//              ),
-//            ),
-            Text("Next Ceremony Will Take Place on:"),
             Observer(
-                builder: (_) => Text(new DateTime.fromMillisecondsSinceEpoch(store.encointer.nextMeetupTime).toIso8601String())
+                builder: (_) => Column(
+                  children: <Widget> [
+                    Text(store.encointer.currentPhase.toString()),
+                    Text("ceremony index: " + store.encointer.currentCeremonyIndex.toString()),
+                    Text("participant index: " + store.encointer.participantIndex.toString()),
+                    Text(store.encointer.timeStamp.toString()),
+                    store.encointer.participantIndex != 0 ? Column( children: <Widget> [
+                      Text("You are registered for CID: " +
+                          Fmt.currencyIdentifier(store.encointer.chosenCid),
+                          style: TextStyle(color: Colors.green)),
+                      Text("Your meetup has index: " + store.encointer.meetupIndex.toString())
+                     ])
+                     : Text("You are not registered for a ceremony...",
+                        style: TextStyle(color: Colors.red)),
+                    Text("total number of ceremony participants: " + store.encointer.participantCount.toString()),
+                    Text("Next Ceremony Will Take Place on:"),
+                    Text(new DateTime.fromMillisecondsSinceEpoch(store.encointer.nextMeetupTime).toIso8601String())
+                  ]
+                ),
             ),
-          ]
+         ]
       ),
     );
   }

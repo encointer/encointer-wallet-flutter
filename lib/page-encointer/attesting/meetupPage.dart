@@ -100,7 +100,20 @@ class _MeetupPageState extends State<MeetupPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text("myself: "),
-                      AddressIcon(store.account.currentAddress, size: 64),
+                      //AddressIcon(store.account.currentAddress, size: 64),
+                      Container(
+                          margin: const EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.all(8.0),
+                          //color: Colors.lime,
+                          decoration: BoxDecoration(
+                              color: Colors.yellow,
+                              border: Border.all(
+                                color: Colors.blue,
+                              ),
+                              borderRadius: BorderRadius.all(Radius.circular(20))
+                          ),
+                          child: Text(store.encointer.myMeetupRegistryIndex.toString())   //AddressIcon(attestation.pubKey, size: 64),
+                      ),
                       Text(
                         Fmt.address(store.account.currentAddress),
                         style: TextStyle(

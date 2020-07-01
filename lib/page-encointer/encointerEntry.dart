@@ -8,6 +8,7 @@ import 'package:polka_wallet/common/components/roundedCard.dart';
 import 'package:polka_wallet/page-encointer/registering/registeringPage.dart';
 import 'package:polka_wallet/page-encointer/assigning/assigningPage.dart';
 import 'package:polka_wallet/page-encointer/attesting/attestingPage.dart';
+import 'package:polka_wallet/page-encointer/common/CeremonyOverviewPanel.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
@@ -142,7 +143,12 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
         ],
       ),
       child: Observer(
-          builder: (_) => _getPhaseView(store.encointer.currentPhase)
+          builder: (_) => Column(
+              children: <Widget> [
+                CeremonyOverviewPanel(store),
+                _getPhaseView(store.encointer.currentPhase)
+              ]
+          )
       ),
     );
   }

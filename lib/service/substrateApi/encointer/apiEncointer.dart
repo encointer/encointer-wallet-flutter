@@ -101,10 +101,14 @@ class ApiEncointer {
     var meetupRegistry = await apiRoot.evalJavascript('encointer.fetchMeetupRegistry("$cid", "$cIndex", "$mIndex")');
     print("Participants: " + meetupRegistry.toString());
     // generate all icons for these participants
+    /*
+    TODO: I guess we'll have to generate icons before using them. the app currently only generates them for known keys
     List res = await apiRoot.evalJavascript(
         'account.genIcons(${jsonEncode(meetupRegistry)})',
         allowRepeat: true);
     store.account.setAddressIconsMap(res);
+
+     */
     return meetupRegistry;
   }
 

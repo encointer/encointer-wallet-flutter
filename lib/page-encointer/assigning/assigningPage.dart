@@ -55,7 +55,7 @@ class _AssigningPageState extends State<AssigningPage> {
     return SafeArea(
       child: Column(
           children: <Widget>[
-            CeremonyOverviewPanel(store),
+            //CeremonyOverviewPanel(store),
           ]
       ),
     );

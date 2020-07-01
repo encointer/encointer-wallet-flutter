@@ -114,8 +114,8 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setTimestamp(int timestamp) {
-    timestamp = timestamp;
+  void setTimestamp(int time) {
+    timeStamp = time;
   }
 
   @action

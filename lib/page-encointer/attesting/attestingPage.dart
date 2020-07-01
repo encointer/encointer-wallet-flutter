@@ -82,12 +82,12 @@ class _AttestingPageState extends State<AttestingPage> {
   Map<int, AttestationState> _buildAttestationStateMap(List<dynamic> pubKeys) {
     final map = Map<int, AttestationState>();
     pubKeys.asMap().forEach(
-        (i, key) => !(key == store.account.currentAccountPubKey)
+        (i, key) => !(key == store.account.currentAddress)
             ? map.putIfAbsent(i, () => AttestationState(key))
             : store.encointer.myMeetupRegistryIndex = i // track our index as it defines if we must show our qr-code first
         );
 
-    print(store.encointer.myMeetupRegistryIndex);
+    print("My index in meetup registry is " + store.encointer.myMeetupRegistryIndex.toString());
     return map;
   }
 
@@ -133,7 +133,7 @@ class _AttestingPageState extends State<AttestingPage> {
     return SafeArea(
       child: Column(
           children: <Widget>[
-            CeremonyOverviewPanel(store),
+            //CeremonyOverviewPanel(store),
             RoundedButton(
                 text: "start meetup",
                 onPressed: () => _startMeetup(context) // for testing always allow sending
