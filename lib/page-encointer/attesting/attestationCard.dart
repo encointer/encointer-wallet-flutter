@@ -122,12 +122,13 @@ class _AttestationCardState extends State<AttestationCard> {
     int otherIndex = widget.otherMeetupRegistryIndex;
 
     var attestation = store.encointer.attestations[otherIndex];
+    print("Attestationcard for " + attestation.pubKey);
     return RoundedCard(
         border: Border.all(color: Theme.of(context).cardColor),
         margin: EdgeInsets.only(bottom: 16),
         child: Column(children: <Widget>[
           ListTile(
-            leading: AddressIcon('', pubKey: attestation.pubKey),
+            leading: AddressIcon(attestation.pubKey, size: 64),
             title: Text(Fmt.address(attestation.pubKey)),
             onTap: () => _scanQrCode(otherIndex),
           ),

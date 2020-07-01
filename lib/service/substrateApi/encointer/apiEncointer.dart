@@ -61,9 +61,9 @@ class ApiEncointer {
     var address = store.account.currentAccountPubKey;
     var cid = store.encointer.chosenCid;
     var cIndex = store.encointer.currentCeremonyIndex;
-    var time = await apiRoot.evalJavascript('encointer.fetchMeetupIndex("$cid", "$cIndex","$address")');
-    print("Next Meetup Time: " + time.toString());
-    store.encointer.setNextMeetupTime(time);
+    var mIndex = await apiRoot.evalJavascript('encointer.fetchMeetupIndex("$cid", "$cIndex","$address")');
+    print("Next Meetup Index: " + mIndex.toString());
+    store.encointer.setMeetupIndex(mIndex);
   }
 
   Future<void> fetchNextMeetupLocation() async {
@@ -88,17 +88,23 @@ class ApiEncointer {
   Future<void> fetchParticipantCount() async {
     var cid = store.encointer.chosenCid;
     var cIndex = store.encointer.currentCeremonyIndex;
-    var pIndex = await apiRoot.evalJavascript('encointer.fetchParticipantCount("$cid", "$cIndex")');
-    print("Participant Index: " + pIndex.toString());
-    store.encointer.setParticipantIndex(pIndex);
+    var pCount = await apiRoot.evalJavascript('encointer.fetchParticipantCount("$cid", "$cIndex")');
+    print("Participant Count: " + pCount.toString());
+    store.encointer.setParticipantCount(pCount);
   }
 
   Future<dynamic> fetchMeetupRegistry() async {
     var cIndex = store.encointer.currentCeremonyIndex;
     var cid = store.encointer.chosenCid;
     var mIndex = store.encointer.meetupIndex;
+    print("fetch meetup registry for cindex " + cIndex.toString() + " mindex " + mIndex.toString() + " cid " + cid);
     var meetupRegistry = await apiRoot.evalJavascript('encointer.fetchMeetupRegistry("$cid", "$cIndex", "$mIndex")');
-    print("Participant Index: " + meetupRegistry.toString());
+    print("Participants: " + meetupRegistry.toString());
+    // generate all icons for these participants
+    List res = await apiRoot.evalJavascript(
+        'account.genIcons(${jsonEncode(meetupRegistry)})',
+        allowRepeat: true);
+    store.account.setAddressIconsMap(res);
     return meetupRegistry;
   }
 

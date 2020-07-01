@@ -60,13 +60,14 @@ class _AttestingPageState extends State<AttestingPage> {
         _amountAttendees);
     print("Claim: " + claimHex);
 
-//    var meetupRegistry = await webApi.encointer.fetchMeetupRegistry();
-    var meetupRegistry = List.filled(amount, '0x44495e0e8733d0b65ea1333c8bf7f4c54dc9f580b38aaadc3d771c771fb70260');
+    var meetupRegistry = await webApi.encointer.fetchMeetupRegistry();
+/*    var meetupRegistry = List.filled(amount, '0x44495e0e8733d0b65ea1333c8bf7f4c54dc9f580b38aaadc3d771c771fb70260');
     meetupRegistry[0] = '0x11195e0e8733d0b65ea1333c8bf7f4c54dc9f580b38aaadc3d771c771fb70260';
     meetupRegistry[1] = store.account.currentAccountPubKey;
     meetupRegistry[2] = '0x22295e0e8733d0b65ea1333c8bf7f4c54dc9f580b38aaadc3d771c771fb70260';
     meetupRegistry[3] = '0x33395e0e8733d0b65ea1333c8bf7f4c54dc9f580b38aaadc3d771c771fb70260';
     meetupRegistry[4] = '0x44495e0e8733d0b65ea1333c8bf7f4c54dc9f580b38aaadc3d771c771fb70260';
+*/
     store.encointer.attestations = _buildAttestationStateMap(meetupRegistry);
 
     var args = {
@@ -78,7 +79,7 @@ class _AttestingPageState extends State<AttestingPage> {
     Navigator.pushNamed(context, MeetupPage.route, arguments: args);
   }
 
-  Map<int, AttestationState> _buildAttestationStateMap(List<String> pubKeys) {
+  Map<int, AttestationState> _buildAttestationStateMap(List<dynamic> pubKeys) {
     final map = Map<int, AttestationState>();
     pubKeys.asMap().forEach(
         (i, key) => !(key == store.account.currentAccountPubKey)

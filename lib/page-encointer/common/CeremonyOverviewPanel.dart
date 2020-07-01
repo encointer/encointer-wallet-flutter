@@ -36,6 +36,7 @@ class _CeremonyOverviewPanelState extends State<CeremonyOverviewPanel> {
   void initState() {
     webApi.encointer.fetchParticipantIndex();
     webApi.encointer.fetchParticipantCount();
+    webApi.encointer.fetchMeetupIndex();
     super.initState();
   }
 

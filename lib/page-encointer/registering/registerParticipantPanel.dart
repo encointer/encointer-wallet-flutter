@@ -96,7 +96,7 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
               Observer(
                   builder: (_) => store.encointer.participantIndex == 0 ?
                   RoundedButton(
-                      text: "Register Participant for Ceremony",
+                      text: "Register Participant",
                       onPressed: () => _submit()
                   ): RoundedButton(
                       text: "Unregister for: " + Fmt.currencyIdentifier(store.encointer.chosenCid).toString(),

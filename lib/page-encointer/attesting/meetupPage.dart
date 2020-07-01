@@ -99,13 +99,12 @@ class _MeetupPageState extends State<MeetupPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      Text("myself: "),
+                      AddressIcon(store.account.currentAddress, size: 64),
                       Text(
-                        dic['encointer'] ?? 'Encointer Ceremony',
+                        Fmt.address(store.account.currentAddress),
                         style: TextStyle(
-                          fontSize: 20,
-                          color: Theme
-                              .of(context)
-                              .cardColor,
+                          fontSize: 16,
                           fontWeight: FontWeight.w500,
                         ),
                       )

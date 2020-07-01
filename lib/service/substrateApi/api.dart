@@ -194,7 +194,7 @@ class Api {
     List<dynamic> info = await Future.wait([
       evalJavascript('settings.getNetworkConst()'),
       evalJavascript('api.rpc.system.properties()'),
-      evalJavascript('api.rpc.system.chain()'),
+      evalJavascript('api.rpc.system.chain()'),  // "Development" or "Encointer Testnet Gesell" or whatever
     ]);
     store.settings.setNetworkConst(info[0]);
     store.settings.setNetworkState(info[1]);
