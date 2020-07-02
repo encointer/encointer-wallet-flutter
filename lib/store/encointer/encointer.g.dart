@@ -348,11 +348,11 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setTimestamp(int timestamp) {
+  void setTimestamp(int time) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.setTimestamp');
     try {
-      return super.setTimestamp(timestamp);
+      return super.setTimestamp(time);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }

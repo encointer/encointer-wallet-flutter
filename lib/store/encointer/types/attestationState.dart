@@ -5,6 +5,8 @@ import 'package:polka_wallet/common/components/passwordInputDialog.dart';
 import 'attestation.dart';
 import 'claimOfAttendance.dart';
 
+//part 'attestationState.g.dart';
+
 @observable
 class AttestationState {
   AttestationState(this.pubKey);
@@ -35,7 +37,7 @@ class AttestationState {
 
   set otherAttestation(String attestation) {
     _attestedOther = true;
-    otherAttestation= attestation;
+    _otherAttestation= attestation;
   }
 
   String get yourAttestation {
@@ -44,7 +46,7 @@ class AttestationState {
 
   set yourAttestation(String attestation) {
     _otherAttestedYou = true;
-    yourAttestation = attestation;
+    _yourAttestation = attestation;
   }
 
   @action

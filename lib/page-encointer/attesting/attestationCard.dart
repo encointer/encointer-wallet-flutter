@@ -82,13 +82,13 @@ class _AttestationCardState extends State<AttestationCard> {
       // show attestationB
       var args2 = {
         "title": 'Attestation from Other',
-        'qrCodeData': widget.claim + ":" + attestationB['attestationHex'].toString(),
+        'qrCodeData': attestationB['attestationHex'].toString(),
       };
       await Navigator.of(context).pushNamed(QrCode.route, arguments: args2);
 
     } else {
       // scanning claim A
-      print("I'm party B. scanning claimA now");
+      print("I'm party B. scanning others' claimA now");
       var claimA = await Navigator.of(context).pushNamed(ScanQrCode.route, arguments: { 'onScan' : onScan });
       print("Received Claim A: " + claimA.toString());
 
@@ -101,8 +101,8 @@ class _AttestationCardState extends State<AttestationCard> {
 
       // show AttestationA | claimB
       var args = {
-        "title": 'Your Attestation | claim other',
-        'qrCodeData': widget.claim + ":" + res['attestationHex'].toString(),
+        "title": 'other Attestation | my claim',
+        'qrCodeData': res['attestationHex'].toString() + ":" + widget.claim,
       };
       await Navigator.of(context).pushNamed(QrCode.route, arguments: args);
 

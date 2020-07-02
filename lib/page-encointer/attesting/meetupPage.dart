@@ -47,12 +47,14 @@ class _MeetupPageState extends State<MeetupPage> {
   }
 
   Future<void> _submit(BuildContext context) async {
+    print("All attestations full: " + store.encointer.attestations.toString());
     var attestations = store.encointer.attestations
-
-
-    .map((key, value) => MapEntry(key, value.otherAttestation))
+      .map((key, value) => MapEntry(key, value.yourAttestation))
         .values
+        .where((x) => x != null)
         .toList();
+    print("All attestations flat: " + attestations.toString());
+    //return;
     var args = {
       "title": 'register_attestations',
       "txInfo": {
