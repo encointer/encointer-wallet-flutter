@@ -13,8 +13,8 @@ class AttestationState {
 //  int meetupRegistryIndex;
   bool _attestedOther = false;
   bool _otherAttestedYou = false;
-  Attestation _otherAttestation;
-  Attestation _yourAttestation;
+  String _otherAttestation;
+  String _yourAttestation;
 
   @observable
   bool get attestedOther {
@@ -29,20 +29,20 @@ class AttestationState {
   @computed
   bool get complete { return this._attestedOther && this._otherAttestedYou; }
 
-  Attestation get otherAttestation {
+  String get otherAttestation {
     return _otherAttestation;
   }
 
-  set otherAttestation(Attestation attestation) {
+  set otherAttestation(String attestation) {
     _attestedOther = true;
     otherAttestation= attestation;
   }
 
-  Attestation get yourAttestation {
+  String get yourAttestation {
     return _yourAttestation;
   }
 
-  set yourAttestation(Attestation attestation) {
+  set yourAttestation(String attestation) {
     _otherAttestedYou = true;
     yourAttestation = attestation;
   }

@@ -19,6 +19,10 @@ abstract class _EncointerStore with Store {
 
   final AppStore rootStore;
   final String cacheTxsTransferKey = 'transfer_txs';
+  final String encointerCurrencyKey = 'wallet_encointer_currency';
+  String _getCacheKey(String key) {
+    return '${rootStore.settings.endpoint.info}_$key';
+  }
 
   // Note: In synchronous code, every modification of an @obervable is tracked by mobx and
   // fires a reaction. However, modifications in asynchronous code must be wrapped in
@@ -101,6 +105,7 @@ abstract class _EncointerStore with Store {
   @action
   void setChosenCid(cid) {
     chosenCid = cid;
+    rootStore.localStorage.setChosenCid(cid);
   }
 
   @action
@@ -159,6 +164,11 @@ abstract class _EncointerStore with Store {
 
   @action
   Future<void> loadCache() async {
+    Map data =
+      await rootStore.localStorage.getObject(_getCacheKey(encointerCurrencyKey));
+    if (data != null) {
+      setChosenCid(data);
+    }
   }
 
 }

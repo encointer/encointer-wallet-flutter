@@ -64,7 +64,7 @@ class _CeremonyOverviewPanelState extends State<CeremonyOverviewPanel> {
               onChanged: (newValue) {
                 setState(() {
                   //if (store.encointer.participantIndex == 0) {
-                    store.encointer.chosenCid = newValue;
+                    store.encointer.setChosenCid(newValue);
                     _refreshData();
                   //}
                 });

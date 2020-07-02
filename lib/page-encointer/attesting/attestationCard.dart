@@ -56,6 +56,7 @@ class _AttestationCardState extends State<AttestationCard> {
     print("performing attestation");
     if (widget.myMeetupRegistryIndex < widget.otherMeetupRegistryIndex) {
       //show claimA
+      print("I'm party A. showing my claim now");
       var args = {
       "title": 'Your Claim',
       'qrCodeData': widget.claim
@@ -67,6 +68,9 @@ class _AttestationCardState extends State<AttestationCard> {
       var attCla = attestationAClaimB.toString().split(':');
       print("Attestation received by QR code: " + attCla[0]);
       print("Claim received by qrCode:" + attCla[1]);
+
+      // store AttestationA (my claim, attested by other)
+      store.encointer.attestations[widget.otherMeetupRegistryIndex].yourAttestation = attCla[0];
 
       // attest claimB
       Map attestationB = await webApi.encointer.attestClaimOfAttendance(attCla[0], "123qwe");
@@ -84,6 +88,7 @@ class _AttestationCardState extends State<AttestationCard> {
 
     } else {
       // scanning claim A
+      print("I'm party B. scanning claimA now");
       var claimA = await Navigator.of(context).pushNamed(ScanQrCode.route, arguments: { 'onScan' : onScan });
       print("Received Claim A: " + claimA.toString());
 
@@ -104,6 +109,9 @@ class _AttestationCardState extends State<AttestationCard> {
       // scan AttestationB
       var attB = await Navigator.of(context).pushNamed(ScanQrCode.route, arguments: { 'onScan' : onScan });
       print("Received AttestastionB: " + attB.toString());
+      // store AttestationB (my claim, attested by other)
+      //store.encointer.attestations[widget.otherMeetupRegistryIndex].yourAttestation = Attestation.fromJson(json.decode(attB));
+      store.encointer.attestations[widget.otherMeetupRegistryIndex].yourAttestation = attB.toString();
     }
   }
 
