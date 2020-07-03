@@ -44,7 +44,7 @@ abstract class _EncointerStore with Store {
   var myMeetupRegistryIndex = 0;
 
   @observable
-  var nextMeetupLocation = Location(0, 0);
+  var nextMeetupLocation = Location("0x", "0x");
 
   @observable
   var participantIndex = 0;
@@ -105,7 +105,9 @@ abstract class _EncointerStore with Store {
   @action
   void setChosenCid(cid) {
     chosenCid = cid;
-    rootStore.localStorage.setChosenCid(cid);
+    //rootStore.localStorage.setChosenCid(cid);
+    rootStore.localStorage
+        .setObject(_getCacheKey(encointerCurrencyKey), cid);
   }
 
   @action
@@ -164,7 +166,7 @@ abstract class _EncointerStore with Store {
 
   @action
   Future<void> loadCache() async {
-    Map data =
+    var data =
       await rootStore.localStorage.getObject(_getCacheKey(encointerCurrencyKey));
     if (data != null) {
       setChosenCid(data);

@@ -70,8 +70,9 @@ class ApiEncointer {
     var address = store.account.currentAccountPubKey;
     var cid = store.encointer.chosenCid;
     var mIndex = store.encointer.meetupIndex;
-    Location loc = await apiRoot.evalJavascript('encointer.fetchNextMeetupLocation("$cid", "$mIndex","$address")');
-    print("Next Meetup Location: lon: " + loc.lon.toString() + " lat: " + loc.lat.toString());
+    var locj = await apiRoot.evalJavascript('encointer.fetchNextMeetupLocation("$cid", "$mIndex","$address")');
+    print("Next Meetup Location: " + locj.toString());
+    Location loc = Location.fromJson(locj);
     store.encointer.setNextMeetupLocation(loc);
   }
 

@@ -34,6 +34,8 @@ class _CeremonyOverviewPanelState extends State<CeremonyOverviewPanel> {
 
   @override
   void initState() {
+    // dropdown menu must include chosen cid even if currencies haven't been fetched
+    store.encointer.setCurrencyIdentifiers([store.encointer.chosenCid]);
     _refreshData();
     super.initState();
   }

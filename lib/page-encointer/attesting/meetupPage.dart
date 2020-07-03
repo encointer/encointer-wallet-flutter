@@ -61,11 +61,12 @@ class _MeetupPageState extends State<MeetupPage> {
     Map res = await webApi.encointer.attestClaimOfAttendance(claimTest, "123qwe");
     List<Attestation> attestations = new List();
     attestations.add(Attestation.fromJson(res['attestation']));
+    attestations.add(Attestation.fromJson(res['attestation']));
     //attestations = [
     //  "0xbe9db4ecc6821c60f81a38c50526c971a94901368555b64e091da9bca8e7cc7ffb0f0000cef98d744e978f3e33724cfb5677d2104e020909fbec6e97c2c594aa607d78cb010000000000000000000000000000000000000000000000a07a2113730100000a000000a22d93c78073c7a1923a4dad3a1a186c0aa8135a86e6ff40612029bfade5423ced9a032c18c0023501ed0bde364d6fd25ce0853d3ae0d191a17b9f0304089b8abe9db4ecc6821c60f81a38c50526c971a94901368555b64e091da9bca8e7cc7f",
     //  "0xbe9db4ecc6821c60f81a38c50526c971a94901368555b64e091da9bca8e7cc7ffb0f0000cef98d744e978f3e33724cfb5677d2104e020909fbec6e97c2c594aa607d78cb010000000000000000000000000000000000000000000000a07a2113730100000a000000a22d93c78073c7a1923a4dad3a1a186c0aa8135a86e6ff40612029bfade5423ced9a032c18c0023501ed0bde364d6fd25ce0853d3ae0d191a17b9f0304089b8abe9db4ecc6821c60f81a38c50526c971a94901368555b64e091da9bca8e7cc7f"
     //];
-    print("All attestations flat: " + attestations.toString());
+    print("All attestations flat: " + jsonEncode(attestations));
     //return;
     var args = {
       "title": 'register_attestations',
@@ -77,20 +78,19 @@ class _MeetupPageState extends State<MeetupPage> {
         "attestations": attestations,
       }),
       "params": [
-        null,
+        attestations,
       ],
       'onFinish': (BuildContext txPageContext, Map res) {
         Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
         globalBalanceRefreshKey.currentState.show();
       }
     };
-    print("tx args: " + args["params"].toString());
     Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
   }
 
   @override
   void initState() {
-    store.encointer.setNextMeetupLocation(Location(0, 0));
+    //store.encointer.setNextMeetupLocation(Location(0, 0));
     super.initState();
   }
 
