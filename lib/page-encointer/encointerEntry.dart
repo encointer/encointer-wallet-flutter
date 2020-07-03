@@ -154,7 +154,7 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
   }
 
   Widget _getPhaseView(CeremonyPhase phase) {
-    //return AttestingPage(store);
+    return AttestingPage(store);
     switch (phase) {
       case CeremonyPhase.REGISTERING:
         return RegisteringPage(store);

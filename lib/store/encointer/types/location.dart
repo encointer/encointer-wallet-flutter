@@ -7,8 +7,8 @@ part 'location.g.dart';
 class Location {
   Location(this.lon, this.lat);
 
-  final double lon;
-  final double lat;
+  final int lon;
+  final int lat;
 
   factory Location.fromJson(Map<String, dynamic> json) =>
       _$LocationFromJson(json);
