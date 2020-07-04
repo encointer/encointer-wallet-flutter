@@ -78,7 +78,7 @@ class _MeetupPageState extends State<MeetupPage> {
         "attestations": attestations,
       }),
       "params": [
-        attestations,
+        null,// TODO: attestations,
       ],
       'onFinish': (BuildContext txPageContext, Map res) {
         Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
@@ -90,7 +90,6 @@ class _MeetupPageState extends State<MeetupPage> {
 
   @override
   void initState() {
-    //store.encointer.setNextMeetupLocation(Location(0, 0));
     super.initState();
   }
 

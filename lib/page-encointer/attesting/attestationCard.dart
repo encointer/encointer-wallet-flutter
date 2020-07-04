@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -57,23 +56,23 @@ class _AttestationCardState extends State<AttestationCard> {
     if (widget.myMeetupRegistryIndex < widget.otherMeetupRegistryIndex) {
       //show claimA
       print("I'm party A. showing my claim now");
-      var args = {
-      "title": 'Your Claim',
-      'qrCodeData': widget.claim
-      };
+      var args = {"title": 'Your Claim', 'qrCodeData': widget.claim};
       await Navigator.of(context).pushNamed(QrCode.route, arguments: args);
 
       // scan AttestationA | claimB
-      var attestationAClaimB = await Navigator.of(context).pushNamed(ScanQrCode.route, arguments: { 'onScan' : onScan });
+      var attestationAClaimB = await Navigator.of(context)
+          .pushNamed(ScanQrCode.route, arguments: {'onScan': onScan});
       var attCla = attestationAClaimB.toString().split(':');
       print("Attestation received by QR code: " + attCla[0]);
       print("Claim received by qrCode:" + attCla[1]);
 
       // store AttestationA (my claim, attested by other)
-      store.encointer.attestations[widget.otherMeetupRegistryIndex].yourAttestation = attCla[0];
+      store.encointer.attestations[widget.otherMeetupRegistryIndex]
+          .setAttestation(attCla[0]);
 
       // attest claimB
-      Map attestationB = await webApi.encointer.attestClaimOfAttendance(attCla[0], "123qwe");
+      Map attestationB =
+          await webApi.encointer.attestClaimOfAttendance(attCla[0], "123qwe");
       print("aat: " + attestationB['attestation'].toString());
       // currently, parsing attestation fails, as it is returned as an `Attestation` from the js_service which implies the the location is in I32F32
       // store.encointer.attestations[widget.otherMeetupRegistryIndex].otherAttestation = Attestation.fromJson(attestationB['attestation']);
@@ -85,15 +84,16 @@ class _AttestationCardState extends State<AttestationCard> {
         'qrCodeData': attestationB['attestationHex'].toString(),
       };
       await Navigator.of(context).pushNamed(QrCode.route, arguments: args2);
-
     } else {
       // scanning claim A
       print("I'm party B. scanning others' claimA now");
-      var claimA = await Navigator.of(context).pushNamed(ScanQrCode.route, arguments: { 'onScan' : onScan });
+      var claimA = await Navigator.of(context)
+          .pushNamed(ScanQrCode.route, arguments: {'onScan': onScan});
       print("Received Claim A: " + claimA.toString());
 
       // attest claimA
-      Map res = await webApi.encointer.attestClaimOfAttendance(claimA, "123qwe");
+      Map res =
+          await webApi.encointer.attestClaimOfAttendance(claimA, "123qwe");
       print("aat: " + res['attestation'].toString());
       // currently, parsing attestation fails, as it is returned as an `Attestation` from the js_service which implies the the location is in I32F32
 //      store.encointer.attestations[widget.otherMeetupRegistryIndex].otherAttestation = Attestation.fromJson(res['attestation']);
@@ -107,11 +107,13 @@ class _AttestationCardState extends State<AttestationCard> {
       await Navigator.of(context).pushNamed(QrCode.route, arguments: args);
 
       // scan AttestationB
-      var attB = await Navigator.of(context).pushNamed(ScanQrCode.route, arguments: { 'onScan' : onScan });
+      var attB = await Navigator.of(context)
+          .pushNamed(ScanQrCode.route, arguments: {'onScan': onScan});
       print("Received AttestastionB: " + attB.toString());
       // store AttestationB (my claim, attested by other)
       //store.encointer.attestations[widget.otherMeetupRegistryIndex].yourAttestation = Attestation.fromJson(json.decode(attB));
-      store.encointer.attestations[widget.otherMeetupRegistryIndex].yourAttestation = attB.toString();
+      store.encointer.attestations[widget.otherMeetupRegistryIndex]
+          .setAttestation(attB.toString());
     }
   }
 
@@ -134,66 +136,51 @@ class _AttestationCardState extends State<AttestationCard> {
     return RoundedCard(
         border: Border.all(color: Theme.of(context).cardColor),
         margin: EdgeInsets.only(bottom: 16),
-        child: Column(children: <Widget>[
-          ListTile(
-            leading: Container(
-              margin: const EdgeInsets.all(10.0),
-              padding: const EdgeInsets.all(8.0),
-              //color: Colors.lime,
-              decoration: BoxDecoration(
-                  color: Colors.yellow,
-                  border: Border.all(
-                    color: Colors.blue,
-                  ),
-                  borderRadius: BorderRadius.all(Radius.circular(20))
-              ),
-              child: Text(otherIndex.toString())   //AddressIcon(attestation.pubKey, size: 64),
-            ),
-            title: Text(Fmt.address(attestation.pubKey)),
-            onTap: () => _scanQrCode(otherIndex),
-          ),
-          Padding(
-              padding: EdgeInsets.only(right: 10),
-              child: Row(children: <Widget>[
-                Flexible(
-                    child: Column(children: <Widget>[
-                  Observer(
-                    builder: (_) => CheckboxListTile(
-                        title: Text(dic['you.attested']),
-                        value: store
-                            .encointer.attestations[otherIndex].attestedOther,
-                        selected: store
-                            .encointer.attestations[otherIndex].attestedOther,
-                        onChanged: (bool value) {
-                          setState(() {
-                            attestation.switchState();
-                          });
-                        }),
-                  ),
-                  Observer(
-                    builder: (_) => CheckboxListTile(
-                        title: Text(dic['other.attested']),
-                        value: store
-                            .encointer.attestations[otherIndex].attestedOther,
-                        selected: store
-                            .encointer.attestations[otherIndex].attestedOther,
-                        onChanged: (bool value) {
-                          setState(() {});
-                        }),
-                  ),
-                ])),
-                Observer(
-                  builder: (_) => RoundedButton(
-                    text: store.encointer.attestations[otherIndex].complete
-                        ? dic['attestation.revert']
-                        : dic['attestation.perform'],
-                    onPressed:
-                        !store.encointer.attestations[otherIndex].complete
-                            ? () => _performAttestation()
-                            : () => _revertAttestation(),
-                  ),
-                )
-              ]))
-        ]));
+        child: Observer(
+            builder: (_) => Container(
+                decoration: store.encointer.attestations[widget.otherMeetupRegistryIndex].done
+                    ? BoxDecoration(
+                        color: Colors.green,
+                        borderRadius: BorderRadius.all(Radius.circular(10)))
+                    : BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(10))),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Container(
+                          margin: const EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.all(8.0),
+                          //color: Colors.lime,
+                          decoration: BoxDecoration(
+                              color: Colors.yellowAccent,
+                              border: Border.all(
+                                color: Colors.yellow,
+                                width: 4,
+                              ),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20))),
+                          child: Text(
+                            otherIndex.toString(),
+                            style: TextStyle(fontSize: 24),
+                          ) //AddressIcon(attestation.pubKey, size: 64),
+                          ),
+                      Container(
+                        child: Text(
+                          Fmt.address(attestation.pubKey),
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        //onTap: () => _scanQrCode(otherIndex),
+                      ),
+                      Container(
+                        margin: const EdgeInsets.all(5.0),
+                        padding: const EdgeInsets.all(5.0),
+                        child: RoundedButton(
+                            text: dic['attestation.perform'],
+                            onPressed: store.encointer.attestations[widget.otherMeetupRegistryIndex].done
+                                ? null
+                                : () => _performAttestation()),
+                      )
+                    ]))));
   }
 }
