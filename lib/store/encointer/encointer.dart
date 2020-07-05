@@ -59,10 +59,10 @@ abstract class _EncointerStore with Store {
   var timeStamp = 0;
 
   @observable
-  List<dynamic> currencyIdentifiers = ["0xf26bfaa0feee0968ec0637e1933e64cd1947294d3b667d43b76b3915fc330b53"];
+  List<dynamic> currencyIdentifiers = [];
 
   @observable
-  var chosenCid = "0xf26bfaa0feee0968ec0637e1933e64cd1947294d3b667d43b76b3915fc330b53";
+  var chosenCid = "";
 
   @observable
   Map<int, AttestationState> attestations = Map<int, AttestationState>();
@@ -108,7 +108,6 @@ abstract class _EncointerStore with Store {
   @action
   void setChosenCid(cid) {
     chosenCid = cid;
-    //rootStore.localStorage.setChosenCid(cid);
     rootStore.localStorage
         .setObject(_getCacheKey(encointerCurrencyKey), cid);
   }

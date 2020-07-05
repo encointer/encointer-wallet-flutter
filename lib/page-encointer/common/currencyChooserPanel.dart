@@ -54,28 +54,42 @@ class _CurrencyChooserPanelState extends State<CurrencyChooserPanel> {
           padding: EdgeInsets.all(8),
           child: Column(children: <Widget>[
             Text("Choose currency:"),
-            Observer(
-                builder: (_) => DropdownButton<dynamic>(
-                      value: store.encointer.chosenCid,
-                      icon: Icon(Icons.arrow_downward),
-                      iconSize: 32,
-                      elevation: 32,
-                      onChanged: (newValue) {
-                        setState(() {
-                          //if (store.encointer.participantIndex == 0) {
-                          store.encointer.setChosenCid(newValue);
-                          _refreshData();
-                          //}
-                        });
-                      },
-                      items: store.encointer.currencyIdentifiers
-                          .map<DropdownMenuItem<dynamic>>(
-                              (value) => DropdownMenuItem<dynamic>(
-                                    value: value,
-                                    child: Text(Fmt.currencyIdentifier(value)),
-                                  ))
-                          .toList(),
-                    )),
+            FutureBuilder<List<dynamic>>(
+                future: webApi.encointer.fetchCurrencyIdentifiers(),
+                builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
+                  if (snapshot.hasData) {
+                    if (store.encointer.currencyIdentifiers.isEmpty) {
+                      store.encointer.setChosenCid("");
+                      return Text("no currencies found");
+                    }
+                    var selectedCid = store.encointer.chosenCid.isEmpty
+                        ? store.encointer.currencyIdentifiers[0]
+                        : store.encointer.chosenCid;
+                    return Observer(
+                        builder: (_) => DropdownButton<dynamic>(
+                              value: selectedCid,
+                              icon: Icon(Icons.arrow_downward),
+                              iconSize: 32,
+                              elevation: 32,
+                              onChanged: (newValue) {
+                                setState(() {
+                                  store.encointer.setChosenCid(newValue);
+                                  _refreshData();
+                                });
+                              },
+                              items: store.encointer.currencyIdentifiers
+                                  .map<DropdownMenuItem<dynamic>>((value) =>
+                                      DropdownMenuItem<dynamic>(
+                                        value: value,
+                                        child:
+                                            Text(Fmt.currencyIdentifier(value)),
+                                      ))
+                                  .toList(),
+                            ));
+                  } else {
+                    return CupertinoActivityIndicator();
+                  }
+                })
           ]),
         ));
   }
