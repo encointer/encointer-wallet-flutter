@@ -48,10 +48,10 @@ class EncointerEntry extends StatelessWidget {
                 ],
               ),
             ),
-            Expanded(
-                child: Observer(
-                    builder: (_) =>
-                        Text(store.encointer.currentPhase.toString()))),
+            //Expanded(
+            //    child: Observer(
+            //        builder: (_) =>
+            //            Text(store.encointer.currentPhase.toString()))),
             PhaseAwareBox(store)
           ],
         ),
@@ -128,11 +128,20 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
 
   @override
   Widget build(BuildContext context) {
-    return Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
-      CurrencyChooserPanel(store),
-      CeremonyOverviewPanel(store),
-      Observer(builder: (_) => _getPhaseView(store.encointer.currentPhase))
-    ]);
+    return FutureBuilder<CeremonyPhase>(
+        future: webApi.encointer.fetchCurrentPhase(),
+        builder: (BuildContext context, AsyncSnapshot<CeremonyPhase> snapshot) {
+          if (snapshot.hasData) {
+            return Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
+              CurrencyChooserPanel(store),
+              CeremonyOverviewPanel(store),
+              Observer(
+                  builder: (_) => _getPhaseView(store.encointer.currentPhase))
+            ]);
+          } else {
+            return CupertinoActivityIndicator();
+          }
+        });
   }
 
   Widget _getPhaseView(CeremonyPhase phase) {

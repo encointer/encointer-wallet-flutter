@@ -178,7 +178,7 @@ abstract class _EncointerStore with Store {
   Future<void> loadCache() async {
     var data = await rootStore.localStorage.getObject(_getCacheKey(encointerCurrencyKey));
     if (data != null) {
-      print("found cached choice of cid. will recover it");
+      print("found cached choice of cid. will recover it: " + data.toString());
       setChosenCid(data);
     }
 

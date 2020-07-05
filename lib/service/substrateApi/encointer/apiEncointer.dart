@@ -28,13 +28,14 @@ class ApiEncointer {
   final Api apiRoot;
   final store = globalAppStore;
 
-  Future<void> fetchCurrentPhase() async {
+  Future<CeremonyPhase> fetchCurrentPhase() async {
     Map res = await apiRoot.evalJavascript('encointer.fetchCurrentPhase()');
 
     var phase = getEnumFromString(
         CeremonyPhase.values, res.values.toList()[0].toString().toUpperCase());
     print("Phase enum: " + phase.toString());
     store.encointer.setCurrentPhase(phase);
+    return phase;
   }
 
   Future<void> fetchCurrentCeremonyIndex() async {
