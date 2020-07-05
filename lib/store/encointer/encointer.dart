@@ -20,6 +20,9 @@ abstract class _EncointerStore with Store {
   final AppStore rootStore;
   final String cacheTxsTransferKey = 'transfer_txs';
   final String encointerCurrencyKey = 'wallet_encointer_currency';
+  final String encointerAttestationsKey = 'wallet_encointer_attestations';
+
+
   String _getCacheKey(String key) {
     return '${rootStore.settings.endpoint.info}_$key';
   }
@@ -111,6 +114,13 @@ abstract class _EncointerStore with Store {
   }
 
   @action
+  void addAttestation(idx, att) {
+    attestations[idx].setAttestation(att);
+    rootStore.localStorage
+        .setObject(_getCacheKey(encointerAttestationsKey), attestations);
+  }
+
+  @action
   void setParticipantIndex(int pIndex) {
     participantIndex = pIndex;
   }
@@ -166,11 +176,18 @@ abstract class _EncointerStore with Store {
 
   @action
   Future<void> loadCache() async {
-    var data =
-      await rootStore.localStorage.getObject(_getCacheKey(encointerCurrencyKey));
+    var data = await rootStore.localStorage.getObject(_getCacheKey(encointerCurrencyKey));
     if (data != null) {
+      print("found cached choice of cid. will recover it");
       setChosenCid(data);
     }
+
+    data = await rootStore.localStorage.getObject(_getCacheKey(encointerAttestationsKey));
+    if (data != null) {
+      print("found cached attestations. will recover them");
+      attestations = data;
+    }
+
   }
 
 }

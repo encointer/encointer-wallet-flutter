@@ -67,9 +67,7 @@ class _AttestationCardState extends State<AttestationCard> {
       print("Claim received by qrCode:" + attCla[1]);
 
       // store AttestationA (my claim, attested by other)
-      store.encointer.attestations[widget.otherMeetupRegistryIndex]
-          .setAttestation(attCla[0]);
-
+      store.encointer.addAttestation(widget.otherMeetupRegistryIndex, attCla[0]);
       // attest claimB
       Map attestationB =
           await webApi.encointer.attestClaimOfAttendance(attCla[0], "123qwe");
@@ -111,9 +109,7 @@ class _AttestationCardState extends State<AttestationCard> {
           .pushNamed(ScanQrCode.route, arguments: {'onScan': onScan});
       print("Received AttestastionB: " + attB.toString());
       // store AttestationB (my claim, attested by other)
-      //store.encointer.attestations[widget.otherMeetupRegistryIndex].yourAttestation = Attestation.fromJson(json.decode(attB));
-      store.encointer.attestations[widget.otherMeetupRegistryIndex]
-          .setAttestation(attB.toString());
+      store.encointer.addAttestation(widget.otherMeetupRegistryIndex, attB.toString());
     }
   }
 
