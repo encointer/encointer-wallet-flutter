@@ -50,6 +50,7 @@ class ApiEncointer {
       return;
     }
     var cid = store.encointer.chosenCid ?? store.encointer.currencyIdentifiers[0];
+    await fetchNextMeetupLocation();
     var loc = jsonEncode({
       "lat": store.encointer.nextMeetupLocation.lat,
       "lon": store.encointer.nextMeetupLocation.lon,
@@ -59,19 +60,23 @@ class ApiEncointer {
     store.encointer.setNextMeetupTime(time);
   }
 
-  Future<void> fetchMeetupIndex() async {
+  Future<int> fetchMeetupIndex() async {
     var address = store.account.currentAccountPubKey;
     var cid = store.encointer.chosenCid;
     var cIndex = store.encointer.currentCeremonyIndex;
     var mIndex = await apiRoot.evalJavascript('encointer.fetchMeetupIndex("$cid", "$cIndex","$address")');
     print("Next Meetup Index: " + mIndex.toString());
     store.encointer.setMeetupIndex(mIndex);
+    return mIndex;
   }
 
   Future<void> fetchNextMeetupLocation() async {
     var address = store.account.currentAccountPubKey;
     var cid = store.encointer.chosenCid;
-    var mIndex = store.encointer.meetupIndex;
+    if (cid.isEmpty) {
+      return; // zero means: not registered
+    }
+    var mIndex = await fetchMeetupIndex();
     var locj = await apiRoot.evalJavascript('encointer.fetchNextMeetupLocation("$cid", "$mIndex","$address")');
     print("Next Meetup Location: " + locj.toString());
     Location loc = Location.fromJson(locj);
@@ -101,21 +106,15 @@ class ApiEncointer {
   }
 
   Future<dynamic> fetchMeetupRegistry() async {
-    var cIndex = store.encointer.currentCeremonyIndex;
+    var cIndex = await fetchCurrentCeremonyIndex();
     var cid = store.encointer.chosenCid;
-    var mIndex = store.encointer.meetupIndex;
+    if (cid.isEmpty) {
+      return new List(); // empty
+    }
+    var mIndex = await fetchMeetupIndex();
     print("fetch meetup registry for cindex " + cIndex.toString() + " mindex " + mIndex.toString() + " cid " + cid);
     var meetupRegistry = await apiRoot.evalJavascript('encointer.fetchMeetupRegistry("$cid", "$cIndex", "$mIndex")');
     print("Participants: " + meetupRegistry.toString());
-    // generate all icons for these participants
-    /*
-    TODO: I guess we'll have to generate icons before using them. the app currently only generates them for known keys
-    List res = await apiRoot.evalJavascript(
-        'account.genIcons(${jsonEncode(meetupRegistry)})',
-        allowRepeat: true);
-    store.account.setAddressIconsMap(res);
-
-     */
     return meetupRegistry;
   }
 

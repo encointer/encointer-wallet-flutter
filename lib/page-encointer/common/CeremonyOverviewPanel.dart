@@ -63,6 +63,7 @@ class _CeremonyOverviewPanelState extends State<CeremonyOverviewPanel> {
             padding: EdgeInsets.all(8),
             child: Observer(
               builder: (_) => Column(children: <Widget>[
+                Text(store.encointer.currentPhase.toString()),
                 Text("ceremony index: " +
                     store.encointer.currentCeremonyIndex.toString()),
                 Text("participant index: " +
@@ -85,7 +86,10 @@ class _CeremonyOverviewPanelState extends State<CeremonyOverviewPanel> {
                 Text("Next Ceremony Will Take Place on:"),
                 Text(new DateTime.fromMillisecondsSinceEpoch(
                         store.encointer.nextMeetupTime)
-                    .toIso8601String())
+                    .toIso8601String()),
+                Text("at location:"),
+                Text(store.encointer.nextMeetupLocation.lat.toString() + " lat, " +
+                    store.encointer.nextMeetupLocation.lon.toString() + " lon") ,
               ]),
             )));
   }
