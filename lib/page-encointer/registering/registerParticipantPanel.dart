@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:intl/intl.dart';
 import 'package:polka_wallet/common/components/infoItem.dart';
 import 'package:polka_wallet/common/components/roundedButton.dart';
 import 'package:polka_wallet/common/components/roundedCard.dart';
@@ -22,8 +23,6 @@ class RegisterParticipantPanel extends StatefulWidget {
 
   @override
   _RegisterParticipantPanel createState() => _RegisterParticipantPanel(store);
-
-
 }
 
 class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
@@ -70,29 +69,28 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
     // await webApi.encointer.fetchParticipantIndex();
   }
 
-
   @override
   Widget build(BuildContext context) {
     // only build dropdown after we have fetched the currency identifiers
-    return  FutureBuilder(
-        builder: (context, _currencyIdentifiers) => Column(
-            children: <Widget>[
-              Observer(
-                  builder: (_) => store.encointer.participantIndex == 0 ?
-                  RoundedButton(
-                      text: "Register Participant",
-                      onPressed: () => _submit()
-                  ): RoundedButton(
-                      text: "Unregister", //for: " + Fmt.currencyIdentifier(store.encointer.chosenCid).toString(),
-                      onPressed: null
-                  )
-              )
-            ]
-        ),
+    return FutureBuilder(
+      builder: (context, _currencyIdentifiers) => Column(children: <Widget>[
+        Observer(
+            builder: (_) => Column(children: <Widget>[
+                  Text("Next ceremony will happen at high sun on:"),
+                  Text(DateFormat('yyyy-MM-dd').format(
+                      new DateTime.fromMillisecondsSinceEpoch(
+                          store.encointer.nextMeetupTime)))
+                ])),
+        Observer(
+            builder: (_) => store.encointer.participantIndex == 0
+                ? RoundedButton(
+                    text: "Register Participant", onPressed: () => _submit())
+                : RoundedButton(
+                    text: "Unregister",
+                    //for: " + Fmt.currencyIdentifier(store.encointer.chosenCid).toString(),
+                    onPressed: null))
+      ]),
       future: webApi.encointer.fetchCurrencyIdentifiers(),
     );
   }
-
 }
-
-
