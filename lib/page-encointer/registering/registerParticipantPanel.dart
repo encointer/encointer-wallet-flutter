@@ -73,24 +73,30 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
   Widget build(BuildContext context) {
     // only build dropdown after we have fetched the currency identifiers
     return FutureBuilder(
-      builder: (context, _currencyIdentifiers) => Column(children: <Widget>[
-        Observer(
-            builder: (_) => Column(children: <Widget>[
-                  Text("Next ceremony will happen at high sun on:"),
-                  Text(DateFormat('yyyy-MM-dd').format(
-                      new DateTime.fromMillisecondsSinceEpoch(
-                          store.encointer.nextMeetupTime)))
-                ])),
-        Observer(
-            builder: (_) => store.encointer.participantIndex == 0
-                ? RoundedButton(
-                    text: "Register Participant", onPressed: () => _submit())
-                : RoundedButton(
-                    text: "Unregister",
-                    //for: " + Fmt.currencyIdentifier(store.encointer.chosenCid).toString(),
-                    onPressed: null))
-      ]),
-      future: webApi.encointer.fetchCurrencyIdentifiers(),
-    );
+        future: webApi.encointer.fetchParticipantIndex(),
+        builder: (context, AsyncSnapshot<int> snapshot) {
+          if (snapshot.hasData) {
+            return Column(children: <Widget>[
+              Observer(
+                  builder: (_) => Column(children: <Widget>[
+                        Text("Next ceremony will happen at high sun on:"),
+                        Text(DateFormat('yyyy-MM-dd').format(
+                            new DateTime.fromMillisecondsSinceEpoch(
+                                store.encointer.nextMeetupTime)))
+                      ])),
+              Observer(
+                  builder: (_) => store.encointer.participantIndex == 0
+                      ? RoundedButton(
+                          text: "Register Participant",
+                          onPressed: () => _submit())
+                      : RoundedButton(
+                          text: "Unregister",
+                          //for: " + Fmt.currencyIdentifier(store.encointer.chosenCid).toString(),
+                          onPressed: null))
+            ]);
+          } else {
+            return CupertinoActivityIndicator();
+          }
+        });
   }
 }

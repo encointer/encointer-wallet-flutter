@@ -38,10 +38,11 @@ class ApiEncointer {
     return phase;
   }
 
-  Future<void> fetchCurrentCeremonyIndex() async {
-    var c_index = await apiRoot.evalJavascript('encointer.fetchCurrentCeremonyIndex()');
-    print("Current Ceremony index: " + c_index.toString());
-    store.encointer.setCurrentCeremonyIndex(c_index);
+  Future<int> fetchCurrentCeremonyIndex() async {
+    var cIndex = await apiRoot.evalJavascript('encointer.fetchCurrentCeremonyIndex()');
+    print("Current Ceremony index: " + cIndex.toString());
+    store.encointer.setCurrentCeremonyIndex(cIndex);
+    return cIndex;
   }
 
   Future<void> fetchNextMeetupTime() async {
@@ -77,14 +78,18 @@ class ApiEncointer {
     store.encointer.setNextMeetupLocation(loc);
   }
 
-  Future<void> fetchParticipantIndex() async {
+  Future<int> fetchParticipantIndex() async {
     var address = store.account.currentAccountPubKey;
     var cid = store.encointer.chosenCid;
-    var cIndex = store.encointer.currentCeremonyIndex;
+    if (cid.isEmpty) {
+      return 0; // zero means: not registered
+    }
+    var cIndex = await fetchCurrentCeremonyIndex();
     print("Fetching participant index for " + address);
     var pIndex = await apiRoot.evalJavascript('encointer.fetchParticipantIndex("$cid", "$cIndex" ,"$address")');
     print("Participant Index: " + pIndex.toString());
     store.encointer.setParticipantIndex(pIndex);
+    return pIndex;
   }
 
   Future<void> fetchParticipantCount() async {
