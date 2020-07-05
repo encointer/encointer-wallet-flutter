@@ -38,7 +38,8 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
   }
 
   Future<void> _refreshData() async {
-    await webApi.encointer.fetchCurrencyIdentifiers();
+    //await webApi.encointer.fetchCurrencyIdentifiers();
+    //await webApi.encointer.fetchParticipantIndex();
   }
 
   Future<void> _submit() async {
@@ -63,6 +64,10 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
       }
     };
     Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
+    //set dummy value to disable register button until refreshed
+    store.encointer.setParticipantIndex(42424242);
+    // this will fetch too early as the above only waits until Broadcast instead of InBlock
+    // await webApi.encointer.fetchParticipantIndex();
   }
 
 

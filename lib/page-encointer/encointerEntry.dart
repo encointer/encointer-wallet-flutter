@@ -9,6 +9,7 @@ import 'package:polka_wallet/page-encointer/registering/registeringPage.dart';
 import 'package:polka_wallet/page-encointer/assigning/assigningPage.dart';
 import 'package:polka_wallet/page-encointer/attesting/attestingPage.dart';
 import 'package:polka_wallet/page-encointer/common/CeremonyOverviewPanel.dart';
+import 'package:polka_wallet/page-encointer/common/CurrencyChooserPanel.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
@@ -25,9 +26,7 @@ class EncointerEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Map dic = I18n
-        .of(context)
-        .encointer;
+    final Map dic = I18n.of(context).encointer;
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(
@@ -42,9 +41,7 @@ class EncointerEntry extends StatelessWidget {
                     dic['encointer'] ?? 'Encointer Ceremony',
                     style: TextStyle(
                       fontSize: 20,
-                      color: Theme
-                          .of(context)
-                          .cardColor,
+                      color: Theme.of(context).cardColor,
                       fontWeight: FontWeight.w500,
                     ),
                   )
@@ -52,8 +49,9 @@ class EncointerEntry extends StatelessWidget {
               ),
             ),
             Expanded(
-                child: Text('Hello World')
-            ),
+                child: Observer(
+                    builder: (_) =>
+                        Text(store.encointer.currentPhase.toString()))),
             PhaseAwareBox(store)
           ],
         ),
@@ -108,11 +106,14 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
     // simply for debug to test that subscriptions are working
     webApi.encointer.subscribeTimestamp(_timeStampSubscribeChannel);
 
+    webApi.encointer.fetchCurrencyIdentifiers();
+    webApi.encointer.fetchCurrentCeremonyIndex();
+
     if (!store.settings.loading) {
       print('Subscribing to current phase');
-      webApi.encointer.subscribeCurrentPhase(_currentPhaseSubscribeChannel, (data) {
-        var phase = getEnumFromString(
-            CeremonyPhase.values, data.toUpperCase());
+      webApi.encointer.subscribeCurrentPhase(_currentPhaseSubscribeChannel,
+          (data) {
+        var phase = getEnumFromString(CeremonyPhase.values, data.toUpperCase());
         store.encointer.setCurrentPhase(phase);
       });
     }
@@ -127,34 +128,17 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
 
   @override
   Widget build(BuildContext context) {
-//    _refreshData();
-    return Container(
-      alignment: Alignment.topCenter,
-      padding: EdgeInsets.all(16),
-      margin: EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: Theme.of(context).cardColor,
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black12,
-            blurRadius: 8.0, // has the effect of softening the shadow
-            spreadRadius: 2.0, // ha
-          )
-        ],
-      ),
-      child: Observer(
-          builder: (_) => Column(
-              children: <Widget> [
-                CeremonyOverviewPanel(store),
-                _getPhaseView(store.encointer.currentPhase)
-              ]
-          )
-      ),
-    );
+    return Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
+      CurrencyChooserPanel(store),
+      CeremonyOverviewPanel(store),
+      Observer(builder: (_) => _getPhaseView(store.encointer.currentPhase))
+    ]);
   }
 
   Widget _getPhaseView(CeremonyPhase phase) {
-    return AttestingPage(store);
+    //return RegisteringPage(store);
+    //return AssigningPage(store);
+    //return AttestingPage(store);
     switch (phase) {
       case CeremonyPhase.REGISTERING:
         return RegisteringPage(store);

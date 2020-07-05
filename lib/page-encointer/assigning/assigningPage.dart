@@ -41,11 +41,12 @@ class _AssigningPageState extends State<AssigningPage> {
   }
 
   Future<void> _refreshData() async {
-    await webApi.encointer.fetchParticipantIndex();
-    await webApi.encointer.fetchParticipantCount();
-    await webApi.encointer.fetchMeetupIndex();
-    await webApi.encointer.fetchNextMeetupTime();
-    await webApi.encointer.fetchNextMeetupLocation();
+    // refreshed by parent!
+    // await webApi.encointer.fetchParticipantIndex();
+    // await webApi.encointer.fetchParticipantCount();
+    // await webApi.encointer.fetchMeetupIndex();
+    //await webApi.encointer.fetchNextMeetupTime();
+    //await webApi.encointer.fetchNextMeetupLocation();
   }
 
   @override
