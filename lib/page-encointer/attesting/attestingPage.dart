@@ -10,6 +10,7 @@ import 'package:polka_wallet/common/components/roundedButton.dart';
 import 'package:polka_wallet/common/components/roundedCard.dart';
 import 'package:polka_wallet/common/consts/settings.dart';
 import 'package:polka_wallet/page-encointer/attesting/qrCode.dart';
+import 'package:polka_wallet/page-encointer/common/assignmentPanel.dart';
 import 'package:polka_wallet/page/account/txConfirmPage.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
@@ -56,7 +57,7 @@ class _AttestingPageState extends State<AttestingPage> {
         MaterialPageRoute(builder: (context) => ConfirmAttendeesDialog()));
     setAmountAttendees(amount);
     var claimHex =
-        await webApi.encointer.getClaimOfAttendance(_amountAttendees);
+    await webApi.encointer.getClaimOfAttendance(_amountAttendees);
     print("Claim: " + claimHex);
 
     var meetupRegistry = await webApi.encointer.fetchMeetupRegistry();
@@ -77,21 +78,22 @@ class _AttestingPageState extends State<AttestingPage> {
 
   Map<int, AttestationState> _buildAttestationStateMap(List<dynamic> pubKeys) {
     final map = Map<int, AttestationState>();
-    pubKeys.asMap().forEach((i, key) => !(key == store.account.currentAddress)
-            ? map.putIfAbsent(i, () => AttestationState(key))
-            : store.encointer.myMeetupRegistryIndex =
-                i // track our index as it defines if we must show our qr-code first
-        );
+    pubKeys.asMap().forEach((i, key) =>
+    !(key == store.account.currentAddress)
+        ? map.putIfAbsent(i, () => AttestationState(key))
+        : store.encointer.myMeetupRegistryIndex =
+        i // track our index as it defines if we must show our qr-code first
+    );
 
     print("My index in meetup registry is " +
         store.encointer.myMeetupRegistryIndex.toString());
     return map;
   }
 
-  Future<void> _submitClaim(
-      BuildContext context, String claimHex, String password) async {
+  Future<void> _submitClaim(BuildContext context, String claimHex,
+      String password) async {
     var att =
-        await webApi.encointer.attestClaimOfAttendance(claimHex, password);
+    await webApi.encointer.attestClaimOfAttendance(claimHex, password);
     print("att: " + att.toString());
 
 //    var args = {
@@ -113,13 +115,15 @@ class _AttestingPageState extends State<AttestingPage> {
 //    Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
   }
 
-  Future<void> _showPasswordDialog(
-      BuildContext context, String claimHex) async {
+  Future<void> _showPasswordDialog(BuildContext context,
+      String claimHex) async {
     showCupertinoDialog(
       context: context,
       builder: (_) {
         return PasswordInputDialog(
-          title: Text(I18n.of(context).home['unlock']),
+          title: Text(I18n
+              .of(context)
+              .home['unlock']),
           onOk: (password) => _submitClaim(context, claimHex, password),
         );
       },
@@ -128,18 +132,25 @@ class _AttestingPageState extends State<AttestingPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Map dic = I18n.of(context).encointer;
+    final Map dic = I18n
+        .of(context)
+        .encointer;
     final int decimals = encointer_token_decimals;
     return SafeArea(
-        child: Container(
+        child: Column(
+
+            children: <Widget> [
+            AssignmentPanel(store),
+        Container(
             width: double.infinity,
             child: RoundedCard(
               margin: EdgeInsets.fromLTRB(16, 4, 16, 16),
               padding: EdgeInsets.all(8),
               child: Column(children: <Widget>[
                 Observer(
-                    builder: (_) => _reportAttestationsCount(
-                        context, store.encointer.attestations)),
+                    builder: (_) =>
+                        _reportAttestationsCount(
+                            context, store.encointer.attestations)),
                 FutureBuilder<int>(
                     future: webApi.encointer.fetchMeetupIndex(),
                     builder:
@@ -150,19 +161,21 @@ class _AttestingPageState extends State<AttestingPage> {
                         }
                         return RoundedButton(
                             text: "start meetup",
-                            onPressed: () => _startMeetup(
-                                context) // for testing always allow sending
-                            );
+                            onPressed: () =>
+                                _startMeetup(
+                                    context) // for testing always allow sending
+                        );
                       } else {
                         return CupertinoActivityIndicator();
                       }
                     }),
               ]),
-            )));
+            ))
+        ]));
   }
 
-  Widget _reportAttestationsCount(
-      BuildContext context, Map<int, AttestationState> attestations) {
+  Widget _reportAttestationsCount(BuildContext context,
+      Map<int, AttestationState> attestations) {
     var count = attestations
         .map((key, value) => MapEntry(key, value.yourAttestation))
         .values
@@ -173,10 +186,10 @@ class _AttestingPageState extends State<AttestingPage> {
       Text("you have been attested by " + count.toString() + " others"),
       count > 0
           ? RoundedButton(
-              text: "submit attestations",
-              onPressed: () =>
-                  _submit(context) // for testing always allow sending
-              )
+          text: "submit attestations",
+          onPressed: () =>
+              _submit(context) // for testing always allow sending
+      )
           : Container()
     ]);
   }
@@ -192,7 +205,7 @@ class _AttestingPageState extends State<AttestingPage> {
     const claimTest =
         '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d3f00000022c51e6a656b19dd1e34c6126a75b8af02b38eedbeec51865063f142c83d40d301000000000000002aacf17b230000000000268b120000006da47bd57201000003000000';
     Map res =
-        await webApi.encointer.attestClaimOfAttendance(claimTest, "123qwe");
+    await webApi.encointer.attestClaimOfAttendance(claimTest, "123qwe");
     List<Attestation> attestations = new List();
     attestations.add(Attestation.fromJson(res['attestation']));
     attestations.add(Attestation.fromJson(res['attestation']));

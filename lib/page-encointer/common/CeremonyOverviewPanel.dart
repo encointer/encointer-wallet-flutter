@@ -83,13 +83,6 @@ class _CeremonyOverviewPanelState extends State<CeremonyOverviewPanel> {
                         style: TextStyle(color: Colors.red)),
                 Text("total number of ceremony participants: " +
                     store.encointer.participantCount.toString()),
-                Text("Next Ceremony Will Take Place on:"),
-                Text(new DateTime.fromMillisecondsSinceEpoch(
-                        store.encointer.nextMeetupTime)
-                    .toIso8601String()),
-                Text("at location:"),
-                Text(store.encointer.nextMeetupLocation.lat.toString() + " lat, " +
-                    store.encointer.nextMeetupLocation.lon.toString() + " lon") ,
               ]),
             )));
   }

@@ -45,9 +45,9 @@ class ApiEncointer {
     return cIndex;
   }
 
-  Future<void> fetchNextMeetupTime() async {
+  Future<DateTime> fetchNextMeetupTime() async {
     if (store.encointer.currencyIdentifiers == null) {
-      return;
+      return null;
     }
     var cid = store.encointer.chosenCid ?? store.encointer.currencyIdentifiers[0];
     await fetchNextMeetupLocation();
@@ -58,6 +58,7 @@ class ApiEncointer {
     var time = await apiRoot.evalJavascript('encointer.fetchNextMeetupTime("$cid", $loc)');
     print("Next Meetup Time: " + time.toString());
     store.encointer.setNextMeetupTime(time);
+    return DateTime.fromMillisecondsSinceEpoch(time);
   }
 
   Future<int> fetchMeetupIndex() async {
