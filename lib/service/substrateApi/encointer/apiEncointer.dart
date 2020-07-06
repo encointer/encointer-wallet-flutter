@@ -155,6 +155,12 @@ class ApiEncointer {
     return claimHex;
   }
 
+  Future<dynamic> parseAttestation(String attestationHex) async {
+    var attestation = await apiRoot.evalJavascript('encointer.parseAttestation("$attestationHex")');
+    print("Attestation parsed: " + attestation.toString());
+    return attestation;
+  }
+
   Future<dynamic> attestClaimOfAttendance(String claimHex, String password) async{
     var pubKey = store.account.currentAccountPubKey;
     print("Public key:" + pubKey);
