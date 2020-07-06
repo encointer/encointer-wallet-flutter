@@ -120,6 +120,14 @@ abstract class _EncointerStore with Store {
   }
 
   @action
+  void purgeAttestations() {
+    attestations.clear();
+    rootStore.localStorage
+        .setObject(_getCacheKey(encointerAttestationsKey), attestations);
+  }
+
+
+  @action
   void setParticipantIndex(int pIndex) {
     participantIndex = pIndex;
   }

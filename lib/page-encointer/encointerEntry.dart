@@ -134,7 +134,7 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
           if (snapshot.hasData) {
             return Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
               CurrencyChooserPanel(store),
-              CeremonyOverviewPanel(store),
+              //CeremonyOverviewPanel(store),
               Observer(
                   builder: (_) => _getPhaseView(store.encointer.currentPhase))
             ]);

@@ -49,7 +49,19 @@ class _AttestingPageState extends State<AttestingPage> {
 
   @override
   void initState() {
+    // check whether the cached attestations are recent
+    /*
+    //TODO parse attestations and compare cindex. if outdated, purge!
+    var cindex = webApi.encointer.fetchCurrentCeremonyIndex();
+
+    if (this.store.encointer.attestations.length > 0 ) {
+      Attestation firstatt = this.store.encointer.attestations.map((key, value) => MapEntry(key, value.yourAttestation))
+          .values.toList()[0];
+      if (
+    }
+    */
     super.initState();
+
   }
 
   Future<void> _startMeetup(BuildContext context) async {

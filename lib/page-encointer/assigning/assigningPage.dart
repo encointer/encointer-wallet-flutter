@@ -37,6 +37,8 @@ class _AssigningPageState extends State<AssigningPage> {
   @override
   void initState() {
     _refreshData();
+    // TODO: remove once we're doing this in init of attesting
+    this.store.encointer.purgeAttestations();
     super.initState();
   }
 
