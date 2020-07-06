@@ -166,7 +166,7 @@ class _WalletAppState extends State<WalletApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'PolkaWallet',
+      title: 'EncointerWallet',
       localizationsDelegates: [
         AppLocalizationsDelegate(_locale),
         GlobalMaterialLocalizations.delegate,
