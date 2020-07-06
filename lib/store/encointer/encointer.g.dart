@@ -6,7 +6,7 @@ part of 'encointer.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$EncointerStore on _EncointerStore, Store {
   final _$currentPhaseAtom = Atom(name: '_EncointerStore.currentPhase');
@@ -320,6 +320,17 @@ mixin _$EncointerStore on _EncointerStore, Store {
         name: '_EncointerStore.setChosenCid');
     try {
       return super.setChosenCid(cid);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void addAttestation(dynamic idx, dynamic att) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(
+        name: '_EncointerStore.addAttestation');
+    try {
+      return super.addAttestation(idx, att);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }
