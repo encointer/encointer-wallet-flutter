@@ -51,10 +51,7 @@ class ApiEncointer {
     }
     var cid = store.encointer.chosenCid ?? store.encointer.currencyIdentifiers[0];
     await fetchNextMeetupLocation();
-    var loc = jsonEncode({
-      "lat": store.encointer.nextMeetupLocation.lat,
-      "lon": store.encointer.nextMeetupLocation.lon,
-    });
+    var loc = jsonEncode(store.encointer.nextMeetupLocation);
     var time = await apiRoot.evalJavascript('encointer.fetchNextMeetupTime("$cid", $loc)');
     print("Next Meetup Time: " + time.toString());
     store.encointer.setNextMeetupTime(time);

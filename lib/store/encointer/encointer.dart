@@ -47,7 +47,7 @@ abstract class _EncointerStore with Store {
   var myMeetupRegistryIndex = 0;
 
   @observable
-  var nextMeetupLocation = Location("0x", "0x");
+  var nextMeetupLocation = Location(BigInt.from(0x0),BigInt.from(0x0));
 
   @observable
   var participantIndex = 0;
