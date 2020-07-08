@@ -55,7 +55,7 @@ class _CurrencyChooserPanelState extends State<CurrencyChooserPanel> {
           child: Column(children: <Widget>[
             Text("Choose currency:"),
             FutureBuilder<List<dynamic>>(
-                future: webApi.encointer.fetchCurrencyIdentifiers(),
+                future: webApi.encointer.getCurrencyIdentifiers(),
                 builder: (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
                   if (snapshot.hasData) {
                     if (store.encointer.currencyIdentifiers.isEmpty) {

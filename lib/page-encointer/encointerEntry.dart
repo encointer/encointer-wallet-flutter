@@ -106,8 +106,8 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
     // simply for debug to test that subscriptions are working
     webApi.encointer.subscribeTimestamp(_timeStampSubscribeChannel);
 
-    webApi.encointer.fetchCurrencyIdentifiers();
-    webApi.encointer.fetchCurrentCeremonyIndex();
+    webApi.encointer.getCurrencyIdentifiers();
+    webApi.encointer.getCurrentCeremonyIndex();
 
     if (!store.settings.loading) {
       print('Subscribing to current phase');
@@ -129,7 +129,7 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<CeremonyPhase>(
-        future: webApi.encointer.fetchCurrentPhase(),
+        future: webApi.encointer.getCurrentPhase(),
         builder: (BuildContext context, AsyncSnapshot<CeremonyPhase> snapshot) {
           if (snapshot.hasData) {
             return Column(mainAxisSize: MainAxisSize.max, children: <Widget>[

@@ -75,7 +75,7 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
   Widget build(BuildContext context) {
     // only build dropdown after we have fetched the currency identifiers
     return FutureBuilder(
-        future: webApi.encointer.fetchParticipantIndex(),
+        future: webApi.encointer.getParticipantIndex(),
         builder: (context, AsyncSnapshot<int> snapshot) {
           if (snapshot.hasData) {
             return Column(children: <Widget>[

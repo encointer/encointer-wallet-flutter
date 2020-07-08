@@ -42,10 +42,10 @@ class _RegisteringPageState extends State<RegisteringPage> {
   }
 
   Future<void> _refresh() async {
-     webApi.encointer.fetchCurrencyIdentifiers();
-     webApi.encointer.fetchCurrentCeremonyIndex();
-     webApi.encointer.fetchNextMeetupTime();
-     webApi.encointer.fetchParticipantIndex();
+     webApi.encointer.getCurrencyIdentifiers();
+     webApi.encointer.getCurrentCeremonyIndex();
+     webApi.encointer.getNextMeetupTime();
+     webApi.encointer.getParticipantIndex();
   }
 
   @override
