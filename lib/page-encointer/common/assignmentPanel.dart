@@ -53,9 +53,9 @@ class _AssignmentPanelState extends State<AssignmentPanel> {
           padding: EdgeInsets.all(8),
           child: Column(children: <Widget>[
             FutureBuilder<DateTime>(
-                future: webApi.encointer.fetchNextMeetupTime(),
-                builder:
-                    (BuildContext context, AsyncSnapshot<DateTime> snapshot) {
+                future: webApi.encointer.getNextMeetupTime(),
+                builder: (BuildContext context,
+                    AsyncSnapshot<DateTime> snapshot) {
                   if (snapshot.hasData) {
                     if (store.encointer.currencyIdentifiers.isEmpty) {
                       store.encointer.setChosenCid("");

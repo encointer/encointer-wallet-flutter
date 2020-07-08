@@ -72,7 +72,7 @@ class _AttestingPageState extends State<AttestingPage> {
     await webApi.encointer.getClaimOfAttendance(_amountAttendees);
     print("Claim: " + claimHex);
 
-    var meetupRegistry = await webApi.encointer.fetchMeetupRegistry();
+    var meetupRegistry = await webApi.encointer.getMeetupRegistry();
 /*    var meetupRegistry = List.filled(amount, '0x44495e0e8733d0b65ea1333c8bf7f4c54dc9f580b38aaadc3d771c771fb70260');
     meetupRegistry[0] = '0x11195e0e8733d0b65ea1333c8bf7f4c54dc9f580b38aaadc3d771c771fb70260';
     meetupRegistry[1] = store.account.currentAccountPubKey;
@@ -164,7 +164,7 @@ class _AttestingPageState extends State<AttestingPage> {
                         _reportAttestationsCount(
                             context, store.encointer.attestations)),
                 FutureBuilder<int>(
-                    future: webApi.encointer.fetchMeetupIndex(),
+                    future: webApi.encointer.getMeetupIndex(),
                     builder:
                         (BuildContext context, AsyncSnapshot<int> snapshot) {
                       if (snapshot.hasData) {

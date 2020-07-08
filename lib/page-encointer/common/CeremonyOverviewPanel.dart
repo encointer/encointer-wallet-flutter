@@ -44,12 +44,12 @@ class _CeremonyOverviewPanelState extends State<CeremonyOverviewPanel> {
     //webApi.encointer.fetchCurrentCeremonyIndex();
     //await webApi.encointer.fetchCurrencyIdentifiers();
     // what follows depends on the above
-    webApi.encointer.fetchParticipantIndex();
-    webApi.encointer.fetchParticipantCount();
-    await webApi.encointer.fetchMeetupIndex();
+    webApi.encointer.getParticipantIndex();
+    webApi.encointer.getParticipantCount();
+    await webApi.encointer.getMeetupIndex();
     // what follows depends on the above
-    webApi.encointer.fetchNextMeetupTime();
-    webApi.encointer.fetchNextMeetupLocation();
+    webApi.encointer.getNextMeetupTime();
+    webApi.encointer.getNextMeetupLocation();
   }
 
   @override
