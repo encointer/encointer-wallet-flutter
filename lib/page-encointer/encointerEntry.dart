@@ -150,11 +150,9 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
     //return AttestingPage(store);
     switch (phase) {
       case CeremonyPhase.REGISTERING:
-//        return RegisteringPage(store);
-        return AttestingPage(store);
+        return RegisteringPage(store);
       case CeremonyPhase.ASSIGNING:
-//        return AssigningPage(store);
-        return AttestingPage(store);
+        return AssigningPage(store);
       case CeremonyPhase.ATTESTING:
         return AttestingPage(store);
     }
