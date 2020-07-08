@@ -184,13 +184,13 @@ class _AttestingPageState extends State<AttestingPage> {
         .length;
     return Column(children: <Widget>[
       Text("you have been attested by " + count.toString() + " others"),
-      count > 0
-          ? RoundedButton(
+//      count > 0 ?
+      RoundedButton(
           text: "submit attestations",
           onPressed: () =>
               _submit(context) // for testing always allow sending
       )
-          : Container()
+//          : Container()
     ]);
   }
 
@@ -206,14 +206,19 @@ class _AttestingPageState extends State<AttestingPage> {
         '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d3f00000022c51e6a656b19dd1e34c6126a75b8af02b38eedbeec51865063f142c83d40d301000000000000002aacf17b230000000000268b120000006da47bd57201000003000000';
     Map res =
     await webApi.encointer.attestClaimOfAttendance(claimTest, "123qwe");
+//    await webApi.encointer.attestClaimOfAttendance(claimTest, "123Welcome");
+//    List<String> attestationsHex = [
+//      "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d3f00000022c51e6a656b19dd1e34c6126a75b8af02b38eedbeec51865063f142c83d40d301000000000000002aacf17b230000000000268b120000006da47bd572010000030000000172733a8a053d1a66178950336bf2a7e1619583281eac6658c1032a65641c6e6d3facd877b53c2e1b5565a68c9f35778c74e53a511fc235526afc93a350f5ec848eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48",
+//      "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d3f00000022c51e6a656b19dd1e34c6126a75b8af02b38eedbeec51865063f142c83d40d301000000000000002aacf17b230000000000268b120000006da47bd572010000030000000172733a8a053d1a66178950336bf2a7e1619583281eac6658c1032a65641c6e6d3facd877b53c2e1b5565a68c9f35778c74e53a511fc235526afc93a350f5ec848eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48"
+//    ];
+//    print("All attestationshex: " + jsonEncode(attestationsHex));
+//    var attObj = await webApi.encointer.parseAttestation(attestationsHex[0]);
+
     List<Attestation> attestations = new List();
     attestations.add(Attestation.fromJson(res['attestation']));
     attestations.add(Attestation.fromJson(res['attestation']));
-    //attestations = [
-    //  "0xbe9db4ecc6821c60f81a38c50526c971a94901368555b64e091da9bca8e7cc7ffb0f0000cef98d744e978f3e33724cfb5677d2104e020909fbec6e97c2c594aa607d78cb010000000000000000000000000000000000000000000000a07a2113730100000a000000a22d93c78073c7a1923a4dad3a1a186c0aa8135a86e6ff40612029bfade5423ced9a032c18c0023501ed0bde364d6fd25ce0853d3ae0d191a17b9f0304089b8abe9db4ecc6821c60f81a38c50526c971a94901368555b64e091da9bca8e7cc7f",
-    //  "0xbe9db4ecc6821c60f81a38c50526c971a94901368555b64e091da9bca8e7cc7ffb0f0000cef98d744e978f3e33724cfb5677d2104e020909fbec6e97c2c594aa607d78cb010000000000000000000000000000000000000000000000a07a2113730100000a000000a22d93c78073c7a1923a4dad3a1a186c0aa8135a86e6ff40612029bfade5423ced9a032c18c0023501ed0bde364d6fd25ce0853d3ae0d191a17b9f0304089b8abe9db4ecc6821c60f81a38c50526c971a94901368555b64e091da9bca8e7cc7f"
-    //];
-    print("All attestations flat: " + jsonEncode(attestations));
+    print("Attestations: " + jsonEncode(attestations[0]));
+
     //return;
     var args = {
       "title": 'register_attestations',
@@ -224,9 +229,9 @@ class _AttestingPageState extends State<AttestingPage> {
       "detail": jsonEncode({
         "attestations": attestations,
       }),
-      "params": [
-        null, // TODO: attestations,
-      ],
+      "params": [attestations],
+//      "rawParam": '[[${attestationsHex.join(',')}]]',
+//      "rawParam": '[$attestations]',
       'onFinish': (BuildContext txPageContext, Map res) {
         Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
       }
