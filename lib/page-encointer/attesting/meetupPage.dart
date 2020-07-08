@@ -9,7 +9,10 @@ import 'package:polka_wallet/common/components/addressIcon.dart';
 import 'package:polka_wallet/common/components/roundedButton.dart';
 import 'package:polka_wallet/common/components/roundedCard.dart';
 import 'package:polka_wallet/page/account/txConfirmPage.dart';
+import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
+import 'package:polka_wallet/store/encointer/types/attestation.dart';
+import 'package:polka_wallet/store/encointer/types/location.dart';
 import 'package:polka_wallet/utils/UI.dart';
 import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
@@ -46,32 +49,6 @@ class _MeetupPageState extends State<MeetupPage> {
         .toList();
   }
 
-  Future<void> _submit(BuildContext context) async {
-    var attestations = store.encointer.attestations
-
-
-    .map((key, value) => MapEntry(key, value.otherAttestation))
-        .values
-        .toList();
-    var args = {
-      "title": 'register_attestations',
-      "txInfo": {
-        "module": 'encointerCeremonies',
-        "call": 'registerAttestations',
-      },
-      "detail": jsonEncode({
-        "attestations": attestations,
-      }),
-      "params": [
-        attestations,
-      ],
-      'onFinish': (BuildContext txPageContext, Map res) {
-        Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
-        globalBalanceRefreshKey.currentState.show();
-      }
-    };
-    Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
-  }
 
   @override
   void initState() {
@@ -99,13 +76,25 @@ class _MeetupPageState extends State<MeetupPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      Text("myself: "),
+                      //AddressIcon(store.account.currentAddress, size: 64),
+                      Container(
+                          margin: const EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.all(8.0),
+                          //color: Colors.lime,
+                          decoration: BoxDecoration(
+                              color: Colors.yellow,
+                              border: Border.all(
+                                color: Colors.blue,
+                              ),
+                              borderRadius: BorderRadius.all(Radius.circular(20))
+                          ),
+                          child: Text(store.encointer.myMeetupRegistryIndex.toString())   //AddressIcon(attestation.pubKey, size: 64),
+                      ),
                       Text(
-                        dic['encointer'] ?? 'Encointer Platform',
+                        Fmt.address(store.account.currentAddress),
                         style: TextStyle(
-                          fontSize: 20,
-                          color: Theme
-                              .of(context)
-                              .cardColor,
+                          fontSize: 16,
                           fontWeight: FontWeight.w500,
                         ),
                       )
@@ -120,7 +109,7 @@ class _MeetupPageState extends State<MeetupPage> {
                 ),
                 RoundedButton(
                   text: dic['meetup.complete'],
-                  onPressed: () =>  _submit(context)
+                  onPressed: () =>  Navigator.popUntil(context, ModalRoute.withName('/'))
                 )
               ]
           ),

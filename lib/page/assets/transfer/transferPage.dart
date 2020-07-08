@@ -88,7 +88,9 @@ class _TransferPageState extends State<TransferPage> {
           Fmt.tokenInt(_amountCtrl.text.trim(), decimals: decimals).toString(),
         ],
       };
-      bool isEncointer = store.settings.endpoint.info == networkEndpointEncointerGesell.info;
+      bool isEncointer = (store.settings.endpoint.info == networkEndpointEncointerGesell.info ||
+          store.settings.endpoint.info == networkEndpointEncointerGesellDev.info ||
+          store.settings.endpoint.info == networkEndpointEncointerCantillon.info);
       if (isEncointer) {
         args['txInfo'] = {
           "module": 'encointer_balances',

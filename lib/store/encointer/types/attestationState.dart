@@ -5,52 +5,25 @@ import 'package:polka_wallet/common/components/passwordInputDialog.dart';
 import 'attestation.dart';
 import 'claimOfAttendance.dart';
 
-@observable
-class AttestationState {
-  AttestationState(this.pubKey);
+part 'attestationState.g.dart';
 
+class AttestationState = _AttestationState with _$AttestationState;
+
+abstract class _AttestationState with Store {
+  _AttestationState(this.pubKey);
   String pubKey;
-//  int meetupRegistryIndex;
-  bool _attestedOther = false;
-  bool _otherAttestedYou = false;
-  Attestation _otherAttestation;
-  Attestation _yourAttestation;
 
   @observable
-  bool get attestedOther {
-    return _attestedOther;
-  }
+  bool done = false;
 
   @observable
-  bool get otherAttestedYou {
-    return _otherAttestedYou;
-  }
-
-  @computed
-  bool get complete { return this._attestedOther && this._otherAttestedYou; }
-
-  Attestation get otherAttestation {
-    return _otherAttestation;
-  }
-
-  set otherAttestation(Attestation attestation) {
-    _attestedOther = true;
-    otherAttestation= attestation;
-  }
-
-  Attestation get yourAttestation {
-    return _yourAttestation;
-  }
-
-  set yourAttestation(Attestation attestation) {
-    _otherAttestedYou = true;
-    yourAttestation = attestation;
-  }
+  String yourAttestation;
 
   @action
-  void switchState() {
-    _attestedOther = !attestedOther;
-    _otherAttestedYou = !otherAttestedYou;
+  void setAttestation(String att) {
+    yourAttestation = att;
+    done = true;
+    print("attestation done for " + pubKey);
   }
 
 }

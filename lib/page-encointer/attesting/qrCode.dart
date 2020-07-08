@@ -23,7 +23,10 @@ class QrCode extends StatelessWidget {
     String qrCodeData = args['qrCodeData'];
 
     bool isKusama = store.settings.endpoint.info == networkEndpointKusama.info;
-    bool isEncointer = store.settings.endpoint.info == networkEndpointEncointerGesell.info;
+    bool isEncointer = store.settings.endpoint.info == networkEndpointEncointerGesell.info ||
+            store.settings.endpoint.info == networkEndpointEncointerGesellDev.info ||
+            store.settings.endpoint.info == networkEndpointEncointerCantillon.info;
+
     return Scaffold(
       backgroundColor: Colors.grey,
       appBar: AppBar(
@@ -68,14 +71,14 @@ class QrCode extends StatelessWidget {
                           borderRadius:
                               BorderRadius.all(const Radius.circular(8)),
                         ),
-                        margin: EdgeInsets.fromLTRB(48, 24, 48, 24),
+                        //margin: EdgeInsets.fromLTRB(64, 24, 48, 64),
                         child: QrImage(
                           data: qrCodeData,
-                          size: 200,
-                          embeddedImage:
-                              AssetImage('assets/images/public/app.png'),
-                          embeddedImageStyle:
-                              QrEmbeddedImageStyle(size: Size(40, 40)),
+                          size: 350,
+                          //embeddedImage:
+                          //    AssetImage('assets/images/public/app.png'),
+                          //embeddedImageStyle:
+                          //    QrEmbeddedImageStyle(size: Size(40, 40)),
                         ),
                       ),
                       Container(

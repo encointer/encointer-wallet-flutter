@@ -19,6 +19,13 @@ abstract class _EncointerStore with Store {
 
   final AppStore rootStore;
   final String cacheTxsTransferKey = 'transfer_txs';
+  final String encointerCurrencyKey = 'wallet_encointer_currency';
+  final String encointerAttestationsKey = 'wallet_encointer_attestations';
+
+
+  String _getCacheKey(String key) {
+    return '${rootStore.settings.endpoint.info}_$key';
+  }
 
   // Note: In synchronous code, every modification of an @obervable is tracked by mobx and
   // fires a reaction. However, modifications in asynchronous code must be wrapped in
@@ -40,7 +47,7 @@ abstract class _EncointerStore with Store {
   var myMeetupRegistryIndex = 0;
 
   @observable
-  var nextMeetupLocation = Location(0, 0);
+  var nextMeetupLocation = Location(BigInt.from(0x0),BigInt.from(0x0));
 
   @observable
   var participantIndex = 0;
@@ -52,10 +59,10 @@ abstract class _EncointerStore with Store {
   var timeStamp = 0;
 
   @observable
-  List<dynamic> currencyIdentifiers = ["0xf26bfaa0feee0968ec0637e1933e64cd1947294d3b667d43b76b3915fc330b53"];
+  List<dynamic> currencyIdentifiers = [];
 
   @observable
-  var chosenCid = "0xf26bfaa0feee0968ec0637e1933e64cd1947294d3b667d43b76b3915fc330b53";
+  var chosenCid = "";
 
   @observable
   Map<int, AttestationState> attestations = Map<int, AttestationState>();
@@ -101,6 +108,15 @@ abstract class _EncointerStore with Store {
   @action
   void setChosenCid(cid) {
     chosenCid = cid;
+    rootStore.localStorage
+        .setObject(_getCacheKey(encointerCurrencyKey), cid);
+  }
+
+  @action
+  void addAttestation(idx, att) {
+    attestations[idx].setAttestation(att);
+    rootStore.localStorage
+        .setObject(_getCacheKey(encointerAttestationsKey), attestations);
   }
 
   @action
@@ -114,8 +130,8 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setTimestamp(int timestamp) {
-    timestamp = timestamp;
+  void setTimestamp(int time) {
+    timeStamp = time;
   }
 
   @action
@@ -159,6 +175,18 @@ abstract class _EncointerStore with Store {
 
   @action
   Future<void> loadCache() async {
+    var data = await rootStore.localStorage.getObject(_getCacheKey(encointerCurrencyKey));
+    if (data != null) {
+      print("found cached choice of cid. will recover it: " + data.toString());
+      setChosenCid(data);
+    }
+
+    data = await rootStore.localStorage.getObject(_getCacheKey(encointerAttestationsKey));
+    if (data != null) {
+      print("found cached attestations. will recover them");
+      attestations = data;
+    }
+
   }
 
 }

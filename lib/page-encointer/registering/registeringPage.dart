@@ -55,13 +55,9 @@ class _RegisteringPageState extends State<RegisteringPage> {
     return  SafeArea(
           child: Column(
               children: <Widget>[
-                Observer(
-                    builder: (_) => Text(store.encointer.currentPhase.toString())
-                ),
-                RegisterParticipantPanel(store),
-                Text("Next Ceremony Will Take Place on:"),
-                Observer(
-                    builder: (_) => Text(new DateTime.fromMillisecondsSinceEpoch(store.encointer.nextMeetupTime).toIso8601String())
+                Container(
+                  padding: EdgeInsets.fromLTRB(16, 32, 16, 32),
+                  child: RegisterParticipantPanel(store),
                 ),
               ]
           ),

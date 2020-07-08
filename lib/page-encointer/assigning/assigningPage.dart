@@ -7,7 +7,7 @@ import 'package:polka_wallet/common/components/infoItem.dart';
 import 'package:polka_wallet/common/components/roundedButton.dart';
 import 'package:polka_wallet/common/components/roundedCard.dart';
 import 'package:polka_wallet/common/consts/settings.dart';
-import 'package:polka_wallet/page-encointer/common/CeremonyOverviewPanel.dart';
+import 'package:polka_wallet/page-encointer/common/assignmentPanel.dart';
 import 'package:polka_wallet/page/account/txConfirmPage.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
@@ -41,11 +41,12 @@ class _AssigningPageState extends State<AssigningPage> {
   }
 
   Future<void> _refreshData() async {
-    await webApi.encointer.fetchParticipantIndex();
-    await webApi.encointer.fetchParticipantCount();
-    await webApi.encointer.fetchMeetupIndex();
-    await webApi.encointer.fetchNextMeetupTime();
-    await webApi.encointer.fetchNextMeetupLocation();
+    // refreshed by parent!
+    // await webApi.encointer.fetchParticipantIndex();
+    // await webApi.encointer.fetchParticipantCount();
+    // await webApi.encointer.fetchMeetupIndex();
+    //await webApi.encointer.fetchNextMeetupTime();
+    //await webApi.encointer.fetchNextMeetupLocation();
   }
 
   @override
@@ -55,7 +56,7 @@ class _AssigningPageState extends State<AssigningPage> {
     return SafeArea(
       child: Column(
           children: <Widget>[
-            CeremonyOverviewPanel(store),
+            AssignmentPanel(store),
           ]
       ),
     );

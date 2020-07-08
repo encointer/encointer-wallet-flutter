@@ -87,7 +87,9 @@ class _WalletAppState extends State<WalletApp> {
   ThemeData _theme = appTheme;
 
   void _changeTheme() {
-    if (_appStore.settings.endpoint.info == networkEndpointEncointerGesell.info) {
+    if (_appStore.settings.endpoint.info == networkEndpointEncointerGesell.info ||
+        _appStore.settings.endpoint.info == networkEndpointEncointerGesellDev.info||
+        _appStore.settings.endpoint.info == networkEndpointEncointerCantillon.info) {
       setState(() {
         _theme = appThemeEncointer;
       });
@@ -190,8 +192,10 @@ class _WalletAppState extends State<WalletApp> {
                     builder: (_, AsyncSnapshot<int> snapshot) {
                       if (snapshot.hasData) {
                         return snapshot.data > 0
-                            ? network.info == networkEndpointEncointerGesell.info
-                                ? EncointerHomePage(_appStore)
+                            ? (network.info == networkEndpointEncointerGesell.info ||
+                            network.info == networkEndpointEncointerGesellDev.info ||
+                            network.info == networkEndpointEncointerCantillon.info)
+                            ? EncointerHomePage(_appStore)
                                 : HomePage(_appStore)
                             : CreateAccountEntryPage();
                       } else {

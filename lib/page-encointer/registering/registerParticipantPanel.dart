@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:intl/intl.dart';
 import 'package:polka_wallet/common/components/infoItem.dart';
 import 'package:polka_wallet/common/components/roundedButton.dart';
 import 'package:polka_wallet/common/components/roundedCard.dart';
@@ -22,8 +23,6 @@ class RegisterParticipantPanel extends StatefulWidget {
 
   @override
   _RegisterParticipantPanel createState() => _RegisterParticipantPanel(store);
-
-
 }
 
 class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
@@ -38,7 +37,8 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
   }
 
   Future<void> _refreshData() async {
-    await webApi.encointer.fetchCurrencyIdentifiers();
+    //await webApi.encointer.fetchCurrencyIdentifiers();
+    //await webApi.encointer.fetchParticipantIndex();
   }
 
   Future<void> _submit() async {
@@ -63,52 +63,40 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
       }
     };
     Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
+    //set dummy value to disable register button until refreshed
+    store.encointer.setParticipantIndex(42424242);
+    // this will fetch too early as the above only waits until Broadcast instead of InBlock
+    // await webApi.encointer.fetchParticipantIndex();
   }
-
 
   @override
   Widget build(BuildContext context) {
     // only build dropdown after we have fetched the currency identifiers
-    return  FutureBuilder(
-        builder: (context, _currencyIdentifiers) => Column(
-            children: <Widget>[
-              Text("Currency Identifiers:"),
-              DropdownButton<dynamic>(
-                value: store.encointer.chosenCid,
-                icon: Icon(Icons.arrow_downward),
-                iconSize: 16,
-                elevation: 16,
-                onChanged: (newValue) {
-                  setState(() {
-                    if (store.encointer.participantIndex == 0) {
-                      store.encointer.chosenCid = newValue;
-                    }
-                  });
-                },
-                items: store.encointer.currencyIdentifiers
-                    .map<DropdownMenuItem<dynamic>>((value) =>
-                    DropdownMenuItem<dynamic>(
-                      value: value,
-                      child: Text(Fmt.currencyIdentifier(value)),
-                    )
-                ).toList(),
-              ),
+    return FutureBuilder(
+        future: webApi.encointer.fetchParticipantIndex(),
+        builder: (context, AsyncSnapshot<int> snapshot) {
+          if (snapshot.hasData) {
+            return Column(children: <Widget>[
               Observer(
-                  builder: (_) => store.encointer.participantIndex == 0 ?
-                  RoundedButton(
-                      text: "Register Participant for Ceremony",
-                      onPressed: () => _submit()
-                  ): RoundedButton(
-                      text: "Unregister for: " + Fmt.currencyIdentifier(store.encointer.chosenCid).toString(),
-                      onPressed: () => {}
-                  )
-              )
-            ]
-        ),
-      future: webApi.encointer.fetchCurrencyIdentifiers(),
-    );
+                  builder: (_) => Column(children: <Widget>[
+                        Text("Next ceremony will happen at high sun on:"),
+                        Text(DateFormat('yyyy-MM-dd').format(
+                            new DateTime.fromMillisecondsSinceEpoch(
+                                store.encointer.nextMeetupTime)))
+                      ])),
+              Observer(
+                  builder: (_) => store.encointer.participantIndex == 0
+                      ? RoundedButton(
+                          text: "Register Participant",
+                          onPressed: () => _submit())
+                      : RoundedButton(
+                          text: "Unregister",
+                          //for: " + Fmt.currencyIdentifier(store.encointer.chosenCid).toString(),
+                          onPressed: null))
+            ]);
+          } else {
+            return CupertinoActivityIndicator();
+          }
+        });
   }
-
 }
-
-
