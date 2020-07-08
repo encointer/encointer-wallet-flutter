@@ -229,7 +229,7 @@ class _AttestingPageState extends State<AttestingPage> {
       "detail": jsonEncode({
         "attestations": attestations,
       }),
-      "params": [[attestations]],
+      "params": [attestations],
 //      "rawParam": '[[${attestationsHex.join(',')}]]',
 //      "rawParam": '[$attestations]',
       'onFinish': (BuildContext txPageContext, Map res) {
