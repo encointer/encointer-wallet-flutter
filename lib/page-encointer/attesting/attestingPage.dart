@@ -217,7 +217,7 @@ class _AttestingPageState extends State<AttestingPage> {
     List<Attestation> attestations = new List();
     attestations.add(Attestation.fromJson(res['attestation']));
     attestations.add(Attestation.fromJson(res['attestation']));
-    print("Attestations: " + attestations[0].toString());
+    print("Attestations: " + jsonEncode(attestations[0]));
 
     //return;
     var args = {

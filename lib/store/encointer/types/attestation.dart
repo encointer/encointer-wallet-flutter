@@ -14,7 +14,7 @@ class Attestation {
   Attestation(this.claim, this.signature, this.public);
 
   ClaimOfAttendance claim;
-  String signature;
+  Map signature;
   String public;
 
   factory Attestation.fromJson(Map<String, dynamic> json) =>
