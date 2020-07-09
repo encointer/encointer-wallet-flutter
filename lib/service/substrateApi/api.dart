@@ -169,6 +169,13 @@ class Api {
       store.settings.setNetworkName(null);
       return;
     }
+
+    // untested
+    if (store.settings.endpoint.info == networkEndpointEncointerCantillon.info) {
+      var worker = store.settings.endpoint.worker;
+      String res = await evalJavascript('settings.setWorkerEndpoint("$worker")');
+    }
+
     fetchNetworkProps();
   }
 
@@ -183,6 +190,13 @@ class Api {
       store.settings.setNetworkName(null);
       return;
     }
+
+    // setWorker endpoint on js side
+    if (store.settings.endpoint.info == networkEndpointEncointerCantillon.info) {
+      var worker = store.settings.endpoint.worker;
+      String res = await evalJavascript('settings.setWorkerEndpoint("$worker")');
+    }
+
     EndpointData connected =
         store.settings.endpointList.firstWhere((i) => i.value == res);
     store.settings.setEndpoint(connected);

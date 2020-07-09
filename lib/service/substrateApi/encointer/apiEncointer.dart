@@ -164,4 +164,13 @@ class ApiEncointer {
     var att = await apiRoot.evalJavascript('account.attestClaimOfAttendance("$claimHex", "$pubKey", "$password")');
     return att;
   }
+
+// untested
+  Future<dynamic> getBalanceFromWorker() async {
+    var pubKey = store.account.currentAccountPubKey;
+    print("Public key:" + pubKey);
+    var cid = store.encointer.chosenCid;
+    var balance = await apiRoot.evalJavascript('worker.getBalance("$pubKey", "$cid", "123qwe")');
+    print("balance: " + balance);
+  }
 }

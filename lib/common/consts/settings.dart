@@ -33,6 +33,7 @@ EndpointData networkEndpointEncointerCantillon = EndpointData.fromJson(const {
   'ss58': 42,
   'text': 'Encointer Cantillon (Hosted by Encointer Association)',
   'value': 'wss://cantillon.encointer.org',
+  'worker': 'wss://substratee03.scs.ch'
 });
 
 List<EndpointData> networkEndpoints = [

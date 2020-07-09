@@ -230,4 +230,5 @@ abstract class _EndpointData {
   int ss58 = 42;
   String text = '';
   String value = '';
+  String worker = ''; // only relevant for cantillon
 }
