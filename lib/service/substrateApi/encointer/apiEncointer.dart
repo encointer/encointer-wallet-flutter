@@ -6,6 +6,7 @@ import 'package:polka_wallet/common/consts/settings.dart';
 import 'package:polka_wallet/service/faucet.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
+import 'package:polka_wallet/store/encointer/types/attestation.dart';
 import 'package:polka_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:polka_wallet/store/encointer/types/location.dart';
 import 'package:polka_wallet/utils/format.dart';
@@ -152,10 +153,12 @@ class ApiEncointer {
     return claimHex;
   }
 
-  Future<dynamic> parseAttestation(String attestationHex) async {
-    var attestation = await apiRoot.evalJavascript('encointer.parseAttestation("$attestationHex")');
-    print("Attestation parsed: " + attestation.toString());
-    return attestation;
+  Future<Attestation> parseAttestation(String attestationHex) async {
+    var attJson = await apiRoot.evalJavascript('encointer.parseAttestation("$attestationHex")');
+    //print("Attestation json: " + attJson.toString());
+    Attestation att = Attestation.fromJson(attJson);
+    //print("Attestation parsed: " + attJson.toString());
+    return att;
   }
 
   Future<dynamic> attestClaimOfAttendance(String claimHex, String password) async{

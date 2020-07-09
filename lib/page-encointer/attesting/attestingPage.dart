@@ -207,29 +207,21 @@ class _AttestingPageState extends State<AttestingPage> {
   }
 
   Future<void> _submit(BuildContext context) async {
-    print("All attestations full: " + store.encointer.attestations.toString());
-    /*var attestations = store.encointer.attestations
+    var attestationsHex = store.encointer.attestations
       .map((key, value) => MapEntry(key, value.yourAttestation))
         .values
         .where((x) => x != null)
         .toList();
-*/
-    const claimTest =
-        '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d3f00000022c51e6a656b19dd1e34c6126a75b8af02b38eedbeec51865063f142c83d40d301000000000000002aacf17b230000000000268b120000006da47bd57201000003000000';
-    Map res =
-    await webApi.encointer.attestClaimOfAttendance(claimTest, "123qwe");
-//    await webApi.encointer.attestClaimOfAttendance(claimTest, "123Welcome");
-//    List<String> attestationsHex = [
-//      "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d3f00000022c51e6a656b19dd1e34c6126a75b8af02b38eedbeec51865063f142c83d40d301000000000000002aacf17b230000000000268b120000006da47bd572010000030000000172733a8a053d1a66178950336bf2a7e1619583281eac6658c1032a65641c6e6d3facd877b53c2e1b5565a68c9f35778c74e53a511fc235526afc93a350f5ec848eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48",
-//      "0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d3f00000022c51e6a656b19dd1e34c6126a75b8af02b38eedbeec51865063f142c83d40d301000000000000002aacf17b230000000000268b120000006da47bd572010000030000000172733a8a053d1a66178950336bf2a7e1619583281eac6658c1032a65641c6e6d3facd877b53c2e1b5565a68c9f35778c74e53a511fc235526afc93a350f5ec848eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48"
-//    ];
-//    print("All attestationshex: " + jsonEncode(attestationsHex));
-//    var attObj = await webApi.encointer.parseAttestation(attestationsHex[0]);
 
     List<Attestation> attestations = new List();
-    attestations.add(Attestation.fromJson(res['attestation']));
-    attestations.add(Attestation.fromJson(res['attestation']));
-    print("Attestations: " + jsonEncode(attestations[0]));
+    for (int i = 0; i < attestationsHex.length; i++) {
+      attestations.add(
+          await webApi.encointer.parseAttestation(attestationsHex[i])
+      );
+    }
+
+    print("Attestations to be submitted: ");
+    attestations.forEach((x) => print(x.toJson()));
 
     //return;
     var args = {
@@ -238,9 +230,7 @@ class _AttestingPageState extends State<AttestingPage> {
         "module": 'encointerCeremonies',
         "call": 'registerAttestations',
       },
-      "detail": jsonEncode({
-        "attestations": attestations,
-      }),
+      "detail": "submitting ${attestations.length} attestations for the recent ceremony ",
       "params": [attestations],
 //      "rawParam": '[[${attestationsHex.join(',')}]]',
 //      "rawParam": '[$attestations]',
