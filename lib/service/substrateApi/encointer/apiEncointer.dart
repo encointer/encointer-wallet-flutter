@@ -172,10 +172,12 @@ class ApiEncointer {
   Future<List<dynamic>> getBalances() async {
     var pubKey = store.account.currentAccountPubKey;
     var data = await apiRoot.evalJavascript('encointer.getBalances("$pubKey")');
+
     List<dynamic> encointerBalances = data.map((e) =>
         EncointerBalanceData.fromJson(e)).toList();
 
     print("encointerBalances list: " + encointerBalances.toString());
+    encointerBalances.forEach((e) {store.encointer.addBalanceEntry(e.cid, e.balanceEntry);});
 
     return encointerBalances;
   }

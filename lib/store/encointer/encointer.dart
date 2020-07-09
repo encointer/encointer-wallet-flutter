@@ -1,6 +1,7 @@
 import 'package:mobx/mobx.dart';
 import 'package:polka_wallet/common/consts/settings.dart';
 import 'package:polka_wallet/store/encointer/types/attestationState.dart';
+import 'package:polka_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:polka_wallet/store/encointer/types/encointerTypes.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/store/assets/types/transferData.dart';
@@ -57,6 +58,9 @@ abstract class _EncointerStore with Store {
 
   @observable
   var timeStamp = 0;
+
+  @observable
+  Map<String, BalanceEntry> balanceEntries = new Map();
 
   @observable
   List<dynamic> currencyIdentifiers = [];
@@ -124,6 +128,11 @@ abstract class _EncointerStore with Store {
     attestations.clear();
     rootStore.localStorage
         .setObject(_getCacheKey(encointerAttestationsKey), attestations);
+  }
+
+  @action
+  void addBalanceEntry(cid, balanceEntry) {
+    balanceEntries[cid] = balanceEntry;
   }
 
 

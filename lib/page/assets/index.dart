@@ -48,6 +48,7 @@ class _AssetsState extends State<Assets> {
     if (isEncointer) {
       await Future.wait([
         webApi.assets.fetchBalance(store.account.currentAccount.pubKey),
+        webApi.encointer.getBalances(),
       ]);
     } else {
       await Future.wait([
@@ -151,6 +152,7 @@ class _AssetsState extends State<Assets> {
             title: Text(Fmt.accountName(context, acc)),
             subtitle: Text(network),
             trailing: isEncointer
+                ? !store.settings.loading
                 ? GestureDetector(
                     child: Padding(
                       padding: EdgeInsets.all(4),
@@ -179,6 +181,7 @@ class _AssetsState extends State<Assets> {
                       }
                     },
                   )
+                : Container(width: 8)
                 : isPolkadot
                     ? !store.settings.loading
                         ? GestureDetector(
@@ -262,7 +265,6 @@ class _AssetsState extends State<Assets> {
         }
 
         BalancesInfo balancesInfo = store.assets.balances[symbol];
-
         return RefreshIndicator(
           key: globalBalanceRefreshKey,
           onRefresh: _fetchBalance,
@@ -333,42 +335,41 @@ class _AssetsState extends State<Assets> {
                         );
                       }).toList(),
                     ),
-                    FutureBuilder<List<dynamic>>(
-                        future: webApi.encointer.getBalances(),
-                        builder:
-                            (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
-                          if (snapshot.hasData) {
-                            var data = snapshot.requireData;
-                            return Column(
-                              children: data.map((balanceData) {
-                                return RoundedCard(
-                                  margin: EdgeInsets.only(top: 16),
-                                  child: ListTile(
-                                    leading: Container(
-                                      width: 36,
-                                      child: Image.asset('assets/images/assets/ERT.png'),
-                                    ),
-                                    title: Text(Fmt.currencyIdentifier(balanceData.cid)),
-                                    trailing: Text(
-                                      Fmt.balance(balanceData.principal.toString(),
-                                          decimals: decimals),
-                                      style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
-                                          color: Colors.black54),
-                                    ),
-                                    onTap: () {
+                    Observer(
+                      builder: (_) =>
+                    store.encointer.balanceEntries.isNotEmpty ?
+                    Column(
+                      children: store.encointer.balanceEntries.entries.map((balanceData) {
+                        print("balance data: " + balanceData.toString());
+                        var cid = balanceData.key;
+                        var balanceEntry = balanceData.value;
+                        return RoundedCard(
+                          margin: EdgeInsets.only(top: 16),
+                          child: ListTile(
+                            leading: Container(
+                              width: 36,
+                              child: Image.asset('assets/images/assets/ERT.png'),
+                            ),
+                            title: Text(Fmt.currencyIdentifier(cid)),
+                            trailing: Text(
+//                              Fmt.balance(balanceEntry.principal.toString(),
+                              Fmt.balance(balanceEntry.principal.toString(),
+                                  decimals: decimals),
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  color: Colors.black54),
+                            ),
+                            onTap: () {
 //                                      Navigator.pushNamed(context, AssetPage.route,
 //                                          arguments: token);
-                                    },
-                                  ),
-                                );
-                              }).toList(),
-                            );
-                          } else {
-                            return CupertinoActivityIndicator();
-                          }
-                        }),
+                            },
+                          ),
+                        );
+                      }).toList(),
+                    )
+                    : Container(),
+                    ),
                     Container(
                       padding: EdgeInsets.only(bottom: 32),
                     ),
