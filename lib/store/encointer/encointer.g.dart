@@ -337,6 +337,17 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
+  void purgeAttestations() {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(
+        name: '_EncointerStore.purgeAttestations');
+    try {
+      return super.purgeAttestations();
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setParticipantIndex(int pIndex) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.setParticipantIndex');

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +17,7 @@ import 'package:polka_wallet/common/components/roundedCard.dart';
 import 'package:polka_wallet/store/account/types/accountData.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/store/assets/types/balancesInfo.dart';
+import 'package:polka_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:polka_wallet/utils/UI.dart';
 import 'package:polka_wallet/utils/format.dart';
 
@@ -331,6 +333,50 @@ class _AssetsState extends State<Assets> {
                         );
                       }).toList(),
                     ),
+                    FutureBuilder<dynamic>(
+                        future: webApi.encointer.getBalances(),
+                        builder:
+                            (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                          if (snapshot.hasData) {
+                            var data = snapshot.requireData;
+                            print("data" + data.toString());
+//                            listTyped.forEach((element) {print("encointerEntry: " + element.toString());});
+                            List<dynamic> encointerBalances = data.map((e) =>
+                                EncointerBalanceData.fromJson(e)).toList();
+                            print("encointerBalances list: " + encointerBalances.toString());
+
+                            return Column(
+                              children: encointerBalances.map((balanceData) {
+//                                  var balanceObj = jsonDecode(balanceData);
+                                print("balanceData: " + balanceData.toString());
+                                return RoundedCard(
+                                  margin: EdgeInsets.only(top: 16),
+                                  child: ListTile(
+                                    leading: Container(
+                                      width: 36,
+                                      child: Image.asset('assets/images/assets/ERT.png'),
+                                    ),
+                                    title: Text(balanceData.cid),
+                                    trailing: Text(
+                                      Fmt.balance(balanceData.principal.toString(),
+                                          decimals: decimals),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 20,
+                                          color: Colors.black54),
+                                    ),
+                                    onTap: () {
+//                                      Navigator.pushNamed(context, AssetPage.route,
+//                                          arguments: token);
+                                    },
+                                  ),
+                                );
+                              }).toList(),
+                            );
+                          } else {
+                            return CupertinoActivityIndicator();
+                          }
+                        }),
                     Container(
                       padding: EdgeInsets.only(bottom: 32),
                     ),
