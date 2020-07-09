@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
 
 // Run: `flutter pub run build_runner build` in order to create/update the *.g.dart
@@ -10,6 +12,11 @@ class EncointerBalanceData {
   final String cid;
   final num principal;
   final int blocknumber;
+
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 
   factory EncointerBalanceData.fromJson(Map<String, dynamic> json) =>
       _$EncointerBalanceDataFromJson(json);
