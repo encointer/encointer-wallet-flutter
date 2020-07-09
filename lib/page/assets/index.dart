@@ -333,22 +333,14 @@ class _AssetsState extends State<Assets> {
                         );
                       }).toList(),
                     ),
-                    FutureBuilder<dynamic>(
+                    FutureBuilder<List<dynamic>>(
                         future: webApi.encointer.getBalances(),
                         builder:
-                            (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                            (BuildContext context, AsyncSnapshot<List<dynamic>> snapshot) {
                           if (snapshot.hasData) {
                             var data = snapshot.requireData;
-                            print("data" + data.toString());
-//                            listTyped.forEach((element) {print("encointerEntry: " + element.toString());});
-                            List<dynamic> encointerBalances = data.map((e) =>
-                                EncointerBalanceData.fromJson(e)).toList();
-                            print("encointerBalances list: " + encointerBalances.toString());
-
                             return Column(
-                              children: encointerBalances.map((balanceData) {
-//                                  var balanceObj = jsonDecode(balanceData);
-                                print("balanceData: " + balanceData.toString());
+                              children: data.map((balanceData) {
                                 return RoundedCard(
                                   margin: EdgeInsets.only(top: 16),
                                   child: ListTile(
@@ -356,7 +348,7 @@ class _AssetsState extends State<Assets> {
                                       width: 36,
                                       child: Image.asset('assets/images/assets/ERT.png'),
                                     ),
-                                    title: Text(balanceData.cid),
+                                    title: Text(Fmt.currencyIdentifier(balanceData.cid)),
                                     trailing: Text(
                                       Fmt.balance(balanceData.principal.toString(),
                                           decimals: decimals),

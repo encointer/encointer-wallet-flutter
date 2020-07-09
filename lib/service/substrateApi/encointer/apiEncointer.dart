@@ -169,13 +169,15 @@ class ApiEncointer {
     return att;
   }
 
-  Future<dynamic> getBalances() async {
+  Future<List<dynamic>> getBalances() async {
     var pubKey = store.account.currentAccountPubKey;
-    print("Public key:" + pubKey);
-    var balances = await apiRoot.evalJavascript('encointer.getBalances("$pubKey")');
-//    Map<String, BalanceEntry> bMap = jsonDecode(balances);
-//    print("Balances: " + balances);
-    return balances;
+    var data = await apiRoot.evalJavascript('encointer.getBalances("$pubKey")');
+    List<dynamic> encointerBalances = data.map((e) =>
+        EncointerBalanceData.fromJson(e)).toList();
+
+    print("encointerBalances list: " + encointerBalances.toString());
+
+    return encointerBalances;
   }
 
 // untested
