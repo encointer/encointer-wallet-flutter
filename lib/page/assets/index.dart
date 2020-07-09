@@ -48,7 +48,6 @@ class _AssetsState extends State<Assets> {
     if (isEncointer) {
       await Future.wait([
         webApi.assets.fetchBalance(store.account.currentAccount.pubKey),
-        webApi.encointer.getBalances(),
       ]);
     } else {
       await Future.wait([
