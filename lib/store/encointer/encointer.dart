@@ -1,5 +1,6 @@
 import 'package:mobx/mobx.dart';
 import 'package:polka_wallet/common/consts/settings.dart';
+import 'package:polka_wallet/store/encointer/types/attestation.dart';
 import 'package:polka_wallet/store/encointer/types/attestationState.dart';
 import 'package:polka_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:polka_wallet/store/encointer/types/encointerTypes.dart';
@@ -201,7 +202,7 @@ abstract class _EncointerStore with Store {
     data = await rootStore.localStorage.getObject(_getCacheKey(encointerAttestationsKey));
     if (data != null) {
       print("found cached attestations. will recover them");
-      attestations = data;
+      attestations = Map.castFrom<String, dynamic, int, AttestationState>(data);
     }
 
   }
