@@ -169,6 +169,14 @@ class ApiEncointer {
     return att;
   }
 
+  Future<dynamic> sendFaucetTx() async {
+    var address = store.account.currentAddress;
+    var amount = Fmt.tokenInt('0.001');
+    var res = await apiRoot.evalJavascript('account.sendFaucetTx("$address", "$amount")');
+    print("Faucet Result :" + res.toString());
+    return res;
+  }
+
   Future<List<dynamic>> getBalances() async {
     var pubKey = store.account.currentAccountPubKey;
     var data = await apiRoot.evalJavascript('encointer.getBalances("$pubKey")');

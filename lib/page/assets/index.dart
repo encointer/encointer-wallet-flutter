@@ -80,15 +80,15 @@ class _AssetsState extends State<Assets> {
     setState(() {
       _faucetSubmitting = true;
     });
-/*    String res = await webApi.encointer.fetchFaucet();
 
+    var res = await webApi.encointer.sendFaucetTx();
     Timer(Duration(seconds: 3), () {
-      String dialogContent = I18n.of(context).acala['faucet.ok'];
+      String dialogContent = I18n.of(context).encointer['faucet.ok'];
       bool isOK = false;
       if (res == null) {
-        dialogContent = I18n.of(context).acala['faucet.error'];
+        dialogContent = I18n.of(context).encointer['faucet.error'];
       } else if (res == "LIMIT") {
-        dialogContent = I18n.of(context).acala['faucet.limit'];
+        dialogContent = I18n.of(context).encointer['faucet.limit'];
       } else {
         isOK = true;
       }
@@ -110,9 +110,9 @@ class _AssetsState extends State<Assets> {
                   if (isOK) {
                     globalBalanceRefreshKey.currentState.show();
                     NotificationPlugin.showNotification(
-                      int.parse(res.substring(0, 6)),
+                      int.parse(res['params'][1]), // todo: Id is used to group notifications. This is probably not a good idea
                       I18n.of(context).assets['notify.receive'],
-                      '{"ACA": 2, "aUSD": 2, "DOT": 2, "XBTC": 0.2}',
+                      'ERT ' + Fmt.balance(res['params'][1]).toString(),
                     );
                   }
                 },
@@ -122,7 +122,6 @@ class _AssetsState extends State<Assets> {
         },
       );
     });
-  */
   }
 
 
@@ -176,7 +175,7 @@ class _AssetsState extends State<Assets> {
                     ),
                     onTap: () {
                       if (acc.address != '') {
-                        //_getTokensFromFaucet();
+                        _getTokensFromFaucet();
                       }
                     },
                   )
