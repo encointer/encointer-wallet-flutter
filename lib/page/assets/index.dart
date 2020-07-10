@@ -266,8 +266,6 @@ class _AssetsState extends State<Assets> {
           currencyIds.retainWhere((i) => i != symbol);
         }
 
-        print("encointer balances" + store.encointer.balanceEntries.toString());
-
         BalancesInfo balancesInfo = store.assets.balances[symbol];
         return RefreshIndicator(
           key: globalBalanceRefreshKey,
@@ -342,7 +340,7 @@ class _AssetsState extends State<Assets> {
                     store.encointer.balanceEntries.isNotEmpty ?
                     Column(
                       children: store.encointer.balanceEntries.entries.map((balanceData) {
-                        print("balance data: " + balanceData.toString());
+//                        print("balance data: " + balanceData.toString());
                         var cid = balanceData.key;
                         var balanceEntry = balanceData.value;
                         return RoundedCard(
