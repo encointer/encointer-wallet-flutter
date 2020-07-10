@@ -77,18 +77,27 @@ class _AssetsState extends State<Assets> {
   }
 
   Future<void> _getTokensFromFaucet() async {
+    String symbol = store.settings.networkState.tokenSymbol;
+    BalancesInfo balancesInfo = store.assets.balances[symbol];
+    bool aboveLimit = false;
     setState(() {
       _faucetSubmitting = true;
     });
 
-    var res = await webApi.encointer.sendFaucetTx();
+    var res;
+    if (balancesInfo.freeBalance - Fmt.tokenInt('0.0001') > BigInt.zero) {
+      aboveLimit = true;
+    } else {
+      res = await webApi.encointer.sendFaucetTx();
+    }
+
     Timer(Duration(seconds: 3), () {
       String dialogContent = I18n.of(context).encointer['faucet.ok'];
       bool isOK = false;
-      if (res == null) {
-        dialogContent = I18n.of(context).encointer['faucet.error'];
-      } else if (res == "LIMIT") {
+      if (aboveLimit) {
         dialogContent = I18n.of(context).encointer['faucet.limit'];
+      } else if (res == null) {
+        dialogContent = I18n.of(context).encointer['faucet.error'];
       } else {
         isOK = true;
       }

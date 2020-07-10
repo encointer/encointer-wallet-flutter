@@ -4,7 +4,7 @@ const Map<String, String> enNctr = {
   'faucet.title': 'Faucet',
   'faucet.brief': 'Get test Tokens Encointer testnet.',
   'faucet.ok': 'Test Tokens were sent.',
-  'faucet.limit': 'Exceeds daily limit.',
+  'faucet.limit': 'You have enough funds, you don\'t need the faucet',
   'faucet.error': 'Request error, try again later.',
   'encointer.registering': 'Registering',
   'loan.txs': 'History',
