@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
+import 'package:mobx/mobx.dart';
 
 // Run: `flutter pub run build_runner build` in order to create/update the *.g.dart
 part 'encointerBalanceData.g.dart';
@@ -9,7 +10,9 @@ part 'encointerBalanceData.g.dart';
 class EncointerBalanceData {
   EncointerBalanceData(this.cid, this.balanceEntry);
 
+  @observable
   final String cid;
+  @observable
   final BalanceEntry balanceEntry;
 
   @override
@@ -27,7 +30,9 @@ class EncointerBalanceData {
 class BalanceEntry {
   BalanceEntry(this.principal, this.lastUpdate);
 
+  @observable
   final num principal;
+  @observable
   final int lastUpdate;
 
   @override

@@ -238,6 +238,10 @@ class _AssetsState extends State<Assets> {
       store.settings.setNetworkLoading(true);
       webApi.connectNodeAll();
     }
+
+    if (!store.settings.loading && store.settings.networkName != null) {
+      webApi.encointer.getBalances();
+    }
     super.initState();
   }
 
@@ -262,6 +266,8 @@ class _AssetsState extends State<Assets> {
           }
           currencyIds.retainWhere((i) => i != symbol);
         }
+
+        print("encointer balances" + store.encointer.balanceEntries.toString());
 
         BalancesInfo balancesInfo = store.assets.balances[symbol];
         return RefreshIndicator(
@@ -334,8 +340,6 @@ class _AssetsState extends State<Assets> {
                         );
                       }).toList(),
                     ),
-                    Observer(
-                      builder: (_) =>
                     store.encointer.balanceEntries.isNotEmpty ?
                     Column(
                       children: store.encointer.balanceEntries.entries.map((balanceData) {
@@ -351,7 +355,6 @@ class _AssetsState extends State<Assets> {
                             ),
                             title: Text(Fmt.currencyIdentifier(cid)),
                             trailing: Text(
-//                              Fmt.balance(balanceEntry.principal.toString(),
                               Fmt.balance(balanceEntry.principal.toString(),
                                   decimals: decimals),
                               style: TextStyle(
@@ -367,8 +370,7 @@ class _AssetsState extends State<Assets> {
                         );
                       }).toList(),
                     )
-                    : Container(),
-                    ),
+                        : Container(),
                     Container(
                       padding: EdgeInsets.only(bottom: 32),
                     ),
