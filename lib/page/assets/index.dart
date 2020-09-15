@@ -338,7 +338,8 @@ class _AssetsState extends State<Assets> {
                         );
                       }).toList(),
                     ),
-                    nonZeroEntointerEntries.isNotEmpty
+                    store.settings.endpointIsEncointer &&
+                            nonZeroEntointerEntries.isNotEmpty
                         ? Column(
                             children: nonZeroEntointerEntries.entries
                                 .map((balanceData) {
