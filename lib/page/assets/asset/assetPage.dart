@@ -166,8 +166,12 @@ class _AssetPageState extends State<AssetPage>
           builder: (_) {
             int decimals = store.settings.networkState.tokenDecimals;
 
-            BigInt balance =
-                Fmt.balanceInt(store.assets.tokenBalances[token.toUpperCase()]);
+            print("Is base token $isBaseToken");
+
+            BigInt balance = !params.isEncointerCommunityCurrency
+                ? Fmt.balanceInt(
+                    store.assets.tokenBalances[token.toUpperCase()])
+                : BigInt.from(store.encointer.balanceEntries[token].principal);
 
             BalancesInfo balancesInfo = store.assets.balances[symbol];
             String lockedInfo = '\n';
@@ -191,8 +195,12 @@ class _AssetPageState extends State<AssetPage>
                       Padding(
                         padding: EdgeInsets.only(bottom: 16),
                         child: Text(
-                          Fmt.token(isBaseToken ? balancesInfo.total : balance,
-                              decimals: decimals, length: 8),
+                          !params.isEncointerCommunityCurrency
+                              ? Fmt.token(
+                                  isBaseToken ? balancesInfo.total : balance,
+                                  decimals: decimals,
+                                  length: 8)
+                              : balance.toString(),
                           style: TextStyle(
                             color: titleColor,
                             fontSize: 28,
