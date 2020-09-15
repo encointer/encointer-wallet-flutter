@@ -20,14 +20,15 @@ import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
 
 class TransferPageParams {
-  TransferPageParams({
-    this.symbol,
-    this.address,
-    this.redirect,
-  });
+  TransferPageParams(
+      {this.symbol,
+      this.address,
+      this.redirect,
+      this.isEncointerCommunityCurrency = false});
   final String address;
   final String redirect;
   final String symbol;
+  final bool isEncointerCommunityCurrency;
 }
 
 class TransferPage extends StatefulWidget {
@@ -51,6 +52,7 @@ class _TransferPageState extends State<TransferPage> {
   final TextEditingController _amountCtrl = new TextEditingController();
 
   String _tokenSymbol;
+  bool _isEncointerCommunityCurrency;
 
   Future<void> _selectCurrency() async {
     List<String> symbolOptions =
@@ -87,7 +89,8 @@ class _TransferPageState extends State<TransferPage> {
           Fmt.tokenInt(_amountCtrl.text.trim(), decimals: decimals).toString(),
         ],
       };
-      if (store.settings.endpointIsEncointer) {
+      // Todo: why was it here depending on the endpoint? Do we not want to facilitate ERT transfers?
+      if (_isEncointerCommunityCurrency) {
         args['txInfo'] = {
           "module": 'encointer_balances',
           "call": 'transfer',
@@ -138,6 +141,7 @@ class _TransferPageState extends State<TransferPage> {
           _tokenSymbol = args.symbol;
         });
       }
+      _isEncointerCommunityCurrency = args.isEncointerCommunityCurrency;
     });
   }
 
@@ -162,7 +166,13 @@ class _TransferPageState extends State<TransferPage> {
 
         BigInt available = isBaseToken
             ? store.assets.balances[symbol.toUpperCase()].transferable
-            : Fmt.balanceInt(store.assets.tokenBalances[symbol.toUpperCase()]);
+            : Fmt.balanceInt(
+                store.assets.tokenBalances[symbol.toUpperCase()]); // BigInt
+
+        if (_isEncointerCommunityCurrency) {
+          available = BigInt.from(
+              store.encointer.balanceEntries[_tokenSymbol].principal);
+        }
 
         return Scaffold(
           appBar: AppBar(
@@ -261,8 +271,12 @@ class _TransferPageState extends State<TransferPage> {
                                               color: Theme.of(context)
                                                   .unselectedWidgetColor),
                                         ),
-                                        CurrencyWithIcon(
-                                            _tokenSymbol ?? baseTokenSymbol),
+                                        !_isEncointerCommunityCurrency
+                                            ? CurrencyWithIcon(
+                                                _tokenSymbol ?? baseTokenSymbol)
+                                            : Text(Fmt.currencyIdentifier(
+                                                _tokenSymbol,
+                                                pad: 8)),
                                       ],
                                     ),
                                     Icon(

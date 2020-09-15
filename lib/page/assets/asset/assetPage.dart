@@ -155,7 +155,9 @@ class _AssetPageState extends State<AssetPage>
     final titleColor = Theme.of(context).cardColor;
     return Scaffold(
       appBar: AppBar(
-        title: Text(token),
+        title: !params.isEncointerCommunityCurrency
+            ? Text(token)
+            : Text(Fmt.currencyIdentifier(token)),
         centerTitle: true,
         elevation: 0.0,
       ),
@@ -310,9 +312,10 @@ class _AssetPageState extends State<AssetPage>
                               context,
                               TransferPage.route,
                               arguments: TransferPageParams(
-                                redirect: AssetPage.route,
-                                symbol: token,
-                              ),
+                                  redirect: AssetPage.route,
+                                  symbol: token,
+                                  isEncointerCommunityCurrency:
+                                      params.isEncointerCommunityCurrency),
                             );
                           },
                         ),
