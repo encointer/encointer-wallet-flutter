@@ -141,7 +141,6 @@ class _TransferPageState extends State<TransferPage> {
           _tokenSymbol = args.symbol;
         });
       }
-      _isEncointerCommunityCurrency = args.isEncointerCommunityCurrency;
     });
   }
 
@@ -163,6 +162,10 @@ class _TransferPageState extends State<TransferPage> {
         List symbolOptions = store.settings.networkConst['currencyIds'];
 
         int decimals = store.settings.networkState.tokenDecimals;
+
+        TransferPageParams params = ModalRoute.of(context).settings.arguments;
+        _isEncointerCommunityCurrency = params.isEncointerCommunityCurrency;
+        _tokenSymbol = params.symbol;
 
         BigInt available; // BigInt
         if (_isEncointerCommunityCurrency) {
