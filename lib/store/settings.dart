@@ -48,6 +48,13 @@ abstract class _SettingsStore with Store {
   ObservableList<AccountData> contactList = ObservableList<AccountData>();
 
   @computed
+  bool get endpointIsEncointer {
+    return endpoint.info == networkEndpointEncointerGesell.info ||
+        endpoint.info == networkEndpointEncointerGesellDev.info ||
+        endpoint.info == networkEndpointEncointerCantillon.info;
+  }
+
+  @computed
   List<EndpointData> get endpointList {
     List<EndpointData> ls = List<EndpointData>.of(networkEndpoints);
     ls.retainWhere((i) => i.info == endpoint.info);
@@ -222,6 +229,12 @@ class EndpointData extends _EndpointData {
       _$EndpointDataFromJson(json);
   static Map<String, dynamic> toJson(EndpointData data) =>
       _$EndpointDataToJson(data);
+
+  bool isEncointer() {
+    return this.info == networkEndpointEncointerGesell.info ||
+        this.info == networkEndpointEncointerGesellDev.info ||
+        this.info == networkEndpointEncointerCantillon.info;
+  }
 }
 
 abstract class _EndpointData {

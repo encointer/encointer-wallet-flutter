@@ -7,7 +7,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:polka_wallet/common/components/currencyWithIcon.dart';
 import 'package:polka_wallet/common/components/roundedButton.dart';
-import 'package:polka_wallet/common/consts/settings.dart';
 import 'package:polka_wallet/common/regInputFormatter.dart';
 import 'package:polka_wallet/page/account/scanPage.dart';
 import 'package:polka_wallet/page/account/txConfirmPage.dart';
@@ -88,10 +87,7 @@ class _TransferPageState extends State<TransferPage> {
           Fmt.tokenInt(_amountCtrl.text.trim(), decimals: decimals).toString(),
         ],
       };
-      bool isEncointer = (store.settings.endpoint.info == networkEndpointEncointerGesell.info ||
-          store.settings.endpoint.info == networkEndpointEncointerGesellDev.info ||
-          store.settings.endpoint.info == networkEndpointEncointerCantillon.info);
-      if (isEncointer) {
+      if (store.settings.endpointIsEncointer) {
         args['txInfo'] = {
           "module": 'encointer_balances',
           "call": 'transfer',
@@ -108,7 +104,7 @@ class _TransferPageState extends State<TransferPage> {
       args['onFinish'] = (BuildContext txPageContext, Map res) {
         final TransferPageParams routeArgs =
             ModalRoute.of(context).settings.arguments;
-        if (isEncointer) {
+        if (store.settings.endpointIsEncointer) {
           store.encointer.setTransferTxs([res]);
         }
         Navigator.popUntil(

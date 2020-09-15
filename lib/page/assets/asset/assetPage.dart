@@ -18,6 +18,12 @@ import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
 import 'package:polka_wallet/utils/localStorage.dart';
 
+class AssetPageParams {
+  AssetPageParams({this.token, this.isEncointerCommunityCurrency = false});
+  final String token;
+  final bool isEncointerCommunityCurrency;
+}
+
 class AssetPage extends StatefulWidget {
   AssetPage(this.store);
 
@@ -104,9 +110,7 @@ class _AssetPageState extends State<AssetPage>
   List<Widget> _buildTxList() {
     List<Widget> res = [];
     final String token = ModalRoute.of(context).settings.arguments;
-    if (store.settings.endpoint.info == networkEndpointEncointerGesell.info ||
-        store.settings.endpoint.info == networkEndpointEncointerGesellDev.info ||
-        store.settings.endpoint.info == networkEndpointEncointerCantillon.info) {
+    if (store.settings.endpointIsEncointer) {
       List<TransferData> ls = store.encointer.txsTransfer.reversed.toList();
       ls.retainWhere((i) => i.token.toUpperCase() == token.toUpperCase());
       res.addAll(ls.map((i) {
@@ -136,9 +140,6 @@ class _AssetPageState extends State<AssetPage>
     final String symbol = store.settings.networkState.tokenSymbol;
     final String token = ModalRoute.of(context).settings.arguments;
     final bool isBaseToken = token == symbol;
-    final isEncointer = store.settings.endpoint.info == networkEndpointEncointerGesell.info ||
-        store.settings.endpoint.info == networkEndpointEncointerGesellDev.info ||
-        store.settings.endpoint.info == networkEndpointEncointerCantillon.info;
 
     final dic = I18n.of(context).assets;
 
@@ -247,7 +248,7 @@ class _AssetPageState extends State<AssetPage>
                     ],
                   ),
                 ),
-                !isEncointer
+                !store.settings.endpointIsEncointer
                     ? TabBar(
                         labelColor: Colors.black87,
                         labelStyle: TextStyle(fontSize: 18),
