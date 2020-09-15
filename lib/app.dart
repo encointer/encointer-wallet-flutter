@@ -65,7 +65,6 @@ import 'package:polka_wallet/service/notification.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/service/version.dart';
 import 'package:polka_wallet/store/app.dart';
-import 'package:polka_wallet/store/settings.dart';
 import 'package:polka_wallet/utils/UI.dart';
 
 import 'common/theme.dart';
@@ -179,16 +178,16 @@ class _WalletAppState extends State<WalletApp> {
       routes: {
         HomePage.route: (context) => Observer(
               builder: (_) {
-                EndpointData network = _appStore != null
-                    ? _appStore.settings.endpoint
-                    : EndpointData();
+                bool isEncointer = _appStore != null &&
+                    _appStore.settings.endpoint != null &&
+                    _appStore.settings.endpointIsEncointer;
                 return WillPopScopWrapper(
                   child: FutureBuilder<int>(
                     future: _initStore(context),
                     builder: (_, AsyncSnapshot<int> snapshot) {
                       if (snapshot.hasData) {
                         return snapshot.data > 0
-                            ? (network.isEncointer())
+                            ? isEncointer
                                 ? EncointerHomePage(_appStore)
                                 : HomePage(_appStore)
                             : CreateAccountEntryPage();

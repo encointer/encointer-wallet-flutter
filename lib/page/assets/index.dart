@@ -338,7 +338,7 @@ class _AssetsState extends State<Assets> {
                         );
                       }).toList(),
                     ),
-                    store.encointer.balanceEntries.isNotEmpty
+                    nonZeroEntointerEntries.isNotEmpty
                         ? Column(
                             children: nonZeroEntointerEntries.entries
                                 .map((balanceData) {

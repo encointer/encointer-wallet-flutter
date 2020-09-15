@@ -164,14 +164,15 @@ class _TransferPageState extends State<TransferPage> {
 
         int decimals = store.settings.networkState.tokenDecimals;
 
-        BigInt available = isBaseToken
-            ? store.assets.balances[symbol.toUpperCase()].transferable
-            : Fmt.balanceInt(
-                store.assets.tokenBalances[symbol.toUpperCase()]); // BigInt
-
+        BigInt available; // BigInt
         if (_isEncointerCommunityCurrency) {
           available = BigInt.from(
               store.encointer.balanceEntries[_tokenSymbol].principal);
+        } else {
+          available = isBaseToken
+              ? store.assets.balances[symbol.toUpperCase()].transferable
+              : Fmt.balanceInt(
+                  store.assets.tokenBalances[symbol.toUpperCase()]);
         }
 
         return Scaffold(

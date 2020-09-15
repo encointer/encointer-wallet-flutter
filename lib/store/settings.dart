@@ -229,12 +229,6 @@ class EndpointData extends _EndpointData {
       _$EndpointDataFromJson(json);
   static Map<String, dynamic> toJson(EndpointData data) =>
       _$EndpointDataToJson(data);
-
-  bool isEncointer() {
-    return this.info == networkEndpointEncointerGesell.info ||
-        this.info == networkEndpointEncointerGesellDev.info ||
-        this.info == networkEndpointEncointerCantillon.info;
-  }
 }
 
 abstract class _EndpointData {
