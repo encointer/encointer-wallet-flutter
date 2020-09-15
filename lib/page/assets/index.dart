@@ -261,9 +261,11 @@ class _AssetsState extends State<Assets> {
           currencyIds.retainWhere((i) => i != symbol);
         }
 
-        Map<String, BalanceEntry> nonZeroEntointerEntries = store
-            .encointer.balanceEntries
-          ..removeWhere((key, value) => value.principal == 0);
+        // Map<String, BalanceEntry> nonZeroEntointerEntries = store
+        //     .encointer.balanceEntries
+        //   ..removeWhere((key, value) => value.principal == 0);
+        Map<String, BalanceEntry> nonZeroEntointerEntries =
+            store.encointer.balanceEntries;
 
         BalancesInfo balancesInfo = store.assets.balances[symbol];
         return RefreshIndicator(
@@ -304,7 +306,7 @@ class _AssetsState extends State<Assets> {
                         ),
                         onTap: () {
                           Navigator.pushNamed(context, AssetPage.route,
-                              arguments: symbol);
+                              arguments: AssetPageParams(token: symbol));
                         },
                       ),
                     ),
@@ -330,7 +332,7 @@ class _AssetsState extends State<Assets> {
                             ),
                             onTap: () {
                               Navigator.pushNamed(context, AssetPage.route,
-                                  arguments: token);
+                                  arguments: AssetPageParams(token: token));
                             },
                           ),
                         );
@@ -360,8 +362,12 @@ class _AssetsState extends State<Assets> {
                                         color: Colors.black54),
                                   ),
                                   onTap: () {
-//                                      Navigator.pushNamed(context, AssetPage.route,
-//                                          arguments: token);
+                                    Navigator.pushNamed(
+                                        context, AssetPage.route,
+                                        arguments: AssetPageParams(
+                                            token: cid,
+                                            isEncointerCommunityCurrency:
+                                                true));
                                   },
                                 ),
                               );

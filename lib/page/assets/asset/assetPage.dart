@@ -109,7 +109,8 @@ class _AssetPageState extends State<AssetPage>
 
   List<Widget> _buildTxList() {
     List<Widget> res = [];
-    final String token = ModalRoute.of(context).settings.arguments;
+    final AssetPageParams params = ModalRoute.of(context).settings.arguments;
+    final String token = params.token;
     if (store.settings.endpointIsEncointer) {
       List<TransferData> ls = store.encointer.txsTransfer.reversed.toList();
       ls.retainWhere((i) => i.token.toUpperCase() == token.toUpperCase());
@@ -138,7 +139,8 @@ class _AssetPageState extends State<AssetPage>
   @override
   Widget build(BuildContext context) {
     final String symbol = store.settings.networkState.tokenSymbol;
-    final String token = ModalRoute.of(context).settings.arguments;
+    final AssetPageParams params = ModalRoute.of(context).settings.arguments;
+    final String token = params.token;
     final bool isBaseToken = token == symbol;
 
     final dic = I18n.of(context).assets;
