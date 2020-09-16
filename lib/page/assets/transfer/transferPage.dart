@@ -92,7 +92,7 @@ class _TransferPageState extends State<TransferPage> {
       // Todo: why was it here depending on the endpoint? Do we not want to facilitate ERT transfers?
       if (_isEncointerCommunityCurrency) {
         args['txInfo'] = {
-          "module": 'encointer_balances',
+          "module": 'encointerBalances',
           "call": 'transfer',
         };
         args['params'] = [
@@ -168,15 +168,7 @@ class _TransferPageState extends State<TransferPage> {
         _tokenSymbol = params.symbol;
 
         BigInt available; // BigInt
-        if (_isEncointerCommunityCurrency) {
-          available = BigInt.from(
-              store.encointer.balanceEntries[_tokenSymbol].principal);
-        } else {
-          available = isBaseToken
-              ? store.assets.balances[symbol.toUpperCase()].transferable
-              : Fmt.balanceInt(
-                  store.assets.tokenBalances[symbol.toUpperCase()]);
-        }
+        available = _getAvailableEncointerOrBaseToken(isBaseToken, symbol);
 
         return Scaffold(
           appBar: AppBar(
@@ -249,9 +241,7 @@ class _TransferPageState extends State<TransferPage> {
                                 if (v.isEmpty) {
                                   return dic['amount.error'];
                                 }
-                                if (double.parse(v.trim()) >=
-                                    available / BigInt.from(pow(10, decimals)) -
-                                        0.001) {
+                                if (balanceToLow(v, available, decimals)) {
                                   return dic['amount.low'];
                                 }
                                 return null;
@@ -334,5 +324,25 @@ class _TransferPageState extends State<TransferPage> {
         );
       },
     );
+  }
+
+  bool balanceToLow(String v, BigInt available, int decimals) {
+    if (_isEncointerCommunityCurrency) {
+      return double.parse(v.trim()) >= available.toDouble() - 0.001;
+    } else {
+      return double.parse(v.trim()) >=
+          available / BigInt.from(pow(10, decimals)) - 0.001;
+    }
+  }
+
+  BigInt _getAvailableEncointerOrBaseToken(bool isBaseToken, String symbol) {
+    if (_isEncointerCommunityCurrency) {
+      return BigInt.from(
+          store.encointer.balanceEntries[_tokenSymbol].principal);
+    } else {
+      return isBaseToken
+          ? store.assets.balances[symbol.toUpperCase()].transferable
+          : Fmt.balanceInt(store.assets.tokenBalances[symbol.toUpperCase()]);
+    }
   }
 }

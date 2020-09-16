@@ -166,8 +166,6 @@ class _AssetPageState extends State<AssetPage>
           builder: (_) {
             int decimals = store.settings.networkState.tokenDecimals;
 
-            print("Is base token $isBaseToken");
-
             BigInt balance = !params.isEncointerCommunityCurrency
                 ? Fmt.balanceInt(
                     store.assets.tokenBalances[token.toUpperCase()])
