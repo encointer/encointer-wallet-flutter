@@ -99,9 +99,9 @@ class _TransferPageState extends State<TransferPage> {
           // params.to
           _addressCtrl.text.trim(),
           // params.currencyId
-          symbol.toUpperCase(),
+          symbol,
           // params.amount
-          Fmt.toEncointerFixPoint(_amountCtrl.text.trim()),
+          _amountCtrl.text.trim(),
         ];
       }
       args['onFinish'] = (BuildContext txPageContext, Map res) {
@@ -228,7 +228,7 @@ class _TransferPageState extends State<TransferPage> {
                               decoration: InputDecoration(
                                 hintText: dic['amount'],
                                 labelText:
-                                    '${dic['amount']} (${dic['balance']}: ${Fmt.token(available, decimals: decimals)})',
+                                    '${dic['amount']} (${dic['balance']}: ${_isEncointerCommunityCurrency ? available : Fmt.token(available, decimals: decimals)})',
                               ),
                               inputFormatters: [
                                 RegExInputFormatter.withRegex(
