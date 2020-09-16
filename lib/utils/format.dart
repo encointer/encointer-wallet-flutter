@@ -128,7 +128,7 @@ class Fmt {
   /// ceil number of last decimal
   static String priceCeil(
     double value, {
-    int decimals = encointer_token_decimals,
+    int decimals = encointerTokenDecimals,
     int lengthFixed = 2,
     int lengthMax,
   }) {
@@ -171,7 +171,7 @@ class Fmt {
 
   static String priceCeilBigInt(
     BigInt value, {
-    int decimals = encointer_token_decimals,
+    int decimals = encointerTokenDecimals,
     int lengthFixed = 2,
     int lengthMax,
   }) {
@@ -187,7 +187,7 @@ class Fmt {
 
   static String priceFloorBigInt(
     BigInt value, {
-    int decimals = encointer_token_decimals,
+    int decimals = encointerTokenDecimals,
     int lengthFixed = 2,
     int lengthMax,
   }) {
