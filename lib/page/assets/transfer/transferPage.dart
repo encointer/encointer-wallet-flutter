@@ -101,7 +101,7 @@ class _TransferPageState extends State<TransferPage> {
           // params.currencyId
           symbol.toUpperCase(),
           // params.amount
-          Fmt.tokenInt(_amountCtrl.text.trim(), decimals: decimals).toString(),
+          Fmt.toEncointerFixPoint(_amountCtrl.text.trim()),
         ];
       }
       args['onFinish'] = (BuildContext txPageContext, Map res) {
