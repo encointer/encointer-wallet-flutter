@@ -49,34 +49,6 @@ class Fmt {
     }
   }
 
-  static String toEncointerFixPoint(String balance) {
-    List<String> upperLower = balance
-        .toString()
-        .split('.')
-        .map((numStr) => int.parse(numStr).toRadixString(2))
-        .toList();
-
-    String upperBits = upperLower[0];
-
-    print("List<string>: $upperLower");
-    if (upperLower.length > 1) {
-      String lowerBits = upperLower[1];
-      lowerBits = (lowerBits.length > 64)
-          ? lowerBits.substring(0, 64)
-          : lowerBits.padRight(64, '0');
-      final String bits = upperBits + lowerBits;
-
-      String fixPointHex = BigInt.parse(bits, radix: 2).toRadixString(16);
-      if (int.parse(upperBits) == 0) {
-        fixPointHex = '0' + fixPointHex;
-      }
-      return fixPointHex;
-    } else {
-      BigInt int = BigInt.parse(upperBits.padRight(128, '0'));
-      return int.toRadixString(16);
-    }
-  }
-
   /// number transform 2:
   /// from <BigInt> to <double>
   static double bigIntToDouble(BigInt value, {int decimals = 12}) {
