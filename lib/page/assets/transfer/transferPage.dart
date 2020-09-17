@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:polka_wallet/common/components/currencyWithIcon.dart';
 import 'package:polka_wallet/common/components/roundedButton.dart';
+import 'package:polka_wallet/common/consts/settings.dart';
 import 'package:polka_wallet/common/regInputFormatter.dart';
 import 'package:polka_wallet/page/account/scanPage.dart';
 import 'package:polka_wallet/page/account/txConfirmPage.dart';
@@ -161,14 +162,17 @@ class _TransferPageState extends State<TransferPage> {
         final bool isBaseToken = _tokenSymbol == baseTokenSymbol;
         List symbolOptions = store.settings.networkConst['currencyIds'];
 
-        int decimals = store.settings.networkState.tokenDecimals;
-
         TransferPageParams params = ModalRoute.of(context).settings.arguments;
         _isEncointerCommunityCurrency = params.isEncointerCommunityCurrency;
         _tokenSymbol = params.symbol;
 
+        int decimals = _isEncointerCommunityCurrency
+            ? encointerTokenDecimals
+            : store.settings.networkState.tokenDecimals;
+
         BigInt available; // BigInt
         available = _getAvailableEncointerOrBaseToken(isBaseToken, symbol);
+        print(available);
 
         return Scaffold(
           appBar: AppBar(
@@ -228,7 +232,7 @@ class _TransferPageState extends State<TransferPage> {
                               decoration: InputDecoration(
                                 hintText: dic['amount'],
                                 labelText:
-                                    '${dic['amount']} (${dic['balance']}: ${_isEncointerCommunityCurrency ? available : Fmt.token(available, decimals: decimals)})',
+                                    '${dic['amount']} (${dic['balance']}: ${Fmt.token(available, decimals: decimals)})',
                               ),
                               inputFormatters: [
                                 RegExInputFormatter.withRegex(
@@ -337,8 +341,9 @@ class _TransferPageState extends State<TransferPage> {
 
   BigInt _getAvailableEncointerOrBaseToken(bool isBaseToken, String symbol) {
     if (_isEncointerCommunityCurrency) {
-      return BigInt.from(
-          store.encointer.balanceEntries[_tokenSymbol].principal);
+      return Fmt.tokenInt(
+          store.encointer.balanceEntries[_tokenSymbol].principal.toString(),
+          decimals: encointerTokenDecimals);
     } else {
       return isBaseToken
           ? store.assets.balances[symbol.toUpperCase()].transferable

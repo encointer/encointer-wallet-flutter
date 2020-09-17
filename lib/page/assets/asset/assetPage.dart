@@ -141,6 +141,8 @@ class _AssetPageState extends State<AssetPage>
     final String symbol = store.settings.networkState.tokenSymbol;
     final AssetPageParams params = ModalRoute.of(context).settings.arguments;
     final String token = params.token;
+    final bool isEncointerCommunityCurrency =
+        params.isEncointerCommunityCurrency;
     final bool isBaseToken = token == symbol;
 
     final dic = I18n.of(context).assets;
@@ -155,21 +157,25 @@ class _AssetPageState extends State<AssetPage>
     final titleColor = Theme.of(context).cardColor;
     return Scaffold(
       appBar: AppBar(
-        title: !params.isEncointerCommunityCurrency
-            ? Text(token)
-            : Text(Fmt.currencyIdentifier(token)),
+        title: isEncointerCommunityCurrency
+            ? Text(Fmt.currencyIdentifier(token))
+            : Text(token),
         centerTitle: true,
         elevation: 0.0,
       ),
       body: SafeArea(
         child: Observer(
           builder: (_) {
-            int decimals = store.settings.networkState.tokenDecimals;
+            int decimals = isEncointerCommunityCurrency
+                ? encointerTokenDecimals
+                : store.settings.networkState.tokenDecimals;
 
-            BigInt balance = !params.isEncointerCommunityCurrency
-                ? Fmt.balanceInt(
-                    store.assets.tokenBalances[token.toUpperCase()])
-                : BigInt.from(store.encointer.balanceEntries[token].principal);
+            BigInt balance = isEncointerCommunityCurrency
+                ? Fmt.tokenInt(
+                    store.encointer.balanceEntries[token].principal.toString(),
+                    decimals: decimals)
+                : Fmt.balanceInt(
+                    store.assets.tokenBalances[token.toUpperCase()]);
 
             BalancesInfo balancesInfo = store.assets.balances[symbol];
             String lockedInfo = '\n';
@@ -193,12 +199,8 @@ class _AssetPageState extends State<AssetPage>
                       Padding(
                         padding: EdgeInsets.only(bottom: 16),
                         child: Text(
-                          !params.isEncointerCommunityCurrency
-                              ? Fmt.token(
-                                  isBaseToken ? balancesInfo.total : balance,
-                                  decimals: decimals,
-                                  length: 8)
-                              : balance.toString(),
+                          Fmt.token(isBaseToken ? balancesInfo.total : balance,
+                              decimals: decimals, length: 8),
                           style: TextStyle(
                             color: titleColor,
                             fontSize: 28,
@@ -321,7 +323,7 @@ class _AssetPageState extends State<AssetPage>
                                   redirect: AssetPage.route,
                                   symbol: token,
                                   isEncointerCommunityCurrency:
-                                      params.isEncointerCommunityCurrency),
+                                      isEncointerCommunityCurrency),
                             );
                           },
                         ),

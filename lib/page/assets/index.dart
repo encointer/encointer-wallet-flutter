@@ -356,7 +356,7 @@ class _AssetsState extends State<Assets> {
                                   ),
                                   title: Text(Fmt.currencyIdentifier(cid)),
                                   trailing: Text(
-                                    balanceEntry.principal.toString(),
+                                    Fmt.doubleFormat(balanceEntry.principal),
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         fontSize: 20,
