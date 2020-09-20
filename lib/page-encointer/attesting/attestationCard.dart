@@ -64,21 +64,23 @@ class _AttestationCardState extends State<AttestationCard> {
       var attestationAClaimB = await Navigator.of(context)
           .pushNamed(ScanQrCode.route, arguments: {'onScan': onScan});
       var attCla = attestationAClaimB.toString().split(':');
-      print("Attestation received by QR code: " + attCla[0]);
-      print("Claim received by qrCode:" + attCla[1]);
-      var claimB = await webApi.encointer.parseClaimOfAttendance(attCla[1]);
-      print("ClaimB parsed: " + claimB.toString());
+      var attestationAhex = attCla[0];
+      var claimBhex = attCla[1];
+      print("Attestation received by QR code: " + attestationAhex);
+      print("Claim received by qrCode:" + claimBhex);
+      var claimBjson = await webApi.encointer.parseClaimOfAttendance(claimBhex);
+      print("ClaimB parsed: " + claimBjson.toString());
       // TODO: compare claimB to own. only sign valid claims. complain in UI and show differences otherwise
 
-      var attestationA = await webApi.encointer.parseAttestation(attCla[0]);
-      print("attestationA parsed: " + attestationA.toString());
+      var attestationAjson = await webApi.encointer.parseAttestation(attestationAhex);
+      print("attestationA parsed: " + attestationAjson.toString());
       // TODO: verify signature and complain in UI if bad
 
       // store AttestationA (my claim, attested by other)
-      store.encointer.addAttestation(widget.otherMeetupRegistryIndex, attCla[0]);
+      store.encointer.addAttestation(widget.otherMeetupRegistryIndex, attestationAhex);
       // attest claimB
       Map attestationB =
-          await webApi.encointer.attestClaimOfAttendance(attCla[0], "123qwe");
+          await webApi.encointer.attestClaimOfAttendance(claimBhex, "123qwe");
       print("att: " + attestationB['attestation'].toString());
       // currently, parsing attestation fails, as it is returned as an `Attestation` from the js_service which implies the the location is in I32F32
       // store.encointer.attestations[widget.otherMeetupRegistryIndex].otherAttestation = Attestation.fromJson(attestationB['attestation']);
