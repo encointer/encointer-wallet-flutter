@@ -69,10 +69,20 @@ class _AttestationCardState extends State<AttestationCard> {
       // TODO: verify signature and complain in UI if bad
 
       // store AttestationA (my claim, attested by other)
-      store.encointer.addAttestation(widget.otherMeetupRegistryIndex, attestationAhex);
+      store.encointer
+          .addAttestation(widget.otherMeetupRegistryIndex, attestationAhex);
       // attest claimB
-      Map attestationB =
-          await webApi.encointer.attestClaimOfAttendance(claimBhex, "123qwe");
+      // Map attestationB =
+      //     await webApi.encointer.attestClaimOfAttendance(claimBhex, "123qwe");
+
+      Map attestationB = await Navigator.of(context)
+          .push(MaterialPageRoute<Map>(builder: (BuildContext context) {
+        return ActivityIndicator(
+            title: "Attesting ClaimB",
+            future:
+                webApi.encointer.attestClaimOfAttendance(claimBhex, "123qwe"));
+      }));
+
       print("att: " + attestationB['attestation'].toString());
       // currently, parsing attestation fails, as it is returned as an `Attestation` from the js_service which implies the the location is in I32F32
       // store.encointer.attestations[widget.otherMeetupRegistryIndex].otherAttestation = Attestation.fromJson(attestationB['attestation']);
@@ -96,8 +106,17 @@ class _AttestationCardState extends State<AttestationCard> {
       // TODO: compare claimA to own. only sign valid claims. complain in UI and show differences otherwise
 
       // attest claimA
-      Map res =
-          await webApi.encointer.attestClaimOfAttendance(claimAhex, "123qwe");
+      // Map res =
+      //     await webApi.encointer.attestClaimOfAttendance(claimAhex, "123qwe");
+
+      Map res = await Navigator.of(context)
+          .push(MaterialPageRoute<Map>(builder: (BuildContext context) {
+        return ActivityIndicator(
+            title: "Attesting ClaimA",
+            future:
+                webApi.encointer.attestClaimOfAttendance(claimAhex, "123qwe"));
+      }));
+
       print("att: " + res['attestation'].toString());
       // currently, parsing attestation fails, as it is returned as an `Attestation` from the js_service which implies the the location is in I32F32
 //      store.encointer.attestations[widget.otherMeetupRegistryIndex].otherAttestation = Attestation.fromJson(res['attestation']);
@@ -114,9 +133,9 @@ class _AttestationCardState extends State<AttestationCard> {
       var attB = await Navigator.of(context)
           .pushNamed(ScanQrCode.route, arguments: {'onScan': onScan});
       print("Received AttestastionB: " + attB.toString());
-
-      var attestationB = await webApi.encointer.parseAttestation(attB);
-      print("attestationB parsed: " + attestationB.toString());
+      //
+      // var attestationB = await webApi.encointer.parseAttestation(attB);
+      // print("attestationB parsed: " + attestationB.toString());
       // TODO: verify signature and complain in UI if bad
 
       // store AttestationB (my claim, attested by other)
