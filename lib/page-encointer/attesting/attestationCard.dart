@@ -1,21 +1,13 @@
-import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter/services.dart';
-import 'package:polka_wallet/common/components/BorderedTitle.dart';
-import 'package:polka_wallet/common/components/addressIcon.dart';
+import 'package:polka_wallet/common/components/activityIndicator.dart';
 import 'package:polka_wallet/common/components/roundedButton.dart';
 import 'package:polka_wallet/common/components/roundedCard.dart';
 import 'package:polka_wallet/page-encointer/attesting/qrCode.dart';
 import 'package:polka_wallet/page-encointer/attesting/scanQrCode.dart';
-import 'package:polka_wallet/page/account/scanPage.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
-import 'package:polka_wallet/service/substrateApi/encointer/apiEncointer.dart';
 import 'package:polka_wallet/store/app.dart';
-import 'package:polka_wallet/store/encointer/types/attestation.dart';
 import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
 
@@ -68,12 +60,12 @@ class _AttestationCardState extends State<AttestationCard> {
       var claimBhex = attCla[1];
       print("Attestation received by QR code: " + attestationAhex);
       print("Claim received by qrCode:" + claimBhex);
-      var claimBjson = await webApi.encointer.parseClaimOfAttendance(claimBhex);
-      print("ClaimB parsed: " + claimBjson.toString());
+      // var claimBjson = await webApi.encointer.parseClaimOfAttendance(claimBhex);
+      // print("ClaimB parsed: " + claimBjson.toString());
       // TODO: compare claimB to own. only sign valid claims. complain in UI and show differences otherwise
 
-      var attestationAjson = await webApi.encointer.parseAttestation(attestationAhex);
-      print("attestationA parsed: " + attestationAjson.toString());
+      // var attestationAjson = await webApi.encointer.parseAttestation(attestationAhex);
+      // print("attestationA parsed: " + attestationAjson.toString());
       // TODO: verify signature and complain in UI if bad
 
       // store AttestationA (my claim, attested by other)
@@ -99,8 +91,8 @@ class _AttestationCardState extends State<AttestationCard> {
           .pushNamed(ScanQrCode.route, arguments: {'onScan': onScan});
       print("Received ClaimA: " + claimAhex.toString());
 
-      var claimA = await webApi.encointer.parseClaimOfAttendance(claimAhex);
-      print("ClaimA parsed: " + claimA.toString());
+      // var claimA = await webApi.encointer.parseClaimOfAttendance(claimAhex);
+      // print("ClaimA parsed: " + claimA.toString());
       // TODO: compare claimA to own. only sign valid claims. complain in UI and show differences otherwise
 
       // attest claimA
@@ -128,7 +120,8 @@ class _AttestationCardState extends State<AttestationCard> {
       // TODO: verify signature and complain in UI if bad
 
       // store AttestationB (my claim, attested by other)
-      store.encointer.addAttestation(widget.otherMeetupRegistryIndex, attB.toString());
+      store.encointer
+          .addAttestation(widget.otherMeetupRegistryIndex, attB.toString());
     }
   }
 
@@ -153,7 +146,8 @@ class _AttestationCardState extends State<AttestationCard> {
         margin: EdgeInsets.only(bottom: 16),
         child: Observer(
             builder: (_) => Container(
-                decoration: store.encointer.attestations[widget.otherMeetupRegistryIndex].done
+                decoration: store.encointer
+                        .attestations[widget.otherMeetupRegistryIndex].done
                     ? BoxDecoration(
                         color: Colors.green,
                         borderRadius: BorderRadius.all(Radius.circular(10)))
@@ -192,7 +186,11 @@ class _AttestationCardState extends State<AttestationCard> {
                         padding: const EdgeInsets.all(5.0),
                         child: RoundedButton(
                             text: dic['attestation.perform'],
-                            onPressed: store.encointer.attestations[widget.otherMeetupRegistryIndex].done
+                            onPressed: store
+                                    .encointer
+                                    .attestations[
+                                        widget.otherMeetupRegistryIndex]
+                                    .done
                                 ? null
                                 : () => _performAttestation()),
                       )
