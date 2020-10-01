@@ -21,7 +21,7 @@ dependencies:
   # intl - format numbers
   intl: ^0.16.0
   json_annotation: ^3.0.1
-  # state management with mobx & provider
+  # state management with mobx
   mobx: ^1.2.0
   flutter_mobx: ^1.1.0
   shared_preferences: ^0.5.6
@@ -53,17 +53,12 @@ dependencies:
       url: https://github.com/polkawallet-io/flutter_qr_reader.git
       ref: master
   permission_handler: ^4.2.0
-  # charts
   charts_flutter: ^0.8.1
-  # svg renderer
   flutter_svg: ^0.18.0
-  # open link in browser
   url_launcher: ^5.4.2
-  # GraphQL
   dropdown_search: ^0.4.4
 
 dev_dependencies:
-#  flutter_launcher_icons: ^0.7.5
   build_runner: ^1.7.4
   json_serializable: ^3.0.0
   mobx_codegen: ^1.1.0
