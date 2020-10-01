@@ -24,7 +24,6 @@ dependencies:
   # state management with mobx & provider
   mobx: ^1.2.0
   flutter_mobx: ^1.1.0
-  provider: ^3.1.0
   shared_preferences: ^0.5.6
   get_storage: ^1.2.1
   flutter_aes_ecb_pkcs5: ^0.1.1
@@ -71,7 +70,7 @@ dev_dependencies:
   mockito: ^4.1.1
   # Check unused dependencies. Note: Some packages are not imported by any dart files but are used
   # for their executables. If that is the case, they can be white-listed by using the --ignore option.
-  # mobx_codegen, json_seriablizable (maybe provider) belong to these
+  # mobx_codegen, json_seriablizable belong to these.
   dependency_validator: any
   flutter_test:
     sdk: flutter
