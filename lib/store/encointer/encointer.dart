@@ -114,8 +114,20 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void addAttestation(idx, att) {
-    attestations[idx].setAttestation(att);
+  void addYourAttestation(idx, att) {
+    attestations[idx].setYourAttestation(att);
+    rootStore.localStorage.setObject(_getCacheKey(encointerAttestationsKey), attestations);
+  }
+
+  @action
+  void addOtherAttestation(idx, att) {
+    attestations[idx].setOtherAttestation(att);
+    rootStore.localStorage.setObject(_getCacheKey(encointerAttestationsKey), attestations);
+  }
+
+  @action
+  void updateAttestationStep(idx, CurrentAttestationStep step) {
+    attestations[idx].setAttestationStep(step);
     rootStore.localStorage.setObject(_getCacheKey(encointerAttestationsKey), attestations);
   }
 

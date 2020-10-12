@@ -341,11 +341,33 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void addAttestation(dynamic idx, dynamic att) {
+  void addYourAttestation(dynamic idx, dynamic att) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
-        name: '_EncointerStore.addAttestation');
+        name: '_EncointerStore.addYourAttestation');
     try {
-      return super.addAttestation(idx, att);
+      return super.addYourAttestation(idx, att);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void addOtherAttestation(dynamic idx, dynamic att) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(
+        name: '_EncointerStore.addOtherAttestation');
+    try {
+      return super.addOtherAttestation(idx, att);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void updateAttestationStep(dynamic idx, CurrentAttestationStep step) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(
+        name: '_EncointerStore.updateAttestationStep');
+    try {
+      return super.updateAttestationStep(idx, step);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }

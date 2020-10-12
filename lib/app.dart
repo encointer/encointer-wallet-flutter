@@ -7,6 +7,8 @@ import 'package:polka_wallet/page-encointer/homePage.dart';
 import 'package:polka_wallet/page-encointer/meetup/MeetupPage.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/qrCode.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/scanQrCode.dart';
+import 'package:polka_wallet/page-encointer/meetup/attestation/components/stateMachinePartyA.dart';
+import 'package:polka_wallet/page-encointer/meetup/attestation/components/stateMachinePartyB.dart';
 import 'package:polka_wallet/page-encointer/phases/assigning/assigningPage.dart';
 import 'package:polka_wallet/page-encointer/phases/attesting/attestingPage.dart';
 import 'package:polka_wallet/page-encointer/phases/registering/registerParticipantPanel.dart';
@@ -192,6 +194,8 @@ class _WalletAppState extends State<WalletApp> {
         CeremonyPage.route: (_) => CeremonyPage(_appStore),
         QrCode.route: (_) => QrCode(_appStore),
         ScanQrCode.route: (_) => ScanQrCode(),
+        StateMachinePartyA.route: (_) => StateMachinePartyA(_appStore),
+        StateMachinePartyB.route: (_) => StateMachinePartyB(_appStore),
       },
     );
   }
