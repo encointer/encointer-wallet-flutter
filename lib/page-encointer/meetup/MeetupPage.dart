@@ -7,18 +7,18 @@ import 'package:polka_wallet/utils/i18n/index.dart';
 
 import 'attestation/attestationCard.dart';
 
-class MeetupPage extends StatefulWidget {
-  MeetupPage(this.store);
+class CeremonyPage extends StatefulWidget {
+  CeremonyPage(this.store);
 
   static const String route = '/encointer/meetup/';
   final AppStore store;
 
   @override
-  _MeetupPageState createState() => _MeetupPageState(store);
+  _CeremonyPageState createState() => _CeremonyPageState(store);
 }
 
-class _MeetupPageState extends State<MeetupPage> {
-  _MeetupPageState(this.store);
+class _CeremonyPageState extends State<CeremonyPage> {
+  _CeremonyPageState(this.store);
 
   final AppStore store;
   var _amountAttendees;

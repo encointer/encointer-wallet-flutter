@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:polka_wallet/common/components/willPopScopWrapper.dart';
-import 'package:polka_wallet/page-encointer/ceremony/attestation/qrCode.dart';
-import 'package:polka_wallet/page-encointer/ceremony/attestation/scanQrCode.dart';
-import 'package:polka_wallet/page-encointer/ceremony/ceremonyPage.dart';
 import 'package:polka_wallet/page-encointer/homePage.dart';
+import 'package:polka_wallet/page-encointer/meetup/MeetupPage.dart';
+import 'package:polka_wallet/page-encointer/meetup/attestation/components/qrCode.dart';
+import 'package:polka_wallet/page-encointer/meetup/attestation/components/scanQrCode.dart';
 import 'package:polka_wallet/page-encointer/phases/assigning/assigningPage.dart';
 import 'package:polka_wallet/page-encointer/phases/attesting/attestingPage.dart';
 import 'package:polka_wallet/page-encointer/phases/registering/registerParticipantPanel.dart';
@@ -189,7 +189,7 @@ class _WalletAppState extends State<WalletApp> {
         RegisterParticipantPanel.route: (_) => RegisterParticipantPanel(_appStore),
         AssigningPage.route: (_) => AssigningPage(_appStore),
         AttestingPage.route: (_) => AttestingPage(_appStore),
-        MeetupPage.route: (_) => MeetupPage(_appStore),
+        CeremonyPage.route: (_) => CeremonyPage(_appStore),
         QrCode.route: (_) => QrCode(_appStore),
         ScanQrCode.route: (_) => ScanQrCode(),
       },

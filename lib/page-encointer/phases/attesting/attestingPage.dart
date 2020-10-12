@@ -5,9 +5,9 @@ import 'package:mobx/mobx.dart';
 import 'package:polka_wallet/common/components/passwordInputDialog.dart';
 import 'package:polka_wallet/common/components/roundedButton.dart';
 import 'package:polka_wallet/common/components/roundedCard.dart';
-import 'package:polka_wallet/page-encointer/ceremony/ceremonyPage.dart';
-import 'package:polka_wallet/page-encointer/ceremony/confirmAttendeesDialog.dart';
 import 'package:polka_wallet/page-encointer/common/assignmentPanel.dart';
+import 'package:polka_wallet/page-encointer/meetup/MeetupPage.dart';
+import 'package:polka_wallet/page-encointer/meetup/confirmAttendeesDialog.dart';
 import 'package:polka_wallet/page/account/txConfirmPage.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
@@ -75,7 +75,7 @@ class _AttestingPageState extends State<AttestingPage> {
     var args = {'claim': claimHex, 'confirmedParticipants': amount};
 
 //    _showPasswordDialog(context, claimHex);
-    Navigator.pushNamed(context, MeetupPage.route, arguments: args);
+    Navigator.pushNamed(context, CeremonyPage.route, arguments: args);
   }
 
   Map<int, AttestationState> _buildAttestationStateMap(List<dynamic> pubKeys) {
