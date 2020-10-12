@@ -4,8 +4,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:polka_wallet/common/components/activityIndicator.dart';
 import 'package:polka_wallet/common/components/roundedButton.dart';
 import 'package:polka_wallet/common/components/roundedCard.dart';
-import 'package:polka_wallet/page-encointer/attesting/qrCode.dart';
-import 'package:polka_wallet/page-encointer/attesting/scanQrCode.dart';
+import 'package:polka_wallet/page-encointer/ceremony/attestation/qrCode.dart';
+import 'package:polka_wallet/page-encointer/ceremony/attestation/scanQrCode.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/utils/format.dart';
@@ -199,5 +199,3 @@ class _AttestationCardState extends State<AttestationCard> {
     );
   }
 }
-
-class StateMachinePartyA {}
