@@ -1,13 +1,12 @@
+import 'dart:html';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:polka_wallet/common/components/activityIndicator.dart';
 import 'package:polka_wallet/common/components/roundedButton.dart';
 import 'package:polka_wallet/common/components/roundedCard.dart';
-import 'package:polka_wallet/page-encointer/meetup/attestation/components/qrCode.dart';
-import 'package:polka_wallet/page-encointer/meetup/attestation/components/scanQrCode.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/stateMachinePartyA.dart';
-import 'package:polka_wallet/service/substrateApi/api.dart';
+import 'package:polka_wallet/page-encointer/meetup/attestation/components/stateMachinePartyB.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
@@ -36,10 +35,6 @@ class _AttestationCardState extends State<AttestationCard> {
 
   final AppStore store;
 
-  void _scanQrCode(int index) {
-    print("scanQrCode clicked at index: " + index.toString());
-  }
-
   @override
   void initState() {
     super.initState();
@@ -50,51 +45,8 @@ class _AttestationCardState extends State<AttestationCard> {
     if (widget.myMeetupRegistryIndex < widget.otherMeetupRegistryIndex) {
       await Navigator.of(context).pushNamed(StateMachinePartyA.route);
     } else {
-      // scanning claim A
-      print("I'm party B. scanning others' claimA now");
-      var claimAhex = await Navigator.of(context).pushNamed(ScanQrCode.route, arguments: {'onScan': onScan});
-      print("Received ClaimA: " + claimAhex.toString());
-
-      // var claimA = await webApi.encointer.parseClaimOfAttendance(claimAhex);
-      // print("ClaimA parsed: " + claimA.toString());
-      // TODO: compare claimA to own. only sign valid claims. complain in UI and show differences otherwise
-
-      // attest claimA
-      // Map res =
-      //     await webApi.encointer.attestClaimOfAttendance(claimAhex, "123qwe");
-
-      Map res = await Navigator.of(context).push(MaterialPageRoute<Map>(builder: (BuildContext context) {
-        return ActivityIndicator(
-            title: "Attesting ClaimA", future: webApi.encointer.attestClaimOfAttendance(claimAhex, "123qwe"));
-      }));
-
-      print("att: " + res['attestation'].toString());
-      // currently, parsing attestation fails, as it is returned as an `Attestation` from the js_service which implies the the location is in I32F32
-//      store.encointer.attestations[widget.otherMeetupRegistryIndex].otherAttestation = Attestation.fromJson(res['attestation']);
-      print("Attestation: " + res.toString());
-
-      // show AttestationA | claimB
-      var args = {
-        "title": 'AttestationA | claimB',
-        'qrCodeData': res['attestationHex'].toString() + ":" + widget.claim,
-      };
-      await Navigator.of(context).pushNamed(QrCode.route, arguments: args);
-
-      // scan AttestationB
-      var attB = await Navigator.of(context).pushNamed(ScanQrCode.route, arguments: {'onScan': onScan});
-      print("Received AttestastionB: " + attB.toString());
-      //
-      // var attestationB = await webApi.encointer.parseAttestation(attB);
-      // print("attestationB parsed: " + attestationB.toString());
-      // TODO: verify signature and complain in UI if bad
-
-      // store AttestationB (my claim, attested by other)
-      store.encointer.addYourAttestation(widget.otherMeetupRegistryIndex, attB.toString());
+      await Navigator.of(context).pushNamed(StateMachinePartyB.route);
     }
-  }
-
-  Future<String> onScan(String data) async {
-    return data;
   }
 
   _revertAttestation() {
@@ -159,23 +111,3 @@ class _AttestationCardState extends State<AttestationCard> {
     );
   }
 }
-//
-// class StateMachinePartyA {
-//   // prefixes are needed as multiple imports define State
-//   final stateMachine.Machine machine = stateMachine.Machine();
-//
-//   stateMachine.State _showingClaimA, _scanningAttAClaimB, _showingAttB, _finished;
-//
-//   factory StateMachinePartyA() => StateMachinePartyA._internal();
-//
-//   StateMachinePartyA._internal() {
-//     _showingClaimA = machine.newState('showingClaimA');
-//     _scanningAttAClaimB = machine.newState('scanningAttAClaimB');
-//     _showingAttB = machine.newState('showingAttB');
-//     _finished = machine.newState('finished');
-//
-//     // _showingClaimA.onStream(, (value) { })
-//
-//     machine.start();
-//   }
-// }

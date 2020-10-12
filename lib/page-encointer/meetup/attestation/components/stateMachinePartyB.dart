@@ -41,14 +41,6 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
     super.dispose();
   }
 
-  _performAttestation() async {
-    // String claimAHex = await _scanClaimA();
-    // String attestationAHex = await _attestClaimA(claimAHex);
-
-    // await _showAttAClaimB(attestationAHex);
-    // await _scanAttestationB();
-  }
-
   Widget _scanClaimA() {
     print("I'm party B. scanning others' claimA now");
     // var claimAhex = await Navigator.of(context).pushNamed(ScanQrCode.route, arguments: {'onScan': _attestClaimA});
@@ -61,11 +53,6 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
     // var claimA = await webApi.encointer.parseClaimOfAttendance(claimAhex);
     // print("ClaimA parsed: " + claimA.toString());
     // TODO: compare claimA to own. only sign valid claims. complain in UI and show differences otherwise
-
-    // attest claimA
-    // Map res =
-    //     await webApi.encointer.attestClaimOfAttendance(claimAhex, "123qwe");
-    // await _attestClaimA(claimAhex);
   }
 
   _attestClaimA(String claimAhex) async {
@@ -87,12 +74,12 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
   }
 
   Widget _showAttAClaimB() {
-    String attA = store.encointer.attestations[widget.otherMeetupRegistryIndex].otherAttestation;
     // var args = {
     //   "title": 'AttestationA | claimB',
     //   'qrCodeData': attestationAHex + ":" + widget.claim,
     // };
     // await Navigator.of(context).pushNamed(QrCode.route, arguments: args);
+    String attA = store.encointer.attestations[widget.otherMeetupRegistryIndex].otherAttestation;
     return QrCode(
       store,
       onPressed: _updateAttestationStep(CurrentAttestationStep.scanningAttB),
@@ -102,8 +89,6 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
   }
 
   Widget _scanAttestationB() {
-    String attB = store.encointer.attestations[widget.otherMeetupRegistryIndex].otherAttestation;
-
     // var attB = await Navigator.of(context).pushNamed(ScanQrCode.route, arguments: {'onScan': onScan});
     // print("Received AttestastionB: " + attB.toString());
 
@@ -123,10 +108,6 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
     print("Received AttestastionB: " + attB.toString());
     store.encointer.addYourAttestation(widget.otherMeetupRegistryIndex, attB.toString());
     _updateAttestationStep(CurrentAttestationStep.finished);
-  }
-
-  Future<String> onScan(String data) async {
-    return data;
   }
 
   _updateAttestationStep(CurrentAttestationStep step) {

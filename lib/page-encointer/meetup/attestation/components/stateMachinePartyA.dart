@@ -33,7 +33,6 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
 
   @override
   void initState() {
-    // _performAttestation();
     super.initState();
   }
 
@@ -95,10 +94,6 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
     store.encointer.addOtherAttestation(widget.otherMeetupRegistryIndex, attestationB['attestationHex'].toString());
     // return attestationB['attestationHex'].toString();
     _updateAttestationStep(CurrentAttestationStep.showAttB);
-  }
-
-  Future<String> onScan(String data) async {
-    return data;
   }
 
   Widget _showAttestationB() {
