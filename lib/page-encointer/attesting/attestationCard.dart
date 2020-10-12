@@ -53,8 +53,7 @@ class _AttestationCardState extends State<AttestationCard> {
       await Navigator.of(context).pushNamed(QrCode.route, arguments: args);
 
       // scan AttestationA | claimB
-      var attestationAClaimB = await Navigator.of(context)
-          .pushNamed(ScanQrCode.route, arguments: {'onScan': onScan});
+      var attestationAClaimB = await Navigator.of(context).pushNamed(ScanQrCode.route, arguments: {'onScan': onScan});
       var attCla = attestationAClaimB.toString().split(':');
       var attestationAhex = attCla[0];
       var claimBhex = attCla[1];
@@ -69,18 +68,14 @@ class _AttestationCardState extends State<AttestationCard> {
       // TODO: verify signature and complain in UI if bad
 
       // store AttestationA (my claim, attested by other)
-      store.encointer
-          .addAttestation(widget.otherMeetupRegistryIndex, attestationAhex);
+      store.encointer.addAttestation(widget.otherMeetupRegistryIndex, attestationAhex);
       // attest claimB
       // Map attestationB =
       //     await webApi.encointer.attestClaimOfAttendance(claimBhex, "123qwe");
 
-      Map attestationB = await Navigator.of(context)
-          .push(MaterialPageRoute<Map>(builder: (BuildContext context) {
+      Map attestationB = await Navigator.of(context).push(MaterialPageRoute<Map>(builder: (BuildContext context) {
         return ActivityIndicator(
-            title: "Attesting ClaimB",
-            future:
-                webApi.encointer.attestClaimOfAttendance(claimBhex, "123qwe"));
+            title: "Attesting ClaimB", future: webApi.encointer.attestClaimOfAttendance(claimBhex, "123qwe"));
       }));
 
       print("att: " + attestationB['attestation'].toString());
@@ -97,8 +92,7 @@ class _AttestationCardState extends State<AttestationCard> {
     } else {
       // scanning claim A
       print("I'm party B. scanning others' claimA now");
-      var claimAhex = await Navigator.of(context)
-          .pushNamed(ScanQrCode.route, arguments: {'onScan': onScan});
+      var claimAhex = await Navigator.of(context).pushNamed(ScanQrCode.route, arguments: {'onScan': onScan});
       print("Received ClaimA: " + claimAhex.toString());
 
       // var claimA = await webApi.encointer.parseClaimOfAttendance(claimAhex);
@@ -109,12 +103,9 @@ class _AttestationCardState extends State<AttestationCard> {
       // Map res =
       //     await webApi.encointer.attestClaimOfAttendance(claimAhex, "123qwe");
 
-      Map res = await Navigator.of(context)
-          .push(MaterialPageRoute<Map>(builder: (BuildContext context) {
+      Map res = await Navigator.of(context).push(MaterialPageRoute<Map>(builder: (BuildContext context) {
         return ActivityIndicator(
-            title: "Attesting ClaimA",
-            future:
-                webApi.encointer.attestClaimOfAttendance(claimAhex, "123qwe"));
+            title: "Attesting ClaimA", future: webApi.encointer.attestClaimOfAttendance(claimAhex, "123qwe"));
       }));
 
       print("att: " + res['attestation'].toString());
@@ -130,8 +121,7 @@ class _AttestationCardState extends State<AttestationCard> {
       await Navigator.of(context).pushNamed(QrCode.route, arguments: args);
 
       // scan AttestationB
-      var attB = await Navigator.of(context)
-          .pushNamed(ScanQrCode.route, arguments: {'onScan': onScan});
+      var attB = await Navigator.of(context).pushNamed(ScanQrCode.route, arguments: {'onScan': onScan});
       print("Received AttestastionB: " + attB.toString());
       //
       // var attestationB = await webApi.encointer.parseAttestation(attB);
@@ -139,8 +129,7 @@ class _AttestationCardState extends State<AttestationCard> {
       // TODO: verify signature and complain in UI if bad
 
       // store AttestationB (my claim, attested by other)
-      store.encointer
-          .addAttestation(widget.otherMeetupRegistryIndex, attB.toString());
+      store.encointer.addAttestation(widget.otherMeetupRegistryIndex, attB.toString());
     }
   }
 
@@ -161,58 +150,54 @@ class _AttestationCardState extends State<AttestationCard> {
     var attestation = store.encointer.attestations[otherIndex];
     print("Attestationcard for " + attestation.pubKey);
     return RoundedCard(
-        border: Border.all(color: Theme.of(context).cardColor),
-        margin: EdgeInsets.only(bottom: 16),
-        child: Observer(
-            builder: (_) => Container(
-                decoration: store.encointer
-                        .attestations[widget.otherMeetupRegistryIndex].done
-                    ? BoxDecoration(
-                        color: Colors.green,
-                        borderRadius: BorderRadius.all(Radius.circular(10)))
-                    : BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(10))),
-                child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Container(
-                          margin: const EdgeInsets.all(10.0),
-                          padding: const EdgeInsets.all(8.0),
-                          //color: Colors.lime,
-                          decoration: BoxDecoration(
-                              color: Colors.yellowAccent,
-                              border: Border.all(
-                                color: Colors.yellow,
-                                width: 4,
-                              ),
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: Text(
-                            otherIndex.toString(),
-                            style: TextStyle(fontSize: 24),
-                          ) //AddressIcon(attestation.pubKey, size: 64),
-                          ),
-                      Container(
-                        child: Text(
-                          Fmt.address(attestation.pubKey),
-                          style: TextStyle(fontSize: 16),
-                        ),
-                        //onTap: () => _scanQrCode(otherIndex),
+      border: Border.all(color: Theme.of(context).cardColor),
+      margin: EdgeInsets.only(bottom: 16),
+      child: Observer(
+        builder: (_) => Container(
+          decoration: store.encointer.attestations[widget.otherMeetupRegistryIndex].done
+              ? BoxDecoration(color: Colors.green, borderRadius: BorderRadius.all(Radius.circular(10)))
+              : BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(10))),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Container(
+                  margin: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.all(8.0),
+                  //color: Colors.lime,
+                  decoration: BoxDecoration(
+                      color: Colors.yellowAccent,
+                      border: Border.all(
+                        color: Colors.yellow,
+                        width: 4,
                       ),
-                      Container(
-                        margin: const EdgeInsets.all(5.0),
-                        padding: const EdgeInsets.all(5.0),
-                        child: RoundedButton(
-                            text: dic['attestation.perform'],
-                            onPressed: store
-                                    .encointer
-                                    .attestations[
-                                        widget.otherMeetupRegistryIndex]
-                                    .done
-                                ? null
-                                : () => _performAttestation()),
-                      )
-                    ]))));
+                      borderRadius: BorderRadius.all(Radius.circular(20))),
+                  child: Text(
+                    otherIndex.toString(),
+                    style: TextStyle(fontSize: 24),
+                  ) //AddressIcon(attestation.pubKey, size: 64),
+                  ),
+              Container(
+                child: Text(
+                  Fmt.address(attestation.pubKey),
+                  style: TextStyle(fontSize: 16),
+                ),
+                //onTap: () => _scanQrCode(otherIndex),
+              ),
+              Container(
+                margin: const EdgeInsets.all(5.0),
+                padding: const EdgeInsets.all(5.0),
+                child: RoundedButton(
+                    text: dic['attestation.perform'],
+                    onPressed: store.encointer.attestations[widget.otherMeetupRegistryIndex].done
+                        ? null
+                        : () => _performAttestation()),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }
+
+class StateMachinePartyA {}
