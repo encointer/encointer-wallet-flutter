@@ -66,6 +66,10 @@ abstract class _EncointerStore with Store {
   @observable
   var chosenCid = "";
 
+  // Todo: remove expensive passing arround of claimHex
+  @observable
+  String claimHex = "";
+
   @observable
   Map<int, AttestationState> attestations = Map<int, AttestationState>();
 
@@ -111,6 +115,11 @@ abstract class _EncointerStore with Store {
   void setChosenCid(cid) {
     chosenCid = cid;
     rootStore.localStorage.setObject(_getCacheKey(encointerCurrencyKey), cid);
+  }
+
+  @action
+  void setClaimHex(String claimHex) {
+    this.claimHex = claimHex;
   }
 
   @action

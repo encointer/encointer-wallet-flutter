@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -42,10 +40,27 @@ class _AttestationCardState extends State<AttestationCard> {
 
   _performAttestation() async {
     print("performing attestation");
+    var args = {
+      'otherMeetupIndex': widget.otherMeetupRegistryIndex,
+    };
     if (widget.myMeetupRegistryIndex < widget.otherMeetupRegistryIndex) {
-      await Navigator.of(context).pushNamed(StateMachinePartyA.route);
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (BuildContext context) => StateMachinePartyA(
+            store,
+            otherMeetupRegistryIndex: widget.otherMeetupRegistryIndex,
+          ),
+        ),
+      );
     } else {
-      await Navigator.of(context).pushNamed(StateMachinePartyB.route);
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (BuildContext context) => StateMachinePartyB(
+            store,
+            otherMeetupRegistryIndex: widget.otherMeetupRegistryIndex,
+          ),
+        ),
+      );
     }
   }
 

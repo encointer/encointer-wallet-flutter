@@ -10,15 +10,11 @@ import 'package:polka_wallet/store/encointer/types/attestationState.dart';
 class StateMachinePartyA extends StatefulWidget {
   StateMachinePartyA(
     this.store, {
-    this.claim,
     this.otherMeetupRegistryIndex,
   }) : super();
 
-  static final String route = '/encointer/attestation/stateMachinePartyA';
-
   final AppStore store;
   final int otherMeetupRegistryIndex;
-  final String claim;
 
   @override
   _StateMachinePartyAState createState() {
@@ -127,14 +123,15 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
   }
 
   Widget _getCurrentAttestationStep(CurrentAttestationStep step) {
+    final String claim = store.encointer.claimHex;
     switch (step) {
       case CurrentAttestationStep.none:
         {
-          return _showClaimA(widget.claim);
+          return _showClaimA(claim);
         }
       case CurrentAttestationStep.showingClaimA:
         {
-          return _showClaimA(widget.claim);
+          return _showClaimA(claim);
         }
       case CurrentAttestationStep.scanningAttAClaimB:
         {
@@ -151,7 +148,7 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
         }
       default:
         {
-          return _showClaimA(widget.claim);
+          return _showClaimA(claim);
         }
     }
   }

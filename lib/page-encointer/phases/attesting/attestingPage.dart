@@ -74,6 +74,8 @@ class _AttestingPageState extends State<AttestingPage> {
 
     var args = {'claim': claimHex, 'confirmedParticipants': amount};
 
+    store.encointer.setClaimHex(claimHex);
+
 //    _showPasswordDialog(context, claimHex);
     Navigator.pushNamed(context, CeremonyPage.route, arguments: args);
   }
