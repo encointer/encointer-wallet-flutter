@@ -45,7 +45,6 @@ abstract class _AttestationState with Store {
   @action
   void setAttestationStep(CurrentAttestationStep step) {
     currentAttestationStep = step;
-    print("currentAttestationStep set:" + step.toString());
   }
 }
 
