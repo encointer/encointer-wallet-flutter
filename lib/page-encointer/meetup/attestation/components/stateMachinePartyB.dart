@@ -127,7 +127,7 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
             builder: (_) => RoundedButton(
               text:
                   "${dic['next.step']}: ${_nextStep(store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep)}",
-              onPressed: _getCurrentAttestationStep(
+              onPressed: () => _getCurrentAttestationStep(
                   store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep),
             ),
           ),

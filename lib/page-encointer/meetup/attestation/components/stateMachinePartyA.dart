@@ -120,6 +120,7 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
   @override
   Widget build(BuildContext context) {
     String other = store.encointer.attestations[widget.otherMeetupRegistryIndex].pubKey;
+    final Map dic = I18n.of(context).encointer;
 
     return Scaffold(
       body: Column(
@@ -128,8 +129,8 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
           Observer(
             builder: (_) => RoundedButton(
               text:
-                  "Next Step: ${_nextStep(store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep)}",
-              onPressed: _getCurrentAttestationStep(
+                  "${dic['next.step']}: ${_nextStep(store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep)}",
+              onPressed: () => _getCurrentAttestationStep(
                   store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep),
             ),
           ),
