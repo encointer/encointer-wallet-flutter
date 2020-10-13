@@ -39,9 +39,6 @@ class _AttestationCardState extends State<AttestationCard> {
 
   _performAttestation() async {
     print("performing attestation");
-    var args = {
-      'otherMeetupIndex': widget.otherMeetupRegistryIndex,
-    };
     if (widget.myMeetupRegistryIndex < widget.otherMeetupRegistryIndex) {
       Navigator.of(context).push(
         MaterialPageRoute(

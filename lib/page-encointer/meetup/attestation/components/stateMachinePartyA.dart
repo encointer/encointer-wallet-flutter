@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:polka_wallet/common/components/activityIndicator.dart';
+import 'package:polka_wallet/common/components/roundedButton.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/qrCode.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/scanQrCode.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/store/encointer/types/attestationState.dart';
+import 'package:polka_wallet/utils/format.dart';
+import 'package:polka_wallet/utils/i18n/index.dart';
 
 class StateMachinePartyA extends StatefulWidget {
   StateMachinePartyA(
@@ -37,19 +40,27 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
     super.dispose();
   }
 
-  Widget _showClaimA(String claimA) {
+  _showClaimA(String claimA) async {
     print("I'm party A. showing my claim now");
-    return QrCode(
-      store,
-      onPressed: _updateAttestationStep(CurrentAttestationStep.scanningAttAClaimB),
-      title: 'ClaimA',
-      qrCodeData: claimA,
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) => QrCode(
+          store,
+          onPressed: _updateAttestationStep(CurrentAttestationStep.scanningAttAClaimB),
+          title: 'ClaimA',
+          qrCodeData: claimA,
+        ),
+      ),
     );
   }
 
-  Widget _scanAttAClaimB() {
-    return ScanQrCode(
-      onScan: _onScanAttAClaimB,
+  _scanAttAClaimB() async {
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) => ScanQrCode(
+          onScan: _onScanAttAClaimB,
+        ),
+      ),
     );
   }
 
@@ -86,32 +97,86 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
     _updateAttestationStep(CurrentAttestationStep.showAttB);
   }
 
-  Widget _showAttestationB() {
+  _showAttestationB() async {
     String attB = store.encointer.attestations[widget.otherMeetupRegistryIndex].otherAttestation;
-    return QrCode(
-      store,
-      onPressed: _updateAttestationStep(CurrentAttestationStep.finished),
-      title: 'AttestationB',
-      qrCodeData: attB,
+    await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) => QrCode(
+          store,
+          onPressed: _updateAttestationStep(CurrentAttestationStep.finished),
+          title: 'AttestationB',
+          qrCodeData: attB,
+        ),
+      ),
     );
   }
 
   _updateAttestationStep(CurrentAttestationStep step) {
     store.encointer.updateAttestationStep(widget.otherMeetupRegistryIndex, step);
     print('Updated Attestation Step: ${step.toString()}');
+    // setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    String other = store.encointer.attestations[widget.otherMeetupRegistryIndex].pubKey;
+
     return Scaffold(
-      body: Observer(
-        builder: (_) => _getCurrentAttestationStep(
-            store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep),
+      body: Column(
+        children: <Widget>[
+          Text("Performing attestation with: ${Fmt.address(other)}"),
+          Observer(
+            builder: (_) => RoundedButton(
+              text:
+                  "Next Step: ${_nextStep(store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep)}",
+              onPressed: _getCurrentAttestationStep(
+                  store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep),
+            ),
+          ),
+        ],
       ),
     );
   }
 
-  Widget _getCurrentAttestationStep(CurrentAttestationStep step) {
+  String _nextStep(CurrentAttestationStep step) {
+    final Map dic = I18n.of(context).encointer;
+    switch (step) {
+      case CurrentAttestationStep.none:
+        {
+          return dic['show.your.claim'];
+        }
+      case CurrentAttestationStep.showingClaimA:
+        {
+          return dic['show.your.claim'];
+        }
+      case CurrentAttestationStep.scanningAttAClaimB:
+        {
+          return dic['scan.your.attestation.other.claim'];
+        }
+      case CurrentAttestationStep.showAttB:
+        {
+          return dic['show.other.attestation'];
+        }
+      case CurrentAttestationStep.finished:
+        {
+          return dic['finish'];
+        }
+      case CurrentAttestationStep.scanningClaimA:
+        {
+          return dic['show.your.claim'];
+        }
+      case CurrentAttestationStep.showingAttAClaimB:
+        {
+          return dic['show.your.claim'];
+        }
+      case CurrentAttestationStep.scanningAttB:
+        {
+          return dic['show.your.claim'];
+        }
+    }
+  }
+
+  _getCurrentAttestationStep(CurrentAttestationStep step) {
     final String claim = store.encointer.claimHex;
     switch (step) {
       case CurrentAttestationStep.none:
