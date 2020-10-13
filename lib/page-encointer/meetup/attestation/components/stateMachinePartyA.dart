@@ -45,7 +45,6 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
       title: 'ClaimA',
       qrCodeData: claimA,
     );
-    // await Navigator.of(context).pushNamed(QrCode.route, arguments: args);
   }
 
   Widget _scanAttAClaimB() {
@@ -55,26 +54,22 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
   }
 
   _onScanAttAClaimB(String attestationAClaimB) async {
-    // var attestationAClaimB = await Navigator.of(context).pushNamed(ScanQrCode.route, arguments: {'onScan': onScan});
     var attCla = attestationAClaimB.toString().split(':');
     var attestationAhex = attCla[0];
     var claimBhex = attCla[1];
     print("Attestation received by QR code: " + attestationAhex);
     print("Claim received by qrCode:" + claimBhex);
 
+    // TODO: compare claimB to own. only sign valid claims. complain in UI and show differences otherwise
     // var claimBjson = await webApi.encointer.parseClaimOfAttendance(claimBhex);
     // print("ClaimB parsed: " + claimBjson.toString());
-    // TODO: compare claimB to own. only sign valid claims. complain in UI and show differences otherwise
 
+    // TODO: verify signature and complain in UI if bad
     // var attestationAjson = await webApi.encointer.parseAttestation(attestationAhex);
     // print("attestationA parsed: " + attestationAjson.toString());
-    // TODO: verify signature and complain in UI if bad
 
     // store AttestationA (my claim, attested by other)
     store.encointer.addYourAttestation(widget.otherMeetupRegistryIndex, attestationAhex);
-    // attest claimB
-    // Map attestationB =
-    //     await webApi.encointer.attestClaimOfAttendance(claimBhex, "123qwe");
 
     Map attestationB = await Navigator.of(context).push(MaterialPageRoute<Map>(builder: (BuildContext context) {
       return ActivityIndicator(
@@ -84,21 +79,15 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
     print("att: " + attestationB['attestation'].toString());
     // currently, parsing attestation fails, as it is returned as an `Attestation` from the js_service which implies the the location is in I32F32
     // store.encointer.attestations[widget.otherMeetupRegistryIndex].otherAttestation = Attestation.fromJson(attestationB['attestation']);
-    print("Attestation: " + attestationB.toString());
+    // print("Attestation: " + attestationB.toString());
 
-    // other claim, attested by me
+    // store AttestationB (other claim, attested by me)
     store.encointer.addOtherAttestation(widget.otherMeetupRegistryIndex, attestationB['attestationHex'].toString());
-    // return attestationB['attestationHex'].toString();
     _updateAttestationStep(CurrentAttestationStep.showAttB);
   }
 
   Widget _showAttestationB() {
     String attB = store.encointer.attestations[widget.otherMeetupRegistryIndex].otherAttestation;
-    // var args2 = {
-    //   "title": 'AttestationB',
-    //   'qrCodeData': attB,
-    // };
-    // await Navigator.of(context).pushNamed(QrCode.route, arguments: args2);
     return QrCode(
       store,
       onPressed: _updateAttestationStep(CurrentAttestationStep.finished),
