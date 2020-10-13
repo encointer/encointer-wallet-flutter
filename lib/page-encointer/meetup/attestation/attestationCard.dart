@@ -6,6 +6,7 @@ import 'package:polka_wallet/common/components/roundedCard.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/stateMachinePartyA.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/stateMachinePartyB.dart';
 import 'package:polka_wallet/store/app.dart';
+import 'package:polka_wallet/store/encointer/types/attestationState.dart';
 import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
 
@@ -14,7 +15,6 @@ class AttestationCard extends StatefulWidget {
     this.store, {
     this.myMeetupRegistryIndex,
     this.otherMeetupRegistryIndex,
-    this.claim,
   });
 
   static const String route = '/encointer/meetup/';
@@ -22,7 +22,6 @@ class AttestationCard extends StatefulWidget {
 
   final int myMeetupRegistryIndex;
   final int otherMeetupRegistryIndex;
-  final String claim;
 
   @override
   _AttestationCardState createState() => _AttestationCardState(store);
@@ -73,9 +72,9 @@ class _AttestationCardState extends State<AttestationCard> {
     final Map dic = I18n.of(context).encointer;
 
     int otherIndex = widget.otherMeetupRegistryIndex;
-
-    var attestation = store.encointer.attestations[otherIndex];
+    AttestationState attestation = store.encointer.attestations[otherIndex];
     print("Attestationcard for " + attestation.pubKey);
+
     return RoundedCard(
       border: Border.all(color: Theme.of(context).cardColor),
       margin: EdgeInsets.only(bottom: 16),

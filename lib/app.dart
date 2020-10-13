@@ -189,7 +189,7 @@ class _WalletAppState extends State<WalletApp> {
         RegisterParticipantPanel.route: (_) => RegisterParticipantPanel(_appStore),
         AssigningPage.route: (_) => AssigningPage(_appStore),
         AttestingPage.route: (_) => AttestingPage(_appStore),
-        CeremonyPage.route: (_) => CeremonyPage(_appStore),
+        MeetupPage.route: (_) => MeetupPage(_appStore),
         QrCode.route: (_) => QrCode(_appStore),
         ScanQrCode.route: (_) => ScanQrCode(),
       },

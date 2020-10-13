@@ -72,12 +72,12 @@ class _AttestingPageState extends State<AttestingPage> {
 */
     store.encointer.attestations = _buildAttestationStateMap(meetupRegistry);
 
-    var args = {'claim': claimHex, 'confirmedParticipants': amount};
+    var args = {'confirmedParticipants': amount};
 
     store.encointer.setClaimHex(claimHex);
 
 //    _showPasswordDialog(context, claimHex);
-    Navigator.pushNamed(context, CeremonyPage.route, arguments: args);
+    Navigator.pushNamed(context, MeetupPage.route, arguments: args);
   }
 
   Map<int, AttestationState> _buildAttestationStateMap(List<dynamic> pubKeys) {

@@ -7,18 +7,18 @@ import 'package:polka_wallet/utils/i18n/index.dart';
 
 import 'attestation/attestationCard.dart';
 
-class CeremonyPage extends StatefulWidget {
-  CeremonyPage(this.store);
+class MeetupPage extends StatefulWidget {
+  MeetupPage(this.store);
 
   static const String route = '/encointer/meetup/';
   final AppStore store;
 
   @override
-  _CeremonyPageState createState() => _CeremonyPageState(store);
+  _MeetupPageState createState() => _MeetupPageState(store);
 }
 
-class _CeremonyPageState extends State<CeremonyPage> {
-  _CeremonyPageState(this.store);
+class _MeetupPageState extends State<MeetupPage> {
+  _MeetupPageState(this.store);
 
   final AppStore store;
   var _amountAttendees;
@@ -31,7 +31,6 @@ class _CeremonyPageState extends State<CeremonyPage> {
               store,
               myMeetupRegistryIndex: store.encointer.myMeetupRegistryIndex,
               otherMeetupRegistryIndex: i,
-              claim: claim,
             )))
         .values
         .toList();
@@ -45,9 +44,6 @@ class _CeremonyPageState extends State<CeremonyPage> {
   @override
   Widget build(BuildContext context) {
     final Map dic = I18n.of(context).encointer;
-
-    final Map<String, dynamic> args = ModalRoute.of(context).settings.arguments;
-    String claim = args['claim'];
 
     return Scaffold(
         appBar: AppBar(
@@ -90,7 +86,7 @@ class _CeremonyPageState extends State<CeremonyPage> {
             Expanded(
               child: ListView(
                 padding: EdgeInsets.only(left: 16, right: 16),
-                children: _buildAttestationCardList(claim),
+                children: _buildAttestationCardList(store.encointer.claimHex),
               ), // Only numbers can be entered
             ),
             RoundedButton(
