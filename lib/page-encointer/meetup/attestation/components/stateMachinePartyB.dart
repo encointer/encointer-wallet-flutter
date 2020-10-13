@@ -132,10 +132,26 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
           Navigator.of(context).pop();
           break;
         }
-      default:
+      case CurrentAttestationStep.showingClaimA:
         {
+          _printInvalidStateMsg(step);
+          return _scanClaimA();
+        }
+      case CurrentAttestationStep.scanningAttAClaimB:
+        {
+          _printInvalidStateMsg(step);
+          return _scanClaimA();
+        }
+      case CurrentAttestationStep.showAttB:
+        {
+          _printInvalidStateMsg(step);
           return _scanClaimA();
         }
     }
+  }
+
+  _printInvalidStateMsg(CurrentAttestationStep invalidStep) {
+    print(
+        "Have invalid attestationState for party A: $invalidStep. Resetting to ${CurrentAttestationStep.showingClaimA}");
   }
 }
