@@ -11,8 +11,8 @@ import 'package:polka_wallet/store/encointer/types/attestationState.dart';
 import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
 
-import '../../../../store/localStorage_mock.dart';
-import '../../../../store/mock/mockEncointerData.dart';
+import '../../../../mocks/data/mockEncointerData.dart';
+import '../../../../mocks/localStorage_mock.dart';
 
 Widget makeTestableWidget({Widget child}) {
   return MediaQuery(
