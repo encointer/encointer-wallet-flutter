@@ -11,6 +11,11 @@ const Map<String, dynamic> claim = {
 String claimHex =
     '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d3f00000022c51e6a656b19dd1e34c6126a75b8af02b38eedbeec51865063f142c83d40d30100000000000000968680d300000000a8184851040000006da47bd57201000003000000';
 
+const Map<String, dynamic> attestationMap = {
+  'attestation': attestation,
+  'attestationHex': attestationHex,
+};
+
 const Map<String, dynamic> attestation = {
   'claim': claim,
   'signature':
@@ -18,5 +23,11 @@ const Map<String, dynamic> attestation = {
   'public': '5DPgv6nn4R1Gi1MUiAnzFDPaKF56SYKD9Zq4Q6REUGLhUZk1'
 };
 
-String attestationHex =
+const String attestationHex =
     '0xd43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d3f00000022c51e6a656b19dd1e34c6126a75b8af02b38eedbeec51865063f142c83d40d301000000000000002aacf17b230000000000268b120000006da47bd5720100000300000001864e24338bf1be2f9a304a67ca1b166f72e76919202109c4ef5b8b6f0e5c00238b7ecc8cc30de924443971dd001a79010ff34c16ca42413eb831e549775a858d8eaf04151687736326c9fea17e25fc5287613693c912909cb226aa4794f26a48';
+
+const List<dynamic> currencyIdentifiers = [
+  '0xf26bfaa0feee0968ec0637e1933e64cd1947294d3b667d43b76b3915fc330b53',
+  '0x2ebf164a5bb618ec6caad31488161b237e24d75efa3040286767b620d9183989',
+  '0xc792bf36f892404a27603ffd14cd5a12e794ed3c740bab0929ba55b8c747c615',
+];

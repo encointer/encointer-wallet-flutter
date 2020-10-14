@@ -6,11 +6,13 @@ import 'package:polka_wallet/common/components/roundedButton.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/qrCode.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/scanQrCode.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/stateMachinePartyA.dart';
+import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/store/encointer/types/attestationState.dart';
 import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
 
+import '../../../../mocks/apiEncointer_mock.dart';
 import '../../../../mocks/data/mockEncointerData.dart';
 import '../../../../mocks/localStorage_mock.dart';
 
@@ -47,6 +49,9 @@ void main() {
     AppStore root = globalAppStore;
     root.localStorage = getMockLocalStorage();
     await root.init('_en');
+
+    webApi = Api(null, root);
+    webApi.encointer = getMockApiEncointer();
 
     root.localStorage.addAccount(accNew);
     final accList = await root.localStorage.getAccountList();
@@ -93,9 +98,10 @@ void main() {
     expect(scanQrCodeFinder, findsOneWidget);
 
     ScanQrCode scanner = scanQrCodeFinder.evaluate().first.widget;
-    String attAClaimB = '${attestationHex}:${claimHex}';
-    scanner.onScan(attAClaimB);
+    String attAClaimB = '$attestationHex:$claimHex';
 
-    await tester.pumpAndSettle();
+    scanner.onScan(attAClaimB);
+    await tester.pump();
+    await tester.pump(); // currently fails at future builder triggering rebuild during build
   });
 }
