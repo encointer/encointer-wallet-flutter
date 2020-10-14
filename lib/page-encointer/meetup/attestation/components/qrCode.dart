@@ -81,7 +81,7 @@ class QrCode extends StatelessWidget {
                         child: RoundedButton(
                           text: I18n.of(context).assets['done?'],
                           onPressed: () => {
-                            onPressed,
+                            onPressed(),
                             Navigator.pop(context),
                           },
                         ),

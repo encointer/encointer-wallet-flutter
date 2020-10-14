@@ -44,17 +44,18 @@ class ScanQrCode extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           if (snapshot.hasData && snapshot.data == true) {
             return QrcodeReaderView(
-                key: _qrViewKey,
-                headerWidget: SafeArea(
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.arrow_back_ios,
-                      color: Theme.of(context).cardColor,
-                    ),
-                    onPressed: () => Navigator.of(context).pop(),
+              key: _qrViewKey,
+              headerWidget: SafeArea(
+                child: IconButton(
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    color: Theme.of(context).cardColor,
                   ),
+                  onPressed: () => Navigator.of(context).pop(),
                 ),
-                onScan: _onScan);
+              ),
+              onScan: _onScan,
+            );
           } else {
             return Container();
           }

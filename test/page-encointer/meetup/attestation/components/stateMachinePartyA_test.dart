@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:polka_wallet/common/components/roundedButton.dart';
+import 'package:polka_wallet/page-encointer/meetup/attestation/components/qrCode.dart';
+import 'package:polka_wallet/page-encointer/meetup/attestation/components/scanQrCode.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/stateMachinePartyA.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/store/encointer/types/attestationState.dart';
@@ -9,6 +12,7 @@ import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
 
 import '../../../../store/localStorage_mock.dart';
+import '../../../../store/mock/mockEncointerData.dart';
 
 Widget makeTestableWidget({Widget child}) {
   return MediaQuery(
@@ -61,10 +65,37 @@ void main() {
     await tester.pumpWidget(makeTestableWidget(child: stateMachineA));
 
     expect(find.text("Performing attestation with: ${Fmt.address(pubKeys[1])}"), findsOneWidget);
+    // unfortunately RoundedButton does not have the key fild, we can only find it by type or by text.
     expect(find.text("Next step: Show your claim"), findsOneWidget);
 
     // start attestation procedure. Show ClaimA (my Claim)
     await tester.tap(find.text("Next step: Show your claim"));
-    await tester.pump();
+    await tester.pumpAndSettle();
+
+    var qrCodeFinder = find.byType(QrCode);
+    expect(qrCodeFinder, findsOneWidget);
+    // make sure that the rounded button, we find is in the QrCode widget
+    var strictButtonMatcher = find.descendant(of: qrCodeFinder, matching: find.byType(RoundedButton));
+    expect(strictButtonMatcher, findsOneWidget);
+
+    // tap done and return to stateMachinePartyA widget
+    // await tester.tap(strictButtonMatcher); for some reason this does not work
+    // the reason is unknown yet: see https://github.com/flutter/flutter/issues/31066
+    RoundedButton button = strictButtonMatcher.evaluate().first.widget;
+    button.onPressed();
+    await tester.pumpAndSettle();
+    expect(find.byType(StateMachinePartyA), findsOneWidget);
+
+    await tester.tap(find.byType(RoundedButton));
+    await tester.pumpAndSettle();
+
+    var scanQrCodeFinder = find.byType(ScanQrCode);
+    expect(scanQrCodeFinder, findsOneWidget);
+
+    ScanQrCode scanner = scanQrCodeFinder.evaluate().first.widget;
+    String attAClaimB = '${attestationHex}:${claimHex}';
+    scanner.onScan(attAClaimB);
+
+    await tester.pumpAndSettle();
   });
 }

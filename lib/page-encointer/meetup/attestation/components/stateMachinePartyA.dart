@@ -42,11 +42,12 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
 
   _showClaimA(String claimA) async {
     print("I'm party A. showing my claim now");
-    await Navigator.of(context).push(
+
+    Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) => QrCode(
           store,
-          onPressed: _updateAttestationStep(CurrentAttestationStep.scanningAttAClaimB),
+          onPressed: () => _updateAttestationStep(CurrentAttestationStep.scanningAttAClaimB),
           title: 'ClaimA',
           qrCodeData: claimA,
         ),
@@ -55,6 +56,7 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
   }
 
   _scanAttAClaimB() async {
+    print("Party A is Scanning AttestationA|ClaimB");
     await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) => ScanQrCode(
