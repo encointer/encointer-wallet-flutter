@@ -1,9 +1,42 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:polka_wallet/common/components/activityIndicator.dart';
 import 'package:polka_wallet/common/components/roundedButton.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/qrCode.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/scanQrCode.dart';
+import 'package:polka_wallet/store/app.dart';
+import 'package:polka_wallet/store/encointer/types/attestationState.dart';
+import 'package:polka_wallet/utils/i18n/index.dart';
+
+Widget makeTestableWidget({Widget child}) {
+  return MediaQuery(
+    data: MediaQueryData(),
+    child: MaterialApp(
+      localizationsDelegates: [
+        AppLocalizationsDelegate(const Locale('en', '')),
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      home: Scaffold(
+        body: child,
+      ),
+    ),
+  );
+}
+
+Map<int, AttestationState> buildAttestationStateMap(AppStore store, List<dynamic> pubKeys) {
+  final map = Map<int, AttestationState>();
+  pubKeys.asMap().forEach((i, key) => !(key == store.account.currentAddress)
+          ? map.putIfAbsent(i, () => AttestationState(key))
+          : store.encointer.myMeetupRegistryIndex = i // track our index as it defines if we must show our qr-code first
+      );
+
+  print("My index in meetup registry is " + store.encointer.myMeetupRegistryIndex.toString());
+  return map;
+}
 
 Future<void> goBackOnePage(WidgetTester tester) async {
   Finder backButton = find.byTooltip('Back');

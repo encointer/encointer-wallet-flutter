@@ -1,6 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/scanQrCode.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/stateMachinePartyB.dart';
@@ -8,40 +5,11 @@ import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/store/encointer/types/attestationState.dart';
 import 'package:polka_wallet/utils/format.dart';
-import 'package:polka_wallet/utils/i18n/index.dart';
 
 import '../../../../mocks/apiEncointer_mock.dart';
 import '../../../../mocks/data/mockEncointerData.dart';
 import '../../../../mocks/localStorage_mock.dart';
 import 'common.dart';
-
-Widget makeTestableWidget({Widget child}) {
-  return MediaQuery(
-    data: MediaQueryData(),
-    child: MaterialApp(
-      localizationsDelegates: [
-        AppLocalizationsDelegate(const Locale('en', '')),
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      home: Scaffold(
-        body: child,
-      ),
-    ),
-  );
-}
-
-Map<int, AttestationState> _buildAttestationStateMap(AppStore store, List<dynamic> pubKeys) {
-  final map = Map<int, AttestationState>();
-  pubKeys.asMap().forEach((i, key) => !(key == store.account.currentAddress)
-          ? map.putIfAbsent(i, () => AttestationState(key))
-          : store.encointer.myMeetupRegistryIndex = i // track our index as it defines if we must show our qr-code first
-      );
-
-  print("My index in meetup registry is " + store.encointer.myMeetupRegistryIndex.toString());
-  return map;
-}
 
 void main() {
   AppStore root;
@@ -57,18 +25,21 @@ void main() {
     webApi = Api(null, root);
     webApi.encointer = getMockApiEncointer();
 
-    root.localStorage.addAccount(accNew);
-    final accList = await root.localStorage.getAccountList();
-    pubKeys = accList.map((e) => e['pubKey']).toList();
-    expect(accList.length, 2);
+    pubKeys = [accList[0], accNew].map((e) => e['pubKey']).toList();
+    expect(pubKeys.length, 2);
 
-    root.encointer.attestations = _buildAttestationStateMap(root, pubKeys);
+    root.encointer.attestations = buildAttestationStateMap(root, pubKeys);
     expect(root.encointer.attestations.length, 2);
 
     stateMachineB = StateMachinePartyB(
       root,
       otherMeetupRegistryIndex: otherMeetupRegistryIndex,
     );
+  });
+
+  tearDown(() {
+    root = null;
+    webApi = null;
   });
 
   testWidgets('StateMachinePartyB happy flow', (WidgetTester tester) async {
