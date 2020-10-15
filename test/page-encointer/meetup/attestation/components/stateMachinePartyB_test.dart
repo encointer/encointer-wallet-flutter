@@ -46,6 +46,8 @@ Map<int, AttestationState> _buildAttestationStateMap(AppStore store, List<dynami
 void main() {
   AppStore root;
   List<dynamic> pubKeys;
+  int otherMeetupRegistryIndex = 0;
+  StateMachinePartyB stateMachineB;
 
   setUp(() async {
     root = globalAppStore;
@@ -61,44 +63,22 @@ void main() {
     expect(accList.length, 2);
 
     root.encointer.attestations = _buildAttestationStateMap(root, pubKeys);
-    // print(root.encointer.attestations);
     expect(root.encointer.attestations.length, 2);
+
+    stateMachineB = StateMachinePartyB(
+      root,
+      otherMeetupRegistryIndex: otherMeetupRegistryIndex,
+    );
   });
 
   testWidgets('StateMachinePartyB test', (WidgetTester tester) async {
-    Widget stateMachineB = StateMachinePartyB(
-      root,
-      otherMeetupRegistryIndex: 0,
-    );
-
     await tester.pumpWidget(makeTestableWidget(child: stateMachineB));
-
     expect(find.text("Performing attestation with: ${Fmt.address(pubKeys[0])}"), findsOneWidget);
-    // unfortunately RoundedButton does not have the key fild, we can only find it by type or by text.
-    expect(find.text("Next step: Scan other claim"), findsOneWidget);
 
-    // start attestation procedure. Scan other claim (ClaimA)
-    await tester.tap(find.text("Next step: Scan other claim"));
-    await tester.pumpAndSettle();
-
-    ScanQrCode scanner = await verifyNavigateToScanner(tester);
-    await verifyScanResult(tester, scanner, claimHex);
-
-    // show QR code of AttestationA|ClaimB
-    expect(find.byType(StateMachinePartyB), findsOneWidget);
-    await tester.tap(find.text("Next step: Show other attestation and your claim"));
-    await tester.pumpAndSettle();
-
-    await verifyNavigateToQrCodeAndTapConfirmButton(tester);
-
-    // scan QR code of my Attestation (AttestationB)
-    expect(find.byType(StateMachinePartyB), findsOneWidget);
-    expect(find.text("Next step: Scan your attestation"), findsOneWidget);
-    await tester.tap(find.text("Next step: Scan your attestation"));
-    await tester.pumpAndSettle();
-
-    scanner = await verifyNavigateToScanner(tester);
-    await verifyScanResult(tester, scanner, attestation.toString(), activityIndicatorShown: false);
+    await _scanClaimA(tester);
+    await _showAttestationAClaimB(tester);
+    await navigateToQrCodeAndTapConfirmButton(tester);
+    await _scanAttestationB(tester);
 
     // verify that we have finished the attestation procedure
     expect(find.byType(StateMachinePartyB), findsOneWidget);
@@ -115,4 +95,30 @@ void main() {
     var backButtonFinder = find.text("Go Back");
     expect(backButtonFinder, findsOneWidget);
   });
+}
+
+Future<void> _scanClaimA(WidgetTester tester) async {
+  expect(find.byType(StateMachinePartyB), findsOneWidget);
+  expect(find.text("Next step: Scan other claim"), findsOneWidget);
+  await tester.tap(find.text("Next step: Scan other claim"));
+  await tester.pumpAndSettle();
+  ScanQrCode scanner = await navigateToScanner(tester);
+  await mockQrCodeScan(tester, scanner, claimHex);
+}
+
+Future<void> _showAttestationAClaimB(WidgetTester tester) async {
+  expect(find.byType(StateMachinePartyB), findsOneWidget);
+  expect(find.text("Next step: Show other attestation and your claim"), findsOneWidget);
+  await tester.tap(find.text("Next step: Show other attestation and your claim"));
+  await tester.pumpAndSettle();
+}
+
+Future<void> _scanAttestationB(WidgetTester tester) async {
+  expect(find.byType(StateMachinePartyB), findsOneWidget);
+  expect(find.text("Next step: Scan your attestation"), findsOneWidget);
+  await tester.tap(find.text("Next step: Scan your attestation"));
+  await tester.pumpAndSettle();
+
+  ScanQrCode scanner = await navigateToScanner(tester);
+  await mockQrCodeScan(tester, scanner, attestation.toString(), activityIndicatorShown: false);
 }
