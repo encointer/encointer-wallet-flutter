@@ -121,7 +121,6 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
   _updateAttestationStep(CurrentAttestationStep step) {
     store.encointer.updateAttestationStep(widget.otherMeetupRegistryIndex, step);
     print('Updated Attestation Step: ${step.toString()}');
-    // setState(() {});
   }
 
   @override
@@ -132,7 +131,7 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          Text("Performing attestation with: ${Fmt.address(other)}"),
+          Text("${dic['attestation.performing.with']}: ${Fmt.address(other)}"),
           Observer(
             builder: (_) => RoundedButton(
               text:

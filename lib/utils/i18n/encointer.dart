@@ -14,7 +14,7 @@ const Map<String, String> enNctr = {
   'you.attested': 'You attested other',
   'other.attested': 'Other attested you',
   'attestation.perform': 'attest',
-  'attestation.performing.with': 'Performing Attestation with',
+  'attestation.performing.with': 'Performing attestation with',
   'attestation.revert': 'revert',
   'meetup.complete': 'complete meetup',
   // partyA

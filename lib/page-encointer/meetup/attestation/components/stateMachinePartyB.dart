@@ -58,10 +58,16 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
     // var claimA = await webApi.encointer.parseClaimOfAttendance(claimAhex);
     // print("ClaimA parsed: " + claimA.toString());
 
-    Map attestationA = await Navigator.of(context).push(MaterialPageRoute<Map>(builder: (BuildContext context) {
-      return ActivityIndicator(
-          title: "Attesting ClaimA", future: webApi.encointer.attestClaimOfAttendance(claimAhex, "123qwe"));
-    }));
+    Map attestationA = await Navigator.of(context).push(
+      MaterialPageRoute<Map>(
+        builder: (BuildContext context) {
+          return ActivityIndicator(
+            title: "Attesting ClaimA",
+            future: webApi.encointer.attestClaimOfAttendance(claimAhex, "123qwe"),
+          );
+        },
+      ),
+    );
 
     print("att: " + attestationA['attestation'].toString());
     // currently, parsing attestation fails, as it is returned as an `Attestation` from the js_service which implies the the location is in I32F32
@@ -79,7 +85,7 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
       MaterialPageRoute(
         builder: (BuildContext context) => QrCode(
           store,
-          onPressed: _updateAttestationStep(CurrentAttestationStep.scanningAttB),
+          onPressed: () => _updateAttestationStep(CurrentAttestationStep.scanningAttB),
           title: 'AttestationA | claimB',
           qrCodeData: '$attA:${store.encointer.claimHex}',
         ),
