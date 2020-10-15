@@ -46,6 +46,7 @@ Map<int, AttestationState> _buildAttestationStateMap(AppStore store, List<dynami
 void main() {
   AppStore root;
   List<dynamic> pubKeys;
+  int otherMeetupRegistryIndex = 1;
   StateMachinePartyA stateMachineA;
 
   setUp(() async {
@@ -66,7 +67,7 @@ void main() {
 
     stateMachineA = StateMachinePartyA(
       root,
-      otherMeetupRegistryIndex: 1,
+      otherMeetupRegistryIndex: otherMeetupRegistryIndex,
     );
   });
 
@@ -74,26 +75,76 @@ void main() {
     await tester.pumpWidget(makeTestableWidget(child: stateMachineA));
     expect(find.text("Performing attestation with: ${Fmt.address(pubKeys[1])}"), findsOneWidget);
 
-    await _showClaimA(tester);
-    await navigateToQrCodeAndTapConfirmButton(tester);
-    await _scanAttestationAClaimB(tester);
-    await _showAttestationB(tester);
-    await navigateToQrCodeAndTapConfirmButton(tester);
+    await _showClaimA(tester, root, otherMeetupRegistryIndex);
+    await _scanAttestationAClaimB(tester, root, otherMeetupRegistryIndex);
+    await _showAttestationB(tester, root, otherMeetupRegistryIndex);
 
     // verify that we have finished the attestation procedure
     expect(find.byType(StateMachinePartyA), findsOneWidget);
     expect(find.text("Next step: Finish"), findsOneWidget);
   });
+
+  group('goBackOneStep', () {
+    testWidgets('stays at none', (WidgetTester tester) async {
+      await tester.pumpWidget(makeTestableWidget(child: stateMachineA));
+      expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.none);
+      await goBackOneAttestationStep(tester);
+      expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.none);
+    });
+
+    testWidgets('A2_scanAttAClaimB back to A1_showClaimA', (WidgetTester tester) async {
+      await tester.pumpWidget(makeTestableWidget(child: stateMachineA));
+      await _showClaimA(tester, root, otherMeetupRegistryIndex);
+      await goBackOneAttestationStep(tester);
+      expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep,
+          CurrentAttestationStep.A1_showClaimA);
+    });
+    testWidgets('A3_showAttB back to A2_scanAttAClaimB', (WidgetTester tester) async {
+      await tester.pumpWidget(makeTestableWidget(child: stateMachineA));
+      await _showClaimA(tester, root, otherMeetupRegistryIndex);
+      await _scanAttestationAClaimB(tester, root, otherMeetupRegistryIndex);
+      await goBackOneAttestationStep(tester);
+      expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep,
+          CurrentAttestationStep.A2_scanAttAClaimB);
+    });
+    testWidgets('finished back to A3_showAttB', (WidgetTester tester) async {
+      await tester.pumpWidget(makeTestableWidget(child: stateMachineA));
+      await _showClaimA(tester, root, otherMeetupRegistryIndex);
+      await _scanAttestationAClaimB(tester, root, otherMeetupRegistryIndex);
+      await _showAttestationB(tester, root, otherMeetupRegistryIndex);
+      await goBackOneAttestationStep(tester);
+      expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep,
+          CurrentAttestationStep.A3_showAttB);
+    });
+    testWidgets('finished back to A1_showClaimA', (WidgetTester tester) async {
+      await tester.pumpWidget(makeTestableWidget(child: stateMachineA));
+      await _showClaimA(tester, root, otherMeetupRegistryIndex);
+      await _scanAttestationAClaimB(tester, root, otherMeetupRegistryIndex);
+      await _showAttestationB(tester, root, otherMeetupRegistryIndex);
+      await goBackOneAttestationStep(tester);
+      expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep,
+          CurrentAttestationStep.A3_showAttB);
+      await goBackOneAttestationStep(tester);
+      expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep,
+          CurrentAttestationStep.A2_scanAttAClaimB);
+      await goBackOneAttestationStep(tester);
+      expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep,
+          CurrentAttestationStep.A1_showClaimA);
+    });
+  });
 }
 
-Future<void> _showClaimA(WidgetTester tester) async {
+Future<void> _showClaimA(WidgetTester tester, AppStore root, int otherMeetupRegistryIndex) async {
   expect(find.byType(StateMachinePartyA), findsOneWidget);
   expect(find.text("Next step: Show your claim"), findsOneWidget);
   await tester.tap(find.text("Next step: Show your claim"));
   await tester.pumpAndSettle();
+  await navigateToQrCodeAndTapConfirmButton(tester);
+  expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep,
+      CurrentAttestationStep.A2_scanAttAClaimB);
 }
 
-Future<void> _scanAttestationAClaimB(WidgetTester tester) async {
+Future<void> _scanAttestationAClaimB(WidgetTester tester, AppStore root, int otherMeetupRegistryIndex) async {
   expect(find.byType(StateMachinePartyA), findsOneWidget);
   expect(find.text("Next step: Scan your attestation and other claim"), findsOneWidget);
   await tester.tap(find.text("Next step: Scan your attestation and other claim"));
@@ -101,11 +152,15 @@ Future<void> _scanAttestationAClaimB(WidgetTester tester) async {
 
   ScanQrCode scanner = await navigateToScanner(tester);
   await mockQrCodeScan(tester, scanner, '$attestationHex:$claimHex');
+  expect(
+      root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.A3_showAttB);
 }
 
-Future<void> _showAttestationB(WidgetTester tester) async {
+Future<void> _showAttestationB(WidgetTester tester, AppStore root, int otherMeetupRegistryIndex) async {
   expect(find.byType(StateMachinePartyA), findsOneWidget);
   expect(find.text("Next step: Show other attestation"), findsOneWidget);
   await tester.tap(find.text("Next step: Show other attestation"));
   await tester.pumpAndSettle();
+  await navigateToQrCodeAndTapConfirmButton(tester);
+  expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.finished);
 }

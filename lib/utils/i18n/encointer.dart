@@ -26,5 +26,6 @@ const Map<String, String> enNctr = {
   'scan.your.attestation': 'Scan your attestation',
   'show.other.attestation.your.claim': 'Show other attestation and your claim',
   'next.step': 'Next step',
+  'go.back': 'Go Back',
   'finish': 'Finish',
 };

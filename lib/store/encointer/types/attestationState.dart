@@ -50,11 +50,11 @@ abstract class _AttestationState with Store {
 
 enum CurrentAttestationStep {
   none, // partyA and partyB
-  showingClaimA, // partyA
-  scanningAttAClaimB, // partyA
-  showAttB, // partyA
-  scanningClaimA, // partyB
-  showingAttAClaimB, // partyB
-  scanningAttB, // partyB
-  finished // partyA and PartyB
+  A1_showClaimA,
+  A2_scanAttAClaimB,
+  A3_showAttB,
+  B1_scanClaimA,
+  B2_showAttAClaimB,
+  B3_scanAttB,
+  finished
 }

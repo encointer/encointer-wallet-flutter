@@ -47,7 +47,7 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
       MaterialPageRoute(
         builder: (BuildContext context) => QrCode(
           store,
-          onPressed: () => _updateAttestationStep(CurrentAttestationStep.scanningAttAClaimB),
+          onPressed: () => _updateAttestationStep(CurrentAttestationStep.A2_scanAttAClaimB),
           title: 'ClaimA',
           qrCodeData: claimA,
         ),
@@ -100,7 +100,7 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
 
     // store AttestationB (other claim, attested by me)
     store.encointer.addOtherAttestation(widget.otherMeetupRegistryIndex, attestationB['attestationHex'].toString());
-    _updateAttestationStep(CurrentAttestationStep.showAttB);
+    _updateAttestationStep(CurrentAttestationStep.A3_showAttB);
   }
 
   _showAttestationB() async {
@@ -132,13 +132,22 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
       body: Column(
         children: <Widget>[
           Text("${dic['attestation.performing.with']}: ${Fmt.address(other)}"),
-          Observer(
-            builder: (_) => RoundedButton(
-              text:
-                  "${dic['next.step']}: ${_nextStep(store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep)}",
-              onPressed: () => _getCurrentAttestationStep(
-                  store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep),
-            ),
+          ButtonBar(
+            children: <Widget>[
+              RoundedButton(
+                text: dic['go.back'],
+                onPressed: () => _goBackOneStep(
+                    store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep),
+              ),
+              Observer(
+                builder: (_) => RoundedButton(
+                  text:
+                      "${dic['next.step']}: ${_nextStep(store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep)}",
+                  onPressed: () => _getCurrentAttestationStep(
+                      store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -152,15 +161,15 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
         {
           return dic['show.your.claim'];
         }
-      case CurrentAttestationStep.showingClaimA:
+      case CurrentAttestationStep.A1_showClaimA:
         {
           return dic['show.your.claim'];
         }
-      case CurrentAttestationStep.scanningAttAClaimB:
+      case CurrentAttestationStep.A2_scanAttAClaimB:
         {
           return dic['scan.your.attestation.other.claim'];
         }
-      case CurrentAttestationStep.showAttB:
+      case CurrentAttestationStep.A3_showAttB:
         {
           return dic['show.other.attestation'];
         }
@@ -168,17 +177,65 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
         {
           return dic['finish'];
         }
-      case CurrentAttestationStep.scanningClaimA:
+      case CurrentAttestationStep.B1_scanClaimA:
         {
           return dic['show.your.claim'];
         }
-      case CurrentAttestationStep.showingAttAClaimB:
+      case CurrentAttestationStep.B2_showAttAClaimB:
         {
           return dic['show.your.claim'];
         }
-      case CurrentAttestationStep.scanningAttB:
+      case CurrentAttestationStep.B3_scanAttB:
         {
           return dic['show.your.claim'];
+        }
+    }
+  }
+
+  void _goBackOneStep(CurrentAttestationStep step) {
+    switch (step) {
+      case CurrentAttestationStep.none:
+        {
+          _updateAttestationStep(CurrentAttestationStep.none);
+          return;
+        }
+      case CurrentAttestationStep.A1_showClaimA:
+        {
+          _updateAttestationStep(CurrentAttestationStep.A1_showClaimA);
+          return;
+        }
+      case CurrentAttestationStep.A2_scanAttAClaimB:
+        {
+          _updateAttestationStep(CurrentAttestationStep.A1_showClaimA);
+          return;
+        }
+      case CurrentAttestationStep.A3_showAttB:
+        {
+          _updateAttestationStep(CurrentAttestationStep.A2_scanAttAClaimB);
+          return;
+        }
+      case CurrentAttestationStep.finished:
+        {
+          _updateAttestationStep(CurrentAttestationStep.A3_showAttB);
+          return;
+        }
+      case CurrentAttestationStep.B1_scanClaimA:
+        {
+          _printInvalidStateMsg(step);
+          _updateAttestationStep(CurrentAttestationStep.none);
+          return;
+        }
+      case CurrentAttestationStep.B2_showAttAClaimB:
+        {
+          _printInvalidStateMsg(step);
+          _updateAttestationStep(CurrentAttestationStep.none);
+          return;
+        }
+      case CurrentAttestationStep.B3_scanAttB:
+        {
+          _printInvalidStateMsg(step);
+          _updateAttestationStep(CurrentAttestationStep.none);
+          return;
         }
     }
   }
@@ -190,15 +247,15 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
         {
           return _showClaimA(claim);
         }
-      case CurrentAttestationStep.showingClaimA:
+      case CurrentAttestationStep.A1_showClaimA:
         {
           return _showClaimA(claim);
         }
-      case CurrentAttestationStep.scanningAttAClaimB:
+      case CurrentAttestationStep.A2_scanAttAClaimB:
         {
           return _scanAttAClaimB();
         }
-      case CurrentAttestationStep.showAttB:
+      case CurrentAttestationStep.A3_showAttB:
         {
           return _showAttestationB();
         }
@@ -207,17 +264,17 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
           Navigator.of(context).pop();
           break;
         }
-      case CurrentAttestationStep.scanningClaimA:
+      case CurrentAttestationStep.B1_scanClaimA:
         {
           _printInvalidStateMsg(step);
           return _showClaimA(claim);
         }
-      case CurrentAttestationStep.showingAttAClaimB:
+      case CurrentAttestationStep.B2_showAttAClaimB:
         {
           _printInvalidStateMsg(step);
           return _showClaimA(claim);
         }
-      case CurrentAttestationStep.scanningAttB:
+      case CurrentAttestationStep.B3_scanAttB:
         {
           _printInvalidStateMsg(step);
           return _showClaimA(claim);
@@ -227,6 +284,6 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
 
   _printInvalidStateMsg(CurrentAttestationStep invalidStep) {
     print(
-        "Have invalid attestationState for party A: $invalidStep. Resetting to ${CurrentAttestationStep.showingClaimA}");
+        "Have invalid attestationState for party A: $invalidStep. Resetting to ${CurrentAttestationStep.A1_showClaimA}");
   }
 }
