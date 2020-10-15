@@ -89,7 +89,7 @@ void main() {
     await tester.tap(find.text("Next step: Show other attestation and your claim"));
     await tester.pumpAndSettle();
 
-    await verifyQrCodeAndTapConfirmButton(tester);
+    await verifyNavigateToQrCodeAndTapConfirmButton(tester);
 
     // scan QR code of my Attestation (AttestationB)
     expect(find.byType(StateMachinePartyB), findsOneWidget);

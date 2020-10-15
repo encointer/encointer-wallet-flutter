@@ -81,7 +81,7 @@ void main() {
     await tester.tap(find.text("Next step: Show your claim"));
     await tester.pumpAndSettle();
 
-    await verifyQrCodeAndTapConfirmButton(tester);
+    await verifyNavigateToQrCodeAndTapConfirmButton(tester);
 
     expect(find.byType(StateMachinePartyA), findsOneWidget);
     await tester.tap(find.text("Next step: Scan your attestation and other claim"));
@@ -95,7 +95,7 @@ void main() {
     await tester.tap(find.text("Next step: Show other attestation"));
     await tester.pumpAndSettle();
 
-    await verifyQrCodeAndTapConfirmButton(tester);
+    await verifyNavigateToQrCodeAndTapConfirmButton(tester);
 
     // verify that we have finished the attestation procedure
     expect(find.byType(StateMachinePartyA), findsOneWidget);

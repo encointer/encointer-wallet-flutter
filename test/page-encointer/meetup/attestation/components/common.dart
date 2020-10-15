@@ -47,7 +47,7 @@ Future<void> verifyScanResult(WidgetTester tester, ScanQrCode scanner, String sc
   await tester.pumpAndSettle();
 }
 
-Future<void> verifyQrCodeAndTapConfirmButton(WidgetTester tester) async {
+Future<void> verifyNavigateToQrCodeAndTapConfirmButton(WidgetTester tester) async {
   var qrCodeFinder = find.byType(QrCode);
   expect(qrCodeFinder, findsOneWidget);
   // make sure that the rounded button, we find is in the QrCode widget
