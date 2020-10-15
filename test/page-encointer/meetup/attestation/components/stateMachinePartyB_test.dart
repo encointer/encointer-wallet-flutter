@@ -2,9 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:polka_wallet/common/components/activityIndicator.dart';
-import 'package:polka_wallet/common/components/roundedButton.dart';
-import 'package:polka_wallet/page-encointer/meetup/attestation/components/qrCode.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/scanQrCode.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/stateMachinePartyB.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
@@ -16,6 +13,7 @@ import 'package:polka_wallet/utils/i18n/index.dart';
 import '../../../../mocks/apiEncointer_mock.dart';
 import '../../../../mocks/data/mockEncointerData.dart';
 import '../../../../mocks/localStorage_mock.dart';
+import 'common.dart';
 
 Widget makeTestableWidget({Widget child}) {
   return MediaQuery(
@@ -46,8 +44,11 @@ Map<int, AttestationState> _buildAttestationStateMap(AppStore store, List<dynami
 }
 
 void main() {
-  testWidgets('StateMachinePartyB test', (WidgetTester tester) async {
-    AppStore root = globalAppStore;
+  AppStore root;
+  List<dynamic> pubKeys;
+
+  setUp(() async {
+    root = globalAppStore;
     root.localStorage = getMockLocalStorage();
     await root.init('_en');
 
@@ -56,13 +57,15 @@ void main() {
 
     root.localStorage.addAccount(accNew);
     final accList = await root.localStorage.getAccountList();
-    final pubKeys = accList.map((e) => e['pubKey']).toList();
+    pubKeys = accList.map((e) => e['pubKey']).toList();
     expect(accList.length, 2);
 
     root.encointer.attestations = _buildAttestationStateMap(root, pubKeys);
     // print(root.encointer.attestations);
     expect(root.encointer.attestations.length, 2);
+  });
 
+  testWidgets('StateMachinePartyB test', (WidgetTester tester) async {
     Widget stateMachineB = StateMachinePartyB(
       root,
       otherMeetupRegistryIndex: 0,
@@ -78,66 +81,38 @@ void main() {
     await tester.tap(find.text("Next step: Scan other claim"));
     await tester.pumpAndSettle();
 
-    var scanQrCodeFinder = find.byType(ScanQrCode);
-    expect(scanQrCodeFinder, findsOneWidget);
-
-    ScanQrCode scanner = scanQrCodeFinder.evaluate().first.widget;
-    String claimA = '$claimHex';
-
-    // Fixme: This is currently a hack. We cannot open the camera, hence we never build the
-    // QrCodeReader view. In order to do that we would need to Mock the scanQrCode reader. And inject it
-    // in the StateMachine. Which we should eventually do to do a proper integration test on the emulator.
-    //
-    // Now we simply go back one page and call then the onScan method programmatically.
-    await goBackOnePage(tester);
-    scanner.onScan(claimA);
-    await tester.pumpAndSettle();
-
-    // tap ok, when the claim has been verified on js side
-    expect(find.byType(ActivityIndicator), findsOneWidget);
-    expect(find.byType(CupertinoButton), findsOneWidget);
-    CupertinoButton cButton = find.byType(CupertinoButton).evaluate().first.widget;
-    cButton.onPressed();
-    await tester.pumpAndSettle();
+    ScanQrCode scanner = await verifyNavigateToScanner(tester);
+    await verifyScanResult(tester, scanner, claimHex);
 
     // show QR code of AttestationA|ClaimB
     expect(find.byType(StateMachinePartyB), findsOneWidget);
     await tester.tap(find.text("Next step: Show other attestation and your claim"));
     await tester.pumpAndSettle();
 
-    expect(find.byType(QrCode), findsOneWidget);
-    RoundedButton button = find.byType(RoundedButton).evaluate().first.widget;
-    button.onPressed();
-    await tester.pumpAndSettle();
+    await verifyQrCodeAndTapConfirmButton(tester);
 
     // scan QR code of my Attestation (AttestationB)
     expect(find.byType(StateMachinePartyB), findsOneWidget);
     expect(find.text("Next step: Scan your attestation"), findsOneWidget);
-
     await tester.tap(find.text("Next step: Scan your attestation"));
     await tester.pumpAndSettle();
 
-    expect(scanQrCodeFinder, findsOneWidget);
-
-    scanner = scanQrCodeFinder.evaluate().first.widget;
-    String attestationB = '$attestation';
-    await goBackOnePage(tester);
-    scanner.onScan(attestationB);
-    await tester.pumpAndSettle();
+    scanner = await verifyNavigateToScanner(tester);
+    await verifyScanResult(tester, scanner, attestation.toString(), activityIndicatorShown: false);
 
     // verify that we have finished the attestation procedure
     expect(find.byType(StateMachinePartyB), findsOneWidget);
     expect(find.text("Next step: Finish"), findsOneWidget);
   });
-}
 
-Future<void> goBackOnePage(WidgetTester tester) async {
-  Finder backButton = find.byTooltip('Back');
-  if (backButton.evaluate().isEmpty) {
-    backButton = find.byType(CupertinoNavigationBarBackButton);
-  }
+  testWidgets('goBackOnStep', (WidgetTester tester) async {
+    Widget stateMachineB = StateMachinePartyB(
+      root,
+      otherMeetupRegistryIndex: 0,
+    );
 
-  expect(backButton, findsOneWidget, reason: 'One back button expected on screen');
-  await tester.tap(backButton);
-  await tester.pumpAndSettle();
+    await tester.pumpWidget(makeTestableWidget(child: stateMachineB));
+    var backButtonFinder = find.text("Go Back");
+    expect(backButtonFinder, findsOneWidget);
+  });
 }
