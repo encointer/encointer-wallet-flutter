@@ -84,10 +84,14 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
     // store AttestationA (my claim, attested by other)
     store.encointer.addYourAttestation(widget.otherMeetupRegistryIndex, attestationAhex);
 
-    Map attestationB = await Navigator.of(context).push(MaterialPageRoute<Map>(builder: (BuildContext context) {
-      return ActivityIndicator(
-          title: "Attesting ClaimB", future: webApi.encointer.attestClaimOfAttendance(claimBhex, "123qwe"));
-    }));
+    Map attestationB = await Navigator.of(context).push(
+      MaterialPageRoute<Map>(
+        builder: (BuildContext context) => ActivityIndicator(
+          title: "Attesting ClaimB",
+          future: webApi.encointer.attestClaimOfAttendance(claimBhex, "123qwe"),
+        ),
+      ),
+    );
 
     print("att: " + attestationB['attestation'].toString());
     // currently, parsing attestation fails, as it is returned as an `Attestation` from the js_service which implies the the location is in I32F32
@@ -100,12 +104,13 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
   }
 
   _showAttestationB() async {
+    print("Showing other Attestation (AttestationB)");
     String attB = store.encointer.attestations[widget.otherMeetupRegistryIndex].otherAttestation;
     await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) => QrCode(
           store,
-          onPressed: _updateAttestationStep(CurrentAttestationStep.finished),
+          onPressed: () => _updateAttestationStep(CurrentAttestationStep.finished),
           title: 'AttestationB',
           qrCodeData: attB,
         ),

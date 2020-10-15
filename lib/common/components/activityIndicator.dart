@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:polka_wallet/utils/i18n/index.dart';
 
 class ActivityIndicator extends StatefulWidget {
   ActivityIndicator({Key key, this.title, this.future}) : super(key: key);
@@ -13,9 +14,20 @@ class ActivityIndicator extends StatefulWidget {
 }
 
 class _ActivityIndicatorState extends State<ActivityIndicator> {
+  bool _isAwaitingFuture = true;
+  dynamic futureResult;
+
+  void _awaitFuture() async {
+    futureResult = await widget.future;
+    setState(() {
+      _isAwaitingFuture = false;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
+    _awaitFuture();
   }
 
   @override
@@ -25,17 +37,16 @@ class _ActivityIndicatorState extends State<ActivityIndicator> {
 
   @override
   Widget build(BuildContext context) {
-    return new FutureBuilder(
-        future: widget.future,
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.hasData) {
-            Navigator.of(context).pop(snapshot.data);
-          }
-
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return new CupertinoAlertDialog(title: Text(widget.title));
-          }
-          return Container();
-        });
+    return new CupertinoAlertDialog(
+      title: Text(widget.title),
+      actions: <Widget>[
+        _isAwaitingFuture
+            ? CupertinoActivityIndicator()
+            : CupertinoButton(
+                child: Text(I18n.of(context).home['ok']),
+                onPressed: () => Navigator.of(context).pop(futureResult),
+              ),
+      ],
+    );
   }
 }

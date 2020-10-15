@@ -39,6 +39,7 @@ class ScanQrCode extends StatelessWidget {
     }
 
     return Scaffold(
+      appBar: AppBar(title: Text("Hello")), // for now let this in case we cannot open the camera in testing
       body: FutureBuilder<bool>(
         future: canOpenCamera(),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
