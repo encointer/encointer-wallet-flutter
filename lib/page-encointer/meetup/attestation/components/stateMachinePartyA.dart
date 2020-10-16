@@ -86,8 +86,9 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
     store.encointer.addYourAttestation(widget.otherMeetupRegistryIndex, attestationAhex);
 
     AttestationResult attestationB = await Navigator.of(context).push(
-      MaterialPageRoute<AttestationResult>(
-        builder: (BuildContext context) => ActivityIndicator(
+      PageRouteBuilder<AttestationResult>(
+        opaque: false,
+        pageBuilder: (BuildContext context, _, __) => ActivityIndicator(
           title: "Attesting ClaimB",
           future: webApi.encointer.attestClaimOfAttendance(claimBhex, "123qwe"),
         ),
