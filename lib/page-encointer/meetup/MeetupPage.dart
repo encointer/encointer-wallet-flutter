@@ -71,6 +71,8 @@ class _MeetupPageState extends State<MeetupPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Map args = ModalRoute.of(context).settings.arguments;
+    _amountAttendees = args['confirmedParticipants'];
     final Map dic = I18n.of(context).encointer;
 
     return Scaffold(
