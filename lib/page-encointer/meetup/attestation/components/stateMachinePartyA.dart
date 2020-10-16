@@ -6,6 +6,7 @@ import 'package:polka_wallet/page-encointer/meetup/attestation/components/qrCode
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/scanQrCode.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
+import 'package:polka_wallet/store/encointer/types/attestation.dart';
 import 'package:polka_wallet/store/encointer/types/attestationState.dart';
 import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
@@ -84,8 +85,8 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
     // store AttestationA (my claim, attested by other)
     store.encointer.addYourAttestation(widget.otherMeetupRegistryIndex, attestationAhex);
 
-    Map attestationB = await Navigator.of(context).push(
-      MaterialPageRoute<Map>(
+    AttestationResult attestationB = await Navigator.of(context).push(
+      MaterialPageRoute<AttestationResult>(
         builder: (BuildContext context) => ActivityIndicator(
           title: "Attesting ClaimB",
           future: webApi.encointer.attestClaimOfAttendance(claimBhex, "123qwe"),
@@ -93,13 +94,13 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
       ),
     );
 
-    print("att: " + attestationB['attestation'].toString());
+    print("att: " + attestationB.attestation.toString());
     // currently, parsing attestation fails, as it is returned as an `Attestation` from the js_service which implies the the location is in I32F32
     // store.encointer.attestations[widget.otherMeetupRegistryIndex].otherAttestation = Attestation.fromJson(attestationB['attestation']);
     // print("Attestation: " + attestationB.toString());
 
     // store AttestationB (other claim, attested by me)
-    store.encointer.addOtherAttestation(widget.otherMeetupRegistryIndex, attestationB['attestationHex'].toString());
+    store.encointer.addOtherAttestation(widget.otherMeetupRegistryIndex, attestationAhex);
     _updateAttestationStep(CurrentAttestationStep.A3_showAttB);
   }
 

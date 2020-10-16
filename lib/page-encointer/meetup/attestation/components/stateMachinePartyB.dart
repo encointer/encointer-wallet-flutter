@@ -6,6 +6,7 @@ import 'package:polka_wallet/page-encointer/meetup/attestation/components/qrCode
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/scanQrCode.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
+import 'package:polka_wallet/store/encointer/types/attestation.dart';
 import 'package:polka_wallet/store/encointer/types/attestationState.dart';
 import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
@@ -58,8 +59,8 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
     // var claimA = await webApi.encointer.parseClaimOfAttendance(claimAhex);
     // print("ClaimA parsed: " + claimA.toString());
 
-    Map attestationA = await Navigator.of(context).push(
-      MaterialPageRoute<Map>(
+    AttestationResult attestationA = await Navigator.of(context).push(
+      MaterialPageRoute<AttestationResult>(
         builder: (BuildContext context) {
           return ActivityIndicator(
             title: "Attesting ClaimA",
@@ -69,13 +70,13 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
       ),
     );
 
-    print("att: " + attestationA['attestation'].toString());
+    print("att: " + attestationA.attestation.toString());
     // currently, parsing attestation fails, as it is returned as an `Attestation` from the js_service which implies the the location is in I32F32
     //      store.encointer.attestations[widget.otherMeetupRegistryIndex].otherAttestation = Attestation.fromJson(attestationA['attestation']);
     // print("Attestation: " + attestationA.toString());
 
     // store AttestationA (other claim, attested by me)
-    store.encointer.addOtherAttestation(widget.otherMeetupRegistryIndex, attestationA['attestationHex'].toString());
+    store.encointer.addOtherAttestation(widget.otherMeetupRegistryIndex, attestationA.attestationHex);
     _updateAttestationStep(CurrentAttestationStep.B2_showAttAClaimB);
   }
 

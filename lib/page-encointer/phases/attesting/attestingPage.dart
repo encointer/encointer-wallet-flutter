@@ -93,7 +93,7 @@ class _AttestingPageState extends State<AttestingPage> {
   }
 
   Future<void> _submitClaim(BuildContext context, String claimHex, String password) async {
-    var att = await webApi.encointer.attestClaimOfAttendance(claimHex, password);
+    AttestationResult att = await webApi.encointer.attestClaimOfAttendance(claimHex, password);
     print("att: " + att.toString());
 
 //    var args = {

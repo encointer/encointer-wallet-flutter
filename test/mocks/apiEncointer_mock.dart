@@ -50,7 +50,7 @@ MockApiEncointer getMockApiEncointer() {
     return Future.value(ClaimOfAttendance.fromJson(claim));
   });
   when(apiEncointer.attestClaimOfAttendance(any, any)).thenAnswer((invocation) {
-    return Future.value(attestationMap);
+    return Future.value(AttestationResult.fromJson(attestationMap));
   });
   return apiEncointer;
 }

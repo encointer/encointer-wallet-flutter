@@ -112,7 +112,7 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setChosenCid(cid) {
+  void setChosenCid(String cid) {
     chosenCid = cid;
     rootStore.localStorage.setObject(_getCacheKey(encointerCurrencyKey), cid);
   }
@@ -123,19 +123,19 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void addYourAttestation(idx, att) {
+  void addYourAttestation(int idx, String att) {
     attestations[idx].setYourAttestation(att);
     rootStore.localStorage.setObject(_getCacheKey(encointerAttestationsKey), attestations);
   }
 
   @action
-  void addOtherAttestation(idx, att) {
+  void addOtherAttestation(int idx, String att) {
     attestations[idx].setOtherAttestation(att);
     rootStore.localStorage.setObject(_getCacheKey(encointerAttestationsKey), attestations);
   }
 
   @action
-  void updateAttestationStep(idx, CurrentAttestationStep step) {
+  void updateAttestationStep(int idx, CurrentAttestationStep step) {
     attestations[idx].setAttestationStep(step);
     rootStore.localStorage.setObject(_getCacheKey(encointerAttestationsKey), attestations);
   }
@@ -147,7 +147,7 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void addBalanceEntry(cid, balanceEntry) {
+  void addBalanceEntry(String cid, BalanceEntry balanceEntry) {
     balanceEntries[cid] = balanceEntry;
   }
 

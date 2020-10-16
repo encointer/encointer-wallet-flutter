@@ -195,6 +195,21 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
+  final _$claimHexAtom = Atom(name: '_EncointerStore.claimHex');
+
+  @override
+  String get claimHex {
+    _$claimHexAtom.reportRead();
+    return super.claimHex;
+  }
+
+  @override
+  set claimHex(String value) {
+    _$claimHexAtom.reportWrite(value, super.claimHex, () {
+      super.claimHex = value;
+    });
+  }
+
   final _$attestationsAtom = Atom(name: '_EncointerStore.attestations');
 
   @override
@@ -330,7 +345,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setChosenCid(dynamic cid) {
+  void setChosenCid(String cid) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.setChosenCid');
     try {
@@ -341,7 +356,18 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void addYourAttestation(dynamic idx, dynamic att) {
+  void setClaimHex(String claimHex) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(
+        name: '_EncointerStore.setClaimHex');
+    try {
+      return super.setClaimHex(claimHex);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void addYourAttestation(int idx, String att) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.addYourAttestation');
     try {
@@ -352,7 +378,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void addOtherAttestation(dynamic idx, dynamic att) {
+  void addOtherAttestation(int idx, String att) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.addOtherAttestation');
     try {
@@ -363,7 +389,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void updateAttestationStep(dynamic idx, CurrentAttestationStep step) {
+  void updateAttestationStep(int idx, CurrentAttestationStep step) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.updateAttestationStep');
     try {
@@ -385,7 +411,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void addBalanceEntry(dynamic cid, dynamic balanceEntry) {
+  void addBalanceEntry(String cid, BalanceEntry balanceEntry) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.addBalanceEntry');
     try {
@@ -443,6 +469,7 @@ timeStamp: ${timeStamp},
 balanceEntries: ${balanceEntries},
 currencyIdentifiers: ${currencyIdentifiers},
 chosenCid: ${chosenCid},
+claimHex: ${claimHex},
 attestations: ${attestations},
 txsTransfer: ${txsTransfer}
     ''';

@@ -160,25 +160,29 @@ class ApiEncointer {
     return claim;
   }
 
-  Future<dynamic> attestClaimOfAttendance(String claimHex, String password) async {
+  Future<AttestationResult> attestClaimOfAttendance(String claimHex, String password) async {
     var pubKey = store.account.currentAccountPubKey;
     var att = await apiRoot.evalJavascript('account.attestClaimOfAttendance("$claimHex", "$pubKey", "$password")');
-    return att;
+    AttestationResult attestation = AttestationResult.fromJson(att);
+    return attestation;
   }
 
   Future<dynamic> sendFaucetTx() async {
     var address = store.account.currentAddress;
     var amount = Fmt.tokenInt(faucetAmount.toString(), ert_decimals);
     var res = await apiRoot.evalJavascript('account.sendFaucetTx("$address", "$amount")');
-//    print("Faucet Result :" + res.toString());
+    // print("Faucet Result :" + res.toString());
     return res;
   }
 
-  Future<List<dynamic>> getBalances() async {
+  Future<List<EncointerBalanceData>> getBalances() async {
     var pubKey = store.account.currentAccountPubKey;
     var data = await apiRoot.evalJavascript('encointer.getBalances("$pubKey")');
 
-    List<dynamic> encointerBalances = data.map((e) => EncointerBalanceData.fromJson(e)).toList();
+    List<EncointerBalanceData> encointerBalances = new List<EncointerBalanceData>();
+    data.map((e) => EncointerBalanceData.fromJson(e)).toList().forEach((e) {
+      encointerBalances.add(e);
+    });
 
 //    print("encointerBalances list: " + encointerBalances.toString());
     encointerBalances.forEach((e) {
