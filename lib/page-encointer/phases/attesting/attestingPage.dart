@@ -77,7 +77,7 @@ class _AttestingPageState extends State<AttestingPage> {
     store.encointer.setClaimHex(claimHex);
 
 //    _showPasswordDialog(context, claimHex);
-    Navigator.pushNamed(context, MeetupPage.route, arguments: args);
+    await Navigator.pushNamed(context, MeetupPage.route, arguments: args);
   }
 
   Map<int, AttestationState> _buildAttestationStateMap(List<dynamic> pubKeys) {

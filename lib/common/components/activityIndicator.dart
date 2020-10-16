@@ -19,6 +19,7 @@ class _ActivityIndicatorState extends State<ActivityIndicator> {
 
   void _awaitFuture() async {
     futureResult = await widget.future;
+    Navigator.of(context).pop(futureResult);
     setState(() {
       _isAwaitingFuture = false;
     });
@@ -42,10 +43,7 @@ class _ActivityIndicatorState extends State<ActivityIndicator> {
       actions: <Widget>[
         _isAwaitingFuture
             ? CupertinoActivityIndicator()
-            : CupertinoButton(
-                child: Text(I18n.of(context).home['ok']),
-                onPressed: () => Navigator.of(context).pop(futureResult),
-              ),
+            : Container(),
       ],
     );
   }
