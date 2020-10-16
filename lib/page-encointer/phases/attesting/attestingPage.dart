@@ -58,38 +58,8 @@ class _AttestingPageState extends State<AttestingPage> {
 
   Future<void> _startMeetup(BuildContext context) async {
     var amount = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConfirmAttendeesDialog()));
-    setAmountAttendees(amount);
-    var claimHex = await webApi.encointer.getClaimOfAttendance(_amountAttendees);
-    print("Claim: " + claimHex);
-
-    var meetupRegistry = await webApi.encointer.getMeetupRegistry();
-/*    var meetupRegistry = List.filled(amount, '0x44495e0e8733d0b65ea1333c8bf7f4c54dc9f580b38aaadc3d771c771fb70260');
-    meetupRegistry[0] = '0x11195e0e8733d0b65ea1333c8bf7f4c54dc9f580b38aaadc3d771c771fb70260';
-    meetupRegistry[1] = store.account.currentAccountPubKey;
-    meetupRegistry[2] = '0x22295e0e8733d0b65ea1333c8bf7f4c54dc9f580b38aaadc3d771c771fb70260';
-    meetupRegistry[3] = '0x33395e0e8733d0b65ea1333c8bf7f4c54dc9f580b38aaadc3d771c771fb70260';
-    meetupRegistry[4] = '0x44495e0e8733d0b65ea1333c8bf7f4c54dc9f580b38aaadc3d771c771fb70260';
-*/
-    store.encointer.attestations = _buildAttestationStateMap(meetupRegistry);
-
     var args = {'confirmedParticipants': amount};
-
-    store.encointer.setClaimHex(claimHex);
-
-//    _showPasswordDialog(context, claimHex);
-    await Navigator.pushNamed(context, MeetupPage.route, arguments: args);
-  }
-
-  Map<int, AttestationState> _buildAttestationStateMap(List<dynamic> pubKeys) {
-    final map = Map<int, AttestationState>();
-    pubKeys.asMap().forEach((i, key) => !(key == store.account.currentAddress)
-            ? map.putIfAbsent(i, () => AttestationState(key))
-            : store.encointer.myMeetupRegistryIndex =
-                i // track our index as it defines if we must show our qr-code first
-        );
-
-    print("My index in meetup registry is " + store.encointer.myMeetupRegistryIndex.toString());
-    return map;
+    Navigator.pushNamed(context, MeetupPage.route, arguments: args);
   }
 
   Future<void> _submitClaim(BuildContext context, String claimHex, String password) async {

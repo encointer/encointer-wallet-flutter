@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:polka_wallet/common/components/roundedButton.dart';
+import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
+import 'package:polka_wallet/store/encointer/types/attestationState.dart';
 import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
 
@@ -22,6 +24,7 @@ class _MeetupPageState extends State<MeetupPage> {
 
   final AppStore store;
   var _amountAttendees;
+  bool _isLoading = true;
 
   List<Widget> _buildAttestationCardList(String claim) {
     return store.encointer.attestations
@@ -39,6 +42,31 @@ class _MeetupPageState extends State<MeetupPage> {
   @override
   void initState() {
     super.initState();
+    _initMeetup();
+  }
+
+  void _initMeetup() async {
+    var claimHex = await webApi.encointer.getClaimOfAttendance(_amountAttendees);
+    print("Claim: " + claimHex);
+
+    var meetupRegistry = await webApi.encointer.getMeetupRegistry();
+    store.encointer.attestations = _buildAttestationStateMap(meetupRegistry);
+    store.encointer.setClaimHex(claimHex);
+    setState(() {
+      _isLoading = false;
+    });
+  }
+
+  Map<int, AttestationState> _buildAttestationStateMap(List<dynamic> pubKeys) {
+    final map = Map<int, AttestationState>();
+    pubKeys.asMap().forEach((i, key) => !(key == store.account.currentAddress)
+            ? map.putIfAbsent(i, () => AttestationState(key))
+            : store.encointer.myMeetupRegistryIndex =
+                i // track our index as it defines if we must show our qr-code first
+        );
+
+    print("My index in meetup registry is " + store.encointer.myMeetupRegistryIndex.toString());
+    return map;
   }
 
   @override
@@ -52,46 +80,49 @@ class _MeetupPageState extends State<MeetupPage> {
         ),
         backgroundColor: Theme.of(context).canvasColor,
         body: SafeArea(
-          child: Column(children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text("myself: "),
-                  //AddressIcon(store.account.currentAddress, size: 64),
-                  Container(
-                      margin: const EdgeInsets.all(10.0),
-                      padding: const EdgeInsets.all(8.0),
-                      //color: Colors.lime,
-                      decoration: BoxDecoration(
-                          color: Colors.yellow,
-                          border: Border.all(
-                            color: Colors.blue,
+          child: _isLoading
+              ? Center(child: CupertinoActivityIndicator())
+              : Column(children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text("myself: "),
+                        //AddressIcon(store.account.currentAddress, size: 64),
+                        Container(
+                            margin: const EdgeInsets.all(10.0),
+                            padding: const EdgeInsets.all(8.0),
+                            //color: Colors.lime,
+                            decoration: BoxDecoration(
+                                color: Colors.yellow,
+                                border: Border.all(
+                                  color: Colors.blue,
+                                ),
+                                borderRadius: BorderRadius.all(Radius.circular(20))),
+                            child: Text(store.encointer.myMeetupRegistryIndex
+                                .toString()) //AddressIcon(attestation.pubKey, size: 64),
+                            ),
+                        Text(
+                          Fmt.address(store.account.currentAddress),
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w500,
                           ),
-                          borderRadius: BorderRadius.all(Radius.circular(20))),
-                      child: Text(
-                          store.encointer.myMeetupRegistryIndex.toString()) //AddressIcon(attestation.pubKey, size: 64),
-                      ),
-                  Text(
-                    Fmt.address(store.account.currentAddress),
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
+                        )
+                      ],
                     ),
-                  )
-                ],
-              ),
-            ),
-            Expanded(
-              child: ListView(
-                padding: EdgeInsets.only(left: 16, right: 16),
-                children: _buildAttestationCardList(store.encointer.claimHex),
-              ), // Only numbers can be entered
-            ),
-            RoundedButton(
-                text: dic['meetup.complete'], onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')))
-          ]),
+                  ),
+                  Expanded(
+                    child: ListView(
+                      padding: EdgeInsets.only(left: 16, right: 16),
+                      children: _buildAttestationCardList(store.encointer.claimHex),
+                    ), // Only numbers can be entered
+                  ),
+                  RoundedButton(
+                      text: dic['meetup.complete'],
+                      onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')))
+                ]),
         ));
   }
 }
