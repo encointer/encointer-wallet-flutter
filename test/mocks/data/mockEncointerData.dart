@@ -13,13 +13,15 @@ String claimHex =
 
 const Map<String, dynamic> attestationMap = {
   'attestation': attestation,
-  'attestationHex': attestationHex,
+  'attestation_hex': attestationHex,
 };
 
 const Map<String, dynamic> attestation = {
   'claim': claim,
-  'signature':
-      '0x01a011d3be75a2448a72876967b859cba02226f41b1a9c179aac4733f5cb74c1096721c89eb4604100813dd99001fb888ded2fd1957dd4ee6891a6f2d30e9da98e',
+  'signature': {
+    "Sr25519":
+        "0xb6dbda8f42ccf3683ce5700762e1e838f6da3066931a791be4c2454cd423e93ac3a2d35dbb18e94b60e5bc10d3bbc7dce8fe67467c5b25c871977144c83b078c"
+  },
   'public': '5DPgv6nn4R1Gi1MUiAnzFDPaKF56SYKD9Zq4Q6REUGLhUZk1'
 };
 

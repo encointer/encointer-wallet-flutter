@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:polka_wallet/common/components/activityIndicator.dart';
 import 'package:polka_wallet/common/components/roundedButton.dart';
+import 'package:polka_wallet/common/components/roundedCard.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/qrCode.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/scanQrCode.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
@@ -42,8 +43,7 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
   }
 
   _showClaimA(String claimA) async {
-    print("I'm party A. showing my claim now");
-
+    print("Party A: Showing the claim");
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) => QrCode(
@@ -57,7 +57,7 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
   }
 
   _scanAttAClaimB() async {
-    print("Party A is Scanning AttestationA|ClaimB");
+    print("Party A: Scanning AttestationA|ClaimB");
     await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) => ScanQrCode(
@@ -71,8 +71,7 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
     var attCla = attestationAClaimB.toString().split(':');
     var attestationAhex = attCla[0];
     var claimBhex = attCla[1];
-    print("Attestation received by QR code: " + attestationAhex);
-    print("Claim received by qrCode:" + claimBhex);
+    print("Party A: Received other claim (ClaimB):" + claimBhex);
 
     // TODO: compare claimB to own. only sign valid claims. complain in UI and show differences otherwise
     // var claimBjson = await webApi.encointer.parseClaimOfAttendance(claimBhex);
@@ -83,6 +82,7 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
     // print("attestationA parsed: " + attestationAjson.toString());
 
     // store AttestationA (my claim, attested by other)
+    print("Party A: Store my attestation (AttA): " + attestationAhex);
     store.encointer.addYourAttestation(widget.otherMeetupRegistryIndex, attestationAhex);
 
     AttestationResult attestationB = await Navigator.of(context).push(
@@ -94,18 +94,19 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
       ),
     );
 
-    print("att: " + attestationB.attestation.toString());
+    print("Party A: Other Attestation (AttB): " + attestationB.attestation.toString());
     // currently, parsing attestation fails, as it is returned as an `Attestation` from the js_service which implies the the location is in I32F32
     // store.encointer.attestations[widget.otherMeetupRegistryIndex].otherAttestation = Attestation.fromJson(attestationB['attestation']);
     // print("Attestation: " + attestationB.toString());
 
     // store AttestationB (other claim, attested by me)
-    store.encointer.addOtherAttestation(widget.otherMeetupRegistryIndex, attestationAhex);
+    print("Party A: Store Other AttestationHex (AttB): " + attestationB.attestationHex);
+    store.encointer.addOtherAttestation(widget.otherMeetupRegistryIndex, attestationB.attestationHex);
     _updateAttestationStep(CurrentAttestationStep.A3_showAttB);
   }
 
   _showAttestationB() async {
-    print("Showing other Attestation (AttestationB)");
+    print("Party A: Showing other Attestation (AttestationB)");
     String attB = store.encointer.attestations[widget.otherMeetupRegistryIndex].otherAttestation;
     await Navigator.of(context).push(
       MaterialPageRoute(
@@ -121,7 +122,7 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
 
   _updateAttestationStep(CurrentAttestationStep step) {
     store.encointer.updateAttestationStep(widget.otherMeetupRegistryIndex, step);
-    print('Updated Attestation Step: ${step.toString()}');
+    print('Party A: Updated Attestation Step: ${step.toString()}');
   }
 
   @override
@@ -130,27 +131,42 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
     final Map dic = I18n.of(context).encointer;
 
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Text("${dic['attestation.performing.with']}: ${Fmt.address(other)}"),
-          ButtonBar(
-            children: <Widget>[
-              RoundedButton(
-                text: dic['go.back'],
-                onPressed: () => _goBackOneStep(
+      appBar: AppBar(
+        title: Text(dic['ceremony']),
+        centerTitle: true,
+      ),
+      backgroundColor: Theme.of(context).canvasColor,
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            RoundedCard(
+              margin: EdgeInsets.fromLTRB(16, 4, 16, 16),
+              padding: EdgeInsets.all(8),
+              child: Text(
+                "${dic['attestation.performing.with']}: ${Fmt.address(other)}",
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ),
+            // ButtonBar(
+            //   children: <Widget>[
+            RoundedButton(
+              text: dic['go.back'],
+              onPressed: () =>
+                  _goBackOneStep(store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep),
+            ),
+            Observer(
+              builder: (_) => RoundedButton(
+                text:
+                    "${dic['next.step']}: ${_nextStep(store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep)}",
+                onPressed: () => _getCurrentAttestationStep(
                     store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep),
+                expand: true,
               ),
-              Observer(
-                builder: (_) => RoundedButton(
-                  text:
-                      "${dic['next.step']}: ${_nextStep(store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep)}",
-                  onPressed: () => _getCurrentAttestationStep(
-                      store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep),
-                ),
-              ),
-            ],
-          ),
-        ],
+            ),
+            //   ],
+            // ),
+          ],
+        ),
       ),
     );
   }
@@ -197,12 +213,13 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
     switch (step) {
       case CurrentAttestationStep.none:
         {
-          _updateAttestationStep(CurrentAttestationStep.none);
+          Navigator.of(context).pop();
           return;
         }
       case CurrentAttestationStep.A1_showClaimA:
         {
-          _updateAttestationStep(CurrentAttestationStep.A1_showClaimA);
+          _updateAttestationStep(CurrentAttestationStep.none);
+          Navigator.of(context).pop();
           return;
         }
       case CurrentAttestationStep.A2_scanAttAClaimB:

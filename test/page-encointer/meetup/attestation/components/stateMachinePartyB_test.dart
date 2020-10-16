@@ -63,7 +63,7 @@ void main() {
       expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.none);
     });
 
-    testWidgets('stays at B1_scanClaimA', (WidgetTester tester) async {
+    testWidgets('B2_showAttAClaimB back to B1_scanClaimA', (WidgetTester tester) async {
       await tester.pumpWidget(makeTestableWidget(child: stateMachineB));
       await _scanClaimA(tester, root, otherMeetupRegistryIndex);
       await goBackOneAttestationStep(tester);

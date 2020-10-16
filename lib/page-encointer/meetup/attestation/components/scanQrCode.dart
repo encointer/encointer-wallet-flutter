@@ -31,7 +31,7 @@ class ScanQrCode extends StatelessWidget {
 
     Future _onScan(String data, String _rawData) async {
       if (data != null) {
-        onScan(data);
+        await onScan(data);
         Navigator.of(context).pop(data);
       } else {
         _qrViewKey.currentState.startScan();

@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:polka_wallet/common/components/activityIndicator.dart';
 import 'package:polka_wallet/common/components/roundedButton.dart';
+import 'package:polka_wallet/common/components/roundedCard.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/qrCode.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/scanQrCode.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
@@ -42,7 +44,7 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
   }
 
   _scanClaimA() async {
-    print("I'm party B. scanning others' claimA now");
+    print("Party B: Scanning others' claimA now");
     await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) => ScanQrCode(
@@ -53,15 +55,16 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
   }
 
   _attestClaimA(String claimAhex) async {
-    print("Received ClaimA: " + claimAhex.toString());
+    print("Party B: Received other claim (ClaimA): " + claimAhex.toString());
 
     // TODO: compare claimA to own. only sign valid claims. complain in UI and show differences otherwise
     // var claimA = await webApi.encointer.parseClaimOfAttendance(claimAhex);
     // print("ClaimA parsed: " + claimA.toString());
-
+    //
     AttestationResult attestationA = await Navigator.of(context).push(
-      MaterialPageRoute<AttestationResult>(
-        builder: (BuildContext context) {
+      PageRouteBuilder<AttestationResult>(
+        opaque: false,
+        pageBuilder: (BuildContext context, _, __) {
           return ActivityIndicator(
             title: "Attesting ClaimA",
             future: webApi.encointer.attestClaimOfAttendance(claimAhex, "123qwe"),
@@ -70,12 +73,14 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
       ),
     );
 
-    print("att: " + attestationA.attestation.toString());
+    print("Party B: Other attestation (AttA): " + attestationA.toString());
+    print("Party B: Other attestation (AttA): " + attestationA.attestation.toString());
     // currently, parsing attestation fails, as it is returned as an `Attestation` from the js_service which implies the the location is in I32F32
     //      store.encointer.attestations[widget.otherMeetupRegistryIndex].otherAttestation = Attestation.fromJson(attestationA['attestation']);
     // print("Attestation: " + attestationA.toString());
 
     // store AttestationA (other claim, attested by me)
+    print("Party B: Other attestationHex (AttA): " + attestationA.attestationHex);
     store.encointer.addOtherAttestation(widget.otherMeetupRegistryIndex, attestationA.attestationHex);
     _updateAttestationStep(CurrentAttestationStep.B2_showAttAClaimB);
   }
@@ -127,27 +132,41 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
     final Map dic = I18n.of(context).encointer;
 
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Text("${dic['attestation.performing.with']}: ${Fmt.address(other)}"),
-          ButtonBar(
-            children: <Widget>[
-              RoundedButton(
-                text: dic['go.back'],
-                onPressed: () => _goBackOneStep(
+      appBar: AppBar(
+        title: Text(dic['ceremony']),
+        centerTitle: true,
+      ),
+      backgroundColor: Theme.of(context).canvasColor,
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            RoundedCard(
+              margin: EdgeInsets.fromLTRB(16, 4, 16, 16),
+              padding: EdgeInsets.all(8),
+              child: Text(
+                "${dic['attestation.performing.with']}: ${Fmt.address(other)}",
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ),
+            // ButtonBar(
+            //   children: <Widget>[
+            RoundedButton(
+              text: dic['go.back'],
+              onPressed: () =>
+                  _goBackOneStep(store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep),
+            ),
+            Observer(
+              builder: (_) => RoundedButton(
+                text:
+                    "${dic['next.step']}: ${_nextStep(store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep)}",
+                onPressed: () => _getCurrentAttestationStep(
                     store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep),
               ),
-              Observer(
-                builder: (_) => RoundedButton(
-                  text:
-                      "${dic['next.step']}: ${_nextStep(store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep)}",
-                  onPressed: () => _getCurrentAttestationStep(
-                      store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep),
-                ),
-              ),
-            ],
-          ),
-        ],
+            ),
+            //   ],
+            // ),
+          ],
+        ),
       ),
     );
   }
@@ -194,12 +213,13 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
     switch (step) {
       case CurrentAttestationStep.none:
         {
-          _updateAttestationStep(CurrentAttestationStep.none);
+          Navigator.of(context).pop();
           return;
         }
       case CurrentAttestationStep.B1_scanClaimA:
         {
           _updateAttestationStep(CurrentAttestationStep.none);
+          Navigator.of(context).pop();
           return;
         }
       case CurrentAttestationStep.B2_showAttAClaimB:
