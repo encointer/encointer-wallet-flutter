@@ -6,7 +6,6 @@ import 'package:permission_handler/permission_handler.dart';
 // TODO: scan image failed
 class ScanQrCode extends StatelessWidget {
   ScanQrCode();
-  static final String route = '/meetup/scan';
   final GlobalKey<QrcodeReaderViewState> _qrViewKey = GlobalKey();
 
   Future<bool> canOpenCamera() async {

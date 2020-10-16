@@ -66,7 +66,6 @@ abstract class _EncointerStore with Store {
   @observable
   String chosenCid = "";
 
-  // Todo: remove expensive passing arround of claimHex
   @observable
   String claimHex = "";
 

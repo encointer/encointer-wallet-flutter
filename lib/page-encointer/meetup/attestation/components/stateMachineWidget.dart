@@ -5,9 +5,14 @@ import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
 
 class StateMachineWidget extends StatelessWidget {
-  StateMachineWidget(
-      {Key key, this.otherMeetupRegistryIndex, this.otherParty, this.onBackward, this.onForwardText, this.onForward})
-      : super(key: key);
+  StateMachineWidget({
+    Key key,
+    @required this.otherMeetupRegistryIndex,
+    @required this.otherParty,
+    @required this.onBackward,
+    @required this.onForwardText,
+    @required this.onForward,
+  }) : super(key: key);
 
   final int otherMeetupRegistryIndex;
   final String otherParty;

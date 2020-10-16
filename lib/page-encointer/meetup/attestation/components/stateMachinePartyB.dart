@@ -72,7 +72,6 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
       ),
     );
 
-    print("Party B: Other attestation (AttA): " + attestationA.toString());
     print("Party B: Other attestation (AttA): " + attestationA.attestation.toString());
     // currently, parsing attestation fails, as it is returned as an `Attestation` from the js_service which implies the the location is in I32F32
     //      store.encointer.attestations[widget.otherMeetupRegistryIndex].otherAttestation = Attestation.fromJson(attestationA['attestation']);
