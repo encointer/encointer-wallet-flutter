@@ -1,15 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:polka_wallet/common/components/activityIndicator.dart';
-import 'package:polka_wallet/common/components/roundedButton.dart';
-import 'package:polka_wallet/common/components/roundedCard.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/qrCode.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/scanQrCode.dart';
+import 'package:polka_wallet/page-encointer/meetup/attestation/components/stateMachineWidget.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/store/encointer/types/attestation.dart';
 import 'package:polka_wallet/store/encointer/types/attestationState.dart';
-import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
 
 class StateMachinePartyA extends StatefulWidget {
@@ -131,45 +129,16 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
   @override
   Widget build(BuildContext context) {
     String other = store.encointer.attestations[widget.otherMeetupRegistryIndex].pubKey;
-    final Map dic = I18n.of(context).encointer;
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(dic['ceremony']),
-        centerTitle: true,
-      ),
-      backgroundColor: Theme.of(context).canvasColor,
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            RoundedCard(
-              margin: EdgeInsets.fromLTRB(16, 4, 16, 16),
-              padding: EdgeInsets.all(8),
-              child: Text(
-                "${dic['attestation.performing.with']}: ${Fmt.address(other)}",
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-            ),
-            // ButtonBar(
-            //   children: <Widget>[
-            RoundedButton(
-              text: dic['go.back'],
-              onPressed: () =>
-                  _goBackOneStep(store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep),
-            ),
-            Observer(
-              builder: (_) => RoundedButton(
-                text:
-                    "${dic['next.step']}: ${_nextStep(store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep)}",
-                onPressed: () => _getCurrentAttestationStep(
-                    store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep),
-                expand: true,
-              ),
-            ),
-            //   ],
-            // ),
-          ],
-        ),
+    return Observer(
+      builder: (BuildContext context) => StateMachineWidget(
+        otherParty: other,
+        otherMeetupRegistryIndex: widget.otherMeetupRegistryIndex,
+        onBackward: () =>
+            _goBackOneStep(store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep),
+        onForward: () => _getCurrentAttestationStep(
+            store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep),
+        onForwardText: _nextStep(store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep),
       ),
     );
   }
