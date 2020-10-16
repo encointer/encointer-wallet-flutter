@@ -42,7 +42,7 @@ void main() {
     webApi = null;
   });
 
-  testWidgets('stateMachinePartyA test', (WidgetTester tester) async {
+  testWidgets('stateMachinePartyA happy flow', (WidgetTester tester) async {
     await tester.pumpWidget(makeTestableWidget(child: stateMachineA));
     expect(find.text("Performing attestation with: ${Fmt.address(pubKeys[1])}"), findsOneWidget);
 

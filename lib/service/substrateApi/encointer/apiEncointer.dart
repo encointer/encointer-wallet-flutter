@@ -122,11 +122,17 @@ class ApiEncointer {
         'encointer.subscribeTimestamp("$channel")', channel, (data) => {store.encointer.setTimestamp(data)});
   }
 
-  Future<List<dynamic>> getCurrencyIdentifiers() async {
+  Future<List<String>> getCurrencyIdentifiers() async {
     Map<String, dynamic> res = await apiRoot.evalJavascript('encointer.getCurrencyIdentifiers()');
-    print("CID: " + res['cids'].toString());
-    store.encointer.setCurrencyIdentifiers(res['cids']);
-    return res['cids'];
+
+    List<String> cids = new List<String>();
+    res['cids'].forEach((e) {
+      cids.add(e.toString());
+    });
+
+    print("CID: " + cids.toString());
+    store.encointer.setCurrencyIdentifiers(cids);
+    return cids;
   }
 
   Future<dynamic> getClaimOfAttendance(participants) async {
@@ -164,6 +170,7 @@ class ApiEncointer {
     var pubKey = store.account.currentAccountPubKey;
     var att = await apiRoot.evalJavascript('account.attestClaimOfAttendance("$claimHex", "$pubKey", "$password")');
     AttestationResult attestation = AttestationResult.fromJson(att);
+    print("Att: ${attestation.toString()}");
     return attestation;
   }
 

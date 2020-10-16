@@ -14,7 +14,7 @@ class Attestation {
   Attestation(this.claim, this.signature, this.public);
 
   ClaimOfAttendance claim;
-  Map signature;
+  String signature;
   String public;
 
   @override

@@ -168,13 +168,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
       Atom(name: '_EncointerStore.currencyIdentifiers');
 
   @override
-  List<dynamic> get currencyIdentifiers {
+  List<String> get currencyIdentifiers {
     _$currencyIdentifiersAtom.reportRead();
     return super.currencyIdentifiers;
   }
 
   @override
-  set currencyIdentifiers(List<dynamic> value) {
+  set currencyIdentifiers(List<String> value) {
     _$currencyIdentifiersAtom.reportWrite(value, super.currencyIdentifiers, () {
       super.currencyIdentifiers = value;
     });
@@ -334,7 +334,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setCurrencyIdentifiers(dynamic cids) {
+  void setCurrencyIdentifiers(List<String> cids) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.setCurrencyIdentifiers');
     try {

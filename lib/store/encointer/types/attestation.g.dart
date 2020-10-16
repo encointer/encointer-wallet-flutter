@@ -11,7 +11,7 @@ Attestation _$AttestationFromJson(Map<String, dynamic> json) {
     json['claim'] == null
         ? null
         : ClaimOfAttendance.fromJson(json['claim'] as Map<String, dynamic>),
-    json['signature'] as Map<String, dynamic>,
+    json['signature'] as String,
     json['public'] as String,
   );
 }

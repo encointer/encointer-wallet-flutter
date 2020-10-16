@@ -61,10 +61,10 @@ abstract class _EncointerStore with Store {
   Map<String, BalanceEntry> balanceEntries = new Map();
 
   @observable
-  List<dynamic> currencyIdentifiers = [];
+  List<String> currencyIdentifiers = [];
 
   @observable
-  var chosenCid = "";
+  String chosenCid = "";
 
   // Todo: remove expensive passing arround of claimHex
   @observable
@@ -107,7 +107,7 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setCurrencyIdentifiers(cids) {
+  void setCurrencyIdentifiers(List<String> cids) {
     currencyIdentifiers = cids;
   }
 
