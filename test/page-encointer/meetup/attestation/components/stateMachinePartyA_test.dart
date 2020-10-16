@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:polka_wallet/page-encointer/meetup/attestation/components/scanQrCode.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/stateMachinePartyA.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
@@ -118,11 +117,14 @@ Future<void> _showClaimA(WidgetTester tester, AppStore root, int otherMeetupRegi
 Future<void> _scanAttestationAClaimB(WidgetTester tester, AppStore root, int otherMeetupRegistryIndex) async {
   expect(find.byType(StateMachinePartyA), findsOneWidget);
   expect(find.text("Next step: Scan your attestation and other claim"), findsOneWidget);
-  await tester.tap(find.text("Next step: Scan your attestation and other claim"));
-  await tester.pumpAndSettle();
 
-  ScanQrCode scanner = await navigateToScanner(tester);
-  await mockQrCodeScan(tester, scanner, '$attestationHex:$claimHex');
+  // store AttestationA (my claim, attested by other)
+  print("Party A: Store my attestation (AttA): " + attestationHex);
+  root.encointer.addYourAttestation(otherMeetupRegistryIndex, attestationHex);
+  root.encointer.addOtherAttestation(otherMeetupRegistryIndex, attestationHex);
+  root.encointer.updateAttestationStep(otherMeetupRegistryIndex, CurrentAttestationStep.A3_showAttB);
+
+  await tester.pumpAndSettle();
   expect(
       root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.A3_showAttB);
 }

@@ -5,11 +5,9 @@ import 'package:permission_handler/permission_handler.dart';
 
 // TODO: scan image failed
 class ScanQrCode extends StatelessWidget {
-  ScanQrCode({this.onScan});
+  ScanQrCode();
   static final String route = '/meetup/scan';
   final GlobalKey<QrcodeReaderViewState> _qrViewKey = GlobalKey();
-
-  final Function onScan;
 
   Future<bool> canOpenCamera() async {
     var status = await PermissionHandler().checkPermissionStatus(PermissionGroup.camera);
@@ -26,12 +24,8 @@ class ScanQrCode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, dynamic> args = ModalRoute.of(context).settings.arguments;
-    Function onScan = this.onScan ?? args['onScan'];
-
     Future _onScan(String data, String _rawData) async {
       if (data != null) {
-        await onScan(data);
         Navigator.of(context).pop(data);
       } else {
         _qrViewKey.currentState.startScan();

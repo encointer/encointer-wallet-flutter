@@ -1,5 +1,4 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:polka_wallet/page-encointer/meetup/attestation/components/scanQrCode.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/stateMachinePartyB.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
@@ -108,10 +107,11 @@ void main() {
 Future<void> _scanClaimA(WidgetTester tester, AppStore root, int otherMeetupRegistryIndex) async {
   expect(find.byType(StateMachinePartyB), findsOneWidget);
   expect(find.text("Next step: Scan other claim"), findsOneWidget);
-  await tester.tap(find.text("Next step: Scan other claim"));
+
+  root.encointer.addOtherAttestation(otherMeetupRegistryIndex, attestationHex);
+  root.encointer.updateAttestationStep(otherMeetupRegistryIndex, CurrentAttestationStep.B2_showAttAClaimB);
   await tester.pumpAndSettle();
-  ScanQrCode scanner = await navigateToScanner(tester);
-  await mockQrCodeScan(tester, scanner, claimHex);
+
   expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep,
       CurrentAttestationStep.B2_showAttAClaimB);
 }
@@ -129,10 +129,10 @@ Future<void> _showAttestationAClaimB(WidgetTester tester, AppStore root, int oth
 Future<void> _scanAttestationB(WidgetTester tester, AppStore root, int otherMeetupRegistryIndex) async {
   expect(find.byType(StateMachinePartyB), findsOneWidget);
   expect(find.text("Next step: Scan your attestation"), findsOneWidget);
-  await tester.tap(find.text("Next step: Scan your attestation"));
+
+  root.encointer.addYourAttestation(otherMeetupRegistryIndex, attestationHex);
+  root.encointer.updateAttestationStep(otherMeetupRegistryIndex, CurrentAttestationStep.finished);
   await tester.pumpAndSettle();
 
-  ScanQrCode scanner = await navigateToScanner(tester);
-  await mockQrCodeScan(tester, scanner, attestation.toString(), activityIndicatorShown: false);
   expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.finished);
 }

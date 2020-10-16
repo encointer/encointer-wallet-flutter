@@ -44,30 +44,30 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
 
   _showClaimA(String claimA) async {
     print("Party A: Showing the claim");
-    Navigator.of(context).push(
+    await Navigator.of(context).push(
       MaterialPageRoute(
         builder: (BuildContext context) => QrCode(
           store,
-          onPressed: () => _updateAttestationStep(CurrentAttestationStep.A2_scanAttAClaimB),
           title: 'ClaimA',
           qrCodeData: claimA,
         ),
       ),
     );
+    store.encointer.updateAttestationStep(widget.otherMeetupRegistryIndex, CurrentAttestationStep.A2_scanAttAClaimB);
+    print('Party A: Updated Attestation Step: ${CurrentAttestationStep.A2_scanAttAClaimB.toString()}');
   }
 
   _scanAttAClaimB() async {
     print("Party A: Scanning AttestationA|ClaimB");
-    await Navigator.of(context).push(
+    String attAClaimB = await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (BuildContext context) => ScanQrCode(
-          onScan: _onScanAttAClaimB,
-        ),
+        builder: (BuildContext context) => ScanQrCode(),
       ),
     );
+    await onScanAttAClaimB(attAClaimB);
   }
 
-  _onScanAttAClaimB(String attestationAClaimB) async {
+  onScanAttAClaimB(String attestationAClaimB) async {
     var attCla = attestationAClaimB.toString().split(':');
     var attestationAhex = attCla[0];
     var claimBhex = attCla[1];
@@ -103,7 +103,8 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
     // store AttestationB (other claim, attested by me)
     print("Party A: Store Other AttestationHex (AttB): " + attestationB.attestationHex);
     store.encointer.addOtherAttestation(widget.otherMeetupRegistryIndex, attestationB.attestationHex);
-    _updateAttestationStep(CurrentAttestationStep.A3_showAttB);
+    store.encointer.updateAttestationStep(widget.otherMeetupRegistryIndex, CurrentAttestationStep.A3_showAttB);
+    print('Party A: Updated Attestation Step: ${CurrentAttestationStep.A3_showAttB.toString()}');
   }
 
   _showAttestationB() async {
@@ -113,12 +114,13 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
       MaterialPageRoute(
         builder: (BuildContext context) => QrCode(
           store,
-          onPressed: () => _updateAttestationStep(CurrentAttestationStep.finished),
           title: 'AttestationB',
           qrCodeData: attB,
         ),
       ),
     );
+    store.encointer.updateAttestationStep(widget.otherMeetupRegistryIndex, CurrentAttestationStep.finished);
+    print('Party A: Updated Attestation Step: ${CurrentAttestationStep.finished.toString()}');
   }
 
   _updateAttestationStep(CurrentAttestationStep step) {

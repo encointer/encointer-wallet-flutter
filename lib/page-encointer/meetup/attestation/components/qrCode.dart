@@ -7,12 +7,11 @@ import 'package:polka_wallet/utils/i18n/index.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QrCode extends StatelessWidget {
-  QrCode(this.store, {this.onPressed, this.title, this.qrCodeData});
+  QrCode(this.store, {this.title, this.qrCodeData});
 
   static final String route = '/encointer/attestation/qrCodeClaim';
   final AppStore store;
 
-  final Function onPressed;
   final String title;
   final String qrCodeData;
 
@@ -81,7 +80,6 @@ class QrCode extends StatelessWidget {
                         child: RoundedButton(
                           text: I18n.of(context).assets['done?'],
                           onPressed: () => {
-                            onPressed(),
                             Navigator.pop(context),
                           },
                         ),
