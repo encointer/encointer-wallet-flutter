@@ -43,7 +43,8 @@ void main() {
 
   testWidgets('stateMachinePartyA happy flow', (WidgetTester tester) async {
     await tester.pumpWidget(makeTestableWidget(child: stateMachineA));
-    expect(find.text("Performing attestation with: ${Fmt.address(pubKeys[1])}"), findsOneWidget);
+    expect(find.text("Performing attestation with:"), findsOneWidget);
+    expect(find.text("${Fmt.address(pubKeys[1])}"), findsOneWidget);
 
     await _showClaimA(tester, root, otherMeetupRegistryIndex);
     await _scanAttestationAClaimB(tester, root, otherMeetupRegistryIndex);
@@ -107,7 +108,7 @@ void main() {
 Future<void> _showClaimA(WidgetTester tester, AppStore root, int otherMeetupRegistryIndex) async {
   expect(find.byType(StateMachinePartyA), findsOneWidget);
   expect(find.text("Next step: Show your claim"), findsOneWidget);
-  await tester.tap(find.text("Next step: Show your claim"));
+  await tester.tap(find.text("Continue"));
   await tester.pumpAndSettle();
   await navigateToQrCodeAndTapConfirmButton(tester);
   expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep,
@@ -132,7 +133,7 @@ Future<void> _scanAttestationAClaimB(WidgetTester tester, AppStore root, int oth
 Future<void> _showAttestationB(WidgetTester tester, AppStore root, int otherMeetupRegistryIndex) async {
   expect(find.byType(StateMachinePartyA), findsOneWidget);
   expect(find.text("Next step: Show other attestation"), findsOneWidget);
-  await tester.tap(find.text("Next step: Show other attestation"));
+  await tester.tap(find.text("Continue"));
   await tester.pumpAndSettle();
   await navigateToQrCodeAndTapConfirmButton(tester);
   expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.finished);

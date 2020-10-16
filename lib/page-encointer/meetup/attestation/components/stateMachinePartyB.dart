@@ -15,10 +15,12 @@ class StateMachinePartyB extends StatefulWidget {
   StateMachinePartyB(
     this.store, {
     this.otherMeetupRegistryIndex,
+    this.initialAttestationStep,
   }) : super();
 
   final AppStore store;
   final int otherMeetupRegistryIndex;
+  final CurrentAttestationStep initialAttestationStep;
 
   @override
   _StateMachinePartyBState createState() {
@@ -230,7 +232,6 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
   }
 
   _getCurrentAttestationStep(CurrentAttestationStep step) {
-    print("getNextAttestationster");
     switch (step) {
       case CurrentAttestationStep.none:
         {

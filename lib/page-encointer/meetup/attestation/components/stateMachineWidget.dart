@@ -40,7 +40,7 @@ class StateMachineWidget extends StatelessWidget {
                     style: Theme.of(context).textTheme.bodyText2,
                   ),
                   Text(
-                    "${Fmt.address(otherParty)}:",
+                    "${Fmt.address(otherParty)}",
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ],

@@ -43,7 +43,8 @@ void main() {
 
   testWidgets('StateMachinePartyB happy flow', (WidgetTester tester) async {
     await tester.pumpWidget(makeTestableWidget(child: stateMachineB));
-    expect(find.text("Performing attestation with: ${Fmt.address(pubKeys[0])}"), findsOneWidget);
+    expect(find.text("Performing attestation with:"), findsOneWidget);
+    expect(find.text("${Fmt.address(pubKeys[0])}"), findsOneWidget);
 
     await _scanClaimA(tester, root, otherMeetupRegistryIndex);
     await _showAttestationAClaimB(tester, root, otherMeetupRegistryIndex);
@@ -119,7 +120,7 @@ Future<void> _scanClaimA(WidgetTester tester, AppStore root, int otherMeetupRegi
 Future<void> _showAttestationAClaimB(WidgetTester tester, AppStore root, int otherMeetupRegistryIndex) async {
   expect(find.byType(StateMachinePartyB), findsOneWidget);
   expect(find.text("Next step: Show other attestation and your claim"), findsOneWidget);
-  await tester.tap(find.text("Next step: Show other attestation and your claim"));
+  await tester.tap(find.text("Continue"));
   await tester.pumpAndSettle();
   await navigateToQrCodeAndTapConfirmButton(tester);
   expect(
