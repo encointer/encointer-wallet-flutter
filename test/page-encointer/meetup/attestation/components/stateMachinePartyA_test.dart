@@ -67,16 +67,16 @@ void main() {
       await tester.pumpWidget(makeTestableWidget(child: stateMachineA));
       await _showClaimA(tester, root, otherMeetupRegistryIndex);
       await goBackOneAttestationStep(tester);
-      expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep,
-          CurrentAttestationStep.A1_showClaimA);
+      expect(
+          root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.STEP1);
     });
     testWidgets('A3_showAttB back to A2_scanAttAClaimB', (WidgetTester tester) async {
       await tester.pumpWidget(makeTestableWidget(child: stateMachineA));
       await _showClaimA(tester, root, otherMeetupRegistryIndex);
       await _scanAttestationAClaimB(tester, root, otherMeetupRegistryIndex);
       await goBackOneAttestationStep(tester);
-      expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep,
-          CurrentAttestationStep.A2_scanAttAClaimB);
+      expect(
+          root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.STEP2);
     });
     testWidgets('finished back to A3_showAttB', (WidgetTester tester) async {
       await tester.pumpWidget(makeTestableWidget(child: stateMachineA));
@@ -84,8 +84,8 @@ void main() {
       await _scanAttestationAClaimB(tester, root, otherMeetupRegistryIndex);
       await _showAttestationB(tester, root, otherMeetupRegistryIndex);
       await goBackOneAttestationStep(tester);
-      expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep,
-          CurrentAttestationStep.A3_showAttB);
+      expect(
+          root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.STEP3);
     });
     testWidgets('finished back to A1_showClaimA', (WidgetTester tester) async {
       await tester.pumpWidget(makeTestableWidget(child: stateMachineA));
@@ -93,14 +93,14 @@ void main() {
       await _scanAttestationAClaimB(tester, root, otherMeetupRegistryIndex);
       await _showAttestationB(tester, root, otherMeetupRegistryIndex);
       await goBackOneAttestationStep(tester);
-      expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep,
-          CurrentAttestationStep.A3_showAttB);
+      expect(
+          root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.STEP3);
       await goBackOneAttestationStep(tester);
-      expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep,
-          CurrentAttestationStep.A2_scanAttAClaimB);
+      expect(
+          root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.STEP2);
       await goBackOneAttestationStep(tester);
-      expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep,
-          CurrentAttestationStep.A1_showClaimA);
+      expect(
+          root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.STEP1);
     });
   });
 }
@@ -111,8 +111,7 @@ Future<void> _showClaimA(WidgetTester tester, AppStore root, int otherMeetupRegi
   await tester.tap(find.text("Continue"));
   await tester.pumpAndSettle();
   await navigateToQrCodeAndTapConfirmButton(tester);
-  expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep,
-      CurrentAttestationStep.A2_scanAttAClaimB);
+  expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.STEP2);
 }
 
 Future<void> _scanAttestationAClaimB(WidgetTester tester, AppStore root, int otherMeetupRegistryIndex) async {
@@ -123,11 +122,10 @@ Future<void> _scanAttestationAClaimB(WidgetTester tester, AppStore root, int oth
   print("Party A: Store my attestation (AttA): " + attestationHex);
   root.encointer.addYourAttestation(otherMeetupRegistryIndex, attestationHex);
   root.encointer.addOtherAttestation(otherMeetupRegistryIndex, attestationHex);
-  root.encointer.updateAttestationStep(otherMeetupRegistryIndex, CurrentAttestationStep.A3_showAttB);
+  root.encointer.updateAttestationStep(otherMeetupRegistryIndex, CurrentAttestationStep.STEP3);
 
   await tester.pumpAndSettle();
-  expect(
-      root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.A3_showAttB);
+  expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.STEP3);
 }
 
 Future<void> _showAttestationB(WidgetTester tester, AppStore root, int otherMeetupRegistryIndex) async {
@@ -136,5 +134,5 @@ Future<void> _showAttestationB(WidgetTester tester, AppStore root, int otherMeet
   await tester.tap(find.text("Continue"));
   await tester.pumpAndSettle();
   await navigateToQrCodeAndTapConfirmButton(tester);
-  expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.finished);
+  expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.FINISHED);
 }
