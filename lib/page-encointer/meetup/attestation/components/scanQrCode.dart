@@ -38,6 +38,7 @@ class ScanQrCode extends StatelessWidget {
           if (snapshot.hasData && snapshot.data == true) {
             return QrcodeReaderView(
               key: _qrViewKey,
+              helpWidget: Text("scan QR code on other phone"),
               headerWidget: SafeArea(
                 child: IconButton(
                   icon: Icon(
