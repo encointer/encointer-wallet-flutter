@@ -50,8 +50,8 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
         builder: (BuildContext context) => ScanQrCode(),
       ),
     );
+    // is null if back button pressed
     if (claimA != null) {
-      // back button pressed
       await _attestClaimA(claimA);
     }
   }
@@ -108,8 +108,8 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
         builder: (BuildContext context) => ScanQrCode(),
       ),
     );
+    // is null if back button pressed
     if (attB != null) {
-      // back button was pressed
       await _onScanAttB(attB);
     }
   }

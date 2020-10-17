@@ -62,8 +62,8 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
         builder: (BuildContext context) => ScanQrCode(),
       ),
     );
+    // is null if back button pressed
     if (attAClaimB != null) {
-      // back button pressed
       await onScanAttAClaimB(attAClaimB);
     }
   }
