@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:polka_wallet/common/components/roundedButton.dart';
 import 'package:polka_wallet/common/components/roundedCard.dart';
 import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
@@ -21,6 +20,9 @@ class StateMachineWidget extends StatelessWidget {
   final String onForwardText;
   final Function onForward;
 
+  static const backButtonKey = Key("back");
+  static const nextButtonKey = Key("next");
+
   @override
   Widget build(BuildContext context) {
     final Map dic = I18n.of(context).encointer;
@@ -30,6 +32,7 @@ class StateMachineWidget extends StatelessWidget {
         title: Text(dic['ceremony']),
         centerTitle: true,
         leading: new IconButton(
+          key: backButtonKey,
           icon: new Icon(Icons.arrow_back),
           onPressed: onBackward,
         ),
@@ -55,17 +58,17 @@ class StateMachineWidget extends StatelessWidget {
                 ],
               ),
             ),
+            SizedBox(width: double.infinity, height: 12),
             RoundedCard(
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    "${dic['next.step']}: $onForwardText",
-                  ),
-                  RoundedButton(
-                    text: "${dic['continue']}",
-                    onPressed: onForward,
-                  ),
-                ],
+              child: ListTile(
+                title: Text(
+                  "${dic['next.step']}: $onForwardText",
+                ),
+                trailing: IconButton(
+                  key: nextButtonKey,
+                  icon: new Icon(Icons.navigate_next),
+                  onPressed: onForward,
+                ),
               ),
             ),
           ],

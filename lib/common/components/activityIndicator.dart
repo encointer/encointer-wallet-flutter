@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:polka_wallet/utils/i18n/index.dart';
 
 class ActivityIndicator extends StatefulWidget {
   ActivityIndicator({Key key, this.title, this.future}) : super(key: key);
@@ -40,11 +39,7 @@ class _ActivityIndicatorState extends State<ActivityIndicator> {
   Widget build(BuildContext context) {
     return new CupertinoAlertDialog(
       title: Text(widget.title),
-      actions: <Widget>[
-        _isAwaitingFuture
-            ? CupertinoActivityIndicator()
-            : Container(),
-      ],
+      content: _isAwaitingFuture ? CupertinoActivityIndicator() : Container(),
     );
   }
 }

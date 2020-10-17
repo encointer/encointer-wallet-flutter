@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/stateMachinePartyA.dart';
+import 'package:polka_wallet/page-encointer/meetup/attestation/components/stateMachineWidget.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/store/encointer/types/attestationState.dart';
@@ -101,12 +102,13 @@ void main() {
 Future<void> _showClaimA(WidgetTester tester, AppStore root, int otherMeetupRegistryIndex) async {
   expect(find.byType(StateMachinePartyA), findsOneWidget);
   expect(find.text("Next step: Show your claim"), findsOneWidget);
-  await tester.tap(find.text("Continue"));
+  await tester.tap(find.byKey(StateMachineWidget.nextButtonKey));
   await tester.pumpAndSettle();
   await navigateToQrCodeAndTapConfirmButton(tester);
   expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.STEP2);
 }
 
+/// mocks AttestationAClaimB scan. Note: Currently, we have no means of really mocking the ScanQrCode widget.
 Future<void> _scanAttestationAClaimB(WidgetTester tester, AppStore root, int otherMeetupRegistryIndex) async {
   expect(find.byType(StateMachinePartyA), findsOneWidget);
   expect(find.text("Next step: Scan your attestation and other claim"), findsOneWidget);
@@ -124,7 +126,7 @@ Future<void> _scanAttestationAClaimB(WidgetTester tester, AppStore root, int oth
 Future<void> _showAttestationB(WidgetTester tester, AppStore root, int otherMeetupRegistryIndex) async {
   expect(find.byType(StateMachinePartyA), findsOneWidget);
   expect(find.text("Next step: Show other attestation"), findsOneWidget);
-  await tester.tap(find.text("Continue"));
+  await tester.tap(find.byKey(StateMachineWidget.nextButtonKey));
   await tester.pumpAndSettle();
   await navigateToQrCodeAndTapConfirmButton(tester);
   expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.FINISHED);

@@ -5,6 +5,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:polka_wallet/common/components/roundedButton.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/qrCode.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/scanQrCode.dart';
+import 'package:polka_wallet/page-encointer/meetup/attestation/components/stateMachineWidget.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/store/encointer/types/attestationState.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
@@ -70,9 +71,8 @@ Future<void> navigateToQrCodeAndTapConfirmButton(WidgetTester tester) async {
 }
 
 Future<void> goBackOneAttestationStep(WidgetTester tester) async {
-  var backButtonFinder = find.byType(IconButton);
+  var backButtonFinder = find.byKey(StateMachineWidget.backButtonKey);
   expect(backButtonFinder, findsOneWidget);
-  IconButton backButton = backButtonFinder.evaluate().first.widget;
-  backButton.onPressed();
+  await tester.tap(find.byKey(StateMachineWidget.backButtonKey));
   await tester.pumpAndSettle();
 }

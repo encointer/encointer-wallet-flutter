@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:polka_wallet/page-encointer/meetup/attestation/components/stateMachinePartyB.dart';
+import 'package:polka_wallet/page-encointer/meetup/attestation/components/stateMachineWidget.dart';
 import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/store/encointer/types/attestationState.dart';
@@ -112,7 +113,7 @@ Future<void> _scanClaimA(WidgetTester tester, AppStore root, int otherMeetupRegi
 Future<void> _showAttestationAClaimB(WidgetTester tester, AppStore root, int otherMeetupRegistryIndex) async {
   expect(find.byType(StateMachinePartyB), findsOneWidget);
   expect(find.text("Next step: Show other attestation and your claim"), findsOneWidget);
-  await tester.tap(find.text("Continue"));
+  await tester.tap(find.byKey(StateMachineWidget.nextButtonKey));
   await tester.pumpAndSettle();
   await navigateToQrCodeAndTapConfirmButton(tester);
   expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.STEP3);
