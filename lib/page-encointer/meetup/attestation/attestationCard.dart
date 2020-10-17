@@ -104,7 +104,7 @@ class _AttestationCardState extends State<AttestationCard> {
               Container(
                 child: Text(
                   Fmt.address(attestation.pubKey),
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 14),
                 ),
                 //onTap: () => _scanQrCode(otherIndex),
               ),
