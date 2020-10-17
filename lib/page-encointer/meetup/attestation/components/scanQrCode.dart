@@ -5,7 +5,8 @@ import 'package:permission_handler/permission_handler.dart';
 
 // TODO: scan image failed
 class ScanQrCode extends StatelessWidget {
-  ScanQrCode();
+  ScanQrCode({this.instruction});
+  final String instruction;
   final GlobalKey<QrcodeReaderViewState> _qrViewKey = GlobalKey();
 
   Future<bool> canOpenCamera() async {
@@ -38,7 +39,7 @@ class ScanQrCode extends StatelessWidget {
           if (snapshot.hasData && snapshot.data == true) {
             return QrcodeReaderView(
               key: _qrViewKey,
-              helpWidget: Text("scan QR code on other phone"),
+              helpWidget: Text(instruction),
               headerWidget: SafeArea(
                 child: IconButton(
                   icon: Icon(

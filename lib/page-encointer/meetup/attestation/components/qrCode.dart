@@ -26,7 +26,7 @@ class QrCode extends StatelessWidget {
       backgroundColor: Colors.grey,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: Text(I18n.of(context).assets['receive']),
+        title: Text(""),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -77,7 +77,7 @@ class QrCode extends StatelessWidget {
                         width: MediaQuery.of(context).size.width / 2,
                         padding: EdgeInsets.only(top: 16, bottom: 32),
                         child: RoundedButton(
-                          text: I18n.of(context).assets['done?'],
+                          text: I18n.of(context).encointer['done'],
                           onPressed: () => Navigator.pop(context),
                         ),
                       )

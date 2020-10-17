@@ -15,11 +15,13 @@ class StateMachinePartyB extends StatefulWidget {
   StateMachinePartyB(
     this.store, {
     this.otherMeetupRegistryIndex,
+    this.myMeetupRegistryIndex,
     this.initialAttestationStep,
   }) : super();
 
   final AppStore store;
   final int otherMeetupRegistryIndex;
+  final int myMeetupRegistryIndex;
   final CurrentAttestationStep initialAttestationStep;
 
   @override
@@ -47,7 +49,7 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
     print("Party B: Scanning others' claimA now");
     String claimA = await Navigator.of(context).push(
       MaterialPageRoute<String>(
-        builder: (BuildContext context) => ScanQrCode(),
+        builder: (BuildContext context) => ScanQrCode(instruction: "scan claimA"),
       ),
     );
     // is null if back button pressed
@@ -105,7 +107,7 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
   _scanAttestationB() async {
     String attB = await Navigator.of(context).push(
       MaterialPageRoute<String>(
-        builder: (BuildContext context) => ScanQrCode(),
+        builder: (BuildContext context) => ScanQrCode(instruction: "scan attestationB"),
       ),
     );
     // is null if back button pressed
@@ -135,6 +137,7 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
       builder: (BuildContext context) => StateMachineWidget(
         otherParty: other,
         otherMeetupRegistryIndex: widget.otherMeetupRegistryIndex,
+        myMeetupRegistryIndex: widget.myMeetupRegistryIndex,
         onBackward: () =>
             _goBackOneStep(store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep),
         onForward: () => _getCurrentAttestationStep(
@@ -154,19 +157,23 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
     switch (step) {
       case CurrentAttestationStep.STEP1:
         {
-          return dic['scan.other.claim'];
+          return dic['attestation.partyB.step1'];
         }
       case CurrentAttestationStep.STEP2:
         {
-          return dic['show.other.attestation.your.claim'];
+          return dic['attestation.partyB.step2'];
         }
       case CurrentAttestationStep.STEP3:
         {
-          return dic['scan.your.attestation'];
+          return dic['attestation.partyB.step3'];
         }
       case CurrentAttestationStep.FINISHED:
         {
           return dic['finish'];
+        }
+      default:
+        {
+          return "attestation step not defined";
         }
     }
   }

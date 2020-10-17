@@ -45,6 +45,7 @@ class _AttestationCardState extends State<AttestationCard> {
           builder: (BuildContext context) => StateMachinePartyA(
             store,
             otherMeetupRegistryIndex: widget.otherMeetupRegistryIndex,
+            myMeetupRegistryIndex: widget.myMeetupRegistryIndex,
           ),
         ),
       );
@@ -54,6 +55,7 @@ class _AttestationCardState extends State<AttestationCard> {
           builder: (BuildContext context) => StateMachinePartyB(
             store,
             otherMeetupRegistryIndex: widget.otherMeetupRegistryIndex,
+            myMeetupRegistryIndex: widget.myMeetupRegistryIndex,
           ),
         ),
       );

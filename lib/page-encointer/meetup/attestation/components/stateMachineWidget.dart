@@ -7,6 +7,7 @@ class StateMachineWidget extends StatelessWidget {
   StateMachineWidget({
     Key key,
     @required this.otherMeetupRegistryIndex,
+    @required this.myMeetupRegistryIndex,
     @required this.otherParty,
     @required this.onBackward,
     @required this.onForwardText,
@@ -14,6 +15,7 @@ class StateMachineWidget extends StatelessWidget {
   }) : super(key: key);
 
   final int otherMeetupRegistryIndex;
+  final int myMeetupRegistryIndex;
   final String otherParty;
 
   final Function onBackward;
@@ -44,17 +46,52 @@ class StateMachineWidget extends StatelessWidget {
           children: <Widget>[
             RoundedCard(
               // margin: EdgeInsets.fromLTRB(16, 4, 16, 16),
-              padding: EdgeInsets.all(30),
+              padding: EdgeInsets.all(10),
               child: Column(
                 children: [
-                  Text(
-                    "${dic['attestation.performing.with']}:",
-                    style: Theme.of(context).textTheme.bodyText2,
+                  Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text("myself: "),
+                        //AddressIcon(store.account.currentAddress, size: 64),
+                        Container(
+                            margin: const EdgeInsets.all(10.0),
+                            padding: const EdgeInsets.all(8.0),
+                            //color: Colors.lime,
+                            decoration: BoxDecoration(
+                                color: Colors.yellow,
+                                border: Border.all(
+                                  color: Colors.blue,
+                                ),
+                                borderRadius: BorderRadius.all(Radius.circular(20))),
+                            child: Text(myMeetupRegistryIndex.toString()) //AddressIcon(attestation.pubKey, size: 64),
+                        ),
+                      ],
+                    ),
                   ),
-                  Text(
-                    "${Fmt.address(otherParty)}",
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        "${dic['attestation.performing.with']}:",
+                        style: Theme.of(context).textTheme.bodyText2,
+                      ),
+                      Container(
+                          margin: const EdgeInsets.all(10.0),
+                          padding: const EdgeInsets.all(8.0),
+                          //color: Colors.lime,
+                          decoration: BoxDecoration(
+                              color: Colors.yellow,
+                              border: Border.all(
+                                color: Colors.blue,
+                              ),
+                              borderRadius: BorderRadius.all(Radius.circular(20))),
+                          child: Text(otherMeetupRegistryIndex.toString()) //AddressIcon(attestation.pubKey, size: 64),
+                      ),
+                    ]
+                  )
                 ],
               ),
             ),
@@ -62,7 +99,7 @@ class StateMachineWidget extends StatelessWidget {
             RoundedCard(
               child: ListTile(
                 title: Text(
-                  "${dic['next.step']}: $onForwardText",
+                  "$onForwardText",
                 ),
                 trailing: IconButton(
                   key: nextButtonKey,

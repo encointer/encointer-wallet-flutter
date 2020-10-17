@@ -14,11 +14,12 @@ class StateMachinePartyA extends StatefulWidget {
   StateMachinePartyA(
     this.store, {
     this.otherMeetupRegistryIndex,
+    this.myMeetupRegistryIndex,
   }) : super();
 
   final AppStore store;
   final int otherMeetupRegistryIndex;
-
+  final int myMeetupRegistryIndex;
   @override
   _StateMachinePartyAState createState() {
     return _StateMachinePartyAState(store);
@@ -59,7 +60,7 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
     print("Party A: Scanning AttestationA|ClaimB");
     String attAClaimB = await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (BuildContext context) => ScanQrCode(),
+        builder: (BuildContext context) => ScanQrCode(instruction: "scan attestationA | claimB"),
       ),
     );
     // is null if back button pressed
@@ -137,6 +138,7 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
       builder: (BuildContext context) => StateMachineWidget(
         otherParty: other,
         otherMeetupRegistryIndex: widget.otherMeetupRegistryIndex,
+        myMeetupRegistryIndex: widget.myMeetupRegistryIndex,
         onBackward: () =>
             _goBackOneStep(store.encointer.attestations[widget.otherMeetupRegistryIndex].currentAttestationStep),
         onForward: () => _getCurrentAttestationStep(
@@ -151,19 +153,23 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
     switch (step) {
       case CurrentAttestationStep.STEP1:
         {
-          return dic['show.your.claim'];
+          return dic['attestation.partyA.step1'];
         }
       case CurrentAttestationStep.STEP2:
         {
-          return dic['scan.your.attestation.other.claim'];
+          return dic['attestation.partyA.step2'];
         }
       case CurrentAttestationStep.STEP3:
         {
-          return dic['show.other.attestation'];
+          return dic['attestation.partyA.step3'];
         }
       case CurrentAttestationStep.FINISHED:
         {
           return dic['finish'];
+        }
+      default:
+        {
+          return "attestation step not defined";
         }
     }
   }
