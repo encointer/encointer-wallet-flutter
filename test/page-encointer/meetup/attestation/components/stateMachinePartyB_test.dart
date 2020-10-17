@@ -56,13 +56,6 @@ void main() {
   });
 
   group('goBackOneStep', () {
-    testWidgets('stays at none', (WidgetTester tester) async {
-      await tester.pumpWidget(makeTestableWidget(child: stateMachineB));
-      expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.none);
-      await goBackOneAttestationStep(tester);
-      expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.none);
-    });
-
     testWidgets('B2_showAttAClaimB back to B1_scanClaimA', (WidgetTester tester) async {
       await tester.pumpWidget(makeTestableWidget(child: stateMachineB));
       await _scanClaimA(tester, root, otherMeetupRegistryIndex);

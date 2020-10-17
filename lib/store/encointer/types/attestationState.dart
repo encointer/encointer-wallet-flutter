@@ -22,7 +22,7 @@ abstract class _AttestationState with Store {
   String otherAttestation;
 
   @observable
-  CurrentAttestationStep currentAttestationStep = CurrentAttestationStep.none;
+  CurrentAttestationStep currentAttestationStep = CurrentAttestationStep.STEP1;
 
   @override
   String toString() {
@@ -48,10 +48,4 @@ abstract class _AttestationState with Store {
   }
 }
 
-enum CurrentAttestationStep {
-  none, // partyA and partyB
-  STEP1,
-  STEP2,
-  STEP3,
-  FINISHED
-}
+enum CurrentAttestationStep { STEP1, STEP2, STEP3, FINISHED }

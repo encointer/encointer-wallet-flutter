@@ -149,10 +149,6 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
   String _nextStep(CurrentAttestationStep step) {
     final Map dic = I18n.of(context).encointer;
     switch (step) {
-      case CurrentAttestationStep.none:
-        {
-          return dic['show.your.claim'];
-        }
       case CurrentAttestationStep.STEP1:
         {
           return dic['show.your.claim'];
@@ -174,14 +170,8 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
 
   void _goBackOneStep(CurrentAttestationStep step) {
     switch (step) {
-      case CurrentAttestationStep.none:
-        {
-          Navigator.of(context).pop();
-          return;
-        }
       case CurrentAttestationStep.STEP1:
         {
-          // _updateAttestationStep(CurrentAttestationStep.none);
           Navigator.of(context).pop();
           return;
         }
@@ -206,10 +196,6 @@ class _StateMachinePartyAState extends State<StateMachinePartyA> {
   _getCurrentAttestationStep(CurrentAttestationStep step) {
     final String claim = store.encointer.claimHex;
     switch (step) {
-      case CurrentAttestationStep.none:
-        {
-          return _showClaimA(claim);
-        }
       case CurrentAttestationStep.STEP1:
         {
           return _showClaimA(claim);
