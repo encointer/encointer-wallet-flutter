@@ -70,8 +70,9 @@ Future<void> navigateToQrCodeAndTapConfirmButton(WidgetTester tester) async {
 }
 
 Future<void> goBackOneAttestationStep(WidgetTester tester) async {
-  var backButtonFinder = find.text("Go Back");
+  var backButtonFinder = find.byType(IconButton);
   expect(backButtonFinder, findsOneWidget);
-  await tester.tap(backButtonFinder);
+  IconButton backButton = backButtonFinder.evaluate().first.widget;
+  backButton.onPressed();
   await tester.pumpAndSettle();
 }

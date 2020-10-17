@@ -50,7 +50,10 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
         builder: (BuildContext context) => ScanQrCode(),
       ),
     );
-    await _attestClaimA(claimA);
+    if (claimA != null) {
+      // back button pressed
+      await _attestClaimA(claimA);
+    }
   }
 
   _attestClaimA(String claimAhex) async {
@@ -105,7 +108,10 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
         builder: (BuildContext context) => ScanQrCode(),
       ),
     );
-    await _onScanAttB(attB);
+    if (attB != null) {
+      // back button was pressed
+      await _onScanAttB(attB);
+    }
   }
 
   _onScanAttB(String attB) {
@@ -190,7 +196,7 @@ class _StateMachinePartyBState extends State<StateMachinePartyB> {
         }
       case CurrentAttestationStep.B1_scanClaimA:
         {
-          _updateAttestationStep(CurrentAttestationStep.none);
+          // _updateAttestationStep(CurrentAttestationStep.none);
           Navigator.of(context).pop();
           return;
         }

@@ -29,54 +29,47 @@ class StateMachineWidget extends StatelessWidget {
       appBar: AppBar(
         title: Text(dic['ceremony']),
         centerTitle: true,
+        leading: new IconButton(
+          icon: new Icon(Icons.arrow_back),
+          onPressed: onBackward,
+        ),
       ),
       backgroundColor: Theme.of(context).canvasColor,
-      body: Stack(
-        children: <Widget>[
-          SafeArea(
-            child: ListView(
-              padding: const EdgeInsets.all(16),
-              children: <Widget>[
-                RoundedCard(
-                  // margin: EdgeInsets.fromLTRB(16, 4, 16, 16),
-                  padding: EdgeInsets.all(30),
-                  child: Column(
-                    children: [
-                      Text(
-                        "${dic['attestation.performing.with']}:",
-                        style: Theme.of(context).textTheme.bodyText2,
-                      ),
-                      Text(
-                        "${Fmt.address(otherParty)}",
-                        style: Theme.of(context).textTheme.bodyText1,
-                      ),
-                    ],
+      body: SafeArea(
+        child: ListView(
+          padding: const EdgeInsets.all(16),
+          children: <Widget>[
+            RoundedCard(
+              // margin: EdgeInsets.fromLTRB(16, 4, 16, 16),
+              padding: EdgeInsets.all(30),
+              child: Column(
+                children: [
+                  Text(
+                    "${dic['attestation.performing.with']}:",
+                    style: Theme.of(context).textTheme.bodyText2,
                   ),
-                ),
-                RoundedCard(
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        "${dic['next.step']}: $onForwardText",
-                      ),
-                      RoundedButton(
-                        text: "${dic['continue']}",
-                        onPressed: onForward,
-                      ),
-                    ],
+                  Text(
+                    "${Fmt.address(otherParty)}",
+                    style: Theme.of(context).textTheme.bodyText1,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-          Positioned(
-            bottom: 0,
-            child: RoundedButton(
-              text: dic['go.back'],
-              onPressed: onBackward,
+            RoundedCard(
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    "${dic['next.step']}: $onForwardText",
+                  ),
+                  RoundedButton(
+                    text: "${dic['continue']}",
+                    onPressed: onForward,
+                  ),
+                ],
+              ),
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }
