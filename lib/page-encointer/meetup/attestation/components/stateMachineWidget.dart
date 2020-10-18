@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:polka_wallet/common/components/roundedCard.dart';
-import 'package:polka_wallet/utils/format.dart';
 import 'package:polka_wallet/utils/i18n/index.dart';
 
 class StateMachineWidget extends StatelessWidget {
@@ -54,7 +53,7 @@ class StateMachineWidget extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text("myself: "),
+                        Text("${dic['myself']}: "),
                         //AddressIcon(store.account.currentAddress, size: 64),
                         Container(
                             margin: const EdgeInsets.all(10.0),
@@ -62,12 +61,10 @@ class StateMachineWidget extends StatelessWidget {
                             //color: Colors.lime,
                             decoration: BoxDecoration(
                                 color: Colors.yellow,
-                                border: Border.all(
-                                  color: Colors.blue,
-                                ),
+                                border: Border.all(color: Colors.blue),
                                 borderRadius: BorderRadius.all(Radius.circular(20))),
                             child: Text(myMeetupRegistryIndex.toString()) //AddressIcon(attestation.pubKey, size: 64),
-                        ),
+                            ),
                       ],
                     ),
                   ),
@@ -89,8 +86,8 @@ class StateMachineWidget extends StatelessWidget {
                               ),
                               borderRadius: BorderRadius.all(Radius.circular(20))),
                           child: Text(otherMeetupRegistryIndex.toString()) //AddressIcon(attestation.pubKey, size: 64),
-                      ),
-                    ]
+                          ),
+                    ],
                   )
                 ],
               ),
@@ -98,9 +95,7 @@ class StateMachineWidget extends StatelessWidget {
             SizedBox(width: double.infinity, height: 12),
             RoundedCard(
               child: ListTile(
-                title: Text(
-                  "$onForwardText",
-                ),
+                title: Text("$onForwardText"),
                 trailing: IconButton(
                   key: nextButtonKey,
                   icon: new Icon(Icons.navigate_next),

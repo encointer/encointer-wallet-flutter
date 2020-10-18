@@ -90,7 +90,7 @@ class _MeetupPageState extends State<MeetupPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text("myself: "),
+                        Text("${dic['myself']}: "),
                         //AddressIcon(store.account.currentAddress, size: 64),
                         Container(
                             margin: const EdgeInsets.all(10.0),

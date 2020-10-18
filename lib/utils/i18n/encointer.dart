@@ -17,6 +17,7 @@ const Map<String, String> enNctr = {
   'attestation.performing.with': 'Performing mutual attestation with',
   'attestation.revert': 'revert',
   'meetup.complete': 'complete meetup',
+  'myself': 'Myself',
   // partyA
   'attestation.partyA.step1': 'STEP 1/3: Show claimA',
   'attestation.partyA.step2': 'STEP 2/3: Scan attestationA and claimB',
@@ -28,7 +29,5 @@ const Map<String, String> enNctr = {
   //
   'done': 'done',
   'next.step': 'Next step',
-  'continue': 'Continue',
-  'go.back': 'Go Back',
   'finish': 'Finish',
 };
