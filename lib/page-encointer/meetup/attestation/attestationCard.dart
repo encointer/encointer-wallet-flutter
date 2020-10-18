@@ -111,11 +111,7 @@ class _AttestationCardState extends State<AttestationCard> {
               Container(
                 margin: const EdgeInsets.all(5.0),
                 padding: const EdgeInsets.all(5.0),
-                child: RoundedButton(
-                    text: dic['attestation.perform'],
-                    onPressed: store.encointer.attestations[widget.otherMeetupRegistryIndex].done
-                        ? null
-                        : () => _performAttestation()),
+                child: RoundedButton(text: dic['attestation.perform'], onPressed: () => _performAttestation()),
               )
             ],
           ),
