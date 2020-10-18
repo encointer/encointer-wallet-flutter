@@ -4,7 +4,6 @@ import 'package:polka_wallet/page-encointer/meetup/attestation/components/stateM
 import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/store/encointer/types/attestationState.dart';
-import 'package:polka_wallet/utils/format.dart';
 
 import '../../../../mocks/apiEncointer_mock.dart';
 import '../../../../mocks/data/mockEncointerData.dart';
@@ -44,8 +43,7 @@ void main() {
 
   testWidgets('StateMachinePartyB happy flow', (WidgetTester tester) async {
     await tester.pumpWidget(makeTestableWidget(child: stateMachineB));
-    expect(find.text("Performing attestation with:"), findsOneWidget);
-    expect(find.text("${Fmt.address(pubKeys[0])}"), findsOneWidget);
+    expect(find.text(otherMeetupRegistryIndex.toString()), findsOneWidget);
 
     await _scanClaimA(tester, root, otherMeetupRegistryIndex);
     await _showAttestationAClaimB(tester, root, otherMeetupRegistryIndex);
@@ -53,7 +51,8 @@ void main() {
 
     // verify that we have finished the attestation procedure
     expect(find.byType(StateMachinePartyB), findsOneWidget);
-    expect(find.text("Next step: Finish"), findsOneWidget);
+    expect(
+        root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.FINISHED);
   });
 
   group('goBackOneStep', () {
@@ -101,7 +100,7 @@ void main() {
 
 Future<void> _scanClaimA(WidgetTester tester, AppStore root, int otherMeetupRegistryIndex) async {
   expect(find.byType(StateMachinePartyB), findsOneWidget);
-  expect(find.text("Next step: Scan other claim"), findsOneWidget);
+  expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.STEP1);
 
   root.encointer.addOtherAttestation(otherMeetupRegistryIndex, attestationHex);
   root.encointer.updateAttestationStep(otherMeetupRegistryIndex, CurrentAttestationStep.STEP2);
@@ -112,7 +111,7 @@ Future<void> _scanClaimA(WidgetTester tester, AppStore root, int otherMeetupRegi
 
 Future<void> _showAttestationAClaimB(WidgetTester tester, AppStore root, int otherMeetupRegistryIndex) async {
   expect(find.byType(StateMachinePartyB), findsOneWidget);
-  expect(find.text("Next step: Show other attestation and your claim"), findsOneWidget);
+  expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.STEP2);
   await tester.tap(find.byKey(StateMachineWidget.nextButtonKey));
   await tester.pumpAndSettle();
   await navigateToQrCodeAndTapConfirmButton(tester);
@@ -121,7 +120,7 @@ Future<void> _showAttestationAClaimB(WidgetTester tester, AppStore root, int oth
 
 Future<void> _scanAttestationB(WidgetTester tester, AppStore root, int otherMeetupRegistryIndex) async {
   expect(find.byType(StateMachinePartyB), findsOneWidget);
-  expect(find.text("Next step: Scan your attestation"), findsOneWidget);
+  expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.STEP3);
 
   root.encointer.addYourAttestation(otherMeetupRegistryIndex, attestationHex);
   root.encointer.updateAttestationStep(otherMeetupRegistryIndex, CurrentAttestationStep.FINISHED);

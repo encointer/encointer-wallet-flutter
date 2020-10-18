@@ -4,7 +4,6 @@ import 'package:polka_wallet/page-encointer/meetup/attestation/components/stateM
 import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
 import 'package:polka_wallet/store/encointer/types/attestationState.dart';
-import 'package:polka_wallet/utils/format.dart';
 
 import '../../../../mocks/apiEncointer_mock.dart';
 import '../../../../mocks/data/mockEncointerData.dart';
@@ -44,8 +43,7 @@ void main() {
 
   testWidgets('stateMachinePartyA happy flow', (WidgetTester tester) async {
     await tester.pumpWidget(makeTestableWidget(child: stateMachineA));
-    expect(find.text("Performing attestation with:"), findsOneWidget);
-    expect(find.text("${Fmt.address(pubKeys[1])}"), findsOneWidget);
+    expect(find.text(otherMeetupRegistryIndex.toString()), findsOneWidget);
 
     await _showClaimA(tester, root, otherMeetupRegistryIndex);
     await _scanAttestationAClaimB(tester, root, otherMeetupRegistryIndex);
@@ -53,7 +51,8 @@ void main() {
 
     // verify that we have finished the attestation procedure
     expect(find.byType(StateMachinePartyA), findsOneWidget);
-    expect(find.text("Next step: Finish"), findsOneWidget);
+    expect(
+        root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.FINISHED);
   });
 
   group('goBackOneStep', () {
@@ -101,7 +100,7 @@ void main() {
 
 Future<void> _showClaimA(WidgetTester tester, AppStore root, int otherMeetupRegistryIndex) async {
   expect(find.byType(StateMachinePartyA), findsOneWidget);
-  expect(find.text("Next step: Show your claim"), findsOneWidget);
+  expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.STEP1);
   await tester.tap(find.byKey(StateMachineWidget.nextButtonKey));
   await tester.pumpAndSettle();
   await navigateToQrCodeAndTapConfirmButton(tester);
@@ -111,7 +110,7 @@ Future<void> _showClaimA(WidgetTester tester, AppStore root, int otherMeetupRegi
 /// mocks AttestationAClaimB scan. Note: Currently, we have no means of really mocking the ScanQrCode widget.
 Future<void> _scanAttestationAClaimB(WidgetTester tester, AppStore root, int otherMeetupRegistryIndex) async {
   expect(find.byType(StateMachinePartyA), findsOneWidget);
-  expect(find.text("Next step: Scan your attestation and other claim"), findsOneWidget);
+  expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.STEP2);
 
   // store AttestationA (my claim, attested by other)
   print("Party A: Store my attestation (AttA): " + attestationHex);
@@ -125,7 +124,7 @@ Future<void> _scanAttestationAClaimB(WidgetTester tester, AppStore root, int oth
 
 Future<void> _showAttestationB(WidgetTester tester, AppStore root, int otherMeetupRegistryIndex) async {
   expect(find.byType(StateMachinePartyA), findsOneWidget);
-  expect(find.text("Next step: Show other attestation"), findsOneWidget);
+  expect(root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.STEP3);
   await tester.tap(find.byKey(StateMachineWidget.nextButtonKey));
   await tester.pumpAndSettle();
   await navigateToQrCodeAndTapConfirmButton(tester);
