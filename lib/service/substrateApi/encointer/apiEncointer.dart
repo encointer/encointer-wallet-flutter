@@ -25,6 +25,25 @@ class ApiEncointer {
 
   final Api apiRoot;
   final store = globalAppStore;
+  final String _timeStampSubscribeChannel = 'timestamp';
+  final String _currentPhaseSubscribeChannel = 'currentPhase';
+
+  Future<void> startSubscriptions() async {
+    // simply for debug to test that subscriptions are working
+    this.subscribeTimestamp(_timeStampSubscribeChannel);
+    this.subscribeCurrentPhase(_currentPhaseSubscribeChannel, (data) {
+      var phase = getEnumFromString(CeremonyPhase.values, data.toUpperCase());
+      store.encointer.setCurrentPhase(phase);
+      // update depending values
+      this.getCurrentCeremonyIndex();
+    });
+
+  }
+
+  Future<void> stopSubscriptions() async {
+    apiRoot.unsubscribeMessage(_currentPhaseSubscribeChannel);
+    apiRoot.unsubscribeMessage(_timeStampSubscribeChannel);
+  }
 
   Future<CeremonyPhase> getCurrentPhase() async {
     Map res = await apiRoot.evalJavascript('encointer.getCurrentPhase()');
@@ -116,6 +135,17 @@ class ApiEncointer {
   }
 
   Future<void> subscribeCurrentPhase(String channel, Function callback) async {
+    apiRoot.subscribeMessage('encointer.subscribeCurrentPhase("$channel")', channel, callback);
+  }
+
+  Future<void> subscribeParticipantIndex(String channel, Function callback) async {
+    String account = store.account.currentAccountPubKey;
+    String cid = store.encointer.chosenCid;
+    if (cid.isEmpty) {
+      return 0; // zero means: not registered
+    }
+    int cIndex = await getCurrentCeremonyIndex();
+
     apiRoot.subscribeMessage('encointer.subscribeCurrentPhase("$channel")', channel, callback);
   }
 

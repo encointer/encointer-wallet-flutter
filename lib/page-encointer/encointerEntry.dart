@@ -67,8 +67,8 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox> with SingleTickerProvider
 
   final AppStore store;
 
-  final String _currentPhaseSubscribeChannel = 'currentPhase';
-  final String _timeStampSubscribeChannel = 'timestamp';
+
+
 
   TabController _tabController;
   int _txsPage = 0;
@@ -91,27 +91,14 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox> with SingleTickerProvider
   @override
   void initState() {
     super.initState();
-    // get current phase before we subscribe
-
-    // simply for debug to test that subscriptions are working
-    webApi.encointer.subscribeTimestamp(_timeStampSubscribeChannel);
-
     webApi.encointer.getCurrencyIdentifiers();
-    webApi.encointer.getCurrentCeremonyIndex();
-
-    if (!store.settings.loading) {
-      print('Subscribing to current phase');
-      webApi.encointer.subscribeCurrentPhase(_currentPhaseSubscribeChannel, (data) {
-        var phase = getEnumFromString(CeremonyPhase.values, data.toUpperCase());
-        store.encointer.setCurrentPhase(phase);
-      });
-    }
   }
 
   @override
   void dispose() {
-    webApi.unsubscribeMessage(_currentPhaseSubscribeChannel);
-    webApi.unsubscribeMessage(_timeStampSubscribeChannel);
+    print("stopping subscriptions and closing webview");
+    webApi.encointer.stopSubscriptions();
+    webApi.closeWebView();
     super.dispose();
   }
 
