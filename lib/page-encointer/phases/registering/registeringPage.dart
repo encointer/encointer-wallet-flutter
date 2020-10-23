@@ -22,18 +22,6 @@ class _RegisteringPageState extends State<RegisteringPage> {
   String _tab = 'DOT';
 
   @override
-  void initState() {
-    _refresh();
-    super.initState();
-  }
-
-  Future<void> _refresh() async {
-    webApi.encointer.getCurrencyIdentifiers();
-    webApi.encointer.getNextMeetupTime();
-    webApi.encointer.getParticipantIndex();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Column(children: <Widget>[

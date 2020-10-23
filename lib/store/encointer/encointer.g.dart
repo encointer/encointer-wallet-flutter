@@ -9,6 +9,21 @@ part of 'encointer.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$EncointerStore on _EncointerStore, Store {
+  final _$timeStampAtom = Atom(name: '_EncointerStore.timeStamp');
+
+  @override
+  int get timeStamp {
+    _$timeStampAtom.reportRead();
+    return super.timeStamp;
+  }
+
+  @override
+  set timeStamp(int value) {
+    _$timeStampAtom.reportWrite(value, super.timeStamp, () {
+      super.timeStamp = value;
+    });
+  }
+
   final _$currentPhaseAtom = Atom(name: '_EncointerStore.currentPhase');
 
   @override
@@ -28,31 +43,16 @@ mixin _$EncointerStore on _EncointerStore, Store {
       Atom(name: '_EncointerStore.currentCeremonyIndex');
 
   @override
-  int get currentCeremonyIndex {
+  dynamic get currentCeremonyIndex {
     _$currentCeremonyIndexAtom.reportRead();
     return super.currentCeremonyIndex;
   }
 
   @override
-  set currentCeremonyIndex(int value) {
+  set currentCeremonyIndex(dynamic value) {
     _$currentCeremonyIndexAtom.reportWrite(value, super.currentCeremonyIndex,
         () {
       super.currentCeremonyIndex = value;
-    });
-  }
-
-  final _$nextMeetupTimeAtom = Atom(name: '_EncointerStore.nextMeetupTime');
-
-  @override
-  int get nextMeetupTime {
-    _$nextMeetupTimeAtom.reportRead();
-    return super.nextMeetupTime;
-  }
-
-  @override
-  set nextMeetupTime(int value) {
-    _$nextMeetupTimeAtom.reportWrite(value, super.nextMeetupTime, () {
-      super.nextMeetupTime = value;
     });
   }
 
@@ -71,6 +71,51 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
+  final _$meetupLocationAtom = Atom(name: '_EncointerStore.meetupLocation');
+
+  @override
+  Location get meetupLocation {
+    _$meetupLocationAtom.reportRead();
+    return super.meetupLocation;
+  }
+
+  @override
+  set meetupLocation(Location value) {
+    _$meetupLocationAtom.reportWrite(value, super.meetupLocation, () {
+      super.meetupLocation = value;
+    });
+  }
+
+  final _$meetupTimeAtom = Atom(name: '_EncointerStore.meetupTime');
+
+  @override
+  int get meetupTime {
+    _$meetupTimeAtom.reportRead();
+    return super.meetupTime;
+  }
+
+  @override
+  set meetupTime(int value) {
+    _$meetupTimeAtom.reportWrite(value, super.meetupTime, () {
+      super.meetupTime = value;
+    });
+  }
+
+  final _$meetupRegistryAtom = Atom(name: '_EncointerStore.meetupRegistry');
+
+  @override
+  List<String> get meetupRegistry {
+    _$meetupRegistryAtom.reportRead();
+    return super.meetupRegistry;
+  }
+
+  @override
+  set meetupRegistry(List<String> value) {
+    _$meetupRegistryAtom.reportWrite(value, super.meetupRegistry, () {
+      super.meetupRegistry = value;
+    });
+  }
+
   final _$myMeetupRegistryIndexAtom =
       Atom(name: '_EncointerStore.myMeetupRegistryIndex');
 
@@ -85,22 +130,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
     _$myMeetupRegistryIndexAtom.reportWrite(value, super.myMeetupRegistryIndex,
         () {
       super.myMeetupRegistryIndex = value;
-    });
-  }
-
-  final _$nextMeetupLocationAtom =
-      Atom(name: '_EncointerStore.nextMeetupLocation');
-
-  @override
-  Location get nextMeetupLocation {
-    _$nextMeetupLocationAtom.reportRead();
-    return super.nextMeetupLocation;
-  }
-
-  @override
-  set nextMeetupLocation(Location value) {
-    _$nextMeetupLocationAtom.reportWrite(value, super.nextMeetupLocation, () {
-      super.nextMeetupLocation = value;
     });
   }
 
@@ -134,18 +163,18 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
-  final _$timeStampAtom = Atom(name: '_EncointerStore.timeStamp');
+  final _$myClaimAtom = Atom(name: '_EncointerStore.myClaim');
 
   @override
-  int get timeStamp {
-    _$timeStampAtom.reportRead();
-    return super.timeStamp;
+  ClaimOfAttendance get myClaim {
+    _$myClaimAtom.reportRead();
+    return super.myClaim;
   }
 
   @override
-  set timeStamp(int value) {
-    _$timeStampAtom.reportWrite(value, super.timeStamp, () {
-      super.timeStamp = value;
+  set myClaim(ClaimOfAttendance value) {
+    _$myClaimAtom.reportWrite(value, super.myClaim, () {
+      super.myClaim = value;
     });
   }
 
@@ -290,33 +319,55 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setNextMeetupLocation(Location location) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(
-        name: '_EncointerStore.setNextMeetupLocation');
-    try {
-      return super.setNextMeetupLocation(location);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setNextMeetupTime(int time) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(
-        name: '_EncointerStore.setNextMeetupTime');
-    try {
-      return super.setNextMeetupTime(time);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setMeetupIndex(int index) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.setMeetupIndex');
     try {
       return super.setMeetupIndex(index);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setMeetupLocation(Location location) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(
+        name: '_EncointerStore.setMeetupLocation');
+    try {
+      return super.setMeetupLocation(location);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setMeetupTime(int time) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(
+        name: '_EncointerStore.setMeetupTime');
+    try {
+      return super.setMeetupTime(time);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setMeetupRegistry(List<String> reg) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(
+        name: '_EncointerStore.setMeetupRegistry');
+    try {
+      return super.setMeetupRegistry(reg);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setMyClaim(ClaimOfAttendance claim) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(
+        name: '_EncointerStore.setMyClaim');
+    try {
+      return super.setMyClaim(claim);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }
@@ -457,15 +508,17 @@ mixin _$EncointerStore on _EncointerStore, Store {
   @override
   String toString() {
     return '''
+timeStamp: ${timeStamp},
 currentPhase: ${currentPhase},
 currentCeremonyIndex: ${currentCeremonyIndex},
-nextMeetupTime: ${nextMeetupTime},
 meetupIndex: ${meetupIndex},
+meetupLocation: ${meetupLocation},
+meetupTime: ${meetupTime},
+meetupRegistry: ${meetupRegistry},
 myMeetupRegistryIndex: ${myMeetupRegistryIndex},
-nextMeetupLocation: ${nextMeetupLocation},
 participantIndex: ${participantIndex},
 participantCount: ${participantCount},
-timeStamp: ${timeStamp},
+myClaim: ${myClaim},
 balanceEntries: ${balanceEntries},
 currencyIdentifiers: ${currencyIdentifiers},
 chosenCid: ${chosenCid},

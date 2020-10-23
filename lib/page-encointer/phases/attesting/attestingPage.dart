@@ -93,21 +93,14 @@ class _AttestingPageState extends State<AttestingPage> {
             padding: EdgeInsets.all(8),
             child: Column(children: <Widget>[
               Observer(builder: (_) => _reportAttestationsCount(context, store.encointer.attestations)),
-              FutureBuilder<int>(
-                  future: webApi.encointer.getMeetupIndex(),
-                  builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
-                    if (snapshot.hasData) {
-                      if (store.encointer.meetupIndex == 0) {
-                        return Text("you are not assigned to a meetup");
-                      }
-                      return RoundedButton(
-                          text: "start meetup",
-                          onPressed: () => _startMeetup(context) // for testing always allow sending
-                          );
-                    } else {
-                      return CupertinoActivityIndicator();
-                    }
-                  }),
+              Observer(builder: (_) =>
+                !(store.encointer.meetupIndex > 0)
+                  ? Text("you are not assigned to a meetup")
+                  : RoundedButton(
+                    text: "start meetup",
+                    onPressed: () => _startMeetup(context) // for testing always allow sending
+                  )
+              )
             ]),
           ))
     ]));

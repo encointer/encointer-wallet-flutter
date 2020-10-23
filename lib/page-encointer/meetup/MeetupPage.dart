@@ -46,12 +46,9 @@ class _MeetupPageState extends State<MeetupPage> {
   }
 
   void _initMeetup() async {
-    var claimHex = await webApi.encointer.getClaimOfAttendance(_amountAttendees);
-    print("Claim: " + claimHex);
-
-    var meetupRegistry = await webApi.encointer.getMeetupRegistry();
-    store.encointer.attestations = _buildAttestationStateMap(meetupRegistry);
-    store.encointer.setClaimHex(claimHex);
+    webApi.encointer.createClaimOfAttendance(_amountAttendees);
+    var claimHex = await webApi.encointer.encodeClaimOfAttendance();
+    store.encointer.attestations = _buildAttestationStateMap(store.encointer.meetupRegistry);
     setState(() {
       _isLoading = false;
     });

@@ -17,7 +17,9 @@ class EncointerEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Map dic = I18n.of(context).encointer;
+    final Map dic = I18n
+        .of(context)
+        .encointer;
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(
@@ -32,7 +34,9 @@ class EncointerEntry extends StatelessWidget {
                     dic['encointer'] ?? 'Encointer Ceremony',
                     style: TextStyle(
                       fontSize: 20,
-                      color: Theme.of(context).cardColor,
+                      color: Theme
+                          .of(context)
+                          .cardColor,
                       fontWeight: FontWeight.w500,
                     ),
                   )
@@ -62,12 +66,11 @@ class PhaseAwareBox extends StatefulWidget {
   _PhaseAwareBoxState createState() => _PhaseAwareBoxState(store);
 }
 
-class _PhaseAwareBoxState extends State<PhaseAwareBox> with SingleTickerProviderStateMixin {
+class _PhaseAwareBoxState extends State<PhaseAwareBox>
+    with SingleTickerProviderStateMixin {
   _PhaseAwareBoxState(this.store);
 
   final AppStore store;
-
-
 
 
   TabController _tabController;
@@ -96,27 +99,25 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox> with SingleTickerProvider
 
   @override
   void dispose() {
-    print("stopping subscriptions and closing webview");
-    webApi.encointer.stopSubscriptions();
-    webApi.closeWebView();
+    //print("stopping subscriptions");
+    //webApi.encointer.stopSubscriptions();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<CeremonyPhase>(
-        future: webApi.encointer.getCurrentPhase(),
-        builder: (BuildContext context, AsyncSnapshot<CeremonyPhase> snapshot) {
-          if (snapshot.hasData) {
-            return Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
+    return Observer(
+        builder: (_) =>
+        Column(children: <Widget>[
+          (store.encointer.currentPhase != null) ?
+            Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
               CurrencyChooserPanel(store),
               //CeremonyOverviewPanel(store),
               Observer(builder: (_) => _getPhaseView(store.encointer.currentPhase))
-            ]);
-          } else {
-            return CupertinoActivityIndicator();
-          }
-        });
+            ])
+          : CupertinoActivityIndicator()
+        ])
+    );
   }
 
   Widget _getPhaseView(CeremonyPhase phase) {
