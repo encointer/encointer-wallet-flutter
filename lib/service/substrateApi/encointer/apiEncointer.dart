@@ -183,7 +183,7 @@ class ApiEncointer {
 
   Future<void> subscribeCurrencyIdentifiers() async {
     apiRoot.subscribeMessage('encointer.subscribeCurrencyIdentifiers("$_currencyIdentifiersChannel")',
-        _currencyIdentifiersChannel, (data) => {store.encointer.setCurrencyIdentifiers(data)});
+        _currencyIdentifiersChannel, (data) => {store.encointer.setCurrencyIdentifiers(data.cast<String>())});
   }
 
   Future<void> subscribeParticipantIndex() async {

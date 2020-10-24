@@ -94,7 +94,7 @@ class _AttestingPageState extends State<AttestingPage> {
             child: Column(children: <Widget>[
               Observer(builder: (_) => _reportAttestationsCount(context, store.encointer.attestations)),
               Observer(builder: (_) =>
-                !(store.encointer.meetupIndex > 0)
+                ((store.encointer.meetupIndex == null) | (store.encointer.meetupIndex == 0))
                   ? Text("you are not assigned to a meetup")
                   : RoundedButton(
                     text: "start meetup",

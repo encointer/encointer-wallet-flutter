@@ -61,7 +61,9 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
         ? CupertinoActivityIndicator()
         : Column(children: <Widget>[
             Observer(
-                builder: (_) => Column(children: <Widget>[
+                builder: (_) => (store.encointer.meetupTime == null )
+                ? Container()
+                : Column(children: <Widget>[
                       Text("Next ceremony will happen at high sun on:"),
                       Text(DateFormat('yyyy-MM-dd').format(
                           new DateTime.fromMillisecondsSinceEpoch(

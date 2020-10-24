@@ -92,12 +92,6 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox>
   }
 
   @override
-  void initState() {
-    super.initState();
-    webApi.encointer.getCurrencyIdentifiers();
-  }
-
-  @override
   void dispose() {
     //print("stopping subscriptions");
     //webApi.encointer.stopSubscriptions();

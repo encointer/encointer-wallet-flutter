@@ -34,7 +34,7 @@ abstract class _EncointerStore with Store {
   // a @action block to fire a reaction.
 
   @observable
-  var timeStamp = 0;
+  var timeStamp;
 
   @observable
   CeremonyPhase currentPhase;
@@ -43,25 +43,25 @@ abstract class _EncointerStore with Store {
   var currentCeremonyIndex;
 
   @observable
-  var meetupIndex = 0;
+  var meetupIndex;
 
   @observable
-  Location meetupLocation = Location(BigInt.from(0x0), BigInt.from(0x0));
+  Location meetupLocation;
 
   @observable
-  var meetupTime = 0;
+  var meetupTime;
 
   @observable
   List<String> meetupRegistry;
 
   @observable
-  var myMeetupRegistryIndex = 0;
+  var myMeetupRegistryIndex;
 
   @observable
-  var participantIndex = 0;
+  var participantIndex;
 
   @observable
-  var participantCount = 0;
+  var participantCount;
 
   @observable
   ClaimOfAttendance myClaim;
@@ -70,13 +70,13 @@ abstract class _EncointerStore with Store {
   Map<String, BalanceEntry> balanceEntries = new Map();
 
   @observable
-  List<String> currencyIdentifiers = [];
+  List<String> currencyIdentifiers;
 
   @observable
-  String chosenCid = "";
+  String chosenCid;
 
   @observable
-  String claimHex = "";
+  String claimHex;
 
   @observable
   Map<int, AttestationState> attestations = Map<int, AttestationState>();
@@ -178,8 +178,10 @@ abstract class _EncointerStore with Store {
       chosenCid = cid;
       rootStore.localStorage.setObject(_getCacheKey(encointerCurrencyKey), cid);
       // update depending values without awaiting
-      webApi.encointer.getMeetupIndex();
-      webApi.encointer.subscribeParticipantIndex();
+      if (!rootStore.settings.loading) {
+        webApi.encointer.getMeetupIndex();
+        webApi.encointer.subscribeParticipantIndex();
+      }
     }
   }
 

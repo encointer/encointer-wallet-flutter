@@ -12,13 +12,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
   final _$timeStampAtom = Atom(name: '_EncointerStore.timeStamp');
 
   @override
-  int get timeStamp {
+  dynamic get timeStamp {
     _$timeStampAtom.reportRead();
     return super.timeStamp;
   }
 
   @override
-  set timeStamp(int value) {
+  set timeStamp(dynamic value) {
     _$timeStampAtom.reportWrite(value, super.timeStamp, () {
       super.timeStamp = value;
     });
@@ -59,13 +59,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
   final _$meetupIndexAtom = Atom(name: '_EncointerStore.meetupIndex');
 
   @override
-  int get meetupIndex {
+  dynamic get meetupIndex {
     _$meetupIndexAtom.reportRead();
     return super.meetupIndex;
   }
 
   @override
-  set meetupIndex(int value) {
+  set meetupIndex(dynamic value) {
     _$meetupIndexAtom.reportWrite(value, super.meetupIndex, () {
       super.meetupIndex = value;
     });
@@ -89,13 +89,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
   final _$meetupTimeAtom = Atom(name: '_EncointerStore.meetupTime');
 
   @override
-  int get meetupTime {
+  dynamic get meetupTime {
     _$meetupTimeAtom.reportRead();
     return super.meetupTime;
   }
 
   @override
-  set meetupTime(int value) {
+  set meetupTime(dynamic value) {
     _$meetupTimeAtom.reportWrite(value, super.meetupTime, () {
       super.meetupTime = value;
     });
@@ -120,13 +120,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
       Atom(name: '_EncointerStore.myMeetupRegistryIndex');
 
   @override
-  int get myMeetupRegistryIndex {
+  dynamic get myMeetupRegistryIndex {
     _$myMeetupRegistryIndexAtom.reportRead();
     return super.myMeetupRegistryIndex;
   }
 
   @override
-  set myMeetupRegistryIndex(int value) {
+  set myMeetupRegistryIndex(dynamic value) {
     _$myMeetupRegistryIndexAtom.reportWrite(value, super.myMeetupRegistryIndex,
         () {
       super.myMeetupRegistryIndex = value;
@@ -136,13 +136,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
   final _$participantIndexAtom = Atom(name: '_EncointerStore.participantIndex');
 
   @override
-  int get participantIndex {
+  dynamic get participantIndex {
     _$participantIndexAtom.reportRead();
     return super.participantIndex;
   }
 
   @override
-  set participantIndex(int value) {
+  set participantIndex(dynamic value) {
     _$participantIndexAtom.reportWrite(value, super.participantIndex, () {
       super.participantIndex = value;
     });
@@ -151,13 +151,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
   final _$participantCountAtom = Atom(name: '_EncointerStore.participantCount');
 
   @override
-  int get participantCount {
+  dynamic get participantCount {
     _$participantCountAtom.reportRead();
     return super.participantCount;
   }
 
   @override
-  set participantCount(int value) {
+  set participantCount(dynamic value) {
     _$participantCountAtom.reportWrite(value, super.participantCount, () {
       super.participantCount = value;
     });
@@ -374,6 +374,17 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
+  void setClaimHex(String claimHex) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(
+        name: '_EncointerStore.setClaimHex');
+    try {
+      return super.setClaimHex(claimHex);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setMyMeetupRegistryIndex(int index) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.setMyMeetupRegistryIndex');
@@ -401,17 +412,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
         name: '_EncointerStore.setChosenCid');
     try {
       return super.setChosenCid(cid);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setClaimHex(String claimHex) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(
-        name: '_EncointerStore.setClaimHex');
-    try {
-      return super.setClaimHex(claimHex);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }

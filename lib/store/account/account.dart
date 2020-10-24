@@ -131,8 +131,10 @@ abstract class _AccountStore with Store {
     currentAccountPubKey = pubKey;
     rootStore.localStorage.setCurrentAccount(pubKey);
     // update depending values
-    webApi.encointer.getMeetupIndex();
-    webApi.encointer.subscribeParticipantIndex();
+    if (!rootStore.settings.loading) {
+      webApi.encointer.getMeetupIndex();
+      webApi.encointer.subscribeParticipantIndex();
+    }
   }
 
   @action

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 import 'package:polka_wallet/common/components/roundedCard.dart';
-import 'package:polka_wallet/service/substrateApi/api.dart';
 import 'package:polka_wallet/store/app.dart';
 
 class AssignmentPanel extends StatefulWidget {
@@ -19,17 +18,6 @@ class _AssignmentPanelState extends State<AssignmentPanel> {
   _AssignmentPanelState(this.store);
 
   final AppStore store;
-
-  @override
-  void initState() {
-    _refreshData();
-    super.initState();
-  }
-
-  Future<void> _refreshData() async {
-    // refreshed by parent!
-    //await webApi.encointer.fetchCurrencyIdentifiers();
-  }
 
   @override
   Widget build(BuildContext context) {
