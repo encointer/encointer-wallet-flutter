@@ -97,33 +97,31 @@ abstract class _EncointerStore with Store {
   @action
   void setCurrentCeremonyIndex(index) {
     print("store: set currentCeremonyIndex to $index");
-    if (currentCeremonyIndex != index) {
-      currentCeremonyIndex = index;
-      // update depending values without awaiting
-      switch (currentPhase) {
-        case CeremonyPhase.REGISTERING:
-          // reset deprecated state
-          purgeAttestations();
-          setMeetupIndex();
-          setMeetupLocation();
-          setMeetupTime();
-          setMeetupRegistry();
-          setMyMeetupRegistryIndex();
-          setMyClaim();
-          setClaimHex();
-          break;
-        case CeremonyPhase.ASSIGNING:
-          purgeAttestations();
-          webApi.encointer.getMeetupIndex();
-          break;
-        case CeremonyPhase.ATTESTING:
-          webApi.encointer.getMeetupIndex();
-          break;
-      }
-      webApi.encointer.subscribeParticipantIndex();
-      //TODO this should be a subscription
-      webApi.encointer.getBalances();
+    currentCeremonyIndex = index;
+    // update depending values without awaiting
+    switch (currentPhase) {
+      case CeremonyPhase.REGISTERING:
+        // reset deprecated state to null
+        purgeAttestations();
+        setMeetupIndex();
+        setMeetupLocation();
+        setMeetupTime();
+        setMeetupRegistry();
+        setMyMeetupRegistryIndex();
+        setMyClaim();
+        setClaimHex();
+        break;
+      case CeremonyPhase.ASSIGNING:
+        purgeAttestations();
+        webApi.encointer.getMeetupIndex();
+        break;
+      case CeremonyPhase.ATTESTING:
+        webApi.encointer.getMeetupIndex();
+        break;
     }
+    webApi.encointer.subscribeParticipantIndex();
+    //TODO this should be a subscription
+    webApi.encointer.getBalances();
   }
 
   @action
