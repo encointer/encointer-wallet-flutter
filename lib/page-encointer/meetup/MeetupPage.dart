@@ -44,7 +44,9 @@ class _MeetupPageState extends State<MeetupPage> {
     print("creating my claim with vote $_amountAttendees");
     webApi.encointer.createClaimOfAttendance(_amountAttendees);
     var claimHex = await webApi.encointer.encodeClaimOfAttendance();
-    store.encointer.attestations = _buildAttestationStateMap(store.encointer.meetupRegistry);
+    if ((store.encointer.attestations == null)|(store.encointer.attestations.isEmpty)) {
+      store.encointer.attestations = _buildAttestationStateMap(store.encointer.meetupRegistry);
+    }
     setState(() {
       _isLoading = false;
     });
