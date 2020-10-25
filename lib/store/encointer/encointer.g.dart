@@ -319,7 +319,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setMeetupIndex(int index) {
+  void setMeetupIndex([int index]) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.setMeetupIndex');
     try {
@@ -330,7 +330,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setMeetupLocation(Location location) {
+  void setMeetupLocation([Location location]) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.setMeetupLocation');
     try {
@@ -341,7 +341,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setMeetupTime(int time) {
+  void setMeetupTime([int time]) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.setMeetupTime');
     try {
@@ -352,7 +352,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setMeetupRegistry(List<String> reg) {
+  void setMeetupRegistry([List<String> reg]) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.setMeetupRegistry');
     try {
@@ -363,7 +363,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setMyClaim(ClaimOfAttendance claim) {
+  void setMyClaim([ClaimOfAttendance claim]) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.setMyClaim');
     try {
@@ -374,7 +374,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setClaimHex(String claimHex) {
+  void setClaimHex([String claimHex]) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.setClaimHex');
     try {
@@ -385,7 +385,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setMyMeetupRegistryIndex(int index) {
+  void setMyMeetupRegistryIndex([int index]) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.setMyMeetupRegistryIndex');
     try {

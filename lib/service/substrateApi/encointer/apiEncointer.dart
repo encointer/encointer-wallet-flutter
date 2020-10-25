@@ -188,8 +188,9 @@ class ApiEncointer {
 
   Future<void> subscribeParticipantIndex() async {
     // try to unsubscribe first in case parameters have changed
-    apiRoot.unsubscribeMessage(_participantIndexChannel);
-
+    if (store.encointer.participantIndex != null) {
+      apiRoot.unsubscribeMessage(_participantIndexChannel);
+    }
     String account = store.account.currentAccountPubKey;
     String cid = store.encointer.chosenCid;
     if (cid.isEmpty) {

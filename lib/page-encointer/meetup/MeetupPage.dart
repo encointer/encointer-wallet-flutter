@@ -39,13 +39,9 @@ class _MeetupPageState extends State<MeetupPage> {
         .toList();
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _initMeetup();
-  }
 
   void _initMeetup() async {
+    print("creating my claim with vote $_amountAttendees");
     webApi.encointer.createClaimOfAttendance(_amountAttendees);
     var claimHex = await webApi.encointer.encodeClaimOfAttendance();
     store.encointer.attestations = _buildAttestationStateMap(store.encointer.meetupRegistry);
@@ -70,6 +66,9 @@ class _MeetupPageState extends State<MeetupPage> {
   Widget build(BuildContext context) {
     final Map args = ModalRoute.of(context).settings.arguments;
     _amountAttendees = args['confirmedParticipants'];
+    if (_isLoading) {
+      _initMeetup();
+    }
     final Map dic = I18n.of(context).encointer;
 
     return Scaffold(

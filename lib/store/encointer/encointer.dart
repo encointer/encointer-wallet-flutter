@@ -102,7 +102,15 @@ abstract class _EncointerStore with Store {
       // update depending values without awaiting
       switch (currentPhase) {
         case CeremonyPhase.REGISTERING:
+          // reset deprecated state
           purgeAttestations();
+          setMeetupIndex();
+          setMeetupLocation();
+          setMeetupTime();
+          setMeetupRegistry();
+          setMyMeetupRegistryIndex();
+          setMyClaim();
+          setClaimHex();
           break;
         case CeremonyPhase.ASSIGNING:
           purgeAttestations();
@@ -113,32 +121,38 @@ abstract class _EncointerStore with Store {
           break;
       }
       webApi.encointer.subscribeParticipantIndex();
+      //TODO this should be a subscription
+      webApi.encointer.getBalances();
     }
   }
 
   @action
-  void setMeetupIndex(int index) {
+  void setMeetupIndex([int index]) {
     print("store: set meetupIndex to $index");
     if (meetupIndex != index) {
       meetupIndex = index;
-      // update depending values
-      webApi.encointer.getMeetupLocation();
-      webApi.encointer.getMeetupRegistry();
+      if (index != null) {
+        // update depending values
+        webApi.encointer.getMeetupLocation();
+        webApi.encointer.getMeetupRegistry();
+      }
     }
   }
 
   @action
-  void setMeetupLocation(Location location) {
+  void setMeetupLocation([Location location]) {
     print("store: set meetupLocation to $location");
     if (meetupLocation != location) {
       meetupLocation = location;
-      // update depending values
-      webApi.encointer.getMeetupTime();
+      if (location != null) {
+        // update depending values
+        webApi.encointer.getMeetupTime();
+      }
     }
   }
 
   @action
-  void setMeetupTime(int time) {
+  void setMeetupTime([int time]) {
     print("store: set meetupTime to $time");
     if (meetupTime != time) {
       meetupTime = time;
@@ -146,24 +160,24 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setMeetupRegistry(List<String> reg) {
+  void setMeetupRegistry([List<String> reg]) {
     print("store: set meetupRegistry to $reg");
     meetupRegistry = reg;
   }
 
   @action
-  void setMyClaim(ClaimOfAttendance claim) {
+  void setMyClaim([ClaimOfAttendance claim]) {
     print("store: set myClaim to $claim");
     myClaim = claim;
   }
 
   @action
-  void setClaimHex(String claimHex) {
+  void setClaimHex([String claimHex]) {
     this.claimHex = claimHex;
   }
 
   @action
-  void setMyMeetupRegistryIndex(int index) {
+  void setMyMeetupRegistryIndex([int index]) {
     myMeetupRegistryIndex = index;
   }
 

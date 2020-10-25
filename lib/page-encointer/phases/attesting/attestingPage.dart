@@ -119,7 +119,8 @@ class _AttestingPageState extends State<AttestingPage> {
           ? RoundedButton(
               text: "submit attestations", onPressed: () => _submit(context) // for testing always allow sending
               )
-          : Container()
+          : Container(),
+      Text("You can still do the meetup again:")
     ]);
   }
 
