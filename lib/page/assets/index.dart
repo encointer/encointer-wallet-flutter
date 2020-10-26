@@ -297,9 +297,9 @@ class _AssetsState extends State<Assets> {
   @override
   Widget build(BuildContext context) {
     final Map dic = I18n.of(context).assets;
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
-      child: Column(children: [
+    return ListView(
+      padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
+      children: [
         Observer(builder: (_) {
           String symbol = store.settings.networkState.tokenSymbol ?? '';
 
@@ -385,7 +385,7 @@ class _AssetsState extends State<Assets> {
           );
         }),
         Expanded(child: _communityCurrencyAssets(context, store)),
-      ]),
+      ],
     );
   }
 
