@@ -29,12 +29,14 @@ class ApiEncointer {
   final String _currentPhaseSubscribeChannel = 'currentPhase';
   final String _participantIndexChannel = 'participantIndex';
   final String _currencyIdentifiersChannel = 'currencyIdentifiers';
+  final String _encointerBalanceChannel = 'encointerBalance';
 
   Future<void> startSubscriptions() async {
     print("api: starting encointer subscriptions");
     this.subscribeTimestamp();
     this.subscribeCurrentPhase();
     this.subscribeCurrencyIdentifiers();
+    this.subscribeEncointerBalance();
   }
 
   Future<void> stopSubscriptions() async {
@@ -43,6 +45,7 @@ class ApiEncointer {
     apiRoot.unsubscribeMessage(_timeStampSubscribeChannel);
     apiRoot.unsubscribeMessage(_participantIndexChannel);
     apiRoot.unsubscribeMessage(_currencyIdentifiersChannel);
+    apiRoot.unsubscribeMessage(_encointerBalanceChannel);
   }
 
   Future<CeremonyPhase> getCurrentPhase() async {
@@ -189,6 +192,28 @@ class ApiEncointer {
         _participantIndexChannel, (data) {
       store.encointer.setParticipantIndex(data);
     });
+  }
+
+  Future<void> subscribeEncointerBalance() async {
+    // unsubscribe from potentially other currency updates
+    print('Substribe encointer balance');
+    // apiRoot.unsubscribeMessage(_encointerBalanceChannel);
+
+    String account = store.account.currentAccountPubKey;
+    String cid = store.encointer.chosenCid;
+    if (cid == null) {
+      return;
+    }
+    print('subscribing to js encointer balance');
+
+    apiRoot.subscribeMessage(
+      'encointer.subscribeBalance("$_encointerBalanceChannel", "$cid", "$account")',
+      _encointerBalanceChannel,
+      (data) {
+        EncointerBalanceData balance = EncointerBalanceData.fromJson(data);
+        store.encointer.addBalanceEntry(balance.cid, balance.balanceEntry);
+      },
+    );
   }
 
   Future<List<String>> getCurrencyIdentifiers() async {
