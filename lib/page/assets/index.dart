@@ -5,6 +5,7 @@ import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/common/consts/settings.dart';
+import 'package:encointer_wallet/page-encointer/common/currencyChooserPanel.dart';
 import 'package:encointer_wallet/page/account/scanPage.dart';
 import 'package:encointer_wallet/page/account/uos/qrSignerPage.dart';
 import 'package:encointer_wallet/page/assets/asset/assetPage.dart';
@@ -180,7 +181,7 @@ class _AssetsState extends State<Assets> {
                   Navigator.of(context).pop();
                   if (isOK) {
                     globalBalanceRefreshKey.currentState.show();
-                    print("Faucet ERrror" + res["error"].toString());
+                    print("Faucet Error" + res["error"].toString());
                     NotificationPlugin.showNotification(
                       int.parse(res['params']
                           [1]), // todo: Id is used to group notifications. This is probably not a good idea
@@ -297,7 +298,7 @@ class _AssetsState extends State<Assets> {
 
   @override
   Widget build(BuildContext context) {
-    final Map dic = I18n.of(context).home;
+    final Map dic = I18n.of(context).assets;
     return Observer(
       builder: (_) {
         String symbol = store.settings.networkState.tokenSymbol ?? '';
@@ -332,7 +333,7 @@ class _AssetsState extends State<Assets> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         BorderedTitle(
-                          title: I18n.of(context).home['assets'],
+                          title: dic['gas.token'],
                         ),
                       ],
                     ),
@@ -388,19 +389,18 @@ class _AssetsState extends State<Assets> {
                       );
                     }).toList(),
                   ),
-                  chosenBalanceEntry != null
-                      ? Padding(
-                          padding: EdgeInsets.only(top: 4),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: <Widget>[
-                              BorderedTitle(
-                                title: 'Chosen Encointer Currency',
-                              ),
-                            ],
-                          ),
-                        )
-                      : Container(),
+                  Padding(
+                    padding: EdgeInsets.symmetric(vertical: 16),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        BorderedTitle(
+                          title: dic['community.currency'],
+                        ),
+                      ],
+                    ),
+                  ),
+                  CurrencyChooserPanel(store),
                   chosenBalanceEntry != null
                       ? RoundedCard(
                           margin: EdgeInsets.only(top: 16),

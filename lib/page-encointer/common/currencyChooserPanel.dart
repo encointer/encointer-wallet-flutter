@@ -24,8 +24,7 @@ class _CurrencyChooserPanelState extends State<CurrencyChooserPanel> {
     return Container(
       width: double.infinity,
       child: RoundedCard(
-        margin: EdgeInsets.fromLTRB(16, 4, 16, 16),
-        padding: EdgeInsets.all(8),
+        padding: EdgeInsets.symmetric(vertical: 8),
         child: Column(
           children: <Widget>[
             Text("Choose currency:"),

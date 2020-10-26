@@ -88,15 +88,24 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox> with SingleTickerProvider
   @override
   Widget build(BuildContext context) {
     return Observer(
-        builder: (_) => Column(children: <Widget>[
-              (store.encointer.currentPhase != null)
-                  ? Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
-                      CurrencyChooserPanel(store),
-                      //CeremonyOverviewPanel(store),
-                      Observer(builder: (_) => _getPhaseView(store.encointer.currentPhase))
-                    ])
-                  : CupertinoActivityIndicator()
-            ]));
+      builder: (_) => Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: <Widget>[
+            (store.encointer.currentPhase != null)
+                ? Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
+                    CurrencyChooserPanel(store),
+                    //CeremonyOverviewPanel(store),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Observer(builder: (_) => _getPhaseView(store.encointer.currentPhase))
+                  ])
+                : CupertinoActivityIndicator()
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _getPhaseView(CeremonyPhase phase) {
