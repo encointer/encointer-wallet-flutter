@@ -197,14 +197,13 @@ class ApiEncointer {
   Future<void> subscribeEncointerBalance() async {
     // unsubscribe from potentially other currency updates
     print('Substribe encointer balance');
-    // apiRoot.unsubscribeMessage(_encointerBalanceChannel);
+    apiRoot.unsubscribeMessage(_encointerBalanceChannel);
 
     String account = store.account.currentAccountPubKey;
     String cid = store.encointer.chosenCid;
     if (cid == null) {
       return;
     }
-    print('subscribing to js encointer balance');
 
     apiRoot.subscribeMessage(
       'encointer.subscribeBalance("$_encointerBalanceChannel", "$cid", "$account")',

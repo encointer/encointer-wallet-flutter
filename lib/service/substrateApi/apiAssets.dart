@@ -33,6 +33,8 @@ class ApiAssets {
   }
 
   Future<void> subscribeBalance() async {
+    apiRoot.unsubscribeMessage(_balanceSubscribeChannel);
+
     String pubKey = store.account.currentAccountPubKey;
     if (pubKey != null && pubKey.isNotEmpty) {
       String address = store.account.currentAddress;
