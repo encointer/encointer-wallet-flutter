@@ -49,8 +49,7 @@ class ApiEncointer {
     print("api: getCurrentPhase");
     Map res = await apiRoot.evalJavascript('encointer.getCurrentPhase()');
 
-    var phase = getEnumFromString(
-        CeremonyPhase.values, res.values.toList()[0].toString().toUpperCase());
+    var phase = getEnumFromString(CeremonyPhase.values, res.values.toList()[0].toString().toUpperCase());
     print("api: Phase enum: " + phase.toString());
     store.encointer.setCurrentPhase(phase);
     return phase;
@@ -58,8 +57,7 @@ class ApiEncointer {
 
   Future<int> getCurrentCeremonyIndex() async {
     print("api: getCurrentCeremonyIndex");
-    int cIndex =
-        await apiRoot.evalJavascript('encointer.getCurrentCeremonyIndex()');
+    int cIndex = await apiRoot.evalJavascript('encointer.getCurrentCeremonyIndex()');
     print("api: Current Ceremony index: " + cIndex.toString());
     store.encointer.setCurrentCeremonyIndex(cIndex);
     return cIndex;
@@ -69,12 +67,11 @@ class ApiEncointer {
     String address = store.account.currentAccountPubKey;
     String cid = store.encointer.chosenCid;
     int cIndex = store.encointer.currentCeremonyIndex;
-    if ((address.isEmpty)|(cid.isEmpty)|(cIndex == null)) {
+    if ((address.isEmpty) | (cid == null) | (cIndex == null)) {
       return 0;
     }
     print("api: getMeetupIndex");
-    int mIndex = await apiRoot.evalJavascript(
-        'encointer.getMeetupIndex("$cid", "$cIndex","$address")');
+    int mIndex = await apiRoot.evalJavascript('encointer.getMeetupIndex("$cid", "$cIndex","$address")');
     print("api: Next Meetup Index: " + mIndex.toString());
     store.encointer.setMeetupIndex(mIndex);
     return mIndex;
@@ -84,12 +81,12 @@ class ApiEncointer {
     print("api: getMeetupLocation");
     String address = store.account.currentAccountPubKey;
     String cid = store.encointer.chosenCid;
-    if (cid.isEmpty) {
+    if (cid == null) {
       return; // zero means: not registered
     }
     int mIndex = store.encointer.meetupIndex;
-    Map<String, dynamic> locj = await apiRoot.evalJavascript(
-        'encointer.getNextMeetupLocation("$cid", "$mIndex","$address")');
+    Map<String, dynamic> locj =
+        await apiRoot.evalJavascript('encointer.getNextMeetupLocation("$cid", "$mIndex","$address")');
     print("api: Next Meetup Location: " + locj.toString());
     Location loc = Location.fromJson(locj);
     store.encointer.setMeetupLocation(loc);
@@ -100,11 +97,9 @@ class ApiEncointer {
     if (store.encointer.currencyIdentifiers == null) {
       return null;
     }
-    String cid =
-        store.encointer.chosenCid ?? store.encointer.currencyIdentifiers[0];
+    String cid = store.encointer.chosenCid ?? store.encointer.currencyIdentifiers[0];
     String loc = jsonEncode(store.encointer.meetupLocation);
-    int time = await apiRoot
-        .evalJavascript('encointer.getNextMeetupTime("$cid", $loc)');
+    int time = await apiRoot.evalJavascript('encointer.getNextMeetupTime("$cid", $loc)');
     print("api: Next Meetup Time: " + time.toString());
     store.encointer.setMeetupTime(time);
     return DateTime.fromMillisecondsSinceEpoch(time);
@@ -114,18 +109,13 @@ class ApiEncointer {
     print("api: getMeetupRegistry");
     int cIndex = store.encointer.currentCeremonyIndex;
     String cid = store.encointer.chosenCid;
-    if (cid.isEmpty) {
+    if (cid == null) {
       return new List(); // empty
     }
     int mIndex = store.encointer.meetupIndex;
-    print("api: get meetup registry for cindex " +
-        cIndex.toString() +
-        " mindex " +
-        mIndex.toString() +
-        " cid " +
-        cid);
-    List<dynamic> meetupRegistry = await apiRoot.evalJavascript(
-        'encointer.getMeetupRegistry("$cid", "$cIndex", "$mIndex")');
+    print("api: get meetup registry for cindex " + cIndex.toString() + " mindex " + mIndex.toString() + " cid " + cid);
+    List<dynamic> meetupRegistry =
+        await apiRoot.evalJavascript('encointer.getMeetupRegistry("$cid", "$cIndex", "$mIndex")');
     print("api: Participants: " + meetupRegistry.toString());
     var mreg = meetupRegistry.map((e) => e.toString()).toList();
     store.encointer.setMeetupRegistry(mreg);
@@ -135,13 +125,12 @@ class ApiEncointer {
   Future<int> getParticipantIndex() async {
     String address = store.account.currentAccountPubKey;
     String cid = store.encointer.chosenCid;
-    if (cid.isEmpty) {
+    if (cid == null) {
       return 0; // zero means: not registered
     }
     int cIndex = store.encointer.currentCeremonyIndex;
     print("api: Getting participant index for " + address);
-    int pIndex = await apiRoot.evalJavascript(
-        'encointer.getParticipantIndex("$cid", "$cIndex" ,"$address")');
+    int pIndex = await apiRoot.evalJavascript('encointer.getParticipantIndex("$cid", "$cIndex" ,"$address")');
     print("api: Participant Index: " + pIndex.toString());
     store.encointer.setParticipantIndex(pIndex);
     return pIndex;
@@ -150,21 +139,19 @@ class ApiEncointer {
   Future<void> getParticipantCount() async {
     String cid = store.encointer.chosenCid;
     int cIndex = store.encointer.currentCeremonyIndex;
-    int pCount = await apiRoot
-        .evalJavascript('encointer.getParticipantCount("$cid", "$cIndex")');
+    int pCount = await apiRoot.evalJavascript('encointer.getParticipantCount("$cid", "$cIndex")');
     print("api: Participant Count: " + pCount.toString());
     store.encointer.setParticipantCount(pCount);
   }
 
   Future<void> subscribeTimestamp() async {
-    apiRoot.subscribeMessage('encointer.subscribeTimestamp("$_timeStampSubscribeChannel")',
-        _timeStampSubscribeChannel, (data) => {store.encointer.setTimestamp(data)});
+    apiRoot.subscribeMessage('encointer.subscribeTimestamp("$_timeStampSubscribeChannel")', _timeStampSubscribeChannel,
+        (data) => {store.encointer.setTimestamp(data)});
   }
 
   Future<void> subscribeCurrentPhase() async {
     apiRoot.subscribeMessage(
-        'encointer.subscribeCurrentPhase("$_currentPhaseSubscribeChannel")',
-        _currentPhaseSubscribeChannel, (data) {
+        'encointer.subscribeCurrentPhase("$_currentPhaseSubscribeChannel")', _currentPhaseSubscribeChannel, (data) {
       var phase = getEnumFromString(CeremonyPhase.values, data.toUpperCase());
       store.encointer.setCurrentPhase(phase);
       // update depending values
@@ -193,7 +180,7 @@ class ApiEncointer {
     }
     String account = store.account.currentAccountPubKey;
     String cid = store.encointer.chosenCid;
-    if (cid.isEmpty) {
+    if (cid == null) {
       return 0; // zero means: not registered
     }
     int cIndex = store.encointer.currentCeremonyIndex;
@@ -204,10 +191,8 @@ class ApiEncointer {
     });
   }
 
-
   Future<List<String>> getCurrencyIdentifiers() async {
-    Map<String, dynamic> res =
-        await apiRoot.evalJavascript('encointer.getCurrencyIdentifiers()');
+    Map<String, dynamic> res = await apiRoot.evalJavascript('encointer.getCurrencyIdentifiers()');
 
     List<String> cids = new List<String>();
     res['cids'].forEach((e) {
@@ -221,7 +206,7 @@ class ApiEncointer {
 
   void createClaimOfAttendance(int participants) {
     print("api: create claim with vote=$participants");
-    var claim =  ClaimOfAttendance(
+    var claim = ClaimOfAttendance(
         store.account.currentAccountPubKey,
         store.encointer.currentCeremonyIndex,
         store.encointer.chosenCid,
@@ -236,15 +221,13 @@ class ApiEncointer {
     print("api: encode claim to hex");
     var claim = jsonEncode(store.encointer.myClaim);
     print("api: $claim");
-    String claimHex =
-        await apiRoot.evalJavascript('encointer.getClaimOfAttendance($claim)');
+    String claimHex = await apiRoot.evalJavascript('encointer.getClaimOfAttendance($claim)');
     store.encointer.setClaimHex(claimHex);
     return claimHex;
   }
 
   Future<Attestation> parseAttestation(String attestationHex) async {
-    var attJson = await apiRoot
-        .evalJavascript('encointer.parseAttestation("$attestationHex")');
+    var attJson = await apiRoot.evalJavascript('encointer.parseAttestation("$attestationHex")');
     //print("Attestation json: " + attJson.toString());
     Attestation att = Attestation.fromJson(attJson);
     //print("Attestation parsed: " + attJson.toString());
@@ -252,19 +235,16 @@ class ApiEncointer {
   }
 
   Future<ClaimOfAttendance> parseClaimOfAttendance(String claimHex) async {
-    var claimJson = await apiRoot
-        .evalJavascript('encointer.parseClaimOfAttendance("$claimHex")');
+    var claimJson = await apiRoot.evalJavascript('encointer.parseClaimOfAttendance("$claimHex")');
     //print("Attestation json: " + attJson.toString());
     ClaimOfAttendance claim = ClaimOfAttendance.fromJson(claimJson);
     //print("Attestation parsed: " + attJson.toString());
     return claim;
   }
 
-  Future<AttestationResult> attestClaimOfAttendance(
-      String claimHex, String password) async {
+  Future<AttestationResult> attestClaimOfAttendance(String claimHex, String password) async {
     var pubKey = store.account.currentAccountPubKey;
-    var att = await apiRoot.evalJavascript(
-        'account.attestClaimOfAttendance("$claimHex", "$pubKey", "$password")');
+    var att = await apiRoot.evalJavascript('account.attestClaimOfAttendance("$claimHex", "$pubKey", "$password")');
     AttestationResult attestation = AttestationResult.fromJson(att);
     print("Att: ${attestation.toString()}");
     return attestation;
@@ -273,8 +253,7 @@ class ApiEncointer {
   Future<dynamic> sendFaucetTx() async {
     var address = store.account.currentAddress;
     var amount = Fmt.tokenInt(faucetAmount.toString(), ert_decimals);
-    var res = await apiRoot
-        .evalJavascript('account.sendFaucetTx("$address", "$amount")');
+    var res = await apiRoot.evalJavascript('account.sendFaucetTx("$address", "$amount")');
     // print("Faucet Result :" + res.toString());
     return res;
   }
@@ -283,8 +262,7 @@ class ApiEncointer {
     var pubKey = store.account.currentAccountPubKey;
     var data = await apiRoot.evalJavascript('encointer.getBalances("$pubKey")');
 
-    List<EncointerBalanceData> encointerBalances =
-        new List<EncointerBalanceData>();
+    List<EncointerBalanceData> encointerBalances = new List<EncointerBalanceData>();
     data.map((e) => EncointerBalanceData.fromJson(e)).toList().forEach((e) {
       encointerBalances.add(e);
     });
@@ -301,8 +279,7 @@ class ApiEncointer {
     var pubKey = store.account.currentAccountPubKey;
     print("Public key:" + pubKey);
     var cid = store.encointer.chosenCid;
-    var balance = await apiRoot
-        .evalJavascript('worker.getBalance("$pubKey", "$cid", "123qwe")');
+    var balance = await apiRoot.evalJavascript('worker.getBalance("$pubKey", "$cid", "123qwe")');
     print("balance: " + balance);
   }
 }
