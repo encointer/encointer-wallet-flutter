@@ -1,8 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:encointer_wallet/common/components/BorderedTitle.dart';
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
@@ -21,6 +18,9 @@ import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class Assets extends StatefulWidget {
   Assets(this.store);
@@ -87,7 +87,9 @@ class _AssetsState extends State<Assets> {
               title: Text(dic['uos.title']),
               content: sender['error'] != null
                   ? Text(sender['error'])
-                  : sender['signer'] == null ? Text(dic['uos.qr.invalid']) : Text(dic['uos.acc.mismatch']),
+                  : sender['signer'] == null
+                      ? Text(dic['uos.qr.invalid'])
+                      : Text(dic['uos.acc.mismatch']),
               actions: <Widget>[
                 CupertinoButton(
                   child: Text(I18n.of(context).home['ok']),
@@ -328,10 +330,14 @@ class _AssetsState extends State<Assets> {
           currencyIds.retainWhere((i) => i != symbol);
         }
 
+        final chosenCid = store.encointer.chosenCid;
+        print("Chosen cid $chosenCid");
+        final BalanceEntry chosenBalanceEntry = store.encointer.balanceEntries[chosenCid];
+        print("Chosen BalanceEntry: $chosenBalanceEntry");
         Map<String, BalanceEntry> nonZeroEncointerEntries = store.encointer.balanceEntries
-          ..removeWhere((key, value) => value.principal == 0);
+          ..removeWhere((key, value) => value.principal == 0 && key != chosenCid);
 
-        BalancesInfo balancesInfo = store.assets.balances[symbol];
+        final BalancesInfo balancesInfo = store.assets.balances[symbol];
         return RefreshIndicator(
           key: globalBalanceRefreshKey,
           onRefresh: _fetchBalance,
@@ -405,10 +411,44 @@ class _AssetsState extends State<Assets> {
                         );
                       }).toList(),
                     ),
+                    chosenBalanceEntry != null
+                        ? Padding(
+                            padding: EdgeInsets.only(top: 4),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: <Widget>[
+                                BorderedTitle(
+                                  title: 'Chosen Encointer Currency',
+                                ),
+                              ],
+                            ),
+                          )
+                        : Container(),
+                    chosenBalanceEntry != null
+                        ? RoundedCard(
+                            margin: EdgeInsets.only(top: 16),
+                            child: ListTile(
+                              leading: Container(
+                                width: 36,
+                                child: Image.asset('assets/images/assets/ERT.png'),
+                              ),
+                              title: Text(Fmt.currencyIdentifier(chosenCid)),
+                              trailing: Text(
+                                Fmt.doubleFormat(chosenBalanceEntry.principal),
+                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
+                              ),
+                              onTap: () {
+                                Navigator.pushNamed(context, AssetPage.route,
+                                    arguments: AssetPageParams(token: chosenCid, isEncointerCommunityCurrency: true));
+                              },
+                            ),
+                          )
+                        : Container(),
                     store.settings.endpointIsEncointer && nonZeroEncointerEntries.isNotEmpty
                         ? Column(
                             children: nonZeroEncointerEntries.entries.map((balanceData) {
 //                        print("balance data: " + balanceData.toString());
+                              if (chosenCid == balanceData.key) return Container();
                               var cid = balanceData.key;
                               var balanceEntry = balanceData.value;
                               return RoundedCard(
