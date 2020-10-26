@@ -43,7 +43,6 @@ class ApiAssets {
         'account.subscribeBalance("$_balanceSubscribeChannel","$address")',
         _balanceSubscribeChannel,
         (data) => {
-          print("Subscribed to balance: ${data.toString()}"),
           store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState.tokenSymbol: data})),
         },
       );
