@@ -39,10 +39,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
               icon: Image.asset(_tabList[activeItem] == i
                   ? 'assets/images/public/${i}_indigo.png'
                   : 'assets/images/public/${i}_dark.png'),
-              title: Text(
-                tabs[i.toLowerCase()],
-                style: TextStyle(fontSize: 14, color: _tabList[activeItem] == i ? Colors.indigo : Colors.grey),
-              ),
+              label: tabs[i.toLowerCase()],
             ))
         .toList();
   }
