@@ -248,8 +248,8 @@ abstract class _EncointerStore with Store {
         "success": true,
         "from": rootStore.account.currentAddress,
         "to": i['params'][0],
-        "token": i['params'][1],
-        "amount": Fmt.balance(i['params'][2], ert_decimals),
+        "token": "ERT", // i['params'][1],
+        "amount": Fmt.balance(i['params'][1], ert_decimals),
       };
     }).toList();
     if (reset) {
