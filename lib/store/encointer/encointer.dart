@@ -66,7 +66,7 @@ abstract class _EncointerStore with Store {
   ClaimOfAttendance myClaim;
 
   @observable
-  Map<String, BalanceEntry> balanceEntries = new Map();
+  Map<String, BalanceEntry> balanceEntries = new ObservableMap();
 
   @observable
   List<String> currencyIdentifiers;
