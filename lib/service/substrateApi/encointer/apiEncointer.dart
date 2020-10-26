@@ -210,8 +210,8 @@ class ApiEncointer {
       'encointer.subscribeBalance("$_encointerBalanceChannel", "$cid", "$account")',
       _encointerBalanceChannel,
       (data) {
-        EncointerBalanceData balance = EncointerBalanceData.fromJson(data);
-        store.encointer.addBalanceEntry(balance.cid, balance.balanceEntry);
+        BalanceEntry balance = BalanceEntry.fromJson(data);
+        store.encointer.addBalanceEntry(cid, balance);
       },
     );
   }

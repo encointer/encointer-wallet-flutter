@@ -315,13 +315,9 @@ class _AssetsState extends State<Assets> {
         }
 
         final chosenCid = store.encointer.chosenCid;
-        print("Chosen cid $chosenCid");
         final BalanceEntry chosenBalanceEntry = store.encointer.balanceEntries[chosenCid];
-        print("Chosen BalanceEntry: $chosenBalanceEntry");
-        Map<String, BalanceEntry> nonZeroEncointerEntries = store.encointer.balanceEntries
-          ..removeWhere((key, value) => value.principal == 0 && key != chosenCid);
-
         final BalancesInfo balancesInfo = store.assets.balances[symbol];
+
         return Column(
           children: <Widget>[
             _buildTopCard(context),
