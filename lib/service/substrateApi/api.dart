@@ -230,6 +230,7 @@ class Api {
 
     // init subscriptions for all apis
     this.encointer.startSubscriptions();
+    this.assets.startSubscriptions();
 
     // fetch account balance
     if (store.account.accountList.length > 0) {

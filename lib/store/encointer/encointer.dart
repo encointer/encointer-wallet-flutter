@@ -119,8 +119,6 @@ abstract class _EncointerStore with Store {
         break;
     }
     webApi.encointer.subscribeParticipantIndex();
-    //TODO this should be a subscription
-    webApi.encointer.getBalances();
   }
 
   @action

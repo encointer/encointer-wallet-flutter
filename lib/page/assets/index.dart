@@ -38,19 +38,6 @@ class _AssetsState extends State<Assets> {
 
   bool _faucetSubmitting = false;
 
-  Future<void> _fetchBalance() async {
-    if (store.settings.endpointIsEncointer) {
-      await Future.wait([
-        webApi.assets.fetchBalance(),
-      ]);
-    } else {
-      await Future.wait([
-        webApi.assets.fetchBalance(),
-      ]);
-    }
-    webApi.account.fetchAccountsIndex();
-  }
-
   Future<void> _handleScan() async {
     final Map dic = I18n.of(context).account;
     final data = await Navigator.pushNamed(
@@ -305,9 +292,6 @@ class _AssetsState extends State<Assets> {
       webApi.connectNodeAll();
     }
 
-    if (!store.settings.loading && store.settings.networkName != null) {
-      webApi.encointer.getBalances();
-    }
     super.initState();
   }
 
@@ -338,148 +322,116 @@ class _AssetsState extends State<Assets> {
           ..removeWhere((key, value) => value.principal == 0 && key != chosenCid);
 
         final BalancesInfo balancesInfo = store.assets.balances[symbol];
-        return RefreshIndicator(
-          key: globalBalanceRefreshKey,
-          onRefresh: _fetchBalance,
-          child: Column(
-            children: <Widget>[
-              _buildTopCard(context),
-              Container(height: 24),
-              Expanded(
-                child: ListView(
-                  padding: EdgeInsets.only(left: 16, right: 16),
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(top: 4),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          BorderedTitle(
-                            title: I18n.of(context).home['assets'],
+        return Column(
+          children: <Widget>[
+            _buildTopCard(context),
+            Container(height: 24),
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.only(left: 16, right: 16),
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(top: 4),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        BorderedTitle(
+                          title: I18n.of(context).home['assets'],
+                        ),
+                      ],
+                    ),
+                  ),
+                  RoundedCard(
+                    margin: EdgeInsets.only(top: 16),
+                    child: ListTile(
+                      leading: Container(
+                        width: 36,
+                        child: Image.asset('assets/images/assets/${symbol.isNotEmpty ? symbol : 'DOT'}.png'),
+                      ),
+                      title: Text(tokenView),
+                      trailing: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(
+                            Fmt.priceFloorBigInt(balancesInfo != null ? balancesInfo.total : BigInt.zero, decimals,
+                                lengthFixed: 3),
+                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
                           ),
+                          Container(width: 16),
                         ],
                       ),
+                      onTap: () {
+                        Navigator.pushNamed(context, AssetPage.route, arguments: AssetPageParams(token: symbol));
+                      },
                     ),
-                    RoundedCard(
-                      margin: EdgeInsets.only(top: 16),
-                      child: ListTile(
-                        leading: Container(
-                          width: 36,
-                          child: Image.asset('assets/images/assets/${symbol.isNotEmpty ? symbol : 'DOT'}.png'),
-                        ),
-                        title: Text(tokenView),
-                        trailing: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            Text(
-                              Fmt.priceFloorBigInt(balancesInfo != null ? balancesInfo.total : BigInt.zero, decimals,
-                                  lengthFixed: 3),
-                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
-                            ),
-                            Container(width: 16),
-                          ],
-                        ),
-                        onTap: () {
-                          Navigator.pushNamed(context, AssetPage.route, arguments: AssetPageParams(token: symbol));
-                        },
-                      ),
-                    ),
-                    Column(
-                      children: currencyIds.map((i) {
+                  ),
+                  Column(
+                    children: currencyIds.map((i) {
 //                  print(store.assets.balances[i]);
-                        String token = i;
-                        return RoundedCard(
+                      String token = i;
+                      return RoundedCard(
+                        margin: EdgeInsets.only(top: 16),
+                        child: ListTile(
+                          leading: Container(
+                            width: 36,
+                            child: CircleAvatar(
+                              child: Text(token.substring(0, 2)),
+                            ),
+                          ),
+                          title: Text(token),
+                          trailing: Text(
+                            Fmt.priceFloorBigInt(Fmt.balanceInt(store.assets.tokenBalances[i]), decimals,
+                                lengthFixed: 3),
+                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
+                          ),
+                          onTap: () {
+                            Navigator.pushNamed(context, AssetPage.route, arguments: AssetPageParams(token: token));
+                          },
+                        ),
+                      );
+                    }).toList(),
+                  ),
+                  chosenBalanceEntry != null
+                      ? Padding(
+                          padding: EdgeInsets.only(top: 4),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              BorderedTitle(
+                                title: 'Chosen Encointer Currency',
+                              ),
+                            ],
+                          ),
+                        )
+                      : Container(),
+                  chosenBalanceEntry != null
+                      ? RoundedCard(
                           margin: EdgeInsets.only(top: 16),
                           child: ListTile(
                             leading: Container(
                               width: 36,
-                              child: CircleAvatar(
-                                child: Text(token.substring(0, 2)),
-                              ),
+                              child: Image.asset('assets/images/assets/ERT.png'),
                             ),
-                            title: Text(token),
+                            title: Text(Fmt.currencyIdentifier(chosenCid)),
                             trailing: Text(
-                              Fmt.priceFloorBigInt(Fmt.balanceInt(store.assets.tokenBalances[i]), decimals,
-                                  lengthFixed: 3),
+                              Fmt.doubleFormat(chosenBalanceEntry.principal),
                               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
                             ),
                             onTap: () {
-                              Navigator.pushNamed(context, AssetPage.route, arguments: AssetPageParams(token: token));
+                              Navigator.pushNamed(context, AssetPage.route,
+                                  arguments: AssetPageParams(token: chosenCid, isEncointerCommunityCurrency: true));
                             },
                           ),
-                        );
-                      }).toList(),
-                    ),
-                    chosenBalanceEntry != null
-                        ? Padding(
-                            padding: EdgeInsets.only(top: 4),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: <Widget>[
-                                BorderedTitle(
-                                  title: 'Chosen Encointer Currency',
-                                ),
-                              ],
-                            ),
-                          )
-                        : Container(),
-                    chosenBalanceEntry != null
-                        ? RoundedCard(
-                            margin: EdgeInsets.only(top: 16),
-                            child: ListTile(
-                              leading: Container(
-                                width: 36,
-                                child: Image.asset('assets/images/assets/ERT.png'),
-                              ),
-                              title: Text(Fmt.currencyIdentifier(chosenCid)),
-                              trailing: Text(
-                                Fmt.doubleFormat(chosenBalanceEntry.principal),
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
-                              ),
-                              onTap: () {
-                                Navigator.pushNamed(context, AssetPage.route,
-                                    arguments: AssetPageParams(token: chosenCid, isEncointerCommunityCurrency: true));
-                              },
-                            ),
-                          )
-                        : Container(),
-                    store.settings.endpointIsEncointer && nonZeroEncointerEntries.isNotEmpty
-                        ? Column(
-                            children: nonZeroEncointerEntries.entries.map((balanceData) {
-//                        print("balance data: " + balanceData.toString());
-                              if (chosenCid == balanceData.key) return Container();
-                              var cid = balanceData.key;
-                              var balanceEntry = balanceData.value;
-                              return RoundedCard(
-                                margin: EdgeInsets.only(top: 16),
-                                child: ListTile(
-                                  leading: Container(
-                                    width: 36,
-                                    child: Image.asset('assets/images/assets/ERT.png'),
-                                  ),
-                                  title: Text(Fmt.currencyIdentifier(cid)),
-                                  trailing: Text(
-                                    Fmt.doubleFormat(balanceEntry.principal),
-                                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
-                                  ),
-                                  onTap: () {
-                                    Navigator.pushNamed(context, AssetPage.route,
-                                        arguments: AssetPageParams(token: cid, isEncointerCommunityCurrency: true));
-                                  },
-                                ),
-                              );
-                            }).toList(),
-                          )
-                        : Container(),
-                    Container(
-                      padding: EdgeInsets.only(bottom: 32),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
+                        )
+                      : Container(),
+                  Container(
+                    padding: EdgeInsets.only(bottom: 32),
+                  ),
+                ],
+              ),
+            )
+          ],
         );
       },
     );
