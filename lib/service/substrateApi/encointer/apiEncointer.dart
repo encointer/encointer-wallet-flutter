@@ -283,22 +283,6 @@ class ApiEncointer {
     return res;
   }
 
-  Future<List<EncointerBalanceData>> getBalances() async {
-    var pubKey = store.account.currentAccountPubKey;
-    var data = await apiRoot.evalJavascript('encointer.getBalances("$pubKey")');
-
-    List<EncointerBalanceData> encointerBalances = new List<EncointerBalanceData>();
-    data.map((e) => EncointerBalanceData.fromJson(e)).toList().forEach((e) {
-      encointerBalances.add(e);
-    });
-
-//    print("encointerBalances list: " + encointerBalances.toString());
-    encointerBalances.forEach((e) {
-      store.encointer.addBalanceEntry(e.cid, e.balanceEntry);
-    });
-    return encointerBalances;
-  }
-
 // untested
   Future<dynamic> getBalanceFromWorker() async {
     var pubKey = store.account.currentAccountPubKey;
