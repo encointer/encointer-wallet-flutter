@@ -30,7 +30,6 @@ class CreateAccountForm extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
               children: <Widget>[
                 TextFormField(
-                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     icon: Icon(Icons.person),
                     hintText: dic['create.name'],
