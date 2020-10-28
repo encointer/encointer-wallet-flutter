@@ -49,10 +49,6 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       cryptoType: _cryptoType,
       derivePath: _derivePath,
     );
-    setState(() {
-      _submitting = false;
-    });
-    Navigator.of(context).pop();
 
     /// check if account duplicate
     if (acc != null) {
@@ -108,6 +104,11 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         );
       },
     );
+
+    Navigator.of(context).pop();
+    setState(() {
+      _submitting = false;
+    });
   }
 
   Future<void> _checkAccountDuplicate(Map<String, dynamic> acc) async {
@@ -190,23 +191,25 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     return Scaffold(
       appBar: AppBar(title: Text(I18n.of(context).home['import'])),
       body: SafeArea(
-        child: ImportAccountForm(store, (Map<String, dynamic> data) {
-          if (data['finish'] == null) {
-            setState(() {
-              _keyType = data['keyType'];
-              _cryptoType = data['cryptoType'];
-              _derivePath = data['derivePath'];
-              _step = 1;
-            });
-          } else {
-            setState(() {
-              _keyType = data['keyType'];
-              _cryptoType = data['cryptoType'];
-              _derivePath = data['derivePath'];
-            });
-            _importAccount();
-          }
-        }),
+        child: !_submitting
+            ? ImportAccountForm(store, (Map<String, dynamic> data) {
+                if (data['finish'] == null) {
+                  setState(() {
+                    _keyType = data['keyType'];
+                    _cryptoType = data['cryptoType'];
+                    _derivePath = data['derivePath'];
+                    _step = 1;
+                  });
+                } else {
+                  setState(() {
+                    _keyType = data['keyType'];
+                    _cryptoType = data['cryptoType'];
+                    _derivePath = data['derivePath'];
+                  });
+                  _importAccount();
+                }
+              })
+            : Center(child: CupertinoActivityIndicator()),
       ),
     );
   }
