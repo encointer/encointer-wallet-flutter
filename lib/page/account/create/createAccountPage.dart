@@ -3,7 +3,6 @@ import 'package:encointer_wallet/page-encointer/homePage.dart';
 import 'package:encointer_wallet/page/account/create/createAccountForm.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,11 +37,10 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     );
 
     if (acc['error'] != null) {
-      UI.alertWASM(context, () {
-        setState(() {
-          _submitting = false;
-        });
+      setState(() {
+        _submitting = false;
       });
+      _showErrorCreatingAccountDialog(context);
       return;
     }
 
@@ -77,6 +75,26 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
               child: Text(I18n.of(context).home['ok']),
               onPressed: () {
                 Navigator.popUntil(context, ModalRoute.withName('/'));
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  static Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
+    showCupertinoDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: Container(),
+          content: Text(I18n.of(context).account['create.error']),
+          actions: <Widget>[
+            CupertinoButton(
+              child: Text(I18n.of(context).home['ok']),
+              onPressed: () {
+                Navigator.of(context).pop();
               },
             ),
           ],
