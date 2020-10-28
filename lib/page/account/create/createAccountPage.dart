@@ -54,6 +54,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     webApi.assets.fetchBalance();
     webApi.account.fetchAccountsBonded([pubKey]);
     webApi.account.getPubKeyIcons([pubKey]);
+    store.account.setCurrentAccount(pubKey);
 
     setState(() {
       _submitting = false;
