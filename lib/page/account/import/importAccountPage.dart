@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:encointer_wallet/page/account/create/createAccountForm.dart';
 import 'package:encointer_wallet/page/account/import/importAccountForm.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
@@ -7,6 +5,8 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ImportAccountPage extends StatefulWidget {
   const ImportAccountPage(this.store);
@@ -176,11 +176,13 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
           ),
         ),
         body: SafeArea(
-          child: CreateAccountForm(
-            setNewAccount: store.account.setNewAccount,
-            submitting: _submitting,
-            onSubmit: _importAccount,
-          ),
+          child: !_submitting
+              ? CreateAccountForm(
+                  setNewAccount: store.account.setNewAccount,
+                  submitting: _submitting,
+                  onSubmit: _importAccount,
+                )
+              : Center(child: CupertinoActivityIndicator()),
         ),
       );
     }
