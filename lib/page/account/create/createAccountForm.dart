@@ -69,7 +69,7 @@ class CreateAccountForm extends StatelessWidget {
           Container(
             padding: EdgeInsets.all(16),
             child: RoundedButton(
-              text: I18n.of(context).home['next'],
+              text: I18n.of(context).account['create'],
               onPressed: () {
                 if (_formKey.currentState.validate()) {
                   setNewAccount(_nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic['create.default'], _passCtrl.text);

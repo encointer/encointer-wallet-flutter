@@ -2,6 +2,7 @@ const Map<String, String> enAccount = {
   'mnemonic': 'Mnemonic',
   'rawSeed': 'Raw Seed',
   'keystore': 'Keystore (json)',
+  'create': 'Create Account',
   'create.name': 'Name',
   'create.hint': '(Default: My Account)',
   'create.default': 'My Account',
