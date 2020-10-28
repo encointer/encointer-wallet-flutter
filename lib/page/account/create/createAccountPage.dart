@@ -22,7 +22,6 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
 
   final AppStore store;
 
-  AccountAdvanceOptionParams _advanceOptions = AccountAdvanceOptionParams();
   bool _submitting = false;
 
   Future<void> _createAndImportAccount() async {
@@ -33,11 +32,9 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     await webApi.account.generateAccount();
 
     var acc = await webApi.account.importAccount(
-      cryptoType: _advanceOptions.type ?? AccountAdvanceOptionParams.encryptTypeSR,
-      derivePath: _advanceOptions.path ?? '',
+      cryptoType: AccountAdvanceOptionParams.encryptTypeSR,
+      derivePath: '',
     );
-
-    print("Imported Account: ${acc.toString()}");
 
     if (acc['error'] != null) {
       UI.alertWASM(context, () {
@@ -71,29 +68,14 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     return Scaffold(
       appBar: AppBar(title: Text(I18n.of(context).home['create'])),
       body: SafeArea(
-        child: Column(
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height / 2,
-              child: CreateAccountForm(
-                setNewAccount: store.account.setNewAccount,
-                submitting: _submitting,
-                onSubmit: () {
-                  setState(() {
-                    _createAndImportAccount();
-                  });
-                },
-              ),
-            ),
-            AccountAdvanceOption(
-              seed: store.account.newAccount.key ?? '',
-              onChange: (data) {
-                setState(() {
-                  _advanceOptions = data;
-                });
-              },
-            ),
-          ],
+        child: CreateAccountForm(
+          setNewAccount: store.account.setNewAccount,
+          submitting: _submitting,
+          onSubmit: () {
+            setState(() {
+              _createAndImportAccount();
+            });
+          },
         ),
       ),
     );
