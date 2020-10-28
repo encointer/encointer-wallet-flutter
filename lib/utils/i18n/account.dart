@@ -3,6 +3,8 @@ const Map<String, String> enAccount = {
   'rawSeed': 'Raw Seed',
   'keystore': 'Keystore (json)',
   'create.name': 'Name',
+  'create.hint': '(Default: My Account)',
+  'create.default': 'My Account',
   'create.name.error': 'Name can not be empty',
   'create.password': 'Password',
   'create.password.error': 'Password must contain at least 6 digits and no other signs',
