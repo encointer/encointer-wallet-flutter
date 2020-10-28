@@ -35,6 +35,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'common/theme.dart';
 import 'utils/i18n/index.dart';
@@ -138,19 +139,22 @@ class _WalletAppState extends State<WalletApp> {
       theme: _theme,
 //      darkTheme: darkTheme,
       routes: {
-        EncointerHomePage.route: (context) => WillPopScopWrapper(
-              child: FutureBuilder<int>(
-                future: _initStore(context),
-                builder: (_, AsyncSnapshot<int> snapshot) {
-                  if (snapshot.hasData) {
-                    return snapshot.data > 0 ? EncointerHomePage(_appStore) : CreateAccountEntryPage();
-                  } else {
-                    return CupertinoActivityIndicator();
-                  }
-                },
-              ),
+        EncointerHomePage.route: (context) => Observer(
+              builder: (_) {
+                return WillPopScopWrapper(
+                  child: FutureBuilder<int>(
+                    future: _initStore(context),
+                    builder: (_, AsyncSnapshot<int> snapshot) {
+                      if (snapshot.hasData) {
+                        return snapshot.data > 0 ? EncointerHomePage(_appStore) : CreateAccountEntryPage();
+                      } else {
+                        return CupertinoActivityIndicator();
+                      }
+                    },
+                  ),
+                );
+              },
             ),
-
         NetworkSelectPage.route: (_) => NetworkSelectPage(_appStore, _changeTheme),
         // account
         CreateAccountEntryPage.route: (_) => CreateAccountEntryPage(),
