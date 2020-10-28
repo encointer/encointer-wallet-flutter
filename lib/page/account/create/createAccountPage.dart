@@ -22,21 +22,19 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
 
   final AppStore store;
 
+  AccountAdvanceOptionParams _advanceOptions = AccountAdvanceOptionParams();
   bool _submitting = false;
 
   Future<void> _createAndImportAccount() async {
     setState(() {
       _submitting = true;
     });
-    // var acc = await webApi.account.importAccount(
-    //   cryptoType: _advanceOptions.type ?? AccountAdvanceOptionParams.encryptTypeSR,
-    //   derivePath: _advanceOptions.path ?? '',
-    // );
+
     await webApi.account.generateAccount();
 
     var acc = await webApi.account.importAccount(
-      cryptoType: AccountAdvanceOptionParams.encryptTypeSR,
-      derivePath: '',
+      cryptoType: _advanceOptions.type ?? AccountAdvanceOptionParams.encryptTypeSR,
+      derivePath: _advanceOptions.path ?? '',
     );
 
     print("Imported Account: ${acc.toString()}");
@@ -73,14 +71,29 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     return Scaffold(
       appBar: AppBar(title: Text(I18n.of(context).home['create'])),
       body: SafeArea(
-        child: CreateAccountForm(
-          setNewAccount: store.account.setNewAccount,
-          submitting: _submitting,
-          onSubmit: () {
-            setState(() {
-              _createAndImportAccount();
-            });
-          },
+        child: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height / 2,
+              child: CreateAccountForm(
+                setNewAccount: store.account.setNewAccount,
+                submitting: _submitting,
+                onSubmit: () {
+                  setState(() {
+                    _createAndImportAccount();
+                  });
+                },
+              ),
+            ),
+            AccountAdvanceOption(
+              seed: store.account.newAccount.key ?? '',
+              onChange: (data) {
+                setState(() {
+                  _advanceOptions = data;
+                });
+              },
+            ),
+          ],
         ),
       ),
     );
