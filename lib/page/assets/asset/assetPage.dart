@@ -1,6 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:encointer_wallet/common/components/BorderedTitle.dart';
 import 'package:encointer_wallet/common/components/TapTooltip.dart';
 import 'package:encointer_wallet/common/components/listTail.dart';
@@ -16,6 +13,9 @@ import 'package:encointer_wallet/store/assets/types/transferData.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class AssetPageParams {
   AssetPageParams({this.token, this.isEncointerCommunityCurrency = false});
@@ -113,14 +113,13 @@ class _AssetPageState extends State<AssetPage> with SingleTickerProviderStateMix
     if (store.settings.endpointIsEncointer) {
       List<TransferData> ls = store.encointer.txsTransfer.reversed.toList();
       final String symbol = store.settings.networkState.tokenSymbol;
-      final bool isBaseToken = token == symbol;
       ls.retainWhere((i) => i.token.toUpperCase() == token.toUpperCase());
       res.addAll(ls.map((i) {
         String crossChain;
         Map<String, dynamic> tx = TransferData.toJson(i);
         return TransferListItem(
           data: crossChain != null ? TransferData.fromJson(tx) : i,
-          token: token,
+          token: token == symbol ? token : Fmt.currencyIdentifier(token),
           isOut: true,
           hasDetail: false,
           crossChain: crossChain,
