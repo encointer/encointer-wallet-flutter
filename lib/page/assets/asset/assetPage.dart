@@ -119,7 +119,7 @@ class _AssetPageState extends State<AssetPage> with SingleTickerProviderStateMix
         Map<String, dynamic> tx = TransferData.toJson(i);
         return TransferListItem(
           data: crossChain != null ? TransferData.fromJson(tx) : i,
-          token: token == symbol ? token : Fmt.currencyIdentifier(token),
+          token: token == symbol ? token : "",
           isOut: true,
           hasDetail: false,
           crossChain: crossChain,
@@ -430,6 +430,7 @@ class TransferListItem extends StatelessWidget {
                   child: Text(
                 '${data.amount} $token',
                 style: Theme.of(context).textTheme.headline4,
+                textAlign: TextAlign.end,
               )),
               isOut
                   ? Image.asset('assets/images/assets/assets_up.png')
