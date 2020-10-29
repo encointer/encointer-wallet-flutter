@@ -129,21 +129,7 @@ class _AssetPageState extends State<AssetPage> with SingleTickerProviderStateMix
         isEmpty: ls.length == 0,
         isLoading: false,
       ));
-    } else {
-      res.addAll(store.assets.txsView.map((i) {
-        return TransferListItem(
-          data: i,
-          token: token,
-          isOut: i.from == store.account.currentAddress,
-          hasDetail: true,
-        );
-      }));
-      res.add(ListTail(
-        isEmpty: store.assets.txsView.length == 0,
-        isLoading: store.assets.isTxsLoading,
-      ));
     }
-
     return res;
   }
 
