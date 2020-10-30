@@ -315,6 +315,19 @@ class _AssetPageState extends State<AssetPage> with SingleTickerProviderStateMix
                           ],
                         ),
                       ),
+                store.encointer.txsTransfer.isNotEmpty
+                    ? Container(
+                        color: titleColor,
+                        padding: EdgeInsets.all(16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Text("From/To", style: Theme.of(context).textTheme.headline4),
+                            Text("Amount", style: Theme.of(context).textTheme.headline4),
+                          ],
+                        ),
+                      )
+                    : Container(),
                 Expanded(
                   child: Container(
                     color: Colors.white,
