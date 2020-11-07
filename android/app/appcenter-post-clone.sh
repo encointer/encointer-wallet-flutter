@@ -21,10 +21,10 @@ curl "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}.pkg" > "$HO
 sudo installer -store -pkg "$HOME/Downloads/node-installer.pkg" -target "/"
 cd ./lib/js_service_encointer && yarn install && yarn run build && cd ../..
 
-#flutter build apk --release --flavor play
+flutter build apk --release --flavor play
 flutter build appbundle --release --flavor play
 
 # copy the APK where AppCenter will find it
-#mkdir -p android/app/build/outputs/apk/; mv build/app/outputs/apk/play/release/app-play-release.apk $_
+mkdir -p android/app/build/outputs/apk/; mv build/app/outputs/apk/play/release/app-play-release.apk $_
 # copy the AAB where AppCenter will find it
 mkdir -p android/app/build/outputs/bundle/; mv build/app/outputs/bundle/playRelease/app-play-release.aab $_
