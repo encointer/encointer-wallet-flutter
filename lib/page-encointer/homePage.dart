@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/page-encointer/bazar/bazarEntry.dart';
 import 'package:encointer_wallet/page-encointer/encointerEntry.dart';
 import 'package:encointer_wallet/page/assets/index.dart';
 import 'package:encointer_wallet/page/profile/index.dart';
@@ -30,6 +31,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
     'Wallet',
     'Ceremonies',
     'Profile',
+    'Bazar',
   ];
   int _tabIndex = 0;
 
@@ -51,13 +53,15 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         return Assets(store);
       case 1:
         return EncointerEntry(store);
+      case 3:
+        return BazarEntry(store);
       default:
         return Profile(store);
     }
   }
 
   List<Widget> _buildPages() {
-    return [0, 1, 2].map((i) {
+    return [0, 1, 2, 3].map((i) {
       if (i == 0) {
         // return assets page
         return Stack(

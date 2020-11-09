@@ -8,6 +8,7 @@ import 'package:encointer_wallet/utils/i18n/encointer.dart';
 import 'account.dart';
 import 'home.dart';
 import 'profile.dart';
+import 'bazar.dart';
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<I18n> {
   const AppLocalizationsDelegate(this.overriddenLocale);
@@ -42,6 +43,7 @@ class I18n {
       'assets': enAssets,
       'profile': enProfile,
       'encointer': enNctr,
+      'bazar': enBazar,
     },
   };
 
@@ -63,5 +65,9 @@ class I18n {
 
   Map<String, String> get encointer {
     return _localizedValues[locale.languageCode]['encointer'];
+  }
+
+  Map<String, String> get bazar {
+    return _localizedValues[locale.languageCode]['bazar'];
   }
 }

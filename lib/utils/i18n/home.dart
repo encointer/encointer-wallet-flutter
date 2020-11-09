@@ -6,6 +6,7 @@ const Map<String, String> enHome = {
   'staking': 'Staking',
   'governance': 'Governance',
   'profile': 'Profile',
+  'bazar': 'Bazar',
   'account': 'Account',
   'menu': 'Menu',
   'scan': 'Scan',
