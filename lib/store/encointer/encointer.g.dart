@@ -59,13 +59,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
   final _$meetupIndexAtom = Atom(name: '_EncointerStore.meetupIndex');
 
   @override
-  dynamic get meetupIndex {
+  int get meetupIndex {
     _$meetupIndexAtom.reportRead();
     return super.meetupIndex;
   }
 
   @override
-  set meetupIndex(dynamic value) {
+  set meetupIndex(int value) {
     _$meetupIndexAtom.reportWrite(value, super.meetupIndex, () {
       super.meetupIndex = value;
     });
@@ -120,13 +120,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
       Atom(name: '_EncointerStore.myMeetupRegistryIndex');
 
   @override
-  dynamic get myMeetupRegistryIndex {
+  int get myMeetupRegistryIndex {
     _$myMeetupRegistryIndexAtom.reportRead();
     return super.myMeetupRegistryIndex;
   }
 
   @override
-  set myMeetupRegistryIndex(dynamic value) {
+  set myMeetupRegistryIndex(int value) {
     _$myMeetupRegistryIndexAtom.reportWrite(value, super.myMeetupRegistryIndex,
         () {
       super.myMeetupRegistryIndex = value;
@@ -136,13 +136,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
   final _$participantIndexAtom = Atom(name: '_EncointerStore.participantIndex');
 
   @override
-  dynamic get participantIndex {
+  int get participantIndex {
     _$participantIndexAtom.reportRead();
     return super.participantIndex;
   }
 
   @override
-  set participantIndex(dynamic value) {
+  set participantIndex(int value) {
     _$participantIndexAtom.reportWrite(value, super.participantIndex, () {
       super.participantIndex = value;
     });
@@ -151,13 +151,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
   final _$participantCountAtom = Atom(name: '_EncointerStore.participantCount');
 
   @override
-  dynamic get participantCount {
+  int get participantCount {
     _$participantCountAtom.reportRead();
     return super.participantCount;
   }
 
   @override
-  set participantCount(dynamic value) {
+  set participantCount(int value) {
     _$participantCountAtom.reportWrite(value, super.participantCount, () {
       super.participantCount = value;
     });

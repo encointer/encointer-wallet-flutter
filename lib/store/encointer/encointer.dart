@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:encointer_wallet/common/consts/settings.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -22,7 +24,14 @@ abstract class _EncointerStore with Store {
   final AppStore rootStore;
   final String cacheTxsTransferKey = 'transfer_txs';
   final String encointerCurrencyKey = 'wallet_encointer_currency';
+  // offline meetup cache.
+  final String encointerCurrentPhaseKey = 'wallet_encointer_current_phase';
+  final String encointerMeetupIndexKey = 'wallet_encointer_meetup_index';
+  final String encointerMeetupLocationKey = 'wallet_encointer_meetup_location';
+  final String encointerMeetupRegistryKey = 'wallet_encointer_meetup_registry';
   final String encointerAttestationsKey = 'wallet_encointer_attestations';
+  final String encointerMeetupTimeKey = 'wallet_encointer_meetup_time';
+  final String encointerMyClaimKey = 'wallet_encointer_my_claim';
 
   String _getCacheKey(String key) {
     return '${rootStore.settings.endpoint.info}_$key';
@@ -42,7 +51,7 @@ abstract class _EncointerStore with Store {
   var currentCeremonyIndex;
 
   @observable
-  var meetupIndex;
+  int meetupIndex;
 
   @observable
   Location meetupLocation;
@@ -54,13 +63,13 @@ abstract class _EncointerStore with Store {
   List<String> meetupRegistry;
 
   @observable
-  var myMeetupRegistryIndex;
+  int myMeetupRegistryIndex;
 
   @observable
-  var participantIndex;
+  int participantIndex;
 
   @observable
-  var participantCount;
+  int participantCount;
 
   @observable
   ClaimOfAttendance myClaim;
@@ -87,6 +96,7 @@ abstract class _EncointerStore with Store {
   void setCurrentPhase(CeremonyPhase phase) {
     print("store: set currentPhase to $phase");
     if (currentPhase != phase) {
+      rootStore.localStorage.setObject(_getCacheKey(encointerMeetupIndexKey), phase);
       currentPhase = phase;
       // update depending values without awaiting
       webApi.encointer.getCurrentCeremonyIndex();
@@ -125,6 +135,7 @@ abstract class _EncointerStore with Store {
   void setMeetupIndex([int index]) {
     print("store: set meetupIndex to $index");
     if (meetupIndex != index) {
+      rootStore.localStorage.setObject(_getCacheKey(encointerMeetupIndexKey), index);
       meetupIndex = index;
       if (index != null) {
         // update depending values
@@ -138,6 +149,7 @@ abstract class _EncointerStore with Store {
   void setMeetupLocation([Location location]) {
     print("store: set meetupLocation to $location");
     if (meetupLocation != location) {
+      rootStore.localStorage.setObject(_getCacheKey(encointerMeetupLocationKey), location);
       meetupLocation = location;
       if (location != null) {
         // update depending values
@@ -150,6 +162,7 @@ abstract class _EncointerStore with Store {
   void setMeetupTime([int time]) {
     print("store: set meetupTime to $time");
     if (meetupTime != time) {
+      rootStore.localStorage.setObject(_getCacheKey(encointerMeetupTimeKey), time);
       meetupTime = time;
     }
   }
@@ -157,12 +170,14 @@ abstract class _EncointerStore with Store {
   @action
   void setMeetupRegistry([List<String> reg]) {
     print("store: set meetupRegistry to $reg");
+    rootStore.localStorage.setObject(_getCacheKey(encointerMeetupRegistryKey), reg);
     meetupRegistry = reg;
   }
 
   @action
   void setMyClaim([ClaimOfAttendance claim]) {
     print("store: set myClaim to $claim");
+    rootStore.localStorage.setObject(_getCacheKey(encointerMyClaimKey), claim);
     myClaim = claim;
   }
 
@@ -284,10 +299,27 @@ abstract class _EncointerStore with Store {
       setChosenCid(data);
     }
 
+    // get meetup related data
     data = await rootStore.localStorage.getObject(_getCacheKey(encointerAttestationsKey));
     if (data != null) {
       print("found cached attestations. will recover them");
       attestations = Map.castFrom<String, dynamic, int, AttestationState>(data);
     }
+    setCurrentPhase(await loadObjectFromCache<CeremonyPhase>(_getCacheKey(encointerCurrentPhaseKey)));
+    setMeetupIndex(await loadObjectFromCache<int>(_getCacheKey(encointerMeetupIndexKey)));
+    setMeetupLocation(await loadObjectFromCache<Location>(_getCacheKey(encointerMeetupLocationKey)));
+    setMeetupRegistry(await loadObjectFromCache<List<String>>(_getCacheKey(encointerMeetupRegistryKey)));
+    setMeetupTime(await loadObjectFromCache(_getCacheKey(encointerMeetupTimeKey)));
+    setMyClaim(await loadObjectFromCache<ClaimOfAttendance>(_getCacheKey(encointerMyClaimKey)));
+  }
+
+  Future<T> loadObjectFromCache<T>(String cacheKey) async {
+    var data = await rootStore.localStorage.getObject(_getCacheKey(encointerCurrentPhaseKey));
+
+    if (data != null) {
+      T obj = jsonDecode(data);
+      return obj;
+    }
+    return null;
   }
 }
