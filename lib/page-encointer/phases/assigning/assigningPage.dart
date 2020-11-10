@@ -31,7 +31,7 @@ class _AssigningPageState extends State<AssigningPage> {
   void initState() {
     // TODO: remove once we're doing this in init of attesting
     this.store.encointer.purgeAttestations();
-    this.timeToMeetup = getTimeToMeetup();
+    this.timeToMeetup = store.encointer.getTimeToMeetup();
     super.initState();
   }
 
@@ -77,22 +77,5 @@ class _AssigningPageState extends State<AssigningPage> {
         )
       ]),
     );
-  }
-
-  /// Calculates the remaining time until the next meetup starts. As Gesell implements timewarp we cannot use the time
-  /// received by the blockchain. Hence, we need to calculate it differently.
-  int getTimeToMeetup() {
-    if (store.settings.endpointIsGesell) {
-      var now = DateTime.now();
-      if (10 < now.minute && now.minute < 20) {
-        return ((19 - now.minute) * 60 + 60 - now.second);
-      } else if (40 < now.minute && now.minute < 50) {
-        return ((49 - now.minute) * 60 + 60 - now.second);
-      } else {
-        print("Warning: Invalid time to meetup");
-      }
-    } else {
-      return store.encointer.meetupTime;
-    }
   }
 }
