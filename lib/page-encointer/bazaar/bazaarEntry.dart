@@ -6,15 +6,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-
-class BazarEntry extends StatelessWidget {
-  BazarEntry(this.store);
+class BazaarEntry extends StatelessWidget {
+  BazaarEntry(this.store);
 
   final AppStore store;
 
   @override
   Widget build(BuildContext context) {
-    final Map dic = I18n.of(context).bazar;
+    final Map dic = I18n.of(context).bazaar;
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -27,7 +26,7 @@ class BazarEntry extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    dic['bazar.title'],
+                    dic['bazaar.title'],
                     style: TextStyle(
                       fontSize: 20,
                       color: Theme.of(context).cardColor,

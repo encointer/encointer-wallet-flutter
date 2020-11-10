@@ -4,12 +4,12 @@ import 'package:flutter/foundation.dart' show SynchronousFuture;
 import 'package:flutter/material.dart';
 import 'package:encointer_wallet/utils/i18n/assets.dart';
 import 'package:encointer_wallet/utils/i18n/encointer.dart';
-import 'package:encointer_wallet/utils/i18n/bazar.dart';
+import 'package:encointer_wallet/utils/i18n/bazaar.dart';
 
 import 'account.dart';
 import 'home.dart';
 import 'profile.dart';
-import 'bazar.dart';
+import 'bazaar.dart';
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<I18n> {
   const AppLocalizationsDelegate(this.overriddenLocale);
@@ -44,7 +44,7 @@ class I18n {
       'assets': enAssets,
       'profile': enProfile,
       'encointer': enNctr,
-      'bazar': enBazar,
+      'bazaar': enBazaar,
     },
   };
 
@@ -68,7 +68,7 @@ class I18n {
     return _localizedValues[locale.languageCode]['encointer'];
   }
 
-  Map<String, String> get bazar {
-    return _localizedValues[locale.languageCode]['bazar'];
+  Map<String, String> get bazaar {
+    return _localizedValues[locale.languageCode]['bazaar'];
   }
 }
