@@ -29,7 +29,6 @@ abstract class _EncointerStore with Store {
   final String encointerMeetupRegistryKey = 'wallet_encointer_meetup_registry';
   final String encointerAttestationsKey = 'wallet_encointer_attestations';
   final String encointerMeetupTimeKey = 'wallet_encointer_meetup_time';
-  final String encointerMyClaimKey = 'wallet_encointer_my_claim';
 
   // Note: In synchronous code, every modification of an @obervable is tracked by mobx and
   // fires a reaction. However, modifications in asynchronous code must be wrapped in
@@ -191,7 +190,6 @@ abstract class _EncointerStore with Store {
   @action
   void setMyClaim([ClaimOfAttendance claim]) {
     print("store: set myClaim to $claim");
-    cacheObject(encointerMyClaimKey, claim);
     myClaim = claim;
   }
 
@@ -333,11 +331,6 @@ abstract class _EncointerStore with Store {
     }
 
     meetupTime = await loadObject(encointerMeetupTimeKey);
-
-    var claim = await loadObject(encointerMyClaimKey);
-    if (claim != null) {
-      myClaim = ClaimOfAttendance.fromJson(claim);
-    }
   }
 
   Future<void> cacheObject(String key, value) {

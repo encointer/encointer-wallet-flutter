@@ -1,6 +1,5 @@
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
 import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -48,11 +47,6 @@ void main() {
       store.setMeetupTime(2);
       expect(store.meetupTime, 2);
       expect(await store.loadObject(store.encointerMeetupTimeKey), 2);
-
-      var claim1 = ClaimOfAttendance.fromJson(claim);
-      store.setMyClaim(claim1);
-      expect(store.myClaim, claim1);
-      expect(await store.loadObject(store.encointerMyClaimKey), claim1.toJson());
     });
   });
 }
