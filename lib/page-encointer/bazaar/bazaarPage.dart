@@ -11,13 +11,13 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 
-class BazarPage extends StatefulWidget {
-  static final String route = '/bazar';
+class BazaarPage extends StatefulWidget {
+  static final String route = '/bazaar';
   @override
-  _BazarPageState createState() => _BazarPageState();
+  _BazaarPageState createState() => _BazaarPageState();
 }
 
-class _BazarPageState extends State<BazarPage> {
+class _BazaarPageState extends State<BazaarPage> {
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -110,11 +110,11 @@ flutter:
     - assets/images/assets/plus_indigo.png
     - assets/images/staking/top_bg_indigo.png
     - assets/images/public/Wallet_indigo.png
-    - assets/images/public/Bazar_dark.png
+    - assets/images/public/Bazaar_dark.png
     - assets/images/public/Profile_indigo.png
     - assets/images/public/Ceremonies_indigo.png
     - assets/images/public/Ceremonies_dark.png
-    - assets/images/public/Bazar_indigo.png
+    - assets/images/public/Bazaar_indigo.png
     ## images - laminar
     - assets/images/assets/scanner_purple.png
     - assets/images/assets/top_bg_purple.png
@@ -127,7 +127,7 @@ flutter:
     ## images - kusama
     - assets/images/assets/scanner_black.png
     - assets/images/public/Wallet_black.png
-    - assets/images/public/Bazar_black.png
+    - assets/images/public/Bazaar_black.png
     - assets/images/public/Profile_black.png
     - assets/images/assets/top_bg_black.png
     - assets/images/assets/qrcode_black.png
@@ -138,7 +138,7 @@ flutter:
     - assets/images/assets/scanner_pink.png
     - assets/images/public/app.png
     - assets/images/public/Wallet_pink.png
-    - assets/images/public/Bazar_pink.png
+    - assets/images/public/Bazaar_pink.png
     - assets/images/public/Profile_pink.png
     - assets/images/public/Wallet_dark.png
     - assets/images/public/Profile_dark.png
