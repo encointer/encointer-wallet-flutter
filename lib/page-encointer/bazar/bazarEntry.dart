@@ -38,7 +38,7 @@ class BazarEntry extends StatelessWidget {
             //    child: Observer(
             //        builder: (_) =>
             //            Text(store.encointer.currentPhase.toString()))),
-            searchBar(),
+            searchBar(context),
           ],
         ),
       ),
@@ -46,7 +46,7 @@ class BazarEntry extends StatelessWidget {
   }
 }
 
-Widget searchBar() {
+Widget searchBar(BuildContext context) {
   return Stack(
     children: <Widget>[
       Container(
@@ -56,12 +56,16 @@ Widget searchBar() {
           elevation: 8,
           child: Container(
             child: TextFormField(
-              cursorColor: Colors.indigo,
+              cursorColor: Theme.of(context).primaryColor,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(10),
                 prefixIcon:
-                Icon(Icons.search, color: Colors.indigoAccent, size: 30),
+                Icon(
+                    Icons.search,
+                    color: Theme.of(context).primaryColor,
+                    size: 30
+                ),
                 hintText: "What are you looking for?",
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0),
