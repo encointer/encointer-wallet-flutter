@@ -123,7 +123,7 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox> with SingleTickerProvider
       return RegisteringPage(store);
     } else {
       int timeToMeetup = store.encointer.getTimeToMeetup();
-      if (timeToMeetup > 60) {
+      if (0 < timeToMeetup && timeToMeetup < 10 * 60) {
         return AssigningPage(store);
       } else {
         return AttestingPage(store);
