@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:encointer_wallet/common/consts/settings.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -32,10 +30,6 @@ abstract class _EncointerStore with Store {
   final String encointerAttestationsKey = 'wallet_encointer_attestations';
   final String encointerMeetupTimeKey = 'wallet_encointer_meetup_time';
   final String encointerMyClaimKey = 'wallet_encointer_my_claim';
-
-  String _getCacheKey(String key) {
-    return '${rootStore.settings.endpoint.info}_$key';
-  }
 
   // Note: In synchronous code, every modification of an @obervable is tracked by mobx and
   // fires a reaction. However, modifications in asynchronous code must be wrapped in
@@ -96,7 +90,8 @@ abstract class _EncointerStore with Store {
   void setCurrentPhase(CeremonyPhase phase) {
     print("store: set currentPhase to $phase");
     if (currentPhase != phase) {
-      rootStore.localStorage.setObject(_getCacheKey(encointerMeetupIndexKey), phase);
+      // jsonEncode fails if we don't call toString for an enum
+      cacheObject(encointerCurrentPhaseKey, phase.toString());
       currentPhase = phase;
       // update depending values without awaiting
       webApi.encointer.getCurrentCeremonyIndex();
@@ -135,7 +130,7 @@ abstract class _EncointerStore with Store {
   void setMeetupIndex([int index]) {
     print("store: set meetupIndex to $index");
     if (meetupIndex != index) {
-      rootStore.localStorage.setObject(_getCacheKey(encointerMeetupIndexKey), index);
+      cacheObject(encointerMeetupIndexKey, index);
       meetupIndex = index;
       if (index != null) {
         // update depending values
@@ -149,7 +144,7 @@ abstract class _EncointerStore with Store {
   void setMeetupLocation([Location location]) {
     print("store: set meetupLocation to $location");
     if (meetupLocation != location) {
-      rootStore.localStorage.setObject(_getCacheKey(encointerMeetupLocationKey), location);
+      cacheObject(encointerMeetupLocationKey, location);
       meetupLocation = location;
       if (location != null) {
         // update depending values
@@ -162,7 +157,7 @@ abstract class _EncointerStore with Store {
   void setMeetupTime([int time]) {
     print("store: set meetupTime to $time");
     if (meetupTime != time) {
-      rootStore.localStorage.setObject(_getCacheKey(encointerMeetupTimeKey), time);
+      cacheObject(encointerMeetupTimeKey, time);
       meetupTime = time;
     }
   }
@@ -170,14 +165,14 @@ abstract class _EncointerStore with Store {
   @action
   void setMeetupRegistry([List<String> reg]) {
     print("store: set meetupRegistry to $reg");
-    rootStore.localStorage.setObject(_getCacheKey(encointerMeetupRegistryKey), reg);
+    cacheObject(encointerMeetupRegistryKey, reg);
     meetupRegistry = reg;
   }
 
   @action
   void setMyClaim([ClaimOfAttendance claim]) {
     print("store: set myClaim to $claim");
-    rootStore.localStorage.setObject(_getCacheKey(encointerMyClaimKey), claim);
+    cacheObject(encointerMyClaimKey, claim);
     myClaim = claim;
   }
 
@@ -200,7 +195,7 @@ abstract class _EncointerStore with Store {
   void setChosenCid(String cid) {
     if (chosenCid != cid) {
       chosenCid = cid;
-      rootStore.localStorage.setObject(_getCacheKey(encointerCurrencyKey), cid);
+      cacheObject(encointerCurrencyKey, cid);
       // update depending values without awaiting
       if (!rootStore.settings.loading) {
         webApi.encointer.getMeetupIndex();
@@ -213,25 +208,25 @@ abstract class _EncointerStore with Store {
   @action
   void addYourAttestation(int idx, String att) {
     attestations[idx].setYourAttestation(att);
-    rootStore.localStorage.setObject(_getCacheKey(encointerAttestationsKey), attestations);
+    cacheObject(encointerAttestationsKey, attestations);
   }
 
   @action
   void addOtherAttestation(int idx, String att) {
     attestations[idx].setOtherAttestation(att);
-    rootStore.localStorage.setObject(_getCacheKey(encointerAttestationsKey), attestations);
+    cacheObject(encointerAttestationsKey, attestations);
   }
 
   @action
   void updateAttestationStep(int idx, CurrentAttestationStep step) {
     attestations[idx].setAttestationStep(step);
-    rootStore.localStorage.setObject(_getCacheKey(encointerAttestationsKey), attestations);
+    cacheObject(encointerAttestationsKey, attestations);
   }
 
   @action
   void purgeAttestations() {
     attestations.clear();
-    rootStore.localStorage.setObject(_getCacheKey(encointerAttestationsKey), attestations);
+    cacheObject(encointerAttestationsKey, attestations);
   }
 
   @action
@@ -293,33 +288,53 @@ abstract class _EncointerStore with Store {
 
   @action
   Future<void> loadCache() async {
-    var data = await rootStore.localStorage.getObject(_getCacheKey(encointerCurrencyKey));
+    var data = await loadObject(encointerCurrencyKey);
     if (data != null) {
       print("found cached choice of cid. will recover it: " + data.toString());
       setChosenCid(data);
     }
 
     // get meetup related data
-    data = await rootStore.localStorage.getObject(_getCacheKey(encointerAttestationsKey));
+    data = await loadObject(encointerAttestationsKey);
     if (data != null) {
       print("found cached attestations. will recover them");
       attestations = Map.castFrom<String, dynamic, int, AttestationState>(data);
     }
-    setCurrentPhase(await loadObjectFromCache<CeremonyPhase>(_getCacheKey(encointerCurrentPhaseKey)));
-    setMeetupIndex(await loadObjectFromCache<int>(_getCacheKey(encointerMeetupIndexKey)));
-    setMeetupLocation(await loadObjectFromCache<Location>(_getCacheKey(encointerMeetupLocationKey)));
-    setMeetupRegistry(await loadObjectFromCache<List<String>>(_getCacheKey(encointerMeetupRegistryKey)));
-    setMeetupTime(await loadObjectFromCache(_getCacheKey(encointerMeetupTimeKey)));
-    setMyClaim(await loadObjectFromCache<ClaimOfAttendance>(_getCacheKey(encointerMyClaimKey)));
+    currentPhase = await loadCurrentPhase();
+    meetupIndex = await loadObject(encointerMeetupIndexKey);
+
+    var loc = await loadObject(encointerMeetupLocationKey);
+    if (loc != null) {
+      meetupLocation = Location.fromJson(loc);
+    }
+
+    var reg = await loadObject(encointerMeetupRegistryKey);
+    if (reg != null) {
+      meetupRegistry = List<String>.from(reg);
+    }
+
+    meetupTime = await loadObject(encointerMeetupTimeKey);
+
+    var claim = await loadObject(encointerMyClaimKey);
+    if (claim != null) {
+      myClaim = ClaimOfAttendance.fromJson(claim);
+    }
   }
 
-  Future<T> loadObjectFromCache<T>(String cacheKey) async {
-    var data = await rootStore.localStorage.getObject(_getCacheKey(encointerCurrentPhaseKey));
+  Future<void> cacheObject(String key, value) {
+    return rootStore.localStorage.setObject(_getCacheKey(key), value);
+  }
 
-    if (data != null) {
-      T obj = jsonDecode(data);
-      return obj;
-    }
-    return null;
+  Future<Object> loadObject(String key) {
+    return rootStore.localStorage.getObject(_getCacheKey(key));
+  }
+
+  String _getCacheKey(String key) {
+    return '${rootStore.settings.endpoint.info}_$key';
+  }
+
+  Future<CeremonyPhase> loadCurrentPhase() async {
+    Object obj = await rootStore.localStorage.getObject(_getCacheKey(encointerCurrentPhaseKey));
+    return getEnumFromString(CeremonyPhase.values, obj);
   }
 }
