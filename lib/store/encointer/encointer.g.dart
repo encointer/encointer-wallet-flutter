@@ -43,13 +43,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
       Atom(name: '_EncointerStore.currentCeremonyIndex');
 
   @override
-  dynamic get currentCeremonyIndex {
+  int get currentCeremonyIndex {
     _$currentCeremonyIndexAtom.reportRead();
     return super.currentCeremonyIndex;
   }
 
   @override
-  set currentCeremonyIndex(dynamic value) {
+  set currentCeremonyIndex(int value) {
     _$currentCeremonyIndexAtom.reportWrite(value, super.currentCeremonyIndex,
         () {
       super.currentCeremonyIndex = value;
@@ -89,13 +89,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
   final _$meetupTimeAtom = Atom(name: '_EncointerStore.meetupTime');
 
   @override
-  dynamic get meetupTime {
+  int get meetupTime {
     _$meetupTimeAtom.reportRead();
     return super.meetupTime;
   }
 
   @override
-  set meetupTime(dynamic value) {
+  set meetupTime(int value) {
     _$meetupTimeAtom.reportWrite(value, super.meetupTime, () {
       super.meetupTime = value;
     });

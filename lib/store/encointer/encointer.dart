@@ -42,7 +42,7 @@ abstract class _EncointerStore with Store {
   CeremonyPhase currentPhase;
 
   @observable
-  var currentCeremonyIndex;
+  int currentCeremonyIndex;
 
   @observable
   int meetupIndex;
@@ -51,7 +51,7 @@ abstract class _EncointerStore with Store {
   Location meetupLocation;
 
   @observable
-  var meetupTime;
+  int meetupTime;
 
   @observable
   List<String> meetupRegistry;

@@ -22,6 +22,7 @@ const Map<String, String> enNctr = {
   'meetup.not.assigned': 'You are not assigned to a meetup',
   'meetup.start': 'start meetup',
   'meetup.complete': 'complete meetup',
+  'meetup.remaining': 'Time to meetup:',
   'meetup.pwd.needed': 'PIN is needed to start the meetup',
   'myself': 'Myself',
   // partyA
