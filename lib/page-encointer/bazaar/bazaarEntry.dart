@@ -49,11 +49,6 @@ class BazaarEntry extends StatelessWidget {
                 },
               ),
             ),
-            Container(
-              child: BorderedTitle(
-                title: dic['category.overview'],
-              ),
-            ),
           ],
         ),
       ),
