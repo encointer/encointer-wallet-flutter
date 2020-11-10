@@ -1,15 +1,8 @@
-import 'package:encointer_wallet/page-encointer/common/currencyChooserPanel.dart';
-import 'package:encointer_wallet/page-encointer/phases/assigning/assigningPage.dart';
-import 'package:encointer_wallet/page-encointer/phases/attesting/attestingPage.dart';
-import 'package:encointer_wallet/page-encointer/phases/registering/registeringPage.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
-//import 'package:encointer_wallet/utils/i18n/bazar.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 
 class BazarEntry extends StatelessWidget {
   BazarEntry(this.store);
