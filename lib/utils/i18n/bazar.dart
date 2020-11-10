@@ -1,4 +1,4 @@
 const Map<String, String> enBazar = {
-  'bazar': 'Bazar market',
+  'bazar.title': 'Bazar Market',
 
 };

@@ -4,6 +4,7 @@ import 'package:encointer_wallet/page-encointer/phases/attesting/attestingPage.d
 import 'package:encointer_wallet/page-encointer/phases/registering/registeringPage.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
+//import 'package:encointer_wallet/utils/i18n/bazar.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +31,7 @@ class BazarEntry extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    dic['bazar'] ?? 'Bazar',
+                    dic['bazar.title'] ?? 'Bazar',
                     style: TextStyle(
                       fontSize: 20,
                       color: Theme.of(context).cardColor,
@@ -62,13 +63,13 @@ Widget searchBar() {
           elevation: 8,
           child: Container(
             child: TextFormField(
-              cursorColor: Colors.orange[200],
+              cursorColor: Colors.indigo,
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(10),
-               // prefixIcon:
-               // Icon(Icons.search, color: Colors.orange[200], size: 30),
-                hintText: "What're you looking for?",
+                prefixIcon:
+                Icon(Icons.search, color: Colors.indigoAccent, size: 30),
+                hintText: "What are you looking for?",
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(30.0),
                     borderSide: BorderSide.none),
