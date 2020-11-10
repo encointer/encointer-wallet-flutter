@@ -29,9 +29,9 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   final List<String> _tabList = [
     'Wallet',
+    'Bazaar',
     'Ceremonies',
     'Profile',
-    'Bazaar',
   ];
   int _tabIndex = 0;
 
@@ -52,9 +52,9 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       case 0:
         return Assets(store);
       case 1:
-        return EncointerEntry(store);
-      case 3:
         return BazaarEntry(store);
+      case 2:
+        return EncointerEntry(store);
       default:
         return Profile(store);
     }
