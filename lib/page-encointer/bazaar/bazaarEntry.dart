@@ -1,5 +1,6 @@
 import 'package:encointer_wallet/common/components/BorderedTitle.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
+import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/components/itemCard.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/components/articleClass.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -42,8 +43,8 @@ class BazaarEntry extends StatelessWidget {
             ),
             searchBar(context, dic),
             Container(
-             margin: EdgeInsets.only(left: 5, top: 15),
-             child: articleInclusion(context, dic, dummyList),
+             margin: EdgeInsets.only(left: 10, top: 15),
+             child: articleSection(context, dic, dummyList),
             ),
           ],
         ),
@@ -86,12 +87,14 @@ Widget searchBar(BuildContext context, Map dic) {
 }
 
 
-Widget articleInclusion(BuildContext context, Map dic, List<Article> itemList) {
+Widget articleSection(BuildContext context, Map dic, List<Article> itemList) {
   final double _height = MediaQuery.of(context).size.height;
   return Column(
     children: <Widget>[
+      // Title
       Row(
         crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget> [
           Container(
             margin: EdgeInsets.only(top: 40),
@@ -99,32 +102,63 @@ Widget articleInclusion(BuildContext context, Map dic, List<Article> itemList) {
               title: dic['article'],
             ),
           ),
+          Container(
+            margin: EdgeInsets.only(top: 40, left: 100, right: 20),
+            child: GestureDetector(
+              onTap: () {},
+              child: Text(
+                dic['show.all'],
+                style: Theme.of(context).textTheme.headline2.apply(fontSizeFactor: 0.7),
+                //TextStyle(
+                 // color: Colors.indigo[255],
+                //),
+              ),
+            ),
+          ),
         ],
       ),
-      Container(
-        height: _height/5,
-        child: ListView.builder(
-          padding: EdgeInsets.all(5),
-          shrinkWrap: true,
-          itemCount: itemList.length,
-          scrollDirection: Axis.horizontal,
-          itemBuilder: (BuildContext context, index) {
-            return _buildEntries(context, index, itemList);
-          },
-        ),
-      ),
-      Container(
-        margin: EdgeInsets.all(40),
-        child: RoundedButton(
-          text: dic['article.insert'] ,
-          onPressed: () {
-          },
+      RoundedCard(
+        margin: EdgeInsets.only(top: 16),
+        child: Column(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(top: 5, left:5, bottom: 5),
+              child: Row(
+              children: <Widget>[
+                  Text(
+                  dic['recently.added'],
+                    style: Theme.of(context).textTheme.headline3,
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: _height/5,
+              child: ListView.builder(
+                padding: EdgeInsets.all(5),
+                shrinkWrap: true,
+                itemCount: itemList.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (BuildContext context, index) {
+                  return _buildEntries(context, index, itemList);
+                },
+              ),
+            ),
+            // Add Article button
+            Container(
+              margin: EdgeInsets.only(left: 40, right: 40, top: 10, bottom: 15),
+              child: RoundedButton(
+                text: dic['article.insert'] ,
+                onPressed: () {
+                },
+              ),
+            ),
+          ],
         ),
       ),
     ],
   );
 }
-
 
 Widget _buildEntries(BuildContext context, int index, List<Article> itemList) {
   return GestureDetector(
