@@ -146,7 +146,8 @@ abstract class _AccountStore with Store {
             args['notificationTitle'],
             rawParam: args['rawParam'],
           );
-          print("result: ${res.toString()}");
+
+          print("Queued tx result: ${res.toString()}");
           if (res['hash'] == null) {
             NotificationPlugin.showNotification(
               0,
@@ -158,11 +159,13 @@ abstract class _AccountStore with Store {
               rootStore.encointer.setTransferTxs([res]);
             }
           }
-          timer.cancel();
         });
+        rootStore.assets.setSubmitting(false);
+        rootStore.account.setTxStatus('');
+        timer.cancel();
         queuedTxs = [];
       } else {
-        print("Waiting for the api to reconnect to send tx");
+        print("Waiting for the api to reconnect to send ${queuedTxs.length} queued tx(s)");
       }
     });
   }

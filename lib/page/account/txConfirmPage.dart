@@ -32,6 +32,8 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
 
   final AppStore store;
 
+  bool appConnected = true;
+
   Map _fee = {};
   double _tip = 0;
   BigInt _tipValue = BigInt.zero;
@@ -41,6 +43,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
     if (_fee['partialFee'] != null && !reload) {
       return _fee['partialFee'].toString();
     }
+
     if (store.account.currentAccount.observation ?? false) {
       webApi.account.queryRecoverable(store.account.currentAddress);
     }
@@ -187,17 +190,6 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
 
     store.assets.setSubmitting(true);
     store.account.setTxStatus('queued');
-    Scaffold.of(context).showSnackBar(SnackBar(
-      backgroundColor: Theme.of(context).cardColor,
-      content: ListTile(
-        leading: CupertinoActivityIndicator(),
-        title: Text(
-          dic['tx.${store.account.txStatus}'] ?? dic['tx.queued'],
-          style: TextStyle(color: Colors.black54),
-        ),
-      ),
-      duration: Duration(minutes: 5),
-    ));
 
     Map txInfo = args['txInfo'];
     txInfo['pubKey'] = store.account.currentAccount.pubKey;
@@ -212,6 +204,8 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
     print(args['params']);
 
     if (await webApi.isConnected()) {
+      _showTxStatusSnackbar(
+          context, dic['tx.${store.account.txStatus}'] ?? dic['tx.queued'], CupertinoActivityIndicator());
       final Map res = viaQr ? await _sendTxViaQr(context, args) : await _sendTx(context, args);
       if (res['hash'] == null) {
         _onTxError(context, res['error']);
@@ -219,9 +213,24 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
         _onTxFinish(context, res);
       }
     } else {
-      args['notificationTitle'] = I18n.of(context).home['notify.submitted'];
+      _showTxStatusSnackbar(context, dic['tx.queued.offline'], null);
+      args['notificationTitle'] = I18n.of(context).home['notify.submitted.queued'];
       store.account.queueTx(args);
     }
+  }
+
+  void _showTxStatusSnackbar(BuildContext context, String status, Widget leading) {
+    Scaffold.of(context).showSnackBar(SnackBar(
+      backgroundColor: Theme.of(context).cardColor,
+      content: ListTile(
+        leading: leading,
+        title: Text(
+          status,
+          style: TextStyle(color: Colors.black54),
+        ),
+      ),
+      duration: Duration(minutes: 5),
+    ));
   }
 
   Future<Map> _sendTx(BuildContext context, Map args) async {
@@ -269,6 +278,14 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
   @override
   void initState() {
     super.initState();
+    _checkConnectionState();
+  }
+
+  Future<void> _checkConnectionState() async {
+    bool isConnected = await webApi.isConnected();
+    setState(() {
+      appConnected = isConnected;
+    });
   }
 
   @override
@@ -381,39 +398,45 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
                                     dic["submit.fees"],
                                   ),
                                 ),
-                                FutureBuilder<String>(
-                                  future: _getTxFee(),
-                                  builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-                                    if (snapshot.hasData) {
-                                      String fee = Fmt.balance(
-                                        _fee['partialFee'].toString(),
-                                        decimals,
-                                        length: 6,
-                                      );
-                                      return Container(
+                                appConnected
+                                    ? FutureBuilder<String>(
+                                        future: _getTxFee(),
+                                        builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+                                          if (snapshot.hasData) {
+                                            String fee = Fmt.balance(
+                                              _fee['partialFee'].toString(),
+                                              decimals,
+                                              length: 6,
+                                            );
+                                            return Container(
+                                              margin: EdgeInsets.only(top: 8),
+                                              width: MediaQuery.of(context).copyWith().size.width - 120,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: <Widget>[
+                                                  Text(
+                                                    '$fee $tokenView',
+                                                  ),
+                                                  Text(
+                                                    '${_fee['weight']} Weight',
+                                                    style: TextStyle(
+                                                      fontSize: 13,
+                                                      color: Theme.of(context).unselectedWidgetColor,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            );
+                                          } else {
+                                            return CupertinoActivityIndicator();
+                                          }
+                                        },
+                                      )
+                                    : Container(
                                         margin: EdgeInsets.only(top: 8),
                                         width: MediaQuery.of(context).copyWith().size.width - 120,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Text(
-                                              '$fee $tokenView',
-                                            ),
-                                            Text(
-                                              '${_fee['weight']} Weight',
-                                              style: TextStyle(
-                                                fontSize: 13,
-                                                color: Theme.of(context).unselectedWidgetColor,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    } else {
-                                      return CupertinoActivityIndicator();
-                                    }
-                                  },
-                                ),
+                                        child: Text(dic['submit.fees.offline']),
+                                      ),
                               ],
                             ),
                           ),
