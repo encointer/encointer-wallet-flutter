@@ -1,8 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:encointer_wallet/common/components/TapTooltip.dart';
 import 'package:encointer_wallet/common/components/addressFormItem.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
@@ -15,6 +12,9 @@ import 'package:encointer_wallet/store/account/types/accountRecoveryInfo.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 // TODO: Add biometrics
 class TxConfirmPage extends StatefulWidget {
@@ -211,11 +211,16 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
     print(txInfo);
     print(args['params']);
 
-    final Map res = viaQr ? await _sendTxViaQr(context, args) : await _sendTx(context, args);
-    if (res['hash'] == null) {
-      _onTxError(context, res['error']);
+    if (await webApi.isConnected()) {
+      final Map res = viaQr ? await _sendTxViaQr(context, args) : await _sendTx(context, args);
+      if (res['hash'] == null) {
+        _onTxError(context, res['error']);
+      } else {
+        _onTxFinish(context, res);
+      }
     } else {
-      _onTxFinish(context, res);
+      args['notificationTitle'] = I18n.of(context).home['notify.submitted'];
+      store.account.queueTx(args);
     }
   }
 
@@ -485,7 +490,9 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
                             ? () => _onSubmit(context)
                             : (isObservation && _proxyAccount == null) || isProxyObservation
                                 ? () => _onSubmit(context, viaQr: true)
-                                : store.assets.submitting ? null : () => _showPasswordDialog(context),
+                                : store.assets.submitting
+                                    ? null
+                                    : () => _showPasswordDialog(context),
                       ),
                     ),
                   ),
