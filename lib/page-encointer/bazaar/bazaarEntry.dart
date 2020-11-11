@@ -45,9 +45,11 @@ class BazaarEntry extends StatelessWidget {
               ),
             ),
             searchBar(context, dic),
+            Divider(height: 28), // not nice solution
             Flexible(
               fit: FlexFit.tight,
               child: ListView(
+                shrinkWrap: true,
                 padding: EdgeInsets.all(8),
                 children: <Widget>[
                   Container(
@@ -178,7 +180,7 @@ Widget storeSection(BuildContext context, Map dic, List<Store> itemList) {
           Container(
             margin: EdgeInsets.only(top: 40),
             child: BorderedTitle(
-              title: dic['article'],
+              title: dic['stores'],
             ),
           ),
           Container(
@@ -227,7 +229,7 @@ Widget storeSection(BuildContext context, Map dic, List<Store> itemList) {
             Container(
               margin: EdgeInsets.only(left: 40, right: 40, top: 10, bottom: 15),
               child: RoundedButton(
-                text: dic['article.insert'],
+                text: dic['store.insert'],
                 onPressed: () {},
               ),
             ),
