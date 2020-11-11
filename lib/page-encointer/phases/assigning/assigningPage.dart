@@ -79,10 +79,14 @@ class _AssigningPageState extends State<AssigningPage> {
     return SafeArea(
       child: Column(children: <Widget>[
         AssignmentPanel(store),
-        RoundedButton(
-          text: timeToMeetup > 60 ? "${dic['meetup.remaining']} ${Fmt.hhmmss(timeToMeetup)}" : dic['meetup.start'],
-          onPressed: timeToMeetup > 60 ? null : () => _startMeetup(context),
-        )
+        SizedBox(height: 16),
+        store.encointer.meetupIndex != null && store.encointer.meetupIndex > 0
+            ? RoundedButton(
+                text:
+                    timeToMeetup > 60 ? "${dic['meetup.remaining']} ${Fmt.hhmmss(timeToMeetup)}" : dic['meetup.start'],
+                onPressed: timeToMeetup > 60 ? null : () => _startMeetup(context),
+              )
+            : Container(),
       ]),
     );
   }
