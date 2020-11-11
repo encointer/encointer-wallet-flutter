@@ -166,9 +166,9 @@ abstract class _EncointerStore with Store {
   int getTimeToMeetup() {
     if (rootStore.settings.endpointIsGesell) {
       var now = DateTime.now();
-      if (10 < now.minute && now.minute < 20) {
+      if (10 <= now.minute && now.minute < 20) {
         return ((19 - now.minute) * 60 + 60 - now.second);
-      } else if (40 < now.minute && now.minute < 50) {
+      } else if (40 <= now.minute && now.minute < 50) {
         return ((49 - now.minute) * 60 + 60 - now.second);
       } else {
         print("Warning: Invalid time to meetup");
