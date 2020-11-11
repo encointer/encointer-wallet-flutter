@@ -22,7 +22,7 @@ class ItemCard extends StatelessWidget {
       elevation: 3,
       shape:
       RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
-      color: Colors.white,
+      color: Colors.indigo[50],
       child: Container(
         padding: EdgeInsets.only(left: 10, top: 10, right: 5, bottom: 10),
         child: Row(
@@ -36,7 +36,7 @@ class ItemCard extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: _height/40),
                 ),
                 Container(
-                  width: _width / 2.75,
+                  width: _width / 3,
                   padding: EdgeInsets.only(top: 5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -52,7 +52,7 @@ class ItemCard extends StatelessWidget {
                       Flexible(
                         child: Container(
                           padding: EdgeInsets.all(2),
-                          color: Colors.grey[200],
+                          //color: Colors.grey[200],
                           child: Text(
                             category,
                             softWrap: true,
@@ -64,7 +64,7 @@ class ItemCard extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: 5,
+                  height: 4,
                 ),
                 Flexible(
                   child: Container(
@@ -77,10 +77,11 @@ class ItemCard extends StatelessWidget {
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         softWrap: true,
-                      )),
+                      )
+                  ),
                 ),
                 SizedBox(
-                  height: 10,
+                  height: 5,
                 ),
                 Flexible(
                   child: Container(
@@ -131,15 +132,15 @@ class ItemCard extends StatelessWidget {
               width: _width/2.5,
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
-                color: Colors.orange[50],
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(10),
               ),
               padding: EdgeInsets.all(10),
               child: Image.asset(
                 image,
                 fit: BoxFit.cover,
-                height: _height/4,
-                width: _width/4,
+                height: _height/4.5,
+                width: _width/4.5,
               ),
             ),
           ],
