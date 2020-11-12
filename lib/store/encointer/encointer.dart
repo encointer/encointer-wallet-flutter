@@ -161,22 +161,17 @@ abstract class _EncointerStore with Store {
     }
   }
 
-  /// Calculates the remaining time until the next meetup starts. As Gesell implements timewarp we cannot use the time
-  /// received by the blockchain. Hence, we need to calculate it differently.
+  /// Calculates the remaining time until the next meetup starts. As Gesell and Cantillon currently implement timewarp
+  /// we cannot use the time received by the blockchain. Hence, we need to calculate it differently.
   int getTimeToMeetup() {
-    if (rootStore.settings.endpointIsGesell) {
-      var now = DateTime.now();
-      if (10 <= now.minute && now.minute < 20) {
-        return ((19 - now.minute) * 60 + 60 - now.second);
-      } else if (40 <= now.minute && now.minute < 50) {
-        return ((49 - now.minute) * 60 + 60 - now.second);
-      } else {
-        print("Warning: Invalid time to meetup");
-        return 100000000;
-      }
+    var now = DateTime.now();
+    if (10 <= now.minute && now.minute < 20) {
+      return ((19 - now.minute) * 60 + 60 - now.second);
+    } else if (40 <= now.minute && now.minute < 50) {
+      return ((49 - now.minute) * 60 + 60 - now.second);
     } else {
-      print("Returning placeholder timeToMeetup for Cantillon");
-      return 100000000;
+      print("Warning: Invalid time to meetup");
+      return 0;
     }
   }
 
