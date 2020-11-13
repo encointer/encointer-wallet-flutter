@@ -6,6 +6,6 @@ const Map<String, String> enBazaar = {
   'looking.for': 'What are you looking for?',
   'show.all': '+ Show all',
   'recently.added': 'Recently added',
-  'stores': 'Stores',
-  'store.insert': '+ Add new store',
+  'shops': 'Shops',
+  'shop.insert': '+ Add new shop',
 };
