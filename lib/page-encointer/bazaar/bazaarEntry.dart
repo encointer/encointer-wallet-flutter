@@ -3,7 +3,7 @@ import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/components/itemCard.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/components/articleClass.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/components/storeClass.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/components/shopClass.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
@@ -16,8 +16,8 @@ class BazaarEntry extends StatelessWidget {
   final AppStore store;
 
   // dummy List creation
-  List<Article> dummyList = createDummyList();
-  List<Store> dummyListStore = createDummyListStore();
+  final List<Article> dummyList = createDummyList();
+  final List<Shop> dummyListShop = createDummyListShop();
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class BazaarEntry extends StatelessWidget {
                   ),
                   Container(
                     margin: EdgeInsets.only(left: 10, top: 15),
-                    child: storeSection(context, dic, dummyListStore),
+                    child: shopSection(context, dic, dummyListShop),
                   ),
                 ],
               ),
@@ -168,7 +168,7 @@ Widget articleSection(BuildContext context, Map dic, List<Article> itemList) {
   );
 }
 
-Widget storeSection(BuildContext context, Map dic, List<Store> itemList) {
+Widget shopSection(BuildContext context, Map dic, List<Shop> itemList) {
   final double _height = MediaQuery.of(context).size.height;
   return Column(
     children: <Widget>[
@@ -180,7 +180,7 @@ Widget storeSection(BuildContext context, Map dic, List<Store> itemList) {
           Container(
             margin: EdgeInsets.only(top: 40),
             child: BorderedTitle(
-              title: dic['stores'],
+              title: dic['shops'],
             ),
           ),
           Container(
@@ -221,7 +221,7 @@ Widget storeSection(BuildContext context, Map dic, List<Store> itemList) {
                 itemCount: itemList.length,
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (BuildContext context, index) {
-                  return _buildStoreEntries(context, index, itemList);
+                  return _buildShopEntries(context, index, itemList);
                 },
               ),
             ),
@@ -229,7 +229,7 @@ Widget storeSection(BuildContext context, Map dic, List<Store> itemList) {
             Container(
               margin: EdgeInsets.only(left: 40, right: 40, top: 10, bottom: 15),
               child: RoundedButton(
-                text: dic['store.insert'],
+                text: dic['shop.insert'],
                 onPressed: () {},
               ),
             ),
@@ -257,7 +257,7 @@ Widget _buildArticleEntries(BuildContext context, int index, List<Article> itemL
   );
 }
 
-Widget _buildStoreEntries(BuildContext context, int index, List<Store> itemList) {
+Widget _buildShopEntries(BuildContext context, int index, List<Shop> itemList) {
   return GestureDetector(
     onTap: () {
       // Navigator.of(context).pushNamed(DETAIL_UI);
@@ -288,13 +288,13 @@ List<Article> createDummyList() {
   ];
 }
 
-List<Store> createDummyListStore() {
-  List<Store> dummyItems;
+List<Shop> createDummyListShop() {
+  List<Shop> dummyItems;
   return dummyItems = [
-    Store(123, "02 Apr 2019", "Lenovo T450", "Best Item ever", 0795419141, "assets/images/public/logo_about.png",
+    Shop(123, "02 Apr 2019", "Lenovo T450", "Best Item ever", 0795419141, "assets/images/public/logo_about.png",
         "Zurich"),
-    Store(124, "02 Apr 2019", "Bread", "Best Item ever", 0795419141, "assets/images/public/logo_about.png", "Zurich"),
-    Store(125, "05 Mai 2019", "Kohlrabi", "Hmm..! Fein", 0795419141, "assets/images/public/logo_about.png", "Zurich"),
-    Store(126, "10 Mai 2019", "Coffee", "Hmm..! Fein", 0795419141, "assets/images/public/logo_about.png", "Zurich"),
+    Shop(124, "02 Apr 2019", "Bread", "Best Item ever", 0795419141, "assets/images/public/logo_about.png", "Zurich"),
+    Shop(125, "05 Mai 2019", "Kohlrabi", "Hmm..! Fein", 0795419141, "assets/images/public/logo_about.png", "Zurich"),
+    Shop(126, "10 Mai 2019", "Coffee", "Hmm..! Fein", 0795419141, "assets/images/public/logo_about.png", "Zurich"),
   ];
 }
