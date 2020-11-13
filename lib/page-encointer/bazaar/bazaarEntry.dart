@@ -21,7 +21,7 @@ class BazaarEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Map dic = I18n.of(context).bazaar;
+    final Map<String, String> dic = I18n.of(context).bazaar;
 
     return Scaffold(
       backgroundColor: Colors.transparent,
@@ -70,7 +70,7 @@ class BazaarEntry extends StatelessWidget {
   }
 }
 
-Widget searchBar(BuildContext context, Map dic) {
+Widget searchBar(BuildContext context, Map<String, String> dic) {
   return Stack(
     children: <Widget>[
       Container(
@@ -96,7 +96,7 @@ Widget searchBar(BuildContext context, Map dic) {
   );
 }
 
-Widget articleSection(BuildContext context, Map dic, List<Article> itemList) {
+Widget articleSection(BuildContext context, Map<String, String> dic, List<Article> itemList) {
   final double _height = MediaQuery.of(context).size.height;
   return Column(
     children: <Widget>[
@@ -168,7 +168,7 @@ Widget articleSection(BuildContext context, Map dic, List<Article> itemList) {
   );
 }
 
-Widget shopSection(BuildContext context, Map dic, List<Shop> itemList) {
+Widget shopSection(BuildContext context, Map<String, String> dic, List<Shop> itemList) {
   final double _height = MediaQuery.of(context).size.height;
   return Column(
     children: <Widget>[
