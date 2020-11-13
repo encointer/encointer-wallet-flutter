@@ -24,7 +24,7 @@ class BazaarEntry extends StatelessWidget {
     final Map dic = I18n.of(context).bazaar;
 
     return Scaffold(
-     backgroundColor: Colors.transparent,
+      backgroundColor: Colors.transparent,
       body: SafeArea(
         child: Column(
           children: <Widget>[
@@ -45,13 +45,13 @@ class BazaarEntry extends StatelessWidget {
               ),
             ),
             searchBar(context, dic),
-            Divider(height:28), // not nice solution
+            Divider(height: 28), // not nice solution
             Flexible(
               fit: FlexFit.tight,
               child: ListView(
                 shrinkWrap: true,
                 padding: EdgeInsets.all(8),
-                children: <Widget> [
+                children: <Widget>[
                   Container(
                     margin: EdgeInsets.only(left: 10, top: 15),
                     child: articleSection(context, dic, dummyList),
@@ -84,16 +84,9 @@ Widget searchBar(BuildContext context, Map dic) {
               keyboardType: TextInputType.text,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.all(10),
-                prefixIcon:
-                Icon(
-                    Icons.search,
-                    color: Theme.of(context).primaryColor,
-                    size: 30
-                ),
+                prefixIcon: Icon(Icons.search, color: Theme.of(context).primaryColor, size: 30),
                 hintText: dic['looking.for'],
-                border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(30.0),
-                    borderSide: BorderSide.none),
+                border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0), borderSide: BorderSide.none),
               ),
             ),
           ),
@@ -103,7 +96,6 @@ Widget searchBar(BuildContext context, Map dic) {
   );
 }
 
-
 Widget articleSection(BuildContext context, Map dic, List<Article> itemList) {
   final double _height = MediaQuery.of(context).size.height;
   return Column(
@@ -112,7 +104,7 @@ Widget articleSection(BuildContext context, Map dic, List<Article> itemList) {
       Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget> [
+        children: <Widget>[
           Container(
             margin: EdgeInsets.only(top: 40),
             child: BorderedTitle(
@@ -127,7 +119,7 @@ Widget articleSection(BuildContext context, Map dic, List<Article> itemList) {
                 dic['show.all'],
                 style: Theme.of(context).textTheme.headline2.apply(fontSizeFactor: 0.7),
                 //TextStyle(
-                 // color: Colors.indigo[255],
+                // color: Colors.indigo[255],
                 //),
               ),
             ),
@@ -139,18 +131,18 @@ Widget articleSection(BuildContext context, Map dic, List<Article> itemList) {
         child: Column(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(top: 5, left:5, bottom: 5),
+              margin: EdgeInsets.only(top: 5, left: 5, bottom: 5),
               child: Row(
-              children: <Widget>[
+                children: <Widget>[
                   Text(
-                  dic['recently.added'],
+                    dic['recently.added'],
                     style: Theme.of(context).textTheme.headline3,
                   ),
                 ],
               ),
             ),
             Container(
-              height: _height/5,
+              height: _height / 5,
               child: ListView.builder(
                 padding: EdgeInsets.all(5),
                 shrinkWrap: true,
@@ -165,9 +157,8 @@ Widget articleSection(BuildContext context, Map dic, List<Article> itemList) {
             Container(
               margin: EdgeInsets.only(left: 40, right: 40, top: 10, bottom: 15),
               child: RoundedButton(
-                text: dic['article.insert'] ,
-                onPressed: () {
-                },
+                text: dic['article.insert'],
+                onPressed: () {},
               ),
             ),
           ],
@@ -185,7 +176,7 @@ Widget storeSection(BuildContext context, Map dic, List<Store> itemList) {
       Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget> [
+        children: <Widget>[
           Container(
             margin: EdgeInsets.only(top: 40),
             child: BorderedTitle(
@@ -212,7 +203,7 @@ Widget storeSection(BuildContext context, Map dic, List<Store> itemList) {
         child: Column(
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(top: 5, left:5, bottom: 5),
+              margin: EdgeInsets.only(top: 5, left: 5, bottom: 5),
               child: Row(
                 children: <Widget>[
                   Text(
@@ -223,7 +214,7 @@ Widget storeSection(BuildContext context, Map dic, List<Store> itemList) {
               ),
             ),
             Container(
-              height: _height/5,
+              height: _height / 5,
               child: ListView.builder(
                 padding: EdgeInsets.all(5),
                 shrinkWrap: true,
@@ -238,9 +229,8 @@ Widget storeSection(BuildContext context, Map dic, List<Store> itemList) {
             Container(
               margin: EdgeInsets.only(left: 40, right: 40, top: 10, bottom: 15),
               child: RoundedButton(
-                text: dic['store.insert'] ,
-                onPressed: () {
-                },
+                text: dic['store.insert'],
+                onPressed: () {},
               ),
             ),
           ],
@@ -287,79 +277,24 @@ Widget _buildStoreEntries(BuildContext context, int index, List<Store> itemList)
 List<Article> createDummyList() {
   List<Article> dummyItems;
   return dummyItems = [
+    Article(123, "02 Apr 2019", "Lenovo T450", "Best Item ever", 40000, 0795419141,
+        "assets/images/public/logo_about.png", "Zurich"),
     Article(
-        123,
-        "02 Apr 2019",
-        "Lenovo T450",
-        "Best Item ever",
-        40000,
-        0795419141,
-        "assets/images/public/logo_about.png",
-        "Zurich"),
+        124, "02 Apr 2019", "Bread", "Best Item ever", 10, 0795419141, "assets/images/public/logo_about.png", "Zurich"),
     Article(
-        124,
-        "02 Apr 2019",
-        "Bread",
-        "Best Item ever",
-        10,
-        0795419141,
-        "assets/images/public/logo_about.png",
-        "Zurich"),
+        125, "05 Mai 2019", "Kohlrabi", "Hmm..! Fein", 10, 0795419141, "assets/images/public/logo_about.png", "Zurich"),
     Article(
-        125,
-        "05 Mai 2019",
-        "Kohlrabi",
-        "Hmm..! Fein",
-        10,
-        0795419141,
-        "assets/images/public/logo_about.png",
-        "Zurich"),
-    Article(
-        126,
-        "10 Mai 2019",
-        "Coffee",
-        "Hmm..! Fein",
-        10,
-        0795419141,
-        "assets/images/public/logo_about.png",
-        "Zurich"),
+        126, "10 Mai 2019", "Coffee", "Hmm..! Fein", 10, 0795419141, "assets/images/public/logo_about.png", "Zurich"),
   ];
 }
 
 List<Store> createDummyListStore() {
   List<Store> dummyItems;
   return dummyItems = [
-    Store(
-        123,
-        "02 Apr 2019",
-        "Lenovo T450",
-        "Best Item ever",
-        0795419141,
-        "assets/images/public/logo_about.png",
+    Store(123, "02 Apr 2019", "Lenovo T450", "Best Item ever", 0795419141, "assets/images/public/logo_about.png",
         "Zurich"),
-    Store(
-        124,
-        "02 Apr 2019",
-        "Bread",
-        "Best Item ever",
-        0795419141,
-        "assets/images/public/logo_about.png",
-        "Zurich"),
-    Store(
-        125,
-        "05 Mai 2019",
-        "Kohlrabi",
-        "Hmm..! Fein",
-        0795419141,
-        "assets/images/public/logo_about.png",
-        "Zurich"),
-    Store(
-        126,
-        "10 Mai 2019",
-        "Coffee",
-        "Hmm..! Fein",
-        0795419141,
-        "assets/images/public/logo_about.png",
-        "Zurich"),
+    Store(124, "02 Apr 2019", "Bread", "Best Item ever", 0795419141, "assets/images/public/logo_about.png", "Zurich"),
+    Store(125, "05 Mai 2019", "Kohlrabi", "Hmm..! Fein", 0795419141, "assets/images/public/logo_about.png", "Zurich"),
+    Store(126, "10 Mai 2019", "Coffee", "Hmm..! Fein", 0795419141, "assets/images/public/logo_about.png", "Zurich"),
   ];
 }

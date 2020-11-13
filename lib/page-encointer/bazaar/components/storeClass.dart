@@ -1,4 +1,4 @@
-class Store{
+class Store {
   int adID;
   String dateAdded;
   String title;
@@ -7,6 +7,5 @@ class Store{
   String image;
   String location;
 
-  Store(this.adID, this.dateAdded, this.title, this.desc,
-      this.mobileNo, this.image, this.location);
+  Store(this.adID, this.dateAdded, this.title, this.desc, this.mobileNo, this.image, this.location);
 }

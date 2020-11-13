@@ -21,8 +21,7 @@ class _BazaarPageState extends State<BazaarPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        child: Text('Best'),
+      child: Text('Best'),
     );
   }
 }
-
