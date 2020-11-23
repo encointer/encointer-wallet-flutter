@@ -51,6 +51,9 @@ class ApiEncointer {
     apiRoot.unsubscribeMessage(_shopRegistryChannel);
   }
 
+  /// Queries the Scheduler pallet: encointerScheduler.currentPhase().
+  ///
+  /// This is on-chain in Cantillon.
   Future<CeremonyPhase> getCurrentPhase() async {
     print("api: getCurrentPhase");
     Map res = await apiRoot.evalJavascript('encointer.getCurrentPhase()');
@@ -61,6 +64,9 @@ class ApiEncointer {
     return phase;
   }
 
+  /// Queries the Scheduler pallet: encointerScheduler.currentCeremonyIndex().
+  ///
+  /// This is on-chain in Cantillon.
   Future<int> getCurrentCeremonyIndex() async {
     print("api: getCurrentCeremonyIndex");
     int cIndex = await apiRoot.evalJavascript('encointer.getCurrentCeremonyIndex()');
@@ -69,6 +75,10 @@ class ApiEncointer {
     return cIndex;
   }
 
+  /// Queries the Ceremonies pallet: encointerCeremonies.meetupIndex([cid, cIndex], address).
+  ///
+  /// This is off-chain and trusted in Cantillon. There is only a combined getter:
+  /// TrustedGetter::get_meetup_index_and_location(AccountId, CurrencyIdentifier).
   Future<int> getMeetupIndex() async {
     String address = store.account.currentAccountPubKey;
     String cid = store.encointer.chosenCid;
@@ -85,6 +95,12 @@ class ApiEncointer {
     return mIndex;
   }
 
+  /// Queries the Currencies pallet: encointerCurrencies.locations(cid)
+  ///
+  /// Fixme: In Gesell JS currently returns locations[0] instead of locations[mIndex -1].
+  ///
+  /// This is off-chain and trusted in Cantillon. There is only a combined getter:
+  /// TrustedGetter::get_meetup_index_and_location(AccountId, CurrencyIdentifier).
   Future<void> getMeetupLocation() async {
     print("api: getMeetupLocation");
     String address = store.account.currentAccountPubKey;
@@ -100,6 +116,10 @@ class ApiEncointer {
     store.encointer.setMeetupLocation(loc);
   }
 
+  /// Queries the Scheduler pallet: encointerScheduler./-currentPhase(), -phaseDurations(phase), -nextPhaseTimestamp().
+  ///
+  /// Fixme: Sometimes the PhaseAwareBox takes ages to update. This might be due to multiple network requests on JS side.
+  /// We could fetch the phaseDurations at application startup, cache them and supply them in the call here.
   Future<DateTime> getMeetupTime() async {
     print("api: getMeetupTime");
     if (store.encointer.currencyIdentifiers == null) {
@@ -113,6 +133,12 @@ class ApiEncointer {
     return DateTime.fromMillisecondsSinceEpoch(time);
   }
 
+  /// Queries the Ceremonies pallet: encointerCeremonies.meetupRegistry([cid, cIndex], mIndex).
+  ///
+  /// This is off-chain in Cantillon.
+  ///
+  /// Todo: This is currently not accessible in Cantillon. We need to first implement a TrustedGetter first,
+  /// see: https://github.com/encointer/encointer-worker/issues/34
   Future<List<String>> getMeetupRegistry() async {
     print("api: getMeetupRegistry");
     int cIndex = store.encointer.currentCeremonyIndex;
@@ -130,6 +156,9 @@ class ApiEncointer {
     return mreg;
   }
 
+  /// Queries the Ceremonies pallet: encointerCeremonies.participantIndex([cid, cIndex], address).
+  ///
+  /// This is off-chain and trusted in Cantillon, accessible with TrustedGetter::registration(AccountId, Cid).
   Future<int> getParticipantIndex() async {
     String address = store.account.currentAccountPubKey;
     String cid = store.encointer.chosenCid;
@@ -144,6 +173,9 @@ class ApiEncointer {
     return pIndex;
   }
 
+  /// Queries the Ceremonies pallet: encointer.Ceremonies.participantCount([cid, cIndex]).
+  ///
+  /// This is off-chain but public in Cantillon, accessible with PublicGetter::participantCount(cid).
   Future<void> getParticipantCount() async {
     String cid = store.encointer.chosenCid;
     int cIndex = store.encointer.currentCeremonyIndex;
@@ -152,6 +184,8 @@ class ApiEncointer {
     store.encointer.setParticipantCount(pCount);
   }
 
+  /// Subscribes to the timestamp of the last block. This is only used as a debug method to see if the dart-js interface
+  /// is still communicating.
   Future<void> subscribeTimestamp() async {
     apiRoot.subscribeMessage('encointer.subscribeTimestamp("$_timeStampSubscribeChannel")', _timeStampSubscribeChannel,
         (data) => {store.encointer.setTimestamp(data)});
@@ -176,11 +210,17 @@ class ApiEncointer {
     });
   }
 
+  /// Subscribes to storage changes in the Scheduler pallet: encointerScheduler.currentPhase().
+  ///
+  /// This is on-chain in Cantillon.
   Future<void> subscribeCurrencyIdentifiers() async {
     apiRoot.subscribeMessage('encointer.subscribeCurrencyIdentifiers("$_currencyIdentifiersChannel")',
         _currencyIdentifiersChannel, (data) => {store.encointer.setCurrencyIdentifiers(data.cast<String>())});
   }
 
+  /// Subscribes to storage changes in the Ceremonies pallet: encointerCeremonies.participantIndex([cid, cIndex], address).
+  ///
+  /// This if off-chain in Cantillon. Hence, subscriptions are not supported.
   Future<void> subscribeParticipantIndex() async {
     // try to unsubscribe first in case parameters have changed
     if (store.encointer.participantIndex != null) {
@@ -199,6 +239,9 @@ class ApiEncointer {
     });
   }
 
+  /// Subscribes to storage changes in the EncointerBalances pallet: encointerBalances.balance(cid, address).
+  ///
+  /// This is off-chain in Cantillon. Hence, subscriptions are not supported.
   Future<void> subscribeEncointerBalance() async {
     // unsubscribe from potentially other currency updates
     print('Substribe encointer balance');
@@ -235,6 +278,9 @@ class ApiEncointer {
     });
   }
 
+  /// Queries the EncointerCurrencies pallet: encointerCurrencies.currencyIdentifiers().
+  ///
+  /// This is on-chain in Cantillon.
   Future<List<String>> getCurrencyIdentifiers() async {
     Map<String, dynamic> res = await apiRoot.evalJavascript('encointer.getCurrencyIdentifiers()');
 
@@ -248,6 +294,25 @@ class ApiEncointer {
     return cids;
   }
 
+  Future<dynamic> sendFaucetTx() async {
+    var address = store.account.currentAddress;
+    var amount = Fmt.tokenInt(faucetAmount.toString(), ert_decimals);
+    var res = await apiRoot.evalJavascript('account.sendFaucetTx("$address", "$amount")');
+    // print("Faucet Result :" + res.toString());
+    return res;
+  }
+
+// untested
+  Future<dynamic> getBalanceFromWorker() async {
+    var pubKey = store.account.currentAccountPubKey;
+    print("Public key:" + pubKey);
+    var cid = store.encointer.chosenCid;
+    var balance = await apiRoot.evalJavascript('worker.getBalance("$pubKey", "$cid", "123qwe")');
+    print("balance: " + balance);
+  }
+
+  // Below are functions that simply use the Scale-codec already implemented in polkadot-js/api such that we do not
+  // have to implement the codec ourselves.
   void createClaimOfAttendance(int participants) {
     print("api: create claim with vote=$participants");
     var claim = ClaimOfAttendance(
@@ -292,23 +357,6 @@ class ApiEncointer {
     AttestationResult attestation = AttestationResult.fromJson(att);
     print("Att: ${attestation.toString()}");
     return attestation;
-  }
-
-  Future<dynamic> sendFaucetTx() async {
-    var address = store.account.currentAddress;
-    var amount = Fmt.tokenInt(faucetAmount.toString(), ert_decimals);
-    var res = await apiRoot.evalJavascript('account.sendFaucetTx("$address", "$amount")');
-    // print("Faucet Result :" + res.toString());
-    return res;
-  }
-
-// untested
-  Future<dynamic> getBalanceFromWorker() async {
-    var pubKey = store.account.currentAccountPubKey;
-    print("Public key:" + pubKey);
-    var cid = store.encointer.chosenCid;
-    var balance = await apiRoot.evalJavascript('worker.getBalance("$pubKey", "$cid", "123qwe")');
-    print("balance: " + balance);
   }
 
   Future<void> getShopRegistry() async {
