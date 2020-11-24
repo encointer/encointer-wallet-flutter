@@ -179,7 +179,8 @@ class ApiEncointer {
     print("api: Getting participant index for " + pubKey);
     int pIndex = store.settings.endpointIsGesell
         ? await _gesell.ceremonies.participantIndex(cid, store.encointer.currentCeremonyIndex, pubKey)
-        : await _cantillon.ceremonies.participantIndex(cid, pubKey, '123123');
+        : await _cantillon.ceremonies.participantIndex(cid, pubKey,
+            '123123'); // Fixme: use cached pin, see issue: https://github.com/encointer/encointer-wallet-flutter/issues/111
 
     print("api: Participant Index: " + pIndex.toString());
     store.encointer.setParticipantIndex(pIndex);
@@ -206,7 +207,8 @@ class ApiEncointer {
 
     BalanceEntry bEntry = store.settings.endpointIsGesell
         ? await _gesell.balances.balance(cid, pubKey)
-        : await _cantillon.balances.balance(cid, pubKey, '123123');
+        : await _cantillon.balances.balance(cid, pubKey,
+            '123123'); // Fixme: use cached pin, see issue: https://github.com/encointer/encointer-wallet-flutter/issues/111
 
     print("bEntryJson: ${bEntry.toString()}");
     store.encointer.addBalanceEntry(cid, bEntry);
@@ -328,15 +330,6 @@ class ApiEncointer {
     var res = await apiRoot.evalJavascript('account.sendFaucetTx("$address", "$amount")');
     // print("Faucet Result :" + res.toString());
     return res;
-  }
-
-// untested
-  Future<dynamic> getBalanceFromWorker() async {
-    var pubKey = store.account.currentAccountPubKey;
-    print("Public key:" + pubKey);
-    var cid = store.encointer.chosenCid;
-    var balance = await apiRoot.evalJavascript('worker.getBalance("$pubKey", "$cid", "123qwe")');
-    print("balance: " + balance);
   }
 
   // Below are functions that simply use the Scale-codec already implemented in polkadot-js/api such that we do not
