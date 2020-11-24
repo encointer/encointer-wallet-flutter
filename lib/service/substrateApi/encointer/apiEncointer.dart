@@ -179,8 +179,7 @@ class ApiEncointer {
     print("api: Getting participant index for " + pubKey);
     int pIndex = store.settings.endpointIsGesell
         ? await _gesell.ceremonies.participantIndex(cid, store.encointer.currentCeremonyIndex, pubKey)
-        : await _cantillon.ceremonies.participantIndex(cid, pubKey,
-            '123123'); // Fixme: use cached pin, see issue: https://github.com/encointer/encointer-wallet-flutter/issues/111
+        : await _cantillon.ceremonies.participantIndex(cid, pubKey, store.account.cachedPin);
 
     print("api: Participant Index: " + pIndex.toString());
     store.encointer.setParticipantIndex(pIndex);
@@ -207,8 +206,7 @@ class ApiEncointer {
 
     BalanceEntry bEntry = store.settings.endpointIsGesell
         ? await _gesell.balances.balance(cid, pubKey)
-        : await _cantillon.balances.balance(cid, pubKey,
-            '123123'); // Fixme: use cached pin, see issue: https://github.com/encointer/encointer-wallet-flutter/issues/111
+        : await _cantillon.balances.balance(cid, pubKey, store.account.cachedPin);
 
     print("bEntryJson: ${bEntry.toString()}");
     store.encointer.addBalanceEntry(cid, bEntry);

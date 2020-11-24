@@ -63,6 +63,13 @@ mixin _$SettingsStore on _SettingsStore, Store {
           () => super.endpointIsGesell,
           name: '_SettingsStore.endpointIsGesell'))
       .value;
+  Computed<bool> _$endpointIsCantillonComputed;
+
+  @override
+  bool get endpointIsCantillon => (_$endpointIsCantillonComputed ??=
+          Computed<bool>(() => super.endpointIsCantillon,
+              name: '_SettingsStore.endpointIsCantillon'))
+      .value;
   Computed<List<EndpointData>> _$endpointListComputed;
 
   @override
@@ -377,6 +384,7 @@ networkConst: ${networkConst},
 contactList: ${contactList},
 endpointIsEncointer: ${endpointIsEncointer},
 endpointIsGesell: ${endpointIsGesell},
+endpointIsCantillon: ${endpointIsCantillon},
 endpointList: ${endpointList},
 contactListAll: ${contactListAll},
 existentialDeposit: ${existentialDeposit},

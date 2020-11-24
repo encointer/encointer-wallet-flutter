@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/bazaarEntry.dart';
 import 'package:encointer_wallet/page-encointer/encointerEntry.dart';
 import 'package:encointer_wallet/page/assets/index.dart';
@@ -5,6 +6,7 @@ import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class EncointerHomePage extends StatefulWidget {
@@ -136,7 +138,61 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       _notificationPlugin.init(context);
     }
 
+    if (store.account.cachedPin.isEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) async {
+          await _showPasswordDialog(context);
+
+          if (store.account.cachedPin.isEmpty) {
+            await _showPasswordDeniedDialog(context);
+            Navigator.of(context).pop();
+          }
+        },
+      );
+    }
+
     super.initState();
+  }
+
+  Future<void> _showPasswordDialog(BuildContext context) async {
+    await showCupertinoDialog(
+      context: context,
+      builder: (_) {
+        return PasswordInputDialog(
+          title: Text(I18n.of(context).home['unlock']),
+          account: store.account.currentAccount,
+          onOk: (password) {
+            setState(() {
+              store.account.setPin(password);
+            });
+          },
+        );
+      },
+    );
+  }
+
+  Future<void> _showPasswordDeniedDialog(BuildContext context) async {
+    await showCupertinoDialog(
+      context: context,
+      builder: (_) {
+        return CupertinoAlertDialog(
+          title: Text(I18n.of(context).encointer['meetup.pwd.needed']),
+          actions: <Widget>[
+            CupertinoButton(
+              child: Text(
+                I18n.of(context).home['ok'],
+                style: TextStyle(
+                    // color: Theme.of(context).unselectedWidgetColor,
+                    ),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   @override

@@ -42,6 +42,9 @@ abstract class _AccountStore with Store {
   String txStatus = '';
 
   @observable
+  String cachedPin = '';
+
+  @observable
   AccountCreate newAccount = AccountCreate();
 
   @observable
@@ -117,9 +120,15 @@ abstract class _AccountStore with Store {
   }
 
   @action
+  void setPin(String pin) {
+    cachedPin = pin;
+  }
+
+  @action
   void setNewAccount(String name, String password) {
     newAccount.name = name;
     newAccount.password = password;
+    cachedPin = password;
   }
 
   @action
