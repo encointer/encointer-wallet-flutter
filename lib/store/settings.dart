@@ -66,6 +66,11 @@ abstract class _SettingsStore with Store {
   }
 
   @computed
+  bool get endpointIsCantillon {
+    return !endpointIsGesell;
+  }
+
+  @computed
   List<EndpointData> get endpointList {
     List<EndpointData> ls = List<EndpointData>.of(networkEndpoints);
     ls.retainWhere((i) => i.info == endpoint.info);

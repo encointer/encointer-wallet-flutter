@@ -10,6 +10,9 @@ import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
 import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:encointer_wallet/utils/format.dart';
 
+import 'apiCantillon.dart';
+import 'apiGesell.dart';
+
 /// Api to interface with the `js_encointer_service.js`
 ///
 /// Note: If a call fails on the js side, the corresponding message completer will not be
@@ -21,7 +24,9 @@ import 'package:encointer_wallet/utils/format.dart';
 /// NOTE: If the js-code was changed a rebuild of the application is needed to update the code.
 
 class ApiEncointer {
-  ApiEncointer(this.apiRoot);
+  ApiEncointer(this.apiRoot)
+      : _gesell = ApiGesell(apiRoot),
+        _cantillon = ApiCantillon(apiRoot);
 
   final Api apiRoot;
   final store = globalAppStore;
@@ -32,12 +37,15 @@ class ApiEncointer {
   final String _encointerBalanceChannel = 'encointerBalance';
   final String _shopRegistryChannel = 'shopRegistry';
 
+  final ApiGesell _gesell;
+  final ApiCantillon _cantillon;
+
   Future<void> startSubscriptions() async {
     print("api: starting encointer subscriptions");
     this.subscribeTimestamp();
     this.subscribeCurrentPhase();
     this.subscribeCurrencyIdentifiers();
-    this.subscribeEncointerBalance();
+    // this.subscribeEncointerBalance();
     this.subscribeShopRegistry();
   }
 
@@ -45,10 +53,12 @@ class ApiEncointer {
     print("api: stopping encointer subscriptions");
     apiRoot.unsubscribeMessage(_currentPhaseSubscribeChannel);
     apiRoot.unsubscribeMessage(_timeStampSubscribeChannel);
-    apiRoot.unsubscribeMessage(_participantIndexChannel);
     apiRoot.unsubscribeMessage(_currencyIdentifiersChannel);
-    apiRoot.unsubscribeMessage(_encointerBalanceChannel);
-    apiRoot.unsubscribeMessage(_shopRegistryChannel);
+
+    if (store.settings.endpointIsGesell) {
+      apiRoot.unsubscribeMessage(_participantIndexChannel);
+      apiRoot.unsubscribeMessage(_encointerBalanceChannel);
+    }
   }
 
   /// Queries the Scheduler pallet: encointerScheduler.currentPhase().
@@ -160,14 +170,17 @@ class ApiEncointer {
   ///
   /// This is off-chain and trusted in Cantillon, accessible with TrustedGetter::registration(AccountId, Cid).
   Future<int> getParticipantIndex() async {
-    String address = store.account.currentAccountPubKey;
     String cid = store.encointer.chosenCid;
     if (cid == null) {
       return 0; // zero means: not registered
     }
-    int cIndex = store.encointer.currentCeremonyIndex;
-    print("api: Getting participant index for " + address);
-    int pIndex = await apiRoot.evalJavascript('encointer.getParticipantIndex("$cid", "$cIndex" ,"$address")');
+
+    String pubKey = store.account.currentAccountPubKey;
+    print("api: Getting participant index for " + pubKey);
+    int pIndex = store.settings.endpointIsGesell
+        ? await _gesell.ceremonies.participantIndex(cid, store.encointer.currentCeremonyIndex, pubKey)
+        : await _cantillon.ceremonies.participantIndex(cid, pubKey, '123123');
+
     print("api: Participant Index: " + pIndex.toString());
     store.encointer.setParticipantIndex(pIndex);
     return pIndex;
@@ -182,6 +195,21 @@ class ApiEncointer {
     int pCount = await apiRoot.evalJavascript('encointer.getParticipantCount("$cid", "$cIndex")');
     print("api: Participant Count: " + pCount.toString());
     store.encointer.setParticipantCount(pCount);
+  }
+
+  Future<void> getEncointerBalance() async {
+    String pubKey = store.account.currentAccountPubKey;
+    String cid = store.encointer.chosenCid;
+    if (cid == null) {
+      return;
+    }
+
+    BalanceEntry bEntry = store.settings.endpointIsGesell
+        ? await _gesell.balances.balance(cid, pubKey)
+        : await _cantillon.balances.balance(cid, pubKey, '123123');
+
+    print("bEntryJson: ${bEntry.toString()}");
+    store.encointer.addBalanceEntry(cid, bEntry);
   }
 
   /// Subscribes to the timestamp of the last block. This is only used as a debug method to see if the dart-js interface
