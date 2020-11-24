@@ -4,6 +4,7 @@ import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/components/itemCard.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/components/articleClass.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/components/shopClass.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shop/createShopPage.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
@@ -230,7 +231,9 @@ Widget shopSection(BuildContext context, Map<String, String> dic, List<Shop> ite
               margin: EdgeInsets.only(left: 40, right: 40, top: 10, bottom: 15),
               child: RoundedButton(
                 text: dic['shop.insert'],
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, CreateShopPage.route);
+                },
               ),
             ),
           ],
