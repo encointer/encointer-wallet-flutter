@@ -1,10 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:encointer_wallet/common/components/AddressInputField.dart';
 import 'package:encointer_wallet/common/components/currencyWithIcon.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
@@ -20,6 +16,10 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class TransferPageParams {
   TransferPageParams({this.symbol, this.address, this.redirect, this.isEncointerCommunityCurrency = false});
@@ -203,6 +203,7 @@ class _TransferPageState extends State<TransferPage> {
       });
 
       webApi.assets.fetchBalance();
+      webApi.encointer.getEncointerBalance();
     });
   }
 

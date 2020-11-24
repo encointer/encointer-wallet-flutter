@@ -177,8 +177,8 @@ abstract class _AccountStore with Store {
     // update depending values
     if (!rootStore.settings.loading) {
       webApi.encointer.getMeetupIndex();
-      webApi.encointer.subscribeParticipantIndex();
-      webApi.encointer.subscribeEncointerBalance();
+      webApi.encointer.getParticipantIndex();
+      webApi.encointer.getEncointerBalance();
       webApi.assets.subscribeBalance();
     }
   }

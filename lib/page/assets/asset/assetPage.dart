@@ -80,6 +80,8 @@ class _AssetPageState extends State<AssetPage> with SingleTickerProviderStateMix
   @override
   void initState() {
     super.initState();
+    webApi.encointer.getEncointerBalance();
+
     _tabController = TabController(vsync: this, length: 3);
 
     _scrollController = ScrollController();

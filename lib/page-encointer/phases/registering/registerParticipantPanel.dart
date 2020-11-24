@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
+import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,12 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
   _RegisterParticipantPanel(this.store);
 
   final AppStore store;
+
+  @override
+  void initState() {
+    webApi.encointer.getParticipantIndex();
+    super.initState();
+  }
 
   Future<void> _submit() async {
     var args = {

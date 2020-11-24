@@ -126,7 +126,7 @@ abstract class _EncointerStore with Store {
         webApi.encointer.getMeetupIndex();
         break;
     }
-    webApi.encointer.subscribeParticipantIndex();
+    webApi.encointer.getParticipantIndex();
   }
 
   @action
@@ -216,8 +216,8 @@ abstract class _EncointerStore with Store {
       // update depending values without awaiting
       if (!rootStore.settings.loading) {
         webApi.encointer.getMeetupIndex();
-        webApi.encointer.subscribeParticipantIndex();
-        webApi.encointer.subscribeEncointerBalance();
+        webApi.encointer.getParticipantIndex();
+        webApi.encointer.getEncointerBalance();
       }
     }
   }
