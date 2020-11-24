@@ -293,3 +293,48 @@ class ApiEncointer {
     print("balance: " + balance);
   }
 }
+
+// bazaar
+Future<void> addNewShop() async {
+  if (store.encointer.shopList.length > 0) {
+    String shops = jsonEncode(store.encointer.shopList.map((i) => ShopData.toJson(i)).toList());
+
+    String ss58 = jsonEncode(network_ss58_map.values.toSet().toList());
+    // Map keys = await apiRoot.evalJavascript('account.initKeys($accounts, $ss58)');
+    // store.account.setPubKeyAddressMap(Map<String, Map>.from(keys));
+
+    // get shop icons
+    getShopIcons(store.enecointer.shopList.map((i) => i.pubKey).toList());
+  }
+}
+
+/*
+Future<void> subscribeCurrencyIdentifiers() async {
+  apiRoot.subscribeMessage('encointer.subscribeCurrencyIdentifiers("$_currencyIdentifiersChannel")',
+      _currencyIdentifiersChannel, (data) => {store.encointer.setCurrencyIdentifiers(data.cast<String>())});
+}
+
+Future<void> initAccounts() async {
+  if (store.account.accountList.length > 0) {
+    String accounts = jsonEncode(store.account.accountList.map((i) => AccountData.toJson(i)).toList());
+
+    String ss58 = jsonEncode(network_ss58_map.values.toSet().toList());
+    Map keys = await apiRoot.evalJavascript('account.initKeys($accounts, $ss58)');
+    store.account.setPubKeyAddressMap(Map<String, Map>.from(keys));
+
+    // get accounts icons
+    getPubKeyIcons(store.account.accountList.map((i) => i.pubKey).toList());
+  }
+
+  // and contacts icons
+  List<AccountData> contacts = List<AccountData>.of(store.settings.contactList);
+  getAddressIcons(contacts.map((i) => i.address).toList());
+  // set pubKeyAddressMap for observation accounts
+  contacts.retainWhere((i) => i.observation);
+  List<String> observations = contacts.map((i) => i.pubKey).toList();
+  if (observations.length > 0) {
+    encodeAddress(observations);
+    getPubKeyIcons(observations);
+  }
+}
+*/
