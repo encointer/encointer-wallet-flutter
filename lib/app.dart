@@ -1,5 +1,4 @@
 import 'package:encointer_wallet/common/components/willPopScopWrapper.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/bazaarPage.dart';
 import 'package:encointer_wallet/page-encointer/homePage.dart';
 import 'package:encointer_wallet/page-encointer/meetup/MeetupPage.dart';
 import 'package:encointer_wallet/page-encointer/phases/assigning/assigningPage.dart';
@@ -189,8 +188,6 @@ class _WalletAppState extends State<WalletApp> {
         AssigningPage.route: (_) => AssigningPage(_appStore),
         AttestingPage.route: (_) => AttestingPage(_appStore),
         MeetupPage.route: (_) => MeetupPage(_appStore),
-        // bazaar
-        BazaarPage.route: (_) => BazaarPage(),
       },
     );
   }
