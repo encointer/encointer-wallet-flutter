@@ -5,6 +5,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/components/itemCard.dart'
 import 'package:encointer_wallet/page-encointer/bazaar/components/articleClass.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/components/shopClass.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shop/createShopPage.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shop/shopOverviewPage.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
@@ -187,13 +188,12 @@ Widget shopSection(BuildContext context, Map<String, String> dic, List<Shop> ite
           Container(
             margin: EdgeInsets.only(top: 40, left: 100, right: 20),
             child: GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushNamed(context, ShopOverviewPage.route);
+              },
               child: Text(
                 dic['show.all'],
                 style: Theme.of(context).textTheme.headline2.apply(fontSizeFactor: 0.7),
-                //TextStyle(
-                // color: Colors.indigo[255],
-                //),
               ),
             ),
           ),
