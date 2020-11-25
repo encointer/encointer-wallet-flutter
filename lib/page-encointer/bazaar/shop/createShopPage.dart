@@ -20,7 +20,7 @@ class CreateShopPage extends StatefulWidget {
 
 class _CreateShopPageState extends State<CreateShopPage> {
   _CreateShopPageState(this.store);
-
+/*
   final AppStore store;
 
   bool _submitting = false;
@@ -128,9 +128,7 @@ class _CreateShopPageState extends State<CreateShopPage> {
   }
 }
 
-/*
-
-
+*/
 
   final AppStore store;
 
@@ -142,9 +140,7 @@ class _CreateShopPageState extends State<CreateShopPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Map dic = I18n
-        .of(context)
-        .bazaar;
+    final Map dic = I18n.of(context).bazaar;
 
     return Scaffold(
       appBar: AppBar(title: Text(dic['shop.create'])),
@@ -169,4 +165,3 @@ class _CreateShopPageState extends State<CreateShopPage> {
     );
   }
 }
-*/

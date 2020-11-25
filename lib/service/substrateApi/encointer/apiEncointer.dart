@@ -295,6 +295,7 @@ class ApiEncointer {
 }
 
 // bazaar
+/*
 Future<void> addNewShop() async {
   if (store.encointer.shopList.length > 0) {
     String shops = jsonEncode(store.encointer.shopList.map((i) => ShopData.toJson(i)).toList());
@@ -308,7 +309,7 @@ Future<void> addNewShop() async {
   }
 }
 
-/*
+
 Future<void> subscribeCurrencyIdentifiers() async {
   apiRoot.subscribeMessage('encointer.subscribeCurrencyIdentifiers("$_currencyIdentifiersChannel")',
       _currencyIdentifiersChannel, (data) => {store.encointer.setCurrencyIdentifiers(data.cast<String>())});
