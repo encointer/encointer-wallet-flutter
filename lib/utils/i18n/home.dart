@@ -15,6 +15,7 @@ const Map<String, String> enHome = {
   'name': 'Name',
   'password': 'PIN',
   'password2': 'Confirm PIN',
+  'pin.needed.app': 'PIN is needed to use the app',
   'next': 'Next Step',
   'ok': 'OK',
   'cancel': 'Cancel',

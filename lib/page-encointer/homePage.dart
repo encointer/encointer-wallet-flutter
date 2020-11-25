@@ -4,10 +4,12 @@ import 'package:encointer_wallet/page-encointer/encointerEntry.dart';
 import 'package:encointer_wallet/page/assets/index.dart';
 import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/service/notification.dart';
+import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class EncointerHomePage extends StatefulWidget {
   EncointerHomePage(this.store);
@@ -144,8 +146,8 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
           await _showPasswordDialog(context);
 
           if (store.account.cachedPin.isEmpty) {
-            await _showPasswordDeniedDialog(context);
-            Navigator.of(context).pop();
+            await _showPasswordNotEnteredDialog(context);
+            SystemChannels.platform.invokeMethod('SystemNavigator.pop');
           }
         },
       );
@@ -158,36 +160,37 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
     await showCupertinoDialog(
       context: context,
       builder: (_) {
-        return PasswordInputDialog(
-          title: Text(I18n.of(context).home['unlock']),
-          account: store.account.currentAccount,
-          onOk: (password) {
-            setState(() {
-              store.account.setPin(password);
-            });
+        return WillPopScope(
+          child: PasswordInputDialog(
+            title: Text(I18n.of(context).home['unlock']),
+            account: store.account.currentAccount,
+            onOk: (password) {
+              setState(() {
+                store.account.setPin(password);
+                webApi.encointer.getEncointerBalance();
+                webApi.encointer.getParticipantIndex();
+              });
+            },
+          ),
+          onWillPop: () {
+            // handles back button press
+            return _showPasswordNotEnteredDialog(context);
           },
         );
       },
     );
   }
 
-  Future<void> _showPasswordDeniedDialog(BuildContext context) async {
+  Future<void> _showPasswordNotEnteredDialog(BuildContext context) async {
     await showCupertinoDialog(
       context: context,
       builder: (_) {
         return CupertinoAlertDialog(
-          title: Text(I18n.of(context).encointer['meetup.pwd.needed']),
+          title: Text(I18n.of(context).home['pin.needed.app']),
           actions: <Widget>[
             CupertinoButton(
-              child: Text(
-                I18n.of(context).home['ok'],
-                style: TextStyle(
-                    // color: Theme.of(context).unselectedWidgetColor,
-                    ),
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
+              child: Text(I18n.of(context).home['ok']),
+              onPressed: () => SystemChannels.platform.invokeMethod('SystemNavigator.pop'),
             ),
           ],
         );
