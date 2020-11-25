@@ -32,7 +32,10 @@ abstract class _EncointerStore with Store {
 
   // Note: In synchronous code, every modification of an @obervable is tracked by mobx and
   // fires a reaction. However, modifications in asynchronous code must be wrapped in
-  // a @action block to fire a reaction.
+  // a @action block to fire a reaction
+  // .
+  @observable
+  List<String> shopRegistry;
 
   @observable
   var timeStamp;
@@ -84,6 +87,11 @@ abstract class _EncointerStore with Store {
 
   @observable
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
+
+  @action
+  void setShopRegistry(List<String> shops) {
+    shopRegistry = shops;
+  }
 
   @action
   void setCurrentPhase(CeremonyPhase phase) {
