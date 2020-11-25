@@ -90,16 +90,14 @@ class _ShopObserverState extends State<ShopObserver> with SingleTickerProviderSt
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
-            (store.encointer.currentPhase != null)
-                ? Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
-                    CurrencyChooserPanel(store),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    //appConnected ? _getShopView(store.encointer.currentPhase) : _getShopViewOffline(),
-                    _getShopView(),
-                  ])
-                : CupertinoActivityIndicator()
+            Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
+              CurrencyChooserPanel(store),
+              SizedBox(
+                height: 16,
+              ),
+              //appConnected ? _getShopView(store.encointer.currentPhase) : _getShopViewOffline(),
+              _getShopView(),
+            ])
           ],
         ),
       ),

@@ -292,9 +292,25 @@ class ApiEncointer {
     var balance = await apiRoot.evalJavascript('worker.getBalance("$pubKey", "$cid", "123qwe")');
     print("balance: " + balance);
   }
+
+  Future<List<String>> getShopRegistry() async {
+    String cid = store.encointer.chosenCid;
+
+    Map<String, dynamic> res = await apiRoot.evalJavascript('encointer.getShopRegistry("$cid")');
+
+    List<String> shops = new List<String>();
+    res['shops'].forEach((e) {
+      shops.add(e.toString());
+    });
+
+    print("SHOPS: " + shops.toString());
+    store.encointer.setShopRegistry(shops);
+    return shops;
+  }
 }
 
 // bazaar
+
 /*
 Future<void> addNewShop() async {
   if (store.encointer.shopList.length > 0) {
