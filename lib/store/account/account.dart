@@ -183,6 +183,7 @@ abstract class _AccountStore with Store {
   void setCurrentAccount(String pubKey) {
     currentAccountPubKey = pubKey;
     rootStore.localStorage.setCurrentAccount(pubKey);
+    cachedPin = '';
     // update depending values
     if (!rootStore.settings.loading) {
       webApi.encointer.getMeetupIndex();

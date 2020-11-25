@@ -10,6 +10,7 @@ import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class EncointerHomePage extends StatefulWidget {
   EncointerHomePage(this.store);
@@ -30,6 +31,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
   final PageController _pageController = PageController();
 
   NotificationPlugin _notificationPlugin;
+  bool _dialogIsShown = false;
 
   final List<String> _tabList = [
     'Wallet',
@@ -139,19 +141,13 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       _notificationPlugin = NotificationPlugin();
       _notificationPlugin.init(context);
     }
-
-    if (store.account.cachedPin.isEmpty) {
-      WidgetsBinding.instance.addPostFrameCallback(
-        (_) async {
-          await _showPasswordDialog(context);
-        },
-      );
-    }
-
     super.initState();
   }
 
   Future<void> _showPasswordDialog(BuildContext context) async {
+    setState(() {
+      _dialogIsShown = true;
+    });
     await showCupertinoDialog(
       context: context,
       builder: (_) {
@@ -175,6 +171,9 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         );
       },
     );
+    setState(() {
+      _dialogIsShown = false;
+    });
   }
 
   Future<void> _showPasswordNotEnteredDialog(BuildContext context) async {
@@ -202,14 +201,25 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: EncointerHomePage.encointerHomePageKey,
-      body: PageView(
-        controller: _pageController,
-        onPageChanged: (index) {
-          setState(() {
-            _tabIndex = index;
-          });
+      body: Observer(
+        builder: (_) {
+          if (!_dialogIsShown & store.account.cachedPin.isEmpty) {
+            WidgetsBinding.instance.addPostFrameCallback(
+              (_) async {
+                await _showPasswordDialog(context);
+              },
+            );
+          }
+          return PageView(
+            controller: _pageController,
+            onPageChanged: (index) {
+              setState(() {
+                _tabIndex = index;
+              });
+            },
+            children: _buildPages(),
+          );
         },
-        children: _buildPages(),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _tabIndex,
