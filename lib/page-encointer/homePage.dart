@@ -1,16 +1,13 @@
+import 'package:encointer_wallet/page-encointer/encointerEntry.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/bazaarEntry.dart';
-import 'package:encointer_wallet/page-encointer/encointerEntry.dart';
 import 'package:encointer_wallet/page/assets/index.dart';
 import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/service/notification.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 
 class EncointerHomePage extends StatefulWidget {
   EncointerHomePage(this.store);
@@ -31,7 +28,6 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
   final PageController _pageController = PageController();
 
   NotificationPlugin _notificationPlugin;
-  bool _dialogIsShown = false;
 
   final List<String> _tabList = [
     'Wallet',
@@ -144,82 +140,18 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
     super.initState();
   }
 
-  Future<void> _showPasswordDialog(BuildContext context) async {
-    setState(() {
-      _dialogIsShown = true;
-    });
-    await showCupertinoDialog(
-      context: context,
-      builder: (_) {
-        return WillPopScope(
-          child: PasswordInputDialog(
-            title: Text(I18n.of(context).home['unlock']),
-            account: store.account.currentAccount,
-            onOk: (password) {
-              setState(() {
-                store.account.setPin(password);
-                webApi.encointer.getEncointerBalance();
-                webApi.encointer.getParticipantIndex();
-              });
-            },
-            onCancel: () => _showPasswordNotEnteredDialog(context),
-          ),
-          onWillPop: () {
-            // handles back button press
-            return _showPasswordNotEnteredDialog(context);
-          },
-        );
-      },
-    );
-    setState(() {
-      _dialogIsShown = false;
-    });
-  }
-
-  Future<void> _showPasswordNotEnteredDialog(BuildContext context) async {
-    await showCupertinoDialog(
-      context: context,
-      builder: (_) {
-        return CupertinoAlertDialog(
-          title: Text(I18n.of(context).home['pin.needed']),
-          actions: <Widget>[
-            CupertinoButton(
-              child: Text(I18n.of(context).home['cancel']),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-            CupertinoButton(
-              child: Text(I18n.of(context).home['close.app']),
-              onPressed: () => SystemChannels.platform.invokeMethod('SystemNavigator.pop'),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: EncointerHomePage.encointerHomePageKey,
-      body: Observer(
-        builder: (_) {
-          if (!_dialogIsShown & store.account.cachedPin.isEmpty) {
-            WidgetsBinding.instance.addPostFrameCallback(
-              (_) async {
-                await _showPasswordDialog(context);
-              },
-            );
-          }
-          return PageView(
-            controller: _pageController,
-            onPageChanged: (index) {
-              setState(() {
-                _tabIndex = index;
-              });
-            },
-            children: _buildPages(),
-          );
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            _tabIndex = index;
+          });
         },
+        children: _buildPages(),
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _tabIndex,

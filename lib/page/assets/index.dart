@@ -20,6 +20,7 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class Assets extends StatefulWidget {
@@ -37,6 +38,7 @@ class _AssetsState extends State<Assets> {
   final AppStore store;
 
   bool _faucetSubmitting = false;
+  bool _dialogIsShown = false;
 
   Future<void> _handleScan() async {
     final Map dic = I18n.of(context).account;
@@ -283,6 +285,59 @@ class _AssetsState extends State<Assets> {
     );
   }
 
+  Future<void> _showPasswordDialog(BuildContext context) async {
+    setState(() {
+      _dialogIsShown = true;
+    });
+    await showCupertinoDialog(
+      context: context,
+      builder: (_) {
+        return WillPopScope(
+          child: PasswordInputDialog(
+            title: Text(I18n.of(context).home['unlock']),
+            account: store.account.currentAccount,
+            onOk: (password) {
+              setState(() {
+                store.account.setPin(password);
+                webApi.encointer.getEncointerBalance();
+                webApi.encointer.getParticipantIndex();
+              });
+            },
+            onCancel: () => _showPasswordNotEnteredDialog(context),
+          ),
+          onWillPop: () {
+            // handles back button press
+            return _showPasswordNotEnteredDialog(context);
+          },
+        );
+      },
+    );
+    setState(() {
+      _dialogIsShown = false;
+    });
+  }
+
+  Future<void> _showPasswordNotEnteredDialog(BuildContext context) async {
+    await showCupertinoDialog(
+      context: context,
+      builder: (_) {
+        return CupertinoAlertDialog(
+          title: Text(I18n.of(context).home['pin.needed']),
+          actions: <Widget>[
+            CupertinoButton(
+              child: Text(I18n.of(context).home['cancel']),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            CupertinoButton(
+              child: Text(I18n.of(context).home['close.app']),
+              onPressed: () => SystemChannels.platform.invokeMethod('SystemNavigator.pop'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   @override
   void initState() {
     // if network connected failed, reconnect
@@ -315,6 +370,15 @@ class _AssetsState extends State<Assets> {
             currencyIds.retainWhere((i) => i != symbol);
           }
           final BalancesInfo balancesInfo = store.assets.balances[symbol];
+
+          if (ModalRoute.of(context).isCurrent && !_dialogIsShown & store.account.cachedPin.isEmpty) {
+            _dialogIsShown = true;
+            WidgetsBinding.instance.addPostFrameCallback(
+              (_) {
+                _showPasswordDialog(context);
+              },
+            );
+          }
 
           return Column(
             children: <Widget>[

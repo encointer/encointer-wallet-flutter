@@ -194,15 +194,14 @@ class Api {
     // do connect
     String res = await evalJavascript('settings.connect("$node")');
     if (res == null) {
-      print('connect failed');
+      print('connecting to node failed');
       store.settings.setNetworkName(null);
       return;
     }
 
-    // untested
-    if (store.settings.endpoint.info == networkEndpointEncointerCantillon.info) {
+    if (store.settings.endpointIsCantillon) {
       var worker = store.settings.endpoint.worker;
-      String res = await evalJavascript('settings.setWorkerEndpoint("$worker")');
+      await evalJavascript('settings.setWorkerEndpoint("$worker")');
     }
 
     fetchNetworkProps();
