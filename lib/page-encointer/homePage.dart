@@ -144,11 +144,6 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       WidgetsBinding.instance.addPostFrameCallback(
         (_) async {
           await _showPasswordDialog(context);
-
-          if (store.account.cachedPin.isEmpty) {
-            await _showPasswordNotEnteredDialog(context);
-            SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-          }
         },
       );
     }
@@ -171,6 +166,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
                 webApi.encointer.getParticipantIndex();
               });
             },
+            onCancel: () => _showPasswordNotEnteredDialog(context),
           ),
           onWillPop: () {
             // handles back button press
@@ -186,10 +182,14 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       context: context,
       builder: (_) {
         return CupertinoAlertDialog(
-          title: Text(I18n.of(context).home['pin.needed.app']),
+          title: Text(I18n.of(context).home['pin.needed']),
           actions: <Widget>[
             CupertinoButton(
-              child: Text(I18n.of(context).home['ok']),
+              child: Text(I18n.of(context).home['cancel']),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            CupertinoButton(
+              child: Text(I18n.of(context).home['close.app']),
               onPressed: () => SystemChannels.platform.invokeMethod('SystemNavigator.pop'),
             ),
           ],
