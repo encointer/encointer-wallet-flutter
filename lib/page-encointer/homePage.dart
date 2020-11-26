@@ -1,8 +1,5 @@
-import 'package:encointer_wallet/page-encointer/encointerEntry.dart';
-import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/bazaarEntry.dart';
-import 'package:encointer_wallet/page/assets/index.dart';
-import 'package:encointer_wallet/page/profile/index.dart';
+import 'package:encointer_wallet/page-encointer/encointe 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
