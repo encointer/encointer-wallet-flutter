@@ -10,4 +10,6 @@ const Map<String, String> enBazaar = {
   'shop.insert': '+ Add new shop',
   'shop.create': 'Create new shop',
   'shop.name': 'Shop name',
+  'shop.url': 'URL to shop',
+  'shop.default': '40',
 };
