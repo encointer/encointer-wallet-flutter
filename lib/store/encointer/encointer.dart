@@ -35,9 +35,6 @@ abstract class _EncointerStore with Store {
   // a @action block to fire a reaction
   // .
   @observable
-  List<String> shopRegistry;
-
-  @observable
   var timeStamp;
 
   @observable
@@ -88,10 +85,8 @@ abstract class _EncointerStore with Store {
   @observable
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
 
-  @action
-  void setShopRegistry(List<String> shops) {
-    shopRegistry = shops;
-  }
+  @observable
+  List<String> shopRegistry;
 
   @action
   void setCurrentPhase(CeremonyPhase phase) {
@@ -312,6 +307,11 @@ abstract class _EncointerStore with Store {
     if (data != null) {
       print("found cached choice of cid. will recover it: " + data.toString());
       setChosenCid(data);
+    }
+
+    @action
+    void setShopRegistry(List<String> shops) {
+      shopRegistry = shops;
     }
 
     // get meetup related data
