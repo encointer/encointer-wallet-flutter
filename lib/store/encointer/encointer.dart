@@ -308,12 +308,6 @@ abstract class _EncointerStore with Store {
       print("found cached choice of cid. will recover it: " + data.toString());
       setChosenCid(data);
     }
-
-    @action
-    void setShopRegistry(List<String> shops) {
-      shopRegistry = shops;
-    }
-
     // get meetup related data
     data = await loadObject(encointerAttestationsKey);
     if (data != null) {
@@ -334,6 +328,11 @@ abstract class _EncointerStore with Store {
     }
 
     meetupTime = await loadObject(encointerMeetupTimeKey);
+  }
+
+  @action
+  void setShopRegistry(List<String> shops) {
+    shopRegistry = shops;
   }
 
   Future<void> cacheObject(String key, value) {

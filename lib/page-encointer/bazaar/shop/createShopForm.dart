@@ -42,15 +42,9 @@ class CreateShopForm extends StatefulWidget {
 
 class _CreateShopForm extends State<CreateShopForm> {
   _CreateShopForm(this.store);
-  // CreateShopForm({this.setNewShop, this.submitting, this.onSubmit});
 
   final AppStore store;
   static final String route = '/encointer/bazaar/createShopForm';
-
-  /*
-  final Function setNewShop;
-  final Function onSubmit;
-  final bool submitting;*/
 
   final _formKey = GlobalKey<FormState>();
 
@@ -71,7 +65,7 @@ class _CreateShopForm extends State<CreateShopForm> {
         }),
         "params": [
           store.encointer.chosenCid,
-          Fmt.tokenInt(_urlCtrl.text.trim(), decimals).toString(),
+          _urlCtrl.text.trim(),
         ],
         'onFinish': (BuildContext txPageContext, Map res) {
           Navigator.popUntil(txPageContext, ModalRoute.withName('/'));

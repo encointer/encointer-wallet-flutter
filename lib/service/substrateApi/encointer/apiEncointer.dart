@@ -30,6 +30,7 @@ class ApiEncointer {
   final String _participantIndexChannel = 'participantIndex';
   final String _currencyIdentifiersChannel = 'currencyIdentifiers';
   final String _encointerBalanceChannel = 'encointerBalance';
+  final String _shopRegistryChannel = 'shopRegistry';
 
   Future<void> startSubscriptions() async {
     print("api: starting encointer subscriptions");
@@ -37,6 +38,7 @@ class ApiEncointer {
     this.subscribeCurrentPhase();
     this.subscribeCurrencyIdentifiers();
     this.subscribeEncointerBalance();
+    this.subscribeShopRegistry();
   }
 
   Future<void> stopSubscriptions() async {
@@ -46,6 +48,7 @@ class ApiEncointer {
     apiRoot.unsubscribeMessage(_participantIndexChannel);
     apiRoot.unsubscribeMessage(_currencyIdentifiersChannel);
     apiRoot.unsubscribeMessage(_encointerBalanceChannel);
+    apiRoot.unsubscribeMessage(_shopRegistryChannel);
   }
 
   Future<CeremonyPhase> getCurrentPhase() async {
@@ -217,6 +220,22 @@ class ApiEncointer {
     );
   }
 
+  Future<void> subscribeShopRegistry() async {
+    // try to unsubscribe first in case parameters have changed
+    if (store.encointer.shopRegistry != null) {
+      apiRoot.unsubscribeMessage(_shopRegistryChannel);
+    }
+    String account = store.account.currentAccountPubKey;
+    String cid = store.encointer.chosenCid;
+    if (cid == null) {
+      return 0; // zero means: not registered
+    }
+    apiRoot.subscribeMessage(
+        'encointer.subscribeShopRegistry("$_shopRegistryChannel", "$cid", "$account")', _shopRegistryChannel, (data) {
+      store.encointer.setShopRegistry(data);
+    });
+  }
+
   Future<List<String>> getCurrencyIdentifiers() async {
     Map<String, dynamic> res = await apiRoot.evalJavascript('encointer.getCurrencyIdentifiers()');
 
@@ -308,50 +327,3 @@ class ApiEncointer {
     return shops;
   }
 }
-
-// bazaar
-
-/*
-Future<void> addNewShop() async {
-  if (store.encointer.shopList.length > 0) {
-    String shops = jsonEncode(store.encointer.shopList.map((i) => ShopData.toJson(i)).toList());
-
-    String ss58 = jsonEncode(network_ss58_map.values.toSet().toList());
-    // Map keys = await apiRoot.evalJavascript('account.initKeys($accounts, $ss58)');
-    // store.account.setPubKeyAddressMap(Map<String, Map>.from(keys));
-
-    // get shop icons
-    getShopIcons(store.enecointer.shopList.map((i) => i.pubKey).toList());
-  }
-}
-
-
-Future<void> subscribeCurrencyIdentifiers() async {
-  apiRoot.subscribeMessage('encointer.subscribeCurrencyIdentifiers("$_currencyIdentifiersChannel")',
-      _currencyIdentifiersChannel, (data) => {store.encointer.setCurrencyIdentifiers(data.cast<String>())});
-}
-
-Future<void> initAccounts() async {
-  if (store.account.accountList.length > 0) {
-    String accounts = jsonEncode(store.account.accountList.map((i) => AccountData.toJson(i)).toList());
-
-    String ss58 = jsonEncode(network_ss58_map.values.toSet().toList());
-    Map keys = await apiRoot.evalJavascript('account.initKeys($accounts, $ss58)');
-    store.account.setPubKeyAddressMap(Map<String, Map>.from(keys));
-
-    // get accounts icons
-    getPubKeyIcons(store.account.accountList.map((i) => i.pubKey).toList());
-  }
-
-  // and contacts icons
-  List<AccountData> contacts = List<AccountData>.of(store.settings.contactList);
-  getAddressIcons(contacts.map((i) => i.address).toList());
-  // set pubKeyAddressMap for observation accounts
-  contacts.retainWhere((i) => i.observation);
-  List<String> observations = contacts.map((i) => i.pubKey).toList();
-  if (observations.length > 0) {
-    encodeAddress(observations);
-    getPubKeyIcons(observations);
-  }
-}
-*/
