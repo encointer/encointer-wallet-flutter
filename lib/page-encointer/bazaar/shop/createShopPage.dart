@@ -24,18 +24,7 @@ class _CreateShopPageState extends State<CreateShopPage> {
   _CreateShopPageState(this.store);
   final AppStore store;
 
-  bool _submitting = false;
-
   TextEditingController nameController = TextEditingController();
-/*
-  void addItemToList() {
-    setState(() {});
-  }
-
-  Future<void> _createShop() async {
-    setState(() {
-      _submitting = true;
-    });*/
 
   @override
   Widget build(BuildContext context) {
@@ -44,30 +33,20 @@ class _CreateShopPageState extends State<CreateShopPage> {
     return Scaffold(
       appBar: AppBar(title: Text(dic['shop.create'])),
       body: SafeArea(
-       // child: !_submitting
-         //   ?
-        child: Column(children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
-                    CurrencyChooserPanel(store),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    CreateShopForm(store),
-                      /*setNewShop: store.encointer.setNewShop,
-                      submitting: _submitting,
-                      onSubmit: () {
-                        setState(() {
-                          _createShop();
-                        });
-                      },*/
-                        )
-                  ]),
-                ),
-              ])
-           // : Center(child: CupertinoActivityIndicator()),
-      ),
+          // child: !_submitting
+          //   ?
+          child: Column(children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
+            CurrencyChooserPanel(store),
+            SizedBox(
+              height: 16,
+            ),
+            CreateShopForm(store),
+          ]),
+        ),
+      ])),
     );
   }
 }
