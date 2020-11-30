@@ -28,28 +28,6 @@ class _ShopOverviewPanelState extends State<ShopOverviewPanel> {
 
   final AppStore store;
 
-  Future<void> _submit() async {
-    var args = {
-      "title": 'register_participant',
-      "txInfo": {
-        "module": 'encointerCeremonies',
-        "call": 'registerParticipant',
-      },
-      "detail": jsonEncode({
-        "cid": store.encointer.chosenCid,
-        "proof": {},
-      }),
-      "params": [
-        store.encointer.chosenCid,
-        null,
-      ],
-      'onFinish': (BuildContext txPageContext, Map res) {
-        Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
-      }
-    };
-    Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -63,9 +41,9 @@ class _ShopOverviewPanelState extends State<ShopOverviewPanel> {
               builder: (_) => (store.encointer.shopRegistry == null)
                   ? CupertinoActivityIndicator()
                   : (store.encointer.shopRegistry.isEmpty)
-                      ? Text("no currencies found")
+                      ? Text("no shops found")
                       : DropdownButton<dynamic>(
-                          value: (store.encointer.shopRegistry),
+                          value: (store.encointer.shopRegistry[0]),
                           icon: Icon(Icons.arrow_downward),
                           iconSize: 32,
                           elevation: 32,
