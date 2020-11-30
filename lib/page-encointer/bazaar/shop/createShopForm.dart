@@ -54,17 +54,19 @@ class _CreateShopForm extends State<CreateShopForm> {
     if (_formKey.currentState.validate()) {
       int decimals = store.settings.networkState.tokenDecimals;
       var args = {
-        "title": 'new_store',
+        "title": 'new_shop',
         "txInfo": {
           "module": 'encointerBazaar',
-          "call": 'newStore',
+          "call": 'newShop',
         },
         "detail": jsonEncode({
           "cid": store.encointer.chosenCid,
           "url": _urlCtrl.text.trim(),
+          //"url": _urlCtrl,
         }),
         "params": [
           store.encointer.chosenCid,
+          //_urlCtrl.text.trim(),
           _urlCtrl.text.trim(),
         ],
         'onFinish': (BuildContext txPageContext, Map res) {
@@ -90,16 +92,14 @@ class _CreateShopForm extends State<CreateShopForm> {
               padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
               shrinkWrap: true,
               children: <Widget>[
-                Expanded(
-                  child: TextFormField(
-                    // URL
-                    decoration: InputDecoration(
-                      icon: Icon(Icons.cake),
-                      hintText: dic['shop.url'],
-                      labelText: "${dic['shop.url']}: ${dic['shop.url']}",
-                    ),
-                    controller: _urlCtrl,
+                TextFormField(
+                  // URL
+                  decoration: InputDecoration(
+                    icon: Icon(Icons.cake),
+                    hintText: dic['shop.url'],
+                    labelText: "${dic['shop.url']}: ${dic['shop.url']}",
                   ),
+                  controller: _urlCtrl,
                 ),
               ],
             ),
