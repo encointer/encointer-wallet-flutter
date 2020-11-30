@@ -225,14 +225,14 @@ class ApiEncointer {
     if (store.encointer.shopRegistry != null) {
       apiRoot.unsubscribeMessage(_shopRegistryChannel);
     }
-    String account = store.account.currentAccountPubKey;
     String cid = store.encointer.chosenCid;
     if (cid == null) {
       return 0; // zero means: not registered
     }
-    apiRoot.subscribeMessage(
-        'encointer.subscribeShopRegistry("$_shopRegistryChannel", "$cid", "$account")', _shopRegistryChannel, (data) {
-      store.encointer.setShopRegistry(data);
+    apiRoot.subscribeMessage('encointer.subscribeShopRegistry("$_shopRegistryChannel", "$cid")', _shopRegistryChannel,
+        (data) {
+      List<dynamic> stringData = data.map((el) => el.toString()).toList();
+      store.encointer.setShopRegistry(stringData.cast<String>());
     });
   }
 
@@ -312,6 +312,7 @@ class ApiEncointer {
     print("balance: " + balance);
   }
 
+  // not yet used
   Future<List<String>> getShopRegistry() async {
     String cid = store.encointer.chosenCid;
 
