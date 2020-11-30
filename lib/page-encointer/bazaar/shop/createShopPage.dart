@@ -36,15 +36,19 @@ class _CreateShopPageState extends State<CreateShopPage> {
           // child: !_submitting
           //   ?
           child: Column(children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
-            CurrencyChooserPanel(store),
-            SizedBox(
-              height: 16,
-            ),
-            CreateShopForm(store),
-          ]),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
+              CurrencyChooserPanel(store),
+              SizedBox(
+                height: 16,
+              ),
+              Expanded(
+                child: CreateShopForm(store),
+              ),
+            ]),
+          ),
         ),
       ])),
     );
