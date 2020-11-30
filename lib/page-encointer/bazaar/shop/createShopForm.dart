@@ -88,15 +88,18 @@ class _CreateShopForm extends State<CreateShopForm> {
           Expanded(
             child: ListView(
               padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+              shrinkWrap: true,
               children: <Widget>[
-                TextFormField(
-                  // URL
-                  decoration: InputDecoration(
-                    icon: Icon(Icons.cake),
-                    hintText: dic['shop.url'],
-                    labelText: "${dic['shop.url']}: ${dic['shop.url']}",
+                Expanded(
+                  child: TextFormField(
+                    // URL
+                    decoration: InputDecoration(
+                      icon: Icon(Icons.cake),
+                      hintText: dic['shop.url'],
+                      labelText: "${dic['shop.url']}: ${dic['shop.url']}",
+                    ),
+                    controller: _urlCtrl,
                   ),
-                  controller: _urlCtrl,
                 ),
               ],
             ),
