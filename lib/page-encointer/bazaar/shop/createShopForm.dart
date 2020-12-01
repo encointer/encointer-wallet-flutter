@@ -62,11 +62,9 @@ class _CreateShopForm extends State<CreateShopForm> {
         "detail": jsonEncode({
           "cid": store.encointer.chosenCid,
           "url": _urlCtrl.text.trim(),
-          //"url": _urlCtrl,
         }),
         "params": [
           store.encointer.chosenCid,
-          //_urlCtrl.text.trim(),
           _urlCtrl.text.trim(),
         ],
         'onFinish': (BuildContext txPageContext, Map res) {

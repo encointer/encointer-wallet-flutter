@@ -231,8 +231,7 @@ class ApiEncointer {
     }
     apiRoot.subscribeMessage('encointer.subscribeShopRegistry("$_shopRegistryChannel", "$cid")', _shopRegistryChannel,
         (data) {
-      List<dynamic> stringData = data.map((el) => el.toString()).toList();
-      store.encointer.setShopRegistry(stringData.cast<String>());
+      store.encointer.setShopRegistry(data.cast<String>());
     });
   }
 
