@@ -25,21 +25,24 @@ class _ShopOverviewPanelState extends State<ShopOverviewPanel> {
   final AppStore store;
   Future<Shop> futureShop;
 
-  Future<Shop> getData() async {
-    final response = await http.get("https://raw.githubusercontent.com/BignaH/json-repository/main/bestShop.json");
+  Future<Shop> getData(shopID) async {
+    final response = await http.get(shopID);
 
     //if response is 200 : success that store
     if (response.statusCode == 200) {
       return Shop.fromJson(jsonDecode(response.body)); //store response as string
     } else {
-      throw Exception('Failed to load json');
+      // create dummy shop
+      return Shop(
+        name: "dummyShop",
+        description: "yet another shop",
+        image: "https://www.loreal-finance.com/site/RA2014/img/desktop/data/body-shop-pic3.jpg",
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    futureShop = getData();
-
     return Container(
       width: double.infinity,
       child: RoundedCard(
@@ -47,39 +50,44 @@ class _ShopOverviewPanelState extends State<ShopOverviewPanel> {
         child: Column(
           children: <Widget>[
             Text("Show shops:"),
-            FutureBuilder<Shop>(
-              future: futureShop,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Card(
-                    child: ListTile(
-                      leading: Image.network(
-                        snapshot.data.image,
-                        fit: BoxFit.fill,
-                        width: 100,
-                        height: 100,
-                        alignment: Alignment.center,
-                      ),
-                      title: Text(snapshot.data.name),
-                      subtitle: Text(snapshot.data.description),
-                    ),
-                  );
-                  //return Text(snapshot.data.name);
-                } else if (snapshot.hasError) {
-                  return Text("${snapshot.error}");
-                }
-                // By default, show a loading spinner.
-                return CircularProgressIndicator();
-              },
-            ),
-
-            /*Observer(
-                builder: (_) => (store.encointer.shopRegistry == null)
-                    ? CupertinoActivityIndicator()
-                    : (store.encointer.shopRegistry.isEmpty)
-                        ? Text("no shops found")
-                        :*/
-            /*)*/
+            Observer(
+              builder: (_) => (store.encointer.shopRegistry == null)
+                  ? CupertinoActivityIndicator()
+                  : (store.encointer.shopRegistry.isEmpty)
+                      ? Text("no shops found")
+                      : ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: store.encointer.shopRegistry == null ? 0 : store.encointer.shopRegistry.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            futureShop = getData(store.encointer.shopRegistry[index]);
+                            return FutureBuilder<Shop>(
+                              future: futureShop,
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return Card(
+                                    child: ListTile(
+                                      leading: Image.network(
+                                        snapshot.data.image,
+                                        fit: BoxFit.fill,
+                                        width: 100,
+                                        height: 100,
+                                        alignment: Alignment.center,
+                                      ),
+                                      title: Text(snapshot.data.name),
+                                      subtitle: Text(snapshot.data.description),
+                                    ),
+                                  );
+                                  //return Text(snapshot.data.name);
+                                } else if (snapshot.hasError) {
+                                  return Text("${snapshot.error}");
+                                }
+                                // By default, show a loading spinner.
+                                return CircularProgressIndicator();
+                              },
+                            );
+                          },
+                        ),
+            )
           ],
         ),
       ),
