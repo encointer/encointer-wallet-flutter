@@ -7,7 +7,8 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:http/http.dart' as http; //TODO: change to IPFS
+import 'package:http/http.dart' as http;
+import 'package:ipfs/ipfs.dart';
 
 class ShopOverviewPanel extends StatefulWidget {
   ShopOverviewPanel(this.store);
