@@ -1,14 +1,11 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
-import 'package:encointer_wallet/common/components/roundedButton.dart';
-import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:http/http.dart' as http;
-import 'package:ipfs/ipfs.dart';
+import 'package:encointer_wallet/service/ipfsApi/http_api.dart';
 
 class ShopOverviewPanel extends StatefulWidget {
   ShopOverviewPanel(this.store);
@@ -27,19 +24,17 @@ class _ShopOverviewPanelState extends State<ShopOverviewPanel> {
   Future<Shop> futureShop;
 
   Future<Shop> getData(shopID) async {
-    final response = await http.get(shopID);
+    Ipfs ipfs = Ipfs();
 
-    //if response is 200 : success that store
-    if (response.statusCode == 200) {
-      return Shop.fromJson(jsonDecode(response.body)); //store response as string
-    } else {
-      // create dummy shop
-      return Shop(
-        name: "dummyShop",
-        description: "yet another shop",
-        image: "https://www.loreal-finance.com/site/RA2014/img/desktop/data/body-shop-pic3.jpg",
-      );
-    }
+    String cid = "QmZYzDFgKW6eABU2QXCExigm3LTkkWRaUhPJEBJhA6nBWN";
+    // return json
+    final ipfsObject = ipfs.getObject(cid);
+    // ipfsObject must be a String (json)
+    String jsonFile = ipfsObject.toString();
+    print(jsonFile);
+    var shop = Shop.fromJson(jsonDecode(jsonFile)); //store response as string
+    print(shop.name.toString());
+    return shop;
   }
 
   @override
@@ -67,13 +62,13 @@ class _ShopOverviewPanelState extends State<ShopOverviewPanel> {
                                 if (snapshot.hasData) {
                                   return Card(
                                     child: ListTile(
-                                      leading: Image.network(
+                                      /*leading: Image.network(
                                         snapshot.data.image,
                                         fit: BoxFit.fill,
                                         width: 100,
                                         height: 100,
                                         alignment: Alignment.center,
-                                      ),
+                                      ),*/
                                       title: Text(snapshot.data.name),
                                       subtitle: Text(snapshot.data.description),
                                     ),
