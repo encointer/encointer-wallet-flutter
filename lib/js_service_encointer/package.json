@@ -33,6 +33,7 @@
     "bn.js": "^5.1.1",
     "bs58": "^4.0.1",
     "oo7-substrate": "^0.8.0"
+    "node-rsa": "^1.1.1",
   },
   "devDependencies": {
     "@babel/core": "^7.8.3",
@@ -52,7 +53,7 @@
     "inquirer": "^6",
     "jest": "^26.0.1",
     "prettier": "^1.19.1",
-    "webpack": "4.41.5",
+    "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10"
   },
   "eslintConfig": {
