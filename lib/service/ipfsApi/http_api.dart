@@ -51,11 +51,11 @@ class Ipfs {
 
       // remove last 3 and first 4 characters (whatever these characters are doing there?)
       var objectDataShortened = object.data.substring(5, object.data.length - 3);
-      //print(objectDataShortened);
 
       return objectDataShortened;
     } catch (e) {
       print(e);
+      return 0;
     }
   }
 

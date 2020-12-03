@@ -26,15 +26,20 @@ class _ShopOverviewPanelState extends State<ShopOverviewPanel> {
   Future<Shop> getData(shopID) async {
     Ipfs ipfs = Ipfs();
 
-    String cid = "QmZYzDFgKW6eABU2QXCExigm3LTkkWRaUhPJEBJhA6nBWN";
+    String cid = shopID;
+    print(cid);
     // return json
     final ipfsObject = await ipfs.getObject(cid);
-    print(ipfsObject);
-    // ipfsObject must be a String (json)
-    // String jsonFile = ipfsObject.toString();
-    // print(jsonFile);
-    var shop = Shop.fromJson(jsonDecode(ipfsObject)); //store response as string
-    return shop;
+    if (ipfsObject != 0) {
+      return Shop.fromJson(jsonDecode(ipfsObject)); //store response as string
+    } else {
+      // in case of invalid IPFS URL
+      return Shop(
+        name: "dummyShop",
+        description: "yet another shop",
+        image: "https://gateway.pinata.cloud/ipfs/QmXD1TNsVubTgWJiH5yge1JK48Tcb1qif5NsJ3YopX3UQW",
+      );
+    }
   }
 
   @override
@@ -62,13 +67,13 @@ class _ShopOverviewPanelState extends State<ShopOverviewPanel> {
                                 if (snapshot.hasData) {
                                   return Card(
                                     child: ListTile(
-                                      /*leading: Image.network(
+                                      leading: Image.network(
                                         snapshot.data.image,
                                         fit: BoxFit.fill,
                                         width: 100,
                                         height: 100,
                                         alignment: Alignment.center,
-                                      ),*/
+                                      ),
                                       title: Text(snapshot.data.name),
                                       subtitle: Text(snapshot.data.description),
                                     ),
@@ -99,10 +104,14 @@ class Shop {
   Shop({this.name, this.description, this.image});
 
   factory Shop.fromJson(Map<String, dynamic> json) {
+    var imageHash = json['image'];
+    var gateway = 'https://gateway.pinata.cloud/ipfs/'; // TODO: const mit besserem Gateway
+    var imageOnIPFS = '$gateway$imageHash';
+    print(imageOnIPFS);
     return Shop(
       name: json['name'],
       description: json['description'],
-      image: json['image'],
+      image: imageOnIPFS,
     );
   }
 }
