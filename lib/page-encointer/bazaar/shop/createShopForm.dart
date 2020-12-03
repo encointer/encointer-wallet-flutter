@@ -6,29 +6,9 @@ import 'dart:convert';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:intl/intl.dart';
-
-import 'package:encointer_wallet/common/components/AddressInputField.dart';
-import 'package:encointer_wallet/common/components/currencyWithIcon.dart';
-import 'package:encointer_wallet/common/components/roundedButton.dart';
-import 'package:encointer_wallet/common/consts/settings.dart';
-import 'package:encointer_wallet/page/account/scanPage.dart';
-import 'package:encointer_wallet/page/account/txConfirmPage.dart';
-import 'package:encointer_wallet/page/assets/asset/assetPage.dart';
-import 'package:encointer_wallet/page/assets/transfer/currencySelectPage.dart';
-import 'package:encointer_wallet/page/assets/transfer/transferCrossChainPage.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
-import 'package:encointer_wallet/store/account/types/accountData.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/UI.dart';
-import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:encointer_wallet/service/ipfsApi/http_api.dart';
+import 'dart:io';
 
 class CreateShopForm extends StatefulWidget {
   CreateShopForm(this.store);
@@ -49,10 +29,50 @@ class _CreateShopForm extends State<CreateShopForm> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _urlCtrl = new TextEditingController();
+  final TextEditingController _nameCtrl = new TextEditingController();
+  final TextEditingController _descriptionCtrl = new TextEditingController();
+  PickedFile _imageFile;
+
+  Future<void> _getImage() async {
+    try {
+      final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+      setState(() {
+        _imageFile = pickedFile;
+      });
+    } catch (e) {
+      print("Image picker error " + e);
+    }
+  }
+
+  Future<String> _uploadImage() async {
+    // TODO: upload image to IPFS, return Hash to image
+    try {
+      final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+      setState(() {
+        _imageFile = pickedFile;
+      });
+    } catch (e) {
+      print("Image picker error " + e);
+    }
+  }
+
+  Future<String> _uploadJson(imageHash) async {
+    // TODO: upload json to IPFS, return Hash to json
+    try {
+      final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+      setState(() {
+        _imageFile = pickedFile;
+      });
+    } catch (e) {
+      print("Image picker error " + e);
+    }
+  }
 
   Future<void> _submit() async {
     if (_formKey.currentState.validate()) {
-      int decimals = store.settings.networkState.tokenDecimals;
+      final _imageHash = await _uploadImage();
+      final _jsonHash = await _uploadJson(_imageHash);
+
       var args = {
         "title": 'new_shop',
         "txInfo": {
@@ -61,11 +81,11 @@ class _CreateShopForm extends State<CreateShopForm> {
         },
         "detail": jsonEncode({
           "cid": store.encointer.chosenCid,
-          "url": _urlCtrl.text.trim(),
+          "url": _urlCtrl.text.trim(), //TODO: create overview?
         }),
         "params": [
           store.encointer.chosenCid,
-          _urlCtrl.text.trim(),
+          _urlCtrl.text.trim(), //TODO: change to _jsonHash
         ],
         'onFinish': (BuildContext txPageContext, Map res) {
           Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
@@ -93,11 +113,39 @@ class _CreateShopForm extends State<CreateShopForm> {
                 TextFormField(
                   // URL
                   decoration: InputDecoration(
-                    icon: Icon(Icons.cake),
+                    icon: Icon(Icons.cake, color: Colors.green),
                     hintText: dic['shop.url'],
-                    labelText: "${dic['shop.url']}: ${dic['shop.url']}",
+                    labelText: "${dic['shop.url']}",
                   ),
                   controller: _urlCtrl,
+                ),
+                TextFormField(
+                  // URL
+                  decoration: InputDecoration(
+                    icon: Icon(Icons.beach_access, color: Colors.blue),
+                    hintText: dic['shop.name'],
+                    labelText: "${dic['shop.name']}",
+                  ),
+                  controller: _nameCtrl,
+                ),
+                TextFormField(
+                  // URL
+                  decoration: InputDecoration(
+                    icon: Icon(Icons.favorite, color: Colors.pink),
+                    hintText: dic['shop.description'],
+                    labelText: "${dic['shop.description']}",
+                  ),
+                  controller: _descriptionCtrl,
+                ),
+                _previewImage(),
+                Container(
+                  padding: EdgeInsets.all(16),
+                  child: RoundedButton(
+                    text: I18n.of(context).bazaar['image.choose'],
+                    onPressed: () {
+                      _getImage();
+                    },
+                  ),
                 ),
               ],
             ),
@@ -114,5 +162,33 @@ class _CreateShopForm extends State<CreateShopForm> {
         ],
       ),
     );
+  }
+
+  Widget _previewImage() {
+    if (_imageFile != null) {
+      return Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Image.file(File(_imageFile.path)),
+            SizedBox(
+              height: 20,
+            ),
+            /* RaisedButton(
+              onPressed: () async {
+                var res = await uploadImage(_imageFile.path, uploadUrl);
+                print(res);
+              },
+              child: const Text('Upload'),
+            )*/
+          ],
+        ),
+      );
+    } else {
+      return const Text(
+        'You have not yet chosen an image.',
+        textAlign: TextAlign.center,
+      );
+    }
   }
 }
