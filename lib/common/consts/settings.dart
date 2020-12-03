@@ -18,6 +18,7 @@ EndpointData networkEndpointEncointerGesellDev = EndpointData.fromJson(const {
   // 'value': 'ws://192.168.1.24:9944',
   //'value': 'ws://127.0.0.1:9944',
   'value': 'ws://10.0.2.2:9994', // AVD
+  //'value': 'ws://172.20.4.143:9994',
 });
 
 EndpointData networkEndpointEncointerCantillon = EndpointData.fromJson(const {
