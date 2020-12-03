@@ -1,9 +1,8 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'dart:convert' as JSON;
-import 'dart:io';
 
-// Mostly taken from import 'package:ipfs/ipfs.dart'; (not working, thus making it myself)
+// Mostly adopted from import 'package:ipfs/ipfs.dart'; (not working, thus making it myself)
 class Ipfs {
   Future getPeers() async {
     try {
@@ -44,19 +43,14 @@ class Ipfs {
 
   Future getObject(String cid) async {
     try {
-      final response = await Dio()
+      final Dio _dio = Dio();
+      final response = await _dio
           .get('http://gateway.pinata.cloud/api/v0/object/get?arg=$cid'); // unschöner gateway -> eigener server?
-      print(response.data.toString());
-      var data = response.toString();
-      var json = JSON.jsonDecode(data);
 
-      var object = Object.fromJson(json);
+      var object = Object.fromJson(response.data);
 
-      var objectData = object.data;
-
-      print(objectData);
-      // remove last 3 and first 4 characters (whatever these characters are doing there?
-      var objectDataShortened = objectData.substring(5, objectData.length - 3);
+      // remove last 3 and first 4 characters (whatever these characters are doing there?)
+      var objectDataShortened = object.data.substring(5, object.data.length - 3);
       //print(objectDataShortened);
 
       return objectDataShortened;
@@ -100,8 +94,8 @@ class Object {
     this.data,
   });
 
-  factory Object.fromJson(Map<String, dynamic> parsedJson) {
-    return Object(data: parsedJson['Data'], links: parsedJson['Links']);
+  factory Object.fromJson(Map<String, dynamic> json) {
+    return Object(data: json['Data'], links: json['Links']);
   }
 }
 

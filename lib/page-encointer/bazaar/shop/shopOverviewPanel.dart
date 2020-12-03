@@ -28,12 +28,12 @@ class _ShopOverviewPanelState extends State<ShopOverviewPanel> {
 
     String cid = "QmZYzDFgKW6eABU2QXCExigm3LTkkWRaUhPJEBJhA6nBWN";
     // return json
-    final ipfsObject = ipfs.getObject(cid);
+    final ipfsObject = await ipfs.getObject(cid);
+    print(ipfsObject);
     // ipfsObject must be a String (json)
-    String jsonFile = ipfsObject.toString();
-    print(jsonFile);
-    var shop = Shop.fromJson(jsonDecode(jsonFile)); //store response as string
-    print(shop.name.toString());
+    // String jsonFile = ipfsObject.toString();
+    // print(jsonFile);
+    var shop = Shop.fromJson(jsonDecode(ipfsObject)); //store response as string
     return shop;
   }
 
