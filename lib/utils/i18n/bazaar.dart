@@ -12,4 +12,6 @@ const Map<String, String> enBazaar = {
   'shop.name': 'Shop name',
   'shop.url': 'URL to shop',
   'shop.default': '40',
+  'shop.description': 'Shop description',
+  'image.choose': 'Choose an image',
 };
