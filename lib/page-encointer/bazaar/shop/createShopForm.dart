@@ -7,8 +7,9 @@ import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:encointer_wallet/service/ipfsApi/http_api.dart';
+import 'package:encointer_wallet/service/ipfsApi/httpApi.dart';
 import 'dart:io';
+import 'package:encointer_wallet/service/substrateApi/api.dart';
 
 class CreateShopForm extends StatefulWidget {
   CreateShopForm(this.store);
@@ -95,10 +96,15 @@ class _CreateShopForm extends State<CreateShopForm> {
     }
   }
 
+  Future<void> test() async {
+    String index = await webApi.evalJavascriptIpfs();
+    print(index);
+  }
+
   @override
   Widget build(BuildContext context) {
     final Map<String, String> dic = I18n.of(context).bazaar;
-
+    test();
     // TODO: Input fields for description, location usw., convert to json, upload and copy URL to blockchain.
     // TODO: IPFS
     return Form(
