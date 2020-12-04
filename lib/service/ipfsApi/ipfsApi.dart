@@ -1,11 +1,8 @@
-import 'dart:async';
 import 'dart:convert';
+import 'dart:async';
 
 import 'package:encointer_wallet/common/consts/settings.dart';
-import 'package:encointer_wallet/service/subscan.dart';
-import 'package:encointer_wallet/service/substrateApi/apiAccount.dart';
-import 'package:encointer_wallet/service/substrateApi/apiAssets.dart';
-import 'package:encointer_wallet/service/substrateApi/encointer/apiEncointer.dart';
+import 'package:encointer_wallet/service/ipfsApi/ipfsApiFunctions.dart';
 import 'package:encointer_wallet/service/substrateApi/types/genExternalLinksParams.dart';
 import 'package:encointer_wallet/service/walletApi.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -15,41 +12,47 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:get_storage/get_storage.dart';
 
-// global api instance
-Api webApi;
+/// Api to interface with the `js_ipfs.js`
+///
+/// Note: If a call fails on the js side, the corresponding message completer will not be
+/// freed. This means that the same call cannot be launched a second time as from the dart
+/// side if allow multiple==false in evalJavascript, which is the default.
+///
+/// NOTE: In this case a `hot_restart` instead of `hot_reload` is needed in order to clear that cache.
+///
+/// NOTE: If the js-code was changed a rebuild of the application is needed to update the code.
 
-class Api {
-  Api(this.context, this.store);
+// global api instance
+IpfsApi ipfsApi;
+
+class IpfsApi {
+  IpfsApi(this.context, this.store);
+
+  //IpfsApiFunctions functions;
 
   final BuildContext context;
   final AppStore store;
   var jsStorage;
 
-  ApiAccount account;
-
-  ApiEncointer encointer;
-
-  ApiAssets assets;
-
-  SubScanApi subScanApi = SubScanApi();
-
   Map<String, Function> _msgHandlers = {};
   Map<String, Completer> _msgCompleters = {};
-  FlutterWebviewPlugin _web;
-  int _evalJavascriptUID = 0;
+  FlutterWebviewPlugin _webView;
 
   Function _connectFunc;
+
+  void testIPFS() {
+    // inject js file to webview
+    _webView.evalJavascript("ipfs.testIPFS");
+    print("ok");
+  }
+}
+
+/*
 
   void init() async {
     jsStorage = GetStorage();
 
-    account = ApiAccount(this);
-
-    encointer = ApiEncointer(this);
-
-    assets = ApiAssets(this);
-
-    //ipfs = ApiIpfs(this);
+    functions = IpfsApiFunctions(this);
 
     print("first launch of webview");
     await launchWebview();
@@ -64,22 +67,11 @@ class Api {
     await launchWebview();
   }
 
-  Future<void> _checkJSCodeUpdate() async {
-    // check js code update
-    final network = store.settings.endpoint.info;
-    final jsVersion = await WalletApi.fetchPolkadotJSVersion(network);
-    final bool needUpdate = await UI.checkJSCodeUpdate(context, jsVersion, network);
-    if (needUpdate) {
-      await UI.updateJSCode(context, jsStorage, network, jsVersion);
-    }
-  }
 
   void _startJSCode(String js) {
     // inject js file to webview
-    _web.evalJavascript(js);
+    _webView.evalJavascript(js);
 
-    // load keyPairs from local data
-    account.initAccounts();
     // connect remote node
     _connectFunc();
   }
@@ -109,8 +101,6 @@ class Api {
           // inject js file to webview
           _web.evalJavascript(js);
 
-          // load keyPairs from local data
-          account.initAccounts();
           // connect remote node
           _connectFunc();
         });
@@ -186,21 +176,8 @@ class Api {
     _web.evalJavascript(script);
 
     return c.future;
-  }
-
-  Future<String> evalJavascriptIpfs() async {
-    // do connect
-    String res = await _web.evalJavascript('ipfs.testIpfs()');
-    if (res == "null") {
-      print('connect failed');
-      store.encointer.setShopRegistry(['0']);
-      return "not ok";
-    } else {
-      print('connect io');
-      store.encointer.setShopRegistry(['1']);
-      return res;
-    }
-  }
+  }*/
+/*
 
   Future<void> connectNode() async {
     String node = store.settings.endpoint.value;
@@ -322,4 +299,4 @@ class Api {
     );
     return res;
   }
-}
+*/
