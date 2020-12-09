@@ -76,21 +76,15 @@ class Ipfs {
     }
   }
 
-  Future<String> uploadImage(PickedFile image) async {
+  Future<String> uploadImage(File image) async {
     Dio _dio = Dio();
 
     //_dio.options.baseUrl = "http://10.0.2.2:5001/api/v0";
     _dio.options.connectTimeout = 5000; //5s
     _dio.options.receiveTimeout = 3000;
-    // _dio.options.contentType = "image/jpg";
-    String fileName = image.path.split('/').last;
-    File file = File(image.path);
-    print(fileName);
-    FormData formData = FormData.fromMap({
-      "file": await MultipartFile.fromFile(image.path),
-    });
-    final response = await _dio.post("http://10.0.2.2:8080/ipfs/", data: file.openRead());
-    // final response = await _dio.post("http://127.0.0.1:5001/api/v0/swarm/peers");
+    // File file = File(image.path);
+    final response = await _dio.post("http://10.0.2.2:8080/ipfs/", data: image.openRead());
+
     print(response.headers.map["location"].toString());
     // return response.data['id'];
     return response.data;

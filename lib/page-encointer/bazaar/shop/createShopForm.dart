@@ -48,7 +48,8 @@ class _CreateShopForm extends State<CreateShopForm> {
   Future<String> _uploadImage() async {
     // TODO: upload image to IPFS, return Hash to image
     Ipfs ipfs = Ipfs();
-    var cid = await ipfs.uploadImage(_imageFile);
+    File image = File(_imageFile.path);
+    var cid = await ipfs.uploadImage(image);
     print(cid.toString());
     return cid.toString();
   }
