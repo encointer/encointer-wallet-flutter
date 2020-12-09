@@ -47,14 +47,10 @@ class _CreateShopForm extends State<CreateShopForm> {
 
   Future<String> _uploadImage() async {
     // TODO: upload image to IPFS, return Hash to image
-    try {
-      final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
-      setState(() {
-        _imageFile = pickedFile;
-      });
-    } catch (e) {
-      print("Image picker error " + e);
-    }
+    Ipfs ipfs = Ipfs();
+    var cid = await ipfs.uploadImage(_imageFile);
+    print(cid.toString());
+    return cid.toString();
   }
 
   Future<String> _uploadJson(imageHash) async {
@@ -72,7 +68,7 @@ class _CreateShopForm extends State<CreateShopForm> {
   Future<void> _submit() async {
     if (_formKey.currentState.validate()) {
       final _imageHash = await _uploadImage();
-      final _jsonHash = await _uploadJson(_imageHash);
+      //  final _jsonHash = await _uploadJson(_imageHash);
 
       var args = {
         "title": 'new_shop',
@@ -104,7 +100,7 @@ class _CreateShopForm extends State<CreateShopForm> {
   @override
   Widget build(BuildContext context) {
     final Map<String, String> dic = I18n.of(context).bazaar;
-    test();
+    // test();
     // TODO: Input fields for description, location usw., convert to json, upload and copy URL to blockchain.
     // TODO: IPFS
     return Form(

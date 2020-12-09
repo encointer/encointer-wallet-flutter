@@ -26,8 +26,11 @@ class _ShopOverviewPanelState extends State<ShopOverviewPanel> {
   Future<Shop> getData(shopID) async {
     Ipfs ipfs = Ipfs();
 
-    String cid = shopID;
-    print(cid);
+    //String cid = shopID;
+    String cid = "QmW6WLLhUPsosBcKebejveknjrSQjZjq5eYFVBRfugygTB";
+    //print(cid);
+    // var test = await ipfs.getPeers();
+    //print(test.toString());
     // return json
     final ipfsObject = await ipfs.getObject(cid);
     if (ipfsObject != 0) {
@@ -105,7 +108,7 @@ class Shop {
 
   factory Shop.fromJson(Map<String, dynamic> json) {
     var imageHash = json['image'];
-    var gateway = 'https://gateway.pinata.cloud/ipfs/'; // TODO: const mit besserem Gateway
+    var gateway = 'http://10.0.2.2:8080/ipfs/'; // TODO: const mit besserem Gateway
     var imageOnIPFS = '$gateway$imageHash';
     print(imageOnIPFS);
     return Shop(
