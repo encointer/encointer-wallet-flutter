@@ -1,6 +1,20 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'dart:convert' as JSON;
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+import 'package:encointer_wallet/common/components/roundedButton.dart';
+import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:encointer_wallet/common/components/roundedButton.dart';
+import 'package:encointer_wallet/page/account/txConfirmPage.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:encointer_wallet/service/ipfsApi/httpApi.dart';
+import 'dart:io';
+import 'package:encointer_wallet/service/substrateApi/api.dart';
 
 // Mostly adopted from import 'package:ipfs/ipfs.dart'; (not working, thus making it myself)
 class Ipfs {
@@ -8,8 +22,9 @@ class Ipfs {
     try {
       Dio dio = new Dio();
       // returns a json file of Peers
-      final response = await dio.get('http://127.0.0.1:5001/api/v0/swarm/peers');
+      final response = await dio.get('http://10.0.2.2:8080/api/v0/swarm/peers');
       var data = response.toString();
+      print(data);
       var json = JSON.jsonDecode(data);
 
       var encoder = JsonEncoder.withIndent('  ');
@@ -44,6 +59,46 @@ class Ipfs {
   Future getObject(String cid) async {
     try {
       final Dio _dio = Dio();
+      //final response = await _dio
+      //     .get('http://gateway.pinata.cloud/api/v0/object/get?arg=$cid'); // unschöner gateway -> eigener server?
+      final response =
+          await _dio.get('http://10.0.2.2:8080/api/v0/object/get?arg=$cid'); // unschöner gateway -> eigener server?
+      print(response.toString());
+      var object = Object.fromJson(response.data);
+
+      // remove last 3 and first 4 characters (whatever these characters are doing there?)
+      var objectDataShortened = object.data.substring(5, object.data.length - 3);
+
+      return objectDataShortened;
+    } catch (e) {
+      print(e);
+      return 0;
+    }
+  }
+
+  Future<String> uploadImage(PickedFile image) async {
+    Dio _dio = Dio();
+
+    //_dio.options.baseUrl = "http://10.0.2.2:5001/api/v0";
+    _dio.options.connectTimeout = 5000; //5s
+    _dio.options.receiveTimeout = 3000;
+    // _dio.options.contentType = "image/jpg";
+    String fileName = image.path.split('/').last;
+    File file = File(image.path);
+    print(fileName);
+    FormData formData = FormData.fromMap({
+      "file": await MultipartFile.fromFile(image.path),
+    });
+    final response = await _dio.post("http://10.0.2.2:8080/ipfs/", data: file.openRead());
+    // final response = await _dio.post("http://127.0.0.1:5001/api/v0/swarm/peers");
+    print(response.headers.map["location"].toString());
+    // return response.data['id'];
+    return response.data;
+  }
+
+  /*Future uploadObject(File path) async {
+    try {
+      final Dio _dio = Dio();
       final response = await _dio
           .get('http://gateway.pinata.cloud/api/v0/object/get?arg=$cid'); // unschöner gateway -> eigener server?
 
@@ -56,8 +111,7 @@ class Ipfs {
     } catch (e) {
       print(e);
       return 0;
-    }
-  }
+    }*/
 
   Future objectStats() async {
     try {
