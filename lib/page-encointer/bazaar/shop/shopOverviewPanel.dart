@@ -26,7 +26,7 @@ class _ShopOverviewPanelState extends State<ShopOverviewPanel> {
   Future<Shop> futureShop;
 
   Future<Shop> getShopData(shopID) async {
-    final ipfsObject = await Ipfs().getObject(shopID);
+    final ipfsObject = await Ipfs().getJson(shopID);
     if (ipfsObject != 0) {
       return Shop.fromJson(jsonDecode(ipfsObject)); //store response as string
     } else {
