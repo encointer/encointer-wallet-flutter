@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ItemCard extends StatelessWidget {
+class ArticleCard extends StatelessWidget {
   double _width;
   double _height;
   String title;
@@ -11,17 +11,15 @@ class ItemCard extends StatelessWidget {
   String image;
   String location;
 
-  ItemCard({this.title, this.price, this.dateAdded, this.category,
-    this.description, this.image, this.location});
+  ArticleCard({this.title, this.price, this.dateAdded, this.category, this.description, this.image, this.location});
 
   @override
   Widget build(BuildContext context) {
-    _width= MediaQuery.of(context).size.width;
+    _width = MediaQuery.of(context).size.width;
     _height = MediaQuery.of(context).size.height;
     return Card(
       elevation: 3,
-      shape:
-      RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
       color: Colors.indigo[50],
       child: Container(
         padding: EdgeInsets.only(left: 10, top: 10, right: 5, bottom: 10),
@@ -33,7 +31,7 @@ class ItemCard extends StatelessWidget {
               children: <Widget>[
                 Text(
                   title,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: _height/40),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: _height / 40),
                 ),
                 Container(
                   width: _width / 3,
@@ -72,13 +70,12 @@ class ItemCard extends StatelessWidget {
                       child: Text(
                         description,
                         style: TextStyle(
-                          fontSize: _height/70,
+                          fontSize: _height / 70,
                         ),
                         maxLines: 2,
                         overflow: TextOverflow.ellipsis,
                         softWrap: true,
-                      )
-                  ),
+                      )),
                 ),
                 SizedBox(
                   height: 5,
@@ -90,9 +87,12 @@ class ItemCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Flexible(
-                          child:  GestureDetector(
-                            child: Icon(Icons.favorite_border, size: _height/30,),
-                            onTap: (){
+                          child: GestureDetector(
+                            child: Icon(
+                              Icons.favorite_border,
+                              size: _height / 30,
+                            ),
+                            onTap: () {
                               print('Fav');
                             },
                           ),
@@ -102,18 +102,18 @@ class ItemCard extends StatelessWidget {
                           children: <Widget>[
                             Text(
                               dateAdded,
-                              style: TextStyle(fontSize: _height/65),
+                              style: TextStyle(fontSize: _height / 65),
                             ),
                             Row(
                               mainAxisSize: MainAxisSize.min,
                               children: <Widget>[
                                 Icon(
                                   Icons.location_on,
-                                  size: _height/65,
+                                  size: _height / 65,
                                 ),
                                 Text(
                                   location,
-                                  style: TextStyle(fontSize: _height/65),
+                                  style: TextStyle(fontSize: _height / 65),
                                 )
                               ],
                             ),
@@ -129,7 +129,7 @@ class ItemCard extends StatelessWidget {
               width: 10,
             ),
             Container(
-              width: _width/2.5,
+              width: _width / 2.5,
               decoration: BoxDecoration(
                 shape: BoxShape.rectangle,
                 color: Colors.white,
@@ -139,8 +139,8 @@ class ItemCard extends StatelessWidget {
               child: Image.asset(
                 image,
                 fit: BoxFit.cover,
-                height: _height/4.5,
-                width: _width/4.5,
+                height: _height / 4.5,
+                width: _width / 4.5,
               ),
             ),
           ],

@@ -31,7 +31,6 @@ class Ipfs {
         }
       }
       var objectData = object.data.substring(indexJsonBegin, indexJsonEnd + 1);
-      print(objectData);
       return objectData;
     } catch (e) {
       print(e);
