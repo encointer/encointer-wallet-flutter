@@ -8,19 +8,6 @@ import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-/*
-class ShopOverviewPage extends StatefulWidget {
-  ShopOverviewPage(this.store);
-
-  static const String route = '/encointer/bazaar/shopOverviewPage';
-  final AppStore store;
-
-  @override
-  _ShopOverviewPageState createState() => _ShopOverviewPageState(store);
-}
-
-class _ShopOverviewPageState extends State<ShopOverviewPage> {
-  _ShopOverviewPageState(this.store);*/
 
 class ShopOverviewPage extends StatelessWidget {
   ShopOverviewPage(this.store);
