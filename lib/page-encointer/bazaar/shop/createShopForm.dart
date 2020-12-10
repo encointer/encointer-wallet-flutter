@@ -3,7 +3,6 @@ import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:image_picker/image_picker.dart';
@@ -53,21 +52,20 @@ class _CreateShopForm extends State<CreateShopForm> {
   }
 
   Future<String> _uploadJson(imageHash) async {
-    // TODO: upload json to IPFS, return Hash to json
-    try {
-      final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
-      setState(() {
-        _imageFile = pickedFile;
-      });
-    } catch (e) {
-      print("Image picker error " + e);
-    }
+    final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+    setState(() {
+      _imageFile = pickedFile;
+    });
   }
 
   Future<void> _submit() async {
     if (_formKey.currentState.validate()) {
+      // upload shop image to ipfs
       final _imageHash = await _uploadImage();
-      //  final _jsonHash = await _uploadJson(_imageHash);
+      // create shop
+
+      //   Shop currentShop = await Shop(_nameCtrl, _descriptionCtrl, ;
+      //   final _jsonHash = await _uploadJson(_jsonString);
 
       var args = {
         "title": 'new_shop',
