@@ -8,13 +8,13 @@ class Ipfs {
   Future getObject(String cid) async {
     try {
       final Dio _dio = Dio();
-
       _dio.options.baseUrl = ipfs_gateway_address;
 
       final response = await _dio.get('/api/v0/object/get?arg=$cid');
       print(response.toString());
       var object = Object.fromJson(response.data);
 
+      // TODO: Better solution
       // remove last 3 and first 4 characters (whatever these characters are doing there?)
       var objectDataShortened = object.data.substring(5, object.data.length - 3);
 
@@ -26,15 +26,23 @@ class Ipfs {
   }
 
   Future<String> uploadImage(File image) async {
-    Dio _dio = Dio();
+    try {
+      Dio _dio = Dio();
+      _dio.options.baseUrl = ipfs_gateway_address;
+      _dio.options.connectTimeout = 5000; //5s
+      _dio.options.receiveTimeout = 3000;
 
-    _dio.options.baseUrl = ipfs_gateway_address;
-    _dio.options.connectTimeout = 5000; //5s
-    _dio.options.receiveTimeout = 3000;
-    // File file = File(image.path);
-    final response = await _dio.post("/ipfs/", data: image.openRead());
-    print(response.headers.map["location"].toString());
-    return response.data;
+      final response = await _dio.post("/ipfs/", data: image.openRead());
+      String imageHashLong = response.headers.map['ipfs-hash'].toString(); // [ipfs_hash]
+
+      // TODO: Nicer solution
+      // remove surrounding [] (quick and dirty)
+      var imageHash = imageHashLong.substring(1, imageHashLong.length - 1);
+      return imageHash;
+    } catch (e) {
+      print("Ipfs upload of Image error " + e);
+      return "";
+    }
   }
 
   /*Future uploadObject(File path) async {
