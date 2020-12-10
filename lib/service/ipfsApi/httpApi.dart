@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'dart:convert' as JSON;
 import 'dart:io';
 import 'package:encointer_wallet/common/consts/settings.dart';
 
