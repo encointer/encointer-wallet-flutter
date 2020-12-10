@@ -6,6 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:encointer_wallet/service/ipfsApi/httpApi.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shop/shopClass.dart';
+import 'package:encointer_wallet/common/consts/settings.dart';
 
 class ShopOverviewPanel extends StatefulWidget {
   ShopOverviewPanel(this.store);
@@ -23,16 +25,8 @@ class _ShopOverviewPanelState extends State<ShopOverviewPanel> {
   final AppStore store;
   Future<Shop> futureShop;
 
-  Future<Shop> getData(shopID) async {
-    Ipfs ipfs = Ipfs();
-
-    //String cid = shopID;
-    String cid = "QmW6WLLhUPsosBcKebejveknjrSQjZjq5eYFVBRfugygTB";
-    //print(cid);
-    // var test = await ipfs.getPeers();
-    //print(test.toString());
-    // return json
-    final ipfsObject = await ipfs.getObject(cid);
+  Future<Shop> getShopData(shopID) async {
+    final ipfsObject = await Ipfs().getObject(shopID);
     if (ipfsObject != 0) {
       return Shop.fromJson(jsonDecode(ipfsObject)); //store response as string
     } else {
@@ -40,9 +34,13 @@ class _ShopOverviewPanelState extends State<ShopOverviewPanel> {
       return Shop(
         name: "dummyShop",
         description: "yet another shop",
-        image: "https://gateway.pinata.cloud/ipfs/QmXD1TNsVubTgWJiH5yge1JK48Tcb1qif5NsJ3YopX3UQW",
+        imageHash: "QmXD1TNsVubTgWJiH5yge1JK48Tcb1qif5NsJ3YopX3UQW",
       );
     }
+  }
+
+  String getImageAdress(String imageHash) {
+    return '$ipfs_gateway_address/ipfs/$imageHash';
   }
 
   @override
@@ -63,7 +61,7 @@ class _ShopOverviewPanelState extends State<ShopOverviewPanel> {
                           shrinkWrap: true,
                           itemCount: store.encointer.shopRegistry == null ? 0 : store.encointer.shopRegistry.length,
                           itemBuilder: (BuildContext context, int index) {
-                            futureShop = getData(store.encointer.shopRegistry[index]);
+                            futureShop = getShopData(store.encointer.shopRegistry[index]);
                             return FutureBuilder<Shop>(
                               future: futureShop,
                               builder: (context, snapshot) {
@@ -71,7 +69,7 @@ class _ShopOverviewPanelState extends State<ShopOverviewPanel> {
                                   return Card(
                                     child: ListTile(
                                       leading: Image.network(
-                                        snapshot.data.image,
+                                        getImageAdress(snapshot.data.imageHash),
                                         fit: BoxFit.fill,
                                         width: 100,
                                         height: 100,
@@ -95,26 +93,6 @@ class _ShopOverviewPanelState extends State<ShopOverviewPanel> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class Shop {
-  final String name;
-  final String description;
-  final String image;
-
-  Shop({this.name, this.description, this.image});
-
-  factory Shop.fromJson(Map<String, dynamic> json) {
-    var imageHash = json['image'];
-    var gateway = 'http://10.0.2.2:8080/ipfs/'; // TODO: const mit besserem Gateway
-    var imageOnIPFS = '$gateway$imageHash';
-    print(imageOnIPFS);
-    return Shop(
-      name: json['name'],
-      description: json['description'],
-      image: imageOnIPFS,
     );
   }
 }
