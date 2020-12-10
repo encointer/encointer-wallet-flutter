@@ -90,29 +90,6 @@ class Ipfs {
       return "";
     }
   }
-
-  Future objectStats() async {
-    try {
-      final response = await Dio()
-          .get('http://127.0.0.1:5001/api/v0/object/stat?arg=QmYWquTmxMJbeA6AnAedb5CxaPhW8KyTBVkezfKjJTy5jH');
-      var data = response.toString();
-      var json = JSON.jsonDecode(data);
-
-      var encoder = JsonEncoder.withIndent('  ');
-      var prettyprint = encoder.convert(json);
-
-      print(prettyprint);
-
-      var obj = ObjectStats.fromJson(json);
-      print(json.toString());
-      print(obj.blockSize);
-      print(obj.dataSize);
-      print(obj.hash);
-      print(obj.numLinks);
-    } catch (e) {
-      print(e);
-    }
-  }
 }
 
 class Object {
@@ -128,26 +105,5 @@ class Object {
 
   factory Object.fromJson(Map<String, dynamic> json) {
     return Object(data: json['Data'], links: json['Links']);
-  }
-}
-
-class ObjectStats {
-  int blockSize;
-  int cumulative;
-  int dataSize;
-  String hash;
-  int linkSize;
-  int numLinks;
-
-  ObjectStats({this.hash, this.blockSize, this.cumulative, this.dataSize, this.linkSize, this.numLinks});
-
-  factory ObjectStats.fromJson(Map<String, dynamic> parsedJson) {
-    return ObjectStats(
-        blockSize: parsedJson['BlockSize'],
-        cumulative: parsedJson['CumulativeSize'],
-        dataSize: parsedJson['DataSize'],
-        hash: parsedJson['Hash'],
-        linkSize: parsedJson['LinksSize'],
-        numLinks: parsedJson['NumLinks']);
   }
 }
