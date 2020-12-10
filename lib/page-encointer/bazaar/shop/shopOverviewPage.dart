@@ -2,8 +2,6 @@ import 'package:encointer_wallet/page-encointer/common/currencyChooserPanel.dart
 import 'package:encointer_wallet/page-encointer/bazaar/shop/shopOverviewPanel.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +13,6 @@ class ShopOverviewPage extends StatelessWidget {
   static const String route = '/encointer/bazaar/shopOverviewPage';
 
   final AppStore store;
-
-  String _tab = 'DOT';
 
   @override
   Widget build(BuildContext context) {
@@ -74,42 +70,31 @@ class _ShopObserverState extends State<ShopObserver> with SingleTickerProviderSt
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) => Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: <Widget>[
-            Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
-              CurrencyChooserPanel(store),
-              SizedBox(
-                height: 16,
-              ),
-              //appConnected ? _getShopView(store.encointer.currentPhase) : _getShopViewOffline(),
-              _getShopView(),
-            ])
-          ],
-        ),
-      ),
+          padding: const EdgeInsets.all(16.0),
+          child: Column(mainAxisSize: MainAxisSize.max, children: <Widget>[
+            CurrencyChooserPanel(store),
+            // TODO: what to show in case of offline?
+            //appConnected ? _getShopView(store.encointer.currentPhase) : _getShopViewOffline(),
+            _getShopView(),
+          ])),
     );
   }
 
   Widget _getShopView() {
     return SafeArea(
-      child: Column(children: <Widget>[
-        Container(
-          padding: EdgeInsets.fromLTRB(16, 32, 16, 32),
-          child: ShopOverviewPanel(store),
-        ),
-      ]),
+      child: Container(
+        padding: EdgeInsets.fromLTRB(16, 32, 16, 32),
+        child: ShopOverviewPanel(store),
+      ),
     );
   }
 
   Widget _getShopViewOffline() {
     return SafeArea(
-      child: Column(children: <Widget>[
-        Container(
-          padding: EdgeInsets.fromLTRB(16, 32, 16, 32),
-          child: ShopOverviewPanel(store),
-        ),
-      ]),
+      child: Container(
+        padding: EdgeInsets.fromLTRB(16, 32, 16, 32),
+        child: ShopOverviewPanel(store),
+      ),
     );
   }
 }

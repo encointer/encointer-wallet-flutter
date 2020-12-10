@@ -1,11 +1,9 @@
-import 'dart:convert';
 import 'dart:async';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:encointer_wallet/service/ipfsApi/httpApi.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shop/shopClass.dart';
 import 'package:encointer_wallet/common/consts/settings.dart';
 
@@ -25,28 +23,19 @@ class _ShopOverviewPanelState extends State<ShopOverviewPanel> {
   final AppStore store;
   Future<Shop> futureShop;
 
-  Future<Shop> getShopData(shopID) async {
-    final ipfsObject = await Ipfs().getJson(shopID);
-    if (ipfsObject != 0) {
-      return Shop.fromJson(jsonDecode(ipfsObject)); //store response as string
-    } else {
-      // in case of invalid IPFS URL
-      return Shop(
-        name: "dummyShop",
-        description: "yet another shop",
-        imageHash: "QmXD1TNsVubTgWJiH5yge1JK48Tcb1qif5NsJ3YopX3UQW",
-      );
-    }
-  }
-
   String getImageAdress(String imageHash) {
     return '$ipfs_gateway_address/ipfs/$imageHash';
   }
 
   @override
   Widget build(BuildContext context) {
+    // Full screen width and height
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
+    // Height (without SafeArea)
+    var padding = MediaQuery.of(context).padding;
+    double height1 = height - padding.top - padding.bottom;
     return Container(
-      width: double.infinity,
       child: RoundedCard(
         padding: EdgeInsets.symmetric(vertical: 8),
         child: Column(
@@ -57,39 +46,44 @@ class _ShopOverviewPanelState extends State<ShopOverviewPanel> {
                   ? CupertinoActivityIndicator()
                   : (store.encointer.shopRegistry.isEmpty)
                       ? Text("no shops found")
-                      : ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: store.encointer.shopRegistry == null ? 0 : store.encointer.shopRegistry.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            futureShop = getShopData(store.encointer.shopRegistry[index]);
-                            return FutureBuilder<Shop>(
-                              future: futureShop,
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  return Card(
-                                    child: ListTile(
-                                      leading: Image.network(
-                                        getImageAdress(snapshot.data.imageHash),
-                                        fit: BoxFit.fill,
-                                        width: 100,
-                                        height: 100,
-                                        alignment: Alignment.center,
+                      : Container(
+                          height: height1 / 1.9,
+                          child: ListView.builder(
+                            shrinkWrap: true,
+                            scrollDirection: Axis.vertical,
+                            padding: EdgeInsets.fromLTRB(16, 0, 16, 100),
+                            itemCount: store.encointer.shopRegistry == null ? 0 : store.encointer.shopRegistry.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              futureShop = Shop().getShopData(store.encointer.shopRegistry[index]);
+                              return FutureBuilder<Shop>(
+                                future: futureShop,
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return Card(
+                                      child: ListTile(
+                                        leading: Image.network(
+                                          getImageAdress(snapshot.data.imageHash),
+                                          fit: BoxFit.fill,
+                                          width: 100,
+                                          height: 100,
+                                          alignment: Alignment.center,
+                                        ),
+                                        title: Text(snapshot.data.name),
+                                        subtitle: Text(snapshot.data.description),
                                       ),
-                                      title: Text(snapshot.data.name),
-                                      subtitle: Text(snapshot.data.description),
-                                    ),
-                                  );
-                                  //return Text(snapshot.data.name);
-                                } else if (snapshot.hasError) {
-                                  return Text("${snapshot.error}");
-                                }
-                                // By default, show a loading spinner.
-                                return CircularProgressIndicator();
-                              },
-                            );
-                          },
+                                    );
+                                    //return Text(snapshot.data.name);
+                                  } else if (snapshot.hasError) {
+                                    return Text("${snapshot.error}");
+                                  }
+                                  // By default, show a loading spinner.
+                                  return CircularProgressIndicator();
+                                },
+                              );
+                            },
+                          ),
                         ),
-            )
+            ),
           ],
         ),
       ),

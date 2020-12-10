@@ -1,9 +1,10 @@
 import 'package:encointer_wallet/common/components/BorderedTitle.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/components/itemCard.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/components/articleClass.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/components/shopClass.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/article/articleClass.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/article/articleCard.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shop/shopCard.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shop/shopClass.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shop/createShopPage.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shop/shopOverviewPage.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -16,10 +17,6 @@ class BazaarEntry extends StatelessWidget {
   BazaarEntry(this.store);
 
   final AppStore store;
-
-  // dummy List creation
-  final List<Article> dummyList = createDummyList();
-  final List<Shop> dummyListShop = createDummyListShop();
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +43,7 @@ class BazaarEntry extends StatelessWidget {
                 ],
               ),
             ),
+            // TODO: implement search option
             searchBar(context, dic),
             Divider(height: 28), // not nice solution
             Flexible(
@@ -54,13 +52,14 @@ class BazaarEntry extends StatelessWidget {
                 shrinkWrap: true,
                 padding: EdgeInsets.all(8),
                 children: <Widget>[
+                  // TODO: implement articles
+                  /*Container(
+                    margin: EdgeInsets.only(left: 10, top: 15),
+                    child: articleSection(context, dic),
+                  ),*/
                   Container(
                     margin: EdgeInsets.only(left: 10, top: 15),
-                    child: articleSection(context, dic, dummyList),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 10, top: 15),
-                    child: shopSection(context, dic, dummyListShop),
+                    child: shopSection(context, dic, store),
                   ),
                 ],
               ),
@@ -92,6 +91,80 @@ Widget searchBar(BuildContext context, Map<String, String> dic) {
               ),
             ),
           ),
+        ),
+      ),
+    ],
+  );
+}
+
+Widget shopSection(BuildContext context, Map<String, String> dic, AppStore store) {
+  final double _height = MediaQuery.of(context).size.height;
+
+  return Column(
+    children: <Widget>[
+      // Title
+      Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(top: 40),
+            child: BorderedTitle(
+              title: dic['shops'],
+            ),
+          ),
+          Container(
+            margin: EdgeInsets.only(top: 40, left: 100, right: 20),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.pushNamed(context, ShopOverviewPage.route);
+              },
+              child: Text(
+                dic['show.all'],
+                style: Theme.of(context).textTheme.headline2.apply(fontSizeFactor: 0.7),
+              ),
+            ),
+          ),
+        ],
+      ),
+      RoundedCard(
+        margin: EdgeInsets.only(top: 16),
+        child: Column(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(top: 5, left: 5, bottom: 5),
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    dic['recently.added'],
+                    style: Theme.of(context).textTheme.headline3,
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: _height / 5,
+              child: ListView.builder(
+                padding: EdgeInsets.all(5),
+                shrinkWrap: true,
+                itemCount: store.encointer.shopRegistry == null ? 0 : store.encointer.shopRegistry.length,
+                scrollDirection: Axis.horizontal,
+                itemBuilder: (BuildContext context, index) {
+                  return _buildShopEntries(context, index, store);
+                },
+              ),
+            ),
+            // Add Article button
+            Container(
+              margin: EdgeInsets.only(left: 40, right: 40, top: 10, bottom: 15),
+              child: RoundedButton(
+                text: dic['shop.insert'],
+                onPressed: () {
+                  Navigator.pushNamed(context, CreateShopPage.route);
+                },
+              ),
+            ),
+          ],
         ),
       ),
     ],
@@ -170,85 +243,12 @@ Widget articleSection(BuildContext context, Map<String, String> dic, List<Articl
   );
 }
 
-Widget shopSection(BuildContext context, Map<String, String> dic, List<Shop> itemList) {
-  final double _height = MediaQuery.of(context).size.height;
-  return Column(
-    children: <Widget>[
-      // Title
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(top: 40),
-            child: BorderedTitle(
-              title: dic['shops'],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 40, left: 100, right: 20),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, ShopOverviewPage.route);
-              },
-              child: Text(
-                dic['show.all'],
-                style: Theme.of(context).textTheme.headline2.apply(fontSizeFactor: 0.7),
-              ),
-            ),
-          ),
-        ],
-      ),
-      RoundedCard(
-        margin: EdgeInsets.only(top: 16),
-        child: Column(
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(top: 5, left: 5, bottom: 5),
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    dic['recently.added'],
-                    style: Theme.of(context).textTheme.headline3,
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              height: _height / 5,
-              child: ListView.builder(
-                padding: EdgeInsets.all(5),
-                shrinkWrap: true,
-                itemCount: itemList.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, index) {
-                  return _buildShopEntries(context, index, itemList);
-                },
-              ),
-            ),
-            // Add Article button
-            Container(
-              margin: EdgeInsets.only(left: 40, right: 40, top: 10, bottom: 15),
-              child: RoundedButton(
-                text: dic['shop.insert'],
-                onPressed: () {
-                  Navigator.pushNamed(context, CreateShopPage.route);
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    ],
-  );
-}
-
 Widget _buildArticleEntries(BuildContext context, int index, List<Article> itemList) {
   return GestureDetector(
     onTap: () {
       // Navigator.of(context).pushNamed(DETAIL_UI);
     },
-    child: ItemCard(
+    child: ArticleCard(
       title: '${itemList[index].title}',
       category: 'dummy',
       price: "₹${itemList[index].price}",
@@ -260,44 +260,42 @@ Widget _buildArticleEntries(BuildContext context, int index, List<Article> itemL
   );
 }
 
-Widget _buildShopEntries(BuildContext context, int index, List<Shop> itemList) {
+List<String> reverse(List<String> list) {
+  int end = list.length - 1;
+  var reversedList = new List(list.length);
+  for (int i = 0; i <= end; i++) {
+    reversedList[end - i] = list[i];
+  }
+  return reversedList.cast<String>();
+}
+
+Widget _buildShopEntries(BuildContext context, int index, AppStore store) {
+  List<String> reversedList = reverse(store.encointer.shopRegistry);
   return GestureDetector(
     onTap: () {
+      //TODO make clickable
       // Navigator.of(context).pushNamed(DETAIL_UI);
     },
-    child: ItemCard(
-      title: '${itemList[index].title}',
-      category: 'dummy',
-      price: " ",
-      dateAdded: "${itemList[index].dateAdded}",
-      description: "${itemList[index].desc}",
-      image: "${itemList[index].image}",
-      location: "${itemList[index].location}",
+    child: FutureBuilder<Shop>(
+      future: Shop().getShopData(reversedList[index]),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return ShopCard(
+            title: snapshot.data.name,
+            description: snapshot.data.description,
+            imageHash: snapshot.data.imageHash,
+            // TODO add these items to shop
+            category: ' ',
+            location: "Zürich, Technopark",
+            dateAdded: "02 December 2020",
+          );
+          //return Text(snapshot.data.name);
+        } else if (snapshot.hasError) {
+          return Text("${snapshot.error}");
+        }
+        // By default, show a loading spinner.
+        return CircularProgressIndicator();
+      },
     ),
   );
-}
-
-List<Article> createDummyList() {
-  List<Article> dummyItems;
-  return dummyItems = [
-    Article(123, "02 Apr 2019", "Lenovo T450", "Best Item ever", 40000, 0795419141,
-        "assets/images/public/logo_about.png", "Zurich"),
-    Article(
-        124, "02 Apr 2019", "Bread", "Best Item ever", 10, 0795419141, "assets/images/public/logo_about.png", "Zurich"),
-    Article(
-        125, "05 Mai 2019", "Kohlrabi", "Hmm..! Fein", 10, 0795419141, "assets/images/public/logo_about.png", "Zurich"),
-    Article(
-        126, "10 Mai 2019", "Coffee", "Hmm..! Fein", 10, 0795419141, "assets/images/public/logo_about.png", "Zurich"),
-  ];
-}
-
-List<Shop> createDummyListShop() {
-  List<Shop> dummyItems;
-  return dummyItems = [
-    Shop(123, "02 Apr 2019", "Lenovo T450", "Best Item ever", 0795419141, "assets/images/public/logo_about.png",
-        "Zurich"),
-    Shop(124, "02 Apr 2019", "Bread", "Best Item ever", 0795419141, "assets/images/public/logo_about.png", "Zurich"),
-    Shop(125, "05 Mai 2019", "Kohlrabi", "Hmm..! Fein", 0795419141, "assets/images/public/logo_about.png", "Zurich"),
-    Shop(126, "10 Mai 2019", "Coffee", "Hmm..! Fein", 0795419141, "assets/images/public/logo_about.png", "Zurich"),
-  ];
 }
