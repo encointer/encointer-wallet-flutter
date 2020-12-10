@@ -189,20 +189,6 @@ class Api {
     return c.future;
   }
 
-  Future<String> evalJavascriptIpfs() async {
-    // do connect
-    String res = await _web.evalJavascript('ipfs.testIpfs()');
-    if (res == "null") {
-      print('connect failed');
-      store.encointer.setShopRegistry(['0']);
-      return "not ok";
-    } else {
-      print('connect io');
-      store.encointer.setShopRegistry(['1']);
-      return res;
-    }
-  }
-
   Future<void> connectNode() async {
     String node = store.settings.endpoint.value;
     // do connect

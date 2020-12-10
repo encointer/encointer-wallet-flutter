@@ -8,7 +8,6 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:encointer_wallet/service/ipfsApi/httpApi.dart';
 import 'dart:io';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shop/shopClass.dart';
 
 class CreateShopForm extends StatefulWidget {
@@ -89,11 +88,6 @@ class _CreateShopForm extends State<CreateShopForm> {
       };
       Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
     }
-  }
-
-  Future<void> test() async {
-    String index = await webApi.evalJavascriptIpfs();
-    print(index);
   }
 
   @override
