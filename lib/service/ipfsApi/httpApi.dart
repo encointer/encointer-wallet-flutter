@@ -2,67 +2,16 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'dart:convert' as JSON;
 import 'dart:io';
-import 'package:image_picker/image_picker.dart';
-import 'package:encointer_wallet/common/components/roundedButton.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:encointer_wallet/common/components/roundedButton.dart';
-import 'package:encointer_wallet/page/account/txConfirmPage.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:encointer_wallet/service/ipfsApi/httpApi.dart';
-import 'dart:io';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/common/consts/settings.dart';
 
-// Mostly adopted from import 'package:ipfs/ipfs.dart'; (not working, thus making it myself)
 class Ipfs {
-  Future getPeers() async {
-    try {
-      Dio dio = new Dio();
-      // returns a json file of Peers
-      final response = await dio.get('http://10.0.2.2:8080/api/v0/swarm/peers');
-      var data = response.toString();
-      print(data);
-      var json = JSON.jsonDecode(data);
-
-      var encoder = JsonEncoder.withIndent('  ');
-      var prettyprint = encoder.convert(json);
-
-      //Object obj = Object.fromJson(json);
-      print(prettyprint);
-      //print(obj.data);
-      //print(obj.links);
-      return prettyprint;
-    } catch (e) {
-      print(e);
-    }
-  }
-
-  Future resolveDag(String cid) async {
-    try {
-      final response = await Dio().get('http://gateway.pinata.cloud/api/v0/object/get?arg=$cid');
-
-      var data = response.toString();
-      var json = JSON.jsonDecode(data);
-
-      var encoder = JsonEncoder.withIndent('  ');
-      var prettyprint = encoder.convert(json);
-      print(prettyprint);
-      return json;
-    } catch (e) {
-      print(e);
-    }
-  }
-
   Future getObject(String cid) async {
     try {
       final Dio _dio = Dio();
-      //final response = await _dio
-      //     .get('http://gateway.pinata.cloud/api/v0/object/get?arg=$cid'); // unschöner gateway -> eigener server?
-      final response =
-          await _dio.get('http://10.0.2.2:8080/api/v0/object/get?arg=$cid'); // unschöner gateway -> eigener server?
+
+      _dio.options.baseUrl = ipfs_gateway_address;
+
+      final response = await _dio.get('/api/v0/object/get?arg=$cid');
       print(response.toString());
       var object = Object.fromJson(response.data);
 
@@ -79,14 +28,12 @@ class Ipfs {
   Future<String> uploadImage(File image) async {
     Dio _dio = Dio();
 
-    //_dio.options.baseUrl = "http://10.0.2.2:5001/api/v0";
+    _dio.options.baseUrl = ipfs_gateway_address;
     _dio.options.connectTimeout = 5000; //5s
     _dio.options.receiveTimeout = 3000;
     // File file = File(image.path);
-    final response = await _dio.post("http://10.0.2.2:8080/ipfs/", data: image.openRead());
-
+    final response = await _dio.post("/ipfs/", data: image.openRead());
     print(response.headers.map["location"].toString());
-    // return response.data['id'];
     return response.data;
   }
 
