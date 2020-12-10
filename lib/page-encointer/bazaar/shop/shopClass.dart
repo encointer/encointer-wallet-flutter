@@ -12,4 +12,10 @@ class Shop {
       imageHash: json['imageHash'],
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'description': description,
+        'imageHash': imageHash,
+      };
 }
