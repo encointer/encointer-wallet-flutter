@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/shop/createShopForm.dart';
+import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/cupertino.dart';
-import 'dart:convert';
 
 class ImagePickerHandler extends StatelessWidget {
   BuildContext context;
@@ -54,28 +53,40 @@ class ImagePickerHandler extends StatelessWidget {
     Navigator.pop(context, _imageFile);
   }
 
+  void _dismiss() {
+    Navigator.pop(context, null);
+  }
+
   @override
   Widget build(BuildContext context) {
     this.context = context;
-    return Material(
-        type: MaterialType.transparency,
-        child: Opacity(
+    final Map<String, String> dic = I18n.of(context).bazaar;
+
+    return Scaffold(
+        //type: MaterialType.transparency,
+        backgroundColor: Colors.black.withOpacity(0.85),
+        body: Opacity(
           opacity: 1,
           child: Container(
-            padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 20.0),
+            padding: EdgeInsets.fromLTRB(30.0, 0.0, 30.0, 0.0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 GestureDetector(
                   onTap: () => _openCamera(),
-                  child: roundedButton("Camera", EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0), const Color(0xFF167F67),
-                      const Color(0xFFFFFFFF)),
+                  child: roundedButton(dic['camera.default'], EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+                      const Color(0xFF167F67), const Color(0xFFFFFFFF)),
                 ),
                 GestureDetector(
                   onTap: () => _openGallery(),
-                  child: roundedButton("Gallery", EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0), const Color(0xFF167F67),
-                      const Color(0xFFFFFFFF)),
+                  child: roundedButton(dic['gallery.default'], EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+                      const Color(0xFF167F67), const Color(0xFFFFFFFF)),
+                ),
+                GestureDetector(
+                  onTap: () => _dismiss(),
+                  child: roundedButton(dic['cancel.default'], EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 0.0),
+                      const Color(0xFF167F67), const Color(0xFFFFFFFF)),
                 ),
                 const SizedBox(height: 15.0),
               ],

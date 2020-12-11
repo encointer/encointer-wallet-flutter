@@ -13,6 +13,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+//TODO: when shop is included, update this widget such that newly added product is shown
 class BazaarEntry extends StatelessWidget {
   BazaarEntry(this.store);
 
