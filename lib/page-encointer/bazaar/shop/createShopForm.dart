@@ -32,12 +32,14 @@ class _CreateShopForm extends State<CreateShopForm> {
   final TextEditingController _descriptionCtrl = new TextEditingController();
   File _imageFile;
 
+  // upload Image to IPFS
   Future<String> _uploadImage() async {
     File image = File(_imageFile.path);
     final String imageHash = await Ipfs().uploadImage(image);
     return imageHash;
   }
 
+  // upload Json to IPFS
   Future<String> _uploadShop(Shop shop) async {
     var jsonToUpload = shop.toJson();
     final String shopHash = await Ipfs().uploadJson(jsonToUpload);
@@ -48,7 +50,7 @@ class _CreateShopForm extends State<CreateShopForm> {
     if (_formKey.currentState.validate()) {
       // upload shop image to ipfs
       final String _imageHash = await _uploadImage();
-      // create shop
+      // create shop with newly generated image hash
       Shop newShop = new Shop(
         name: _nameCtrl.text.trim(),
         description: _descriptionCtrl.text.trim(),
@@ -134,14 +136,18 @@ class _CreateShopForm extends State<CreateShopForm> {
     );
   }
 
+  // route to imagePickerHandler
   Future<void> _getImage() async {
     final image = await Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => ImagePickerHandler()),
+      PageRouteBuilder(opaque: false, pageBuilder: (context, _, __) => ImagePickerHandler()),
     );
-    setState(() {
-      _imageFile = image;
-    });
+    // only update image when new picture is chosen
+    if (image != null) {
+      setState(() {
+        _imageFile = image;
+      });
+    }
   }
 
   Widget _previewImage() {
@@ -154,13 +160,6 @@ class _CreateShopForm extends State<CreateShopForm> {
             SizedBox(
               height: 20,
             ),
-            /* RaisedButton(
-              onPressed: () async {
-                var res = await uploadImage(_imageFile.path, uploadUrl);
-                print(res);
-              },
-              child: const Text('Upload'),
-            )*/
           ],
         ),
       );
