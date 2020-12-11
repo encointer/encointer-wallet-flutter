@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:encointer_wallet/service/ipfsApi/httpApi.dart';
 import 'dart:io';
 import 'package:encointer_wallet/page-encointer/bazaar/shop/shopClass.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/common/imagePickerHandler.dart';
 
 class CreateShopForm extends StatefulWidget {
   CreateShopForm(this.store);
@@ -30,18 +30,7 @@ class _CreateShopForm extends State<CreateShopForm> {
 
   final TextEditingController _nameCtrl = new TextEditingController();
   final TextEditingController _descriptionCtrl = new TextEditingController();
-  PickedFile _imageFile;
-
-  Future<void> _getImage() async {
-    try {
-      final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
-      setState(() {
-        _imageFile = pickedFile;
-      });
-    } catch (e) {
-      print("Image picker error " + e);
-    }
-  }
+  File _imageFile;
 
   Future<String> _uploadImage() async {
     File image = File(_imageFile.path);
@@ -93,8 +82,6 @@ class _CreateShopForm extends State<CreateShopForm> {
   @override
   Widget build(BuildContext context) {
     final Map<String, String> dic = I18n.of(context).bazaar;
-    // TODO: Input fields for description, location usw., convert to json, upload and copy URL to blockchain.
-    // TODO: IPFS
     return Form(
       key: _formKey,
       child: Column(
@@ -107,7 +94,7 @@ class _CreateShopForm extends State<CreateShopForm> {
                 TextFormField(
                   // shop name
                   decoration: InputDecoration(
-                    icon: Icon(Icons.beach_access, color: Colors.blue),
+                    icon: Icon(Icons.cake, color: Colors.blueAccent),
                     hintText: dic['shop.name'],
                     labelText: "${dic['shop.name']}",
                   ),
@@ -127,9 +114,7 @@ class _CreateShopForm extends State<CreateShopForm> {
                   padding: EdgeInsets.all(16),
                   child: RoundedButton(
                     text: I18n.of(context).bazaar['image.choose'],
-                    onPressed: () {
-                      _getImage();
-                    },
+                    onPressed: () => _getImage(),
                   ),
                 ),
               ],
@@ -147,6 +132,16 @@ class _CreateShopForm extends State<CreateShopForm> {
         ],
       ),
     );
+  }
+
+  Future<void> _getImage() async {
+    final image = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => ImagePickerHandler()),
+    );
+    setState(() {
+      _imageFile = image;
+    });
   }
 
   Widget _previewImage() {
