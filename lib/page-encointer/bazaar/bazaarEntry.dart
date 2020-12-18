@@ -23,16 +23,17 @@ class BazaarEntry extends StatelessWidget {
   Widget build(BuildContext context) {
     final Map<String, String> dic = I18n.of(context).bazaar;
     Color primaryColor = Theme.of(context).primaryColor;
+    Color secondaryColor = Theme.of(context).secondaryHeaderColor;
 
     final List<Widget> _widgetList = <Widget>[
       homeView(context, store),
-      shopView(context, store),
+      ShopOverviewPage(store),
       //articleView(context, store),
     ];
 
     final List<Widget> _tabList = <Widget>[
-      Row(children: [Icon(Icons.home, color: Colors.blueAccent), SizedBox(width: 5), Text("Home")]),
-      Row(children: [Icon(Icons.home, color: Colors.blueAccent), SizedBox(width: 5), Text("Shops")]),
+      Row(children: [Icon(Icons.home, color: secondaryColor), SizedBox(width: 5), Text("Home")]),
+      Row(children: [Icon(Icons.shop, color: secondaryColor), SizedBox(width: 5), Text("Shops")]),
       //articleView(context, store),
     ];
 
@@ -43,7 +44,7 @@ class BazaarEntry extends StatelessWidget {
           bottom: TabBar(
             tabs: _tabList,
           ),
-          title: Text('Tabs Demo'),
+          title: Text(dic['bazaar.title']),
         ),
         body: TabBarView(children: _widgetList),
       ),
@@ -58,22 +59,6 @@ Widget homeView(BuildContext context, AppStore store) {
     body: SafeArea(
       child: Column(
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  dic['bazaar.title'],
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Theme.of(context).cardColor,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-          ),
           // TODO: implement search option
           searchBar(context),
           Divider(height: 28), // not nice solution
@@ -90,7 +75,7 @@ Widget homeView(BuildContext context, AppStore store) {
                   ),*/
                 Container(
                   margin: EdgeInsets.only(left: 10, top: 15),
-                  child: shopView(context, store),
+                  child: recentlyAdded(context, store),
                 ),
               ],
             ),
@@ -128,7 +113,7 @@ Widget searchBar(BuildContext context) {
   );
 }
 
-Widget shopView(BuildContext context, AppStore store) {
+Widget recentlyAdded(BuildContext context, AppStore store) {
   final double _height = MediaQuery.of(context).size.height;
   final Map<String, String> dic = I18n.of(context).bazaar;
 
@@ -200,95 +185,6 @@ Widget shopView(BuildContext context, AppStore store) {
         ),
       ),
     ],
-  );
-}
-
-Widget articleView(BuildContext context, Map<String, String> dic, List<Article> itemList) {
-  final double _height = MediaQuery.of(context).size.height;
-  return Column(
-    children: <Widget>[
-      // Title
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(top: 40),
-            child: BorderedTitle(
-              title: dic['article'],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 40, left: 100, right: 20),
-            child: GestureDetector(
-              onTap: () {},
-              child: Text(
-                dic['show.all'],
-                style: Theme.of(context).textTheme.headline2.apply(fontSizeFactor: 0.7),
-                //TextStyle(
-                // color: Colors.indigo[255],
-                //),
-              ),
-            ),
-          ),
-        ],
-      ),
-      RoundedCard(
-        margin: EdgeInsets.only(top: 16),
-        child: Column(
-          children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(top: 5, left: 5, bottom: 5),
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    dic['recently.added'],
-                    style: Theme.of(context).textTheme.headline3,
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              height: _height / 5,
-              child: ListView.builder(
-                padding: EdgeInsets.all(5),
-                shrinkWrap: true,
-                itemCount: itemList.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, index) {
-                  return _buildArticleEntries(context, index, itemList);
-                },
-              ),
-            ),
-            // Add Article button
-            Container(
-              margin: EdgeInsets.only(left: 40, right: 40, top: 10, bottom: 15),
-              child: RoundedButton(
-                text: dic['article.insert'],
-                onPressed: () {},
-              ),
-            ),
-          ],
-        ),
-      ),
-    ],
-  );
-}
-
-Widget _buildArticleEntries(BuildContext context, int index, List<Article> itemList) {
-  return GestureDetector(
-    onTap: () {
-      // Navigator.of(context).pushNamed(DETAIL_UI);
-    },
-    child: ArticleCard(
-      title: '${itemList[index].title}',
-      category: 'dummy',
-      price: "₹${itemList[index].price}",
-      dateAdded: "${itemList[index].dateAdded}",
-      description: "${itemList[index].desc}",
-      image: "${itemList[index].image}",
-      location: "${itemList[index].location}",
-    ),
   );
 }
 
