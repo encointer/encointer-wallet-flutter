@@ -19,37 +19,33 @@ class BazaarEntry extends StatelessWidget {
 
   final AppStore store;
 
-  final List<Tab> tabs = <Tab>[
-    Tab(text: 'Zeroth'),
-    Tab(text: 'First'),
-    Tab(text: 'Second'),
-    Tab(text: 'Third'),
-  ];
-
   @override
   Widget build(BuildContext context) {
     final Map<String, String> dic = I18n.of(context).bazaar;
     Color primaryColor = Theme.of(context).primaryColor;
 
+    final List<Widget> _widgetList = <Widget>[
+      homeView(context, store),
+      shopView(context, store),
+      //articleView(context, store),
+    ];
+
+    final List<Widget> _tabList = <Widget>[
+      Row(children: [Icon(Icons.home, color: Colors.blueAccent), SizedBox(width: 5), Text("Home")]),
+      Row(children: [Icon(Icons.home, color: Colors.blueAccent), SizedBox(width: 5), Text("Shops")]),
+      //articleView(context, store),
+    ];
+
     return DefaultTabController(
-      length: tabs.length,
+      length: _tabList.length,
       child: Scaffold(
         appBar: AppBar(
           bottom: TabBar(
-            tabs: tabs,
+            tabs: _tabList,
           ),
           title: Text('Tabs Demo'),
         ),
-        body: TabBarView(
-          children: tabs.map((Tab tab) {
-            return Center(
-              child: Text(
-                tab.text + ' Tab',
-                style: Theme.of(context).textTheme.headline5,
-              ),
-            );
-          }).toList(),
-        ),
+        body: TabBarView(children: _widgetList),
       ),
     );
   }
@@ -57,7 +53,7 @@ class BazaarEntry extends StatelessWidget {
 
 Widget homeView(BuildContext context, AppStore store) {
   final Map<String, String> dic = I18n.of(context).bazaar;
-  Scaffold(
+  return Scaffold(
     backgroundColor: Colors.transparent,
     body: SafeArea(
       child: Column(
@@ -79,7 +75,7 @@ Widget homeView(BuildContext context, AppStore store) {
             ),
           ),
           // TODO: implement search option
-          searchBar(context, dic),
+          searchBar(context),
           Divider(height: 28), // not nice solution
           Flexible(
             fit: FlexFit.tight,
@@ -94,7 +90,7 @@ Widget homeView(BuildContext context, AppStore store) {
                   ),*/
                 Container(
                   margin: EdgeInsets.only(left: 10, top: 15),
-                  child: shopView(context, dic, store),
+                  child: shopView(context, store),
                 ),
               ],
             ),
@@ -105,7 +101,8 @@ Widget homeView(BuildContext context, AppStore store) {
   );
 }
 
-Widget searchBar(BuildContext context, Map<String, String> dic) {
+Widget searchBar(BuildContext context) {
+  final Map<String, String> dic = I18n.of(context).bazaar;
   return Stack(
     children: <Widget>[
       Container(
@@ -131,8 +128,9 @@ Widget searchBar(BuildContext context, Map<String, String> dic) {
   );
 }
 
-Widget shopView(BuildContext context, Map<String, String> dic, AppStore store) {
+Widget shopView(BuildContext context, AppStore store) {
   final double _height = MediaQuery.of(context).size.height;
+  final Map<String, String> dic = I18n.of(context).bazaar;
 
   return Column(
     children: <Widget>[
