@@ -19,57 +19,90 @@ class BazaarEntry extends StatelessWidget {
 
   final AppStore store;
 
+  final List<Tab> tabs = <Tab>[
+    Tab(text: 'Zeroth'),
+    Tab(text: 'First'),
+    Tab(text: 'Second'),
+    Tab(text: 'Third'),
+  ];
+
   @override
   Widget build(BuildContext context) {
     final Map<String, String> dic = I18n.of(context).bazaar;
+    Color primaryColor = Theme.of(context).primaryColor;
 
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    dic['bazaar.title'],
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Theme.of(context).cardColor,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                ],
+    return DefaultTabController(
+      length: tabs.length,
+      child: Scaffold(
+        appBar: AppBar(
+          bottom: TabBar(
+            tabs: tabs,
+          ),
+          title: Text('Tabs Demo'),
+        ),
+        body: TabBarView(
+          children: tabs.map((Tab tab) {
+            return Center(
+              child: Text(
+                tab.text + ' Tab',
+                style: Theme.of(context).textTheme.headline5,
               ),
-            ),
-            // TODO: implement search option
-            searchBar(context, dic),
-            Divider(height: 28), // not nice solution
-            Flexible(
-              fit: FlexFit.tight,
-              child: ListView(
-                shrinkWrap: true,
-                padding: EdgeInsets.all(8),
-                children: <Widget>[
-                  // TODO: implement articles
-                  /*Container(
-                    margin: EdgeInsets.only(left: 10, top: 15),
-                    child: articleSection(context, dic),
-                  ),*/
-                  Container(
-                    margin: EdgeInsets.only(left: 10, top: 15),
-                    child: shopSection(context, dic, store),
-                  ),
-                ],
-              ),
-            ),
-          ],
+            );
+          }).toList(),
         ),
       ),
     );
   }
+}
+
+Widget homeView(BuildContext context, AppStore store) {
+  final Map<String, String> dic = I18n.of(context).bazaar;
+  Scaffold(
+    backgroundColor: Colors.transparent,
+    body: SafeArea(
+      child: Column(
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text(
+                  dic['bazaar.title'],
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Theme.of(context).cardColor,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          // TODO: implement search option
+          searchBar(context, dic),
+          Divider(height: 28), // not nice solution
+          Flexible(
+            fit: FlexFit.tight,
+            child: ListView(
+              shrinkWrap: true,
+              padding: EdgeInsets.all(8),
+              children: <Widget>[
+                // TODO: implement articles
+                /*Container(
+                    margin: EdgeInsets.only(left: 10, top: 15),
+                    child: articleSection(context, dic),
+                  ),*/
+                Container(
+                  margin: EdgeInsets.only(left: 10, top: 15),
+                  child: shopView(context, dic, store),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }
 
 Widget searchBar(BuildContext context, Map<String, String> dic) {
@@ -98,7 +131,7 @@ Widget searchBar(BuildContext context, Map<String, String> dic) {
   );
 }
 
-Widget shopSection(BuildContext context, Map<String, String> dic, AppStore store) {
+Widget shopView(BuildContext context, Map<String, String> dic, AppStore store) {
   final double _height = MediaQuery.of(context).size.height;
 
   return Column(
@@ -172,7 +205,7 @@ Widget shopSection(BuildContext context, Map<String, String> dic, AppStore store
   );
 }
 
-Widget articleSection(BuildContext context, Map<String, String> dic, List<Article> itemList) {
+Widget articleView(BuildContext context, Map<String, String> dic, List<Article> itemList) {
   final double _height = MediaQuery.of(context).size.height;
   return Column(
     children: <Widget>[
