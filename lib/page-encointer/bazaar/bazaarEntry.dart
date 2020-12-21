@@ -7,12 +7,14 @@ import 'package:encointer_wallet/page-encointer/bazaar/shop/shopCard.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shop/shopClass.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shop/createShopPage.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shop/shopOverviewPage.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/common/currencyChooserHandler.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class BazaarEntry extends StatefulWidget {
   BazaarEntry(this.store);
@@ -27,6 +29,14 @@ class _BazaarEntryState extends State<BazaarEntry> {
   _BazaarEntryState(this.store);
 
   final AppStore store;
+
+  // route to imagePickerHandler
+  Future<void> _getCurrency() async {
+    var newCid = Navigator.push(
+      context,
+      PageRouteBuilder(opaque: false, pageBuilder: (context, _, __) => CurrencyChooserHandler(store)),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,31 +65,23 @@ class _BazaarEntryState extends State<BazaarEntry> {
           ),
           title: Text(dic['bazaar.title']),
           centerTitle: true,
-          leading: IconButton(
-            icon: Image.asset('assets/images/assets/ERT.png'),
-            onPressed: () {
-              // do something
-            },
-          ),
+          leading: IconButton(icon: Image.asset('assets/images/assets/ERT.png'), onPressed: () => _getCurrency()),
           actions: <Widget>[
             IconButton(
-              icon: Icon(
-                Icons.menu,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                // do something
-              },
-            ),
+                icon: Icon(
+                  Icons.menu,
+                  color: Colors.white,
+                ),
+                onPressed: () {}),
           ],
           flexibleSpace: Container(
-            padding: EdgeInsets.fromLTRB(20, 75, 16, 32),
+            padding: EdgeInsets.fromLTRB(10, 70, 100, 10),
             child: store.encointer.balanceEntries[store.encointer.chosenCid] != null
                 ? Text(
-                    Fmt.doubleFormat(store.encointer.balanceEntries[store.encointer.chosenCid].principal),
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
+                    Fmt.currencyIdentifier(store.encointer.chosenCid),
+                    style: TextStyle(fontSize: 15, color: Colors.black54),
                   )
-                : Text('-'),
+                : Text('Choose currency'),
           ),
         ),
         body: TabBarView(children: _widgetList),
@@ -96,8 +98,8 @@ Widget homeView(BuildContext context, AppStore store) {
       child: Column(
         children: <Widget>[
           // TODO: implement search option
-          searchBar(context),
-          Divider(height: 28), // not nice solution
+          //searchBar(context),
+          //Divider(height: 28),
           Flexible(
             fit: FlexFit.tight,
             child: ListView(
