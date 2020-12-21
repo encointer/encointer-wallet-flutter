@@ -21,11 +21,11 @@ class _CurrencyChooserHandlerState extends State<CurrencyChooserHandler> {
   BuildContext context;
   final AppStore store;
 
-  void _setStateAndReturn(var newValue) {
+  void _setStateAndReturn(var newCid) {
     setState(() {
-      store.encointer.setChosenCid(newValue);
+      store.encointer.setChosenCid(newCid);
     });
-    Navigator.pop(context, newValue);
+    Navigator.pop(context, newCid);
   }
 
   void _dismiss() {
@@ -38,44 +38,52 @@ class _CurrencyChooserHandlerState extends State<CurrencyChooserHandler> {
     final Map<String, String> dic = I18n.of(context).bazaar;
 
     return Scaffold(
-        //type: MaterialType.transparency,
         backgroundColor: Colors.black.withOpacity(0.85),
         body: Opacity(
           opacity: 1,
           child: Container(
-            width: double.infinity,
+            width: MediaQuery.of(context).size.width / 1.2,
+            padding: EdgeInsets.fromLTRB(10, 50, 100, 50),
             child: RoundedCard(
-              padding: EdgeInsets.symmetric(vertical: 8),
-              child: Column(
-                children: <Widget>[
-                  Text("Choose currency:"),
-                  Observer(
-                    builder: (_) => (store.encointer.currencyIdentifiers == null)
-                        ? CupertinoActivityIndicator()
-                        : (store.encointer.currencyIdentifiers.isEmpty)
-                            ? Text("no currencies found")
-                            : DropdownButton<dynamic>(
-                                value: (store.encointer.chosenCid == null ||
-                                        !store.encointer.currencyIdentifiers.contains(store.encointer.chosenCid))
-                                    ? store.encointer.currencyIdentifiers[0]
-                                    : store.encointer.chosenCid,
-                                icon: Icon(Icons.arrow_downward),
-                                iconSize: 32,
-                                elevation: 32,
-                                onChanged: (newValue) {
-                                  setState(() {
-                                    store.encointer.setChosenCid(newValue);
-                                  });
-                                },
-                                items: store.encointer.currencyIdentifiers
-                                    .map<DropdownMenuItem<dynamic>>((value) => DropdownMenuItem<dynamic>(
-                                          value: value,
-                                          child: Text(Fmt.currencyIdentifier(value)),
-                                        ))
-                                    .toList(),
-                              ),
-                  ),
-                ],
+              child: Observer(
+                builder: (_) => (store.encointer.currencyIdentifiers == null)
+                    ? CupertinoActivityIndicator()
+                    : (store.encointer.currencyIdentifiers.isEmpty)
+                        ? Text("no currencies found")
+                        : SingleChildScrollView(
+                            child: Column(
+                              children: <Widget>[
+                                RoundedCard(
+                                    child: Row(
+                                  children: <Widget>[
+                                    Container(
+                                      width: 50,
+                                      height: 50,
+                                      child: Image.asset('assets/images/assets/ERT.png'),
+                                    ),
+                                    Container(width: 15),
+                                    Text(
+                                      dic['choose.currency'],
+                                    ),
+                                  ],
+                                )),
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  //padding: const EdgeInsets.all(8.0),
+                                  itemCount: store.encointer.currencyIdentifiers.length,
+                                  itemBuilder: (BuildContext context, int index) {
+                                    return ListTile(
+                                      title: Text(Fmt.currencyIdentifier(store.encointer.currencyIdentifiers[index])),
+                                      onTap: () {
+                                        _setStateAndReturn(store.encointer.currencyIdentifiers[index]);
+                                      },
+                                    );
+                                  },
+                                ),
+                              ],
+                            ),
+                          ),
               ),
             ),
           ),

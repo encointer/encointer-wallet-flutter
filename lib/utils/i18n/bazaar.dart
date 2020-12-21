@@ -17,4 +17,5 @@ const Map<String, String> enBazaar = {
   'camera.default': 'Camera',
   'gallery.default': 'Gallery',
   'cancel.default': 'Cancel',
+  'choose.currency': 'Choose currency:'
 };

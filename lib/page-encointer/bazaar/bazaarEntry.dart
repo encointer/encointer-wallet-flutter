@@ -75,13 +75,17 @@ class _BazaarEntryState extends State<BazaarEntry> {
                 onPressed: () {}),
           ],
           flexibleSpace: Container(
-            padding: EdgeInsets.fromLTRB(10, 70, 100, 10),
-            child: store.encointer.balanceEntries[store.encointer.chosenCid] != null
-                ? Text(
-                    Fmt.currencyIdentifier(store.encointer.chosenCid),
-                    style: TextStyle(fontSize: 15, color: Colors.black54),
-                  )
-                : Text('Choose currency'),
+            padding: EdgeInsets.fromLTRB(10, 73, 100, 10),
+            child: Observer(
+              builder: (_) {
+                return store.encointer.balanceEntries[store.encointer.chosenCid] != null
+                    ? Text(
+                        Fmt.currencyIdentifier(store.encointer.chosenCid),
+                        style: TextStyle(fontSize: 15, color: Colors.white),
+                      )
+                    : Text('Choose currency');
+              },
+            ),
           ),
         ),
         body: TabBarView(children: _widgetList),
