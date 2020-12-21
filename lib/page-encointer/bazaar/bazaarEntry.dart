@@ -72,15 +72,14 @@ class _BazaarEntryState extends State<BazaarEntry> {
               },
             ),
           ],
-          // TODO: How to show current currency nicely? Icon only?
           flexibleSpace: Container(
-            padding: EdgeInsets.fromLTRB(7, 75, 16, 32),
-            child: Text(
-              Fmt.currencyIdentifier(store.encointer.chosenCid),
-              style: TextStyle(
-                color: Colors.white,
-              ),
-            ),
+            padding: EdgeInsets.fromLTRB(20, 75, 16, 32),
+            child: store.encointer.balanceEntries[store.encointer.chosenCid] != null
+                ? Text(
+                    Fmt.doubleFormat(store.encointer.balanceEntries[store.encointer.chosenCid].principal),
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
+                  )
+                : Text('-'),
           ),
         ),
         body: TabBarView(children: _widgetList),
