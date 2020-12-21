@@ -12,10 +12,19 @@ import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:encointer_wallet/utils/format.dart';
 
-//TODO: when shop is included, update this widget such that newly added product is shown
-class BazaarEntry extends StatelessWidget {
+class BazaarEntry extends StatefulWidget {
   BazaarEntry(this.store);
+
+  final AppStore store;
+
+  @override
+  _BazaarEntryState createState() => _BazaarEntryState(store);
+}
+
+class _BazaarEntryState extends State<BazaarEntry> {
+  _BazaarEntryState(this.store);
 
   final AppStore store;
 
@@ -45,6 +54,34 @@ class BazaarEntry extends StatelessWidget {
             tabs: _tabList,
           ),
           title: Text(dic['bazaar.title']),
+          centerTitle: true,
+          leading: IconButton(
+            icon: Image.asset('assets/images/assets/ERT.png'),
+            onPressed: () {
+              // do something
+            },
+          ),
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(
+                Icons.menu,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                // do something
+              },
+            ),
+          ],
+          // TODO: How to show current currency nicely? Icon only?
+          flexibleSpace: Container(
+            padding: EdgeInsets.fromLTRB(7, 75, 16, 32),
+            child: Text(
+              Fmt.currencyIdentifier(store.encointer.chosenCid),
+              style: TextStyle(
+                color: Colors.white,
+              ),
+            ),
+          ),
         ),
         body: TabBarView(children: _widgetList),
       ),
@@ -127,7 +164,7 @@ Widget recentlyAdded(BuildContext context, AppStore store) {
           Container(
             margin: EdgeInsets.only(top: 40),
             child: BorderedTitle(
-              title: dic['shops'],
+              title: dic['recently.added'],
             ),
           ),
           Container(
@@ -148,17 +185,6 @@ Widget recentlyAdded(BuildContext context, AppStore store) {
         margin: EdgeInsets.only(top: 16),
         child: Column(
           children: <Widget>[
-            Container(
-              margin: EdgeInsets.only(top: 5, left: 5, bottom: 5),
-              child: Row(
-                children: <Widget>[
-                  Text(
-                    dic['recently.added'],
-                    style: Theme.of(context).textTheme.headline3,
-                  ),
-                ],
-              ),
-            ),
             Container(
               height: _height / 5,
               child: ListView.builder(
