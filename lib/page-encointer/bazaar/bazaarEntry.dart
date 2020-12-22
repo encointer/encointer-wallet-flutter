@@ -37,9 +37,14 @@ class _BazaarEntryState extends State<BazaarEntry> {
     );
   }
 
+  @observable
+  bool reload = false;
+
   Future<void> refreshPage(String cid) async {
+    reload = true;
     await store.encointer.reloadShopRegistry();
     setState(() {});
+    reload = false;
   }
 
   @override
@@ -198,31 +203,33 @@ class _BazaarEntryState extends State<BazaarEntry> {
             ),
           ],
         ),
-        RoundedCard(
-          margin: EdgeInsets.only(top: 16),
-          child: Container(
-            height: _height / 5,
-            child: store.encointer.shopRegistry == null
-                ? Container(
-                    alignment: Alignment.center,
-                    child: CupertinoActivityIndicator(),
-                  )
-                : (store.encointer.shopRegistry.isEmpty)
-                    ? Container(
-                        alignment: Alignment.center,
-                        child: Text(dic['no.items']),
-                      )
-                    : ListView.builder(
-                        padding: EdgeInsets.all(5),
-                        shrinkWrap: true,
-                        itemCount: store.encointer.shopRegistry.length,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (BuildContext context, index) {
-                          return _buildShopEntries(context, index, store);
-                        },
-                      ),
-          ),
-        ),
+        Observer(builder: (_) {
+          return RoundedCard(
+            margin: EdgeInsets.only(top: 16),
+            child: Container(
+              height: _height / 5,
+              child: (store.encointer.shopRegistry == null) || reload || (store.encointer.chosenCid == null)
+                  ? Container(
+                      alignment: Alignment.center,
+                      child: CupertinoActivityIndicator(),
+                    )
+                  : (store.encointer.shopRegistry.isEmpty)
+                      ? Container(
+                          alignment: Alignment.center,
+                          child: Text(dic['no.items']),
+                        )
+                      : ListView.builder(
+                          padding: EdgeInsets.all(5),
+                          shrinkWrap: true,
+                          itemCount: store.encointer.shopRegistry.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (BuildContext context, index) {
+                            return _buildShopEntries(context, index, store);
+                          },
+                        ),
+            ),
+          );
+        }),
       ],
     );
   }

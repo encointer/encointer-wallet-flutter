@@ -338,7 +338,7 @@ abstract class _EncointerStore with Store {
   }
 
   Future<void> reloadShopRegistry() async {
-    var _ = await webApi.encointer.getShopRegistry();
+    await webApi.encointer.getShopRegistry();
   }
 
   Future<void> cacheObject(String key, value) {
