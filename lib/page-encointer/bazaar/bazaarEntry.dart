@@ -8,6 +8,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/shop/shopClass.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shop/createShopPage.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shop/shopOverviewPage.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/common/currencyChooserHandler.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/common/menuHandler.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
@@ -72,7 +73,12 @@ class _BazaarEntryState extends State<BazaarEntry> {
                   Icons.menu,
                   color: Colors.white,
                 ),
-                onPressed: () {}),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => MenuHandler(store)),
+                  );
+                }),
           ],
           flexibleSpace: Container(
             padding: EdgeInsets.fromLTRB(10, 73, 100, 10),
