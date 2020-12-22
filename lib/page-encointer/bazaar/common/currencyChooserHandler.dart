@@ -25,7 +25,7 @@ class _CurrencyChooserHandlerState extends State<CurrencyChooserHandler> {
     setState(() {
       store.encointer.setChosenCid(newCid);
     });
-    Navigator.pop(context, newCid);
+    Navigator.pop(context, true);
   }
 
   void _dismiss() {

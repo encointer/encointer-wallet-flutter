@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobx/mobx.dart';
 
 class BazaarEntry extends StatefulWidget {
   BazaarEntry(this.store);
@@ -29,13 +30,14 @@ class _BazaarEntryState extends State<BazaarEntry> {
 
   final AppStore store;
 
-  // route to imagePickerHandler
-  Future<void> _getCurrency() async {
-    var newCid = Navigator.push(
+  Future<void> _chooseCurrency() async {
+    await Navigator.push(
       context,
       PageRouteBuilder(opaque: false, pageBuilder: (context, _, __) => CurrencyChooserHandler(store)),
     );
   }
+
+  void refreshPage() => setState(() {});
 
   @override
   Widget build(BuildContext context) {
@@ -43,10 +45,13 @@ class _BazaarEntryState extends State<BazaarEntry> {
     Color primaryColor = Theme.of(context).primaryColor;
     Color secondaryColor = Theme.of(context).secondaryHeaderColor;
 
+    // reaction necessary as shops are not an observable list (view should not change without user doing anything)
+    final refreshPageOnCidChange = reaction((_) => store.encointer.chosenCid, (_) => refreshPage());
+
     final List<Widget> _widgetList = <Widget>[
       homeView(context, store),
       ShopOverviewPage(store),
-      //articleView(context, store),
+      //articleView(context, store),d
     ];
 
     final List<Widget> _tabList = <Widget>[
@@ -64,7 +69,7 @@ class _BazaarEntryState extends State<BazaarEntry> {
           ),
           title: Text(dic['bazaar.title']),
           centerTitle: true,
-          leading: IconButton(icon: Image.asset('assets/images/assets/ERT.png'), onPressed: () => _getCurrency()),
+          leading: IconButton(icon: Image.asset('assets/images/assets/ERT.png'), onPressed: () => _chooseCurrency()),
           actions: <Widget>[
             IconButton(
               icon: Icon(
@@ -97,111 +102,112 @@ class _BazaarEntryState extends State<BazaarEntry> {
       ),
     );
   }
-}
 
-Widget homeView(BuildContext context, AppStore store) {
-  final Map<String, String> dic = I18n.of(context).bazaar;
-  return Scaffold(
-    backgroundColor: Colors.transparent,
-    body: SafeArea(
-      child: Column(
-        children: <Widget>[
-          // TODO: implement search option
-          //searchBar(context),
-          //Divider(height: 28),
-          Flexible(
-            fit: FlexFit.tight,
-            child: ListView(
-              shrinkWrap: true,
-              padding: EdgeInsets.all(8),
-              children: <Widget>[
-                // TODO: implement articles
-                /*Container(
+  Widget homeView(BuildContext context, AppStore store) {
+    final Map<String, String> dic = I18n.of(context).bazaar;
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      body: SafeArea(
+        child: Column(
+          children: <Widget>[
+            // TODO: implement search option
+            //searchBar(context),
+            //Divider(height: 28),
+            Flexible(
+              fit: FlexFit.tight,
+              child: ListView(
+                shrinkWrap: true,
+                padding: EdgeInsets.all(8),
+                children: <Widget>[
+                  // TODO: implement articles
+                  /*Container(
                     margin: EdgeInsets.only(left: 10, top: 15),
                     child: articleSection(context, dic),
                   ),*/
-                Container(
-                  margin: EdgeInsets.only(left: 10, top: 15),
-                  child: recentlyAdded(context, store),
-                ),
-              ],
+                  Container(
+                    margin: EdgeInsets.only(left: 10, top: 15),
+                    child: recentlyAdded(context, store),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ),
-  );
-}
+    );
+  }
 
-Widget searchBar(BuildContext context) {
-  final Map<String, String> dic = I18n.of(context).bazaar;
-  return Stack(
-    children: <Widget>[
-      Container(
-        margin: EdgeInsets.only(left: 40, right: 40, top: 15),
-        child: Material(
-          borderRadius: BorderRadius.circular(30.0),
-          elevation: 8,
-          child: Container(
-            child: TextFormField(
-              cursorColor: Theme.of(context).primaryColor,
-              keyboardType: TextInputType.text,
-              decoration: InputDecoration(
-                contentPadding: EdgeInsets.all(10),
-                prefixIcon: Icon(Icons.search, color: Theme.of(context).primaryColor, size: 30),
-                hintText: dic['looking.for'],
-                border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0), borderSide: BorderSide.none),
+  Widget searchBar(BuildContext context) {
+    final Map<String, String> dic = I18n.of(context).bazaar;
+    return Stack(
+      children: <Widget>[
+        Container(
+          margin: EdgeInsets.only(left: 40, right: 40, top: 15),
+          child: Material(
+            borderRadius: BorderRadius.circular(30.0),
+            elevation: 8,
+            child: Container(
+              child: TextFormField(
+                cursorColor: Theme.of(context).primaryColor,
+                keyboardType: TextInputType.text,
+                decoration: InputDecoration(
+                  contentPadding: EdgeInsets.all(10),
+                  prefixIcon: Icon(Icons.search, color: Theme.of(context).primaryColor, size: 30),
+                  hintText: dic['looking.for'],
+                  border: OutlineInputBorder(borderRadius: BorderRadius.circular(30.0), borderSide: BorderSide.none),
+                ),
               ),
             ),
           ),
         ),
-      ),
-    ],
-  );
-}
+      ],
+    );
+  }
 
-Widget recentlyAdded(BuildContext context, AppStore store) {
-  final double _height = MediaQuery.of(context).size.height;
-  final Map<String, String> dic = I18n.of(context).bazaar;
+  Widget recentlyAdded(BuildContext context, AppStore store) {
+    final double _height = MediaQuery.of(context).size.height;
+    final Map<String, String> dic = I18n.of(context).bazaar;
 
-  return Column(
-    children: <Widget>[
-      // Title
-      Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Container(
-            margin: EdgeInsets.only(top: 40),
-            child: BorderedTitle(
-              title: dic['recently.added'],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(top: 40, left: 100, right: 20),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.pushNamed(context, ShopOverviewPage.route);
-              },
-              child: Text(
-                dic['show.all'],
-                style: Theme.of(context).textTheme.headline2.apply(fontSizeFactor: 0.7),
+    return Column(
+      children: <Widget>[
+        // Title
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(top: 40),
+              child: BorderedTitle(
+                title: dic['recently.added'],
               ),
             ),
-          ),
-        ],
-      ),
-      RoundedCard(
-        margin: EdgeInsets.only(top: 16),
-        child: Container(
-          height: _height / 5,
-          child: Observer(
-            builder: (_) => store.encointer.shopRegistry == null
-                ? CupertinoActivityIndicator()
+            Container(
+              margin: EdgeInsets.only(top: 40, left: 100, right: 20),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.pushNamed(context, ShopOverviewPage.route);
+                },
+                child: Text(
+                  dic['show.all'],
+                  style: Theme.of(context).textTheme.headline2.apply(fontSizeFactor: 0.7),
+                ),
+              ),
+            ),
+          ],
+        ),
+        RoundedCard(
+          margin: EdgeInsets.only(top: 16),
+          child: Container(
+            height: _height / 5,
+            child: store.encointer.shopRegistry == null
+                ? Container(
+                    alignment: Alignment.center,
+                    child: CupertinoActivityIndicator(),
+                  )
                 : (store.encointer.shopRegistry.isEmpty)
                     ? Container(
                         alignment: Alignment.center,
-                        child: Text(dic['no.shop']),
+                        child: Text(dic['no.items']),
                       )
                     : ListView.builder(
                         padding: EdgeInsets.all(5),
@@ -214,47 +220,47 @@ Widget recentlyAdded(BuildContext context, AppStore store) {
                       ),
           ),
         ),
-      ),
-    ],
-  );
-}
-
-List<String> reverse(List<String> list) {
-  int end = list.length - 1;
-  var reversedList = new List(list.length);
-  for (int i = 0; i <= end; i++) {
-    reversedList[end - i] = list[i];
+      ],
+    );
   }
-  return reversedList.cast<String>();
-}
 
-Widget _buildShopEntries(BuildContext context, int index, AppStore store) {
-  List<String> reversedList = reverse(store.encointer.shopRegistry);
-  return GestureDetector(
-    onTap: () {
-      //TODO make clickable
-      // Navigator.of(context).pushNamed(DETAIL_UI);
-    },
-    child: FutureBuilder<Shop>(
-      future: Shop().getShopData(reversedList[index]),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return ShopCard(
-            title: snapshot.data.name,
-            description: snapshot.data.description,
-            imageHash: snapshot.data.imageHash,
-            // TODO add these items to shop
-            category: ' ',
-            location: "Zürich, Technopark",
-            dateAdded: "02 December 2020",
-          );
-          //return Text(snapshot.data.name);
-        } else if (snapshot.hasError) {
-          return Text("${snapshot.error}");
-        }
-        // By default, show a loading spinner.
-        return CircularProgressIndicator();
+  List<String> reverse(List<String> list) {
+    int end = list.length - 1;
+    var reversedList = new List(list.length);
+    for (int i = 0; i <= end; i++) {
+      reversedList[end - i] = list[i];
+    }
+    return reversedList.cast<String>();
+  }
+
+  Widget _buildShopEntries(BuildContext context, int index, AppStore store) {
+    List<String> reversedList = reverse(store.encointer.shopRegistry);
+    return GestureDetector(
+      onTap: () {
+        //TODO make clickable
+        // Navigator.of(context).pushNamed(DETAIL_UI);
       },
-    ),
-  );
+      child: FutureBuilder<Shop>(
+        future: Shop().getShopData(reversedList[index]),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ShopCard(
+              title: snapshot.data.name,
+              description: snapshot.data.description,
+              imageHash: snapshot.data.imageHash,
+              // TODO add these items to shop
+              category: ' ',
+              location: "Zürich, Technopark",
+              dateAdded: "02 December 2020",
+            );
+            //return Text(snapshot.data.name);
+          } else if (snapshot.hasError) {
+            return Text("${snapshot.error}");
+          }
+          // By default, show a loading spinner.
+          return CircularProgressIndicator();
+        },
+      ),
+    );
+  }
 }

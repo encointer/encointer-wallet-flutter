@@ -11,7 +11,7 @@ const Map<String, String> enBazaar = {
   'shop.create': 'Create new shop',
   'shop.name': 'Shop name',
   'shop.url': 'URL to shop',
-  'no.shop': 'No shops found',
+  'no.items': 'No items found',
   'shop.description': 'Shop description',
   'image.choose': 'Choose an image',
   'camera.default': 'Camera',
