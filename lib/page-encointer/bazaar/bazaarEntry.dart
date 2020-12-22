@@ -192,13 +192,17 @@ Widget recentlyAdded(BuildContext context, AppStore store) {
           children: <Widget>[
             Container(
               height: _height / 5,
-              child: ListView.builder(
-                padding: EdgeInsets.all(5),
-                shrinkWrap: true,
-                itemCount: store.encointer.shopRegistry == null ? 0 : store.encointer.shopRegistry.length,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (BuildContext context, index) {
-                  return _buildShopEntries(context, index, store);
+              child: Observer(
+                builder: (_) {
+                  return ListView.builder(
+                    padding: EdgeInsets.all(5),
+                    shrinkWrap: true,
+                    itemCount: store.encointer.shopRegistry == null ? 0 : store.encointer.shopRegistry.length,
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (BuildContext context, index) {
+                      return _buildShopEntries(context, index, store);
+                    },
+                  );
                 },
               ),
             ),
