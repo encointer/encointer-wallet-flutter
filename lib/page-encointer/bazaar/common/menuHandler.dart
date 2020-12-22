@@ -1,68 +1,61 @@
 import 'package:flutter/material.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:encointer_wallet/common/components/roundedCard.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shop/myShopPage.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 
 class MenuHandler extends StatelessWidget {
   MenuHandler(this.store);
-
-  BuildContext context;
   final AppStore store;
 
-  void _dismiss() {
+  void _dismiss(context) {
     Navigator.pop(context);
   }
 
   @override
   Widget build(BuildContext context) {
-    this.context = context;
     final Map<String, String> dic = I18n.of(context).bazaar;
-
     return GestureDetector(
       onTap: () {
-        _dismiss(); // return when tapped on background
+        _dismiss(context); // return when tapped on background
       },
       child: Scaffold(
-        backgroundColor: Colors.black.withOpacity(0.85),
+        backgroundColor: Colors.black.withOpacity(0.8),
         body: Opacity(
           opacity: 1,
-          child: Container(
-            width: MediaQuery.of(context).size.width / 1.2,
-            padding: EdgeInsets.fromLTRB(10, 50, 100, 50),
-            child: RoundedCard(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    RoundedCard(
-                        child: Row(
-                      children: <Widget>[
-                        Container(
-                          width: 50,
-                          height: 50,
-                          child: Image.asset('assets/images/assets/ERT.png'),
+          child: SafeArea(
+            child: Align(
+              widthFactor: double.infinity,
+              heightFactor: double.infinity,
+              alignment: Alignment.topRight,
+              child: GestureDetector(
+                onTap: () {}, // make sure nothing happens if clicked on white area of menu
+                child: Container(
+                  color: Colors.white,
+                  width: MediaQuery.of(context).size.width / 1.6,
+                  height: MediaQuery.of(context).size.height,
+                  padding: EdgeInsets.fromLTRB(15, 30, 15, 0),
+                  child: ListView(
+                    children: <Widget>[
+                      ListTile(
+                        title: Text(dic['menu']),
+                        trailing: Icon(Icons.close, size: 25),
+                        onTap: () => _dismiss(context),
+                      ),
+                      ListTile(
+                        leading: Container(
+                          width: 32,
+                          child: Icon(Icons.shop_outlined, color: Colors.grey, size: 22),
                         ),
-                        Container(width: 15),
-                        Text(
-                          dic['choose.currency'],
-                        ),
-                      ],
-                    )),
-                    ListView.builder(
-                      shrinkWrap: true,
-                      scrollDirection: Axis.vertical,
-                      //padding: const EdgeInsets.all(8.0),
-                      itemCount: store.encointer.currencyIdentifiers.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return ListTile(
-                          title: Text(Fmt.currencyIdentifier(store.encointer.currencyIdentifiers[index])),
-                          onTap: () {},
-                        );
-                      },
-                    ),
-                  ],
+                        title: Text(dic['my.shops']),
+                        trailing: Icon(Icons.arrow_forward_ios, size: 18),
+                        onTap: () => {
+                          _dismiss(context), //dismiss menu when routing to another page
+                          Navigator.of(context).pushNamed(MyShopPage.route),
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

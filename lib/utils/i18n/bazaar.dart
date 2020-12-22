@@ -11,11 +11,14 @@ const Map<String, String> enBazaar = {
   'shop.create': 'Create new shop',
   'shop.name': 'Shop name',
   'shop.url': 'URL to shop',
-  'shop.default': '40',
+  'no.shop': 'No shops found',
   'shop.description': 'Shop description',
   'image.choose': 'Choose an image',
   'camera.default': 'Camera',
   'gallery.default': 'Gallery',
   'cancel.default': 'Cancel',
-  'choose.currency': 'Choose currency:'
+  'currency.choose': 'Choose currency:',
+  'currency.notFound': 'No currency found',
+  'menu': 'Menu',
+  'my.shops': 'My shops',
 };
