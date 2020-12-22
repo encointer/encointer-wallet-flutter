@@ -311,18 +311,12 @@ class ApiEncointer {
     print("balance: " + balance);
   }
 
-  // not yet used
   Future<List<String>> getShopRegistry() async {
     String cid = store.encointer.chosenCid;
+    List<dynamic> res = await apiRoot.evalJavascript('encointer.getShopRegistry("$cid")');
 
-    Map<String, dynamic> res = await apiRoot.evalJavascript('encointer.getShopRegistry("$cid")');
+    List<String> shops = res.cast<String>();
 
-    List<String> shops = new List<String>();
-    res['shops'].forEach((e) {
-      shops.add(e.toString());
-    });
-
-    print("SHOPS: " + shops.toString());
     store.encointer.setShopRegistry(shops);
     return shops;
   }

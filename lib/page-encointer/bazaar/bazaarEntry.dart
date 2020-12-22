@@ -37,7 +37,10 @@ class _BazaarEntryState extends State<BazaarEntry> {
     );
   }
 
-  void refreshPage() => setState(() {});
+  Future<void> refreshPage(String cid) async {
+    await store.encointer.reloadShopRegistry();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +49,7 @@ class _BazaarEntryState extends State<BazaarEntry> {
     Color secondaryColor = Theme.of(context).secondaryHeaderColor;
 
     // reaction necessary as shops are not an observable list (view should not change without user doing anything)
-    final refreshPageOnCidChange = reaction((_) => store.encointer.chosenCid, (_) => refreshPage());
+    final refreshPageOnCidChange = reaction((_) => store.encointer.chosenCid, (cid) => refreshPage(cid));
 
     final List<Widget> _widgetList = <Widget>[
       homeView(context, store),
