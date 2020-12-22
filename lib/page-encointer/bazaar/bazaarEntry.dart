@@ -1,11 +1,9 @@
 import 'package:encointer_wallet/common/components/BorderedTitle.dart';
-import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/article/articleClass.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/article/articleCard.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shop/shopCard.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shop/shopClass.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/shop/createShopPage.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shop/shopOverviewPage.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/common/currencyChooserHandler.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/common/menuHandler.dart';
@@ -69,16 +67,17 @@ class _BazaarEntryState extends State<BazaarEntry> {
           leading: IconButton(icon: Image.asset('assets/images/assets/ERT.png'), onPressed: () => _getCurrency()),
           actions: <Widget>[
             IconButton(
-                icon: Icon(
-                  Icons.menu,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => MenuHandler(store)),
-                  );
-                }),
+              icon: Icon(
+                Icons.menu,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  PageRouteBuilder(opaque: false, pageBuilder: (context, _, __) => MenuHandler(store)),
+                );
+              },
+            ),
           ],
           flexibleSpace: Container(
             padding: EdgeInsets.fromLTRB(10, 73, 100, 10),
@@ -194,35 +193,26 @@ Widget recentlyAdded(BuildContext context, AppStore store) {
       ),
       RoundedCard(
         margin: EdgeInsets.only(top: 16),
-        child: Column(
-          children: <Widget>[
-            Container(
-              height: _height / 5,
-              child: Observer(
-                builder: (_) {
-                  return ListView.builder(
-                    padding: EdgeInsets.all(5),
-                    shrinkWrap: true,
-                    itemCount: store.encointer.shopRegistry == null ? 0 : store.encointer.shopRegistry.length,
-                    scrollDirection: Axis.horizontal,
-                    itemBuilder: (BuildContext context, index) {
-                      return _buildShopEntries(context, index, store);
-                    },
-                  );
-                },
-              ),
-            ),
-            // Add Article button
-            Container(
-              margin: EdgeInsets.only(left: 40, right: 40, top: 10, bottom: 15),
-              child: RoundedButton(
-                text: dic['shop.insert'],
-                onPressed: () {
-                  Navigator.pushNamed(context, CreateShopPage.route);
-                },
-              ),
-            ),
-          ],
+        child: Container(
+          height: _height / 5,
+          child: Observer(
+            builder: (_) => store.encointer.shopRegistry == null
+                ? CupertinoActivityIndicator()
+                : (store.encointer.shopRegistry.isEmpty)
+                    ? Container(
+                        alignment: Alignment.center,
+                        child: Text(dic['no.shop']),
+                      )
+                    : ListView.builder(
+                        padding: EdgeInsets.all(5),
+                        shrinkWrap: true,
+                        itemCount: store.encointer.shopRegistry.length,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (BuildContext context, index) {
+                          return _buildShopEntries(context, index, store);
+                        },
+                      ),
+          ),
         ),
       ),
     ],
