@@ -54,6 +54,7 @@ class ApiEncointer {
     apiRoot.unsubscribeMessage(_currentPhaseSubscribeChannel);
     apiRoot.unsubscribeMessage(_timeStampSubscribeChannel);
     apiRoot.unsubscribeMessage(_currencyIdentifiersChannel);
+    apiRoot.unsubscribeMessage(_shopRegistryChannel);
 
     if (store.settings.endpointIsGesell) {
       apiRoot.unsubscribeMessage(_participantIndexChannel);
