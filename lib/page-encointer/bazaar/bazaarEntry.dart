@@ -40,11 +40,18 @@ class _BazaarEntryState extends State<BazaarEntry> {
   @observable
   bool reload = false;
 
-  Future<void> refreshPage(String cid) async {
+  @action
+  Future<void> refreshPage() async {
     reload = true;
-    await store.encointer.reloadShopRegistry();
+    if (store.encointer.chosenCid != null) {
+      await store.encointer.reloadShopRegistry();
+      await resetState();
+      reload = false;
+    }
+  }
+
+  Future<void> resetState() async {
     setState(() {});
-    reload = false;
   }
 
   @override
@@ -53,8 +60,8 @@ class _BazaarEntryState extends State<BazaarEntry> {
     Color primaryColor = Theme.of(context).primaryColor;
     Color secondaryColor = Theme.of(context).secondaryHeaderColor;
 
-    // reaction necessary as shops are not an observable list (view should not change without user doing anything)
-    final refreshPageOnCidChange = reaction((_) => store.encointer.chosenCid, (cid) => refreshPage(cid));
+    // reaction necessary because shops is not an observable list (view should not change without user doing anything)
+    final refreshPageOnCidChange = reaction((_) => store.encointer.chosenCid, (_) => refreshPage());
 
     final List<Widget> _widgetList = <Widget>[
       homeView(context, store),
@@ -208,6 +215,8 @@ class _BazaarEntryState extends State<BazaarEntry> {
             margin: EdgeInsets.only(top: 16),
             child: Container(
               height: _height / 5,
+              // TODO: Change from shopRegistry == null to != null is not registered - how to fix?
+              //  Problem only when restarting app.
               child: (store.encointer.shopRegistry == null) || reload || (store.encointer.chosenCid == null)
                   ? Container(
                       alignment: Alignment.center,
