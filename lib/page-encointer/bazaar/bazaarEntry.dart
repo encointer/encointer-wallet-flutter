@@ -4,7 +4,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/article/articleClass.dart
 import 'package:encointer_wallet/page-encointer/bazaar/article/articleCard.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shop/shopCard.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shop/shopClass.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/shop/shopOverviewPage.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shop/shopOverviewPanel.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/common/currencyChooserHandler.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/common/menuHandler.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -64,7 +64,7 @@ class _BazaarEntryState extends State<BazaarEntry> {
 
     final List<Widget> _widgetList = <Widget>[
       homeView(context, store),
-      ShopOverviewPage(store),
+      ShopOverviewPanel(store),
       //articleView(context, store),d
     ];
 
@@ -210,7 +210,8 @@ class _BazaarEntryState extends State<BazaarEntry> {
                 title: dic['recently.added'],
               ),
             ),
-            Container(
+            //TODO: Better view for recently added?
+            /*Container(
               margin: EdgeInsets.only(top: 40, left: 100, right: 20),
               child: GestureDetector(
                 onTap: () {
@@ -221,7 +222,7 @@ class _BazaarEntryState extends State<BazaarEntry> {
                   style: Theme.of(context).textTheme.headline2.apply(fontSizeFactor: 0.7),
                 ),
               ),
-            ),
+            ),*/
           ],
         ),
         Observer(builder: (_) {
