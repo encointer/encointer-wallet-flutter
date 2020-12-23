@@ -29,7 +29,6 @@ class _BazaarEntryState extends State<BazaarEntry> {
   _BazaarEntryState(this.store);
 
   final AppStore store;
-
   Future<void> _chooseCurrency() async {
     await Navigator.push(
       context,
@@ -95,12 +94,12 @@ class _BazaarEntryState extends State<BazaarEntry> {
                 Navigator.push(
                   context,
                   PageRouteBuilder(opaque: false, pageBuilder: (context, _, __) => MenuHandler(store)),
-                );
+                ).whenComplete(() => refreshPage());
               },
             ),
           ],
           flexibleSpace: Container(
-            padding: EdgeInsets.fromLTRB(10, 73, 100, 10),
+            padding: EdgeInsets.fromLTRB(10, 53, 100, 10),
             child: Observer(
               builder: (_) {
                 return store.encointer.balanceEntries[store.encointer.chosenCid] != null
@@ -220,7 +219,27 @@ class _BazaarEntryState extends State<BazaarEntry> {
               child: (store.encointer.shopRegistry == null) || reload || (store.encointer.chosenCid == null)
                   ? Container(
                       alignment: Alignment.center,
-                      child: CupertinoActivityIndicator(),
+                      child: Column(
+                        children: <Widget>[
+                          // TODO: how to refresh automatically?
+                          !reload
+                              ? FlatButton(
+                                  child: Text("Refresh"),
+                                  onPressed: () {
+                                    refreshPage();
+                                  })
+                              : Container(
+                                  alignment: Alignment.topCenter,
+                                  child: FlatButton(
+                                    child: Text(""),
+                                  ),
+                                ),
+                          Container(
+                            alignment: Alignment.center,
+                            child: CupertinoActivityIndicator(),
+                          ),
+                        ],
+                      ),
                     )
                   : (store.encointer.shopRegistry.isEmpty)
                       ? Container(

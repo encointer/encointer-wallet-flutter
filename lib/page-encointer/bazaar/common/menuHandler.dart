@@ -6,6 +6,7 @@ import 'package:encointer_wallet/store/app.dart';
 
 class MenuHandler extends StatelessWidget {
   MenuHandler(this.store);
+
   final AppStore store;
 
   void _dismiss(context) {
@@ -50,7 +51,6 @@ class MenuHandler extends StatelessWidget {
                         title: Text(dic['my.shops']),
                         trailing: Icon(Icons.arrow_forward_ios, size: 18),
                         onTap: () => {
-                          _dismiss(context), //dismiss menu when routing to another page
                           Navigator.of(context).pushNamed(MyShopPage.route),
                         },
                       ),
