@@ -103,11 +103,27 @@ class _BazaarEntryState extends State<BazaarEntry> {
             child: Observer(
               builder: (_) {
                 return store.encointer.balanceEntries[store.encointer.chosenCid] != null
-                    ? Text(
-                        Fmt.currencyIdentifier(store.encointer.chosenCid),
-                        style: TextStyle(fontSize: 15, color: Colors.white),
-                      )
-                    : Text('Choose currency');
+                    ? Stack(children: <Widget>[
+                        Text(
+                          Fmt.currencyIdentifier(store.encointer.chosenCid),
+                          style: TextStyle(fontSize: 12, color: Colors.white),
+                        ),
+                        GestureDetector(
+                          onTap: () => _chooseCurrency(),
+                          child: Container(
+                            color: Colors.transparent,
+                            width: 120,
+                            height: 15,
+                          ),
+                        ),
+                      ])
+                    : GestureDetector(
+                        onTap: () => _chooseCurrency(),
+                        child: Text(
+                          dic['currency.load'],
+                          style: TextStyle(fontSize: 12, color: Colors.white),
+                        ),
+                      );
               },
             ),
           ),
@@ -118,7 +134,6 @@ class _BazaarEntryState extends State<BazaarEntry> {
   }
 
   Widget homeView(BuildContext context, AppStore store) {
-    final Map<String, String> dic = I18n.of(context).bazaar;
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: SafeArea(

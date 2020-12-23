@@ -18,6 +18,7 @@ const Map<String, String> enBazaar = {
   'gallery.default': 'Gallery',
   'cancel.default': 'Cancel',
   'currency.choose': 'Choose currency:',
+  'currency.load': 'Loading currency..',
   'currency.notFound': 'No currency found',
   'menu': 'Menu',
   'my.shops': 'My shops',
