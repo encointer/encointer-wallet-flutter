@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:encointer_wallet/common/consts/settings.dart';
 import 'package:encointer_wallet/service/subscan.dart';
 import 'package:encointer_wallet/service/substrateApi/apiAccount.dart';
 import 'package:encointer_wallet/service/substrateApi/apiAssets.dart';
@@ -218,7 +217,7 @@ class Api {
     }
 
     // setWorker endpoint on js side
-    if (store.settings.endpoint.info == networkEndpointEncointerCantillon.info) {
+    if (store.settings.endpointIsCantillon) {
       var worker = store.settings.endpoint.worker;
       String res = await evalJavascript('settings.setWorkerEndpoint("$worker")');
     }
