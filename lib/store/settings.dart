@@ -56,7 +56,8 @@ abstract class _SettingsStore with Store {
   bool get endpointIsEncointer {
     return endpoint.info == networkEndpointEncointerGesell.info ||
         endpoint.info == networkEndpointEncointerGesellDev.info ||
-        endpoint.info == networkEndpointEncointerCantillon.info;
+        endpoint.info == networkEndpointEncointerCantillon.info ||
+        endpoint.info == networkEndpointEncointerCantillonDev.info;
   }
 
   @computed

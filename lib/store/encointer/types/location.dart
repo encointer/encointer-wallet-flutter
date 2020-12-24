@@ -17,9 +17,6 @@ class Location {
     return jsonEncode(this);
   }
 
-
-  factory Location.fromJson(Map<String, dynamic> json) =>
-      _$LocationFromJson(json);
-  Map<String, dynamic> toJson() =>
-      _$LocationToJson(this);
+  factory Location.fromJson(Map<String, dynamic> json) => _$LocationFromJson(json);
+  Map<String, dynamic> toJson() => _$LocationToJson(this);
 }

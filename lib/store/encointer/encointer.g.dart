@@ -269,6 +269,21 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
+  final _$shopRegistryAtom = Atom(name: '_EncointerStore.shopRegistry');
+
+  @override
+  List<String> get shopRegistry {
+    _$shopRegistryAtom.reportRead();
+    return super.shopRegistry;
+  }
+
+  @override
+  set shopRegistry(List<String> value) {
+    _$shopRegistryAtom.reportWrite(value, super.shopRegistry, () {
+      super.shopRegistry = value;
+    });
+  }
+
   final _$setTransferTxsAsyncAction =
       AsyncAction('_EncointerStore.setTransferTxs');
 
@@ -506,6 +521,17 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
+  void setShopRegistry(List<String> shops) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(
+        name: '_EncointerStore.setShopRegistry');
+    try {
+      return super.setShopRegistry(shops);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 timeStamp: ${timeStamp},
@@ -524,7 +550,8 @@ currencyIdentifiers: ${currencyIdentifiers},
 chosenCid: ${chosenCid},
 claimHex: ${claimHex},
 attestations: ${attestations},
-txsTransfer: ${txsTransfer}
+txsTransfer: ${txsTransfer},
+shopRegistry: ${shopRegistry}
     ''';
   }
 }

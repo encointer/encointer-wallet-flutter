@@ -29,10 +29,19 @@ EndpointData networkEndpointEncointerCantillon = EndpointData.fromJson(const {
   'worker': 'wss://substratee03.scs.ch'
 });
 
+EndpointData networkEndpointEncointerCantillonDev = EndpointData.fromJson(const {
+  'info': 'nctr-cln-dev',
+  'ss58': 42,
+  'text': 'Encointer Cantillon (Hosted by Encointer Association)',
+  'value': 'ws://192.168.1.24:9979',
+  'worker': 'ws://192.168.1.24:2079',
+});
+
 List<EndpointData> networkEndpoints = [
   networkEndpointEncointerGesell,
   networkEndpointEncointerGesellDev,
   networkEndpointEncointerCantillon,
+  networkEndpointEncointerCantillonDev,
 ];
 
 const network_ss58_map = {
@@ -40,6 +49,7 @@ const network_ss58_map = {
   'nctr-gsl': 42,
   'nctr-cln': 42,
   'nctr-gsl-dev': 42,
+  'nctr-cln-dev': 42,
   'substrate': 42,
 };
 
