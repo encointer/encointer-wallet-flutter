@@ -211,7 +211,9 @@ abstract class _EncointerStore with Store {
   void setChosenCid(String cid) {
     if (chosenCid != cid) {
       chosenCid = cid;
-      webApi.encointer.subscribeShopRegistry();
+      if (rootStore.settings.endpointIsGesell) {
+        webApi.encointer.subscribeShopRegistry();
+      }
       cacheObject(encointerCurrencyKey, cid);
       // update depending values without awaiting
       if (!rootStore.settings.loading) {

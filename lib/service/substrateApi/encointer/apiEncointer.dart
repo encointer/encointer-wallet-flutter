@@ -46,7 +46,9 @@ class ApiEncointer {
     this.subscribeCurrentPhase();
     this.subscribeCurrencyIdentifiers();
     // this.subscribeEncointerBalance();
-    this.subscribeShopRegistry();
+    if (store.settings.endpointIsGesell) {
+      this.subscribeShopRegistry();
+    }
   }
 
   Future<void> stopSubscriptions() async {
@@ -59,6 +61,7 @@ class ApiEncointer {
     if (store.settings.endpointIsGesell) {
       apiRoot.unsubscribeMessage(_participantIndexChannel);
       apiRoot.unsubscribeMessage(_encointerBalanceChannel);
+      apiRoot.unsubscribeMessage(_shopRegistryChannel);
     }
   }
 

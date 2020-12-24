@@ -28,12 +28,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   NotificationPlugin _notificationPlugin;
 
-  final List<String> _tabList = [
-    'Wallet',
-    'Bazaar',
-    'Ceremonies',
-    'Profile',
-  ];
+  List<String> _tabList;
   int _tabIndex = 0;
 
   List<BottomNavigationBarItem> _navBarItems(int activeItem) {
@@ -49,15 +44,26 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
   }
 
   Widget _getPage(i) {
-    switch (i) {
-      case 0:
-        return Assets(store);
-      case 1:
-        return BazaarEntry(store);
-      case 2:
-        return EncointerEntry(store);
-      default:
-        return Profile(store);
+    if (store.settings.endpointIsGesell) {
+      switch (i) {
+        case 0:
+          return Assets(store);
+        case 1:
+          return BazaarEntry(store);
+        case 2:
+          return EncointerEntry(store);
+        default:
+          return Profile(store);
+      }
+    } else {
+      switch (i) {
+        case 0:
+          return Assets(store);
+        case 1:
+          return EncointerEntry(store);
+        default:
+          return Profile(store);
+      }
     }
   }
 
@@ -136,6 +142,20 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       _notificationPlugin = NotificationPlugin();
       _notificationPlugin.init(context);
     }
+
+    _tabList = store.settings.endpointIsGesell
+        ? [
+            'Wallet',
+            'Bazaar',
+            'Ceremonies',
+            'Profile',
+          ]
+        : [
+            'Wallet',
+            'Ceremonies',
+            'Profile',
+          ];
+
     super.initState();
   }
 
