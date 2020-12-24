@@ -19,6 +19,16 @@ class Ceremonies {
   Future<int> participantIndex(String cid, int cIndex, String pubKey) async {
     return await apiRoot.evalJavascript('encointer.getParticipantIndex("$cid", "$cIndex" ,"$pubKey")');
   }
+
+  Future<int> meetupIndex(String cid, int cIndex, String pubKey) async {
+    return await await apiRoot.evalJavascript('encointer.getMeetupIndex("$cid", "$cIndex","$pubKey")');
+  }
+
+  Future<List<String>> meetupRegistry(String cid, int cIndex, int mIndex) async {
+    List<dynamic> meetupRegistry =
+        await apiRoot.evalJavascript('encointer.getMeetupRegistry("$cid", "$cIndex", "$mIndex")');
+    return meetupRegistry.map((e) => e.toString()).toList();
+  }
 }
 
 class Balances {

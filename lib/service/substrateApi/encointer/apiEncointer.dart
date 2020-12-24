@@ -88,19 +88,21 @@ class ApiEncointer {
 
   /// Queries the Ceremonies pallet: encointerCeremonies.meetupIndex([cid, cIndex], address).
   ///
-  /// This is off-chain and trusted in Cantillon. There is only a combined getter:
-  /// TrustedGetter::get_meetup_index_and_location(AccountId, CurrencyIdentifier).
+  /// This is off-chain and trusted in Cantillon.
   Future<int> getMeetupIndex() async {
-    String address = store.account.currentAccountPubKey;
+    print("api: getMeetupIndex");
     String cid = store.encointer.chosenCid;
-    int cIndex = store.encointer.currentCeremonyIndex;
+    String pubKey = store.account.currentAccountPubKey;
 
-    if (address == null) return 0;
-    if ((address.isEmpty) | (cid == null) | (cIndex == null)) {
+    if (pubKey == null) return 0;
+    if ((pubKey.isEmpty) | (cid == null)) {
       return 0;
     }
-    print("api: getMeetupIndex");
-    int mIndex = await apiRoot.evalJavascript('encointer.getMeetupIndex("$cid", "$cIndex","$address")');
+
+    int mIndex = store.settings.endpointIsGesell
+        ? await _gesell.ceremonies.meetupIndex(cid, store.encointer.currentCeremonyIndex, pubKey)
+        : await _cantillon.ceremonies.meetupIndex(cid, pubKey, store.account.cachedPin);
+
     print("api: Next Meetup Index: " + mIndex.toString());
     store.encointer.setMeetupIndex(mIndex);
     return mIndex;
@@ -108,10 +110,9 @@ class ApiEncointer {
 
   /// Queries the Currencies pallet: encointerCurrencies.locations(cid)
   ///
-  /// Fixme: In Gesell JS currently returns locations[0] instead of locations[mIndex -1].
+  /// Fixme: JS currently returns locations[0] instead of locations[mIndex -1].
   ///
-  /// This is off-chain and trusted in Cantillon. There is only a combined getter:
-  /// TrustedGetter::get_meetup_index_and_location(AccountId, CurrencyIdentifier).
+  /// This is on-chain in Cantillon
   Future<void> getMeetupLocation() async {
     print("api: getMeetupLocation");
     String address = store.account.currentAccountPubKey;
@@ -146,10 +147,7 @@ class ApiEncointer {
 
   /// Queries the Ceremonies pallet: encointerCeremonies.meetupRegistry([cid, cIndex], mIndex).
   ///
-  /// This is off-chain in Cantillon.
-  ///
-  /// Todo: This is currently not accessible in Cantillon. We need to first implement a TrustedGetter first,
-  /// see: https://github.com/encointer/encointer-worker/issues/34
+  /// This is off-chain and trusted in Cantillon.
   Future<List<String>> getMeetupRegistry() async {
     print("api: getMeetupRegistry");
     int cIndex = store.encointer.currentCeremonyIndex;
@@ -157,19 +155,21 @@ class ApiEncointer {
     if (cid == null) {
       return new List(); // empty
     }
+    String pubKey = store.account.currentAccountPubKey;
     int mIndex = store.encointer.meetupIndex;
     print("api: get meetup registry for cindex " + cIndex.toString() + " mindex " + mIndex.toString() + " cid " + cid);
-    List<dynamic> meetupRegistry =
-        await apiRoot.evalJavascript('encointer.getMeetupRegistry("$cid", "$cIndex", "$mIndex")');
-    print("api: Participants: " + meetupRegistry.toString());
-    var mreg = meetupRegistry.map((e) => e.toString()).toList();
-    store.encointer.setMeetupRegistry(mreg);
-    return mreg;
+
+    List<String> registry = store.settings.endpointIsGesell
+        ? await _gesell.ceremonies.meetupRegistry(cid, cIndex, mIndex)
+        : await _cantillon.ceremonies.meetupRegistry(cid, pubKey, store.account.cachedPin);
+    print("api: Participants: " + registry.toString());
+    store.encointer.setMeetupRegistry(registry);
+    return registry;
   }
 
   /// Queries the Ceremonies pallet: encointerCeremonies.participantIndex([cid, cIndex], address).
   ///
-  /// This is off-chain and trusted in Cantillon, accessible with TrustedGetter::registration(AccountId, Cid).
+  /// This is off-chain and trusted in Cantillon.
   Future<int> getParticipantIndex() async {
     String cid = store.encointer.chosenCid;
     if (cid == null) {

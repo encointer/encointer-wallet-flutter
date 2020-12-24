@@ -19,6 +19,16 @@ class Ceremonies {
   Future<int> participantIndex(String cid, String pubKey, String password) async {
     return await apiRoot.evalJavascript('worker.getParticipantIndex("$pubKey", "$cid", "$password")');
   }
+
+  Future<int> meetupIndex(String cid, String pubKey, String password) async {
+    return await apiRoot.evalJavascript('worker.getMeetupIndex("$pubKey", "$cid", "$password")');
+  }
+
+  Future<List<String>> meetupRegistry(String cid, String pubKey, String password) async {
+    List<dynamic> meetupRegistry =
+        await apiRoot.evalJavascript('worker.getMeetupRegistry("$pubKey", "$cid", "$password")');
+    return meetupRegistry.map((e) => e.toString()).toList();
+  }
 }
 
 class Balances {
