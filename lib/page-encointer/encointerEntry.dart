@@ -77,6 +77,8 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox> with SingleTickerProvider
 
   _checkConnectionState() async {
     appConnected = await webApi.isConnected();
+
+    setState(() {});
   }
 
   @override
