@@ -108,7 +108,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
           ],
         );
       }
-      // return staking page
+
       return Stack(
         fit: StackFit.expand,
         children: <Widget>[
@@ -143,6 +143,11 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       _notificationPlugin.init(context);
     }
 
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     _tabList = store.settings.endpointIsGesell
         ? [
             'Wallet',
@@ -155,12 +160,6 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
             'Ceremonies',
             'Profile',
           ];
-
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       key: EncointerHomePage.encointerHomePageKey,
       body: PageView(
