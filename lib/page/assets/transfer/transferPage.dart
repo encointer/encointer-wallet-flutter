@@ -106,6 +106,7 @@ class _TransferPageState extends State<TransferPage> {
         args['txInfo'] = {
           "module": 'encointerBalances',
           "call": 'transfer',
+          "cid": symbol,
         };
         args['params'] = [
           // params.to

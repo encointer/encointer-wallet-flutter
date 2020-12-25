@@ -36,6 +36,7 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
       "txInfo": {
         "module": 'encointerCeremonies',
         "call": 'registerParticipant',
+        "cid": store.encointer.chosenCid,
       },
       "detail": jsonEncode({
         "cid": store.encointer.chosenCid,
