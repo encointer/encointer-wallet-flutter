@@ -256,6 +256,7 @@ abstract class _EncointerStore with Store {
   @action
   void setParticipantIndex(int pIndex) {
     participantIndex = pIndex;
+    webApi.encointer.getMeetupIndex();
   }
 
   @action
