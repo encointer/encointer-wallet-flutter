@@ -10,8 +10,8 @@ import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
 import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:encointer_wallet/utils/format.dart';
 
-import 'apiCantillon.dart';
-import 'apiGesell.dart';
+import 'apiNoTee.dart';
+import 'apiTeeProxy.dart';
 
 /// Api to interface with the `js_encointer_service.js`
 ///
@@ -25,8 +25,8 @@ import 'apiGesell.dart';
 
 class ApiEncointer {
   ApiEncointer(this.apiRoot)
-      : _gesell = ApiGesell(apiRoot),
-        _cantillon = ApiCantillon(apiRoot);
+      : _noTee = ApiNoTee(apiRoot),
+        _teeProxy = ApiTeeProxy(apiRoot);
 
   final Api apiRoot;
   final store = globalAppStore;
@@ -37,8 +37,8 @@ class ApiEncointer {
   final String _encointerBalanceChannel = 'encointerBalance';
   final String _shopRegistryChannel = 'shopRegistry';
 
-  final ApiGesell _gesell;
-  final ApiCantillon _cantillon;
+  final ApiNoTee _noTee;
+  final ApiTeeProxy _teeProxy;
 
   Future<void> startSubscriptions() async {
     print("api: starting encointer subscriptions");
@@ -103,8 +103,8 @@ class ApiEncointer {
     }
 
     int mIndex = store.settings.endpointIsGesell
-        ? await _gesell.ceremonies.meetupIndex(cid, store.encointer.currentCeremonyIndex, pubKey)
-        : await _cantillon.ceremonies.meetupIndex(cid, pubKey, store.account.cachedPin);
+        ? await _noTee.ceremonies.meetupIndex(cid, store.encointer.currentCeremonyIndex, pubKey)
+        : await _teeProxy.ceremonies.meetupIndex(cid, pubKey, store.account.cachedPin);
 
     print("api: Next Meetup Index: " + mIndex.toString());
     store.encointer.setMeetupIndex(mIndex);
@@ -163,8 +163,8 @@ class ApiEncointer {
     print("api: get meetup registry for cindex " + cIndex.toString() + " mindex " + mIndex.toString() + " cid " + cid);
 
     List<String> registry = store.settings.endpointIsGesell
-        ? await _gesell.ceremonies.meetupRegistry(cid, cIndex, mIndex)
-        : await _cantillon.ceremonies.meetupRegistry(cid, pubKey, store.account.cachedPin);
+        ? await _noTee.ceremonies.meetupRegistry(cid, cIndex, mIndex)
+        : await _teeProxy.ceremonies.meetupRegistry(cid, pubKey, store.account.cachedPin);
     print("api: Participants: " + registry.toString());
     store.encointer.setMeetupRegistry(registry);
     return registry;
@@ -182,8 +182,8 @@ class ApiEncointer {
     String pubKey = store.account.currentAccountPubKey;
     print("api: Getting participant index for " + pubKey);
     int pIndex = store.settings.endpointIsGesell
-        ? await _gesell.ceremonies.participantIndex(cid, store.encointer.currentCeremonyIndex, pubKey)
-        : await _cantillon.ceremonies.participantIndex(cid, pubKey, store.account.cachedPin);
+        ? await _noTee.ceremonies.participantIndex(cid, store.encointer.currentCeremonyIndex, pubKey)
+        : await _teeProxy.ceremonies.participantIndex(cid, pubKey, store.account.cachedPin);
 
     print("api: Participant Index: " + pIndex.toString());
     store.encointer.setParticipantIndex(pIndex);
@@ -195,8 +195,8 @@ class ApiEncointer {
   /// This is off-chain but public in Cantillon, accessible with PublicGetter::participantCount(cid).
   Future<void> getParticipantCount() async {
     int pCount = store.settings.endpointIsGesell
-        ? await _gesell.ceremonies.participantCount(store.encointer.chosenCid, store.encointer.currentCeremonyIndex)
-        : await _cantillon.ceremonies.participantCount(store.encointer.chosenCid);
+        ? await _noTee.ceremonies.participantCount(store.encointer.chosenCid, store.encointer.currentCeremonyIndex)
+        : await _teeProxy.ceremonies.participantCount(store.encointer.chosenCid);
 
     print("api: Participant Count: " + pCount.toString());
     return pCount;
@@ -215,8 +215,8 @@ class ApiEncointer {
     print("Getting encointer balance for ${Fmt.currencyIdentifier(cid)}");
 
     BalanceEntry bEntry = store.settings.endpointIsGesell
-        ? await _gesell.balances.balance(cid, pubKey)
-        : await _cantillon.balances.balance(cid, pubKey, store.account.cachedPin);
+        ? await _noTee.balances.balance(cid, pubKey)
+        : await _teeProxy.balances.balance(cid, pubKey, store.account.cachedPin);
 
     print("bEntryJson: ${bEntry.toString()}");
     store.encointer.addBalanceEntry(cid, bEntry);

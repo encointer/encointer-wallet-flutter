@@ -1,8 +1,8 @@
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 
-class ApiGesell {
-  ApiGesell(this.apiRoot)
+class ApiNoTee {
+  ApiNoTee(this.apiRoot)
       : ceremonies = Ceremonies(apiRoot),
         balances = Balances(apiRoot);
 
