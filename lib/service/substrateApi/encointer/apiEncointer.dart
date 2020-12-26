@@ -212,6 +212,8 @@ class ApiEncointer {
       return;
     }
 
+    print("Getting encointer balance for ${Fmt.currencyIdentifier(cid)}");
+
     BalanceEntry bEntry = store.settings.endpointIsGesell
         ? await _gesell.balances.balance(cid, pubKey)
         : await _cantillon.balances.balance(cid, pubKey, store.account.cachedPin);

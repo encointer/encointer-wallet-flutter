@@ -124,6 +124,7 @@ abstract class _AccountStore with Store {
     cachedPin = pin;
     if (pin.isNotEmpty) {
       rootStore.encointer.updateState();
+      webApi.encointer.getEncointerBalance();
     }
   }
 

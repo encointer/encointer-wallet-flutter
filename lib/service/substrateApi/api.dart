@@ -242,10 +242,6 @@ class Api {
     // init subscriptions for all apis
     this.encointer.startSubscriptions();
     this.assets.startSubscriptions();
-
-    if (store.account.cachedPin.isNotEmpty) {
-      await this.encointer.getEncointerBalance();
-    }
   }
 
   Future<void> updateBlocks(List txs) async {
