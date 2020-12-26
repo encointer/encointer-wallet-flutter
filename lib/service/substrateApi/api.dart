@@ -243,11 +243,8 @@ class Api {
     this.encointer.startSubscriptions();
     this.assets.startSubscriptions();
 
-    this.encointer.getEncointerBalance();
-
-    // fetch account balance
-    if (store.account.accountList.length > 0) {
-      await assets.fetchBalance();
+    if (store.account.cachedPin.isNotEmpty) {
+      await this.encointer.getEncointerBalance();
     }
   }
 
