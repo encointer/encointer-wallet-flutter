@@ -201,6 +201,9 @@ class ApiEncointer {
     store.encointer.setParticipantCount(pCount);
   }
 
+  /// Queries the EncointerBalances pallet: encointer.encointerBalances.balance(cid, address).
+  ///
+  /// This is off-chain and trusted in Cantillon, accessible with TrustedGetter::balance(cid, accountId).
   Future<void> getEncointerBalance() async {
     String pubKey = store.account.currentAccountPubKey;
     String cid = store.encointer.chosenCid;
