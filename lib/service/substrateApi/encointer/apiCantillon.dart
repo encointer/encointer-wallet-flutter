@@ -16,6 +16,10 @@ class Ceremonies {
 
   final Api apiRoot;
 
+  Future<int> participantCount(String cid) async {
+    return await apiRoot.evalJavascript('worker.getParticipantCount("$cid")');
+  }
+
   Future<int> participantIndex(String cid, String pubKey, String password) async {
     return await apiRoot.evalJavascript('worker.getParticipantIndex("$pubKey", "$cid", "$password")');
   }

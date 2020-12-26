@@ -194,11 +194,12 @@ class ApiEncointer {
   ///
   /// This is off-chain but public in Cantillon, accessible with PublicGetter::participantCount(cid).
   Future<void> getParticipantCount() async {
-    String cid = store.encointer.chosenCid;
-    int cIndex = store.encointer.currentCeremonyIndex;
-    int pCount = await apiRoot.evalJavascript('encointer.getParticipantCount("$cid", "$cIndex")');
+    int pCount = store.settings.endpointIsGesell
+        ? await _gesell.ceremonies.participantCount(store.encointer.chosenCid, store.encointer.currentCeremonyIndex)
+        : await _cantillon.ceremonies.participantCount(store.encointer.chosenCid);
+
     print("api: Participant Count: " + pCount.toString());
-    store.encointer.setParticipantCount(pCount);
+    return pCount;
   }
 
   /// Queries the EncointerBalances pallet: encointer.encointerBalances.balance(cid, address).
@@ -231,17 +232,6 @@ class ApiEncointer {
         'encointer.subscribeCurrentPhase("$_currentPhaseSubscribeChannel")', _currentPhaseSubscribeChannel, (data) {
       var phase = getEnumFromString(CeremonyPhase.values, data.toUpperCase());
       store.encointer.setCurrentPhase(phase);
-      // update depending values
-      switch (phase) {
-        case CeremonyPhase.REGISTERING:
-          this.getCurrentCeremonyIndex();
-          break;
-        case CeremonyPhase.ASSIGNING:
-          this.getMeetupIndex();
-          break;
-        case CeremonyPhase.ATTESTING:
-          break;
-      }
     });
   }
 
