@@ -300,7 +300,6 @@ class _AssetsState extends State<Assets> {
               setState(() {
                 store.account.setPin(password);
                 webApi.encointer.getEncointerBalance();
-                webApi.encointer.getParticipantIndex();
               });
             },
             onCancel: () => _showPasswordNotEnteredDialog(context),

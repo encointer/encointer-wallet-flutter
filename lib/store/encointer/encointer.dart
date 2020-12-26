@@ -106,6 +106,14 @@ abstract class _EncointerStore with Store {
     print("store: set currentCeremonyIndex to $index");
     currentCeremonyIndex = index;
     // update depending values without awaiting
+    if (currentPhase == CeremonyPhase.ASSIGNING) {
+      purgeAttestations();
+    }
+    updateState();
+  }
+
+  @action
+  void updateState() {
     switch (currentPhase) {
       case CeremonyPhase.REGISTERING:
         // reset deprecated state to null
@@ -119,7 +127,6 @@ abstract class _EncointerStore with Store {
         setClaimHex();
         break;
       case CeremonyPhase.ASSIGNING:
-        purgeAttestations();
         webApi.encointer.getMeetupIndex();
         break;
       case CeremonyPhase.ATTESTING:
@@ -127,6 +134,7 @@ abstract class _EncointerStore with Store {
         break;
     }
     webApi.encointer.getParticipantIndex();
+    webApi.encointer.getParticipantCount();
   }
 
   @action
@@ -256,7 +264,6 @@ abstract class _EncointerStore with Store {
   @action
   void setParticipantIndex(int pIndex) {
     participantIndex = pIndex;
-    webApi.encointer.getMeetupIndex();
   }
 
   @action

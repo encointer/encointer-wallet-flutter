@@ -122,6 +122,9 @@ abstract class _AccountStore with Store {
   @action
   void setPin(String pin) {
     cachedPin = pin;
+    if (pin.isNotEmpty) {
+      rootStore.encointer.updateState();
+    }
   }
 
   @action
@@ -186,11 +189,7 @@ abstract class _AccountStore with Store {
       rootStore.localStorage.setCurrentAccount(pubKey);
       setPin('');
     }
-    // update depending values
     if (!rootStore.settings.loading) {
-      webApi.encointer.getMeetupIndex();
-      webApi.encointer.getParticipantIndex();
-      webApi.encointer.getEncointerBalance();
       webApi.assets.subscribeBalance();
     }
   }

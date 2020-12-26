@@ -334,6 +334,17 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
+  void updateState() {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(
+        name: '_EncointerStore.updateState');
+    try {
+      return super.updateState();
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setMeetupIndex([int index]) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.setMeetupIndex');
