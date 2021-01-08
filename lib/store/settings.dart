@@ -281,4 +281,5 @@ abstract class _EndpointData {
   String text = '';
   String value = '';
   String worker = ''; // only relevant for cantillon
+  String mrenclave = ''; // relevant until we fetch mrenclave from substrateeRegistry
 }

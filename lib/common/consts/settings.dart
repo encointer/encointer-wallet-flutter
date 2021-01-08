@@ -26,7 +26,8 @@ EndpointData networkEndpointEncointerCantillon = EndpointData.fromJson(const {
   'ss58': 42,
   'text': 'Encointer Cantillon (Hosted by Encointer Association)',
   'value': 'wss://cantillon.encointer.org',
-  'worker': 'wss://substratee03.scs.ch'
+  'worker': 'wss://substratee03.scs.ch',
+  'mrenclave': 'CbE3fPWjeYVo9LSNKgPPiCXThFBjfhP1GK6Y9S7t5WVe'
 });
 
 EndpointData networkEndpointEncointerCantillonDev = EndpointData.fromJson(const {
@@ -35,6 +36,7 @@ EndpointData networkEndpointEncointerCantillonDev = EndpointData.fromJson(const 
   'text': 'Encointer Cantillon (Hosted by Encointer Association)',
   'value': 'ws://192.168.1.24:9979',
   'worker': 'ws://192.168.1.24:2079',
+  'mrenclave': '8NTy2X2Bs2jwP2mGz6yTqxtJk8Mi2c8UXHVovJDd6GZv'
 });
 
 List<EndpointData> networkEndpoints = [

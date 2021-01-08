@@ -29,7 +29,8 @@ EndpointData _$EndpointDataFromJson(Map<String, dynamic> json) {
     ..ss58 = json['ss58'] as int
     ..text = json['text'] as String
     ..value = json['value'] as String
-    ..worker = json['worker'] as String;
+    ..worker = json['worker'] as String
+    ..mrenclave = json['mrenclave'] as String;
 }
 
 Map<String, dynamic> _$EndpointDataToJson(EndpointData instance) =>
@@ -40,6 +41,7 @@ Map<String, dynamic> _$EndpointDataToJson(EndpointData instance) =>
       'text': instance.text,
       'value': instance.value,
       'worker': instance.worker,
+      'mrenclave': instance.mrenclave,
     };
 
 // **************************************************************************

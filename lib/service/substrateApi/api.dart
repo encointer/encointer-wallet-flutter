@@ -40,7 +40,7 @@ class Api {
 
   Function _connectFunc;
 
-  void init() async {
+  Future<void> init() async {
     jsStorage = GetStorage();
 
     account = ApiAccount(this);
@@ -200,7 +200,8 @@ class Api {
 
     if (store.settings.endpointIsCantillon) {
       var worker = store.settings.endpoint.worker;
-      await evalJavascript('settings.setWorkerEndpoint("$worker")');
+      var mrenclave = store.settings.endpoint.mrenclave;
+      String res = await evalJavascript('settings.setWorkerEndpoint("$worker", "$mrenclave")');
     }
 
     fetchNetworkProps();
@@ -219,7 +220,8 @@ class Api {
     // setWorker endpoint on js side
     if (store.settings.endpointIsCantillon) {
       var worker = store.settings.endpoint.worker;
-      String res = await evalJavascript('settings.setWorkerEndpoint("$worker")');
+      var mrenclave = store.settings.endpoint.mrenclave;
+      String res = await evalJavascript('settings.setWorkerEndpoint("$worker", "$mrenclave")');
     }
 
     int index = store.settings.endpointList.indexWhere((i) => i.value == res);
