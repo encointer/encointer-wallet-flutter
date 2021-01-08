@@ -56,12 +56,12 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
   @override
   Widget build(BuildContext context) {
     // only build dropdown after we have fetched the currency identifiers
-    return (store.encointer.participantIndex == null)
-        ? CupertinoActivityIndicator()
-        : Column(
-            children: <Widget>[
-              Observer(
-                builder: (_) => (store.encointer.meetupTime == null)
+    return Observer(
+      builder: (_) => store.encointer.participantIndex == null
+          ? CupertinoActivityIndicator()
+          : Column(
+              children: <Widget>[
+                store.encointer.meetupTime == null
                     ? Container()
                     : Column(
                         children: <Widget>[
@@ -70,16 +70,14 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
                               .format(new DateTime.fromMillisecondsSinceEpoch(store.encointer.meetupTime)))
                         ],
                       ),
-              ),
-              Observer(
-                builder: (_) => store.encointer.participantIndex == 0
+                store.encointer.participantIndex == 0
                     ? RoundedButton(text: "Register Participant", onPressed: () => _submit())
                     : RoundedButton(
                         text: "Unregister",
                         //for: " + Fmt.currencyIdentifier(store.encointer.chosenCid).toString(),
                         onPressed: null),
-              )
-            ],
-          );
+              ],
+            ),
+    );
   }
 }
