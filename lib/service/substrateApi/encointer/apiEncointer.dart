@@ -46,8 +46,8 @@ class ApiEncointer {
     this.subscribeTimestamp();
     this.subscribeCurrentPhase();
     this.subscribeCurrencyIdentifiers();
-    // this.subscribeEncointerBalance();
     if (store.settings.endpointIsGesell) {
+      this.subscribeEncointerBalance();
       this.subscribeShopRegistry();
     }
   }
