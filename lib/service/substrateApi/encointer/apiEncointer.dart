@@ -8,6 +8,7 @@ import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
 import 'package:encointer_wallet/store/encointer/types/location.dart';
+import 'package:encointer_wallet/store/encointer/types/proofOfAttendance.dart';
 import 'package:encointer_wallet/utils/format.dart';
 
 import 'apiNoTee.dart';
@@ -375,6 +376,18 @@ class ApiEncointer {
     AttestationResult attestation = AttestationResult.fromJson(att);
     print("Att: ${attestation.toString()}");
     return attestation;
+  }
+
+  Future<ProofOfAttendance> getProofOfAttendance() async {
+    var pubKey = store.account.currentAccountPubKey;
+    var cid = store.encointer.chosenCid;
+    var cIndex = store.encointer.currentCeremonyIndex;
+    var pin = store.account.cachedPin;
+    var proofJs =
+        await apiRoot.evalJavascript('encointer.getProofOfAttendance("$pubKey", "$cid", "${cIndex - 1}", "$pin")');
+    ProofOfAttendance proof = ProofOfAttendance.fromJson(proofJs);
+    print("Proof: ${proof.toString()}");
+    return proof;
   }
 
   Future<void> getShopRegistry() async {

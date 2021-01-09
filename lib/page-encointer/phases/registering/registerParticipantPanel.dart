@@ -4,6 +4,8 @@ import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/store/encointer/types/proofOfAttendance.dart';
+import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -24,6 +26,9 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
 
   final AppStore store;
 
+  bool attendedLastMeetup = false;
+  Future<ProofOfAttendance> proof;
+
   @override
   void initState() {
     webApi.encointer.getParticipantIndex();
@@ -31,6 +36,11 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
   }
 
   Future<void> _submit() async {
+    ProofOfAttendance p;
+    if (attendedLastMeetup) {
+      p = await proof;
+    }
+
     var args = {
       "title": 'register_participant',
       "txInfo": {
@@ -40,11 +50,11 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
       },
       "detail": jsonEncode({
         "cid": store.encointer.chosenCid,
-        "proof": {},
+        "proof": p ?? {},
       }),
       "params": [
         store.encointer.chosenCid,
-        null,
+        p,
       ],
       'onFinish': (BuildContext txPageContext, Map res) {
         Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
@@ -56,6 +66,7 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
   @override
   Widget build(BuildContext context) {
     // only build dropdown after we have fetched the currency identifiers
+    Map dic = I18n.of(context).encointer;
     return Observer(
       builder: (_) => store.encointer.participantIndex == null
           ? CupertinoActivityIndicator()
@@ -65,11 +76,23 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
                     ? Container()
                     : Column(
                         children: <Widget>[
-                          Text("Next ceremony will happen at high sun on:"),
+                          Text(dic["ceremony.next"]),
                           Text(DateFormat('yyyy-MM-dd')
                               .format(new DateTime.fromMillisecondsSinceEpoch(store.encointer.meetupTime)))
                         ],
                       ),
+                CheckboxListTile(
+                  title: Text(dic["meetup.attended"]),
+                  onChanged: (bool value) {
+                    if (value && proof == null) {
+                      proof = webApi.encointer.getProofOfAttendance();
+                    }
+                    setState(() {
+                      attendedLastMeetup = value;
+                    });
+                  },
+                  value: attendedLastMeetup,
+                ),
                 store.encointer.participantIndex == 0
                     ? RoundedButton(text: "Register Participant", onPressed: () => _submit())
                     : RoundedButton(
