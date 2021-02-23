@@ -20,6 +20,7 @@
     "@encointer/node-api": "^0.1.1",
     "@encointer/types": "^0.1.1",
     "@encointer/util": "^0.1.0",
+    "@encointer/worker-api": "^0.1.1",
     "@polkadot/api": "3.10.1",
     "@polkadot/keyring": "^5.7.1",
     "@polkadot/rpc-provider": "^3.10.1",
