@@ -6,8 +6,8 @@
   "scripts": {
     "clean": "rm -rf dist/*",
     "lint": "eslint src/**.js",
-    "build": "webpack -p --mode production",
-    "build-dev": "webpack -d --mode development",
+    "build": "webpack --stats-error-details true",
+    "build-dev": "webpack --stats-error-details true",
     "test": "jest -i --watch"
   },
   "exports": {
@@ -54,7 +54,7 @@
     "jest": "^26.6.3",
     "prettier": "^2.2.1",
     "webpack": "^5.24.0",
-    "webpack-cli": "^4"
+    "webpack-cli": "^4.5.0"
   },
   "eslintConfig": {
     "globals": {
