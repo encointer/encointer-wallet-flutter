@@ -34,6 +34,7 @@
     "oo7-substrate": "^0.8.0"
   },
   "devDependencies": {
+    "@polkadot/dev": "^0.60.3",
     "@babel/core": "^7.13.0",
     "@babel/preset-env": "^7.13.0",
     "@jest/globals": "^26.6.2",
