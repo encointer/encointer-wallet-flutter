@@ -178,19 +178,20 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
-  final _$currencyIdentifiersAtom =
-      Atom(name: '_EncointerStore.currencyIdentifiers');
+  final _$communityIdentifiersAtom =
+      Atom(name: '_EncointerStore.communityIdentifiers');
 
   @override
-  List<String> get currencyIdentifiers {
-    _$currencyIdentifiersAtom.reportRead();
-    return super.currencyIdentifiers;
+  List<String> get communityIdentifiers {
+    _$communityIdentifiersAtom.reportRead();
+    return super.communityIdentifiers;
   }
 
   @override
-  set currencyIdentifiers(List<String> value) {
-    _$currencyIdentifiersAtom.reportWrite(value, super.currencyIdentifiers, () {
-      super.currencyIdentifiers = value;
+  set communityIdentifiers(List<String> value) {
+    _$communityIdentifiersAtom.reportWrite(value, super.communityIdentifiers,
+        () {
+      super.communityIdentifiers = value;
     });
   }
 
@@ -407,11 +408,11 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setCurrencyIdentifiers(List<String> cids) {
+  void setCommunityIdentifiers(List<String> cids) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
-        name: '_EncointerStore.setCurrencyIdentifiers');
+        name: '_EncointerStore.setCommunityIdentifiers');
     try {
-      return super.setCurrencyIdentifiers(cids);
+      return super.setCommunityIdentifiers(cids);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }
@@ -530,7 +531,7 @@ participantIndex: ${participantIndex},
 participantCount: ${participantCount},
 myClaim: ${myClaim},
 balanceEntries: ${balanceEntries},
-currencyIdentifiers: ${currencyIdentifiers},
+communityIdentifiers: ${communityIdentifiers},
 chosenCid: ${chosenCid},
 claimHex: ${claimHex},
 attestations: ${attestations},

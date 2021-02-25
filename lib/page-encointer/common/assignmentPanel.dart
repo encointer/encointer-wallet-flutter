@@ -43,7 +43,7 @@ class _AssignmentPanelState extends State<AssignmentPanel> {
           child: Column(children: <Widget>[
             Observer(
                 builder: (_) => store.encointer.meetupTime != null
-                    ? store.encointer.currencyIdentifiers == null
+                    ? store.encointer.communityIdentifiers == null
                         ? Text("no currencies found")
                         : Column(children: <Widget>[
                             store.encointer.meetupIndex > 0
@@ -59,7 +59,7 @@ class _AssignmentPanelState extends State<AssignmentPanel> {
                                     "You are not registered for ceremony on " +
                                         DateFormat('yyyy-MM-dd').format(
                                             new DateTime.fromMillisecondsSinceEpoch(store.encointer.meetupTime)) +
-                                        " for the selected currency",
+                                        " for the selected community",
                                     style: TextStyle(color: Colors.red)),
                           ])
                     : CupertinoActivityIndicator())

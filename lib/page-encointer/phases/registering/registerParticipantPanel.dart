@@ -65,7 +65,7 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
 
   @override
   Widget build(BuildContext context) {
-    // only build dropdown after we have fetched the currency identifiers
+    // only build dropdown after we have fetched the community identifiers
     Map dic = I18n.of(context).encointer;
     return Observer(
       builder: (_) => store.encointer.participantIndex == null
@@ -97,7 +97,7 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
                     ? RoundedButton(text: "Register Participant", onPressed: () => _submit())
                     : RoundedButton(
                         text: "Unregister",
-                        //for: " + Fmt.currencyIdentifier(store.encointer.chosenCid).toString(),
+                        //for: " + Fmt.communityIdentifier(store.encointer.chosenCid).toString(),
                         onPressed: null),
               ],
             ),

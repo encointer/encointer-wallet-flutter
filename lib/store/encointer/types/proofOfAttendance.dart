@@ -13,14 +13,14 @@ class ProofOfAttendance {
   ProofOfAttendance(
     this.proverPublic,
     this.ceremonyIndex,
-    this.currencyIdentifier,
+    this.communityIdentifier,
     this.attendeePublic,
     this.attendeeSignature,
   );
 
   String proverPublic;
   int ceremonyIndex;
-  String currencyIdentifier;
+  String communityIdentifier;
   String attendeePublic;
   Map<String, String> attendeeSignature;
 

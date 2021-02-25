@@ -34,7 +34,7 @@ class ApiEncointer {
   final String _timeStampSubscribeChannel = 'timestamp';
   final String _currentPhaseSubscribeChannel = 'currentPhase';
   final String _participantIndexChannel = 'participantIndex';
-  final String _currencyIdentifiersChannel = 'currencyIdentifiers';
+  final String _communityIdentifiersChannel = 'communityIdentifiers';
   final String _encointerBalanceChannel = 'encointerBalance';
   final String _shopRegistryChannel = 'shopRegistry';
 
@@ -45,7 +45,7 @@ class ApiEncointer {
     print("api: starting encointer subscriptions");
     this.subscribeTimestamp();
     this.subscribeCurrentPhase();
-    this.subscribeCurrencyIdentifiers();
+    this.subscribeCommunityIdentifiers();
     if (store.settings.endpointIsGesell) {
       this.subscribeEncointerBalance();
       this.subscribeShopRegistry();
@@ -56,7 +56,7 @@ class ApiEncointer {
     print("api: stopping encointer subscriptions");
     apiRoot.unsubscribeMessage(_currentPhaseSubscribeChannel);
     apiRoot.unsubscribeMessage(_timeStampSubscribeChannel);
-    apiRoot.unsubscribeMessage(_currencyIdentifiersChannel);
+    apiRoot.unsubscribeMessage(_communityIdentifiersChannel);
     apiRoot.unsubscribeMessage(_shopRegistryChannel);
 
     if (store.settings.endpointIsGesell) {
@@ -138,10 +138,10 @@ class ApiEncointer {
   /// We could fetch the phaseDurations at application startup, cache them and supply them in the call here.
   Future<DateTime> getMeetupTime() async {
     print("api: getMeetupTime");
-    if (store.encointer.currencyIdentifiers == null) {
+    if (store.encointer.communityIdentifiers == null) {
       return null;
     }
-    String cid = store.encointer.chosenCid ?? store.encointer.currencyIdentifiers[0];
+    String cid = store.encointer.chosenCid ?? store.encointer.communityIdentifiers[0];
     String loc = jsonEncode(store.encointer.meetupLocation);
     int time = await apiRoot.evalJavascript('encointer.getNextMeetupTime("$cid", $loc)');
     print("api: Next Meetup Time: " + time.toString());
@@ -213,7 +213,7 @@ class ApiEncointer {
       return;
     }
 
-    print("Getting encointer balance for ${Fmt.currencyIdentifier(cid)}");
+    print("Getting encointer balance for ${Fmt.communityIdentifier(cid)}");
 
     BalanceEntry bEntry = store.settings.endpointIsGesell
         ? await _noTee.balances.balance(cid, pubKey)
@@ -243,9 +243,9 @@ class ApiEncointer {
   /// Subscribes to storage changes in the Scheduler pallet: encointerScheduler.currentPhase().
   ///
   /// This is on-chain in Cantillon.
-  Future<void> subscribeCurrencyIdentifiers() async {
-    apiRoot.subscribeMessage('encointer.subscribeCurrencyIdentifiers("$_currencyIdentifiersChannel")',
-        _currencyIdentifiersChannel, (data) => {store.encointer.setCurrencyIdentifiers(data.cast<String>())});
+  Future<void> subscribeCommunityIdentifiers() async {
+    apiRoot.subscribeMessage('encointer.subscribeCommunityIdentifiers("$_communityIdentifiersChannel")',
+        _communityIdentifiersChannel, (data) => {store.encointer.setCommunityIdentifiers(data.cast<String>())});
   }
 
   /// Subscribes to storage changes in the Ceremonies pallet: encointerCeremonies.participantIndex([cid, cIndex], address).
@@ -273,7 +273,7 @@ class ApiEncointer {
   ///
   /// This is off-chain in Cantillon. Hence, subscriptions are not supported.
   Future<void> subscribeEncointerBalance() async {
-    // unsubscribe from potentially other currency updates
+    // unsubscribe from potentially other community updates
     print('Substribe encointer balance');
     apiRoot.unsubscribeMessage(_encointerBalanceChannel);
 
@@ -308,11 +308,11 @@ class ApiEncointer {
     });
   }
 
-  /// Queries the EncointerCurrencies pallet: encointerCurrencies.currencyIdentifiers().
+  /// Queries the EncointerCurrencies pallet: encointerCurrencies.communityIdentifiers().
   ///
   /// This is on-chain in Cantillon.
-  Future<List<String>> getCurrencyIdentifiers() async {
-    Map<String, dynamic> res = await apiRoot.evalJavascript('encointer.getCurrencyIdentifiers()');
+  Future<List<String>> getCommunityIdentifiers() async {
+    Map<String, dynamic> res = await apiRoot.evalJavascript('encointer.getCommunityIdentifiers()');
 
     List<String> cids = new List<String>();
     res['cids'].forEach((e) {
@@ -320,7 +320,7 @@ class ApiEncointer {
     });
 
     print("CID: " + cids.toString());
-    store.encointer.setCurrencyIdentifiers(cids);
+    store.encointer.setCommunityIdentifiers(cids);
     return cids;
   }
 

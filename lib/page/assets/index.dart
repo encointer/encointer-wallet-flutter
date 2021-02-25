@@ -5,7 +5,7 @@ import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/common/consts/settings.dart';
-import 'package:encointer_wallet/page-encointer/common/currencyChooserPanel.dart';
+import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
 import 'package:encointer_wallet/page/account/scanPage.dart';
 import 'package:encointer_wallet/page/account/uos/qrSignerPage.dart';
 import 'package:encointer_wallet/page/assets/asset/assetPage.dart';
@@ -360,12 +360,12 @@ class _AssetsState extends State<Assets> {
           String networkName = store.settings.networkName ?? '';
           final String tokenView = Fmt.tokenView(symbol);
 
-          List<String> currencyIds = [];
+          List<String> communityIds = [];
           if (store.settings.endpointIsEncointer && networkName != null) {
-            if (store.settings.networkConst['currencyIds'] != null) {
-              currencyIds.addAll(List<String>.from(store.settings.networkConst['currencyIds']));
+            if (store.settings.networkConst['communityIds'] != null) {
+              communityIds.addAll(List<String>.from(store.settings.networkConst['communityIds']));
             }
-            currencyIds.retainWhere((i) => i != symbol);
+            communityIds.retainWhere((i) => i != symbol);
           }
           final BalancesInfo balancesInfo = store.assets.balances[symbol];
 
@@ -381,7 +381,7 @@ class _AssetsState extends State<Assets> {
           return Column(
             children: <Widget>[
               _buildTopCard(context),
-              _communityCurrencyAssets(context, store),
+              _communityCommunityAssets(context, store),
               Padding(
                 padding: EdgeInsets.only(top: 4),
                 child: Row(
@@ -419,7 +419,7 @@ class _AssetsState extends State<Assets> {
                 ),
               ),
               Column(
-                children: currencyIds.map((i) {
+                children: communityIds.map((i) {
 //                  print(store.assets.balances[i]);
                   String token = i;
                   return RoundedCard(
@@ -450,7 +450,7 @@ class _AssetsState extends State<Assets> {
     );
   }
 
-  Widget _communityCurrencyAssets(BuildContext context, AppStore store) {
+  Widget _communityCommunityAssets(BuildContext context, AppStore store) {
     final Map dic = I18n.of(context).assets;
     return Column(
       children: [
@@ -460,14 +460,14 @@ class _AssetsState extends State<Assets> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               BorderedTitle(
-                title: dic['community.currency'],
+                title: dic['community.community'],
               ),
             ],
           ),
         ),
-        CurrencyChooserPanel(store),
+        CommunityChooserPanel(store),
         Observer(builder: (_) {
-          return (store.encointer.currencyIdentifiers != null) & (store.encointer.chosenCid != null)
+          return (store.encointer.communityIdentifiers != null) & (store.encointer.chosenCid != null)
               ? RoundedCard(
                   margin: EdgeInsets.only(top: 16),
                   child: ListTile(
@@ -475,7 +475,7 @@ class _AssetsState extends State<Assets> {
                       width: 36,
                       child: Image.asset('assets/images/assets/ERT.png'),
                     ),
-                    title: Text(Fmt.currencyIdentifier(store.encointer.chosenCid)),
+                    title: Text(Fmt.communityIdentifier(store.encointer.chosenCid)),
                     trailing: store.encointer.balanceEntries[store.encointer.chosenCid] != null
                         ? Text(
                             Fmt.doubleFormat(store.encointer.balanceEntries[store.encointer.chosenCid].principal),
@@ -486,7 +486,7 @@ class _AssetsState extends State<Assets> {
                         ? () {
                             Navigator.pushNamed(context, AssetPage.route,
                                 arguments: AssetPageParams(
-                                    token: store.encointer.chosenCid, isEncointerCommunityCurrency: true));
+                                    token: store.encointer.chosenCid, isEncointerCommunityCommunity: true));
                           }
                         : null,
                   ),

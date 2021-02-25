@@ -21,7 +21,7 @@ abstract class _EncointerStore with Store {
 
   final AppStore rootStore;
   final String cacheTxsTransferKey = 'transfer_txs';
-  final String encointerCurrencyKey = 'wallet_encointer_currency';
+  final String encointerCommunityKey = 'wallet_encointer_community';
   // offline meetup cache.
   final String encointerCurrenCeremonyIndexKey = 'wallet_encointer_current_ceremony_index';
   final String encointerCurrentPhaseKey = 'wallet_encointer_current_phase';
@@ -69,7 +69,7 @@ abstract class _EncointerStore with Store {
   Map<String, BalanceEntry> balanceEntries = new ObservableMap();
 
   @observable
-  List<String> currencyIdentifiers;
+  List<String> communityIdentifiers;
 
   @observable
   String chosenCid;
@@ -209,8 +209,8 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setCurrencyIdentifiers(List<String> cids) {
-    currencyIdentifiers = cids;
+  void setCommunityIdentifiers(List<String> cids) {
+    communityIdentifiers = cids;
   }
 
   @action
@@ -220,7 +220,7 @@ abstract class _EncointerStore with Store {
       if (rootStore.settings.endpointIsGesell) {
         webApi.encointer.subscribeShopRegistry();
       }
-      cacheObject(encointerCurrencyKey, cid);
+      cacheObject(encointerCommunityKey, cid);
       // update depending values without awaiting
       if (!rootStore.settings.loading) {
         webApi.encointer.getMeetupIndex();
@@ -273,15 +273,15 @@ abstract class _EncointerStore with Store {
   @action
   Future<void> setTransferTxs(List list, {bool reset = false, needCache = true}) async {
     List transfers = list.map((i) {
-      bool isCommunityCurrency = i['params'].length == 3;
+      bool isCommunityCommunity = i['params'].length == 3;
       return {
         "block_timestamp": i['time'],
         "hash": i['hash'],
         "success": true,
         "from": rootStore.account.currentAddress,
         "to": i['params'][0],
-        "token": isCommunityCurrency ? i['params'][1] : rootStore.settings.networkState.tokenSymbol,
-        "amount": isCommunityCurrency ? Fmt.doubleFormat(i['params'][2]) : Fmt.balance(i['params'][1], ert_decimals),
+        "token": isCommunityCommunity ? i['params'][1] : rootStore.settings.networkState.tokenSymbol,
+        "amount": isCommunityCommunity ? Fmt.doubleFormat(i['params'][2]) : Fmt.balance(i['params'][1], ert_decimals),
       };
     }).toList();
     if (reset) {
@@ -309,7 +309,7 @@ abstract class _EncointerStore with Store {
 
   @action
   Future<void> loadCache() async {
-    var data = await loadObject(encointerCurrencyKey);
+    var data = await loadObject(encointerCommunityKey);
     if (data != null) {
       print("found cached choice of cid. will recover it: " + data.toString());
       setChosenCid(data);
