@@ -9,21 +9,6 @@ part of 'encointer.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$EncointerStore on _EncointerStore, Store {
-  final _$timeStampAtom = Atom(name: '_EncointerStore.timeStamp');
-
-  @override
-  dynamic get timeStamp {
-    _$timeStampAtom.reportRead();
-    return super.timeStamp;
-  }
-
-  @override
-  set timeStamp(dynamic value) {
-    _$timeStampAtom.reportWrite(value, super.timeStamp, () {
-      super.timeStamp = value;
-    });
-  }
-
   final _$currentPhaseAtom = Atom(name: '_EncointerStore.currentPhase');
 
   @override
@@ -521,17 +506,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setTimestamp(int time) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(
-        name: '_EncointerStore.setTimestamp');
-    try {
-      return super.setTimestamp(time);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setShopRegistry(List<String> shops) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.setShopRegistry');
@@ -545,7 +519,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   @override
   String toString() {
     return '''
-timeStamp: ${timeStamp},
 currentPhase: ${currentPhase},
 currentCeremonyIndex: ${currentCeremonyIndex},
 meetupIndex: ${meetupIndex},

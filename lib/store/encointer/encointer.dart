@@ -36,9 +36,6 @@ abstract class _EncointerStore with Store {
   // a @action block to fire a reaction
   // .
   @observable
-  var timeStamp;
-
-  @observable
   CeremonyPhase currentPhase;
 
   @observable
@@ -271,11 +268,6 @@ abstract class _EncointerStore with Store {
   @action
   void setParticipantCount(int pCount) {
     participantCount = pCount;
-  }
-
-  @action
-  void setTimestamp(int time) {
-    timeStamp = time;
   }
 
   @action

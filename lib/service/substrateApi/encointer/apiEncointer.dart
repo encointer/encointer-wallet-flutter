@@ -227,7 +227,9 @@ class ApiEncointer {
   /// is still communicating.
   Future<void> subscribeTimestamp() async {
     apiRoot.subscribeMessage('encointer.subscribeTimestamp("$_timeStampSubscribeChannel")', _timeStampSubscribeChannel,
-        (data) => {store.encointer.setTimestamp(data)});
+        (data) => {
+      print("timestamp: $data")
+    });
   }
 
   Future<void> subscribeCurrentPhase() async {
