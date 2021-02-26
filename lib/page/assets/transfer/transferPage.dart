@@ -4,7 +4,7 @@ import 'dart:math';
 import 'package:encointer_wallet/common/components/AddressInputField.dart';
 import 'package:encointer_wallet/common/components/currencyWithIcon.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
-import 'package:encointer_wallet/common/consts/settings.dart';
+import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page/account/scanPage.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/page/assets/asset/assetPage.dart';

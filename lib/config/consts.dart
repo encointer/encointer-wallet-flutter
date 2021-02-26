@@ -34,8 +34,8 @@ EndpointData networkEndpointEncointerCantillonDev = EndpointData.fromJson(const 
   'info': 'nctr-cln-dev',
   'ss58': 42,
   'text': 'Encointer Cantillon (Hosted by Encointer Association)',
-  'value': 'ws://192.168.1.24:9979',
-  'worker': 'ws://192.168.1.24:2079',
+  'value': 'ws://172.17.0.1:9979',
+  'worker': 'ws:/172.17.0.1:2079',
   'mrenclave': '8NTy2X2Bs2jwP2mGz6yTqxtJk8Mi2c8UXHVovJDd6GZv'
 });
 

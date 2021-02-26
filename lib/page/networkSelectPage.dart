@@ -1,6 +1,6 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
-import 'package:encointer_wallet/common/consts/settings.dart';
+import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page/account/createAccountEntryPage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';

@@ -4,7 +4,7 @@ import 'package:encointer_wallet/common/components/BorderedTitle.dart';
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
-import 'package:encointer_wallet/common/consts/settings.dart';
+import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
 import 'package:encointer_wallet/page/account/scanPage.dart';
 import 'package:encointer_wallet/page/account/uos/qrSignerPage.dart';
