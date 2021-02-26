@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:encointer_wallet/config/node.dart';
 import 'package:encointer_wallet/service/subscan.dart';
 import 'package:encointer_wallet/service/substrateApi/apiAccount.dart';
 import 'package:encointer_wallet/service/substrateApi/apiAssets.dart';
@@ -190,8 +191,9 @@ class Api {
 
   Future<void> connectNode() async {
     String node = store.settings.endpoint.value;
+    NodeConfig config = store.settings.endpoint.overrideConfig;
     // do connect
-    String res = await evalJavascript('settings.connect("$node")');
+    String res = await evalJavascript('settings.connect("$node", "${jsonEncode(config)}")');
     if (res == null) {
       print('connecting to node failed');
       store.settings.setNetworkName(null);
@@ -209,8 +211,10 @@ class Api {
 
   Future<void> connectNodeAll() async {
     List<String> nodes = store.settings.endpointList.map((e) => e.value).toList();
+    List<NodeConfig> configs = store.settings.endpointList.map((e) => e.overrideConfig).toList();
+    print("configs: $configs");
     // do connect
-    String res = await evalJavascript('settings.connectAll(${jsonEncode(nodes)})');
+    String res = await evalJavascript('settings.connectAll(${jsonEncode(nodes)}, ${jsonEncode(configs)})');
     if (res == null) {
       print('connect failed');
       store.settings.setNetworkName(null);

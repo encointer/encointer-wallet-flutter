@@ -1,16 +1,18 @@
+import 'package:encointer_wallet/config/node.dart';
 import 'package:encointer_wallet/store/settings.dart';
 
 const String network_name_encointer_gesell = 'nctr-gsl';
 const String network_name_encointer_cantillon = 'nctr-ctln';
 
-EndpointData networkEndpointEncointerGesell = EndpointData.fromJson(const {
+EndpointData networkEndpointEncointerGesell = EndpointData.fromJson({
   'info': 'nctr-gsl',
   'ss58': 42,
   'text': 'Encointer Gesell (Hosted by Encointer Association)',
   'value': 'wss://gesell.encointer.org',
+  'overrideConfig': SgxMasterConfig.toJson()
 });
 
-EndpointData networkEndpointEncointerGesellDev = EndpointData.fromJson(const {
+EndpointData networkEndpointEncointerGesellDev = EndpointData.fromJson({
   'info': 'nctr-gsl-dev',
   'ss58': 42,
   'text': 'Encointer Gesell Local Devnet',
@@ -19,24 +21,27 @@ EndpointData networkEndpointEncointerGesellDev = EndpointData.fromJson(const {
   //'value': 'ws://127.0.0.1:9944',
   'value': 'ws://192.168.1.24:9979',
   //'value': 'ws://172.20.4.143:9994',
+  'overrideConfig': SgxMasterConfig.toJson()
 });
 
-EndpointData networkEndpointEncointerCantillon = EndpointData.fromJson(const {
+EndpointData networkEndpointEncointerCantillon = EndpointData.fromJson({
   'info': 'nctr-cln',
   'ss58': 42,
   'text': 'Encointer Cantillon (Hosted by Encointer Association)',
   'value': 'wss://cantillon.encointer.org',
   'worker': 'wss://substratee03.scs.ch',
-  'mrenclave': 'CbE3fPWjeYVo9LSNKgPPiCXThFBjfhP1GK6Y9S7t5WVe'
+  'mrenclave': 'CbE3fPWjeYVo9LSNKgPPiCXThFBjfhP1GK6Y9S7t5WVe',
+  'overrideConfig': SgxMasterConfig.toJson()
 });
 
-EndpointData networkEndpointEncointerCantillonDev = EndpointData.fromJson(const {
+EndpointData networkEndpointEncointerCantillonDev = EndpointData.fromJson({
   'info': 'nctr-cln-dev',
   'ss58': 42,
   'text': 'Encointer Cantillon (Hosted by Encointer Association)',
   'value': 'ws://172.17.0.1:9979',
   'worker': 'ws:/172.17.0.1:2079',
-  'mrenclave': '8NTy2X2Bs2jwP2mGz6yTqxtJk8Mi2c8UXHVovJDd6GZv'
+  'mrenclave': '8NTy2X2Bs2jwP2mGz6yTqxtJk8Mi2c8UXHVovJDd6GZv',
+  'overrideConfig': SgxMasterConfig.toJson()
 });
 
 List<EndpointData> networkEndpoints = [
