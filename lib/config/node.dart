@@ -4,11 +4,20 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'node.g.dart';
 
-const NodeConfig SgxMasterConfig = const NodeConfig(SgxMasterTypeOverrides, SgxMasterPalletOverrides);
+/// Overrides for the Gesell test network
+const NodeConfig GesellConfig = const NodeConfig(TypeOverrides_V3_8, PalletOverrides_V3_8);
+/// Overrides for the Cantillon test network
+const NodeConfig CantillonConfig = const NodeConfig(TypeOverrides_V3_8, PalletOverrides_V3_8);
+/// Overrides for the master branch of the `encointer-node`, which is usually used in a local
+/// no-tee-dev-setup
+const NodeConfig MasterBranchConfig = const NodeConfig(TypeOverrides_V3_8, PalletOverrides_V3_8);
+/// Overrides for the sgx-master branch of the `encointer-node`, which is usually used in a local
+/// tee-dev-setup
+const NodeConfig SgxBranchConfig = const NodeConfig(TypeOverrides_V3_8, PalletOverrides_V3_8);
 
 @JsonSerializable(explicitToJson: true)
 /// Config to handle different versions of our nodes by supplying type overwrites
-/// and currently overwrite pallet names and methods that have been renamed.
+/// and pallet names and methods overwrites.
 class NodeConfig {
   /// type overwrites passed to the JS Api type-registry
   final Map<String, dynamic> types;
@@ -45,7 +54,8 @@ class Pallet {
   Map<String, dynamic> toJson() => _$PalletToJson(this);
 }
 
-const SgxMasterTypeOverrides = {
+/// Type overrides needed for the tag v3.8
+const TypeOverrides_V3_8 = {
   'CurrencyIdentifier': 'Hash',
   'BalanceType': 'i128',
   'BalanceEntry': {
@@ -80,6 +90,7 @@ const SgxMasterTypeOverrides = {
   }
 };
 
-const Map<String, Pallet> SgxMasterPalletOverrides = {
+/// Pallet overrides needed for the tag v3.8
+const Map<String, Pallet> PalletOverrides_V3_8 = {
   'encointerCommunities': const Pallet('encointerCurrencies', { 'communityIdentifiers': 'currencyIdentifiers'})
 };

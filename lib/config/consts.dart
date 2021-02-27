@@ -9,7 +9,7 @@ EndpointData networkEndpointEncointerGesell = EndpointData.fromJson({
   'ss58': 42,
   'text': 'Encointer Gesell (Hosted by Encointer Association)',
   'value': 'wss://gesell.encointer.org',
-  'overrideConfig': SgxMasterConfig.toJson()
+  'overrideConfig': GesellConfig.toJson()
 });
 
 EndpointData networkEndpointEncointerGesellDev = EndpointData.fromJson({
@@ -21,7 +21,7 @@ EndpointData networkEndpointEncointerGesellDev = EndpointData.fromJson({
   //'value': 'ws://127.0.0.1:9944',
   'value': 'ws://192.168.1.24:9979',
   //'value': 'ws://172.20.4.143:9994',
-  'overrideConfig': SgxMasterConfig.toJson()
+  'overrideConfig': MasterBranchConfig.toJson()
 });
 
 EndpointData networkEndpointEncointerCantillon = EndpointData.fromJson({
@@ -31,7 +31,7 @@ EndpointData networkEndpointEncointerCantillon = EndpointData.fromJson({
   'value': 'wss://cantillon.encointer.org',
   'worker': 'wss://substratee03.scs.ch',
   'mrenclave': 'CbE3fPWjeYVo9LSNKgPPiCXThFBjfhP1GK6Y9S7t5WVe',
-  'overrideConfig': SgxMasterConfig.toJson()
+  'overrideConfig': CantillonConfig.toJson()
 });
 
 EndpointData networkEndpointEncointerCantillonDev = EndpointData.fromJson({
@@ -41,7 +41,7 @@ EndpointData networkEndpointEncointerCantillonDev = EndpointData.fromJson({
   'value': 'ws://172.17.0.1:9979',
   'worker': 'ws:/172.17.0.1:2079',
   'mrenclave': '8NTy2X2Bs2jwP2mGz6yTqxtJk8Mi2c8UXHVovJDd6GZv',
-  'overrideConfig': SgxMasterConfig.toJson()
+  'overrideConfig': SgxBranchConfig.toJson()
 });
 
 List<EndpointData> networkEndpoints = [
