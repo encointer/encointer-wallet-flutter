@@ -18,9 +18,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class AssetPageParams {
-  AssetPageParams({this.token, this.isEncointerCommunityCommunity = false});
+  AssetPageParams({this.token, this.isEncointerCommunityCurrency = false});
   final String token;
-  final bool isEncointerCommunityCommunity;
+  final bool isEncointerCommunityCurrency;
 }
 
 class AssetPage extends StatefulWidget {
@@ -139,7 +139,7 @@ class _AssetPageState extends State<AssetPage> with SingleTickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     final AssetPageParams params = ModalRoute.of(context).settings.arguments;
-    final bool isEncointerCommunityCommunity = params.isEncointerCommunityCommunity;
+    final bool isEncointerCommunityCurrency = params.isEncointerCommunityCurrency;
     final String token = params.token;
 
     final dic = I18n.of(context).assets;
@@ -159,18 +159,18 @@ class _AssetPageState extends State<AssetPage> with SingleTickerProviderStateMix
 
     return Scaffold(
       appBar: AppBar(
-        title: isEncointerCommunityCommunity ? Text(Fmt.communityIdentifier(token)) : Text(tokenView),
+        title: isEncointerCommunityCurrency ? Text(Fmt.communityIdentifier(token)) : Text(tokenView),
         centerTitle: true,
         elevation: 0.0,
       ),
       body: SafeArea(
         child: Observer(
           builder: (_) {
-            int decimals = isEncointerCommunityCommunity
+            int decimals = isEncointerCommunityCurrency
                 ? encointer_currencies_decimals
                 : store.settings.networkState.tokenDecimals ?? ert_decimals;
 
-            BigInt balance = isEncointerCommunityCommunity
+            BigInt balance = isEncointerCommunityCurrency
                 ? Fmt.tokenInt(store.encointer.balanceEntries[token].principal.toString(), decimals)
                 : Fmt.balanceInt(store.assets.tokenBalances[token.toUpperCase()]);
 
@@ -371,7 +371,7 @@ class _AssetPageState extends State<AssetPage> with SingleTickerProviderStateMix
                               arguments: TransferPageParams(
                                   redirect: AssetPage.route,
                                   symbol: token,
-                                  isEncointerCommunityCommunity: isEncointerCommunityCommunity),
+                                  isEncointerCommunityCurrency: isEncointerCommunityCurrency),
                             );
                           },
                         ),

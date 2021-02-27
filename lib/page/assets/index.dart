@@ -381,7 +381,7 @@ class _AssetsState extends State<Assets> {
           return Column(
             children: <Widget>[
               _buildTopCard(context),
-              _communityCommunityAssets(context, store),
+              _communityCurrencyAssets(context, store),
               Padding(
                 padding: EdgeInsets.only(top: 4),
                 child: Row(
@@ -450,7 +450,7 @@ class _AssetsState extends State<Assets> {
     );
   }
 
-  Widget _communityCommunityAssets(BuildContext context, AppStore store) {
+  Widget _communityCurrencyAssets(BuildContext context, AppStore store) {
     final Map dic = I18n.of(context).assets;
     return Column(
       children: [
@@ -460,7 +460,7 @@ class _AssetsState extends State<Assets> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               BorderedTitle(
-                title: dic['community.community'],
+                title: dic['community.currency'],
               ),
             ],
           ),
@@ -486,7 +486,7 @@ class _AssetsState extends State<Assets> {
                         ? () {
                             Navigator.pushNamed(context, AssetPage.route,
                                 arguments: AssetPageParams(
-                                    token: store.encointer.chosenCid, isEncointerCommunityCommunity: true));
+                                    token: store.encointer.chosenCid, isEncointerCommunityCurrency: true));
                           }
                         : null,
                   ),

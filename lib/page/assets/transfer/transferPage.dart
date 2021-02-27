@@ -22,11 +22,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class TransferPageParams {
-  TransferPageParams({this.symbol, this.address, this.redirect, this.isEncointerCommunityCommunity = false});
+  TransferPageParams({this.symbol, this.address, this.redirect, this.isEncointerCommunityCurrency = false});
   final String address;
   final String redirect;
   final String symbol;
-  final bool isEncointerCommunityCommunity;
+  final bool isEncointerCommunityCurrency;
 }
 
 class TransferPage extends StatefulWidget {
@@ -50,7 +50,7 @@ class _TransferPageState extends State<TransferPage> {
 
   AccountData _accountTo;
   String _tokenSymbol;
-  bool _isEncointerCommunityCommunity;
+  bool _isEncointerCommunityCurrency;
 
   bool _crossChain = false;
 
@@ -102,7 +102,7 @@ class _TransferPageState extends State<TransferPage> {
         ],
       };
       // Todo: why was it here depending on the endpoint? Do we not want to facilitate ERT transfers?
-      if (_isEncointerCommunityCommunity) {
+      if (_isEncointerCommunityCurrency) {
         args['txInfo'] = {
           "module": 'encointerBalances',
           "call": 'transfer',
@@ -226,10 +226,10 @@ class _TransferPageState extends State<TransferPage> {
         List symbolOptions = store.settings.networkConst['currencyIds'];
 
         TransferPageParams params = ModalRoute.of(context).settings.arguments;
-        _isEncointerCommunityCommunity = params.isEncointerCommunityCommunity;
+        _isEncointerCommunityCurrency = params.isEncointerCommunityCurrency;
         _tokenSymbol = params.symbol;
 
-        int decimals = _isEncointerCommunityCommunity
+        int decimals = _isEncointerCommunityCurrency
             ? encointer_currencies_decimals
             : store.settings.networkState.tokenDecimals ?? ert_decimals;
 
@@ -307,7 +307,7 @@ class _TransferPageState extends State<TransferPage> {
                                           dic['currency'],
                                           style: TextStyle(color: Theme.of(context).unselectedWidgetColor),
                                         ),
-                                        !_isEncointerCommunityCommunity
+                                        !_isEncointerCommunityCurrency
                                             ? CurrencyWithIcon(_tokenSymbol ?? baseTokenSymbol)
                                             : Text(Fmt.communityIdentifier(_tokenSymbol, pad: 8)),
                                       ],
@@ -363,7 +363,7 @@ class _TransferPageState extends State<TransferPage> {
   }
 
   bool balanceToLow(String v, BigInt available, int decimals) {
-    if (_isEncointerCommunityCommunity) {
+    if (_isEncointerCommunityCurrency) {
       return double.parse(v.trim()) >= available.toDouble() - 0.0001;
     } else {
       return double.parse(v.trim()) >= available / BigInt.from(pow(10, decimals)) - 0.0001;
@@ -371,7 +371,7 @@ class _TransferPageState extends State<TransferPage> {
   }
 
   BigInt _getAvailableEncointerOrBaseToken(bool isBaseToken, String symbol) {
-    if (_isEncointerCommunityCommunity) {
+    if (_isEncointerCommunityCurrency) {
       return Fmt.tokenInt(
           store.encointer.balanceEntries[_tokenSymbol].principal.toString(), encointer_currencies_decimals);
     } else {
