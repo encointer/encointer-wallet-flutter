@@ -16,11 +16,7 @@ EndpointData networkEndpointEncointerGesellDev = EndpointData.fromJson({
   'info': 'nctr-gsl-dev',
   'ss58': 42,
   'text': 'Encointer Gesell Local Devnet',
-  // 'value': 'ws://192.168.1.36:9941',
-  // 'value': 'ws://192.168.1.24:9944',
-  //'value': 'ws://127.0.0.1:9944',
-  'value': 'ws://192.168.1.24:9979',
-  //'value': 'ws://172.20.4.143:9994',
+  'value': 'ws://192.168.1.24:9979',  // do not use the docker's address, use the host's
   'overrideConfig': MasterBranchConfig.toJson()
 });
 
@@ -38,9 +34,9 @@ EndpointData networkEndpointEncointerCantillonDev = EndpointData.fromJson({
   'info': 'nctr-cln-dev',
   'ss58': 42,
   'text': 'Encointer Cantillon (Hosted by Encointer Association)',
-  'value': 'ws://172.17.0.1:9979',
-  'worker': 'ws:/172.17.0.1:2079',
-  'mrenclave': '8NTy2X2Bs2jwP2mGz6yTqxtJk8Mi2c8UXHVovJDd6GZv',
+  'value': 'ws://10.0.0.134:9979', // do not use the docker's address, use the host's
+  'worker': 'ws:/10.0.0.134:2079',
+  'mrenclave': '4SkU25tusVChcrUprW8X22QoEgamCgj3HKQeje7j8Z4E',
   'overrideConfig': SgxBranchConfig.toJson()
 });
 
