@@ -84,7 +84,7 @@ class ApiEncointer {
   /// This is on-chain in Cantillon.
   Future<int> getCurrentCeremonyIndex() async {
     print("api: getCurrentCeremonyIndex");
-    int cIndex = await apiRoot.evalJavascript('encointer.getCurrentCeremonyIndex()');
+    int cIndex = await apiRoot.evalJavascript('encointer.getCurrentCeremonyIndex()').then((index) => int.parse(index));
     print("api: Current Ceremony index: " + cIndex.toString());
     store.encointer.setCurrentCeremonyIndex(cIndex);
     return cIndex;
@@ -227,9 +227,7 @@ class ApiEncointer {
   /// is still communicating.
   Future<void> subscribeTimestamp() async {
     apiRoot.subscribeMessage('encointer.subscribeTimestamp("$_timeStampSubscribeChannel")', _timeStampSubscribeChannel,
-        (data) => {
-      print("timestamp: $data")
-    });
+        (data) => {print("timestamp: $data")});
   }
 
   Future<void> subscribeCurrentPhase() async {

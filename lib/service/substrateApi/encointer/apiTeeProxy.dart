@@ -39,7 +39,7 @@ class Ceremonies {
   Future<List<String>> meetupRegistry(String cid, String pubKey, String pin) async {
     return apiRoot
         .evalJavascript('worker.getMeetupRegistry(${jsonEncode(PubKeyPinPair(pubKey, pin))}, "$cid")')
-        .then((registry) => registry.map((e) => e.toString()).toList());
+        .then((value) => List<String>.from(value));
   }
 }
 
