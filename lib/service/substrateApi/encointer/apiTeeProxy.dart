@@ -40,7 +40,7 @@ class Ceremonies {
     return apiRoot
         .evalJavascript('worker.getMeetupRegistry(${jsonEncode(PubKeyPinPair(pubKey, pin))}, "$cid")')
         .then((registry) => registry.map((e) => e.toString()).toList());
-    }
+  }
 }
 
 class Balances {
@@ -49,8 +49,8 @@ class Balances {
   final Api apiRoot;
 
   Future<BalanceEntry> balance(String cid, String pubKey, String pin) async {
-    Map<String, dynamic> balance =
-    await apiRoot.evalJavascript('worker.getBalance(${jsonEncode(PubKeyPinPair(pubKey, pin))}, "$cid")');
-    return BalanceEntry.fromJson(balance);
+    return apiRoot
+        .evalJavascript('worker.getBalance(${jsonEncode(PubKeyPinPair(pubKey, pin))}, "$cid")')
+        .then((balance) => BalanceEntry.fromJson(balance));
   }
 }
