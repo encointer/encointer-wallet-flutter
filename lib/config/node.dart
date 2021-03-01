@@ -87,6 +87,14 @@ const TypeOverrides_V3_8 = {
       'attestations': '(AccountId, CurrencyIdentifier)',
       'meetup_registry': '(AccountId, CurrencyIdentifier)'
     }
+  },
+  'TrustedCall': {
+    '_enum': {
+      'balance_transfer': '(AccountId, AccountId, CurrencyIdentifier, BalanceType)',
+      'ceremonies_register_participant': '(AccountId, CurrencyIdentifier, Option<ProofOfAttendance<MultiSignature, AccountId>>)',
+      'ceremonies_register_attestations': '(AccountId, Vec<Attestation<MultiSignature, AccountId, u64>>)',
+      'ceremonies_grant_reputation': '(AccountId, CurrencyIdentifier, AccountId)'
+    }
   }
 };
 
