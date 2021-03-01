@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
+import 'package:encointer_wallet/store/encointer/types/workerApi.dart';
 
 class ApiTeeProxy {
   ApiTeeProxy(this.apiRoot)
@@ -17,22 +20,27 @@ class Ceremonies {
   final Api apiRoot;
 
   Future<int> participantCount(String cid) async {
+    // count does not need an explicit parse as the worker returns a js-native `number`
     return await apiRoot.evalJavascript('worker.getParticipantCount("$cid")');
   }
 
-  Future<int> participantIndex(String cid, String pubKey, String password) async {
-    return await apiRoot.evalJavascript('worker.getParticipantIndex("$pubKey", "$cid", "$password")');
+  Future<int> participantIndex(String cid, String pubKey, String pin) async {
+    return apiRoot
+        .evalJavascript('worker.getParticipantIndex(${jsonEncode(PubKeyPinPair(pubKey, pin))}, "$cid")')
+        .then((value) => int.parse(value));
   }
 
-  Future<int> meetupIndex(String cid, String pubKey, String password) async {
-    return await apiRoot.evalJavascript('worker.getMeetupIndex("$pubKey", "$cid", "$password")');
+  Future<int> meetupIndex(String cid, String pubKey, String pin) async {
+    return apiRoot
+        .evalJavascript('worker.getMeetupIndex(${jsonEncode(PubKeyPinPair(pubKey, pin))}, "$cid")')
+        .then((value) => int.parse(value));
   }
 
-  Future<List<String>> meetupRegistry(String cid, String pubKey, String password) async {
-    List<dynamic> meetupRegistry =
-        await apiRoot.evalJavascript('worker.getMeetupRegistry("$pubKey", "$cid", "$password")');
-    return meetupRegistry.map((e) => e.toString()).toList();
-  }
+  Future<List<String>> meetupRegistry(String cid, String pubKey, String pin) async {
+    return apiRoot
+        .evalJavascript('worker.getMeetupRegistry(${jsonEncode(PubKeyPinPair(pubKey, pin))}, "$cid")')
+        .then((registry) => registry.map((e) => e.toString()).toList());
+    }
 }
 
 class Balances {
@@ -40,8 +48,9 @@ class Balances {
 
   final Api apiRoot;
 
-  Future<BalanceEntry> balance(String cid, String pubKey, String password) async {
-    Map<String, dynamic> balance = await apiRoot.evalJavascript('worker.getBalance("$pubKey", "$cid", "$password")');
+  Future<BalanceEntry> balance(String cid, String pubKey, String pin) async {
+    Map<String, dynamic> balance =
+    await apiRoot.evalJavascript('worker.getBalance(${jsonEncode(PubKeyPinPair(pubKey, pin))}, "$cid")');
     return BalanceEntry.fromJson(balance);
   }
 }
