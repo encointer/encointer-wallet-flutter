@@ -7,32 +7,24 @@ import 'package:encointer_wallet/store/encointer/types/attestationState.dart';
 
 import '../../../../mocks/apiEncointer_mock.dart';
 import '../../../../mocks/data/mockEncointerData.dart';
-import '../../../../mocks/localStorage_mock.dart';
 import 'common.dart';
 
 void main() {
   AppStore root;
-  List<dynamic> pubKeys;
   int otherMeetupRegistryIndex = 0;
   StateMachinePartyB stateMachineB;
 
   setUp(() async {
-    root = globalAppStore;
-    root.localStorage = getMockLocalStorage();
-    await root.init('_en');
+    root = await setupStore();
 
     webApi = Api(null, root);
     webApi.encointer = getMockApiEncointer();
 
-    pubKeys = [accList[0], accNew].map((e) => e['pubKey']).toList();
-    expect(pubKeys.length, 2);
-
-    root.encointer.attestations = buildAttestationStateMap(root, pubKeys);
-    expect(root.encointer.attestations.length, 2);
-
     stateMachineB = StateMachinePartyB(
       root,
       otherMeetupRegistryIndex: otherMeetupRegistryIndex,
+      myMeetupRegistryIndex: root.encointer.myMeetupRegistryIndex,
+      initialAttestationStep: CurrentAttestationStep.STEP1,
     );
   });
 

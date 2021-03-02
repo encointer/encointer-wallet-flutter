@@ -10,6 +10,10 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/attestationState.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 
+import '../../../../mocks/data/MockAccountData.dart';
+import '../../../../mocks/data/mockEncointerData.dart';
+import '../../../../mocks/localStorage_mock.dart';
+
 Widget makeTestableWidget({Widget child}) {
   return MediaQuery(
     data: MediaQueryData(),
@@ -75,4 +79,18 @@ Future<void> goBackOneAttestationStep(WidgetTester tester) async {
   expect(backButtonFinder, findsOneWidget);
   await tester.tap(find.byKey(StateMachineWidget.backButtonKey));
   await tester.pumpAndSettle();
+}
+
+Future<AppStore> setupStore() async {
+  AppStore root = globalAppStore;
+  root.localStorage = getMockLocalStorage();
+  await root.init('_en');
+
+  List<dynamic> pubKeys = [accList[0], accNew].map((e) => e['pubKey']).toList();
+  expect(pubKeys.length, 2);
+
+  root.encointer.attestations = buildAttestationStateMap(root, pubKeys);
+  root.encointer.claimHex = claimHex;
+  expect(root.encointer.attestations.length, 2);
+  return root;
 }
