@@ -28,11 +28,13 @@ void main() {
     expect(pubKeys.length, 2);
 
     root.encointer.attestations = buildAttestationStateMap(root, pubKeys);
+    root.encointer.claimHex = claimHex;
     expect(root.encointer.attestations.length, 2);
 
     stateMachineA = StateMachinePartyA(
       root,
       otherMeetupRegistryIndex: otherMeetupRegistryIndex,
+      myMeetupRegistryIndex: root.encointer.myMeetupRegistryIndex,
     );
   });
 

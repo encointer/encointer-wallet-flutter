@@ -22,6 +22,7 @@ abstract class _EncointerStore with Store {
   final AppStore rootStore;
   final String cacheTxsTransferKey = 'transfer_txs';
   final String encointerCommunityKey = 'wallet_encointer_community';
+
   // offline meetup cache.
   final String encointerCurrenCeremonyIndexKey = 'wallet_encointer_current_ceremony_index';
   final String encointerCurrentPhaseKey = 'wallet_encointer_current_phase';
@@ -234,25 +235,25 @@ abstract class _EncointerStore with Store {
   @action
   void addYourAttestation(int idx, String att) {
     attestations[idx].setYourAttestation(att);
-    cacheObject(encointerAttestationsKey, attestations);
+    cacheAttestationStates(attestations);
   }
 
   @action
   void addOtherAttestation(int idx, String att) {
     attestations[idx].setOtherAttestation(att);
-    cacheObject(encointerAttestationsKey, attestations);
+    cacheAttestationStates(attestations);
   }
 
   @action
   void updateAttestationStep(int idx, CurrentAttestationStep step) {
     attestations[idx].setAttestationStep(step);
-    cacheObject(encointerAttestationsKey, attestations);
+    cacheAttestationStates(attestations);
   }
 
   @action
   void purgeAttestations() {
     attestations.clear();
-    cacheObject(encointerAttestationsKey, attestations);
+    cacheAttestationStates(attestations);
   }
 
   @action
@@ -344,6 +345,11 @@ abstract class _EncointerStore with Store {
 
   Future<void> reloadShopRegistry() async {
     await webApi.encointer.getShopRegistry();
+  }
+
+  Future<void> cacheAttestationStates(Map<int, AttestationState> attestations) {
+    Map<String, AttestationState> att = attestations.map((key, value) => MapEntry(key.toString(), value));
+    return cacheObject(encointerAttestationsKey, att);
   }
 
   Future<void> cacheObject(String key, value) {
