@@ -86,9 +86,6 @@ Future<AppStore> setupStore() async {
   root.localStorage = getMockLocalStorage();
   await root.init('_en');
 
-  List<dynamic> pubKeys = [accList[0], accNew].map((e) => e['pubKey']).toList();
-  expect(pubKeys.length, 2);
-
   root.encointer.attestations = buildAttestationStateMap(root, pubKeys);
   root.encointer.claimHex = claimHex;
   expect(root.encointer.attestations.length, 2);

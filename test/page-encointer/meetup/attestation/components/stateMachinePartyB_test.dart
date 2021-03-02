@@ -6,6 +6,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/attestationState.dart';
 
 import '../../../../mocks/apiEncointer_mock.dart';
+import '../../../../mocks/data/MockAccountData.dart';
 import '../../../../mocks/data/mockEncointerData.dart';
 import 'common.dart';
 
@@ -34,6 +35,7 @@ void main() {
   });
 
   testWidgets('StateMachinePartyB happy flow', (WidgetTester tester) async {
+    root.encointer.attestations = buildAttestationStateMap(root, pubKeys);
     await tester.pumpWidget(makeTestableWidget(child: stateMachineB));
     expect(find.text(otherMeetupRegistryIndex.toString()), findsOneWidget);
 
@@ -49,6 +51,7 @@ void main() {
 
   group('goBackOneStep', () {
     testWidgets('B2_showAttAClaimB back to B1_scanClaimA', (WidgetTester tester) async {
+      root.encointer.attestations = buildAttestationStateMap(root, pubKeys);
       await tester.pumpWidget(makeTestableWidget(child: stateMachineB));
       await _scanClaimA(tester, root, otherMeetupRegistryIndex);
       await goBackOneAttestationStep(tester);
@@ -56,6 +59,7 @@ void main() {
           root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.STEP1);
     });
     testWidgets('B3_scanAttB  back to B2_showAttAClaimB', (WidgetTester tester) async {
+      root.encointer.attestations = buildAttestationStateMap(root, pubKeys);
       await tester.pumpWidget(makeTestableWidget(child: stateMachineB));
       await _scanClaimA(tester, root, otherMeetupRegistryIndex);
       await _showAttestationAClaimB(tester, root, otherMeetupRegistryIndex);
@@ -64,6 +68,7 @@ void main() {
           root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.STEP2);
     });
     testWidgets('finished back to B3_scanAttB', (WidgetTester tester) async {
+      root.encointer.attestations = buildAttestationStateMap(root, pubKeys);
       await tester.pumpWidget(makeTestableWidget(child: stateMachineB));
       await _scanClaimA(tester, root, otherMeetupRegistryIndex);
       await _showAttestationAClaimB(tester, root, otherMeetupRegistryIndex);
@@ -73,6 +78,7 @@ void main() {
           root.encointer.attestations[otherMeetupRegistryIndex].currentAttestationStep, CurrentAttestationStep.STEP3);
     });
     testWidgets('finished back to B1_scanClaimA', (WidgetTester tester) async {
+      root.encointer.attestations = buildAttestationStateMap(root, pubKeys);
       await tester.pumpWidget(makeTestableWidget(child: stateMachineB));
       await _scanClaimA(tester, root, otherMeetupRegistryIndex);
       await _showAttestationAClaimB(tester, root, otherMeetupRegistryIndex);

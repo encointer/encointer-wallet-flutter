@@ -48,6 +48,8 @@ Map<String, dynamic> accNew = {
 
 String currentAccountPubKey = accList[0]['pubKey'];
 
+List<dynamic> pubKeys = [accList[0], accNew].map((e) => e['pubKey']).toList();
+
 List<Map<String, dynamic>> contactList = [];
 
 Map<String, dynamic> storage = new Map<String, dynamic>();
