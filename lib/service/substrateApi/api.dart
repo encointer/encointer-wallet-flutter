@@ -36,6 +36,7 @@ class Api {
   Map<String, Function> _msgHandlers = {};
   Map<String, Completer> _msgCompleters = {};
   FlutterWebviewPlugin _web;
+  StreamSubscription _subscription;
 
   int _evalJavascriptUID = 0;
 
@@ -86,21 +87,22 @@ class Api {
   }
 
   Future<void> launchWebview({bool customNode = false}) async {
-    _msgHandlers = {'txStatusChange': store.account.setTxStatus};
-
-    _evalJavascriptUID = 0;
+    _msgHandlers = {};
     _msgCompleters = {};
+    _evalJavascriptUID = 0;
 
     _connectFunc = customNode ? connectNode : connectNodeAll;
 
-    if (_web != null) {
-      print("reloading webview. close first");
-      _web.close();
+    final bool needLaunch = _web == null;
+    if (needLaunch) {
+      _web = FlutterWebviewPlugin();
     }
 
-    _web = FlutterWebviewPlugin();
-
-    _web.onStateChanged.listen((viewState) async {
+    if (_subscription != null) {
+      //  (should only happen in hot-restart)
+      _subscription.cancel();
+    }
+    _subscription = _web.onStateChanged.listen((viewState) async {
       if (viewState.type == WebViewState.finishLoad) {
         String network = 'encointer';
         print('webview loaded for network $network');
@@ -118,35 +120,40 @@ class Api {
       }
     });
 
-    _web.launch(
-      'about:blank',
-      javascriptChannels: [
-        JavascriptChannel(
-            name: 'PolkaWallet',
-            onMessageReceived: (JavascriptMessage message) {
-              print('received msg: ${message.message}');
-              compute(jsonDecode, message.message).then((msg) {
-                final String path = msg['path'];
-                if (_msgCompleters[path] != null) {
-                  Completer handler = _msgCompleters[path];
-                  handler.complete(msg['data']);
-                  if (path.contains('uid=')) {
-                    _msgCompleters.remove(path);
+    if (!needLaunch) {
+      _web.reload();
+      return;
+    } else {
+      _web.launch(
+        'about:blank',
+        javascriptChannels: [
+          JavascriptChannel(
+              name: 'PolkaWallet',
+              onMessageReceived: (JavascriptMessage message) {
+                print('received msg: ${message.message}');
+                compute(jsonDecode, message.message).then((msg) {
+                  final String path = msg['path'];
+                  if (_msgCompleters[path] != null) {
+                    Completer handler = _msgCompleters[path];
+                    handler.complete(msg['data']);
+                    if (path.contains('uid=')) {
+                      _msgCompleters.remove(path);
+                    }
                   }
-                }
-                if (_msgHandlers[path] != null) {
-                  Function handler = _msgHandlers[path];
-                  handler(msg['data']);
-                }
-              });
-            }),
-      ].toSet(),
-      ignoreSSLErrors: true,
+                  if (_msgHandlers[path] != null) {
+                    Function handler = _msgHandlers[path];
+                    handler(msg['data']);
+                  }
+                });
+              }),
+        ].toSet(),
+        ignoreSSLErrors: true,
 //      debuggingEnabled: true,
 //        withLocalUrl: true,
 //        localUrlScope: 'lib/polkadot_js_service/dist/',
-      hidden: true,
-    );
+        hidden: true,
+      );
+    }
   }
 
   int _getEvalJavascriptUID() {
