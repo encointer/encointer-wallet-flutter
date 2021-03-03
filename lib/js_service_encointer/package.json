@@ -7,7 +7,6 @@
     "clean": "rm -rf dist/*",
     "lint": "eslint src/**.js",
     "build": "webpack --stats-error-details true",
-    "build-dev": "webpack --stats-error-details true",
     "encointer-link": "./scripts/encointer-link.cjs",
     "encointer-unlink": "./scripts/encointer-unlink.cjs",
     "test": "jest -i --watch"
