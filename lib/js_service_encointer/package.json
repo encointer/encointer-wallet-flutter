@@ -7,8 +7,8 @@
     "clean": "rm -rf dist/*",
     "lint": "eslint src/**.js",
     "build": "webpack --stats-error-details true",
-    "encointer-link": "./scripts/encointer-link.cjs",
-    "encointer-unlink": "./scripts/encointer-unlink.cjs",
+    "encointer:link": "./scripts/encointer-link.cjs",
+    "encointer:unlink": "./scripts/encointer-unlink.cjs",
     "test": "jest -i --watch"
   },
   "exports": {
