@@ -1005,47 +1005,48 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@encointer/node-api@^0.1.0":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@encointer/node-api/-/node-api-0.1.1.tgz#86f50b67ef281bd4730ef4534dc32ef74d350128"
-  integrity sha512-cLu6ok5quQ6yxK6AaN6/Pra+7+FiOSWvnBEgXYx4Lxs+7GHUmYU7CtQvtp9YFfMLF4hsaFH+r9HlBKzEq4mkNA==
+"@encointer/node-api@^0.1.2-next.1":
+  version "0.1.2-next.1"
+  resolved "https://registry.yarnpkg.com/@encointer/node-api/-/node-api-0.1.2-next.1.tgz#d471f6512d234b5041bc29bbf73f095f831ac29a"
+  integrity sha512-XvhgIJD7Vy8PH+RFNX5Bo5zak2R4RQOZeCY/0GOWHPxc54lbXxwvICm+tnqmLmlgHrraDkOe4KvJ5vQToS1OOQ==
   dependencies:
-    "@encointer/types" "^0.1.0"
-    "@polkadot/api" "^3.1.1"
+    "@encointer/types" "^0.1.2-next.1"
+    "@polkadot/api" "^3.11.1"
 
-"@encointer/types@^0.1.0":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@encointer/types/-/types-0.1.1.tgz#7b654f019e510b60b6ac5330c02426b2ed655e07"
-  integrity sha512-RrwHCCu5P0Aw34NCGAcekauwymWvwJtk9Pu0U2CHejX0vpq6O1MlX6eQy2LB2he01Xp0GsSTDkdFeokQ/ck3QA==
+"@encointer/types@^0.1.2-next.1":
+  version "0.1.2-next.1"
+  resolved "https://registry.yarnpkg.com/@encointer/types/-/types-0.1.2-next.1.tgz#081193cba3965916da563150c94f77a174ffb980"
+  integrity sha512-uShgo6TGdEVEu0uOClUNjQWHBVd8Bv75j9Qn9Ueb6MaYn+WboD/4iCCwPPfiaWjmzbRTxeCCviLhjGdGZrCxSA==
   dependencies:
-    "@polkadot/api" "^3.4.1"
-    "@polkadot/types" "^3.4.1"
-    "@polkadot/util" "^5.1.1"
+    "@polkadot/api" "^3.11.1"
+    "@polkadot/types" "^3.11.1"
+    "@polkadot/util" "^5.9.2"
 
-"@encointer/util@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@encointer/util/-/util-0.1.0.tgz#d666f0b67e782a10c25fbfa62879af8547c585e4"
-  integrity sha512-T4/6kItjaxjWF80Sp1h9UIAsy8KtT9cUxyiFoV5Y5mx8Q6R0CWibNa08+fgbVDMiTwdf0uGLzjfbg8BOxGhv7w==
+"@encointer/util@^0.1.2-next.1":
+  version "0.1.2-next.1"
+  resolved "https://registry.yarnpkg.com/@encointer/util/-/util-0.1.2-next.1.tgz#75bff581e68d312bc6f4b330e5089af6501e157b"
+  integrity sha512-KZ00GowbxMy65vqp9A+DQQ/9yI98Av92WfIe+NhENdFkHRG0vBHYtVf/4MMrWQYVaT2nnsrUSID6yK7jWGUugA==
   dependencies:
     "@babel/runtime" "^7.12.5"
-    "@polkadot/util" "^5.3.1"
+    "@polkadot/util" "^5.9.2"
     "@types/bn.js" "^4.11.6"
     assert "^2.0.0"
-    bn.js "^5.1.3"
+    bn.js "^4.12.0"
 
-"@encointer/worker-api@^0.1.0":
-  version "0.1.1"
-  resolved "https://registry.yarnpkg.com/@encointer/worker-api/-/worker-api-0.1.1.tgz#978b1a925dee561eeea8723a9de5db1277ea5114"
-  integrity sha512-nYOrl/P4WQrrQ6ynFwypa9v4noZBRU2Upv8bZOoo5FXXzKoqWA7t5O4cA7LHEvh8sLhIGtARWweZgxUv3Zwkaw==
+"@encointer/worker-api@^0.1.2-next.1":
+  version "0.1.2-next.1"
+  resolved "https://registry.yarnpkg.com/@encointer/worker-api/-/worker-api-0.1.2-next.1.tgz#f12da100d49e43285938ec6b356fef110613e143"
+  integrity sha512-5ftrWuFrxuVBpO4WYLVgwrOGKAcCmtBOI6ozRb8iB6wNbkmPhng89RBCkaujL3t1hZ7iVbh4TxrrnJoNr1CMhQ==
   dependencies:
-    "@encointer/node-api" "^0.1.0"
-    "@encointer/types" "^0.1.0"
-    "@encointer/util" "^0.1.0"
-    "@polkadot/api" "^3.1.1"
-    "@polkadot/types" "^3.1.1"
-    "@polkadot/util" "^5.1.1"
+    "@encointer/node-api" "^0.1.2-next.1"
+    "@encointer/types" "^0.1.2-next.1"
+    "@encointer/util" "^0.1.2-next.1"
+    "@polkadot/api" "^3.11.1"
+    "@polkadot/types" "^3.11.1"
+    "@polkadot/util" "^5.9.2"
     bs58 "^4.0.1"
-    websocket-as-promised "^1.1.0"
+    node-rsa "^1.1.1"
+    websocket-as-promised "^2.0.1"
 
 "@eslint/eslintrc@^0.4.0":
   version "0.4.0"
@@ -1564,7 +1565,7 @@
     "@polkadot/x-rxjs" "^5.9.2"
     bn.js "^4.11.9"
 
-"@polkadot/api@3.11.1", "@polkadot/api@^3.1.1", "@polkadot/api@^3.4.1":
+"@polkadot/api@3.11.1", "@polkadot/api@^3.11.1":
   version "3.11.1"
   resolved "https://registry.yarnpkg.com/@polkadot/api/-/api-3.11.1.tgz#854ee9686942a4be736932d61bf7ddb1242a0966"
   integrity sha512-VqEh2n13ESLxnTUKujUfZ3Spct+lTycNgrX+IWD7/f05GsMwhCZLYtt708K8nqGFH2OKDl8xzwuGCvRN/05U1Q==
@@ -1716,7 +1717,7 @@
     "@polkadot/util" "^5.9.2"
     bn.js "^4.11.9"
 
-"@polkadot/types@3.11.1", "@polkadot/types@^3.1.1", "@polkadot/types@^3.11.1", "@polkadot/types@^3.4.1":
+"@polkadot/types@3.11.1", "@polkadot/types@^3.11.1":
   version "3.11.1"
   resolved "https://registry.yarnpkg.com/@polkadot/types/-/types-3.11.1.tgz#c0188390dfda84d746d57f7818ad622ac6b1de8b"
   integrity sha512-+BWsmveYVkLFx/csvPmU+NhNFhf+0srAt2d0f+7y663nitc/sng1AcEDPbrbXHSQVyPdvI20Mh4Escl4aR+TLw==
@@ -1759,7 +1760,7 @@
     tweetnacl "^1.0.3"
     xxhashjs "^0.2.2"
 
-"@polkadot/util@5.9.2", "@polkadot/util@^5.1.1", "@polkadot/util@^5.3.1", "@polkadot/util@^5.9.2":
+"@polkadot/util@5.9.2", "@polkadot/util@^5.9.2":
   version "5.9.2"
   resolved "https://registry.yarnpkg.com/@polkadot/util/-/util-5.9.2.tgz#ad2494e78ca6c3aadd6fb394a6be55020dc9b2a8"
   integrity sha512-p225NJusnXeu7i2iAb8HAGWiMOUAnRaIyblIjJ4F89ZFZZ4amyliGxe5gKcyjRgxAJ44WdKyBLl/8L3rNv8hmQ==
@@ -3176,7 +3177,7 @@ bluebird@^3.1.1, bluebird@^3.5.5:
   resolved "https://registry.yarnpkg.com/bluebird/-/bluebird-3.7.2.tgz#9f229c15be272454ffa973ace0dbee79a1b0c36f"
   integrity sha512-XpNj6GDQzdfW+r2Wnn7xiSAd7TM3jzkxGXBGTtWKuSXv1xUV+azxAm8jdWZN06QTQk+2N2XB9jRDkvbmQmcRtg==
 
-bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.11.8, bn.js@^4.11.9:
+bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.11.8, bn.js@^4.11.9, bn.js@^4.12.0:
   version "4.12.0"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.12.0.tgz#775b3f278efbb9718eec7361f483fb36fbbfea88"
   integrity sha512-c98Bf3tPniI+scsdk237ku1Dc3ujXQTSgyiPUDEOe7tRkhrqridvh8klBv0HCEso1OLOYcHuCv/cS6DNxKH+ZA==
@@ -10286,6 +10287,11 @@ promise.prototype.finally@^3.1.2:
     es-abstract "^1.17.0-next.0"
     function-bind "^1.1.1"
 
+promised-map@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/promised-map/-/promised-map-1.0.0.tgz#aa3ec59e13724d37b946415f6850273af8e213b5"
+  integrity sha512-fP9VSMgcml+U2uJ9PBc4/LDQ3ZkJCH4blLNCS6gbH7RHyRZCYs91zxWHqiUy+heFiEMiB2op/qllYoFqmIqdWA==
+
 prompts@^2.0.1:
   version "2.4.0"
   resolved "https://registry.yarnpkg.com/prompts/-/prompts-2.4.0.tgz#4aa5de0723a231d1ee9121c40fdf663df73f61d7"
@@ -12887,14 +12893,15 @@ webpack@4.x.x, webpack@^4.46.0:
     watchpack "^1.7.4"
     webpack-sources "^1.4.1"
 
-websocket-as-promised@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/websocket-as-promised/-/websocket-as-promised-1.1.0.tgz#3f5666645a5efdb3a6d89d53eb2f925649a70c32"
-  integrity sha512-agq8bPsPFKBWinKQkoXwY7LoBYe+2fQ7Gnuxx964+BTIiyAdL130FnB60bXuVQdUCdaS17R/MyRaaO4WIqtl4Q==
+websocket-as-promised@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/websocket-as-promised/-/websocket-as-promised-2.0.1.tgz#d18b7c160bba294585aaf6fa9572f31e05cfb175"
+  integrity sha512-ePV26D/D37ughXU9j+DjGmwUbelWJrC/vi+6GK++fRlBJmS7aU9T8ABu47KFF0O7r6XN2NAuqJRpegbUwXZxQg==
   dependencies:
     chnl "^1.2.0"
     promise-controller "^1.0.0"
     promise.prototype.finally "^3.1.2"
+    promised-map "^1.0.0"
 
 websocket-driver@>=0.5.1:
   version "0.7.4"
