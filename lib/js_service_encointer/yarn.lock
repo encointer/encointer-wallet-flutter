@@ -1005,7 +1005,7 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
-"@encointer/node-api@^0.1.2", "@encointer/node-api@^0.1.2-next.1":
+"@encointer/node-api@^0.1.2":
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/@encointer/node-api/-/node-api-0.1.2.tgz#ba9ffbcd47735f52beff43b51dd1337b8e449613"
   integrity sha512-YOq5ydhEqRdyi9z58CdVJxzfGZADf8Fl1IZbnFpqpBgdRtteYjcMVyHOCfDwruKC0i52CH4fJzx6cMizdSLVbw==
@@ -1013,7 +1013,7 @@
     "@encointer/types" "^0.1.2"
     "@polkadot/api" "^3.11.1"
 
-"@encointer/types@^0.1.2", "@encointer/types@^0.1.2-next.1":
+"@encointer/types@^0.1.2":
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/@encointer/types/-/types-0.1.2.tgz#a9f74c3fc06d1dadb3847db794b9ccb6e057f76c"
   integrity sha512-KvAFerWNRQY+lCAO793GwCI2rXAtLju6AUNj/v0R1TFiwrkNGXeiwAUE7AkYbve8y/37yapQ+ki5xY+U+6ZHxA==
@@ -1022,7 +1022,7 @@
     "@polkadot/types" "^3.11.1"
     "@polkadot/util" "^5.9.2"
 
-"@encointer/util@^0.1.2", "@encointer/util@^0.1.2-next.1":
+"@encointer/util@^0.1.2":
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/@encointer/util/-/util-0.1.2.tgz#b9b24a8f7b56207c2d4196a0374807611e26ccc3"
   integrity sha512-2Vidow1pvGgseCjAqN5yU1BivSRn6v9FwfBeV3PSslXmDeIW0Y8KxvTbdYhh5WqazMjUKIL5Uj0KQKdWd0iNLw==
@@ -1033,7 +1033,7 @@
     assert "^2.0.0"
     bn.js "^4.12.0"
 
-"@encointer/worker-api@^0.1.2-next.1":
+"@encointer/worker-api@^0.1.2":
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/@encointer/worker-api/-/worker-api-0.1.2.tgz#958c3563315d4fe8190f11e8cb8ea82af7d8cc6b"
   integrity sha512-Zp1k8ozcA2YW2Ki2v9On07yDntaLbn7xtEiEA3oEmpNVA6skMCtBXOFET48AkJKD3Ggyc0cf29X4T3EeHLhl2w==
