@@ -8,6 +8,8 @@ void main() {
 
     setUpAll(() async {
       driver = await FlutterDriver.connect();
+      // waits until the firs frame after ft startup stabilized
+      await driver.waitUntilFirstFrameRasterized();
     });
 
     tearDownAll(() async {
@@ -15,15 +17,10 @@ void main() {
         driver.close();
       }
     });
-  });
 
-  test('screenshot test', () async {
-    // await driver.runUnsynchronized(() async {
+    test('screenshot test', () async {
       final config = Config();
-      //
-      // await screenshot(driver, config, 'myscreenshot1');
-      expect(true, true);
-    // },
-    // timeout: Duration(minutes: 2));
+      await screenshot(driver, config, 'myscreenshot1');
+    });
   });
 }
