@@ -81,9 +81,6 @@ The screenshots package is used to created automated screenshots
 
 Install: `flutter pub global activate screenshots`
 
-Note: The package is currently heavily outdated. It needs some dependency overrides to be able to install it with recent flutter sdks. They have been marked in `pubspec.yaml`
-Note 2: Maybe the `emulator` needs to be added to the path. It is located in the Android/sdk.
-
 Run: `screenshots --flavor dev`
 
 #### Android Studio
