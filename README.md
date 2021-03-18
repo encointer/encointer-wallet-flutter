@@ -66,13 +66,23 @@ and find the output in `build/app/outputs/bundle/release/app-release.aab`
 Re-generate mobx g.dart files
   flutter packages pub run build_runner build --delete-conflicting-outputs
   
-### Runt tests
+### Run tests
 
 * run all tests from the command line:`flutter test`
 * run tests in specific directory: `flutter test test/page-encointer`
 
-## Integration tests
+### Integration tests
 * run all integration tests in `test_driver` directory: `flutter drive --target=test_driver/app.dart --flavor dev`
+
+### Automated screenshots
+The screenshots package is used to created automated screenshots
+
+Install: `flutter pub global activate screenshots`
+
+Note: The package is currently heavily outdated. It needs some dependency overrides to be able to install it with recent flutter sdks. They have been marked in `pubspec.yaml`
+Note 2: Maybe the `emulator` needs to be added to the path. It is located in the Android/sdk.
+
+Run: `screenshots --flavor dev`
 
 #### Android Studio
 To run the in Android Studio a build flavor must be specified. Go to Run/Debug configurations and add the build flavor `dev` in the appropriate field. Other available values are in the in the android/app/src/build.gradle file.

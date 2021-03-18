@@ -1,9 +1,10 @@
 import 'package:flutter_driver/flutter_driver.dart';
+import 'package:screenshots/screenshots.dart';
 import 'package:test/test.dart';
 
 void main() {
+  FlutterDriver driver;
   group('EncointerWallet App', () {
-    FlutterDriver driver;
 
     setUpAll(() async {
       driver = await FlutterDriver.connect();
@@ -16,7 +17,10 @@ void main() {
     });
   });
 
-  test('true is true', () async {
+  test('screenshot test', () async {
+    // final config = Config();
+    //
+    // await screenshot(driver, config, 'myscreenshot1');
     expect(true, true);
   });
 }
