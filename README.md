@@ -71,6 +71,9 @@ Re-generate mobx g.dart files
 * run all tests from the command line:`flutter test`
 * run tests in specific directory: `flutter test test/page-encointer`
 
+## Integration tests
+* run all integration tests in `test_driver` directory: `flutter drive --target=test_driver/app.dart --flavor dev`
+
 #### Android Studio
 To run the in Android Studio a build flavor must be specified. Go to Run/Debug configurations and add the build flavor `dev` in the appropriate field. Other available values are in the in the android/app/src/build.gradle file.
 
