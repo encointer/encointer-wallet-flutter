@@ -60,6 +60,7 @@ dependencies:
   flutter_svg: ^0.19.3
   url_launcher: ^5.4.2
   dropdown_search: ^0.4.9
+  charts_flutter: ^0.10.0
 
 dev_dependencies:
   screenshots: ^0.2.1
