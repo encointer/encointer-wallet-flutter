@@ -1,5 +1,5 @@
+import 'package:encointer_wallet/utils/screenshot.dart';
 import 'package:flutter_driver/flutter_driver.dart';
-import 'package:screenshots/screenshots.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -18,9 +18,12 @@ void main() {
   });
 
   test('screenshot test', () async {
-    // final config = Config();
-    //
-    // await screenshot(driver, config, 'myscreenshot1');
-    expect(true, true);
+    // await driver.runUnsynchronized(() async {
+      final config = Config();
+      //
+      // await screenshot(driver, config, 'myscreenshot1');
+      expect(true, true);
+    // },
+    // timeout: Duration(minutes: 2));
   });
 }

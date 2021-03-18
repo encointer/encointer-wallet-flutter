@@ -19,7 +19,7 @@ environment:
 
 dependencies:
   # intl - format numbers
-  intl: ^0.16.0
+  intl: ^0.17.0
   json_annotation: ^3.0.1
   # state management with mobx
   mobx: ^1.2.0
@@ -57,13 +57,12 @@ dependencies:
       url: https://github.com/polkawallet-io/flutter_qr_reader.git
       ref: master
   permission_handler: ^4.2.0
-  flutter_svg: ^0.19.1
+  flutter_svg: ^0.19.3
   url_launcher: ^5.4.2
   dropdown_search: ^0.4.9
   charts_flutter: ^0.10.0
 
 dev_dependencies:
-  screenshots: ^2.1.0
   build_runner: ^1.7.4
   json_serializable: ^3.0.0
   mobx_codegen: ^1.1.0
@@ -77,20 +76,6 @@ dev_dependencies:
   flutter_driver:
     sdk: flutter
   test: any
-
-dependency_overrides:
-  # Dependency overrides needed to get screenshots working with recent flutter, see: https://github.com/mmcc007/screenshots/issues/215
-  # Todo: remove once resolved
-  screenshots:
-    git: https://github.com/trygvis/screenshots
-  tool_base:
-    git: https://github.com/speaking-in-code/tool_base
-  tool_base_test:
-    git: https://github.com/trygvis/tool_base_test
-  tool_mobile:
-    git: https://github.com/trygvis/tool_mobile
-  fake_process_manager:
-    git: https://github.com/trygvis/fake_process_manager
 
 flutter_icons:
   android: "launcher_icon"
