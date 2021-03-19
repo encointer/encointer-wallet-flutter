@@ -52,4 +52,22 @@ List<dynamic> pubKeys = [accList[0], accNew].map((e) => e['pubKey']).toList();
 
 List<Map<String, dynamic>> contactList = [];
 
+Map<String, dynamic> balancesInfo = {
+  "freeBalance": "0x00000000000000000000000000000000",
+  "frozenFee": "0x00000000000000000000000000000000",
+  "frozenMisc": "0x00000000000000000000000000000000",
+  "reservedBalance": "0x00000000000000000000000000000000",
+  "votingBalance": "0x00000000000000000000000000000000",
+  "availableBalance": "0x00000000000000000000000000000000",
+  "lockedBalance": "0x00000000000000000000000000000000",
+  "lockedBreakdown": [],
+  "vestingLocked": "0x00000000000000000000000000000000",
+  "isVesting": false,
+  "vestedBalance": "0x00000000000000000000000000000000",
+  "vestedClaimable": "0x00000000000000000000000000000000",
+  "vestingEndBlock": "0x00000000",
+  "vestingPerBlock": "0x00000000000000000000000000000000",
+  "vestingTotal": "0x00000000000000000000000000000000",
+};
+
 Map<String, dynamic> storage = new Map<String, dynamic>();
