@@ -10,9 +10,9 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/attestationState.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 
-import '../../../../mocks/data/MockAccountData.dart';
-import '../../../../mocks/data/mockEncointerData.dart';
-import '../../../../mocks/localStorage_mock.dart';
+import 'package:encointer_mocks/data/MockAccountData.dart';
+import 'package:encointer_mocks/data/mockEncointerData.dart';
+import 'package:encointer_mocks/localStorage_mock.dart';
 
 Widget makeTestableWidget({Widget child}) {
   return MediaQuery(

@@ -225,6 +225,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.9"
+  encointer_mocks:
+    dependency: "direct dev"
+    description:
+      path: mocks
+      relative: true
+    source: path
+    version: "0.0.0"
   fake_async:
     dependency: transitive
     description:

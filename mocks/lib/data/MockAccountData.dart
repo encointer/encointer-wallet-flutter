@@ -10,7 +10,7 @@ Map<String, String> addressIconsMap = {
 
 List<Map<String, dynamic>> accList = [
   {
-    "name": "test-ggg",
+    "name": "Endo Encointer",
     "address": "1eiq96Y7844qcjkWUqjEibzqTpY5Si6dbFq6ZqZx8DDSWcv",
     "encoded":
     "0x5d30c7a8ac930d4f8086f5b6468f2ce4f8013c6ac8ce2062b5c4cf8fc48c898807ae3a0ceb62a053e68bbe529a6baa0ae3f68a5ebc11cd2713b83e177bcbbd704e366fddaf259dd7c7ea9b858dac245bfa3544f4134c802d0dd8d546c23b12a7253a732db57cbbcb09bcba21a422e2a84518ad679b3ce1e39a57dac72111f194c4d0c6e28dcd33cf029b8a9bb7ca58af46cd72667540c874d0eb6a77ed",
