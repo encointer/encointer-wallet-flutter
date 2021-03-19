@@ -63,8 +63,6 @@ dependencies:
   charts_flutter: ^0.10.0
 
 dev_dependencies:
-  encointer_mocks:
-    path: "./mocks"
   build_runner: ^1.7.4
   json_serializable: ^3.0.0
   mobx_codegen: ^1.1.0

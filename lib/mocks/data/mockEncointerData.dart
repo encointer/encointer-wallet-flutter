@@ -1,7 +1,9 @@
+const String cid = '0x22c51e6a656b19dd1e34c6126a75b8af02b38eedbeec51865063f142c83d40d3';
+
 const Map<String, dynamic> claim = {
   'claimant_public': '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
   'ceremony_index': 63,
-  'community_identifier': '0x22c51e6a656b19dd1e34c6126a75b8af02b38eedbeec51865063f142c83d40d3',
+  'community_identifier': cid,
   'meetup_index': 1,
   'location': {'lon': 79643934720, 'lat': 152403291178},
   'timestamp': 1592719549549,
@@ -38,3 +40,8 @@ const List<String> meetupRegistry = [
   "0xb67fe3812b469da5cac180161851120a45b6c6cf13f5be7062874bfa6cec381f",
   "0x1cc4e46bbd2bb547d93d952c5de12ea7e3a3f3b638551a8eaf35ad086700c00c",
 ];
+
+const Map<String, dynamic> balanceEntry = {
+  'principal': 1.2,
+  'lastUpdate': 4
+};
