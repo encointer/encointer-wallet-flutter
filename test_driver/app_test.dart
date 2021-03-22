@@ -1,13 +1,6 @@
-import 'package:encointer_wallet/mocks/localStorage_mock.dart';
-import 'package:encointer_wallet/store/account/types/accountData.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:encointer_wallet/utils/screenshot.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
-
-import 'package:encointer_wallet/mocks/data/MockAccountData.dart';
-import 'package:encointer_wallet/mocks/data/mockEncointerData.dart';
 
 void main() {
   FlutterDriver driver;
@@ -15,9 +8,12 @@ void main() {
 
     setUpAll(() async {
       driver = await FlutterDriver.connect();
+
+      // communicate to the app isolate how to setup the store
+      // await driver.requestData(SETUP_STORE);
+
       // waits until the firs frame after ft startup stabilized
       await driver.waitUntilFirstFrameRasterized();
-      setupLocalStorage(globalAppStore);
     });
 
     tearDownAll(() async {
@@ -33,13 +29,4 @@ void main() {
   });
 }
 
-
-AppStore setupLocalStorage(AppStore store) {
-  // prevent data corruption by not persisting state
-  store.localStorage = getMockLocalStorage();
-  store.account.accountList = accList.map((acc) => AccountData.fromJson(acc)).toList();
-  store.account.setCurrentAccount(currentAccountPubKey);
-  store.assets.setAccountBalances(currentAccountPubKey, balancesInfo);
-  store.encointer.addBalanceEntry(cid, BalanceEntry.fromJson(balanceEntry));
-  return store;
-}
+const SETUP_STORE = "setup_store";

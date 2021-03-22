@@ -5,8 +5,7 @@ import 'package:encointer_wallet/mocks/localStorage_mock.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  final AppStore store = AppStore();
-  store.localStorage = getMockLocalStorage();
+  final AppStore store = AppStore(getMockLocalStorage());
 
   group('store test', () {
     test('app store created and not ready', () {

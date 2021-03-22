@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:core';
 
 import 'package:encointer_wallet/utils/localStorage.dart';
 import 'package:mockito/mockito.dart';

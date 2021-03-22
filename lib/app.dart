@@ -35,7 +35,6 @@ import 'package:encointer_wallet/page/profile/settings/settingsPage.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58PrefixListPage.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
-import 'package:encointer_wallet/service/walletApi.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -46,7 +45,9 @@ import 'common/theme.dart';
 import 'utils/i18n/index.dart';
 
 class WalletApp extends StatefulWidget {
-  const WalletApp();
+  const WalletApp(this.store);
+
+  final AppStore store;
 
   @override
   _WalletAppState createState() => _WalletAppState();
@@ -84,9 +85,9 @@ class _WalletAppState extends State<WalletApp> {
     });
   }
 
-  Future<int> _initStore(BuildContext context) async {
+  Future<int> _initStore(BuildContext context, AppStore store) async {
     if (_appStore == null) {
-      _appStore = globalAppStore;
+      _appStore = store;
       print('initailizing app state');
       print('sys locale: ${Localizations.localeOf(context)}');
       await _appStore.init(Localizations.localeOf(context).toString());
@@ -149,7 +150,7 @@ class _WalletAppState extends State<WalletApp> {
               builder: (_) {
                 return WillPopScopWrapper(
                   child: FutureBuilder<int>(
-                    future: _initStore(context),
+                    future: _initStore(context, widget.store),
                     builder: (_, AsyncSnapshot<int> snapshot) {
                       if (snapshot.hasData) {
                         return snapshot.data > 0 ? EncointerHomePage(_appStore) : CreateAccountEntryPage();

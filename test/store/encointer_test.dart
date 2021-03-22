@@ -12,8 +12,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('EncointerStore test', () {
-    final AppStore root = AppStore();
-    root.localStorage = getMockLocalStorage();
+    final AppStore root = AppStore(getMockLocalStorage());
 
     webApi = Api(null, root);
     webApi.encointer = getMockApiEncointer();

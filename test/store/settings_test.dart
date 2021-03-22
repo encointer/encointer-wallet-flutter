@@ -9,8 +9,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('SettingsStore test', () {
-    final AppStore root = AppStore();
-    root.localStorage = getMockLocalStorage();
+    final AppStore root = AppStore(getMockLocalStorage());
     final store = SettingsStore(root);
 
     test('settings store created', () {

@@ -1,10 +1,34 @@
+import 'package:encointer_wallet/mocks/localStorage_mock.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:flutter/material.dart';
+
+import 'package:encointer_wallet/app.dart';
 import 'package:flutter_driver/driver_extension.dart';
-import 'package:encointer_wallet/main.dart' as app;
 
 void main() {
+
+  // //
+  // Future<String> dataHandler(String msg) async {
+  //   switch (msg) {
+  //     case SETUP_STORE:
+  //       {
+  //         setupLocalStorage(globalAppStore);
+  //       }
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }
+
   enableFlutterDriverExtension();
 
   // Call the `main()` function of the app, or call `runApp` with
   // any widget you are interested in testing.
-  app.main();
+
+  globalAppStore = AppStore(getMockLocalStorage());
+  runApp(
+    WalletApp(globalAppStore),
+  );
 }
+
+const SETUP_STORE = 'setup_store';
