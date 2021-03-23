@@ -1,7 +1,6 @@
 import 'dart:io';
 
-import 'package:encointer_wallet/mocks/localStorage_mock.dart';
-import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
@@ -42,9 +41,7 @@ Future<void> main() async {
 
   HttpOverrides.global = MyHttpOverrides();
 
-  globalAppStore = AppStore(getMockLocalStorage());
-
   runApp(
-    WalletApp(globalAppStore),
+    WalletApp(Config()),
   );
 }

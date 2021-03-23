@@ -1,5 +1,4 @@
-import 'package:encointer_wallet/mocks/localStorage_mock.dart';
-import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/config.dart';
 import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/app.dart';
@@ -24,10 +23,8 @@ void main() {
 
   // Call the `main()` function of the app, or call `runApp` with
   // any widget you are interested in testing.
-
-  globalAppStore = AppStore(getMockLocalStorage());
   runApp(
-    WalletApp(globalAppStore),
+    WalletApp(Config(mockLocalStorage: true)),
   );
 }
 
