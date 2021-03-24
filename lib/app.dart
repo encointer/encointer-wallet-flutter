@@ -117,16 +117,16 @@ class _WalletAppState extends State<WalletApp> {
 
   @override
   void dispose() {
-    showCupertinoDialog(
-      context: context,
-      builder: (BuildContext context) {
-        final Map<String, String> dic = I18n.of(context).assets;
-        return CupertinoAlertDialog(
-          title: Container(),
-          content: Text('${dic['copy']} ${dic['success']}'),
-        );
-      },
-    );
+    // showCupertinoDialog(
+    //   context: context,
+    //   builder: (BuildContext context) {
+    //     final Map<String, String> dic = I18n.of(context).assets;
+    //     return CupertinoAlertDialog(
+    //       title: Container(),
+    //       content: Text('${dic['copy']} ${dic['success']}'),
+    //     );
+    //   },
+    // );
 
     didReceiveLocalNotificationSubject.close();
     selectNotificationSubject.close();
