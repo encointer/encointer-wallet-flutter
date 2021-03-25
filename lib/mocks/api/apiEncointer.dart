@@ -4,7 +4,6 @@ import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
 import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:encointer_wallet/store/encointer/types/attestation.dart';
 import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
-import 'package:mockito/mockito.dart';
 
 import '../data/mockEncointerData.dart';
 
@@ -38,6 +37,11 @@ class MockApiEncointer extends ApiEncointer {
 
   @override
   Future<List<String>> getCommunityIdentifiers() async {
+    return meetupRegistry;
+  }
+
+  @override
+  Future<List<String>> getMeetupRegistry() async {
     return communityIdentifiers;
   }
 

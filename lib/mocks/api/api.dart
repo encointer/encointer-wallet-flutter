@@ -7,7 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
 class MockApi extends Api {
-  MockApi(BuildContext context, AppStore store): super(context, store);
+  MockApi(BuildContext context, AppStore store, {this.withUi = true}): super(context, store);
+
+  final bool withUi;
+
 
   @override
   Future<void> init() async {
@@ -21,16 +24,18 @@ class MockApi extends Api {
 
     //ipfs = ApiIpfs(this);
 
-    print("first launch of webview");
-    await launchWebview();
+    if (withUi) {
+      print("first launch of webview");
+      await launchWebview();
 
-    //TODO: fix this properly!
-    // hack to allow hot-restart with re-loaded webview
-    // the problem is that hot-restart doesn't call dispose(),
-    // so the webview will not be closed properly. Therefore,
-    // the first call to launchWebView will crash. The second
-    // one seems to succeed
-    print("second launch of webview");
-    await launchWebview();
+      //TODO: fix this properly!
+      // hack to allow hot-restart with re-loaded webview
+      // the problem is that hot-restart doesn't call dispose(),
+      // so the webview will not be closed properly. Therefore,
+      // the first call to launchWebView will crash. The second
+      // one seems to succeed
+      print("second launch of webview");
+      await launchWebview();
+    }
   }
 }

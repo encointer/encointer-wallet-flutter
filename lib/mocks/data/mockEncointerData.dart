@@ -38,6 +38,7 @@ const List<String> communityIdentifiers = [
 
 const List<String> meetupRegistry = [
   "0xb67fe3812b469da5cac180161851120a45b6c6cf13f5be7062874bfa6cec381f",
+  "0x1bb4e46bbd2bb547d93d952c5de12ea7e3a3f3b638551a8eaf35ad086700c00c",
   "0x1cc4e46bbd2bb547d93d952c5de12ea7e3a3f3b638551a8eaf35ad086700c00c",
 ];
 

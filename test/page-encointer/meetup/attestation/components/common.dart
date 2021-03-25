@@ -86,6 +86,7 @@ Future<AppStore> setupStore() async {
   root.localStorage = getMockLocalStorage();
   await root.init('_en');
 
+  accList.add(endoEncointer);
   root.encointer.attestations = buildAttestationStateMap(root, pubKeys);
   root.encointer.claimHex = claimHex;
   expect(root.encointer.attestations.length, 2);
