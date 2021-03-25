@@ -5,8 +5,8 @@ import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:encointer_wallet/mocks/data/mockEncointerData.dart';
-import 'package:encointer_wallet/mocks/localStorage_mock.dart';
-import 'package:encointer_wallet/mocks/api/apiEncointer_mock.dart';
+import 'package:encointer_wallet/mocks/localStorage.dart';
+import 'package:encointer_wallet/mocks/api/apiEncointer.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

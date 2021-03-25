@@ -12,7 +12,7 @@ import 'package:encointer_wallet/utils/i18n/index.dart';
 
 import 'package:encointer_wallet/mocks/data/mockAccountData.dart';
 import 'package:encointer_wallet/mocks/data/mockEncointerData.dart';
-import 'package:encointer_wallet/mocks/localStorage_mock.dart';
+import 'package:encointer_wallet/mocks/localStorage.dart';
 
 Widget makeTestableWidget({Widget child}) {
   return MediaQuery(

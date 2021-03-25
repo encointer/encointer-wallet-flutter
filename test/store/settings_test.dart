@@ -3,7 +3,7 @@ import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
 
-import 'package:encointer_wallet/mocks/localStorage_mock.dart';
+import 'package:encointer_wallet/mocks/localStorage.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
