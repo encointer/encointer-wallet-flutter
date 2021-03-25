@@ -45,6 +45,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'common/theme.dart';
 import 'mocks/localStorage.dart';
+import 'mocks/api/api.dart';
 import 'utils/i18n/index.dart';
 
 class WalletApp extends StatefulWidget {
@@ -98,7 +99,7 @@ class _WalletAppState extends State<WalletApp> {
       await _appStore.init(Localizations.localeOf(context).toString());
 
       // init webApi after store initiated
-      webApi = Api(context, _appStore);
+      webApi = widget.config.mockSubstrateApi ? MockApi(context, _appStore) : Api(context, _appStore);
       webApi.init();
 
       _changeLang(context, _appStore.settings.localeCode);

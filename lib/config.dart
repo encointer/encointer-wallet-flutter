@@ -9,10 +9,12 @@ class Config {
   const Config({
     this.initialRoute = EncointerHomePage.route,
     this.mockLocalStorage = false,
+    this.mockSubstrateApi = false,
   });
 
   final String initialRoute;
   final bool mockLocalStorage;
+  final bool mockSubstrateApi;
 
   factory Config.fromJson(Map<String, dynamic> json) => _$ConfigFromJson(json);
   Map<String, dynamic> toJson() => _$ConfigToJson(this);
