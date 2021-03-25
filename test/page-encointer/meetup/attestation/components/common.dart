@@ -10,7 +10,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/attestationState.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 
-import 'package:encointer_wallet/mocks/data/MockAccountData.dart';
+import 'package:encointer_wallet/mocks/data/mockAccountData.dart';
 import 'package:encointer_wallet/mocks/data/mockEncointerData.dart';
 import 'package:encointer_wallet/mocks/localStorage_mock.dart';
 

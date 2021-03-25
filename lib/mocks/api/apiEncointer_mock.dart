@@ -4,7 +4,7 @@ import 'package:encointer_wallet/store/encointer/types/attestation.dart';
 import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:mockito/mockito.dart';
 
-import 'data/mockEncointerData.dart';
+import '../data/mockEncointerData.dart';
 
 class MockApiEncointer extends Mock implements ApiEncointer {}
 

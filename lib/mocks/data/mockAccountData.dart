@@ -25,7 +25,7 @@ Map<String, dynamic> endoEncointer = {
     "type": "xsalsa20-poly1305",
     "version": "2"
   },
-  "meta": {"whenCreated": 1590987392804, "whenEdited": 1590987392804, "name": "ggg"},
+  "meta": {"whenCreated": 1590987392804, "whenEdited": 1590987392804, "name": "Endo Encointer"},
   "mnemonic": 'adjust ability hockey august machine empty cargo monster charge plastic snap gather',
   "rawSeed": 'test_seed',
   "memo": null,

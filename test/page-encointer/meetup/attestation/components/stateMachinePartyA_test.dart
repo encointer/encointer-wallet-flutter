@@ -5,8 +5,8 @@ import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/attestationState.dart';
 
-import 'package:encointer_wallet/mocks/apiEncointer_mock.dart';
-import 'package:encointer_wallet/mocks/data/MockAccountData.dart';
+import 'package:encointer_wallet/mocks/api/apiEncointer_mock.dart';
+import 'package:encointer_wallet/mocks/data/mockAccountData.dart';
 import 'package:encointer_wallet/mocks/data/mockEncointerData.dart';
 
 import 'common.dart';
