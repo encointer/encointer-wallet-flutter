@@ -32,6 +32,8 @@ Map<String, dynamic> endoEncointer = {
   "observation": null
 };
 
+String defaultPin = "1234";
+
 Map<String, dynamic> accNew = {
   "name": "test-ttt",
   "address": "158Hhwd6wG84JPTHkX4QuxyZwz7XfMxLa4BRF3c4Ks5giuxs",

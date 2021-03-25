@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:encointer_wallet/mocks/data/MockAccountData.dart';
+import 'package:encointer_wallet/utils/screenshot.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
@@ -26,32 +27,39 @@ void main() {
 
     test('importing account', () async {
       log("tap import account...");
-      final importAccount = find.byValueKey('import-account');
-      await driver.tap(importAccount);
+      await driver.tap(find.byValueKey('import-account'));
 
       log("entering mnemonic...");
-      final accountSource = find.byValueKey('account-source');
-      await driver.tap(accountSource);
+      // put focus on text field
+      await driver.tap(find.byValueKey('account-source'));
       await driver.enterText(endoEncointer['mnemonic']);
 
       log("tap import confirm");
       final importAccountOk = find.byValueKey('account-import-next');
       await driver.tap(importAccountOk);
 
-      sleep(Duration(seconds: 10));
-    });
+      log("setting account name");
+      // put focus on text field
+      await driver.tap(find.byValueKey('create-account-name'));
+      await driver.enterText(endoEncointer['name']);
 
-    //
-    // test('screenshot test', () async {
-    //   final passwordTextFinder = find.byValueKey('password-input-field');
-    //   driver.tap(passwordTextFinder);
-    //   await driver.enterText("1234");
-    //   final okButtonFinder = find.byValueKey('password-ok');
-    //   await driver.tap(okButtonFinder);
-    //
-    //   final config = Config();
-    //   await screenshot(driver, config, 'myscreenshot1');
-    // });
+      log("setting account pin");
+      // put focus on text field
+      await driver.tap(find.byValueKey('create-account-pin'));
+      await driver.enterText(defaultPin);
+
+      log("confirming account pin");
+      // put focus on text field
+      await driver.tap(find.byValueKey('create-account-pin2'));
+      await driver.enterText(defaultPin);
+
+      log("creating account");
+      await driver.tap(find.byValueKey('create-account-confirm'));
+
+      // take a screenshot of the EncointerHome Screen
+      final config = Config();
+      await screenshot(driver, config, 'myscreenshot1');
+    });
   });
 }
 
