@@ -1,55 +1,73 @@
 import 'package:encointer_wallet/service/substrateApi/encointer/apiEncointer.dart';
-import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
+import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:encointer_wallet/store/encointer/types/attestation.dart';
 import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:mockito/mockito.dart';
 
 import '../data/mockEncointerData.dart';
 
-class MockApiEncointer extends Mock implements ApiEncointer {}
+class MockApiEncointer extends ApiEncointer {
+  MockApiEncointer(Api api) : super(api);
 
-// Todo: this might need to be refined and exteded
-MockApiEncointer getMockApiEncointer() {
-  final apiEncointer = MockApiEncointer();
-  final store = globalAppStore;
-  when(apiEncointer.getCurrentPhase()).thenAnswer((_) {
-    return Future.value(store.encointer.currentPhase);
-  });
-  when(apiEncointer.getCurrentCeremonyIndex()).thenAnswer((invocation) {
-    return Future.value(1);
-  });
-  when(apiEncointer.getMeetupTime()).thenAnswer((invocation) {
-    return Future.value(null);
-  });
-  when(apiEncointer.getMeetupIndex()).thenAnswer((invocation) {
-    return Future.value(1);
-  });
-  when(apiEncointer.getMeetupLocation()).thenAnswer((_) {
-    return Future.value();
-  });
-  when(apiEncointer.getParticipantIndex()).thenAnswer((invocation) {
-    return Future.value(1);
-  });
-  when(apiEncointer.getParticipantCount()).thenAnswer((invocation) {
-    return Future.value(3);
-  });
-  when(apiEncointer.getParticipantCount()).thenAnswer((invocation) {
-    return Future.value(3);
-  });
-  when(apiEncointer.getCommunityIdentifiers()).thenAnswer((invocation) {
-    return Future.value(communityIdentifiers);
-  });
-  when(apiEncointer.createClaimOfAttendance(any)).thenAnswer((invocation) {
-    return Future.value(claimHex);
-  });
-  when(apiEncointer.parseAttestation(any)).thenAnswer((invocation) {
-    return Future.value(Attestation.fromJson(attestation));
-  });
-  when(apiEncointer.parseClaimOfAttendance(any)).thenAnswer((invocation) {
+  @override
+  Future<CeremonyPhase> getCurrentPhase() async {
+    return store.encointer.currentPhase;
+  }
+
+  @override
+  Future<int> getCurrentCeremonyIndex() async {
+    return 1;
+  }
+
+  @override
+  Future<int> getParticipantIndex() async {
+    return 1;
+  }
+
+  @override
+  Future<int> getMeetupIndex() async {
+    return 1;
+  }
+
+  @override
+  Future<int> getParticipantCount() async {
+    return 3;
+  }
+
+  @override
+  Future<List<String>> getCommunityIdentifiers() async {
+    return communityIdentifiers;
+  }
+
+  @override
+  Future<AttestationResult> attestClaimOfAttendance(String _claimHex, String _password) async {
+    return AttestationResult.fromJson(attestationMap);
+  }
+
+  @override
+  Future<ClaimOfAttendance> parseClaimOfAttendance(String _claimHex) async {
     return Future.value(ClaimOfAttendance.fromJson(claim));
-  });
-  when(apiEncointer.attestClaimOfAttendance(any, any)).thenAnswer((invocation) {
-    return Future.value(AttestationResult.fromJson(attestationMap));
-  });
-  return apiEncointer;
+  }
+
+  @override
+  Future<Attestation> parseAttestation(String _attestationHex) async {
+    return Attestation.fromJson(attestation);
+  }
+
+  @override
+  Future<Attestation> createClaimOfAttendance(int _participants) async {
+    return Attestation.fromJson(attestation);
+  }
+
+  @override
+  Future<Location> getMeetupLocation() async {
+    return Location.fromJson(claim['location']);
+  }
+
+  @override
+  Future<DateTime> getMeetupTime() async {
+    return DateTime.fromMillisecondsSinceEpoch(claim['timestamp']);
+  }
 }
