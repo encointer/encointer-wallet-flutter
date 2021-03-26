@@ -2,10 +2,13 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 import 'package:encointer_wallet/mocks/localStorage.dart';
+import 'package:encointer_wallet/mocks/data/mockAccountData.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
   final AppStore store = AppStore(getMockLocalStorage());
+  accList = [testAcc];
+  currentAccountPubKey = accList[0]['pubKey'];
 
   group('store test', () {
     test('app store created and not ready', () {

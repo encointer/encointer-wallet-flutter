@@ -84,6 +84,10 @@ Future<void> goBackOneAttestationStep(WidgetTester tester) async {
 Future<AppStore> setupStore() async {
   AppStore root = globalAppStore;
   root.localStorage = getMockLocalStorage();
+
+  accList = [testAcc];
+  currentAccountPubKey = accList[0]['pubKey'];
+
   await root.init('_en');
 
   accList.add(endoEncointer);

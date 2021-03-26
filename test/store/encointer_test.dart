@@ -6,6 +6,7 @@ import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:encointer_wallet/mocks/data/mockEncointerData.dart';
+import 'package:encointer_wallet/mocks/data/mockAccountData.dart';
 import 'package:encointer_wallet/mocks/localStorage.dart';
 
 void main() {
@@ -13,6 +14,8 @@ void main() {
 
   group('EncointerStore test', () {
     final AppStore root = AppStore(getMockLocalStorage());
+    accList = [testAcc];
+    currentAccountPubKey = accList[0]['pubKey'];
 
     webApi = MockApi(null, root, withUi: false);
 

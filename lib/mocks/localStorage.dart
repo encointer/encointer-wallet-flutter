@@ -5,7 +5,12 @@ import 'package:mockito/mockito.dart';
 
 import 'data/mockAccountData.dart';
 
-class MockLocalStorage extends Mock implements LocalStorage {}
+class MockLocalStorage extends Mock implements LocalStorage {
+  setupAccounts() {
+    accList = [testAcc];
+    currentAccountPubKey = accList[0]['pubKey'];
+  }
+}
 
 
 MockLocalStorage getMockLocalStorage() {

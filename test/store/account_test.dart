@@ -11,6 +11,9 @@ void main() {
     final AppStore root = AppStore(getMockLocalStorage());
 
     test('account store test', () async {
+      accList = [testAcc];
+      currentAccountPubKey = accList[0]['pubKey'];
+
       await root.init('_en');
       final store = root.account;
 
