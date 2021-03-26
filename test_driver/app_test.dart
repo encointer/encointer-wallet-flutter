@@ -65,6 +65,15 @@ void main() {
     });
 
 
+    test('show receive qr code', () async {
+      log("tapping cid dropdown");
+      await driver.tap(find.byValueKey('qr-receive'));
+      await screenshot(driver, config, 'receive-funds');
+
+      await driver.tap(find.pageBack());
+    });
+
+
     test('encointerEntryPage', () async {
       log("tapping encointerEntry tap");
       await driver.tap(find.byValueKey('tab-ceremonies'));
