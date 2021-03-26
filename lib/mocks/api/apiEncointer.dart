@@ -1,33 +1,71 @@
+import 'package:encointer_wallet/mocks/data/mockEncointerData.dart';
 import 'package:encointer_wallet/service/substrateApi/encointer/apiEncointer.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
 import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:encointer_wallet/store/encointer/types/attestation.dart';
 import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
-
-import '../data/mockEncointerData.dart';
+import 'package:encointer_wallet/store/encointer/types/proofOfAttendance.dart';
 
 class MockApiEncointer extends ApiEncointer {
   MockApiEncointer(Api api) : super(api);
 
+  void _log(String msg) {
+    print("[mockApiAssets] $msg");
+  }
+
+  @override
+  Future<void> startSubscriptions() async {
+    _log("startSubscriptions stub");
+
+    // put some initial values in the store that never update
+    getCurrentPhase();
+    getCommunityIdentifiers();
+    getEncointerBalance();
+  }
+
+  @override
+  Future<void> stopSubscriptions() async {
+    _log("empty stopSubscriptions stub");
+  }
+
   @override
   Future<CeremonyPhase> getCurrentPhase() async {
+    if (store.encointer.currentPhase == null) {
+      store.encointer.setCurrentPhase(initialPhase);
+    }
+
     return store.encointer.currentPhase;
   }
 
   @override
   Future<int> getCurrentCeremonyIndex() async {
-    return 1;
+    if (store.encointer.currentCeremonyIndex == null) {
+      store.encointer.setCurrentCeremonyIndex(1);
+    }
+    return store.encointer.currentCeremonyIndex;
+  }
+
+  @override
+  Future<void> getEncointerBalance() async {
+    store.encointer.addBalanceEntry(cid, BalanceEntry.fromJson(balanceEntry));
   }
 
   @override
   Future<int> getParticipantIndex() async {
-    return 1;
+    if (store.encointer.participantIndex == null) {
+      store.encointer.setMeetupIndex(1);
+    }
+    return store.encointer.participantIndex;
   }
 
   @override
   Future<int> getMeetupIndex() async {
-    return 1;
+    if (store.encointer.meetupIndex == null) {
+      store.encointer.setParticipantIndex(1);
+    }
+    return store.encointer.meetupIndex;
   }
 
   @override
@@ -37,12 +75,16 @@ class MockApiEncointer extends ApiEncointer {
 
   @override
   Future<List<String>> getCommunityIdentifiers() async {
-    return meetupRegistry;
+    store.encointer.setCommunityIdentifiers(communityIdentifiers);
+    return communityIdentifiers;
   }
 
   @override
   Future<List<String>> getMeetupRegistry() async {
-    return communityIdentifiers;
+    if (store.encointer.meetupRegistry == null) {
+      store.encointer.setMeetupRegistry(meetupRegistry);
+    }
+    return store.encointer.meetupRegistry;
   }
 
   @override
@@ -61,17 +103,29 @@ class MockApiEncointer extends ApiEncointer {
   }
 
   @override
-  Future<Attestation> createClaimOfAttendance(int _participants) async {
-    return Attestation.fromJson(attestation);
+  void createClaimOfAttendance(int _participants) {
+    if (store.encointer.myClaim == null) {
+      store.encointer.setMyClaim(ClaimOfAttendance.fromJson(claim));
+    }
   }
 
   @override
-  Future<Location> getMeetupLocation() async {
-    return Location.fromJson(claim['location']);
+  Future<void> getMeetupLocation() async {
+    if (store.encointer.meetupLocation == null) {
+      store.encointer.setMeetupLocation(Location.fromJson(claim['location']));
+    }
+  }
+
+  @override getShopRegistry() async {
+    _log("warn: getShopRegistry mock is unimplemented");
   }
 
   @override
   Future<DateTime> getMeetupTime() async {
+    if (store.encointer.meetupTime == null) {
+      store.encointer.setMeetupTime(claim['timestamp']);
+    }
+
     return DateTime.fromMillisecondsSinceEpoch(claim['timestamp']);
   }
 }
