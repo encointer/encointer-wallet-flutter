@@ -59,7 +59,7 @@ List<dynamic> pubKeys = accList.map((e) => e['pubKey']).toList();
 List<Map<String, dynamic>> contactList = [];
 
 Map<String, dynamic> balancesInfo = {
-  "freeBalance": "0x00000000000000000000000000000000",
+  "freeBalance": "0x00000000000000000001000000000000",
   "frozenFee": "0x00000000000000000000000000000000",
   "frozenMisc": "0x00000000000000000000000000000000",
   "reservedBalance": "0x00000000000000000000000000000000",
