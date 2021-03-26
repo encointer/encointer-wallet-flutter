@@ -56,6 +56,13 @@ void main() {
       log("creating account");
       await driver.tap(find.byValueKey('create-account-confirm'));
 
+      sleep(Duration(seconds: 5));
+
+      log("tapping cid dropdown");
+      await driver.tap(find.byValueKey('cid-dropdown'));
+      log("choosing cid");
+      await driver.tap(find.byValueKey('cid-0'));
+
       // take a screenshot of the EncointerHome Screen
       final config = Config();
       await screenshot(driver, config, 'myscreenshot1');
