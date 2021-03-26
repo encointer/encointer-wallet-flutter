@@ -13,7 +13,12 @@ void main() {
     switch (msg) {
       case StorageSetup.UNREGISTERED_PARTICIPANT:
         {
-          PrepareStorage.setupStorageUnregisteredParticipant(globalAppStore);
+          PrepareStorage.unregisteredParticipant(globalAppStore);
+        }
+        break;
+      case StorageSetup.READY_FOR_MEETUP:
+        {
+          PrepareStorage.readyForMeetup(globalAppStore);
         }
         break;
       default:

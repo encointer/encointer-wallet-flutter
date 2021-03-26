@@ -6,12 +6,11 @@ import 'package:test/test.dart';
 
 void main() {
   FlutterDriver driver;
+  final config = Config();
+
   group('EncointerWallet App', () {
     setUpAll(() async {
       driver = await FlutterDriver.connect();
-
-      // communicate to the app isolate how to setup the store
-      // await driver.requestData(SETUP_STORE);
 
       // waits until the firs frame after ft startup stabilized
       await driver.waitUntilFirstFrameRasterized();
@@ -62,28 +61,22 @@ void main() {
       await driver.tap(find.byValueKey('cid-0'));
 
       // take a screenshot of the EncointerHome Screen
-      final config = Config();
-      await screenshot(driver, config, 'wallet-tab');
+      await screenshot(driver, config, 'encointer-home');
     });
 
 
-    test('switch to encointerEntryPage', () async {
+    test('encointerEntryPage', () async {
       log("tapping encointerEntry tap");
       await driver.tap(find.byValueKey('tab-ceremonies'));
 
       // communicate to the app isolate how to setup the store
       await driver.requestData(StorageSetup.UNREGISTERED_PARTICIPANT);
+      await screenshot(driver, config, 'register-participant-page');
 
-      // should be registering
-
-      // log("choosing cid");
-      // await driver.tap(find.byValueKey('cid-0'));
-      //
-      // take a screenshot of the EncointerHome Screen
-      final config = Config();
-      await screenshot(driver, config, 'wallet-tab');
+      // attesting page
+      await driver.requestData(StorageSetup.READY_FOR_MEETUP);
+      await screenshot(driver, config, 'attesting-page');
     });
-
   });
 }
 
