@@ -1,4 +1,6 @@
 import 'package:encointer_wallet/config.dart';
+import 'package:encointer_wallet/mocks/storage/prepareStorage.dart';
+import 'package:encointer_wallet/mocks/storage/storageSetup.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
 
@@ -7,12 +9,11 @@ import 'package:flutter_driver/driver_extension.dart';
 
 void main() {
 
-  //
   Future<String> dataHandler(String msg) async {
     switch (msg) {
-      case SETUP_STORE:
+      case StorageSetup.UNREGISTERED_PARTICIPANT:
         {
-          setupAppStorage(globalAppStore);
+          PrepareStorage.setupStorageUnregisteredParticipant(globalAppStore);
         }
         break;
       default:
@@ -27,11 +28,4 @@ void main() {
   runApp(
     WalletApp(Config(mockLocalStorage: true, mockSubstrateApi: true)),
   );
-}
-
-const SETUP_STORE = 'setup_store';
-
-void setupAppStorage(AppStore store) {
-  print("[test_driver] setting up AppStore");
-  // store.account.setPin("1234");
 }

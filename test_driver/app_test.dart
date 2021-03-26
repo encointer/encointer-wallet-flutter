@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:encointer_wallet/mocks/data/mockAccountData.dart';
+import 'package:encointer_wallet/mocks/storage/storageSetup.dart';
 import 'package:encointer_wallet/utils/screenshot.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
@@ -8,7 +7,6 @@ import 'package:test/test.dart';
 void main() {
   FlutterDriver driver;
   group('EncointerWallet App', () {
-
     setUpAll(() async {
       driver = await FlutterDriver.connect();
 
@@ -55,9 +53,9 @@ void main() {
 
       log("creating account");
       await driver.tap(find.byValueKey('create-account-confirm'));
+    });
 
-      sleep(Duration(seconds: 5));
-
+    test('choosing cid', () async {
       log("tapping cid dropdown");
       await driver.tap(find.byValueKey('cid-dropdown'));
       log("choosing cid");
@@ -65,12 +63,30 @@ void main() {
 
       // take a screenshot of the EncointerHome Screen
       final config = Config();
-      await screenshot(driver, config, 'myscreenshot1');
+      await screenshot(driver, config, 'wallet-tab');
     });
+
+
+    test('switch to encointerEntryPage', () async {
+      log("tapping encointerEntry tap");
+      await driver.tap(find.byValueKey('tab-ceremonies'));
+
+      // communicate to the app isolate how to setup the store
+      await driver.requestData(StorageSetup.UNREGISTERED_PARTICIPANT);
+
+      // should be registering
+
+      // log("choosing cid");
+      // await driver.tap(find.byValueKey('cid-0'));
+      //
+      // take a screenshot of the EncointerHome Screen
+      final config = Config();
+      await screenshot(driver, config, 'wallet-tab');
+    });
+
   });
 }
 
-const SETUP_STORE = "setup_store";
 
 void log(String msg) {
   print("[test_driver] $msg");

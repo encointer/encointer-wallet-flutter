@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:encointer_wallet/utils/localStorage.dart';
 import 'package:mockito/mockito.dart';
 
-import 'data/mockAccountData.dart';
+import '../data/mockAccountData.dart';
 
 class MockLocalStorage extends Mock implements LocalStorage {
   setupAccounts() {

@@ -44,7 +44,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'common/theme.dart';
-import 'mocks/localStorage.dart';
+import 'mocks/storage/localStorage.dart';
 import 'mocks/api/api.dart';
 import 'utils/i18n/index.dart';
 
