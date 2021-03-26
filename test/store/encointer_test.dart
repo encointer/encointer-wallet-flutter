@@ -7,13 +7,14 @@ import 'package:flutter_test/flutter_test.dart';
 
 import 'package:encointer_wallet/mocks/data/mockEncointerData.dart';
 import 'package:encointer_wallet/mocks/data/mockAccountData.dart';
-import 'package:encointer_wallet/mocks/localStorage.dart';
+import 'package:encointer_wallet/mocks/storage/localStorage.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('EncointerStore test', () {
-    final AppStore root = AppStore(getMockLocalStorage());
+    globalAppStore = AppStore(getMockLocalStorage());
+    final AppStore root = globalAppStore;
     accList = [testAcc];
     currentAccountPubKey = accList[0]['pubKey'];
 
