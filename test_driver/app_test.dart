@@ -25,41 +25,32 @@ void main() {
     });
 
     test('importing account', () async {
-      log("tap import account...");
       await driver.tap(find.byValueKey('import-account'));
 
-      log("entering mnemonic...");
       // put focus on text field
       await driver.tap(find.byValueKey('account-source'));
       await driver.enterText(endoEncointer['mnemonic']);
 
-      log("tap import confirm");
       final importAccountOk = find.byValueKey('account-import-next');
       await driver.tap(importAccountOk);
 
-      log("setting account name");
       // put focus on text field
       await driver.tap(find.byValueKey('create-account-name'));
       await driver.enterText(endoEncointer['name']);
 
-      log("setting account pin");
       // put focus on text field
       await driver.tap(find.byValueKey('create-account-pin'));
       await driver.enterText(defaultPin);
 
-      log("confirming account pin");
       // put focus on text field
       await driver.tap(find.byValueKey('create-account-pin2'));
       await driver.enterText(defaultPin);
 
-      log("creating account");
       await driver.tap(find.byValueKey('create-account-confirm'));
     });
 
     test('choosing cid', () async {
-      log("tapping cid dropdown");
       await driver.tap(find.byValueKey('cid-dropdown'));
-      log("choosing cid");
       await driver.tap(find.byValueKey('cid-0'));
 
       // take a screenshot of the EncointerHome Screen
@@ -67,15 +58,15 @@ void main() {
     });
 
     test('show receive qr code', () async {
-      log("tapping cid dropdown");
       await driver.tap(find.byValueKey('qr-receive'));
       await screenshot(driver, config, 'receive-funds');
 
+      // go back to homepage
       await driver.tap(find.pageBack());
     });
 
     test('transfer-page', () async {
-      log("tapping first cid asset");
+      // go to transfer page
       await driver.tap(find.byValueKey('cid-asset'));
 
       await driver.tap(find.byValueKey('transfer'));
