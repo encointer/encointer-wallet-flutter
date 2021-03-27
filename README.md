@@ -83,6 +83,8 @@ Install: `flutter pub global activate screenshots`
 
 Run: `screenshots --flavor dev`
 
+**Note:** The devices defined in the `screenshots.yaml` must be preconfigured emulators, i.e. they must be setup via the AVD manager of Android Studio.
+
 #### Android Studio
 To run the in Android Studio a build flavor must be specified. Go to Run/Debug configurations and add the build flavor `dev` in the appropriate field. Other available values are in the in the android/app/src/build.gradle file.
 

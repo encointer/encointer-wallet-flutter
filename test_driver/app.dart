@@ -9,6 +9,10 @@ import 'package:flutter_driver/driver_extension.dart';
 
 void main() {
 
+  // the tests are run in a separate isolate from the app. The test isolate can only interact with
+  // the app via the driver in order to, for instance, configure the app state.
+  // More info in: https://medium.com/stuart-engineering/mocking-integration-tests-with-flutter-af3b6ba846c7
+  //
   // ignore: missing_return
   Future<String> dataHandler(String msg) async {
     switch (msg) {

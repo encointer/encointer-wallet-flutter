@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:encointer_wallet/mocks/data/mockAccountData.dart';
 import 'package:encointer_wallet/mocks/storage/storageSetup.dart';
 import 'package:encointer_wallet/utils/screenshot.dart';
