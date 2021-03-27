@@ -472,6 +472,7 @@ class _AssetsState extends State<Assets> {
               ? RoundedCard(
                   margin: EdgeInsets.only(top: 16),
                   child: ListTile(
+                    key: Key('cid-asset'),
                     leading: Container(
                       width: 36,
                       child: Image.asset('assets/images/assets/ERT.png'),

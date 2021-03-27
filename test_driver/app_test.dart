@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:encointer_wallet/mocks/data/mockAccountData.dart';
 import 'package:encointer_wallet/mocks/storage/storageSetup.dart';
 import 'package:encointer_wallet/utils/screenshot.dart';
@@ -64,7 +66,6 @@ void main() {
       await screenshot(driver, config, 'encointer-home');
     });
 
-
     test('show receive qr code', () async {
       log("tapping cid dropdown");
       await driver.tap(find.byValueKey('qr-receive'));
@@ -73,6 +74,21 @@ void main() {
       await driver.tap(find.pageBack());
     });
 
+    test('transfer-page', () async {
+      log("tapping first cid asset");
+      await driver.tap(find.byValueKey('cid-asset'));
+
+      await driver.tap(find.byValueKey('transfer'));
+
+      await driver.tap(find.byValueKey('transfer-amount-input'));
+      await driver.enterText('3.4');
+
+      await screenshot(driver, config, 'transfer-page');
+
+      // go back to homepage
+      await driver.tap(find.pageBack());
+      await driver.tap(find.pageBack());
+    });
 
     test('encointerEntryPage', () async {
       log("tapping encointerEntry tap");
@@ -88,7 +104,6 @@ void main() {
     });
   });
 }
-
 
 void log(String msg) {
   print("[test_driver] $msg");

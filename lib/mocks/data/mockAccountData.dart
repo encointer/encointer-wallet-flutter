@@ -32,6 +32,22 @@ Map<String, dynamic> endoEncointer = {
   "observation": null
 };
 
+Map<String, dynamic> endorphineCointer = {
+  "name": "Endorphine Cointer",
+  "address": "5HKczFYLWA3LDZrKN4kK8wmH6pBv6pxiwbYhmhjiN3KHiQHz",
+  "encoded":
+      "PkGLcXnzjnIn77H4bhaWEpKtOSz1GpOK9ZH4GlstcuEAgAAAAQAAAAgAAADEKys5iFgIyCIceLKTiN9fxkgNZARxVRsgpwUt0xg5f4cYkDPy/+ui8A4XPu8BWl4fwUMJUJ7vZW+H1Zi+2lGQhdhOh9U1aECcOUQoXygR631vRrRU26lvKLHTJlhKEUWifd8h0r4mVfsgHg8Mx8DfHaDwvsuyVDGvyqPSxj55PffWrSEgFgK1b4wgebQgYgtQB+bFbKyc4wRVI1Ua",
+  "encoding": {
+    "content": ["pkcs8", "sr25519"],
+    "type": ["scrypt", "xsalsa20-poly1305"],
+    "version": "3"
+  },
+  "meta": {"genesisHash": "", "name": "Endorphine Cointer", "whenCreated": 1616850683478},
+  "mnemonic": 'clap mechanic diary rose vital current eyebrow mean limb pulse portion plate',
+  "memo": null,
+  "observation": null
+};
+
 String defaultPin = "1234";
 
 Map<String, dynamic> testAcc = {
@@ -56,7 +72,7 @@ String currentAccountPubKey;
 
 List<dynamic> pubKeys = accList.map((e) => e['pubKey']).toList();
 
-List<Map<String, dynamic>> contactList = [];
+List<Map<String, dynamic>> contactList = [endorphineCointer];
 
 Map<String, dynamic> balancesInfo = {
   "freeBalance": "0x00000000000000000001000000000000",
