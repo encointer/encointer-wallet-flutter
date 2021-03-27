@@ -17,12 +17,7 @@ class MockApiEncointer extends ApiEncointer {
 
   @override
   Future<void> startSubscriptions() async {
-    _log("startSubscriptions stub");
-
-    // put some initial values in the store that never update
-    getCurrentPhase();
-    getCommunityIdentifiers();
-    getEncointerBalance();
+    _log("empty startSubscriptions stub");
   }
 
   @override
@@ -59,17 +54,11 @@ class MockApiEncointer extends ApiEncointer {
 
   @override
   Future<int> getParticipantIndex() async {
-    // if (store.encointer.participantIndex == null) {
-    //   store.encointer.setMeetupIndex(0);
-    // }
     return store.encointer.participantIndex;
   }
 
   @override
   Future<int> getMeetupIndex() async {
-    // if (store.encointer.meetupIndex == null) {
-    //   store.encointer.setParticipantIndex(1);
-    // }
     return store.encointer.meetupIndex;
   }
 
@@ -86,9 +75,6 @@ class MockApiEncointer extends ApiEncointer {
 
   @override
   Future<List<String>> getMeetupRegistry() async {
-    // if (store.encointer.meetupRegistry == null) {
-    //   store.encointer.setMeetupRegistry(meetupRegistry);
-    // }
     return store.encointer.meetupRegistry;
   }
 
@@ -116,9 +102,6 @@ class MockApiEncointer extends ApiEncointer {
 
   @override
   Future<void> getMeetupLocation() async {
-    // if (store.encointer.meetupLocation == null) {
-    //   store.encointer.setMeetupLocation(Location.fromJson(claim['location']));
-    // }
   }
 
   @override getShopRegistry() async {
@@ -127,10 +110,6 @@ class MockApiEncointer extends ApiEncointer {
 
   @override
   Future<DateTime> getMeetupTime() async {
-    // if (store.encointer.meetupTime == null) {
-    //   store.encointer.setMeetupTime(claim['timestamp']);
-    // }
-
     return DateTime.fromMillisecondsSinceEpoch(claim['timestamp']);
   }
 }
