@@ -77,11 +77,17 @@ Re-generate mobx g.dart files
 * run all integration tests in `test_driver` directory: `flutter drive --target=test_driver/app.dart --flavor dev`
 
 ### Automated screenshots
-The screenshots package is used to created automated screenshots
+The `screenshots` package is used to created automated screenshots. The frame-it package is used to generate Hardware frames for the screenshots.
+
 
 Install: `flutter pub global activate screenshots`
+Install: `flutter pub global activate frameit_chrome`
+
+Download the frames: git clone https://github.com/fastlane/frameit-frames
+
 
 Run: `screenshots --flavor dev`
+Run: `flutter pub global run frameit_chrome --base-dir=/android/fastlane/metadata/android --frames-dir=<path_to_frameit>/frameit-frames/latest`
 
 #### Notes:
 * The devices defined in the `screenshots.yaml` must be preconfigured emulators, i.e. they must be setup via the AVD manager of Android Studio.

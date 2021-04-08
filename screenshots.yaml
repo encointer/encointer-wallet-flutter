@@ -20,8 +20,8 @@ devices:
 #      orientation:
 #        - Portrait # default
   android:
-    Nexus 6P:
+    Pixel 3a:
 #    SM G965F: # a real attached device (frame and orientation disabled)
 
 # Frame screenshots
-frame: true
+frame: false
