@@ -67,12 +67,11 @@ class MockApiEncointer extends ApiEncointer {
 
   @override
   Future<int> getParticipantCount() async {
-    return 3;
+    return store.encointer.participantCount;
   }
 
   @override
   Future<List<String>> getCommunityIdentifiers() async {
-    store.encointer.setCommunityIdentifiers(communityIdentifiers);
     return communityIdentifiers;
   }
 

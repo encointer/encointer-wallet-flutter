@@ -14,6 +14,7 @@ void main() {
 
       // waits until the firs frame after ft startup stabilized
       await driver.waitUntilFirstFrameRasterized();
+      await driver.requestData(StorageSetup.INIT);
     });
 
     tearDownAll(() async {
