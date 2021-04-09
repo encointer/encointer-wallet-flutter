@@ -20,7 +20,10 @@ devices:
 #      orientation:
 #        - Portrait # default
   android:
-    Pixel 3a:
+    IPad 12.9inch:
+    IPhone 6.5inch:
+    IPhone 5.5inch:
+    Google Pixel 3:
 #    SM G965F: # a real attached device (frame and orientation disabled)
 
 # Frame screenshots
