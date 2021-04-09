@@ -1,12 +1,11 @@
 import 'package:encointer_wallet/mocks/data/mockEncointerData.dart';
-import 'package:encointer_wallet/service/substrateApi/encointer/apiEncointer.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
-import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
-import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
+import 'package:encointer_wallet/service/substrateApi/encointer/apiEncointer.dart';
 import 'package:encointer_wallet/store/encointer/types/attestation.dart';
 import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
+import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
 
-/// The key rationale behind this mock is, that all the getters do not alter the app state.
+/// The key rationale behind this mock is that all the getters do not alter the app state.
 ///
 /// This allows to configure the app storage for specific tests via the `PrepareStorage` class.
 ///  The getters then return the preconfigured value, which in turn leads to consistent
@@ -51,9 +50,7 @@ class MockApiEncointer extends ApiEncointer {
   }
 
   @override
-  Future<void> getEncointerBalance() async {
-    store.encointer.addBalanceEntry(cid, BalanceEntry.fromJson(balanceEntry));
-  }
+  Future<void> getEncointerBalance() async { }
 
   @override
   Future<int> getParticipantIndex() async {
@@ -103,10 +100,10 @@ class MockApiEncointer extends ApiEncointer {
   }
 
   @override
-  Future<void> getMeetupLocation() async {
-  }
+  Future<void> getMeetupLocation() async {}
 
-  @override getShopRegistry() async {
+  @override
+  getShopRegistry() async {
     _log("warn: getShopRegistry mock is unimplemented");
   }
 
