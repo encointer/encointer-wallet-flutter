@@ -15,43 +15,33 @@ class MockScanPage extends StatelessWidget {
     Future onScan(String txt, String rawData) async {}
 
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: background,
-            fit: BoxFit.cover,
+      body: QrcodeReaderView(
+        key: Key('mockQr'),
+        helpWidget: Text("scan Qr Code"),
+        headerWidget: Stack(children: <Widget>[
+          Container(
+              constraints: BoxConstraints.expand(),
+              decoration: BoxDecoration(
+                color: Color.fromARGB(100, 100, 100, 100),
+                //   image: DecorationImage(
+                //     image: background,
+                //     fit: BoxFit.cover,
+                //   ),
+              ),
+              child: Container()),
+          SafeArea(
+            child: IconButton(
+              icon: Icon(
+                Icons.arrow_back_ios,
+                color: Theme
+                    .of(context)
+                    .cardColor,
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
           ),
-        ),
-        child: QrcodeReaderView(
-          key: Key('mockQr'),
-          helpWidget: Text("scan Qr Code"),
-          headerWidget: Stack(
-              children: <Widget>[
-                Container(
-                    constraints: BoxConstraints.expand(),
-                    decoration: BoxDecoration(
-                      color: Color.fromARGB(100, 100, 100, 100),
-                      // image: DecorationImage(
-                      //   image: background,
-                      //   fit: BoxFit.cover,
-                      // ),
-                    ),
-                    child: Container()
-                ),
-                SafeArea(
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.arrow_back_ios,
-                      color: Theme
-                          .of(context)
-                          .cardColor,
-                    ),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                ),
-              ]),
-          onScan: onScan,
-        ),
+        ]),
+        onScan: onScan,
       ),
     );
   }
