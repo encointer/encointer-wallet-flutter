@@ -22,20 +22,17 @@ class MockScanPage extends StatelessWidget {
           Container(
               constraints: BoxConstraints.expand(),
               decoration: BoxDecoration(
-                color: Color.fromARGB(100, 100, 100, 100),
-                //   image: DecorationImage(
-                //     image: background,
-                //     fit: BoxFit.cover,
-                //   ),
+                image: DecorationImage(
+                  image: background,
+                  fit: BoxFit.cover,
+                ),
               ),
               child: Container()),
           SafeArea(
             child: IconButton(
               icon: Icon(
                 Icons.arrow_back_ios,
-                color: Theme
-                    .of(context)
-                    .cardColor,
+                color: Theme.of(context).cardColor,
               ),
               onPressed: () => Navigator.of(context).pop(),
             ),
