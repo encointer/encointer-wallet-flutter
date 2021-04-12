@@ -30,24 +30,21 @@ void main() {
       await driver.tap(find.byValueKey('account-source'));
       await driver.enterText(endoEncointer['mnemonic']);
 
-      final importAccountOk = find.byValueKey('account-import-next');
-      await driver.tap(importAccountOk);
+      await driver.tap(find.byValueKey('account-import-next'));
 
-      // put focus on text field
       await driver.tap(find.byValueKey('create-account-name'));
       await driver.enterText(endoEncointer['name']);
 
-      // put focus on text field
       await driver.tap(find.byValueKey('create-account-pin'));
       await driver.enterText(defaultPin);
 
-      // put focus on text field
       await driver.tap(find.byValueKey('create-account-pin2'));
       await driver.enterText(defaultPin);
 
       await driver.tap(find.byValueKey('create-account-confirm'));
     });
 
+    // Note: The seconds test continues where the first one ended
     test('choosing cid', () async {
       await driver.tap(find.byValueKey('cid-dropdown'));
       await driver.tap(find.byValueKey('cid-0'));
@@ -88,7 +85,7 @@ void main() {
       await driver.requestData(StorageSetup.UNREGISTERED_PARTICIPANT);
       await screenshot(driver, config, 'register-participant-page');
 
-      // attesting page
+      // attesting phase
       await driver.requestData(StorageSetup.READY_FOR_MEETUP);
       await screenshot(driver, config, 'attesting-page');
     });
