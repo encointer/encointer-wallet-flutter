@@ -22,6 +22,7 @@ void main() async {
   }
 
   enableFlutterDriverExtension(handler: dataHandler);
+  WidgetsApp.debugAllowBannerOverride = false; // remove debug banner for screenshots
 
   runApp(
     MaterialApp(
