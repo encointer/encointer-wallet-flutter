@@ -31,7 +31,6 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
   ];
 
   KeySelection _keySelection = KeySelection.MNEMONIC;
-  bool _observationSubmitting = false;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -148,7 +147,6 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
 
   Future<void> _onAddObservationAccount() async {
     setState(() {
-      _observationSubmitting = true;
     });
     showCupertinoDialog(
       context: context,
@@ -175,7 +173,6 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
     int exist = widget.store.settings.contactList.indexWhere((i) => i.address == address);
     if (exist > -1) {
       setState(() {
-        _observationSubmitting = false;
       });
       Navigator.of(context).pop();
 
@@ -202,7 +199,6 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
       webApi.account.encodeAddress([pubKey]);
       webApi.account.getPubKeyIcons([pubKey]);
       setState(() {
-        _observationSubmitting = false;
       });
       // go to home page
       Navigator.popUntil(context, ModalRoute.withName('/'));
