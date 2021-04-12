@@ -30,7 +30,6 @@ void main() {
       // set the background in the MockScanPage
       await driver.requestData(base64);
 
-      sleep(Duration(seconds: 10));
       await screenshot(driver, config, 'scan-receive');
     });
   });
