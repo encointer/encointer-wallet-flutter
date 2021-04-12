@@ -8,7 +8,6 @@ import 'package:encointer_wallet/page/account/uos/qrSenderPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactListPage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
-import 'package:encointer_wallet/store/account/types/accountRecoveryInfo.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
@@ -86,10 +85,8 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
     print('callback triggered, blockHash: ${res['hash']}');
     store.assets.setSubmitting(false);
     if (mounted) {
-      final ScaffoldState state = Scaffold.of(context);
-
-      state.removeCurrentSnackBar();
-      state.showSnackBar(SnackBar(
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: Colors.white,
         content: ListTile(
           leading: Container(
@@ -105,7 +102,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
       ));
 
       Timer(Duration(seconds: 2), () {
-        if (state.mounted) {
+        if (Scaffold.of(context).mounted) {
           (args['onFinish'] as Function(BuildContext, Map))(context, res);
         }
       });
@@ -116,7 +113,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
     final Map<String, String> dic = I18n.of(context).home;
     store.assets.setSubmitting(false);
     if (mounted) {
-      Scaffold.of(context).removeCurrentSnackBar();
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
     }
     showCupertinoDialog(
       context: context,
@@ -223,7 +220,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
   }
 
   void _showTxStatusSnackbar(BuildContext context, String status, Widget leading) {
-    Scaffold.of(context).showSnackBar(SnackBar(
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       backgroundColor: Theme.of(context).cardColor,
       content: ListTile(
         leading: leading,
