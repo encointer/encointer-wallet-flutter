@@ -188,7 +188,7 @@ class Api {
     if (store.settings.endpointIsCantillon) {
       var worker = store.settings.endpoint.worker;
       var mrenclave = store.settings.endpoint.mrenclave;
-      String res = await evalJavascript('settings.setWorkerEndpoint("$worker", "$mrenclave")');
+      await evalJavascript('settings.setWorkerEndpoint("$worker", "$mrenclave")');
     }
 
     fetchNetworkProps();
@@ -210,7 +210,7 @@ class Api {
     if (store.settings.endpointIsCantillon) {
       var worker = store.settings.endpoint.worker;
       var mrenclave = store.settings.endpoint.mrenclave;
-      String res = await evalJavascript('settings.setWorkerEndpoint("$worker", "$mrenclave")');
+      await evalJavascript('settings.setWorkerEndpoint("$worker", "$mrenclave")');
     }
 
     int index = store.settings.endpointList.indexWhere((i) => i.value == res);
