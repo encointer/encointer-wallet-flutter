@@ -8,7 +8,7 @@ import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
 /// The key rationale behind this mock is that all the getters do not alter the app state.
 ///
 /// This allows to configure the app storage for specific tests via the `PrepareStorage` class.
-///  The getters then return the preconfigured value, which in turn leads to consistent
+/// The getters then return the preconfigured value, which in turn leads to consistent
 /// responses in the test.
 class MockApiEncointer extends ApiEncointer {
   MockApiEncointer(Api api) : super(api);
@@ -50,7 +50,7 @@ class MockApiEncointer extends ApiEncointer {
   }
 
   @override
-  Future<void> getEncointerBalance() async { }
+  Future<void> getEncointerBalance() async {}
 
   @override
   Future<int> getParticipantIndex() async {

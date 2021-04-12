@@ -10,7 +10,7 @@ import 'package:rxdart/rxdart.dart';
 /// from the driver to the app.
 ///
 /// Reasoning behind that procedure is that we don't want to include the high resolution image that we set as
-/// background in the app bundle. Flutter does not yet support build configuration / -flavor dependant asset inclusion.
+/// background in the app bundle. Flutter does not yet support build configuration /-flavor dependant asset inclusion.
 ///
 void main() async {
   final PublishSubject<ImageProvider> stream = PublishSubject();
