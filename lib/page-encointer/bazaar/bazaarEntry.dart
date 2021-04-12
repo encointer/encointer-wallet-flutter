@@ -273,17 +273,8 @@ class _BazaarEntryState extends State<BazaarEntry> {
     );
   }
 
-  List<String> reverse(List<String> list) {
-    int end = list.length - 1;
-    var reversedList = new List(list.length);
-    for (int i = 0; i <= end; i++) {
-      reversedList[end - i] = list[i];
-    }
-    return reversedList.cast<String>();
-  }
-
   Widget _buildShopEntries(BuildContext context, int index, AppStore store) {
-    List<String> reversedList = reverse(store.encointer.shopRegistry);
+    List<String> reversedList = new List.from(store.encointer.shopRegistry.reversed);
     return GestureDetector(
       onTap: () {
         //TODO make clickable
