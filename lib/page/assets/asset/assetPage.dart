@@ -149,7 +149,6 @@ class _AssetPageState extends State<AssetPage> with SingleTickerProviderStateMix
       Tab(text: dic['out']),
     ];
 
-    final int decimals = store.settings.networkState.tokenDecimals;
     final String symbol = store.settings.networkState.tokenSymbol;
     final String tokenView = Fmt.tokenView(token);
     final bool isBaseToken = token == symbol;

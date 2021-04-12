@@ -79,7 +79,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
             validator: (v) {
               // TODO: fix me: disable validator for polkawallet-RN exported keystore importing
               return null;
-              return v.trim().length > 0 ? null : dic['create.password.error'];
+              // return v.trim().length > 0 ? null : dic['create.password.error'];
             },
           ),
         ),
@@ -306,8 +306,8 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                 ),
                 _keySelection != KeySelection.OBSERVATION
                     ? Padding(
-                    key: Key('account-source'),
-                    padding: EdgeInsets.only(left: 16, right: 16),
+                        key: Key('account-source'),
+                        padding: EdgeInsets.only(left: 16, right: 16),
                         child: TextFormField(
                           decoration: InputDecoration(
                             hintText: selected,

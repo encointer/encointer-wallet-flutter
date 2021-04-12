@@ -62,9 +62,9 @@ class _AttestationCardState extends State<AttestationCard> {
     }
   }
 
-  _revertAttestation() {
-    print("reverting attestation");
-  }
+  // _revertAttestation() {
+  //   print("reverting attestation");
+  // }
 
   @override
   Widget build(BuildContext context) {

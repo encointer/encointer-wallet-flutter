@@ -28,8 +28,6 @@ class _AttestingPageState extends State<AttestingPage> {
 
   final AppStore store;
 
-  String _tab = 'DOT';
-
   Future<void> _startMeetup(BuildContext context) async {
     var amount = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConfirmAttendeesDialog()));
     var args = {'confirmedParticipants': amount};

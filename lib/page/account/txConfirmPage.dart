@@ -300,7 +300,6 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
   @override
   Widget build(BuildContext context) {
     final Map<String, String> dic = I18n.of(context).home;
-    final Map<String, String> dicAcc = I18n.of(context).account;
     final Map<String, String> dicAsset = I18n.of(context).assets;
     final String symbol = store.settings.networkState.tokenSymbol ?? '';
     final int decimals = store.settings.networkState.tokenDecimals ?? ert_decimals;
@@ -318,7 +317,6 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
         child: Observer(builder: (BuildContext context) {
           final bool isObservation = store.account.currentAccount.observation ?? false;
           final bool isProxyObservation = _proxyAccount != null ? _proxyAccount.observation ?? false : false;
-          final AccountRecoveryInfo recoverable = store.account.recoveryInfo;
 
           return Column(
             children: <Widget>[
