@@ -487,8 +487,8 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
                   Expanded(
                     child: Container(
                       color: store.assets.submitting ? Colors.black12 : Colors.orange,
-                      child: FlatButton(
-                        padding: EdgeInsets.all(16),
+                      child: TextButton(
+                        style: TextButton.styleFrom(padding: EdgeInsets.all(16)),
                         child: Text(dic['cancel'], style: TextStyle(color: Colors.white)),
                         onPressed: () {
                           Navigator.of(context).pop();
@@ -499,8 +499,8 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
                   Expanded(
                     child: Container(
                       color: store.assets.submitting ? Theme.of(context).disabledColor : Theme.of(context).primaryColor,
-                      child: FlatButton(
-                        padding: EdgeInsets.all(16),
+                      child: TextButton(
+                        style: TextButton.styleFrom(padding: EdgeInsets.all(16)),
                         child: Text(
                           isUnsigned
                               ? dic['submit.no.sign']

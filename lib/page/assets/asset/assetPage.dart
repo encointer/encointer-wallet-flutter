@@ -349,8 +349,8 @@ class _AssetPageState extends State<AssetPage> with SingleTickerProviderStateMix
                       child: Container(
                         key: Key('transfer'),
                         color: Colors.lightBlue,
-                        child: FlatButton(
-                          padding: EdgeInsets.all(16),
+                        child: TextButton(
+                          style: TextButton.styleFrom(padding: EdgeInsets.all(16)),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
@@ -380,8 +380,8 @@ class _AssetPageState extends State<AssetPage> with SingleTickerProviderStateMix
                     Expanded(
                       child: Container(
                         color: Colors.lightGreen,
-                        child: FlatButton(
-                          padding: EdgeInsets.all(16),
+                        child: TextButton(
+                          style: TextButton.styleFrom(padding: EdgeInsets.all(16)),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
