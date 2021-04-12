@@ -1,9 +1,6 @@
 os: osx
 osx_image: xcode12
 language: generic
-dart_task:
-  # fatal warnings, only analyze the lib directory
-  - dartanalyzer: --fatal-warnings lib
 before_script:
 - brew update
 - brew install --HEAD usbmuxd
