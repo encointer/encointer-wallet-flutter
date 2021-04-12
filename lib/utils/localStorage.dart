@@ -144,7 +144,7 @@ class _LocalStorage {
   }
 
   Future<List<Map<String, dynamic>>> getList(String storeKey) async {
-    List<Map<String, dynamic>> res =[];
+    List<Map<String, dynamic>> res = [];
 
     String str = await getKV(storeKey);
     if (str != null) {
