@@ -25,6 +25,7 @@ jobs:
     - uses: actions/setup-node@v2
       with:
         node-version: '12'
+    - run: dartanalyzer --fatal-warnings .
     - run: |
         pushd ./lib/js_service_encointer
         yarn install
