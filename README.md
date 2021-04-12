@@ -93,7 +93,7 @@ The `screenshots` package is used to created automated screenshots. Setup:
 * Run: `screenshots --flavor dev`
 
 #### Notes:
-* The following directories need to be added to the path to run the emulator from the command line:
+* The following directories need to be added to the path to run the emulator from the command line. The location below is the standard installation directory of the Android sdk in ubuntu:
 ```shell
  export PATH="$PATH":"$HOME/Android/Sdk"
  export PATH="$PATH":"$HOME/Android/Sdk/emulator"
