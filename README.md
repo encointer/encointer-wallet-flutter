@@ -87,7 +87,7 @@ The `screenshots` package is used to created automated screenshots. Setup:
 |---|---|---|
 | IPad 12.9inch     | 12.9 inch     | 2048x2732	
 | IPhone 6.5inch    | 6.5 inch      | 1242x2688
-| IPhone 5.5inch    | 6.5 inch      | 1242x2208
+| IPhone 5.5inch    | 5.5 inch      | 1242x2208
 | Google Pixel 3    | 5.6 inch      | 1080x2220
 
 * Run: `screenshots --flavor dev`
@@ -97,7 +97,7 @@ The `screenshots` package is used to created automated screenshots. Setup:
 ```shell
  export PATH="$PATH":"$HOME/Android/Sdk"
  export PATH="$PATH":"$HOME/Android/Sdk/emulator"
- export PATH="$Path":"$HOME/Android/Sdk/tools/bin" 
+ export PATH="$PATH":"$HOME/Android/Sdk/tools/bin" 
 ```
 * Having 4 emulators setup will need approximately 45Gb of free space on the hard drive.
 * Bug: The test run fails if the emulator is started with a cold boot.
