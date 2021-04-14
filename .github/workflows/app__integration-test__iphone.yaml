@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         device:
-          - "iPad Pro (12.90-inch) (3rd generation) (13.2.2)"
+          - "iPhone 11 Pro Max (14.4)"
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
