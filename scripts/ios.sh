@@ -3,7 +3,7 @@
 set -o pipefail
 
 echo "Available devices are:"
-xcrun instruments -s
+xcrun xctrace list devices
 
 echo "Start device with ID ${DEVICE_ID}."
 DEVICE_MATCHING="device=${DEVICE_ID}"
