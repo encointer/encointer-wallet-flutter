@@ -6,35 +6,54 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+  flutter_version: '2.0.1'
+
 jobs:
   ios_device_test:
     runs-on: macos-latest
     strategy:
       matrix:
         device:
-          - "iPhone 11 Pro Max (14.4)"
+          - "iPhone 11 Pro Max"
       fail-fast: false
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-java@v1
         with:
           java-version: '12.x'
+      - name: Cache Flutter dependencies
+        uses: actions/cache@v1
+        with:
+          path: /Users/runner/hostedtoolcache/flutter
+          key: ${{ runner.OS }}-flutter-install-cache-${{ env.flutter_version }}
       - uses: subosito/flutter-action@v1
         with:
-          flutter-version: '2.0.1'
+          flutter-version: ${{ env.flutter_version }}
       - uses: actions/setup-node@v2
         with:
           node-version: '12'
-      - run: |
-          pushd ./lib/js_service_encointer
-          yarn install
-          yarn run build
-          popd
-      - run: flutter pub get
-      - name: "Start Simulator and run driver test"
+      - name: "Yarn cache"
+        working-directory: ./lib/js_service_encointer
+        uses: c-hive/gha-yarn-cache@v1
+      - name: "Build JS"
         working-directory: ./scripts
+        run: source ./init_env.sh && ./build_js.sh
+      - run: flutter pub get
+      - name: "Start Simulator"
+        working-directory: ./scripts
+        env:
+          DEVICE_ID: ${{ matrix.device }}
         run: source ./ios.sh
-      - name: "Flutter driver test"
-        run: flutter drive --target=test_driver/app.dart
+      - name: "Flutter driver test and record video"
+        working-directory: ./scripts
+        run: source ./init_env.sh && ./ios_integration_test.sh
+        env:
+          TEMP_DIR: /tmp/encointer-wallet/
+      - name: "Upload Recording"
+        uses: actions/upload-artifact@v2
+        with:
+          name: recording
+          path: /tmp/encointer-wallet/
 
 

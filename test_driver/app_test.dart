@@ -53,42 +53,42 @@ void main() {
       await screenshot(driver, config, 'encointer-home');
     });
 
-    test('show receive qr code', () async {
-      await driver.tap(find.byValueKey('qr-receive'));
-      await screenshot(driver, config, 'receive-funds');
-
-      // go back to homepage
-      await driver.tap(find.pageBack());
-    });
-
-    test('transfer-page', () async {
-      // go to transfer page
-      await driver.tap(find.byValueKey('cid-asset'));
-
-      await driver.tap(find.byValueKey('transfer'));
-
-      await driver.tap(find.byValueKey('transfer-amount-input'));
-      await driver.enterText('3.4');
-
-      await screenshot(driver, config, 'transfer-page');
-
-      // go back to homepage
-      await driver.tap(find.pageBack());
-      await driver.tap(find.pageBack());
-    });
-
-    test('encointerEntryPage', () async {
-      log("tapping encointerEntry tap");
-      await driver.tap(find.byValueKey('tab-ceremonies'));
-
-      // communicate to the app isolate how to setup the store
-      await driver.requestData(StorageSetup.UNREGISTERED_PARTICIPANT);
-      await screenshot(driver, config, 'register-participant-page');
-
-      // attesting phase
-      await driver.requestData(StorageSetup.READY_FOR_MEETUP);
-      await screenshot(driver, config, 'attesting-page');
-    });
+  //   test('show receive qr code', () async {
+  //     await driver.tap(find.byValueKey('qr-receive'));
+  //     await screenshot(driver, config, 'receive-funds');
+  //
+  //     // go back to homepage
+  //     await driver.tap(find.pageBack());
+  //   });
+  //
+  //   test('transfer-page', () async {
+  //     // go to transfer page
+  //     await driver.tap(find.byValueKey('cid-asset'));
+  //
+  //     await driver.tap(find.byValueKey('transfer'));
+  //
+  //     await driver.tap(find.byValueKey('transfer-amount-input'));
+  //     await driver.enterText('3.4');
+  //
+  //     await screenshot(driver, config, 'transfer-page');
+  //
+  //     // go back to homepage
+  //     await driver.tap(find.pageBack());
+  //     await driver.tap(find.pageBack());
+  //   });
+  //
+  //   test('encointerEntryPage', () async {
+  //     log("tapping encointerEntry tap");
+  //     await driver.tap(find.byValueKey('tab-ceremonies'));
+  //
+  //     // communicate to the app isolate how to setup the store
+  //     await driver.requestData(StorageSetup.UNREGISTERED_PARTICIPANT);
+  //     await screenshot(driver, config, 'register-participant-page');
+  //
+  //     // attesting phase
+  //     await driver.requestData(StorageSetup.READY_FOR_MEETUP);
+  //     await screenshot(driver, config, 'attesting-page');
+  //   });
   });
 }
 
