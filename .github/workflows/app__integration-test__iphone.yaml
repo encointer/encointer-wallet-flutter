@@ -2,68 +2,97 @@ name: App Integration Test (iPhone)
 
 on:
   push:
-    branches: [ master, gihtub-action-integration-tests ]
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
 env:
   flutter_version: '2.0.1'
+  # same as the one defined in the screenshots.yaml
+  temp_screenshots: /tmp/screenshots
 
 jobs:
   ios_device_test:
     runs-on: macos-latest
+    timeout-minutes: 30
     strategy:
       matrix:
-        device:
-          - "iPhone 11 Pro Max"
+        include:
+          - device: "iPhone 11 Pro Max"
+            record_video: true
+          - device: "iPhone 8 Plus"
+            record_video: false
+          - device: "iPad Pro (12.9-inch) (3rd generation)"
+            record_video: false
+          - device: "iPad Pro (12.9-inch) (2nd generation)"
+            record_video: false
       fail-fast: false
     steps:
+        # Setup Environment
       - uses: actions/checkout@v2
+        with:
+          # 2 to compare the last two revisions to check if JS changed
+          fetch-depth: 2
+
       - uses: actions/setup-java@v1
         with:
           java-version: '12.x'
-      - name: Cache Flutter dependencies
-        uses: actions/cache@v1
-        with:
-          path: /Users/runner/hostedtoolcache/flutter
-          key: ${{ runner.OS }}-flutter-install-cache-${{ env.flutter_version }}
+
       - uses: subosito/flutter-action@v1
         with:
           flutter-version: ${{ env.flutter_version }}
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '12'
-      - uses: marceloprado/has-changed-path@v1
-          id: js-changed
-          with:
-            paths: ./lib/js_service_encointer
-      - name: "Cache JS"
-        id: cache-js
-        uses: actions/cache@v2
-        with:
-          path: ./lib/js_service_encointer/dist/main.js
-          key: ${{ runner.os }}-main.js
-      - name: "Build JS if needed"
-        if: steps.js-changed.outputs.changed == 'true' && steps.cache-js.outputs.cache-hit != 'true'
-        run: source ./init_env.sh && ./build_js.sh
-#      - name: "Build JS"
-#        working-directory: ./scripts
-#        run: source ./init_env.sh && ./build_js.sh
-      - run: flutter pub get
+
+      - name: "Prepare IOS Environment"
+        working-directory: ./scripts
+        run: ./ios_init_env.sh
+
+      - name: "Create Simulator if iPad Pro 2nd gen"
+        if: ${{ matrix.device == 'iPad Pro (12.9-inch) (2nd generation)' }}
+        run: xcrun simctl create "iPad Pro (12.9-inch) (2nd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---2nd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-14-4"
+
+      - name: "Create Simulator if iPad Pro 3rd gen"
+        if: ${{ matrix.device == 'iPad Pro (12.9-inch) (3rd generation)' }}
+        run: xcrun simctl create "iPad Pro (12.9-inch) (3rd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---3rd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-14-4"
+
       - name: "Start Simulator"
         working-directory: ./scripts
         env:
           DEVICE_ID: ${{ matrix.device }}
         run: source ./ios.sh
+
+        # JS Stuff
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+
+      - name: "Check if JS code was updated"
+        uses: marceloprado/has-changed-path@v1
+        id: js-changed
+        with:
+          paths: ./lib/js_service_encointer
+
+      - name: "Setup JS Cache"
+        id: cache-js
+        uses: actions/cache@v2
+        with:
+          path: ./lib/js_service_encointer/dist/main.js
+          key: ${{ runner.os }}-${{ 'encointer.js' }}
+
+      - name: "Build JS if needed"
+        if: ${{ steps.js-changed.outputs.changed == 'true' || steps.cache-js.outputs.cache-hit != 'true' }}
+        working-directory: ./scripts
+        run: source ./init_env.sh && ./build_js.sh
+
+        # Run Tests
       - name: "Flutter driver test and record video"
         working-directory: ./scripts
         run: source ./init_env.sh && ./ios_integration_test.sh
         env:
-          TEMP_DIR: /tmp/encointer-wallet/
-      - name: "Upload Recording"
+          TEMP_DIR: ${{ env.temp_screenshots }}
+          RECORD: ${{ matrix.record_video }}
+
+      - name: "Upload screenshots and recording"
         uses: actions/upload-artifact@v2
         with:
-          name: recording
-          path: /tmp/encointer-wallet/
-
-
+          name:  ${{ matrix.device }}
+          path: ${{ env.temp_screenshots }}

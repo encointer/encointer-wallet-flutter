@@ -1,6 +1,5 @@
 #!/bin/bash
-
-set -o pipefail
+set -euo pipefail
 
 CURRENT_DIR=$(pwd)
 
