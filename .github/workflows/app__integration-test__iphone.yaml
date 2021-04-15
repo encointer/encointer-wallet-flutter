@@ -33,12 +33,22 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '12'
-      - name: "Yarn cache"
-        working-directory: ./lib/js_service_encointer
-        uses: c-hive/gha-yarn-cache@v1
-      - name: "Build JS"
-        working-directory: ./scripts
+      - uses: marceloprado/has-changed-path@v1
+          id: js-changed
+          with:
+            paths: ./lib/js_service_encointer
+      - name: "Cache JS"
+        id: cache-js
+        uses: actions/cache@v2
+        with:
+          path: ./lib/js_service_encointer/dist/main.js
+          key: ${{ runner.os }}-main.js
+      - name: "Build JS if needed"
+        if: steps.js-changed.outputs.changed == 'true' && steps.cache-js.outputs.cache-hit != 'true'
         run: source ./init_env.sh && ./build_js.sh
+#      - name: "Build JS"
+#        working-directory: ./scripts
+#        run: source ./init_env.sh && ./build_js.sh
       - run: flutter pub get
       - name: "Start Simulator"
         working-directory: ./scripts
