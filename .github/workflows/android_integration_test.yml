@@ -6,35 +6,75 @@ on:
   pull_request:
     branches: [ master ]
 
+env:
+  flutter_version: '2.0.1'
+  # same as the one defined in the screenshots.yaml
+  temp_screenshots: /tmp/screenshots
+
 jobs:
   build-android:
-    # use macos-os, as only there hardware acceleration is available
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      matrix:
+        include:
+          - device: "Nexus 6"
+      fail-fast: false
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-java@v1
-      with:
-        java-version: '12.x'
-    - uses: actions/setup-node@v2
-      with:
-        node-version: '12'
-    - name: "Build JS"
-      working-directory: ./scripts
-      run: source ./init_env.sh && ./build_js.sh
-    - uses: subosito/flutter-action@v1
-      with:
-        flutter-version: '2.0.1'
-#    - run: flutter analyze  --fatal-warnings
-#    - run: flutter pub get
-#    - run: flutter test
-#    - run: flutter build apk --flavor fdroid
-    - name: "Android Integration Tests"
-      timeout-minutes: 30
-      uses: reactivecircus/android-emulator-runner@v2
-      env:
-        ANDROID_DEBUG: "true"
-      with:
-        api-level: 30
-        profile: "Nexus 6"
-        script: source ./scripts/run_android_integration_test.sh
+      # Setup Environment
+      - uses: actions/checkout@v2
+        with:
+          # 2 to compare the last two revisions to check if JS changed
+          fetch-depth: 2
+
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '12.x'
+
+      # JS Stuff
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '12'
+
+      - name: "Check if JS code was updated"
+        uses: marceloprado/has-changed-path@v1
+        id: js-changed
+        with:
+          paths: ./lib/js_service_encointer
+
+      - name: "Setup JS Cache"
+        id: cache-js
+        uses: actions/cache@v2
+        with:
+          path: ./lib/js_service_encointer/dist/main.js
+          key: ${{ runner.os }}-${{ 'encointer.js' }}
+
+      - name: "Build JS if needed"
+        if: ${{ steps.js-changed.outputs.changed == 'true' || steps.cache-js.outputs.cache-hit != 'true' }}
+        working-directory: ./scripts
+        run: source ./init_env.sh && ./build_js.sh
+
+      - name: "Analyze Code"
+        run: flutter pub get && flutter analyze  --fatal-warnings
+
+      - name: "Run unit tests"
+        run: flutter pub get && flutter test
+
+      - name: "Android Integration Tests"
+        uses: reactivecircus/android-emulator-runner@v2
+        env:
+          ANDROID_DEBUG: "true"
+        with:
+          api-level: 30
+          profile: ${{ matrix.device }}
+          script: source ./scripts/run_android_integration_test.sh
+
+      - name: "Upload screenshots"
+        uses: actions/upload-artifact@v2
+        with:
+          name:  ${{ matrix.device }}
+          path: ${{ env.temp_screenshots }}
+
+      - name: "Build apk"
+        run: flutter pub get && flutter build apk --flavor fdroid
 

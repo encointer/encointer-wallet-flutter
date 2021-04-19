@@ -11,3 +11,7 @@ flutter doctor -v
 flutter pub get && flutter drive --target=test_driver/app.dart
 
 cd "$CURRENT_DIR" || exit
+
+# copy screenshots to TEMP_DIR
+cp -r "$TEMP_DIR/test"/* "$TEMP_DIR"
+rm -r "$TEMP_DIR/test"
