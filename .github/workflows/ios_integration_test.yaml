@@ -58,7 +58,7 @@ jobs:
         working-directory: ./scripts
         env:
           DEVICE_ID: ${{ matrix.device }}
-        run: source ./ios.sh
+        run: source ./ios_emulator.sh
 
         # JS Stuff
       - uses: actions/setup-node@v2
