@@ -1,4 +1,4 @@
-name: Test and build Android
+name: App Integration Test and Build (Android)
 
 on:
   push:

@@ -42,7 +42,7 @@ jobs:
         with:
           flutter-version: ${{ steps.config.outputs.flutter-version }}
 
-      - name: "Prepare IOS Environment"
+      - name: "Prepare environment for ios"
         working-directory: ./scripts
         run: ./ios_init_env.sh
 
