@@ -2,7 +2,7 @@ name: App Integration Test and Build (Android)
 
 on:
   push:
-    branches: [ master, gihtub-action-integration-tests ]
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
