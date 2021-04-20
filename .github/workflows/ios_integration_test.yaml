@@ -2,7 +2,7 @@ name: App Integration Test (iPhone)
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, gihtub-action-integration-tests ]
   pull_request:
     branches: [ master ]
 
