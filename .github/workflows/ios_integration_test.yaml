@@ -9,7 +9,7 @@ on:
 jobs:
   ios_device_test:
     runs-on: macos-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     strategy:
       matrix:
         include:
