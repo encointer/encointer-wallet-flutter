@@ -9,12 +9,6 @@ Encointer wallet and client for mobile phones
      alt="Get it on Google Play"
      height="80">](https://play.google.com/store/apps/details?id=org.encointer.wallet)
 
-
-[![Build](https://github.com/encointer/encointer-wallet-flutter/actions/workflows/android_build.yml/badge.svg)](https://github.com/encointer/encointer-wallet-flutter/actions/workflows/android_build.yml)
-[![Android](https://github.com/encointer/encointer-wallet-flutter/actions/workflows/android_integration_test.yml/badge.svg)](https://github.com/encointer/encointer-wallet-flutter/actions/workflows/android_integration_test.yml)
-[![IOS](https://github.com/encointer/encointer-wallet-flutter/actions/workflows/ios_integration_test.yaml/badge.svg)](https://github.com/encointer/encointer-wallet-flutter/actions/workflows/ios_integration_test.yaml)
-[![Tests](https://github.com/encointer/encointer-wallet-flutter/actions/workflows/unit_tests.yaml/badge.svg)](https://github.com/encointer/encointer-wallet-flutter/actions/workflows/unit_tests.yaml)
-
 ## Overview
 
 <img src="./encointer-gesell-assets.png" width=300>
