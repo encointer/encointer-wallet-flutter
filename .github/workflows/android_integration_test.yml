@@ -1,4 +1,4 @@
-name: App Integration Test and Build (Android)
+name: Android Integration
 
 on:
   push:
@@ -87,7 +87,3 @@ jobs:
         with:
           name:  ${{ matrix.device }}
           path:  ${{ steps.config.outputs.temp-screenshots }}
-
-      - name: "Build apk"
-        run: flutter build apk --flavor fdroid
-

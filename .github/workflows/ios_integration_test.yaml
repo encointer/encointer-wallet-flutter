@@ -1,4 +1,4 @@
-name: App Integration Test (iPhone)
+name: IOS Integration
 
 on:
   push:
