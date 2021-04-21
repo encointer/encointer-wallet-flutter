@@ -10,8 +10,8 @@ then
   echo "Recording process up with pid: ${RECORDING_PID}"
 fi
 
-flutter drive --target=test_driver/app.dart || echo "app test failed..."
-flutter drive --target=test_driver/scanPage.dart || echo "app test failed..."
+flutter drive --target=test_driver/app.dart
+flutter drive --target=test_driver/scanPage.dart
 
 mkdir -p "$TEMP_DIR"
 

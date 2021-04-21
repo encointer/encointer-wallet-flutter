@@ -58,4 +58,3 @@ jobs:
 
       - name: "Build apk"
         run: flutter build apk --flavor fdroid
-

@@ -1,4 +1,4 @@
-name: Android Integration
+name: Android CI
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
             # needs to be the `id` from the devices given by `avdmanager list device`
             device: "pixel_3a"
             api-level: 29 # 30 is not working
-            # disable for now. it takes ages to build an launch the app and the upper limit of
+            # disable for now. it takes ages to build and launch the app and the upper limit of
             # recordings is 180s. The app has not even started by then.
             record_video: false
       fail-fast: false
@@ -61,7 +61,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ steps.config.outputs.encointer-main-js-path }}
-          # change cache version in config to force cache overwrite.
+          # note: change cache version in config to force cache overwrite.
           key: ${{ runner.os }}-${{ 'encointer.js' }}-{{ steps.config.outputs.cache-version }}
 
       - name: "Build JS if needed"

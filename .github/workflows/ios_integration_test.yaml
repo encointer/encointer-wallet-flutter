@@ -1,4 +1,4 @@
-name: IOS Integration
+name: IOS CI
 
 on:
   push:
@@ -76,6 +76,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ steps.config.outputs.encointer-main-js-path }}
+          # note: change cache version in config to force cache overwrite.
           key: ${{ runner.os }}-${{ 'encointer.js' }}-{{ steps.config.outputs.cache-version }}
 
       - name: "Build JS if needed"

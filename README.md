@@ -77,7 +77,7 @@ Re-generate mobx g.dart files
 * run all integration tests in `test_driver` directory: `flutter drive --target=test_driver/app.dart --flavor dev`
 
 ### Automated screenshots
-* Github actions is used to create automated screenshots for the specified devices there. However, running the integration tests will create screenshots for the currently running device.
+* Github actions is used to create automated screenshots for the specified devices there. However, running the integration tests locally will create screenshots for the currently running device.
 
 #### Android Studio
 To run the in Android Studio a build flavor must be specified. Go to Run/Debug configurations and add the build flavor `dev` in the appropriate field. Other available values are in the in the android/app/src/build.gradle file.
