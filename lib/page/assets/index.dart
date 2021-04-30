@@ -477,7 +477,7 @@ class _AssetsState extends State<Assets> {
                       width: 36,
                       child: Image.asset('assets/images/assets/ERT.png'),
                     ),
-                    title: Text(store.encointer.communityName),
+                    title: Text(store.encointer.communityName + " (${store.encointer.communitySymbol})"),
                     trailing: store.encointer.balanceEntries[store.encointer.chosenCid] != null
                         ? Text(
                             Fmt.doubleFormat(store.encointer.balanceEntries[store.encointer.chosenCid].principal),

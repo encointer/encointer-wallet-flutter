@@ -99,6 +99,9 @@ abstract class _EncointerStore with Store {
   @computed
   String get communityName => communityMetadata?.name;
 
+  @computed
+  String get communitySymbol => communityMetadata?.symbol;
+
   @action
   void setCurrentPhase(CeremonyPhase phase) {
     print("store: set currentPhase to $phase");
