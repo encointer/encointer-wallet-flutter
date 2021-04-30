@@ -468,7 +468,7 @@ class _AssetsState extends State<Assets> {
         ),
         CommunityChooserPanel(store),
         Observer(builder: (_) {
-          return (store.encointer.communityIdentifiers != null) & (store.encointer.chosenCid != null)
+          return (store.encointer.communityName != null) & (store.encointer.chosenCid != null)
               ? RoundedCard(
                   margin: EdgeInsets.only(top: 16),
                   child: ListTile(
@@ -477,7 +477,7 @@ class _AssetsState extends State<Assets> {
                       width: 36,
                       child: Image.asset('assets/images/assets/ERT.png'),
                     ),
-                    title: Text(Fmt.communityIdentifier(store.encointer.chosenCid)),
+                    title: Text(store.encointer.communityName),
                     trailing: store.encointer.balanceEntries[store.encointer.chosenCid] != null
                         ? Text(
                             Fmt.doubleFormat(store.encointer.balanceEntries[store.encointer.chosenCid].principal),

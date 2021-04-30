@@ -80,7 +80,7 @@ abstract class _EncointerStore with Store {
   String chosenCid;
 
   @observable
-  CommunityMetadata currentCommunityMetadata;
+  CommunityMetadata communityMetadata;
 
   @observable
   String claimHex;
@@ -94,6 +94,9 @@ abstract class _EncointerStore with Store {
   // not working as obsverable (no item change registered -> if necessary change to ObservableList)
   @observable
   List<String> shopRegistry;
+
+  @computed
+  String get communityName => communityMetadata?.name;
 
   @action
   void setCurrentPhase(CeremonyPhase phase) {
@@ -223,7 +226,7 @@ abstract class _EncointerStore with Store {
 
   @action
   void setCommunityMetadata(CommunityMetadata meta) {
-    currentCommunityMetadata = meta;
+    communityMetadata = meta;
   }
 
   @action
