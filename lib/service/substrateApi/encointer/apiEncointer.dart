@@ -145,7 +145,9 @@ class ApiEncointer {
 
     CommunityMetadata meta = await apiRoot.evalJavascript('encointer.getCommunityMetadata("$cid")')
         .then((m) => CommunityMetadata.fromJson(m));
+
     print("api: community metadata: " + meta.toString());
+    store.encointer.setCommunityMetadata(meta);
   }
 
   /// Calls the custom rpc: api.rpc.communities.getCidNames()

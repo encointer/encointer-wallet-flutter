@@ -80,6 +80,9 @@ abstract class _EncointerStore with Store {
   String chosenCid;
 
   @observable
+  CommunityMetadata currentCommunityMetadata;
+
+  @observable
   String claimHex;
 
   @observable
@@ -219,6 +222,11 @@ abstract class _EncointerStore with Store {
   }
 
   @action
+  void setCommunityMetadata(CommunityMetadata meta) {
+    currentCommunityMetadata = meta;
+  }
+
+  @action
   void setCommunities(List<CidName> c) {
     communities = c;
   }
@@ -237,6 +245,7 @@ abstract class _EncointerStore with Store {
         webApi.encointer.getParticipantIndex();
         webApi.encointer.getParticipantCount();
         webApi.encointer.getEncointerBalance();
+        webApi.encointer.getCommunityMetadata();
       }
     }
   }
