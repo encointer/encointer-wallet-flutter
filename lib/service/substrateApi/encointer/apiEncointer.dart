@@ -146,9 +146,6 @@ class ApiEncointer {
     CommunityMetadata meta = await apiRoot.evalJavascript('encointer.getCommunityMetadata("$cid")')
         .then((m) => CommunityMetadata.fromJson(m));
     print("api: community metadata: " + meta.toString());
-
-    // debug call
-    await this.getCidNames();
   }
 
   /// Calls the custom rpc: api.rpc.communities.getCidNames()
@@ -157,6 +154,7 @@ class ApiEncointer {
         .then((list) =>  List.from(list).map((cn) => CidName.fromJson(cn)).toList());
 
     print("api: CidNames: " + cn.toString());
+    store.encointer.setCommunities(cn);
   }
 
   /// Queries the Scheduler pallet: encointerScheduler./-currentPhase(), -phaseDurations(phase), -nextPhaseTimestamp().
@@ -267,7 +265,11 @@ class ApiEncointer {
   /// This is on-chain in Cantillon.
   Future<void> subscribeCommunityIdentifiers() async {
     apiRoot.subscribeMessage('encointer.subscribeCommunityIdentifiers("$_communityIdentifiersChannel")',
-        _communityIdentifiersChannel, (data) => {store.encointer.setCommunityIdentifiers(data.cast<String>())});
+        _communityIdentifiersChannel, (data) async {
+        store.encointer.setCommunityIdentifiers(data.cast<String>());
+        // debug call
+        await this.getCidNames();
+    });
   }
 
   /// Subscribes to storage changes in the Ceremonies pallet: encointerCeremonies.participantIndex([cid, cIndex], address).

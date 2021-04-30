@@ -195,6 +195,21 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
+  final _$communitiesAtom = Atom(name: '_EncointerStore.communities');
+
+  @override
+  List<CidName> get communities {
+    _$communitiesAtom.reportRead();
+    return super.communities;
+  }
+
+  @override
+  set communities(List<CidName> value) {
+    _$communitiesAtom.reportWrite(value, super.communities, () {
+      super.communities = value;
+    });
+  }
+
   final _$chosenCidAtom = Atom(name: '_EncointerStore.chosenCid');
 
   @override
@@ -419,6 +434,17 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
+  void setCommunities(List<CidName> c) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(
+        name: '_EncointerStore.setCommunities');
+    try {
+      return super.setCommunities(c);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setChosenCid(String cid) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.setChosenCid');
@@ -532,6 +558,7 @@ participantCount: ${participantCount},
 myClaim: ${myClaim},
 balanceEntries: ${balanceEntries},
 communityIdentifiers: ${communityIdentifiers},
+communities: ${communities},
 chosenCid: ${chosenCid},
 claimHex: ${claimHex},
 attestations: ${attestations},
