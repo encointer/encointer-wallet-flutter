@@ -46,7 +46,6 @@ class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
                           onChanged: (newValue) {
                             setState(() {
                               store.encointer.setChosenCid(newValue.cid);
-                              webApi.encointer.getCommunityMetadata();
                             });
                           },
                           items: store.encointer.communities
