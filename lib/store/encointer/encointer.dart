@@ -23,6 +23,7 @@ abstract class _EncointerStore with Store {
   final AppStore rootStore;
   final String cacheTxsTransferKey = 'transfer_txs';
   final String encointerCommunityKey = 'wallet_encointer_community';
+  final String encointerCommunityMetadataKey = 'wallet_encointer_community_metadata';
 
   // offline meetup cache.
   final String encointerCurrentCeremonyIndexKey = 'wallet_encointer_current_ceremony_index';
@@ -227,6 +228,7 @@ abstract class _EncointerStore with Store {
   @action
   void setCommunityMetadata(CommunityMetadata meta) {
     communityMetadata = meta;
+    cacheObject(encointerCommunityMetadataKey, meta);
   }
 
   @action
@@ -236,7 +238,7 @@ abstract class _EncointerStore with Store {
 
   @action
   void setChosenCid(String cid) {
-    if (chosenCid != cid) {
+    // if (chosenCid != cid) {
       chosenCid = cid;
       if (rootStore.settings.endpointIsGesell) {
         webApi.encointer.subscribeShopRegistry();
@@ -250,7 +252,7 @@ abstract class _EncointerStore with Store {
         webApi.encointer.getEncointerBalance();
         webApi.encointer.getCommunityMetadata();
       }
-    }
+    // }
   }
 
   @action
