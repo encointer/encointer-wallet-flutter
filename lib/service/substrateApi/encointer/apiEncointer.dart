@@ -150,9 +150,9 @@ class ApiEncointer {
     store.encointer.setCommunityMetadata(meta);
   }
 
-  /// Calls the custom rpc: api.rpc.communities.getCidNames()
-  Future<void> getCidNames() async {
-    List<CidName> cn =  await apiRoot.evalJavascript('encointer.getCidNames()')
+  /// Calls the custom rpc: api.rpc.communities.getAll()
+  Future<void> getAll() async {
+    List<CidName> cn =  await apiRoot.evalJavascript('encointer.getAll()')
         .then((list) =>  List.from(list).map((cn) => CidName.fromJson(cn)).toList());
 
     print("api: CidNames: " + cn.toString());
@@ -270,7 +270,7 @@ class ApiEncointer {
         _communityIdentifiersChannel, (data) async {
         store.encointer.setCommunityIdentifiers(data.cast<String>());
         // debug call
-        await this.getCidNames();
+        await this.getAll();
     });
   }
 
