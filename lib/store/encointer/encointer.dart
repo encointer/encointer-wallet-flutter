@@ -106,9 +106,9 @@ abstract class _EncointerStore with Store {
       // jsonEncode fails if we don't call toString for an enum
       cacheObject(encointerCurrentPhaseKey, phase.toString());
       currentPhase = phase;
-      // update depending values without awaiting
-      webApi.encointer.getCurrentCeremonyIndex();
     }
+    // update depending values without awaiting
+    webApi.encointer.getCurrentCeremonyIndex();
   }
 
   @action
@@ -153,11 +153,12 @@ abstract class _EncointerStore with Store {
     if (meetupIndex != index) {
       cacheObject(encointerMeetupIndexKey, index);
       meetupIndex = index;
-      if (index != null) {
-        // update depending values
-        webApi.encointer.getMeetupLocation();
-        webApi.encointer.getMeetupRegistry();
-      }
+    }
+
+    if (index != null) {
+      // update depending values
+      webApi.encointer.getMeetupLocation();
+      webApi.encointer.getMeetupRegistry();
     }
   }
 
@@ -167,10 +168,11 @@ abstract class _EncointerStore with Store {
     if (meetupLocation != location) {
       cacheObject(encointerMeetupLocationKey, location);
       meetupLocation = location;
-      if (location != null) {
-        // update depending values
-        webApi.encointer.getMeetupTime();
-      }
+    }
+
+    if (location != null) {
+      // update depending values
+      webApi.encointer.getMeetupTime();
     }
   }
 
@@ -238,21 +240,22 @@ abstract class _EncointerStore with Store {
 
   @action
   void setChosenCid(String cid) {
-    // if (chosenCid != cid) {
+    if (chosenCid != cid) {
       chosenCid = cid;
-      if (rootStore.settings.endpointIsGesell) {
-        webApi.encointer.subscribeShopRegistry();
-      }
       cacheObject(encointerCommunityKey, cid);
-      // update depending values without awaiting
-      if (!rootStore.settings.loading) {
-        webApi.encointer.getMeetupIndex();
-        webApi.encointer.getParticipantIndex();
-        webApi.encointer.getParticipantCount();
-        webApi.encointer.getEncointerBalance();
-        webApi.encointer.getCommunityMetadata();
-      }
-    // }
+    }
+
+    if (rootStore.settings.endpointIsGesell) {
+      webApi.encointer.subscribeShopRegistry();
+    }
+    // update depending values without awaiting
+    if (!rootStore.settings.loading) {
+      webApi.encointer.getMeetupIndex();
+      webApi.encointer.getParticipantIndex();
+      webApi.encointer.getParticipantCount();
+      webApi.encointer.getEncointerBalance();
+      webApi.encointer.getCommunityMetadata();
+    }
   }
 
   @action
