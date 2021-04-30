@@ -144,8 +144,19 @@ class ApiEncointer {
     }
 
     CommunityMetadata meta = await apiRoot.evalJavascript('encointer.getCommunityMetadata("$cid")')
-    .then((m) => CommunityMetadata.fromJson(m));
+        .then((m) => CommunityMetadata.fromJson(m));
     print("api: community metadata: " + meta.toString());
+
+    // debug call
+    await this.getCidNames();
+  }
+
+  /// Calls the custom rpc: api.rpc.communities.getCidNames()
+  Future<void> getCidNames() async {
+    List<CidName> cn =  await apiRoot.evalJavascript('encointer.getCidNames()')
+        .then((list) =>  List.from(list).map((cn) => CidName.fromJson(cn)).toList());
+
+    print("api: CidNames: " + cn.toString());
   }
 
   /// Queries the Scheduler pallet: encointerScheduler./-currentPhase(), -phaseDurations(phase), -nextPhaseTimestamp().

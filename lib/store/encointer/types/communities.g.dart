@@ -26,3 +26,15 @@ Map<String, dynamic> _$CommunityMetadataToJson(CommunityMetadata instance) =>
       'url': instance.url,
       'theme': instance.theme?.toJson(),
     };
+
+CidName _$CidNameFromJson(Map<String, dynamic> json) {
+  return CidName(
+    json['cid'] as String,
+    json['name'] as String,
+  );
+}
+
+Map<String, dynamic> _$CidNameToJson(CidName instance) => <String, dynamic>{
+      'cid': instance.cid,
+      'name': instance.name,
+    };

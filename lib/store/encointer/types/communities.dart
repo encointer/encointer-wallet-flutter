@@ -50,3 +50,20 @@ class CustomTheme {
       };
 }
 
+@JsonSerializable(fieldRename: FieldRename.snake)
+class CidName {
+  CidName(this.cid, this.name);
+
+  String cid;
+  String name;
+
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
+
+  factory CidName.fromJson(Map<String, dynamic> json) => _$CidNameFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CidNameToJson(this);
+}
+
