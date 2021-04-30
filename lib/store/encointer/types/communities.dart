@@ -6,7 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 
 // Run: `flutter pub run build_runner build` in order to create/update the *.g.dart
 
-part 'communityMetadata.g.dart';
+part 'communities.g.dart';
 
 // explicit = true as we have nested Json with location
 // field rename such that the fields match the ones defined in the runtime

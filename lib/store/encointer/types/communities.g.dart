@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'communityMetadata.dart';
+part of 'communities.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
