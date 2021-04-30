@@ -24,7 +24,7 @@ abstract class _EncointerStore with Store {
   final String encointerCommunityKey = 'wallet_encointer_community';
 
   // offline meetup cache.
-  final String encointerCurrenCeremonyIndexKey = 'wallet_encointer_current_ceremony_index';
+  final String encointerCurrentCeremonyIndexKey = 'wallet_encointer_current_ceremony_index';
   final String encointerCurrentPhaseKey = 'wallet_encointer_current_phase';
   final String encointerMeetupIndexKey = 'wallet_encointer_meetup_index';
   final String encointerMeetupLocationKey = 'wallet_encointer_meetup_location';
@@ -104,7 +104,7 @@ abstract class _EncointerStore with Store {
   void setCurrentCeremonyIndex(index) {
     print("store: set currentCeremonyIndex to $index");
     currentCeremonyIndex = index;
-    cacheObject(encointerCurrenCeremonyIndexKey, index);
+    cacheObject(encointerCurrentCeremonyIndexKey, index);
     // update depending values without awaiting
     if (currentPhase == CeremonyPhase.ASSIGNING) {
       purgeAttestations();
@@ -322,7 +322,7 @@ abstract class _EncointerStore with Store {
       attestations = Map.castFrom<String, dynamic, int, AttestationState>(data);
     }
     currentPhase = await loadCurrentPhase();
-    currentCeremonyIndex = await loadObject(encointerCurrenCeremonyIndexKey);
+    currentCeremonyIndex = await loadObject(encointerCurrentCeremonyIndexKey);
     meetupIndex = await loadObject(encointerMeetupIndexKey);
 
     var loc = await loadObject(encointerMeetupLocationKey);
