@@ -293,27 +293,17 @@ class _AssetPageState extends State<AssetPage> with SingleTickerProviderStateMix
                     ],
                   ),
                 ),
-                !store.settings.endpointIsEncointer
-                    ? TabBar(
-                        labelColor: Colors.black87,
-                        labelStyle: TextStyle(fontSize: 18),
-                        controller: _tabController,
-                        tabs: _myTabs,
-                        onTap: (i) {
-                          store.assets.setTxsFilter(i);
-                        },
-                      )
-                    : Container(
-                        color: titleColor,
-                        padding: EdgeInsets.all(16),
-                        child: Row(
-                          children: <Widget>[
-                            BorderedTitle(
-                              title: I18n.of(context).encointer['loan.txs'],
-                            )
-                          ],
-                        ),
-                      ),
+                Container(
+                  color: titleColor,
+                  padding: EdgeInsets.all(16),
+                  child: Row(
+                    children: <Widget>[
+                      BorderedTitle(title: I18n
+                          .of(context)
+                          .encointer['loan.txs'])
+                    ],
+                  ),
+                ),
                 store.encointer.txsTransfer.isNotEmpty
                     ? Container(
                         color: titleColor,
