@@ -278,10 +278,10 @@ class _TransferPageState extends State<TransferPage> {
                                             : Text(_communitySymbol),
                                       ],
                                     ),
-                                    Icon(
-                                      Icons.arrow_forward_ios,
-                                      size: 18,
-                                    )
+                                    // Icon(
+                                    //   Icons.arrow_forward_ios,
+                                    //   size: 18,
+                                    // )
                                   ],
                                 ),
                               ),
