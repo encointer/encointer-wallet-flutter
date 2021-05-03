@@ -109,7 +109,7 @@ class _TransferPageState extends State<TransferPage> {
         };
         args["detail"] = jsonEncode({
           "destination": address,
-          "community": _communitySymbol,
+          "currency": _communitySymbol,
           "amount": _amountCtrl.text.trim(),
         });
         args['params'] = [
