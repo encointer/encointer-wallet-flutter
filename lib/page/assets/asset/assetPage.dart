@@ -357,7 +357,9 @@ class _AssetPageState extends State<AssetPage> with SingleTickerProviderStateMix
                               arguments: TransferPageParams(
                                   redirect: AssetPage.route,
                                   symbol: token,
-                                  isEncointerCommunityCurrency: isEncointerCommunityCurrency),
+                                  isEncointerCommunityCurrency: isEncointerCommunityCurrency,
+                                  communitySymbol: params.communitySymbol
+                              ),
                             );
                           },
                         ),
