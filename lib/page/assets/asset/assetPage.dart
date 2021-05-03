@@ -18,9 +18,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class AssetPageParams {
-  AssetPageParams({this.token, this.isEncointerCommunityCurrency = false});
+  AssetPageParams({
+    @required this.token,  @required this.isEncointerCommunityCurrency, this.communityName, this.communitySymbol});
+
+  /// token equals cid if `isEncointerCommunityCurrency == true`
   final String token;
   final bool isEncointerCommunityCurrency;
+  final String communityName;
+  final String communitySymbol;
 }
 
 class AssetPage extends StatefulWidget {
@@ -149,7 +154,7 @@ class _AssetPageState extends State<AssetPage> with SingleTickerProviderStateMix
 
     return Scaffold(
       appBar: AppBar(
-        title: isEncointerCommunityCurrency ? Text(Fmt.communityIdentifier(token)) : Text(tokenView),
+        title: isEncointerCommunityCurrency ? Text(params.communitySymbol) : Text(tokenView),
         centerTitle: true,
         elevation: 0.0,
       ),
