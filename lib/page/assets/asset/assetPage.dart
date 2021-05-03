@@ -140,11 +140,6 @@ class _AssetPageState extends State<AssetPage> with SingleTickerProviderStateMix
     final String token = params.token;
 
     final dic = I18n.of(context).assets;
-    final List<Tab> _myTabs = <Tab>[
-      Tab(text: dic['all']),
-      Tab(text: dic['in']),
-      Tab(text: dic['out']),
-    ];
 
     final String symbol = store.settings.networkState.tokenSymbol;
     final String tokenView = Fmt.tokenView(token);
