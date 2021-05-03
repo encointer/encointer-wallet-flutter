@@ -143,7 +143,6 @@ class _AssetPageState extends State<AssetPage> with SingleTickerProviderStateMix
 
     final String symbol = store.settings.networkState.tokenSymbol;
     final String tokenView = Fmt.tokenView(token);
-    final bool isBaseToken = token == symbol;
 
     final primaryColor = Theme.of(context).primaryColor;
     final titleColor = Theme.of(context).cardColor;
@@ -193,7 +192,7 @@ class _AssetPageState extends State<AssetPage> with SingleTickerProviderStateMix
                       Padding(
                         padding: EdgeInsets.only(bottom: tokenPrice != null ? 4 : 16),
                         child: Text(
-                          Fmt.token(isBaseToken ? balancesInfo.total : balance, decimals, length: 8),
+                          Fmt.token(!isEncointerCommunityCurrency ? balancesInfo.total : balance, decimals, length: 8),
                           style: TextStyle(
                             color: titleColor,
                             fontSize: 28,
@@ -212,7 +211,7 @@ class _AssetPageState extends State<AssetPage> with SingleTickerProviderStateMix
                               ),
                             )
                           : Container(),
-                      isBaseToken
+                      !isEncointerCommunityCurrency
                           ? Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: <Widget>[
