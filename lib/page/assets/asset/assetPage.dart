@@ -117,14 +117,11 @@ class _AssetPageState extends State<AssetPage> with SingleTickerProviderStateMix
     ls.retainWhere((i) =>
     i.token.toUpperCase() == token.toUpperCase() && i.concernsCurrentAccount(store.account.currentAddress));
     res.addAll(ls.map((i) {
-      String crossChain;
-      Map<String, dynamic> tx = TransferData.toJson(i);
       return TransferListItem(
-        data: crossChain != null ? TransferData.fromJson(tx) : i,
+        data: i,
         token: token == symbol ? token : "",
         isOut: i.from == store.account.currentAddress,
         hasDetail: false,
-        crossChain: crossChain,
       );
     }));
     res.add(ListTail(
