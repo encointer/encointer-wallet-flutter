@@ -269,7 +269,7 @@ class ApiEncointer {
     apiRoot.subscribeMessage('encointer.subscribeCommunityIdentifiers("$_communityIdentifiersChannel")',
         _communityIdentifiersChannel, (data) async {
         store.encointer.setCommunityIdentifiers(data.cast<String>());
-        // debug call
+
         await this.communitiesGetAll();
     });
   }
