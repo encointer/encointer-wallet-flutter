@@ -35,6 +35,7 @@
     "buffer": "^6.0.3",
     "node-rsa": "^1.1.1",
     "oo7-substrate": "^0.8.0",
+    "process": "^0.11.10",
     "readable-stream": "^3.6.0"
   },
   "devDependencies": {
