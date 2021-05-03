@@ -108,6 +108,8 @@ class _AssetPageState extends State<AssetPage> with SingleTickerProviderStateMix
     super.dispose();
   }
 
+  /// Note: Tx list display is currently limited to tx's that were sent on the running device, see:
+  /// https://github.com/encointer/encointer-wallet-flutter/issues/54
   List<Widget> _buildTxList() {
     List<Widget> res = [];
     final AssetPageParams params = ModalRoute.of(context).settings.arguments;
