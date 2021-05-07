@@ -3,10 +3,14 @@ import 'dart:io';
 import 'package:encointer_wallet/config/consts.dart';
 
 class Ipfs {
+  Ipfs({this.gateway = ipfs_gateway_address});
+
+  final String gateway;
+
   Future getJson(String cid) async {
     try {
       final Dio _dio = Dio();
-      _dio.options.baseUrl = ipfs_gateway_address;
+      _dio.options.baseUrl = gateway;
 
       final response = await _dio.get('/api/v0/object/get?arg=$cid');
       var object = Object.fromJson(response.data);
@@ -41,7 +45,7 @@ class Ipfs {
   Future<String> uploadImage(File image) async {
     try {
       Dio _dio = Dio();
-      _dio.options.baseUrl = ipfs_gateway_address;
+      _dio.options.baseUrl = gateway;
       _dio.options.connectTimeout = 5000; //5s
       _dio.options.receiveTimeout = 3000;
 
@@ -66,7 +70,7 @@ class Ipfs {
   Future<String> uploadJson(Map<String, dynamic> json) async {
     try {
       Dio _dio = Dio();
-      _dio.options.baseUrl = ipfs_gateway_address;
+      _dio.options.baseUrl = gateway;
       _dio.options.connectTimeout = 5000; //5s
       _dio.options.receiveTimeout = 3000;
 
