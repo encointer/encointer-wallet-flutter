@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:encointer_wallet/config/consts.dart';
 
-
-
 class Ipfs {
   // Todo: remove default -> migrate bazaar to use ipfs field from webApi instance
   Ipfs({this.gateway = ipfs_gateway_encointer});
@@ -60,12 +58,15 @@ class Ipfs {
     return '$gateway/ipfs/$cid/icons/${devicePixelRatioToResolution(devicePixelRatio)}community_icon.png';
   }
 
+  /// The [ratio] should be obtained via ' MediaQuery.of(context).devicePixelRatio'.
+  ///
+  /// Internally, Flutter handles asset resolution the same.
   String devicePixelRatioToResolution(double ratio) {
     if (ratio < 0) {
       print("[Error] invalid devicePixelRation returning 1.0x");
       return '';
     } else if (ratio < 1.8) {
-      // normal resolution is on top level.
+      // '1.0x' resolution is on top level.
       return '';
     } else if (ratio < 2.7) {
       return '2.0x/';
@@ -141,7 +142,6 @@ class IpfsDio {
 
 class Object {
   List links;
-  //String cid;
   String data;
 
   Object({
@@ -158,8 +158,10 @@ class Object {
   factory Object.fromJson(Map<String, dynamic> json) {
     return Object(data: json['Data'], links: json['Links']);
   }
-  Map<String, dynamic> toJson() => <String, dynamic>{
-    'links': this.links,
-    'data': this.data
-  };
+
+  Map<String, dynamic> toJson() =>
+      <String, dynamic>{
+        'links': this.links,
+        'data': this.data
+      };
 }
