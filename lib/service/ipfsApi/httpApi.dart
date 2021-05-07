@@ -1,5 +1,7 @@
-import 'package:dio/dio.dart';
 import 'dart:io';
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:encointer_wallet/config/consts.dart';
 
 const String api_get_req = '/api/v0/object/get?arg=';
@@ -44,12 +46,14 @@ class Ipfs {
     }
   }
 
-  Future<void> getCommunityIcons(String cid) async {
+  Future<String> getCommunityIcons(String cid) async {
     final dio = IpfsDio(BaseOptions(baseUrl: gateway));
 
-    final response = await dio.get(cid);
+    final response = await dio.get(cid)
+      .then((r) => Object.fromJson(r.data));
     print("IPFS get response");
     print(response);
+    return response.data;
   }
 
   Future<String> uploadImage(File image) async {
@@ -128,7 +132,16 @@ class Object {
     this.data,
   });
 
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
+
   factory Object.fromJson(Map<String, dynamic> json) {
     return Object(data: json['Data'], links: json['Links']);
   }
+  Map<String, dynamic> toJson() => <String, dynamic>{
+    'links': this.links,
+    'data': this.data
+  };
 }
