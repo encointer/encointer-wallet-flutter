@@ -73,6 +73,9 @@ abstract class _SettingsStore with Store {
   }
 
   @computed
+  String get ipfsGateway => endpoint?.ipfsGateway;
+
+  @computed
   List<EndpointData> get endpointList {
     List<EndpointData> ls = List<EndpointData>.of(networkEndpoints);
     ls.retainWhere((i) => i.info == endpoint.info);

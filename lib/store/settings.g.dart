@@ -70,6 +70,13 @@ mixin _$SettingsStore on _SettingsStore, Store {
           Computed<bool>(() => super.endpointIsCantillon,
               name: '_SettingsStore.endpointIsCantillon'))
       .value;
+  Computed<String> _$ipfsGatewayComputed;
+
+  @override
+  String get ipfsGateway =>
+      (_$ipfsGatewayComputed ??= Computed<String>(() => super.ipfsGateway,
+              name: '_SettingsStore.ipfsGateway'))
+          .value;
   Computed<List<EndpointData>> _$endpointListComputed;
 
   @override
@@ -385,6 +392,7 @@ contactList: ${contactList},
 endpointIsEncointer: ${endpointIsEncointer},
 endpointIsGesell: ${endpointIsGesell},
 endpointIsCantillon: ${endpointIsCantillon},
+ipfsGateway: ${ipfsGateway},
 endpointList: ${endpointList},
 contactListAll: ${contactListAll},
 existentialDeposit: ${existentialDeposit},
