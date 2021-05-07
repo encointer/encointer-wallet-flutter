@@ -234,6 +234,7 @@ abstract class _EncointerStore with Store {
   void setCommunityMetadata(CommunityMetadata meta) {
     communityMetadata = meta;
     cacheObject(encointerCommunityMetadataKey, meta);
+    webApi.ipfs.getCommunityIcons(meta.icons);
   }
 
   @action

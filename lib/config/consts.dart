@@ -61,7 +61,7 @@ const network_ss58_map = {
 };
 
 const String ipfs_gateway_encointer = "http://ipfs.encointer.org:8080"; // AVD: 10.0.2.2 = 127.0.0.1
-const String ipfs_gateway_local = 'http://127.0.0.1:8080';
+const String ipfs_gateway_local = 'http://10.0.2.2:8080';
 
 const int ert_decimals = 12;
 const int encointer_currencies_decimals = 18;

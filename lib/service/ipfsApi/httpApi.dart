@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'dart:io';
 import 'package:encointer_wallet/config/consts.dart';
 
+const String api_get_req = '/api/v0/object/get?arg=';
+
 class Ipfs {
   // Todo: remove default -> migrate bazaar to use ipfs field from webApi instance
   Ipfs({this.gateway = ipfs_gateway_encointer});
@@ -10,10 +12,9 @@ class Ipfs {
 
   Future getJson(String cid) async {
     try {
-      final Dio _dio = Dio();
-      _dio.options.baseUrl = gateway;
+      final dio = IpfsDio(BaseOptions(baseUrl: gateway));
 
-      final response = await _dio.get('/api/v0/object/get?arg=$cid');
+      final response = await dio.get(cid);
       var object = Object.fromJson(response.data);
 
       // TODO: Better solution available to remove preceding and trailing characters of json?
@@ -41,6 +42,14 @@ class Ipfs {
       print(e);
       return 0;
     }
+  }
+
+  Future<void> getCommunityIcons(String cid) async {
+    final dio = IpfsDio(BaseOptions(baseUrl: gateway));
+
+    final response = await dio.get(cid);
+    print("IPFS get response");
+    print(response);
   }
 
   Future<String> uploadImage(File image) async {
@@ -91,6 +100,20 @@ class Ipfs {
       print("Ipfs upload of json error " + e);
       return "";
     }
+  }
+}
+
+class IpfsDio {
+  IpfsDio([BaseOptions options]) {
+    this.dio = Dio(options);
+  }
+
+  Dio dio;
+
+  Future<Response<T>> get<T>(String cid) async {
+    final String req = '$api_get_req$cid/icons/community_icon.png';
+    print("Ipfs req: $req");
+    return dio.get(req);
   }
 }
 
