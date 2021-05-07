@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:encointer_wallet/config/consts.dart';
 
 class Ipfs {
-  Ipfs({this.gateway = ipfs_gateway_address});
+  Ipfs({this.gateway = ipfs_gateway_encointer});
 
   final String gateway;
 
