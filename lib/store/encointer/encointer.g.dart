@@ -23,13 +23,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
           () => super.communitySymbol,
           name: '_EncointerStore.communitySymbol'))
       .value;
-  Computed<String> _$communityIconsComputed;
+  Computed<String> _$communityIconsCidComputed;
 
   @override
-  String get communityIcons =>
-      (_$communityIconsComputed ??= Computed<String>(() => super.communityIcons,
-              name: '_EncointerStore.communityIcons'))
-          .value;
+  String get communityIconsCid => (_$communityIconsCidComputed ??=
+          Computed<String>(() => super.communityIconsCid,
+              name: '_EncointerStore.communityIconsCid'))
+      .value;
 
   final _$currentPhaseAtom = Atom(name: '_EncointerStore.currentPhase');
 
@@ -616,7 +616,7 @@ txsTransfer: ${txsTransfer},
 shopRegistry: ${shopRegistry},
 communityName: ${communityName},
 communitySymbol: ${communitySymbol},
-communityIcons: ${communityIcons}
+communityIconsCid: ${communityIconsCid}
     ''';
   }
 }

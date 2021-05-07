@@ -478,12 +478,7 @@ class _AssetsState extends State<Assets> {
                     key: Key('cid-asset'),
                     leading: Container(
                       width: 36,
-                      child: Image.network(
-                          webApi.ipfs.getCommunityIconsUrl(store.encointer.communityIcons, devicePixelRatio),
-                          errorBuilder: (_, error, __) {
-                        print("Image.network error: ${error.toString()}");
-                        return Image.asset('assets/images/assets/ERT.png');
-                      }),
+                      child: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio),
                     ),
                     title: Text(store.encointer.communityName + " (${store.encointer.communitySymbol})"),
                     trailing: store.encointer.balanceEntries[store.encointer.chosenCid] != null

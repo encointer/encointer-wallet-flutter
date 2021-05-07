@@ -103,7 +103,7 @@ abstract class _EncointerStore with Store {
   String get communitySymbol => communityMetadata?.symbol;
 
   @computed
-  String get communityIcons => communityMetadata?.icons;
+  String get communityIconsCid => communityMetadata?.icons;
 
 
   @action

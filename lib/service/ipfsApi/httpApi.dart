@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:encointer_wallet/config/consts.dart';
 
@@ -44,6 +45,15 @@ class Ipfs {
       print(e);
       return 0;
     }
+  }
+
+  Image getCommunityIcon(String cid, double devicePixelRatio) {
+    return Image.network(
+        getCommunityIconsUrl(cid, devicePixelRatio),
+        errorBuilder: (_, error, __) {
+          print("Image.network error: ${error.toString()}");
+          return Image.asset('assets/images/assets/ERT.png');
+        });
   }
 
   String getCommunityIconsUrl(String cid, double devicePixelRatio) {
