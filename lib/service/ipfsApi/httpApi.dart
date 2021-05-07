@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:encointer_wallet/config/consts.dart';
 
-const String api_get_req = '/api/v0/object/get?arg=';
+
 
 class Ipfs {
   // Todo: remove default -> migrate bazaar to use ipfs field from webApi instance
@@ -115,6 +115,8 @@ class Ipfs {
   }
 }
 
+const String getRequest = '/api/v0/object/get?arg=';
+
 class IpfsDio {
   IpfsDio([BaseOptions options]) {
     this.dio = Dio(options);
@@ -123,9 +125,7 @@ class IpfsDio {
   Dio dio;
 
   Future<Response<T>> get<T>(String cid) async {
-    final String req = '$api_get_req$cid/icons/community_icon.png';
-    print("Ipfs req: $req");
-    return dio.get(req);
+    return dio.get('$getRequest$cid');
   }
 }
 
