@@ -46,14 +46,22 @@ class Ipfs {
     }
   }
 
-  Future<String> getCommunityIcons(String cid) async {
-    final dio = IpfsDio(BaseOptions(baseUrl: gateway));
+  String getCommunityIconsUrl(String cid, double devicePixelRatio) {
+    return '$gateway/ipfs/$cid/icons/${devicePixelRatioToResolution(devicePixelRatio)}community_icon.png';
+  }
 
-    final response = await dio.get(cid)
-      .then((r) => Object.fromJson(r.data));
-    print("IPFS get response");
-    print(response);
-    return response.data;
+  String devicePixelRatioToResolution(double ratio) {
+    if (ratio < 0) {
+      print("[Error] invalid devicePixelRation returning 1.0x");
+      return '';
+    } else if (ratio < 1.8) {
+      // normal resolution is on top level.
+      return '';
+    } else if (ratio < 2.7) {
+      return '2.0x/';
+    } else {
+      return '3.0x/';
+    }
   }
 
   Future<String> uploadImage(File image) async {

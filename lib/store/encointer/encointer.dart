@@ -1,6 +1,3 @@
-import 'dart:typed_data';
-import 'dart:convert';
-
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -99,14 +96,15 @@ abstract class _EncointerStore with Store {
   @observable
   List<String> shopRegistry;
 
-  @observable
-  Uint8List communityIcon;
-
   @computed
   String get communityName => communityMetadata?.name;
 
   @computed
   String get communitySymbol => communityMetadata?.symbol;
+
+  @computed
+  String get communityIcons => communityMetadata?.icons;
+
 
   @action
   void setCurrentPhase(CeremonyPhase phase) {
@@ -232,11 +230,6 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setCommunityIcon(Uint8List imgData) {
-    communityIcon = imgData;
-  }
-
-  @action
   void setCommunityIdentifiers(List<String> cids) {
     communityIdentifiers = cids;
   }
@@ -245,11 +238,6 @@ abstract class _EncointerStore with Store {
   void setCommunityMetadata(CommunityMetadata meta) {
     communityMetadata = meta;
     cacheObject(encointerCommunityMetadataKey, meta);
-    webApi.ipfs.getCommunityIcons(meta.icons)
-      .then((imgStr) {
-        print("[Debug] Setting community icon");
-        setCommunityIcon(Uint8List.fromList(utf8.encode(imgStr)));
-    });
   }
 
   @action

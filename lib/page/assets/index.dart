@@ -1,9 +1,11 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:encointer_wallet/common/components/BorderedTitle.dart';
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
+import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
 import 'package:encointer_wallet/page/account/scanPage.dart';
@@ -11,7 +13,6 @@ import 'package:encointer_wallet/page/account/uos/qrSignerPage.dart';
 import 'package:encointer_wallet/page/assets/asset/assetPage.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
 import 'package:encointer_wallet/service/notification.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/assets/types/balancesInfo.dart';
@@ -453,6 +454,8 @@ class _AssetsState extends State<Assets> {
 
   Widget _communityCurrencyAssets(BuildContext context, AppStore store) {
     final Map dic = I18n.of(context).assets;
+    final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
+
     return Column(
       children: [
         Padding(
@@ -473,9 +476,14 @@ class _AssetsState extends State<Assets> {
                   margin: EdgeInsets.only(top: 16),
                   child: ListTile(
                     key: Key('cid-asset'),
-                    leading: Container(
+                    leading: Image.network(
+                      webApi.ipfs.getCommunityIconsUrl(store.encointer.communityIcons, devicePixelRatio),
+                      fit: BoxFit.cover,
                       width: 36,
-                      child: Image.asset('assets/images/assets/ERT.png'),
+                      errorBuilder: (_, error, __) {
+                        print("Image.network error: ${error.toString()}");
+                        return  Image.asset('assets/images/assets/ERT.png');
+                      }
                     ),
                     title: Text(store.encointer.communityName + " (${store.encointer.communitySymbol})"),
                     trailing: store.encointer.balanceEntries[store.encointer.chosenCid] != null
