@@ -476,14 +476,14 @@ class _AssetsState extends State<Assets> {
                   margin: EdgeInsets.only(top: 16),
                   child: ListTile(
                     key: Key('cid-asset'),
-                    leading: Image.network(
-                      webApi.ipfs.getCommunityIconsUrl(store.encointer.communityIcons, devicePixelRatio),
-                      fit: BoxFit.cover,
+                    leading: Container(
                       width: 36,
-                      errorBuilder: (_, error, __) {
+                      child: Image.network(
+                          webApi.ipfs.getCommunityIconsUrl(store.encointer.communityIcons, devicePixelRatio),
+                          errorBuilder: (_, error, __) {
                         print("Image.network error: ${error.toString()}");
-                        return  Image.asset('assets/images/assets/ERT.png');
-                      }
+                        return Image.asset('assets/images/assets/ERT.png');
+                      }),
                     ),
                     title: Text(store.encointer.communityName + " (${store.encointer.communitySymbol})"),
                     trailing: store.encointer.balanceEntries[store.encointer.chosenCid] != null
