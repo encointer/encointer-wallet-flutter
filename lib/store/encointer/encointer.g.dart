@@ -16,6 +16,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
       (_$communityNameComputed ??= Computed<String>(() => super.communityName,
               name: '_EncointerStore.communityName'))
           .value;
+  Computed<String> _$communitySymbolComputed;
+
+  @override
+  String get communitySymbol => (_$communitySymbolComputed ??= Computed<String>(
+          () => super.communitySymbol,
+          name: '_EncointerStore.communitySymbol'))
+      .value;
 
   final _$currentPhaseAtom = Atom(name: '_EncointerStore.currentPhase');
 
@@ -600,7 +607,8 @@ claimHex: ${claimHex},
 attestations: ${attestations},
 txsTransfer: ${txsTransfer},
 shopRegistry: ${shopRegistry},
-communityName: ${communityName}
+communityName: ${communityName},
+communitySymbol: ${communitySymbol}
     ''';
   }
 }
