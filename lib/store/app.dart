@@ -50,10 +50,23 @@ abstract class _AppStore with Store {
     assets.loadCache();
 
     chain = ChainStore(this);
+    chain.loadCache();
 
     encointer = EncointerStore(this);
     encointer.loadCache();
 
     isReady = true;
+  }
+
+  Future<void> cacheObject(String key, value) {
+    return localStorage.setObject(getCacheKey(key), value);
+  }
+
+  Future<Object> loadObject(String key) {
+    return localStorage.getObject(getCacheKey(key));
+  }
+
+  String getCacheKey(String key) {
+    return '${settings.endpoint.info}_$key';
   }
 }

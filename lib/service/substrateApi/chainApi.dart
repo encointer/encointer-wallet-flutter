@@ -37,7 +37,7 @@ class ChainApi {
     apiRoot.subscribeMessage('chain.subscribeNewHeads("$_newHeadsSubscribeChannel")', _newHeadsSubscribeChannel,
             (header) {
           print("Latest header: $header");
-          store.chain.setLatestHead(Header.fromJson(header));
+          store.chain.setLatestHeader(Header.fromJson(header));
         });
   }
 }

@@ -14,10 +14,18 @@ abstract class _ChainStore with Store {
 
   final AppStore rootStore;
 
-  @observable
-  Header latestHead;
+  final String latestHeaderKey = 'chain_latest_header';
 
-  void setLatestHead(Header latest) {
-    latestHead = latest;
+  @observable
+  Header latestHeader;
+
+  @action
+  void setLatestHeader(Header latest) {
+    latestHeader = latest;
+    rootStore.cacheObject(latestHeaderKey, latest);
+  }
+
+  Future<void> loadCache() async {
+    latestHeader = await rootStore.loadObject(latestHeaderKey);
   }
 }

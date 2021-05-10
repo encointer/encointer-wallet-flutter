@@ -386,19 +386,15 @@ abstract class _EncointerStore with Store {
   }
 
   Future<void> cacheObject(String key, value) {
-    return rootStore.localStorage.setObject(_getCacheKey(key), value);
+    return rootStore.cacheObject(key, value);
   }
 
   Future<Object> loadObject(String key) {
-    return rootStore.localStorage.getObject(_getCacheKey(key));
-  }
-
-  String _getCacheKey(String key) {
-    return '${rootStore.settings.endpoint.info}_$key';
+    return rootStore.loadObject(key);
   }
 
   Future<CeremonyPhase> loadCurrentPhase() async {
-    Object obj = await rootStore.localStorage.getObject(_getCacheKey(encointerCurrentPhaseKey));
+    Object obj = await rootStore.loadObject(encointerCurrentPhaseKey);
     return getEnumFromString(CeremonyPhase.values, obj);
   }
 }
