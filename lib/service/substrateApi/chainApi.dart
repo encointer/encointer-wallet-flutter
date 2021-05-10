@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/store/chain/types/header.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 
 class ChainApi {
@@ -34,6 +35,9 @@ class ChainApi {
   /// Subscribes to the latest headers
   Future<void> subscribeNewHeads() async {
     apiRoot.subscribeMessage('chain.subscribeNewHeads("$_newHeadsSubscribeChannel")', _newHeadsSubscribeChannel,
-            (header) => {print("Latest header: $header")});
+            (header) {
+          print("Latest header: $header");
+          store.chain.setLatestHead(Header.fromJson(header));
+        });
   }
 }

@@ -2,6 +2,7 @@ import 'package:mobx/mobx.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/assets/assets.dart';
 import 'package:encointer_wallet/store/encointer/encointer.dart';
+import 'package:encointer_wallet/store/chain/chain.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/localStorage.dart';
 
@@ -26,6 +27,9 @@ abstract class _AppStore with Store {
   AssetsStore assets;
 
   @observable
+  ChainStore chain;
+
+  @observable
   EncointerStore encointer;
 
   @observable
@@ -43,8 +47,9 @@ abstract class _AppStore with Store {
     await account.loadAccount();
 
     assets = AssetsStore(this);
-
     assets.loadCache();
+
+    chain = ChainStore(this);
 
     encointer = EncointerStore(this);
     encointer.loadCache();
