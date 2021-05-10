@@ -30,6 +30,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
           Computed<String>(() => super.communityIconsCid,
               name: '_EncointerStore.communityIconsCid'))
       .value;
+  Computed<dynamic> _$canComputeDemurrageComputed;
+
+  @override
+  dynamic get canComputeDemurrage => (_$canComputeDemurrageComputed ??=
+          Computed<dynamic>(() => super.canComputeDemurrage,
+              name: '_EncointerStore.canComputeDemurrage'))
+      .value;
 
   final _$currentPhaseAtom = Atom(name: '_EncointerStore.currentPhase');
 
@@ -643,7 +650,8 @@ txsTransfer: ${txsTransfer},
 shopRegistry: ${shopRegistry},
 communityName: ${communityName},
 communitySymbol: ${communitySymbol},
-communityIconsCid: ${communityIconsCid}
+communityIconsCid: ${communityIconsCid},
+canComputeDemurrage: ${canComputeDemurrage}
     ''';
   }
 }

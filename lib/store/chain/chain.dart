@@ -25,6 +25,9 @@ abstract class _ChainStore with Store {
     rootStore.cacheObject(latestHeaderKey, latest);
   }
 
+  @computed
+  get latestHeaderNumber => latestHeader?.number;
+
   Future<void> loadCache() async {
     latestHeader = await rootStore.loadObject(latestHeaderKey);
   }

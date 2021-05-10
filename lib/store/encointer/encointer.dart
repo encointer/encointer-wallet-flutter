@@ -108,6 +108,13 @@ abstract class _EncointerStore with Store {
   @computed
   String get communityIconsCid => communityMetadata?.icons;
 
+  @computed
+  get canComputeDemurrage {
+    return (balanceEntries[chosenCid] != null &&
+        demurrage != null &&
+        rootStore.chain.latestHeaderNumber != null
+    );
+  }
 
   @action
   void setCurrentPhase(CeremonyPhase phase) {
