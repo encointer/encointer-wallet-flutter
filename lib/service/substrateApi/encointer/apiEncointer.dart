@@ -147,6 +147,25 @@ class ApiEncointer {
     store.encointer.setCommunityMetadata(meta);
   }
 
+  /// Queries the Communities and the Balances pallet:
+  ///   encointerCommunities.demurragePerBloc(cid)
+  ///   encointerBalances.defaultDemurragePerBlock
+  ///
+  /// If the custom demurrage for a community is given, that is returned otherwise
+  /// the default set in the balances pallet is returned
+  ///
+  /// This is on-chain in Cantillon
+  Future<void> getDemurrage() async {
+    String cid = store.encointer.chosenCid;
+    if (cid == null) {
+      return;
+   }
+    
+    double dem = await apiRoot.evalJavascript('encointer.getDemurrage("$cid")');
+    print("api: fetched demurrage: $dem");
+    store.encointer.setDemurrage(dem);
+  }
+
   /// Calls the custom rpc: api.rpc.communities.communitiesGetAll()
   Future<void> communitiesGetAll() async {
     List<CidName> cn =  await apiRoot.evalJavascript('encointer.communitiesGetAll()')

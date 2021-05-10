@@ -84,6 +84,9 @@ abstract class _EncointerStore with Store {
   CommunityMetadata communityMetadata;
 
   @observable
+  double demurrage;
+
+  @observable
   String claimHex;
 
   @observable
@@ -246,6 +249,11 @@ abstract class _EncointerStore with Store {
   }
 
   @action
+  void setDemurrage(double demurrage) {
+    demurrage = demurrage;
+  }
+
+  @action
   void setChosenCid(String cid) {
     if (chosenCid != cid) {
       chosenCid = cid;
@@ -262,6 +270,7 @@ abstract class _EncointerStore with Store {
       webApi.encointer.getParticipantCount();
       webApi.encointer.getEncointerBalance();
       webApi.encointer.getCommunityMetadata();
+      webApi.encointer.getDemurrage();
     }
   }
 

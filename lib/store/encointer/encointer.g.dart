@@ -263,6 +263,21 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
+  final _$demurrageAtom = Atom(name: '_EncointerStore.demurrage');
+
+  @override
+  double get demurrage {
+    _$demurrageAtom.reportRead();
+    return super.demurrage;
+  }
+
+  @override
+  set demurrage(double value) {
+    _$demurrageAtom.reportWrite(value, super.demurrage, () {
+      super.demurrage = value;
+    });
+  }
+
   final _$claimHexAtom = Atom(name: '_EncointerStore.claimHex');
 
   @override
@@ -494,6 +509,17 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
+  void setDemurrage(double demurrage) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(
+        name: '_EncointerStore.setDemurrage');
+    try {
+      return super.setDemurrage(demurrage);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setChosenCid(String cid) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.setChosenCid');
@@ -610,6 +636,7 @@ communityIdentifiers: ${communityIdentifiers},
 communities: ${communities},
 chosenCid: ${chosenCid},
 communityMetadata: ${communityMetadata},
+demurrage: ${demurrage},
 claimHex: ${claimHex},
 attestations: ${attestations},
 txsTransfer: ${txsTransfer},
