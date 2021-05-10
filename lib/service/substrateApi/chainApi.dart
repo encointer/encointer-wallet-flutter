@@ -9,7 +9,7 @@ class ChainApi {
   final store = globalAppStore;
 
   final String _timeStampSubscribeChannel = 'timestamp';
-  final String _newHeadsSubscribeChannel = 'timestamp';
+  final String _newHeadsSubscribeChannel = 'latestHeader';
 
 
   Future<void> startSubscriptions() async {
