@@ -151,8 +151,9 @@ class ApiEncointer {
   ///   encointerCommunities.demurragePerBloc(cid)
   ///   encointerBalances.defaultDemurragePerBlock
   ///
-  /// If the custom demurrage for a community is given, that is returned otherwise
-  /// the default set in the balances pallet is returned
+  /// Returns the community specific demurrage if defined,
+  /// otherwise the default demurrage from the balances pallet
+  /// is returned.
   ///
   /// This is on-chain in Cantillon
   Future<void> getDemurrage() async {
