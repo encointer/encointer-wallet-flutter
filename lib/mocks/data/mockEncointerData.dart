@@ -25,6 +25,8 @@ const Map<String, dynamic> communityMetadata = {
   'url': null
 };
 
+const double demurrage = 1.1267607882072287e-7;
+
 const Map<String, dynamic> claim = {
   'claimant_public': '5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY',
   'ceremony_index': 63,
