@@ -111,20 +111,20 @@ abstract class _EncointerStore with Store {
   String get communityIconsCid => communityMetadata?.icons;
 
   @computed
-  BalanceEntry get currentBalanceEntry {
+  BalanceEntry get communityBalanceEntry {
     return balanceEntries[chosenCid];
   }
 
   @computed
-  double get encointerBalance {
+  double get communityBalance {
     double res;
     if (rootStore.chain.latestHeaderNumber != null &&
-        currentBalanceEntry != null &&
+        communityBalanceEntry != null &&
         demurrage != null
     ) {
-      int elapsed = rootStore.chain.latestHeaderNumber - currentBalanceEntry.lastUpdate;
+      int elapsed = rootStore.chain.latestHeaderNumber - communityBalanceEntry.lastUpdate;
       double exponent = -demurrage * elapsed;
-      res = currentBalanceEntry.principal * pow(e, exponent);
+      res = communityBalanceEntry.principal * pow(e, exponent);
     }
     return res;
   }

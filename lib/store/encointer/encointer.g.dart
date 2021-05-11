@@ -30,19 +30,19 @@ mixin _$EncointerStore on _EncointerStore, Store {
           Computed<String>(() => super.communityIconsCid,
               name: '_EncointerStore.communityIconsCid'))
       .value;
-  Computed<BalanceEntry> _$currentBalanceEntryComputed;
+  Computed<BalanceEntry> _$communityBalanceEntryComputed;
 
   @override
-  BalanceEntry get currentBalanceEntry => (_$currentBalanceEntryComputed ??=
-          Computed<BalanceEntry>(() => super.currentBalanceEntry,
-              name: '_EncointerStore.currentBalanceEntry'))
+  BalanceEntry get communityBalanceEntry => (_$communityBalanceEntryComputed ??=
+          Computed<BalanceEntry>(() => super.communityBalanceEntry,
+              name: '_EncointerStore.communityBalanceEntry'))
       .value;
-  Computed<double> _$encointerBalanceComputed;
+  Computed<double> _$communityBalanceComputed;
 
   @override
-  double get encointerBalance => (_$encointerBalanceComputed ??=
-          Computed<double>(() => super.encointerBalance,
-              name: '_EncointerStore.encointerBalance'))
+  double get communityBalance => (_$communityBalanceComputed ??=
+          Computed<double>(() => super.communityBalance,
+              name: '_EncointerStore.communityBalance'))
       .value;
 
   final _$currentPhaseAtom = Atom(name: '_EncointerStore.currentPhase');
@@ -523,11 +523,11 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setDemurrage(double demurrage) {
+  void setDemurrage(double d) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.setDemurrage');
     try {
-      return super.setDemurrage(demurrage);
+      return super.setDemurrage(d);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }
@@ -658,8 +658,8 @@ shopRegistry: ${shopRegistry},
 communityName: ${communityName},
 communitySymbol: ${communitySymbol},
 communityIconsCid: ${communityIconsCid},
-currentBalanceEntry: ${currentBalanceEntry},
-encointerBalance: ${encointerBalance}
+communityBalanceEntry: ${communityBalanceEntry},
+communityBalance: ${communityBalance}
     ''';
   }
 }
