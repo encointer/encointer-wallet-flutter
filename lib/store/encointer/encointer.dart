@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -109,11 +111,22 @@ abstract class _EncointerStore with Store {
   String get communityIconsCid => communityMetadata?.icons;
 
   @computed
-  get canComputeDemurrage {
-    return (balanceEntries[chosenCid] != null &&
-        demurrage != null &&
-        rootStore.chain.latestHeaderNumber != null
-    );
+  BalanceEntry get currentBalanceEntry {
+    return balanceEntries[chosenCid];
+  }
+
+  @computed
+  double get encointerBalance {
+    double res;
+    if (rootStore.chain.latestHeaderNumber != null &&
+        currentBalanceEntry != null &&
+        demurrage != null
+    ) {
+      int elapsed = rootStore.chain.latestHeaderNumber - currentBalanceEntry.lastUpdate;
+      double exponent = -demurrage * elapsed;
+      res = currentBalanceEntry.principal * pow(e, exponent);
+    }
+    return res;
   }
 
   @action
@@ -256,8 +269,8 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setDemurrage(double demurrage) {
-    demurrage = demurrage;
+  void setDemurrage(double d) {
+    demurrage = d;
   }
 
   @action

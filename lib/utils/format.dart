@@ -7,7 +7,6 @@ import 'package:base58check/base58.dart';
 import 'package:base58check/base58check.dart';
 import 'package:convert/convert.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
-import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
@@ -59,16 +58,6 @@ class Fmt {
     } else {
       return BigInt.parse(raw);
     }
-  }
-
-  static String demurrage(BalanceEntry entry, int currentBlock, double demurrage,{
-    int length = 3,
-    int round = 0,
-  }) {
-    int elapsed = currentBlock - entry.lastUpdate;
-    double exponent = -demurrage * elapsed;
-    double res = entry.principal * pow(e, exponent);
-    return doubleFormat(res, length: length, round: round);
   }
 
   /// number transform 2:

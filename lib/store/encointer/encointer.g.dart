@@ -30,12 +30,19 @@ mixin _$EncointerStore on _EncointerStore, Store {
           Computed<String>(() => super.communityIconsCid,
               name: '_EncointerStore.communityIconsCid'))
       .value;
-  Computed<dynamic> _$canComputeDemurrageComputed;
+  Computed<BalanceEntry> _$currentBalanceEntryComputed;
 
   @override
-  dynamic get canComputeDemurrage => (_$canComputeDemurrageComputed ??=
-          Computed<dynamic>(() => super.canComputeDemurrage,
-              name: '_EncointerStore.canComputeDemurrage'))
+  BalanceEntry get currentBalanceEntry => (_$currentBalanceEntryComputed ??=
+          Computed<BalanceEntry>(() => super.currentBalanceEntry,
+              name: '_EncointerStore.currentBalanceEntry'))
+      .value;
+  Computed<double> _$encointerBalanceComputed;
+
+  @override
+  double get encointerBalance => (_$encointerBalanceComputed ??=
+          Computed<double>(() => super.encointerBalance,
+              name: '_EncointerStore.encointerBalance'))
       .value;
 
   final _$currentPhaseAtom = Atom(name: '_EncointerStore.currentPhase');
@@ -651,7 +658,8 @@ shopRegistry: ${shopRegistry},
 communityName: ${communityName},
 communitySymbol: ${communitySymbol},
 communityIconsCid: ${communityIconsCid},
-canComputeDemurrage: ${canComputeDemurrage}
+currentBalanceEntry: ${currentBalanceEntry},
+encointerBalance: ${encointerBalance}
     ''';
   }
 }

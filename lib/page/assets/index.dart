@@ -481,13 +481,9 @@ class _AssetsState extends State<Assets> {
                       child: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio),
                     ),
                     title: Text(store.encointer.communityName + " (${store.encointer.communitySymbol})"),
-                    trailing: store.encointer.canComputeDemurrage
+                    trailing: store.encointer.encointerBalance != null
                         ? Text(
-                            Fmt.demurrage(
-                                store.encointer.balanceEntries[store.encointer.chosenCid],
-                                store.chain.latestHeaderNumber,
-                                store.encointer.demurrage
-                            ),
+                            Fmt.doubleFormat(store.encointer.encointerBalance),
                             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
                           )
                         : CupertinoActivityIndicator(),
