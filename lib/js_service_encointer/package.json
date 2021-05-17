@@ -9,7 +9,7 @@
     "build": "webpack --stats-error-details true",
     "encointer:link": "./scripts/encointer-link.cjs",
     "encointer:unlink": "./scripts/encointer-unlink.cjs",
-    "test": "jest -i --watch"
+    "test": "polkadot-dev-run-test"
   },
   "exports": {
     ".": "./src/index.js",
@@ -39,6 +39,8 @@
   "devDependencies": {
     "@babel/core": "^7.14.0",
     "@babel/preset-env": "^7.14.0",
+    "@babel/register": "^7.13.16",
+    "@babel/runtime": "^7.14.0",
     "@jest/globals": "^26.6.2",
     "@polkadot/dev": "0.62.11",
     "@webpack-cli/info": "^0.2.0",
