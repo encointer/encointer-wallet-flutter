@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/page-encointer/common/assignmentPanel.dart';
-import 'package:encointer_wallet/page-encointer/meetup/MeetupPage.dart';
 import 'package:encointer_wallet/page-encointer/meetup/confirmAttendeesDialog.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -63,9 +62,9 @@ class _AssigningPageState extends State<AssigningPage> {
   }
 
   Future<void> _startMeetup(BuildContext context) async {
-    var amount = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConfirmAttendeesDialog()));
-    var args = {'confirmedParticipants': amount};
-    Navigator.pushNamed(context, MeetupPage.route, arguments: args);
+    var _amount = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConfirmAttendeesDialog()));
+    // var args = {'confirmedParticipants': amount};
+    // Navigator.pushNamed(context, MeetupPage.route, arguments: args);
   }
 
   @override
