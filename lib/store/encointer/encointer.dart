@@ -295,27 +295,8 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void addYourAttestation(int idx, String att) {
-    attestations[idx].setYourAttestation(att);
-    cacheAttestationStates(attestations);
-  }
-
-  @action
-  void addOtherAttestation(int idx, String att) {
-    attestations[idx].setOtherAttestation(att);
-    cacheAttestationStates(attestations);
-  }
-
-  @action
-  void updateAttestationStep(int idx, CurrentAttestationStep step) {
-    attestations[idx].setAttestationStep(step);
-    cacheAttestationStates(attestations);
-  }
-
-  @action
   void purgeAttestations() {
-    attestations.clear();
-    cacheAttestationStates(attestations);
+    // Todo: rename to purgeClaims and fill method stub.
   }
 
   @action
