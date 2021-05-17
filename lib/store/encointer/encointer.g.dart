@@ -545,39 +545,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void addYourAttestation(int idx, String att) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(
-        name: '_EncointerStore.addYourAttestation');
-    try {
-      return super.addYourAttestation(idx, att);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void addOtherAttestation(int idx, String att) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(
-        name: '_EncointerStore.addOtherAttestation');
-    try {
-      return super.addOtherAttestation(idx, att);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void updateAttestationStep(int idx, CurrentAttestationStep step) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(
-        name: '_EncointerStore.updateAttestationStep');
-    try {
-      return super.updateAttestationStep(idx, step);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void purgeAttestations() {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.purgeAttestations');
