@@ -67,9 +67,6 @@ abstract class _EncointerStore with Store {
   int participantCount;
 
   @observable
-  ClaimOfAttendance myClaim;
-
-  @observable
   Map<String, BalanceEntry> balanceEntries = new ObservableMap();
 
   @observable
@@ -166,7 +163,6 @@ abstract class _EncointerStore with Store {
         setMeetupTime();
         setMeetupRegistry();
         setMyMeetupRegistryIndex();
-        setMyClaim();
         setClaimHex();
         break;
       case CeremonyPhase.ASSIGNING:
@@ -236,12 +232,6 @@ abstract class _EncointerStore with Store {
     print("store: set meetupRegistry to $reg");
     cacheObject(encointerMeetupRegistryKey, reg);
     meetupRegistry = reg;
-  }
-
-  @action
-  void setMyClaim([ClaimOfAttendance claim]) {
-    print("store: set myClaim to $claim");
-    myClaim = claim;
   }
 
   @action

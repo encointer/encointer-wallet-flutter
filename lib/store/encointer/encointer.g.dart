@@ -9,6 +9,13 @@ part of 'encointer.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$EncointerStore on _EncointerStore, Store {
+  Computed<dynamic> _$scannedClaimsCountComputed;
+
+  @override
+  dynamic get scannedClaimsCount => (_$scannedClaimsCountComputed ??=
+          Computed<dynamic>(() => super.scannedClaimsCount,
+              name: '_EncointerStore.scannedClaimsCount'))
+      .value;
   Computed<String> _$communityNameComputed;
 
   @override
@@ -181,21 +188,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   set participantCount(int value) {
     _$participantCountAtom.reportWrite(value, super.participantCount, () {
       super.participantCount = value;
-    });
-  }
-
-  final _$myClaimAtom = Atom(name: '_EncointerStore.myClaim');
-
-  @override
-  ClaimOfAttendance get myClaim {
-    _$myClaimAtom.reportRead();
-    return super.myClaim;
-  }
-
-  @override
-  set myClaim(ClaimOfAttendance value) {
-    _$myClaimAtom.reportWrite(value, super.myClaim, () {
-      super.myClaim = value;
     });
   }
 
@@ -458,17 +450,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setMyClaim([ClaimOfAttendance claim]) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(
-        name: '_EncointerStore.setMyClaim');
-    try {
-      return super.setMyClaim(claim);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setClaimHex([String claimHex]) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.setClaimHex');
@@ -557,6 +538,17 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
+  void addParticipantClaim(ClaimOfAttendance claim) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(
+        name: '_EncointerStore.addParticipantClaim');
+    try {
+      return super.addParticipantClaim(claim);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void addBalanceEntry(String cid, BalanceEntry balanceEntry) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.addBalanceEntry');
@@ -612,7 +604,6 @@ meetupRegistry: ${meetupRegistry},
 myMeetupRegistryIndex: ${myMeetupRegistryIndex},
 participantIndex: ${participantIndex},
 participantCount: ${participantCount},
-myClaim: ${myClaim},
 balanceEntries: ${balanceEntries},
 communityIdentifiers: ${communityIdentifiers},
 communities: ${communities},
@@ -623,6 +614,7 @@ claimHex: ${claimHex},
 participantsClaims: ${participantsClaims},
 txsTransfer: ${txsTransfer},
 shopRegistry: ${shopRegistry},
+scannedClaimsCount: ${scannedClaimsCount},
 communityName: ${communityName},
 communitySymbol: ${communitySymbol},
 communityIconsCid: ${communityIconsCid},
