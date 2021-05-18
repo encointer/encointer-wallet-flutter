@@ -23,6 +23,15 @@ class ScanClaimQrCode extends StatelessWidget {
     return Permission.camera.request().isGranted;
   }
 
+  void _showSnackBar(BuildContext context, String msg) {
+      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        backgroundColor: Colors.white,
+        content: Text(msg, style: TextStyle(color: Colors.black54)),
+        duration: Duration(seconds: 2),
+      ));
+  }
+
   @override
   Widget build(BuildContext context) {
     final Map dic = I18n.of(context).encointer;
@@ -30,7 +39,16 @@ class ScanClaimQrCode extends StatelessWidget {
     Future _onScan(String data, String _rawData) async {
       if (data != null) {
         var claim = ClaimOfAttendance.fromJson(json.decode(data));
+
+        String msg = store.encointer.containsClaim(claim) ? dic['claims.scanned.already'] : dic['claims.scanned.new'];
         store.encointer.addParticipantClaim(claim);
+        _showSnackBar(context, msg);
+
+        // if we don't wait, scans are spammed of the same qr code
+        Future.delayed(const Duration(milliseconds: 500), () {
+          _qrViewKey.currentState.startScan();
+        });
+
       } else {
         _qrViewKey.currentState.startScan();
       }

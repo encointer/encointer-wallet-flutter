@@ -292,6 +292,10 @@ abstract class _EncointerStore with Store {
     cacheParticipantsClaims(participantsClaims);
   }
 
+  bool containsClaim(ClaimOfAttendance claim) {
+    return participantsClaims[claim.claimantPublic] != null;
+  }
+
   @action
   void addParticipantClaim(ClaimOfAttendance claim) {
     participantsClaims[claim.claimantPublic] = claim;
