@@ -8,8 +8,8 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 import 'scanQrCode.dart';
 
-class ClaimQrCodeView extends StatelessWidget {
-  ClaimQrCodeView(
+class ClaimQrCode extends StatelessWidget {
+  ClaimQrCode(
     this.store, {
     @required this.title,
     @required this.claim,

@@ -10,7 +10,7 @@ Future<void> startMeetup(BuildContext context, AppStore store) async {
   var claim = await webApi.encointer.signClaimOfAttendance(amount, store.account.cachedPin);
   await Navigator.of(context).push(
     MaterialPageRoute(
-      builder: (BuildContext context) => ClaimQrCodeView(
+      builder: (BuildContext context) => ClaimQrCode(
         store,
         title: 'My Claim of Attendance',
         claim: claim,
