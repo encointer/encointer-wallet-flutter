@@ -365,7 +365,7 @@ class ApiEncointer {
 
   // Below are functions that simply use the Scale-codec already implemented in polkadot-js/api such that we do not
   // have to implement the codec ourselves.
-  void createClaimOfAttendance(int participants) {
+  Future<void> signClaimOfAttendance(int participants, String password) async {
     print("api: create claim with vote=$participants");
     var claim = ClaimOfAttendance(
         store.account.currentAccountPubKey,
@@ -375,16 +375,14 @@ class ApiEncointer {
         store.encointer.meetupLocation,
         store.encointer.meetupTime,
         participants);
-    store.encointer.setMyClaim(claim);
-  }
 
-  Future<String> encodeClaimOfAttendance() async {
-    print("api: encode claim to hex");
-    var claim = jsonEncode(store.encointer.myClaim);
-    print("api: $claim");
-    String claimHex = await apiRoot.evalJavascript('encointer.getClaimOfAttendance($claim)');
-    store.encointer.setClaimHex(claimHex);
-    return claimHex;
+    print("api: sign claim: ${claim.toString()}");
+
+    var claimSigned =  await apiRoot.evalJavascript('encointer.signClaimOfAttendance(${jsonEncode(claim)}, "$password")')
+        .then((c) => ClaimOfAttendance.fromJson(c));
+
+    print("Retrieved signed claim: ${claimSigned.toString()}");
+    // store.encointer.setMyClaim(claim);
   }
 
   Future<ClaimOfAttendance> parseClaimOfAttendance(String claimHex) async {
