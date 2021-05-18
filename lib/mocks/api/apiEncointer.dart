@@ -1,7 +1,6 @@
 import 'package:encointer_wallet/mocks/data/mockEncointerData.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/service/substrateApi/encointer/apiEncointer.dart';
-import 'package:encointer_wallet/store/encointer/types/attestation.dart';
 import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
@@ -92,18 +91,8 @@ class MockApiEncointer extends ApiEncointer {
   Future<void> getDemurrage() async {}
 
   @override
-  Future<AttestationResult> attestClaimOfAttendance(String _claimHex, String _password) async {
-    return AttestationResult.fromJson(attestationMap);
-  }
-
-  @override
   Future<ClaimOfAttendance> parseClaimOfAttendance(String _claimHex) async {
     return Future.value(ClaimOfAttendance.fromJson(claim));
-  }
-
-  @override
-  Future<Attestation> parseAttestation(String _attestationHex) async {
-    return Attestation.fromJson(attestation);
   }
 
   @override
