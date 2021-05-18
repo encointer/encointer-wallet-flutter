@@ -96,14 +96,6 @@ class MockApiEncointer extends ApiEncointer {
   }
 
   @override
-  Future<ClaimOfAttendance> signClaimOfAttendance(int _participants, String pwd) async {
-    _log("warn: signClaimOfAttendance mock is unimplemented");
-    // if (store.encointer.myClaim == null) {
-    //   store.encointer.setMyClaim(ClaimOfAttendance.fromJson(claim));
-    // }
-  }
-
-  @override
   Future<void> getMeetupLocation() async {}
 
   @override
