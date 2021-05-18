@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/encointer/types/attestation.dart';
 import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
@@ -388,28 +387,12 @@ class ApiEncointer {
     return claimHex;
   }
 
-  Future<Attestation> parseAttestation(String attestationHex) async {
-    var attJson = await apiRoot.evalJavascript('encointer.parseAttestation("$attestationHex")');
-    //print("Attestation json: " + attJson.toString());
-    Attestation att = Attestation.fromJson(attJson);
-    //print("Attestation parsed: " + attJson.toString());
-    return att;
-  }
-
   Future<ClaimOfAttendance> parseClaimOfAttendance(String claimHex) async {
     var claimJson = await apiRoot.evalJavascript('encointer.parseClaimOfAttendance("$claimHex")');
     //print("Attestation json: " + attJson.toString());
     ClaimOfAttendance claim = ClaimOfAttendance.fromJson(claimJson);
     //print("Attestation parsed: " + attJson.toString());
     return claim;
-  }
-
-  Future<AttestationResult> attestClaimOfAttendance(String claimHex, String password) async {
-    var pubKey = store.account.currentAccountPubKey;
-    var att = await apiRoot.evalJavascript('account.attestClaimOfAttendance("$claimHex", "$pubKey", "$password")');
-    AttestationResult attestation = AttestationResult.fromJson(att);
-    print("Att: ${attestation.toString()}");
-    return attestation;
   }
 
   Future<ProofOfAttendance> getProofOfAttendance() async {
