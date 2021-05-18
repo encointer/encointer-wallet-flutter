@@ -71,6 +71,7 @@ class ClaimQrCode extends StatelessWidget {
                         child: QrImage(
                           data: claim.toString(),
                           size: 280,
+                          errorCorrectionLevel: QrErrorCorrectLevel.Q,
                           //embeddedImage:
                           //    AssetImage('assets/images/public/app.png'),
                           //embeddedImageStyle:
