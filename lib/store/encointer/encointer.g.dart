@@ -307,18 +307,19 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
-  final _$attestationsAtom = Atom(name: '_EncointerStore.attestations');
+  final _$participantsClaimsAtom =
+      Atom(name: '_EncointerStore.participantsClaims');
 
   @override
-  Map<int, AttestationState> get attestations {
-    _$attestationsAtom.reportRead();
-    return super.attestations;
+  Map<String, ClaimOfAttendance> get participantsClaims {
+    _$participantsClaimsAtom.reportRead();
+    return super.participantsClaims;
   }
 
   @override
-  set attestations(Map<int, AttestationState> value) {
-    _$attestationsAtom.reportWrite(value, super.attestations, () {
-      super.attestations = value;
+  set participantsClaims(Map<String, ClaimOfAttendance> value) {
+    _$participantsClaimsAtom.reportWrite(value, super.participantsClaims, () {
+      super.participantsClaims = value;
     });
   }
 
@@ -619,7 +620,7 @@ chosenCid: ${chosenCid},
 communityMetadata: ${communityMetadata},
 demurrage: ${demurrage},
 claimHex: ${claimHex},
-attestations: ${attestations},
+participantsClaims: ${participantsClaims},
 txsTransfer: ${txsTransfer},
 shopRegistry: ${shopRegistry},
 communityName: ${communityName},
