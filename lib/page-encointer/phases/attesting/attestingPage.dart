@@ -26,7 +26,7 @@ class _AttestingPageState extends State<AttestingPage> {
 
   @override
   Widget build(BuildContext context) {
-    Map dic = I18n.of(context).encointer;
+    final Map dic = I18n.of(context).encointer;
     return SafeArea(
       child: Column(children: <Widget>[
         AssignmentPanel(store),
@@ -43,27 +43,45 @@ class _AttestingPageState extends State<AttestingPage> {
                     : Container(
                         key: Key('start-meetup'),
                         child: RoundedButton(text: dic['meetup.start'], onPressed: () => startMeetup(context, store))),
-              )
+              ),
             ]),
+          ),
+        ),
+        SizedBox(height: 16),
+        Container(
+          width: double.infinity,
+          child: Observer(
+              builder: (_) => RoundedCard(
+                  padding: const EdgeInsets.only(top: 16, bottom: 16),
+                  child: Column(
+                      children: <Widget>[
+                        Text(dic['claims.scanned'].replaceAll('AMOUNT_PLACEHOLDER', store.encointer.scannedClaimsCount.toString())),
+                        ElevatedButton(
+                            child: Text(dic['claims.submit']),
+                            onPressed: store.encointer.scannedClaimsCount > 0 ?
+                                () => _submit(context) :
+                            null
+                        )
+                      ]
+                  )
+              )
           ),
         )
       ]),
     );
   }
 
-  /// Todo: use `attest_claims`
   Future<void> _submit(BuildContext context) async {
+    final dic = I18n.of(context).encointer;
     var args = {
-      "title": 'register_attestations',
+      "title": 'attest_claims',
       "txInfo": {
         "module": 'encointerCeremonies',
-        "call": 'registerAttestations',
+        "call": 'attestClaims',
         "cid": store.encointer.chosenCid,
       },
-      // "detail": "submitting ${attestations.length} attestations for the recent ceremony ",
-      // "params": [attestations],
-//      "rawParam": '[[${attestationsHex.join(',')}]]',
-//      "rawParam": '[$attestations]',
+      "detail": dic['claims.submit.detail'].replaceAll('AMOUNT', store.encointer.scannedClaimsCount),
+      "params": [store.encointer.participantsClaims.values.toList()],
       'onFinish': (BuildContext txPageContext, Map res) {
         Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
       }
