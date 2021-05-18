@@ -6,8 +6,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 // TODO: scan image failed
-class ScanQrCode extends StatelessWidget {
-  ScanQrCode(this.store, this.confirmedParticipantsCount);
+class ScanClaimQrCode extends StatelessWidget {
+  ScanClaimQrCode(this.store, this.confirmedParticipantsCount);
 
   final AppStore store;
   final int confirmedParticipantsCount;
