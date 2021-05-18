@@ -74,11 +74,14 @@ class _AssigningPageState extends State<AssigningPage> {
         AssignmentPanel(store),
         SizedBox(height: 16),
         store.encointer.meetupIndex != null && store.encointer.meetupIndex > 0
-            ? RoundedButton(
-                text:
-                    timeToMeetup > 60 ? "${dic['meetup.remaining']} ${Fmt.hhmmss(timeToMeetup)}" : dic['meetup.start'],
-                onPressed: timeToMeetup > 60 ? null : () => startMeetup(context, store),
-              )
+            ? Container(
+                key: Key('start-meetup'),
+                child: RoundedButton(
+                  text: timeToMeetup > 60
+                      ? "${dic['meetup.remaining']} ${Fmt.hhmmss(timeToMeetup)}"
+                      : dic['meetup.start'],
+                  onPressed: timeToMeetup > 60 ? null : () => startMeetup(context, store),
+                ))
             : Container(),
       ]),
     );
