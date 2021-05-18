@@ -382,7 +382,6 @@ class ApiEncointer {
         .then((c) => ClaimOfAttendance.fromJson(c));
 
     print("Retrieved signed claim: ${claimSigned.toString()}");
-    store.encointer.setMyClaim(claim);
     return claim;
   }
 
