@@ -42,10 +42,9 @@ class _AttestingPageState extends State<AttestingPage> {
               Observer(
                 builder: (_) => ((store.encointer.meetupIndex == null) | (store.encointer.meetupIndex == 0))
                     ? Text(dic['meetup.not.assigned'])
-                    : RoundedButton(
-                        text: dic['meetup.start'],
-                        onPressed: () => startMeetup(context, store),
-                      ),
+                    : Container(
+                        key: Key('start-meetup'),
+                        child: RoundedButton(text: dic['meetup.start'], onPressed: () => startMeetup(context, store))),
               )
             ]),
           ),
