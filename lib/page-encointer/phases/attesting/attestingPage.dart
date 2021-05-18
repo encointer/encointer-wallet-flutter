@@ -1,9 +1,8 @@
 import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/page-encointer/common/assignmentPanel.dart';
-import 'package:encointer_wallet/page-encointer/meetup/confirmAttendeesDialog.dart';
+import 'package:encointer_wallet/page-encointer/meetup/startMeetup.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/attestation.dart';
 import 'package:encointer_wallet/store/encointer/types/attestationState.dart';
@@ -27,12 +26,6 @@ class _AttestingPageState extends State<AttestingPage> {
 
   final AppStore store;
 
-  Future<void> _startMeetup(BuildContext context) async {
-    var _amount = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConfirmAttendeesDialog()));
-    // var args = {'confirmedParticipants': amount};
-    // Navigator.pushNamed(context, MeetupPage.route, arguments: args);
-  }
-
   @override
   Widget build(BuildContext context) {
     Map dic = I18n.of(context).encointer;
@@ -51,7 +44,7 @@ class _AttestingPageState extends State<AttestingPage> {
                     ? Text(dic['meetup.not.assigned'])
                     : RoundedButton(
                         text: dic['meetup.start'],
-                        onPressed: () => _startMeetup(context),
+                        onPressed: () => startMeetup(context, store),
                       ),
               )
             ]),
@@ -87,9 +80,9 @@ class _AttestingPageState extends State<AttestingPage> {
         .toList();
 
     List<Attestation> attestations = [];
-    for (int i = 0; i < attestationsHex.length; i++) {
-      attestations.add(await webApi.encointer.parseAttestation(attestationsHex[i]));
-    }
+    // for (int i = 0; i < attestationsHex.length; i++) {
+    //   attestations.add(await webApi.encointer.parseAttestation(attestationsHex[i]));
+    // }
 
     print("Attestations to be submitted: ");
     attestations.forEach((x) => print(x.toJson()));
