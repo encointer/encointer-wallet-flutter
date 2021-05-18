@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:encointer_wallet/common/components/addressIcon.dart';
@@ -5,17 +6,19 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-class QrCode extends StatelessWidget {
-  QrCode(
+import 'scanQrCode.dart';
+
+class ClaimQrCodeView extends StatelessWidget {
+  ClaimQrCodeView(
     this.store, {
     @required this.title,
-    @required this.qrCodeData,
+    @required this.claim,
   });
 
   final AppStore store;
 
   final String title;
-  final String qrCodeData;
+  final ClaimOfAttendance claim;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +68,7 @@ class QrCode extends StatelessWidget {
                           borderRadius: BorderRadius.all(const Radius.circular(8)),
                         ),
                         child: QrImage(
-                          data: qrCodeData,
+                          data: claim.toString(),
                           size: 280,
                           //embeddedImage:
                           //    AssetImage('assets/images/public/app.png'),
@@ -94,7 +97,14 @@ class QrCode extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            onPressed: () => Navigator.pop(context),
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (BuildContext context) =>
+                                      ScanQrCode(store, claim.numberOfParticipantsConfirmed),
+                                ),
+                              );
+                            },
                           ),
                         ),
                       ])
