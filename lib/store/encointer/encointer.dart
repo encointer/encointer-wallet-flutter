@@ -93,6 +93,9 @@ abstract class _EncointerStore with Store {
   @observable
   Map<String, ClaimOfAttendance> participantsClaims = new ObservableMap();
 
+  @computed
+  get scannedClaimsCount => participantsClaims.length;
+
   @observable
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
 
