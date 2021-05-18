@@ -22,7 +22,8 @@ class ClaimQrCode extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color themeColor = Theme.of(context).primaryColor;
+    final dic = I18n.of(context).encointer;
+    final Color themeColor = Theme.of(context).primaryColor;
 
     return Scaffold(
       backgroundColor: Colors.grey,
@@ -80,7 +81,7 @@ class ClaimQrCode extends StatelessWidget {
                         Container(
                           padding: EdgeInsets.only(top: 16, bottom: 16),
                           child: ElevatedButton(
-                            child: Text(I18n.of(context).encointer['done']),
+                            child: Text(dic['done']),
                             onPressed: () => Navigator.pop(context),
                           ),
                         ),
@@ -89,7 +90,7 @@ class ClaimQrCode extends StatelessWidget {
                           child: TextButton(
                             child: Row(
                               children: [
-                                Text('Scan'),
+                                Text(dic['scan']),
                                 SizedBox(width: 4),
                                 Image.asset(
                                   'assets/images/assets/qrcode_indigo.png',
