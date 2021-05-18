@@ -101,7 +101,7 @@ class ClaimQrCodeView extends StatelessWidget {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      ScanQrCode(store, claim.numberOfParticipantsConfirmed),
+                                      ScanClaimQrCode(store, claim.numberOfParticipantsConfirmed),
                                 ),
                               );
                             },
