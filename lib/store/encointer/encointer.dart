@@ -4,7 +4,6 @@ import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/assets/types/transferData.dart';
-import 'package:encointer_wallet/store/encointer/types/attestationState.dart';
 import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
@@ -33,7 +32,7 @@ abstract class _EncointerStore with Store {
   final String encointerMeetupIndexKey = 'wallet_encointer_meetup_index';
   final String encointerMeetupLocationKey = 'wallet_encointer_meetup_location';
   final String encointerMeetupRegistryKey = 'wallet_encointer_meetup_registry';
-  final String encointerAttestationsKey = 'wallet_encointer_attestations';
+  final String encointerParticipantsClaimsKey = 'wallet_encointer_participants_claims';
   final String encointerMeetupTimeKey = 'wallet_encointer_meetup_time';
 
   // Note: In synchronous code, every modification of an @obervable is tracked by mobx and
@@ -92,7 +91,7 @@ abstract class _EncointerStore with Store {
   String claimHex;
 
   @observable
-  Map<int, AttestationState> attestations = Map<int, AttestationState>();
+  Map<String, ClaimOfAttendance> participantsClaims = new ObservableMap();
 
   @observable
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
@@ -296,7 +295,8 @@ abstract class _EncointerStore with Store {
 
   @action
   void purgeAttestations() {
-    // Todo: rename to purgeClaims and fill method stub.
+    participantsClaims.clear();
+    cacheParticipantsClaims(participantsClaims);
   }
 
   @action
@@ -359,10 +359,10 @@ abstract class _EncointerStore with Store {
       setChosenCid(data);
     }
     // get meetup related data
-    data = await loadObject(encointerAttestationsKey);
+    data = await loadObject(encointerParticipantsClaimsKey);
     if (data != null) {
-      print("found cached attestations. will recover them");
-      attestations = Map.castFrom<String, dynamic, int, AttestationState>(data);
+      print("found cached participants' claims. will recover them");
+      participantsClaims = Map.castFrom<String, dynamic, String, ClaimOfAttendance>(data);
     }
     currentPhase = await loadCurrentPhase();
     currentCeremonyIndex = await loadObject(encointerCurrentCeremonyIndexKey);
@@ -390,9 +390,8 @@ abstract class _EncointerStore with Store {
     await webApi.encointer.getShopRegistry();
   }
 
-  Future<void> cacheAttestationStates(Map<int, AttestationState> attestations) {
-    Map<String, AttestationState> att = attestations.map((key, value) => MapEntry(key.toString(), value));
-    return cacheObject(encointerAttestationsKey, att);
+  Future<void> cacheParticipantsClaims(Map<String, ClaimOfAttendance> claims) {
+    return cacheObject(encointerParticipantsClaimsKey, claims);
   }
 
   Future<void> cacheObject(String key, value) {
