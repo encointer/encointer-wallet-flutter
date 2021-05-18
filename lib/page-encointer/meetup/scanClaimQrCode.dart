@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_scan/qrcode_reader_view.dart';
@@ -23,7 +26,8 @@ class ScanClaimQrCode extends StatelessWidget {
   Widget build(BuildContext context) {
     Future _onScan(String data, String _rawData) async {
       if (data != null) {
-        Navigator.of(context).pop(data);
+        var claim = ClaimOfAttendance.fromJson(json.decode(data));
+        store.encointer.addParticipantClaim(claim);
       } else {
         _qrViewKey.currentState.startScan();
       }

@@ -303,6 +303,11 @@ abstract class _EncointerStore with Store {
   }
 
   @action
+  void addParticipantClaim(ClaimOfAttendance claim) {
+    participantsClaims[claim.claimantPublic] = claim;
+  }
+
+  @action
   void addBalanceEntry(String cid, BalanceEntry balanceEntry) {
     balanceEntries[cid] = balanceEntry;
   }
