@@ -3,7 +3,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
 
 import 'confirmAttendeesDialog.dart';
-import 'qrCode.dart';
+import 'claimQrCode.dart';
 
 Future<void> startMeetup(BuildContext context, AppStore store) async {
   var amount = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConfirmAttendeesDialog()));

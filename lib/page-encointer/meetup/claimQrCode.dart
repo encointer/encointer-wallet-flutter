@@ -6,7 +6,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-import 'scanQrCode.dart';
+import 'scanClaimQrCode.dart';
 
 class ClaimQrCode extends StatelessWidget {
   ClaimQrCode(
