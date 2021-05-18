@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/page-encointer/common/assignmentPanel.dart';
-import 'package:encointer_wallet/page-encointer/meetup/confirmAttendeesDialog.dart';
+import 'package:encointer_wallet/page-encointer/meetup/startMeetup.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
@@ -61,12 +61,6 @@ class _AssigningPageState extends State<AssigningPage> {
     });
   }
 
-  Future<void> _startMeetup(BuildContext context) async {
-    var _amount = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConfirmAttendeesDialog()));
-    // var args = {'confirmedParticipants': amount};
-    // Navigator.pushNamed(context, MeetupPage.route, arguments: args);
-  }
-
   @override
   Widget build(BuildContext context) {
     Map dic = I18n.of(context).encointer;
@@ -83,7 +77,7 @@ class _AssigningPageState extends State<AssigningPage> {
             ? RoundedButton(
                 text:
                     timeToMeetup > 60 ? "${dic['meetup.remaining']} ${Fmt.hhmmss(timeToMeetup)}" : dic['meetup.start'],
-                onPressed: timeToMeetup > 60 ? null : () => _startMeetup(context),
+                onPressed: timeToMeetup > 60 ? null : () => startMeetup(context, store),
               )
             : Container(),
       ]),
