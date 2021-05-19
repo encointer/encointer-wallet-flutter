@@ -9,6 +9,13 @@ part of 'encointer.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$EncointerStore on _EncointerStore, Store {
+  Computed<dynamic> _$currentPhaseDurationComputed;
+
+  @override
+  dynamic get currentPhaseDuration => (_$currentPhaseDurationComputed ??=
+          Computed<dynamic>(() => super.currentPhaseDuration,
+              name: '_EncointerStore.currentPhaseDuration'))
+      .value;
   Computed<dynamic> _$scannedClaimsCountComputed;
 
   @override
@@ -64,6 +71,21 @@ mixin _$EncointerStore on _EncointerStore, Store {
   set currentPhase(CeremonyPhase value) {
     _$currentPhaseAtom.reportWrite(value, super.currentPhase, () {
       super.currentPhase = value;
+    });
+  }
+
+  final _$phaseDurationsAtom = Atom(name: '_EncointerStore.phaseDurations');
+
+  @override
+  Map<CeremonyPhase, int> get phaseDurations {
+    _$phaseDurationsAtom.reportRead();
+    return super.phaseDurations;
+  }
+
+  @override
+  set phaseDurations(Map<CeremonyPhase, int> value) {
+    _$phaseDurationsAtom.reportWrite(value, super.phaseDurations, () {
+      super.phaseDurations = value;
     });
   }
 
@@ -406,6 +428,17 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
+  dynamic resetState() {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(
+        name: '_EncointerStore.resetState');
+    try {
+      return super.resetState();
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setMeetupIndex([int index]) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.setMeetupIndex');
@@ -596,6 +629,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   String toString() {
     return '''
 currentPhase: ${currentPhase},
+phaseDurations: ${phaseDurations},
 currentCeremonyIndex: ${currentCeremonyIndex},
 meetupIndex: ${meetupIndex},
 meetupLocation: ${meetupLocation},
@@ -614,6 +648,7 @@ claimHex: ${claimHex},
 participantsClaims: ${participantsClaims},
 txsTransfer: ${txsTransfer},
 shopRegistry: ${shopRegistry},
+currentPhaseDuration: ${currentPhaseDuration},
 scannedClaimsCount: ${scannedClaimsCount},
 communityName: ${communityName},
 communitySymbol: ${communitySymbol},
