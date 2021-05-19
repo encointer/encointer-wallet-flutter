@@ -28,7 +28,7 @@ class ScanClaimQrCode extends StatelessWidget {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         backgroundColor: Colors.white,
         content: Text(msg, style: TextStyle(color: Colors.black54)),
-        duration: Duration(seconds: 2),
+        duration: Duration(milliseconds: 1000),
       ));
   }
 
@@ -44,8 +44,10 @@ class ScanClaimQrCode extends StatelessWidget {
         store.encointer.addParticipantClaim(claim);
         _showSnackBar(context, msg);
 
-        // if we don't wait, scans are spammed of the same qr code
-        Future.delayed(const Duration(milliseconds: 500), () {
+        // if we don't wait, scans are spammed of the same qr code.
+        // My fairly recent cellphone gets too much load for duration < 500 ms. We might need to increase
+        // this for older phones.
+        Future.delayed(const Duration(milliseconds: 1500), () {
           _qrViewKey.currentState.startScan();
         });
 
