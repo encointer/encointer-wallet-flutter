@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:math';
 
 import 'package:encointer_wallet/config/consts.dart';
@@ -364,8 +365,8 @@ abstract class _EncointerStore with Store {
     // get meetup related data
     data = await loadObject(encointerParticipantsClaimsKey);
     if (data != null) {
-      print("found cached participants' claims. will recover them");
-      participantsClaims = Map.castFrom<String, dynamic, String, ClaimOfAttendance>(data);
+      print("found cached participants' claims. will recover them: $data");
+      participantsClaims = jsonDecode(data).cast<String, ClaimOfAttendance>();
     }
     currentPhase = await loadCurrentPhase();
     currentCeremonyIndex = await loadObject(encointerCurrentCeremonyIndexKey);
@@ -394,7 +395,8 @@ abstract class _EncointerStore with Store {
   }
 
   Future<void> cacheParticipantsClaims(Map<String, ClaimOfAttendance> claims) {
-    return cacheObject(encointerParticipantsClaimsKey, claims);
+    print("jsonEncode claims: ${jsonEncode(claims)}");
+    return cacheObject(encointerParticipantsClaimsKey, jsonEncode(claims));
   }
 
   Future<void> cacheObject(String key, value) {
