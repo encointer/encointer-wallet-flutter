@@ -155,7 +155,7 @@ abstract class _EncointerStore with Store {
     switch (currentPhase) {
       case CeremonyPhase.REGISTERING:
         // reset deprecated state to null
-        purgeAttestations();
+        purgeParticipantsClaims();
         setMeetupIndex();
         setMeetupLocation();
         setMeetupTime();
@@ -285,7 +285,7 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void purgeAttestations() {
+  void purgeParticipantsClaims() {
     participantsClaims.clear();
     cacheParticipantsClaims(participantsClaims);
   }

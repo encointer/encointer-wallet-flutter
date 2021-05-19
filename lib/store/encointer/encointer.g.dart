@@ -527,11 +527,11 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void purgeAttestations() {
+  void purgeParticipantsClaims() {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
-        name: '_EncointerStore.purgeAttestations');
+        name: '_EncointerStore.purgeParticipantsClaims');
     try {
-      return super.purgeAttestations();
+      return super.purgeParticipantsClaims();
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }
