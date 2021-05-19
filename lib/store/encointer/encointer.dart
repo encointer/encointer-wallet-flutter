@@ -102,9 +102,8 @@ abstract class _EncointerStore with Store {
   @observable
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
 
-  // not working as observable (no item change registered -> if necessary change to ObservableList)
   @observable
-  List<String> shopRegistry;
+  ObservableList<String> shopRegistry;
 
   @computed
   String get communityName => communityMetadata?.name;

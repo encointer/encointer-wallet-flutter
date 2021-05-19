@@ -355,13 +355,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
   final _$shopRegistryAtom = Atom(name: '_EncointerStore.shopRegistry');
 
   @override
-  List<String> get shopRegistry {
+  ObservableList<String> get shopRegistry {
     _$shopRegistryAtom.reportRead();
     return super.shopRegistry;
   }
 
   @override
-  set shopRegistry(List<String> value) {
+  set shopRegistry(ObservableList<String> value) {
     _$shopRegistryAtom.reportWrite(value, super.shopRegistry, () {
       super.shopRegistry = value;
     });
