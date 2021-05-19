@@ -30,8 +30,6 @@ class _AssigningPageState extends State<AssigningPage> {
 
   @override
   void initState() {
-    // TODO: remove once we're doing this in init of attesting
-    this.store.encointer.purgeAttestations();
     this.timeToMeetup = store.encointer.getTimeToMeetup();
     super.initState();
   }

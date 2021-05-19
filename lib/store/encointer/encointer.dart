@@ -147,9 +147,6 @@ abstract class _EncointerStore with Store {
     currentCeremonyIndex = index;
     cacheObject(encointerCurrentCeremonyIndexKey, index);
     // update depending values without awaiting
-    if (currentPhase == CeremonyPhase.ASSIGNING) {
-      purgeAttestations();
-    }
     updateState();
   }
 
