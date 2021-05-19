@@ -379,7 +379,7 @@ abstract class _EncointerStore with Store {
     data = await loadObject(encointerParticipantsClaimsKey);
     if (data != null) {
       print("found cached participants' claims. will recover them: $data");
-      participantsClaims = jsonDecode(data).cast<String, ClaimOfAttendance>();
+      participantsClaims = ObservableMap.of(jsonDecode(data).cast<String, ClaimOfAttendance>());
     }
     currentPhase = await loadCurrentPhase();
     currentCeremonyIndex = await loadObject(encointerCurrentCeremonyIndexKey);
@@ -400,7 +400,7 @@ abstract class _EncointerStore with Store {
 
   @action
   void setShopRegistry(List<String> shops) {
-    shopRegistry = shops;
+    shopRegistry = ObservableList.of(shops);
   }
 
   Future<void> reloadShopRegistry() async {
