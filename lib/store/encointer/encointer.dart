@@ -39,6 +39,11 @@ abstract class _EncointerStore with Store {
   // Note: In synchronous code, every modification of an @observable is tracked by mobx and
   // fires a reaction. However, modifications in asynchronous code must be wrapped in
   // a `@action` block to fire a reaction.
+  //
+  // Note2: In case of Map/List: If the variable is declared as plain Map/List with `@observable` annotated, mobx
+  // tracks variable assignment but not if individual items are changed. If this is wanted, the variable must be
+  // declared as `ObservableList/-Map`.
+
   @observable
   CeremonyPhase currentPhase;
 
