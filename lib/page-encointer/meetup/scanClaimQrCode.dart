@@ -64,7 +64,7 @@ class ScanClaimQrCode extends StatelessWidget {
               helpWidget: Observer(
                 builder: (_) => Text(dic['claims.scanned.n.of.m']
                     .replaceAll('SCANNED_COUNT', store.encointer.scannedClaimsCount.toString())
-                    .replaceAll('TOTAL_COUNT', confirmedParticipantsCount.toString())
+                    .replaceAll('TOTAL_COUNT', (confirmedParticipantsCount - 1).toString())
                 )
               ),
               headerWidget: SafeArea(
