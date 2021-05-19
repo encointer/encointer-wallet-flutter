@@ -398,7 +398,7 @@ class ApiEncointer {
         .then((c) => ClaimOfAttendance.fromJson(c));
 
     print("Retrieved signed claim: ${claimSigned.toString()}");
-    return claim;
+    return claimSigned;
   }
 
   Future<ClaimOfAttendance> parseClaimOfAttendance(String claimHex) async {
