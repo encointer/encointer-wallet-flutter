@@ -42,6 +42,7 @@ class ApiEncointer {
 
   Future<void> startSubscriptions() async {
     print("api: starting encointer subscriptions");
+    this.getPhaseDurations();
     this.subscribeCurrentPhase();
     this.subscribeCommunityIdentifiers();
     if (store.settings.endpointIsGesell) {
@@ -70,10 +71,23 @@ class ApiEncointer {
     print("api: getCurrentPhase");
     Map res = await apiRoot.evalJavascript('encointer.getCurrentPhase()');
 
-    var phase = getEnumFromString(CeremonyPhase.values, res.values.toList()[0].toString().toUpperCase());
+    var phase = ceremonyPhaseFromString(res.values.toList()[0].toString().toUpperCase());
     print("api: Phase enum: " + phase.toString());
     store.encointer.setCurrentPhase(phase);
     return phase;
+  }
+
+  /// Queries the Scheduler pallet: encointerScheduler.currentPhase().
+  ///
+  /// This should be done only once at app-startup, as this is practically const.
+  ///
+  /// This is on-chain in Cantillon.
+  Future<void> getPhaseDurations() async {
+    Map<CeremonyPhase, int> phaseDurations = await apiRoot
+        .evalJavascript('encointer.getPhaseDurations()')
+        .then((m) => Map.from(m).map((key, value) => MapEntry(ceremonyPhaseFromString(key), int.parse(value))));
+    print("Phase durations: ${phaseDurations.toString()}");
+    store.encointer.phaseDurations = phaseDurations;
   }
 
   /// Queries the Scheduler pallet: encointerScheduler.currentCeremonyIndex().
@@ -186,7 +200,9 @@ class ApiEncointer {
     }
     String cid = store.encointer.chosenCid ?? store.encointer.communityIdentifiers[0];
     String loc = jsonEncode(store.encointer.meetupLocation);
-    int time = await apiRoot.evalJavascript('encointer.getNextMeetupTime("$cid", $loc)');
+
+    int time = await apiRoot.evalJavascript(
+        'encointer.getNextMeetupTime("$cid", $loc, "${toValue(store.encointer.currentPhase)}", ${store.encointer.currentPhaseDuration})');
     print("api: Next Meetup Time: " + time.toString());
     store.encointer.setMeetupTime(time);
     return DateTime.fromMillisecondsSinceEpoch(time);
@@ -266,7 +282,7 @@ class ApiEncointer {
   Future<void> subscribeCurrentPhase() async {
     apiRoot.subscribeMessage(
         'encointer.subscribeCurrentPhase("$_currentPhaseSubscribeChannel")', _currentPhaseSubscribeChannel, (data) {
-      var phase = getEnumFromString(CeremonyPhase.values, data.toUpperCase());
+      var phase = ceremonyPhaseFromString(data.toUpperCase());
       store.encointer.setCurrentPhase(phase);
     });
   }

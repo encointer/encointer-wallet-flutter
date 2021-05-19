@@ -43,6 +43,12 @@ abstract class _EncointerStore with Store {
   CeremonyPhase currentPhase;
 
   @observable
+  Map<CeremonyPhase, int> phaseDurations = new Map();
+
+  @computed
+  get currentPhaseDuration => phaseDurations[currentPhase];
+
+  @observable
   int currentCeremonyIndex;
 
   @observable
@@ -96,7 +102,7 @@ abstract class _EncointerStore with Store {
   @observable
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
 
-  // not working as obsverable (no item change registered -> if necessary change to ObservableList)
+  // not working as observable (no item change registered -> if necessary change to ObservableList)
   @observable
   List<String> shopRegistry;
 
@@ -412,6 +418,6 @@ abstract class _EncointerStore with Store {
 
   Future<CeremonyPhase> loadCurrentPhase() async {
     Object obj = await rootStore.loadObject(encointerCurrentPhaseKey);
-    return getEnumFromString(CeremonyPhase.values, obj);
+    return ceremonyPhaseFromString(obj);
   }
 }
