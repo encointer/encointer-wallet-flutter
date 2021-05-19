@@ -80,7 +80,7 @@ class _AttestingPageState extends State<AttestingPage> {
         "call": 'attestClaims',
         "cid": store.encointer.chosenCid,
       },
-      "detail": dic['claims.submit.detail'].replaceAll('AMOUNT', store.encointer.scannedClaimsCount),
+      "detail": dic['claims.submit.detail'].replaceAll('AMOUNT', store.encointer.scannedClaimsCount.toString()),
       "params": [store.encointer.participantsClaims.values.toList()],
       'onFinish': (BuildContext txPageContext, Map res) {
         Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
