@@ -42,6 +42,9 @@ abstract class _EncointerStore with Store {
   @observable
   CeremonyPhase currentPhase;
 
+  // no need for an observable here. This gets only fetch upon start.
+  Map<CeremonyPhase, int> phaseDurations;
+
   @observable
   int currentCeremonyIndex;
 

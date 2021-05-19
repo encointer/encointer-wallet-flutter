@@ -42,6 +42,7 @@ class ApiEncointer {
 
   Future<void> startSubscriptions() async {
     print("api: starting encointer subscriptions");
+    this.getPhaseDurations();
     this.subscribeCurrentPhase();
     this.subscribeCommunityIdentifiers();
     if (store.settings.endpointIsGesell) {
@@ -74,6 +75,19 @@ class ApiEncointer {
     print("api: Phase enum: " + phase.toString());
     store.encointer.setCurrentPhase(phase);
     return phase;
+  }
+
+  /// Queries the Scheduler pallet: encointerScheduler.currentPhase().
+  ///
+  /// This should be done only once at app-startup, as this is practically const.
+  ///
+  /// This is on-chain in Cantillon.
+  Future<void> getPhaseDurations() async {
+    Map<CeremonyPhase, int> phaseDurations = await apiRoot
+        .evalJavascript('encointer.getPhaseDurations()')
+        .then((m) => Map.from(m).map((key, value) => MapEntry(ceremonyPhaseFromString(key), int.parse(value))));
+    print("Phase durations: ${phaseDurations.toString()}");
+    store.encointer.phaseDurations = phaseDurations;
   }
 
   /// Queries the Scheduler pallet: encointerScheduler.currentCeremonyIndex().
