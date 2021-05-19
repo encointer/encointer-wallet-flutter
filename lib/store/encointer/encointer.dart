@@ -412,6 +412,6 @@ abstract class _EncointerStore with Store {
 
   Future<CeremonyPhase> loadCurrentPhase() async {
     Object obj = await rootStore.loadObject(encointerCurrentPhaseKey);
-    return getEnumFromString(CeremonyPhase.values, obj);
+    return ceremonyPhaseFromString(obj);
   }
 }

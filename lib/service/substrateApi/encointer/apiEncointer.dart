@@ -70,7 +70,7 @@ class ApiEncointer {
     print("api: getCurrentPhase");
     Map res = await apiRoot.evalJavascript('encointer.getCurrentPhase()');
 
-    var phase = getEnumFromString(CeremonyPhase.values, res.values.toList()[0].toString().toUpperCase());
+    var phase = ceremonyPhaseFromString(res.values.toList()[0].toString().toUpperCase());
     print("api: Phase enum: " + phase.toString());
     store.encointer.setCurrentPhase(phase);
     return phase;
@@ -266,7 +266,7 @@ class ApiEncointer {
   Future<void> subscribeCurrentPhase() async {
     apiRoot.subscribeMessage(
         'encointer.subscribeCurrentPhase("$_currentPhaseSubscribeChannel")', _currentPhaseSubscribeChannel, (data) {
-      var phase = getEnumFromString(CeremonyPhase.values, data.toUpperCase());
+      var phase = ceremonyPhaseFromString(data.toUpperCase());
       store.encointer.setCurrentPhase(phase);
     });
   }
