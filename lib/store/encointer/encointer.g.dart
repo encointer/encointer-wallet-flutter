@@ -325,13 +325,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
       Atom(name: '_EncointerStore.participantsClaims');
 
   @override
-  Map<String, ClaimOfAttendance> get participantsClaims {
+  ObservableMap<String, ClaimOfAttendance> get participantsClaims {
     _$participantsClaimsAtom.reportRead();
     return super.participantsClaims;
   }
 
   @override
-  set participantsClaims(Map<String, ClaimOfAttendance> value) {
+  set participantsClaims(ObservableMap<String, ClaimOfAttendance> value) {
     _$participantsClaimsAtom.reportWrite(value, super.participantsClaims, () {
       super.participantsClaims = value;
     });

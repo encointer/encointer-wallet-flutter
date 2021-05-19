@@ -94,7 +94,7 @@ abstract class _EncointerStore with Store {
   String claimHex;
 
   @observable
-  Map<String, ClaimOfAttendance> participantsClaims = new ObservableMap();
+  ObservableMap<String, ClaimOfAttendance> participantsClaims = new ObservableMap();
 
   @computed
   get scannedClaimsCount => participantsClaims.length;
