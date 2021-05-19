@@ -43,7 +43,7 @@ abstract class _EncointerStore with Store {
   CeremonyPhase currentPhase;
 
   @observable
-  Map<CeremonyPhase, int> phaseDurations = new Map();
+  ObservableMap<CeremonyPhase, int> phaseDurations = new Map();
 
   @computed
   get currentPhaseDuration => phaseDurations[currentPhase];
@@ -61,7 +61,7 @@ abstract class _EncointerStore with Store {
   int meetupTime;
 
   @observable
-  List<String> meetupRegistry;
+  ObservableList<String> meetupRegistry;
 
   @observable
   int myMeetupRegistryIndex;
@@ -73,13 +73,13 @@ abstract class _EncointerStore with Store {
   int participantCount;
 
   @observable
-  Map<String, BalanceEntry> balanceEntries = new ObservableMap();
+  ObservableMap<String, BalanceEntry> balanceEntries = new ObservableMap();
 
   @observable
-  List<String> communityIdentifiers;
+  ObservableList<String> communityIdentifiers;
 
   @observable
-  List<CidName> communities;
+  ObservableList<CidName> communities;
 
   @observable
   String chosenCid;
@@ -94,7 +94,7 @@ abstract class _EncointerStore with Store {
   String claimHex;
 
   @observable
-  Map<String, ClaimOfAttendance> participantsClaims = new ObservableMap();
+  ObservableMap<String, ClaimOfAttendance> participantsClaims = new ObservableMap();
 
   @computed
   get scannedClaimsCount => participantsClaims.length;
@@ -102,9 +102,8 @@ abstract class _EncointerStore with Store {
   @observable
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
 
-  // not working as observable (no item change registered -> if necessary change to ObservableList)
   @observable
-  List<String> shopRegistry;
+  ObservableList<String> shopRegistry;
 
   @computed
   String get communityName => communityMetadata?.name;

@@ -9,6 +9,13 @@ part of 'encointer.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$EncointerStore on _EncointerStore, Store {
+  Computed<dynamic> _$currentPhaseDurationComputed;
+
+  @override
+  dynamic get currentPhaseDuration => (_$currentPhaseDurationComputed ??=
+          Computed<dynamic>(() => super.currentPhaseDuration,
+              name: '_EncointerStore.currentPhaseDuration'))
+      .value;
   Computed<dynamic> _$scannedClaimsCountComputed;
 
   @override
@@ -64,6 +71,21 @@ mixin _$EncointerStore on _EncointerStore, Store {
   set currentPhase(CeremonyPhase value) {
     _$currentPhaseAtom.reportWrite(value, super.currentPhase, () {
       super.currentPhase = value;
+    });
+  }
+
+  final _$phaseDurationsAtom = Atom(name: '_EncointerStore.phaseDurations');
+
+  @override
+  ObservableMap<CeremonyPhase, int> get phaseDurations {
+    _$phaseDurationsAtom.reportRead();
+    return super.phaseDurations;
+  }
+
+  @override
+  set phaseDurations(ObservableMap<CeremonyPhase, int> value) {
+    _$phaseDurationsAtom.reportWrite(value, super.phaseDurations, () {
+      super.phaseDurations = value;
     });
   }
 
@@ -132,13 +154,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
   final _$meetupRegistryAtom = Atom(name: '_EncointerStore.meetupRegistry');
 
   @override
-  List<String> get meetupRegistry {
+  ObservableList<String> get meetupRegistry {
     _$meetupRegistryAtom.reportRead();
     return super.meetupRegistry;
   }
 
   @override
-  set meetupRegistry(List<String> value) {
+  set meetupRegistry(ObservableList<String> value) {
     _$meetupRegistryAtom.reportWrite(value, super.meetupRegistry, () {
       super.meetupRegistry = value;
     });
@@ -194,13 +216,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
   final _$balanceEntriesAtom = Atom(name: '_EncointerStore.balanceEntries');
 
   @override
-  Map<String, BalanceEntry> get balanceEntries {
+  ObservableMap<String, BalanceEntry> get balanceEntries {
     _$balanceEntriesAtom.reportRead();
     return super.balanceEntries;
   }
 
   @override
-  set balanceEntries(Map<String, BalanceEntry> value) {
+  set balanceEntries(ObservableMap<String, BalanceEntry> value) {
     _$balanceEntriesAtom.reportWrite(value, super.balanceEntries, () {
       super.balanceEntries = value;
     });
@@ -210,13 +232,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
       Atom(name: '_EncointerStore.communityIdentifiers');
 
   @override
-  List<String> get communityIdentifiers {
+  ObservableList<String> get communityIdentifiers {
     _$communityIdentifiersAtom.reportRead();
     return super.communityIdentifiers;
   }
 
   @override
-  set communityIdentifiers(List<String> value) {
+  set communityIdentifiers(ObservableList<String> value) {
     _$communityIdentifiersAtom.reportWrite(value, super.communityIdentifiers,
         () {
       super.communityIdentifiers = value;
@@ -226,13 +248,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
   final _$communitiesAtom = Atom(name: '_EncointerStore.communities');
 
   @override
-  List<CidName> get communities {
+  ObservableList<CidName> get communities {
     _$communitiesAtom.reportRead();
     return super.communities;
   }
 
   @override
-  set communities(List<CidName> value) {
+  set communities(ObservableList<CidName> value) {
     _$communitiesAtom.reportWrite(value, super.communities, () {
       super.communities = value;
     });
@@ -303,13 +325,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
       Atom(name: '_EncointerStore.participantsClaims');
 
   @override
-  Map<String, ClaimOfAttendance> get participantsClaims {
+  ObservableMap<String, ClaimOfAttendance> get participantsClaims {
     _$participantsClaimsAtom.reportRead();
     return super.participantsClaims;
   }
 
   @override
-  set participantsClaims(Map<String, ClaimOfAttendance> value) {
+  set participantsClaims(ObservableMap<String, ClaimOfAttendance> value) {
     _$participantsClaimsAtom.reportWrite(value, super.participantsClaims, () {
       super.participantsClaims = value;
     });
@@ -333,13 +355,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
   final _$shopRegistryAtom = Atom(name: '_EncointerStore.shopRegistry');
 
   @override
-  List<String> get shopRegistry {
+  ObservableList<String> get shopRegistry {
     _$shopRegistryAtom.reportRead();
     return super.shopRegistry;
   }
 
   @override
-  set shopRegistry(List<String> value) {
+  set shopRegistry(ObservableList<String> value) {
     _$shopRegistryAtom.reportWrite(value, super.shopRegistry, () {
       super.shopRegistry = value;
     });
@@ -400,6 +422,17 @@ mixin _$EncointerStore on _EncointerStore, Store {
         name: '_EncointerStore.updateState');
     try {
       return super.updateState();
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  dynamic resetState() {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(
+        name: '_EncointerStore.resetState');
+    try {
+      return super.resetState();
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }
@@ -596,6 +629,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   String toString() {
     return '''
 currentPhase: ${currentPhase},
+phaseDurations: ${phaseDurations},
 currentCeremonyIndex: ${currentCeremonyIndex},
 meetupIndex: ${meetupIndex},
 meetupLocation: ${meetupLocation},
@@ -614,6 +648,7 @@ claimHex: ${claimHex},
 participantsClaims: ${participantsClaims},
 txsTransfer: ${txsTransfer},
 shopRegistry: ${shopRegistry},
+currentPhaseDuration: ${currentPhaseDuration},
 scannedClaimsCount: ${scannedClaimsCount},
 communityName: ${communityName},
 communitySymbol: ${communitySymbol},
