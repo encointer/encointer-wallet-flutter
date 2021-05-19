@@ -42,8 +42,11 @@ abstract class _EncointerStore with Store {
   @observable
   CeremonyPhase currentPhase;
 
-  // no need for an observable here. This gets only fetch upon start.
-  Map<CeremonyPhase, int> phaseDurations;
+  @observable
+  Map<CeremonyPhase, int> phaseDurations = new Map();
+
+  @computed
+  get currentPhaseDuration => phaseDurations[currentPhase];
 
   @observable
   int currentCeremonyIndex;
@@ -99,7 +102,7 @@ abstract class _EncointerStore with Store {
   @observable
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
 
-  // not working as obsverable (no item change registered -> if necessary change to ObservableList)
+  // not working as observable (no item change registered -> if necessary change to ObservableList)
   @observable
   List<String> shopRegistry;
 
