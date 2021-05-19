@@ -36,7 +36,6 @@ class ChainApi {
   Future<void> subscribeNewHeads() async {
     apiRoot.subscribeMessage('chain.subscribeNewHeads("$_newHeadsSubscribeChannel")', _newHeadsSubscribeChannel,
             (header) {
-          print("Latest header: $header");
           store.chain.setLatestHeader(Header.fromJson(header));
         });
   }
