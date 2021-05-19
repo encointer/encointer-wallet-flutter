@@ -149,7 +149,7 @@ abstract class _EncointerStore with Store {
   @action
   void setCurrentCeremonyIndex(index) {
     print("store: set currentCeremonyIndex to $index");
-    if (currentCeremonyIndex != index) {
+    if (currentCeremonyIndex != index && currentPhase == CeremonyPhase.REGISTERING) {
       resetState();
     }
 
