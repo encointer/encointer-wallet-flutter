@@ -36,10 +36,9 @@ abstract class _EncointerStore with Store {
   final String encointerParticipantsClaimsKey = 'wallet_encointer_participants_claims';
   final String encointerMeetupTimeKey = 'wallet_encointer_meetup_time';
 
-  // Note: In synchronous code, every modification of an @obervable is tracked by mobx and
+  // Note: In synchronous code, every modification of an @observable is tracked by mobx and
   // fires a reaction. However, modifications in asynchronous code must be wrapped in
-  // a @action block to fire a reaction
-  // .
+  // a `@action` block to fire a reaction.
   @observable
   CeremonyPhase currentPhase;
 
@@ -144,6 +143,10 @@ abstract class _EncointerStore with Store {
   @action
   void setCurrentCeremonyIndex(index) {
     print("store: set currentCeremonyIndex to $index");
+    if (currentCeremonyIndex != index) {
+      resetState();
+    }
+
     currentCeremonyIndex = index;
     cacheObject(encointerCurrentCeremonyIndexKey, index);
     // update depending values without awaiting
@@ -154,14 +157,6 @@ abstract class _EncointerStore with Store {
   void updateState() {
     switch (currentPhase) {
       case CeremonyPhase.REGISTERING:
-        // reset deprecated state to null
-        purgeParticipantsClaims();
-        setMeetupIndex();
-        setMeetupLocation();
-        setMeetupTime();
-        setMeetupRegistry();
-        setMyMeetupRegistryIndex();
-        setClaimHex();
         break;
       case CeremonyPhase.ASSIGNING:
         webApi.encointer.getMeetupIndex();
@@ -171,6 +166,17 @@ abstract class _EncointerStore with Store {
         break;
     }
     webApi.encointer.getParticipantIndex();
+  }
+
+  @action
+  resetState() {
+    purgeParticipantsClaims();
+    setMeetupIndex();
+    setMeetupLocation();
+    setMeetupTime();
+    setMeetupRegistry();
+    setMyMeetupRegistryIndex();
+    setClaimHex();
   }
 
   @action
