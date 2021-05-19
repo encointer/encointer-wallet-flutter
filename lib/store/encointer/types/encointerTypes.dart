@@ -21,3 +21,9 @@ T getEnumFromString<T>(Iterable<T> values, String value) {
 CeremonyPhase ceremonyPhaseFromString(String value) {
   return getEnumFromString(CeremonyPhase.values, value);
 }
+
+String toValue(CeremonyPhase phase) {
+  String p = phase.toString().split(".").last;
+  // return capitalized values
+  return "${p[0].toUpperCase()}${p.substring(1).toLowerCase()}";
+}

@@ -200,7 +200,9 @@ class ApiEncointer {
     }
     String cid = store.encointer.chosenCid ?? store.encointer.communityIdentifiers[0];
     String loc = jsonEncode(store.encointer.meetupLocation);
-    int time = await apiRoot.evalJavascript('encointer.getNextMeetupTime("$cid", $loc)');
+
+    int time = await apiRoot.evalJavascript(
+        'encointer.getNextMeetupTime("$cid", $loc, "${toValue(store.encointer.currentPhase)}", ${store.encointer.currentPhaseDuration})');
     print("api: Next Meetup Time: " + time.toString());
     store.encointer.setMeetupTime(time);
     return DateTime.fromMillisecondsSinceEpoch(time);
