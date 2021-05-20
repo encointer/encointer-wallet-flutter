@@ -96,9 +96,6 @@ abstract class _EncointerStore with Store {
   double demurrage;
 
   @observable
-  String claimHex;
-
-  @observable
   ObservableMap<String, ClaimOfAttendance> participantsClaims = new ObservableMap();
 
   @computed
@@ -186,7 +183,6 @@ abstract class _EncointerStore with Store {
     setMeetupTime();
     setMeetupRegistry();
     setMyMeetupRegistryIndex();
-    setClaimHex();
   }
 
   @action
@@ -246,11 +242,6 @@ abstract class _EncointerStore with Store {
     print("store: set meetupRegistry to $reg");
     cacheObject(encointerMeetupRegistryKey, reg);
     meetupRegistry = reg;
-  }
-
-  @action
-  void setClaimHex([String claimHex]) {
-    this.claimHex = claimHex;
   }
 
   @action

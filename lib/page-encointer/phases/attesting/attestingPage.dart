@@ -36,7 +36,6 @@ class _AttestingPageState extends State<AttestingPage> {
           child: RoundedCard(
             padding: EdgeInsets.all(8),
             child: Column(children: <Widget>[
-              // Observer(builder: (_) => _reportAttestationsCount(context, store.encointer.attestations)),
               Observer(
                 builder: (_) => ((store.encointer.meetupIndex == null) | (store.encointer.meetupIndex == 0))
                     ? Text(dic['meetup.not.assigned'])

@@ -306,21 +306,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
-  final _$claimHexAtom = Atom(name: '_EncointerStore.claimHex');
-
-  @override
-  String get claimHex {
-    _$claimHexAtom.reportRead();
-    return super.claimHex;
-  }
-
-  @override
-  set claimHex(String value) {
-    _$claimHexAtom.reportWrite(value, super.claimHex, () {
-      super.claimHex = value;
-    });
-  }
-
   final _$participantsClaimsAtom =
       Atom(name: '_EncointerStore.participantsClaims');
 
@@ -483,17 +468,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setClaimHex([String claimHex]) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(
-        name: '_EncointerStore.setClaimHex');
-    try {
-      return super.setClaimHex(claimHex);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setMyMeetupRegistryIndex([int index]) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.setMyMeetupRegistryIndex');
@@ -644,7 +618,6 @@ communities: ${communities},
 chosenCid: ${chosenCid},
 communityMetadata: ${communityMetadata},
 demurrage: ${demurrage},
-claimHex: ${claimHex},
 participantsClaims: ${participantsClaims},
 txsTransfer: ${txsTransfer},
 shopRegistry: ${shopRegistry},

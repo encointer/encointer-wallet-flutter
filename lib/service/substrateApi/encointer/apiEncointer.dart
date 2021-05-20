@@ -401,14 +401,6 @@ class ApiEncointer {
     return claimSigned;
   }
 
-  Future<ClaimOfAttendance> parseClaimOfAttendance(String claimHex) async {
-    var claimJson = await apiRoot.evalJavascript('encointer.parseClaimOfAttendance("$claimHex")');
-    //print("Attestation json: " + attJson.toString());
-    ClaimOfAttendance claim = ClaimOfAttendance.fromJson(claimJson);
-    //print("Attestation parsed: " + attJson.toString());
-    return claim;
-  }
-
   Future<ProofOfAttendance> getProofOfAttendance() async {
     var pubKey = store.account.currentAccountPubKey;
     var cid = store.encointer.chosenCid;
