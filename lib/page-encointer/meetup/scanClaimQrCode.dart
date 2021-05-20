@@ -40,11 +40,16 @@ class ScanClaimQrCode extends StatelessWidget {
       if (data != null) {
         var claim = ClaimOfAttendance.fromJson(json.decode(data));
 
-        String msg = store.encointer.containsClaim(claim) ? dic['claims.scanned.already'] : dic['claims.scanned.new'];
-        store.encointer.addParticipantClaim(claim);
-        _showSnackBar(context, msg);
+        if (!store.encointer.meetupRegistry.contains(claim.claimantPublic)) {
+          // this is important because the runtime checks if there are too many claims trying to be registered.
+          _showSnackBar(context, dic['meetup.claimant.invalid']);
+        } else {
+          String msg = store.encointer.containsClaim(claim) ? dic['claims.scanned.already'] : dic['claims.scanned.new'];
+          store.encointer.addParticipantClaim(claim);
+          _showSnackBar(context, msg);
+        }
 
-        // if we don't wait, scans are spammed of the same qr code.
+        // If we don't wait, scans  of the same qr code are spammed.
         // My fairly recent cellphone gets too much load for duration < 500 ms. We might need to increase
         // this for older phones.
         Future.delayed(const Duration(milliseconds: 1500), () {

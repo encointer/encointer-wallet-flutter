@@ -20,6 +20,7 @@ const Map<String, String> enNctr = {
   'claims.scanned.new': 'Scanned new claim',
   'claims.scanned.already': 'Updated previously scanned claim',
   'meetup.not.assigned': 'You are not assigned to a meetup',
+  'meetup.claimant.invalid': 'This claimant is not part of the meetup. Claim is not stored.',
   'meetup.start': 'start meetup',
   'meetup.remaining': 'Time to meetup:',
   'meetup.attended': 'Attended last meetup',
