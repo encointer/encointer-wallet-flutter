@@ -13,12 +13,14 @@ class ClaimQrCode extends StatelessWidget {
     this.store, {
     @required this.title,
     @required this.claim,
+    @required this.confirmedParticipantsCount,
   });
 
   final AppStore store;
 
   final String title;
-  final ClaimOfAttendance claim;
+  final Future<ClaimOfAttendance> claim;
+  final int confirmedParticipantsCount;
 
   @override
   Widget build(BuildContext context) {
@@ -64,18 +66,29 @@ class ClaimQrCode extends StatelessWidget {
                       ),
                       Container(width: 8, height: 8),
                       Container(
+                        width: 280,
+                        height: 280,
                         decoration: BoxDecoration(
                           border: Border.all(width: 4, color: themeColor),
                           borderRadius: BorderRadius.all(const Radius.circular(8)),
                         ),
-                        child: QrImage(
-                          data: claim.toString(),
-                          size: 280,
-                          errorCorrectionLevel: QrErrorCorrectLevel.Q,
-                          //embeddedImage:
-                          //    AssetImage('assets/images/public/app.png'),
-                          //embeddedImageStyle:
-                          //    QrEmbeddedImageStyle(size: Size(40, 40)),
+                        child: FutureBuilder<ClaimOfAttendance>(
+                          future: claim,
+                          builder: (_, AsyncSnapshot<ClaimOfAttendance> snapshot) {
+                            if (snapshot.hasData) {
+                              return QrImage(
+                                data: snapshot.data.toString(),
+                                size: 280,
+                                errorCorrectionLevel: QrErrorCorrectLevel.Q,
+                                //embeddedImage:
+                                //    AssetImage('assets/images/public/app.png'),
+                                //embeddedImageStyle:
+                                //    QrEmbeddedImageStyle(size: Size(40, 40)),
+                              );
+                            } else {
+                              return Expanded(child: CupertinoActivityIndicator());
+                            }
+                          },
                         ),
                       ),
                       ButtonBar(children: <Widget>[
@@ -103,7 +116,7 @@ class ClaimQrCode extends StatelessWidget {
                               Navigator.of(context).push(
                                 MaterialPageRoute(
                                   builder: (BuildContext context) =>
-                                      ScanClaimQrCode(store, claim.numberOfParticipantsConfirmed),
+                                      ScanClaimQrCode(store, confirmedParticipantsCount),
                                 ),
                               );
                             },
