@@ -86,7 +86,7 @@ class ClaimQrCode extends StatelessWidget {
                                 //    QrEmbeddedImageStyle(size: Size(40, 40)),
                               );
                             } else {
-                              return Expanded(child: CupertinoActivityIndicator());
+                              return CupertinoActivityIndicator();
                             }
                           },
                         ),
