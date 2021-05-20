@@ -311,4 +311,8 @@ class Fmt {
   static String addressOfAccount(AccountData acc, AppStore store) {
     return store.account.pubKeyAddressMap[store.settings.endpoint.ss58][acc.pubKey] ?? acc.address ?? '';
   }
+
+  static String degree(BigInt degree, int fractionDigits) {
+    return (degree / BigInt.two.pow(64)).toStringAsFixed(fractionDigits);
+  }
 }
