@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
-    "scripts": {
+  "scripts": {
     "clean": "rm -rf dist/*",
     "lint": "eslint src/**.js",
     "build": "webpack --stats-error-details true",
     "encointer:link": "./scripts/encointer-link.cjs",
     "encointer:unlink": "./scripts/encointer-unlink.cjs",
-    "test": "polkadot-dev-run-test"
+    "test": "polkadot-dev-run-test",
+    "postinstall": "sh -c \"yarn --silent are-you-es5 check -r . | tail -n 1 > ./non_ES5_node_modules \""
   },
   "exports": {
     ".": "./src/index.js",
@@ -17,7 +18,6 @@
     "./types": "./src/config/types.js"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.12.1",
     "@encointer/node-api": "^0.3.0",
     "@encointer/types": "^0.3.0",
     "@encointer/util": "^0.3.0",
@@ -33,20 +33,22 @@
     "browserify": "^17.0.0",
     "bs58": "^4.0.1",
     "buffer": "^6.0.3",
+    "core-js": "^3.12.1",
     "node-rsa": "^1.1.1",
     "oo7-substrate": "^0.8.0",
-    "core-js": "^3.12.1"
+    "regenerator-runtime": "^0.13.7"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
     "@babel/preset-env": "^7.14.0",
     "@babel/register": "^7.13.16",
     "@babel/runtime": "^7.14.0",
-    "babel-loader": "^8.2.2",
     "@jest/globals": "^26.6.2",
     "@polkadot/dev": "0.62.11",
     "@webpack-cli/info": "^0.2.0",
     "@webpack-cli/init": "^0.3.0",
+    "are-you-es5": "^2.1.1",
+    "babel-loader": "^8.2.2",
     "chai": "^4.3.4",
     "eslint": "^7.25.0",
     "eslint-config-standard": "^16.0.2",
