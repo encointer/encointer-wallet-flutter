@@ -9,8 +9,7 @@
     "build": "webpack --stats-error-details true",
     "encointer:link": "./scripts/encointer-link.cjs",
     "encointer:unlink": "./scripts/encointer-unlink.cjs",
-    "test": "polkadot-dev-run-test",
-    "postinstall": "sh -c \"yarn --silent are-you-es5 check -r . | tail -n 1 > ./non_ES5_node_modules \""
+    "test": "polkadot-dev-run-test"
   },
   "exports": {
     ".": "./src/index.js",
@@ -47,7 +46,6 @@
     "@polkadot/dev": "0.62.11",
     "@webpack-cli/info": "^0.2.0",
     "@webpack-cli/init": "^0.3.0",
-    "are-you-es5": "^2.1.1",
     "babel-loader": "^8.2.2",
     "chai": "^4.3.4",
     "eslint": "^7.25.0",
