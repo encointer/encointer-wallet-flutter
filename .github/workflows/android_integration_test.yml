@@ -46,10 +46,6 @@ jobs:
       - name: Setup Android SDK and accept licences
         uses: android-actions/setup-android@v2
 
-      - name: "Install Api 30 if needed"
-        if:  ${{ matrix.api-level == 30 }}
-        run: sdkmanager --install "system-images;android-30;default;x86"
-
       # JS Stuff
       - uses: actions/setup-node@v2
         with:
@@ -86,6 +82,7 @@ jobs:
           api-level: ${{ matrix.api-level }}
           profile: ${{ matrix.device }}
           script: ./scripts/android_integration_test.sh
+          target: google_apis
 
       - name: "Upload screenshots"
         uses: actions/upload-artifact@v2
