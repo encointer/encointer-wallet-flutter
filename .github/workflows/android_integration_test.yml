@@ -48,7 +48,7 @@ jobs:
 
       - name: "Install Api 30 if needed"
         if:  ${{ matrix.api-level == 30 }}
-        run: sdkmanager --install "system-images;android-30;google_apis;x86"
+        run: sdkmanager --install "system-images;android-30;default;x86"
 
       # JS Stuff
       - uses: actions/setup-node@v2
