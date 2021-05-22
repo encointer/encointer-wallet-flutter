@@ -14,7 +14,7 @@ jobs:
     strategy:
       matrix:
         # lower api-levels would be supported but the webView that is pre-installed on these images does not.
-        api-level: [30]
+        api-level: [27, 28, 29] # 30 is broken for now, probably due to low emulator performance.
         include:
           - os: macos-latest
             # needs to be the `id` from the devices given by `avdmanager list device`
@@ -85,7 +85,6 @@ jobs:
           api-level: ${{ matrix.api-level }}
           profile: ${{ matrix.device }}
           script: ./scripts/android_integration_test.sh
-          target: google_apis
 
       - name: "Upload screenshots"
         uses: actions/upload-artifact@v2
