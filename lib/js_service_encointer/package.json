@@ -17,6 +17,7 @@
     "./types": "./src/config/types.js"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.12.1",
     "@encointer/node-api": "^0.3.0",
     "@encointer/types": "^0.3.0",
     "@encointer/util": "^0.3.0",
