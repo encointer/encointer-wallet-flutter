@@ -17,7 +17,7 @@ EndpointData networkEndpointEncointerGesellDev = EndpointData.fromJson({
   'info': 'nctr-gsl-dev',
   'ss58': 42,
   'text': 'Encointer Gesell Local Devnet',
-  'value': 'ws://192.168.1.24:9944',  // do not use the docker's address, use the host's
+  'value': 'ws://10.0.2.2:9944', // the AVD's host address. won't work with real phones
   'overrideConfig': MasterBranchConfig.toJson(),
   'ipfsGateway': ipfs_gateway_local
 });
@@ -37,8 +37,8 @@ EndpointData networkEndpointEncointerCantillonDev = EndpointData.fromJson({
   'info': 'nctr-cln-dev',
   'ss58': 42,
   'text': 'Encointer Cantillon (Hosted by Encointer Association)',
-  'value': 'ws://10.0.0.134:9979', // do not use the docker's address, use the host's
-  'worker': 'ws:/10.0.0.134:2079',
+  'value': 'ws://10.0.2.2:9944', // the AVD's host address. won't work with real phones
+  'worker': 'ws:/10.0.2.2:2000', // the AVD's host address. won't work with real phones
   'mrenclave': '4SkU25tusVChcrUprW8X22QoEgamCgj3HKQeje7j8Z4E',
   'overrideConfig': SgxBranchConfig.toJson(),
   'ipfsGateway': ipfs_gateway_encointer
