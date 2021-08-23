@@ -2,9 +2,9 @@ import 'package:encointer_wallet/common/components/BorderedTitle.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/common/communityChooserHandler.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/common/menuHandler.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/shop/shopCard.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/shop/shopClass.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/shop/shopOverviewPanel.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/business/businessCard.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/business/businessClass.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/business/businessOverviewPanel.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
@@ -41,7 +41,7 @@ class _BazaarEntryState extends State<BazaarEntry> {
   Future<void> refreshPage() async {
     reload = true;
     if (store.encointer.chosenCid != null) {
-      await store.encointer.reloadShopRegistry();
+      await store.encointer.reloadBusinessRegistry();
       await resetState();
       reload = false;
     }
@@ -56,19 +56,19 @@ class _BazaarEntryState extends State<BazaarEntry> {
     final Map<String, String> dic = I18n.of(context).bazaar;
     Color secondaryColor = Theme.of(context).secondaryHeaderColor;
 
-    // reaction necessary because shops is not an observable list (view should not change without user doing anything)
+    // reaction necessary because businesses is not an observable list (view should not change without user doing anything)
     //final refreshPageOnCidChange = reaction((_) => store.encointer.chosenCid, (_) => refreshPage());
 
     final List<Widget> _widgetList = <Widget>[
       homeView(context, store),
-      ShopOverviewPanel(store),
-      //articleView(context, store),d
+      BusinessOverviewPanel(store),
+      //offeringView(context, store),d
     ];
 
     final List<Widget> _tabList = <Widget>[
       Row(children: [Icon(Icons.home, color: secondaryColor), SizedBox(width: 5), Text("Home")]),
-      Row(children: [Icon(Icons.shop, color: secondaryColor), SizedBox(width: 5), Text("Shops")]),
-      //articleView(context, store),
+      Row(children: [Icon(Icons.shop, color: secondaryColor), SizedBox(width: 5), Text("Businesses")]),
+      //offeringView(context, store),
     ];
 
     return DefaultTabController(
@@ -145,10 +145,10 @@ class _BazaarEntryState extends State<BazaarEntry> {
                 shrinkWrap: true,
                 padding: EdgeInsets.all(8),
                 children: <Widget>[
-                  // TODO: implement articles
+                  // TODO: implement offerings
                   /*Container(
                     margin: EdgeInsets.only(left: 10, top: 15),
-                    child: articleSection(context, dic),
+                    child: offeringSection(context, dic),
                   ),*/
                   Container(
                     margin: EdgeInsets.only(left: 10, top: 15),
@@ -212,7 +212,7 @@ class _BazaarEntryState extends State<BazaarEntry> {
               margin: EdgeInsets.only(top: 40, left: 100, right: 20),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, ShopOverviewPage.route);
+                  Navigator.pushNamed(contextBusiness, OverviewPage.route);
                 },
                 child: Text(
                   dic['show.all'],
@@ -227,9 +227,9 @@ class _BazaarEntryState extends State<BazaarEntry> {
             margin: EdgeInsets.only(top: 16),
             child: Container(
               height: _height / 5,
-              // TODO: Change from shopRegistry == null to != null is not registered - how to fix?
+              // TODO: Change from businessRegistry == null to != null is not registered - how to fix?
               //  Problem only when restarting app.
-              child: (store.encointer.shopRegistry == null) || reload || (store.encointer.chosenCid == null)
+              child: (store.encointer.businessRegistry == null) || reload || (store.encointer.chosenCid == null)
                   ? Container(
                       alignment: Alignment.center,
                       child: Column(
@@ -252,7 +252,7 @@ class _BazaarEntryState extends State<BazaarEntry> {
                         ],
                       ),
                     )
-                  : (store.encointer.shopRegistry.isEmpty)
+                  : (store.encointer.businessRegistry.isEmpty)
                       ? Container(
                           alignment: Alignment.center,
                           child: Text(dic['no.items']),
@@ -260,10 +260,10 @@ class _BazaarEntryState extends State<BazaarEntry> {
                       : ListView.builder(
                           padding: EdgeInsets.all(5),
                           shrinkWrap: true,
-                          itemCount: store.encointer.shopRegistry.length,
+                          itemCount: store.encointer.businessRegistry.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (BuildContext context, index) {
-                            return _buildShopEntries(context, index, store);
+                            return _buildBusinessEntries(context, index, store);
                           },
                         ),
             ),
@@ -273,22 +273,22 @@ class _BazaarEntryState extends State<BazaarEntry> {
     );
   }
 
-  Widget _buildShopEntries(BuildContext context, int index, AppStore store) {
-    List<String> reversedList = new List.from(store.encointer.shopRegistry.reversed);
+  Widget _buildBusinessEntries(BuildContext context, int index, AppStore store) {
+    List<String> reversedList = new List.from(store.encointer.businessRegistry.reversed);
     return GestureDetector(
       onTap: () {
         //TODO make clickable
         // Navigator.of(context).pushNamed(DETAIL_UI);
       },
-      child: FutureBuilder<Shop>(
-        future: Shop().getShopData(reversedList[index]),
+      child: FutureBuilder<Business>(
+        future: Business().getBusinessData(reversedList[index]),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return ShopCard(
+            return BusinessCard(
               title: snapshot.data.name,
               description: snapshot.data.description,
               imageHash: snapshot.data.imageHash,
-              // TODO add these items to shop
+              // TODO add these items to business
               category: ' ',
               location: "Zürich, Technopark",
               dateAdded: "02 December 2020",

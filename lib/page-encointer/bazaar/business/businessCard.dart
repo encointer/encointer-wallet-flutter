@@ -1,7 +1,7 @@
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:flutter/material.dart';
 
-class ShopCard extends StatelessWidget {
+class BusinessCard extends StatelessWidget {
   final String title;
   final String description;
   final String imageHash;
@@ -10,7 +10,7 @@ class ShopCard extends StatelessWidget {
   final String category;
   final String location;
 
-  ShopCard({this.title, this.dateAdded, this.category, this.description, this.imageHash, this.location});
+  BusinessCard({this.title, this.dateAdded, this.category, this.description, this.imageHash, this.location});
 
   String getImageAdress(String imageHash) {
     return '$ipfs_gateway_encointer/ipfs/$imageHash';

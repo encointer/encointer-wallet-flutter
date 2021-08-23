@@ -1,15 +1,15 @@
 import 'package:encointer_wallet/service/ipfsApi/httpApi.dart';
 import 'dart:convert';
 
-class Shop {
+class Business {
   final String name;
   final String description;
   final String imageHash;
 
-  Shop({this.name, this.description, this.imageHash});
+  Business({this.name, this.description, this.imageHash});
 
-  factory Shop.fromJson(Map<String, dynamic> json) {
-    return Shop(
+  factory Business.fromJson(Map<String, dynamic> json) {
+    return Business(
       name: json['name'],
       description: json['description'],
       imageHash: json['imageHash'],
@@ -22,14 +22,14 @@ class Shop {
         'imageHash': imageHash,
       };
 
-  Future<Shop> getShopData(shopID) async {
-    final ipfsObject = await Ipfs().getJson(shopID);
+  Future<Business> getBusinessData(businessID) async {
+    final ipfsObject = await Ipfs().getJson(businessID);
     if (ipfsObject != 0) {
-      return Shop.fromJson(jsonDecode(ipfsObject)); //store response as string
+      return Business.fromJson(jsonDecode(ipfsObject)); //store response as string
     } else {
       // TODO: What to do in case of non-existent URL? (i.e. node not running?)
       // in case of invalid IPFS URL
-      return Shop();
+      return Business();
     }
   }
 }

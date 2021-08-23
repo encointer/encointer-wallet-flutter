@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/shop/myShopPage.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/business/myBusinessPage.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 class MenuHandler extends StatelessWidget {
@@ -48,10 +48,10 @@ class MenuHandler extends StatelessWidget {
                           width: 32,
                           child: Icon(Icons.shop_outlined, color: Colors.grey, size: 22),
                         ),
-                        title: Text(dic['my.shops']),
+                        title: Text(dic['my.businessess']),
                         trailing: Icon(Icons.arrow_forward_ios, size: 18),
                         onTap: () => {
-                          Navigator.of(context).pushNamed(MyShopPage.route),
+                          Navigator.of(context).pushNamed(MyBusinessPage.route),
                         },
                       ),
                     ],
