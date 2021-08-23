@@ -105,7 +105,7 @@ abstract class _EncointerStore with Store {
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
 
   @observable
-  ObservableList<String> shopRegistry;
+  ObservableList<String> businessRegistry;
 
   @computed
   String get communityName => communityMetadata?.name;
@@ -278,7 +278,7 @@ abstract class _EncointerStore with Store {
     }
 
     if (rootStore.settings.endpointIsGesell) {
-      webApi.encointer.subscribeShopRegistry();
+      webApi.encointer.subscribeBusinessRegistry();
     }
     // update depending values without awaiting
     if (!rootStore.settings.loading) {
@@ -390,12 +390,12 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setShopRegistry(List<String> shops) {
-    shopRegistry = ObservableList.of(shops);
+  void setBusinessRegistry(List<String> businesses) {
+    businessRegistry = ObservableList.of(businesses);
   }
 
-  Future<void> reloadShopRegistry() async {
-    await webApi.encointer.getShopRegistry();
+  Future<void> reloadBusinessRegistry() async {
+    await webApi.encointer.getBusinessRegistry();
   }
 
   Future<void> cacheParticipantsClaims(Map<String, ClaimOfAttendance> claims) {
