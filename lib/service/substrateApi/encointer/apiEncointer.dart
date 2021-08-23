@@ -35,7 +35,8 @@ class ApiEncointer {
   final String _participantIndexChannel = 'participantIndex';
   final String _communityIdentifiersChannel = 'communityIdentifiers';
   final String _encointerBalanceChannel = 'encointerBalance';
-  final String _shopRegistryChannel = 'shopRegistry';
+  //final String _shopRegistryChannel = 'shopRegistry';
+  final String _businessRegistryChannel = 'businessRegistry';
 
   final ApiNoTee _noTee;
   final ApiTeeProxy _teeProxy;
@@ -47,7 +48,7 @@ class ApiEncointer {
     this.subscribeCommunityIdentifiers();
     if (store.settings.endpointIsGesell) {
       this.subscribeEncointerBalance();
-      this.subscribeShopRegistry();
+      this.subscribeBusinessRegistry();
     }
   }
 
@@ -55,12 +56,12 @@ class ApiEncointer {
     print("api: stopping encointer subscriptions");
     apiRoot.unsubscribeMessage(_currentPhaseSubscribeChannel);
     apiRoot.unsubscribeMessage(_communityIdentifiersChannel);
-    apiRoot.unsubscribeMessage(_shopRegistryChannel);
+    apiRoot.unsubscribeMessage(_businessRegistryChannel);
 
     if (store.settings.endpointIsGesell) {
       apiRoot.unsubscribeMessage(_participantIndexChannel);
       apiRoot.unsubscribeMessage(_encointerBalanceChannel);
-      apiRoot.unsubscribeMessage(_shopRegistryChannel);
+      apiRoot.unsubscribeMessage(_businessRegistryChannel);
     }
   }
 
@@ -344,18 +345,18 @@ class ApiEncointer {
     );
   }
 
-  Future<void> subscribeShopRegistry() async {
+  Future<void> subscribeBusinessRegistry() async {
     // try to unsubscribe first in case parameters have changed
-    if (store.encointer.shopRegistry != null) {
-      apiRoot.unsubscribeMessage(_shopRegistryChannel);
+    if (store.encointer.businessRegistry != null) {
+      apiRoot.unsubscribeMessage(_businessRegistryChannel);
     }
     String cid = store.encointer.chosenCid;
     if (cid == null) {
       return; // zero means: not registered
     }
-    apiRoot.subscribeMessage('encointer.subscribeShopRegistry("$_shopRegistryChannel", "$cid")', _shopRegistryChannel,
+    apiRoot.subscribeMessage('encointer.subscribeBusinessRegistry("$_businessRegistryChannel", "$cid")', _businessRegistryChannel,
         (data) {
-      store.encointer.setShopRegistry(data.cast<String>());
+      store.encointer.setBusinessRegistry(data.cast<String>());
     });
   }
 
@@ -409,16 +410,16 @@ class ApiEncointer {
     return proof;
   }
 
-  Future<void> getShopRegistry() async {
+  Future<void> getBusinessRegistry() async {
     String cid = store.encointer.chosenCid;
 
     if (cid == null) {
       return;
     }
-    List<dynamic> res = await apiRoot.evalJavascript('encointer.getShopRegistry("$cid")');
+    List<dynamic> res = await apiRoot.evalJavascript('encointer.getBusinessRegistry("$cid")');
 
-    List<String> shops = res.cast<String>();
+    List<String> businesses = res.cast<String>();
 
-    store.encointer.setShopRegistry(shops);
+    store.encointer.setBusinessRegistry(businesses);
   }
 }
