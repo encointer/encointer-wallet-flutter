@@ -212,7 +212,7 @@ class _BazaarEntryState extends State<BazaarEntry> {
               margin: EdgeInsets.only(top: 40, left: 100, right: 20),
               child: GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(contextBusiness, OverviewPage.route);
+                  Navigator.pushNamed(context, BusinessOverviewPage.route);
                 },
                 child: Text(
                   dic['show.all'],
