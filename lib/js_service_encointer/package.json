@@ -20,7 +20,8 @@
     "@polkadot/keyring": "^7.4.1",
     "@polkadot/util": "^7.4.1",
     "@polkadot/util-crypto": "^7.4.1",
-    "@polkadot/types": "^5.9.1"
+    "@polkadot/types": "^5.9.1",
+    "tslib": "2.1.0"
   },
   "dependencies": {
     "@encointer/node-api": "^0.4.2",
@@ -42,7 +43,8 @@
     "core-js": "^3.12.1",
     "node-rsa": "^1.1.1",
     "oo7-substrate": "^0.8.0",
-    "regenerator-runtime": "^0.13.7"
+    "regenerator-runtime": "^0.13.7",
+    "tslib": "2.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.14.0",
