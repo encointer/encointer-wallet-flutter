@@ -17,7 +17,7 @@
     "./types": "./src/config/types.js"
   },
   "resolutions": {
-    "tslib": "2.1.0"
+    "tslib": "^2.3.1"
   },
   "dependencies": {
     "@encointer/node-api": "^0.4.2",
@@ -41,7 +41,7 @@
     "oo7-substrate": "^0.8.0",
     "process": "^0.11.10",
     "regenerator-runtime": "^0.13.7",
-    "tslib": "2.1.0"
+    "tslib": "^2.3.1"
   },
   "devDependencies": {
     "@babel/core": "^7.15.5",
