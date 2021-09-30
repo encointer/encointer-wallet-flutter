@@ -20,10 +20,10 @@
     "tslib": "^2.3.1"
   },
   "dependencies": {
-    "@encointer/node-api": "^0.4.2",
-    "@encointer/types": "^0.4.2",
-    "@encointer/util": "^0.4.2",
-    "@encointer/worker-api": "^0.4.2",
+    "@encointer/node-api": "^0.4.3",
+    "@encointer/types": "^0.4.3",
+    "@encointer/util": "^0.4.3",
+    "@encointer/worker-api": "^0.4.3",
     "@polkadot/api": "^5.9.1",
     "@polkadot/keyring": "^7.4.1",
     "@polkadot/networks": "^7.4.1",
