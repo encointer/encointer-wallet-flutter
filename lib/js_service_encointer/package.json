@@ -9,7 +9,7 @@
     "build": "webpack",
     "encointer:link": "./scripts/encointer-link.cjs",
     "encointer:unlink": "./scripts/encointer-unlink.cjs",
-    "test": "jest"
+    "test": "polkadot-dev-run-test"
   },
   "exports": {
     ".": "./src/index.js",
