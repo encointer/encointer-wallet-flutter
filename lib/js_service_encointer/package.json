@@ -6,7 +6,7 @@
   "scripts": {
     "clean": "rm -rf dist/*",
     "lint": "eslint src/**.js",
-    "build": "webpack",
+    "build": "./scripts/buildWebpack.cjs",
     "encointer:link": "./scripts/encointer-link.cjs",
     "encointer:unlink": "./scripts/encointer-unlink.cjs",
     "test": "polkadot-dev-run-test"
