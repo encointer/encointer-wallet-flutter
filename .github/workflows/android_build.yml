@@ -50,5 +50,12 @@ jobs:
         working-directory: ./scripts
         run: source ./init_env.sh && ./build_js.sh
 
+      # Upload artifacts
+      - name: Upload js
+        uses: actions/upload-artifact@v2
+        with:
+          name: main-js-${{ github.sha }}-${{ runner.os}}
+          path: lib/js_service_encointer/dist/main.js
+
       - name: "Build apk"
         run: flutter build apk --flavor fdroid

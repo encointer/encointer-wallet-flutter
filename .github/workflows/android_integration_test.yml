@@ -69,6 +69,13 @@ jobs:
         working-directory: ./scripts
         run: source ./init_env.sh && ./build_js.sh
 
+      # Upload artifacts
+      - name: Upload js
+        uses: actions/upload-artifact@v2
+        with:
+          name: main-js-${{ github.sha }}-${{ matrix.api-level }}
+          path: lib/js_service_encointer/dist/main.js
+
       - name: "Android Integration Tests"
         uses: reactivecircus/android-emulator-runner@v2
         env:
