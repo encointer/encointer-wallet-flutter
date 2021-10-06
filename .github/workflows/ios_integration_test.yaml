@@ -7,6 +7,14 @@ on:
     branches: [ master ]
 
 jobs:
+  cancel_previous_runs:
+    name: Cancel Previous Runs
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: styfle/cancel-workflow-action@0.4.1
+        with:
+          access_token: ${{ secrets.GITHUB_TOKEN }}
+
   ios_device_test:
     runs-on: macos-latest
     timeout-minutes: 60
