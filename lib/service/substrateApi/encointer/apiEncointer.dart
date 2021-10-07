@@ -413,16 +413,23 @@ class ApiEncointer {
 
   /// Get all the registered businesses for the current `chosenCid`
   Future<List<AccountBusinessTuple>> getBusinesses() async {
+
+      // set the store because the current bazaar data model reads the values from the store.
+      store.encointer.setbusinessRegistry(allMockBusinesses);
       return allMockBusinesses;
   }
 
   /// Get all the registered offerings for the current `chosenCid`
   Future<List<OfferingData>> getOfferings() async {
+
+    // Todo: @armin you'd probably extend the encointer store and also set the store here.
     return allMockOfferings;
   }
 
   /// Get all the registered offerings for the business with [bid]
   Future<List<OfferingData>> getOfferingsForBusiness(BusinessIdentifier bid) async {
+
+    // Todo: @armin you'd probably extend the encointer store and also set the store here.
     return business1MockOfferings;
   }
 }
