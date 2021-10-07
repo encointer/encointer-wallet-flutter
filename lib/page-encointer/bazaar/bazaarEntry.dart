@@ -1,3 +1,9 @@
+
+/// Bazaar entry page
+///
+/// Todo: @armin: For my taste this file is way to big. Please separate it into smaller files. However, I don't know
+/// how much of this will be needed in the new design anyhow.
+
 import 'package:encointer_wallet/common/components/BorderedTitle.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/mocks/api/apiIpfsBazaar.dart';
@@ -38,7 +44,6 @@ class _BazaarEntryState extends State<BazaarEntry> {
   @observable
   bool reload = false;
 
-  @action
   Future<void> refreshPage() async {
     reload = true;
     if (store.encointer.chosenCid != null) {
@@ -46,6 +51,12 @@ class _BazaarEntryState extends State<BazaarEntry> {
       await resetState();
       reload = false;
     }
+  }
+
+  @override
+  void initState() {
+    refreshPage();
+    super.initState();
   }
 
   Future<void> resetState() async {
@@ -56,9 +67,6 @@ class _BazaarEntryState extends State<BazaarEntry> {
   Widget build(BuildContext context) {
     final Map<String, String> dic = I18n.of(context).bazaar;
     Color secondaryColor = Theme.of(context).secondaryHeaderColor;
-
-    // reaction necessary because shops is not an observable list (view should not change without user doing anything)
-    //final refreshPageOnCidChange = reaction((_) => store.encointer.chosenCid, (_) => refreshPage());
 
     final List<Widget> _widgetList = <Widget>[
       homeView(context, store),
@@ -92,7 +100,7 @@ class _BazaarEntryState extends State<BazaarEntry> {
                 Navigator.push(
                   context,
                   PageRouteBuilder(opaque: false, pageBuilder: (context, _, __) => MenuHandler(store)),
-                ).whenComplete(() => refreshPage());
+                );
               },
             ),
           ],
@@ -238,6 +246,8 @@ class _BazaarEntryState extends State<BazaarEntry> {
                           // TODO: how to refresh automatically?
                           !reload
                               ? TextButton(
+                                  // todo: @armin: we never want to use direct string literals in the app.
+                                  // please use the `i18n` dictionaries for the texts.
                                   child: Text("Refresh"),
                                   onPressed: () {
                                     refreshPage();
