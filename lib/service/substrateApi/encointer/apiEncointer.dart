@@ -9,6 +9,8 @@ import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
 import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:encointer_wallet/store/encointer/types/proofOfAttendance.dart';
+import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
+import 'package:encointer_wallet/mocks/data/mockBazaarData.dart';
 import 'package:encointer_wallet/utils/format.dart';
 
 import 'apiNoTee.dart';
@@ -174,7 +176,7 @@ class ApiEncointer {
     if (cid == null) {
       return;
    }
-    
+
     double dem = await apiRoot.evalJavascript('encointer.getDemurrage("$cid")');
     print("api: fetched demurrage: $dem");
     store.encointer.setDemurrage(dem);
@@ -409,16 +411,18 @@ class ApiEncointer {
     return proof;
   }
 
-  Future<void> getShopRegistry() async {
-    String cid = store.encointer.chosenCid;
+  /// Get all the registered businesses for the current `chosenCid`
+  Future<List<AccountBusinessTuple>> getBusinesses() async {
+      return allMockBusinesses;
+  }
 
-    if (cid == null) {
-      return;
-    }
-    List<dynamic> res = await apiRoot.evalJavascript('encointer.getShopRegistry("$cid")');
+  /// Get all the registered offerings for the current `chosenCid`
+  Future<List<OfferingData>> getOfferings() async {
+    return allMockOfferings;
+  }
 
-    List<String> shops = res.cast<String>();
-
-    store.encointer.setShopRegistry(shops);
+  /// Get all the registered offerings for the business with [bid]
+  Future<List<OfferingData>> getOfferingsForBusiness(BusinessIdentifier bid) async {
+    return business1MockOfferings;
   }
 }

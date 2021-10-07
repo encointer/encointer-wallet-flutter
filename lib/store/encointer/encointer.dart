@@ -395,7 +395,7 @@ abstract class _EncointerStore with Store {
   }
 
   Future<void> reloadShopRegistry() async {
-    await webApi.encointer.getShopRegistry();
+    await webApi.encointer.getBusinesses();
   }
 
   Future<void> cacheParticipantsClaims(Map<String, ClaimOfAttendance> claims) {
