@@ -1,11 +1,12 @@
 import 'package:encointer_wallet/common/components/BorderedTitle.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
+import 'package:encointer_wallet/mocks/api/apiIpfsBazaar.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/common/communityChooserHandler.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/common/menuHandler.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shop/shopCard.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/shop/shopClass.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shop/shopOverviewPanel.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
@@ -274,23 +275,27 @@ class _BazaarEntryState extends State<BazaarEntry> {
   }
 
   Widget _buildShopEntries(BuildContext context, int index, AppStore store) {
-    List<String> reversedList = new List.from(store.encointer.businessRegistry.reversed);
+    // todo: This not performant. we should create an iterable from the outside and only pass an element to it.
+    List<AccountBusinessTuple> businesses = new List.from(store.encointer.businessRegistry.reversed);
+    // futureBusiness = BazaarIpfsApiMock.getBusiness(store.encointer.businessRegistry[index].businessData.url);
+
+
     return GestureDetector(
       onTap: () {
         //TODO make clickable
         // Navigator.of(context).pushNamed(DETAIL_UI);
       },
-      child: FutureBuilder<Shop>(
-        future: Shop().getShopData(reversedList[index]),
+      child: FutureBuilder<IpfsBusiness>(
+        future: BazaarIpfsApiMock.getBusiness(businesses[index].businessData.url),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ShopCard(
               title: snapshot.data.name,
               description: snapshot.data.description,
-              imageHash: snapshot.data.imageHash,
+              imageHash: snapshot.data.imagesCid,
               // TODO add these items to shop
               category: ' ',
-              location: "Zürich, Technopark",
+              location: snapshot.data.contactInfo,
               dateAdded: "02 December 2020",
             );
             //return Text(snapshot.data.name);

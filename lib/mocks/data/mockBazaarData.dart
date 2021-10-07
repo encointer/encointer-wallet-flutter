@@ -11,16 +11,32 @@ const String business_ipfs_cid3 = '0x3ebf164a5bb618ec6caad31488161b237e24d75efa3
 const String cid1 = '0x5ebf164a5bb618ec6caad31488161b237e24d75efa3040286767b620d9183989';
 const String cid2 = '0x6ebf164a5bb618ec6caad31488161b237e24d75efa3040286767b620d9183989';
 
+final BusinessIdentifier bid1 = BusinessIdentifier(cid1, controller1);
+final BusinessIdentifier bid2 = BusinessIdentifier(cid1, controller2);
+final BusinessIdentifier bid3 = BusinessIdentifier(cid1, controller3);
+
 final List<AccountBusinessTuple> allMockBusinesses = [
   AccountBusinessTuple(controller1, BusinessData(business_ipfs_cid1, 1)),
   AccountBusinessTuple(controller2, BusinessData(business_ipfs_cid2, 1)),
   AccountBusinessTuple(controller3, BusinessData(business_ipfs_cid3, 1)),
 ];
 
-final OfferingData offeringData1 = OfferingData('0x67ebf164a5bb618ec6caad31488161b237e24d75efa3040286767b620d9183989');
-final OfferingData offeringData2 = OfferingData('0x77ebf164a5bb618ec6caad31488161b237e24d75efa3040286767b620d9183989');
-final OfferingData offeringData3 = OfferingData('0x87ebf164a5bb618ec6caad31488161b237e24d75efa3040286767b620d9183989');
-final OfferingData offeringData4 = OfferingData('0x97ebf164a5bb618ec6caad31488161b237e24d75efa3040286767b620d9183989');
+
+const String offering_ipfs_cid1 = '0x67ebf164a5bb618ec6caad31488161b237e24d75efa3040286767b620d9183989';
+const String offering_ipfs_cid2 = '0x77ebf164a5bb618ec6caad31488161b237e24d75efa3040286767b620d9183989';
+const String offering_ipfs_cid3 = '0x87ebf164a5bb618ec6caad31488161b237e24d75efa3040286767b620d9183989';
+const String offering_ipfs_cid4 = '0x97ebf164a5bb618ec6caad31488161b237e24d75efa3040286767b620d9183989';
+
+final OfferingData offeringData1 = OfferingData(offering_ipfs_cid1);
+final OfferingData offeringData2 = OfferingData(offering_ipfs_cid2);
+final OfferingData offeringData3 = OfferingData(offering_ipfs_cid3);
+final OfferingData offeringData4 = OfferingData(offering_ipfs_cid4);
+
+final Map<BusinessIdentifier, List<OfferingData>> offeringsForBusiness = {
+  bid1: business1MockOfferings,
+  bid2: business2MockOfferings,
+  bid3: [],
+};
 
 final List<OfferingData> business1MockOfferings = [
   offeringData1,
@@ -45,11 +61,19 @@ final List<IpfsBusiness> allMockIpfsBusinesses = [
   ipfsBusiness3,
 ];
 
-final List<IpfsOffering> allMockIpfsOfferings = [
-  ipfsOffering1,
-  ipfsOffering2,
-  ipfsOffering2,
-];
+final Map<String, IpfsOffering> ipfsOfferings = {
+  offering_ipfs_cid1: ipfsOffering1,
+  offering_ipfs_cid2: ipfsOffering2,
+  offering_ipfs_cid3: ipfsOffering3,
+  offering_ipfs_cid4: ipfsOffering4,
+};
+
+final Map<String, IpfsBusiness> ipfsBusinesses = {
+  business_ipfs_cid1: ipfsBusiness1,
+  business_ipfs_cid2: ipfsBusiness2,
+  business_ipfs_cid3: ipfsBusiness3,
+};
+
 
 // Todo: @armin add some actual images to assets that look nice in the bazaar.
 // Additionally, the bazaar should support more than one image per asset/business.

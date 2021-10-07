@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 
 class BazaarIpfsApiMock {
 
-  Future<List<IpfsBusiness>> getBusinesses(List<String> ipfsCids) {
-    return Future.value(allMockIpfsBusinesses);
+  static Future<IpfsBusiness> getBusiness(String ipfsCid) {
+    return Future.value(ipfsBusinesses[ipfsCid]);
   }
 
 
-  Future<List<IpfsOffering>> getOfferings(List<String> ipfsCids) {
-     return Future.value(allMockIpfsOfferings);
+  static Future<List<IpfsOffering>> getOfferings(List<String> ipfsCids) {
+     return Future.value([]);
   }
 
   /// Image path in mock. Ipfs cid in real api
-  Future<List<Image>> getImage(String imagePath) {
+  static Future<List<Image>> getImage(String imagePath) {
     return Future.value([Image.asset(imagePath)]);
   }
 }

@@ -28,8 +28,8 @@ class MockApiEncointer extends ApiEncointer {
   }
 
   @override
-  Future<void> subscribebusinessRegistry() async {
-    _log("empty subscribebusinessRegistry stub");
+  Future<void> subscribeBusinessRegistry() async {
+    _log("empty subscribeBusinessRegistry stub");
   }
 
   @override

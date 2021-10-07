@@ -279,10 +279,11 @@ abstract class _EncointerStore with Store {
     }
 
     if (rootStore.settings.endpointIsGesell) {
-      webApi.encointer.subscribebusinessRegistry();
+      webApi.encointer.subscribeBusinessRegistry();
     }
     // update depending values without awaiting
     if (!rootStore.settings.loading) {
+      webApi.encointer.getBusinesses();
       webApi.encointer.getMeetupIndex();
       webApi.encointer.getParticipantIndex();
       webApi.encointer.getParticipantCount();

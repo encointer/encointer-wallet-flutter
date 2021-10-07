@@ -49,7 +49,7 @@ class ApiEncointer {
     this.subscribeCommunityIdentifiers();
     if (store.settings.endpointIsGesell) {
       this.subscribeEncointerBalance();
-      this.subscribebusinessRegistry();
+      this.subscribeBusinessRegistry();
     }
   }
 
@@ -346,19 +346,8 @@ class ApiEncointer {
     );
   }
 
-  Future<void> subscribebusinessRegistry() async {
-    // try to unsubscribe first in case parameters have changed
-    if (store.encointer.businessRegistry != null) {
-      apiRoot.unsubscribeMessage(_businessRegistryChannel);
-    }
-    String cid = store.encointer.chosenCid;
-    if (cid == null) {
-      return; // zero means: not registered
-    }
-    apiRoot.subscribeMessage('encointer.subscribebusinessRegistry("$_businessRegistryChannel", "$cid")', _businessRegistryChannel,
-        (data) {
-      store.encointer.setbusinessRegistry(data.cast<String>());
-    });
+  Future<void> subscribeBusinessRegistry() async {
+    // todo: implement subscribing
   }
 
   /// Queries the EncointerCurrencies pallet: encointerCurrencies.communityIdentifiers().
