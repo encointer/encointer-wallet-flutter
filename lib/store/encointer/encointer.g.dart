@@ -340,13 +340,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
   final _$businessRegistryAtom = Atom(name: '_EncointerStore.businessRegistry');
 
   @override
-  ObservableList<String> get businessRegistry {
+  ObservableList<AccountBusinessTuple> get businessRegistry {
     _$businessRegistryAtom.reportRead();
     return super.businessRegistry;
   }
 
   @override
-  set businessRegistry(ObservableList<String> value) {
+  set businessRegistry(ObservableList<AccountBusinessTuple> value) {
     _$businessRegistryAtom.reportWrite(value, super.businessRegistry, () {
       super.businessRegistry = value;
     });
@@ -589,11 +589,11 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setbusinessRegistry(List<String> shops) {
+  void setbusinessRegistry(List<AccountBusinessTuple> accBusinesses) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(
         name: '_EncointerStore.setbusinessRegistry');
     try {
-      return super.setbusinessRegistry(shops);
+      return super.setbusinessRegistry(accBusinesses);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }

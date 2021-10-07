@@ -5,6 +5,7 @@ import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/assets/types/transferData.dart';
+import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
 import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
@@ -105,7 +106,7 @@ abstract class _EncointerStore with Store {
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
 
   @observable
-  ObservableList<String> businessRegistry;
+  ObservableList<AccountBusinessTuple> businessRegistry;
 
   @computed
   String get communityName => communityMetadata?.name;
@@ -390,8 +391,8 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setbusinessRegistry(List<String> shops) {
-    businessRegistry = ObservableList.of(shops);
+  void setbusinessRegistry(List<AccountBusinessTuple> accBusinesses) {
+    businessRegistry = ObservableList.of(accBusinesses);
   }
 
   Future<void> reloadbusinessRegistry() async {
