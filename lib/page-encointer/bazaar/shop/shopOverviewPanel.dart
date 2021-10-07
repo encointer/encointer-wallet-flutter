@@ -53,6 +53,8 @@ class _ShopOverviewPanelState extends State<ShopOverviewPanel> {
                             builder: (context, snapshot) {
                               if (snapshot.hasData) {
                                 return Card(
+                                  // Todo: @armin the image should actually be another future that is returned by
+                                  // BazaarIpfsAPiMock.getImage();
                                   child: ListTile(
                                     leading: Image.asset(
                                       snapshot.data.imagesCid,
