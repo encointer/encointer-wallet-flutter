@@ -29,7 +29,6 @@ IpfsOffering _$IpfsOfferingFromJson(Map<String, dynamic> json) {
   return IpfsOffering(
     json['name'] as String,
     json['price'] as int,
-    json['cid'] as String,
     json['description'] as String,
     json['contactInfo'] as String,
     json['imagesCid'] as String,
@@ -40,7 +39,6 @@ Map<String, dynamic> _$IpfsOfferingToJson(IpfsOffering instance) =>
     <String, dynamic>{
       'name': instance.name,
       'price': instance.price,
-      'cid': instance.cid,
       'description': instance.description,
       'contactInfo': instance.contactInfo,
       'imagesCid': instance.imagesCid,

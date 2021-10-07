@@ -43,14 +43,12 @@ class IpfsBusiness {
 /// Offering metadata living in ipfs
 @JsonSerializable()
 class IpfsOffering {
-  IpfsOffering(this.name, this.price, this.cid, this.description, this.contactInfo, this.imagesCid);
+  IpfsOffering(this.name, this.price, this.description, this.contactInfo, this.imagesCid);
 
   /// name of the offering
   final String name;
   /// price in community currency
   final int price;
-  /// community identifier
-  final String cid;
   /// description of the offering
   final String description;
   /// contact info of the business
