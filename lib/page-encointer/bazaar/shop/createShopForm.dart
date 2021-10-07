@@ -49,8 +49,8 @@ class _CreateShopForm extends State<CreateShopForm> {
       // upload shop image to ipfs
       final String _imageHash = await _uploadImage();
 
-      // This part is commented out because the types used here do no longer exist. After the pallet-encointer-bazaar`
-      // revamp, the flow here should be implemented as follows:
+      // This part is commented out because the types used here do no longer exist.
+      // revamp, the flow here should be implemented as follows in the future:
       //
       // 1. Upload an `IpfsBusiness` to ipfs. As ipfs-cid is returned as a result
       // 2. Register that business with the chain by sending a `register_business` extrinsic
