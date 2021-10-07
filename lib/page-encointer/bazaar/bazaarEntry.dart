@@ -289,13 +289,16 @@ class _BazaarEntryState extends State<BazaarEntry> {
         future: BazaarIpfsApiMock.getBusiness(businesses[index].businessData.url),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            // @armin as far as I know are the two todos below not in the UI draft from the issue. If you don't find
+            // any reason to use `category` and `dateAdded` just skipp them, or consult with alain.
             return ShopCard(
               title: snapshot.data.name,
               description: snapshot.data.description,
               imageHash: snapshot.data.imagesCid,
-              // TODO add these items to shop
+              // Todo: what kind of categories do we want?
               category: ' ',
               location: snapshot.data.contactInfo,
+              // Todo: How do we determine this in reality. Do we rely on the shop owner's to populate that themselves?
               dateAdded: "02 December 2020",
             );
             //return Text(snapshot.data.name);
