@@ -41,7 +41,7 @@ class _BazaarEntryState extends State<BazaarEntry> {
   Future<void> refreshPage() async {
     reload = true;
     if (store.encointer.chosenCid != null) {
-      await store.encointer.reloadShopRegistry();
+      await store.encointer.reloadbusinessRegistry();
       await resetState();
       reload = false;
     }
@@ -227,9 +227,9 @@ class _BazaarEntryState extends State<BazaarEntry> {
             margin: EdgeInsets.only(top: 16),
             child: Container(
               height: _height / 5,
-              // TODO: Change from shopRegistry == null to != null is not registered - how to fix?
+              // TODO: Change from businessRegistry == null to != null is not registered - how to fix?
               //  Problem only when restarting app.
-              child: (store.encointer.shopRegistry == null) || reload || (store.encointer.chosenCid == null)
+              child: (store.encointer.businessRegistry == null) || reload || (store.encointer.chosenCid == null)
                   ? Container(
                       alignment: Alignment.center,
                       child: Column(
@@ -252,7 +252,7 @@ class _BazaarEntryState extends State<BazaarEntry> {
                         ],
                       ),
                     )
-                  : (store.encointer.shopRegistry.isEmpty)
+                  : (store.encointer.businessRegistry.isEmpty)
                       ? Container(
                           alignment: Alignment.center,
                           child: Text(dic['no.items']),
@@ -260,7 +260,7 @@ class _BazaarEntryState extends State<BazaarEntry> {
                       : ListView.builder(
                           padding: EdgeInsets.all(5),
                           shrinkWrap: true,
-                          itemCount: store.encointer.shopRegistry.length,
+                          itemCount: store.encointer.businessRegistry.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (BuildContext context, index) {
                             return _buildShopEntries(context, index, store);
@@ -274,7 +274,7 @@ class _BazaarEntryState extends State<BazaarEntry> {
   }
 
   Widget _buildShopEntries(BuildContext context, int index, AppStore store) {
-    List<String> reversedList = new List.from(store.encointer.shopRegistry.reversed);
+    List<String> reversedList = new List.from(store.encointer.businessRegistry.reversed);
     return GestureDetector(
       onTap: () {
         //TODO make clickable

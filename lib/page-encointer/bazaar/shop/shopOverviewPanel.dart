@@ -34,17 +34,17 @@ class _ShopOverviewPanelState extends State<ShopOverviewPanel> {
         child: RoundedCard(
           padding: EdgeInsets.symmetric(vertical: 8),
           child: Observer(
-            builder: (_) => (store.encointer.shopRegistry == null)
+            builder: (_) => (store.encointer.businessRegistry == null)
                 ? CupertinoActivityIndicator()
-                : (store.encointer.shopRegistry.isEmpty)
+                : (store.encointer.businessRegistry.isEmpty)
                     ? Text("no shops found")
                     : ListView.builder(
                         shrinkWrap: true,
                         scrollDirection: Axis.vertical,
                         padding: EdgeInsets.fromLTRB(16, 0, 16, 100),
-                        itemCount: store.encointer.shopRegistry == null ? 0 : store.encointer.shopRegistry.length,
+                        itemCount: store.encointer.businessRegistry == null ? 0 : store.encointer.businessRegistry.length,
                         itemBuilder: (BuildContext context, int index) {
-                          futureShop = Shop().getShopData(store.encointer.shopRegistry[index]);
+                          futureShop = Shop().getShopData(store.encointer.businessRegistry[index]);
                           return FutureBuilder<Shop>(
                             future: futureShop,
                             builder: (context, snapshot) {

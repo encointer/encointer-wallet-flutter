@@ -28,8 +28,8 @@ class MockApiEncointer extends ApiEncointer {
   }
 
   @override
-  Future<void> subscribeShopRegistry() async {
-    _log("empty subscribeShopRegistry stub");
+  Future<void> subscribebusinessRegistry() async {
+    _log("empty subscribebusinessRegistry stub");
   }
 
   @override
@@ -95,7 +95,7 @@ class MockApiEncointer extends ApiEncointer {
 
   @override
   Future<List<AccountBusinessTuple>> getBusinesses() async {
-    _log("warn: getShopRegistry mock is unimplemented");
+    _log("warn: getbusinessRegistry mock is unimplemented");
   }
 
   @override
