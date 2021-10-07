@@ -3,9 +3,9 @@ import 'dart:io';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/common/imagePickerHandler.dart';
 // import 'package:encointer_wallet/page/account/txConfirmPage.dart';
-import 'package:encointer_wallet/service/ipfsApi/httpApi.dart';
+// import 'package:encointer_wallet/service/ipfsApi/httpApi.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
+// import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -31,23 +31,23 @@ class _CreateShopForm extends State<CreateShopForm> {
   File _imageFile;
 
   // upload Image to IPFS
-  Future<String> _uploadImage() async {
-    File image = File(_imageFile.path);
-    final String imageHash = await Ipfs().uploadImage(image);
-    return imageHash;
-  }
+  // Future<String> _uploadImage() async {
+  //   File image = File(_imageFile.path);
+  //   final String imageHash = await Ipfs().uploadImage(image);
+  //   return imageHash;
+  // }
 
   // upload Json to IPFS
-  Future<String> _uploadShop(IpfsBusiness shop) async {
-    var jsonToUpload = shop.toJson();
-    final String shopHash = await Ipfs().uploadJson(jsonToUpload);
-    return shopHash;
-  }
+  // Future<String> _uploadShop(IpfsBusiness shop) async {
+  //   var jsonToUpload = shop.toJson();
+  //   final String shopHash = await Ipfs().uploadJson(jsonToUpload);
+  //   return shopHash;
+  // }
 
   Future<void> _submit() async {
     if (_formKey.currentState.validate()) {
       // upload shop image to ipfs
-      final String _imageHash = await _uploadImage();
+      // final String _imageHash = await _uploadImage();
 
       // This part is commented out because the types used here do no longer exist.
       // revamp, the flow here should be implemented as follows in the future:

@@ -96,6 +96,8 @@ class MockApiEncointer extends ApiEncointer {
   @override
   Future<List<AccountBusinessTuple>> getBusinesses() async {
     _log("warn: getbusinessRegistry mock is unimplemented");
+
+    return Future.value([]);
   }
 
   @override

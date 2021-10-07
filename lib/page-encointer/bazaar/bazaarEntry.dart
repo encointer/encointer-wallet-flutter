@@ -287,8 +287,6 @@ class _BazaarEntryState extends State<BazaarEntry> {
   Widget _buildShopEntries(BuildContext context, int index, AppStore store) {
     // todo: This not performant. we should create an iterable from the outside and only pass an element to it.
     List<AccountBusinessTuple> businesses = new List.from(store.encointer.businessRegistry.reversed);
-    // futureBusiness = BazaarIpfsApiMock.getBusiness(store.encointer.businessRegistry[index].businessData.url);
-
 
     return GestureDetector(
       onTap: () {
