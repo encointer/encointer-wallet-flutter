@@ -10,6 +10,9 @@ IpfsBusiness _$IpfsBusinessFromJson(Map<String, dynamic> json) {
   return IpfsBusiness(
     json['name'] as String,
     json['description'] as String,
+    json['contactInfo'] as String,
+    json['imagesCid'] as String,
+    json['openingHours'] as String,
   );
 }
 
@@ -17,6 +20,9 @@ Map<String, dynamic> _$IpfsBusinessToJson(IpfsBusiness instance) =>
     <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
+      'contactInfo': instance.contactInfo,
+      'imagesCid': instance.imagesCid,
+      'openingHours': instance.openingHours,
     };
 
 IpfsOffering _$IpfsOfferingFromJson(Map<String, dynamic> json) {
@@ -24,7 +30,9 @@ IpfsOffering _$IpfsOfferingFromJson(Map<String, dynamic> json) {
     json['name'] as String,
     json['price'] as int,
     json['cid'] as String,
-    json['imageCid'] as String,
+    json['description'] as String,
+    json['contactInfo'] as String,
+    json['imagesCid'] as String,
   );
 }
 
@@ -33,7 +41,9 @@ Map<String, dynamic> _$IpfsOfferingToJson(IpfsOffering instance) =>
       'name': instance.name,
       'price': instance.price,
       'cid': instance.cid,
-      'imageCid': instance.imageCid,
+      'description': instance.description,
+      'contactInfo': instance.contactInfo,
+      'imagesCid': instance.imagesCid,
     };
 
 BusinessData _$BusinessDataFromJson(Map<String, dynamic> json) {

@@ -16,12 +16,19 @@ part 'bazaar.g.dart';
 /// Business metadata living in ipfs
 @JsonSerializable()
 class IpfsBusiness {
-  IpfsBusiness(this.name, this.description);
+  IpfsBusiness(this.name, this.description, this.contactInfo, this.imagesCid, this.openingHours);
 
   /// name of the business
   final String name;
   /// brief description of the business
   final String description;
+  /// contact info of the business
+  final String contactInfo;
+  /// ipfs-cid where the images live
+  final String imagesCid;
+  /// opening hours of the business
+  /// Todo: change to an actual date format instead of string
+  final String openingHours;
 
   @override
   String toString() {
@@ -36,7 +43,7 @@ class IpfsBusiness {
 /// Offering metadata living in ipfs
 @JsonSerializable()
 class IpfsOffering {
-  IpfsOffering(this.name, this.price, this.cid, this.imageCid);
+  IpfsOffering(this.name, this.price, this.cid, this.description, this.contactInfo, this.imagesCid);
 
   /// name of the offering
   final String name;
@@ -44,8 +51,12 @@ class IpfsOffering {
   final int price;
   /// community identifier
   final String cid;
-  /// ipfs-cid where the image lives
-  final String imageCid;
+  /// description of the offering
+  final String description;
+  /// contact info of the business
+  final String contactInfo;
+  /// ipfs-cid where the offering's images live
+  final String imagesCid;
 
   @override
   String toString() {
