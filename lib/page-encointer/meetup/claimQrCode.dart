@@ -79,7 +79,7 @@ class ClaimQrCode extends StatelessWidget {
                               return QrImage(
                                 data: snapshot.data.toString(),
                                 size: 280,
-                                errorCorrectionLevel: QrErrorCorrectLevel.Q,
+                                errorCorrectionLevel: QrErrorCorrectLevel.M,
                                 //embeddedImage:
                                 //    AssetImage('assets/images/public/app.png'),
                                 //embeddedImageStyle:
