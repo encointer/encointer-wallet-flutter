@@ -48,6 +48,7 @@ class ApiEncointer {
     this.subscribeCurrentPhase();
     this.subscribeCommunityIdentifiers();
     if (store.settings.endpointIsGesell) {
+      this.subscribeParticipantIndex();
       this.subscribeEncointerBalance();
       this.subscribeBusinessRegistry();
     }
@@ -318,7 +319,7 @@ class ApiEncointer {
     apiRoot.subscribeMessage(
         'encointer.subscribeParticipantIndex("$_participantIndexChannel", "$cid", "$cIndex", "$account")',
         _participantIndexChannel, (data) {
-      store.encointer.setParticipantIndex(data);
+      store.encointer.setParticipantIndex(int.parse(data));
     });
   }
 
@@ -327,7 +328,7 @@ class ApiEncointer {
   /// This is off-chain in Cantillon. Hence, subscriptions are not supported.
   Future<void> subscribeEncointerBalance() async {
     // unsubscribe from potentially other community updates
-    print('Substribe encointer balance');
+    print('Subscribe encointer balance');
     apiRoot.unsubscribeMessage(_encointerBalanceChannel);
 
     String account = store.account.currentAccountPubKey;
