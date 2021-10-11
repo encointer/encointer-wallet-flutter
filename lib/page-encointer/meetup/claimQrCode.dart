@@ -45,7 +45,7 @@ class ClaimQrCode extends StatelessWidget {
                   child: Image.asset('assets/images/assets/receive_line_indigo.png'),
                 ),
                 Container(
-                  margin: EdgeInsets.only(top: 40, left: 40, right: 40),
+                  margin: EdgeInsets.only(top: 40, left: 5, right: 5),
                   padding: EdgeInsets.only(left: 0, right: 0),
                   decoration: BoxDecoration(
                     borderRadius: const BorderRadius.all(const Radius.circular(4)),
@@ -66,8 +66,8 @@ class ClaimQrCode extends StatelessWidget {
                       ),
                       Container(width: 8, height: 8),
                       Container(
-                        width: 300,
-                        height: 300,
+                        width: 380,
+                        height: 380,
                         decoration: BoxDecoration(
                           border: Border.all(width: 4, color: themeColor),
                           borderRadius: BorderRadius.all(const Radius.circular(8)),
