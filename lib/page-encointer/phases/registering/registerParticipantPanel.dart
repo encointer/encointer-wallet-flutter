@@ -57,6 +57,7 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
         p,
       ],
       'onFinish': (BuildContext txPageContext, Map res) {
+        webApi.encointer.getParticipantIndex();
         Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
       }
     };
