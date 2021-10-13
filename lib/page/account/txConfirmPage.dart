@@ -80,10 +80,12 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
     _getTxFee(reload: true);
   }
 
-  void _onTxFinish(BuildContext context, Map res) {
-    final Map args = ModalRoute.of(context).settings.arguments;
+  void _onTxFinish(BuildContext context, Map res, Function(BuildContext, Map) onTxFinish) {
     print('callback triggered, blockHash: ${res['hash']}');
     store.assets.setSubmitting(false);
+
+    onTxFinish(context, res);
+
     if (mounted) {
       ScaffoldMessenger.of(context).removeCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -100,12 +102,6 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
         ),
         duration: Duration(seconds: 2),
       ));
-
-      Timer(Duration(seconds: 2), () {
-        if (Scaffold.of(context).mounted) {
-          (args['onFinish'] as Function(BuildContext, Map))(context, res);
-        }
-      });
     }
   }
 
@@ -170,8 +166,8 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
       builder: (_) {
         return PasswordInputDialog(
           title: Text(
-              I18n.of(context).home['unlock'],
-              key: Key('password-input-field'),
+            I18n.of(context).home['unlock'],
+            key: Key('password-input-field'),
           ),
           account: _proxyAccount ?? store.account.currentAccount,
           onOk: (password) => _onSubmit(context, password: password),
@@ -188,6 +184,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
     final Map<String, String> dic = I18n.of(context).home;
     final Map args = ModalRoute.of(context).settings.arguments;
 
+
     store.assets.setSubmitting(true);
     store.account.setTxStatus('queued');
 
@@ -203,6 +200,9 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
     print(txInfo);
     print(args['params']);
 
+    var onTxFinishFn = (args['onFinish'] as Function(BuildContext, Map));
+
+
     if (await webApi.isConnected()) {
       _showTxStatusSnackbar(
           context, dic['tx.${store.account.txStatus}'] ?? dic['tx.queued'], CupertinoActivityIndicator());
@@ -210,7 +210,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
       if (res['hash'] == null) {
         _onTxError(context, res['error']);
       } else {
-        _onTxFinish(context, res);
+        _onTxFinish(context, res, onTxFinishFn);
       }
     } else {
       _showTxStatusSnackbar(context, dic['tx.queued.offline'], null);
