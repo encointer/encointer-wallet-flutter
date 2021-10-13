@@ -184,7 +184,6 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
     final Map<String, String> dic = I18n.of(context).home;
     final Map args = ModalRoute.of(context).settings.arguments;
 
-
     store.assets.setSubmitting(true);
     store.account.setTxStatus('queued');
 
@@ -201,7 +200,6 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
     print(args['params']);
 
     var onTxFinishFn = (args['onFinish'] as Function(BuildContext, Map));
-
 
     if (await webApi.isConnected()) {
       _showTxStatusSnackbar(
