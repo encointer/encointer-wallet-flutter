@@ -229,7 +229,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
           style: TextStyle(color: Colors.black54),
         ),
       ),
-      duration: Duration(minutes: 5),
+      duration: Duration(seconds: 12),
     ));
   }
 
