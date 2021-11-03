@@ -4,7 +4,6 @@ import 'dart:ui';
 import 'package:encointer_wallet/common/components/BorderedTitle.dart';
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
-import 'package:encointer_wallet/common/components/passwordInputSwitchAccountDialog.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
@@ -12,7 +11,6 @@ import 'package:encointer_wallet/page/account/scanPage.dart';
 import 'package:encointer_wallet/page/account/uos/qrSignerPage.dart';
 import 'package:encointer_wallet/page/assets/asset/assetPage.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
-import 'package:encointer_wallet/page/networkSelectPage.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
@@ -28,6 +26,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 
 class Assets extends StatefulWidget {
   Assets(this.store);
+
   final AppStore store;
 
   @override
@@ -289,7 +288,6 @@ class _AssetsState extends State<Assets> {
   }
 
   Future<void> _showPasswordDialog(BuildContext context) async {
-    var dic = I18n.of(context).home;
     setState(() {
       _dialogIsShown = true;
     });
@@ -297,20 +295,16 @@ class _AssetsState extends State<Assets> {
       context: context,
       builder: (_) {
         return WillPopScope(
-          child: PasswordInputSwitchAccountDialog(
-              title: Text(dic['unlock.account']
-                  .replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name.toString())),
-              account: store.account.currentAccount,
-              onOk: (password) {
-                setState(() {
-                  store.account.setPin(password);
-                });
-              },
-              onSwitch: () async => {
-                    Navigator.of(context).pop(),
-                    await Navigator.of(context).pushNamed(NetworkSelectPage.route),
-                    setState(() {}),
-                  }),
+          child: PasswordInputDialog(
+            title: Text(I18n.of(context).home['unlock']),
+            account: store.account.currentAccount,
+            onOk: (password) {
+              setState(() {
+                store.account.setPin(password);
+              });
+            },
+            onCancel: () => _showPasswordNotEnteredDialog(context),
+          ),
           onWillPop: () {
             // handles back button press
             return _showPasswordNotEnteredDialog(context);
@@ -376,6 +370,7 @@ class _AssetsState extends State<Assets> {
             communityIds.retainWhere((i) => i != symbol);
           }
           final BalancesInfo balancesInfo = store.assets.balances[symbol];
+
           if (ModalRoute.of(context).isCurrent && !_dialogIsShown & store.account.cachedPin.isEmpty) {
             _dialogIsShown = true;
             WidgetsBinding.instance.addPostFrameCallback(
@@ -477,37 +472,49 @@ class _AssetsState extends State<Assets> {
           ),
         ),
         CommunityChooserPanel(store),
-        Observer(builder: (_) {
-          return (store.encointer.communityName != null) & (store.encointer.chosenCid != null)
-              ? RoundedCard(
-                  margin: EdgeInsets.only(top: 16),
-                  child: ListTile(
-                    key: Key('cid-asset'),
-                    leading: Container(
-                      width: 36,
-                      child: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio),
+        Observer(
+          builder: (_) {
+            return (store.encointer.communityName != null) & (store.encointer.chosenCid != null)
+                ? RoundedCard(
+                    margin: EdgeInsets.only(top: 16),
+                    child: ListTile(
+                      key: Key('cid-asset'),
+                      leading: Container(
+                        width: 36,
+                        child: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio),
+                      ),
+                      title: Text(store.encointer.communityName + " (${store.encointer.communitySymbol})"),
+                      trailing: store.encointer.communityBalance != null
+                          ? Text(
+                              Fmt.doubleFormat(store.encointer.communityBalance),
+                              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
+                            )
+                          : CupertinoActivityIndicator(),
+                      onTap: store.encointer.communityBalance != null
+                          ? () {
+                              Navigator.pushNamed(context, AssetPage.route,
+                                  arguments: AssetPageParams(
+                                      token: store.encointer.chosenCid,
+                                      isEncointerCommunityCurrency: true,
+                                      communityName: store.encointer.communityName,
+                                      communitySymbol: store.encointer.communitySymbol));
+                            }
+                          : null,
                     ),
-                    title: Text(store.encointer.communityName + " (${store.encointer.communitySymbol})"),
-                    trailing: store.encointer.communityBalance != null
-                        ? Text(
-                            Fmt.doubleFormat(store.encointer.communityBalance),
-                            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
-                          )
-                        : CupertinoActivityIndicator(),
-                    onTap: store.encointer.communityBalance != null
-                        ? () {
-                            Navigator.pushNamed(context, AssetPage.route,
-                                arguments: AssetPageParams(
-                                    token: store.encointer.chosenCid,
-                                    isEncointerCommunityCurrency: true,
-                                    communityName: store.encointer.communityName,
-                                    communitySymbol: store.encointer.communitySymbol));
-                          }
-                        : null,
-                  ),
-                )
-              : Container();
-        }),
+                  )
+                : RoundedCard(
+                    margin: EdgeInsets.only(top: 16),
+                    padding: EdgeInsets.symmetric(vertical: 8),
+                    child: (store.encointer.chosenCid == null)
+                        ? Container(
+                            width: double.infinity, child: Text('No community selected', textAlign: TextAlign.center))
+                        : Container(
+                            width: double.infinity,
+                            child: CupertinoActivityIndicator(),
+                          ),
+                  );
+          },
+        ),
         Container(
           padding: EdgeInsets.only(bottom: 32),
         ),

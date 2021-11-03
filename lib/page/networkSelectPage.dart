@@ -95,6 +95,8 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         webApi.assets.fetchBalance();
       } else {
         /// set new network and reload web view
+        store.encointer.setChosenCid();
+        store.encointer.communities = null;
         await _reloadNetwork();
       }
     }
