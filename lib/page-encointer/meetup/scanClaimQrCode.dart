@@ -1,7 +1,8 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/service/substrateApi/codecApi.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +39,9 @@ class ScanClaimQrCode extends StatelessWidget {
 
     Future _onScan(String data, String _rawData) async {
       if (data != null) {
-        var claim = ClaimOfAttendance.fromJson(json.decode(data));
+        // Todo: Not good to use the global webApi here, but I wanted to prevent big changes into the code for now.
+        // Fix this when #132 is tackled.
+        var claim = await webApi.codec.decodeBytes(ClaimOfAttendanceJSRegistryName, base64.decode(data));
 
         if (!store.encointer.meetupRegistry.contains(claim.claimantPublic)) {
           // this is important because the runtime checks if there are too many claims trying to be registered.
