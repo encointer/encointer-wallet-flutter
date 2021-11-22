@@ -81,8 +81,8 @@ class ClaimQrCode extends StatelessWidget {
                           builder: (_, AsyncSnapshot<Uint8List> snapshot) {
                             if (snapshot.hasData) {
                               var base64Str = base64.encode(snapshot.data);
-                              // print("Data length: ${snapshot.data.length}");
-                              // print("Data:        ${snapshot.data}");
+                              print("Data length: ${snapshot.data.length}");
+                              print("Data:        ${snapshot.data}");
                               //
                               // print("base64 length: ${base64Str.length}");
                               // print("base64:        ${base64Str}");

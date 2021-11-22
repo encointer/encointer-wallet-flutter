@@ -37,11 +37,13 @@ class ScanClaimQrCode extends StatelessWidget {
   Widget build(BuildContext context) {
     final Map dic = I18n.of(context).encointer;
 
-    Future _onScan(String data, String _rawData) async {
-      if (data != null) {
+    Future _onScan(String base64Data, String _rawData) async {
+      if (base64Data != null) {
         // Todo: Not good to use the global webApi here, but I wanted to prevent big changes into the code for now.
         // Fix this when #132 is tackled.
-        var claim = await webApi.codec.decodeBytes(ClaimOfAttendanceJSRegistryName, base64.decode(data));
+        var data = base64.decode(base64Data);
+
+        var claim = await webApi.codec.decodeBytes(ClaimOfAttendanceJSRegistryName, data);
 
         if (!store.encointer.meetupRegistry.contains(claim.claimantPublic)) {
           // this is important because the runtime checks if there are too many claims trying to be registered.
