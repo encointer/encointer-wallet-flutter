@@ -18,6 +18,8 @@ const NodeConfig MasterBranchConfig = const NodeConfig(TypeOverridesDev, PalletO
 /// tee-dev-setup
 const NodeConfig SgxBranchConfig = const NodeConfig(GesellTypeOverrides, GesellPalletOverrides);
 
+@JsonSerializable(explicitToJson: true)
+
 /// Config to handle different versions of our nodes by supplying type overwrites
 /// and pallet names and methods overwrites.
 @JsonSerializable(explicitToJson: true)

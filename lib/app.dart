@@ -1,11 +1,11 @@
-import 'package:encointer_wallet/common/components/willPopScopWrapper.dart';
+import 'package:encointer_wallet/common/components/willPopScopeWrapper.dart';
 import 'package:encointer_wallet/config.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/business/businessOverviewPage.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/business/businessOverviewPanel.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/business/createBusinessForm.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/business/createBusinessPage.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/business/myBusinessPage.dart';
 import 'package:encointer_wallet/page-encointer/homePage.dart';
+import 'package:encointer_wallet/page-encointer/old_code/bazaar/business/businessOverviewPage.dart';
+import 'package:encointer_wallet/page-encointer/old_code/bazaar/business/businessOverviewPanel.dart';
+import 'package:encointer_wallet/page-encointer/old_code/bazaar/business/createBusinessForm.dart';
+import 'package:encointer_wallet/page-encointer/old_code/bazaar/business/createBusinessPage.dart';
+import 'package:encointer_wallet/page-encointer/old_code/bazaar/business/myBusinessPage.dart';
 import 'package:encointer_wallet/page-encointer/phases/assigning/assigningPage.dart';
 import 'package:encointer_wallet/page-encointer/phases/attesting/attestingPage.dart';
 import 'package:encointer_wallet/page-encointer/phases/registering/registerParticipantPanel.dart';
@@ -141,7 +141,7 @@ class _WalletAppState extends State<WalletApp> {
       routes: {
         EncointerHomePage.route: (context) => Observer(
               builder: (_) {
-                return WillPopScopWrapper(
+                return WillPopScopeWrapper(
                   child: FutureBuilder<int>(
                     future: _initStore(context),
                     builder: (_, AsyncSnapshot<int> snapshot) {
