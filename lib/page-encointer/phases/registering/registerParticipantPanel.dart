@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:encointer_wallet/common/components/roundedButton.dart';
-import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -98,11 +97,10 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
               ? CupertinoActivityIndicator()
               : store.encointer.participantIndex == 0
                   ? RoundedButton(text: "Register Participant", onPressed: () => _submit())
-                  : RoundedCard(
-                      child: ListTile(
-                      title: Text("Participant is registered", textAlign: TextAlign.center),
-                    ),
-          ),
+                  : RoundedButton(
+                      text: "Already Registered",
+                      onPressed: null,
+                      color: Theme.of(context).primaryColor.withOpacity(0.5)),
         ],
       ),
     );
