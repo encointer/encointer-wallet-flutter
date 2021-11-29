@@ -18,10 +18,14 @@ class PhotoTiles extends StatelessWidget {
           width: 16,
         ),
         Container(
-            height: 150,
-            width: 150,
-            color: Colors.grey,
-            child: ListTile(leading: Icon(Icons.add_a_photo), title: Text("Add a photo"))),
+          height: 150,
+          width: 150,
+          color: Colors.grey,
+          child: ListTile(
+            leading: Icon(Icons.add_a_photo),
+            title: Text("Add a photo"),
+          ),
+        ),
       ],
     );
   }

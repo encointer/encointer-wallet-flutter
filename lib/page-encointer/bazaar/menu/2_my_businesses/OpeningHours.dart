@@ -1,32 +1,32 @@
+import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/BusinessFormState.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-
-import '../../0_main/BazaarMainState.dart';
+import 'package:provider/provider.dart';
 
 class OpeningHours extends StatelessWidget {
-  final BazaarMainState bazaarMainState;
-
-  OpeningHours(this.bazaarMainState);
-
   @override
   Widget build(BuildContext context) {
+    final businessFormState = Provider.of<BusinessFormState>(context);
+
     return Column(
-        children: [0, 1, 2, 3, 4, 5, 6].map((int day) => OpeningHoursViewForDay(bazaarMainState, day)).toList());
+      children: [0, 1, 2, 3, 4, 5, 6]
+          .map(
+            (int day) => OpeningHoursViewForDay(day),
+          )
+          .toList(),
+    );
   }
 }
 
 class OpeningHoursViewForDay extends StatelessWidget {
   final day;
 
-  final BazaarMainState bazaarMainState;
-  final businessFormState;
-
-  OpeningHoursViewForDay(this.bazaarMainState, this.day)
-      : businessFormState = bazaarMainState.bazaarMyBusinessesState.businessFormState;
+  OpeningHoursViewForDay(this.day);
 
   @override
   Widget build(BuildContext context) {
+    final businessFormState = Provider.of<BusinessFormState>(context);
     final openingHours = businessFormState.openingHours;
     final openingHoursForThisDay = openingHours.getOpeningHoursFor(day);
 
@@ -81,30 +81,29 @@ class OpeningHoursViewForDay extends StatelessWidget {
                         itemBuilder: (_, index) {
                           final interval = openingHoursForThisDay.openingIntervals[index];
                           return Container(
-                            width: 200,
-                            child: Row(
-                              children: [
-                                Text(
-                                  interval.humanReadable(),
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                Observer(
-                                  builder: (_) => IconButton(
-                                    icon: Icon(
-                                      Icons.remove_circle,
-                                      color: Colors.red,
-                                    ),
-                                    iconSize: 36,
-                                    visualDensity: VisualDensity.compact,
-                                    padding: EdgeInsets.zero,
-                                    onPressed: () {
-                                      openingHoursForThisDay.removeInterval(index);
-                                    },
+                              width: 200,
+                              child: Row(
+                                children: [
+                                  Text(
+                                    interval.humanReadable(),
+                                    overflow: TextOverflow.ellipsis,
                                   ),
-                                )
-                              ],
-                            ),
-                          );
+                                  Observer(
+                                    builder: (_) => IconButton(
+                                      icon: Icon(
+                                        Icons.remove_circle,
+                                        color: Colors.red,
+                                      ),
+                                      iconSize: 36,
+                                      visualDensity: VisualDensity.compact,
+                                      padding: EdgeInsets.zero,
+                                      onPressed: () {
+                                        openingHoursForThisDay.removeInterval(index);
+                                      },
+                                    ),
+                                  )
+                                ],
+                              ));
                         }),
                   ),
                 ),
@@ -127,7 +126,7 @@ class OpeningHoursViewForDay extends StatelessWidget {
 
             Observer(
               builder: (_) => Visibility(
-                child: AddOpeningIntervalForDay(bazaarMainState, day),
+                child: AddOpeningIntervalForDay(day),
                 visible: day == openingHours.dayOnFocus,
               ),
             ),
@@ -143,14 +142,11 @@ class AddOpeningIntervalForDay extends StatelessWidget {
   final _textController = TextEditingController(text: '');
   final day;
 
-  final BazaarMainState bazaarMainState;
-  final businessFormState;
-
-  AddOpeningIntervalForDay(this.bazaarMainState, this.day)
-      : businessFormState = bazaarMainState.bazaarMyBusinessesState.businessFormState;
+  AddOpeningIntervalForDay(this.day);
 
   @override
   Widget build(BuildContext context) {
+    final businessFormState = Provider.of<BusinessFormState>(context);
     final openingHours = businessFormState.openingHours;
     var openingHoursForDay = openingHours.getOpeningHoursFor(day);
 

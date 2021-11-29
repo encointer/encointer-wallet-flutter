@@ -1,9 +1,8 @@
+import 'package:encointer_wallet/page-encointer/bazaar/menu/1_my_offerings/OfferingForm.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/BazaarItemVertical.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/ToggleButtonsWithTitle.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/DemoData.dart';
 import 'package:flutter/material.dart';
-
-import '../../menu/1_my_offerings/OfferingForm.dart';
-import '../../shared/BazaarItemVertical.dart';
-import '../../shared/ToggleButtonsWithTitle.dart';
-import '../../shared/data_model/demo_data/DemoData.dart';
 
 class MyOfferings extends StatelessWidget {
   final data = myOfferings;
@@ -30,7 +29,12 @@ class MyOfferings extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => OfferingForm()));
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => OfferingForm(),
+              ),
+            );
           }),
     );
   }

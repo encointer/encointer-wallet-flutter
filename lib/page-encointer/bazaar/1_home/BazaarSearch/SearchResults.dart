@@ -1,9 +1,9 @@
+import 'package:encointer_wallet/page-encointer/bazaar/shared/BazaarItemVertical.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/DemoData.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/BazaarItemData.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../shared/BazaarItemVertical.dart';
-import '../../shared/data_model/demo_data/DemoData.dart';
-import '../../shared/data_model/model/BazaarItemData.dart';
 import 'SearchResultsBusiness.dart';
 import 'SearchResultsOffering.dart';
 
@@ -27,11 +27,13 @@ class SearchResults extends StatelessWidget {
         Column(
           mainAxisSize: MainAxisSize.min,
           children: [0, 1]
-              .map((int index) => BazaarItemVertical(
-                    data: [businessResults[0], offeringsResults[0]],
-                    index: index,
-                    cardHeight: 125,
-                  ))
+              .map(
+                (int index) => BazaarItemVertical(
+                  data: [businessResults[0], offeringsResults[0]],
+                  index: index,
+                  cardHeight: 125,
+                ),
+              )
               .toList(),
         ),
       ],
@@ -74,8 +76,9 @@ class ResultSummaryListTile extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  (results[0] is BazaarBusinessData) ? SearchResultsBusiness(results) : SearchResultsOffering(results)),
+            builder: (context) =>
+                (results[0] is BazaarBusinessData) ? SearchResultsBusiness(results) : SearchResultsOffering(results),
+          ),
         );
       }, // TODO state management
     );

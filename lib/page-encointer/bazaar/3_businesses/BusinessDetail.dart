@@ -1,10 +1,9 @@
+import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/BusinessesOnMap.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/BazaarItemHorizontal.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/BazaarItemData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import "package:latlong2/latlong.dart";
-
-import '../menu/2_my_businesses/BusinessesOnMap.dart';
-import '../shared/BazaarItemHorizontal.dart';
-import '../shared/data_model/model/BazaarItemData.dart';
 
 class BusinessDetail extends StatelessWidget {
   final BazaarBusinessData business;
@@ -32,7 +31,10 @@ class BusinessDetail extends StatelessWidget {
               Container(padding: EdgeInsets.all(4), child: business.image),
               Align(
                   alignment: Alignment.topLeft,
-                  child: Container(padding: EdgeInsets.fromLTRB(2, 8, 0, 16), child: Text("${business.description}"))),
+                  child: Container(
+                    padding: EdgeInsets.fromLTRB(2, 8, 0, 16),
+                    child: Text("${business.description}"),
+                  )),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -59,7 +61,9 @@ class BusinessDetail extends StatelessWidget {
                                 DataCell(
                                   Container(width: 30, child: Text(business.openingHours.getDayString(index))),
                                 ),
-                                DataCell(Text(business.openingHours.getOpeningHoursFor(index).toString()))
+                                DataCell(Text(
+                                  business.openingHours.getOpeningHoursFor(index).toString(),
+                                ))
                               ],
                             ),
                           ),
@@ -121,7 +125,13 @@ class SmallLeaflet extends StatelessWidget {
         Align(
           alignment: Alignment.topRight,
           child: GestureDetector(
-            onTap: () => {Navigator.push(context, MaterialPageRoute(builder: (context) => BusinessesOnMap()))},
+            onTap: () => {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BusinessesOnMap(),
+                  ))
+            },
             child: Icon(Icons.fullscreen, size: 40),
           ),
         )

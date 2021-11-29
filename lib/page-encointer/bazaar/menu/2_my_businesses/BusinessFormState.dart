@@ -1,6 +1,6 @@
+import 'package:encointer_wallet/page-encointer/bazaar/menu/camera/ImagePickerState.dart';
 import 'package:mobx/mobx.dart';
 
-import '../camera/ImagePickerState.dart';
 import 'OpeningHoursState.dart';
 
 part 'BusinessFormState.g.dart';

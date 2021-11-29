@@ -1,8 +1,7 @@
+import 'package:encointer_wallet/page-encointer/bazaar/shared/ToggleButtonsWithTitle.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/DemoData.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/BazaarItemData.dart';
 import 'package:flutter/material.dart';
-
-import '../shared/ToggleButtonsWithTitle.dart';
-import '../shared/data_model/demo_data/DemoData.dart';
-import '../shared/data_model/model/BazaarItemData.dart';
 
 class OfferingDetail extends StatelessWidget {
   final BazaarOfferingData offering;
@@ -27,7 +26,9 @@ class OfferingDetail extends StatelessWidget {
         children: [
           Column(
             children: [
-              Center(child: Container(padding: EdgeInsets.all(4), child: offering.image)),
+              Center(
+                child: Container(padding: EdgeInsets.all(4), child: offering.image),
+              ),
               Text("${offering.description}"),
               SizedBox(
                 height: 8,

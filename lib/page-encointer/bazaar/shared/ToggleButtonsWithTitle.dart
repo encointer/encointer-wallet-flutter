@@ -20,7 +20,10 @@ class ToggleButtonsWithTitle extends StatelessWidget {
     return Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
       Container(
         padding: EdgeInsets.fromLTRB(0, 8, 0, 4),
-        child: Text(title, style: TextStyle(fontWeight: FontWeight.bold)),
+        child: Text(
+          title,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
       ),
       Container(
         child: SizedBox(

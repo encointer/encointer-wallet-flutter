@@ -1,11 +1,10 @@
+import 'package:encointer_wallet/page-encointer/bazaar/3_businesses/BusinessDetail.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/DemoData.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/BazaarItemData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import "package:latlong2/latlong.dart";
-
-import '../../3_businesses/BusinessDetail.dart';
-import '../../shared/data_model/demo_data/DemoData.dart';
-import '../../shared/data_model/model/BazaarItemData.dart';
 
 class BusinessesOnMap extends StatelessWidget {
   final data = allBusinesses;
@@ -87,7 +86,9 @@ class BusinessDetailsPopup extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => BusinessDetail(dataForThisMarker)),
+            MaterialPageRoute(
+              builder: (context) => BusinessDetail(dataForThisMarker),
+            ),
           );
         },
         child: Container(
@@ -105,7 +106,9 @@ class BusinessDetailsPopup extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const Padding(padding: EdgeInsets.only(bottom: 2.0)),
+              const Padding(
+                padding: EdgeInsets.only(bottom: 2.0),
+              ),
               Text(
                 dataForThisMarker.description,
                 maxLines: 3,

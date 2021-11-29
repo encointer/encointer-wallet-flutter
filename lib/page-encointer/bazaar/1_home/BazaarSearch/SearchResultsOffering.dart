@@ -1,7 +1,7 @@
+import 'package:encointer_wallet/page-encointer/bazaar/shared/BazaarItemVertical.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../../shared/BazaarItemVertical.dart';
 import 'SearchResultsOfferingFiltered.dart';
 
 class SearchResultsOffering extends StatelessWidget {

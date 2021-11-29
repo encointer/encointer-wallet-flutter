@@ -1,15 +1,10 @@
+import 'package:encointer_wallet/page-encointer/bazaar/shared/BazaarItemHorizontal.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/DemoData.dart';
 import 'package:flutter/material.dart';
 
-import '../0_main/BazaarMainState.dart';
-import '../shared/BazaarItemHorizontal.dart';
-import '../shared/data_model/demo_data/DemoData.dart';
 import 'BazaarSearch/BazaarSearch.dart';
 
 class Home extends StatelessWidget {
-  final BazaarMainState bazaarMainState;
-
-  Home(this.bazaarMainState);
-
   final double cardHeight = 200;
   final double cardWidth = 160;
 

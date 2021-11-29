@@ -1,9 +1,9 @@
+import 'package:encointer_wallet/page-encointer/bazaar/2_offerings/OfferingDetail.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/3_businesses/BusinessDetail.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/BazaarItemVerticalState.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-import '../2_offerings/OfferingDetail.dart';
-import '../3_businesses/BusinessDetail.dart';
-import '../shared/BazaarItemVerticalState.dart';
 import 'data_model/model/BazaarItemData.dart';
 
 class BazaarItemVertical extends StatelessWidget {
@@ -27,8 +27,9 @@ class BazaarItemVertical extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-                builder: (context) =>
-                    (data[index] is BazaarBusinessData) ? BusinessDetail(data[index]) : OfferingDetail(data[index])),
+              builder: (context) =>
+                  (data[index] is BazaarBusinessData) ? BusinessDetail(data[index]) : OfferingDetail(data[index]),
+            ),
           );
         },
         child: SizedBox(

@@ -58,7 +58,9 @@ abstract class _OpeningHoursState with Store {
     var target = getOpeningHoursFor(day);
     if (copiedOpeningHours == null) return;
 
-    copiedOpeningHours.openingIntervals.forEach((OpeningIntervalState interval) => target.addInterval(interval));
+    copiedOpeningHours.openingIntervals.forEach(
+      (OpeningIntervalState interval) => target.addInterval(interval),
+    );
   }
 
   _OpeningHoursState(this.mon, this.tue, this.wed, this.thu, this.fri, this.sat, this.sun);

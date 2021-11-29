@@ -1,46 +1,39 @@
+import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/BusinessFormState.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/menu/camera/ImagePickerScaffold.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/PhotoTiles.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/ToggleButtonsWithTitle.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/DemoData.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 
-import '../../0_main/BazaarMainState.dart';
-import '../../menu/2_my_businesses/BusinessFormState.dart';
-import '../../menu/camera/ImagePickerScaffold.dart';
-import '../../shared/PhotoTiles.dart';
-import '../../shared/ToggleButtonsWithTitle.dart';
-import '../../shared/data_model/demo_data/DemoData.dart';
-import '../2_my_businesses/BusinessFormState.dart';
-import '../camera/ImagePickerScaffold.dart';
 import 'OpeningHours.dart';
 
 class BusinessFormScaffold extends StatelessWidget {
   var categories = allCategories; // TODO state management
 
-  final BazaarMainState bazaarMainState;
-
-  BusinessFormScaffold(this.bazaarMainState);
-
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Add Business"),
-      ),
-      body: BusinessForm(bazaarMainState, categories: categories),
-    );
-  }
+  Widget build(BuildContext context) => Provider<BusinessFormState>(
+        create: (_) => BusinessFormState(),
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text("Add Business"),
+          ),
+          body: BusinessForm(categories: categories),
+        ),
+      );
 }
 
 class BusinessForm extends StatelessWidget {
-  BusinessForm(
-    this.bazaarMainState, {
+  const BusinessForm({
     @required this.categories,
-  }) : businessFormState = bazaarMainState.bazaarMyBusinessesState.businessFormState;
+  });
 
-  final BazaarMainState bazaarMainState;
-  final List<String> categories; // TODO use state variable
-  final BusinessFormState businessFormState;
+  final List<String> categories;
 
   @override
   Widget build(BuildContext context) {
+    final businessFormState = Provider.of<BusinessFormState>(context);
     return Form(
       child: Padding(
         padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
@@ -48,7 +41,7 @@ class BusinessForm extends StatelessWidget {
           children: <Widget>[
             PhotoTiles(),
             LimitedBox(
-              child: ImagePickerScaffold(bazaarMainState),
+              child: ImagePickerScaffold(),
               maxHeight: 250,
             ),
             Observer(
@@ -76,12 +69,12 @@ class BusinessForm extends StatelessWidget {
 
             ToggleButtonsWithTitle("Categories", categories, null),
             // TODO state mananagement
-            BusinessAddress(bazaarMainState),
+            BusinessAddress(),
             Text(
               "Opening Hours",
               style: TextStyle(height: 2, fontWeight: FontWeight.bold),
             ),
-            OpeningHours(bazaarMainState),
+            OpeningHours(),
             ButtonBar(
               children: <Widget>[
                 ElevatedButton(
@@ -109,18 +102,20 @@ class BusinessForm extends StatelessWidget {
 }
 
 class BusinessAddress extends StatelessWidget {
-  final BazaarMainState bazaarMainState;
-
-  BusinessAddress(this.bazaarMainState) : businessFormState = bazaarMainState.bazaarMyBusinessesState.businessFormState;
-
-  final BusinessFormState businessFormState;
+  const BusinessAddress({
+    Key key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final businessFormState = Provider.of<BusinessFormState>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Address", style: TextStyle(fontWeight: FontWeight.bold, height: 2.5)),
+        Text(
+          "Address",
+          style: TextStyle(fontWeight: FontWeight.bold, height: 2.5),
+        ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

@@ -1,19 +1,15 @@
 import 'dart:io';
 
+import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/BusinessFormState.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-
-import '../../0_main/BazaarMainState.dart';
+import 'package:provider/provider.dart';
 
 class ImagePreview extends StatelessWidget {
-  final BazaarMainState bazaarMainState;
-  final businessFormState;
-
-  ImagePreview(this.bazaarMainState) : businessFormState = bazaarMainState.bazaarMyBusinessesState.businessFormState;
-
   @override
   Widget build(BuildContext context) {
+    final businessFormState = Provider.of<BusinessFormState>(context);
     final imagePickerState = businessFormState.imagePickerState;
 
     return Observer(

@@ -1,23 +1,20 @@
 import 'dart:async';
 
+import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/BusinessFormState.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
-import '../../0_main/BazaarMainState.dart';
 import 'ImagePickerState.dart';
 import 'ImagePreview.dart';
 
 class ImagePickerScaffold extends StatelessWidget {
-  final BazaarMainState bazaarMainState;
-  final businessFormState;
   final ImagePicker _picker = ImagePicker();
-
-  ImagePickerScaffold(this.bazaarMainState)
-      : businessFormState = bazaarMainState.bazaarMyBusinessesState.businessFormState;
 
   @override
   Widget build(BuildContext context) {
+    final businessFormState = Provider.of<BusinessFormState>(context);
     final imagePickerState = businessFormState.imagePickerState;
 
     return Scaffold(
@@ -37,7 +34,7 @@ class ImagePickerScaffold extends StatelessWidget {
                         textAlign: TextAlign.center,
                       );
                     case ConnectionState.done:
-                      return ImagePreview(bazaarMainState);
+                      return ImagePreview();
                     default:
                       if (snapshot.hasError) {
                         return Text(
@@ -53,7 +50,7 @@ class ImagePickerScaffold extends StatelessWidget {
                   }
                 },
               )
-            : ImagePreview(bazaarMainState),
+            : ImagePreview(),
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,

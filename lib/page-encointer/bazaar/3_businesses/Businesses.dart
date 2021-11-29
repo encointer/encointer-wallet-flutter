@@ -1,16 +1,11 @@
+import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/BusinessesOnMap.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/BazaarItemVertical.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/ToggleButtonsWithTitle.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/DemoData.dart';
 import 'package:flutter/material.dart';
 
-import '../0_main/BazaarMainState.dart';
-import '../menu/2_my_businesses/BusinessesOnMap.dart';
-import '../shared/BazaarItemVertical.dart';
-import '../shared/ToggleButtonsWithTitle.dart';
-import '../shared/data_model/demo_data/DemoData.dart';
-
 class Businesses extends StatelessWidget {
-  final BazaarMainState bazaarMainState;
-  final data = allBusinesses; // TODO read from bazaarMainState, also in other files
-
-  Businesses(this.bazaarMainState);
+  final data = allBusinesses;
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +23,11 @@ class Businesses extends StatelessWidget {
       ),
       ElevatedButton(
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => BusinessesOnMap()));
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => BusinessesOnMap(),
+              ));
         },
         child: Row(
           mainAxisSize: MainAxisSize.min,

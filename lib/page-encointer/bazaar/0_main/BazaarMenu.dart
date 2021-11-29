@@ -1,13 +1,11 @@
+import 'package:encointer_wallet/page-encointer/bazaar/menu/1_my_offerings/MyOfferings.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/MyBusinesses.dart';
 import 'package:flutter/material.dart';
 
-import '../menu/1_my_offerings/MyOfferings.dart';
-import '../menu/2_my_businesses/MyBusinesses.dart';
-import 'BazaarMainState.dart';
-
 class BazaarMenu extends StatelessWidget {
-  final BazaarMainState bazaarMainState;
-
-  BazaarMenu(this.bazaarMainState);
+  const BazaarMenu({
+    Key key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +28,9 @@ class BazaarMenu extends StatelessWidget {
               Navigator.pop(context);
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MyOfferings()),
+                MaterialPageRoute(
+                  builder: (context) => MyOfferings(),
+                ),
               );
             },
           ),
@@ -40,7 +40,9 @@ class BazaarMenu extends StatelessWidget {
               Navigator.pop(context);
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => MyBusinesses(bazaarMainState)),
+                MaterialPageRoute(
+                  builder: (context) => MyBusinesses(),
+                ),
               );
             },
           ),

@@ -1,15 +1,11 @@
+import 'package:encointer_wallet/page-encointer/bazaar/shared/BazaarItemVertical.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/DemoData.dart';
 import 'package:flutter/material.dart';
 
-import '../../0_main/BazaarMainState.dart';
-import '../../shared/BazaarItemVertical.dart';
-import '../../shared/data_model/demo_data/DemoData.dart';
 import 'BusinessForm.dart';
 
 class MyBusinesses extends StatelessWidget {
-  final BazaarMainState bazaarMainState;
   final data = myBusinesses;
-
-  MyBusinesses(this.bazaarMainState);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +28,11 @@ class MyBusinesses extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () {
-            Navigator.push(context, MaterialPageRoute(builder: (context) => BusinessFormScaffold(bazaarMainState)));
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BusinessFormScaffold(),
+                ));
           }),
     );
   }

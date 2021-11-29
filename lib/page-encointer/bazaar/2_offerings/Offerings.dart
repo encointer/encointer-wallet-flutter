@@ -1,15 +1,11 @@
+import 'package:encointer_wallet/page-encointer/bazaar/shared/BazaarItemVertical.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/DemoData.dart';
 import 'package:flutter/material.dart';
 
-import '../0_main/BazaarMainState.dart';
-import '../shared/BazaarItemVertical.dart';
 import '../shared/ToggleButtonsWithTitle.dart';
-import '../shared/data_model/demo_data/DemoData.dart';
 
 class Offerings extends StatelessWidget {
-  final BazaarMainState bazaarMainState;
   final data = allOfferings;
-
-  Offerings(this.bazaarMainState);
 
   @override
   Widget build(BuildContext context) {

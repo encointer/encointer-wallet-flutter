@@ -144,8 +144,12 @@ class OpeningInterval {
   static int _parseTime(String startEndTime, int part) {
     var startEnd = startEndTime.split('-');
     var time = startEnd[part].trim();
-    var minutes = int.parse(time.substring(time.length - 2));
-    var hours = int.parse(time.substring(0, time.length - 3));
+    var minutes = int.parse(
+      time.substring(time.length - 2),
+    );
+    var hours = int.parse(
+      time.substring(0, time.length - 3),
+    );
     return (hours * 60 + minutes) % (24 * 60);
   }
 
