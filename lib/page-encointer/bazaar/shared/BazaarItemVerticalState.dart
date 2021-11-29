@@ -1,4 +1,5 @@
 import 'package:mobx/mobx.dart';
+
 part 'BazaarItemVerticalState.g.dart';
 
 class BazaarItemVerticalState = _BazaarItemVerticalState with _$BazaarItemVerticalState;

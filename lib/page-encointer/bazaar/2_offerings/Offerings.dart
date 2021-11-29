@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+
+import '../0_main/BazaarMainState.dart';
 import '../shared/BazaarItemVertical.dart';
+import '../shared/ToggleButtonsWithTitle.dart';
 import '../shared/data_model/demo_data/DemoData.dart';
 
-import '../shared/ToggleButtonsWithTitle.dart';
-
 class Offerings extends StatelessWidget {
+  final BazaarMainState bazaarMainState;
   final data = allOfferings;
+
+  Offerings(this.bazaarMainState);
 
   @override
   Widget build(BuildContext context) {
@@ -13,12 +17,13 @@ class Offerings extends StatelessWidget {
       ToggleButtonsWithTitle("Categories", allCategories, null), // TODO state management
       Expanded(
         child: ListView.builder(
-            itemCount: data.length,
-            itemBuilder: (context, index) => BazaarItemVertical(
-                  data: data,
-                  index: index,
-                  cardHeight: 125,
-                )),
+          itemCount: data.length,
+          itemBuilder: (context, index) => BazaarItemVertical(
+            data: data,
+            index: index,
+            cardHeight: 125,
+          ),
+        ),
       ),
     ]);
   }

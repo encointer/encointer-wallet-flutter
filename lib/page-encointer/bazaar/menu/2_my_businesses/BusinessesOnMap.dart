@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import "package:latlong2/latlong.dart";
+
 import '../../3_businesses/BusinessDetail.dart';
 import '../../shared/data_model/demo_data/DemoData.dart';
 import '../../shared/data_model/model/BazaarItemData.dart';
@@ -12,10 +13,11 @@ class BusinessesOnMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text("Businesses"),
-        ),
-        body: BMap(data));
+      appBar: AppBar(
+        title: Text("Businesses"),
+      ),
+      body: BMap(data),
+    );
   }
 }
 

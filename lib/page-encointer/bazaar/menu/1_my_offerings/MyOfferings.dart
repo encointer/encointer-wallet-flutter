@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../../menu/1_my_offerings/OfferingForm.dart';
 import '../../shared/BazaarItemVertical.dart';
 import '../../shared/ToggleButtonsWithTitle.dart';
@@ -17,12 +18,13 @@ class MyOfferings extends StatelessWidget {
         ToggleButtonsWithTitle("Categories", allCategories, null), // TODO state management
         Expanded(
           child: ListView.builder(
-              itemCount: data.length,
-              itemBuilder: (context, index) => BazaarItemVertical(
-                    data: data,
-                    index: index,
-                    cardHeight: 125,
-                  )),
+            itemCount: data.length,
+            itemBuilder: (context, index) => BazaarItemVertical(
+              data: data,
+              index: index,
+              cardHeight: 125,
+            ),
+          ),
         ),
       ]),
       floatingActionButton: FloatingActionButton(

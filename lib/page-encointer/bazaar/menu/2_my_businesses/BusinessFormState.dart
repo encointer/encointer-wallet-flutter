@@ -1,6 +1,6 @@
 import 'package:mobx/mobx.dart';
-import '../camera/ImagePickerState.dart';
 
+import '../camera/ImagePickerState.dart';
 import 'OpeningHoursState.dart';
 
 part 'BusinessFormState.g.dart';

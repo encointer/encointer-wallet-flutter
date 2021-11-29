@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../../shared/BazaarItemVertical.dart';
 import '../../shared/data_model/demo_data/DemoData.dart';
 import '../../shared/data_model/model/BazaarItemData.dart';
-
 import 'SearchResultsBusiness.dart';
 import 'SearchResultsOffering.dart';
 

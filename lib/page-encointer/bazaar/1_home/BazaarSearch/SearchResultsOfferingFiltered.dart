@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import '../../shared/ToggleButtonsWithTitle.dart';
 import '../../shared/data_model/demo_data/DemoData.dart';
 
@@ -61,11 +62,13 @@ class SearchResultsOfferingFiltered extends StatelessWidget {
       floatingActionButton: ButtonBar(
         children: [
           ElevatedButton(
-              onPressed: () => null, // TODO state management
-              child: Text("Reset")),
+            onPressed: () => null, // TODO state management
+            child: Text("Reset"),
+          ),
           ElevatedButton(
-              onPressed: () => null, //TODO state management
-              child: Text("Apply")),
+            onPressed: () => null, //TODO state management
+            child: Text("Apply"),
+          ),
         ],
       ),
     );

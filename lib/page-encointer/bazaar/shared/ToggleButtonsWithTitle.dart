@@ -28,10 +28,12 @@ class ToggleButtonsWithTitle extends StatelessWidget {
           child: ListView(scrollDirection: Axis.horizontal, children: [
             ToggleButtons(
               children: items
-                  .map((cat) => Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                        child: Text(cat),
-                      ))
+                  .map(
+                    (cat) => Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                      child: Text(cat),
+                    ),
+                  )
                   .toList(),
               // TODO add proper state management, add logic for "all" and other categories
               onPressed: (int index) => onPressed(index),

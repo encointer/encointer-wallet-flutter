@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+
 import '../2_offerings/OfferingDetail.dart';
 import '../3_businesses/BusinessDetail.dart';
 import '../shared/BazaarItemVerticalState.dart';
-
 import 'data_model/model/BazaarItemData.dart';
 
 class BazaarItemVertical extends StatelessWidget {
@@ -47,17 +47,18 @@ class BazaarItemVertical extends StatelessWidget {
                     top: -4,
                     child: Observer(
                       builder: (BuildContext context) => IconButton(
-                          visualDensity: VisualDensity.compact,
-                          onPressed: tempState.toggleLiked,
-                          icon: tempState.liked
-                              ? Icon(
-                                  Icons.favorite,
-                                  color: Colors.redAccent,
-                                )
-                              : Icon(
-                                  Icons.favorite_border,
-                                  color: Colors.blueGrey,
-                                )),
+                        visualDensity: VisualDensity.compact,
+                        onPressed: tempState.toggleLiked,
+                        icon: tempState.liked
+                            ? Icon(
+                                Icons.favorite,
+                                color: Colors.redAccent,
+                              )
+                            : Icon(
+                                Icons.favorite_border,
+                                color: Colors.blueGrey,
+                              ),
+                      ),
                     ),
                   )
                 ]),
