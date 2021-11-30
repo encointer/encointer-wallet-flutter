@@ -35,7 +35,6 @@
     "@polkadot/util-crypto": "^7.4.1",
     "Buffer": "^0.0.0",
     "bn.js": "^4.12.0",
-    "bs58": "^4.0.1",
     "buffer": "^6.0.3",
     "core-js": "^3.12.1",
     "node-rsa": "^1.1.1",
