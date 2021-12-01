@@ -11,7 +11,8 @@
     "encointer:link": "./scripts/encointer-link.cjs",
     "encointer:unlink": "./scripts/encointer-unlink.cjs",
     "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
-    "test:gesell": "node --experimental-vm-modules node_modules/jest/bin/jest.js --config jest.config-gesell-e2e.js"
+    "test:gesell": "node --experimental-vm-modules node_modules/jest/bin/jest.js --config jest.config-gesell-e2e.js",
+    "test:cantillon": "node --experimental-vm-modules node_modules/jest/bin/jest.js --config jest.config-cantillon-e2e.js"
   },
   "exports": {
     ".": "./src/index.js",
