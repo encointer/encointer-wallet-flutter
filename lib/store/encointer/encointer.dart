@@ -250,11 +250,13 @@ abstract class _EncointerStore with Store {
 
   @action
   void setCommunityIdentifiers(List<String> cids) {
+    print("store: set communityIdentifiers to $cids");
     communityIdentifiers = cids;
   }
 
   @action
   void setCommunityMetadata([CommunityMetadata meta]) {
+    print("store: set communityMetadata to $meta");
     communityMetadata = meta;
     cacheObject(encointerCommunityMetadataKey, meta);
   }
@@ -369,14 +371,11 @@ abstract class _EncointerStore with Store {
     if (cachedCid != null) {
       print("found cached choice of cid. will recover it: " + cachedCid.toString());
       chosenCid = cachedCid;
-      // setChosenCid(cachedCid);
     }
-    // ComunityMetadata loaded from cache
     var cachedCommunityMetadata = await loadObject(encointerCommunityMetadataKey);
     if (cachedCommunityMetadata != null) {
       communityMetadata = CommunityMetadata.fromJson(cachedCommunityMetadata);
       print("found cached community metadata. will recover it: " + cachedCommunityMetadata.toString());
-      // setCommunityMetadata(comMet);
     }
     List<dynamic> cachedCommunitiesInternalList = await loadObject(encointerCommunitiesKey);
     if (cachedCommunitiesInternalList != null) {
@@ -384,7 +383,6 @@ abstract class _EncointerStore with Store {
           cachedCommunitiesInternalList.map((s) => new CidName(s['cid'], s['name'])).toList();
       print("found cached communities. will recover it: " + cachedCommunities.toString());
       communities = cachedCommunities;
-      // setCommunities(cachedCommunities);
     }
     // get meetup related data
     var data = await loadObject(encointerParticipantsClaimsKey);

@@ -11,6 +11,7 @@ const Map<String, String> enAssets = {
   'amount.low': 'Insufficient balance',
   'community': 'Community',
   'currency': 'currency',
+  'community.choose': 'Please choose a community',
   'community.select': 'Select Community',
   'community.currency': 'Community Currency',
   'communities.not.found': 'no communities found',

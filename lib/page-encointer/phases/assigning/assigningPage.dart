@@ -84,7 +84,7 @@ class _AssigningPageState extends State<AssigningPage> {
                         child: Text(
                           "${dic['meetup.remaining']} ${Fmt.hhmmss(timeToMeetup)}",
                           textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 20),
+                          style: TextStyle(fontSize: 15),
                         ),
                       ),
                     ),

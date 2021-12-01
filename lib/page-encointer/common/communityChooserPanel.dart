@@ -36,7 +36,7 @@ class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
                       ? Text(dic['communities.not.found'])
                       : DropdownButton<dynamic>(
                           key: Key('cid-dropdown'),
-                          hint: Text("Please choose a community"),
+                          hint: Text(dic['community.choose']),
                           value: (store.encointer.chosenCid == null ||
                                   store.encointer.communities
                                       .where((cn) => cn.cid == store.encointer.chosenCid)

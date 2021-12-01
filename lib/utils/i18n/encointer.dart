@@ -27,5 +27,7 @@ const Map<String, String> enNctr = {
   'meetup.attended': 'Attended last meetup',
   'done': 'Done',
   'finish': 'Finish',
+  "register.participant": 'Register Participant',
+  'registered': 'Already Registered',
   'scan': 'Scan',
 };

@@ -96,11 +96,9 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
           store.encointer.participantIndex == null
               ? CupertinoActivityIndicator()
               : store.encointer.participantIndex == 0
-                  ? RoundedButton(text: "Register Participant", onPressed: () => _submit())
+                  ? RoundedButton(text: dic["register.participant"], onPressed: () => _submit())
                   : RoundedButton(
-                      text: "Unregister",
-                      //for: " + Fmt.communityIdentifier(store.encointer.chosenCid).toString(),
-                      onPressed: null),
+                      text: dic["registered"], onPressed: null, color: Theme.of(context).disabledColor),
         ],
       ),
     );

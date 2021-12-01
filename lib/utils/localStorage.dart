@@ -76,7 +76,6 @@ class LocalStorage {
 
   Future<Object> getObject(String key) async {
     String value = await storage.getKV('${customKVKey}_$key');
-    // THIS IS A MISTAKE! getKV returns a string "null" and not the type null!!, so if "null" returned, still excecuted!
     if (value != null) {
       Object data = await compute(jsonDecode, value);
       return data;
