@@ -10,7 +10,8 @@
     "build": "cross-env NODE_ENV=production ./scripts/buildWebpack.cjs",
     "encointer:link": "./scripts/encointer-link.cjs",
     "encointer:unlink": "./scripts/encointer-unlink.cjs",
-    "test": "polkadot-dev-run-test"
+    "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js",
+    "test:gesell": "node --experimental-vm-modules node_modules/jest/bin/jest.js --config jest.config-gesell-e2e.js"
   },
   "exports": {
     ".": "./src/index.js",
@@ -49,7 +50,6 @@
     "@babel/register": "^7.15.3",
     "@babel/runtime": "^7.15.4",
     "@jest/globals": "^27.2.3",
-    "@polkadot/dev": "^0.62.11",
     "@webpack-cli/info": "^1.3.0",
     "@webpack-cli/init": "^1.1.3",
     "babel-loader": "^8.2.2",
