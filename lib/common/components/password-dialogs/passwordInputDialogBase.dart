@@ -5,20 +5,38 @@ import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
-class PasswordInputSwitchAccountDialog extends StatefulWidget {
-  PasswordInputSwitchAccountDialog({this.account, this.title, this.onOk, this.onCancel, this.onSwitch});
+showPasswordInputDialog(context, account, title, onOk) {
+  return PasswordInputDialogBase(
+    account: account,
+    title: title,
+    onCancel: () => Navigator.of(context).pop(),
+    onOk: onOk,
+  );
+}
+
+showPasswordDialogWithAccountSwitch(account, title, onOk, onAccountSwitch) {
+  return PasswordInputDialogBase(
+    account: account,
+    title: title,
+    onOk: onOk,
+    onAccountSwitch: onAccountSwitch,
+  );
+}
+
+class PasswordInputDialogBase extends StatefulWidget {
+  PasswordInputDialogBase({this.account, this.title, this.onOk, this.onCancel, this.onAccountSwitch});
 
   final AccountData account;
   final Widget title;
   final Function onOk;
   final Function onCancel;
-  final Function onSwitch;
+  final Function onAccountSwitch;
 
   @override
-  _PasswordInputSwitchAccountDialog createState() => _PasswordInputSwitchAccountDialog();
+  _PasswordInputDialogBaseState createState() => _PasswordInputDialogBaseState();
 }
 
-class _PasswordInputSwitchAccountDialog extends State<PasswordInputSwitchAccountDialog> {
+class _PasswordInputDialogBaseState extends State<PasswordInputDialogBase> {
   final TextEditingController _passCtrl = new TextEditingController();
   bool _submitting = false;
 
@@ -84,11 +102,11 @@ class _PasswordInputSwitchAccountDialog extends State<PasswordInputSwitchAccount
         ),
       ),
       actions: <Widget>[
-        widget.onSwitch != null
+        widget.onAccountSwitch != null
             ? CupertinoButton(
                 child: Text(dic['switch']),
                 onPressed: () {
-                  widget.onSwitch();
+                  widget.onAccountSwitch();
                 },
               )
             : Container(),

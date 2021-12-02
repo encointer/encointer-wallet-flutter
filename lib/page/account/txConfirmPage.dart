@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:encointer_wallet/common/components/TapTooltip.dart';
 import 'package:encointer_wallet/common/components/addressFormItem.dart';
-import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
+import 'package:encointer_wallet/common/components/password-dialogs/passwordInputDialogBase.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page/account/uos/qrSenderPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactListPage.dart';
@@ -164,13 +164,14 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
     showCupertinoDialog(
       context: context,
       builder: (_) {
-        return PasswordInputDialog(
-            title: Text(
+        return showPasswordInputDialog(
+            context,
+            _proxyAccount ?? store.account.currentAccount,
+            Text(
               I18n.of(context).home['unlock'],
               key: Key('password-input-field'),
             ),
-            account: _proxyAccount ?? store.account.currentAccount,
-            onOk: (password) => _onSubmit(context, password: password));
+            (password) => _onSubmit(context, password: password));
       },
     );
   }
