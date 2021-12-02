@@ -80,19 +80,9 @@ class ClaimQrCode extends StatelessWidget {
                           future: claim,
                           builder: (_, AsyncSnapshot<Uint8List> snapshot) {
                             if (snapshot.hasData) {
-                              var base64Str = base64.encode(snapshot.data);
-                              print("Data length: ${snapshot.data.length}");
-                              print("Data:        ${snapshot.data}");
-                              //
-                              // print("base64 length: ${base64Str.length}");
-                              // print("base64:        ${base64Str}");
                               return QrImage(
-                                data: base64Str,
+                                data: base64.encode(snapshot.data),
                                 errorCorrectionLevel: QrErrorCorrectLevel.L,
-                                //embeddedImage:
-                                //    AssetImage('assets/images/public/app.png'),
-                                //embeddedImageStyle:
-                                //    QrEmbeddedImageStyle(size: Size(40, 40)),
                               );
                             } else {
                               return CupertinoActivityIndicator();
