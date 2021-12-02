@@ -88,7 +88,7 @@ class _AssigningPageState extends State<AssigningPage> {
                         ),
                       ),
                     ),
-                    // SizedBox(height: 16),
+                    SizedBox(height: 16),
                     timeToMeetup < 60
                         ? RoundedButton(
                             text: dic['meetup.start'],
