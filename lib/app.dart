@@ -1,11 +1,6 @@
 import 'package:encointer_wallet/common/components/willPopScopeWrapper.dart';
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/page-encointer/homePage.dart';
-import 'package:encointer_wallet/page-encointer/old_code/bazaar/business/businessOverviewPage.dart';
-import 'package:encointer_wallet/page-encointer/old_code/bazaar/business/businessOverviewPanel.dart';
-import 'package:encointer_wallet/page-encointer/old_code/bazaar/business/createBusinessForm.dart';
-import 'package:encointer_wallet/page-encointer/old_code/bazaar/business/createBusinessPage.dart';
-import 'package:encointer_wallet/page-encointer/old_code/bazaar/business/myBusinessPage.dart';
 import 'package:encointer_wallet/page-encointer/phases/assigning/assigningPage.dart';
 import 'package:encointer_wallet/page-encointer/phases/attesting/attestingPage.dart';
 import 'package:encointer_wallet/page-encointer/phases/registering/registerParticipantPanel.dart';
@@ -187,11 +182,7 @@ class _WalletAppState extends State<WalletApp> {
         AssigningPage.route: (_) => AssigningPage(_appStore),
         AttestingPage.route: (_) => AttestingPage(_appStore),
         // bazaar
-        CreateBusinessPage.route: (_) => CreateBusinessPage(_appStore),
-        CreateBusinessForm.route: (_) => CreateBusinessForm(_appStore),
-        BusinessOverviewPage.route: (_) => BusinessOverviewPage(_appStore),
-        BusinessOverviewPanel.route: (_) => BusinessOverviewPanel(_appStore),
-        MyBusinessPage.route: (_) => MyBusinessPage(_appStore),
+        // TODO add routes for bazaar
       },
     );
   }
