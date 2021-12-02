@@ -11,7 +11,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_qr_scan/qrcode_reader_view.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-// TODO: scan image failed
 class ScanClaimQrCode extends StatelessWidget {
   ScanClaimQrCode(this.store, this.confirmedParticipantsCount);
 
@@ -30,8 +29,19 @@ class ScanClaimQrCode extends StatelessWidget {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       backgroundColor: Colors.white,
       content: Text(msg, style: TextStyle(color: Colors.black54)),
-      duration: Duration(milliseconds: 1000),
+      duration: Duration(milliseconds: 1500),
     ));
+  }
+
+  void validateAndStoreClaim(BuildContext context, ClaimOfAttendance claim, Map dic) {
+    if (!store.encointer.meetupRegistry.contains(claim.claimantPublic)) {
+      // this is important because the runtime checks if there are too many claims trying to be registered.
+      _showSnackBar(context, dic['meetup.claimant.invalid']);
+    } else {
+      String msg = store.encointer.containsClaim(claim) ? dic['claims.scanned.already'] : dic['claims.scanned.new'];
+      store.encointer.addParticipantClaim(claim);
+      _showSnackBar(context, msg);
+    }
   }
 
   @override
@@ -46,15 +56,17 @@ class ScanClaimQrCode extends StatelessWidget {
 
         var claim = await webApi.codec
             .decodeBytes(ClaimOfAttendanceJSRegistryName, data)
-            .then((c) => ClaimOfAttendance.fromJson(c));
+            .then((c) => ClaimOfAttendance.fromJson(c))
+            .timeout(
+          const Duration(seconds: 3),
+          onTimeout: () {
+            _showSnackBar(context, dic['claims.scanned.decode.failed']);
+            return null;
+          },
+        );
 
-        if (!store.encointer.meetupRegistry.contains(claim.claimantPublic)) {
-          // this is important because the runtime checks if there are too many claims trying to be registered.
-          _showSnackBar(context, dic['meetup.claimant.invalid']);
-        } else {
-          String msg = store.encointer.containsClaim(claim) ? dic['claims.scanned.already'] : dic['claims.scanned.new'];
-          store.encointer.addParticipantClaim(claim);
-          _showSnackBar(context, msg);
+        if (claim != null) {
+          validateAndStoreClaim(context, claim, dic);
         }
 
         // If we don't wait, scans  of the same qr code are spammed.
