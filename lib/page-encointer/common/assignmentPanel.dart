@@ -44,7 +44,7 @@ class _AssignmentPanelState extends State<AssignmentPanel> {
           child: Column(children: <Widget>[
             Observer(
                 builder: (_) => store.encointer.meetupTime != null
-                    ? store.encointer.communityIdentifiers == null
+                    ? store.encointer.communities == null
                         ? Text(dic['communities.not.found'])
                         : Column(children: <Widget>[
                             store.encointer.meetupIndex > 0
