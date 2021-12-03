@@ -50,6 +50,7 @@ void main() {
       await driver.tap(find.byValueKey('cid-0'));
 
       // take a screenshot of the EncointerHome Screen
+      await driver.requestData(StorageSetup.GET_METADATA);
       await screenshot(driver, config, 'encointer-home');
     }, timeout: Timeout(Duration(seconds: 120))); // needed for android CI with github actions
 
