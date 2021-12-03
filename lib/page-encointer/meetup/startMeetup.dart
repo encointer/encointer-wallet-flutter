@@ -9,6 +9,7 @@ import 'confirmAttendeesDialog.dart';
 
 Future<void> startMeetup(BuildContext context, AppStore store) async {
   var amount = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConfirmAttendeesDialog()));
+  // amount is `null` if back button pressed in `ConfirmAttendeesDialog`
   if (amount != null) {
     await Navigator.of(context).push(
       MaterialPageRoute(
