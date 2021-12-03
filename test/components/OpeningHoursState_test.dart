@@ -5,7 +5,7 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
-import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/OpeningHoursState.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/openingHoursState.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mobx/mobx.dart';
 

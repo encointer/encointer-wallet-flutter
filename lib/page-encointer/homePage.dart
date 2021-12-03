@@ -7,7 +7,7 @@ import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'bazaar/0_main/BazaarMain.dart';
+import 'bazaar/0_main/bazaarMain.dart';
 
 class EncointerHomePage extends StatefulWidget {
   EncointerHomePage(this.store);
