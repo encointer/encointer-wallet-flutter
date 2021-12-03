@@ -8,14 +8,10 @@ class SearchResultsBusinessFiltered extends StatelessWidget {
   final categories = allCategories;
   final deliveryOptions = allDeliveryOptions;
   final productNewnessOptions = allProductNewnessOptions;
-  var selectedDeliveryOptions;
-  var selectedProductNewnessOptions;
-  var _currentRangeValues = const RangeValues(40, 80);
+  final selectedDeliveryOptions = <bool>[];
+  final selectedProductNewnessOptions = <bool>[];
 
-  SearchResultsBusinessFiltered(this.results, {Key key}) : super(key: key) {
-    selectedDeliveryOptions = List.filled(deliveryOptions.length, false);
-    selectedProductNewnessOptions = List.filled(deliveryOptions.length, false);
-  }
+  SearchResultsBusinessFiltered(this.results, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +19,10 @@ class SearchResultsBusinessFiltered extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text("Filter found businesses"),
+          title: Text(
+            "Filter found businesses",
+            style: titleStyle,
+          ),
         ),
         body: ListView(children: [
           ToggleButtonsWithTitle("Categories", categories, null), // TODO state management

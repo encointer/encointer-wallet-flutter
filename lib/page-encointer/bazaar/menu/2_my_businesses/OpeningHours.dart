@@ -7,8 +7,6 @@ import 'package:provider/provider.dart';
 class OpeningHours extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final businessFormState = Provider.of<BusinessFormState>(context);
-
     return Column(
       children: [0, 1, 2, 3, 4, 5, 6]
           .map(

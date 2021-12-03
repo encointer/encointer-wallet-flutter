@@ -106,12 +106,12 @@ abstract class _OpeningHoursForDayState with Store {
   _OpeningHoursForDayState(this.openingIntervals);
 
   @observable
-  String timeFormatError = null;
+  String timeFormatError;
 
   @action
   addParsedIntervalIfValid(String startEnd) {
     try {
-      var openingIntervalState = OpeningIntervalState.fromString(startEnd);
+      OpeningIntervalState openingIntervalState = _OpeningIntervalState.parseOpeningIntervalState(startEnd);
       timeFormatError = null;
       openingIntervals.add(openingIntervalState);
     } catch (e) {
@@ -158,9 +158,9 @@ abstract class _OpeningIntervalState with Store {
   int end;
 
   /// example "8:00-12:00" or "8:00 - 12:00"
-  _OpeningIntervalState.fromString(String startEndTime)
-      : start = _parseTimeInterval(startEndTime, 0),
-        end = _parseTimeInterval(startEndTime, 1);
+  static _OpeningIntervalState parseOpeningIntervalState(String startEndTime) {
+    return OpeningIntervalState(_parseTimeInterval(startEndTime, 0), _parseTimeInterval(startEndTime, 1));
+  }
 
   _OpeningIntervalState(this.start, this.end);
 

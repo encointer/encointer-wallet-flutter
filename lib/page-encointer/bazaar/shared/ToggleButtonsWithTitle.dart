@@ -5,7 +5,7 @@ class ToggleButtonsWithTitle extends StatelessWidget {
   final List<bool> isSelected;
   final Function(int) onPressed;
   final String title;
-  var allSelected = false;
+  final allSelected = false;
 
   ToggleButtonsWithTitle(
     this.title,

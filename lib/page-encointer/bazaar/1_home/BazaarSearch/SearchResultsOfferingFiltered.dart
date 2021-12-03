@@ -8,14 +8,11 @@ class SearchResultsOfferingFiltered extends StatelessWidget {
   final categories = allCategories;
   final deliveryOptions = allDeliveryOptions;
   final productNewnessOptions = allProductNewnessOptions;
-  var selectedDeliveryOptions;
-  var selectedProductNewnessOptions;
-  var _currentRangeValues = const RangeValues(40, 80);
+  final selectedDeliveryOptions = <bool>[];
+  final selectedProductNewnessOptions = <bool>[];
+  final _currentRangeValues = const RangeValues(40, 80);
 
-  SearchResultsOfferingFiltered(this.results, {Key key}) : super(key: key) {
-    selectedDeliveryOptions = List.filled(deliveryOptions.length, false);
-    selectedProductNewnessOptions = List.filled(deliveryOptions.length, false);
-  }
+  SearchResultsOfferingFiltered(this.results, {Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

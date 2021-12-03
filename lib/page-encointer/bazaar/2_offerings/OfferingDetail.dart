@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 class OfferingDetail extends StatelessWidget {
   final BazaarOfferingData offering;
-  var productNewness = allProductNewnessOptions; // TODO state management
-  var deliveryOptions = allDeliveryOptions; // TODO state management
+  final productNewness = allProductNewnessOptions; // TODO state management
+  final deliveryOptions = allDeliveryOptions; // TODO state management
 
   @override
   Widget build(BuildContext context) {

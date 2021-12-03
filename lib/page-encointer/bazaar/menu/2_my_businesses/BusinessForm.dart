@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 import 'OpeningHours.dart';
 
 class BusinessFormScaffold extends StatelessWidget {
-  var categories = allCategories; // TODO state management
+  final categories = allCategories; // TODO state management
 
   @override
   Widget build(BuildContext context) => Provider<BusinessFormState>(
