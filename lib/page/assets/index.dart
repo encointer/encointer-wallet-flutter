@@ -3,7 +3,7 @@ import 'dart:ui';
 
 import 'package:encointer_wallet/common/components/BorderedTitle.dart';
 import 'package:encointer_wallet/common/components/addressIcon.dart';
-import 'package:encointer_wallet/common/components/password-dialogs/passwordInputDialogBase.dart';
+import 'package:encointer_wallet/common/components/passwordInputDialogBase.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
@@ -289,7 +289,6 @@ class _AssetsState extends State<Assets> {
   }
 
   Future<void> _showPasswordDialog(BuildContext context) async {
-    var dic = I18n.of(context).home;
     setState(() {
       _dialogIsShown = true;
     });
@@ -297,10 +296,7 @@ class _AssetsState extends State<Assets> {
       context: context,
       builder: (_) {
         return WillPopScope(
-          child: showPasswordDialogWithAccountSwitch(
-              store.account.currentAccount,
-              Text(dic['unlock.account']
-                  .replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name.toString())), (password) {
+          child: showPasswordDialogWithAccountSwitch(context, store, (password) {
             setState(() {
               store.account.setPin(password);
             });

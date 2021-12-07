@@ -1,5 +1,5 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
-import 'package:encointer_wallet/common/components/password-dialogs/passwordInputDialogBase.dart';
+import 'package:encointer_wallet/common/components/passwordInputDialogBase.dart';
 import 'package:encointer_wallet/page/profile/account/changeNamePage.dart';
 import 'package:encointer_wallet/page/profile/account/changePasswordPage.dart';
 import 'package:encointer_wallet/page/profile/account/exportAccountPage.dart';

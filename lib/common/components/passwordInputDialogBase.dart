@@ -14,10 +14,12 @@ showPasswordInputDialog(context, account, title, onOk) {
   );
 }
 
-showPasswordDialogWithAccountSwitch(account, title, onOk, onAccountSwitch) {
+showPasswordDialogWithAccountSwitch(context, store, onOk, onAccountSwitch) {
   return PasswordInputDialogBase(
-    account: account,
-    title: title,
+    account: store.account.currentAccount,
+    title: Text(I18n.of(context)
+        .home['unlock.account']
+        .replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name.toString())),
     onOk: onOk,
     onAccountSwitch: onAccountSwitch,
   );
