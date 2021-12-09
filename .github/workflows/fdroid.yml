@@ -2,7 +2,7 @@ name: Fdroid test
 
 on:
   push:
-    branches: [ beta, cl/fix-fdroid  ]
+    branches: [ beta ]
   pull_request:
     branches: [ beta ]
 
