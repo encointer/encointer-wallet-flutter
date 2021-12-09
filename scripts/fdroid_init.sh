@@ -15,8 +15,8 @@ source ./scripts/init_env.sh
 ######################### Setup phase
 
 DISTRO="linux-x64"
-NODE_VERSION="14.17.1" # should match the value from the CI.
-SHA_SUM="2921eba80c839e06d68b60b27fbbcbc7822df437f3f8d58717ec5a7703563ba4"
+NODE_VERSION="16.13.1" # should match the value from the CI.
+SHA_SUM="a3721f87cecc0b52b0be8587c20776ac7305db413751db02c55aa2bffac15198"
 NODE="node-v${NODE_VERSION}-${DISTRO}"
 
 curl -Lo node.tar.xz "https://nodejs.org/dist/v${NODE_VERSION}/${NODE}.tar.xz"
@@ -29,6 +29,9 @@ export PATH=$PATH:$PWD/${NODE}/bin
 echo "Path: $PATH"
 
 node -v
+
+# enable binary proxies, which automatically install yarn, if needed.
+corepack enable
 
 # Build JS
 ./scripts/build_js.sh
