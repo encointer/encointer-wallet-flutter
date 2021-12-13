@@ -129,6 +129,7 @@ class _WalletAppState extends State<WalletApp> {
       ],
       supportedLocales: [
         const Locale('en', ''),
+        const Locale('de', ''),
       ],
       initialRoute: widget.config.initialRoute,
       theme: _theme,
