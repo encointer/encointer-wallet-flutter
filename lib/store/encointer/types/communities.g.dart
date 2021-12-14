@@ -24,6 +24,18 @@ Map<String, dynamic> _$CommunityMetadataToJson(CommunityMetadata instance) => <S
       'theme': instance.theme?.toJson(),
     };
 
+CommunityIdentifier _$CommunityIdentifierFromJson(Map<String, dynamic> json) {
+  return CommunityIdentifier(
+    (json['geohash'] as List)?.map((e) => e as int)?.toList(),
+    (json['digest'] as List)?.map((e) => e as int)?.toList(),
+  );
+}
+
+Map<String, dynamic> _$CommunityIdentifierToJson(CommunityIdentifier instance) => <String, dynamic>{
+      'geohash': instance.geohash,
+      'digest': instance.digest,
+    };
+
 CidName _$CidNameFromJson(Map<String, dynamic> json) {
   return CidName(
     json['cid'] as String,

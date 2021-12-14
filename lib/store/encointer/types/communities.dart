@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-
 import 'package:json_annotation/json_annotation.dart';
 
 // Run: `flutter pub run build_runner build` in order to create/update the *.g.dart
@@ -47,6 +46,25 @@ class CustomTheme {
   Map<String, dynamic> toJson() => <String, dynamic>{
         'primary_swatch': primarySwatch.value,
       };
+}
+
+@JsonSerializable(fieldRename: FieldRename.snake)
+class CommunityIdentifier {
+  CommunityIdentifier(this.geohash, this.digest);
+
+  // [u8; 5]
+  List<int> geohash;
+  // [u8; 4]
+  List<int> digest;
+
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
+
+  factory CommunityIdentifier.fromJson(Map<String, dynamic> json) => _$CommunityIdentifierFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CommunityIdentifierToJson(this);
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake)
