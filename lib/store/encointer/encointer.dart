@@ -370,8 +370,8 @@ abstract class _EncointerStore with Store {
   Future<void> loadCache() async {
     var cachedCid = await loadObject(encointerCommunityKey);
     if (cachedCid != null) {
-      print("found cached choice of cid. will recover it: " + cachedCid.toString());
-      chosenCid = cachedCid;
+      chosenCid = CommunityIdentifier.fromJson(cachedCid);
+      print("found cached choice of cid. will recover it: " + chosenCid.toFmtString());
     }
     var cachedCommunityMetadata = await loadObject(encointerCommunityMetadataKey);
     if (cachedCommunityMetadata != null) {
