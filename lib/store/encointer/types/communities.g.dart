@@ -12,14 +12,11 @@ CommunityMetadata _$CommunityMetadataFromJson(Map<String, dynamic> json) {
     json['symbol'] as String,
     json['icons'] as String,
     json['url'] as String,
-    json['theme'] == null
-        ? null
-        : CustomTheme.fromJson(json['theme'] as Map<String, dynamic>),
+    json['theme'] == null ? null : CustomTheme.fromJson(json['theme'] as Map<String, dynamic>),
   );
 }
 
-Map<String, dynamic> _$CommunityMetadataToJson(CommunityMetadata instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$CommunityMetadataToJson(CommunityMetadata instance) => <String, dynamic>{
       'name': instance.name,
       'symbol': instance.symbol,
       'icons': instance.icons,
@@ -27,25 +24,15 @@ Map<String, dynamic> _$CommunityMetadataToJson(CommunityMetadata instance) =>
       'theme': instance.theme?.toJson(),
     };
 
-CommunityIdentifier _$CommunityIdentifierFromJson(Map<String, dynamic> json) {
-  return CommunityIdentifier(
-    (json['geohash'] as List)?.map((e) => e as int)?.toList(),
-    (json['digest'] as List)?.map((e) => e as int)?.toList(),
-  );
-}
-
-Map<String, dynamic> _$CommunityIdentifierToJson(
-        CommunityIdentifier instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$CommunityIdentifierToJson(CommunityIdentifier instance) => <String, dynamic>{
       'geohash': instance.geohash,
       'digest': instance.digest,
+      'hash_code': instance.hashCode,
     };
 
 CidName _$CidNameFromJson(Map<String, dynamic> json) {
   return CidName(
-    json['cid'] == null
-        ? null
-        : CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
+    json['cid'] == null ? null : CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
     json['name'] as String,
   );
 }

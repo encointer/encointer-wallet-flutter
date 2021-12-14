@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:base58check/base58.dart';
 import 'package:base58check/base58check.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:convert/convert.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -52,6 +53,7 @@ class CustomTheme {
       };
 }
 
+/// CommunityIdentifier consisting of a geohash and a 4-bytes crc code.
 @JsonSerializable(createFactory: false, fieldRename: FieldRename.snake)
 class CommunityIdentifier {
   CommunityIdentifier(this.geohash, this.digest);
@@ -89,12 +91,14 @@ class CommunityIdentifier {
   @override
   int get hashCode => geohash.hashCode ^ digest.hashCode;
 
-  factory CommunityIdentifier.fromJson(Map<String, dynamic> json) => CommunityIdentifier(
-      Fmt.hexToBytes(json['geohash']),
-      Fmt.hexToBytes(json['digest'])
-  );
+  // JS-passes as these values as hex-string, but this is more complicated to handle here.
+  factory CommunityIdentifier.fromJson(Map<String, dynamic> json) =>
+      CommunityIdentifier(Fmt.hexToBytes(json['geohash']), Fmt.hexToBytes(json['digest']));
 
-  Map<String, dynamic> toJson() => _$CommunityIdentifierToJson(this);
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'geohash': hex.encode(geohash),
+        'digest': hex.encode(digest),
+      };
 }
 
 @JsonSerializable(fieldRename: FieldRename.snake)
