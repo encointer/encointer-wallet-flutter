@@ -156,7 +156,7 @@ class ApiEncointer {
     }
 
     CommunityMetadata meta = await apiRoot
-        .evalJavascript('encointer.getCommunityMetadata("$cid")')
+        .evalJavascript('encointer.getCommunityMetadata(${jsonEncode(cid)})')
         .then((m) => CommunityMetadata.fromJson(m));
 
     print("api: community metadata: " + meta.toString());
@@ -178,7 +178,7 @@ class ApiEncointer {
       return;
     }
 
-    double dem = await apiRoot.evalJavascript('encointer.getDemurrage("$cid")');
+    double dem = await apiRoot.evalJavascript('encointer.getDemurrage(${jsonEncode(cid)})');
     print("api: fetched demurrage: $dem");
     store.encointer.setDemurrage(dem);
   }
@@ -206,7 +206,7 @@ class ApiEncointer {
     String loc = jsonEncode(store.encointer.meetupLocation);
 
     int time = await apiRoot.evalJavascript(
-        'encointer.getNextMeetupTime("$cid", $loc, "${toValue(store.encointer.currentPhase)}", ${store.encointer.currentPhaseDuration})');
+        'encointer.getNextMeetupTime(${jsonEncode(cid)}, $loc, "${toValue(store.encointer.currentPhase)}", ${store.encointer.currentPhaseDuration})');
     print("api: Next Meetup Time: " + time.toString());
     store.encointer.setMeetupTime(time);
     return DateTime.fromMillisecondsSinceEpoch(time);
@@ -324,7 +324,7 @@ class ApiEncointer {
     }
     int cIndex = store.encointer.currentCeremonyIndex;
     apiRoot.subscribeMessage(
-        'encointer.subscribeParticipantIndex("$_participantIndexChannel", "$cid", "$cIndex", "$account")',
+        'encointer.subscribeParticipantIndex("$_participantIndexChannel", ${jsonEncode(cid)}, "$cIndex", "$account")',
         _participantIndexChannel, (data) {
       store.encointer.setParticipantIndex(int.parse(data));
     });
@@ -345,7 +345,7 @@ class ApiEncointer {
     }
 
     apiRoot.subscribeMessage(
-      'encointer.subscribeBalance("$_encointerBalanceChannel", "$cid", "$account")',
+      'encointer.subscribeBalance("$_encointerBalanceChannel", ${jsonEncode(cid)}, "$account")',
       _encointerBalanceChannel,
       (data) {
         BalanceEntry balance = BalanceEntry.fromJson(data);
@@ -403,8 +403,8 @@ class ApiEncointer {
     var cid = store.encointer.chosenCid;
     var cIndex = store.encointer.currentCeremonyIndex;
     var pin = store.account.cachedPin;
-    var proofJs =
-        await apiRoot.evalJavascript('encointer.getProofOfAttendance("$pubKey", "$cid", "${cIndex - 1}", "$pin")');
+    var proofJs = await apiRoot
+        .evalJavascript('encointer.getProofOfAttendance("$pubKey", ${jsonEncode(cid)}, "${cIndex - 1}", "$pin")');
     ProofOfAttendance proof = ProofOfAttendance.fromJson(proofJs);
     print("Proof: ${proof.toString()}");
     return proof;
