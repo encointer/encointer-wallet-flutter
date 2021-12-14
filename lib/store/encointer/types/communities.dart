@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:base58check/base58.dart';
+import 'package:base58check/base58check.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -53,14 +56,37 @@ class CommunityIdentifier {
   CommunityIdentifier(this.geohash, this.digest);
 
   // [u8; 5]
-  List<int> geohash;
+  final List<int> geohash;
   // [u8; 4]
-  List<int> digest;
+  final List<int> digest;
 
   @override
   String toString() {
     return jsonEncode(this);
   }
+
+  static CommunityIdentifier fromFmtString(String cid) {
+    Base58Codec codec = Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
+
+    return CommunityIdentifier(utf8.encode(cid.substring(0, 5)), codec.decode(cid.substring(5)));
+  }
+
+  String toFmtString() {
+    Base58Codec codec = Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
+
+    return utf8.decode(geohash) + codec.encode(digest);
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CommunityIdentifier &&
+          runtimeType == other.runtimeType &&
+          listEquals(geohash, other.geohash) &&
+          listEquals(digest, other.digest);
+
+  @override
+  int get hashCode => geohash.hashCode ^ digest.hashCode;
 
   factory CommunityIdentifier.fromJson(Map<String, dynamic> json) => _$CommunityIdentifierFromJson(json);
 
