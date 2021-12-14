@@ -278,7 +278,7 @@ class ApiEncointer {
       return;
     }
 
-    print("Getting encointer balance for ${Fmt.communityIdentifier(cid)}");
+    print("Getting encointer balance for ${cid.toFmtString()}");
 
     BalanceEntry bEntry = store.settings.endpointIsGesell
         ? await _noTee.balances.balance(cid, pubKey)
