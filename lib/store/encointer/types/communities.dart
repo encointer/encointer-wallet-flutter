@@ -80,6 +80,8 @@ class CommunityIdentifier {
     return utf8.decode(geohash) + codec.encode(digest);
   }
 
+  // By default, the dart `==` operator returns only true iff both variables point to the same instance. We want to
+  // override this behaviour, such that it is also true if the instances contain the same values.
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
