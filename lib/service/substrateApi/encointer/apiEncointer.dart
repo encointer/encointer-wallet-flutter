@@ -303,7 +303,8 @@ class ApiEncointer {
     apiRoot.subscribeMessage(
         'encointer.subscribeCommunityIdentifiers("$_communityIdentifiersChannel")', _communityIdentifiersChannel,
         (data) async {
-      store.encointer.setCommunityIdentifiers(data.cast<String>());
+      List<CommunityIdentifier> cids = List.from(data).map((cn) => CommunityIdentifier.fromJson(cn)).toList();
+      store.encointer.setCommunityIdentifiers(cids);
 
       await this.communitiesGetAll();
     });

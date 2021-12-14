@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:base58check/base58.dart';
 import 'package:base58check/base58check.dart';
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -51,7 +52,7 @@ class CustomTheme {
       };
 }
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(createFactory: false, fieldRename: FieldRename.snake)
 class CommunityIdentifier {
   CommunityIdentifier(this.geohash, this.digest);
 
@@ -88,7 +89,10 @@ class CommunityIdentifier {
   @override
   int get hashCode => geohash.hashCode ^ digest.hashCode;
 
-  factory CommunityIdentifier.fromJson(Map<String, dynamic> json) => _$CommunityIdentifierFromJson(json);
+  factory CommunityIdentifier.fromJson(Map<String, dynamic> json) => CommunityIdentifier(
+      Fmt.hexToBytes(json['geohash']),
+      Fmt.hexToBytes(json['digest'])
+  );
 
   Map<String, dynamic> toJson() => _$CommunityIdentifierToJson(this);
 }
