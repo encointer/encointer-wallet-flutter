@@ -79,16 +79,16 @@ abstract class _EncointerStore with Store {
   int participantCount;
 
   @observable
-  Map<String, BalanceEntry> balanceEntries = new ObservableMap();
+  Map<CommunityIdentifier, BalanceEntry> balanceEntries = new ObservableMap();
 
   @observable
-  List<String> communityIdentifiers;
+  List<CommunityIdentifier> communityIdentifiers;
 
   @observable
   List<CidName> communities;
 
   @observable
-  String chosenCid;
+  CommunityIdentifier chosenCid;
 
   @observable
   CommunityMetadata communityMetadata;
@@ -96,6 +96,7 @@ abstract class _EncointerStore with Store {
   @observable
   double demurrage;
 
+  // claimantPublic -> ClaimOfAttendance
   @observable
   ObservableMap<String, ClaimOfAttendance> participantsClaims = new ObservableMap();
 
@@ -249,7 +250,7 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setCommunityIdentifiers(List<String> cids) {
+  void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
     print("store: set communityIdentifiers to $cids");
     communityIdentifiers = cids;
   }
@@ -274,7 +275,7 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setChosenCid([String cid]) {
+  void setChosenCid([CommunityIdentifier cid]) {
     if (chosenCid != cid) {
       chosenCid = cid;
       cacheObject(encointerCommunityKey, cid);
@@ -314,7 +315,7 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void addBalanceEntry(String cid, BalanceEntry balanceEntry) {
+  void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
     balanceEntries[cid] = balanceEntry;
   }
 

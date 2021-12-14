@@ -8,6 +8,7 @@ import 'package:base58check/base58check.dart';
 import 'package:convert/convert.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
@@ -28,11 +29,10 @@ class Fmt {
     return addr.substring(0, pad) + '...' + addr.substring(addr.length - pad);
   }
 
-  static String communityIdentifier(String cid, {int pad = 8}) {
-    List<int> cidBytes = hexToBytes(cid);
+  static String communityIdentifier(CommunityIdentifier cid) {
     Base58Codec codec = Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
-    var cidBase58 = codec.encode(cidBytes);
-    return address(cidBase58, pad: pad);
+
+    return utf8.decode(cid.geohash) + codec.encode(cid.digest);
   }
 
   static String dateTime(DateTime time) {

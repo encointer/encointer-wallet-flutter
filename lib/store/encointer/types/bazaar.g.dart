@@ -16,7 +16,8 @@ IpfsBusiness _$IpfsBusinessFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$IpfsBusinessToJson(IpfsBusiness instance) => <String, dynamic>{
+Map<String, dynamic> _$IpfsBusinessToJson(IpfsBusiness instance) =>
+    <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
       'contactInfo': instance.contactInfo,
@@ -34,7 +35,8 @@ IpfsOffering _$IpfsOfferingFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$IpfsOfferingToJson(IpfsOffering instance) => <String, dynamic>{
+Map<String, dynamic> _$IpfsOfferingToJson(IpfsOffering instance) =>
+    <String, dynamic>{
       'name': instance.name,
       'price': instance.price,
       'description': instance.description,
@@ -49,7 +51,8 @@ BusinessData _$BusinessDataFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$BusinessDataToJson(BusinessData instance) => <String, dynamic>{
+Map<String, dynamic> _$BusinessDataToJson(BusinessData instance) =>
+    <String, dynamic>{
       'url': instance.url,
       'lastOid': instance.lastOid,
     };
@@ -60,30 +63,38 @@ OfferingData _$OfferingDataFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$OfferingDataToJson(OfferingData instance) => <String, dynamic>{
+Map<String, dynamic> _$OfferingDataToJson(OfferingData instance) =>
+    <String, dynamic>{
       'url': instance.url,
     };
 
 AccountBusinessTuple _$AccountBusinessTupleFromJson(Map<String, dynamic> json) {
   return AccountBusinessTuple(
     json['controller'] as String,
-    json['businessData'] == null ? null : BusinessData.fromJson(json['businessData'] as Map<String, dynamic>),
+    json['businessData'] == null
+        ? null
+        : BusinessData.fromJson(json['businessData'] as Map<String, dynamic>),
   );
 }
 
-Map<String, dynamic> _$AccountBusinessTupleToJson(AccountBusinessTuple instance) => <String, dynamic>{
+Map<String, dynamic> _$AccountBusinessTupleToJson(
+        AccountBusinessTuple instance) =>
+    <String, dynamic>{
       'controller': instance.controller,
       'businessData': instance.businessData,
     };
 
 BusinessIdentifier _$BusinessIdentifierFromJson(Map<String, dynamic> json) {
   return BusinessIdentifier(
-    json['cid'] as String,
+    json['cid'] == null
+        ? null
+        : CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
     json['controller'] as String,
   );
 }
 
-Map<String, dynamic> _$BusinessIdentifierToJson(BusinessIdentifier instance) => <String, dynamic>{
+Map<String, dynamic> _$BusinessIdentifierToJson(BusinessIdentifier instance) =>
+    <String, dynamic>{
       'cid': instance.cid,
       'controller': instance.controller,
     };

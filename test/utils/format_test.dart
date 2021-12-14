@@ -1,11 +1,13 @@
-import 'package:flutter_test/flutter_test.dart';
+import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('Fmt', () {
     test('formats cid properly', () {
-      expect('HKKAHQhLbLy8b84u1UjnHX9Pqk4FXebzKgtqSt8EKsES',
-          Fmt.communityIdentifier('0xf26bfaa0feee0968ec0637e1933e64cd1947294d3b667d43b76b3915fc330b53', pad: 46));
+      var cid = CommunityIdentifier([103, 98, 115, 117, 118], [255, 255, 255, 255]);
+
+      expect('gbsuv7YXq9G', Fmt.communityIdentifier(cid));
     });
   });
 }

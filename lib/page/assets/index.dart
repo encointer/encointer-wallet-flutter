@@ -495,7 +495,7 @@ class _AssetsState extends State<Assets> {
                           ? () {
                               Navigator.pushNamed(context, AssetPage.route,
                                   arguments: AssetPageParams(
-                                      token: store.encointer.chosenCid,
+                                      token: Fmt.communityIdentifier(store.encointer.chosenCid),
                                       isEncointerCommunityCurrency: true,
                                       communityName: store.encointer.communityName,
                                       communitySymbol: store.encointer.communitySymbol));

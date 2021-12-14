@@ -71,7 +71,7 @@ class CommunityIdentifier {
 class CidName {
   CidName(this.cid, this.name);
 
-  String cid;
+  CommunityIdentifier cid;
   String name;
 
   @override

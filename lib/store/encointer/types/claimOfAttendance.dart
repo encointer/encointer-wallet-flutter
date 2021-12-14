@@ -1,7 +1,9 @@
 import 'dart:convert';
 
-import 'package:json_annotation/json_annotation.dart';
 import 'package:encointer_wallet/store/encointer/types/location.dart';
+import 'package:json_annotation/json_annotation.dart';
+
+import 'communities.dart';
 
 // Run: `flutter pub run build_runner build` in order to create/update the *.g.dart
 
@@ -16,7 +18,7 @@ class ClaimOfAttendance {
 
   String claimantPublic;
   int ceremonyIndex;
-  String communityIdentifier;
+  CommunityIdentifier communityIdentifier;
   int meetupIndex;
   Location location;
   int timestamp;
