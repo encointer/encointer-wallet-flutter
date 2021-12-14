@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:base58check/base58.dart';
 import 'package:base58check/base58check.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:convert/convert.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -93,7 +92,7 @@ class CommunityIdentifier {
   @override
   int get hashCode => geohash.hashCode ^ digest.hashCode;
 
-  // JS-passes as these values as hex-string, but this is more complicated to handle here.
+  // JS-passes these values as hex-strings, but this would be more complicated to handle in dart.
   factory CommunityIdentifier.fromJson(Map<String, dynamic> json) =>
       CommunityIdentifier(Fmt.hexToBytes(json['geohash']), Fmt.hexToBytes(json['digest']));
 
