@@ -98,12 +98,12 @@ class CommunityIdentifier {
       CommunityIdentifier(Fmt.hexToBytes(json['geohash']), Fmt.hexToBytes(json['digest']));
 
   Map<String, dynamic> toJson() => <String, dynamic>{
-        'geohash': hex.encode(geohash),
-        'digest': hex.encode(digest),
+        'geohash': Fmt.bytesToHex(geohash),
+        'digest': Fmt.bytesToHex(digest),
       };
 }
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable(fieldRename: FieldRename.snake, explicitToJson: true)
 class CidName {
   CidName(this.cid, this.name);
 

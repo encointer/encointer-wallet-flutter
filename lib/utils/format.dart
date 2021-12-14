@@ -261,6 +261,10 @@ class Fmt {
     return result;
   }
 
+  static String bytesToHex(List<int> bytes) {
+    return "0x" + hex.encode(bytes);
+  }
+
   static String accountDisplayNameString(String address, Map accInfo) {
     String display = Fmt.address(address, pad: 6);
     if (accInfo != null) {
