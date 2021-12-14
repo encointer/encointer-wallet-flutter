@@ -38,6 +38,6 @@ CidName _$CidNameFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$CidNameToJson(CidName instance) => <String, dynamic>{
-      'cid': instance.cid,
+      'cid': instance.cid?.toJson(),
       'name': instance.name,
     };

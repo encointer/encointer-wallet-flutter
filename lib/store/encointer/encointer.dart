@@ -380,8 +380,7 @@ abstract class _EncointerStore with Store {
     }
     List<dynamic> cachedCommunitiesInternalList = await loadObject(encointerCommunitiesKey);
     if (cachedCommunitiesInternalList != null) {
-      List<CidName> cachedCommunities =
-          cachedCommunitiesInternalList.map((s) => new CidName(s['cid'], s['name'])).toList();
+      List<CidName> cachedCommunities = cachedCommunitiesInternalList.map((s) => CidName.fromJson(s)).toList();
       print("found cached communities. will recover it: " + cachedCommunities.toString());
       communities = cachedCommunities;
     }
