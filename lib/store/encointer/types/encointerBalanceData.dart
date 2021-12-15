@@ -24,7 +24,7 @@ class EncointerBalanceData {
   Map<String, dynamic> toJson() => _$EncointerBalanceDataToJson(this);
 }
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+@JsonSerializable()
 class BalanceEntry {
   BalanceEntry(this.principal, this.lastUpdate);
 
