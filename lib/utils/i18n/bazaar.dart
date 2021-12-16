@@ -73,7 +73,7 @@ const Map<String, String> deBazaar = {
   'last.visited': 'Zuletzt besucht',
   'search': 'Suche...',
   'results.in.businesses': 'Resultate in Geschäfte',
-  'results.in.offerings': 'Results in Angebote',
+  'results.in.offerings': 'Resultate in Angebote',
   'categories': 'Kategorien',
   'day': 'Tag',
   'opening.hours': 'Öffnungszeiten',
