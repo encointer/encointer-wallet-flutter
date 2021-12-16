@@ -1,6 +1,7 @@
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaarItemVertical.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:encointer_wallet/utils/i18n/index.dart';
 
 import 'searchResultsOfferingFiltered.dart';
 
@@ -13,7 +14,7 @@ class SearchResultsOffering extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Found ${results.length} offerings"),
+        title: Text("${results.length} ${I18n.of(context).bazaar['found.offerings']}"),
       ),
       body: Column(
         children: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:encointer_wallet/utils/i18n/index.dart';
 
 class PhotoTiles extends StatelessWidget {
   const PhotoTiles({
@@ -23,7 +24,7 @@ class PhotoTiles extends StatelessWidget {
           color: Colors.grey,
           child: ListTile(
             leading: Icon(Icons.add_a_photo),
-            title: Text("Add a photo"),
+            title: Text(I18n.of(context).bazaar['add.photo']),
           ),
         ),
       ],

@@ -22,7 +22,7 @@ class SearchResults extends StatelessWidget {
         ResultSummaryListTile(businessResults, I18n.of(context).bazaar['results.in.businesses']),
         ResultSummaryListTile(offeringsResults, I18n.of(context).bazaar['results.in.offerings']),
         Text(
-          "Top Results",
+          I18n.of(context).bazaar['top.results'],
           style: TextStyle(fontWeight: FontWeight.bold, height: 2.5),
         ),
         Column(
