@@ -139,7 +139,8 @@ class ApiEncointer {
       return;
     }
     int mIndex = store.encointer.meetupIndex;
-    Map<String, dynamic> locj = await apiRoot.evalJavascript('encointer.getNextMeetupLocation(, "$mIndex","$address")');
+    Map<String, dynamic> locj =
+        await apiRoot.evalJavascript('encointer.getNextMeetupLocation(${jsonEncode(cid)}, "$mIndex","$address")');
     print("api: Next Meetup Location: " + locj.toString());
     Location loc = Location.fromJson(locj);
     store.encointer.setMeetupLocation(loc);
