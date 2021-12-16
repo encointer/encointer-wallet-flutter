@@ -2,7 +2,7 @@ const Map<String, String> enBazaar = {
   'bazaar.title': 'The Bazaar',
   'offerings': 'Offerings',
   'my.offerings': 'My Offerings',
-  'offering.insert': '+ Add new offering',
+  'offering.insert': '+ Add an offering',
   'offering.new': 'Featuring Newest',
   'looking.for': 'What are you looking for?',
   'show.all': '+ Show all',
@@ -29,12 +29,15 @@ const Map<String, String> enBazaar = {
   'search': 'Search...',
   'results.in.businesses': 'Results in Businesses',
   'results.in.offerings': 'Results in Offerings',
+  'categories': 'Categories',
+  'day': 'Day',
+  'opening.hours': 'Opening Hours'
 };
 
 const Map<String, String> deBazaar = {
   'bazaar.title': 'Der Bazaar',
   'offerings': 'Angebote',
-  'offering.insert': '+ Füge ein neues Angebot hinzu',
+  'offering.insert': '+ Füge ein Angebot hinzu',
   'offering.new': 'Mit Neuste',
   'looking.for': 'Nach was suchst du?',
   'show.all': '+ Zeige alle',
@@ -63,4 +66,7 @@ const Map<String, String> deBazaar = {
   'search': 'Suche...',
   'results.in.businesses': 'Resultate in Geschäfte',
   'results.in.offerings': 'Results in Angebote',
+  'categories': 'Kategorien',
+  'day': 'Tag',
+  'opening.hours': 'Öffnungszeiten'
 };

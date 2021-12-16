@@ -4,6 +4,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/b
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import "package:latlong2/latlong.dart";
+import 'package:encointer_wallet/utils/i18n/index.dart';
 
 class BusinessDetail extends StatelessWidget {
   final BazaarBusinessData business;
@@ -49,7 +50,7 @@ class BusinessDetail extends StatelessWidget {
                       Card(
                         margin: EdgeInsets.fromLTRB(4, 0, 2, 0),
                         child: DataTable(
-                          columns: [DataColumn(label: Text("Day")), DataColumn(label: Text("Opening Hours"))],
+                          columns: [DataColumn(label: Text(I18n.of(context).bazaar['day'])), DataColumn(label: Text(I18n.of(context).bazaar['openning hours']))],
                           headingRowHeight: 32,
                           columnSpacing: 4,
                           horizontalMargin: 8,
