@@ -31,7 +31,15 @@ const Map<String, String> enBazaar = {
   'results.in.offerings': 'Results in Offerings',
   'categories': 'Categories',
   'day': 'Day',
-  'opening.hours': 'Opening Hours'
+  'opening.hours': 'Opening Hours',
+  'add.photo': 'Add Photo',
+  'use.descriptive.name': 'Use a descriptive name',
+  'description': 'Description',
+  'offered.in.businesses': 'Offered in Businesses',
+  'state': 'State',
+  'delivery.options': 'Delivery options',
+  'delete': 'Delete',
+  'save': 'Save',
 };
 
 const Map<String, String> deBazaar = {
@@ -68,5 +76,13 @@ const Map<String, String> deBazaar = {
   'results.in.offerings': 'Results in Angebote',
   'categories': 'Kategorien',
   'day': 'Tag',
-  'opening.hours': 'Öffnungszeiten'
+  'opening.hours': 'Öffnungszeiten',
+  'add.photo': 'Photo hinzufügen',
+  'use.descriptive.name': 'Benutze einen sinnvollen Namen',
+  'description': 'Beschreibung',
+  'offered.in.businesses': 'In Geschäften offeriert',
+  'state': 'Stand',
+  'delivery.options': 'Versandsoptionen',
+  'delete': 'Löschen',
+  'save': 'Speicherm',
 };
