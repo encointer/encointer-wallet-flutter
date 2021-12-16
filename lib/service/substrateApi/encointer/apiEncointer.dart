@@ -200,14 +200,14 @@ class ApiEncointer {
   /// We could fetch the phaseDurations at application startup, cache them and supply them in the call here.
   Future<DateTime> getMeetupTime() async {
     print("api: getMeetupTime");
-    if (store.encointer.communityIdentifiers == null) {
+    if (store.encointer.meetupLocation == null) {
+      print("No meetup location set. Can't get meetup time");
       return null;
     }
-    CommunityIdentifier cid = store.encointer.chosenCid ?? store.encointer.communityIdentifiers[0];
     String loc = jsonEncode(store.encointer.meetupLocation);
 
     int time = await apiRoot.evalJavascript(
-        'encointer.getNextMeetupTime(${jsonEncode(cid)}, $loc, "${toValue(store.encointer.currentPhase)}", ${store.encointer.currentPhaseDuration})');
+        'encointer.getNextMeetupTime($loc, "${toValue(store.encointer.currentPhase)}", ${store.encointer.currentPhaseDuration})');
     print("api: Next Meetup Time: " + time.toString());
     store.encointer.setMeetupTime(time);
     return DateTime.fromMillisecondsSinceEpoch(time);
