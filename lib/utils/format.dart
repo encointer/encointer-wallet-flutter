@@ -308,12 +308,7 @@ class Fmt {
   }
 
   /// Formats fixed point number with the amount of fractional digits given by [fixedPointFraction].
-  static String degree(BigInt degree, {int fixedPointFraction = 64, int fractionDisplay = 3}) {
-    return (degree / BigInt.two.pow(fixedPointFraction)).toStringAsFixed(fractionDisplay);
-  }
-
-  /// Formats fixed point number with the amount of fractional digits given by [fixedPointFraction].
-  static String degreeFromHex(String degree, {int fixedPointFraction = 64, int fractionDisplay = 3}) {
-    return Fmt.degree(BigInt.parse(degree));
+  static String degree(String degree, {int fixedPointFraction = 64, int fractionDisplay = 3}) {
+    return (double.tryParse(degree) ?? 0.0).toStringAsFixed(fractionDisplay);
   }
 }
