@@ -128,8 +128,6 @@ class ApiEncointer {
 
   /// Queries the Communities pallet: encointerCommunities.locations(cid)
   ///
-  /// Fixme: JS currently returns locations[0] instead of locations[mIndex -1].
-  ///
   /// This is on-chain in Cantillon
   Future<void> getMeetupLocation() async {
     print("api: getMeetupLocation");
