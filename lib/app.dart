@@ -75,7 +75,7 @@ class _WalletAppState extends State<WalletApp> {
         res = const Locale('en', '');
         break;
       case 'de':
-        res = const Locale('de','');
+        res = const Locale('de', '');
         break;
       default:
         res = Localizations.localeOf(context);
