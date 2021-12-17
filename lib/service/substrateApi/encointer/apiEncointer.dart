@@ -140,8 +140,11 @@ class ApiEncointer {
     Map<String, dynamic> locj =
         await apiRoot.evalJavascript('encointer.getNextMeetupLocation(${jsonEncode(cid)}, "$mIndex","$address")');
     print("api: Next Meetup Location: " + locj.toString());
-    Location loc = Location.fromJson(locj);
-    store.encointer.setMeetupLocation(loc);
+
+    if (locj != null) {
+      Location loc = Location.fromJson(locj);
+      store.encointer.setMeetupLocation(loc);
+    }
   }
 
   /// Queries the Communities pallet: encointerCommunities.communityMetadata(cid)
