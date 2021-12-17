@@ -94,7 +94,7 @@ const Map<String, String> deProfile = {
   'contact.memo': 'Memo',
   'contact.save': 'Speichere',
   'contact.exist': 'Adresse existiert',
-  'contact.edit': 'Edite',
+  'contact.edit': 'Bearbeiten',
   'contact.delete': 'Lösche',
   'contact.delete.warn': 'Bist du sicher, dass du die Adresse löschen möchtest?',
   'setting': 'Einstellungen',
