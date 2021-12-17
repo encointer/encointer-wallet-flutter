@@ -23,7 +23,12 @@ class BazaarMain extends StatelessWidget {
               // leading: IconButton(icon: Image.asset('assets/images/assets/ERT.png'), onPressed: () => _chooseCommunity()), // TODO
               leading: IconButton(icon: Image.asset('assets/images/assets/ERT.png'), onPressed: () => null),
               bottom: TabBar(
-                tabs: bazaarTabBar,
+                tabs: <Widget>[
+                  Tab(icon: Icon(Icons.home), text: "Home"),
+                  Tab(icon: Icon(Icons.local_offer), text: I18n.of(context).bazaar['offerings']),
+                  Tab(icon: Icon(Icons.business), text: I18n.of(context).bazaar['businesses']),
+                  Tab(icon: Icon(Icons.favorite, color: Colors.pink), text: I18n.of(context).bazaar['favorites']),
+                ],
               ),
             ),
             endDrawer: BazaarMenu(),

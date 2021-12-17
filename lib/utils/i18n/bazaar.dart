@@ -65,6 +65,7 @@ const Map<String, String> enBazaar = {
   'take.photo': 'Take a Photo',
   'image.video.error': 'Pick image/video error',
   'images.added': 'Images added',
+  'favorites': 'Favorites',
 };
 const Map<String, String> deBazaar = {
   'bazaar.title': 'Der Bazaar',
@@ -134,4 +135,5 @@ const Map<String, String> deBazaar = {
   'take.photo': 'Photo aufnehmen',
   'image.video.error': 'Pick image/video error',
   'images.added': 'Bilder wurden hinzugefügt',
+  'favorites': 'Favoriten',
 };
