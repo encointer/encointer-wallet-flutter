@@ -7,18 +7,20 @@ import 'package:encointer_wallet/config/consts.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
+import 'package:encointer_wallet/store/app.dart';
 // import 'dart:io' as io;
 
 class Ipfs {
   // Todo: remove default -> migrate bazaar to use ipfs field from webApi instance
-  Ipfs({this.gateway = ipfs_gateway_encointer});
+  Ipfs({this.gateway = ipfs_gateway_encointer, this.store});
 
+  final AppStore store;
   final String gateway;
   String _dir;
   // String ipfsGateWay = 'http://ipfs.encointer.org:8080/ipfs/QmP2fzfikh7VqTu8pvzd2G2vAd4eK7EaazXTEgqGN6AWoD';
 
   String infuraGateway = 'https://infura-ipfs.io';
-
+  String icon;
   Future getJson(String cid) async {
     try {
       final dio = IpfsDio(BaseOptions(baseUrl: gateway));
@@ -83,17 +85,23 @@ class Ipfs {
       if (file.isFile) {
         var outFile = File(fileName);
         print('File: ' + outFile.path);
+        icon = outFile.path;
         outFile = await outFile.create(recursive: true);
+        await outFile.writeAsBytes(file.content);
       }
     }
+    // store.encointer.setIconReady(true);
+    //SET store.encointer.iconReady true
+    //And when changing community/Network, setting iconReady false
   }
 
-  Image getCommunityIcon(String cid, double devicePixelRatio) {
+  Future<Image> getCommunityIcon (String cid, double devicePixelRatio) async{
+    // store.encointer.setIconReady(false);
     String communityIconUrl = getCommunityIconsUrl(cid);
-    _downloadZip(communityIconUrl, cid);
+    await _downloadZip(communityIconUrl, cid);
     // HERE CHECK THAT unarchiveAndSave succeded
-    // return Image.file(File('$_dir/${devicePixelRatioToResolution(devicePixelRatio)}community_icon.png'));
-
+    Image res = Image.file(File('$_dir/${devicePixelRatioToResolution(devicePixelRatio)}community_icon.png'));
+    return res;
     // return Image.network(getCommunityIconsUrl(cid, devicePixelRatio), errorBuilder: (_, error, __) {
     //   print("Image.network error: ${error.toString()}");
     //   return Image.asset('assets/images/assets/ERT.png');

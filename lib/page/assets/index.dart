@@ -475,15 +475,31 @@ class _AssetsState extends State<Assets> {
         CommunityChooserPanel(store),
         Observer(
           builder: (_) {
+            // CHECK HERE THAT FILES ARE ALREADY STORED AND JUST THEN GET THE IMAGE
             return (store.encointer.communityName != null) & (store.encointer.chosenCid != null)
                 ? RoundedCard(
                     margin: EdgeInsets.only(top: 16),
                     child: ListTile(
                       key: Key('cid-asset'),
                       leading: Container(
-                        width: 36,
-                        child: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio),
-                      ),
+                          width: 36,
+                          // child: store.encointer.iconReady ? webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio) : Container(),
+                          child: FutureBuilder(
+                              future: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio),
+                              builder: (context, snapshot) {
+                                if (snapshot.connectionState == ConnectionState.waiting) {
+                                  return CupertinoActivityIndicator();
+                                }
+
+                                if (snapshot.hasData) {
+                                  return snapshot.data;
+                                }
+
+                                return Container();
+                              }
+                              )
+                          // store.encointer.iconReady ? webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio) : CupertinoActivityIndicator(),
+                          ),
                       title: Text(store.encointer.communityName + " (${store.encointer.communitySymbol})"),
                       trailing: store.encointer.communityBalance != null
                           ? Text(

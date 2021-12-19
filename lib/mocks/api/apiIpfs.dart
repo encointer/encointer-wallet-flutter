@@ -13,8 +13,8 @@ class MockIpfs extends Ipfs {
   }
 
   @override
-  Image getCommunityIcon(String cid, double devicePixelRatio) {
-    return Image.asset('assets/images/assets/Assets_nav_0.png');
+  Future<Image> getCommunityIcon (String cid, double devicePixelRatio) async{
+    return await Image.asset('assets/images/assets/Assets_nav_0.png');
   }
 
   @override
