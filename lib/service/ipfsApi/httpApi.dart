@@ -15,7 +15,9 @@ class Ipfs {
 
   final String gateway;
   String _dir;
-  String workingLink = 'http://ipfs.encointer.org:8080/ipfs/QmP2fzfikh7VqTu8pvzd2G2vAd4eK7EaazXTEgqGN6AWoD';
+  // String ipfsGateWay = 'http://ipfs.encointer.org:8080/ipfs/QmP2fzfikh7VqTu8pvzd2G2vAd4eK7EaazXTEgqGN6AWoD';
+
+  String infuraGateway = 'https://infura-ipfs.io';
 
   Future getJson(String cid) async {
     try {
@@ -57,7 +59,7 @@ class Ipfs {
   }
 
   Future<File> _downloadFile(String url, String fileName) async {
-    var req = await http.Client().get(Uri.parse(workingLink));
+    var req = await http.Client().get(Uri.parse(url));
     // var pathToSDCard = await getExternalStorageDirectory();
     // var _dir = pathToSDCard.path;
     // accessing app memory in /data/user/0/org.encointer.wallet/app_flutter/
@@ -91,6 +93,7 @@ class Ipfs {
     _downloadZip(communityIconUrl, cid);
     // HERE CHECK THAT unarchiveAndSave succeded
     // return Image.file(File('$_dir/${devicePixelRatioToResolution(devicePixelRatio)}community_icon.png'));
+
     // return Image.network(getCommunityIconsUrl(cid, devicePixelRatio), errorBuilder: (_, error, __) {
     //   print("Image.network error: ${error.toString()}");
     //   return Image.asset('assets/images/assets/ERT.png');
@@ -99,7 +102,8 @@ class Ipfs {
 
   String getCommunityIconsUrl(String cid) {
     // return '$gateway/ipfs/$cid/icons/${devicePixelRatioToResolution(devicePixelRatio)}community_icon.png';
-    var zipUrl = 'http://ipfs.encointer.org:8080/ipfs/$cid';
+    // var zipUrl = 'http://ipfs.encointer.org:8080/ipfs/$cid';
+    var zipUrl = '$infuraGateway/ipfs/$cid';
     return zipUrl;
   }
 
