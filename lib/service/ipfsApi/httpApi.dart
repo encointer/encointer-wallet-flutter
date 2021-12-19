@@ -1,15 +1,21 @@
-import 'dart:io';
 import 'dart:convert';
+import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:archive/archive.dart';
 import 'package:dio/dio.dart';
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+// import 'dart:io' as io;
 
 class Ipfs {
   // Todo: remove default -> migrate bazaar to use ipfs field from webApi instance
   Ipfs({this.gateway = ipfs_gateway_encointer});
 
   final String gateway;
+  String _dir;
+  String workingLink = 'http://ipfs.encointer.org:8080/ipfs/QmP2fzfikh7VqTu8pvzd2G2vAd4eK7EaazXTEgqGN6AWoD';
 
   Future getJson(String cid) async {
     try {
@@ -45,15 +51,56 @@ class Ipfs {
     }
   }
 
-  Image getCommunityIcon(String cid, double devicePixelRatio) {
-    return Image.network(getCommunityIconsUrl(cid, devicePixelRatio), errorBuilder: (_, error, __) {
-      print("Image.network error: ${error.toString()}");
-      return Image.asset('assets/images/assets/ERT.png');
-    });
+  Future<void> _downloadZip(String url, String cid) async {
+    var zippedFile = await _downloadFile(url, '$cid.zip');
+    await unarchiveAndSave(zippedFile);
   }
 
-  String getCommunityIconsUrl(String cid, double devicePixelRatio) {
-    return '$gateway/ipfs/$cid/icons/${devicePixelRatioToResolution(devicePixelRatio)}community_icon.png';
+  Future<File> _downloadFile(String url, String fileName) async {
+    var req = await http.Client().get(Uri.parse(workingLink));
+    // var pathToSDCard = await getExternalStorageDirectory();
+    // var _dir = pathToSDCard.path;
+    // accessing app memory in /data/user/0/org.encointer.wallet/app_flutter/
+    if (null == _dir) {
+      _dir = (await getApplicationDocumentsDirectory()).path;
+    }
+    File file2 = File('$_dir/$fileName');
+    // bool doesFileExist = await io.File(file2.toString()).exists();
+    // if (!doesFileExist) {
+    //   return file2.writeAsBytes(req.bodyBytes);
+    // }
+    // return file2;
+    return file2.writeAsBytes(req.bodyBytes);
+  }
+
+  unarchiveAndSave(var zippedFile) async {
+    var bytes = zippedFile.readAsBytesSync();
+    var archive = ZipDecoder().decodeBytes(bytes);
+    for (var file in archive) {
+      var fileName = '$_dir/${file.name}';
+      if (file.isFile) {
+        var outFile = File(fileName);
+        print('File: ' + outFile.path);
+        outFile = await outFile.create(recursive: true);
+      }
+    }
+  }
+
+  Image getCommunityIcon(String cid, double devicePixelRatio) {
+    String communityIconUrl = getCommunityIconsUrl(cid);
+    _downloadZip(communityIconUrl, cid);
+    // HERE CHECK THAT unarchiveAndSave succeded
+    // return Image.file(File('$_dir/${devicePixelRatioToResolution(devicePixelRatio)}community_icon.png'));
+    // return Image.network(getCommunityIconsUrl(cid, devicePixelRatio), errorBuilder: (_, error, __) {
+    //   print("Image.network error: ${error.toString()}");
+    //   return Image.asset('assets/images/assets/ERT.png');
+    // });
+  }
+
+  String getCommunityIconsUrl(String cid) {
+    // return '$gateway/ipfs/$cid/icons/${devicePixelRatioToResolution(devicePixelRatio)}community_icon.png';
+    var zipUrl = 'http://ipfs.encointer.org:8080/ipfs/$cid';
+    return zipUrl;
   }
 
   /// The [ratio] should be obtained via ' MediaQuery.of(context).devicePixelRatio'.

@@ -30,6 +30,8 @@ dependencies:
   get_storage: ^2.0.2
   convert: ^2.1.1
   http: ^0.13.1
+  path_provider: ^2.0.1
+  archive: ^2.0.8
   flutter_webview_plugin: ^0.3.11
   rxdart: ^0.26.0
   flutter_local_notifications: ^5.0.0+1
@@ -95,7 +97,6 @@ flutter_icons:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
