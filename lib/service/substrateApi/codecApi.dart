@@ -21,6 +21,7 @@ class CodecApi {
   ///
   /// [type] must exist in the polkadot-js/api's type registry.
   Future<dynamic> decodeBytes(String type, Uint8List bytes) {
+    print("bytes: ${bytes.toString()}");
     return apiRoot.evalJavascript('codec.decode("$type", $bytes)', allowRepeat: true);
   }
 
