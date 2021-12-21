@@ -24,7 +24,6 @@ Future<void> startMeetup(BuildContext context, AppStore store) async {
                 .home['unlock.account']
                 .replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name.toString())), (password) {
           store.account.setPin(password);
-          Navigator.of(context).pop();
         });
       },
     );
