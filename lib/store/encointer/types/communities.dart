@@ -53,7 +53,6 @@ class CustomTheme {
 }
 
 /// CommunityIdentifier consisting of a geohash and a 4-bytes crc code.
-@JsonSerializable(createFactory: false, fieldRename: FieldRename.snake)
 class CommunityIdentifier {
   CommunityIdentifier(this.geohash, this.digest);
 
