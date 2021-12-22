@@ -10,16 +10,19 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(fit: StackFit.expand, children: [
-      Padding(
-        padding: const EdgeInsets.only(top: 54),
-        child: ListView(children: [
-          HorizontalBazaarItemList(newInBazaar, "New in Bazaar", cardHeight, cardWidth),
-          HorizontalBazaarItemList(businessesInVicinity, "Businesses in my Vicinity", cardHeight, cardWidth),
-          HorizontalBazaarItemList(lastVisited, "Last visited", cardHeight, cardWidth),
-        ]),
-      ),
-      BazaarSearch(),
-    ]);
+    return Stack(
+      fit: StackFit.expand,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(top: 54),
+          child: ListView(children: [
+            HorizontalBazaarItemList(newInBazaar, "New in Bazaar", cardHeight, cardWidth),
+            HorizontalBazaarItemList(businessesInVicinity, "Businesses in my Vicinity", cardHeight, cardWidth),
+            HorizontalBazaarItemList(lastVisited, "Last visited", cardHeight, cardWidth),
+          ]),
+        ),
+        BazaarSearch(),
+      ],
+    );
   }
 }
