@@ -18,6 +18,16 @@ abstract class BazaarItemData {
   String get info;
 }
 
+/// wraps two lists one of businesses and one of offerings (i.e. List<BazaarBusinessData>, List<BazaarOfferingData>)
+/// this is a convenience class for applying the same action (like searching and filtering) on all items
+/// (both lists at once)
+class BazaarItemsWrapper {
+  final List<BazaarBusinessData> businesses;
+  final List<BazaarOfferingData> offerings;
+
+  BazaarItemsWrapper(this.businesses, this.offerings);
+}
+
 class BazaarOfferingData extends BazaarItemData {
   final double price;
   final List<DeliveryOption> availableDeliveryOptions;

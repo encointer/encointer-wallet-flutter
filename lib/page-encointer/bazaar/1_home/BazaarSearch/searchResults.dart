@@ -1,40 +1,47 @@
-import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaarItemVertical.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demoData.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaarItemData.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaarItemVertical.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaarItemData.dart';
 
 import 'searchResultsBusiness.dart';
 import 'searchResultsOffering.dart';
 
 class SearchResults extends StatelessWidget {
-  // TODO implement state management with logic that takes the first of each list of search results
-  final businessResults = searchResultsInBusinesses;
-  final offeringsResults = searchResultsInOfferings;
+  final BazaarItemsWrapper searchResults;
+
+  const SearchResults(
+    this.searchResults, {
+    Key key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    var topResults = [
+      if (searchResults.businesses.isNotEmpty) searchResults.businesses[0],
+      if (searchResults.offerings.isNotEmpty) searchResults.offerings[0],
+    ];
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ResultSummaryListTile(businessResults, "Results in Businesses"),
-        ResultSummaryListTile(offeringsResults, "Results in Offerings"),
+        ResultSummaryListTile(searchResults.businesses, "Results in Businesses"),
+        ResultSummaryListTile(searchResults.offerings, "Results in Offerings"),
         Text(
           "Top Results",
           style: TextStyle(fontWeight: FontWeight.bold, height: 2.5),
         ),
         Column(
           mainAxisSize: MainAxisSize.min,
-          children: [0, 1]
-              .map(
-                (int index) => BazaarItemVertical(
-                  data: [businessResults[0], offeringsResults[0]],
-                  index: index,
-                  cardHeight: 125,
-                ),
-              )
-              .toList(),
+          children: List.generate(
+            topResults.length,
+            (int index) {
+              return BazaarItemVertical(
+                data: topResults,
+                index: index,
+                cardHeight: 125,
+              );
+            },
+          ),
         ),
       ],
     );
@@ -42,7 +49,7 @@ class SearchResults extends StatelessWidget {
 }
 
 class ResultSummaryListTile extends StatelessWidget {
-  final results;
+  final List<BazaarItemData> results;
   final title;
 
   const ResultSummaryListTile(

@@ -10,9 +10,9 @@ import 'package:encointer_wallet/page-encointer/bazaar/1_home/BazaarSearch/bazaa
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaarItemData.dart';
 
 class TestCaseBazaarSearch {
-  final List<BazaarItemData> items;
+  final BazaarItemsWrapper items;
   final String searchQuery;
-  final List<BazaarItemData> expectedOutput;
+  final BazaarItemsWrapper expectedOutput;
   final String testDescription;
 
   TestCaseBazaarSearch(this.items, this.searchQuery, this.expectedOutput, this.testDescription);
@@ -40,11 +40,11 @@ class TestCaseBazaarSearchLowLevelWord {
 }
 
 class TestCaseBazaarFilter {
-  final List<BazaarItemData> rawSearchResults;
+  final BazaarItemsWrapper rawSearchResults;
   final List<Keyword> keywords;
   final List<DeliveryOption> availableDeliveryOptions;
   final List<UsageState> availableUsageStates;
-  final List<BazaarItemData> expectedOutput;
+  final BazaarItemsWrapper expectedOutput;
   final String testDescription;
 
   TestCaseBazaarFilter(this.rawSearchResults, this.keywords, this.availableDeliveryOptions, this.availableUsageStates,
@@ -101,6 +101,30 @@ void main() {
       "should find the word bone",
     ),
     TestCaseBazaarSearchLowLevelWord(
+      "a bone.",
+      <String>["bone"],
+      true,
+      "should find the word bone, even though it is followed by a dot",
+    ),
+    TestCaseBazaarSearchLowLevelWord(
+      "a bone, five.",
+      <String>["bone"],
+      true,
+      "should find the word bone, followed by a comma",
+    ),
+    TestCaseBazaarSearchLowLevelWord(
+      "a BONE",
+      <String>["bone"],
+      true,
+      "should find the word bone, even though it is all caps",
+    ),
+    TestCaseBazaarSearchLowLevelWord(
+      "a BONE",
+      <String>["boNE"],
+      true,
+      "should find the word bone, even though it is all caps, and the search term entered was not all lower case",
+    ),
+    TestCaseBazaarSearchLowLevelWord(
       "stick and Bone",
       <String>["bone"],
       true,
@@ -150,21 +174,27 @@ void main() {
     ),
   ];
 
-  final coopItems = <BazaarItemData>[
+  final coopOfferings = <BazaarOfferingData>[
     BazaarOfferingData("coop super card", null, null, null, null, null, null),
-    BazaarBusinessData("myCoop", null, null, null, null, null, null),
-    BazaarBusinessData("the coOp", null, null, null, null, null, null),
     BazaarOfferingData("PaccoOppulent", null, null, null, null, null, null),
   ];
+  final coopBusinesses = <BazaarBusinessData>[
+    BazaarBusinessData("myCoop", null, null, null, null, null, null),
+    BazaarBusinessData("the coOp", null, null, null, null, null, null),
+  ];
 
-  final coopItemsWord = <BazaarItemData>[
+  final coopOfferingsWord = <BazaarOfferingData>[
     BazaarOfferingData("coop super card", null, null, null, null, null, null),
+  ];
+  final coopBusinessesWord = <BazaarBusinessData>[
     BazaarBusinessData("myCoop", null, null, null, null, null, null),
   ];
 
-  final nonCoopItems = <BazaarItemData>[
+  final nonCoopBusinesses = <BazaarBusinessData>[
     BazaarBusinessData("migros", null, null, null, null, null, null),
     BazaarBusinessData("copy shop", null, null, null, null, null, null),
+  ];
+  final nonCoopOfferings = <BazaarOfferingData>[
     BazaarOfferingData("car", null, null, null, null, null, null),
     BazaarOfferingData("opaque button", null, null, null, null, null, null),
     BazaarOfferingData("co op", null, null, null, null, null, null),
@@ -172,23 +202,23 @@ void main() {
 
   final List<TestCaseBazaarSearch> testCasesIgnoringCase = [
     TestCaseBazaarSearch(
-      <BazaarItemData>[...coopItems, ...nonCoopItems],
+      BazaarItemsWrapper([...coopBusinesses, ...nonCoopBusinesses], [...coopOfferings, ...nonCoopOfferings]),
       "coop",
-      coopItems,
+      BazaarItemsWrapper(coopBusinesses, coopOfferings),
       "items containing the char sequence 'Coop' in their name (ignoring case)",
     ),
   ];
 
   final List<TestCaseBazaarSearch> testCasesWords = [
     TestCaseBazaarSearch(
-      <BazaarItemData>[...coopItems, ...nonCoopItems],
+      BazaarItemsWrapper([...coopBusinesses, ...nonCoopBusinesses], [...coopOfferings, ...nonCoopOfferings]),
       "coop",
-      coopItemsWord,
+      BazaarItemsWrapper(coopBusinessesWord, coopOfferingsWord),
       "items containing the word 'Coop' in their name",
     ),
   ];
 
-  var rawSearchResultsKeywords = <BazaarItemData>[
+  var rawSearchResultsBusinessesFilteringKeywords = <BazaarBusinessData>[
     BazaarBusinessData("b1", null, <Keyword>[Keyword.winter, Keyword.livingRoom], null, null, null, null),
     BazaarBusinessData("b2", null, <Keyword>[Keyword.summer, Keyword.livingRoom], null, null, null, null),
     BazaarBusinessData(
@@ -197,8 +227,10 @@ void main() {
     BazaarBusinessData("b5", null, <Keyword>[Keyword.food, Keyword.summer], null, null, null, null),
   ];
 
-  var rawSearchResultsDeliveryOptions = <BazaarItemData>[
+  var rawSearchResultsBusinessesFilteringDeliveryOptions = <BazaarBusinessData>[
     BazaarBusinessData("b1", null, null, null, null, null, null),
+  ];
+  var rawSearchResultsOfferingsFilteringDeliveryOptions = <BazaarOfferingData>[
     BazaarOfferingData("o1", null, null, null, null, <DeliveryOption>[], null),
     BazaarOfferingData("o2", null, null, null, null, <DeliveryOption>[DeliveryOption.mailOrder], null),
     BazaarOfferingData("o3", null, null, null, null, <DeliveryOption>[DeliveryOption.pickUp], null),
@@ -206,8 +238,10 @@ void main() {
         "o4", null, null, null, null, <DeliveryOption>[DeliveryOption.mailOrder, DeliveryOption.pickUp], null),
   ];
 
-  var rawSearchResultsUsageStates = <BazaarItemData>[
+  var rawSearchResultsBusinessesFilteringUsageStates = <BazaarBusinessData>[
     BazaarBusinessData("b1", null, null, null, null, null, null),
+  ];
+  var rawSearchResultsOfferingsFilteringUsageStates = <BazaarOfferingData>[
     BazaarOfferingData("o1", null, null, null, null, <DeliveryOption>[], <UsageState>[]),
     BazaarOfferingData("o2", null, null, null, null, <DeliveryOption>[], <UsageState>[UsageState.used]),
     BazaarOfferingData("o3", null, null, null, null, <DeliveryOption>[], <UsageState>[UsageState.brandNew]),
@@ -224,124 +258,176 @@ void main() {
 
   final List<TestCaseBazaarFilter> testCasesFilterKeywords = [
     TestCaseBazaarFilter(
-      rawSearchResultsKeywords,
+      BazaarItemsWrapper(rawSearchResultsBusinessesFilteringKeywords, []),
       <Keyword>[Keyword.summer, Keyword.food],
       <DeliveryOption>[],
       <UsageState>[],
-      rawSearchResultsKeywords.sublist(1),
+      BazaarItemsWrapper(rawSearchResultsBusinessesFilteringKeywords.sublist(1), []),
       "summer and food",
     ),
     TestCaseBazaarFilter(
-      rawSearchResultsKeywords,
+      BazaarItemsWrapper(rawSearchResultsBusinessesFilteringKeywords, []),
       null,
       <DeliveryOption>[],
       <UsageState>[],
-      rawSearchResultsKeywords,
+      BazaarItemsWrapper(rawSearchResultsBusinessesFilteringKeywords, []),
       "No keywords constraint (null) -> should pass all",
     ),
     TestCaseBazaarFilter(
-      rawSearchResultsKeywords,
+      BazaarItemsWrapper(rawSearchResultsBusinessesFilteringKeywords, []),
       <Keyword>[],
       <DeliveryOption>[],
       <UsageState>[],
-      rawSearchResultsKeywords,
+      BazaarItemsWrapper(rawSearchResultsBusinessesFilteringKeywords, []),
       "No keywords constraint (empty list) -> should pass all",
     ),
   ];
 
   final List<TestCaseBazaarFilter> testCasesFilterDeliveryOptions = [
     TestCaseBazaarFilter(
-      rawSearchResultsDeliveryOptions,
+      BazaarItemsWrapper(
+        rawSearchResultsBusinessesFilteringDeliveryOptions,
+        rawSearchResultsOfferingsFilteringDeliveryOptions,
+      ),
       null,
       null,
       <UsageState>[],
-      rawSearchResultsDeliveryOptions,
+      BazaarItemsWrapper(
+        rawSearchResultsBusinessesFilteringDeliveryOptions,
+        rawSearchResultsOfferingsFilteringDeliveryOptions,
+      ),
       "no delivery option constraint (null) -> should pass all",
     ),
     TestCaseBazaarFilter(
-      rawSearchResultsDeliveryOptions,
+      BazaarItemsWrapper(
+        rawSearchResultsBusinessesFilteringDeliveryOptions,
+        rawSearchResultsOfferingsFilteringDeliveryOptions,
+      ),
       null,
       <DeliveryOption>[],
       <UsageState>[],
-      rawSearchResultsDeliveryOptions,
+      BazaarItemsWrapper(
+        rawSearchResultsBusinessesFilteringDeliveryOptions,
+        rawSearchResultsOfferingsFilteringDeliveryOptions,
+      ),
       "no delivery option constraint (empty list) -> should pass all",
     ),
     TestCaseBazaarFilter(
-      rawSearchResultsDeliveryOptions,
+      BazaarItemsWrapper(
+        rawSearchResultsBusinessesFilteringDeliveryOptions,
+        rawSearchResultsOfferingsFilteringDeliveryOptions,
+      ),
       null,
       <DeliveryOption>[DeliveryOption.mailOrder],
       <UsageState>[],
-      [
-        ...rawSearchResultsDeliveryOptions.sublist(0, 1),
-        ...rawSearchResultsDeliveryOptions.sublist(2, 3),
-        ...rawSearchResultsDeliveryOptions.sublist(4)
-      ],
+      BazaarItemsWrapper(
+        [rawSearchResultsBusinessesFilteringDeliveryOptions[0]],
+        [
+          rawSearchResultsOfferingsFilteringDeliveryOptions[1],
+          ...rawSearchResultsOfferingsFilteringDeliveryOptions.sublist(3),
+        ],
+      ),
       "mailOrder",
     ),
     TestCaseBazaarFilter(
-      rawSearchResultsDeliveryOptions,
+      BazaarItemsWrapper(
+        rawSearchResultsBusinessesFilteringDeliveryOptions,
+        rawSearchResultsOfferingsFilteringDeliveryOptions,
+      ),
       null,
       <DeliveryOption>[DeliveryOption.pickUp],
       <UsageState>[],
-      [
-        ...rawSearchResultsDeliveryOptions.sublist(0, 1),
-        ...rawSearchResultsDeliveryOptions.sublist(3),
-      ],
+      BazaarItemsWrapper(
+        [rawSearchResultsBusinessesFilteringDeliveryOptions[0]],
+        rawSearchResultsOfferingsFilteringDeliveryOptions.sublist(2),
+      ),
       "pickUp",
     ),
     TestCaseBazaarFilter(
-      rawSearchResultsDeliveryOptions,
+      BazaarItemsWrapper(
+        rawSearchResultsBusinessesFilteringDeliveryOptions,
+        rawSearchResultsOfferingsFilteringDeliveryOptions,
+      ),
       null,
       <DeliveryOption>[DeliveryOption.mailOrder, DeliveryOption.pickUp],
       <UsageState>[],
-      [...rawSearchResultsDeliveryOptions.sublist(0, 1), ...rawSearchResultsDeliveryOptions.sublist(2)],
+      BazaarItemsWrapper(
+        [rawSearchResultsBusinessesFilteringDeliveryOptions[0]],
+        rawSearchResultsOfferingsFilteringDeliveryOptions.sublist(1),
+      ),
       "mailOrder and pickUp",
     ),
   ];
 
   final List<TestCaseBazaarFilter> testCasesFilterUsageStates = [
     TestCaseBazaarFilter(
-      rawSearchResultsUsageStates,
+      BazaarItemsWrapper(
+        rawSearchResultsBusinessesFilteringUsageStates,
+        rawSearchResultsOfferingsFilteringUsageStates,
+      ),
       null,
       null,
       null,
-      rawSearchResultsUsageStates,
+      BazaarItemsWrapper(
+        rawSearchResultsBusinessesFilteringUsageStates,
+        rawSearchResultsOfferingsFilteringUsageStates,
+      ),
       "no usage states constraint (null) -> should pass all",
     ),
     TestCaseBazaarFilter(
-      rawSearchResultsUsageStates,
+      BazaarItemsWrapper(
+        rawSearchResultsBusinessesFilteringUsageStates,
+        rawSearchResultsOfferingsFilteringUsageStates,
+      ),
       null,
       null,
       <UsageState>[],
-      rawSearchResultsUsageStates,
+      BazaarItemsWrapper(
+        rawSearchResultsBusinessesFilteringUsageStates,
+        rawSearchResultsOfferingsFilteringUsageStates,
+      ),
       "no usage states constraint (empty list) -> should pass all",
     ),
     TestCaseBazaarFilter(
-      rawSearchResultsUsageStates,
+      BazaarItemsWrapper(
+        rawSearchResultsBusinessesFilteringUsageStates,
+        rawSearchResultsOfferingsFilteringUsageStates,
+      ),
       null,
       <DeliveryOption>[],
       <UsageState>[UsageState.used],
-      [
-        ...rawSearchResultsUsageStates.sublist(0, 1),
-        ...rawSearchResultsUsageStates.sublist(2, 3),
-        ...rawSearchResultsUsageStates.sublist(4)
-      ],
+      BazaarItemsWrapper(
+        [rawSearchResultsBusinessesFilteringUsageStates[0]],
+        [rawSearchResultsOfferingsFilteringUsageStates[1], ...rawSearchResultsOfferingsFilteringUsageStates.sublist(3)],
+      ),
       "used",
     ),
     TestCaseBazaarFilter(
-      rawSearchResultsUsageStates,
+      BazaarItemsWrapper(
+        rawSearchResultsBusinessesFilteringUsageStates,
+        rawSearchResultsOfferingsFilteringUsageStates,
+      ),
       null,
       <DeliveryOption>[],
       <UsageState>[UsageState.brandNew],
-      [...rawSearchResultsUsageStates.sublist(0, 1), ...rawSearchResultsUsageStates.sublist(3)],
+      BazaarItemsWrapper(
+        [rawSearchResultsBusinessesFilteringUsageStates[0]],
+        rawSearchResultsOfferingsFilteringUsageStates.sublist(2),
+      ),
       "brandNew",
     ),
     TestCaseBazaarFilter(
-      rawSearchResultsUsageStates,
+      BazaarItemsWrapper(
+        rawSearchResultsBusinessesFilteringUsageStates,
+        rawSearchResultsOfferingsFilteringUsageStates,
+      ),
       null,
       <DeliveryOption>[],
       <UsageState>[UsageState.used, UsageState.brandNew],
-      [...rawSearchResultsUsageStates.sublist(0, 1), ...rawSearchResultsUsageStates.sublist(2)],
+      BazaarItemsWrapper(
+        [rawSearchResultsBusinessesFilteringUsageStates[0]],
+        rawSearchResultsOfferingsFilteringUsageStates.sublist(1),
+      ),
       "used or brandNew",
     ),
   ];
@@ -370,9 +456,11 @@ void main() {
     test('Should correctly find (ignoring case): ${testCase.testDescription}', () {
       final bazaarSearchAndFilter = BazaarSearchAndFilter(testCase.items);
 
-      var actualSearchResults = bazaarSearchAndFilter.findItemsContainingIgnoringCase(testCase.searchQuery, false);
+      var actualSearchResults =
+          bazaarSearchAndFilter.findItemsContainingIgnoringCase(testCase.searchQuery, SearchDomain.nameOnly);
 
-      expect(actualSearchResults.length, testCase.expectedOutput.length);
+      expect(actualSearchResults.businesses.length, testCase.expectedOutput.businesses.length);
+      expect(actualSearchResults.offerings.length, testCase.expectedOutput.offerings.length);
       compareItems(actualSearchResults, testCase.expectedOutput);
     });
   });
@@ -381,22 +469,29 @@ void main() {
     test('Should correctly find (words): ${testCase.testDescription}', () {
       final bazaarSearchAndFilter = BazaarSearchAndFilter(testCase.items);
 
-      var actualSearchResults = bazaarSearchAndFilter.findItemsContainingWords(testCase.searchQuery, false);
+      var actualSearchResults =
+          bazaarSearchAndFilter.findItemsContainingWords(testCase.searchQuery, SearchDomain.nameOnly);
 
-      expect(actualSearchResults.length, testCase.expectedOutput.length);
+      expect(actualSearchResults.businesses.length, testCase.expectedOutput.businesses.length);
+      expect(actualSearchResults.offerings.length, testCase.expectedOutput.offerings.length);
       compareItems(actualSearchResults, testCase.expectedOutput);
     });
   });
 
   test('search in title, vs. in both title and description', () {
-    final bazaarSearchAndFilter = BazaarSearchAndFilter(<BazaarItemData>[
-      BazaarOfferingData("loop", "green loop", null, null, null, null, null),
-    ]);
-    var actualInTitle = bazaarSearchAndFilter.findItemsContainingWords("green", false);
-    expect(actualInTitle.length, 0);
+    final bazaarSearchAndFilter = BazaarSearchAndFilter(
+      BazaarItemsWrapper([], <BazaarOfferingData>[
+        BazaarOfferingData("loop", "green loop", null, null, null, null, null),
+      ]),
+    );
+    var actualInTitle = bazaarSearchAndFilter.findItemsContainingWords("green", SearchDomain.nameOnly);
+    expect(actualInTitle.businesses.length, 0);
+    expect(actualInTitle.offerings.length, 0);
 
-    var actualInTitleAndDescription = bazaarSearchAndFilter.findItemsContainingWords("green", true);
-    expect(actualInTitleAndDescription.length, 1);
+    var actualInTitleAndDescription =
+        bazaarSearchAndFilter.findItemsContainingWords("green", SearchDomain.nameAndDescription);
+    expect(actualInTitleAndDescription.businesses.length, 0);
+    expect(actualInTitleAndDescription.offerings.length, 1);
   });
 
   testCasesFilterKeywords.forEach((testCase) {
@@ -410,7 +505,8 @@ void main() {
         testCase.availableUsageStates,
       );
 
-      expect(actualFilteredSearchResults.length, testCase.expectedOutput.length);
+      expect(actualFilteredSearchResults.businesses.length, testCase.expectedOutput.businesses.length);
+      expect(actualFilteredSearchResults.offerings.length, testCase.expectedOutput.offerings.length);
       compareItems(actualFilteredSearchResults, testCase.expectedOutput);
     });
   });
@@ -426,7 +522,8 @@ void main() {
         testCase.availableUsageStates,
       );
 
-      expect(actualFilteredSearchResults.length, testCase.expectedOutput.length);
+      expect(actualFilteredSearchResults.businesses.length, testCase.expectedOutput.businesses.length);
+      expect(actualFilteredSearchResults.offerings.length, testCase.expectedOutput.offerings.length);
       compareItems(actualFilteredSearchResults, testCase.expectedOutput);
     });
   });
@@ -442,19 +539,26 @@ void main() {
         testCase.availableUsageStates,
       );
 
-      expect(actualFilteredSearchResults.length, testCase.expectedOutput.length);
+      expect(actualFilteredSearchResults.businesses.length, testCase.expectedOutput.businesses.length);
+      expect(actualFilteredSearchResults.offerings.length, testCase.expectedOutput.offerings.length);
       compareItems(actualFilteredSearchResults, testCase.expectedOutput);
     });
   });
 }
 
-void compareItems(List<BazaarItemData> actualSearchResults, List<BazaarItemData> expectedOutput) {
+void compareItems(BazaarItemsWrapper actualSearchResults, BazaarItemsWrapper expectedOutput) {
   // compare ignoring order, only need it sorted here for comparison.
   final sortRule = (a, b) => "${a.title} +++ ${a.description}".compareTo("${b.title} +++ ${b.description}");
-  actualSearchResults.sort(sortRule);
-  expectedOutput.sort(sortRule);
-  for (int i = 0; i < expectedOutput.length; i++) {
-    expect(actualSearchResults[i].title, expectedOutput[i].title);
-    expect(actualSearchResults[i].description, expectedOutput[i].description);
+  actualSearchResults.businesses.sort(sortRule);
+  expectedOutput.businesses.sort(sortRule);
+  for (int i = 0; i < expectedOutput.businesses.length; i++) {
+    expect(actualSearchResults.businesses[i].title, expectedOutput.businesses[i].title);
+    expect(actualSearchResults.businesses[i].description, expectedOutput.businesses[i].description);
+  }
+  actualSearchResults.offerings.sort(sortRule);
+  expectedOutput.offerings.sort(sortRule);
+  for (int i = 0; i < expectedOutput.offerings.length; i++) {
+    expect(actualSearchResults.offerings[i].title, expectedOutput.offerings[i].title);
+    expect(actualSearchResults.offerings[i].description, expectedOutput.offerings[i].description);
   }
 }

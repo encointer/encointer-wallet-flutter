@@ -2,20 +2,36 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/b
 
 class BazaarSearchAndFilter {
   // TODO use this class in BazaarSearch widget
-  final allBazaarItems;
+  final BazaarItemsWrapper allBazaarItems;
 
   BazaarSearchAndFilter(this.allBazaarItems);
 
-  /// search character sequences in item title and optionally also in description
-  List<BazaarItemData> findItemsContainingIgnoringCase(String query, bool searchInDescriptionToo) {
-    final List<String> searchTermsLowerCase = query.trim().toLowerCase().split(RegExp(r"\W"));
-    return allBazaarItems.where((item) {
-      var input = searchInDescriptionToo ? '${item.title} ${item.description}' : item.title;
-      return stringContainsIgnoreCase(input, searchTermsLowerCase);
-    }).toList();
+  ///
+  BazaarItemsWrapper findItems(String query, SearchMode searchMode) {
+    if (searchMode.matcher == Matcher.searchWords) {
+      return findItemsContainingWords(query, searchMode.searchDomain);
+    }
+    if (searchMode.matcher == Matcher.searchCharacterSequenceIgnoringCase) {
+      return findItemsContainingIgnoringCase(query, searchMode.searchDomain);
+    }
+    throw Exception("Matcher for this SearchMode not yet implemented: (${searchMode.matcher})");
   }
 
-  bool stringContainsIgnoreCase(input, List<String> searchTermsLowerCase) {
+  /// search character sequences in item title and optionally also in description
+  BazaarItemsWrapper findItemsContainingIgnoringCase(String query, SearchDomain searchDomain) {
+    final List<String> searchTermsLowerCase = query.trim().toLowerCase().split(RegExp(r"\W"));
+    List<BazaarBusinessData> businessesResults = allBazaarItems.businesses.where((item) {
+      var input = (searchDomain == SearchDomain.nameAndDescription ? '${item.title} ${item.description}' : item.title);
+      return stringContainsIgnoreCase(input, searchTermsLowerCase);
+    }).toList();
+    List<BazaarOfferingData> offeringsResults = allBazaarItems.offerings.where((item) {
+      var input = (searchDomain == SearchDomain.nameAndDescription ? '${item.title} ${item.description}' : item.title);
+      return stringContainsIgnoreCase(input, searchTermsLowerCase);
+    }).toList();
+    return BazaarItemsWrapper(businessesResults, offeringsResults);
+  }
+
+  bool stringContainsIgnoreCase(String input, List<String> searchTermsLowerCase) {
     var lowerCase = input.toLowerCase();
     for (var term in searchTermsLowerCase) {
       if (lowerCase.contains(term)) return true;
@@ -25,21 +41,26 @@ class BazaarSearchAndFilter {
 
   /// search words (enclosed by word bounds cf regex, or in camel/pascal case) in the title and optionally also in the
   /// description
-  List<BazaarItemData> findItemsContainingWords(String query, bool searchInDescriptionToo) {
+  BazaarItemsWrapper findItemsContainingWords(String query, SearchDomain searchDomain) {
     final List<String> searchTerms = query.trim().toLowerCase().split(RegExp(r"\W"));
-    return allBazaarItems.where((item) {
-      var input = searchInDescriptionToo ? '${item.title} ${item.description}' : item.title;
+    List<BazaarBusinessData> businessesResults = allBazaarItems.businesses.where((item) {
+      var input = (searchDomain == SearchDomain.nameAndDescription ? '${item.title} ${item.description}' : item.title);
       return stringContainsWords(input, searchTerms);
     }).toList();
+    List<BazaarOfferingData> offeringsResults = allBazaarItems.offerings.where((item) {
+      var input = (searchDomain == SearchDomain.nameAndDescription ? '${item.title} ${item.description}' : item.title);
+      return stringContainsWords(input, searchTerms);
+    }).toList();
+    return BazaarItemsWrapper(businessesResults, offeringsResults);
   }
 
   /// returns true if input contains any of the search terms as a word (word bounds or camel/pascal cased)
-  bool stringContainsWords(input, List<String> searchTerms) {
-    var lowerCase = input.replaceAllMapped(RegExp(r"\B([A-Z])"), (match) {
+  bool stringContainsWords(String input, List<String> searchTerms) {
+    var splitCamelCaseAndPascalCaseButKeepAllCapsWords = input.replaceAllMapped(RegExp(r"\B([A-Z][a-z])"), (match) {
       return ' ${match.group(0)}';
     }).toLowerCase();
     for (var term in searchTerms) {
-      if (lowerCase.contains(RegExp("\\b$term\\b"))) return true;
+      if (splitCamelCaseAndPascalCaseButKeepAllCapsWords.contains(RegExp("\\b${term.toLowerCase()}\\b"))) return true;
     }
     return false;
   }
@@ -48,18 +69,25 @@ class BazaarSearchAndFilter {
   /// keywords: has to contain at least one of the keywords, if keywords is null or an empty list -> no constraint
   /// deliveryOptions: has to contain at least one of the delivery option(s), if deliveryOption is null -> no constraint
   /// usageState: has to contain at least one of the required usage state, if usageState is null -> no constraint
-  List<BazaarItemData> filterSearchResults(
-    List<BazaarItemData> searchResults,
+  BazaarItemsWrapper filterSearchResults(
+    BazaarItemsWrapper searchResults,
     List<Keyword> keywords,
     List<DeliveryOption> deliveryOptions,
     List<UsageState> usageStates,
   ) {
-    return searchResults.where((item) {
+    List<BazaarBusinessData> businessesFiltered = searchResults.businesses.where((item) {
       var keywordsConstraintSatisfied = checkKeywordConstraint(keywords, item);
       var deliveryOptionsConstraintSatisfied = checkDeliveryOptionsConstraint(deliveryOptions, item);
       var usageStatesConstraintSatisfied = checkUsageStatesConstraint(usageStates, item);
       return keywordsConstraintSatisfied && deliveryOptionsConstraintSatisfied && usageStatesConstraintSatisfied;
     }).toList();
+    List<BazaarOfferingData> offeringsFiltered = searchResults.offerings.where((item) {
+      var keywordsConstraintSatisfied = checkKeywordConstraint(keywords, item);
+      var deliveryOptionsConstraintSatisfied = checkDeliveryOptionsConstraint(deliveryOptions, item);
+      var usageStatesConstraintSatisfied = checkUsageStatesConstraint(usageStates, item);
+      return keywordsConstraintSatisfied && deliveryOptionsConstraintSatisfied && usageStatesConstraintSatisfied;
+    }).toList();
+    return BazaarItemsWrapper(businessesFiltered, offeringsFiltered);
   }
 
   /// checks if the item contains any of the requested keywords
@@ -101,4 +129,21 @@ class BazaarSearchAndFilter {
     }
     return false;
   }
+}
+
+class SearchMode {
+  final SearchDomain searchDomain;
+  final Matcher matcher;
+
+  SearchMode(this.searchDomain, this.matcher);
+}
+
+enum SearchDomain {
+  nameOnly,
+  nameAndDescription,
+}
+
+enum Matcher {
+  searchWords,
+  searchCharacterSequenceIgnoringCase,
 }

@@ -302,6 +302,8 @@ final List<BazaarItemData> searchResultsInOfferings = [
   allOfferings[5],
 ];
 
+final BazaarItemsWrapper allBazaarItems = BazaarItemsWrapper(allBusinesses, allOfferings);
+
 final allCategories = ["All", "Food", "Furniture", "Electronics", "Tools", "Cloths", "Other", "Blablabla"];
 
 final allDeliveryOptions = ["Delivery", "Pickup"];
