@@ -370,6 +370,8 @@ class _AssetsState extends State<Assets> {
           }
           final BalancesInfo balancesInfo = store.assets.balances[symbol];
           if (ModalRoute.of(context).isCurrent && !_enteredPin & store.account.cachedPin.isEmpty) {
+            // The pin is not immeditally propagated to the store, hence we track if the pin has been entered to prevent
+            // showing the dialog multiple times.
             WidgetsBinding.instance.addPostFrameCallback(
               (_) {
                 _showPasswordDialog(context);
