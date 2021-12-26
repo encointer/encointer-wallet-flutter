@@ -95,7 +95,7 @@ class Ipfs {
     //And when changing community/Network, setting iconReady false
   }
 
-  Future<Image> getCommunityIcon (String cid, double devicePixelRatio) async{
+  Future<Image> getCommunityIcon(String cid, double devicePixelRatio) async {
     // store.encointer.setIconReady(false);
     String communityIconUrl = getCommunityIconsUrl(cid);
     await _downloadZip(communityIconUrl, cid);

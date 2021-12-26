@@ -496,8 +496,7 @@ class _AssetsState extends State<Assets> {
                                 }
 
                                 return Container();
-                              }
-                              )
+                              })
                           // store.encointer.iconReady ? webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio) : CupertinoActivityIndicator(),
                           ),
                       title: Text(store.encointer.communityName + " (${store.encointer.communitySymbol})"),
