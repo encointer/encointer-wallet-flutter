@@ -21,11 +21,7 @@ class _Settings extends State<SettingsPage> {
   final SettingsStore store;
   final Function changeLang;
 
-  final _langOptions = [
-    null,
-    'en',
-    'de'
-  ];
+  final _langOptions = [null, 'en', 'de'];
 
   int _selected = 0;
 
