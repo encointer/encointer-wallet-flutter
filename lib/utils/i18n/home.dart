@@ -128,13 +128,13 @@ const Map<String, String> deHome = {
   'update.start': 'Verbinde...',
   'update.download': 'Runterladen...',
   'update.install': 'Installiere...',
-  'update.error': 'Update Failed',
+  'update.error': 'Update fehlgeschlagen',
   'update.js.up': 'Metadata muss aktualisiert werden um fortzuschreiten.',
   'exit.confirm': 'Möchtest du die App verlassen?',
-  'input.invalid': 'Ungültiger Input',
+  'input.invalid': 'Ungültige Eingabe',
   'loading': 'Lädt...',
   'success': 'Erfolgreich',
-  'announce': 'Annonce',
+  'announce': 'Mitteilung',
 };
 
 const Map<String, String> zhHome = {

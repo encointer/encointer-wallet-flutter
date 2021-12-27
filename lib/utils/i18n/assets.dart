@@ -66,7 +66,7 @@ const Map<String, String> deAssets = {
   'node.failed': 'Verbindung zur remote node fehlgeschlagen',
   'transfer': 'Transfer',
   'receive': 'Erhalte',
-  'copy': 'Koppiere',
+  'copy': 'Kopiere',
   'address': 'Sende zu Adresse',
   'address.error': 'Ungültige Adresse',
   'amount': 'Betrag',
@@ -115,7 +115,7 @@ const Map<String, String> deAssets = {
   'claim.eth': 'ETH Adresse',
   'claim.eth.sign': 'Logge dich mit deiner ETH Adresse ein',
   'claim.eth.copy':
-      'Klicke und koppiere den folgenden String und signiere ihn mit dem Ethereum Konto, welches verwendet wurde, während dem Vorverkauf im Wallet deiner Wahl. Benutze den String als Payload und dann füge das Objekt der Transaktionssignatur darunter hinzu',
+      'Klicke und kopiere den folgenden String und signiere ihn mit dem Ethereum Konto, welches verwendet wurde, während dem Vorverkauf im Wallet deiner Wahl. Benutze den String als Payload und dann füge das Objekt der Transaktionssignatur darunter hinzu',
   'claim.amount': 'Hat einen gültigen Anspruch',
   'claim.empty': 'Scheint keinen gültigen Anspruch zu haben.',
   'claim.empty2': 'Bitte überprüfe, dass die Transaktion korrekt auf dem richtigen ETH Konto signiert wurde.',

@@ -69,7 +69,7 @@ const Map<String, String> deAccount = {
   'create.warn1': 'Backup prom',
   'create.warn2': 'Der Besitz der Mnemonic ermöglicht den Zugriff auf das Vermögen des Wallets',
   'create.warn3': 'Backup Mnemonic',
-  'create.warn4': 'Benutze Stift und Papier um die Mnemonics korrekt zu koppieren',
+  'create.warn4': 'Benutze Stift und Papier um die Mnemonics korrekt zu kopieren',
   'create.warn5':
       'Bei Verlust, Diebstahl oder Beschädigung deines Mobilgerätes wird die Mnemonic benötigt um dein Vermögen wiederherzustellen',
   'create.warn6': 'Offline Speicher',
@@ -77,8 +77,8 @@ const Map<String, String> deAccount = {
   'create.warn8': 'Speichere deine Mnemonics nicht in einer Netzwerkumgebung wie Email, Photo Album etc.',
   'create.warn9': 'Mach keine Screenshots',
   'create.warn10':
-      'Mach keine Screenshots, welche von einer dritt-Partei gesammelt werden kann. Dies kann zum Verlust deines Vermögens führen',
-  'create.error': 'Es trat ein Fehler auf beim erstellen deines Kontos',
+      'Mach keine Screenshots, welche von einer Drittpartei gesammelt werden können. Dies kann zum Verlust deines Vermögens führen',
+  'create.error': 'Es trat ein Fehler auf beim Erstellen deines Kontos',
   'backup': 'Bestätige die Mnemonic',
   'backup.confirm': 'Bitte klicke auf die Mnemonic in der korrekten Reihenfolge um den Backup zu bestätigen',
   'backup.reset': 'Wiederherstellen',
@@ -92,9 +92,9 @@ const Map<String, String> deAccount = {
   'path': 'Geheimer Derivationspfad',
   'observe': 'Observation',
   'observe.brief':
-      '\nMarkiere diese Adresse als Observation,\ndann kann diese Adresse in der Kontoauswahlseite ausgewählt werden\n um dessen Vermögen und Aktionen zu beobachten\n',
+      '\nMarkiere diese Adresse als Observation,\ndann kann diese Adresse in der Kontoauswahlseite ausgewählt werden,\n um dessen Vermögen und Aktionen zu beobachten.\n',
   'observe.tx': 'Nur für Observation',
-  'observe.proxy': 'melde dich mit einem Proxy Konto an',
+  'observe.proxy': 'Melde dich mit einem Proxy Konto an',
   'observe.proxy.brief': '\nEin wiederherstellbares Konto kann\nTransaktionen durch einen Proxy Konto senden\n',
   'observe.proxy.invalid': 'Ungültiges Proxy Konto',
   'observe.invalid': 'Ungültig',
