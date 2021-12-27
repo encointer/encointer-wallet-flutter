@@ -1,8 +1,8 @@
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/businessFormState.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/menu/camera/imagePickerScaffold.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demoData.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/photoTiles.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/toggleButtonsWithTitle.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demoData.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -50,7 +50,7 @@ class BusinessForm extends StatelessWidget {
                 onChanged: (value) => businessFormState.name = value,
                 decoration: InputDecoration(
                   labelText: 'Name',
-                  hintText: I18n.of(context).bazaar['use.descriptive.name'],
+                  hintText: I18n.of(context).bazaar['business.name.hint'],
                   errorText: businessFormState.errors.name,
                 ),
               ),
@@ -63,7 +63,7 @@ class BusinessForm extends StatelessWidget {
                 onChanged: (value) => businessFormState.description = value,
                 decoration: InputDecoration(
                     labelText: I18n.of(context).bazaar['description'],
-                    hintText: I18n.of(context).bazaar['spark.interest'],
+                    hintText: I18n.of(context).bazaar['business.spark.interest.hint'],
                     errorText: businessFormState.errors.description),
               ),
             ),

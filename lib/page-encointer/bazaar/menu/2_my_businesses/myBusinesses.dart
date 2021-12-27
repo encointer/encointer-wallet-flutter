@@ -12,7 +12,7 @@ class MyBusinesses extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context).bazaar['my.businesses']),
+        title: Text(I18n.of(context).bazaar['businesses.my']),
       ),
       body: Column(children: [
         Expanded(

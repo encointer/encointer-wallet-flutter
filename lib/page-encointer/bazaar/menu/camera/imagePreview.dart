@@ -24,7 +24,7 @@ class ImagePreview extends StatelessWidget {
             ),
           if (imagePickerState.images.isEmpty)
             Text(
-              I18n.of(context).bazaar['not.picked.image'],
+              I18n.of(context).bazaar['image.not.picked'],
               textAlign: TextAlign.center,
             ),
           Text("${imagePickerState.images.length} ${I18n.of(context).bazaar['images.added']}"),

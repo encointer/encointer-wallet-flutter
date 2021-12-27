@@ -12,7 +12,7 @@ class MyOfferings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context).bazaar['my.offerings']),
+        title: Text(I18n.of(context).bazaar['offerings.my']),
       ),
       body: Column(children: [
         ToggleButtonsWithTitle(I18n.of(context).bazaar['categories'], allCategories, null), // TODO state management

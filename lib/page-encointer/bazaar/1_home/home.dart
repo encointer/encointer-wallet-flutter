@@ -16,7 +16,7 @@ class Home extends StatelessWidget {
       Padding(
         padding: const EdgeInsets.only(top: 54),
         child: ListView(children: [
-          HorizontalBazaarItemList(newInBazaar, dic['new.in.bazaar'], cardHeight, cardWidth),
+          HorizontalBazaarItemList(newInBazaar, dic['bazaar.new'], cardHeight, cardWidth),
           HorizontalBazaarItemList(businessesInVicinity, dic['businesses.vicinity'], cardHeight, cardWidth),
           HorizontalBazaarItemList(lastVisited, dic['last.visited'], cardHeight, cardWidth),
         ]),

@@ -25,7 +25,7 @@ class BazaarMenu extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text(dic['my.offerings']),
+            title: Text(dic['offerings.my']),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
@@ -37,7 +37,7 @@ class BazaarMenu extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text(dic['my.businesses']),
+            title: Text(dic['businesses.my']),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(

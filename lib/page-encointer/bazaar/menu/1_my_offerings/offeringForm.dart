@@ -44,7 +44,7 @@ class _OfferingFormState extends State<OfferingForm> {
                       color: Colors.grey,
                       child: ListTile(
                         leading: Icon(Icons.add_a_photo),
-                        title: Text(dic['add.photo']),
+                        title: Text(dic['photo.add']),
                       )),
                 ],
               ),
@@ -64,7 +64,7 @@ class _OfferingFormState extends State<OfferingForm> {
               ToggleButtonsWithTitle(dic['categories'], categories, null),
               // TODO state mananagement
               ToggleButtonsWithTitle(
-                  dic['offered.in.businesses'], businesses.map((business) => business.title).toList(), null),
+                  dic['businesses.offered'], businesses.map((business) => business.title).toList(), null),
               // TODO state mananagement, TODO has to be an business.id not just the title
               ToggleButtonsWithTitle(dic['state'], productNewness, null),
               // TODO state mananagement, TODO has to be an business.id not just the title

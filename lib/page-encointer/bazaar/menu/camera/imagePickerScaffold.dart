@@ -20,7 +20,7 @@ class ImagePickerScaffold extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context).bazaar['add.remove.images']),
+        title: Text(I18n.of(context).bazaar['images.add.remove']),
       ),
       body: Center(
         child: !kIsWeb && defaultTargetPlatform == TargetPlatform.android
@@ -44,7 +44,7 @@ class ImagePickerScaffold extends StatelessWidget {
                         );
                       } else {
                         return Text(
-                          I18n.of(context).bazaar['not.picked.image'],
+                          I18n.of(context).bazaar['image.not.picked'],
                           textAlign: TextAlign.center,
                         );
                       }
@@ -67,7 +67,7 @@ class ImagePickerScaffold extends StatelessWidget {
                 );
               },
               heroTag: 'image1',
-              tooltip: I18n.of(context).bazaar['pick.multiple.images'],
+              tooltip: I18n.of(context).bazaar['images.multiple.pick'],
               child: const Icon(Icons.photo_library),
             ),
           ),
@@ -78,7 +78,7 @@ class ImagePickerScaffold extends StatelessWidget {
                 _onImageButtonPressed(imagePickerState, ImageSource.camera, context: context);
               },
               heroTag: 'image2',
-              tooltip: I18n.of(context).bazaar['take.photo'],
+              tooltip: I18n.of(context).bazaar['photo.take'],
               child: const Icon(Icons.camera_alt),
             ),
           ),
