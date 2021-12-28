@@ -38,7 +38,7 @@ const Map<String, String> deBazaar = {
   'business.name': 'Geschäftsname',
   'business.url': 'URL zum Geschäft',
   'no.items': 'Keine Items Gefunden',
-  'business.description': 'Geschäftsbeschrieb',
+  'business.description': 'Geschäftsbeschreibung',
   'image.choose': 'Wähle ein Bild',
   'camera.default': 'Kamera',
   'gallery.default': 'Galerie',

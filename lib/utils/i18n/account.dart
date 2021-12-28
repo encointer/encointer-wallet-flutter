@@ -93,9 +93,9 @@ const Map<String, String> deAccount = {
   'observe.brief':
       '\nMarkiere diese Adresse als Observation,\ndann kann diese Adresse in der Kontoauswahlseite ausgewählt werden,\n um dessen Vermögen und Aktionen zu beobachten.\n',
   'observe.invalid': 'Ungültig',
-  'observe.proxy': 'Melde dich mit einem Proxy Konto an',
-  'observe.proxy.brief': '\nEin wiederherstellbares Konto kann\nTransaktionen durch einen Proxy Konto senden\n',
-  'observe.proxy.invalid': 'Ungültiges Proxy Konto',
+  'observe.proxy': 'Melde dich mit einem Proxy-Konto an',
+  'observe.proxy.brief': '\nEin wiederherstellbares Konto kann\nTransaktionen durch einen Proxy-Konto senden\n',
+  'observe.proxy.invalid': 'Ungültiges Proxy-Konto',
   'observe.tx': 'Nur für Observation',
   'path': 'Geheimer Derivationspfad',
   'rawSeed': 'Raw Seed',
