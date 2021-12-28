@@ -26,7 +26,7 @@ const Map<String, String> enAccount = {
   'create.warn8':
       'Do not share and store mnemonics in a networked environment, such as emails, photo albums, social applications',
   'create.warn9': 'Do not take screenshots',
-  'import.duplicate': 'account exist, do you want to override the existing account?',
+  'import.duplicate': 'Account exists, do you want to override the existing account?',
   'import.encrypt': 'Encrypt Type',
   'import.invalid': 'Invalid',
   'import.type': 'Source Type',
@@ -58,7 +58,7 @@ const Map<String, String> deAccount = {
   'backup': 'Bestätige die Mnemonic',
   'backup.confirm': 'Bitte klicke auf die Mnemonic in der korrekten Reihenfolge um den Backup zu bestätigen',
   'backup.error':
-      'Dieses Gerät unterstützt den key typ sr25519 nicht, wähle [Erweiterte Optionen -> Verschlüsselungstyp -> ed225519] für den nächsten Schritt.',
+      'Dieses Gerät unterstützt den key Typ sr25519 nicht, wähle [Erweiterte Optionen -> Verschlüsselungstyp -> ed225519] für den nächsten Schritt.',
   'backup.reset': 'Wiederherstellen',
   'create': 'Konto registrieren',
   'create.default': 'Mein Konto',
@@ -87,7 +87,7 @@ const Map<String, String> deAccount = {
   'import.invalid': 'Ungültig',
   'import.type': 'Ursprungstyp',
   'keystore': 'Keystore (json)',
-  'list': 'Konto Auswahl',
+  'list': 'Kontoauswahl',
   'mnemonic': 'Mnemonic',
   'observe': 'Observation',
   'observe.brief':
