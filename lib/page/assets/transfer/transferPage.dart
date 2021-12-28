@@ -54,131 +54,6 @@ class _TransferPageState extends State<TransferPage> {
   bool _isEncointerCommunityCurrency;
   String _communitySymbol;
 
-  Future<void> _onScan() async {
-    final to = await Navigator.of(context).pushNamed(ScanPage.route);
-    if (to == null) return;
-    AccountData acc = AccountData();
-    acc.address = (to as QRCodeAddressResult).address;
-    acc.name = (to as QRCodeAddressResult).name;
-    setState(() {
-      _accountTo = acc;
-    });
-  }
-
-  Future<void> _selectCommunity() async {
-    List<String> symbolOptions = List<String>.from(store.settings.networkConst['currencyIds']);
-
-    var currency = await Navigator.of(context).pushNamed(CommunitySelectPage.route, arguments: symbolOptions);
-
-    if (currency != null) {
-      setState(() {
-        _tokenSymbol = currency;
-      });
-    }
-  }
-
-  void _handleSubmit() {
-    if (_formKey.currentState.validate()) {
-      String symbol = _tokenSymbol ?? store.settings.networkState.tokenSymbol;
-      int decimals = store.settings.networkState.tokenDecimals;
-      final String tokenView = Fmt.tokenView(symbol);
-      final address = Fmt.addressOfAccount(_accountTo, store);
-      var args = {
-        "title": I18n.of(context).assets['transfer'] + ' $tokenView',
-        "txInfo": {
-          "module": 'balances',
-          "call": 'transfer',
-        },
-        "detail": jsonEncode({
-          "destination": address,
-          "currency": tokenView,
-          "amount": _amountCtrl.text.trim(),
-        }),
-        "params": [
-          // params.to
-          address,
-          // params.amount
-          Fmt.tokenInt(_amountCtrl.text.trim(), decimals).toString(),
-        ],
-      };
-      // Todo: why was it here depending on the endpoint? Do we not want to facilitate ERT transfers?
-      if (_isEncointerCommunityCurrency) {
-        args['txInfo'] = {
-          "module": 'encointerBalances',
-          "call": 'transfer',
-          "cid": symbol,
-        };
-        args["detail"] = jsonEncode({
-          "destination": address,
-          "currency": _communitySymbol,
-          "amount": _amountCtrl.text.trim(),
-        });
-        args['params'] = [
-          // params.to
-          address,
-          // params.currencyId
-          symbol,
-          // params.amount
-          _amountCtrl.text.trim(),
-        ];
-      }
-      args['onFinish'] = (BuildContext txPageContext, Map res) {
-        final TransferPageParams routeArgs = ModalRoute.of(context).settings.arguments;
-        if (store.settings.endpointIsEncointer) {
-          store.encointer.setTransferTxs([res]);
-        }
-        Navigator.popUntil(txPageContext, ModalRoute.withName(routeArgs.redirect));
-        // user may route to transfer page from asset page
-        // or from home page with QRCode Scanner
-        if (routeArgs.redirect == AssetPage.route) {
-          globalAssetRefreshKey.currentState.show();
-        }
-        if (routeArgs.redirect == '/') {
-          globalBalanceRefreshKey.currentState.show();
-        }
-      };
-      Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final TransferPageParams args = ModalRoute.of(context).settings.arguments;
-      if (args.address != null) {
-        final AccountData acc = AccountData();
-        acc.address = args.address;
-        setState(() {
-          _accountTo = acc;
-        });
-      } else {
-        if (widget.store.account.optionalAccounts.length > 0) {
-          setState(() {
-            _accountTo = widget.store.account.optionalAccounts[0];
-          });
-        } else if (widget.store.settings.contactList.length > 0) {
-          setState(() {
-            _accountTo = widget.store.settings.contactList[0];
-          });
-        }
-      }
-      setState(() {
-        _tokenSymbol = args.symbol ?? store.settings.networkState.tokenSymbol;
-      });
-
-      webApi.assets.fetchBalance();
-      webApi.encointer.getEncointerBalance();
-    });
-  }
-
-  @override
-  void dispose() {
-    _amountCtrl.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Observer(
@@ -328,6 +203,131 @@ class _TransferPageState extends State<TransferPage> {
         );
       },
     );
+  }
+
+  Future<void> _onScan() async {
+    final to = await Navigator.of(context).pushNamed(ScanPage.route);
+    if (to == null) return;
+    AccountData acc = AccountData();
+    acc.address = (to as QRCodeAddressResult).address;
+    acc.name = (to as QRCodeAddressResult).name;
+    setState(() {
+      _accountTo = acc;
+    });
+  }
+
+  Future<void> _selectCommunity() async {
+    List<String> symbolOptions = List<String>.from(store.settings.networkConst['currencyIds']);
+
+    var currency = await Navigator.of(context).pushNamed(CommunitySelectPage.route, arguments: symbolOptions);
+
+    if (currency != null) {
+      setState(() {
+        _tokenSymbol = currency;
+      });
+    }
+  }
+
+  void _handleSubmit() {
+    if (_formKey.currentState.validate()) {
+      String symbol = _tokenSymbol ?? store.settings.networkState.tokenSymbol;
+      int decimals = store.settings.networkState.tokenDecimals;
+      final String tokenView = Fmt.tokenView(symbol);
+      final address = Fmt.addressOfAccount(_accountTo, store);
+      var args = {
+        "title": I18n.of(context).assets['transfer'] + ' $tokenView',
+        "txInfo": {
+          "module": 'balances',
+          "call": 'transfer',
+        },
+        "detail": jsonEncode({
+          "destination": address,
+          "currency": tokenView,
+          "amount": _amountCtrl.text.trim(),
+        }),
+        "params": [
+          // params.to
+          address,
+          // params.amount
+          Fmt.tokenInt(_amountCtrl.text.trim(), decimals).toString(),
+        ],
+      };
+      // Todo: why was it here depending on the endpoint? Do we not want to facilitate ERT transfers?
+      if (_isEncointerCommunityCurrency) {
+        args['txInfo'] = {
+          "module": 'encointerBalances',
+          "call": 'transfer',
+          "cid": symbol,
+        };
+        args["detail"] = jsonEncode({
+          "destination": address,
+          "currency": _communitySymbol,
+          "amount": _amountCtrl.text.trim(),
+        });
+        args['params'] = [
+          // params.to
+          address,
+          // params.currencyId
+          symbol,
+          // params.amount
+          _amountCtrl.text.trim(),
+        ];
+      }
+      args['onFinish'] = (BuildContext txPageContext, Map res) {
+        final TransferPageParams routeArgs = ModalRoute.of(context).settings.arguments;
+        if (store.settings.endpointIsEncointer) {
+          store.encointer.setTransferTxs([res]);
+        }
+        Navigator.popUntil(txPageContext, ModalRoute.withName(routeArgs.redirect));
+        // user may route to transfer page from asset page
+        // or from home page with QRCode Scanner
+        if (routeArgs.redirect == AssetPage.route) {
+          globalAssetRefreshKey.currentState.show();
+        }
+        if (routeArgs.redirect == '/') {
+          globalBalanceRefreshKey.currentState.show();
+        }
+      };
+      Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final TransferPageParams args = ModalRoute.of(context).settings.arguments;
+      if (args.address != null) {
+        final AccountData acc = AccountData();
+        acc.address = args.address;
+        setState(() {
+          _accountTo = acc;
+        });
+      } else {
+        if (widget.store.account.optionalAccounts.length > 0) {
+          setState(() {
+            _accountTo = widget.store.account.optionalAccounts[0];
+          });
+        } else if (widget.store.settings.contactList.length > 0) {
+          setState(() {
+            _accountTo = widget.store.settings.contactList[0];
+          });
+        }
+      }
+      setState(() {
+        _tokenSymbol = args.symbol ?? store.settings.networkState.tokenSymbol;
+      });
+
+      webApi.assets.fetchBalance();
+      webApi.encointer.getEncointerBalance();
+    });
+  }
+
+  @override
+  void dispose() {
+    _amountCtrl.dispose();
+    super.dispose();
   }
 
   bool balanceToLow(String v, BigInt available, int decimals) {

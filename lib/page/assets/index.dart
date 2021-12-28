@@ -42,6 +42,123 @@ class _AssetsState extends State<Assets> {
   bool _faucetSubmitting = false;
   bool _enteredPin = false;
 
+  @override
+  void initState() {
+    // if network connected failed, reconnect
+    if (!store.settings.loading && store.settings.networkName == null) {
+      store.settings.setNetworkLoading(true);
+      webApi.connectNodeAll();
+    }
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final Map dic = I18n.of(context).assets;
+    return ListView(
+      padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
+      children: [
+        Observer(builder: (_) {
+          String symbol = store.settings.networkState.tokenSymbol ?? '';
+
+          int decimals = store.settings.networkState.tokenDecimals ?? ert_decimals;
+          String networkName = store.settings.networkName ?? '';
+          final String tokenView = Fmt.tokenView(symbol);
+
+          List<String> communityIds = [];
+          if (store.settings.endpointIsEncointer && networkName != null) {
+            if (store.settings.networkConst['communityIds'] != null) {
+              communityIds.addAll(List<String>.from(store.settings.networkConst['communityIds']));
+            }
+            communityIds.retainWhere((i) => i != symbol);
+          }
+          final BalancesInfo balancesInfo = store.assets.balances[symbol];
+          if (ModalRoute.of(context).isCurrent &&
+              !_enteredPin & store.account.cachedPin.isEmpty & !store.settings.endpointIsGesell) {
+            // The pin is not immeditally propagated to the store, hence we track if the pin has been entered to prevent
+            // showing the dialog multiple times.
+            WidgetsBinding.instance.addPostFrameCallback(
+                  (_) {
+                _showPasswordDialog(context);
+              },
+            );
+          }
+
+          return Column(
+            children: <Widget>[
+              _buildTopCard(context),
+              _communityCurrencyAssets(context, store),
+              Padding(
+                padding: EdgeInsets.only(top: 4),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    BorderedTitle(
+                      title: dic['gas.token'],
+                    ),
+                  ],
+                ),
+              ),
+              RoundedCard(
+                margin: EdgeInsets.only(top: 16),
+                child: ListTile(
+                  leading: Container(
+                    width: 36,
+                    child: Image.asset('assets/images/assets/${symbol.isNotEmpty ? symbol : 'DOT'}.png'),
+                  ),
+                  title: Text(tokenView),
+                  trailing: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        Fmt.priceFloorBigInt(balancesInfo != null ? balancesInfo.total : BigInt.zero, decimals,
+                            lengthFixed: 3),
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
+                      ),
+                      Container(width: 16),
+                    ],
+                  ),
+                  onTap: () {
+                    Navigator.pushNamed(context, AssetPage.route,
+                        arguments: AssetPageParams(token: symbol, isEncointerCommunityCurrency: false));
+                  },
+                ),
+              ),
+              Column(
+                children: communityIds.map((i) {
+//                  print(store.assets.balances[i]);
+                  String token = i;
+                  return RoundedCard(
+                    margin: EdgeInsets.only(top: 16),
+                    child: ListTile(
+                      leading: Container(
+                        width: 36,
+                        child: CircleAvatar(
+                          child: Text(token.substring(0, 2)),
+                        ),
+                      ),
+                      title: Text(token),
+                      trailing: Text(
+                        Fmt.priceFloorBigInt(Fmt.balanceInt(store.assets.tokenBalances[i]), decimals, lengthFixed: 3),
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
+                      ),
+                      onTap: () {
+                        Navigator.pushNamed(context, AssetPage.route,
+                            arguments: AssetPageParams(token: symbol, isEncointerCommunityCurrency: false));
+                      },
+                    ),
+                  );
+                }).toList(),
+              ),
+            ],
+          );
+        }),
+      ],
+    );
+  }
+
   Future<void> _handleScan() async {
     final Map dic = I18n.of(context).account;
     final data = await Navigator.pushNamed(
@@ -334,123 +451,6 @@ class _AssetsState extends State<Assets> {
           ],
         );
       },
-    );
-  }
-
-  @override
-  void initState() {
-    // if network connected failed, reconnect
-    if (!store.settings.loading && store.settings.networkName == null) {
-      store.settings.setNetworkLoading(true);
-      webApi.connectNodeAll();
-    }
-
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final Map dic = I18n.of(context).assets;
-    return ListView(
-      padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
-      children: [
-        Observer(builder: (_) {
-          String symbol = store.settings.networkState.tokenSymbol ?? '';
-
-          int decimals = store.settings.networkState.tokenDecimals ?? ert_decimals;
-          String networkName = store.settings.networkName ?? '';
-          final String tokenView = Fmt.tokenView(symbol);
-
-          List<String> communityIds = [];
-          if (store.settings.endpointIsEncointer && networkName != null) {
-            if (store.settings.networkConst['communityIds'] != null) {
-              communityIds.addAll(List<String>.from(store.settings.networkConst['communityIds']));
-            }
-            communityIds.retainWhere((i) => i != symbol);
-          }
-          final BalancesInfo balancesInfo = store.assets.balances[symbol];
-          if (ModalRoute.of(context).isCurrent &&
-              !_enteredPin & store.account.cachedPin.isEmpty & !store.settings.endpointIsGesell) {
-            // The pin is not immeditally propagated to the store, hence we track if the pin has been entered to prevent
-            // showing the dialog multiple times.
-            WidgetsBinding.instance.addPostFrameCallback(
-              (_) {
-                _showPasswordDialog(context);
-              },
-            );
-          }
-
-          return Column(
-            children: <Widget>[
-              _buildTopCard(context),
-              _communityCurrencyAssets(context, store),
-              Padding(
-                padding: EdgeInsets.only(top: 4),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    BorderedTitle(
-                      title: dic['gas.token'],
-                    ),
-                  ],
-                ),
-              ),
-              RoundedCard(
-                margin: EdgeInsets.only(top: 16),
-                child: ListTile(
-                  leading: Container(
-                    width: 36,
-                    child: Image.asset('assets/images/assets/${symbol.isNotEmpty ? symbol : 'DOT'}.png'),
-                  ),
-                  title: Text(tokenView),
-                  trailing: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        Fmt.priceFloorBigInt(balancesInfo != null ? balancesInfo.total : BigInt.zero, decimals,
-                            lengthFixed: 3),
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
-                      ),
-                      Container(width: 16),
-                    ],
-                  ),
-                  onTap: () {
-                    Navigator.pushNamed(context, AssetPage.route,
-                        arguments: AssetPageParams(token: symbol, isEncointerCommunityCurrency: false));
-                  },
-                ),
-              ),
-              Column(
-                children: communityIds.map((i) {
-//                  print(store.assets.balances[i]);
-                  String token = i;
-                  return RoundedCard(
-                    margin: EdgeInsets.only(top: 16),
-                    child: ListTile(
-                      leading: Container(
-                        width: 36,
-                        child: CircleAvatar(
-                          child: Text(token.substring(0, 2)),
-                        ),
-                      ),
-                      title: Text(token),
-                      trailing: Text(
-                        Fmt.priceFloorBigInt(Fmt.balanceInt(store.assets.tokenBalances[i]), decimals, lengthFixed: 3),
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
-                      ),
-                      onTap: () {
-                        Navigator.pushNamed(context, AssetPage.route,
-                            arguments: AssetPageParams(token: symbol, isEncointerCommunityCurrency: false));
-                      },
-                    ),
-                  );
-                }).toList(),
-              ),
-            ],
-          );
-        }),
-      ],
     );
   }
 
