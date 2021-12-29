@@ -70,7 +70,7 @@ const Map<String, String> enBazaar = {
 };
 const Map<String, String> deBazaar = {
   'address': 'Adresse',
-  'apply': 'anwenden',
+  'apply': 'Anwenden',
   'bazaar.new': 'Neu im Bazaar',
   'bazaar.title': 'Der Bazaar',
   'business.add': '+ Neues Geschäft hinzufügen',
