@@ -21,7 +21,7 @@ class _OfferingFormState extends State<OfferingForm> {
     var dic = I18n.of(context).bazaar;
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic['offering.insert']),
+        title: Text(dic['offering.add']),
       ),
       body: Form(
         child: Padding(

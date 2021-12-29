@@ -18,7 +18,7 @@ class BusinessFormScaffold extends StatelessWidget {
         create: (_) => BusinessFormState(),
         child: Scaffold(
           appBar: AppBar(
-            title: Text(I18n.of(context).bazaar['add.businesses']),
+            title: Text(I18n.of(context).bazaar['business.add']),
           ),
           body: BusinessForm(categories: categories),
         ),
@@ -63,7 +63,7 @@ class BusinessForm extends StatelessWidget {
                 onChanged: (value) => businessFormState.description = value,
                 decoration: InputDecoration(
                     labelText: I18n.of(context).bazaar['description'],
-                    hintText: I18n.of(context).bazaar['business.spark.interest.hint'],
+                    hintText: I18n.of(context).bazaar['business.description.hint'],
                     errorText: businessFormState.errors.description),
               ),
             ),
