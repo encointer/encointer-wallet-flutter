@@ -78,7 +78,7 @@ const Map<String, String> deBazaar = {
   'business.name': 'Geschäftsname',
   'business.name.hint': 'Benutze einen sinnvollen Namen',
   'business.description': 'Geschäftsbeschreibung',
-  'business.description.hint': 'Wecken Interesse an deinem Angebot mit einer kurzen Beschreibung',
+  'business.description.hint': 'Wecke Interesse an deinem Angebot mit einer kurzen Beschreibung',
   'business.url': 'URL zum Geschäft',
   'businesses': 'Geschäfte',
   'businesses.found': 'Geschäfte gefunden',
