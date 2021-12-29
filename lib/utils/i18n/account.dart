@@ -68,7 +68,7 @@ const Map<String, String> deAccount = {
   'create.name.error': 'Name muss ausgefüllt werden',
   'create.password': 'PIN',
   'create.password.error': 'PIN muss aus mindestens 4 Ziffern bestehen und keinen anderen Zeichen',
-  'create.password2': 'Bestätige PIN',
+  'create.password2': 'PIN Bestätigen',
   'create.password2.error': 'Inkonsistente PINs',
   'create.warn1': 'Backup prom',
   'create.warn10':
@@ -82,7 +82,7 @@ const Map<String, String> deAccount = {
   'create.warn7': 'Behalte es sicher im isolierten Netzwerk',
   'create.warn8': 'Speichere deine Mnemonics nicht in einer Netzwerkumgebung wie Email, Photo Album etc.',
   'create.warn9': 'Mach keine Screenshots',
-  'import.duplicate': 'Konto existiert, möchtest du das bereits existierende Konto überschreiben?',
+  'import.duplicate': 'Konto existiert bereits, möchtest du es überschreiben?',
   'import.encrypt': 'Verschlüsselungstyp',
   'import.invalid': 'Ungültig',
   'import.type': 'Ursprungstyp',
@@ -104,7 +104,7 @@ const Map<String, String> deAccount = {
   'uos.canceled': 'Tx abgebrochen',
   'uos.push': 'Scanne um zu veröffentlichen',
   'uos.qr.invalid': 'Ungültiger QR Code',
-  'uos.scan': 'Scanne signiert und sende',
+  'uos.scan': 'Signierte Tx scannen und senden',
   'uos.signer': 'Signierer',
   'uos.title': 'Offline Signatur',
 };
