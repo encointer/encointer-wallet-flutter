@@ -3,8 +3,10 @@ import 'dart:math';
 
 import 'package:encointer_wallet/common/components/AddressInputField.dart';
 import 'package:encointer_wallet/common/components/currencyWithIcon.dart';
+import 'package:encointer_wallet/common/components/iconTextButton.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
 import 'package:encointer_wallet/page/account/scanPage.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/page/assets/asset/assetPage.dart';
@@ -23,6 +25,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 class TransferPageParams {
   TransferPageParams(
       {this.symbol, this.address, this.redirect, this.isEncointerCommunityCurrency = false, this.communitySymbol});
+
   final String address;
   final String redirect;
   final String symbol;
@@ -80,124 +83,111 @@ class _TransferPageState extends State<TransferPage> {
         available = _getAvailableEncointerOrBaseToken(isBaseToken, symbol);
         print('Available: $available');
 
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(dic['transfer']),
-            centerTitle: true,
-            actions: <Widget>[
-              IconButton(
-                icon: Image.asset('assets/images/assets/Menu_scan.png'),
-                onPressed: _onScan,
-              )
-            ],
-          ),
-          body: SafeArea(
-            child: Builder(
-              builder: (BuildContext context) {
-                return Column(
-                  children: <Widget>[
-                    Expanded(
-                      child: Form(
-                        key: _formKey,
-                        child: ListView(
-                          padding: EdgeInsets.all(16),
-                          children: <Widget>[
-                            AddressInputField(
-                              widget.store,
-                              label: dic['address'],
-                              initialValue: _accountTo,
-                              onChanged: (AccountData acc) {
-                                setState(() {
-                                  _accountTo = acc;
-                                });
-                              },
-                            ),
-                            TextFormField(
-                              key: Key('transfer-amount-input'),
-                              decoration: InputDecoration(
-                                hintText: dic['amount'],
-                                labelText: '${dic['amount']} (${dic['balance']}: ${Fmt.priceFloorBigInt(
-                                  available,
-                                  decimals,
-                                  lengthMax: 6,
-                                )})',
+        double iconSizeBig = 48;
+
+        return Form(
+          key: _formKey,
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(dic['transfer']),
+              centerTitle: true,
+            ),
+            body: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ListView(
+                      children: [
+                        CommunityWithCommunityChooser(store),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
+                          child: Text(
+                            "available",
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        store.encointer.communityBalance != null
+                            ? AccountBalanceWithMoreDigits(store: store, available: available, decimals: decimals)
+                            : CupertinoActivityIndicator(),
+                        Padding(
+                          padding: const EdgeInsets.all(16),
+                          child: IconTextButton(
+                            text: "Scan",
+                            iconData: Icons.qr_code_scanner,
+                            onTap: _onScan, // TODO
+                            iconSize: iconSizeBig,
+                          ),
+                        ),
+                        // Padding(
+                        //   padding: const EdgeInsets.all(8.0),
+                        //   child: Text(
+                        //     "amount to send",
+                        //     textAlign: TextAlign.center,
+                        //   ),
+                        // ),
+                        TextFormField(
+                          key: Key('transfer-amount-input'),
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: "amount to send",
+                          ),
+                          inputFormatters: [UI.decimalInputFormatter(decimals)],
+                          controller: _amountCtrl,
+                          textAlign: TextAlign.center,
+                          keyboardType: TextInputType.numberWithOptions(decimal: true),
+                          validator: (v) {
+                            if (v.isEmpty) {
+                              return dic['amount.error'];
+                            }
+                            if (balanceTooLow(v, available, decimals)) {
+                              return dic['amount.low'];
+                            }
+                            return null;
+                          },
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            "to",
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: AddressInputField(
+                                widget.store,
+                                label: dic['address'],
+                                initialValue: _accountTo,
+                                onChanged: (AccountData acc) {
+                                  setState(() {
+                                    _accountTo = acc;
+                                  });
+                                },
                               ),
-                              inputFormatters: [UI.decimalInputFormatter(decimals)],
-                              controller: _amountCtrl,
-                              keyboardType: TextInputType.numberWithOptions(decimal: true),
-                              validator: (v) {
-                                if (v.isEmpty) {
-                                  return dic['amount.error'];
-                                }
-                                if (balanceToLow(v, available, decimals)) {
-                                  return dic['amount.low'];
-                                }
-                                return null;
-                              },
-                            ),
-                            GestureDetector(
-                              child: Container(
-                                color: Theme.of(context).canvasColor,
-                                margin: EdgeInsets.only(top: 16, bottom: 16),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          dic['currency'],
-                                          style: TextStyle(color: Theme.of(context).unselectedWidgetColor),
-                                        ),
-                                        !_isEncointerCommunityCurrency
-                                            ? CurrencyWithIcon(_tokenSymbol ?? baseTokenSymbol)
-                                            : Text(_communitySymbol),
-                                      ],
-                                    ),
-                                    // Icon(
-                                    //   Icons.arrow_forward_ios,
-                                    //   size: 18,
-                                    // )
-                                  ],
-                                ),
-                              ),
-                              onTap: symbolOptions != null ? () => _selectCommunity() : null,
-                            ),
-                            Divider(),
-                            Padding(
-                              padding: EdgeInsets.only(top: 16),
-                              child: Text(
-                                  'existentialDeposit: ${store.settings.existentialDeposit} $baseTokenSymbolView',
-                                  style: TextStyle(fontSize: 16, color: Colors.black54)),
-                            ),
-//                            Padding(
-//                              padding: EdgeInsets.only(top: 16),
-//                              child: Text(
-//                                  'TransferFee: ${store.settings.transactionBaseFee} $baseTokenSymbol',
-//                                  style: TextStyle(
-//                                      fontSize: 16, color: Colors.black54)),
-//                            ),
-                            Padding(
-                              padding: EdgeInsets.only(top: 16),
-                              child: Text(
-                                  'transactionByteFee: ${store.settings.transactionByteFee} $baseTokenSymbolView',
-                                  style: TextStyle(fontSize: 16, color: Colors.black54)),
                             ),
                           ],
                         ),
-                      ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(8.0, 16, 8, 72),
+                          child: Center(
+                            child: Text('transactionByteFee: ${store.settings.transactionByteFee} $baseTokenSymbolView',
+                                style: TextStyle(fontSize: 16, color: Colors.black54)),
+                          ),
+                        ),
+                      ],
                     ),
-                    Container(
-                      key: Key('make-transfer'),
-                      padding: EdgeInsets.all(16),
-                      child: RoundedButton(
-                        text: I18n.of(context).assets['make'],
-                        onPressed: _handleSubmit,
-                      ),
-                    )
-                  ],
-                );
-              },
+                  ),
+                  Container(
+                    key: Key('make-transfer'),
+                    child: RoundedButton(
+                      text: I18n.of(context).assets['make'],
+                      onPressed: _handleSubmit,
+                    ),
+                  )
+                ],
+              ),
             ),
           ),
         );
@@ -330,7 +320,7 @@ class _TransferPageState extends State<TransferPage> {
     super.dispose();
   }
 
-  bool balanceToLow(String v, BigInt available, int decimals) {
+  bool balanceTooLow(String v, BigInt available, int decimals) {
     if (_isEncointerCommunityCurrency) {
       return double.parse(v.trim()) >= available.toDouble() - 0.0001;
     } else {
@@ -346,5 +336,36 @@ class _TransferPageState extends State<TransferPage> {
           ? store.assets.balances[symbol.toUpperCase()].transferable
           : Fmt.balanceInt(store.assets.tokenBalances[symbol.toUpperCase()]);
     }
+  }
+}
+
+class AccountBalanceWithMoreDigits extends StatelessWidget {
+  const AccountBalanceWithMoreDigits({
+    Key key,
+    @required this.store,
+    @required this.available,
+    @required this.decimals,
+  }) : super(key: key);
+
+  final AppStore store;
+  final BigInt available;
+  final int decimals;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        "${Fmt.priceFloorBigInt(
+          available,
+          decimals,
+          lengthMax: 6,
+        )} ${store.encointer.communitySymbol}",
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 28,
+          color: Colors.black54,
+        ),
+      ),
+    );
   }
 }
