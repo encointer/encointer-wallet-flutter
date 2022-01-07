@@ -39,7 +39,6 @@ class _AssetsState extends State<Assets> {
 
   final AppStore store;
 
-  bool _faucetSubmitting = false;
   bool _enteredPin = false;
 
   @override
@@ -254,71 +253,6 @@ class _AssetsState extends State<Assets> {
     );
   }
 
-  Future<void> _getTokensFromFaucet() async {
-    String symbol = store.settings.networkState.tokenSymbol;
-    BalancesInfo balancesInfo = store.assets.balances[symbol];
-    bool aboveLimit = false;
-    setState(() {
-      _faucetSubmitting = true;
-    });
-
-    var res;
-    if (balancesInfo.freeBalance - Fmt.tokenInt(faucetAmount.toString(), ert_decimals) > BigInt.zero) {
-      aboveLimit = true;
-    } else {
-      res = await webApi.encointer.sendFaucetTx();
-    }
-
-    Timer(Duration(seconds: 3), () {
-      String dialogContent = I18n.of(context).encointer['faucet.ok'];
-      bool isOK = false;
-      if (aboveLimit) {
-        dialogContent = I18n.of(context).encointer['faucet.limit'];
-      } else if (res == null || res["error"] != null) {
-        dialogContent = I18n.of(context).encointer['faucet.error'];
-
-        if (res["error"] == "balances.InsufficientBalance") {
-          dialogContent += "\nError: ${I18n.of(context).encointer['faucet.insufficientBalance']}";
-        } else {
-          dialogContent += "\nError: ${res["error"]}";
-        }
-      } else {
-        isOK = true;
-      }
-      setState(() {
-        _faucetSubmitting = false;
-      });
-
-      showCupertinoDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return CupertinoAlertDialog(
-            title: Container(),
-            content: Text(dialogContent),
-            actions: <Widget>[
-              CupertinoButton(
-                child: Text(I18n.of(context).home['ok']),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  if (isOK) {
-                    globalBalanceRefreshKey.currentState.show();
-                    print("Faucet Error" + res["error"].toString());
-                    NotificationPlugin.showNotification(
-                      int.parse(res['params']
-                          [1]), // todo: Id is used to group notifications. This is probably not a good idea
-                      I18n.of(context).assets['notify.receive'],
-                      'ERT ' + Fmt.balance(res['params'][1], ert_decimals).toString(),
-                    );
-                  }
-                },
-              ),
-            ],
-          );
-        },
-      );
-    });
-  }
-
   Widget _buildTopCard(BuildContext context) {
     var dic = I18n.of(context).assets;
     String network = store.settings.loading ? dic['node.connecting'] : store.settings.networkName ?? dic['node.failed'];
@@ -335,39 +269,11 @@ class _AssetsState extends State<Assets> {
               leading: AddressIcon('', pubKey: acc.pubKey),
               title: Text(Fmt.accountName(context, acc)),
               subtitle: Text(network),
-              trailing: !store.settings.loading
-                  ? GestureDetector(
-                      child: Padding(
-                        padding: EdgeInsets.all(4),
-                        child: Column(
-                          children: <Widget>[
-                            _faucetSubmitting
-                                ? CupertinoActivityIndicator()
-                                : Icon(
-                                    Icons.card_giftcard,
-                                    color: Theme.of(context).primaryColor,
-                                    size: 20,
-                                  ),
-                            Text(
-                              I18n.of(context).encointer['faucet.title'],
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: Theme.of(context).primaryColor,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      onTap: () {
-                        if (acc.address != '') {
-                          _getTokensFromFaucet();
-                        }
-                      },
-                    )
-                  : Container(width: 8)),
-          IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () => Navigator.of(context).pushNamed('/network'),
+              trailing:
+              IconButton(
+                icon: Icon(Icons.menu),
+                onPressed: () => Navigator.of(context).pushNamed('/network'),
+              ),
           ),
           ListTile(
             title: Row(
