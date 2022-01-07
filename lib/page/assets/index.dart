@@ -12,12 +12,10 @@ import 'package:encointer_wallet/page/account/uos/qrSignerPage.dart';
 import 'package:encointer_wallet/page/assets/asset/assetPage.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
 import 'package:encointer_wallet/page/networkSelectPage.dart';
-import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/assets/types/balancesInfo.dart';
-import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
@@ -78,7 +76,7 @@ class _AssetsState extends State<Assets> {
             // The pin is not immeditally propagated to the store, hence we track if the pin has been entered to prevent
             // showing the dialog multiple times.
             WidgetsBinding.instance.addPostFrameCallback(
-                  (_) {
+              (_) {
                 _showPasswordDialog(context);
               },
             );
@@ -87,7 +85,7 @@ class _AssetsState extends State<Assets> {
           return Column(
             children: <Widget>[
               _buildTopCard(context),
-              _communityCurrencyAssets(context, store),
+              CommunityCurrencyAssets(store),
               IconButton(
                 icon: Icon(Icons.send),
                 onPressed: () {
@@ -210,14 +208,13 @@ class _AssetsState extends State<Assets> {
       child: Column(
         children: <Widget>[
           ListTile(
-              leading: AddressIcon('', pubKey: acc.pubKey),
-              title: Text(Fmt.accountName(context, acc)),
-              subtitle: Text(network),
-              trailing:
-              IconButton(
-                icon: Icon(Icons.menu),
-                onPressed: () => Navigator.of(context).pushNamed('/network'),
-              ),
+            leading: AddressIcon('', pubKey: acc.pubKey),
+            title: Text(Fmt.accountName(context, acc)),
+            subtitle: Text(network),
+            trailing: IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () => Navigator.of(context).pushNamed('/network'),
+            ),
           ),
           ListTile(
             title: Row(
@@ -307,8 +304,24 @@ class _AssetsState extends State<Assets> {
       },
     );
   }
+}
 
-  Widget _communityCurrencyAssets(BuildContext context, AppStore store) {
+class CommunityCurrencyAssets extends StatefulWidget {
+  final AppStore store;
+
+  CommunityCurrencyAssets(this.store);
+
+  @override
+  _CommunityCurrencyAssetsState createState() => _CommunityCurrencyAssetsState(store);
+}
+
+class _CommunityCurrencyAssetsState extends State<CommunityCurrencyAssets> {
+  final AppStore store;
+
+  _CommunityCurrencyAssetsState(this.store);
+
+  @override
+  Widget build(BuildContext context) {
     final Map dic = I18n.of(context).assets;
     final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
 
