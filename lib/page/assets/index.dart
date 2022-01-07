@@ -365,6 +365,10 @@ class _AssetsState extends State<Assets> {
                       },
                     )
                   : Container(width: 8)),
+          IconButton(
+            icon: Icon(Icons.menu),
+            onPressed: () => Navigator.of(context).pushNamed('/network'),
+          ),
           ListTile(
             title: Row(
               children: [
