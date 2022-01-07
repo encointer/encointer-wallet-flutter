@@ -84,7 +84,7 @@ class _AssetsState extends State<Assets> {
 
           return Column(
             children: <Widget>[
-              _buildTopCard(context),
+              TopCard(store),
               CommunityCurrencyAssets(store),
               IconButton(
                 icon: Icon(Icons.send),
@@ -97,163 +97,6 @@ class _AssetsState extends State<Assets> {
           );
         }),
       ],
-    );
-  }
-
-  Future<void> _handleScan() async {
-    final Map dic = I18n.of(context).account;
-    final data = await Navigator.pushNamed(
-      context,
-      ScanPage.route,
-      arguments: 'tx',
-    );
-    if (data != null) {
-      if (store.account.currentAccount.observation ?? false) {
-        showCupertinoDialog(
-          context: context,
-          builder: (_) {
-            return CupertinoAlertDialog(
-              title: Text(dic['uos.title']),
-              content: Text(dic['uos.acc.invalid']),
-              actions: <Widget>[
-                CupertinoButton(
-                  child: Text(I18n.of(context).home['ok']),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-              ],
-            );
-          },
-        );
-        return;
-      }
-
-      final Map sender = await webApi.account.parseQrCode(data.toString().trim());
-      if (sender['signer'] != store.account.currentAddress) {
-        showCupertinoDialog(
-          context: context,
-          builder: (_) {
-            return CupertinoAlertDialog(
-              title: Text(dic['uos.title']),
-              content: sender['error'] != null
-                  ? Text(sender['error'])
-                  : sender['signer'] == null
-                      ? Text(dic['uos.qr.invalid'])
-                      : Text(dic['uos.acc.mismatch']),
-              actions: <Widget>[
-                CupertinoButton(
-                  child: Text(I18n.of(context).home['ok']),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-              ],
-            );
-          },
-        );
-      } else {
-        showCupertinoDialog(
-          context: context,
-          builder: (_) {
-            return showPasswordInputDialog(
-              context,
-              store.account.currentAccount,
-              Text(dic['uos.title']),
-              (password) {
-                print('pass ok: $password');
-                _signAsync(password);
-              },
-            );
-          },
-        );
-      }
-    }
-  }
-
-  Future<void> _signAsync(String password) async {
-    final Map dic = I18n.of(context).account;
-    final Map signed = await webApi.account.signAsync(password);
-    print('signed: $signed');
-    if (signed['error'] != null) {
-      showCupertinoDialog(
-        context: context,
-        builder: (_) {
-          return CupertinoAlertDialog(
-            title: Text(dic['uos.title']),
-            content: Text(signed['error']),
-            actions: <Widget>[
-              CupertinoButton(
-                child: Text(I18n.of(context).home['ok']),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            ],
-          );
-        },
-      );
-      return;
-    }
-    Navigator.of(context).pushNamed(
-      QrSignerPage.route,
-      arguments: signed['signature'].toString().substring(2),
-    );
-  }
-
-  Widget _buildTopCard(BuildContext context) {
-    var dic = I18n.of(context).assets;
-    String network = store.settings.loading ? dic['node.connecting'] : store.settings.networkName ?? dic['node.failed'];
-
-    AccountData acc = store.account.currentAccount;
-
-    final accInfo = store.account.accountIndexMap[acc.address];
-    final String accIndex = accInfo != null && accInfo['accountIndex'] != null ? '${accInfo['accountIndex']}\n' : '';
-    return RoundedCard(
-      padding: EdgeInsets.all(8),
-      child: Column(
-        children: <Widget>[
-          ListTile(
-            leading: AddressIcon('', pubKey: acc.pubKey),
-            title: Text(Fmt.accountName(context, acc)),
-            subtitle: Text(network),
-            trailing: IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: () => Navigator.of(context).pushNamed('/network'),
-            ),
-          ),
-          ListTile(
-            title: Row(
-              children: [
-                GestureDetector(
-                  child: Padding(
-                    key: Key('qr-receive'),
-                    padding: EdgeInsets.only(left: 2),
-                    child: Image.asset(
-                      'assets/images/assets/qrcode_${store.settings.endpoint.color ?? 'pink'}.png',
-                      width: 24,
-                    ),
-                  ),
-                  onTap: () {
-                    if (acc.address != '') {
-                      Navigator.pushNamed(context, ReceivePage.route);
-                    }
-                  },
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 8),
-                  child: Text(
-                    '$accIndex${Fmt.address(store.account.currentAddress)}',
-                    style: TextStyle(fontSize: 14),
-                  ),
-                )
-              ],
-            ),
-            trailing: IconButton(
-              icon: Image.asset('assets/images/assets/qrcode_indigo.png'),
-              onPressed: () {
-                if (acc.address != '') {
-                  _handleScan();
-                }
-              },
-            ),
-          ),
-        ],
-      ),
     );
   }
 
@@ -387,6 +230,178 @@ class _CommunityCurrencyAssetsState extends State<CommunityCurrencyAssets> {
           padding: EdgeInsets.only(bottom: 32),
         ),
       ],
+    );
+  }
+}
+
+class TopCard extends StatefulWidget {
+  final AppStore store;
+
+  TopCard(this.store);
+
+  @override
+  _TopCardState createState() => _TopCardState(store);
+}
+
+class _TopCardState extends State<TopCard> {
+  final AppStore store;
+
+  _TopCardState(this.store);
+  @override
+  Widget build(BuildContext context) {
+    var dic = I18n.of(context).assets;
+    String network = store.settings.loading ? dic['node.connecting'] : store.settings.networkName ?? dic['node.failed'];
+
+    AccountData acc = store.account.currentAccount;
+
+    final accInfo = store.account.accountIndexMap[acc.address];
+    final String accIndex = accInfo != null && accInfo['accountIndex'] != null ? '${accInfo['accountIndex']}\n' : '';
+    return RoundedCard(
+      padding: EdgeInsets.all(8),
+      child: Column(
+        children: <Widget>[
+          ListTile(
+            leading: AddressIcon('', pubKey: acc.pubKey),
+            title: Text(Fmt.accountName(context, acc)),
+            subtitle: Text(network),
+            trailing: IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () => Navigator.of(context).pushNamed('/network'),
+            ),
+          ),
+          ListTile(
+            title: Row(
+              children: [
+                GestureDetector(
+                  child: Padding(
+                    key: Key('qr-receive'),
+                    padding: EdgeInsets.only(left: 2),
+                    child: Image.asset(
+                      'assets/images/assets/qrcode_${store.settings.endpoint.color ?? 'pink'}.png',
+                      width: 24,
+                    ),
+                  ),
+                  onTap: () {
+                    if (acc.address != '') {
+                      Navigator.pushNamed(context, ReceivePage.route);
+                    }
+                  },
+                ),
+                Padding(
+                  padding: EdgeInsets.only(left: 8),
+                  child: Text(
+                    '$accIndex${Fmt.address(store.account.currentAddress)}',
+                    style: TextStyle(fontSize: 14),
+                  ),
+                )
+              ],
+            ),
+            trailing: IconButton(
+              icon: Image.asset('assets/images/assets/qrcode_indigo.png'),
+              onPressed: () {
+                if (acc.address != '') {
+                  _handleScan();
+                }
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<void> _handleScan() async {
+    final Map dic = I18n.of(context).account;
+    final data = await Navigator.pushNamed(
+      context,
+      ScanPage.route,
+      arguments: 'tx',
+    );
+    if (data != null) {
+      if (store.account.currentAccount.observation ?? false) {
+        showCupertinoDialog(
+          context: context,
+          builder: (_) {
+            return CupertinoAlertDialog(
+              title: Text(dic['uos.title']),
+              content: Text(dic['uos.acc.invalid']),
+              actions: <Widget>[
+                CupertinoButton(
+                  child: Text(I18n.of(context).home['ok']),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ],
+            );
+          },
+        );
+        return;
+      }
+
+      final Map sender = await webApi.account.parseQrCode(data.toString().trim());
+      if (sender['signer'] != store.account.currentAddress) {
+        showCupertinoDialog(
+          context: context,
+          builder: (_) {
+            return CupertinoAlertDialog(
+              title: Text(dic['uos.title']),
+              content: sender['error'] != null
+                  ? Text(sender['error'])
+                  : sender['signer'] == null
+                      ? Text(dic['uos.qr.invalid'])
+                      : Text(dic['uos.acc.mismatch']),
+              actions: <Widget>[
+                CupertinoButton(
+                  child: Text(I18n.of(context).home['ok']),
+                  onPressed: () => Navigator.of(context).pop(),
+                ),
+              ],
+            );
+          },
+        );
+      } else {
+        showCupertinoDialog(
+          context: context,
+          builder: (_) {
+            return showPasswordInputDialog(
+              context,
+              store.account.currentAccount,
+              Text(dic['uos.title']),
+              (password) {
+                print('pass ok: $password');
+                _signAsync(password);
+              },
+            );
+          },
+        );
+      }
+    }
+  }
+
+  Future<void> _signAsync(String password) async {
+    final Map dic = I18n.of(context).account;
+    final Map signed = await webApi.account.signAsync(password);
+    print('signed: $signed');
+    if (signed['error'] != null) {
+      showCupertinoDialog(
+        context: context,
+        builder: (_) {
+          return CupertinoAlertDialog(
+            title: Text(dic['uos.title']),
+            content: Text(signed['error']),
+            actions: <Widget>[
+              CupertinoButton(
+                child: Text(I18n.of(context).home['ok']),
+                onPressed: () => Navigator.of(context).pop(),
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+    Navigator.of(context).pushNamed(
+      QrSignerPage.route,
+      arguments: signed['signature'].toString().substring(2),
     );
   }
 }
