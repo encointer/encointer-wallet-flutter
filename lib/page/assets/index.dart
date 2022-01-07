@@ -88,42 +88,12 @@ class _AssetsState extends State<Assets> {
             children: <Widget>[
               _buildTopCard(context),
               _communityCurrencyAssets(context, store),
-              Padding(
-                padding: EdgeInsets.only(top: 4),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    BorderedTitle(
-                      title: dic['gas.token'],
-                    ),
-                  ],
-                ),
-              ),
-              RoundedCard(
-                margin: EdgeInsets.only(top: 16),
-                child: ListTile(
-                  leading: Container(
-                    width: 36,
-                    child: Image.asset('assets/images/assets/${symbol.isNotEmpty ? symbol : 'DOT'}.png'),
-                  ),
-                  title: Text(tokenView),
-                  trailing: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        Fmt.priceFloorBigInt(balancesInfo != null ? balancesInfo.total : BigInt.zero, decimals,
-                            lengthFixed: 3),
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
-                      ),
-                      Container(width: 16),
-                    ],
-                  ),
-                  onTap: () {
-                    Navigator.pushNamed(context, AssetPage.route,
-                        arguments: AssetPageParams(token: symbol, isEncointerCommunityCurrency: false));
-                  },
-                ),
+              IconButton(
+                icon: Icon(Icons.send),
+                onPressed: () {
+                  Navigator.pushNamed(context, AssetPage.route,
+                      arguments: AssetPageParams(token: symbol, isEncointerCommunityCurrency: false));
+                },
               ),
               Column(
                 children: communityIds.map((i) {
