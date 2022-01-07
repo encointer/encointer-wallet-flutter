@@ -95,32 +95,6 @@ class _AssetsState extends State<Assets> {
                       arguments: AssetPageParams(token: symbol, isEncointerCommunityCurrency: false));
                 },
               ),
-              Column(
-                children: communityIds.map((i) {
-//                  print(store.assets.balances[i]);
-                  String token = i;
-                  return RoundedCard(
-                    margin: EdgeInsets.only(top: 16),
-                    child: ListTile(
-                      leading: Container(
-                        width: 36,
-                        child: CircleAvatar(
-                          child: Text(token.substring(0, 2)),
-                        ),
-                      ),
-                      title: Text(token),
-                      trailing: Text(
-                        Fmt.priceFloorBigInt(Fmt.balanceInt(store.assets.tokenBalances[i]), decimals, lengthFixed: 3),
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
-                      ),
-                      onTap: () {
-                        Navigator.pushNamed(context, AssetPage.route,
-                            arguments: AssetPageParams(token: symbol, isEncointerCommunityCurrency: false));
-                      },
-                    ),
-                  );
-                }).toList(),
-              ),
             ],
           );
         }),
