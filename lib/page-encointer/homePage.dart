@@ -52,7 +52,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         case 0:
           return Assets(store);
         case 1:
-          return BazaarMain(); // TODO provider pattern everywhere https://mobx.netlify.app/examples/todos
+          return BazaarMain(store); // TODO provider pattern everywhere https://mobx.netlify.app/examples/todos
         case 2:
           return EncointerEntry(store);
         default:
@@ -63,7 +63,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         case 0:
           return Assets(store);
         case 1:
-          return BazaarMain();
+          return BazaarMain(store);
         case 2:
           return EncointerEntry(store);
         default:
