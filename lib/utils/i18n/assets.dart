@@ -5,6 +5,7 @@ const Map<String, String> enAssets = {
   'amount': 'Amount',
   'amount.error': 'Invalid amount',
   'amount.low': 'Insufficient balance',
+  'amount.available': 'Available amount',
   'assets.test': 'Test Tokens',
   'available': 'Available',
   'balance': 'Balance',
@@ -35,12 +36,15 @@ const Map<String, String> enAssets = {
   'polkascan': 'Open in Browser',
   'receive': 'Receive',
   'reserved': 'Reserved',
+  'scan': 'Scan',
   'success': 'Success',
   'tip': 'Tip',
   'tip.tip': '\nAdding a tip to this Tx, paying\nthe block author for greater priority.\n',
   'to': 'To',
   'transfer': 'Transfer',
   'value': 'Value',
+  'invite': 'Invite someone',
+  'bazaar': 'Bazaar',
 };
 
 const Map<String, String> deAssets = {
@@ -50,6 +54,7 @@ const Map<String, String> deAssets = {
   'amount': 'Betrag',
   'amount.error': 'Ungültiger Betrag',
   'amount.low': 'Ungenügender Saldo',
+  'amount.available': 'Verfügbarer Betrag',
   'assets.test': 'Test Tokens',
   'available': 'Erhältlich',
   'balance': 'Saldo',
@@ -80,12 +85,15 @@ const Map<String, String> deAssets = {
   'polkascan': 'Öffne im Browser',
   'receive': 'Erhalte',
   'reserved': 'Reserviert',
+  'scan': 'Scannen',
   'success': 'Erfolgreich',
   'tip': 'Trinkgeld',
   'tip.tip': '\nTrinkgeld für diese Tx hinzufügen, bezahle\ndem Block Author für höhere Priorität.\n',
   'to': 'Nach',
   'transfer': 'Transfer',
   'value': 'Wert',
+  'invite': 'Jemanden einladen',
+  'bazaar': 'Bazaar',
 };
 
 const Map<String, String> zhAssets = {
