@@ -75,43 +75,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
   List<Widget> _buildPages() {
     return [0, 1, 2, 3].map((i) {
       if (i == 0) {
-        // return assets page
-        return Stack(
-          fit: StackFit.expand,
-          children: <Widget>[
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              color: Theme.of(context).canvasColor,
-            ),
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  alignment: Alignment.topLeft,
-                  image: AssetImage("assets/images/assets/top_bg_indigo.png"),
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
-            Scaffold(
-              backgroundColor: Colors.transparent,
-              appBar: AppBar(
-                title: Image.asset('assets/images/assets/logo.png'),
-                centerTitle: false,
-                backgroundColor: Colors.transparent,
-                elevation: 0.0,
-                actions: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.menu),
-                    onPressed: () => Navigator.of(context).pushNamed('/network'),
-                  ),
-                ],
-              ),
-              body: _getPage(i),
-            )
-          ],
-        );
+        return Assets(store);
       }
 
       return Stack(
