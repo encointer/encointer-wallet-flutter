@@ -76,9 +76,6 @@ abstract class _EncointerStore with Store {
   int participantIndex;
 
   @observable
-  int participantCount;
-
-  @observable
   Map<CommunityIdentifier, BalanceEntry> balanceEntries = new ObservableMap();
 
   @observable
@@ -291,7 +288,6 @@ abstract class _EncointerStore with Store {
       webApi.encointer.getBusinesses();
       webApi.encointer.getMeetupIndex();
       webApi.encointer.getParticipantIndex();
-      webApi.encointer.getParticipantCount();
       webApi.encointer.getEncointerBalance();
       webApi.encointer.getCommunityMetadata();
       webApi.encointer.getDemurrage();
@@ -322,11 +318,6 @@ abstract class _EncointerStore with Store {
   @action
   void setParticipantIndex([int pIndex]) {
     participantIndex = pIndex;
-  }
-
-  @action
-  void setParticipantCount(int pCount) {
-    participantCount = pCount;
   }
 
   @action
