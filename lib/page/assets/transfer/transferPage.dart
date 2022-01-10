@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:encointer_wallet/common/components/AddressInputField.dart';
-import 'package:encointer_wallet/common/components/currencyWithIcon.dart';
 import 'package:encointer_wallet/common/components/iconTextButton.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/config/consts.dart';
@@ -10,7 +9,6 @@ import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dar
 import 'package:encointer_wallet/page/account/scanPage.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/page/assets/asset/assetPage.dart';
-import 'package:encointer_wallet/page/assets/transfer/currencySelectPage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -66,7 +64,6 @@ class _TransferPageState extends State<TransferPage> {
         final String baseTokenSymbolView = Fmt.tokenView(baseTokenSymbol);
         String symbol = _tokenSymbol ?? baseTokenSymbol;
         final bool isBaseToken = _tokenSymbol == baseTokenSymbol;
-        List symbolOptions = store.settings.networkConst['currencyIds'];
 
         TransferPageParams params = ModalRoute.of(context).settings.arguments;
         _isEncointerCommunityCurrency = params.isEncointerCommunityCurrency;
@@ -204,18 +201,6 @@ class _TransferPageState extends State<TransferPage> {
     setState(() {
       _accountTo = acc;
     });
-  }
-
-  Future<void> _selectCommunity() async {
-    List<String> symbolOptions = List<String>.from(store.settings.networkConst['currencyIds']);
-
-    var currency = await Navigator.of(context).pushNamed(CommunitySelectPage.route, arguments: symbolOptions);
-
-    if (currency != null) {
-      setState(() {
-        _tokenSymbol = currency;
-      });
-    }
   }
 
   void _handleSubmit() {
