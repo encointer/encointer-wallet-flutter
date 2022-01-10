@@ -156,7 +156,7 @@ class _AssetsState extends State<Assets> {
                         ? RoundedCard(
                             margin: EdgeInsets.only(top: 16),
                             child: ListTile(
-                              key: Key('transfer'),
+                              // key: Key('transfer'),
                               leading: Container(
                                 width: 36,
                                 child:
@@ -200,6 +200,48 @@ class _AssetsState extends State<Assets> {
                                   ),
                           );
                   },
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                  //   IconTextButton(
+                  //     text: I18n.of(context).assets['receive'],
+                  //     iconData: Icons.download_sharp,
+                  //     onTap: store.encointer.communityBalance != null
+                  //         ? () {
+                  //       Navigator.pushNamed(context, ReceivePage.route);
+                  //     }
+                  //         : null,
+                  //   ),
+                  //   IconTextButton(
+                  //     text: I18n.of(context).assets['bazaar'],
+                  //     iconData: Icons.shopping_bag_sharp,
+                  //     onTap: () {
+                  //       Navigator.pushNamed(
+                  //         context,
+                  //         BazaarMain.route,
+                  //       );
+                  //     },
+                  //   ),
+                    IconTextButton(
+                      key: Key('transfer'),
+                      text: I18n.of(context).assets['transfer'],
+                      iconData: Icons.upload_sharp,
+                      onTap: store.encointer.communityBalance != null
+                          ? () {
+                        Navigator.pushNamed(
+                          context,
+                          TransferPage.route,
+                          arguments: TransferPageParams(
+                              redirect: AssetPage.route,
+                              symbol: store.encointer.chosenCid.toFmtString(),
+                              isEncointerCommunityCurrency: true,
+                              communitySymbol: store.encointer.communitySymbol),
+                        );
+                      }
+                          : null,
+                    ),
+                  ],
                 ),
               ],
             );
