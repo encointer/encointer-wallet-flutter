@@ -124,13 +124,22 @@ class _AssetsState extends State<Assets> {
                         icon: Icon(Icons.menu, color: Colors.orange),
                         onPressed: () => Navigator.of(context).pushNamed('/network'),
                       ),
-                    // if (developerMode)
-                    //   IconButton(
-                    //     // TODO design decision where to put this functionality
-                    //     key: Key('qr-receive'),
-                    //     icon: Icon(Icons.qr_code_outlined, color: Colors.orange),
-                    //     onPressed: _handleScan,
-                    //   ),
+                    if (developerMode)
+                      IconButton(
+                        // TODO design decision where to put this functionality
+                        key: Key('qr-receive'),
+                        icon: Icon(Icons.qr_code_outlined, color: Colors.orange),
+                        onPressed: () {
+                          if (acc.address != '') {
+                            Navigator.pushNamed(context, ReceivePage.route);
+                          }
+                        },
+                      ),
+                    // qr-receive text:
+                    // Text(
+                    //   '$accIndex${Fmt.address(store.account.currentAddress)}',
+                    //   style: TextStyle(fontSize: 14),
+                    // ),
                     IconTextButton(
                       iconData: Icons.person,
                       text: Fmt.accountName(context, acc),
@@ -156,32 +165,7 @@ class _AssetsState extends State<Assets> {
                         ),
                       ),
                       ListTile(
-                        title: Row(
-                          children: [
-                            GestureDetector(
-                              child: Padding(
-                                key: Key('qr-receive'),
-                                padding: EdgeInsets.only(left: 2),
-                                child: Image.asset(
-                                  'assets/images/assets/qrcode_${store.settings.endpoint.color ?? 'pink'}.png',
-                                  width: 24,
-                                ),
-                              ),
-                              onTap: () {
-                                if (acc.address != '') {
-                                  Navigator.pushNamed(context, ReceivePage.route);
-                                }
-                              },
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(left: 8),
-                              child: Text(
-                                '$accIndex${Fmt.address(store.account.currentAddress)}',
-                                style: TextStyle(fontSize: 14),
-                              ),
-                            )
-                          ],
-                        ),
+                        title: Text("dummy title"),
                         trailing: IconButton(
                           icon: Image.asset('assets/images/assets/qrcode_indigo.png'),
                           onPressed: () {
