@@ -66,7 +66,7 @@ void main() {
 
     test('transfer-page', () async {
       // go to transfer page
-      await driver.tap(find.byValueKey('cid-asset'));
+      // await driver.tap(find.byValueKey('cid-asset'));
 
       await driver.tap(find.byValueKey('transfer'));
 
@@ -76,7 +76,6 @@ void main() {
       await screenshot(driver, config, 'transfer-page');
 
       // go back to homepage
-      await driver.tap(find.pageBack());
       await driver.tap(find.pageBack());
     });
 

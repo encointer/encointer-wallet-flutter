@@ -156,7 +156,7 @@ class _AssetsState extends State<Assets> {
                         ? RoundedCard(
                             margin: EdgeInsets.only(top: 16),
                             child: ListTile(
-                              key: Key('cid-asset'),
+                              key: Key('transfer'),
                               leading: Container(
                                 width: 36,
                                 child:
@@ -174,16 +174,16 @@ class _AssetsState extends State<Assets> {
                                   : CupertinoActivityIndicator(),
                               onTap: store.encointer.communityBalance != null
                                   ? () {
-                                      Navigator.pushNamed(
-                                        context,
-                                        AssetPage.route,
-                                        arguments: AssetPageParams(
-                                            token: store.encointer.chosenCid.toFmtString(),
-                                            isEncointerCommunityCurrency: true,
-                                            communityName: store.encointer.communityName,
-                                            communitySymbol: store.encointer.communitySymbol),
-                                      );
-                                    }
+                                Navigator.pushNamed(
+                                  context,
+                                  TransferPage.route,
+                                  arguments: TransferPageParams(
+                                      redirect: AssetPage.route,
+                                      symbol: store.encointer.chosenCid.toFmtString(),
+                                      isEncointerCommunityCurrency: true,
+                                      communitySymbol: store.encointer.communitySymbol),
+                                );
+                              }
                                   : null,
                             ),
                           )
