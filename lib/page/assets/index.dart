@@ -3,6 +3,7 @@ import 'dart:ui';
 
 import 'package:encointer_wallet/common/components/BorderedTitle.dart';
 import 'package:encointer_wallet/common/components/addressIcon.dart';
+import 'package:encointer_wallet/common/components/iconTextButton.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/config/consts.dart';
@@ -11,7 +12,9 @@ import 'package:encointer_wallet/page/account/scanPage.dart';
 import 'package:encointer_wallet/page/account/uos/qrSignerPage.dart';
 import 'package:encointer_wallet/page/assets/asset/assetPage.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
+import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
 import 'package:encointer_wallet/page/networkSelectPage.dart';
+import 'package:encointer_wallet/page/profile/account/accountManagePage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -93,8 +96,52 @@ class _AssetsState extends State<Assets> {
                 accInfo != null && accInfo['accountIndex'] != null ? '${accInfo['accountIndex']}\n' : '';
             final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
 
+            var developerMode = true;
             return Column(
               children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    IconTextButton(
+                      iconData: Icons.person_add_alt,
+                      text: I18n.of(context).assets['invite'],
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          TransferPage.route,
+                          arguments: TransferPageParams(
+                              redirect: AssetPage.route,
+                              symbol: store.encointer.chosenCid.toFmtString(),
+                              isEncointerCommunityCurrency: true,
+                              communitySymbol: store.encointer.communitySymbol),
+                        );
+                      },
+                    ),
+                    if (developerMode = true)
+                      IconButton(
+                        // TODO design decision where to put this functionality
+                        key: Key('choose-network'),
+                        icon: Icon(Icons.menu, color: Colors.orange),
+                        onPressed: () => Navigator.of(context).pushNamed('/network'),
+                      ),
+                    // if (developerMode)
+                    //   IconButton(
+                    //     // TODO design decision where to put this functionality
+                    //     key: Key('qr-receive'),
+                    //     icon: Icon(Icons.qr_code_outlined, color: Colors.orange),
+                    //     onPressed: _handleScan,
+                    //   ),
+                    IconTextButton(
+                      iconData: Icons.person,
+                      text: Fmt.accountName(context, acc),
+                      onTap: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (BuildContext context) => AccountManagePage(store),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 RoundedCard(
                   padding: EdgeInsets.all(8),
                   child: Column(
