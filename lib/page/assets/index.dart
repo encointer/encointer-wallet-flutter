@@ -151,59 +151,55 @@ class _AssetsState extends State<Assets> {
                     ),
                   ],
                 ),
-                Column(
-                  children: [
-                    CommunityWithCommunityChooser(store),
-                    Observer(
-                      builder: (_) {
-                        return (store.encointer.communityName != null) & (store.encointer.chosenCid != null)
-                            ? RoundedCard(
-                                margin: EdgeInsets.only(top: 16),
-                                child: ListTile(
-                                  key: Key('cid-asset'),
-                                  leading: Container(
-                                    width: 36,
-                                    child: webApi.ipfs
-                                        .getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio),
-                                  ),
-                                  title: Text(store.encointer.communityName + " (${store.encointer.communitySymbol})"),
-                                  trailing: store.encointer.communityBalance != null
-                                      ? Text(
-                                          Fmt.doubleFormat(store.encointer.communityBalance),
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
-                                        )
-                                      : CupertinoActivityIndicator(),
-                                  onTap: store.encointer.communityBalance != null
-                                      ? () {
-                                          Navigator.pushNamed(context, AssetPage.route,
-                                              arguments: AssetPageParams(
-                                                  token: store.encointer.chosenCid.toFmtString(),
-                                                  isEncointerCommunityCurrency: true,
-                                                  communityName: store.encointer.communityName,
-                                                  communitySymbol: store.encointer.communitySymbol));
-                                        }
-                                      : null,
-                                ),
-                              )
-                            : Container(
-                                margin: EdgeInsets.only(top: 16),
-                                padding: EdgeInsets.symmetric(vertical: 8),
-                                child: (store.encointer.chosenCid == null)
-                                    ? Container(
-                                        width: double.infinity,
-                                        child: Text(dic['community.not.selected'], textAlign: TextAlign.center))
-                                    : Container(
-                                        width: double.infinity,
-                                        child: CupertinoActivityIndicator(),
-                                      ),
-                              );
-                      },
-                    ),
-                    Container(
-                      padding: EdgeInsets.only(bottom: 32),
-                    ),
-                  ],
+                CommunityWithCommunityChooser(store),
+                Observer(
+                  builder: (_) {
+                    return (store.encointer.communityName != null) & (store.encointer.chosenCid != null)
+                        ? RoundedCard(
+                      margin: EdgeInsets.only(top: 16),
+                      child: ListTile(
+                        key: Key('cid-asset'),
+                        leading: Container(
+                          width: 36,
+                          child: webApi.ipfs
+                              .getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio),
+                        ),
+                        title: Text(store.encointer.communityName + " (${store.encointer.communitySymbol})"),
+                        trailing: store.encointer.communityBalance != null
+                            ? Text(
+                          Fmt.doubleFormat(store.encointer.communityBalance),
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
+                        )
+                            : CupertinoActivityIndicator(),
+                        onTap: store.encointer.communityBalance != null
+                            ? () {
+                          Navigator.pushNamed(context, AssetPage.route,
+                              arguments: AssetPageParams(
+                                  token: store.encointer.chosenCid.toFmtString(),
+                                  isEncointerCommunityCurrency: true,
+                                  communityName: store.encointer.communityName,
+                                  communitySymbol: store.encointer.communitySymbol));
+                        }
+                            : null,
+                      ),
+                    )
+                        : Container(
+                      margin: EdgeInsets.only(top: 16),
+                      padding: EdgeInsets.symmetric(vertical: 8),
+                      child: (store.encointer.chosenCid == null)
+                          ? Container(
+                          width: double.infinity,
+                          child: Text(dic['community.not.selected'], textAlign: TextAlign.center))
+                          : Container(
+                        width: double.infinity,
+                        child: CupertinoActivityIndicator(),
+                      ),
+                    );
+                  },
+                ),
+                Container(
+                  padding: EdgeInsets.only(bottom: 32),
                 ),
                 IconButton(
                   icon: Icon(Icons.send),
