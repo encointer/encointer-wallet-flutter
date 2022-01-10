@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:encointer_wallet/common/components/iconTextButton.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaarMain.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
-import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
 import 'package:encointer_wallet/page/account/scanPage.dart';
@@ -153,7 +153,7 @@ class _AssetsState extends State<Assets> {
                 Observer(
                   builder: (_) {
                     return (store.encointer.communityName != null) & (store.encointer.chosenCid != null)
-                        ? RoundedCard(
+                        ? Container(
                             margin: EdgeInsets.only(top: 16),
                             child: ListTile(
                               // key: Key('transfer'),
@@ -172,19 +172,6 @@ class _AssetsState extends State<Assets> {
                                           TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
                                     )
                                   : CupertinoActivityIndicator(),
-                              onTap: store.encointer.communityBalance != null
-                                  ? () {
-                                Navigator.pushNamed(
-                                  context,
-                                  TransferPage.route,
-                                  arguments: TransferPageParams(
-                                      redirect: AssetPage.route,
-                                      symbol: store.encointer.chosenCid.toFmtString(),
-                                      isEncointerCommunityCurrency: true,
-                                      communitySymbol: store.encointer.communitySymbol),
-                                );
-                              }
-                                  : null,
                             ),
                           )
                         : Container(
@@ -204,41 +191,41 @@ class _AssetsState extends State<Assets> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                  //   IconTextButton(
-                  //     text: I18n.of(context).assets['receive'],
-                  //     iconData: Icons.download_sharp,
-                  //     onTap: store.encointer.communityBalance != null
-                  //         ? () {
-                  //       Navigator.pushNamed(context, ReceivePage.route);
-                  //     }
-                  //         : null,
-                  //   ),
-                  //   IconTextButton(
-                  //     text: I18n.of(context).assets['bazaar'],
-                  //     iconData: Icons.shopping_bag_sharp,
-                  //     onTap: () {
-                  //       Navigator.pushNamed(
-                  //         context,
-                  //         BazaarMain.route,
-                  //       );
-                  //     },
-                  //   ),
+                    IconTextButton(
+                      text: I18n.of(context).assets['receive'],
+                      iconData: Icons.download_sharp,
+                      onTap: store.encointer.communityBalance != null
+                          ? () {
+                              Navigator.pushNamed(context, ReceivePage.route);
+                            }
+                          : null,
+                    ),
+                    IconTextButton(
+                      text: I18n.of(context).assets['bazaar'],
+                      iconData: Icons.shopping_bag_sharp,
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          BazaarMain.route,
+                        );
+                      },
+                    ),
                     IconTextButton(
                       key: Key('transfer'),
                       text: I18n.of(context).assets['transfer'],
                       iconData: Icons.upload_sharp,
                       onTap: store.encointer.communityBalance != null
                           ? () {
-                        Navigator.pushNamed(
-                          context,
-                          TransferPage.route,
-                          arguments: TransferPageParams(
-                              redirect: AssetPage.route,
-                              symbol: store.encointer.chosenCid.toFmtString(),
-                              isEncointerCommunityCurrency: true,
-                              communitySymbol: store.encointer.communitySymbol),
-                        );
-                      }
+                              Navigator.pushNamed(
+                                context,
+                                TransferPage.route,
+                                arguments: TransferPageParams(
+                                    redirect: AssetPage.route,
+                                    symbol: store.encointer.chosenCid.toFmtString(),
+                                    isEncointerCommunityCurrency: true,
+                                    communitySymbol: store.encointer.communitySymbol),
+                              );
+                            }
                           : null,
                     ),
                   ],
