@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:encointer_wallet/common/components/BorderedTitle.dart';
-import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/iconTextButton.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
@@ -196,16 +194,6 @@ class _AssetsState extends State<Assets> {
                         child: CupertinoActivityIndicator(),
                       ),
                     );
-                  },
-                ),
-                Container(
-                  padding: EdgeInsets.only(bottom: 32),
-                ),
-                IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: () {
-                    Navigator.pushNamed(context, AssetPage.route,
-                        arguments: AssetPageParams(token: symbol, isEncointerCommunityCurrency: false));
                   },
                 ),
               ],
