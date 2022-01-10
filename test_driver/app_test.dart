@@ -46,6 +46,7 @@ void main() {
 
     // Note: The seconds test continues where the first one ended
     test('choosing cid', () async {
+      await driver.tap(find.byValueKey('cid-avatar'));
       await driver.tap(find.byValueKey('cid-dropdown'));
       await driver.tap(find.byValueKey('cid-0'));
 

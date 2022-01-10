@@ -153,18 +153,7 @@ class _AssetsState extends State<Assets> {
                 ),
                 Column(
                   children: [
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          BorderedTitle(
-                            title: dic['community.currency'],
-                          ),
-                        ],
-                      ),
-                    ),
-                    CommunityChooserPanel(store),
+                    CommunityWithCommunityChooser(store),
                     Observer(
                       builder: (_) {
                         return (store.encointer.communityName != null) & (store.encointer.chosenCid != null)

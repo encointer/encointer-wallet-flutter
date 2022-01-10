@@ -108,7 +108,7 @@ class _CommunityWithCommunityChooserState extends State<CommunityWithCommunityCh
                 });
               }),
         ),
-        CommunityChooserPanel(store),
+        communityChooserPanelVisible? CommunityChooserPanel(store): Text("Hint: click on the icon"),
       ],
     );
   }
