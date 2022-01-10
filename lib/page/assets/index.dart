@@ -143,25 +143,10 @@ class _AssetsState extends State<Assets> {
                   builder: (_) {
                     return (store.encointer.communityName != null) & (store.encointer.chosenCid != null)
                         ? Container(
-                            margin: EdgeInsets.only(top: 16),
-                            child: ListTile(
-                              // key: Key('transfer'),
-                              leading: Container(
-                                width: 36,
-                                child:
-                                    webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio),
-                              ),
-                              title: Text(
-                                '${Fmt.doubleFormat(store.encointer.communityBalance)} ${store.encointer.communityName} (${store.encointer.communitySymbol})',
-                              ),
-                              trailing: store.encointer.communityBalance != null
-                                  ? Text(
-                                      Fmt.doubleFormat(store.encointer.communityBalance),
-                                      style:
-                                          TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
-                                    )
-                                  : CupertinoActivityIndicator(),
-                            ),
+                            margin: EdgeInsets.only(bottom: 32),
+                            child: Text(
+                                '${Fmt.doubleFormat(store.encointer.communityBalance)} ${store.encointer.communitySymbol}',
+                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54)),
                           )
                         : Container(
                             margin: EdgeInsets.only(top: 16),
