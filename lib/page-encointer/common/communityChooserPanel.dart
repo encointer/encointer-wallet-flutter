@@ -108,7 +108,7 @@ class _CommunityWithCommunityChooserState extends State<CommunityWithCommunityCh
                 });
               }),
         ),
-        if(communityChooserPanelVisible) CommunityChooserPanel(store),
+        if (communityChooserPanelVisible) CommunityChooserPanel(store),
       ],
     );
   }
