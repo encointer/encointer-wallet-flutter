@@ -151,33 +151,6 @@ class _AssetsState extends State<Assets> {
                     ),
                   ],
                 ),
-                RoundedCard(
-                  padding: EdgeInsets.all(8),
-                  child: Column(
-                    children: <Widget>[
-                      ListTile(
-                        leading: AddressIcon('', pubKey: acc.pubKey),
-                        title: Text(Fmt.accountName(context, acc)),
-                        subtitle: Text(network),
-                        trailing: IconButton(
-                          icon: Icon(Icons.menu),
-                          onPressed: () => Navigator.of(context).pushNamed('/network'),
-                        ),
-                      ),
-                      ListTile(
-                        title: Text("dummy title"),
-                        trailing: IconButton(
-                          icon: Image.asset('assets/images/assets/qrcode_indigo.png'),
-                          onPressed: () {
-                            if (acc.address != '') {
-                              _handleScan();
-                            }
-                          },
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
                 Column(
                   children: [
                     Padding(
