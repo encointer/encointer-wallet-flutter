@@ -186,7 +186,7 @@ class _AssetsState extends State<Assets> {
                                       : null,
                                 ),
                               )
-                            : RoundedCard(
+                            : Container(
                                 margin: EdgeInsets.only(top: 16),
                                 padding: EdgeInsets.symmetric(vertical: 8),
                                 child: (store.encointer.chosenCid == null)
