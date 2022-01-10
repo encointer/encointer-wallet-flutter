@@ -122,17 +122,6 @@ class _AssetsState extends State<Assets> {
                         icon: Icon(Icons.menu, color: Colors.orange),
                         onPressed: () => Navigator.of(context).pushNamed('/network'),
                       ),
-                    if (developerMode)
-                      IconButton(
-                        // TODO design decision where to put this functionality
-                        key: Key('qr-receive'),
-                        icon: Icon(Icons.qr_code_outlined, color: Colors.orange),
-                        onPressed: () {
-                          if (acc.address != '') {
-                            Navigator.pushNamed(context, ReceivePage.route);
-                          }
-                        },
-                      ),
                     // qr-receive text:
                     // Text(
                     //   '$accIndex${Fmt.address(store.account.currentAddress)}',
@@ -163,7 +152,7 @@ class _AssetsState extends State<Assets> {
                                     webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio),
                               ),
                               title: Text(
-                                store.encointer.communityName + " (${store.encointer.communitySymbol})",
+                                '${Fmt.doubleFormat(store.encointer.communityBalance)} ${store.encointer.communityName} (${store.encointer.communitySymbol})',
                               ),
                               trailing: store.encointer.communityBalance != null
                                   ? Text(
@@ -194,11 +183,12 @@ class _AssetsState extends State<Assets> {
                     IconTextButton(
                       text: I18n.of(context).assets['receive'],
                       iconData: Icons.download_sharp,
-                      onTap: store.encointer.communityBalance != null
-                          ? () {
-                              Navigator.pushNamed(context, ReceivePage.route);
-                            }
-                          : null,
+                      key: Key('qr-receive'),
+                      onTap: () {
+                        if (acc.address != '') {
+                          Navigator.pushNamed(context, ReceivePage.route);
+                        }
+                      },
                     ),
                     IconTextButton(
                       text: I18n.of(context).assets['bazaar'],
