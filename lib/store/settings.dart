@@ -144,6 +144,11 @@ abstract class _SettingsStore with Store {
     loading = false;
   }
 
+  @computed
+  bool get isConnected {
+    return !loading && networkName.isNotEmpty;
+  }
+
   @action
   Future<void> setNetworkState(
     Map<String, dynamic> data, {
