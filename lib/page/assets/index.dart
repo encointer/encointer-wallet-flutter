@@ -106,7 +106,7 @@ class _AssetsState extends State<Assets> {
                   children: [
                     IconTextButton(
                       iconData: Icons.person_add_alt,
-                      text: I18n.of(context).assets['invite'],
+                      text: dic['invite'],
                       onTap: () {
                         Navigator.pushNamed(
                           context,
@@ -170,7 +170,7 @@ class _AssetsState extends State<Assets> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     IconTextButton(
-                      text: I18n.of(context).assets['receive'],
+                      text: dic['receive'],
                       iconData: Icons.download_sharp,
                       key: Key('qr-receive'),
                       onTap: () {
@@ -180,7 +180,7 @@ class _AssetsState extends State<Assets> {
                       },
                     ),
                     IconTextButton(
-                      text: I18n.of(context).assets['bazaar'],
+                      text: dic['bazaar'],
                       iconData: Icons.shopping_bag_sharp,
                       onTap: () {
                         Navigator.pushNamed(
@@ -191,7 +191,7 @@ class _AssetsState extends State<Assets> {
                     ),
                     IconTextButton(
                       key: Key('transfer'),
-                      text: I18n.of(context).assets['transfer'],
+                      text: dic['transfer'],
                       iconData: Icons.upload_sharp,
                       onTap: store.encointer.communityBalance != null
                           ? () {
@@ -212,7 +212,12 @@ class _AssetsState extends State<Assets> {
               ],
             );
           }),
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 6, horizontal: 0),
+          ),
           Observer(builder: (_) {
+            var dic = I18n.of(context).assets;
+
             return store.settings.isConnected
                 ? FutureBuilder<bool>(
                     future: webApi.encointer.hasPendingIssuance(),
@@ -222,13 +227,14 @@ class _AssetsState extends State<Assets> {
 
                         if (hasPendingIssuance) {
                           return RoundedButton(
-                            text: "Has pending issuance",
+                            text: dic['issuance.pending'],
                             onPressed: () => _submitClaimRewards(context),
                           );
                         } else {
                           return RoundedButton(
-                            text: "Does not have pending Issuance",
+                            text: dic['issuance.claimed'],
                             onPressed: null,
+                            color: Theme.of(context).disabledColor,
                           );
                         }
                       } else {
