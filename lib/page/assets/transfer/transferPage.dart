@@ -254,11 +254,6 @@ class _TransferPageState extends State<TransferPage> {
           store.encointer.setTransferTxs([res]);
         }
         Navigator.popUntil(txPageContext, ModalRoute.withName(routeArgs.redirect));
-        // user may route to transfer page from asset page
-        // or from home page with QRCode Scanner
-        if (routeArgs.redirect == AssetPage.route) {
-          globalAssetRefreshKey.currentState.show();
-        }
         if (routeArgs.redirect == '/') {
           globalBalanceRefreshKey.currentState.show();
         }

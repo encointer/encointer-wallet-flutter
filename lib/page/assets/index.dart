@@ -199,7 +199,7 @@ class _AssetsState extends State<Assets> {
                                 context,
                                 TransferPage.route,
                                 arguments: TransferPageParams(
-                                    redirect: AssetPage.route,
+                                    redirect: '/',
                                     symbol: store.encointer.chosenCid.toFmtString(),
                                     isEncointerCommunityCurrency: true,
                                     communitySymbol: store.encointer.communitySymbol),
