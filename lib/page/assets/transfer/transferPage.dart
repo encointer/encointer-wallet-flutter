@@ -166,13 +166,6 @@ class _TransferPageState extends State<TransferPage> {
                             ),
                           ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(8.0, 16, 8, 72),
-                          child: Center(
-                            child: Text('transactionByteFee: ${store.settings.transactionByteFee} $baseTokenSymbolView',
-                                style: TextStyle(fontSize: 16, color: Colors.black54)),
-                          ),
-                        ),
                       ],
                     ),
                   ),
