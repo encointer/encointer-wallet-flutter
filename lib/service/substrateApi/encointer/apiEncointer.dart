@@ -258,7 +258,7 @@ class ApiEncointer {
   Future<bool> hasPendingIssuance() async {
     CommunityIdentifier cid = store.encointer.chosenCid;
     if (cid == null) {
-      return false; // zero means: not registered
+      return false;
     }
 
     // -1 as we get the pending issuance for the last ceremony
