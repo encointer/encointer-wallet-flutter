@@ -2,10 +2,11 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:encointer_wallet/common/components/iconTextButton.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaarMain.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaarMain.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
+import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/page/assets/asset/assetPage.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
@@ -49,26 +50,24 @@ class _AssetsState extends State<Assets> {
   }
 
   @override
-  Widget build(BuildContext context)
+  Widget build(BuildContext context) {
+    Future<void> _submitClaimRewards(BuildContext context) async {
+      var args = {
+        "title": 'claim_rewards',
+        "txInfo": {
+          "module": 'encointerCeremonies',
+          "call": 'claimRewards',
+          "cid": store.encointer.chosenCid,
+        },
+        "detail": "cid: ${store.encointer.chosenCid.toFmtString()}",
+        "params": [store.encointer.chosenCid],
+        'onFinish': (BuildContext txPageContext, Map res) {
+          Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
+        }
+      };
+      Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
+    }
 
-  Future<void> _submitClaimRewards(BuildContext context) async {
-    var args = {
-      "title": 'claim_rewards',
-      "txInfo": {
-        "module": 'encointerCeremonies',
-        "call": 'claimRewards',
-        "cid": store.encointer.chosenCid,
-      },
-      "detail": "cid: ${store.encointer.chosenCid.toFmtString()}",
-      "params": [store.encointer.chosenCid],
-      'onFinish': (BuildContext txPageContext, Map res) {
-        Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
-      }
-    };
-    Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
-  }
-  
-  {
     return SafeArea(
       child: ListView(
         padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
@@ -213,29 +212,29 @@ class _AssetsState extends State<Assets> {
               ],
             );
           }),
-        ],
-  FutureBuilder<bool>(
-  future: pendingIssuance(),
-  builder: (_, AsyncSnapshot<bool> snapshot) {
-  if (snapshot.hasData) {
-  var hasPendingIssuance = snapshot.data;
+          FutureBuilder<bool>(
+            future: pendingIssuance(),
+            builder: (_, AsyncSnapshot<bool> snapshot) {
+              if (snapshot.hasData) {
+                var hasPendingIssuance = snapshot.data;
 
-  if (hasPendingIssuance) {
-  return RoundedButton(
-  text: "Has pending issuance",
-  onPressed: () => _submitClaimRewards(context),
-  );
-  } else {
-  return RoundedButton(
-  text: "Does not have pending Issuance",
-  onPressed: null,
-  );
-  }
-  } else {
-  return CupertinoActivityIndicator();
-  }
-  },
-  ),
+                if (hasPendingIssuance) {
+                  return RoundedButton(
+                    text: "Has pending issuance",
+                    onPressed: () => _submitClaimRewards(context),
+                  );
+                } else {
+                  return RoundedButton(
+                    text: "Does not have pending Issuance",
+                    onPressed: null,
+                  );
+                }
+              } else {
+                return CupertinoActivityIndicator();
+              }
+            },
+          ),
+        ],
       ),
     );
   }
