@@ -82,6 +82,10 @@ class MockApiEncointer extends ApiEncointer {
     return store.encointer.communities;
   }
 
+  Future<bool> hasPendingIssuance() async {
+    return true;
+  }
+
   @override
   Future<void> getDemurrage() async {}
 
