@@ -215,7 +215,7 @@ class _AssetsState extends State<Assets> {
           Observer(builder: (_) {
             return store.settings.isConnected
                 ? FutureBuilder<bool>(
-                    future: pendingIssuance(),
+                    future: webApi.encointer.hasPendingIssuance(),
                     builder: (_, AsyncSnapshot<bool> snapshot) {
                       if (snapshot.hasData) {
                         var hasPendingIssuance = snapshot.data;
@@ -290,9 +290,4 @@ class _AssetsState extends State<Assets> {
       },
     );
   }
-}
-
-Future<bool> pendingIssuance() async {
-  await webApi.isConnected();
-  return webApi.encointer.hasPendingIssuance();
 }
