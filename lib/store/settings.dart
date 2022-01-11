@@ -231,8 +231,6 @@ abstract class _SettingsStore with Store {
     } else {
       endpoint = EndpointData.fromJson(value);
     }
-    //TODO: remove this. it will force Kusama for safe start
-    //endpoint = networkEndpointKusama;
   }
 
   @action
