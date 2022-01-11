@@ -212,28 +212,32 @@ class _AssetsState extends State<Assets> {
               ],
             );
           }),
-          FutureBuilder<bool>(
-            future: pendingIssuance(),
-            builder: (_, AsyncSnapshot<bool> snapshot) {
-              if (snapshot.hasData) {
-                var hasPendingIssuance = snapshot.data;
+          Observer(builder: (_) {
+            return store.settings.isConnected
+                ? FutureBuilder<bool>(
+                    future: pendingIssuance(),
+                    builder: (_, AsyncSnapshot<bool> snapshot) {
+                      if (snapshot.hasData) {
+                        var hasPendingIssuance = snapshot.data;
 
-                if (hasPendingIssuance) {
-                  return RoundedButton(
-                    text: "Has pending issuance",
-                    onPressed: () => _submitClaimRewards(context),
-                  );
-                } else {
-                  return RoundedButton(
-                    text: "Does not have pending Issuance",
-                    onPressed: null,
-                  );
-                }
-              } else {
-                return CupertinoActivityIndicator();
-              }
-            },
-          ),
+                        if (hasPendingIssuance) {
+                          return RoundedButton(
+                            text: "Has pending issuance",
+                            onPressed: () => _submitClaimRewards(context),
+                          );
+                        } else {
+                          return RoundedButton(
+                            text: "Does not have pending Issuance",
+                            onPressed: null,
+                          );
+                        }
+                      } else {
+                        return CupertinoActivityIndicator();
+                      }
+                    },
+                  )
+                : Container();
+          }),
         ],
       ),
     );
