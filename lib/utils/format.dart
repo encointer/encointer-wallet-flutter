@@ -76,7 +76,7 @@ class Fmt {
   }
 
   /// number transform 3a:
-  /// from <double> to <String> in token format of ",##0.000"
+  /// from <String> to <String> in token format of ",##0.000"
   static String numberFormat(
     String value, {
     int length = 3,
