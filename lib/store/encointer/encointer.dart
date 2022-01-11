@@ -330,7 +330,9 @@ abstract class _EncointerStore with Store {
         "success": true,
         "from": rootStore.account.currentAddress,
         "to": i['params'][0],
-        "token": isCommunityCurrency ? i['params'][1] : rootStore.settings.networkState.tokenSymbol,
+        "token": isCommunityCurrency
+            ? CommunityIdentifier.fromJson(i['params'][1]).toFmtString()
+            : rootStore.settings.networkState.tokenSymbol,
         "amount": isCommunityCurrency ? Fmt.numberFormat(i['params'][2]) : Fmt.balance(i['params'][1], ert_decimals),
       };
     }).toList();
