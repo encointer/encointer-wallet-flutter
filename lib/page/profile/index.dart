@@ -1,101 +1,209 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
-import 'package:encointer_wallet/page/profile/aboutPage.dart';
-import 'package:encointer_wallet/page/profile/account/accountManagePage.dart';
-import 'package:encointer_wallet/page/profile/contacts/contactsPage.dart';
-import 'package:encointer_wallet/page/profile/settings/settingsPage.dart';
+import 'package:encointer_wallet/common/components/roundedCard.dart';
+import 'package:encointer_wallet/page/account/createAccountEntryPage.dart';
+import 'package:encointer_wallet/page/profile/account/changePasswordPage.dart';
+import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-class Profile extends StatelessWidget {
+class Profile extends StatefulWidget {
   Profile(this.store);
-
   final AppStore store;
+  @override
+  _ProfileState createState() => _ProfileState(store);
+}
+
+class _ProfileState extends State<Profile> {
+  _ProfileState(this.store);
+  final AppStore store;
+  EndpointData _selectedNetwork;
+  bool _networkChanging = false;
+
+  void _loadAccountCache() {
+    // refresh balance
+    store.assets.clearTxs();
+    store.assets.loadAccountCache();
+    store.encointer.loadCache();
+  }
+
+  Future<void> _reloadNetwork() async {
+    setState(() {
+      _networkChanging = true;
+    });
+    showCupertinoDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: Text(I18n.of(context).home['loading']),
+          content: Container(height: 64, child: CupertinoActivityIndicator()),
+        );
+      },
+    );
+
+    store.settings.setNetworkLoading(true);
+    await store.settings.setNetworkConst({}, needCache: false);
+    store.settings.setEndpoint(_selectedNetwork);
+
+    _loadAccountCache();
+    //webApi.closeWebView();
+
+    await store.settings.loadNetworkStateCache();
+
+    store.assets.loadCache();
+    store.encointer.loadCache();
+
+    webApi.launchWebview();
+    // changeTheme();
+    if (mounted) {
+      Navigator.of(context).pop();
+      setState(() {
+        _networkChanging = false;
+      });
+    }
+  }
+
+  Future<void> _onSelect(AccountData i, String address) async {
+    bool isCurrentNetwork = _selectedNetwork.info == store.settings.endpoint.info;
+    if (address != store.account.currentAddress || !isCurrentNetwork) {
+      /// set current account
+      store.account.setCurrentAccount(i.pubKey);
+
+      if (isCurrentNetwork) {
+        _loadAccountCache();
+
+        /// reload account info
+        webApi.assets.fetchBalance();
+      } else {
+        /// set new network and reload web view
+        // todo  remove the two options here, and fix the caching issue, explained in #219
+        store.encointer.setChosenCid();
+        store.encointer.communities = null;
+        await _reloadNetwork();
+      }
+    }
+    Navigator.of(context).pop();
+  }
+
+  Future<void> _onCreateAccount() async {
+    bool isCurrentNetwork = _selectedNetwork.info == store.settings.endpoint.info;
+    if (!isCurrentNetwork) {
+      await _reloadNetwork();
+    }
+    Navigator.of(context).pushNamed(CreateAccountEntryPage.route);
+  }
+
+  List<Widget> _buildAccountList() {
+    final Map<String, String> dic = I18n.of(context).profile;
+    Color primaryColor = Theme.of(context).primaryColor;
+    List<Widget> res = [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(
+            '${dic['accounts']} in ${_selectedNetwork.info.toUpperCase()}',
+            style: Theme.of(context).textTheme.headline4,
+          ),
+          Row(children: <Widget>[
+            Text('ADD'),
+            IconButton(
+              icon: Image.asset('assets/images/assets/plus_indigo.png'),
+              color: primaryColor,
+              onPressed: () => _onCreateAccount(),
+            )
+          ])
+        ],
+      ),
+    ];
+
+    /// first item is current account
+    List<AccountData> accounts = [store.account.currentAccount];
+
+    /// add optional accounts
+    accounts.addAll(store.account.optionalAccounts);
+
+    res.addAll(accounts.map((i) {
+      String address = i.address;
+      if (store.account.pubKeyAddressMap[_selectedNetwork.ss58] != null) {
+        address = store.account.pubKeyAddressMap[_selectedNetwork.ss58][i.pubKey];
+      }
+      final bool isCurrentNetwork = _selectedNetwork.info == store.settings.endpoint.info;
+      final accInfo = store.account.accountIndexMap[i.address];
+      final String accIndex =
+          isCurrentNetwork && accInfo != null && accInfo['accountIndex'] != null ? '${accInfo['accountIndex']}\n' : '';
+      final double padding = accIndex.isEmpty ? 0 : 7;
+      return RoundedCard(
+        border: address == store.account.currentAddress
+            ? Border.all(color: Theme.of(context).primaryColorLight)
+            : Border.all(color: Theme.of(context).cardColor),
+        margin: EdgeInsets.only(bottom: 16),
+        padding: EdgeInsets.only(top: padding, bottom: padding),
+        child: ListTile(
+          leading: AddressIcon('', pubKey: i.pubKey, addressToCopy: address),
+          title: Text(Fmt.accountName(context, i)),
+          subtitle: Text('$accIndex${Fmt.address(address)}', maxLines: 2),
+          onTap: _networkChanging ? null : () => _onSelect(i, address),
+        ),
+      );
+    }).toList());
+    return res;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {
+        _selectedNetwork = store.settings.endpoint;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final Map<String, String> dic = I18n.of(context).profile;
     final Color grey = Theme.of(context).unselectedWidgetColor;
 
-    return Observer(builder: (_) {
-      AccountData acc = store.account.currentAccount;
-      Color primaryColor = Theme.of(context).primaryColor;
-      return Scaffold(
-        appBar: AppBar(
-          title: Text(dic['title']),
-          centerTitle: true,
-          elevation: 0.0,
-        ),
-        body: ListView(
-          children: <Widget>[
-            Container(
-              color: primaryColor,
-              padding: EdgeInsets.only(bottom: 16),
-              child: ListTile(
-                leading: AddressIcon('', pubKey: store.account.currentAccount.pubKey),
-                title: Text(Fmt.accountName(context, acc), style: TextStyle(fontSize: 16, color: Colors.white)),
-                subtitle: Text(
-                  Fmt.address(store.account.currentAddress) ?? '',
-                  style: TextStyle(fontSize: 16, color: Colors.white70),
-                ),
-              ),
-            ),
-            !(acc.observation ?? false)
-                ? Container(
-                    padding: EdgeInsets.all(24),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        ElevatedButton(
-                          style: TextButton.styleFrom(
-                            padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
-                            backgroundColor: primaryColor,
-                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-                          ),
-                          child: Text(
-                            dic['account'],
-                            style: Theme.of(context).textTheme.button,
-                          ),
-                          onPressed: () => Navigator.pushNamed(context, AccountManagePage.route),
-                        )
-                      ],
+    return Observer(
+      builder: (_) {
+        AccountData acc = store.account.currentAccount;
+        Color primaryColor = Theme.of(context).primaryColor;
+        return Scaffold(
+          appBar: AppBar(
+            title: Text(dic['title']),
+            centerTitle: true,
+            elevation: 0.0,
+          ),
+          body: Observer(
+            builder: (_) {
+              if (_selectedNetwork == null) return Container();
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    height: 250,
+                    child: ListView(
+                      padding: EdgeInsets.all(16),
+                      children: _buildAccountList(),
                     ),
-                  )
-                : Container(height: 24),
-            ListTile(
-              leading: Container(
-                width: 32,
-                child: Icon(Icons.people_outline, color: grey, size: 22),
-              ),
-              title: Text(dic['contact']),
-              trailing: Icon(Icons.arrow_forward_ios, size: 18),
-              onTap: () => Navigator.of(context).pushNamed(ContactsPage.route),
-            ),
-            ListTile(
-              leading: Container(
-                width: 32,
-                child: Icon(Icons.settings, color: grey, size: 22),
-              ),
-              title: Text(dic['setting']),
-              trailing: Icon(Icons.arrow_forward_ios, size: 18),
-              onTap: () => Navigator.of(context).pushNamed(SettingsPage.route),
-            ),
-            ListTile(
-              leading: Container(
-                width: 32,
-                child: Icon(Icons.info_outline, color: grey, size: 22),
-              ),
-              title: Text(dic['about']),
-              trailing: Icon(Icons.arrow_forward_ios, size: 18),
-              onTap: () => Navigator.of(context).pushNamed(AboutPage.route),
-            ),
-          ],
-        ),
-      );
-    });
+                  ),
+                  ListTile(
+                    title: Text(dic['pass.change']),
+                    trailing: Icon(Icons.arrow_forward_ios, size: 18),
+                    onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
+                  ),
+                ],
+              );
+            },
+          ),
+        );
+      },
+    );
   }
 }
