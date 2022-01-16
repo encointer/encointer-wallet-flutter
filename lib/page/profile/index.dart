@@ -139,7 +139,7 @@ class _ProfileState extends State<Profile> {
       final double padding = accIndex.isEmpty ? 0 : 7;
       return RoundedCard(
         border: address == store.account.currentAddress
-            ? Border.all(color: Theme.of(context).primaryColorLight)
+            ? Border.all(color: Colors.amber)
             : Border.all(color: Theme.of(context).cardColor),
         margin: EdgeInsets.only(bottom: 16),
         padding: EdgeInsets.only(top: padding, bottom: padding),
