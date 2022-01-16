@@ -109,13 +109,14 @@ class _ProfileState extends State<Profile> {
               color: primaryColor,
               onPressed: () => _onCreateAccount(),
             ),
-            developerMode ?
-              IconButton(
-                // TODO design decision where to put this functionality
-                key: Key('choose-network'),
-                icon: Icon(Icons.menu, color: Colors.orange),
-                onPressed: () => Navigator.of(context).pushNamed('/network'),
-              ) : Container(),
+            developerMode
+                ? IconButton(
+                    // TODO design decision where to put this functionality
+                    key: Key('choose-network'),
+                    icon: Icon(Icons.menu, color: Colors.orange),
+                    onPressed: () => Navigator.of(context).pushNamed('/network'),
+                  )
+                : Container(),
           ])
         ],
       ),
@@ -149,10 +150,7 @@ class _ProfileState extends State<Profile> {
           subtitle: Text('$accIndex${Fmt.address(address)}', maxLines: 2),
           onTap: () => _onSelect(i, address),
           selected: address == store.account.currentAddress,
-          trailing: editIcon(
-            i,
-            address, 40, store
-          ),
+          trailing: editIcon(i, address, 40, store),
         ),
       );
     }).toList());
@@ -196,6 +194,7 @@ class _ProfileState extends State<Profile> {
                     child: ListView(
                       padding: EdgeInsets.all(16),
                       children: _buildAccountList(),
+                      // scrollDirection: Axis.horizontal,
                     ),
                   ),
                   ListTile(
@@ -206,14 +205,14 @@ class _ProfileState extends State<Profile> {
                   Row(
                     children: <Widget>[
                       Text('developer mode'),
-                    Checkbox(
-                      value: developerMode,
-                      onChanged: (bool value) {
-                        setState(() {
-                          developerMode = !developerMode;
-                        });
-                      },
-                  ),
+                      Checkbox(
+                        value: developerMode,
+                        onChanged: (bool value) {
+                          setState(() {
+                            developerMode = !developerMode;
+                          });
+                        },
+                      ),
                     ],
                   ),
                 ],
