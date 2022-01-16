@@ -25,6 +25,7 @@ class _ProfileState extends State<Profile> {
   final AppStore store;
   EndpointData _selectedNetwork;
   bool _networkChanging = false;
+  bool developerMode = false;
 
   void _loadAccountCache() {
     // refresh balance
@@ -107,7 +108,14 @@ class _ProfileState extends State<Profile> {
               icon: Image.asset('assets/images/assets/plus_indigo.png'),
               color: primaryColor,
               onPressed: () => _onCreateAccount(),
-            )
+            ),
+            developerMode ?
+              IconButton(
+                // TODO design decision where to put this functionality
+                key: Key('choose-network'),
+                icon: Icon(Icons.menu, color: Colors.orange),
+                onPressed: () => Navigator.of(context).pushNamed('/network'),
+              ) : Container(),
           ])
         ],
       ),
@@ -193,6 +201,19 @@ class _ProfileState extends State<Profile> {
                     title: Text(dic['pass.change']),
                     trailing: Icon(Icons.arrow_forward_ios, size: 18),
                     onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
+                  ),
+                  Row(
+                    children: <Widget>[
+                      Text('developer mode'),
+                    Checkbox(
+                      value: developerMode,
+                      onChanged: (bool value) {
+                        setState(() {
+                          developerMode = !developerMode;
+                        });
+                      },
+                  ),
+                    ],
                   ),
                 ],
               );
