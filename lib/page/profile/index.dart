@@ -148,6 +148,7 @@ class _ProfileState extends State<Profile> {
           title: Text(Fmt.accountName(context, i)),
           subtitle: Text('$accIndex${Fmt.address(address)}', maxLines: 2),
           onTap: () => _onSelect(i, address),
+          selected: address == store.account.currentAddress,
           trailing: editIcon(
             i,
             address, 40, store
