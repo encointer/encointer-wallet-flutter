@@ -235,7 +235,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
                   padding: EdgeInsets.all(16),
                   children: _buildAccountList(),
                 ),
-              )
+              ),
             ],
           );
         },

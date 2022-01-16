@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
+import 'package:encointer_wallet/common/components/editIcon.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/page/account/createAccountEntryPage.dart';
 import 'package:encointer_wallet/page/profile/account/changePasswordPage.dart';
@@ -69,25 +70,16 @@ class _ProfileState extends State<Profile> {
   }
 
   Future<void> _onSelect(AccountData i, String address) async {
-    bool isCurrentNetwork = _selectedNetwork.info == store.settings.endpoint.info;
-    if (address != store.account.currentAddress || !isCurrentNetwork) {
+    if (address != store.account.currentAddress) {
+      print("we are here changing from addres ${store.account.currentAddress} to $address");
+
       /// set current account
       store.account.setCurrentAccount(i.pubKey);
+      _loadAccountCache();
 
-      if (isCurrentNetwork) {
-        _loadAccountCache();
-
-        /// reload account info
-        webApi.assets.fetchBalance();
-      } else {
-        /// set new network and reload web view
-        // todo  remove the two options here, and fix the caching issue, explained in #219
-        store.encointer.setChosenCid();
-        store.encointer.communities = null;
-        await _reloadNetwork();
-      }
+      /// reload account info
+      webApi.assets.fetchBalance();
     }
-    Navigator.of(context).pop();
   }
 
   Future<void> _onCreateAccount() async {
@@ -110,7 +102,7 @@ class _ProfileState extends State<Profile> {
             style: Theme.of(context).textTheme.headline4,
           ),
           Row(children: <Widget>[
-            Text('ADD'),
+            Text(dic['add']),
             IconButton(
               icon: Image.asset('assets/images/assets/plus_indigo.png'),
               color: primaryColor,
@@ -147,7 +139,11 @@ class _ProfileState extends State<Profile> {
           leading: AddressIcon('', pubKey: i.pubKey, addressToCopy: address),
           title: Text(Fmt.accountName(context, i)),
           subtitle: Text('$accIndex${Fmt.address(address)}', maxLines: 2),
-          onTap: _networkChanging ? null : () => _onSelect(i, address),
+          onTap: () => _onSelect(i, address),
+          trailing: editIcon(
+            i,
+            address, 40, store
+          ),
         ),
       );
     }).toList());
@@ -187,7 +183,7 @@ class _ProfileState extends State<Profile> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    height: 250,
+                    height: 350,
                     child: ListView(
                       padding: EdgeInsets.all(16),
                       children: _buildAccountList(),

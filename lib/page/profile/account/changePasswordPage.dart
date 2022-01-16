@@ -1,5 +1,4 @@
 import 'package:encointer_wallet/common/components/roundedButton.dart';
-import 'package:encointer_wallet/page/profile/account/accountManagePage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
@@ -84,9 +83,11 @@ class _ChangePassword extends State<ChangePasswordPage> {
               content: Text(dic['pass.success.txt']),
               actions: <Widget>[
                 CupertinoButton(
-                  child: Text(I18n.of(context).home['ok']),
-                  onPressed: () => Navigator.popUntil(context, ModalRoute.withName(AccountManagePage.route)),
-                ),
+                    child: Text(I18n.of(context).home['ok']),
+                    onPressed: () => {
+                          Navigator.of(context).pop(),
+                          Navigator.of(context).pop(),
+                        }),
               ],
             );
           },
