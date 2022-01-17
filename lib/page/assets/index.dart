@@ -120,11 +120,16 @@ class _AssetsState extends State<Assets> {
                       },
                     ),
                     if (developerMode == true)
-                      IconButton(
+                      InkWell(
                         // TODO design decision where to put this functionality
                         key: Key('choose-network'),
-                        icon: Icon(Icons.menu, color: Colors.orange),
-                        onPressed: () => Navigator.of(context).pushNamed('/network'),
+                        child: Observer(
+                          builder: (_) => Text(
+                            "net: ${store.settings.endpoint.info}",
+                            style: TextStyle(color: Colors.orange),
+                          ),
+                        ),
+                        onTap: () => Navigator.of(context).pushNamed('/network'),
                       ),
                     // qr-receive text:
                     // Text(
