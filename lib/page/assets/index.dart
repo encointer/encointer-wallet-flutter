@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/iconTextButton.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
@@ -136,9 +137,19 @@ class _AssetsState extends State<Assets> {
                     //   '$accIndex${Fmt.address(store.account.currentAddress)}',
                     //   style: TextStyle(fontSize: 14),
                     // ),
-                    IconTextButton(
-                      iconData: Icons.person,
-                      text: Fmt.accountName(context, acc),
+                    InkWell(
+                      child: Column(
+                        children: [
+                          AddressIcon(
+                            '',
+                            pubKey: store.account.currentAccount.pubKey,
+                            tapToCopy: false,
+                          ),
+                          Text(
+                            Fmt.accountName(context, acc),
+                          ),
+                        ],
+                      ),
                       onTap: () => Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (BuildContext context) => AccountManagePage(store),
