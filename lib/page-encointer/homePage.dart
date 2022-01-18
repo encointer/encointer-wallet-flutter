@@ -1,4 +1,6 @@
-import 'package:encointer_wallet/page-encointer/encointerEntry.dart';
+import 'package:encointer_wallet/page/account/scanPage.dart';
+import 'package:encointer_wallet/page/assets/index.dart';
+import 'package:encointer_wallet/page/profile/contacts/contactListPage.dart';
 import 'package:encointer_wallet/page/assets/index.dart';
 import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/service/notification.dart';
@@ -35,14 +37,15 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
   List<BottomNavigationBarItem> _navBarItems(int activeItem) {
     Map<String, String> tabs = I18n.of(context).home;
     return _tabList
-        .map((i) => BottomNavigationBarItem(
-              icon: Image.asset(
-                  _tabList[activeItem] == i
-                      ? 'assets/images/public/${i}_indigo.png'
-                      : 'assets/images/public/${i}_dark.png',
-                  key: Key('tab-${i.toLowerCase()}')),
-              label: tabs[i.toLowerCase()],
-            ))
+        .map(
+          (i) => BottomNavigationBarItem(
+            icon: Image.asset(
+              _tabList[activeItem] == i ? 'assets/images/public/${i}_indigo.png' : 'assets/images/public/${i}_dark.png',
+              key: Key('tab-${i.toLowerCase()}'),
+            ),
+            label: tabs[i.toLowerCase()],
+          ),
+        )
         .toList();
   }
 
@@ -52,9 +55,11 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         case 0:
           return Assets(store);
         case 1:
-          return BazaarMain(store); // TODO provider pattern everywhere https://mobx.netlify.app/examples/todos
+          return BazaarMain(store);
         case 2:
-          return EncointerEntry(store);
+          return ScanPage();
+        case 3:
+          return ContactListPage(store);
         default:
           return Profile(store);
       }
@@ -63,9 +68,9 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         case 0:
           return Assets(store);
         case 1:
-          return BazaarMain(store);
+          return ScanPage();
         case 2:
-          return EncointerEntry(store);
+          return ContactListPage(store);
         default:
           return Profile(store);
       }
@@ -73,7 +78,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
   }
 
   List<Widget> _buildPages() {
-    return [0, 1, 2, 3].map((i) {
+    return [0, 1, 2, 3, 4].map((i) {
       if (i == 0) {
         return Assets(store);
       }
@@ -121,12 +126,14 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         ? [
             'Wallet',
             'Bazaar',
-            'Ceremonies',
+            'Scan',
+            'Contacts',
             'Profile',
           ]
         : [
             'Wallet',
-            'Ceremonies',
+            'Scan',
+            'Contacts',
             'Profile',
           ];
     return Scaffold(
