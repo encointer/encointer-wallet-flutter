@@ -1,7 +1,6 @@
 import 'package:encointer_wallet/page/account/scanPage.dart';
 import 'package:encointer_wallet/page/assets/index.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactListPage.dart';
-import 'package:encointer_wallet/page/assets/index.dart';
 import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -50,31 +49,22 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
   }
 
   Widget _getPage(i) {
-    if (store.settings.endpointIsGesell) {
-      switch (i) {
-        case 0:
-          return Assets(store);
-        case 1:
-          return BazaarMain(store);
-        case 2:
-          return ScanPage();
-        case 3:
-          return ContactListPage(store);
-        default:
-          return Profile(store);
-      }
-    } else {
-      switch (i) {
-        case 0:
-          return Assets(store);
-        case 1:
-          return ScanPage();
-        case 2:
-          return ContactListPage(store);
-        default:
-          return Profile(store);
-      }
+    final List<Function> tabBarClasses = [
+      () => Assets(store),
+      () => BazaarMain(store),
+      () => ScanPage(),
+      () => ContactListPage(store),
+      () => Profile(store),
+    ];
+    if (i >= tabBarClasses.length) {
+      // default case: last item
+      i = tabBarClasses.length - 1;
     }
+    if (!store.settings.endpointIsGesell && i >= 2) {
+      // skip BazaarMain if not in Gesell network
+      i -= 1;
+    }
+    return tabBarClasses[i]();
   }
 
   List<Widget> _buildPages() {
