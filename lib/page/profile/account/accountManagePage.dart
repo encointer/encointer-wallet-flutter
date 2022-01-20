@@ -44,9 +44,16 @@ class AccountManagePage extends StatelessWidget {
     CommunityIdentifier cid = store.encointer.chosenCid;
     print("balanceEntries: ${store.encointer.balanceEntries[cid]}");
     CommunityMetadata cm = store.encointer.communityMetadata;
-    String name = cm.name;
-    String symbol = cm.symbol;
-    symbol = 'logo';
+    print("communityMeta $cm");
+    String name = '';
+    String symbol = '';
+    if (cm != null) {
+      name = cm.name;
+      symbol = cm.symbol;
+    }
+    // symbol = 'logo';
+    print("symbol $symbol");
+    print("name" + name);
     // String symbol = store.settings.networkState.tokenSymbol ?? '';
     final String tokenView = Fmt.tokenView(symbol);
     return store.encointer.balanceEntries.entries.map((i) {
