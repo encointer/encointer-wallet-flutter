@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/page-encointer/encointerEntry.dart';
 import 'package:encointer_wallet/page/account/scanPage.dart';
 import 'package:encointer_wallet/page/assets/index.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactListPage.dart';
@@ -51,24 +52,18 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
   Widget _getPage(i) {
     final List<Function> tabBarClasses = [
       () => Assets(store),
-      () => BazaarMain(store),
+      if (store.settings.endpointIsGesell) () => BazaarMain(store), // dart collection if
+      () => EncointerEntry(store), // #272 we leave it in for now until we have a replacement
       () => ScanPage(),
       () => ContactListPage(store),
       () => Profile(store),
     ];
-    if (i >= tabBarClasses.length) {
-      // default case: last item
-      i = tabBarClasses.length - 1;
-    }
-    if (!store.settings.endpointIsGesell && i >= 2) {
-      // skip BazaarMain if not in Gesell network
-      i -= 1;
-    }
-    return tabBarClasses[i]();
+
+    return i < tabBarClasses.length ? tabBarClasses[i]() : tabBarClasses.last();
   }
 
   List<Widget> _buildPages() {
-    return [0, 1, 2, 3, 4].map((i) {
+    return [0, 1, 2, 3, 4, 5].map((i) {
       if (i == 0) {
         return Assets(store);
       }
@@ -112,20 +107,14 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    _tabList = store.settings.endpointIsGesell
-        ? [
-            'Wallet',
-            'Bazaar',
-            'Scan',
-            'Contacts',
-            'Profile',
-          ]
-        : [
-            'Wallet',
-            'Scan',
-            'Contacts',
-            'Profile',
-          ];
+    _tabList = [
+      'Wallet',
+      if (store.settings.endpointIsGesell) 'Bazaar', // dart collection if
+      'Ceremonies',
+      'Scan',
+      'Contacts',
+      'Profile',
+    ];
     return Scaffold(
       key: EncointerHomePage.encointerHomePageKey,
       body: PageView(
