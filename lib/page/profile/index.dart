@@ -24,7 +24,6 @@ class _ProfileState extends State<Profile> {
   _ProfileState(this.store);
   final AppStore store;
   EndpointData _selectedNetwork;
-  bool _networkChanging = false;
   bool developerMode = false;
 
   void _loadAccountCache() {
@@ -32,42 +31,6 @@ class _ProfileState extends State<Profile> {
     store.assets.clearTxs();
     store.assets.loadAccountCache();
     store.encointer.loadCache();
-  }
-
-  Future<void> _reloadNetwork() async {
-    setState(() {
-      _networkChanging = true;
-    });
-    showCupertinoDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return CupertinoAlertDialog(
-          title: Text(I18n.of(context).home['loading']),
-          content: Container(height: 64, child: CupertinoActivityIndicator()),
-        );
-      },
-    );
-
-    store.settings.setNetworkLoading(true);
-    await store.settings.setNetworkConst({}, needCache: false);
-    store.settings.setEndpoint(_selectedNetwork);
-
-    _loadAccountCache();
-    //webApi.closeWebView();
-
-    await store.settings.loadNetworkStateCache();
-
-    store.assets.loadCache();
-    store.encointer.loadCache();
-
-    webApi.launchWebview();
-    // changeTheme();
-    if (mounted) {
-      Navigator.of(context).pop();
-      setState(() {
-        _networkChanging = false;
-      });
-    }
   }
 
   Future<void> _onSelect(AccountData i, String address) async {
@@ -84,10 +47,6 @@ class _ProfileState extends State<Profile> {
   }
 
   Future<void> _onCreateAccount() async {
-    bool isCurrentNetwork = _selectedNetwork.info == store.settings.endpoint.info;
-    if (!isCurrentNetwork) {
-      await _reloadNetwork();
-    }
     Navigator.of(context).pushNamed(CreateAccountEntryPage.route);
   }
 
