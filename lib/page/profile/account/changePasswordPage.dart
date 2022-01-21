@@ -2,8 +2,8 @@ import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/page/profile/account/accountManagePage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
-import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
+import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
@@ -34,6 +34,8 @@ class _ChangePassword extends State<ChangePasswordPage> {
   bool _submitting = false;
 
   Future<void> _onSave() async {
+    // print("settingsStore is $settingsStore");
+
     if (_formKey.currentState.validate()) {
       setState(() {
         _submitting = true;
@@ -42,6 +44,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
       final String passOld = _passOldCtrl.text.trim();
       final String passNew = _passCtrl.text.trim();
       // check password
+      // todo: this doesn't make much sense anymore to checkAccountPassword according to account,
       final passChecked = await webApi.account.checkAccountPassword(store.currentAccount, passOld);
       if (passChecked == null) {
         showCupertinoDialog(
@@ -75,7 +78,10 @@ class _ChangePassword extends State<ChangePasswordPage> {
         acc['meta']['name'] = localAcc['name'];
         store.updateAccount(acc);
         // update encrypted seed after password updated
-        store.updateSeed(store.currentAccount.pubKey, _passOldCtrl.text, _passCtrl.text);
+        store.accountListAll.map((accountData) {
+          store.updateSeed(accountData.pubKey, _passOldCtrl.text, _passCtrl.text);
+        });
+        print("passwords: ${_passOldCtrl.text} ${_passCtrl.text}");
         settingsStore.setPin(passNew);
         showCupertinoDialog(
           context: context,
@@ -98,6 +104,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
 
   @override
   Widget build(BuildContext context) {
+    // print("store is $store");
     var dic = I18n.of(context).profile;
     var accDic = I18n.of(context).account;
     return Scaffold(
