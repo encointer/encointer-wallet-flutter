@@ -45,46 +45,45 @@ class AccountManagePage extends StatelessWidget {
     print("balanceEntries: ${store.encointer.balanceEntries[cid]}");
     CommunityMetadata cm = store.encointer.communityMetadata;
     print("communityMeta $cm");
-    String name = '';
-    String symbol = '';
-    if (cm != null) {
-      name = cm.name;
-      symbol = cm.symbol;
-    }
+    String name = cm != null ? cm.name : '';
+    String symbol = cm != null ? cm.symbol : '';
     // symbol = 'logo';
     print("symbol $symbol");
     print("name" + name);
     // String symbol = store.settings.networkState.tokenSymbol ?? '';
     final String tokenView = Fmt.tokenView(symbol);
     return store.encointer.balanceEntries.entries.map((i) {
-      return RoundedCard(
-        margin: EdgeInsets.only(top: 16),
-        child: ListTile(
-          leading: Container(
-            width: 36,
-            child: Image.asset('assets/images/assets/${symbol.isNotEmpty ? symbol : 'DOT'}.png'),
+      if (cm != null) {
+        return RoundedCard(
+          margin: EdgeInsets.only(top: 16),
+          child: ListTile(
+            leading: Container(
+              width: 36,
+              child: Image.asset('assets/images/assets/${symbol.isNotEmpty ? symbol : 'DOT'}.png'),
+            ),
+            title: Text(name),
+            subtitle: Text(tokenView),
+            trailing: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  i.value.principal.toString(),
+                  // Fmt.priceFloorBigInt(i.value.principal != null ? i.value.principal : BigInt.zero, decimals,
+                  //     lengthFixed: 3),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
+                ),
+                Container(width: 16),
+              ],
+            ),
+            // onTap: () {
+            //   Navigator.pushNamed(context, AssetPage.route,
+            //       arguments: AssetPageParams(token: symbol, isEncointerCommunityCurrency: false));
+            // },
           ),
-          title: Text(name),
-          subtitle: Text(tokenView),
-          trailing: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                i.value.principal.toString(),
-                // Fmt.priceFloorBigInt(i.value.principal != null ? i.value.principal : BigInt.zero, decimals,
-                //     lengthFixed: 3),
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
-              ),
-              Container(width: 16),
-            ],
-          ),
-          // onTap: () {
-          //   Navigator.pushNamed(context, AssetPage.route,
-          //       arguments: AssetPageParams(token: symbol, isEncointerCommunityCurrency: false));
-          // },
-        ),
-      );
+        );
+      }
+      else return Container();
     }).toList();
   }
 
