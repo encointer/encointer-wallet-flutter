@@ -6,8 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-class editIcon extends StatelessWidget {
-  editIcon(this.accountData, this.address, this.size, this.store);
+class EditIcon extends StatelessWidget {
+  EditIcon(this.accountData, this.address, this.size, this.store);
   final String address;
   final AccountData accountData;
   final double size;

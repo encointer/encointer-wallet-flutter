@@ -150,7 +150,7 @@ class _ProfileState extends State<Profile> {
           subtitle: Text('$accIndex${Fmt.address(address)}', maxLines: 2),
           onTap: () => _onSelect(i, address),
           selected: address == store.account.currentAddress,
-          trailing: editIcon(i, address, 40, store),
+          trailing: EditIcon(i, address, 40, store),
         ),
       );
     }).toList());
@@ -171,12 +171,12 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     final Map<String, String> dic = I18n.of(context).profile;
-    final Color grey = Theme.of(context).unselectedWidgetColor;
+    // final Color grey = Theme.of(context).unselectedWidgetColor;
 
     return Observer(
       builder: (_) {
-        AccountData acc = store.account.currentAccount;
-        Color primaryColor = Theme.of(context).primaryColor;
+        // AccountData acc = store.account.currentAccount;
+        // Color primaryColor = Theme.of(context).primaryColor;
         return Scaffold(
           appBar: AppBar(
             title: Text(dic['title']),
