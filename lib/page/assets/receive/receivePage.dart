@@ -15,7 +15,7 @@ class ReceivePage extends StatelessWidget {
   Widget build(BuildContext context) {
     bool isShare = false;
     final Map args = ModalRoute.of(context).settings.arguments;
-    if(args != null) {
+    if (args != null) {
       isShare = args['isShare'];
     }
 

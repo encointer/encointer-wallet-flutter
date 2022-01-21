@@ -82,8 +82,8 @@ class AccountManagePage extends StatelessWidget {
             // },
           ),
         );
-      }
-      else return Container();
+      } else
+        return Container();
     }).toList();
   }
 
