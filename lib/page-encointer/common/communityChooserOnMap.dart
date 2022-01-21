@@ -5,9 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import "package:latlong2/latlong.dart";
+import 'package:dart_geohash/dart_geohash.dart';
+import 'dart:convert';
 
 class CommunityChooserOnMap extends StatelessWidget {
   final AppStore store;
+  final geoHasher = GeoHasher();
 
   /// Used to trigger showing/hiding of popups.
   final PopupController _popupLayerController = PopupController();
@@ -56,18 +59,21 @@ class CommunityChooserOnMap extends StatelessWidget {
   }
 
   List<Marker> get _markers {
-    return store.encointer.communities == null? []:store.encointer.communities
-        .map((community) => Marker(
-            point: coordinatesOf(community),
-            width: 40,
-            height: 40,
-            builder: (_) => Icon(Icons.location_on, size: 40, color: Colors.blueAccent),
-            anchorPos: AnchorPos.align(AnchorAlign.top)))
-        .toList();
+    return store.encointer.communities == null
+        ? []
+        : store.encointer.communities
+            .map((community) => Marker(
+                point: coordinatesOf(community),
+                width: 40,
+                height: 40,
+                builder: (_) => Icon(Icons.location_on, size: 40, color: Colors.blueAccent),
+                anchorPos: AnchorPos.align(AnchorAlign.top)))
+            .toList();
   }
 
   LatLng coordinatesOf(CidName community) {
-    return LatLng(47.389712, 8.517076); // TODO obtain LatLng from geoHash in CidName
+    GeoHash coordinates = GeoHash(utf8.decode(community.cid.geohash));
+    return LatLng(coordinates.latitude(), coordinates.longitude());
   }
 }
 
