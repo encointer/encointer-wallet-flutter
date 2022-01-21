@@ -37,6 +37,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:encointer_wallet/store/settings.dart';
 
 import 'common/theme.dart';
 import 'mocks/api/api.dart';
@@ -54,6 +55,7 @@ class WalletApp extends StatefulWidget {
 
 class _WalletAppState extends State<WalletApp> {
   AppStore _appStore;
+  SettingsStore _settingsStore;
   Locale _locale = const Locale('en', '');
   ThemeData _theme = appTheme;
 
@@ -174,7 +176,7 @@ class _WalletAppState extends State<WalletApp> {
         ContactListPage.route: (_) => ContactListPage(_appStore),
         ContactPage.route: (_) => ContactPage(_appStore),
         ChangeNamePage.route: (_) => ChangeNamePage(_appStore.account),
-        ChangePasswordPage.route: (_) => ChangePasswordPage(_appStore.account),
+        ChangePasswordPage.route: (_) => ChangePasswordPage(_appStore.account, _settingsStore),
         SettingsPage.route: (_) => SettingsPage(_appStore.settings, _changeLang),
         ExportAccountPage.route: (_) => ExportAccountPage(_appStore.account),
         ExportResultPage.route: (_) => ExportResultPage(),

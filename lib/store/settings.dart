@@ -6,6 +6,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
+import 'package:encointer_wallet/service/substrateApi/api.dart';
 
 part 'settings.g.dart';
 
@@ -28,6 +29,9 @@ abstract class _SettingsStore with Store {
   String _getCacheKeyOfNetwork(String key) {
     return '${endpoint.info}_$key';
   }
+
+  @observable
+  String cachedPin = '';
 
   @observable
   bool loading = true;
@@ -142,6 +146,15 @@ abstract class _SettingsStore with Store {
   void setNetworkName(String name) {
     networkName = name;
     loading = false;
+  }
+
+  @action
+  void setPin(String pin) {
+    cachedPin = pin;
+    if (pin.isNotEmpty) {
+      rootStore.encointer.updateState();
+      webApi.encointer.getEncointerBalance();
+    }
   }
 
   @computed

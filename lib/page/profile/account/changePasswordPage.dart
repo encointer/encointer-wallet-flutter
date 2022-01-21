@@ -2,6 +2,7 @@ import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/page/profile/account/accountManagePage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
+import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
@@ -10,21 +11,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ChangePasswordPage extends StatefulWidget {
-  ChangePasswordPage(this.store);
+  ChangePasswordPage(this.store, this.settingsStore);
 
   static final String route = '/profile/password';
   final AccountStore store;
-
+  final SettingsStore settingsStore;
   @override
-  _ChangePassword createState() => _ChangePassword(store);
+  _ChangePassword createState() => _ChangePassword(store, settingsStore);
 }
 
 class _ChangePassword extends State<ChangePasswordPage> {
-  _ChangePassword(this.store);
+  _ChangePassword(this.store, this.settingsStore);
 
   final Api api = webApi;
   final AccountStore store;
-
+  final SettingsStore settingsStore;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _passOldCtrl = new TextEditingController();
   final TextEditingController _passCtrl = new TextEditingController();
@@ -75,7 +76,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
         store.updateAccount(acc);
         // update encrypted seed after password updated
         store.updateSeed(store.currentAccount.pubKey, _passOldCtrl.text, _passCtrl.text);
-        store.setPin(passNew);
+        settingsStore.setPin(passNew);
         showCupertinoDialog(
           context: context,
           builder: (BuildContext context) {
