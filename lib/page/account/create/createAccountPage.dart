@@ -111,14 +111,15 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       body: SafeArea(
         child: !_submitting
             ? CreateAccountForm(
-                setNewAccount: store.account.setNewAccount,
-                submitting: _submitting,
-                onSubmit: () {
-                  setState(() {
-                    _createAndImportAccount();
-                  });
-                },
-              )
+          setNewAccount: store.account.setNewAccount,
+          submitting: _submitting,
+          onSubmit: () {
+            setState(() {
+              _createAndImportAccount();
+            });
+          },
+          store: store,
+        )
             : Center(child: CupertinoActivityIndicator()),
       ),
     );
