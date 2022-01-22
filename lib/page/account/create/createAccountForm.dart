@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/components/roundedButton.dart';
+import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,11 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CreateAccountForm extends StatelessWidget {
-  CreateAccountForm({this.setNewAccount, this.submitting, this.onSubmit});
+  CreateAccountForm({this.setNewAccount, this.submitting, this.onSubmit, this.store});
 
   final Function setNewAccount;
   final Function onSubmit;
   final bool submitting;
+  final AppStore store;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -79,7 +81,13 @@ class CreateAccountForm extends StatelessWidget {
               text: I18n.of(context).account['create'],
               onPressed: () {
                 if (_formKey.currentState.validate()) {
-                  setNewAccount(_nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic['create.default'], _passCtrl.text);
+                  if (store.account.accountListAll.isEmpty)
+                    setNewAccount(_nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic['create.default'], _passCtrl.text);
+                  else {
+                    // todo: not good to set cachedPin. Should set the actual pin from account, because if user exits and reenters app during this step, cachedPin will be empty
+                    setNewAccount(
+                        _nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic['create.default'], store.settings.cachedPin);
+                  }
                   onSubmit();
                 }
               },

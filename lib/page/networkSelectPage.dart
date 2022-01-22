@@ -11,6 +11,7 @@ import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 
 class NetworkSelectPage extends StatefulWidget {
   NetworkSelectPage(this.store, this.changeTheme);
@@ -28,6 +29,8 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
 
   final AppStore store;
   final Function changeTheme;
+  bool _enteredPin = false;
+
 
   // Here we commented out the two not-active networks of Cantillon. When they will be relevant, they can be uncommented #232
   final List<EndpointData> networks = [
@@ -113,6 +116,31 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     Navigator.of(context).pushNamed(CreateAccountEntryPage.route);
   }
 
+  Future<void> _showPasswordDialog(BuildContext context) async {
+    await showCupertinoDialog(
+      context: context,
+      builder: (_) {
+        return Container(
+          child: PasswordInputDialog(
+            title: Text(I18n
+                .of(context)
+                .home['unlock']),
+            account: store.account.currentAccount,
+            onOk: (password) {
+              setState(() {
+                store.settings.setPin(password);
+              });
+            },
+            onCancel: () => Navigator.of(context).pop(),
+          ),
+        );
+      },
+    );
+    setState(() {
+      _enteredPin = true;
+    });
+  }
+
   List<Widget> _buildAccountList() {
     Color primaryColor = Theme.of(context).primaryColor;
     List<Widget> res = [
@@ -126,7 +154,16 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
           IconButton(
             icon: Image.asset('assets/images/assets/plus_indigo.png'),
             color: primaryColor,
-            onPressed: () => _onCreateAccount(),
+            onPressed:  () async => {
+              if(store.settings.cachedPin.isEmpty)
+                {
+                  await _showPasswordDialog(context),
+                  _onCreateAccount()
+                }
+              else {
+                _onCreateAccount(),
+    }
+            }
           )
         ],
       ),
