@@ -40,6 +40,7 @@ class PasswordInputDialog extends StatefulWidget {
 class _PasswordInputDialogState extends State<PasswordInputDialog> {
   final TextEditingController _passCtrl = new TextEditingController();
   bool _submitting = false;
+  bool passwordCorrect = false;
 
   Future<void> _onOk(String password) async {
     setState(() {
@@ -71,6 +72,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
       );
     } else {
       widget.onOk(password);
+      passwordCorrect = true;
     }
   }
 
@@ -126,8 +128,12 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
           ),
           onPressed: _submitting
               ? null
-              : () {
-                  _onOk(_passCtrl.text.trim());
+              : () async {
+                  await _onOk(_passCtrl.text.trim());
+                  // Navigator.of(context).pop();
+                  // if(passwordCorrect) {
+                  //   Navigator.of(context).pop();
+                  // }
                 },
         ),
       ],
