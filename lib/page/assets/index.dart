@@ -249,9 +249,6 @@ class _AssetsState extends State<Assets> {
   }
 
   Future<void> _showPasswordDialog(BuildContext context) async {
-    setState(() {
-      _enteredPin = true;
-    });
     await showCupertinoDialog(
       context: context,
       builder: (_) {
@@ -274,7 +271,7 @@ class _AssetsState extends State<Assets> {
       },
     );
     setState(() {
-      _enteredPin = false;
+      _enteredPin = true;
     });
   }
 
