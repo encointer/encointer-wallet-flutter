@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
+import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page/account/createAccountEntryPage.dart';
@@ -11,7 +12,6 @@ import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 
 class NetworkSelectPage extends StatefulWidget {
   NetworkSelectPage(this.store, this.changeTheme);
@@ -30,7 +30,6 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   final AppStore store;
   final Function changeTheme;
   bool _enteredPin = false;
-
 
   // Here we commented out the two not-active networks of Cantillon. When they will be relevant, they can be uncommented #232
   final List<EndpointData> networks = [
@@ -109,27 +108,30 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   }
 
   Future<void> _onCreateAccount() async {
-    bool isCurrentNetwork = _selectedNetwork.info == store.settings.endpoint.info;
-    if (!isCurrentNetwork) {
-      await _reloadNetwork();
-    }
+    // Navigator.of(context).pushNamed(CreateAccountEntryPage.route);
+    // bool isCurrentNetwork = _selectedNetwork.info == store.settings.endpoint.info;
+    // if (!isCurrentNetwork) {
+    //   await _reloadNetwork();
+    // }
     Navigator.of(context).pushNamed(CreateAccountEntryPage.route);
   }
 
   Future<void> _showPasswordDialog(BuildContext context) async {
+    setState(() {
+      _enteredPin = true;
+    });
     await showCupertinoDialog(
       context: context,
       builder: (_) {
         return Container(
           child: PasswordInputDialog(
-            title: Text(I18n
-                .of(context)
-                .home['unlock']),
+            title: Text(I18n.of(context).home['unlock']),
             account: store.account.currentAccount,
             onOk: (password) {
               setState(() {
                 store.settings.setPin(password);
               });
+              _onCreateAccount();
             },
             onCancel: () => Navigator.of(context).pop(),
           ),
@@ -137,7 +139,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       },
     );
     setState(() {
-      _enteredPin = true;
+      _enteredPin = false;
     });
   }
 
@@ -152,19 +154,18 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
             style: Theme.of(context).textTheme.headline4,
           ),
           IconButton(
-            icon: Image.asset('assets/images/assets/plus_indigo.png'),
-            color: primaryColor,
-            onPressed:  () async => {
-              if(store.settings.cachedPin.isEmpty)
-                {
-                  await _showPasswordDialog(context),
-                  _onCreateAccount()
-                }
-              else {
-                _onCreateAccount(),
-    }
-            }
-          )
+              icon: Image.asset('assets/images/assets/plus_indigo.png'),
+              color: primaryColor,
+              onPressed: () async => {
+                if (store.settings.cachedPin.isEmpty)
+                      {
+                        await _showPasswordDialog(context),
+                      }
+                    else
+                      {
+                        _onCreateAccount(),
+                      }
+                  })
         ],
       ),
     ];

@@ -41,7 +41,8 @@ class CreateAccountForm extends StatelessWidget {
                   ),
                   controller: _nameCtrl,
                 ),
-                TextFormField(
+                // todo: couldnt wrap this ternary in a single one, had to do two ternaries (for each pin)... clang: how to?
+                (store.account.accountListAll.isEmpty) ? TextFormField(
                   key: Key('create-account-pin'),
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
@@ -55,8 +56,8 @@ class CreateAccountForm extends StatelessWidget {
                   },
                   obscureText: true,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-                ),
-                TextFormField(
+                ) : Container(),
+                (store.account.accountListAll.isEmpty) ? TextFormField(
                   key: Key('create-account-pin2'),
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
@@ -70,7 +71,7 @@ class CreateAccountForm extends StatelessWidget {
                     return _passCtrl.text != v ? dic['create.password2.error'] : null;
                   },
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-                ),
+                ) : Container(),
               ],
             ),
           ),
