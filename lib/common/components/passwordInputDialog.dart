@@ -72,6 +72,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
       );
     } else {
       widget.onOk(password);
+      print("passwordCorrect is set to true");
       passwordCorrect = true;
     }
   }
@@ -130,10 +131,10 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
               ? null
               : () async {
                   await _onOk(_passCtrl.text.trim());
-                  // Navigator.of(context).pop();
-                  // if(passwordCorrect) {
-                  //   Navigator.of(context).pop();
-                  // }
+                  print("passwordCorrect $passwordCorrect");
+                  if(passwordCorrect) {
+                    Navigator.of(context).pop();
+                  }
                 },
         ),
       ],
