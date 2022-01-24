@@ -118,6 +118,18 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              const Padding(
+                padding: EdgeInsets.only(bottom: 2.0),
+              ),
+              Text(
+                widget.dataForThisMarker.cid.toFmtString(),
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 12.0,
+                  color: Colors.black54,
+                ),
+              ),
             ],
           ),
         ),
