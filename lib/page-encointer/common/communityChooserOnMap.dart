@@ -66,7 +66,7 @@ class CommunityChooserOnMap extends StatelessWidget {
             .map((community) => Marker(
                 // marker is not a widget, hence test_driver cannot find it (it can find it in the Icon inside, though).
                 // But we need the key to derive the popup key
-                key: Key('cid-${cnt}-marker'),
+                key: Key('cid-$cnt-marker'),
                 point: coordinatesOf(community),
                 width: 40,
                 height: 40,
