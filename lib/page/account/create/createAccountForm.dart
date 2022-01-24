@@ -42,36 +42,40 @@ class CreateAccountForm extends StatelessWidget {
                   controller: _nameCtrl,
                 ),
                 // todo: couldnt wrap this ternary in a single one, had to do two ternaries (for each pin)... clang: how to?
-                (store.account.accountListAll.isEmpty) ? TextFormField(
-                  key: Key('create-account-pin'),
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    icon: Icon(Icons.lock),
-                    hintText: dic['create.password'],
-                    labelText: dic['create.password'],
-                  ),
-                  controller: _passCtrl,
-                  validator: (v) {
-                    return Fmt.checkPassword(v.trim()) ? null : dic['create.password.error'];
-                  },
-                  obscureText: true,
-                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-                ) : Container(),
-                (store.account.accountListAll.isEmpty) ? TextFormField(
-                  key: Key('create-account-pin2'),
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    icon: Icon(Icons.lock),
-                    hintText: dic['create.password2'],
-                    labelText: dic['create.password2'],
-                  ),
-                  controller: _pass2Ctrl,
-                  obscureText: true,
-                  validator: (v) {
-                    return _passCtrl.text != v ? dic['create.password2.error'] : null;
-                  },
-                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-                ) : Container(),
+                (store.account.accountListAll.isEmpty)
+                    ? TextFormField(
+                        key: Key('create-account-pin'),
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          icon: Icon(Icons.lock),
+                          hintText: dic['create.password'],
+                          labelText: dic['create.password'],
+                        ),
+                        controller: _passCtrl,
+                        validator: (v) {
+                          return Fmt.checkPassword(v.trim()) ? null : dic['create.password.error'];
+                        },
+                        obscureText: true,
+                        inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                      )
+                    : Container(),
+                (store.account.accountListAll.isEmpty)
+                    ? TextFormField(
+                        key: Key('create-account-pin2'),
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                          icon: Icon(Icons.lock),
+                          hintText: dic['create.password2'],
+                          labelText: dic['create.password2'],
+                        ),
+                        controller: _pass2Ctrl,
+                        obscureText: true,
+                        validator: (v) {
+                          return _passCtrl.text != v ? dic['create.password2.error'] : null;
+                        },
+                        inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                      )
+                    : Container(),
               ],
             ),
           ),
