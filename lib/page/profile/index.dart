@@ -54,10 +54,6 @@ class _ProfileState extends State<Profile> {
   }
 
   Future<void> _showPasswordDialog(BuildContext context) async {
-    // todo discuss this with clangenb
-    setState(() {
-      _enteredPin = true;
-    });
     await showCupertinoDialog(
       context: context,
       builder: (_) {
@@ -69,7 +65,6 @@ class _ProfileState extends State<Profile> {
               setState(() {
                 store.settings.setPin(password);
               });
-              _onCreateAccount();
             },
             onCancel: () => Navigator.of(context).pop(),
           ),
@@ -78,7 +73,7 @@ class _ProfileState extends State<Profile> {
     );
     // todo discuss this with clangenb (its taken from networkSelect. when use setState, when not, why anonymous function etc.
     setState(() {
-      _enteredPin = false;
+      _enteredPin = true;
     });
   }
 
