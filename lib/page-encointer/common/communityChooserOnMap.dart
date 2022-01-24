@@ -64,11 +64,18 @@ class CommunityChooserOnMap extends StatelessWidget {
         ? []
         : store.encointer.communities
             .map((community) => Marker(
-                key: Key('cid-${cnt++}-marker'),
+                // marker is not a widget, hence test_driver cannot find it (it can find it in the Icon inside, though).
+                // But we need the key to derive the popup key
+                key: Key('cid-${cnt}-marker'),
                 point: coordinatesOf(community),
                 width: 40,
                 height: 40,
-                builder: (_) => Icon(Icons.location_on, size: 40, color: Colors.blueAccent),
+                builder: (_) => Icon(
+                      Icons.location_on,
+                      size: 40,
+                      color: Colors.blueAccent,
+                      key: Key('cid-${cnt++}-marker-icon'), // used for test_driver
+                    ),
                 anchorPos: AnchorPos.align(AnchorAlign.top)))
             .toList();
   }
@@ -125,8 +132,7 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
                 padding: EdgeInsets.only(bottom: 2.0),
               ),
               Text(
-                // widget.dataForThisMarker.cid.toFmtString(),
-                '${widget.marker.key.toString().substring(3, widget.marker.key.toString().length - 3)}-description',
+                widget.dataForThisMarker.cid.toFmtString(),
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
