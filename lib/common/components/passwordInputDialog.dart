@@ -132,9 +132,9 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
               : () async {
                   await _onOk(_passCtrl.text.trim());
                   print("passwordCorrect $passwordCorrect");
-                  if(passwordCorrect) {
-                    Navigator.of(context).pop();
-                  }
+                  // if(passwordCorrect) {
+                  //   Navigator.of(context).pop();
+                  // }
                 },
         ),
       ],

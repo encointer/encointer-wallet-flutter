@@ -1,5 +1,6 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/editIcon.dart';
+import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/page/account/createAccountEntryPage.dart';
 import 'package:encointer_wallet/page/profile/account/changePasswordPage.dart';
@@ -25,6 +26,8 @@ class _ProfileState extends State<Profile> {
   final AppStore store;
   EndpointData _selectedNetwork;
   bool developerMode = false;
+  // todo not sure if this is necessary
+  bool _enteredPin = false;
 
   void _loadAccountCache() {
     // refresh balance
@@ -50,6 +53,35 @@ class _ProfileState extends State<Profile> {
     Navigator.of(context).pushNamed(CreateAccountEntryPage.route);
   }
 
+  Future<void> _showPasswordDialog(BuildContext context) async {
+    // todo discuss this with clangenb
+    setState(() {
+      _enteredPin = true;
+    });
+    await showCupertinoDialog(
+      context: context,
+      builder: (_) {
+        return Container(
+          child: PasswordInputDialog(
+            title: Text(I18n.of(context).home['unlock']),
+            account: store.account.currentAccount,
+            onOk: (password) {
+              setState(() {
+                store.settings.setPin(password);
+              });
+              _onCreateAccount();
+            },
+            onCancel: () => Navigator.of(context).pop(),
+          ),
+        );
+      },
+    );
+    // todo discuss this with clangenb (its taken from networkSelect. when use setState, when not, why anonymous function etc.
+    setState(() {
+      _enteredPin = false;
+    });
+  }
+
   List<Widget> _buildAccountList() {
     final Map<String, String> dic = I18n.of(context).profile;
     Color primaryColor = Theme.of(context).primaryColor;
@@ -64,10 +96,18 @@ class _ProfileState extends State<Profile> {
           Row(children: <Widget>[
             Text(dic['add']),
             IconButton(
-              icon: Image.asset('assets/images/assets/plus_indigo.png'),
-              color: primaryColor,
-              onPressed: () => _onCreateAccount(),
-            ),
+                icon: Image.asset('assets/images/assets/plus_indigo.png'),
+                color: primaryColor,
+                onPressed: () async => {
+                      if (store.settings.cachedPin.isEmpty)
+                        {
+                          await _showPasswordDialog(context),
+                        }
+                      else
+                        {
+                          _onCreateAccount(),
+                        }
+                    }),
             developerMode
                 ? IconButton(
                     // TODO design decision where to put this functionality
