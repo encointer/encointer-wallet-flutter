@@ -108,11 +108,11 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   }
 
   Future<void> _onCreateAccount() async {
-    // Navigator.of(context).pushNamed(CreateAccountEntryPage.route);
-    // bool isCurrentNetwork = _selectedNetwork.info == store.settings.endpoint.info;
-    // if (!isCurrentNetwork) {
-    //   await _reloadNetwork();
-    // }
+    Navigator.of(context).pushNamed(CreateAccountEntryPage.route);
+    bool isCurrentNetwork = _selectedNetwork.info == store.settings.endpoint.info;
+    if (!isCurrentNetwork) {
+      await _reloadNetwork();
+    }
     Navigator.of(context).pushNamed(CreateAccountEntryPage.route);
   }
 
@@ -157,7 +157,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
               icon: Image.asset('assets/images/assets/plus_indigo.png'),
               color: primaryColor,
               onPressed: () async => {
-                if (store.settings.cachedPin.isEmpty)
+                    if (store.settings.cachedPin.isEmpty)
                       {
                         await _showPasswordDialog(context),
                       }

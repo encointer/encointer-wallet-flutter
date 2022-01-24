@@ -120,7 +120,6 @@ abstract class _AccountStore with Store {
     txStatus = status;
   }
 
-
   @action
   void setNewAccount(String name, String password) {
     newAccount.name = name;
