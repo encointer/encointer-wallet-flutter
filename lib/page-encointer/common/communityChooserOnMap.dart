@@ -11,7 +11,6 @@ import "package:latlong2/latlong.dart";
 
 class CommunityChooserOnMap extends StatelessWidget {
   final AppStore store;
-  final geoHasher = GeoHasher();
 
   /// Used to trigger showing/hiding of popups.
   final PopupController _popupLayerController = PopupController();
