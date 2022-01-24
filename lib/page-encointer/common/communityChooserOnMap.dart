@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:dart_geohash/dart_geohash.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
@@ -5,8 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import "package:latlong2/latlong.dart";
-import 'package:dart_geohash/dart_geohash.dart';
-import 'dart:convert';
 
 class CommunityChooserOnMap extends StatelessWidget {
   final AppStore store;
@@ -59,10 +60,12 @@ class CommunityChooserOnMap extends StatelessWidget {
   }
 
   List<Marker> get _markers {
+    int cnt = 0;
     return store.encointer.communities == null
         ? []
         : store.encointer.communities
             .map((community) => Marker(
+                key: Key('cid-${cnt++}-marker'),
                 point: coordinatesOf(community),
                 width: 40,
                 height: 40,
@@ -97,6 +100,7 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
   Widget build(BuildContext context) {
     return Card(
       child: InkWell(
+        key: Key('${widget.marker.key.toString().substring(3, widget.marker.key.toString().length - 3)}-description'),
         onTap: () {
           setState(() {
             store.encointer.setChosenCid(widget.dataForThisMarker.cid);
@@ -122,7 +126,8 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
                 padding: EdgeInsets.only(bottom: 2.0),
               ),
               Text(
-                widget.dataForThisMarker.cid.toFmtString(),
+                // widget.dataForThisMarker.cid.toFmtString(),
+                '${widget.marker.key.toString().substring(3, widget.marker.key.toString().length - 3)}-description',
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(

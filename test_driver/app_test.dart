@@ -47,7 +47,8 @@ void main() {
     // Note: The seconds test continues where the first one ended
     test('choosing cid', () async {
       await driver.tap(find.byValueKey('cid-avatar'));
-      await driver.tap(find.byValueKey('cid-dropdown'));
+      await driver.tap(find.byValueKey('cid-0-marker'));
+      await driver.tap(find.byValueKey('cid-0-marker-description'));
       await driver.tap(find.byValueKey('cid-0'));
 
       // Here we get the metadata because it is reset to null in the setChosenCid() method which is called, when a community is chosen
