@@ -105,7 +105,7 @@ class _AssetsState extends State<Assets> {
                   children: [
                     IconTextButton(
                       iconData: Icons.person_add_alt,
-                      text: dic['invite'],
+                      text: "dic['invite']",
                       onTap: () {
                         Navigator.pushNamed(
                           context,
@@ -179,16 +179,6 @@ class _AssetsState extends State<Assets> {
                         if (acc.address != '') {
                           Navigator.pushNamed(context, ReceivePage.route);
                         }
-                      },
-                    ),
-                    IconTextButton(
-                      text: dic['bazaar'],
-                      iconData: Icons.shopping_bag_sharp,
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          BazaarMain.route,
-                        );
                       },
                     ),
                     IconTextButton(
