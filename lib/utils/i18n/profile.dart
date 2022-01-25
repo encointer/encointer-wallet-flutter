@@ -45,6 +45,7 @@ const Map<String, String> enProfile = {
   'setting.prefix.list': 'Available Prefixes',
   'share': 'Share',
   'title': 'Profile',
+  'unlock': 'You need to enter your PIN to add a new account',
 };
 const Map<String, String> deProfile = {
   'about': 'Über',
@@ -93,6 +94,7 @@ const Map<String, String> deProfile = {
   'setting.prefix.list': 'Verfügbare Prefix',
   'share': 'Teilen',
   'title': 'Profil',
+  'unlock': 'Du musst deinen PIN eingeben um einen neuen Account hinzuzufügen',
 };
 const Map<String, String> zhProfile = {
   'title': '设置',
