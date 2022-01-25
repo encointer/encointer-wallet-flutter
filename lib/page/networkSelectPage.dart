@@ -29,7 +29,6 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
 
   final AppStore store;
   final Function changeTheme;
-  bool _enteredPin = false;
 
   // Here we commented out the two not-active networks of Cantillon. When they will be relevant, they can be uncommented #232
   final List<EndpointData> networks = [
@@ -134,9 +133,6 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         );
       },
     );
-    setState(() {
-      _enteredPin = true;
-    });
   }
 
   List<Widget> _buildAccountList() {

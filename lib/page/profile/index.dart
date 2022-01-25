@@ -27,7 +27,6 @@ class _ProfileState extends State<Profile> {
   EndpointData _selectedNetwork;
   bool developerMode = false;
   // todo not sure if this is necessary
-  bool _enteredPin = false;
 
   void _loadAccountCache() {
     // refresh balance
@@ -59,7 +58,7 @@ class _ProfileState extends State<Profile> {
       builder: (_) {
         return Container(
           child: PasswordInputDialog(
-            title: Text(I18n.of(context).home['unlock']),
+            title: Text(I18n.of(context).profile['unlock']),
             account: store.account.currentAccount,
             onOk: (password) {
               setState(() {
@@ -71,10 +70,6 @@ class _ProfileState extends State<Profile> {
         );
       },
     );
-    // todo discuss this with clangenb (its taken from networkSelect. when use setState, when not, why anonymous function etc.
-    setState(() {
-      _enteredPin = true;
-    });
   }
 
   List<Widget> _buildAccountList() {
