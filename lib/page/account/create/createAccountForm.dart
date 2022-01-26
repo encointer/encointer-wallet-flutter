@@ -89,9 +89,11 @@ class CreateAccountForm extends StatelessWidget {
                   if (store != null && store.account != null && store.account.accountListAll.isEmpty)
                     setNewAccount(_nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic['create.default'], _passCtrl.text);
                   else {
-                    // todo: not good to set cachedPin. Should set the actual pin from account, because if user exits and reenters app during this step, cachedPin will be empty, so we can take: store.account.newAccount.password
+                    // todo: not good to set cachedPin. Should set the actual pin from account, because if user exits and reenters app during this step, cachedPin will be empty, so we can take: store.account.newAccount.password, doesnt work.. account.newAccount.password seems to be empty
                     setNewAccount(
                         _nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic['create.default'], store.settings.cachedPin);
+                    print("newAccount.password: ${store.account.newAccount.password}");
+                    print("settings.cachedPin is: ${store.settings.cachedPin}");
                   }
                   onSubmit();
                 }
