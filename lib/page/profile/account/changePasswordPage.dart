@@ -82,6 +82,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
         });
         print("passwords: ${_passOldCtrl.text} ${_passCtrl.text}");
         settingsStore.setPin(passNew);
+        settingsStore.setPassword(passNew);
         showCupertinoDialog(
           context: context,
           builder: (BuildContext context) {
