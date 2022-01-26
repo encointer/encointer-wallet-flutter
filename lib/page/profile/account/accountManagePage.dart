@@ -5,7 +5,6 @@ import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
 import 'package:encointer_wallet/page/profile/account/changeNamePage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
-import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -40,17 +39,9 @@ class AccountManagePage extends StatelessWidget {
   }
 
   List<Widget> _getBalances() {
-    print("chosenCid: ${store.encointer.chosenCid}");
-    CommunityIdentifier cid = store.encointer.chosenCid;
-    print("balanceEntries: ${store.encointer.balanceEntries[cid]}");
     CommunityMetadata cm = store.encointer.communityMetadata;
-    print("communityMeta $cm");
     String name = cm != null ? cm.name : '';
     String symbol = cm != null ? cm.symbol : '';
-    // symbol = 'logo';
-    print("symbol $symbol");
-    print("name" + name);
-    // String symbol = store.settings.networkState.tokenSymbol ?? '';
     final String tokenView = Fmt.tokenView(symbol);
     return store.encointer.balanceEntries.entries.map((i) {
       if (cm != null) {
@@ -68,18 +59,12 @@ class AccountManagePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  i.value.principal.toString(),
-                  // Fmt.priceFloorBigInt(i.value.principal != null ? i.value.principal : BigInt.zero, decimals,
-                  //     lengthFixed: 3),
+                  Fmt.doubleFormat(store.encointer.communityBalance),
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
                 ),
                 Container(width: 16),
               ],
             ),
-            // onTap: () {
-            //   Navigator.pushNamed(context, AssetPage.route,
-            //       arguments: AssetPageParams(token: symbol, isEncointerCommunityCurrency: false));
-            // },
           ),
         );
       } else
@@ -90,7 +75,6 @@ class AccountManagePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Map<String, String> dic = I18n.of(context).profile;
-    AccountData acc = store.account.currentAccount;
     Color primaryColor = Theme.of(context).primaryColor;
     var args = {
       "isShare": true,
@@ -148,11 +132,6 @@ class AccountManagePage extends StatelessWidget {
                       ],
                     ),
                   ),
-                  // ListTile(
-                  //   title: Text(dic['export']),
-                  //   trailing: Icon(Icons.arrow_forward_ios, size: 18),
-                  //   onTap: () => Navigator.of(context).pushNamed(ExportAccountPage.route),
-                  // ),
                 ],
               ),
               Expanded(
@@ -169,9 +148,7 @@ class AccountManagePage extends StatelessWidget {
                     style: Theme.of(context).textTheme.button,
                   ),
                   onPressed: () {
-                    if (acc.address != '') {
-                      Navigator.pushNamed(context, ReceivePage.route, arguments: args);
-                    }
+                    Navigator.pushNamed(context, ReceivePage.route, arguments: args);
                   }),
               Row(
                 children: <Widget>[
