@@ -26,7 +26,6 @@ class _ProfileState extends State<Profile> {
   final AppStore store;
   EndpointData _selectedNetwork;
   bool developerMode = false;
-  // todo not sure if this is necessary
 
   void _loadAccountCache() {
     // refresh balance
@@ -159,7 +158,6 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    // Todo it works, but its not working nice, when last account deleted, it goes to account createpage, but shows shortly a red screen, find out why (nvaigator.dart: Failed assertion: line 4112 pos 12: '!_debugLocked': is not true.)
     if (store.account.accountListAll.isEmpty) {
       store.settings.setPassword('');
       Future.delayed(Duration.zero, () {
@@ -167,12 +165,9 @@ class _ProfileState extends State<Profile> {
       });
     }
     final Map<String, String> dic = I18n.of(context).profile;
-    // final Color grey = Theme.of(context).unselectedWidgetColor;
 
     return Observer(
       builder: (_) {
-        // AccountData acc = store.account.currentAccount;
-        // Color primaryColor = Theme.of(context).primaryColor;
         return Scaffold(
           appBar: AppBar(
             title: Text(dic['title']),

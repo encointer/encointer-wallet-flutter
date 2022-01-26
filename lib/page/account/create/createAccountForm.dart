@@ -90,12 +90,8 @@ class CreateAccountForm extends StatelessWidget {
                     setNewAccount(_nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic['create.default'], _passCtrl.text);
                     store.settings.setPassword(_passCtrl.text);
                   } else {
-                    // todo: not good to set cachedPin. Should set the actual pin from account, because if user exits and reenters app during this step, cachedPin will be empty, so we can take: store.account.newAccount.password, doesnt work.. account.newAccount.password seems to be empty
-                    // todo: IS WRONG TO SET cachedPin! if all accounts deleted, then it will take the old cachedPin, which is wrong! How should I get the last password? it should be globally set in settings!
                     setNewAccount(_nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic['create.default'],
                         store.settings.globalPassword);
-                    print("newAccount.password: ${store.account.newAccount.password}");
-                    print("settings.cachedPin is: ${store.settings.cachedPin}");
                   }
                   onSubmit();
                 }
