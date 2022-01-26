@@ -120,13 +120,12 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       builder: (_) {
         return Container(
           child: PasswordInputDialog(
-            title: Text(I18n.of(context).home['unlock']),
+            title: Text(I18n.of(context).profile['unlock']),
             account: store.account.currentAccount,
             onOk: (password) {
               setState(() {
                 store.settings.setPin(password);
               });
-              _onCreateAccount();
             },
             onCancel: () => Navigator.of(context).pop(),
           ),
