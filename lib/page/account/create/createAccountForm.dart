@@ -42,7 +42,7 @@ class CreateAccountForm extends StatelessWidget {
                   controller: _nameCtrl,
                 ),
                 // todo: couldnt wrap this ternary in a single one, had to do two ternaries (for each pin)... clang: how to?
-                (store.account.accountListAll.isEmpty)
+                (store != null && store.account != null && store.account.accountListAll.isEmpty)
                     ? TextFormField(
                         key: Key('create-account-pin'),
                         keyboardType: TextInputType.number,
@@ -59,7 +59,7 @@ class CreateAccountForm extends StatelessWidget {
                         inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                       )
                     : Container(),
-                (store.account.accountListAll.isEmpty)
+                (store != null && store.account != null && store.account.accountListAll.isEmpty)
                     ? TextFormField(
                         key: Key('create-account-pin2'),
                         keyboardType: TextInputType.number,
@@ -86,7 +86,7 @@ class CreateAccountForm extends StatelessWidget {
               text: I18n.of(context).account['create'],
               onPressed: () {
                 if (_formKey.currentState.validate()) {
-                  if (store.account.accountListAll.isEmpty)
+                  if (store != null && store.account != null && store.account.accountListAll.isEmpty)
                     setNewAccount(_nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic['create.default'], _passCtrl.text);
                   else {
                     // todo: not good to set cachedPin. Should set the actual pin from account, because if user exits and reenters app during this step, cachedPin will be empty
