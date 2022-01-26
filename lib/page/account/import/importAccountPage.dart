@@ -156,6 +156,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   }
 
   Future<void> _saveAccount(Map<String, dynamic> acc) async {
+    // That might be a problem, now we dont store pin anymore in account.newAccount.password, but in store.settings.cachedPin, maybe we should just set it to store.settings.password
     await store.account.addAccount(acc, store.account.newAccount.password);
     webApi.account.encodeAddress([acc['pubKey']]);
 
@@ -190,9 +191,11 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         body: SafeArea(
           child: !_submitting
               ? CreateAccountForm(
+                  //todo get rid of the setNewAccount method where password is stored
                   setNewAccount: store.account.setNewAccount,
                   submitting: _submitting,
                   onSubmit: _importAccount,
+                  store: store
                 )
               : Center(child: CupertinoActivityIndicator()),
         ),

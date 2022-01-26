@@ -8,7 +8,7 @@ import 'package:flutter/services.dart';
 
 class CreateAccountForm extends StatelessWidget {
   CreateAccountForm({this.setNewAccount, this.submitting, this.onSubmit, this.store});
-
+//todo get rid of the setNewAccount method where password is stored
   final Function setNewAccount;
   final Function onSubmit;
   final bool submitting;
@@ -89,7 +89,7 @@ class CreateAccountForm extends StatelessWidget {
                   if (store != null && store.account != null && store.account.accountListAll.isEmpty)
                     setNewAccount(_nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic['create.default'], _passCtrl.text);
                   else {
-                    // todo: not good to set cachedPin. Should set the actual pin from account, because if user exits and reenters app during this step, cachedPin will be empty
+                    // todo: not good to set cachedPin. Should set the actual pin from account, because if user exits and reenters app during this step, cachedPin will be empty, so we can take: store.account.newAccount.password
                     setNewAccount(
                         _nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic['create.default'], store.settings.cachedPin);
                   }
