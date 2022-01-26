@@ -1,12 +1,12 @@
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/config/node.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58PrefixListPage.dart';
+import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
 
 part 'settings.g.dart';
 
@@ -32,6 +32,9 @@ abstract class _SettingsStore with Store {
 
   @observable
   String cachedPin = '';
+
+  @observable
+  String globalPassword = '';
 
   @observable
   bool loading = true;
@@ -121,6 +124,11 @@ abstract class _SettingsStore with Store {
       loadNetworkStateCache(),
       loadContacts(),
     ]);
+  }
+
+  @action
+  void setPassword(String password) {
+    globalPassword = password;
   }
 
   @action

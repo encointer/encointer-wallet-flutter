@@ -161,6 +161,7 @@ class _ProfileState extends State<Profile> {
   Widget build(BuildContext context) {
     // Todo it works, but its not working nice, when last account deleted, it goes to account createpage, but shows shortly a red screen, find out why (nvaigator.dart: Failed assertion: line 4112 pos 12: '!_debugLocked': is not true.)
     if (store.account.accountListAll.isEmpty) {
+      store.settings.setPassword('');
       Future.delayed(Duration.zero, () {
         Navigator.popUntil(context, ModalRoute.withName('/'));
       });
