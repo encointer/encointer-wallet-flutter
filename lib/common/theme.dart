@@ -80,7 +80,7 @@ final appThemeEncointer = ThemeData(
   secondaryHeaderColor: Color(0xffbb5500),
   textTheme: TextTheme(
       headline1: TextStyle(
-        fontSize: 24,
+        fontSize: 66,
         color: Color(0xff0000ff),
       ),
       headline2: TextStyle(
@@ -88,10 +88,14 @@ final appThemeEncointer = ThemeData(
         color: Color(0xff00ffff),
       ),
       headline3: TextStyle(
-        fontSize: 20,
-        color: Color(0xff00ff00),
+        fontSize: 19,
+        color: Color(0xff4374A3),
       ),
-      headline4: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+      headline4: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.bold,
+        color: Color(0xff4374A3),
+      ),
       button: TextStyle(
         color: Colors.white,
         fontSize: 18,

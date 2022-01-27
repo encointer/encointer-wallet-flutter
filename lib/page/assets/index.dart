@@ -99,6 +99,15 @@ class _AssetsState extends State<Assets> {
 
             return Column(
               children: <Widget>[
+                Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(24),
+                    child: Text(
+                      "Home",
+                      style: Theme.of(context).textTheme.headline3,
+                    ),
+                  ),
+                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -111,8 +120,10 @@ class _AssetsState extends State<Assets> {
                             pubKey: store.account.currentAccount.pubKey,
                             tapToCopy: false,
                           ),
+                          SizedBox(height: 6),
                           Text(
                             Fmt.accountName(context, acc),
+                            style: Theme.of(context).textTheme.headline4,
                           ),
                         ],
                       ),

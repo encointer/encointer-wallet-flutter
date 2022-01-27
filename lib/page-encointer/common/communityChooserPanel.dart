@@ -110,6 +110,7 @@ class _CommunityWithCommunityChooserState extends State<CommunityWithCommunityCh
                       child: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio),
                     ),
                   ),
+                  SizedBox(height: 6),
                   Text(
                     store.encointer.communities != null && store.encointer.chosenCid != null
                         ? store.encointer.communities
@@ -117,6 +118,7 @@ class _CommunityWithCommunityChooserState extends State<CommunityWithCommunityCh
                             .name
                             .toString()
                         : '...',
+                    style: Theme.of(context).textTheme.headline4,
                   ),
                 ],
               ),
