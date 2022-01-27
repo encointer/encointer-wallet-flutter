@@ -144,6 +144,7 @@ class ApiAccount {
     Map<String, dynamic> acc = await apiRoot.evalJavascript(code, allowRepeat: true);
     return acc;
   }
+
   // Todo what is this doing?
   Future<dynamic> checkAccountPassword(AccountData account, String pass) async {
     String pubKey = account.pubKey;
@@ -293,11 +294,11 @@ class ApiAccount {
   }
 
   Future<Map> addSignatureAndSend(
-      String signed,
-      Map txInfo,
-      String pageTile,
-      String notificationTitle,
-      ) async {
+    String signed,
+    Map txInfo,
+    String pageTile,
+    String notificationTitle,
+  ) async {
     final String address = store.account.currentAddress;
     final Map res = await apiRoot.evalJavascript(
       'account.addSignatureAndSend("$address", "$signed")',
