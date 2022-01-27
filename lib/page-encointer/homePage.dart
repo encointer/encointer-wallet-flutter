@@ -49,52 +49,6 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         .toList();
   }
 
-  Widget _getPage(i) {
-    final List<Function> tabBarClasses = [
-      () => Assets(store),
-      if (store.settings.endpointIsGesell) () => BazaarMain(store), // dart collection if
-      () => EncointerEntry(store), // #272 we leave it in for now until we have a replacement
-      () => ScanPage(),
-      () => ContactsPage(store),
-      () => Profile(store),
-    ];
-
-    return i < tabBarClasses.length ? tabBarClasses[i]() : tabBarClasses.last();
-  }
-
-  List<Widget> _buildPages() {
-    return [0, 1, 2, 3, 4, 5].map((i) {
-      if (i == 0) {
-        return Assets(store);
-      }
-
-      return Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          Container(
-            width: double.infinity,
-            height: double.infinity,
-            color: Theme.of(context).canvasColor,
-          ),
-          Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                alignment: Alignment.topLeft,
-                image: AssetImage("assets/images/${i == 1 ? 'staking' : 'assets'}/top_bg_indigo.png"),
-                fit: BoxFit.contain,
-              ),
-            ),
-          ),
-          Scaffold(
-            backgroundColor: Colors.transparent,
-            body: _getPage(i),
-          )
-        ],
-      );
-    }).toList();
-  }
-
   @override
   void initState() {
     if (_notificationPlugin == null) {
@@ -129,7 +83,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
           if (store.settings.endpointIsGesell) BazaarMain(store), // dart collection if
           EncointerEntry(store), // #272 we leave it in for now until we have a replacement
           ScanPage(),
-          ContactListPage(store),
+          ContactsPage(store),
           Profile(store),
         ],
       ),
