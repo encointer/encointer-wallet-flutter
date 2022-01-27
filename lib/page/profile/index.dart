@@ -86,20 +86,16 @@ class _ProfileState extends State<Profile> {
       if (store.account.pubKeyAddressMap[_selectedNetwork.ss58] != null) {
         address = store.account.pubKeyAddressMap[_selectedNetwork.ss58][i.pubKey];
       }
-      final bool isCurrentNetwork = _selectedNetwork.info == store.settings.endpoint.info;
-      final accInfo = store.account.accountIndexMap[i.address];
-      final String accIndex = isCurrentNetwork && accInfo != null ? accInfo['accountIndex'] : '';
-      final double padding = accIndex.isEmpty ? 0 : 7;
       return RoundedCard(
         border: address == store.account.currentAddress
             ? Border.all(color: Colors.amber)
             : Border.all(color: Theme.of(context).cardColor),
         margin: EdgeInsets.only(bottom: 16),
-        padding: EdgeInsets.only(top: padding, bottom: padding),
+        padding: EdgeInsets.only(top: 7, bottom: 7),
         child: ListTile(
           leading: AddressIcon('', pubKey: i.pubKey, addressToCopy: address),
           title: Text(Fmt.accountName(context, i)),
-          subtitle: Text('$accIndex${Fmt.address(address)}', maxLines: 2),
+          subtitle: Text('${Fmt.address(address)}', maxLines: 2),
           onTap: () => _onSelect(i, address),
           selected: address == store.account.currentAddress,
           trailing: EditIcon(i, address, 40, store),
