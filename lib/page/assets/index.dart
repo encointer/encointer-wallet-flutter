@@ -118,6 +118,23 @@ class _AssetsState extends State<Assets> {
                         );
                       },
                     ),
+                    if (developerMode == true)
+                      Column(
+                        children: [
+                          InkWell(
+                            // TODO design decision where to put this functionality
+                            key: Key('choose-network'),
+                            child: Observer(
+                              builder: (_) => Text(
+                                "net: ${store.settings.endpoint.info}",
+                                style: TextStyle(color: Colors.orange),
+                              ),
+                            ),
+                            onTap: () => Navigator.of(context).pushNamed('/network'),
+                          ),
+                          store.settings.isConnected ? Icon(Icons.check) : CupertinoActivityIndicator(),
+                        ],
+                      ),
                     // qr-receive text:
                     // Text(
                     //   '$accIndex${Fmt.address(store.account.currentAddress)}',
