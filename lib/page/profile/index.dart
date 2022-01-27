@@ -73,42 +73,7 @@ class _ProfileState extends State<Profile> {
 
   List<Widget> _buildAccountList() {
     final Map<String, String> dic = I18n.of(context).profile;
-    Color primaryColor = Theme.of(context).primaryColor;
-    List<Widget> res = [
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
-          Text(
-            '${dic['accounts']} in ${_selectedNetwork.info.toUpperCase()}',
-            style: Theme.of(context).textTheme.headline4,
-          ),
-          Row(children: <Widget>[
-            Text(dic['add']),
-            IconButton(
-                icon: Image.asset('assets/images/assets/plus_indigo.png'),
-                color: primaryColor,
-                onPressed: () async => {
-                      if (store.settings.cachedPin.isEmpty)
-                        {
-                          await _showPasswordDialog(context),
-                        }
-                      else
-                        {
-                          _onCreateAccount(),
-                        }
-                    }),
-            developerMode
-                ? IconButton(
-                    // TODO design decision where to put this functionality
-                    key: Key('choose-network'),
-                    icon: Icon(Icons.menu, color: Colors.orange),
-                    onPressed: () => Navigator.of(context).pushNamed('/network'),
-                  )
-                : Container(),
-          ])
-        ],
-      ),
-    ];
+    List<Widget> res = _buildAddAccount(dic);
 
     /// first item is current account
     List<AccountData> accounts = [store.account.currentAccount];
@@ -123,8 +88,7 @@ class _ProfileState extends State<Profile> {
       }
       final bool isCurrentNetwork = _selectedNetwork.info == store.settings.endpoint.info;
       final accInfo = store.account.accountIndexMap[i.address];
-      final String accIndex =
-          isCurrentNetwork && accInfo != null && accInfo['accountIndex'] != null ? '${accInfo['accountIndex']}\n' : '';
+      final String accIndex = isCurrentNetwork && accInfo != null ? accInfo['accountIndex'] : '';
       final double padding = accIndex.isEmpty ? 0 : 7;
       return RoundedCard(
         border: address == store.account.currentAddress
@@ -145,21 +109,49 @@ class _ProfileState extends State<Profile> {
     return res;
   }
 
+  List<Widget> _buildAddAccount(Map<String, String> dic) {
+    Color primaryColor = Theme.of(context).primaryColor;
+    List<Widget> res = [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Text(
+            '${dic['accounts']} in ${_selectedNetwork.info.toUpperCase()}',
+            style: Theme.of(context).textTheme.headline4,
+          ),
+          Row(children: <Widget>[
+            Text(dic['add']),
+            IconButton(
+                icon: Image.asset('assets/images/assets/plus_indigo.png'),
+                color: primaryColor,
+                onPressed: () =>
+                    {store.settings.cachedPin.isEmpty ? _showPasswordDialog(context) : _onCreateAccount()}),
+            developerMode
+                ? IconButton(
+                    // TODO design decision where to put this functionality
+                    key: Key('choose-network'),
+                    icon: Icon(Icons.menu, color: Colors.orange),
+                    onPressed: () => Navigator.of(context).pushNamed('/network'),
+                  )
+                : Container(),
+          ])
+        ],
+      ),
+    ];
+    return res;
+  }
+
   @override
   void initState() {
     super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      setState(() {
-        _selectedNetwork = store.settings.endpoint;
-      });
-    });
   }
 
   @override
   Widget build(BuildContext context) {
+    _selectedNetwork = store.settings.endpoint;
+    // if all accounts are deleted, go to createAccountPage
     if (store.account.accountListAll.isEmpty) {
-      store.settings.setPassword('');
+      store.settings.setPin('');
       Future.delayed(Duration.zero, () {
         Navigator.popUntil(context, ModalRoute.withName('/'));
       });
@@ -195,7 +187,7 @@ class _ProfileState extends State<Profile> {
                   ),
                   Row(
                     children: <Widget>[
-                      Text('developer mode'),
+                      Text(dic['developer']),
                       Checkbox(
                         value: developerMode,
                         onChanged: (bool value) {

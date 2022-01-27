@@ -34,9 +34,6 @@ abstract class _SettingsStore with Store {
   String cachedPin = '';
 
   @observable
-  String globalPassword = '';
-
-  @observable
   bool loading = true;
 
   @observable
@@ -124,11 +121,6 @@ abstract class _SettingsStore with Store {
       loadNetworkStateCache(),
       loadContacts(),
     ]);
-  }
-
-  @action
-  void setPassword(String password) {
-    globalPassword = password;
   }
 
   @action

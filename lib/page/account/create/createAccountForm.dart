@@ -42,7 +42,7 @@ class CreateAccountForm extends StatelessWidget {
                   controller: _nameCtrl,
                 ),
                 // todo: couldnt wrap this ternary in a single one, had to do two ternaries (for each pin)... clang: how to?
-                (store != null && store.account != null && store.account.accountListAll.isEmpty)
+                (store.account.accountListAll.isEmpty)
                     ? TextFormField(
                         key: Key('create-account-pin'),
                         keyboardType: TextInputType.number,
@@ -59,7 +59,7 @@ class CreateAccountForm extends StatelessWidget {
                         inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                       )
                     : Container(),
-                (store != null && store.account != null && store.account.accountListAll.isEmpty)
+                (store.account.accountListAll.isEmpty)
                     ? TextFormField(
                         key: Key('create-account-pin2'),
                         keyboardType: TextInputType.number,
@@ -89,10 +89,10 @@ class CreateAccountForm extends StatelessWidget {
                   if (store != null && store.account != null && store.account.accountListAll.isEmpty) {
                     setNewAccount(_nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic['create.default'], _passCtrl.text);
                     // Here the global password is set to the password entered
-                    store.settings.setPassword(_passCtrl.text);
+                    store.settings.setPin(_passCtrl.text);
                   } else {
-                    setNewAccount(_nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic['create.default'],
-                        store.settings.globalPassword);
+                    setNewAccount(
+                        _nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic['create.default'], store.settings.cachedPin);
                   }
                   onSubmit();
                 }

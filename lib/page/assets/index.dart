@@ -256,15 +256,15 @@ class _AssetsState extends State<Assets> {
       context: context,
       builder: (_) {
         return WillPopScope(
-          child: PasswordInputDialog(
-            title: Text(I18n.of(context).home['unlock']),
-            account: store.account.currentAccount,
-            onOk: (password) {
+          child: showPasswordInputDialog(
+            context,
+            store.account.currentAccount,
+            Text(I18n.of(context).home['unlock']),
+                (password) {
               setState(() {
                 store.settings.setPin(password);
               });
             },
-            onCancel: () => _showPasswordNotEnteredDialog(context),
           ),
           onWillPop: () {
             // handles back button press

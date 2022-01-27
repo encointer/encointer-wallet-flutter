@@ -33,8 +33,6 @@ class _ChangePassword extends State<ChangePasswordPage> {
   bool _submitting = false;
 
   Future<void> _onSave() async {
-    // print("settingsStore is $settingsStore");
-
     if (_formKey.currentState.validate()) {
       setState(() {
         _submitting = true;
@@ -82,7 +80,6 @@ class _ChangePassword extends State<ChangePasswordPage> {
         });
         print("passwords: ${_passOldCtrl.text} ${_passCtrl.text}");
         settingsStore.setPin(passNew);
-        settingsStore.setPassword(passNew);
         showCupertinoDialog(
           context: context,
           builder: (BuildContext context) {
@@ -106,7 +103,6 @@ class _ChangePassword extends State<ChangePasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    // print("store is $store");
     var dic = I18n.of(context).profile;
     var accDic = I18n.of(context).account;
     return Scaffold(
