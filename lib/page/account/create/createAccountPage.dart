@@ -111,7 +111,6 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       body: SafeArea(
         child: !_submitting
             ? CreateAccountForm(
-                //todo get rid of the setNewAccount method where password is stored
                 setNewAccount: store.account.setNewAccount,
                 submitting: _submitting,
                 onSubmit: () {
