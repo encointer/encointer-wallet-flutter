@@ -5,10 +5,8 @@ import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/iconTextButton.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaarMain.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
-import 'package:encointer_wallet/page/assets/asset/assetPage.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
 import 'package:encointer_wallet/page/profile/account/accountManagePage.dart';
@@ -68,6 +66,7 @@ class _AssetsState extends State<Assets> {
       Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
     }
 
+    var developerMode = true;
     return SafeArea(
       child: ListView(
         padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
@@ -103,43 +102,6 @@ class _AssetsState extends State<Assets> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    IconTextButton(
-                      iconData: Icons.person_add_alt,
-                      text: "dic['invite']",
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          TransferPage.route,
-                          arguments: TransferPageParams(
-                              redirect: AssetPage.route,
-                              symbol: store.encointer.chosenCid.toFmtString(),
-                              isEncointerCommunityCurrency: true,
-                              communitySymbol: store.encointer.communitySymbol),
-                        );
-                      },
-                    ),
-                    if (developerMode == true)
-                      Column(
-                        children: [
-                          InkWell(
-                            // TODO design decision where to put this functionality
-                            key: Key('choose-network'),
-                            child: Observer(
-                              builder: (_) => Text(
-                                "net: ${store.settings.endpoint.info}",
-                                style: TextStyle(color: Colors.orange),
-                              ),
-                            ),
-                            onTap: () => Navigator.of(context).pushNamed('/network'),
-                          ),
-                          store.settings.isConnected ? Icon(Icons.check) : CupertinoActivityIndicator(),
-                        ],
-                      ),
-                    // qr-receive text:
-                    // Text(
-                    //   '$accIndex${Fmt.address(store.account.currentAddress)}',
-                    //   style: TextStyle(fontSize: 14),
-                    // ),
                     InkWell(
                       child: Column(
                         children: [
@@ -218,6 +180,26 @@ class _AssetsState extends State<Assets> {
                     ),
                   ],
                 ),
+                if (developerMode == true)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 32),
+                    child: Column(
+                      children: [
+                        InkWell(
+                          // TODO design decision where to put this functionality
+                          key: Key('choose-network'),
+                          child: Observer(
+                            builder: (_) => Text(
+                              "net: ${store.settings.endpoint.info}",
+                              style: TextStyle(color: Colors.orange),
+                            ),
+                          ),
+                          onTap: () => Navigator.of(context).pushNamed('/network'),
+                        ),
+                        store.settings.isConnected ? Icon(Icons.check) : CupertinoActivityIndicator(),
+                      ],
+                    ),
+                  ),
               ],
             );
           }),
