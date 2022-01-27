@@ -124,7 +124,14 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
             _tabIndex = index;
           });
         },
-        children: _buildPages(),
+        children: [
+          Assets(store),
+          if (store.settings.endpointIsGesell) BazaarMain(store), // dart collection if
+          EncointerEntry(store), // #272 we leave it in for now until we have a replacement
+          ScanPage(),
+          ContactListPage(store),
+          Profile(store),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _tabIndex,
