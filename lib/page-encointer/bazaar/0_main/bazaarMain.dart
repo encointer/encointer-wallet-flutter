@@ -43,1022 +43,808 @@ class BazaarMain extends StatelessWidget {
 
   @override
   Widget build(BuildContext) {
-    return Container(
-      width: 391,
-      height: 844,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(40),
-        color: Colors.white,
-      ),
-      padding: const EdgeInsets.only(
-        bottom: 62,
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Container(
-            width: 390,
-            color: Color(0xff353535),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Container(
-                    height: double.infinity,
-                    padding: const EdgeInsets.only(
-                      top: 15,
-                      bottom: 10,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 54,
-                          child: Text(
-                            "9:41",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontFamily: "SF Pro Text",
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 24.33,
-                              height: 11.33,
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: 22,
-                                    height: 11.33,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(2.67),
-                                      border: Border.all(
-                                        color: Colors.white,
-                                        width: 1,
-                                      ),
-                                    ),
-                                    padding: const EdgeInsets.all(2),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          width: 18,
-                                          height: 7.33,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(1.33),
-                                            color: Colors.white,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(width: 1),
-                                  Opacity(
-                                    opacity: 0.40,
-                                    child: Container(
-                                      width: 1.33,
-                                      height: 4,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
+    var blue43 = Color(0xff4374a3);
+    var bluef4 = Color(0xfff4f8f9);
+    var gray66 = Color(0xff666666);
+    var black35 = Color(0xff353535);
+    return SafeArea(
+      child: Scaffold(
+        body: Container(
+          padding: const EdgeInsets.only(
+            bottom: 62,
           ),
-          SizedBox(height: 4.86),
-          Container(
-            width: 390,
-            color: Colors.white,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(
-                  child: Container(
-                    height: double.infinity,
-                    padding: const EdgeInsets.only(
-                      top: 15,
-                      bottom: 10,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(
-                          width: 54,
-                          child: Text(
-                            "9:41",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              color: Color(0xff353535),
-                              fontSize: 15,
-                              fontFamily: "SF Pro Text",
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 10),
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              width: 24.33,
-                              height: 11.33,
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    width: 22,
-                                    height: 11.33,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(2.67),
-                                      border: Border.all(
-                                        color: Color(0xff353535),
-                                        width: 1,
-                                      ),
-                                    ),
-                                    padding: const EdgeInsets.all(2),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Container(
-                                          width: 18,
-                                          height: 7.33,
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(1.33),
-                                            color: Color(0xff353535),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(width: 1),
-                                  Opacity(
-                                    opacity: 0.40,
-                                    child: Container(
-                                      width: 1.33,
-                                      height: 4,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(8),
-                                        color: Color(0xff353535),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 4.86),
-          Container(
-            width: 391,
-            height: 81,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(40),
-                topRight: Radius.circular(40),
-                bottomLeft: Radius.circular(0),
-                bottomRight: Radius.circular(0),
-              ),
-              border: Border.all(
-                color: Colors.white,
-                width: 0.50,
-              ),
-              color: Colors.white,
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  "Home",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: "Roboto",
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 4.86),
-          Row(
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Container(
-                width: 120,
-                height: 120,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(80),
-                  border: Border.all(
-                    color: Color(0xffebebeb),
-                    width: 1,
+              Padding(
+                padding: const EdgeInsets.all(26),
+                child: Center(
+                  child: Text(
+                    "Home",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: "Roboto",
+                      fontWeight: FontWeight.w700,
+                      color: blue43,
+                    ),
                   ),
                 ),
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 71.70,
-                      height: 44,
-                      child: FlutterLogo(size: 44),
+              ),
+              SizedBox(height: 4.86),
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 120,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(80),
+                      border: Border.all(
+                        color: Color(0xffebebeb),
+                        width: 1,
+                      ),
                     ),
-                  ],
-                ),
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          width: 71.70,
+                          height: 44,
+                          child: FlutterLogo(size: 44),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(width: 24),
+                  Container(
+                    width: 120,
+                    height: 120,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: FlutterLogo(size: 120),
+                  ),
+                ],
               ),
-              SizedBox(width: 24),
+              SizedBox(height: 4.86),
               Container(
-                width: 120,
-                height: 120,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-                child: FlutterLogo(size: 120),
-              ),
-            ],
-          ),
-          SizedBox(height: 4.86),
-          Container(
-            width: 330,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Column(
+                width: 330,
+                child: Column(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      "13.46",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 80,
-                        fontFamily: "Roboto",
-                        fontWeight: FontWeight.w300,
-                      ),
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "13.46",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 80,
+                            fontFamily: "Roboto",
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                        Text(
+                          "BALANCE, LEU",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            color: gray66,
+                            fontSize: 14,
+                            fontFamily: "Roboto",
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(
-                      "BALANCE, LEU",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xff666666),
-                        fontSize: 14,
-                        fontFamily: "Roboto",
-                        fontWeight: FontWeight.w500,
+                    SizedBox(height: 20),
+                    Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Container(
+                              height: 60,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(15),
+                                  topRight: Radius.circular(0),
+                                  bottomLeft: Radius.circular(15),
+                                  bottomRight: Radius.circular(0),
+                                ),
+                                color: bluef4,
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    width: 24,
+                                    height: 24,
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 24,
+                                          height: 24,
+                                          child: Stack(
+                                            children: [
+                                              Positioned.fill(
+                                                child: Align(
+                                                  alignment: Alignment.topLeft,
+                                                  child: Container(
+                                                    width: 22,
+                                                    height: 22,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(8),
+                                                      border: Border.all(
+                                                        color: blue43,
+                                                        width: 2,
+                                                      ),
+                                                      color: Color(0x7f7f3a44),
+                                                    ),
+                                                    padding: const EdgeInsets.only(
+                                                      top: 6,
+                                                      bottom: 5,
+                                                    ),
+                                                    child: Column(
+                                                      mainAxisSize: MainAxisSize.min,
+                                                      mainAxisAlignment: MainAxisAlignment.end,
+                                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                                      children: [
+                                                        Container(
+                                                          width: 5.66,
+                                                          height: 5.66,
+                                                          decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(8),
+                                                          ),
+                                                          child: FlutterLogo(size: 5.660003662109375),
+                                                        ),
+                                                        SizedBox(height: 3.17),
+                                                        Container(
+                                                          width: 14,
+                                                          height: 2.97,
+                                                          decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(8),
+                                                            border: Border.all(
+                                                              color: blue43,
+                                                              width: 2,
+                                                            ),
+                                                            color: Color(0x7f7f3a44),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Opacity(
+                                                opacity: 0,
+                                                child: Container(
+                                                  width: 24,
+                                                  height: 24,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(8),
+                                                    color: Color(0x7f7f3a44),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Text(
+                                    "Receive",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: blue43,
+                                      fontSize: 19,
+                                      fontFamily: "Roboto",
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(width: 2),
+                          Expanded(
+                            child: Container(
+                              height: 60,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(0),
+                                  topRight: Radius.circular(15),
+                                  bottomLeft: Radius.circular(0),
+                                  bottomRight: Radius.circular(15),
+                                ),
+                                color: bluef4,
+                              ),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    "Send",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      color: blue43,
+                                      fontSize: 19,
+                                      fontFamily: "Roboto",
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  SizedBox(width: 10),
+                                  Container(
+                                    width: 24,
+                                    height: 24,
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 24,
+                                          height: 24,
+                                          child: Stack(
+                                            children: [
+                                              Positioned.fill(
+                                                child: Align(
+                                                  alignment: Alignment.topLeft,
+                                                  child: Container(
+                                                    width: 22,
+                                                    height: 22,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius: BorderRadius.circular(8),
+                                                      border: Border.all(
+                                                        color: blue43,
+                                                        width: 2,
+                                                      ),
+                                                      color: Color(0x7f7f3a44),
+                                                    ),
+                                                    padding: const EdgeInsets.only(
+                                                      top: 6,
+                                                      bottom: 5,
+                                                    ),
+                                                    child: Column(
+                                                      mainAxisSize: MainAxisSize.min,
+                                                      mainAxisAlignment: MainAxisAlignment.end,
+                                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                                      children: [
+                                                        Container(
+                                                          width: 5.66,
+                                                          height: 5.66,
+                                                          decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(8),
+                                                          ),
+                                                          child: FlutterLogo(size: 5.660003662109375),
+                                                        ),
+                                                        SizedBox(height: 3.17),
+                                                        Container(
+                                                          width: 14,
+                                                          height: 2.97,
+                                                          decoration: BoxDecoration(
+                                                            borderRadius: BorderRadius.circular(8),
+                                                            border: Border.all(
+                                                              color: blue43,
+                                                              width: 2,
+                                                            ),
+                                                            color: Color(0x7f7f3a44),
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              Opacity(
+                                                opacity: 0,
+                                                child: Container(
+                                                  width: 24,
+                                                  height: 24,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(8),
+                                                    color: Color(0x7f7f3a44),
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
-                Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Container(
-                          height: 60,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(15),
-                              topRight: Radius.circular(0),
-                              bottomLeft: Radius.circular(15),
-                              bottomRight: Radius.circular(0),
-                            ),
-                            color: Color(0xfff4f8f9),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 24,
-                                height: 24,
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      width: 24,
-                                      height: 24,
-                                      child: Stack(
-                                        children: [
-                                          Positioned.fill(
-                                            child: Align(
-                                              alignment: Alignment.topLeft,
-                                              child: Container(
-                                                width: 22,
-                                                height: 22,
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(8),
-                                                  border: Border.all(
-                                                    color: Color(0xff4374a3),
-                                                    width: 2,
-                                                  ),
-                                                  color: Color(0x7f7f3a44),
-                                                ),
-                                                padding: const EdgeInsets.only(
-                                                  top: 6,
-                                                  bottom: 5,
-                                                ),
-                                                child: Column(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  mainAxisAlignment: MainAxisAlignment.end,
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                                  children: [
-                                                    Container(
-                                                      width: 5.66,
-                                                      height: 5.66,
-                                                      decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(8),
-                                                      ),
-                                                      child: FlutterLogo(size: 5.660003662109375),
-                                                    ),
-                                                    SizedBox(height: 3.17),
-                                                    Container(
-                                                      width: 14,
-                                                      height: 2.97,
-                                                      decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(8),
-                                                        border: Border.all(
-                                                          color: Color(0xff4374a3),
-                                                          width: 2,
-                                                        ),
-                                                        color: Color(0x7f7f3a44),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Opacity(
-                                            opacity: 0,
-                                            child: Container(
-                                              width: 24,
-                                              height: 24,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(8),
-                                                color: Color(0x7f7f3a44),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                              Text(
-                                "Receive",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Color(0xff4374a3),
-                                  fontSize: 19,
-                                  fontFamily: "Roboto",
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 2),
-                      Expanded(
-                        child: Container(
-                          height: 60,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(0),
-                              topRight: Radius.circular(15),
-                              bottomLeft: Radius.circular(0),
-                              bottomRight: Radius.circular(15),
-                            ),
-                            color: Color(0xfff4f8f9),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Send",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Color(0xff4374a3),
-                                  fontSize: 19,
-                                  fontFamily: "Roboto",
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                              Container(
-                                width: 24,
-                                height: 24,
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Container(
-                                      width: 24,
-                                      height: 24,
-                                      child: Stack(
-                                        children: [
-                                          Positioned.fill(
-                                            child: Align(
-                                              alignment: Alignment.topLeft,
-                                              child: Container(
-                                                width: 22,
-                                                height: 22,
-                                                decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(8),
-                                                  border: Border.all(
-                                                    color: Color(0xff4374a3),
-                                                    width: 2,
-                                                  ),
-                                                  color: Color(0x7f7f3a44),
-                                                ),
-                                                padding: const EdgeInsets.only(
-                                                  top: 6,
-                                                  bottom: 5,
-                                                ),
-                                                child: Column(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  mainAxisAlignment: MainAxisAlignment.end,
-                                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                                  children: [
-                                                    Container(
-                                                      width: 5.66,
-                                                      height: 5.66,
-                                                      decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(8),
-                                                      ),
-                                                      child: FlutterLogo(size: 5.660003662109375),
-                                                    ),
-                                                    SizedBox(height: 3.17),
-                                                    Container(
-                                                      width: 14,
-                                                      height: 2.97,
-                                                      decoration: BoxDecoration(
-                                                        borderRadius: BorderRadius.circular(8),
-                                                        border: Border.all(
-                                                          color: Color(0xff4374a3),
-                                                          width: 2,
-                                                        ),
-                                                        color: Color(0x7f7f3a44),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                          Opacity(
-                                            opacity: 0,
-                                            child: Container(
-                                              width: 24,
-                                              height: 24,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(8),
-                                                color: Color(0x7f7f3a44),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+              ),
+              SizedBox(height: 4.86),
+              Container(
+                width: 331,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: bluef4,
                 ),
-              ],
-            ),
-          ),
-          SizedBox(height: 4.86),
-          Container(
-            width: 331,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: Color(0xfff4f8f9),
-            ),
-            padding: const EdgeInsets.all(24),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  width: double.infinity,
-                  height: 8,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 291,
-                        height: 8,
-                        color: Color(0xffe8f0f2),
-                        padding: const EdgeInsets.only(
-                          right: 74,
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 191,
-                              height: 8,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: Color(0xff4374a3),
-                              ),
-                            ),
-                            SizedBox(width: 11),
-                            Container(
-                              width: 2,
-                              height: 8,
-                              color: Color(0xfff4f8f9),
-                            ),
-                            SizedBox(width: 11),
-                            Container(
-                              width: 2,
-                              height: 8,
-                              color: Color(0xfff4f8f9),
-                            ),
-                          ],
-                        ),
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: double.infinity,
+                      height: 8,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
                       ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 16),
-                Container(
-                  width: double.infinity,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Next ceremony in 12 days",
-                              style: TextStyle(
-                                color: Color(0xff666666),
-                                fontSize: 14,
-                                fontFamily: "Roboto",
-                                fontWeight: FontWeight.w700,
-                              ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 291,
+                            height: 8,
+                            color: Color(0xffe8f0f2),
+                            padding: const EdgeInsets.only(
+                              right: 74,
                             ),
-                            SizedBox(height: 6),
-                            Row(
+                            child: Row(
                               mainAxisSize: MainAxisSize.min,
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
                                 Container(
-                                  width: 110,
-                                  height: 28,
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 18,
-                                        height: 18,
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          children: [
-                                            Container(
-                                              width: 18,
-                                              height: 18,
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(8),
-                                              ),
-                                              child: FlutterLogo(size: 18),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(width: 6),
-                                      Text(
-                                        "1.2.2022",
-                                        style: TextStyle(
-                                          color: Color(0xff353535),
-                                          fontSize: 22,
-                                        ),
-                                      ),
-                                    ],
+                                  width: 191,
+                                  height: 8,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: blue43,
                                   ),
                                 ),
-                                SizedBox(width: 16),
+                                SizedBox(width: 11),
+                                Container(
+                                  width: 2,
+                                  height: 8,
+                                  color: bluef4,
+                                ),
+                                SizedBox(width: 11),
+                                Container(
+                                  width: 2,
+                                  height: 8,
+                                  color: bluef4,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(height: 16),
+                    Container(
+                      width: double.infinity,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "Next ceremony in 12 days",
+                                  style: TextStyle(
+                                    color: gray66,
+                                    fontSize: 14,
+                                    fontFamily: "Roboto",
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                SizedBox(height: 6),
                                 Row(
                                   mainAxisSize: MainAxisSize.min,
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
                                     Container(
-                                      width: 18,
-                                      height: 18,
+                                      width: 110,
+                                      height: 28,
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.end,
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         children: [
                                           Container(
                                             width: 18,
                                             height: 18,
-                                            decoration: BoxDecoration(
-                                              borderRadius: BorderRadius.circular(8),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                Container(
+                                                  width: 18,
+                                                  height: 18,
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(8),
+                                                  ),
+                                                  child: FlutterLogo(size: 18),
+                                                ),
+                                              ],
                                             ),
-                                            child: FlutterLogo(size: 18),
+                                          ),
+                                          SizedBox(width: 6),
+                                          Text(
+                                            "1.2.2022",
+                                            style: TextStyle(
+                                              color: black35,
+                                              fontSize: 22,
+                                            ),
                                           ),
                                         ],
                                       ),
                                     ),
-                                    SizedBox(width: 6),
-                                    Text(
-                                      "12:00",
-                                      style: TextStyle(
-                                        color: Color(0xff353535),
-                                        fontSize: 22,
-                                      ),
+                                    SizedBox(width: 16),
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      children: [
+                                        Container(
+                                          width: 18,
+                                          height: 18,
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                width: 18,
+                                                height: 18,
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(8),
+                                                ),
+                                                child: FlutterLogo(size: 18),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        SizedBox(width: 6),
+                                        Text(
+                                          "12:00",
+                                          style: TextStyle(
+                                            color: black35,
+                                            fontSize: 22,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
                               ],
                             ),
-                          ],
-                        ),
-                      ),
-                      Container(
-                        width: 24,
-                        height: 24,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 24,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: FlutterLogo(size: 24),
+                          ),
+                          Container(
+                            width: 24,
+                            height: 24,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: FlutterLogo(size: 24),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 16),
-                Container(
-                  width: double.infinity,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Color(0x19000000),
-                        blurRadius: 24,
-                        offset: Offset(0, 0),
-                      ),
-                      BoxShadow(
-                        color: Color(0x19000000),
-                        blurRadius: 7,
-                        offset: Offset(0, 2),
-                      ),
-                    ],
-                    gradient: LinearGradient(
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                      colors: [Color(0xff3880bd), Color(0xff3869ac)],
                     ),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 24,
-                        height: 24,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 24,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: FlutterLogo(size: 24),
+                    SizedBox(height: 16),
+                    Container(
+                      width: double.infinity,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color(0x19000000),
+                            blurRadius: 24,
+                            offset: Offset(0, 0),
+                          ),
+                          BoxShadow(
+                            color: Color(0x19000000),
+                            blurRadius: 7,
+                            offset: Offset(0, 2),
+                          ),
+                        ],
+                        gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [Color(0xff3880bd), Color(0xff3869ac)],
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 24,
+                            height: 24,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: FlutterLogo(size: 24),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(width: 10),
-                      Text(
-                        "Register now",
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 19,
-                          fontFamily: "Roboto",
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 4.86),
-          Container(
-            width: 330,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              color: Colors.white,
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 24,
-                        height: 24,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 24,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: FlutterLogo(size: 24),
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            "Register now",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 19,
+                              fontFamily: "Roboto",
+                              fontWeight: FontWeight.w500,
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-                SizedBox(width: 4),
-                Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 24,
-                        height: 24,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 24,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: FlutterLogo(size: 24),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(width: 4),
-                Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Color(0xfff4f8f9),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 24,
-                        height: 24,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 24,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: FlutterLogo(size: 24),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(width: 4),
-                Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 24,
-                        height: 24,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 24,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: FlutterLogo(size: 24),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(width: 4),
-                Container(
-                  width: 60,
-                  height: 60,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 24,
-                        height: 24,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 24,
-                              height: 24,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: FlutterLogo(size: 24),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 4.86),
-          Container(
-            width: 14,
-            height: 2,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(2),
-              gradient: LinearGradient(
-                begin: Alignment.centerLeft,
-                end: Alignment.centerRight,
-                colors: [Color(0xff3880bd), Color(0xff3869ac)],
               ),
-            ),
+              SizedBox(height: 4.86),
+              Container(
+                width: 330,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.white,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 24,
+                            height: 24,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: FlutterLogo(size: 24),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 4),
+                    Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 24,
+                            height: 24,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: FlutterLogo(size: 24),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 4),
+                    Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        color: bluef4,
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 24,
+                            height: 24,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: FlutterLogo(size: 24),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 4),
+                    Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 24,
+                            height: 24,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: FlutterLogo(size: 24),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: 4),
+                    Container(
+                      width: 60,
+                      height: 60,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Container(
+                            width: 24,
+                            height: 24,
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  width: 24,
+                                  height: 24,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                  ),
+                                  child: FlutterLogo(size: 24),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(height: 4.86),
+              Container(
+                width: 14,
+                height: 2,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(2),
+                  gradient: LinearGradient(
+                    begin: Alignment.centerLeft,
+                    end: Alignment.centerRight,
+                    colors: [Color(0xff3880bd), Color(0xff3869ac)],
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
