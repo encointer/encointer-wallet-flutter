@@ -118,7 +118,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
           ),
           onPressed: _submitting
               ? null
-              : () async {
+              : () {
                   _onOk(_passCtrl.text.trim());
                 },
         ),
