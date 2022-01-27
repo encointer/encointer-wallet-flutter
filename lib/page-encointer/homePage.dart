@@ -71,6 +71,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
     ];
     return Scaffold(
       key: EncointerHomePage.encointerHomePageKey,
+      backgroundColor: Colors.white,
       body: PageView(
         controller: _pageController,
         onPageChanged: (index) {
