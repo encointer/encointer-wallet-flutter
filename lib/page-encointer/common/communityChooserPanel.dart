@@ -97,10 +97,28 @@ class _CommunityWithCommunityChooserState extends State<CommunityWithCommunityCh
           padding: const EdgeInsets.fromLTRB(0, 16, 0, 16),
           child: InkWell(
               key: Key('cid-avatar'),
-              child: CircleAvatar(
-                backgroundColor: Colors.white,
-                radius: 48,
-                child: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio),
+              child: Column(
+                children: [
+                  Card(
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(96),
+                    ),
+                    child: SizedBox(
+                      width: 96,
+                      height: 96,
+                      child: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio),
+                    ),
+                  ),
+                  Text(
+                    store.encointer.communities != null && store.encointer.chosenCid != null
+                        ? store.encointer.communities
+                            .firstWhere((c) => c.cid == store.encointer.chosenCid)
+                            .name
+                            .toString()
+                        : '...',
+                  ),
+                ],
               ),
               onTap: () {
                 Navigator.push(

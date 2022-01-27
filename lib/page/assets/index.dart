@@ -100,8 +100,9 @@ class _AssetsState extends State<Assets> {
             return Column(
               children: <Widget>[
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    CommunityWithCommunityChooser(store),
                     InkWell(
                       child: Column(
                         children: [
@@ -123,7 +124,6 @@ class _AssetsState extends State<Assets> {
                     ),
                   ],
                 ),
-                CommunityWithCommunityChooser(store),
                 Observer(
                   builder: (_) {
                     return (store.encointer.communityName != null) & (store.encointer.chosenCid != null)

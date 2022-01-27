@@ -75,16 +75,21 @@ final appThemeKusama = ThemeData(
 );
 
 final appThemeEncointer = ThemeData(
-  primarySwatch: Colors.indigo,
+  // primarySwatch: Colors.green,
+  primaryColor: Color(0xFFFF55AA),
+  secondaryHeaderColor: Color(0xffbb5500),
   textTheme: TextTheme(
       headline1: TextStyle(
         fontSize: 24,
+        color: Color(0xff0000ff),
       ),
       headline2: TextStyle(
         fontSize: 22,
+        color: Color(0xff00ffff),
       ),
       headline3: TextStyle(
         fontSize: 20,
+        color: Color(0xff00ff00),
       ),
       headline4: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
       button: TextStyle(
