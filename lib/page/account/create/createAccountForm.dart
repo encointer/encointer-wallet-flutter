@@ -88,6 +88,7 @@ class CreateAccountForm extends StatelessWidget {
                 if (_formKey.currentState.validate()) {
                   if (store != null && store.account != null && store.account.accountListAll.isEmpty) {
                     setNewAccount(_nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic['create.default'], _passCtrl.text);
+                    // Here the global password is set to the password entered
                     store.settings.setPassword(_passCtrl.text);
                   } else {
                     setNewAccount(_nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic['create.default'],

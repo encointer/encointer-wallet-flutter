@@ -43,7 +43,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
       final String passOld = _passOldCtrl.text.trim();
       final String passNew = _passCtrl.text.trim();
       // check password
-      // todo: this doesn't make much sense anymore to checkAccountPassword according to account,
+      // Todo what is this doing?
       final passChecked = await webApi.account.checkAccountPassword(store.currentAccount, passOld);
       if (passChecked == null) {
         showCupertinoDialog(
