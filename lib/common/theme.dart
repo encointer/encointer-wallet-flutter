@@ -76,30 +76,32 @@ final appThemeKusama = ThemeData(
 
 final appThemeEncointer = ThemeData(
   // primarySwatch: Colors.green,
-  primaryColor: Color(0xFFFF55AA),
-  secondaryHeaderColor: Color(0xffbb5500),
+  primaryColor: Color(0xff4374A3),
   textTheme: TextTheme(
-      headline1: TextStyle(
-        fontSize: 66,
-        color: Color(0xff0000ff),
-      ),
-      headline2: TextStyle(
-        fontSize: 22,
-        color: Color(0xff00ffff),
-      ),
-      headline3: TextStyle(
-        fontSize: 19,
-        color: Color(0xff4374A3),
-      ),
-      headline4: TextStyle(
-        fontSize: 14,
-        fontWeight: FontWeight.bold,
-        color: Color(0xff4374A3),
-      ),
-      button: TextStyle(
-        color: Colors.white,
-        fontSize: 18,
-      )),
+    headline1: TextStyle(
+      fontSize: 66,
+      color: Color(0xff4374A3),
+    ),
+    headline2: TextStyle(
+      fontSize: 22,
+      color: Color(0xff4374A3),
+    ),
+    headline3: TextStyle(
+      fontSize: 19,
+      color: Color(0xff4374A3),
+    ),
+    headline4: TextStyle(
+      fontSize: 14,
+      color: Color(0xff4374A3),
+    ),
+  ),
+  elevatedButtonTheme: ElevatedButtonThemeData(
+    style: ElevatedButton.styleFrom(
+      primary: Color(0xffF4F8F9),
+      onPrimary: Color(0xff4374A3),
+      shadowColor: Colors.transparent,
+    ),
+  ),
 );
 
 final appThemeLaminar = ThemeData(

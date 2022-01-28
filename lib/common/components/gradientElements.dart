@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:flutter/material.dart';
 
 class PrimaryButton extends StatelessWidget {
   final Function onPressed;
@@ -24,6 +24,7 @@ class PrimaryButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(vertical: 16), // make splash animation as high as the container
           primary: Colors.transparent,
+          onPrimary: Colors.white,
           shadowColor: Colors.transparent,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(20),

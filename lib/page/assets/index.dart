@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:encointer_wallet/common/components/addressIcon.dart';
+import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/components/iconTextButton.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
@@ -19,7 +20,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:encointer_wallet/common/components/gradientElements.dart';
 
 class Assets extends StatefulWidget {
   Assets(this.store);
@@ -144,7 +144,8 @@ class _AssetsState extends State<Assets> {
                               TextGradient('${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ'),
                               Text(
                                 "Balance, ${store.encointer.communitySymbol}",
-                                style: Theme.of(context).textTheme.headline4,
+                                style: Theme.of(context).textTheme.headline4.copyWith(
+                                  color: Color(0xff666666),),
                               ),
                             ],
                           )
@@ -165,21 +166,29 @@ class _AssetsState extends State<Assets> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    IconTextButton(
-                      text: dic['receive'],
-                      iconData: Icons.download_sharp,
+                    ElevatedButton(
+                      child: Row(
+                        children: [
+                          Icon(Icons.download_sharp),
+                          Text(dic['receive']),
+                        ],
+                      ),
                       key: Key('qr-receive'),
-                      onTap: () {
+                      onPressed: () {
                         if (acc.address != '') {
                           Navigator.pushNamed(context, ReceivePage.route);
                         }
                       },
                     ),
-                    IconTextButton(
+                    ElevatedButton(
                       key: Key('transfer'),
-                      text: dic['transfer'],
-                      iconData: Icons.upload_sharp,
-                      onTap: store.encointer.communityBalance != null
+                      child: Row(
+                        children: [
+                          Icon(Icons.upload_sharp),
+                          Text(dic['transfer']),
+                        ],
+                      ),
+                      onPressed: store.encointer.communityBalance != null
                           ? () {
                               Navigator.pushNamed(
                                 context,
