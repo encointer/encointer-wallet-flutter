@@ -19,6 +19,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:encointer_wallet/common/components/gradientElements.dart';
 
 class Assets extends StatefulWidget {
   Assets(this.store);
@@ -138,11 +139,14 @@ class _AssetsState extends State<Assets> {
                 Observer(
                   builder: (_) {
                     return (store.encointer.communityName != null) & (store.encointer.chosenCid != null)
-                        ? Container(
-                            margin: EdgeInsets.only(bottom: 32),
-                            child: Text(
-                                '${Fmt.doubleFormat(store.encointer.communityBalance)} ${store.encointer.communitySymbol}',
-                                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54)),
+                        ? Column(
+                            children: [
+                              TextGradient('${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ'),
+                              Text(
+                                "Balance, ${store.encointer.communitySymbol}",
+                                style: Theme.of(context).textTheme.headline4,
+                              ),
+                            ],
                           )
                         : Container(
                             margin: EdgeInsets.only(top: 16),

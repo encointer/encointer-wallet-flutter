@@ -120,3 +120,10 @@ final appThemeLaminar = ThemeData(
         fontSize: 18,
       )),
 );
+
+// TODO later: maybe turn into a function that takes the 2 colors and returns the gradient
+final encointerGradient = LinearGradient(
+  begin: Alignment(-.9, 0),
+  end: Alignment(0.1, -.1),
+  colors: <Color>[Color(0xff3880BD), Color(0xff3969AC)],
+);
