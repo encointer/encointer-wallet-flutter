@@ -15,6 +15,7 @@ const Map<String, String> enProfile = {
   'contact.exist': 'Address exists already',
   'contact.memo': 'Memo',
   'contact.name': 'Name',
+  'contact.name.save': 'Save Name',
   'contact.name.error': 'Name can not be empty',
   'contact.name.exist': 'Name exists already',
   'contact.save': 'Save',

@@ -30,13 +30,11 @@ class _AccountManagePageState extends State<AccountManagePage> {
   final Api api = webApi;
   TextEditingController _nameCtrl;
   bool _isEditingText = false;
-  String initialText;
 
   @override
   void initState() {
     super.initState();
     _nameCtrl = TextEditingController(text: store.account.currentAccount.name);
-    initialText = store.account.currentAccount.name;
   }
 
   @override
@@ -96,36 +94,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
     }).toList();
   }
 
-  // Widget _editTitleTextField() {
-  //   if (_isEditingText)
-  //     return Center(
-  //       child: TextField(
-  //         onSubmitted: (newValue){
-  //           setState(() {
-  //             initialText = newValue;
-  //             _isEditingText =false;
-  //           });
-  //         },
-  //         autofocus: true,
-  //         controller: _nameCtrl,
-  //       ),
-  //     );
-  //   return InkWell(
-  //       onTap: () {
-  //     setState(() {
-  //       _isEditingText = true;
-  //     });
-  //   },
-  //   child: Text(
-  //   initialText,
-  //   style: TextStyle(
-  //   color: Colors.black,
-  //   fontSize: 18.0,
-  //   ),
-  //   );
-  // }
-
-
   @override
   Widget build(BuildContext context) {
     final Map<String, String> dic = I18n.of(context).profile;
@@ -137,10 +105,11 @@ class _AccountManagePageState extends State<AccountManagePage> {
       builder: (_) => Scaffold(
         appBar: AppBar(
           title: TextFormField(
+            // Do you want decoration? don't think its necessary..
             decoration: InputDecoration(
-              // hintText: dic['contact.name'],
-              // labelText: dic['contact.name'],
-            ),
+                // hintText: dic['contact.name'],
+                // labelText: dic['contact.name'],
+                ),
             controller: _nameCtrl,
             onTap: () {
               setState(() {
@@ -165,15 +134,16 @@ class _AccountManagePageState extends State<AccountManagePage> {
             children: <Widget>[
               Container(
                 margin: EdgeInsets.all(16),
-                child: _isEditingText ? RoundedButton(
-                  text: dic['contact.save'],
-                  onPressed: () {
-                      widget.store.account.updateAccountName(_nameCtrl.text.trim());
-                      setState(() {
-                        _isEditingText = false;
-                      });
-                    }
-                ) : Container(),
+                child: _isEditingText
+                    ? RoundedButton(
+                        text: dic['contact.name.save'],
+                        onPressed: () {
+                          widget.store.account.updateAccountName(_nameCtrl.text.trim());
+                          setState(() {
+                            _isEditingText = false;
+                          });
+                        })
+                    : Container(),
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
