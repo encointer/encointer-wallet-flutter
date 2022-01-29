@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:encointer_wallet/common/components/accountAdvanceOption.dart';
-import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/page/account/scanPage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';

@@ -169,47 +169,61 @@ class _AssetsState extends State<Assets> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    ElevatedButton(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.download_sharp),
-                            Text(dic['receive']),
-                          ],
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Color(0xffF4F8F9),
+                          onPrimary: Color(0xff4374A3),
+                          shadowColor: Colors.transparent,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.zero),
+                          ),
                         ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.download_sharp),
+                              Text(dic['receive']),
+                            ],
+                          ),
+                        ),
+                        key: Key('qr-receive'),
+                        onPressed: () {
+                          if (acc.address != '') {
+                            Navigator.pushNamed(context, ReceivePage.route);
+                          }
+                        },
                       ),
-                      key: Key('qr-receive'),
-                      onPressed: () {
-                        if (acc.address != '') {
-                          Navigator.pushNamed(context, ReceivePage.route);
-                        }
-                      },
                     ),
-                    ElevatedButton(
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Row(
-                          children: [
-                            Icon(Icons.upload_sharp),
-                            Text(dic['transfer']),
-                          ],
+                    Expanded(
+                      child: ElevatedButton(
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.upload_sharp),
+                              Text(dic['transfer']),
+                            ],
+                          ),
                         ),
+                        key: Key('transfer'),
+                        onPressed: store.encointer.communityBalance != null
+                            ? () {
+                                Navigator.pushNamed(
+                                  context,
+                                  TransferPage.route,
+                                  arguments: TransferPageParams(
+                                      redirect: '/',
+                                      symbol: store.encointer.chosenCid.toFmtString(),
+                                      isEncointerCommunityCurrency: true,
+                                      communitySymbol: store.encointer.communitySymbol),
+                                );
+                              }
+                            : null,
                       ),
-                      key: Key('transfer'),
-                      onPressed: store.encointer.communityBalance != null
-                          ? () {
-                              Navigator.pushNamed(
-                                context,
-                                TransferPage.route,
-                                arguments: TransferPageParams(
-                                    redirect: '/',
-                                    symbol: store.encointer.chosenCid.toFmtString(),
-                                    isEncointerCommunityCurrency: true,
-                                    communitySymbol: store.encointer.communitySymbol),
-                              );
-                            }
-                          : null,
                     ),
                   ],
                 ),

@@ -42,7 +42,7 @@ class BazaarMain extends StatelessWidget {
   //     );
 
   @override
-  Widget build(BuildContext) {
+  Widget build(buildContext) {
     var blue43 = Color(0xff4374a3);
     var bluef4 = Color(0xfff4f8f9);
     var gray66 = Color(0xff666666);
