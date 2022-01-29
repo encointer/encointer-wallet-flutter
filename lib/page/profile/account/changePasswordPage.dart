@@ -91,8 +91,8 @@ class _ChangePassword extends State<ChangePasswordPage> {
                 CupertinoButton(
                     child: Text(I18n.of(context).home['ok']),
                     onPressed: () => {
-                          Navigator.of(context).pop(),
-                          Navigator.of(context).pop(),
+                          // moving back to profile page after changing password
+                          Navigator.popUntil(context, ModalRoute.withName('/')),
                         }),
               ],
             );
