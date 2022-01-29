@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 
 class PrimaryButton extends StatelessWidget {
   final Function onPressed;
-  final String text;
+  final Widget child;
 
   const PrimaryButton(
-    this.text,
+    this.child,
     this.onPressed, {
     Key key,
   }) : super(key: key);
@@ -30,7 +30,7 @@ class PrimaryButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(20),
           ),
         ),
-        child: Text(text),
+        child: child,
       ),
     );
   }

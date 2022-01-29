@@ -3,7 +3,6 @@ import 'dart:ui';
 
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
-import 'package:encointer_wallet/common/components/iconTextButton.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
@@ -145,7 +144,8 @@ class _AssetsState extends State<Assets> {
                               Text(
                                 "Balance, ${store.encointer.communitySymbol}",
                                 style: Theme.of(context).textTheme.headline4.copyWith(
-                                  color: Color(0xff666666),),
+                                      color: Color(0xff666666),
+                                    ),
                               ),
                             ],
                           )
@@ -163,15 +163,21 @@ class _AssetsState extends State<Assets> {
                           );
                   },
                 ),
+                SizedBox(
+                  height: 42,
+                ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     ElevatedButton(
-                      child: Row(
-                        children: [
-                          Icon(Icons.download_sharp),
-                          Text(dic['receive']),
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                          children: [
+                            Icon(Icons.download_sharp),
+                            Text(dic['receive']),
+                          ],
+                        ),
                       ),
                       key: Key('qr-receive'),
                       onPressed: () {
@@ -259,6 +265,12 @@ class _AssetsState extends State<Assets> {
                   )
                 : Container();
           }),
+          PrimaryButton(
+            Text("Register now"),
+                () {
+              print("TODO register");
+            },
+          ),
         ],
       ),
     );

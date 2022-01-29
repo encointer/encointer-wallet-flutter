@@ -100,6 +100,9 @@ final appThemeEncointer = ThemeData(
       primary: Color(0xffF4F8F9),
       onPrimary: Color(0xff4374A3),
       shadowColor: Colors.transparent,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(15)),
+      ),
     ),
   ),
 );

@@ -10,6 +10,7 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:encointer_wallet/common/components/gradientElements.dart';
 
 class ImportAccountForm extends StatefulWidget {
   const ImportAccountForm(this.store, this.onSubmit);
@@ -332,9 +333,9 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
         Container(
           key: Key('account-import-next'),
           padding: EdgeInsets.all(16),
-          child: RoundedButton(
-            text: I18n.of(context).home['next'],
-            onPressed: () async {
+          child: PrimaryButton(
+            Text(I18n.of(context).home['next']),
+            () async {
               if (_formKey.currentState.validate() && !(_advanceOptions.error ?? false)) {
                 if (_keySelection == KeySelection.OBSERVATION) {
                   _onAddObservationAccount();
