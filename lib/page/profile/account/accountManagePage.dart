@@ -1,9 +1,9 @@
 import 'package:encointer_wallet/common/components/BorderedTitle.dart';
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
+import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
-import 'package:encointer_wallet/page/profile/account/changeNamePage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
@@ -14,22 +14,46 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
-class AccountManagePage extends StatelessWidget {
+class AccountManagePage extends StatefulWidget {
   AccountManagePage(this.store);
 
   static final String route = '/profile/account';
-  final Api api = webApi;
   final AppStore store;
+
+  @override
+  _AccountManagePageState createState() => _AccountManagePageState(store);
+}
+
+class _AccountManagePageState extends State<AccountManagePage> {
+  _AccountManagePageState(this.store);
+  final AppStore store;
+  final Api api = webApi;
+  TextEditingController _nameCtrl;
+  bool _isEditingText = false;
+  String initialText;
+
+  @override
+  void initState() {
+    super.initState();
+    _nameCtrl = TextEditingController(text: store.account.currentAccount.name);
+    initialText = store.account.currentAccount.name;
+  }
+
+  @override
+  void dispose() {
+    _nameCtrl.dispose();
+    super.dispose();
+  }
 
   void _onDeleteAccount(BuildContext context) {
     showCupertinoDialog(
       context: context,
       builder: (BuildContext context) {
         return showPasswordInputDialog(
-            context, store.account.currentAccount, Text(I18n.of(context).profile['delete.confirm']), (_) {
-          store.account.removeAccount(store.account.currentAccount).then((_) {
+            context, widget.store.account.currentAccount, Text(I18n.of(context).profile['delete.confirm']), (_) {
+          widget.store.account.removeAccount(widget.store.account.currentAccount).then((_) {
             // refresh balance
-            store.assets.loadAccountCache();
+            widget.store.assets.loadAccountCache();
             webApi.assets.fetchBalance();
           });
           Navigator.of(context).pop();
@@ -39,11 +63,11 @@ class AccountManagePage extends StatelessWidget {
   }
 
   List<Widget> _getBalances() {
-    CommunityMetadata cm = store.encointer.communityMetadata;
+    CommunityMetadata cm = widget.store.encointer.communityMetadata;
     String name = cm != null ? cm.name : '';
     String symbol = cm != null ? cm.symbol : '';
     final String tokenView = Fmt.tokenView(symbol);
-    return store.encointer.balanceEntries.entries.map((i) {
+    return widget.store.encointer.balanceEntries.entries.map((i) {
       if (cm != null) {
         return RoundedCard(
           margin: EdgeInsets.only(top: 16),
@@ -59,7 +83,7 @@ class AccountManagePage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  Fmt.doubleFormat(store.encointer.communityBalance),
+                  Fmt.doubleFormat(widget.store.encointer.communityBalance),
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
                 ),
                 Container(width: 16),
@@ -72,6 +96,36 @@ class AccountManagePage extends StatelessWidget {
     }).toList();
   }
 
+  // Widget _editTitleTextField() {
+  //   if (_isEditingText)
+  //     return Center(
+  //       child: TextField(
+  //         onSubmitted: (newValue){
+  //           setState(() {
+  //             initialText = newValue;
+  //             _isEditingText =false;
+  //           });
+  //         },
+  //         autofocus: true,
+  //         controller: _nameCtrl,
+  //       ),
+  //     );
+  //   return InkWell(
+  //       onTap: () {
+  //     setState(() {
+  //       _isEditingText = true;
+  //     });
+  //   },
+  //   child: Text(
+  //   initialText,
+  //   style: TextStyle(
+  //   color: Colors.black,
+  //   fontSize: 18.0,
+  //   ),
+  //   );
+  // }
+
+
   @override
   Widget build(BuildContext context) {
     final Map<String, String> dic = I18n.of(context).profile;
@@ -82,29 +136,61 @@ class AccountManagePage extends StatelessWidget {
     return Observer(
       builder: (_) => Scaffold(
         appBar: AppBar(
-          title: Text(store.account.currentAccount.name),
-          centerTitle: true,
-          elevation: 0.0,
+          title: TextFormField(
+            decoration: InputDecoration(
+              // hintText: dic['contact.name'],
+              // labelText: dic['contact.name'],
+            ),
+            controller: _nameCtrl,
+            onTap: () {
+              setState(() {
+                _isEditingText = true;
+              });
+            },
+            validator: (v) {
+              String name = v.trim();
+              if (name.length == 0) {
+                return dic['contact.name.error'];
+              }
+              int exist = widget.store.account.optionalAccounts.indexWhere((i) => i.name == name);
+              if (exist > -1) {
+                return dic['contact.name.exist'];
+              }
+              return null;
+            },
+          ),
         ),
         body: SafeArea(
           child: Column(
             children: <Widget>[
+              Container(
+                margin: EdgeInsets.all(16),
+                child: _isEditingText ? RoundedButton(
+                  text: dic['contact.save'],
+                  onPressed: () {
+                      widget.store.account.updateAccountName(_nameCtrl.text.trim());
+                      setState(() {
+                        _isEditingText = false;
+                      });
+                    }
+                ) : Container(),
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   AddressIcon(
                     '',
                     size: 100,
-                    pubKey: store.account.currentAccount.pubKey,
+                    pubKey: widget.store.account.currentAccount.pubKey,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(Fmt.address(store.account.currentAddress), style: TextStyle(fontSize: 20)),
+                      Text(Fmt.address(widget.store.account.currentAddress), style: TextStyle(fontSize: 20)),
                       ElevatedButton(
                         child: Icon(Icons.copy),
                         onPressed: () {
-                          final data = ClipboardData(text: store.account.currentAddress);
+                          final data = ClipboardData(text: widget.store.account.currentAddress);
                           Clipboard.setData(data);
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('✓   Copied to Clipboard')),
@@ -113,14 +199,9 @@ class AccountManagePage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Text(Fmt.address(store.account.currentAddress) ?? '',
+                  Text(Fmt.address(widget.store.account.currentAddress) ?? '',
                       style: TextStyle(fontSize: 16, color: Colors.white)),
                   Container(padding: EdgeInsets.only(top: 16)),
-                  ListTile(
-                    title: Text(dic['name.change']),
-                    trailing: Icon(Icons.arrow_forward_ios, size: 18),
-                    onTap: () => Navigator.pushNamed(context, ChangeNamePage.route),
-                  ),
                   Padding(
                     padding: EdgeInsets.only(top: 4),
                     child: Row(
