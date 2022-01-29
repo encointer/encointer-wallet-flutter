@@ -145,7 +145,6 @@ class ApiAccount {
     return acc;
   }
 
-  // Todo what is this doing?
   Future<dynamic> checkAccountPassword(AccountData account, String pass) async {
     String pubKey = account.pubKey;
     print('checkpass: $pubKey, $pass');

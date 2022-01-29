@@ -66,10 +66,8 @@ class _ChangePassword extends State<ChangePasswordPage> {
         );
       } else {
         // we need to iterate over all active accounts and update there password
-        print("we are here where we want");
         settingsStore.setPin(passNew);
         store.accountListAll.forEach((account) async {
-          print("PRINT ALL ACCOUNTS: ${account.pubKey}");
           final Map acc =
               await api.evalJavascript('account.changePassword("${account.pubKey}", "$passOld", "$passNew")');
           // use local name, not webApi returned name
@@ -83,18 +81,6 @@ class _ChangePassword extends State<ChangePasswordPage> {
             store.updateSeed(accountData.pubKey, _passOldCtrl.text, _passCtrl.text);
           });
         });
-        // final Map acc = await api
-        //     .evalJavascript('account.changePassword("${store.currentAccount.pubKey}", "$passOld", "$passNew")');
-        // // use local name, not webApi returned name
-        // Map<String, dynamic> localAcc = AccountData.toJson(store.currentAccount);
-        //
-        // // make metadata the same as the polkadot-js/api's
-        // acc['meta']['name'] = localAcc['name'];
-        // store.updateAccount(acc);
-        // // update encrypted seed after password updated
-        // store.accountListAll.map((accountData) {
-        //   store.updateSeed(accountData.pubKey, _passOldCtrl.text, _passCtrl.text);
-        // });
         showCupertinoDialog(
           context: context,
           builder: (BuildContext context) {

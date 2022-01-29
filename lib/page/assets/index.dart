@@ -260,7 +260,7 @@ class _AssetsState extends State<Assets> {
             context,
             store.account.currentAccount,
             Text(I18n.of(context).home['unlock']),
-                (password) {
+            (password) {
               setState(() {
                 store.settings.setPin(password);
               });
