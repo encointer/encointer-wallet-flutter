@@ -187,13 +187,16 @@ class _AssetsState extends State<Assets> {
                       },
                     ),
                     ElevatedButton(
-                      key: Key('transfer'),
-                      child: Row(
-                        children: [
-                          Icon(Icons.upload_sharp),
-                          Text(dic['transfer']),
-                        ],
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                          children: [
+                            Icon(Icons.upload_sharp),
+                            Text(dic['transfer']),
+                          ],
+                        ),
                       ),
+                      key: Key('transfer'),
                       onPressed: store.encointer.communityBalance != null
                           ? () {
                               Navigator.pushNamed(
@@ -265,6 +268,18 @@ class _AssetsState extends State<Assets> {
                   )
                 : Container();
           }),
+          Container(
+            decoration: BoxDecoration(
+              color: Color(0xffF4F8F9),
+              borderRadius: BorderRadius.circular(15),
+            ),
+            height: 150,
+            width: double.infinity,
+            child: Center(
+              child: Text("Placeholder TODO add ceremony guide"),
+            ),
+          ),
+          SizedBox(height: 12),
           PrimaryButton(
             Text("Register now"),
                 () {
