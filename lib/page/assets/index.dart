@@ -4,7 +4,6 @@ import 'dart:ui';
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
-import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
@@ -172,10 +171,8 @@ class _AssetsState extends State<Assets> {
                     Expanded(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          primary: Color(0xffF4F8F9),
-                          onPrimary: Color(0xff4374A3),
-                          shadowColor: Colors.transparent,
                           shape: RoundedRectangleBorder(
+                            // don't redefine the entire style just the border radii
                             borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.zero),
                           ),
                         ),
@@ -197,8 +194,15 @@ class _AssetsState extends State<Assets> {
                         },
                       ),
                     ),
+                    SizedBox(width: 2),
                     Expanded(
                       child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                            // don't redefine the entire style just the border radii
+                            borderRadius: BorderRadius.horizontal(left: Radius.zero, right: Radius.circular(15)),
+                          ),
+                        ),
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Row(
@@ -264,15 +268,14 @@ class _AssetsState extends State<Assets> {
                         var hasPendingIssuance = snapshot.data;
 
                         if (hasPendingIssuance) {
-                          return RoundedButton(
-                            text: dic['issuance.pending'],
+                          return ElevatedButton(
+                            child: Text(dic['issuance.pending']),
                             onPressed: () => _submitClaimRewards(context),
                           );
                         } else {
-                          return RoundedButton(
-                            text: dic['issuance.claimed'],
+                          return ElevatedButton(
+                            child: Text(dic['issuance.claimed']),
                             onPressed: null,
-                            color: Theme.of(context).disabledColor,
                           );
                         }
                       } else {
@@ -290,13 +293,16 @@ class _AssetsState extends State<Assets> {
             height: 150,
             width: double.infinity,
             child: Center(
-              child: Text("Placeholder TODO add ceremony guide"),
+              child: Text(
+                "Placeholder TODO add ceremony guide",
+                style: TextStyle(color: Colors.orange),
+              ),
             ),
           ),
           SizedBox(height: 12),
           PrimaryButton(
             Text("Register now"),
-                () {
+            () {
               print("TODO register");
             },
           ),
