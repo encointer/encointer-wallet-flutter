@@ -20,7 +20,8 @@ class AccountSelectList extends StatelessWidget {
           title: Text(Fmt.accountName(context, i)),
           subtitle: Text(Fmt.address(Fmt.addressOfAccount(i, store))),
           trailing: Icon(Icons.arrow_forward_ios, size: 16),
-          onTap: () => Navigator.of(context).pop(i),
+          // Why pop here? this is the reason for the black screen!
+          // onTap: () => Navigator.of(context).pop(),
         );
       }).toList(),
     );
