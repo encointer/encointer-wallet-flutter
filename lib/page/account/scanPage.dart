@@ -58,18 +58,24 @@ class ScanPage extends StatelessWidget {
         future: canOpenCamera(),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           if (snapshot.hasData && snapshot.data == true) {
+            print("the context is: ${ModalRoute.of(context).settings.name}");
             return QrcodeReaderView(
                 key: _qrViewKey,
                 helpWidget: Text("scan QR code"),
                 // Or check, if Navigator root is still '/', and then don't show button, or just remove this back button. If this scan page would be used in another place, where it will be pushed onto the stack with the navigator, then the back button would be necessary
-                // headerWidget: SafeArea(
-                //   child: IconButton(
-                //     icon: Icon(
-                //       Icons.arrow_back_ios,
-                //       color: Theme.of(context).cardColor,
-                //     ),
-                //   ),
-                // ),
+                headerWidget: SafeArea(
+                  child: ModalRoute.of(context).settings.name != '/'
+                      ? Align(
+                      alignment: Alignment.topRight, child: IconButton(
+                          icon: Icon(
+                            Icons.close,
+                            color: Theme.of(context).cardColor,
+                          ),
+                        onPressed: () => Navigator.of(context).pop(),
+                        ),
+                  )
+                      : Container(),
+                ),
                 onScan: onScan);
           } else {
             return Container();
