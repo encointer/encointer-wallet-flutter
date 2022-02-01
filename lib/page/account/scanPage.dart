@@ -62,8 +62,8 @@ class ScanPage extends StatelessWidget {
             return QrcodeReaderView(
                 key: _qrViewKey,
                 helpWidget: Text("scan QR code"),
-                // Or check, if Navigator root is still '/', and then don't show button, or just remove this back button. If this scan page would be used in another place, where it will be pushed onto the stack with the navigator, then the back button would be necessary
                 headerWidget: SafeArea(
+                  // check if we are in root, then don't offer the exit button to pop, this is the case when pressing scan in the navbar
                   child: ModalRoute.of(context).settings.name != '/'
                       ? Align(
                       alignment: Alignment.topRight, child: IconButton(
