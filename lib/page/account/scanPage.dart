@@ -66,14 +66,15 @@ class ScanPage extends StatelessWidget {
                   // check if we are in root, then don't offer the exit button to pop, this is the case when pressing scan in the navbar
                   child: ModalRoute.of(context).settings.name != '/'
                       ? Align(
-                      alignment: Alignment.topRight, child: IconButton(
-                          icon: Icon(
-                            Icons.close,
-                            color: Theme.of(context).cardColor,
+                          alignment: Alignment.topRight,
+                          child: IconButton(
+                            icon: Icon(
+                              Icons.close,
+                              color: Theme.of(context).cardColor,
+                            ),
+                            onPressed: () => Navigator.of(context).pop(),
                           ),
-                        onPressed: () => Navigator.of(context).pop(),
-                        ),
-                  )
+                        )
                       : Container(),
                 ),
                 onScan: onScan);
