@@ -8,6 +8,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 
 import 'bazaar/0_main/bazaarMain.dart';
 
@@ -31,7 +32,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   NotificationPlugin _notificationPlugin;
 
-  List<String> _tabList;
+  List<TabData> _tabList;
   int _tabIndex = 0;
 
   List<BottomNavigationBarItem> _navBarItems(int activeItem) {
@@ -39,11 +40,12 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
     return _tabList
         .map(
           (i) => BottomNavigationBarItem(
-            icon: Image.asset(
-              _tabList[activeItem] == i ? 'assets/images/public/${i}_indigo.png' : 'assets/images/public/${i}_dark.png',
-              key: Key('tab-${i.toLowerCase()}'),
+            icon: Icon(
+              i.iconData,
+              key: Key('tab-${i.key.toLowerCase()}'),
+              // color: _tabList[activeItem] == i ? Colors.blue : Colors.grey,
             ),
-            label: tabs[i.toLowerCase()],
+            label: tabs[i.key.toLowerCase()],
           ),
         )
         .toList();
@@ -61,13 +63,14 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    _tabList = [
-      'Wallet',
-      if (store.settings.endpointIsGesell) 'Bazaar', // dart collection if
-      'Ceremonies',
-      'Scan',
-      'Contacts',
-      'Profile',
+    _tabList = <TabData>[
+      TabData('Wallet',Iconsax.home_2,),
+      if (store.settings.endpointIsGesell)
+    TabData('Bazaar',Iconsax.shop,), // dart collection if
+      TabData('Ceremonies',Iconsax.calendar,),
+      TabData('Scan',Iconsax.scan_barcode,),
+      TabData('Contacts',Iconsax.profile_2user,),
+      TabData('Profile',Iconsax.profile_circle,),
     ];
     return Scaffold(
       key: EncointerHomePage.encointerHomePageKey,
@@ -102,4 +105,15 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       ),
     );
   }
+}
+
+class TabData {
+  /// used for our integration tests to click on a UI element
+  final String key;
+
+  /// used for our integration tests to click on a UI element
+  final IconData iconData;
+
+  TabData(this.key, this.iconData);
+
 }
