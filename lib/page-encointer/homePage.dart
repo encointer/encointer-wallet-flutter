@@ -8,6 +8,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:encointer_wallet/common/theme.dart';
 
 import 'bazaar/0_main/bazaarMain.dart';
 
@@ -38,11 +39,32 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
     return _tabList
         .map(
           (i) => BottomNavigationBarItem(
-            icon: Icon(
-              i.iconData,
-              key: Key('tab-${i.key.toLowerCase()}'),
-              // color: _tabList[activeItem] == i ? Colors.blue : Colors.grey,
-            ),
+            icon: _tabList[activeItem] == i
+                ? ShaderMask(
+                    blendMode: BlendMode.srcIn,
+                    shaderCallback: (bounds) => encointerGradient.createShader(
+                      Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+                    ),
+                    child: Column(children: [
+                      Icon(
+                        i.iconData,
+                        key: Key('tab-${i.key.toLowerCase()}'),
+                      ),
+                      Container(
+                        height: 4,
+                        width: 16,
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(width: 2.0),
+                          ),
+                        ),
+                      )
+                    ]),
+                  )
+                : Icon(
+                    i.iconData,
+                    key: Key('tab-${i.key.toLowerCase()}'),
+                  ),
             label: '',
           ),
         )
@@ -62,13 +84,31 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
   @override
   Widget build(BuildContext context) {
     _tabList = <TabData>[
-      TabData('Wallet',Iconsax.home_2,),
+      TabData(
+        'Wallet',
+        Iconsax.home_2,
+      ),
       if (store.settings.endpointIsGesell)
-    TabData('Bazaar',Iconsax.shop,), // dart collection if
-      TabData('Ceremonies',Iconsax.calendar,),
-      TabData('Scan',Iconsax.scan_barcode,),
-      TabData('Contacts',Iconsax.profile_2user,),
-      TabData('Profile',Iconsax.profile_circle,),
+        TabData(
+          'Bazaar',
+          Iconsax.shop,
+        ), // dart collection if
+      TabData(
+        'Ceremonies',
+        Iconsax.calendar,
+      ),
+      TabData(
+        'Scan',
+        Iconsax.scan_barcode,
+      ),
+      TabData(
+        'Contacts',
+        Iconsax.profile_2user,
+      ),
+      TabData(
+        'Profile',
+        Iconsax.profile_circle,
+      ),
     ];
     return Scaffold(
       key: EncointerHomePage.encointerHomePageKey,
@@ -115,5 +155,4 @@ class TabData {
   final IconData iconData;
 
   TabData(this.key, this.iconData);
-
 }
