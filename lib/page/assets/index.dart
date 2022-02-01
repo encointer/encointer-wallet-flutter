@@ -18,6 +18,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:iconsax/iconsax.dart';
 
 class Assets extends StatefulWidget {
   Assets(this.store);
@@ -181,7 +182,8 @@ class _AssetsState extends State<Assets> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.download_sharp),
+                              Icon(Iconsax.receive_square_2),
+                              SizedBox(width: 12),
                               Text(dic['receive']),
                             ],
                           ),
@@ -208,8 +210,9 @@ class _AssetsState extends State<Assets> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Icon(Icons.upload_sharp),
                               Text(dic['transfer']),
+                              SizedBox(width: 12),
+                              Icon(Iconsax.send_sqaure_2),
                             ],
                           ),
                         ),
@@ -301,7 +304,14 @@ class _AssetsState extends State<Assets> {
           ),
           SizedBox(height: 12),
           PrimaryButton(
-            Text("Register now"),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Iconsax.login_1),
+                SizedBox(width: 12),
+                Text("Register now"),
+              ],
+            ),
             () {
               print("TODO register");
             },
