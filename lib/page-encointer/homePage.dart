@@ -5,7 +5,6 @@ import 'package:encointer_wallet/page/profile/contacts/contactsPage.dart';
 import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -36,7 +35,6 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
   int _tabIndex = 0;
 
   List<BottomNavigationBarItem> _navBarItems(int activeItem) {
-    Map<String, String> tabs = I18n.of(context).home;
     return _tabList
         .map(
           (i) => BottomNavigationBarItem(
@@ -45,7 +43,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
               key: Key('tab-${i.key.toLowerCase()}'),
               // color: _tabList[activeItem] == i ? Colors.blue : Colors.grey,
             ),
-            label: tabs[i.key.toLowerCase()],
+            label: '',
           ),
         )
         .toList();
@@ -102,6 +100,8 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         },
         type: BottomNavigationBarType.fixed,
         items: _navBarItems(_tabIndex),
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
       ),
     );
   }
