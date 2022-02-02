@@ -76,35 +76,51 @@ final appThemeKusama = ThemeData(
 
 final appThemeEncointer = ThemeData(
   // primarySwatch: Colors.green,
-  primaryColor: Color(0xff4374A3),
+  primarySwatch: ZurichLion,
   textTheme: TextTheme(
     headline1: TextStyle(
       fontSize: 66,
-      color: Color(0xff4374A3),
+      color: ZurichLion.shade500,
     ),
     headline2: TextStyle(
       fontSize: 22,
-      color: Color(0xff4374A3),
+      color: ZurichLion.shade500,
     ),
     headline3: TextStyle(
       fontSize: 19,
-      color: Color(0xff4374A3),
+      color: ZurichLion.shade500,
     ),
     headline4: TextStyle(
       fontSize: 14,
-      color: Color(0xff4374A3),
+      color: ZurichLion.shade500,
     ),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
-      primary: Color(0xffF4F8F9),
-      onPrimary: Color(0xff4374A3),
+      primary: ZurichLion.shade50,
+      onPrimary: ZurichLion.shade500,
       shadowColor: Colors.transparent,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
     ),
   ),
+);
+
+const MaterialColor ZurichLion = const MaterialColor(
+  0xff4374A3,
+  const <int, Color>{
+    50: const Color(0xffF4F8F9), // <--- used for light blue buttons (i.e. secondary buttons)
+    100: const Color(0xffF4F8F9),
+    200: const Color(0xffF4F8F9),
+    300: const Color(0xffF4F8F9),
+    400: const Color(0xFF3880BD), // <--- starting color of gradient
+    500: const Color(0xff4374A3), // <--- main color for almost all texts
+    600: const Color(0xFF3969AC), // <--- end color of gradient
+    700: const Color(0xFF3969AC),
+    800: const Color(0xFF3969AC),
+    900: const Color(0xFF3969AC),
+  },
 );
 
 final appThemeLaminar = ThemeData(
@@ -130,5 +146,5 @@ final appThemeLaminar = ThemeData(
 final encointerGradient = LinearGradient(
   begin: Alignment(-.9, 0),
   end: Alignment(0.1, -.1),
-  colors: <Color>[Color(0xff3880BD), Color(0xff3969AC)],
+  colors: <Color>[ZurichLion.shade400, ZurichLion.shade600],
 );
