@@ -1,6 +1,10 @@
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:flutter/material.dart';
 
+/// In our UX-app design, we distinguish between "Primary" and "Secondary" Buttons. The former being the visually
+/// prominent one, the user is supposed to primarily interact with. The latter being a less important button, which
+/// offers further options.
+///
 class PrimaryButton extends StatelessWidget {
   final Function onPressed;
   final Widget child;
