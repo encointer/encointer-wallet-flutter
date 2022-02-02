@@ -33,7 +33,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
   @override
   void initState() {
-    super.initState();
     _nameCtrl = TextEditingController(text: store.account.currentAccount.name);
   }
 
@@ -48,8 +47,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
       context: context,
       builder: (BuildContext context) {
         return showPasswordInputDialog(
-            context, widget.store.account.currentAccount, Text(I18n.of(context).profile['delete.confirm']), (_) {
-          widget.store.account.removeAccount(widget.store.account.currentAccount).then((_) {
+            context, store.account.currentAccount, Text(I18n.of(context).profile['delete.confirm']), (_) {
+          store.account.removeAccount(store.account.currentAccount).then((_) {
             // refresh balance
             widget.store.assets.loadAccountCache();
             webApi.assets.fetchBalance();
@@ -105,11 +104,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
       builder: (_) => Scaffold(
         appBar: AppBar(
           title: TextFormField(
-            // Do you want decoration? don't think its necessary..
-            decoration: InputDecoration(
-                // hintText: dic['contact.name'],
-                // labelText: dic['contact.name'],
-                ),
             controller: _nameCtrl,
             onTap: () {
               setState(() {
