@@ -55,8 +55,6 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       if (store.settings.endpointIsGesell) () => BazaarMain(store), // dart collection if
       () => EncointerEntry(store), // #272 we leave it in for now until we have a replacement
       () => ScanPage(),
-      // Why contactListPage, whats the exact difference? here all accounts are shown because contactListAll is returned, but onTap would just pop the account.. why? and here we can not edit or delete account from contact list, therefore I push the other page
-      // () => ContactListPage(store),
       () => ContactsPage(store),
       () => Profile(store),
     ];
