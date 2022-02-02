@@ -38,8 +38,8 @@ class PrimaryButton extends StatelessWidget {
 
 class TextGradient extends StatelessWidget {
   final String text;
-  const TextGradient(
-    this.text, {
+  const TextGradient({
+    this.text,
     Key key,
   }) : super(key: key);
 

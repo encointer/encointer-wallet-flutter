@@ -140,7 +140,7 @@ class _AssetsState extends State<Assets> {
                     return (store.encointer.communityName != null) & (store.encointer.chosenCid != null)
                         ? Column(
                             children: [
-                              TextGradient('${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ'),
+                              TextGradient(text: '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ'),
                               Text(
                                 "Balance, ${store.encointer.communitySymbol}",
                                 style: Theme.of(context).textTheme.headline4.copyWith(
