@@ -75,7 +75,6 @@ final appThemeKusama = ThemeData(
 );
 
 final appThemeEncointer = ThemeData(
-  // primarySwatch: Colors.green,
   primarySwatch: ZurichLion,
   textTheme: TextTheme(
     headline1: TextStyle(
