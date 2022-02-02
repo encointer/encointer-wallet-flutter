@@ -23,8 +23,8 @@ class CreateAccountEntryPage extends StatelessWidget {
               key: Key('create-account'),
               padding: EdgeInsets.all(16),
               child: PrimaryButton(
-                Text(I18n.of(context).home['create']),
-                () {
+                child: Text(I18n.of(context).home['create']),
+                onPressed: () {
                   Navigator.pushNamed(context, CreateAccountPage.route);
                 },
               ),
@@ -33,8 +33,8 @@ class CreateAccountEntryPage extends StatelessWidget {
               key: Key('import-account'),
               padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
               child: PrimaryButton(
-                Text(I18n.of(context).home['import']),
-                () {
+                child: Text(I18n.of(context).home['import']),
+                onPressed: () {
                   Navigator.pushNamed(context, ImportAccountPage.route);
                 },
               ),

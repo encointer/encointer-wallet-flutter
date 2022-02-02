@@ -333,8 +333,8 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
           key: Key('account-import-next'),
           padding: EdgeInsets.all(16),
           child: PrimaryButton(
-            Text(I18n.of(context).home['next']),
-            () async {
+            child: Text(I18n.of(context).home['next']),
+            onPressed: () async {
               if (_formKey.currentState.validate() && !(_advanceOptions.error ?? false)) {
                 if (_keySelection == KeySelection.OBSERVATION) {
                   _onAddObservationAccount();

@@ -5,9 +5,9 @@ class PrimaryButton extends StatelessWidget {
   final Function onPressed;
   final Widget child;
 
-  const PrimaryButton(
+  const PrimaryButton({
     this.child,
-    this.onPressed, {
+    this.onPressed,
     Key key,
   }) : super(key: key);
 

@@ -304,7 +304,7 @@ class _AssetsState extends State<Assets> {
           ),
           SizedBox(height: 12),
           PrimaryButton(
-            Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Icon(Iconsax.login_1),
@@ -312,7 +312,7 @@ class _AssetsState extends State<Assets> {
                 Text("Register now"),
               ],
             ),
-            () {
+            onPressed: () {
               print("TODO register");
             },
           ),

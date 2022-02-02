@@ -83,8 +83,8 @@ class CreateAccountForm extends StatelessWidget {
             key: Key('create-account-confirm'),
             padding: EdgeInsets.all(16),
             child: PrimaryButton(
-              Text(I18n.of(context).account['create']),
-              () {
+              child: Text(I18n.of(context).account['create']),
+              onPressed: () {
                 if (_formKey.currentState.validate()) {
                   if (store.account.accountListAll.isEmpty) {
                     setNewAccount(_nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic['create.default'], _passCtrl.text);
