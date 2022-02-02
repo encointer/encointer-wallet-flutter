@@ -143,7 +143,7 @@ final appThemeLaminar = ThemeData(
 );
 
 // TODO later: maybe turn into a function that takes the 2 colors and returns the gradient
-final encointerGradient = LinearGradient(
+final primaryGradient = LinearGradient(
   begin: Alignment(-.9, 0),
   end: Alignment(0.1, -.1),
   colors: <Color>[ZurichLion.shade400, ZurichLion.shade600],

@@ -16,7 +16,7 @@ class PrimaryButton extends StatelessWidget {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        gradient: encointerGradient,
+        gradient: primaryGradient,
         borderRadius: BorderRadius.circular(20),
       ),
       child: ElevatedButton(
@@ -47,7 +47,7 @@ class TextGradient extends StatelessWidget {
   Widget build(BuildContext context) {
     return ShaderMask(
       blendMode: BlendMode.srcIn,
-      shaderCallback: (bounds) => encointerGradient.createShader(
+      shaderCallback: (bounds) => primaryGradient.createShader(
         Rect.fromLTWH(0, 0, bounds.width, bounds.height),
       ),
       child: Text(text, style: TextStyle(fontSize: 60)),

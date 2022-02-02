@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/encointerEntry.dart';
 import 'package:encointer_wallet/page/account/scanPage.dart';
 import 'package:encointer_wallet/page/assets/index.dart';
@@ -8,7 +9,6 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:encointer_wallet/common/theme.dart';
 
 import 'bazaar/0_main/bazaarMain.dart';
 
@@ -42,7 +42,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
             icon: _tabList[activeItem] == i
                 ? ShaderMask(
                     blendMode: BlendMode.srcIn,
-                    shaderCallback: (bounds) => encointerGradient.createShader(
+                    shaderCallback: (bounds) => primaryGradient.createShader(
                       Rect.fromLTWH(0, 0, bounds.width, bounds.height),
                     ),
                     child: Column(children: [
