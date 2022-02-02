@@ -66,7 +66,6 @@ class _AssetsState extends State<Assets> {
       Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
     }
 
-    var developerMode = true;
     return SafeArea(
       child: ListView(
         padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
@@ -234,26 +233,6 @@ class _AssetsState extends State<Assets> {
                     ),
                   ],
                 ),
-                if (developerMode == true)
-                  Padding(
-                    padding: const EdgeInsets.only(top: 32),
-                    child: Column(
-                      children: [
-                        InkWell(
-                          // TODO design decision where to put this functionality
-                          key: Key('choose-network'),
-                          child: Observer(
-                            builder: (_) => Text(
-                              "net: ${store.settings.endpoint.info}",
-                              style: TextStyle(color: Colors.orange),
-                            ),
-                          ),
-                          onTap: () => Navigator.of(context).pushNamed('/network'),
-                        ),
-                        store.settings.isConnected ? Icon(Icons.check) : CupertinoActivityIndicator(),
-                      ],
-                    ),
-                  ),
               ],
             );
           }),
