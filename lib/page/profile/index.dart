@@ -122,20 +122,6 @@ class _ProfileState extends State<Profile> {
                 color: primaryColor,
                 onPressed: () =>
                     {store.settings.cachedPin.isEmpty ? _showPasswordDialog(context) : _onCreateAccount()}),
-            if (developerMode == true)
-              Column(
-                children: [
-                  IconButton(
-                    key: Key('choose-network'),
-                    icon: Text(
-                      "net",
-                      style: TextStyle(color: Colors.orange),
-                    ),
-                    onPressed: () => Navigator.of(context).pushNamed('/network'),
-                  ),
-                  store.settings.isConnected ? Icon(Icons.check, color: Colors.green) : CupertinoActivityIndicator(),
-                ],
-              ),
           ])
         ],
       ),
@@ -200,6 +186,25 @@ class _ProfileState extends State<Profile> {
                       ),
                     ],
                   ),
+                  if (developerMode == true)
+                    Row(
+                      children: [
+                        InkWell(
+                          key: Key('choose-network'),
+                          child: Observer(
+                            builder: (_) => Text(
+                              "network: ${store.settings.endpoint.info}",
+                              style: TextStyle(color: Colors.orange),
+                            ),
+                          ),
+                          onTap: () => Navigator.of(context).pushNamed('/network'),
+                        ),
+                        SizedBox(width: 8),
+                        store.settings.isConnected
+                            ? Icon(Icons.check, color: Colors.green)
+                            : CupertinoActivityIndicator(),
+                      ],
+                    ),
                 ],
               );
             },
