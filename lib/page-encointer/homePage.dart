@@ -95,6 +95,10 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
           Iconsax.shop,
         ), // dart collection if
       TabData(
+        'Ceremonies',
+        Iconsax.calendar,
+      ),
+      TabData(
         'Scan',
         Iconsax.scan_barcode,
       ),
@@ -120,22 +124,11 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         children: [
           Assets(store),
           if (store.settings.endpointIsGesell) BazaarMain(store), // dart collection if
+          EncointerEntry(store), // #272 we leave it in for now until we have a replacement
           ScanPage(),
           ContactsPage(store),
           Profile(store),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        child: Text("Cere"),
-        key: Key('tab-ceremonies'),
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => EncointerEntry(store),
-            ),
-          );
-        },
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _tabIndex,
