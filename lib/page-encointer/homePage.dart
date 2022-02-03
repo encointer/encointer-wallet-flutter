@@ -64,7 +64,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
                 : Icon(
                     i.iconData,
                     key: Key('tab-${i.key.toLowerCase()}'),
-                    color: i.key == 'Scan' ? Color(0xff000022) : Color(0xff666666),
+                    color: i.key == 'Scan' ? ZurichLion.shade900 : encointerGrey,
                   ),
             label: '',
           ),
