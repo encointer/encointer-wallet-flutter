@@ -39,40 +39,33 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
     return _tabList
         .map(
           (i) => BottomNavigationBarItem(
-            icon: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(8)),
-                color: i.key == 'Scan' ? ZurichLion.shade50 : Colors.transparent,
-              ),
-              width: 48,
-              height: 48,
-              child: _tabList[activeItem] == i
-                  ? ShaderMask(
-                      blendMode: BlendMode.srcIn,
-                      shaderCallback: (bounds) => primaryGradient.createShader(
-                        Rect.fromLTWH(0, 0, bounds.width, bounds.height),
-                      ),
-                      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-                        Icon(
-                          i.iconData,
-                          key: Key('tab-${i.key.toLowerCase()}'),
-                        ),
-                        Container(
-                          height: 4,
-                          width: 16,
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(width: 2.0),
-                            ),
-                          ),
-                        )
-                      ]),
-                    )
-                  : Icon(
-                      i.iconData,
-                      key: Key('tab-${i.key.toLowerCase()}'),
+            icon: _tabList[activeItem] == i
+                ? ShaderMask(
+                    blendMode: BlendMode.srcIn,
+                    shaderCallback: (bounds) => primaryGradient.createShader(
+                      Rect.fromLTWH(0, 0, bounds.width, bounds.height),
                     ),
-            ),
+                    child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      Icon(
+                        i.iconData,
+                        key: Key('tab-${i.key.toLowerCase()}'),
+                      ),
+                      Container(
+                        height: 4,
+                        width: 16,
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(width: 2.0),
+                          ),
+                        ),
+                      )
+                    ]),
+                  )
+                : Icon(
+                    i.iconData,
+                    key: Key('tab-${i.key.toLowerCase()}'),
+                    color: i.key == 'Scan' ? Color(0xff000022) : Color(0xff666666),
+                  ),
             label: '',
           ),
         )
