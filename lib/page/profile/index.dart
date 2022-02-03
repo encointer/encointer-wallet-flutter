@@ -122,14 +122,20 @@ class _ProfileState extends State<Profile> {
                 color: primaryColor,
                 onPressed: () =>
                     {store.settings.cachedPin.isEmpty ? _showPasswordDialog(context) : _onCreateAccount()}),
-            developerMode
-                ? IconButton(
-                    // TODO design decision where to put this functionality
+            if (developerMode == true)
+              Column(
+                children: [
+                  IconButton(
                     key: Key('choose-network'),
-                    icon: Icon(Icons.menu, color: Colors.orange),
+                    icon: Text(
+                      "net",
+                      style: TextStyle(color: Colors.orange),
+                    ),
                     onPressed: () => Navigator.of(context).pushNamed('/network'),
-                  )
-                : Container(),
+                  ),
+                  store.settings.isConnected ? Icon(Icons.check, color: Colors.green) : CupertinoActivityIndicator(),
+                ],
+              ),
           ])
         ],
       ),
