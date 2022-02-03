@@ -33,6 +33,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
   @override
   void initState() {
+    super.initState();
     _nameCtrl = TextEditingController(text: store.account.currentAccount.name);
   }
 
