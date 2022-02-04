@@ -1,24 +1,24 @@
 import 'package:encointer_wallet/common/components/accountAdvanceOption.dart';
 import 'package:encointer_wallet/page-encointer/homePage.dart';
-import 'package:encointer_wallet/page/account/create/createAccountForm.dart';
+import 'package:encointer_wallet/page/account/create/createPinForm.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class CreateAccountPage extends StatefulWidget {
-  const CreateAccountPage(this.store);
+class CreatePinPage extends StatefulWidget {
+  const CreatePinPage(this.store);
 
-  static final String route = '/account/createAccount';
+  static final String route = '/account/createPin';
   final AppStore store;
 
   @override
-  _CreateAccountPageState createState() => _CreateAccountPageState(store);
+  _CreatePinPageState createState() => _CreatePinPageState(store);
 }
 
-class _CreateAccountPageState extends State<CreateAccountPage> {
-  _CreateAccountPageState(this.store);
+class _CreatePinPageState extends State<CreatePinPage> {
+  _CreatePinPageState(this.store);
 
   final AppStore store;
 
@@ -106,13 +106,23 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Map args = ModalRoute.of(context).settings.arguments;
+    print("the name is: ${args['name']}");
     return Scaffold(
-      appBar: AppBar(title: Text(I18n.of(context).home['create']), centerTitle: true, leading: Container(),
+      appBar: AppBar(title: Text(I18n.of(context).home['create']), centerTitle: true,
       ),
       body: SafeArea(
         child: !_submitting
-            ? CreateAccountForm(
+            ? CreatePinForm(
+                setNewAccount: store.account.setNewAccount,
+                submitting: _submitting,
+                onSubmit: () {
+                  setState(() {
+                    _createAndImportAccount();
+                  });
+                },
                 store: store,
+                name: args['name'],
               )
             : Center(child: CupertinoActivityIndicator()),
       ),

@@ -190,9 +190,6 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         body: SafeArea(
           child: !_submitting
               ? CreateAccountForm(
-                  setNewAccount: store.account.setNewAccount,
-                  submitting: _submitting,
-                  onSubmit: _importAccount,
                   store: store)
               : Center(child: CupertinoActivityIndicator()),
         ),

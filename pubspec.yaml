@@ -110,6 +110,9 @@ flutter:
     # js service
     - lib/js_service_encointer/dist/main.js
 
+    #svg
+    - assets/encointer_logo_orig.svg
+    - assets/Kacheln.svg
     # images
     ## images - settings
     - assets/images/public/nctr-cln.png
