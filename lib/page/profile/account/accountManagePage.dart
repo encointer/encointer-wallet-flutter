@@ -1,6 +1,5 @@
 import 'package:encointer_wallet/common/components/BorderedTitle.dart';
 import 'package:encointer_wallet/common/components/addressIcon.dart';
-import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
 import 'package:encointer_wallet/page/profile/account/changeNamePage.dart';
@@ -25,15 +24,51 @@ class AccountManagePage extends StatelessWidget {
     showCupertinoDialog(
       context: context,
       builder: (BuildContext context) {
-        return showPasswordInputDialog(
-            context, store.account.currentAccount, Text(I18n.of(context).profile['delete.confirm']), (_) {
-          store.account.removeAccount(store.account.currentAccount).then((_) {
-            // refresh balance
-            store.assets.loadAccountCache();
-            webApi.assets.fetchBalance();
-          });
-          Navigator.of(context).pop();
-        });
+        // return showPromptDialog(
+        //     context, store.account.currentAccount, Text("Are you sure you want to delete the account?"), (_) {
+        //   store.account.removeAccount(store.account.currentAccount).then((_) {
+        //     // refresh balance
+        //     store.assets.loadAccountCache();
+        //     webApi.assets.fetchBalance();
+        //   });
+        //   Navigator.of(context).pop();
+        // });
+        // return PromptDialog(
+        //     account: store.account.currentAccount,
+        //     title: Text("Are you sure you want to delete the account?"),
+        //     onOk: (_) {
+        //       store.account.removeAccount(store.account.currentAccount).then((_) {
+        //         // refresh balance
+        //         store.assets.loadAccountCache();
+        //         webApi.assets.fetchBalance();
+        //       });
+        //       Navigator.of(context).pop();
+        //     },
+        //     onCancel: () {
+        //       Navigator.of(context).pop();
+        //     });
+        return CupertinoAlertDialog(
+          title: Text("Are you sure you want to delete the account?"),
+          // content: Text(dic['pass.error.txt']),
+          actions: <Widget>[
+            CupertinoButton(
+              // key: Key('error-dialog-ok'),
+              child: Text(I18n.of(context).home['cancel']),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            CupertinoButton(
+                // key: Key('error-dialog-ok'),
+                child: Text(I18n.of(context).home['ok']),
+                onPressed: () => {
+                      store.account.removeAccount(store.account.currentAccount).then((_) {
+                        // refresh balance
+                        store.assets.loadAccountCache();
+                        webApi.assets.fetchBalance();
+                        Navigator.of(context).pop();
+                      }),
+                    }),
+          ],
+        );
       },
     );
   }
