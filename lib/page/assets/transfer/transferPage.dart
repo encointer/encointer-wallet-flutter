@@ -105,15 +105,6 @@ class _TransferPageState extends State<TransferPage> {
                         store.encointer.communityBalance != null
                             ? AccountBalanceWithMoreDigits(store: store, available: available, decimals: decimals)
                             : CupertinoActivityIndicator(),
-                        Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: IconTextButton(
-                            text: "Scan",
-                            iconData: Icons.qr_code_scanner,
-                            onTap: _onScan, // TODO
-                            iconSize: iconSizeBig,
-                          ),
-                        ),
                         // Padding(
                         //   padding: const EdgeInsets.all(8.0),
                         //   child: Text(
