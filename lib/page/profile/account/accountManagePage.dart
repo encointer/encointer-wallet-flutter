@@ -46,15 +46,51 @@ class _AccountManagePageState extends State<AccountManagePage> {
     showCupertinoDialog(
       context: context,
       builder: (BuildContext context) {
-        return showPasswordInputDialog(
-            context, store.account.currentAccount, Text(I18n.of(context).profile['delete.confirm']), (_) {
-          store.account.removeAccount(store.account.currentAccount).then((_) {
-            // refresh balance
-            store.assets.loadAccountCache();
-            webApi.assets.fetchBalance();
-          });
-          Navigator.of(context).pop();
-        });
+        // return showPromptDialog(
+        //     context, store.account.currentAccount, Text("Are you sure you want to delete the account?"), (_) {
+        //   store.account.removeAccount(store.account.currentAccount).then((_) {
+        //     // refresh balance
+        //     store.assets.loadAccountCache();
+        //     webApi.assets.fetchBalance();
+        //   });
+        //   Navigator.of(context).pop();
+        // });
+        // return PromptDialog(
+        //     account: store.account.currentAccount,
+        //     title: Text("Are you sure you want to delete the account?"),
+        //     onOk: (_) {
+        //       store.account.removeAccount(store.account.currentAccount).then((_) {
+        //         // refresh balance
+        //         store.assets.loadAccountCache();
+        //         webApi.assets.fetchBalance();
+        //       });
+        //       Navigator.of(context).pop();
+        //     },
+        //     onCancel: () {
+        //       Navigator.of(context).pop();
+        //     });
+        return CupertinoAlertDialog(
+          title: Text("Are you sure you want to delete the account?"),
+          // content: Text(dic['pass.error.txt']),
+          actions: <Widget>[
+            CupertinoButton(
+              // key: Key('error-dialog-ok'),
+              child: Text(I18n.of(context).home['cancel']),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            CupertinoButton(
+                // key: Key('error-dialog-ok'),
+                child: Text(I18n.of(context).home['ok']),
+                onPressed: () => {
+                      store.account.removeAccount(store.account.currentAccount).then((_) {
+                        // refresh balance
+                        store.assets.loadAccountCache();
+                        webApi.assets.fetchBalance();
+                        Navigator.of(context).pop();
+                      }),
+                    }),
+          ],
+        );
       },
     );
   }
@@ -100,7 +136,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
     final Map<String, String> dic = I18n.of(context).profile;
     Color primaryColor = Theme.of(context).primaryColor;
-
     var args = {
       "isShare": true,
     };
@@ -170,6 +205,11 @@ class _AccountManagePageState extends State<AccountManagePage> {
                   Text(Fmt.address(store.account.currentAddress) ?? '',
                       style: TextStyle(fontSize: 16, color: Colors.white)),
                   Container(padding: EdgeInsets.only(top: 16)),
+                  ListTile(
+                    title: Text(dic['name.change']),
+                    trailing: Icon(Icons.arrow_forward_ios, size: 18),
+                    onTap: () => Navigator.pushNamed(context, ChangeNamePage.route),
+                  ),
                   Padding(
                     padding: EdgeInsets.only(top: 4),
                     child: Row(
