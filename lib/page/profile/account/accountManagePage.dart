@@ -70,8 +70,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
         //       Navigator.of(context).pop();
         //     });
         return CupertinoAlertDialog(
-          title: Text("Are you sure you want to delete the account?"),
-          // content: Text(dic['pass.error.txt']),
+          title: Text(I18n.of(context).profile['account.delete']),
           actions: <Widget>[
             CupertinoButton(
               // key: Key('error-dialog-ok'),
