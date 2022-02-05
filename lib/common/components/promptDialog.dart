@@ -54,11 +54,11 @@ class _PromptDialogState extends State<PromptDialog> {
       actions: <Widget>[
         widget.onCancel != null
             ? CupertinoButton(
-          child: Text(dic['cancel']),
-          onPressed: () {
-            widget.onCancel();
-          },
-        )
+                child: Text(dic['cancel']),
+                onPressed: () {
+                  widget.onCancel();
+                },
+              )
             : Container(),
         CupertinoButton(
           key: Key('password-ok'),
@@ -69,8 +69,8 @@ class _PromptDialogState extends State<PromptDialog> {
           onPressed: _submitting
               ? null
               : () {
-            _onOk();
-          },
+                  _onOk();
+                },
         ),
       ],
     );
