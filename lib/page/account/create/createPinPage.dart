@@ -110,20 +110,20 @@ class _CreatePinPageState extends State<CreatePinPage> {
     print("the name is: ${args['name']}");
     return Scaffold(
       appBar: AppBar(
-          title: Text(
-            I18n.of(context).home['create'],
-            style: Theme.of(context).textTheme.headline3,
-          ),
-          iconTheme: IconThemeData(
-            color: Color(0xff666666), //change your color here
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
+        title: Text(
+          I18n.of(context).home['create'],
+          style: Theme.of(context).textTheme.headline3,
+        ),
+        iconTheme: IconThemeData(
+          color: Color(0xff666666), //change your color here
+        ),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
         actions: <Widget>[
           IconButton(
             icon: Icon(
-              Icons.settings,
+              Icons.close,
               color: Color(0xff666666),
             ),
             onPressed: () {

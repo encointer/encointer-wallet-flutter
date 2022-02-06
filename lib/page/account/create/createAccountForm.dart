@@ -39,7 +39,8 @@ class CreateAccountForm extends StatelessWidget {
                 // width: 300,
                 Center(
                   child: Text(
-                    "You can change it later in \n your profile settings.", textAlign: TextAlign.center,
+                    "You can change it later in \n your profile settings.",
+                    textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headline2.copyWith(
                           color: Colors.black,
                         ),

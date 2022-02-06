@@ -26,18 +26,18 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text(
-            I18n.of(context).home['create'],
-            style: Theme.of(context).textTheme.headline3,
-          ),
-          centerTitle: true,
-          leading: Container(),
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
+        title: Text(
+          I18n.of(context).home['create'],
+          style: Theme.of(context).textTheme.headline3,
+        ),
+        centerTitle: true,
+        leading: Container(),
+        backgroundColor: Colors.transparent,
+        shadowColor: Colors.transparent,
         actions: <Widget>[
           IconButton(
             icon: Icon(
-              Icons.settings,
+              Icons.close,
               color: Color(0xff666666),
             ),
             onPressed: () {
@@ -47,9 +47,9 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
         ],
       ),
       body: SafeArea(
-          child: CreateAccountForm(
-        store: store,
-      ),
+        child: CreateAccountForm(
+          store: store,
+        ),
       ),
     );
   }
