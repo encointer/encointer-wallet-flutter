@@ -42,10 +42,11 @@ class CreatePinForm extends StatelessWidget {
                 // width: 300,
                 Center(
                   child: Text(
-                    "You will need this pin to unlock \n your encointer app.", textAlign: TextAlign.center,
+                    "You will need this pin to unlock \n your encointer app.",
+                    textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headline2.copyWith(
-                      color: Colors.black,
-                    ),
+                          color: Colors.black,
+                        ),
                   ),
                 ),
                 SizedBox(height: 30),
@@ -58,7 +59,8 @@ class CreatePinForm extends StatelessWidget {
                           enabledBorder: const OutlineInputBorder(
                             // width: 0.0 produces a thin "hairline" border
                             borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
-                            borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
+                            borderRadius:
+                                BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
                           ),
                           filled: true,
                           fillColor: Color(0xffF4F8F9),
@@ -86,7 +88,8 @@ class CreatePinForm extends StatelessWidget {
                           enabledBorder: const OutlineInputBorder(
                             // width: 0.0 produces a thin "hairline" border
                             borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
-                            borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
+                            borderRadius:
+                                BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
                           ),
                           filled: true,
                           fillColor: Color(0xffF4F8F9),
@@ -105,6 +108,22 @@ class CreatePinForm extends StatelessWidget {
                         inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                       )
                     : Container(),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Icons.info_outlined),
+                      SizedBox(width: 12),
+                      Text(
+                        "Pin should consist of at least 4 digits",
+                        style: Theme.of(context).textTheme.headline4.copyWith(
+                              color: Color(0xff666666),
+                            ),
+                      ),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),
@@ -112,17 +131,19 @@ class CreatePinForm extends StatelessWidget {
             key: Key('create-account-confirm'),
             padding: EdgeInsets.all(16),
             child: PrimaryButton(
-              child: Text(I18n.of(context).account['create'], style: Theme.of(context).textTheme.headline3.copyWith(
-                color: Color(0xffF4F8F9),
-              ),),
+              child: Text(
+                I18n.of(context).account['create'],
+                style: Theme.of(context).textTheme.headline3.copyWith(
+                      color: Color(0xffF4F8F9),
+                    ),
+              ),
               onPressed: () {
                 if (_formKey.currentState.validate()) {
                   if (store.account.accountListAll.isEmpty) {
                     setNewAccount(this.name.isNotEmpty ? this.name : dic['create.default'], _passCtrl.text);
                   } else {
                     // cachedPin won't be empty, because cachedPin is verified not to be empty before user adds an account in profile/index.dart
-                    setNewAccount(
-                        this.name.isNotEmpty ? this.name : dic['create.default'], store.settings.cachedPin);
+                    setNewAccount(this.name.isNotEmpty ? this.name : dic['create.default'], store.settings.cachedPin);
                   }
                   onSubmit();
                 }
