@@ -77,16 +77,6 @@ class AddAccountForm extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SizedBox(width: 12),
-                      // implementing with inkwell.. missing richText to separate between the clickable text and nonclickable
-                      // InkWell(
-                      //   onTap: () {
-                      //     Navigator.pushNamed(context, ImportAccountPage.route);
-                      //   },
-                      //   child: Padding(
-                      //     padding: EdgeInsets.all(10.0),
-                      //     child: Text(I18n.of(context).home['import'])
-                      //   ),
-                      // ),
                       RichText(
                         text: TextSpan(children: [
                           TextSpan(
@@ -106,12 +96,6 @@ class AddAccountForm extends StatelessWidget {
                                 }),
                         ]),
                       ),
-                      // Text(
-                      //     I18n.of(context).home['import'],
-                      //   style: Theme.of(context).textTheme.headline4.copyWith(
-                      //     color: Color(0xff666666),
-                      //   ),
-                      // ),
                     ],
                   ),
                 ),
