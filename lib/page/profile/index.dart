@@ -48,7 +48,10 @@ class _ProfileState extends State<Profile> {
   }
 
   Future<void> _onAddAccount() async {
-    Navigator.of(context).pushNamed(AddAccountPage.route);
+    var arg = {
+      'isImporting': false
+    };
+    Navigator.of(context).pushNamed(AddAccountPage.route, arguments: arg);
   }
 
   Future<void> _showPasswordDialog(BuildContext context) async {

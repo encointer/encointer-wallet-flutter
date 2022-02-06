@@ -106,6 +106,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Map<String, dynamic> arg = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -133,6 +134,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
       body: SafeArea(
         child: !_submitting
             ? AddAccountForm(
+                isImporting: arg['isImporting'],
                 setNewAccount: store.account.setNewAccount,
                 submitting: _submitting,
                 onSubmit: () {

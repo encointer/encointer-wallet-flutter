@@ -107,7 +107,6 @@ class _CreatePinPageState extends State<CreatePinPage> {
   @override
   Widget build(BuildContext context) {
     final Map args = ModalRoute.of(context).settings.arguments;
-    print("the name is: ${args['name']}");
     return Scaffold(
       appBar: AppBar(
         title: Text(
