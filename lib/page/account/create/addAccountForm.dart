@@ -8,12 +8,13 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 class AddAccountForm extends StatelessWidget {
-  AddAccountForm({this.setNewAccount, this.submitting, this.onSubmit, this.store});
+  AddAccountForm({this.isImporting, this.setNewAccount, this.submitting, this.onSubmit, this.store});
 //todo get rid of the setNewAccount method where password is stored
   final Function setNewAccount;
   final Function onSubmit;
   final bool submitting;
   final AppStore store;
+  final bool isImporting;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -71,7 +72,7 @@ class AddAccountForm extends StatelessWidget {
                     ),
                   ],
                 ),
-                Padding(
+                !isImporting ? Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -98,7 +99,8 @@ class AddAccountForm extends StatelessWidget {
                       ),
                     ],
                   ),
-                ),
+                ) :
+                    Container(),
               ],
             ),
           ),
@@ -124,6 +126,8 @@ class AddAccountForm extends StatelessWidget {
                   setNewAccount(
                       _nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic['create.default'], store.settings.cachedPin);
                   onSubmit();
+                } else {
+                  print("formKey.currentState.validate failed");
                 }
               },
             ),

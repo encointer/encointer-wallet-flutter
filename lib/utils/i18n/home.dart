@@ -1,5 +1,6 @@
 const Map<String, String> enHome = {
   'account': 'Account',
+  'account.import': 'Import account',
   'announce': 'Announcement',
   'assets': 'Assets',
   'bazaar': 'Bazaar',
@@ -67,6 +68,7 @@ const Map<String, String> enHome = {
 };
 const Map<String, String> deHome = {
   'account': 'Konto',
+  'account.import': 'Konto importieren',
   'announce': 'Mitteilung',
   'assets': 'Vermögen',
   'bazaar': 'Bazaar',
