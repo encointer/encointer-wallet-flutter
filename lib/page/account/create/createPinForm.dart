@@ -112,7 +112,9 @@ class CreatePinForm extends StatelessWidget {
             key: Key('create-account-confirm'),
             padding: EdgeInsets.all(16),
             child: PrimaryButton(
-              child: Text(I18n.of(context).account['create']),
+              child: Text(I18n.of(context).account['create'], style: Theme.of(context).textTheme.headline3.copyWith(
+                color: Color(0xffF4F8F9),
+              ),),
               onPressed: () {
                 if (_formKey.currentState.validate()) {
                   if (store.account.accountListAll.isEmpty) {

@@ -119,7 +119,18 @@ class _CreatePinPageState extends State<CreatePinPage> {
           ),
           centerTitle: true,
           backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent
+          shadowColor: Colors.transparent,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.settings,
+              color: Color(0xff666666),
+            ),
+            onPressed: () {
+              Navigator.popUntil(context, ModalRoute.withName('/'));
+            },
+          )
+        ],
       ),
       body: SafeArea(
         child: !_submitting

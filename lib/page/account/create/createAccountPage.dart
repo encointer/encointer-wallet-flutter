@@ -41,7 +41,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
               color: Color(0xff666666),
             ),
             onPressed: () {
-              Navigator.of(context).popUntil('/');
+              Navigator.popUntil(context, ModalRoute.withName('/'));
             },
           )
         ],
