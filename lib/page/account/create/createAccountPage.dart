@@ -25,14 +25,31 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(I18n.of(context).home['create'], style: Theme.of(context).textTheme.headline3,
-      ), centerTitle: true, leading: Container(), backgroundColor: Colors.white, shadowColor: Colors.white
+      appBar: AppBar(
+          title: Text(
+            I18n.of(context).home['create'],
+            style: Theme.of(context).textTheme.headline3,
+          ),
+          centerTitle: true,
+          leading: Container(),
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent,
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.settings,
+              color: Color(0xff666666),
+            ),
+            onPressed: () {
+              Navigator.of(context).popUntil('/');
+            },
+          )
+        ],
       ),
       body: SafeArea(
-        child:
-            CreateAccountForm(
-                store: store,
-              )
+          child: CreateAccountForm(
+        store: store,
+      ),
       ),
     );
   }

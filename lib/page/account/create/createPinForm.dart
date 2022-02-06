@@ -33,15 +33,41 @@ class CreatePinForm extends StatelessWidget {
             child: ListView(
               padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
               children: <Widget>[
+                SizedBox(height: 80),
+                Center(
+                  child: Text("Secure your account with a pin.", style: Theme.of(context).textTheme.headline2),
+                ),
+                // ),
+                // Container(
+                // width: 300,
+                Center(
+                  child: Text(
+                    "You will need this pin to unlock \n your encointer app.", textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headline2.copyWith(
+                      color: Colors.black,
+                    ),
+                  ),
+                ),
+                SizedBox(height: 30),
                 // todo: couldnt wrap this ternary in a single one, had to do two ternaries (for each pin)... clang: how to?
                 (store.account.accountListAll.isEmpty)
                     ? TextFormField(
                         key: Key('create-account-pin'),
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
-                          icon: Icon(Icons.lock),
+                          enabledBorder: const OutlineInputBorder(
+                            // width: 0.0 produces a thin "hairline" border
+                            borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+                            borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
+                          ),
+                          filled: true,
+                          fillColor: Color(0xffF4F8F9),
+                          // icon: Icon(Icons.lock),
                           hintText: dic['create.password'],
                           labelText: dic['create.password'],
+                          // if change color of hint:
+                          // labelStyle: TextStyle(
+                          //     color: Color(0xff4374A3))
                         ),
                         controller: _passCtrl,
                         validator: (v) {
@@ -51,12 +77,23 @@ class CreatePinForm extends StatelessWidget {
                         inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                       )
                     : Container(),
+                SizedBox(height: 20),
                 (store.account.accountListAll.isEmpty)
                     ? TextFormField(
                         key: Key('create-account-pin2'),
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
-                          icon: Icon(Icons.lock),
+                          enabledBorder: const OutlineInputBorder(
+                            // width: 0.0 produces a thin "hairline" border
+                            borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+                            borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
+                          ),
+                          filled: true,
+                          fillColor: Color(0xffF4F8F9),
+                          // icon: Icon(Icons.lock),
+                          // if change color of hint:
+                          // labelStyle: TextStyle(
+                          //     color: Color(0xff4374A3))
                           hintText: dic['create.password2'],
                           labelText: dic['create.password2'],
                         ),

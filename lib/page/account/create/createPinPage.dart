@@ -109,7 +109,17 @@ class _CreatePinPageState extends State<CreatePinPage> {
     final Map args = ModalRoute.of(context).settings.arguments;
     print("the name is: ${args['name']}");
     return Scaffold(
-      appBar: AppBar(title: Text(I18n.of(context).home['create']), centerTitle: true,
+      appBar: AppBar(
+          title: Text(
+            I18n.of(context).home['create'],
+            style: Theme.of(context).textTheme.headline3,
+          ),
+          iconTheme: IconThemeData(
+            color: Color(0xff666666), //change your color here
+          ),
+          centerTitle: true,
+          backgroundColor: Colors.transparent,
+          shadowColor: Colors.transparent
       ),
       body: SafeArea(
         child: !_submitting

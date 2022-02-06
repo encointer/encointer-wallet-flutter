@@ -24,42 +24,51 @@ class CreateAccountForm extends StatelessWidget {
       key: _formKey,
       child: Column(
         children: <Widget>[
+          SizedBox(height: 80),
           Expanded(
             child: ListView(
               padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
               children: <Widget>[
+                // Container(
+                // width: 200,
                 Center(
                   child: Text("Choose an account name.", style: Theme.of(context).textTheme.headline2),
                 ),
-                SizedBox(
-                  width: 1,
-                  height: 100,
-                  child:
+                // ),
+                // Container(
+                // width: 300,
                 Center(
-                child: Text(
-                    "You can change it later \n"
-                    "in your profile settings.",
+                  child: Text(
+                    "You can change it later in \n your profile settings.", textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headline2.copyWith(
                           color: Colors.black,
                         ),
                   ),
-                  ),
                 ),
-                Align(
-                  //find alignment statement when online^^
-                child: Column(
+                // ),
+                SizedBox(height: 30),
+                Column(
                   children: <Widget>[
                     TextFormField(
                       key: Key('create-account-name'),
                       decoration: InputDecoration(
+                        enabledBorder: const OutlineInputBorder(
+                          // width: 0.0 produces a thin "hairline" border
+                          borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+                          borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
+                        ),
+                        filled: true,
+                        fillColor: Color(0xffF4F8F9),
                         // icon: Icon(Icons.person),
+                        // if change color of hint:
+                        // labelStyle: TextStyle(
+                        //     color: Color(0xff4374A3))
                         hintText: dic['create.hint'],
                         labelText: "Account name",
                       ),
                       controller: _nameCtrl,
                     ),
                   ],
-                ),
                 ),
               ],
             ),
@@ -84,9 +93,7 @@ class CreateAccountForm extends StatelessWidget {
               onPressed: () {
                 if (_formKey.currentState.validate()) {
                   // onSubmit();
-                  var args = {
-                  "name": '${_nameCtrl.text}'
-                  };
+                  var args = {"name": '${_nameCtrl.text}'};
                   Navigator.pushNamed(context, CreatePinPage.route, arguments: args);
                 }
               },
