@@ -17,7 +17,6 @@ class CreatePinForm extends StatelessWidget {
 
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _nameCtrl = new TextEditingController();
   final TextEditingController _passCtrl = new TextEditingController();
   final TextEditingController _pass2Ctrl = new TextEditingController();
 

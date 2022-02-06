@@ -2,7 +2,7 @@ import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/editIcon.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
-import 'package:encointer_wallet/page/account/createAccountEntryPage.dart';
+import 'package:encointer_wallet/page/account/create/addAccountPage.dart';
 import 'package:encointer_wallet/page/profile/account/changePasswordPage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
@@ -47,8 +47,8 @@ class _ProfileState extends State<Profile> {
     }
   }
 
-  Future<void> _onCreateAccount() async {
-    Navigator.of(context).pushNamed(CreateAccountEntryPage.route);
+  Future<void> _onAddAccount() async {
+    Navigator.of(context).pushNamed(AddAccountPage.route);
   }
 
   Future<void> _showPasswordDialog(BuildContext context) async {
@@ -120,8 +120,15 @@ class _ProfileState extends State<Profile> {
             IconButton(
                 icon: Image.asset('assets/images/assets/plus_indigo.png'),
                 color: primaryColor,
-                onPressed: () =>
-                    {store.settings.cachedPin.isEmpty ? _showPasswordDialog(context) : _onCreateAccount()}),
+                onPressed: () => {store.settings.cachedPin.isEmpty ? _showPasswordDialog(context) : _onAddAccount()}),
+            developerMode
+                ? IconButton(
+                    // TODO design decision where to put this functionality
+                    key: Key('choose-network'),
+                    icon: Icon(Icons.menu, color: Colors.orange),
+                    onPressed: () => Navigator.of(context).pushNamed('/network'),
+                  )
+                : Container(),
           ])
         ],
       ),
