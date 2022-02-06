@@ -141,6 +141,31 @@ class _ProfileState extends State<Profile> {
     super.initState();
   }
 
+  // void displayDialog(title) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) => new CupertinoAlertDialog(
+  //       title: Text(title),
+  //       // content: new Text("My alert message"),
+  //       actions: [
+  //         CupertinoButton(
+  //           // key: Key('error-dialog-ok'),
+  //           child: Text(I18n.of(context).home['cancel']),
+  //           onPressed: () => Navigator.of(context).pop(),
+  //         ),
+  //         CupertinoButton(
+  //             // key: Key('error-dialog-ok'),
+  //             child: Text(I18n.of(context).home['ok']),
+  //             onPressed: () => {
+  //                   store.account.accountListAll.map((acc) {
+  //                     store.account.removeAccount(acc);
+  //                   })
+  //                 }),
+  //       ],
+  //     ),
+  //   );
+  // }
+
   @override
   Widget build(BuildContext context) {
     _selectedNetwork = store.settings.endpoint;
@@ -179,6 +204,33 @@ class _ProfileState extends State<Profile> {
                     title: Text(dic['pass.change']),
                     trailing: Icon(Icons.arrow_forward_ios, size: 18),
                     onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
+                  ),
+                  ListTile(
+                    title: Text("Remove all Accounts"),
+                    onTap: () => showCupertinoDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return CupertinoAlertDialog(title: Text("Are you sure you want to remove all accounts?"),
+                              // content: Text(dic['pass.error.txt']),
+                              actions: <Widget>[
+                                CupertinoButton(
+                                  // key: Key('error-dialog-ok'),
+                                  child: Text(I18n.of(context).home['cancel']),
+                                  onPressed: () => Navigator.of(context).pop(),
+                                ),
+                                CupertinoButton(
+                                    // key: Key('error-dialog-ok'),
+                                    child: Text(I18n.of(context).home['ok']),
+                                    onPressed: () => {
+                                          print("remove ${store.account.accountListAll}"),
+                                          store.account.accountListAll.forEach((acc) {
+                                            print("removing the account: ${acc}");
+                                            store.account.removeAccount(acc);
+                                          }),
+                                          Navigator.popUntil(context, ModalRoute.withName('/')),
+                                        }),
+                              ]);
+                        }),
                   ),
                   Row(
                     children: <Widget>[
