@@ -112,7 +112,6 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       ),
     ];
 
-    print("Tabkey: ${TabKey.Profile.toString()}");
     return Scaffold(
       key: EncointerHomePage.encointerHomePageKey,
       backgroundColor: Colors.white,

@@ -59,7 +59,6 @@ class ScanPage extends StatelessWidget {
         future: canOpenCamera(),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           if (snapshot.hasData && snapshot.data == true) {
-            print("the context is: ${ModalRoute.of(context).settings.name}");
             return QrcodeReaderView(
                 key: _qrViewKey,
                 helpWidget: Text(I18n.of(context).account['qr.scan']),
