@@ -132,7 +132,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         iconSize: 22.0,
         onTap: (index) async {
           if (_tabList[index].key == TabKey.Scan) {
-            // `ScanPage` should be opened on a new route instead of in a tab.
+            // Push `ScanPage.Route`instead of changing the Page.
             Navigator.of(context).pushNamed(ScanPage.route);
           } else {
             setState(() {
