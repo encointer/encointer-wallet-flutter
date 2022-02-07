@@ -50,7 +50,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
             context, store.account.currentAccount, Text(I18n.of(context).profile['delete.confirm']), (_) {
           store.account.removeAccount(store.account.currentAccount).then((_) {
             // refresh balance
-            widget.store.assets.loadAccountCache();
+            store.assets.loadAccountCache();
             webApi.assets.fetchBalance();
           });
           Navigator.of(context).pop();
@@ -60,11 +60,11 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 
   List<Widget> _getBalances() {
-    CommunityMetadata cm = widget.store.encointer.communityMetadata;
+    CommunityMetadata cm = store.encointer.communityMetadata;
     String name = cm != null ? cm.name : '';
     String symbol = cm != null ? cm.symbol : '';
     final String tokenView = Fmt.tokenView(symbol);
-    return widget.store.encointer.balanceEntries.entries.map((i) {
+    return store.encointer.balanceEntries.entries.map((i) {
       if (cm != null) {
         return RoundedCard(
           margin: EdgeInsets.only(top: 16),
@@ -80,7 +80,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  Fmt.doubleFormat(widget.store.encointer.communityBalance),
+                  Fmt.doubleFormat(store.encointer.communityBalance),
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
                 ),
                 Container(width: 16),
