@@ -1,5 +1,6 @@
 import 'package:encointer_wallet/common/components/BorderedTitle.dart';
 import 'package:encointer_wallet/common/components/addressIcon.dart';
+import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
@@ -13,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:iconsax/iconsax.dart';
 
 class AccountManagePage extends StatefulWidget {
   AccountManagePage(this.store);
@@ -186,34 +188,86 @@ class _AccountManagePageState extends State<AccountManagePage> {
               Expanded(
                 child: ListView(padding: EdgeInsets.all(16), children: _getBalances()),
               ),
-              ElevatedButton(
-                  style: TextButton.styleFrom(
-                    padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
-                    backgroundColor: primaryColor,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-                  ),
-                  child: Text(
-                    dic['account.share'],
-                    style: Theme.of(context).textTheme.button,
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, ReceivePage.route, arguments: args);
-                  }),
-              Row(
-                children: <Widget>[
-                  Expanded(
-                    child: TextButton(
-                      style: TextButton.styleFrom(
-                        padding: EdgeInsets.all(16),
-                        backgroundColor: Colors.white,
-                        textStyle: TextStyle(color: Colors.red),
+              Padding(
+                padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                child: Container(
+                  // color: Theme.of(context).colorScheme.secondary,
+                  child: Center(
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: ElevatedButton(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Iconsax.profile_remove),
+                            SizedBox(width: 12),
+                            Text(
+                              dic['delete'],
+                              style: Theme.of(context).textTheme.headline3
+                            ),
+                          ],
+                        ),
+                        // Text(I18n.of(context).home['create'], style: Theme.of(context).textTheme.headline3),
+                        onPressed: () {
+                          _onDeleteAccount(context);
+                        },
                       ),
-                      child: Text(dic['delete']),
-                      onPressed: () => _onDeleteAccount(context),
+                    ),
+                  ),
+                ),
+              ),
+          Container(
+            padding: EdgeInsets.all(16),
+            child: PrimaryButton(
+              onPressed: () => Navigator.pushNamed(context, ReceivePage.route, arguments: args),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Iconsax.share),
+                  SizedBox(width: 12),
+                  Text(
+                    dic['account.share'],
+                    style: Theme.of(context).textTheme.headline3.copyWith(
+                      color: Color(0xffF4F8F9),
                     ),
                   ),
                 ],
               ),
+            ),
+          ),
+              // Container(
+              //   child: SizedBox(
+              //     width: double.infinity,
+              //     child: ElevatedButton(
+              //         style: TextButton.styleFrom(
+              //           padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
+              //           backgroundColor: primaryColor,
+              //           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+              //         ),
+              //         child: Text(
+              //           dic['delete'],
+              //           style: Theme.of(context).textTheme.button,
+              //         ),
+              //         onPressed: () {
+              //           _onDeleteAccount(context);
+              //         }),
+              //   ),
+              // ),
+              // Row(
+              //   children: <Widget>[
+              //     Expanded(
+              //       child: TextButton(
+              //         style: TextButton.styleFrom(
+              //           padding: EdgeInsets.all(16),
+              //           backgroundColor: Colors.white,
+              //           textStyle: TextStyle(color: Colors.red),
+              //         ),
+              //         child: Text(dic['delete']),
+              //         onPressed: () => _onDeleteAccount(context),
+              //       ),
+              //     ),
+              //   ],
+              // ),
             ],
           ),
         ),
