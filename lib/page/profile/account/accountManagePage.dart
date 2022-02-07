@@ -34,7 +34,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
   @override
   void initState() {
     super.initState();
-    _nameCtrl = TextEditingController(text: store.account.currentAccount.name);
   }
 
   @override
@@ -96,6 +95,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
   @override
   Widget build(BuildContext context) {
+    _nameCtrl = TextEditingController(text: store.account.currentAccount.name);
+
     final Map<String, String> dic = I18n.of(context).profile;
     Color primaryColor = Theme.of(context).primaryColor;
 
