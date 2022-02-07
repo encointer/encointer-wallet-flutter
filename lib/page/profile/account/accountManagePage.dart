@@ -98,6 +98,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   Widget build(BuildContext context) {
     final Map<String, String> dic = I18n.of(context).profile;
     Color primaryColor = Theme.of(context).primaryColor;
+
     var args = {
       "isShare": true,
     };
@@ -116,7 +117,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
               if (name.length == 0) {
                 return dic['contact.name.error'];
               }
-              int exist = widget.store.account.optionalAccounts.indexWhere((i) => i.name == name);
+              int exist = store.account.optionalAccounts.indexWhere((i) => i.name == name);
               if (exist > -1) {
                 return dic['contact.name.exist'];
               }
@@ -133,7 +134,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     ? RoundedButton(
                         text: dic['contact.name.save'],
                         onPressed: () {
-                          widget.store.account.updateAccountName(_nameCtrl.text.trim());
+                          store.account.updateAccountName(_nameCtrl.text.trim());
                           setState(() {
                             _isEditingText = false;
                           });
@@ -146,16 +147,16 @@ class _AccountManagePageState extends State<AccountManagePage> {
                   AddressIcon(
                     '',
                     size: 100,
-                    pubKey: widget.store.account.currentAccount.pubKey,
+                    pubKey: store.account.currentAccount.pubKey,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(Fmt.address(widget.store.account.currentAddress), style: TextStyle(fontSize: 20)),
+                      Text(Fmt.address(store.account.currentAddress), style: TextStyle(fontSize: 20)),
                       ElevatedButton(
                         child: Icon(Icons.copy),
                         onPressed: () {
-                          final data = ClipboardData(text: widget.store.account.currentAddress);
+                          final data = ClipboardData(text: store.account.currentAddress);
                           Clipboard.setData(data);
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(content: Text('✓   Copied to Clipboard')),
@@ -164,7 +165,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       ),
                     ],
                   ),
-                  Text(Fmt.address(widget.store.account.currentAddress) ?? '',
+                  Text(Fmt.address(store.account.currentAddress) ?? '',
                       style: TextStyle(fontSize: 16, color: Colors.white)),
                   Container(padding: EdgeInsets.only(top: 16)),
                   Padding(
