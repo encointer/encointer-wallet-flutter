@@ -196,15 +196,15 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     child: SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(vertical: 16)
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Icon(Iconsax.profile_remove),
                             SizedBox(width: 12),
-                            Text(
-                              dic['delete'],
-                              style: Theme.of(context).textTheme.headline3
-                            ),
+                            Text(dic['delete'], style: Theme.of(context).textTheme.headline3),
                           ],
                         ),
                         // Text(I18n.of(context).home['create'], style: Theme.of(context).textTheme.headline3),
@@ -216,25 +216,25 @@ class _AccountManagePageState extends State<AccountManagePage> {
                   ),
                 ),
               ),
-          Container(
-            padding: EdgeInsets.all(16),
-            child: PrimaryButton(
-              onPressed: () => Navigator.pushNamed(context, ReceivePage.route, arguments: args),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Iconsax.share),
-                  SizedBox(width: 12),
-                  Text(
-                    dic['account.share'],
-                    style: Theme.of(context).textTheme.headline3.copyWith(
-                      color: Color(0xffF4F8F9),
-                    ),
+              Container(
+                padding: EdgeInsets.all(16),
+                child: PrimaryButton(
+                  onPressed: () => Navigator.pushNamed(context, ReceivePage.route, arguments: args),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Iconsax.share),
+                      SizedBox(width: 12),
+                      Text(
+                        dic['account.share'],
+                        style: Theme.of(context).textTheme.headline3.copyWith(
+                              color: Color(0xffF4F8F9),
+                            ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
               // Container(
               //   child: SizedBox(
               //     width: double.infinity,
