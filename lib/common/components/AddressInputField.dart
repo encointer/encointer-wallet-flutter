@@ -8,6 +8,8 @@ import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 
+import '../theme.dart';
+
 class AddressInputField extends StatefulWidget {
   AddressInputField(this.store, {this.label, this.initialValue, this.onChanged});
   final AppStore store;
@@ -91,7 +93,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
           padding: EdgeInsets.only(top: 8),
           child: Row(
             children: [
-              AddressIcon(item.address, pubKey: item.pubKey, tapToCopy: false),
+              AddressIcon(item.address, pubKey: item.pubKey, tapToCopy: false, size: 36),
               Padding(
                 padding: EdgeInsets.only(left: 8),
                 child: Column(
@@ -147,26 +149,42 @@ class _AddressInputFieldState extends State<AddressInputField> {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownSearch<AccountData>(
-      mode: Mode.BOTTOM_SHEET,
-      isFilteredOnline: true,
-      showSearchBox: true,
-      showSelectedItem: true,
-      autoFocusSearchBox: true,
-      searchBoxDecoration: InputDecoration(hintText: widget.label),
-      label: widget.label,
-      selectedItem: widget.initialValue,
-      compareFn: (AccountData i, s) => i.pubKey == s?.pubKey,
-      validator: (AccountData u) => u == null ? "user field is required " : null,
-      onFind: (String filter) => _getAccountsFromInput(filter),
-      itemAsString: _itemAsString,
-      onChanged: (AccountData data) {
-        if (widget.onChanged != null) {
-          widget.onChanged(data);
-        }
-      },
-      dropdownBuilder: _selectedItemBuilder,
-      popupItemBuilder: _listItemBuilder,
+    return Container(
+      decoration: BoxDecoration(
+        color: ZurichLion.shade50,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: DropdownSearch<AccountData>(
+        mode: Mode.BOTTOM_SHEET,
+        isFilteredOnline: true,
+        showSearchBox: true,
+        showSelectedItem: true,
+        autoFocusSearchBox: true,
+        dropdownSearchDecoration: InputDecoration(
+          labelText: widget.label,
+          labelStyle: Theme.of(context).textTheme.headline4,
+          contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 25),
+          border: UnderlineInputBorder(
+            borderSide: BorderSide(
+              width: 0,
+              style: BorderStyle.none,
+            ),
+          ),
+        ),
+        label: widget.label,
+        selectedItem: widget.initialValue,
+        compareFn: (AccountData i, s) => i.pubKey == s?.pubKey,
+        validator: (AccountData u) => u == null ? "user field is required " : null,
+        onFind: (String filter) => _getAccountsFromInput(filter),
+        itemAsString: _itemAsString,
+        onChanged: (AccountData data) {
+          if (widget.onChanged != null) {
+            widget.onChanged(data);
+          }
+        },
+        dropdownBuilder: _selectedItemBuilder,
+        popupItemBuilder: _listItemBuilder,
+      ),
     );
   }
 }
