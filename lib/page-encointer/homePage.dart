@@ -116,11 +116,6 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       backgroundColor: Colors.white,
       body: PageView(
         controller: _pageController,
-        onPageChanged: (index) {
-          setState(() {
-            _tabIndex = index;
-          });
-        },
         children: [
           Assets(store),
           if (store.settings.endpointIsGesell) BazaarMain(store), // dart collection if
@@ -133,11 +128,16 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _tabIndex,
         iconSize: 22.0,
-        onTap: (index) {
-          setState(() {
-            _tabIndex = index;
-          });
-          _pageController.jumpToPage(index);
+        onTap: (index) async {
+          if (_tabList[index].key == 'Scan') {
+            // `ScanPage` should be opened on a new route instead of in a tab.
+            Navigator.of(context).pushNamed(ScanPage.route);
+          } else {
+            setState(() {
+              _tabIndex = index;
+              _pageController.jumpToPage(index);
+            });
+          }
         },
         type: BottomNavigationBarType.fixed,
         items: _navBarItems(_tabIndex),
