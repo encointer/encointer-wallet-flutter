@@ -83,7 +83,16 @@ class _TransferPageState extends State<TransferPage> {
           child: Scaffold(
             appBar: AppBar(
               title: Text(dic['transfer']),
-              centerTitle: true,
+              leading: Container(),
+              actions: [
+                IconButton(
+                  key: Key('close-transfer-page'),
+                  icon: Icon(Icons.close),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                )
+              ],
             ),
             body: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8),
