@@ -106,7 +106,8 @@ class _TransferPageState extends State<TransferPage> {
                             ? AccountBalanceWithMoreDigits(store: store, available: available, decimals: decimals)
                             : CupertinoActivityIndicator(),
                         Text(
-                          "Your balance, Account name", // TODO how to obtain the account name?
+                          "Your balance for ${Fmt.accountName(context, store.account.currentAccount)}",
+                          style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(height: 48),
