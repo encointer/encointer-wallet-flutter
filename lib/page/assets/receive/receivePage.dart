@@ -1,12 +1,9 @@
-import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:share/share.dart';
 
 class ReceivePage extends StatelessWidget {
   ReceivePage(this.store);
@@ -22,10 +19,6 @@ class ReceivePage extends StatelessWidget {
 
     String codeAddress =
         'substrate:${store.account.currentAddress}:${store.account.currentAccount.pubKey}:${store.account.currentAccount.name}';
-    Color themeColor = Theme.of(context).primaryColor;
-
-    bool isEncointer = store.settings.endpointIsEncointer;
-    final accInfo = store.account.accountIndexMap[store.account.currentAccount.address];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -38,22 +31,82 @@ class ReceivePage extends StatelessWidget {
             Column(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
                   child: Text(
                     I18n.of(context).profile['qr.scan.hint'],
-                    style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
+                    style: Theme.of(context).textTheme.headline3.copyWith(color: encointerBlack),
                     textAlign: TextAlign.center,
                   ),
                 ),
+                SizedBox(height: 8),
                 Container(
-                  child: QrImage(
-                    data: codeAddress,
-                    embeddedImage: AssetImage('assets/images/public/app.png'),
-                    embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
+                  margin: EdgeInsets.symmetric(horizontal: 8),
+                  decoration: BoxDecoration(
+                    color: ZurichLion.shade50,
+                    borderRadius: BorderRadius.circular(15),
                   ),
-                ),
+                  child: TextFormField(
+                    style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
+                    decoration: InputDecoration(
+                      labelText: 'Invoice amount',
+                      labelStyle: Theme.of(context).textTheme.headline4,
+                      contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 25),
+                      border: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          width: 0,
+                          style: BorderStyle.none,
+                        ),
+                      ),
+                      suffixIcon: Text(
+                        "ⵐ",
+                        style: TextStyle(
+                          color: encointerGrey,
+                          fontSize: 44,
+                        ),
+                      ),
+                    ),
+                    // inputFormatters: [UI.decimalInputFormatter(decimals)],
+                    // controller: _amountCtrl,
+                    textAlign: TextAlign.center,
+                    keyboardType: TextInputType.numberWithOptions(decimal: true),
+                    // The validator receives the text that the user has entered.
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                  ),
+                )
               ],
-            )
+            ),
+            SizedBox(height: 8),
+            Column(children: [
+              Container(
+                child: QrImage(
+                  data: codeAddress,
+                  embeddedImage: AssetImage('assets/images/public/app.png'),
+                  embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
+                ),
+              ),
+              InkWell(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(Icons.share, color: ZurichLion.shade500),
+                        SizedBox(width: 8),
+                        Text(
+                          "Share QR code",
+                          style: Theme.of(context).textTheme.headline3,
+                        ),
+                      ]),
+                ),
+                onTap: () => null, // TODO add functionality to share the QR code
+              ),
+            ])
           ],
         ),
       ),
