@@ -334,14 +334,22 @@ class AccountBalanceWithMoreDigits extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Text(
-        "${Fmt.priceFloorBigInt(
-          available,
-          decimals,
-          lengthMax: 6,
-        )} ⵐ",
-        // ${store.encointer.communitySymbol}
-        style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black),
+      child: RichText(
+        // need text base line aligment
+        text: TextSpan(
+          text: '${Fmt.priceFloorBigInt(
+            available,
+            decimals,
+            lengthMax: 6,
+          )} ',
+          style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
+          children: const <TextSpan>[
+            TextSpan(
+              text: 'ⵐ',
+              style: TextStyle(color: encointerGrey),
+            ),
+          ],
+        ),
       ),
     );
   }
