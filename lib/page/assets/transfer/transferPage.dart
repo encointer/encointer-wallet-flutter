@@ -109,33 +109,49 @@ class _TransferPageState extends State<TransferPage> {
                           "Your balance, Account name", // TODO how to obtain the account name?
                           textAlign: TextAlign.center,
                         ),
-                        TextFormField(
-                          key: Key('transfer-amount-input'),
-                          decoration: InputDecoration(
-                            border: OutlineInputBorder(),
-                            hintText: "amount to send",
+                        SizedBox(height: 48),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: ZurichLion.shade50,
+                            borderRadius: BorderRadius.circular(15),
                           ),
-                          inputFormatters: [UI.decimalInputFormatter(decimals)],
-                          controller: _amountCtrl,
-                          textAlign: TextAlign.center,
-                          keyboardType: TextInputType.numberWithOptions(decimal: true),
-                          validator: (v) {
-                            if (v.isEmpty) {
-                              return dic['amount.error'];
-                            }
-                            if (balanceTooLow(v, available, decimals)) {
-                              return dic['amount.low'];
-                            }
-                            return null;
-                          },
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            "to",
+                          child: TextFormField(
+                            key: Key('transfer-amount-input'),
+                            style: Theme.of(context).textTheme.headline1.copyWith(color: encointerBlack),
+                            decoration: InputDecoration(
+                              labelText: 'amount to send',
+                              labelStyle: Theme.of(context).textTheme.headline4,
+                              contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 25),
+                              border: UnderlineInputBorder(
+                                borderSide: BorderSide(
+                                  width: 0,
+                                  style: BorderStyle.none,
+                                ),
+                              ),
+                              suffixIcon: Text(
+                                "ⵐ",
+                                style: TextStyle(
+                                  color: encointerGrey,
+                                  fontSize: 44,
+                                ),
+                              ),
+                            ),
+                            inputFormatters: [UI.decimalInputFormatter(decimals)],
+                            controller: _amountCtrl,
                             textAlign: TextAlign.center,
+                            keyboardType: TextInputType.numberWithOptions(decimal: true),
+                            validator: (v) {
+                              if (v.isEmpty) {
+                                return dic['amount.error'];
+                              }
+                              if (balanceTooLow(v, available, decimals)) {
+                                return dic['amount.low'];
+                              }
+                              return null;
+                            },
                           ),
                         ),
+                        SizedBox(height: 24),
                         Row(
                           children: [
                             Expanded(
@@ -155,6 +171,7 @@ class _TransferPageState extends State<TransferPage> {
                       ],
                     ),
                   ),
+                  SizedBox(height: 48),
                   Center(
                     child: Text(
                       "Fee: TODO compute Fee",
