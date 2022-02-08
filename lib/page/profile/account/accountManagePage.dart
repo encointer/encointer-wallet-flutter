@@ -148,6 +148,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
+                  SizedBox(height: 50),
                   AddressIcon(
                     '',
                     size: 100,
@@ -172,14 +173,17 @@ class _AccountManagePageState extends State<AccountManagePage> {
                   Text(Fmt.address(store.account.currentAddress) ?? '',
                       style: TextStyle(fontSize: 16, color: Colors.white)),
                   Container(padding: EdgeInsets.only(top: 16)),
+                  ListTile(
+                    title: Text(dic['name.change']),
+                    trailing: Icon(Icons.arrow_forward_ios, size: 18),
+                    onTap: () => Navigator.pushNamed(context, ChangeNamePage.route),
+                  ),
                   Padding(
-                    padding: EdgeInsets.only(top: 4),
+                    padding: const EdgeInsets.all(16),
                     child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
-                        BorderedTitle(
-                          title: 'Communities',
-                        ),
+                        Text(dic['communities'],
+                            style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black54))
                       ],
                     ),
                   ),
@@ -196,9 +200,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     child: SizedBox(
                       width: double.infinity,
                       child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            padding: EdgeInsets.symmetric(vertical: 16)
-                        ),
+                        style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
