@@ -1,3 +1,5 @@
+/// contains translations for Bazaar
+/// always add a new getter here in the abstract class first, then generate/implement the getters in the subclasses
 abstract class TranslationsBazaar {
   String get address;
   String get apply;

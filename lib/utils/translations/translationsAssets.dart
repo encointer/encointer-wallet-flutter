@@ -1,3 +1,5 @@
+/// contains translations for Assets
+/// always add a new getter here in the abstract class first, then generate/implement the getters in the subclasses
 abstract class TranslationsAssets {
   String get address;
   String get addressError;

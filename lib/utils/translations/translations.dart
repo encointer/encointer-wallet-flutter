@@ -6,6 +6,7 @@ import 'package:encointer_wallet/utils/translations/TranslationsEncointer.dart';
 import 'package:encointer_wallet/utils/translations/translationsBazaar.dart';
 
 /// top level contains groups like 'account', 'profile' etc.
+/// (when you add a new group the compiler will force you to add it in all implementations, too.)
 abstract class Translations {
   TranslationsHome get home;
   TranslationsAccount get account;

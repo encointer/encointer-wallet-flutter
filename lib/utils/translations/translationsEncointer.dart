@@ -1,3 +1,5 @@
+/// contains translations for Encointer
+/// always add a new getter here in the abstract class first, then generate/implement the getters in the subclasses
 abstract class TranslationsEncointer {
   String get registerParticipant;
   String get attestationsSubmit;

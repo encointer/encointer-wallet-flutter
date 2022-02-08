@@ -1,3 +1,5 @@
+/// contains translations for Profile
+/// always add a new getter here in the abstract class first, then generate/implement the getters in the subclasses
 abstract class TranslationsProfile {
   String get about;
   String get aboutBrif;
