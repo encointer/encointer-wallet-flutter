@@ -48,7 +48,7 @@ class ReceivePage extends StatelessWidget {
                   child: TextFormField(
                     style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
                     decoration: InputDecoration(
-                      labelText: 'Invoice amount',
+                      labelText: I18n.of(context).assets['invoice.amount'],
                       labelStyle: Theme.of(context).textTheme.headline4,
                       contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 25),
                       border: UnderlineInputBorder(
@@ -99,7 +99,7 @@ class ReceivePage extends StatelessWidget {
                         Icon(Icons.share, color: ZurichLion.shade500),
                         SizedBox(width: 8),
                         Text(
-                          "Share QR code",
+                          I18n.of(context).assets['share.qr.code'],
                           style: Theme.of(context).textTheme.headline3,
                         ),
                       ]),
@@ -113,11 +113,3 @@ class ReceivePage extends StatelessWidget {
     );
   }
 }
-
-// what was this for???:
-// accInfo != null && accInfo['accountIndex'] != null
-// ? Padding(
-// padding: EdgeInsets.all(8),
-// child: Text(accInfo['accountIndex']),
-// )
-// : Container(width: 8, height: 8),

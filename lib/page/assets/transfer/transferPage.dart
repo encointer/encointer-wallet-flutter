@@ -106,7 +106,7 @@ class _TransferPageState extends State<TransferPage> {
                             ? AccountBalanceWithMoreDigits(store: store, available: available, decimals: decimals)
                             : CupertinoActivityIndicator(),
                         Text(
-                          "Your balance for ${Fmt.accountName(context, store.account.currentAccount)}",
+                          "${I18n.of(context).assets['your.balance.for']} ${Fmt.accountName(context, store.account.currentAccount)}",
                           style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
                           textAlign: TextAlign.center,
                         ),
@@ -120,7 +120,7 @@ class _TransferPageState extends State<TransferPage> {
                             key: Key('transfer-amount-input'),
                             style: Theme.of(context).textTheme.headline1.copyWith(color: encointerBlack),
                             decoration: InputDecoration(
-                              labelText: 'amount to send',
+                              labelText: dic['amount.to.send'],
                               labelStyle: Theme.of(context).textTheme.headline4,
                               contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 25),
                               border: UnderlineInputBorder(
@@ -188,7 +188,7 @@ class _TransferPageState extends State<TransferPage> {
                         children: [
                           Icon(Iconsax.send_sqaure_2),
                           SizedBox(width: 12),
-                          Text(dic['make']), // TODO rename
+                          Text(dic['amount.to.be.transferred']),
                         ],
                       ),
                       onPressed: _handleSubmit,
