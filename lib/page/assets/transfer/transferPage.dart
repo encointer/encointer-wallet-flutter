@@ -120,7 +120,7 @@ class _TransferPageState extends State<TransferPage> {
                             key: Key('transfer-amount-input'),
                             style: Theme.of(context).textTheme.headline1.copyWith(color: encointerBlack),
                             decoration: InputDecoration(
-                              labelText: dic['amount.to.send'],
+                              labelText: dic['amount.to.be.transferred'],
                               labelStyle: Theme.of(context).textTheme.headline4,
                               contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 25),
                               border: UnderlineInputBorder(
