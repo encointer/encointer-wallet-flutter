@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:encointer_wallet/common/components/AddressInputField.dart';
-import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
+import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
@@ -113,6 +113,7 @@ class _TransferPageState extends State<TransferPage> {
                         SizedBox(height: 48),
                         EncointerTextFormField(
                           labelText: dic['amount.to.be.transferred'],
+                          textStyle: Theme.of(context).textTheme.headline1.copyWith(color: encointerBlack),
                           inputFormatters: [UI.decimalInputFormatter(decimals)],
                           controller: _amountCtrl,
                           textFormFieldKey: Key('transfer-amount-input'),
