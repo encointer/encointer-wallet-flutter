@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
@@ -19,6 +20,9 @@ class ReceivePage extends StatelessWidget {
 
     String codeAddress =
         'substrate:${store.account.currentAddress}:${store.account.currentAccount.pubKey}:${store.account.currentAccount.name}';
+
+    final TextEditingController _amountController = new TextEditingController();
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -39,45 +43,26 @@ class ReceivePage extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 8),
-                Container(
-                  margin: EdgeInsets.symmetric(horizontal: 8),
-                  decoration: BoxDecoration(
-                    color: ZurichLion.shade50,
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  child: TextFormField(
-                    style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
-                    decoration: InputDecoration(
-                      labelText: I18n.of(context).assets['invoice.amount'],
-                      labelStyle: Theme.of(context).textTheme.headline4,
-                      contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 25),
-                      border: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          width: 0,
-                          style: BorderStyle.none,
-                        ),
-                      ),
-                      suffixIcon: Text(
-                        "ⵐ",
-                        style: TextStyle(
-                          color: encointerGrey,
-                          fontSize: 44,
-                        ),
-                      ),
+                EncointerTextFormField(
+                  labelText: I18n.of(context).assets['invoice.amount'],
+                  textStyle: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
+                  inputFormatters: null,
+                  controller: _amountController,
+                  textFormFieldKey: Key('invoice-amount-input'),
+                  validator: (String value) {
+                    if (value == null || value.isEmpty) {
+                      return I18n.of(context).assets['amount.error'];
+                    }
+                    return null;
+                  },
+                  suffixIcon: Text(
+                    "ⵐ",
+                    style: TextStyle(
+                      color: encointerGrey,
+                      fontSize: 26,
                     ),
-                    // inputFormatters: [UI.decimalInputFormatter(decimals)],
-                    // controller: _amountCtrl,
-                    textAlign: TextAlign.center,
-                    keyboardType: TextInputType.numberWithOptions(decimal: true),
-                    // The validator receives the text that the user has entered.
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    },
                   ),
-                )
+                ),
               ],
             ),
             SizedBox(height: 8),

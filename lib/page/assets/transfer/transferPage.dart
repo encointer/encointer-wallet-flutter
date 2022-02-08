@@ -3,6 +3,7 @@ import 'dart:math';
 
 import 'package:encointer_wallet/common/components/AddressInputField.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
+import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
@@ -15,7 +16,6 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -111,46 +111,27 @@ class _TransferPageState extends State<TransferPage> {
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(height: 48),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: ZurichLion.shade50,
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          child: TextFormField(
-                            key: Key('transfer-amount-input'),
-                            style: Theme.of(context).textTheme.headline1.copyWith(color: encointerBlack),
-                            decoration: InputDecoration(
-                              labelText: dic['amount.to.be.transferred'],
-                              labelStyle: Theme.of(context).textTheme.headline4,
-                              contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 25),
-                              border: UnderlineInputBorder(
-                                borderSide: BorderSide(
-                                  width: 0,
-                                  style: BorderStyle.none,
-                                ),
-                              ),
-                              suffixIcon: Text(
-                                "ⵐ",
-                                style: TextStyle(
-                                  color: encointerGrey,
-                                  fontSize: 44,
-                                ),
-                              ),
+                        EncointerTextFormField(
+                          labelText: dic['amount.to.be.transferred'],
+                          inputFormatters: [UI.decimalInputFormatter(decimals)],
+                          controller: _amountCtrl,
+                          textFormFieldKey: Key('transfer-amount-input'),
+                          validator: (String value) {
+                            if (value.isEmpty) {
+                              return dic['amount.error'];
+                            }
+                            if (balanceTooLow(value, available, decimals)) {
+                              return dic['amount.low'];
+                            }
+                            return null;
+                          },
+                          suffixIcon: Text(
+                            "ⵐ",
+                            style: TextStyle(
+                              color: encointerGrey,
+                              fontSize: 44,
                             ),
-                            inputFormatters: [UI.decimalInputFormatter(decimals)],
-                            controller: _amountCtrl,
-                            textAlign: TextAlign.center,
-                            keyboardType: TextInputType.numberWithOptions(decimal: true),
-                            validator: (v) {
-                              if (v.isEmpty) {
-                                return dic['amount.error'];
-                              }
-                              if (balanceTooLow(v, available, decimals)) {
-                                return dic['amount.low'];
-                              }
-                              return null;
-                            },
-                          ),
+                          )
                         ),
                         SizedBox(height: 24),
                         Row(
