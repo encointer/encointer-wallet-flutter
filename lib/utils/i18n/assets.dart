@@ -32,7 +32,7 @@ const Map<String, String> enAssets = {
   'issuance.pending': 'Claim pending community income',
   'issuance.claimed': 'No pending community income',
   'locked': 'Locked',
-  'make': 'Make Transfer',
+  'make': 'Send amount',
   'node.connecting': 'Connecting remote node...',
   'node.failed': 'Remote node connection failed',
   'notify.receive': 'Token Received',

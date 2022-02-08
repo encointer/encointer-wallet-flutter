@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:encointer_wallet/common/components/AddressInputField.dart';
-import 'package:encointer_wallet/common/components/roundedButton.dart';
+import 'package:encointer_wallet/common/components/gradientElements.dart';
+import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
-import 'package:encointer_wallet/page/account/scanPage.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
@@ -17,6 +17,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:iconsax/iconsax.dart';
 
 class TransferPageParams {
   TransferPageParams(
@@ -92,23 +93,13 @@ class _TransferPageState extends State<TransferPage> {
                     child: ListView(
                       children: [
                         CommunityWithCommunityChooser(store),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 8, 0, 0),
-                          child: Text(
-                            "available",
-                            textAlign: TextAlign.center,
-                          ),
-                        ),
                         store.encointer.communityBalance != null
                             ? AccountBalanceWithMoreDigits(store: store, available: available, decimals: decimals)
                             : CupertinoActivityIndicator(),
-                        // Padding(
-                        //   padding: const EdgeInsets.all(8.0),
-                        //   child: Text(
-                        //     "amount to send",
-                        //     textAlign: TextAlign.center,
-                        //   ),
-                        // ),
+                        Text(
+                          "Your balance, Account name", // TODO how to obtain the account name?
+                          textAlign: TextAlign.center,
+                        ),
                         TextFormField(
                           key: Key('transfer-amount-input'),
                           decoration: InputDecoration(
@@ -155,13 +146,28 @@ class _TransferPageState extends State<TransferPage> {
                       ],
                     ),
                   ),
+                  Center(
+                    child: Text(
+                      "Fee: TODO compute Fee",
+                      style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
+                    ),
+                  ),
+                  SizedBox(height: 8),
                   Container(
                     key: Key('make-transfer'),
-                    child: RoundedButton(
-                      text: I18n.of(context).assets['make'],
+                    child: PrimaryButton(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Iconsax.send_sqaure_2),
+                          SizedBox(width: 12),
+                          Text(dic['make']), // TODO rename
+                        ],
+                      ),
                       onPressed: _handleSubmit,
                     ),
-                  )
+                  ),
+                  SizedBox(height: 8),
                 ],
               ),
             ),
@@ -307,12 +313,9 @@ class AccountBalanceWithMoreDigits extends StatelessWidget {
           available,
           decimals,
           lengthMax: 6,
-        )} ${store.encointer.communitySymbol}",
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 28,
-          color: Colors.black54,
-        ),
+        )} ⵐ",
+        // ${store.encointer.communitySymbol}
+        style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black),
       ),
     );
   }
