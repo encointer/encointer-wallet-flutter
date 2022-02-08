@@ -6,10 +6,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-class ReceivePage extends StatelessWidget {
+class ReceivePage extends StatefulWidget {
   ReceivePage(this.store);
   static final String route = '/assets/receive';
   final AppStore store;
+  @override
+  _ReceivePageState createState() => _ReceivePageState();
+}
+
+class _ReceivePageState extends State<ReceivePage> {
   @override
   Widget build(BuildContext context) {
     bool isShare = false;
@@ -19,7 +24,7 @@ class ReceivePage extends StatelessWidget {
     }
 
     String codeAddress =
-        'substrate:${store.account.currentAddress}:${store.account.currentAccount.pubKey}:${store.account.currentAccount.name}';
+        'substrate:${widget.store.account.currentAddress}:${widget.store.account.currentAccount.pubKey}:${widget.store.account.currentAccount.name}';
 
     final TextEditingController _amountController = new TextEditingController();
 
