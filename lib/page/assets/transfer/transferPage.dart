@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:encointer_wallet/common/components/AddressInputField.dart';
-import 'package:encointer_wallet/common/components/iconTextButton.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
@@ -77,8 +76,6 @@ class _TransferPageState extends State<TransferPage> {
         BigInt available; // BigInt
         available = _getAvailableEncointerOrBaseToken(isBaseToken, symbol);
         print('Available: $available');
-
-        double iconSizeBig = 48;
 
         return Form(
           key: _formKey,
@@ -172,17 +169,6 @@ class _TransferPageState extends State<TransferPage> {
         );
       },
     );
-  }
-
-  Future<void> _onScan() async {
-    final to = await Navigator.of(context).pushNamed(ScanPage.route);
-    if (to == null) return;
-    AccountData acc = AccountData();
-    acc.address = (to as QRCodeAddressResult).address;
-    acc.name = (to as QRCodeAddressResult).name;
-    setState(() {
-      _accountTo = acc;
-    });
   }
 
   void _handleSubmit() {
