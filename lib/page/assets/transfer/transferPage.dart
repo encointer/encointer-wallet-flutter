@@ -131,7 +131,7 @@ class _TransferPageState extends State<TransferPage> {
                               color: encointerGrey,
                               fontSize: 44,
                             ),
-                          )
+                          ),
                         ),
                         SizedBox(height: 24),
                         Row(
