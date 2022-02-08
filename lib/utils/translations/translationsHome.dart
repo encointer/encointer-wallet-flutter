@@ -185,7 +185,8 @@ class TranslationsDeHome implements TranslationsHome {
   String get txInblock => 'Bereit';
   String get txQueued => 'Fehler';
   String get txQueuedOffline => 'In der Warteschlange';
-  String get txReady =>      'Die App ist nicht mit der Blockchain verbunden. Die Transaktionen in der Warteschlange werden automatisch bei erfolgreicher Verbindung versendet.';
+  String get txReady =>
+      'Die App ist nicht mit der Blockchain verbunden. Die Transaktionen in der Warteschlange werden automatisch bei erfolgreicher Verbindung versendet.';
   String get unlock => 'Konto entsperren mit PIN';
   String get unlockAccount => 'Entsperre Konto CURRENT_ACCOUNT_NAME mit PIN';
   String get update => 'Überprüfe ob App-Aktualisierung möglich';
@@ -252,7 +253,7 @@ class TranslationsZhHome implements TranslationsHome {
   get txReady => '准备广播';
   get txError => '发送失败';
   get txQueued => '已加入队列';
-  get txQueuedOffline =>      '该应用程序未连接到区块链。 排队交易（将在重新连接时自动发送）';
+  get txQueuedOffline => '该应用程序未连接到区块链。 排队交易（将在重新连接时自动发送）';
   get unlock => '使用密码解锁账户';
   get unlockAccount => '使用 PIN 解锁帐户 CURRENT_ACCOUNT_NAME';
   get update => '检查更新';
