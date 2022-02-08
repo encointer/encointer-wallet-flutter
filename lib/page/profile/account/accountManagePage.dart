@@ -45,48 +45,26 @@ class _AccountManagePageState extends State<AccountManagePage> {
     showCupertinoDialog(
       context: context,
       builder: (BuildContext context) {
-        // return showPromptDialog(
-        //     context, store.account.currentAccount, Text("Are you sure you want to delete the account?"), (_) {
-        //   store.account.removeAccount(store.account.currentAccount).then((_) {
-        //     // refresh balance
-        //     store.assets.loadAccountCache();
-        //     webApi.assets.fetchBalance();
-        //   });
-        //   Navigator.of(context).pop();
-        // });
-        // return PromptDialog(
-        //     account: store.account.currentAccount,
-        //     title: Text("Are you sure you want to delete the account?"),
-        //     onOk: (_) {
-        //       store.account.removeAccount(store.account.currentAccount).then((_) {
-        //         // refresh balance
-        //         store.assets.loadAccountCache();
-        //         webApi.assets.fetchBalance();
-        //       });
-        //       Navigator.of(context).pop();
-        //     },
-        //     onCancel: () {
-        //       Navigator.of(context).pop();
-        //     });
         return CupertinoAlertDialog(
           title: Text(I18n.of(context).profile['account.delete']),
           actions: <Widget>[
             CupertinoButton(
-              // key: Key('error-dialog-ok'),
               child: Text(I18n.of(context).home['cancel']),
               onPressed: () => Navigator.of(context).pop(),
             ),
             CupertinoButton(
-                // key: Key('error-dialog-ok'),
-                child: Text(I18n.of(context).home['ok']),
-                onPressed: () => {
-                      store.account.removeAccount(store.account.currentAccount).then((_) {
-                        // refresh balance
-                        store.assets.loadAccountCache();
-                        webApi.assets.fetchBalance();
-                        Navigator.of(context).pop();
-                      }),
-                    }),
+              child: Text(I18n.of(context).home['ok']),
+              onPressed: () => {
+                store.account.removeAccount(store.account.currentAccount).then(
+                  (_) {
+                    // refresh balance
+                    store.assets.loadAccountCache();
+                    webApi.assets.fetchBalance();
+                    Navigator.of(context).pop();
+                  },
+                ),
+              },
+            ),
           ],
         );
       },
