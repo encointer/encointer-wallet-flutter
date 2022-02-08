@@ -165,6 +165,7 @@ class _TransferPageState extends State<TransferPage> {
                                     _accountTo = acc;
                                   });
                                 },
+                                hideIdenticon: true,
                               ),
                             ),
                           ],

@@ -1,21 +1,22 @@
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../theme.dart';
 
 class AddressInputField extends StatefulWidget {
-  AddressInputField(this.store, {this.label, this.initialValue, this.onChanged});
+  AddressInputField(this.store, {this.label, this.initialValue, this.onChanged, this.hideIdenticon = false});
   final AppStore store;
   final String label;
   final AccountData initialValue;
   final Function(AccountData) onChanged;
+  final bool hideIdenticon;
   @override
   _AddressInputFieldState createState() => _AddressInputFieldState();
 }
@@ -93,22 +94,23 @@ class _AddressInputFieldState extends State<AddressInputField> {
           padding: EdgeInsets.only(top: 8),
           child: Row(
             children: [
-              AddressIcon(item.address, pubKey: item.pubKey, tapToCopy: false, size: 36),
-              Padding(
-                padding: EdgeInsets.only(left: 8),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(Fmt.address(address)),
-                    Text(
-                      item.name.isNotEmpty ? item.name : Fmt.accountDisplayNameString(item.address, accInfo),
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Theme.of(context).unselectedWidgetColor,
-                      ),
-                    ),
-                  ],
+              if (!widget.hideIdenticon)
+                Padding(
+                  padding: const EdgeInsets.only(right: 8),
+                  child: AddressIcon(item.address, pubKey: item.pubKey, tapToCopy: false, size: 36),
                 ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(Fmt.address(address)),
+                  Text(
+                    item.name.isNotEmpty ? item.name : Fmt.accountDisplayNameString(item.address, accInfo),
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: Theme.of(context).unselectedWidgetColor,
+                    ),
+                  ),
+                ],
               )
             ],
           ),
