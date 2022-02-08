@@ -1,8 +1,6 @@
-import 'package:encointer_wallet/common/components/BorderedTitle.dart';
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
-import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
@@ -97,11 +95,12 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
   @override
   Widget build(BuildContext context) {
+    final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     _nameCtrl = TextEditingController(text: store.account.currentAccount.name);
     _nameCtrl.selection = TextSelection.fromPosition(TextPosition(offset: _nameCtrl.text.length));
 
     final Map<String, String> dic = I18n.of(context).profile;
-    Color primaryColor = Theme.of(context).primaryColor;
+    // Color primaryColor = Theme.of(context).primaryColor;
 
     var args = {
       "isShare": true,
@@ -109,85 +108,87 @@ class _AccountManagePageState extends State<AccountManagePage> {
     return Observer(
       builder: (_) => Scaffold(
         appBar: AppBar(
-          title: TextFormField(
-            controller: _nameCtrl,
-            onTap: () {
-              setState(() {
-                _isEditingText = true;
-              });
-            },
-            validator: (v) {
-              String name = v.trim();
-              if (name.length == 0) {
-                return dic['contact.name.error'];
-              }
-              int exist = store.account.optionalAccounts.indexWhere((i) => i.name == name);
-              if (exist > -1) {
-                return dic['contact.name.exist'];
-              }
-              return null;
-            },
-          ),
+          title: _isEditingText
+              ? TextFormField(
+                  controller: _nameCtrl,
+                  validator: (v) {
+                    String name = v.trim();
+                    if (name.length == 0) {
+                      return dic['contact.name.error'];
+                    }
+                    int exist = store.account.optionalAccounts.indexWhere((i) => i.name == name);
+                    if (exist > -1) {
+                      return dic['contact.name.exist'];
+                    }
+                    return null;
+                  },
+                )
+              : Text(_nameCtrl.text),
+          actions: <Widget>[
+            !_isEditingText
+                ? IconButton(
+                    icon: Icon(
+                      Iconsax.edit,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        _isEditingText = true;
+                      });
+                    },
+                  )
+                : IconButton(
+                    icon: Icon(
+                      Icons.check,
+                    ),
+                    onPressed: () {
+                      store.account.updateAccountName(_nameCtrl.text.trim());
+                      setState(() {
+                        _isEditingText = false;
+                      });
+                    },
+                  )
+          ],
         ),
         body: SafeArea(
           child: Column(
             children: <Widget>[
-              Container(
-                margin: EdgeInsets.all(16),
-                child: _isEditingText
-                    ? RoundedButton(
-                        text: dic['contact.name.save'],
-                        onPressed: () {
-                          store.account.updateAccountName(_nameCtrl.text.trim());
-                          setState(() {
-                            _isEditingText = false;
-                          });
-                        })
-                    : Container(),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(height: 50),
-                  AddressIcon(
-                    '',
-                    size: 100,
-                    pubKey: store.account.currentAccount.pubKey,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(Fmt.address(store.account.currentAddress), style: TextStyle(fontSize: 20)),
-                      ElevatedButton(
-                        child: Icon(Icons.copy),
-                        onPressed: () {
-                          final data = ClipboardData(text: store.account.currentAddress);
-                          Clipboard.setData(data);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('✓   Copied to Clipboard')),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  Text(Fmt.address(store.account.currentAddress) ?? '',
-                      style: TextStyle(fontSize: 16, color: Colors.white)),
-                  Container(padding: EdgeInsets.only(top: 16)),
-                  ListTile(
-                    title: Text(dic['name.change']),
-                    trailing: Icon(Icons.arrow_forward_ios, size: 18),
-                    onTap: () => Navigator.pushNamed(context, ChangeNamePage.route),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Row(
-                      children: <Widget>[
-                        Text(dic['communities'],
-                            style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black54))
+              SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(height: 20),
+                    if (!isKeyboard) AddressIcon(
+                      '',
+                      size: 130,
+                      pubKey: store.account.currentAccount.pubKey,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(Fmt.address(store.account.currentAddress), style: TextStyle(fontSize: 20)),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(shadowColor: Colors.transparent),
+                          child: Icon(Iconsax.copy),
+                          onPressed: () {
+                            final data = ClipboardData(text: store.account.currentAddress);
+                            Clipboard.setData(data);
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('✓   Copied to Clipboard')),
+                            );
+                          },
+                        ),
                       ],
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Row(
+                        children: <Widget>[
+                          Text(dic['communities'],
+                              style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black54))
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Expanded(
                 child: ListView(padding: EdgeInsets.all(16), children: _getBalances()),
@@ -204,12 +205,11 @@ class _AccountManagePageState extends State<AccountManagePage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Iconsax.profile_remove),
+                            Icon(Iconsax.trash),
                             SizedBox(width: 12),
                             Text(dic['delete'], style: Theme.of(context).textTheme.headline3),
                           ],
                         ),
-                        // Text(I18n.of(context).home['create'], style: Theme.of(context).textTheme.headline3),
                         onPressed: () {
                           _onDeleteAccount(context);
                         },
@@ -237,39 +237,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
                   ),
                 ),
               ),
-              // Container(
-              //   child: SizedBox(
-              //     width: double.infinity,
-              //     child: ElevatedButton(
-              //         style: TextButton.styleFrom(
-              //           padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
-              //           backgroundColor: primaryColor,
-              //           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-              //         ),
-              //         child: Text(
-              //           dic['delete'],
-              //           style: Theme.of(context).textTheme.button,
-              //         ),
-              //         onPressed: () {
-              //           _onDeleteAccount(context);
-              //         }),
-              //   ),
-              // ),
-              // Row(
-              //   children: <Widget>[
-              //     Expanded(
-              //       child: TextButton(
-              //         style: TextButton.styleFrom(
-              //           padding: EdgeInsets.all(16),
-              //           backgroundColor: Colors.white,
-              //           textStyle: TextStyle(color: Colors.red),
-              //         ),
-              //         child: Text(dic['delete']),
-              //         onPressed: () => _onDeleteAccount(context),
-              //       ),
-              //     ),
-              //   ],
-              // ),
             ],
           ),
         ),
