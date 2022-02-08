@@ -1,5 +1,4 @@
 import 'package:encointer_wallet/common/components/accountAdvanceOption.dart';
-import 'package:encointer_wallet/page-encointer/homePage.dart';
 import 'package:encointer_wallet/page/account/create/addAccountForm.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -61,27 +60,6 @@ class _AddAccountPageState extends State<AddAccountPage> {
     });
     // go to home page
     Navigator.popUntil(context, ModalRoute.withName('/'));
-    // pass the encointerHomepage context, else Navigator.pop() acts on this context, which has been invalidated.
-    _showTryFaucetDialog(EncointerHomePage.encointerHomePageKey.currentContext);
-  }
-
-  Future<void> _showTryFaucetDialog(BuildContext context) async {
-    await showCupertinoDialog(
-      context: context,
-      builder: (_) {
-        return CupertinoAlertDialog(
-          title: Text(I18n.of(context).encointer['faucet.try']),
-          actions: <Widget>[
-            CupertinoButton(
-              child: Text(I18n.of(context).home['ok']),
-              onPressed: () {
-                Navigator.popUntil(context, ModalRoute.withName('/'));
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 
   static Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
@@ -107,29 +85,24 @@ class _AddAccountPageState extends State<AddAccountPage> {
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> arg = ModalRoute.of(context).settings.arguments;
+    final Map<String, String> dic = I18n.of(context).profile;
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Add account",
-          style: Theme.of(context).textTheme.headline3,
+          dic['account.add'],
         ),
-        iconTheme: IconThemeData(
-          color: Color(0xff666666), //change your color here
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        shadowColor: Colors.transparent,
-        // actions: <Widget>[
-        //   IconButton(
-        //     icon: Icon(
-        //       Icons.close,
-        //       color: Color(0xff666666),
-        //     ),
-        //     onPressed: () {
-        //       Navigator.popUntil(context, ModalRoute.withName('/'));
-        //     },
-        //   )
-        // ],
+        leading: Container(),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.close,
+              color: Color(0xff666666),
+            ),
+            onPressed: () {
+              Navigator.popUntil(context, ModalRoute.withName('/'));
+            },
+          )
+        ],
       ),
       body: SafeArea(
         child: !_submitting

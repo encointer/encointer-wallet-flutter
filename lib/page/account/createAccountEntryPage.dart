@@ -10,12 +10,8 @@ class CreateAccountEntryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final String assetName = 'assets/encointer_logo.svg';
     final String encointerLogo = 'assets/encointer_logo_orig.svg';
-    // final String dogs = 'assets/dog.svg';
     final String kacheln = 'assets/Kacheln.svg';
-    // final Widget svg = SvgPicture.asset(dogs, semanticsLabel: 'Encointer Logo');
-    // final Widget kachel = SvgPicture.asset(kacheln, semanticsLabel: 'background');
 
     return Scaffold(
       body: SafeArea(
@@ -30,8 +26,8 @@ class CreateAccountEntryPage extends StatelessWidget {
               child: SvgPicture.asset(
                 encointerLogo,
                 color: Colors.white,
-                width: 180,
-                height: 180,
+                width: 210,
+                height: 210,
               ),
             ),
             Column(
@@ -45,6 +41,7 @@ class CreateAccountEntryPage extends StatelessWidget {
                       child: SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
                           key: Key('create-account'),
                           child: Text(I18n.of(context).home['create'], style: Theme.of(context).textTheme.headline3),
                           onPressed: () {

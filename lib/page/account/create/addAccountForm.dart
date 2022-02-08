@@ -34,14 +34,12 @@ class AddAccountForm extends StatelessWidget {
               children: <Widget>[
                 SizedBox(height: 80),
                 Center(
-                  child: Text("Choose an account name.", style: Theme.of(context).textTheme.headline2),
+                  child: Text(I18n.of(context).profile['account.name.choose'],
+                      style: Theme.of(context).textTheme.headline2),
                 ),
-                // ),
-                // Container(
-                // width: 300,
                 Center(
                   child: Text(
-                    "You can change it later in \n your profile settings.",
+                    I18n.of(context).profile['account.name.choose.hint'],
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headline2.copyWith(
                           color: Colors.black,
@@ -61,46 +59,46 @@ class AddAccountForm extends StatelessWidget {
                         ),
                         filled: true,
                         fillColor: Color(0xffF4F8F9),
-                        // icon: Icon(Icons.person),
-                        // if change color of hint:
-                        // labelStyle: TextStyle(
-                        //     color: Color(0xff4374A3))
                         hintText: dic['create.hint'],
-                        labelText: "Account name",
+                        labelText: I18n.of(context).profile['account.name'],
                       ),
                       controller: _nameCtrl,
                     ),
                   ],
                 ),
-                !isImporting ? Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(width: 12),
-                      RichText(
-                        text: TextSpan(children: [
-                          TextSpan(
-                            text: 'Already have an account? ',
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
-                          ),
-                          TextSpan(
-                              text: 'Import',
-                              style: TextStyle(
-                                color: Color(0xff4374A3),
+                !isImporting
+                    ? Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(width: 12),
+                            RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: I18n.of(context).profile['account.have'],
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                  TextSpan(
+                                    text: I18n.of(context).profile['import'],
+                                    style: TextStyle(
+                                      color: Color(0xff4374A3),
+                                    ),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        Navigator.pushNamed(context, ImportAccountPage.route);
+                                      },
+                                  ),
+                                ],
                               ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () {
-                                  Navigator.pushNamed(context, ImportAccountPage.route);
-                                }),
-                        ]),
-                      ),
-                    ],
-                  ),
-                ) :
-                    Container(),
+                            ),
+                          ],
+                        ),
+                      )
+                    : Container(),
               ],
             ),
           ),
@@ -114,7 +112,7 @@ class AddAccountForm extends StatelessWidget {
                   Icon(Iconsax.add_square),
                   SizedBox(width: 12),
                   Text(
-                    "Create account",
+                    I18n.of(context).profile['account.create'],
                     style: Theme.of(context).textTheme.headline3.copyWith(
                           color: Color(0xffF4F8F9),
                         ),
