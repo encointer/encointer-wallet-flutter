@@ -48,9 +48,7 @@ class _ProfileState extends State<Profile> {
   }
 
   Future<void> _onAddAccount() async {
-    var arg = {
-      'isImporting': false
-    };
+    var arg = {'isImporting': false};
     Navigator.of(context).pushNamed(AddAccountPage.route, arguments: arg);
   }
 
@@ -143,31 +141,6 @@ class _ProfileState extends State<Profile> {
   void initState() {
     super.initState();
   }
-
-  // void displayDialog(title) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) => new CupertinoAlertDialog(
-  //       title: Text(title),
-  //       // content: new Text("My alert message"),
-  //       actions: [
-  //         CupertinoButton(
-  //           // key: Key('error-dialog-ok'),
-  //           child: Text(I18n.of(context).home['cancel']),
-  //           onPressed: () => Navigator.of(context).pop(),
-  //         ),
-  //         CupertinoButton(
-  //             // key: Key('error-dialog-ok'),
-  //             child: Text(I18n.of(context).home['ok']),
-  //             onPressed: () => {
-  //                   store.account.accountListAll.map((acc) {
-  //                     store.account.removeAccount(acc);
-  //                   })
-  //                 }),
-  //       ],
-  //     ),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {

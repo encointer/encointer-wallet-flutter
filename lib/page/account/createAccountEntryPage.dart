@@ -36,7 +36,6 @@ class CreateAccountEntryPage extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
                   child: Container(
-                    // color: Theme.of(context).colorScheme.secondary,
                     child: Center(
                       child: SizedBox(
                         width: double.infinity,

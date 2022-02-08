@@ -9,7 +9,6 @@ import 'package:iconsax/iconsax.dart';
 
 class AddAccountForm extends StatelessWidget {
   AddAccountForm({this.isImporting, this.setNewAccount, this.submitting, this.onSubmit, this.store});
-//todo get rid of the setNewAccount method where password is stored
   final Function setNewAccount;
   final Function onSubmit;
   final bool submitting;
