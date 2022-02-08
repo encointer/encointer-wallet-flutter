@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:ui';
 
-import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
+import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
@@ -67,9 +67,10 @@ class _AssetsState extends State<Assets> {
       Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
     }
 
+    var dic = I18n.of(context).assets;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Home"),
+        title: Text(dic['home']),
       ),
       body: SafeArea(
         child: ListView(
@@ -98,7 +99,6 @@ class _AssetsState extends State<Assets> {
                   },
                 );
               }
-              var dic = I18n.of(context).assets;
               AccountData acc = store.account.currentAccount;
 
               return Column(
