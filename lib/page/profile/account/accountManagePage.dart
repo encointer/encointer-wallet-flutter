@@ -1,6 +1,5 @@
 import 'package:encointer_wallet/common/components/BorderedTitle.dart';
 import 'package:encointer_wallet/common/components/addressIcon.dart';
-import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
@@ -204,11 +203,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
                   Text(Fmt.address(store.account.currentAddress) ?? '',
                       style: TextStyle(fontSize: 16, color: Colors.white)),
                   Container(padding: EdgeInsets.only(top: 16)),
-                  ListTile(
-                    title: Text(dic['name.change']),
-                    trailing: Icon(Icons.arrow_forward_ios, size: 18),
-                    onTap: () => Navigator.pushNamed(context, ChangeNamePage.route),
-                  ),
                   Padding(
                     padding: EdgeInsets.only(top: 4),
                     child: Row(
