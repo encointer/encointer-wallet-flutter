@@ -6,7 +6,7 @@ const Map<String, String> enProfile = {
   'account.share': 'Share Account',
   'accounts': 'Accounts',
   'add': 'Add',
-  'ceremonies': 'ceremonies',
+  'ceremonies': 'Ceremonies',
   'contact': 'Address Book',
   'contact.address': 'Address',
   'contact.address.error': 'Invalid address',
