@@ -194,15 +194,14 @@ class _ProfileState extends State<Profile> {
                   ),
                   Container(
                     height: 130,
-                    child: Stack(
-                      children: [
-                        ListView(
+                    child: Stack(children: [
+                      ListView(
                         padding: EdgeInsets.all(16),
                         children: _buildAccountList(),
                         scrollDirection: Axis.horizontal,
-                      ), FadeEndListview(),
-                      ]
-                    ),
+                      ),
+                      FadeEndListview(),
+                    ]),
                   ),
                   ListTile(
                     title: Text(dic['pass.change']),
@@ -210,10 +209,10 @@ class _ProfileState extends State<Profile> {
                     onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
                   ),
                   ListTile(
-                    title: Text(dic['reputation']),
+                    title: Text(dic['reputation.overall']),
                   ),
                   ListTile(
-                    title: Text(dic['ceremonies.overall']),
+                    title: Text(dic['ceremonies']),
                   ),
                   ListTile(
                     leading: Container(
