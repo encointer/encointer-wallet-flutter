@@ -1,5 +1,4 @@
 import 'package:encointer_wallet/common/components/accountAdvanceOption.dart';
-import 'package:encointer_wallet/page-encointer/homePage.dart';
 import 'package:encointer_wallet/page/account/create/createPinForm.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -61,27 +60,6 @@ class _CreatePinPageState extends State<CreatePinPage> {
     });
     // go to home page
     Navigator.popUntil(context, ModalRoute.withName('/'));
-    // pass the encointerHomepage context, else Navigator.pop() acts on this context, which has been invalidated.
-    _showTryFaucetDialog(EncointerHomePage.encointerHomePageKey.currentContext);
-  }
-
-  Future<void> _showTryFaucetDialog(BuildContext context) async {
-    await showCupertinoDialog(
-      context: context,
-      builder: (_) {
-        return CupertinoAlertDialog(
-          title: Text(I18n.of(context).encointer['faucet.try']),
-          actions: <Widget>[
-            CupertinoButton(
-              child: Text(I18n.of(context).home['ok']),
-              onPressed: () {
-                Navigator.popUntil(context, ModalRoute.withName('/'));
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 
   static Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {

@@ -2,6 +2,7 @@ import 'package:encointer_wallet/page/account/create/createAccountPage.dart';
 import 'package:encointer_wallet/page/account/import/importAccountPage.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -10,21 +11,21 @@ class CreateAccountEntryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final String encointerLogo = 'assets/encointer_logo_orig.svg';
-    final String kacheln = 'assets/Kacheln.svg';
+    final String nctrLogo = 'assets/nctr_logo.svg';
+    final String mosaicBackground = 'assets/nctr_mosaic_background.svg';
 
     return Scaffold(
       body: SafeArea(
         child: Stack(
           children: <Widget>[
             SvgPicture.asset(
-              kacheln,
+              mosaicBackground,
               fit: BoxFit.fill,
               width: MediaQuery.of(context).size.width,
             ),
             Center(
               child: SvgPicture.asset(
-                encointerLogo,
+                nctrLogo,
                 color: Colors.white,
                 width: 210,
                 height: 210,
@@ -52,21 +53,38 @@ class CreateAccountEntryPage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  key: Key('import-account'),
-                  padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
-                  child: TextButton(
-                    child: Text(
-                      I18n.of(context).home['import'],
-                      style: Theme.of(context).textTheme.headline4.copyWith(
-                            color: Color(0xffF4F8F9),
-                        decoration: TextDecoration.underline,
-                          ),
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, ImportAccountPage.route);
-                    },
+                  padding: const EdgeInsets.all(16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(width: 12),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: '${I18n.of(context).profile['account.have']} ',
+                              style: TextStyle(
+                                color: Color(0xffF4F8F9),
+                              ),
+                            ),
+                            TextSpan(
+                              text: I18n.of(context).profile['import'],
+                              style: TextStyle(
+                                color: Color(0xffF4F8F9),
+                                decoration: TextDecoration.underline,
+                              ),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.pushNamed(context, ImportAccountPage.route);
+                                },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
                 ),
+                SizedBox(height: 20),
               ],
             ),
           ],
