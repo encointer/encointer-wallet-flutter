@@ -105,7 +105,8 @@ class _AddressInputFieldState extends State<AddressInputField> {
                   Text(
                     item.name.isNotEmpty ? item.name : Fmt.accountDisplayNameString(item.address, accInfo),
                   ),
-                  Text(Fmt.address(address),
+                  Text(
+                    Fmt.address(address),
                     style: TextStyle(
                       fontSize: 12,
                       color: Theme.of(context).unselectedWidgetColor,
