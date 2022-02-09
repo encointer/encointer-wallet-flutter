@@ -109,7 +109,7 @@ class CreatePinForm extends StatelessWidget {
                       Text(
                         dicProf['pin.info'],
                         style: Theme.of(context).textTheme.headline4.copyWith(
-                              color: Color(0xff666666),
+                              color: encointerGrey,
                             ),
                       ),
                     ],
@@ -125,7 +125,8 @@ class CreatePinForm extends StatelessWidget {
               child: Text(
                 I18n.of(context).account['create'],
                 style: Theme.of(context).textTheme.headline3.copyWith(
-                      color: Color(0xffF4F8F9),
+                  //todo define color
+                color: Color(0xffF4F8F9),
                     ),
               ),
               onPressed: () {

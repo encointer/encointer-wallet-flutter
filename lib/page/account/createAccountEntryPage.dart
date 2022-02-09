@@ -64,12 +64,14 @@ class CreateAccountEntryPage extends StatelessWidget {
                             TextSpan(
                               text: '${I18n.of(context).profile['account.have']} ',
                               style: TextStyle(
+                                //todo define color
                                 color: Color(0xffF4F8F9),
                               ),
                             ),
                             TextSpan(
                               text: I18n.of(context).profile['import'],
                               style: TextStyle(
+                                //todo define color
                                 color: Color(0xffF4F8F9),
                                 decoration: TextDecoration.underline,
                               ),

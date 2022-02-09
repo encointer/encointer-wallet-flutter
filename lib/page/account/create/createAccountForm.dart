@@ -59,6 +59,7 @@ class CreateAccountForm extends StatelessWidget {
                           borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
                         ),
                         filled: true,
+                        //todo define color
                         fillColor: Color(0xffF4F8F9),
                         hintText: dic['create.hint'],
                         labelText: I18n.of(context).profile['account.name'],
@@ -82,7 +83,8 @@ class CreateAccountForm extends StatelessWidget {
                   Text(
                     dic['next'],
                     style: Theme.of(context).textTheme.headline3.copyWith(
-                          color: Color(0xffF4F8F9),
+                      //todo define color
+                    color: Color(0xffF4F8F9),
                         ),
                   ),
                 ],
