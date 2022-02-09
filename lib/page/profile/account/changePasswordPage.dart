@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/common/components/roundedButton.dart';
+import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
@@ -118,12 +118,33 @@ class _ChangePassword extends State<ChangePasswordPage> {
               child: Form(
                 key: _formKey,
                 child: ListView(
-                  padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+                  padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
                   children: <Widget>[
+                    SizedBox(height: 80),
+                    Center(
+                      child: Text(dic['pin.hint1'],
+                          textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline2),
+                    ),
+                    Center(
+                      child: Text(
+                        dic['pin.hint2'],
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.headline2.copyWith(
+                              color: Colors.black,
+                            ),
+                      ),
+                    ),
+                    SizedBox(height: 30),
                     TextFormField(
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                        icon: Icon(Icons.lock),
+                        enabledBorder: const OutlineInputBorder(
+                          // width: 0.0 produces a thin "hairline" border
+                          borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+                          borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
+                        ),
+                        filled: true,
+                        fillColor: Color(0xffF4F8F9),
                         hintText: dic['pass.old'],
                         labelText: dic['pass.old'],
                         suffixIcon: IconButton(
@@ -146,10 +167,16 @@ class _ChangePassword extends State<ChangePasswordPage> {
                       obscureText: true,
                       inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                     ),
+                    SizedBox(height: 20),
                     TextFormField(
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                        icon: Icon(Icons.lock),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+                          borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
+                        ),
+                        filled: true,
+                        fillColor: Color(0xffF4F8F9),
                         hintText: dic['pass.new'],
                         labelText: dic['pass.new'],
                       ),
@@ -160,10 +187,16 @@ class _ChangePassword extends State<ChangePasswordPage> {
                       obscureText: true,
                       inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                     ),
+                    SizedBox(height: 20),
                     TextFormField(
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                        icon: Icon(Icons.lock),
+                        enabledBorder: const OutlineInputBorder(
+                          borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+                          borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
+                        ),
+                        filled: true,
+                        fillColor: Color(0xffF4F8F9),
                         hintText: dic['pass.new2'],
                         labelText: dic['pass.new2'],
                       ),
@@ -180,9 +213,19 @@ class _ChangePassword extends State<ChangePasswordPage> {
             ),
             Container(
               margin: EdgeInsets.all(16),
-              child: RoundedButton(
-                text: dic['contact.save'],
-                icon: _submitting ? CupertinoActivityIndicator() : null,
+              child: PrimaryButton(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    _submitting ? CupertinoActivityIndicator() : Container(),
+                    Text(
+                      dic['contact.save'],
+                      style: Theme.of(context).textTheme.headline3.copyWith(
+                            color: Color(0xffF4F8F9),
+                          ),
+                    ),
+                  ],
+                ),
                 onPressed: _submitting ? null : _onSave,
               ),
             ),
