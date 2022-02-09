@@ -156,11 +156,12 @@ class _AccountManagePageState extends State<AccountManagePage> {
                 child: Column(
                   children: <Widget>[
                     SizedBox(height: 20),
-                    if (!isKeyboard) AddressIcon(
-                      '',
-                      size: 130,
-                      pubKey: store.account.currentAccount.pubKey,
-                    ),
+                    if (!isKeyboard)
+                      AddressIcon(
+                        '',
+                        size: 130,
+                        pubKey: store.account.currentAccount.pubKey,
+                      ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
