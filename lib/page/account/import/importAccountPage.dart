@@ -208,6 +208,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         ),
       );
     }
+    // todo what are the different steps 1 and 0? do i need here to add also the AddAccountForm?
     return Scaffold(
       appBar: AppBar(title: Text(I18n.of(context).home['account.import'])),
       body: SafeArea(
