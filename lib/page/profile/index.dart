@@ -75,7 +75,7 @@ class _ProfileState extends State<Profile> {
   List<Widget> _buildAccountList() {
     Color primaryColor = Theme.of(context).primaryColor;
 
-    List<Widget> res = new List<Widget>();
+    List<Widget> res = [];
 
     /// first item is current account
     List<AccountData> accounts = [store.account.currentAccount];
