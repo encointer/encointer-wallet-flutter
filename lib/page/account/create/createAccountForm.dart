@@ -32,7 +32,8 @@ class CreateAccountForm extends StatelessWidget {
                 // Container(
                 // width: 200,
                 Center(
-                  child: Text(I18n.of(context).profile['account.name.choose'], style: Theme.of(context).textTheme.headline2),
+                  child: Text(I18n.of(context).profile['account.name.choose'],
+                      style: Theme.of(context).textTheme.headline2),
                 ),
                 // ),
                 // Container(
