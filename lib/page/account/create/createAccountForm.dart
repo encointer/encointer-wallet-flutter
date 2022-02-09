@@ -35,9 +35,7 @@ class CreateAccountForm extends StatelessWidget {
                   child: Text(I18n.of(context).profile['account.name.choose'],
                       style: Theme.of(context).textTheme.headline2),
                 ),
-                // ),
-                // Container(
-                // width: 300,
+                SizedBox(height: 10),
                 Center(
                   child: Text(
                     I18n.of(context).profile['account.name.choose.hint'],
@@ -48,7 +46,7 @@ class CreateAccountForm extends StatelessWidget {
                   ),
                 ),
                 // ),
-                SizedBox(height: 30),
+                SizedBox(height: 50),
                 Column(
                   children: <Widget>[
                     TextFormField(
@@ -61,10 +59,6 @@ class CreateAccountForm extends StatelessWidget {
                         ),
                         filled: true,
                         fillColor: Color(0xffF4F8F9),
-                        // icon: Icon(Icons.person),
-                        // if change color of hint:
-                        // labelStyle: TextStyle(
-                        //     color: Color(0xff4374A3))
                         hintText: dic['create.hint'],
                         labelText: I18n.of(context).profile['account.name'],
                       ),

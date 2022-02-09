@@ -59,6 +59,7 @@ class CreateAccountEntryPage extends StatelessWidget {
                       I18n.of(context).home['import'],
                       style: Theme.of(context).textTheme.headline4.copyWith(
                             color: Color(0xffF4F8F9),
+                        decoration: TextDecoration.underline,
                           ),
                     ),
                     onPressed: () {

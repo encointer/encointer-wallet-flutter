@@ -45,8 +45,9 @@ const Map<String, String> enProfile = {
   'pass.old': 'Current PIN',
   'pass.success': 'Success',
   'pass.success.txt': 'PIN changed successfully',
-  'pin.hint':
-      'If the PIN is lost, there is no option to restore the account unless you made a backup via the profile page.',
+  'pin.hint': 'You will need this PIN for transactions\nand adding a new account.',
+  'pin.info':
+      'PIN should consist of at least 4 digits.\nIf the PIN is lost, there is no option\nto restore the account unless you made\na backup via the profile page.',
   'pin.secure': 'Secure your account with a PIN.',
   'qr.scan.hint': 'Ask the recipient to scan this QR-code in the encointer app',
   'setting': 'Settings',
@@ -71,7 +72,7 @@ const Map<String, String> deProfile = {
   'account.have': 'Hast du bereits ein Konto?',
   'account.name': 'Kontoname',
   'account.name.choose': 'Wähle einen Kontonamen.',
-  'account.name.choose.hint': 'You can change it later in \n your profile settings.',
+  'account.name.choose.hint': 'You can change it later in\nyour profile settings.',
   'accounts': 'Kontos',
   'account.share': 'Konto teilen',
   'add': 'Hinzufügen',
@@ -107,8 +108,9 @@ const Map<String, String> deProfile = {
   'pass.old': 'Aktuelle PIN',
   'pass.success': 'Erfolgreich',
   'pass.success.txt': 'PIN wurde erfolgreich geändert',
-  'pin.hint':
-      'Bei PIN-Verlust ist der Account nicht wiederherstellbar, ausser man hat ein Backup auf der Profilseite gemacht.',
+  'pin.hint': 'Du wirst diese PIN benötigen um Transaktionen\nzu tätigen oder neue Konten hinzufügen.',
+  'pin.info':
+      'PIN muss mindestens 4 Ziffern enthalten.\nBei PIN-Verlust ist der Account nicht wiederherstellbar,\nausser man hat ein Backup\nauf der Profilseite gemacht.',
   'pin.secure': 'Sichere dein Konto mit einem PIN.',
   'qr.scan.hint': 'Lass den Empfänger diesen QR-Code in der Encointer App scannen',
   'setting': 'Einstellungen',

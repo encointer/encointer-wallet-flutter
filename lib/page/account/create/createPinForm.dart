@@ -37,9 +37,7 @@ class CreatePinForm extends StatelessWidget {
                 Center(
                   child: Text(dicProf['pin.secure'], style: Theme.of(context).textTheme.headline2),
                 ),
-                // ),
-                // Container(
-                // width: 300,
+                SizedBox(height: 10),
                 Center(
                   child: Text(
                     dicProf['pin.hint'],
@@ -116,7 +114,7 @@ class CreatePinForm extends StatelessWidget {
                       Icon(Icons.info_outlined),
                       SizedBox(width: 12),
                       Text(
-                        "Pin should consist of at least 4 digits",
+                        dicProf['pin.info'],
                         style: Theme.of(context).textTheme.headline4.copyWith(
                               color: Color(0xff666666),
                             ),
