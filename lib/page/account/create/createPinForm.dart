@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/components/gradientElements.dart';
+import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserOnMap.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -44,7 +45,7 @@ class CreatePinForm extends StatelessWidget {
                     dicProf['pin.hint'],
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headline2.copyWith(
-                          color: Colors.black,
+                          color: encointerBlack,
                         ),
                   ),
                 ),
@@ -59,6 +60,7 @@ class CreatePinForm extends StatelessWidget {
                       borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
                     ),
                     filled: true,
+                    // todo define color
                     fillColor: Color(0xffF4F8F9),
                     // icon: Icon(Icons.lock),
                     hintText: dic['create.password'],
@@ -85,11 +87,8 @@ class CreatePinForm extends StatelessWidget {
                       borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
                     ),
                     filled: true,
+                    //todo define color
                     fillColor: Color(0xffF4F8F9),
-                    // icon: Icon(Icons.lock),
-                    // if change color of hint:
-                    // labelStyle: TextStyle(
-                    //     color: Color(0xff4374A3))
                     hintText: dic['create.password2'],
                     labelText: dic['create.password2'],
                   ),

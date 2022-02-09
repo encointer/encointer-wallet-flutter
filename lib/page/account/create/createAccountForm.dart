@@ -5,6 +5,7 @@ import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:encointer_wallet/common/theme.dart';
 
 class CreateAccountForm extends StatelessWidget {
   CreateAccountForm({this.store});
@@ -41,7 +42,7 @@ class CreateAccountForm extends StatelessWidget {
                     I18n.of(context).profile['account.name.choose.hint'],
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headline2.copyWith(
-                          color: Colors.black,
+                          color: encointerBlack,
                         ),
                   ),
                 ),

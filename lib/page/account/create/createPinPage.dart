@@ -5,6 +5,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:encointer_wallet/common/theme.dart';
 
 class CreatePinPage extends StatefulWidget {
   const CreatePinPage(this.store);
@@ -89,13 +90,13 @@ class _CreatePinPageState extends State<CreatePinPage> {
           I18n.of(context).home['create'],
         ),
         iconTheme: IconThemeData(
-          color: Color(0xff666666), //change your color here
+          color: encointerGrey, //change your color here
         ),
         actions: <Widget>[
           IconButton(
             icon: Icon(
               Icons.close,
-              color: Color(0xff666666),
+              color: encointerGrey,
             ),
             onPressed: () {
               Navigator.popUntil(context, ModalRoute.withName('/'));
