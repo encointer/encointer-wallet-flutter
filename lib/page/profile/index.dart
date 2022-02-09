@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
+import 'package:encointer_wallet/common/components/fadingEdge.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/page/account/createAccountEntryPage.dart';
 import 'package:encointer_wallet/page/profile/account/accountManagePage.dart';
@@ -14,7 +15,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:encointer_wallet/common/components/fadingEdge.dart';
 
 class Profile extends StatefulWidget {
   Profile(this.store);
@@ -26,6 +26,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   _ProfileState(this.store);
   final AppStore store;
+  final Api api = webApi;
   EndpointData _selectedNetwork;
   bool developerMode = false;
 
@@ -51,6 +52,11 @@ class _ProfileState extends State<Profile> {
 
   Future<void> _onCreateAccount() async {
     Navigator.of(context).pushNamed(CreateAccountEntryPage.route);
+  }
+
+  // What type is a reputations? is it a string?
+  Future<void> _getReputations() async {
+    await webApi.encointer.getReputations();
   }
 
   Future<void> _showPasswordDialog(BuildContext context) async {
@@ -209,7 +215,7 @@ class _ProfileState extends State<Profile> {
                     onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
                   ),
                   ListTile(
-                    title: Text(dic['reputation.overall']),
+                    title: Text('${dic['reputation.overall']}'),
                   ),
                   ListTile(
                     title: Text(dic['ceremonies']),
