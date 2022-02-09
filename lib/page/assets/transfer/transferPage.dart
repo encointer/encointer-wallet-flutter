@@ -114,7 +114,7 @@ class _TransferPageState extends State<TransferPage> {
                         EncointerTextFormField(
                           labelText: dic['amount.to.be.transferred'],
                           textStyle: Theme.of(context).textTheme.headline1.copyWith(color: encointerBlack),
-                          inputFormatters: [UI.decimalInputFormatter(decimals)],
+                          inputFormatters: [UI.decimalInputFormatter(decimals: decimals)],
                           controller: _amountCtrl,
                           textFormFieldKey: Key('transfer-amount-input'),
                           validator: (String value) {

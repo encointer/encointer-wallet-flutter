@@ -1,6 +1,7 @@
 import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +55,7 @@ class _ReceivePageState extends State<ReceivePage> {
                   EncointerTextFormField(
                     labelText: I18n.of(context).assets['invoice.amount'],
                     textStyle: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
-                    inputFormatters: null,
+                    inputFormatters: [UI.decimalInputFormatter()],
                     controller: _amountController,
                     textFormFieldKey: Key('invoice-amount-input'),
                     validator: (String value) {
