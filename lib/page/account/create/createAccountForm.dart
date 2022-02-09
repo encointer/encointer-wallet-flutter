@@ -79,7 +79,7 @@ class CreateAccountForm extends StatelessWidget {
                   Icon(Iconsax.login_1),
                   SizedBox(width: 12),
                   Text(
-                    "Next",
+                    dic['next'],
                     style: Theme.of(context).textTheme.headline3.copyWith(
                           color: Color(0xffF4F8F9),
                         ),
