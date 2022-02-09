@@ -14,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:encointer_wallet/common/components/fadingEdge.dart';
 
 class Profile extends StatefulWidget {
   Profile(this.store);
@@ -193,10 +194,14 @@ class _ProfileState extends State<Profile> {
                   ),
                   Container(
                     height: 130,
-                    child: ListView(
-                      padding: EdgeInsets.all(16),
-                      children: _buildAccountList(),
-                      scrollDirection: Axis.horizontal,
+                    child: Stack(
+                      children: [
+                        ListView(
+                        padding: EdgeInsets.all(16),
+                        children: _buildAccountList(),
+                        scrollDirection: Axis.horizontal,
+                      ), FadeEndListview(),
+                      ]
                     ),
                   ),
                   ListTile(
