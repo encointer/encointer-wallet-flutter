@@ -32,14 +32,14 @@ class CreateAccountForm extends StatelessWidget {
                 // Container(
                 // width: 200,
                 Center(
-                  child: Text("Choose an account name.", style: Theme.of(context).textTheme.headline2),
+                  child: Text(I18n.of(context).profile['account.name.choose'], style: Theme.of(context).textTheme.headline2),
                 ),
                 // ),
                 // Container(
                 // width: 300,
                 Center(
                   child: Text(
-                    "You can change it later in \n your profile settings.",
+                    I18n.of(context).profile['account.name.choose.hint'],
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headline2.copyWith(
                           color: Colors.black,
@@ -65,7 +65,7 @@ class CreateAccountForm extends StatelessWidget {
                         // labelStyle: TextStyle(
                         //     color: Color(0xff4374A3))
                         hintText: dic['create.hint'],
-                        labelText: "Account name",
+                        labelText: I18n.of(context).profile['account.name'],
                       ),
                       controller: _nameCtrl,
                     ),
