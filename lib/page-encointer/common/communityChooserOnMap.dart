@@ -29,6 +29,18 @@ class CommunityChooserOnMap extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(dic['community.choose']),
+        leading: Container(),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.close,
+              color: Color(0xff666666),
+            ),
+            onPressed: () {
+              Navigator.popUntil(context, ModalRoute.withName('/'));
+            },
+          )
+        ],
       ),
       body: FlutterMap(
         options: MapOptions(
@@ -111,7 +123,9 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
           setState(() {
             store.encointer.setChosenCid(widget.dataForThisMarker.cid);
           });
+          // Do
           Navigator.pop(context);
+          Navigator.popUntil(context, ModalRoute.withName('/'));
         },
         child: Container(
           width: 150,

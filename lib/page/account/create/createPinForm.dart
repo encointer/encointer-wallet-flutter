@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/components/gradientElements.dart';
+import 'package:encointer_wallet/page-encointer/common/communityChooserOnMap.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
@@ -48,64 +49,57 @@ class CreatePinForm extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 30),
-                // todo: couldnt wrap this ternary in a single one, had to do two ternaries (for each pin)... clang: how to?
-                (store.account.accountListAll.isEmpty)
-                    ? TextFormField(
-                        key: Key('create-account-pin'),
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          enabledBorder: const OutlineInputBorder(
-                            // width: 0.0 produces a thin "hairline" border
-                            borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
-                            borderRadius:
-                                BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
-                          ),
-                          filled: true,
-                          fillColor: Color(0xffF4F8F9),
-                          // icon: Icon(Icons.lock),
-                          hintText: dic['create.password'],
-                          labelText: dic['create.password'],
-                          // if change color of hint:
-                          // labelStyle: TextStyle(
-                          //     color: Color(0xff4374A3))
-                        ),
-                        controller: _passCtrl,
-                        validator: (v) {
-                          return Fmt.checkPassword(v.trim()) ? null : dic['create.password.error'];
-                        },
-                        obscureText: true,
-                        inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-                      )
-                    : Container(),
+                TextFormField(
+                  key: Key('create-account-pin'),
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    enabledBorder: const OutlineInputBorder(
+                      // width: 0.0 produces a thin "hairline" border
+                      borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+                      borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
+                    ),
+                    filled: true,
+                    fillColor: Color(0xffF4F8F9),
+                    // icon: Icon(Icons.lock),
+                    hintText: dic['create.password'],
+                    labelText: dic['create.password'],
+                    // if change color of hint:
+                    // labelStyle: TextStyle(
+                    //     color: Color(0xff4374A3))
+                  ),
+                  controller: _passCtrl,
+                  validator: (v) {
+                    return Fmt.checkPassword(v.trim()) ? null : dic['create.password.error'];
+                  },
+                  obscureText: true,
+                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                ),
                 SizedBox(height: 20),
-                (store.account.accountListAll.isEmpty)
-                    ? TextFormField(
-                        key: Key('create-account-pin2'),
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          enabledBorder: const OutlineInputBorder(
-                            // width: 0.0 produces a thin "hairline" border
-                            borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
-                            borderRadius:
-                                BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
-                          ),
-                          filled: true,
-                          fillColor: Color(0xffF4F8F9),
-                          // icon: Icon(Icons.lock),
-                          // if change color of hint:
-                          // labelStyle: TextStyle(
-                          //     color: Color(0xff4374A3))
-                          hintText: dic['create.password2'],
-                          labelText: dic['create.password2'],
-                        ),
-                        controller: _pass2Ctrl,
-                        obscureText: true,
-                        validator: (v) {
-                          return _passCtrl.text != v ? dic['create.password2.error'] : null;
-                        },
-                        inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-                      )
-                    : Container(),
+                TextFormField(
+                  key: Key('create-account-pin2'),
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    enabledBorder: const OutlineInputBorder(
+                      // width: 0.0 produces a thin "hairline" border
+                      borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+                      borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
+                    ),
+                    filled: true,
+                    fillColor: Color(0xffF4F8F9),
+                    // icon: Icon(Icons.lock),
+                    // if change color of hint:
+                    // labelStyle: TextStyle(
+                    //     color: Color(0xff4374A3))
+                    hintText: dic['create.password2'],
+                    labelText: dic['create.password2'],
+                  ),
+                  controller: _pass2Ctrl,
+                  obscureText: true,
+                  validator: (v) {
+                    return _passCtrl.text != v ? dic['create.password2.error'] : null;
+                  },
+                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
@@ -139,9 +133,21 @@ class CreatePinForm extends StatelessWidget {
                 if (_formKey.currentState.validate()) {
                   if (store.account.accountListAll.isEmpty) {
                     setNewAccount(this.name.isNotEmpty ? this.name : dic['create.default'], _passCtrl.text);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CommunityChooserOnMap(store),
+                      ),
+                    );
                   } else {
                     // cachedPin won't be empty, because cachedPin is verified not to be empty before user adds an account in profile/index.dart
                     setNewAccount(this.name.isNotEmpty ? this.name : dic['create.default'], store.settings.cachedPin);
+                    Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CommunityChooserOnMap(store),
+                          ),
+                        );
                   }
                   onSubmit();
                 }

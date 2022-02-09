@@ -58,8 +58,6 @@ class _CreatePinPageState extends State<CreatePinPage> {
     setState(() {
       _submitting = false;
     });
-    // go to home page
-    Navigator.popUntil(context, ModalRoute.withName('/'));
   }
 
   static Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
