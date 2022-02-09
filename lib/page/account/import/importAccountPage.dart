@@ -197,7 +197,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         body: SafeArea(
           child: !_submitting && store.account.accountListAll.isEmpty
               ? CreateAccountForm(store: store)
-              : (!_submitting && !store.account.accountListAll.isEmpty)
+              : (!_submitting && store.account.accountListAll.isNotEmpty)
                   ? AddAccountForm(
                       isImporting: true,
                       setNewAccount: store.account.setNewAccount,

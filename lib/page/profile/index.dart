@@ -200,7 +200,7 @@ class _ProfileState extends State<Profile> {
                                     onPressed: () => {
                                           print("remove ${store.account.accountListAll}"),
                                           store.account.accountListAll.forEach((acc) {
-                                            print("removing the account: ${acc}");
+                                            print("removing the account: $acc");
                                             store.account.removeAccount(acc);
                                           }),
                                           Navigator.popUntil(context, ModalRoute.withName('/')),

@@ -14,7 +14,7 @@ class CreateAccountForm extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _nameCtrl = new TextEditingController();
-  var args = {};
+  final args = {};
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +94,6 @@ class CreateAccountForm extends StatelessWidget {
               ),
               onPressed: () {
                 if (_formKey.currentState.validate()) {
-                  // onSubmit();
                   var args = {"name": '${_nameCtrl.text}'};
                   Navigator.pushNamed(context, CreatePinPage.route, arguments: args);
                 }
