@@ -23,6 +23,7 @@ class CreatePinForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Map<String, String> dic = I18n.of(context).account;
+    final Map<String, String> dicProf = I18n.of(context).profile;
 
     return Form(
       key: _formKey,
@@ -34,14 +35,14 @@ class CreatePinForm extends StatelessWidget {
               children: <Widget>[
                 SizedBox(height: 80),
                 Center(
-                  child: Text("Secure your account with a pin.", style: Theme.of(context).textTheme.headline2),
+                  child: Text(dicProf['pin.secure'], style: Theme.of(context).textTheme.headline2),
                 ),
                 // ),
                 // Container(
                 // width: 300,
                 Center(
                   child: Text(
-                    "You will need this pin to unlock \n your encointer app.",
+                    dicProf['pin.hint'],
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headline2.copyWith(
                           color: Colors.black,
