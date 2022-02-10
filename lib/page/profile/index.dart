@@ -1,6 +1,7 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/fadingEdge.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
+import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/createAccountEntryPage.dart';
 import 'package:encointer_wallet/page/profile/account/accountManagePage.dart';
 import 'package:encointer_wallet/page/profile/account/changePasswordPage.dart';
@@ -55,9 +56,9 @@ class _ProfileState extends State<Profile> {
   }
 
   // What type is a reputations? is it a string?
-  Future<void> _getReputations() async {
-    await webApi.encointer.getReputations();
-  }
+  // Future<void> _getReputations() async {
+  //   await webApi.encointer.getReputations();
+  // }
 
   Future<void> _showPasswordDialog(BuildContext context) async {
     await showCupertinoDialog(
@@ -80,8 +81,6 @@ class _ProfileState extends State<Profile> {
   }
 
   List<Widget> _buildAccountList() {
-    Color primaryColor = Theme.of(context).primaryColor;
-
     List<Widget> res = [];
 
     /// first item is current account
@@ -109,7 +108,7 @@ class _ProfileState extends State<Profile> {
                 ),
                 Positioned(
                   bottom: 0, right: 0, //give the values according to your requirement
-                  child: Icon(Iconsax.edit, color: primaryColor),
+                  child: Icon(Iconsax.edit, color: encointerBlue),
                 ),
               ],
             ),
@@ -138,7 +137,6 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     final Color grey = Theme.of(context).unselectedWidgetColor;
-    Color primaryColor = Theme.of(context).primaryColor;
     _selectedNetwork = store.settings.endpoint;
     // if all accounts are deleted, go to createAccountPage
     if (store.account.accountListAll.isEmpty) {
@@ -158,7 +156,7 @@ class _ProfileState extends State<Profile> {
               style: Theme.of(context).textTheme.headline3,
             ),
             iconTheme: IconThemeData(
-              color: Color(0xff666666), //change your color here
+              color: encointerGrey, //change your color here
             ),
             centerTitle: true,
             backgroundColor: Colors.transparent,
@@ -177,12 +175,12 @@ class _ProfileState extends State<Profile> {
                       children: <Widget>[
                         Text(
                           '${dic['accounts']}',
-                          style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black),
+                          style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
                         ),
                         Row(children: <Widget>[
                           IconButton(
                               icon: Icon(Iconsax.add_square),
-                              color: primaryColor,
+                              color: encointerBlue,
                               onPressed: () => {
                                     store.settings.cachedPin.isEmpty ? _showPasswordDialog(context) : _onCreateAccount()
                                   }),
@@ -210,7 +208,7 @@ class _ProfileState extends State<Profile> {
                     ]),
                   ),
                   ListTile(
-                    title: Text(dic['pass.change']),
+                    title: Text(dic['pass.change'], style: Theme.of(context).textTheme.headline3),
                     trailing: Icon(Icons.arrow_forward_ios, size: 18),
                     onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
                   ),
@@ -229,18 +227,24 @@ class _ProfileState extends State<Profile> {
                     trailing: Icon(Icons.arrow_forward_ios, size: 18),
                     onTap: () => Navigator.of(context).pushNamed(SettingsPage.route),
                   ),
-                  Row(
-                    children: <Widget>[
-                      Text(dic['developer']),
-                      Checkbox(
-                        value: developerMode,
-                        onChanged: (bool value) {
-                          setState(() {
-                            developerMode = !developerMode;
-                          });
-                        },
-                      ),
-                    ],
+                  Padding(
+                    padding: EdgeInsets.all(16),
+                    child: Row(
+                      children: <Widget>[
+                        Text(
+                          dic['developer'],
+                          style: Theme.of(context).textTheme.headline3.copyWith(color: encointerBlack),
+                        ),
+                        Checkbox(
+                          value: developerMode,
+                          onChanged: (bool value) {
+                            setState(() {
+                              developerMode = !developerMode;
+                            });
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                   if (developerMode == true)
                     Row(
