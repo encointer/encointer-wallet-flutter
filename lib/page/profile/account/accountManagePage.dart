@@ -179,15 +179,15 @@ class _AccountManagePageState extends State<AccountManagePage> {
                         ),
                       ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Row(
-                        children: <Widget>[
-                          Text(dic['communities'],
-                              style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black54))
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.only(left: 16),
+                        child: Row(
+                          children: <Widget>[
+                            Text(dic['communities'],
+                                style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black54))
+                          ],
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ),
