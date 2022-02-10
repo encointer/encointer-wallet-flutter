@@ -27,7 +27,6 @@ class _ProfileState extends State<Profile> {
   final AppStore store;
   final Api api = webApi;
   EndpointData _selectedNetwork;
-  bool developerMode = false;
 
   void _loadAccountCache() {
     // refresh balance
@@ -130,6 +129,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    bool developerMode = store.settings.developerMode;
     _selectedNetwork = store.settings.endpoint;
     // if all accounts are deleted, go to createAccountPage
     if (store.account.accountListAll.isEmpty) {
@@ -224,7 +224,7 @@ class _ProfileState extends State<Profile> {
                           value: developerMode,
                           onChanged: (bool value) {
                             setState(() {
-                              developerMode = !developerMode;
+                              store.settings.setDeveloperMode();
                             });
                           },
                         ),
