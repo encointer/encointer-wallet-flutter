@@ -209,7 +209,7 @@ class _ProfileState extends State<Profile> {
                         style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey)),
                   ),
                   ListTile(
-                    title: Text(dic['ceremonies'],
+                    title: Text(dic['reputation.history'],
                         style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey)),
                   ),
                   Padding(
