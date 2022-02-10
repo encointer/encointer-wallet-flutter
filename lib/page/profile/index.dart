@@ -1,5 +1,4 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
-import 'package:encointer_wallet/common/components/fadingEdge.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/createAccountEntryPage.dart';
@@ -198,7 +197,6 @@ class _ProfileState extends State<Profile> {
                         children: _buildAccountList(),
                         scrollDirection: Axis.horizontal,
                       ),
-                      FadeEndListview(),
                     ]),
                   ),
                   ListTile(
