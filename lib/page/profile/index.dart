@@ -5,7 +5,6 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/createAccountEntryPage.dart';
 import 'package:encointer_wallet/page/profile/account/accountManagePage.dart';
 import 'package:encointer_wallet/page/profile/account/changePasswordPage.dart';
-import 'package:encointer_wallet/page/profile/settings/settingsPage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -136,7 +135,6 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    final Color grey = Theme.of(context).unselectedWidgetColor;
     _selectedNetwork = store.settings.endpoint;
     // if all accounts are deleted, go to createAccountPage
     if (store.account.accountListAll.isEmpty) {
@@ -218,15 +216,7 @@ class _ProfileState extends State<Profile> {
                   ListTile(
                     title: Text(dic['ceremonies']),
                   ),
-                  ListTile(
-                    leading: Container(
-                      width: 32,
-                      child: Icon(Icons.settings, color: grey, size: 22),
-                    ),
-                    title: Text(dic['setting']),
-                    trailing: Icon(Icons.arrow_forward_ios, size: 18),
-                    onTap: () => Navigator.of(context).pushNamed(SettingsPage.route),
-                  ),
+
                   Padding(
                     padding: EdgeInsets.all(16),
                     child: Row(
