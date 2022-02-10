@@ -14,13 +14,38 @@ class ReceivePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool isShare = false;
+    bool isInvoice = false;
+    // bool isClaim = false;
+    // var sendingAmount = 0.0;
+    //maybe better save as String..
+    // String community;
+    var invoice;
+    var contact = ['encointer-contact', 'V1.0', store.account.currentAccount.address];
     final Map args = ModalRoute.of(context).settings.arguments;
-    if (args != null) {
-      isShare = args['isShare'];
-    }
+    // todo: Idea, make this page (or a copy of it) a generic QR generator, where info is taken from args
+    // sharing contact
+    if (args != null) if (args['isShare'] != null)
+      isShare = true;
+    // recieving money
+    else if (args['receive'] != null) {
+      isInvoice = true;
+      // sendingAmount = args['recieve'];
+      // community = args['communityIdentifier'];
+      invoice = contact;
+      // invoice.push(community);
+      // invoice.push(sendingAmount);
+      invoice.add(store.account.currentAccount.name);
+    } // else if (args['recieve'] == null) {
+    //   contact.add(community);
+    //   contact.add(store.account.currentAccount.name);
+    // }
 
+    // case for claim of attendance?
+
+    // todo: I dont get, if this is the format for the shared contact, or the one in rich qr.
     String codeAddress =
         'substrate:${store.account.currentAddress}:${store.account.currentAccount.pubKey}:${store.account.currentAccount.name}';
+
     Color themeColor = Theme.of(context).primaryColor;
 
     bool isEncointer = store.settings.endpointIsEncointer;
@@ -29,7 +54,11 @@ class ReceivePage extends StatelessWidget {
       backgroundColor: Colors.grey,
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: isShare ? Text(I18n.of(context).profile['share']) : Text(I18n.of(context).assets['receive']),
+        title: isShare
+            ? Text(I18n.of(context).profile['share'])
+            : isInvoice
+            ? Text(I18n.of(context).assets['transfer'])
+            : Text(I18n.of(context).assets['receive']),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -57,9 +86,9 @@ class ReceivePage extends StatelessWidget {
                       ),
                       accInfo != null && accInfo['accountIndex'] != null
                           ? Padding(
-                              padding: EdgeInsets.all(8),
-                              child: Text(accInfo['accountIndex']),
-                            )
+                        padding: EdgeInsets.all(8),
+                        child: Text(accInfo['accountIndex']),
+                      )
                           : Container(width: 8, height: 8),
                       Container(
                         decoration: BoxDecoration(
@@ -67,12 +96,23 @@ class ReceivePage extends StatelessWidget {
                           borderRadius: BorderRadius.all(const Radius.circular(8)),
                         ),
                         margin: EdgeInsets.fromLTRB(48, 16, 48, 24),
-                        child: QrImage(
-                          data: codeAddress,
+                        child: isInvoice
+                            ? QrImage(
+                          data: invoice.toString(),
                           size: 200,
+                          // here would come the community logo svg
                           embeddedImage: AssetImage('assets/images/public/app.png'),
                           embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
-                        ),
+                        )
+                            : isShare
+                            ? QrImage(
+                          data: codeAddress,
+                          size: 200,
+                          // here would come the community logo svg
+                          embeddedImage: AssetImage('assets/images/public/app.png'),
+                          embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
+                        )
+                            : Container(),
                       ),
                       Container(
                         width: 160,
@@ -83,11 +123,11 @@ class ReceivePage extends StatelessWidget {
                         padding: EdgeInsets.only(top: 16, bottom: 32),
                         child: isShare
                             ? RoundedButton(
-                                text: I18n.of(context).profile['share'], onPressed: () => Share.share(codeAddress))
-                            : RoundedButton(
-                                text: I18n.of(context).assets['copy'],
-                                onPressed: () => UI.copyAndNotify(context, store.account.currentAddress),
-                              ),
+                            text: I18n.of(context).profile['share'], onPressed: () => Share.share(codeAddress))
+                            : isInvoice ? RoundedButton(
+                          text: I18n.of(context).assets['copy'],
+                          onPressed: () => UI.copyAndNotify(context, store.account.currentAddress),
+                        ) : Container(),
                       )
                     ],
                   ),
