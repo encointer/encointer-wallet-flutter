@@ -82,11 +82,7 @@ class _ProfileState extends State<Profile> {
   List<Widget> _buildAccountList() {
     List<Widget> res = [];
 
-    /// first item is current account
-    List<AccountData> accounts = [store.account.currentAccount];
-
-    /// add optional accounts
-    accounts.addAll(store.account.optionalAccounts);
+    List<AccountData> accounts = store.account.accountListAll;
 
     res.addAll(accounts.map((i) {
       String address = i.address;
@@ -211,10 +207,12 @@ class _ProfileState extends State<Profile> {
                     onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
                   ),
                   ListTile(
-                    title: Text(dic['reputation.overall'], style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey)),
+                    title: Text(dic['reputation.overall'],
+                        style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey)),
                   ),
                   ListTile(
-                    title: Text(dic['ceremonies'],style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey)),
+                    title: Text(dic['ceremonies'],
+                        style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey)),
                   ),
                   Padding(
                     padding: EdgeInsets.all(16),
