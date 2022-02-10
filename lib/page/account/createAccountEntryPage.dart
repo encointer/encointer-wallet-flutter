@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:encointer_wallet/common/theme.dart';
 
 class CreateAccountEntryPage extends StatelessWidget {
   static final String route = '/account/entry';
@@ -64,15 +65,13 @@ class CreateAccountEntryPage extends StatelessWidget {
                             TextSpan(
                               text: '${I18n.of(context).profile['account.have']} ',
                               style: TextStyle(
-                                //todo define color
-                                color: Color(0xffF4F8F9),
+                                color: encointerLightBlue,
                               ),
                             ),
                             TextSpan(
                               text: I18n.of(context).profile['import'],
                               style: TextStyle(
-                                //todo define color
-                                color: Color(0xffF4F8F9),
+                                color: encointerLightBlue,
                                 decoration: TextDecoration.underline,
                               ),
                               recognizer: TapGestureRecognizer()

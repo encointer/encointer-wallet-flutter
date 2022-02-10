@@ -41,12 +41,15 @@ class CreatePinForm extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Center(
-                  child: Text(
-                    dicProf['pin.hint'],
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline2.copyWith(
-                          color: encointerBlack,
-                        ),
+                  child: Container(
+                    width: 250,
+                    child: Text(
+                      dicProf['pin.hint'],
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headline2.copyWith(
+                            color: encointerBlack,
+                          ),
+                    ),
                   ),
                 ),
                 SizedBox(height: 30),
@@ -60,9 +63,7 @@ class CreatePinForm extends StatelessWidget {
                       borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
                     ),
                     filled: true,
-                    // todo define color
-                    fillColor: Color(0xffF4F8F9),
-                    // icon: Icon(Icons.lock),
+                    fillColor: encointerLightBlue,
                     hintText: dic['create.password'],
                     labelText: dic['create.password'],
                     // if change color of hint:
@@ -106,11 +107,14 @@ class CreatePinForm extends StatelessWidget {
                     children: [
                       Icon(Icons.info_outlined),
                       SizedBox(width: 12),
-                      Text(
-                        dicProf['pin.info'],
-                        style: Theme.of(context).textTheme.headline4.copyWith(
-                              color: encointerGrey,
-                            ),
+                      Container(
+                        width: 250,
+                        child: Text(
+                          dicProf['pin.info'],
+                          style: Theme.of(context).textTheme.headline4.copyWith(
+                                color: encointerGrey,
+                              ),
+                        ),
                       ),
                     ],
                   ),
@@ -125,8 +129,7 @@ class CreatePinForm extends StatelessWidget {
               child: Text(
                 I18n.of(context).account['create'],
                 style: Theme.of(context).textTheme.headline3.copyWith(
-                  //todo define color
-                color: Color(0xffF4F8F9),
+                      color: encointerLightBlue,
                     ),
               ),
               onPressed: () {
@@ -143,11 +146,11 @@ class CreatePinForm extends StatelessWidget {
                     // cachedPin won't be empty, because cachedPin is verified not to be empty before user adds an account in profile/index.dart
                     setNewAccount(this.name.isNotEmpty ? this.name : dic['create.default'], store.settings.cachedPin);
                     Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CommunityChooserOnMap(store),
-                          ),
-                        );
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => CommunityChooserOnMap(store),
+                      ),
+                    );
                   }
                   onSubmit();
                 }

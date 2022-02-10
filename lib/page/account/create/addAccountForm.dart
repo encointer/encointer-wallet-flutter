@@ -5,6 +5,7 @@ import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:encointer_wallet/common/theme.dart';
 
 class AddAccountForm extends StatelessWidget {
   AddAccountForm({this.isImporting, this.setNewAccount, this.submitting, this.onSubmit, this.store});
@@ -37,12 +38,15 @@ class AddAccountForm extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Center(
-                  child: Text(
-                    I18n.of(context).profile['account.name.choose.hint'],
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline2.copyWith(
-                          color: Colors.black,
-                        ),
+                  child: Container(
+                    width: 300,
+                    child: Text(
+                      I18n.of(context).profile['account.name.choose.hint'],
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headline2.copyWith(
+                            color: Colors.black,
+                          ),
+                    ),
                   ),
                 ),
                 SizedBox(height: 30),
@@ -57,7 +61,7 @@ class AddAccountForm extends StatelessWidget {
                           borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
                         ),
                         filled: true,
-                        fillColor: Color(0xffF4F8F9),
+                        fillColor: encointerLightBlue,
                         hintText: dic['create.hint'],
                         labelText: I18n.of(context).profile['account.name'],
                       ),
@@ -70,30 +74,31 @@ class AddAccountForm extends StatelessWidget {
           ),
           !isImporting
               ? Padding(
-            padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-            child: Container(
-              child: Center(
-                child: SizedBox(
-                  width: double.infinity,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
-                    key: Key('import-account'),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                    Icon(Iconsax.import_2),
-                      SizedBox(width: 10),
-                      Text(I18n.of(context).home['account.import'], style: Theme.of(context).textTheme.headline3),
-                    ],
+                  padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+                  child: Container(
+                    child: Center(
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
+                          key: Key('import-account'),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Iconsax.import_2),
+                              SizedBox(width: 10),
+                              Text(I18n.of(context).home['account.import'],
+                                  style: Theme.of(context).textTheme.headline3),
+                            ],
+                          ),
+                          onPressed: () {
+                            Navigator.pushNamed(context, ImportAccountPage.route);
+                          },
+                        ),
+                      ),
                     ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, ImportAccountPage.route);
-                    },
                   ),
-                ),
-              ),
-            ),
-          )
+                )
               : Container(),
           Container(
             key: Key('create-account-confirm'),
@@ -107,7 +112,7 @@ class AddAccountForm extends StatelessWidget {
                   Text(
                     I18n.of(context).profile['account.create'],
                     style: Theme.of(context).textTheme.headline3.copyWith(
-                          color: Color(0xffF4F8F9),
+                          color: encointerLightBlue,
                         ),
                   ),
                 ],
