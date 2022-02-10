@@ -15,7 +15,6 @@ class CreateAccountForm extends StatelessWidget {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _nameCtrl = new TextEditingController();
-  final args = {};
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +29,6 @@ class CreateAccountForm extends StatelessWidget {
             child: ListView(
               padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
               children: <Widget>[
-                // Container(
-                // width: 200,
                 Center(
                   child: Text(I18n.of(context).profile['account.name.choose'],
                       style: Theme.of(context).textTheme.headline2),
@@ -49,7 +46,6 @@ class CreateAccountForm extends StatelessWidget {
                     ),
                   ),
                 ),
-                // ),
                 SizedBox(height: 50),
                 Column(
                   children: <Widget>[

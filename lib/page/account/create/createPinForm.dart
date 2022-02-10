@@ -66,9 +66,6 @@ class CreatePinForm extends StatelessWidget {
                     fillColor: encointerLightBlue,
                     hintText: dic['create.password'],
                     labelText: dic['create.password'],
-                    // if change color of hint:
-                    // labelStyle: TextStyle(
-                    //     color: Color(0xff4374A3))
                   ),
                   controller: _passCtrl,
                   validator: (v) {
