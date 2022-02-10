@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dart_geohash/dart_geohash.dart';
+import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/utils/i18n/index.dart';
@@ -34,7 +35,7 @@ class CommunityChooserOnMap extends StatelessWidget {
           IconButton(
             icon: Icon(
               Icons.close,
-              color: Color(0xff666666),
+              color: encointerGrey,
             ),
             onPressed: () => Navigator.pop(context),
           )
