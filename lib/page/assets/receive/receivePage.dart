@@ -44,7 +44,7 @@ class _ReceivePageState extends State<ReceivePage> {
               Column(
                 children: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24),
+                    padding: const EdgeInsets.symmetric(horizontal: 48),
                     child: Text(
                       I18n.of(context).profile['qr.scan.hint'],
                       style: Theme.of(context).textTheme.headline3.copyWith(color: encointerBlack),
@@ -52,23 +52,26 @@ class _ReceivePageState extends State<ReceivePage> {
                     ),
                   ),
                   SizedBox(height: 8),
-                  EncointerTextFormField(
-                    labelText: I18n.of(context).assets['invoice.amount'],
-                    textStyle: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
-                    inputFormatters: [UI.decimalInputFormatter()],
-                    controller: _amountController,
-                    textFormFieldKey: Key('invoice-amount-input'),
-                    validator: (String value) {
-                      if (value == null || value.isEmpty) {
-                        return I18n.of(context).assets['amount.error'];
-                      }
-                      return null;
-                    },
-                    suffixIcon: Text(
-                      "ⵐ",
-                      style: TextStyle(
-                        color: encointerGrey,
-                        fontSize: 26,
+                  Padding(
+                    padding: const EdgeInsets.all(30),
+                    child: EncointerTextFormField(
+                      labelText: I18n.of(context).assets['invoice.amount'],
+                      textStyle: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
+                      inputFormatters: [UI.decimalInputFormatter()],
+                      controller: _amountController,
+                      textFormFieldKey: Key('invoice-amount-input'),
+                      validator: (String value) {
+                        if (value == null || value.isEmpty) {
+                          return I18n.of(context).assets['amount.error'];
+                        }
+                        return null;
+                      },
+                      suffixIcon: Text(
+                        "ⵐ",
+                        style: TextStyle(
+                          color: encointerGrey,
+                          fontSize: 26,
+                        ),
                       ),
                     ),
                   ),
