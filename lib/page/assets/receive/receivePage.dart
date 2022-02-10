@@ -36,7 +36,16 @@ class _ReceivePageState extends State<ReceivePage> {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           title: isShare ? Text(I18n.of(context).profile['share']) : Text(I18n.of(context).assets['receive']),
-          centerTitle: true,
+          leading: Container(),
+          actions: [
+            IconButton(
+              key: Key('close-receive-page'),
+              icon: Icon(Icons.close),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            )
+          ],
         ),
         body: SafeArea(
           child: ListView(
