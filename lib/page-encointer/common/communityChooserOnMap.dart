@@ -36,9 +36,7 @@ class CommunityChooserOnMap extends StatelessWidget {
               Icons.close,
               color: Color(0xff666666),
             ),
-            onPressed: () {
-              Navigator.popUntil(context, ModalRoute.withName('/'));
-            },
+            onPressed: () => Navigator.pop(context),
           )
         ],
       ),
@@ -123,9 +121,7 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
           setState(() {
             store.encointer.setChosenCid(widget.dataForThisMarker.cid);
           });
-          // Do
           Navigator.pop(context);
-          Navigator.popUntil(context, ModalRoute.withName('/'));
         },
         child: Container(
           width: 150,

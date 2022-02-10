@@ -133,23 +133,20 @@ class CreatePinForm extends StatelessWidget {
                 if (_formKey.currentState.validate()) {
                   if (store.account.accountListAll.isEmpty) {
                     setNewAccount(this.name.isNotEmpty ? this.name : dic['create.default'], _passCtrl.text);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CommunityChooserOnMap(store),
-                      ),
-                    );
                   } else {
                     // cachedPin won't be empty, because cachedPin is verified not to be empty before user adds an account in profile/index.dart
                     setNewAccount(this.name.isNotEmpty ? this.name : dic['create.default'], store.settings.cachedPin);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CommunityChooserOnMap(store),
-                      ),
-                    );
                   }
+
                   onSubmit();
+
+                  // Even if we do not choose a community, we go back to the home screen.
+                  Navigator.popUntil(context, ModalRoute.withName('/'));
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)),
+                  );
                 }
               },
             ),
