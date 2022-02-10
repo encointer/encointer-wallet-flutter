@@ -211,19 +211,18 @@ class _ProfileState extends State<Profile> {
                     onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
                   ),
                   ListTile(
-                    title: Text('${dic['reputation.overall']}'),
+                    title: Text(dic['reputation.overall'], style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey)),
                   ),
                   ListTile(
-                    title: Text(dic['ceremonies']),
+                    title: Text(dic['ceremonies'],style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey)),
                   ),
-
                   Padding(
                     padding: EdgeInsets.all(16),
                     child: Row(
                       children: <Widget>[
                         Text(
                           dic['developer'],
-                          style: Theme.of(context).textTheme.headline3.copyWith(color: encointerBlack),
+                          style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
                         ),
                         Checkbox(
                           value: developerMode,
