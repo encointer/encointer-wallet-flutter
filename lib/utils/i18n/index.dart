@@ -1,15 +1,16 @@
 import 'dart:async';
 
+import 'package:encointer_wallet/utils/i18n/assets.dart';
+import 'package:encointer_wallet/utils/i18n/bazaar.dart';
+import 'package:encointer_wallet/utils/i18n/encointer.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/foundation.dart' show SynchronousFuture;
 import 'package:flutter/material.dart';
-import 'package:encointer_wallet/utils/i18n/assets.dart';
-import 'package:encointer_wallet/utils/i18n/encointer.dart';
-import 'package:encointer_wallet/utils/i18n/bazaar.dart';
 
 import 'account.dart';
+import 'bazaar.dart';
 import 'home.dart';
 import 'profile.dart';
-import 'bazaar.dart';
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<I18n> {
   const AppLocalizationsDelegate(this.overriddenLocale);
@@ -35,6 +36,18 @@ class I18n {
 
   static I18n of(BuildContext context) {
     return Localizations.of<I18n>(context, I18n);
+  }
+
+  /// this will be used in different places, also supportedLocales.keys
+  static final Map<Locale, Translations> supportedLocales = {
+    Locale('en', ''): TranslationsEn(),
+    Locale('de', ''): TranslationsDe(),
+    Locale('zh', ''): TranslationsZh(),
+  };
+
+  Translations translationsForLocale() {
+    var translations = supportedLocales[locale];
+    return translations != null ? translations : TranslationsEn();
   }
 
   static Map<String, Map<String, Map<String, String>>> _localizedValues = {
