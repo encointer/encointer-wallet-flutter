@@ -58,6 +58,7 @@ class CreateAccountEntryPage extends StatelessWidget {
                         ),
                       ),
                       GestureDetector(
+                          key: Key('import-account'),
                           child: Text(
                             I18n.of(context).profile['import'],
                             style: TextStyle(
