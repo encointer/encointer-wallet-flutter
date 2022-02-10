@@ -9,7 +9,7 @@ import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -177,7 +177,7 @@ class _ProfileState extends State<Profile> {
                     ),
                   ),
                   ListTile(
-                    title: Text(dic['pass.change']),
+                    title: Text(dic['passChange']),
                     trailing: Icon(Icons.arrow_forward_ios, size: 18),
                     onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
                   ),
@@ -188,7 +188,7 @@ class _ProfileState extends State<Profile> {
                         context: context,
                         builder: (BuildContext context) {
                           return CupertinoAlertDialog(title: Text("Are you sure you want to remove all accounts?"),
-                              // content: Text(dic['pass.error.txt']),
+                              // content: Text(dic['passErrorTxt']),
                               actions: <Widget>[
                                 CupertinoButton(
                                   // key: Key('error-dialog-ok'),

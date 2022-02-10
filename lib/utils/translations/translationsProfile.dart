@@ -5,6 +5,7 @@ abstract class TranslationsProfile {
   String get aboutBrif;
   String get aboutVersion;
   String get account;
+  String get accountDelete;
   String get accounts;
   String get accountShare;
   String get add;
@@ -57,6 +58,7 @@ class TranslationsEnProfile implements TranslationsProfile {
   get aboutVersion => 'Version';
   get account => 'Manage Account';
   get accounts => 'Accounts';
+  get accountDelete => 'Are you sure you want to delete the account?';
   get accountShare => 'Share Account';
   get add => 'Add';
   get contact => 'Address Book';
@@ -109,6 +111,7 @@ class TranslationsDeProfile implements TranslationsProfile {
   get aboutVersion => 'Version';
   get account => 'Konto';
   get accounts => 'Kontos';
+  get accountDelete => 'Bist du sicher, dass du den account löschen möchtest?';
   get accountShare => 'Konto teilen';
   get add => 'Hinzufügen';
   get contact => 'Adressbuch';
@@ -161,6 +164,7 @@ class TranslationsZhProfile implements TranslationsProfile {
   get aboutVersion => '版本';
   get account => '账户管理';
   get accounts => '帐户';
+  get accountDelete => '您确定要删除该帐户吗？';
   get accountShare => '共享账户';
   get add => '添加';
   get contact => '地址簿';

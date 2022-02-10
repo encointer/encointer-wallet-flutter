@@ -10,7 +10,7 @@ import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -142,7 +142,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
             title: Text(Fmt.address(address)),
-            content: Text(I18n.of(context).account['observe.proxy.invalid']),
+            content: Text(I18n.of(context).account['observeProxyInvalid']),
             actions: <Widget>[
               CupertinoButton(
                 child: Text(
@@ -203,7 +203,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
 
     if (await webApi.isConnected()) {
       _showTxStatusSnackbar(
-          context, dic['tx.${store.account.txStatus}'] ?? dic['tx.queued'], CupertinoActivityIndicator());
+          context, dic['tx.${store.account.txStatus}'] ?? dic['txQueued'], CupertinoActivityIndicator());
       final Map res = viaQr ? await _sendTxViaQr(context, args) : await _sendTx(context, args);
       if (res['hash'] == null) {
         _onTxError(context, res['error']);
@@ -211,8 +211,8 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
         _onTxFinish(context, res, onTxFinishFn);
       }
     } else {
-      _showTxStatusSnackbar(context, dic['tx.queued.offline'], null);
-      args['notificationTitle'] = I18n.of(context).home['notify.submitted.queued'];
+      _showTxStatusSnackbar(context, dic['txQueuedOffline'], null);
+      args['notificationTitle'] = I18n.of(context).home['notifySubmittedQueued'];
       store.account.queueTx(args);
     }
   }
@@ -236,7 +236,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
       args['txInfo'],
       args['params'],
       args['title'],
-      I18n.of(context).home['notify.submitted'],
+      I18n.of(context).home['notifySubmitted'],
       rawParam: args['rawParam'],
     );
   }
@@ -247,13 +247,13 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
     final signed = await Navigator.of(context).pushNamed(QrSenderPage.route, arguments: args);
     if (signed == null) {
       store.assets.setSubmitting(false);
-      return {'error': dic['uos.canceled']};
+      return {'error': dic['uosCanceled']};
     }
     return await webApi.account.addSignatureAndSend(
       signed.toString(),
       args['txInfo'],
       args['title'],
-      I18n.of(context).home['notify.submitted'],
+      I18n.of(context).home['notifySubmitted'],
     );
   }
 
@@ -321,7 +321,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
                     Padding(
                       padding: EdgeInsets.all(16),
                       child: Text(
-                        dic['submit.tx'],
+                        dic['submitTx'],
                         style: Theme.of(context).textTheme.headline4,
                       ),
                     ),
@@ -431,7 +431,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
                                     : Container(
                                         margin: EdgeInsets.only(top: 8),
                                         width: MediaQuery.of(context).copyWith().size.width - 120,
-                                        child: Text(dic['submit.fees.offline']),
+                                        child: Text(dic['submitFeesOffline']),
                                       ),
                               ],
                             ),
@@ -446,7 +446,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
                           ),
                           Text('${Fmt.token(_tipValue, decimals)} $tokenView'),
                           TapTooltip(
-                            message: dicAsset['tip.tip'],
+                            message: dicAsset['tipTip'],
                             child: Icon(
                               Icons.info,
                               color: Theme.of(context).unselectedWidgetColor,
@@ -498,10 +498,10 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
                         style: TextButton.styleFrom(padding: EdgeInsets.all(16)),
                         child: Text(
                           isUnsigned
-                              ? dic['submit.no.sign']
+                              ? dic['submitNoSign']
                               : (isObservation && _proxyAccount == null) || isProxyObservation
-                                  ? dic['submit.qr']
-                                  // dicAcc['observe.invalid']
+                                  ? dic['submitQr']
+                                  // dicAcc['observeInvalid']
                                   : dic['submit'],
                           style: TextStyle(color: Colors.white),
                         ),

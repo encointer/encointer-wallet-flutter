@@ -33,6 +33,7 @@ abstract class TranslationsAccount {
   String get keystore;
   String get list;
   String get mnemonic;
+  String get next;
   String get observe;
   String get observeBrief;
   String get observeInvalid;
@@ -43,8 +44,8 @@ abstract class TranslationsAccount {
   String get path;
   String get qrScan;
   String get rawSeed;
-  String get uosAccMismatch;
   String get uosAccInvalid;
+  String get uosAccMismatch;
   String get uosCanceled;
   String get uosPush;
   String get uosQrInvalid;
@@ -57,8 +58,7 @@ class TranslationsEnAccount implements TranslationsAccount {
   get advanced => 'Advanced Options';
   get backup => 'Confirm the mnemonic';
   get backupConfirm => 'Please click on the mnemonic in the correct order to confirm that the backup is correct';
-  get backupError =>
-      'This device does not support key type sr25519, you can select [Advanced Options -> Encrypt Type -> ed25519] to continue.';
+  get backupError => 'This device does not support key type sr25519, you can select [Advanced Options -> Encrypt Type -> ed25519] to continue.';
   get backupReset => 'Reset';
   get create => 'Create Account';
   get createDefault => 'My Account';
@@ -78,8 +78,7 @@ class TranslationsEnAccount implements TranslationsAccount {
   get createWarn5 => 'If your phone is lost, stolen or damaged, the mnemonic will restore your assets';
   get createWarn6 => 'Offline storage';
   get createWarn7 => 'Keep it safe to a safe place on the isolated network';
-  get createWarn8 =>
-      'Do not share and store mnemonics in a networked environment, such as emails, photo albums, social applications';
+  get createWarn8 => 'Do not share and store mnemonics in a networked environment, such as emails, photo albums, social applications';
   get createWarn9 => 'Do not take screenshots';
   get importDuplicate => 'Account exists, do you want to override the existing account?';
   get importEncrypt => 'Encrypt Type';
@@ -88,9 +87,9 @@ class TranslationsEnAccount implements TranslationsAccount {
   get keystore => 'Keystore (json)';
   get list => 'Account Select';
   get mnemonic => 'Mnemonic';
+  get next => 'Weiter';
   get observe => 'Observation';
-  get observeBrief =>
-      '\nMark this address as observation,\nthen you can select this address\nin account select page, to watch\nit\'s assets and actions\n';
+  get observeBrief => '\nMark this address as observation,\nthen you can select this address\nin account select page, to watch\nit\'s assets and actions\n';
   get observeInvalid => 'Invalid';
   get observeProxy => 'sign with proxy account';
   get observeProxyBrief => '\nA recoverable account can\nsend Tx through a proxy account\n';
@@ -99,8 +98,8 @@ class TranslationsEnAccount implements TranslationsAccount {
   get path => 'Secret derivation path';
   get qrScan => 'Scan QR code';
   get rawSeed => 'Raw Seed';
-  get uosAccMismatch => 'Account mismatch';
   get uosAccInvalid => 'Account invalid';
+  get uosAccMismatch => 'Account mismatch';
   get uosCanceled => 'Tx canceled';
   get uosPush => 'Scan to publish';
   get uosQrInvalid => 'Invalid QR code';
@@ -113,8 +112,7 @@ class TranslationsDeAccount implements TranslationsAccount {
   get advanced => 'Erweiterte Optionen';
   get backup => 'Bestätige die Mnemonic';
   get backupConfirm => 'Bitte klicke auf die Mnemonic in der korrekten Reihenfolge um den Backup zu bestätigen';
-  get backupError =>
-      'Dieses Gerät unterstützt den key Typ sr25519 nicht, wähle [Erweiterte Optionen -> Verschlüsselungstyp -> ed225519] für den nächsten Schritt.';
+  get backupError =>      'Dieses Gerät unterstützt den key Typ sr25519 nicht, wähle [Erweiterte Optionen -> Verschlüsselungstyp -> ed225519] für den nächsten Schritt.';
   get backupReset => 'Wiederherstellen';
   get create => 'Konto registrieren';
   get createDefault => 'Mein Konto';
@@ -127,13 +125,11 @@ class TranslationsDeAccount implements TranslationsAccount {
   get createPassword2Error => 'Inkonsistente PINs';
   get createPasswordError => 'PIN muss aus mindestens 4 Ziffern bestehen und keinen anderen Zeichen';
   get createWarn1 => 'Backup prom';
-  get createWarn10 =>
-      'Mach keine Screenshots, welche von einer Drittpartei gesammelt werden können. Dies kann zum Verlust deines Vermögens führen';
+  get createWarn10 =>      'Mach keine Screenshots, welche von einer Drittpartei gesammelt werden können. Dies kann zum Verlust deines Vermögens führen';
   get createWarn2 => 'Der Besitz der Mnemonic ermöglicht den Zugriff auf das Vermögen des Wallets';
   get createWarn3 => 'Backup Mnemonic';
   get createWarn4 => 'Benutze Stift und Papier um die Mnemonics korrekt zu kopieren';
-  get createWarn5 =>
-      'Bei Verlust, Diebstahl oder Beschädigung deines Mobilgerätes wird die Mnemonic benötigt um dein Vermögen wiederherzustellen';
+  get createWarn5 =>      'Bei Verlust, Diebstahl oder Beschädigung deines Mobilgerätes wird die Mnemonic benötigt um dein Vermögen wiederherzustellen';
   get createWarn6 => 'Offline Speicher';
   get createWarn7 => 'Behalte es sicher im isolierten Netzwerk';
   get createWarn8 => 'Speichere deine Mnemonics nicht in einer Netzwerkumgebung wie Email, Photo Album etc.';
@@ -145,9 +141,9 @@ class TranslationsDeAccount implements TranslationsAccount {
   get keystore => 'Keystore (json)';
   get list => 'Kontoauswahl';
   get mnemonic => 'Mnemonic';
+  get next => 'Next';
   get observe => 'Observation';
-  get observeBrief =>
-      '\nMarkiere diese Adresse als Observation,\ndann kann diese Adresse in der Kontoauswahlseite ausgewählt werden,\n um dessen Vermögen und Aktionen zu beobachten.\n';
+  get observeBrief =>      '\nMarkiere diese Adresse als Observation,\ndann kann diese Adresse in der Kontoauswahlseite ausgewählt werden,\n um dessen Vermögen und Aktionen zu beobachten.\n';
   get observeInvalid => 'Ungültig';
   get observeProxy => 'Melde dich mit einem Proxy-Konto an';
   get observeProxyBrief => '\nEin wiederherstellbares Konto kann\nTransaktionen durch einen Proxy-Konto senden\n';
@@ -156,8 +152,8 @@ class TranslationsDeAccount implements TranslationsAccount {
   get path => 'Geheimer Derivationspfad';
   get qrScan => 'Scanne QR Code';
   get rawSeed => 'Raw Seed';
-  get uosAccMismatch => 'Konto stimmt nicht überein';
   get uosAccInvalid => 'Ungütliges Konto';
+  get uosAccMismatch => 'Konto stimmt nicht überein';
   get uosCanceled => 'Tx abgebrochen';
   get uosPush => 'Scanne um zu veröffentlichen';
   get uosQrInvalid => 'Ungültiger QR Code';
@@ -167,54 +163,55 @@ class TranslationsDeAccount implements TranslationsAccount {
 }
 
 class TranslationsZhAccount implements TranslationsAccount {
-  get advanced => '高级选项';
-  get backup => '确认助记词';
-  get backupConfirm => '请按正确顺序点击助记词，以确认备份正确';
-  get backupError => '该设备不支持  加密方式，请选择高级选项  加密类型';
-  get backupReset => '重置';
-  get create => '创建帐户';
-  get createDefault => '我的帐户';
-  get createError => '创建帐户时出错';
-  get createHint => '（默认值：我的帐户）';
-  get createName => '账户名';
-  get createNameError => '账户名不能为空';
-  get createPassword => '密码';
-  get createPassword2 => '确认密码';
-  get createPassword2Error => '密码不一致';
-  get createPasswordError => '密码至少6位，且包含数字和字母';
-  get createWarn1 => '备份提示';
-  get createWarn10 => '请勿截屏分享和储存，这将可能被第三方恶意软件收集，造成资产损失';
-  get createWarn2 => '获得助记词等于拥有钱包资产所有权';
-  get createWarn3 => '备份助记词';
-  get createWarn4 => '使用纸和笔正确抄写助记词';
-  get createWarn5 => '如果你的手机丢失、被盗、损坏，助记词将可以恢复你的资产';
-  get createWarn6 => '离线保存';
-  get createWarn7 => '妥善保管至隔离网络的安全地方';
-  get createWarn8 => '请勿将助记词在联网环境下分享和储存，比如邮件、相册、社交应用等';
-  get createWarn9 => '请勿截屏';
-  get importDuplicate => '账户已存在，要覆盖原有账户吗？';
-  get importEncrypt => '加密类型';
-  get importInvalid => '无效的';
-  get importType => '导入类型';
-  get keystore => '加密 Keystore (json)';
-  get list => '选择账户';
-  get mnemonic => '助记词';
-  get observe => '观察账户';
-  get observeBrief => '\n将该地址标记为观察账户后，\n您可以在账户切换页面选择该地址，\n在钱包中观察该地址的资产、\n操作记录等信息。\n';
-  get observeInvalid => '不可用';
-  get observeProxy => '使用代理账户签名';
-  get observeProxyBrief => '\n完成社交恢复流程的账户\n可以使用代理账户发送交易\n';
-  get observeProxyInvalid => '代理账户不可用';
-  get observeTx => '仅供查看';
-  get path => '加密派生路径';
-  get qrScan => '请扫描二维码';
-  get rawSeed => '私钥种子';
-  get uosAccMismatch => '账户不匹配';
-  get uosAccInvalid => '账户不可用';
-  get uosCanceled => '交易取消';
-  get uosPush => '扫码发送交易';
-  get uosQrInvalid => '无效二维码';
-  get uosScan => '扫描签名结果并发送';
-  get uosSigner => '签名账户';
-  get uosTitle => '离线签名';
+  get advanced =>'高级选项';
+  get backup =>  '确认助记符';
+  get backupConfirm =>  '请按正确顺序点击助记词确认备份无误';
+  get backupError =>  '此设备不支持密钥类型 sr25519，您可以选择 [高级选项 -> 加密类型 -> ed25519] 继续。';
+  get backupReset =>  '重置';
+  get create =>  '创建帐户';
+  get createDefault =>  '我的帐户';
+  get createError =>  '创建帐户时出错';
+  get createHint =>  '（默认值：我的帐户）';
+  get createName =>  '名称';
+  get createNameError =>  '名称不能为空';
+  get createPassword =>  'PIN';
+  get createPassword2 =>  '确认 PIN';
+  get createPassword2Error =>  'PIN 不一致';
+  get createPasswordError =>  'PIN 必须包含至少 4 位数字且不得包含其他符号';
+  get createWarn1 =>  '备份舞会';
+  get createWarn10 =>  '请勿截图，可能被第三方恶意软件收集，造成资产损失';
+  get createWarn2 =>  '获得助记词等于拥有钱包资产';
+  get createWarn3 =>  '备份助记符';
+  get createWarn4 =>  '用纸和笔正确复制助记符';
+  get createWarn5 =>  '如果您的手机丢失、被盗或损坏，助记词将恢复您的资产';
+  get createWarn6 =>  '离线存储';
+  get createWarn7 =>  '将其安全保存到隔离网络上的安全位置';
+  get createWarn8 =>  '不要在网络环境中共享和存储助记词，例如电子邮件、相册、社交应用程序';
+  get createWarn9 =>  '不要截图';
+  get importDuplicate =>  '账户存在，是否覆盖现有账户？';
+  get importEncrypt =>  '加密类型';
+  get importInvalid =>  '无效';
+  get importType =>  '源类型';
+  get keystore =>  '密钥库 (json)';
+  get list =>  '账户选择';
+  get mnemonic =>  '助记符';
+  get next =>  '韦特';
+  get observe =>  '观察';
+  get observeBrief =>  '\n将此地址标记为观察，\n然后您可以在帐户选择页面中选择此地址\nit\n的资产和操作\n';
+  get observeInvalid =>  '无效';
+  get observeProxy =>  '使用代理帐户签名';
+  get observeProxyBrief =>  '\n可恢复的帐户可以\ns通过代理帐户发送 Tx\n';
+  get observeProxyInvalid =>  '无效的代理帐户';
+  get observeTx =>  '仅用于观察';
+  get path =>  '秘密推导路径';
+  get qrScan =>  '扫描二维码';
+  get rawSeed =>  '原始种子';
+  get uosAccInvalid =>  '帐号无效';
+  get uosAccMismatch =>  '账户不匹配';
+  get uosCanceled =>  'Tx 取消';
+  get uosPush =>  '扫描发布';
+  get uosQrInvalid =>  '二维码无效';
+  get uosScan =>  '扫描签名并发送';
+  get uosSigner =>  '签名者';
+  get uosTitle =>  '离线签名';
 }

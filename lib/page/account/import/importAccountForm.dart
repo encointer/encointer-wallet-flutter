@@ -7,7 +7,7 @@ import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -53,8 +53,8 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
           padding: EdgeInsets.only(left: 16, right: 16),
           child: TextFormField(
             decoration: InputDecoration(
-              hintText: dic['create.hint'],
-              labelText: "${dic['create.name']}: ${dic['create.hint']}",
+              hintText: dic['createHint'],
+              labelText: "${dic['createName']}: ${dic['createHint']}",
             ),
             controller: _nameCtrl,
           ),
@@ -63,8 +63,8 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
           padding: EdgeInsets.only(left: 16, right: 16),
           child: TextFormField(
             decoration: InputDecoration(
-              hintText: dic['create.password'],
-              labelText: dic['create.password'],
+              hintText: dic['createPassword'],
+              labelText: dic['createPassword'],
               suffixIcon: IconButton(
                 iconSize: 18,
                 icon: Icon(CupertinoIcons.clear_thick_circled, color: Theme.of(context).unselectedWidgetColor),
@@ -78,7 +78,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
             validator: (v) {
               // TODO: fix me: disable validator for polkawallet-RN exported keystore importing
               return null;
-              // return v.trim().length > 0 ? null : dic['create.password.error'];
+              // return v.trim().length > 0 ? null : dic['createPasswordError'];
             },
           ),
         ),
@@ -94,8 +94,8 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
           padding: EdgeInsets.only(left: 16, right: 16),
           child: TextFormField(
             decoration: InputDecoration(
-              hintText: dic['contact.address'],
-              labelText: dic['contact.address'],
+              hintText: dic['contactAddress'],
+              labelText: dic['contactAddress'],
               suffix: GestureDetector(
                 child: Icon(Icons.camera_alt),
                 onTap: () async {
@@ -112,7 +112,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
             controller: _observationAddressCtrl,
             validator: (v) {
               if (!Fmt.isAddress(v.trim())) {
-                return dic['contact.address.error'];
+                return dic['contactAddressError'];
               }
               return null;
             },
@@ -122,12 +122,12 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
           padding: EdgeInsets.only(left: 16, right: 16),
           child: TextFormField(
             decoration: InputDecoration(
-              hintText: dic['contact.name'],
-              labelText: dic['contact.name'],
+              hintText: dic['contactName'],
+              labelText: dic['contactName'],
             ),
             controller: _observationNameCtrl,
             validator: (v) {
-              return v.trim().length > 0 ? null : dic['contact.name.error'];
+              return v.trim().length > 0 ? null : dic['contactNameError'];
             },
           ),
         ),
@@ -135,8 +135,8 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
           padding: EdgeInsets.only(left: 16, right: 16),
           child: TextFormField(
             decoration: InputDecoration(
-              hintText: dic['contact.memo'],
-              labelText: dic['contact.memo'],
+              hintText: dic['contactMemo'],
+              labelText: dic['contactMemo'],
             ),
             controller: _memoCtrl,
           ),
@@ -179,7 +179,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
             title: Container(),
-            content: Text(dic['contact.exist']),
+            content: Text(dic['contactExist']),
             actions: <Widget>[
               CupertinoButton(
                 child: Text(I18n.of(context).home['ok']),
@@ -230,7 +230,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
       case KeySelection.OBSERVATION:
         break;
     }
-    return passed ? null : '${dic['import.invalid']} ${dic[_keyOptions[_keySelection.index]]}';
+    return passed ? null : '${dic['importInvalid']} ${dic[_keyOptions[_keySelection.index]]}';
   }
 
   void _onKeyChange(String v) {
@@ -272,7 +272,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
             child: ListView(
               children: <Widget>[
                 ListTile(
-                  title: Text(I18n.of(context).home['account.import']),
+                  title: Text(I18n.of(context).home['accountImport']),
                   subtitle: Text(selected),
                   trailing: Icon(Icons.arrow_forward_ios, size: 18),
                   onTap: () {
@@ -343,7 +343,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                 }
                 if (_keySelection == KeySelection.KEYSTORE_JSON) {
                   widget.store.account.setNewAccount(
-                      _nameCtrl.text.isNotEmpty ? _nameCtrl.text.trim() : dic['create.default'], _passCtrl.text.trim());
+                      _nameCtrl.text.isNotEmpty ? _nameCtrl.text.trim() : dic['createDefault'], _passCtrl.text.trim());
                 }
                 widget.store.account.setNewAccountKey(_keyCtrl.text.trim());
                 widget.onSubmit({

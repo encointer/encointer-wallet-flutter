@@ -1,7 +1,7 @@
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/create/createAccountPage.dart';
 import 'package:encointer_wallet/page/account/import/importAccountPage.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -52,7 +52,7 @@ class CreateAccountEntryPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        '${I18n.of(context).profile['account.have']} ',
+                        '${I18n.of(context).profile['accountHave']} ',
                         style: TextStyle(
                           color: encointerLightBlue,
                         ),

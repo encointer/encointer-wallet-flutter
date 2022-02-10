@@ -1,6 +1,6 @@
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaarItemHorizontal.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demoData.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 
 import 'BazaarSearch/bazaarSearch.dart';
@@ -16,9 +16,9 @@ class Home extends StatelessWidget {
       Padding(
         padding: const EdgeInsets.only(top: 54),
         child: ListView(children: [
-          HorizontalBazaarItemList(newInBazaar, dic['bazaar.new'], cardHeight, cardWidth),
-          HorizontalBazaarItemList(businessesInVicinity, dic['businesses.vicinity'], cardHeight, cardWidth),
-          HorizontalBazaarItemList(lastVisited, dic['last.visited'], cardHeight, cardWidth),
+          HorizontalBazaarItemList(newInBazaar, dic['bazaarNew'], cardHeight, cardWidth),
+          HorizontalBazaarItemList(businessesInVicinity, dic['businessesVicinity'], cardHeight, cardWidth),
+          HorizontalBazaarItemList(lastVisited, dic['lastVisited'], cardHeight, cardWidth),
         ]),
       ),
       BazaarSearch(),

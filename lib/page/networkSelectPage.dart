@@ -8,7 +8,7 @@ import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -210,7 +210,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     final Map doc = I18n.of(context).home;
     return Scaffold(
       appBar: AppBar(
-        title: Text(doc['setting.network']),
+        title: Text(doc['settingNetwork']),
         centerTitle: true,
       ),
       body: Observer(

@@ -1,5 +1,5 @@
 import 'package:encointer_wallet/store/account/account.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -17,7 +17,7 @@ class ExportResultPage extends StatelessWidget {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Text(dic['export']),
-          content: Text(dic['export.${args['type']}.ok']),
+          content: Text(dic['export.${args['type']}Ok']),
           actions: <Widget>[
             CupertinoButton(
               child: Text(I18n.of(context).home['ok']),
@@ -44,7 +44,7 @@ class ExportResultPage extends StatelessWidget {
               child: ListView(
                 padding: EdgeInsets.all(16),
                 children: <Widget>[
-                  args['type'] == AccountStore.seedTypeKeystore ? Container() : Text(dic['export.warn']),
+                  args['type'] == AccountStore.seedTypeKeystore ? Container() : Text(dic['exportWarn']),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[

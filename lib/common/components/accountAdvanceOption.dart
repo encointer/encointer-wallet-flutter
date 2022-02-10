@@ -1,7 +1,7 @@
+import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
 
 class AccountAdvanceOption extends StatefulWidget {
   AccountAdvanceOption({this.seed, this.onChange});
@@ -92,7 +92,7 @@ class _AccountAdvanceOption extends State<AccountAdvanceOption> {
         ),
         _expanded
             ? ListTile(
-                title: Text(I18n.of(context).account['import.encrypt']),
+                title: Text(I18n.of(context).account['importEncrypt']),
                 subtitle: Text(_typeOptions[_typeSelection]),
                 trailing: Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () {

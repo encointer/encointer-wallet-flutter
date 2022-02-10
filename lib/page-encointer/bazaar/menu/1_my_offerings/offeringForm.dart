@@ -1,7 +1,7 @@
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demoData.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/toggleButtonsWithTitle.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
 
 class OfferingForm extends StatefulWidget {
   const OfferingForm();
@@ -21,7 +21,7 @@ class _OfferingFormState extends State<OfferingForm> {
     var dic = I18n.of(context).bazaar;
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic['offering.add']),
+        title: Text(dic['offeringAdd']),
       ),
       body: Form(
         child: Padding(
@@ -44,14 +44,14 @@ class _OfferingFormState extends State<OfferingForm> {
                       color: Colors.grey,
                       child: ListTile(
                         leading: Icon(Icons.add_a_photo),
-                        title: Text(dic['photo.add']),
+                        title: Text(dic['photoAdd']),
                       )),
                 ],
               ),
               TextField(
                 decoration: InputDecoration(
                   labelText: 'Name',
-                  hintText: dic['use.descriptive.name'],
+                  hintText: dic['useDescriptiveName'],
                 ),
               ),
               TextField(
@@ -64,11 +64,11 @@ class _OfferingFormState extends State<OfferingForm> {
               ToggleButtonsWithTitle(dic['categories'], categories, null),
               // TODO state mananagement
               ToggleButtonsWithTitle(
-                  dic['businesses.offered'], businesses.map((business) => business.title).toList(), null),
+                  dic['businessesOffered'], businesses.map((business) => business.title).toList(), null),
               // TODO state mananagement, TODO has to be an business.id not just the title
               ToggleButtonsWithTitle(dic['state'], productNewness, null),
               // TODO state mananagement, TODO has to be an business.id not just the title
-              ToggleButtonsWithTitle(dic['delivery.options'], deliveryOptions, null),
+              ToggleButtonsWithTitle(dic['deliveryOptions'], deliveryOptions, null),
               // TODO state mananagement, TODO has to be an business.id not just the title
             ],
           ),

@@ -3,7 +3,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/menu/camera/imagePickerSc
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demoData.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/photoTiles.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/toggleButtonsWithTitle.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
@@ -18,7 +18,7 @@ class BusinessFormScaffold extends StatelessWidget {
         create: (_) => BusinessFormState(),
         child: Scaffold(
           appBar: AppBar(
-            title: Text(I18n.of(context).bazaar['business.add']),
+            title: Text(I18n.of(context).bazaar['businessAdd']),
           ),
           body: BusinessForm(categories: categories),
         ),
@@ -50,7 +50,7 @@ class BusinessForm extends StatelessWidget {
                 onChanged: (value) => businessFormState.name = value,
                 decoration: InputDecoration(
                   labelText: 'Name',
-                  hintText: I18n.of(context).bazaar['business.name.hint'],
+                  hintText: I18n.of(context).bazaar['businessNameHint'],
                   errorText: businessFormState.errors.name,
                 ),
               ),
@@ -63,7 +63,7 @@ class BusinessForm extends StatelessWidget {
                 onChanged: (value) => businessFormState.description = value,
                 decoration: InputDecoration(
                     labelText: I18n.of(context).bazaar['description'],
-                    hintText: I18n.of(context).bazaar['business.description.hint'],
+                    hintText: I18n.of(context).bazaar['businessDescriptionHint'],
                     errorText: businessFormState.errors.description),
               ),
             ),
@@ -72,7 +72,7 @@ class BusinessForm extends StatelessWidget {
             // TODO state mananagement
             BusinessAddress(),
             Text(
-              I18n.of(context).bazaar['openning.hours'],
+              I18n.of(context).bazaar['openningHours'],
               style: TextStyle(height: 2, fontWeight: FontWeight.bold),
             ),
             OpeningHours(),
@@ -156,7 +156,7 @@ class BusinessAddress extends StatelessWidget {
                 builder: (_) => TextField(
                   onChanged: (value) => businessFormState.zipCode = value,
                   decoration: InputDecoration(
-                    labelText: I18n.of(context).bazaar['zip.code'],
+                    labelText: I18n.of(context).bazaar['zipCode'],
                     errorText: businessFormState.errors.zipCode,
                   ),
                 ),

@@ -2,7 +2,7 @@ import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserOnMap.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -30,16 +30,16 @@ class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
         padding: EdgeInsets.symmetric(vertical: 8),
         child: Column(
           children: <Widget>[
-            Text(dic['community.choose']),
+            Text(dic['communityChoose']),
             Observer(
               builder: (_) => (store.encointer.communities == null)
                   ? CupertinoActivityIndicator()
                   : (store.encointer.communities.isEmpty)
-                      ? Text(dic['communities.not.found'])
+                      ? Text(dic['communitiesNotFound'])
                       : DropdownButton<dynamic>(
                           key: Key('cid-dropdown'),
                           // todo find out, why adding the hint breaks the integration test walkthrough when choosing community #225
-                          // hint: Text(dic['community.choose']),
+                          // hint: Text(dic['communityChoose']),
                           value: (store.encointer.chosenCid == null ||
                                   store.encointer.communities
                                       .where((cn) => cn.cid == store.encointer.chosenCid)

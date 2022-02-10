@@ -4,7 +4,7 @@ import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/service/substrateApi/codecApi.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -36,9 +36,9 @@ class ScanClaimQrCode extends StatelessWidget {
   void validateAndStoreClaim(BuildContext context, ClaimOfAttendance claim, Map dic) {
     if (!store.encointer.meetupRegistry.contains(claim.claimantPublic)) {
       // this is important because the runtime checks if there are too many claims trying to be registered.
-      _showSnackBar(context, dic['meetup.claimant.invalid']);
+      _showSnackBar(context, dic['meetupClaimantInvalid']);
     } else {
-      String msg = store.encointer.containsClaim(claim) ? dic['claims.scanned.already'] : dic['claims.scanned.new'];
+      String msg = store.encointer.containsClaim(claim) ? dic['claimsScannedAlready'] : dic['claimsScannedNew'];
       store.encointer.addParticipantClaim(claim);
       _showSnackBar(context, msg);
     }
@@ -60,7 +60,7 @@ class ScanClaimQrCode extends StatelessWidget {
             .timeout(
           const Duration(seconds: 3),
           onTimeout: () {
-            _showSnackBar(context, dic['claims.scanned.decode.failed']);
+            _showSnackBar(context, dic['claimsScannedDecodeFailed']);
             return null;
           },
         );
@@ -88,7 +88,7 @@ class ScanClaimQrCode extends StatelessWidget {
             return QrcodeReaderView(
               key: _qrViewKey,
               helpWidget: Observer(
-                  builder: (_) => Text(dic['claims.scanned.n.of.m']
+                  builder: (_) => Text(dic['claimsScannedNOfM']
                       .replaceAll('SCANNED_COUNT', store.encointer.scannedClaimsCount.toString())
                       .replaceAll('TOTAL_COUNT', (confirmedParticipantsCount - 1).toString()))),
               headerWidget: SafeArea(

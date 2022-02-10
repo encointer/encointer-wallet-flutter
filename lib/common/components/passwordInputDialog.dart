@@ -1,7 +1,7 @@
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
@@ -47,8 +47,8 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
         context: context,
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
-            title: Text(dic['pass.error']),
-            content: Text(dic['pass.error.txt']),
+            title: Text(dic['passError']),
+            content: Text(dic['passErrorTxt']),
             actions: <Widget>[
               CupertinoButton(
                 key: Key('error-dialog-ok'),
@@ -82,10 +82,10 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
         child: CupertinoTextField(
           autofocus: true,
           keyboardType: TextInputType.number,
-          placeholder: I18n.of(context).profile['pass.old'],
+          placeholder: I18n.of(context).profile['passOld'],
           controller: _passCtrl,
           onChanged: (v) {
-            return Fmt.checkPassword(v.trim()) ? null : I18n.of(context).account['create.password.error'];
+            return Fmt.checkPassword(v.trim()) ? null : I18n.of(context).account['createPasswordError'];
           },
           obscureText: true,
           clearButtonMode: OverlayVisibilityMode.editing,

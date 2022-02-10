@@ -2,7 +2,7 @@ import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/service/substrateApi/codecApi.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +21,7 @@ Future<void> startMeetup(BuildContext context, AppStore store) async {
             context,
             store.account.currentAccount,
             Text(I18n.of(context)
-                .home['unlock.account']
+                .home['unlockAccount']
                 .replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name.toString())), (password) {
           store.settings.setPin(password);
         });
@@ -34,7 +34,7 @@ Future<void> startMeetup(BuildContext context, AppStore store) async {
       MaterialPageRoute(
         builder: (BuildContext context) => ClaimQrCode(
           store,
-          title: I18n.of(context).encointer['claim.qr'],
+          title: I18n.of(context).encointer['claimQr'],
           claim: webApi.encointer
               .signClaimOfAttendance(amount, store.settings.cachedPin)
               .then((claim) => webApi.codec.encodeToBytes(ClaimOfAttendanceJSRegistryName, claim)),

@@ -5,7 +5,7 @@ import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -63,7 +63,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
               final Map<String, String> accDic = I18n.of(context).account;
               return CupertinoAlertDialog(
                 title: Container(),
-                content: Text('${accDic['import.invalid']} ${accDic[_keyType]}'),
+                content: Text('${accDic['importInvalid']} ${accDic[_keyType]}'),
                 actions: <Widget>[
                   CupertinoButton(
                     child: Text(I18n.of(context).home['ok']),
@@ -100,7 +100,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         final Map<String, String> accDic = I18n.of(context).account;
         return CupertinoAlertDialog(
           title: Container(),
-          content: Text('${accDic['import.invalid']} ${accDic['create.password']}'),
+          content: Text('${accDic['importInvalid']} ${accDic['createPassword']}'),
           actions: <Widget>[
             CupertinoButton(
               child: Text(I18n.of(context).home['cancel']),
@@ -128,7 +128,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
               title: Text(Fmt.address(address)),
-              content: Text(I18n.of(context).account['import.duplicate']),
+              content: Text(I18n.of(context).account['importDuplicate']),
               actions: <Widget>[
                 CupertinoButton(
                   child: Text(I18n.of(context).home['cancel']),
@@ -179,7 +179,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       return Scaffold(
         appBar: AppBar(
           title: Text(
-            I18n.of(context).home['account.import'],
+            I18n.of(context).home['accountImport'],
             style: Theme.of(context).textTheme.headline3,
           ),
           centerTitle: true,
@@ -210,7 +210,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     }
     // todo what are the different steps 1 and 0? do i need here to add also the AddAccountForm?
     return Scaffold(
-      appBar: AppBar(title: Text(I18n.of(context).home['account.import'])),
+      appBar: AppBar(title: Text(I18n.of(context).home['accountImport'])),
       body: SafeArea(
         child: !_submitting
             ? ImportAccountForm(store, (Map<String, dynamic> data) {

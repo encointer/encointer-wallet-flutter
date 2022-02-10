@@ -5,7 +5,7 @@ import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -28,8 +28,8 @@ class ExportAccountPage extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
-              title: Text(dic['pass.error']),
-              content: Text(dic['pass.error.txt']),
+              title: Text(dic['passError']),
+              content: Text(dic['passErrorTxt']),
               actions: <Widget>[
                 CupertinoButton(
                   child: Text(I18n.of(context).home['ok']),
@@ -53,16 +53,16 @@ class ExportAccountPage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: Text(dic['delete.confirm']),
+          title: Text(dic['deleteConfirm']),
           content: Padding(
             padding: EdgeInsets.only(top: 16),
             child: CupertinoTextField(
               keyboardType: TextInputType.number,
-              placeholder: dic['pass.old'],
+              placeholder: dic['passOld'],
               controller: _passCtrl,
               clearButtonMode: OverlayVisibilityMode.editing,
               onChanged: (v) {
-                return Fmt.checkPassword(v.trim()) ? null : accDic['create.password.error'];
+                return Fmt.checkPassword(v.trim()) ? null : accDic['createPasswordError'];
               },
               obscureText: true,
               inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],

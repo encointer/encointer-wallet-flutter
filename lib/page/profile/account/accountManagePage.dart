@@ -7,7 +7,7 @@ import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -46,7 +46,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: Text(I18n.of(context).profile['account.delete']),
+          title: Text(I18n.of(context).profile['accountDelete']),
           actions: <Widget>[
             CupertinoButton(
               child: Text(I18n.of(context).home['cancel']),
@@ -128,11 +128,11 @@ class _AccountManagePageState extends State<AccountManagePage> {
             validator: (v) {
               String name = v.trim();
               if (name.length == 0) {
-                return dic['contact.name.error'];
+                return dic['contactNameError'];
               }
               int exist = store.account.optionalAccounts.indexWhere((i) => i.name == name);
               if (exist > -1) {
-                return dic['contact.name.exist'];
+                return dic['contactNameExist'];
               }
               return null;
             },
@@ -145,7 +145,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                 margin: EdgeInsets.all(16),
                 child: _isEditingText
                     ? RoundedButton(
-                        text: dic['contact.name.save'],
+                        text: dic['contactNameSave'],
                         onPressed: () {
                           store.account.updateAccountName(_nameCtrl.text.trim());
                           setState(() {
@@ -204,7 +204,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
                   ),
                   child: Text(
-                    dic['account.share'],
+                    dic['accountShare'],
                     style: Theme.of(context).textTheme.button,
                   ),
                   onPressed: () {

@@ -6,7 +6,7 @@ import 'package:encointer_wallet/page-encointer/common/assignmentPanel.dart';
 import 'package:encointer_wallet/page-encointer/meetup/startMeetup.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quiver/async.dart';
@@ -82,7 +82,7 @@ class _AssigningPageState extends State<AssigningPage> {
                       child: Container(
                         width: double.infinity,
                         child: Text(
-                          "${dic['meetup.remaining']} ${Fmt.hhmmss(timeToMeetup)}",
+                          "${dic['meetupRemaining']} ${Fmt.hhmmss(timeToMeetup)}",
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 15),
                         ),
@@ -91,7 +91,7 @@ class _AssigningPageState extends State<AssigningPage> {
                     SizedBox(height: 16),
                     timeToMeetup < 60
                         ? RoundedButton(
-                            text: dic['meetup.start'],
+                            text: dic['meetupStart'],
                             onPressed: () => startMeetup(context, store),
                           )
                         : Container(),

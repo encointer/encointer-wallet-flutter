@@ -13,7 +13,7 @@ import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -106,23 +106,23 @@ class _TransferPageState extends State<TransferPage> {
                             ? AccountBalanceWithMoreDigits(store: store, available: available, decimals: decimals)
                             : CupertinoActivityIndicator(),
                         Text(
-                          "${I18n.of(context).assets['your.balance.for']} ${Fmt.accountName(context, store.account.currentAccount)}",
+                          "${I18n.of(context).assets['yourBalanceFor']} ${Fmt.accountName(context, store.account.currentAccount)}",
                           style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(height: 48),
                         EncointerTextFormField(
-                          labelText: dic['amount.to.be.transferred'],
+                          labelText: dic['amountToBeTransferred'],
                           textStyle: Theme.of(context).textTheme.headline1.copyWith(color: encointerBlack),
                           inputFormatters: [UI.decimalInputFormatter(decimals: decimals)],
                           controller: _amountCtrl,
                           textFormFieldKey: Key('transfer-amount-input'),
                           validator: (String value) {
                             if (value.isEmpty) {
-                              return dic['amount.error'];
+                              return dic['amountError'];
                             }
                             if (balanceTooLow(value, available, decimals)) {
-                              return dic['amount.low'];
+                              return dic['amountLow'];
                             }
                             return null;
                           },
@@ -171,7 +171,7 @@ class _TransferPageState extends State<TransferPage> {
                         children: [
                           Icon(Iconsax.send_sqaure_2),
                           SizedBox(width: 12),
-                          Text(dic['amount.to.be.transferred']),
+                          Text(dic['amountToBeTransferred']),
                         ],
                       ),
                       onPressed: _handleSubmit,

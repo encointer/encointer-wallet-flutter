@@ -1,6 +1,6 @@
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demoData.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/toggleButtonsWithTitle.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +21,7 @@ class SearchResultsBusinessFiltered extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            "Filter ${I18n.of(context).bazaar['businesses.found']}",
+            "Filter ${I18n.of(context).bazaar['businessesFound']}",
             style: titleStyle,
           ),
         ),

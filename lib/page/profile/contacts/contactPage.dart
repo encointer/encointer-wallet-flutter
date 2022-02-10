@@ -1,13 +1,13 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:encointer_wallet/common/components/TapTooltip.dart';
+import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/page/account/scanPage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
-import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ContactPage extends StatefulWidget {
   ContactPage(this.store);
@@ -76,7 +76,7 @@ class _Contact extends State<ContactPage> {
             builder: (BuildContext context) {
               return CupertinoAlertDialog(
                 title: Container(),
-                content: Text(dic['contact.exist']),
+                content: Text(dic['contactExist']),
                 actions: <Widget>[
                   CupertinoButton(
                     child: Text(I18n.of(context).home['ok']),
@@ -150,13 +150,13 @@ class _Contact extends State<ContactPage> {
                       padding: EdgeInsets.only(left: 16, right: 16),
                       child: TextFormField(
                         decoration: InputDecoration(
-                          hintText: dic['contact.address'],
-                          labelText: dic['contact.address'],
+                          hintText: dic['contactAddress'],
+                          labelText: dic['contactAddress'],
                         ),
                         controller: _addressCtrl,
                         validator: (v) {
                           if (!Fmt.isAddress(v.trim())) {
-                            return dic['contact.address.error'];
+                            return dic['contactAddressError'];
                           }
                           return null;
                         },
@@ -167,12 +167,12 @@ class _Contact extends State<ContactPage> {
                       padding: EdgeInsets.only(left: 16, right: 16),
                       child: TextFormField(
                         decoration: InputDecoration(
-                          hintText: dic['contact.name'],
-                          labelText: dic['contact.name'],
+                          hintText: dic['contactName'],
+                          labelText: dic['contactName'],
                         ),
                         controller: _nameCtrl,
                         validator: (v) {
-                          return v.trim().length > 0 ? null : dic['contact.name.error'];
+                          return v.trim().length > 0 ? null : dic['contactNameError'];
                         },
                       ),
                     ),
@@ -180,8 +180,8 @@ class _Contact extends State<ContactPage> {
                       padding: EdgeInsets.only(left: 16, right: 16),
                       child: TextFormField(
                         decoration: InputDecoration(
-                          hintText: dic['contact.memo'],
-                          labelText: dic['contact.memo'],
+                          hintText: dic['contactMemo'],
+                          labelText: dic['contactMemo'],
                         ),
                         controller: _memoCtrl,
                       ),
@@ -209,7 +209,7 @@ class _Contact extends State<ContactPage> {
                             padding: EdgeInsets.only(left: 8),
                             child: Icon(Icons.info_outline, size: 16),
                           ),
-                          message: I18n.of(context).account['observe.brief'],
+                          message: I18n.of(context).account['observeBrief'],
                         ),
                       ],
                     )
@@ -221,7 +221,7 @@ class _Contact extends State<ContactPage> {
               margin: EdgeInsets.all(16),
               child: RoundedButton(
                 submitting: _submitting,
-                text: dic['contact.save'],
+                text: dic['contactSave'],
                 onPressed: () => _onSave(),
               ),
             ),

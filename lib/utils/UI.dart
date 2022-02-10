@@ -1,16 +1,16 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:encointer_wallet/common/regInputFormatter.dart';
+import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/service/walletApi.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/common/regInputFormatter.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
-import 'package:encointer_wallet/service/walletApi.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:update_app/update_app.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -80,7 +80,7 @@ class UI {
             children: [
               Padding(
                 padding: EdgeInsets.only(top: 12, bottom: 8),
-                child: Text(needUpdate ? dic['update.up'] : dic['update.latest']),
+                child: Text(needUpdate ? dic['updateUp'] : dic['updateLatest']),
               ),
               needUpdate
                   ? Column(
@@ -147,7 +147,7 @@ class UI {
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
               title: Text('metadata v$jsVersion'),
-              content: Text(dic['update.js.up']),
+              content: Text(dic['updateJsUp']),
               actions: <Widget>[
                 CupertinoButton(
                   child: Text(dic['cancel']),
@@ -183,7 +183,7 @@ class UI {
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: Text(dic['update.download']),
+          title: Text(dic['updateDownload']),
           content: CupertinoActivityIndicator(),
         );
       },
@@ -195,7 +195,7 @@ class UI {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Container(),
-          content: code == null ? Text(dic['update.error']) : Text(dic['success']),
+          content: code == null ? Text(dic['updateError']) : Text(dic['success']),
           actions: <Widget>[
             CupertinoButton(
               child: Text(dic['ok']),
@@ -219,7 +219,7 @@ class UI {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Container(),
-          content: Text(I18n.of(context).account['backup.error']),
+          content: Text(I18n.of(context).account['backupError']),
           actions: <Widget>[
             CupertinoButton(
               child: Text(I18n.of(context).home['ok']),
@@ -241,7 +241,7 @@ class UI {
         context: context,
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
-            title: Text(I18n.of(context).assets['amount.low']),
+            title: Text(I18n.of(context).assets['amountLow']),
             content: Container(),
             actions: <Widget>[
               CupertinoButton(

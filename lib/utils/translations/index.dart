@@ -7,10 +7,10 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/foundation.dart' show SynchronousFuture;
 import 'package:flutter/material.dart';
 
-import 'account.dart';
-import 'bazaar.dart';
-import 'home.dart';
-import 'profile.dart';
+import '../i18n/account.dart';
+import '../i18n/bazaar.dart';
+import '../i18n/home.dart';
+import '../i18n/profile.dart';
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<I18n> {
   const AppLocalizationsDelegate(this.overriddenLocale);

@@ -12,7 +12,7 @@ import 'package:encointer_wallet/store/assets/types/balancesInfo.dart';
 import 'package:encointer_wallet/store/assets/types/transferData.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -296,7 +296,7 @@ class _AssetPageState extends State<AssetPage> with SingleTickerProviderStateMix
                   color: titleColor,
                   padding: EdgeInsets.all(16),
                   child: Row(
-                    children: <Widget>[BorderedTitle(title: I18n.of(context).encointer['loan.txs'])],
+                    children: <Widget>[BorderedTitle(title: I18n.of(context).encointer['loanTxs'])],
                   ),
                 ),
                 store.encointer.txsTransfer.isNotEmpty

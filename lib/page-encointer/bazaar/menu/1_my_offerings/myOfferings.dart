@@ -2,7 +2,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/menu/1_my_offerings/offer
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaarItemVertical.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demoData.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/toggleButtonsWithTitle.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 
 class MyOfferings extends StatelessWidget {
@@ -12,7 +12,7 @@ class MyOfferings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context).bazaar['offerings.my']),
+        title: Text(I18n.of(context).bazaar['offeringsMy']),
       ),
       body: Column(children: [
         ToggleButtonsWithTitle(I18n.of(context).bazaar['categories'], allCategories, null), // TODO state management

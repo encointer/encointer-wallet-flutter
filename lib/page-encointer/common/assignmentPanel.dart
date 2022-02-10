@@ -2,7 +2,7 @@ import 'package:encointer_wallet/common/components/JumpToBrowserLink.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -45,7 +45,7 @@ class _AssignmentPanelState extends State<AssignmentPanel> {
             Observer(
                 builder: (_) => store.encointer.meetupTime != null
                     ? store.encointer.communities == null
-                        ? Text(dic['communities.not.found'])
+                        ? Text(dic['communitiesNotFound'])
                         : Column(children: <Widget>[
                             store.encointer.meetupIndex > 0
                                 ? Column(children: <Widget>[

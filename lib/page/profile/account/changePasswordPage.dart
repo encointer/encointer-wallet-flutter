@@ -4,7 +4,7 @@ import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -47,8 +47,8 @@ class _ChangePassword extends State<ChangePasswordPage> {
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
-              title: Text(dic['pass.error']),
-              content: Text(dic['pass.error.txt']),
+              title: Text(dic['passError']),
+              content: Text(dic['passErrorTxt']),
               actions: <Widget>[
                 CupertinoButton(
                   child: Text(I18n.of(context).home['ok']),
@@ -85,8 +85,8 @@ class _ChangePassword extends State<ChangePasswordPage> {
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
-              title: Text(dic['pass.success']),
-              content: Text(dic['pass.success.txt']),
+              title: Text(dic['passSuccess']),
+              content: Text(dic['passSuccessTxt']),
               actions: <Widget>[
                 CupertinoButton(
                     child: Text(I18n.of(context).home['ok']),
@@ -108,7 +108,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
     var accDic = I18n.of(context).account;
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic['pass.change']),
+        title: Text(dic['passChange']),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -124,8 +124,8 @@ class _ChangePassword extends State<ChangePasswordPage> {
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         icon: Icon(Icons.lock),
-                        hintText: dic['pass.old'],
-                        labelText: dic['pass.old'],
+                        hintText: dic['passOld'],
+                        labelText: dic['passOld'],
                         suffixIcon: IconButton(
                           iconSize: 18,
                           icon: Icon(
@@ -141,7 +141,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                       validator: (v) {
                         // TODO: fix me: disable validator for polkawallet-RN exported keystore importing
                         return null;
-                        // return Fmt.checkPassword(v.trim()) ? null : accDic['create.password.error'];
+                        // return Fmt.checkPassword(v.trim()) ? null : accDic['createPasswordError'];
                       },
                       obscureText: true,
                       inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
@@ -150,12 +150,12 @@ class _ChangePassword extends State<ChangePasswordPage> {
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         icon: Icon(Icons.lock),
-                        hintText: dic['pass.new'],
-                        labelText: dic['pass.new'],
+                        hintText: dic['passNew'],
+                        labelText: dic['passNew'],
                       ),
                       controller: _passCtrl,
                       validator: (v) {
-                        return Fmt.checkPassword(v.trim()) ? null : accDic['create.password.error'];
+                        return Fmt.checkPassword(v.trim()) ? null : accDic['createPasswordError'];
                       },
                       obscureText: true,
                       inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
@@ -164,12 +164,12 @@ class _ChangePassword extends State<ChangePasswordPage> {
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
                         icon: Icon(Icons.lock),
-                        hintText: dic['pass.new2'],
-                        labelText: dic['pass.new2'],
+                        hintText: dic['passNew2'],
+                        labelText: dic['passNew2'],
                       ),
                       controller: _pass2Ctrl,
                       validator: (v) {
-                        return v.trim() != _passCtrl.text ? accDic['create.password2.error'] : null;
+                        return v.trim() != _passCtrl.text ? accDic['createPassword2Error'] : null;
                       },
                       obscureText: true,
                       inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
@@ -181,7 +181,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
             Container(
               margin: EdgeInsets.all(16),
               child: RoundedButton(
-                text: dic['contact.save'],
+                text: dic['contactSave'],
                 icon: _submitting ? CupertinoActivityIndicator() : null,
                 onPressed: _submitting ? null : _onSave,
               ),

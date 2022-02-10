@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:encointer_wallet/common/components/addressFormItem.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
 class QrSignerPage extends StatelessWidget {
@@ -18,7 +18,7 @@ class QrSignerPage extends StatelessWidget {
     final String text = ModalRoute.of(context).settings.arguments;
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(title: Text(dic['uos.title']), centerTitle: true),
+      appBar: AppBar(title: Text(dic['uosTitle']), centerTitle: true),
       body: SafeArea(
         child: ListView(
           padding: EdgeInsets.all(16),
@@ -28,11 +28,11 @@ class QrSignerPage extends StatelessWidget {
               children: [
                 AddressFormItem(
                   store.account.currentAccount,
-                  label: dic['uos.signer'],
+                  label: dic['uosSigner'],
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 16, bottom: 8),
-                  child: Text(dic['uos.push']),
+                  child: Text(dic['uosPush']),
                 ),
                 QrImage(data: text, size: screenWidth - 24),
               ],

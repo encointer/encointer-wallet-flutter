@@ -31,6 +31,7 @@ abstract class TranslationsAssets {
   String get from;
   String get gasToken;
   String get hash;
+  String get home;
   String get invite;
   String get issuanceClaimed;
   String get issuancePending;
@@ -82,6 +83,7 @@ class TranslationsEnAssets implements TranslationsAssets {
   get from => 'From';
   get gasToken => 'Gas Token';
   get hash => 'TxHash';
+  get home => 'Home';
   get invite => 'Invite someone';
   get issuanceClaimed => 'No pending community income';
   get issuancePending => 'Claim pending community income';
@@ -133,6 +135,7 @@ class TranslationsDeAssets implements TranslationsAssets {
   get from => 'Von';
   get gasToken => 'Gas Token';
   get hash => 'TxHash';
+  get home => 'Startbildschirm';
   get invite => 'Jemanden einladen';
   get issuanceClaimed => 'Kein ausstehendes Community-Einkommen';
   get issuancePending => 'Ausstehendes Community-Einkommen einfordern';
@@ -184,6 +187,7 @@ class TranslationsZhAssets implements TranslationsAssets {
   get from => '付款地址';
   get gasToken => '气体代币';
   get hash => '交易Hash';
+  get home => '家';
   get invite => '邀请某人';
   get issuanceClaimed => '没有待处理的社区收入';
   get issuancePending => '申领待处理的社区收入';

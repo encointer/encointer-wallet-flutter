@@ -3,7 +3,7 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserOnMap.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -37,14 +37,14 @@ class CreatePinForm extends StatelessWidget {
               children: <Widget>[
                 SizedBox(height: 80),
                 Center(
-                  child: Text(dicProf['pin.secure'], style: Theme.of(context).textTheme.headline2),
+                  child: Text(dicProf['pinSecure'], style: Theme.of(context).textTheme.headline2),
                 ),
                 SizedBox(height: 10),
                 Center(
                   child: Container(
                     width: 250,
                     child: Text(
-                      dicProf['pin.hint'],
+                      dicProf['pinHint'],
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headline2.copyWith(
                             color: encointerBlack,
@@ -64,12 +64,12 @@ class CreatePinForm extends StatelessWidget {
                     ),
                     filled: true,
                     fillColor: encointerLightBlue,
-                    hintText: dic['create.password'],
-                    labelText: dic['create.password'],
+                    hintText: dic['createPassword'],
+                    labelText: dic['createPassword'],
                   ),
                   controller: _passCtrl,
                   validator: (v) {
-                    return Fmt.checkPassword(v.trim()) ? null : dic['create.password.error'];
+                    return Fmt.checkPassword(v.trim()) ? null : dic['createPasswordError'];
                   },
                   obscureText: true,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
@@ -87,13 +87,13 @@ class CreatePinForm extends StatelessWidget {
                     filled: true,
                     //todo define color
                     fillColor: Color(0xffF4F8F9),
-                    hintText: dic['create.password2'],
-                    labelText: dic['create.password2'],
+                    hintText: dic['createPassword2'],
+                    labelText: dic['createPassword2'],
                   ),
                   controller: _pass2Ctrl,
                   obscureText: true,
                   validator: (v) {
-                    return _passCtrl.text != v ? dic['create.password2.error'] : null;
+                    return _passCtrl.text != v ? dic['createPassword2Error'] : null;
                   },
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                 ),
@@ -107,7 +107,7 @@ class CreatePinForm extends StatelessWidget {
                       Container(
                         width: 250,
                         child: Text(
-                          dicProf['pin.info'],
+                          dicProf['pinInfo'],
                           style: Theme.of(context).textTheme.headline4.copyWith(
                                 color: encointerGrey,
                               ),
@@ -132,10 +132,10 @@ class CreatePinForm extends StatelessWidget {
               onPressed: () {
                 if (_formKey.currentState.validate()) {
                   if (store.account.accountListAll.isEmpty) {
-                    setNewAccount(this.name.isNotEmpty ? this.name : dic['create.default'], _passCtrl.text);
+                    setNewAccount(this.name.isNotEmpty ? this.name : dic['createDefault'], _passCtrl.text);
                   } else {
                     // cachedPin won't be empty, because cachedPin is verified not to be empty before user adds an account in profile/index.dart
-                    setNewAccount(this.name.isNotEmpty ? this.name : dic['create.default'], store.settings.cachedPin);
+                    setNewAccount(this.name.isNotEmpty ? this.name : dic['createDefault'], store.settings.cachedPin);
                   }
 
                   onSubmit();

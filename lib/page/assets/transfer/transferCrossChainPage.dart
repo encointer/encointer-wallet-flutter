@@ -1,10 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:encointer_wallet/common/components/addressFormItem.dart';
 import 'package:encointer_wallet/common/components/currencyWithIcon.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
@@ -15,7 +11,11 @@ import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class TransferCrossChainPage extends StatefulWidget {
   const TransferCrossChainPage(this.store);
@@ -126,7 +126,7 @@ class _TransferCrossChainPageState extends State<TransferCrossChainPage> {
                             Padding(
                               padding: EdgeInsets.only(top: 16),
                               child: Text(
-                                dic['cross.chain'],
+                                dic['crossChain'],
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Theme.of(context).unselectedWidgetColor,
@@ -165,10 +165,10 @@ class _TransferCrossChainPageState extends State<TransferCrossChainPage> {
                               keyboardType: TextInputType.numberWithOptions(decimal: true),
                               validator: (v) {
                                 if (v.isEmpty) {
-                                  return dic['amount.error'];
+                                  return dic['amountError'];
                                 }
                                 if (double.parse(v.trim()) >= available / BigInt.from(pow(10, decimals)) - 0.001) {
-                                  return dic['amount.low'];
+                                  return dic['amountLow'];
                                 }
                                 return null;
                               },

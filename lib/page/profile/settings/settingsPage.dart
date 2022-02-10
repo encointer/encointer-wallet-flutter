@@ -1,7 +1,7 @@
 import 'package:encointer_wallet/page/profile/settings/remoteNodeListPage.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58PrefixListPage.dart';
 import 'package:encointer_wallet/store/settings.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -36,7 +36,7 @@ class _Settings extends State<SettingsPage> {
         case 'de':
           return 'Deutsch';
         default:
-          return dic['setting.lang.auto'];
+          return dic['settingLangAuto'];
       }
     }
 
@@ -86,7 +86,7 @@ class _Settings extends State<SettingsPage> {
                   width: 36,
                   child: Image.asset('assets/images/public/${store.endpoint.info}.png'),
                 ),
-                title: Text(dic['setting.node']),
+                title: Text(dic['settingNode']),
                 subtitle: Text(store.endpoint.text ?? ''),
                 trailing: Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.of(context).pushNamed(RemoteNodeListPage.route),
@@ -96,13 +96,13 @@ class _Settings extends State<SettingsPage> {
                   width: 36,
                   child: Image.asset('assets/images/public/${store.customSS58Format['info']}.png'),
                 ),
-                title: Text(dic['setting.prefix']),
+                title: Text(dic['settingPrefix']),
                 subtitle: Text(store.customSS58Format['text'] ?? ''),
                 trailing: Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.of(context).pushNamed(SS58PrefixListPage.route),
               ),
               ListTile(
-                title: Text(dic['setting.lang']),
+                title: Text(dic['settingLang']),
                 subtitle: Text(getLang(store.localeCode)),
                 trailing: Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => _onLanguageTap(),

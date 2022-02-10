@@ -1,6 +1,6 @@
 import 'package:encointer_wallet/page-encointer/bazaar/menu/1_my_offerings/myOfferings.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/myBusinesses.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 
 class BazaarMenu extends StatelessWidget {
@@ -25,7 +25,7 @@ class BazaarMenu extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text(dic['offerings.my']),
+            title: Text(dic['offeringsMy']),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
@@ -37,7 +37,7 @@ class BazaarMenu extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text(dic['businesses.my']),
+            title: Text(dic['businessesMy']),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(

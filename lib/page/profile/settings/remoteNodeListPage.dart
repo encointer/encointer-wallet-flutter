@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/settings.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 class RemoteNodeListPage extends StatelessWidget {
   RemoteNodeListPage(this.store);
@@ -54,7 +54,7 @@ class RemoteNodeListPage extends StatelessWidget {
         .toList();
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic['setting.node.list']),
+        title: Text(dic['settingNodeList']),
         centerTitle: true,
       ),
       body: SafeArea(

@@ -1,7 +1,7 @@
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ota_update/ota_update.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
 
 class DownloadDialog extends StatefulWidget {
   DownloadDialog(this.url);
@@ -28,16 +28,16 @@ class _DownloadDialog extends State<DownloadDialog> {
       (OtaEvent event) {
         print('EVENT: ${event.status} : ${event.value}');
         final Map dic = I18n.of(context).home;
-        String status = dic['update.start'];
+        String status = dic['updateStart'];
         switch (event.status.index) {
           case 0:
-            status = dic['update.download'];
+            status = dic['updateDownload'];
             break;
           case 1:
-            status = dic['update.install'];
+            status = dic['updateInstall'];
             break;
           default:
-            status = dic['update.error'];
+            status = dic['updateError'];
         }
         setState(() {
           _downloadStatus = status;
@@ -59,7 +59,7 @@ class _DownloadDialog extends State<DownloadDialog> {
     double progressWidth = 200;
     double progress = progressWidth * _downloadProgress / 100;
     return CupertinoAlertDialog(
-      title: Text(_downloadStatus.isEmpty ? dic['update.start'] : _downloadStatus),
+      title: Text(_downloadStatus.isEmpty ? dic['updateStart'] : _downloadStatus),
       content: Padding(
         padding: EdgeInsets.only(top: 12),
         child: Stack(
@@ -83,7 +83,7 @@ class _DownloadDialog extends State<DownloadDialog> {
           ],
         ),
       ),
-      actions: _downloadStatus == dic['update.error']
+      actions: _downloadStatus == dic['updateError']
           ? <Widget>[
               CupertinoButton(
                 child: Text(dic['cancel']),

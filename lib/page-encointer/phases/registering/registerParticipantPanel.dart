@@ -6,7 +6,7 @@ import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/proofOfAttendance.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -95,7 +95,7 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
                       return showPasswordInputDialog(
                           context,
                           store.account.currentAccount,
-                          Text(I18n.of(context).home['unlock.account'].replaceAll(
+                          Text(I18n.of(context).home['unlockAccount'].replaceAll(
                               'CURRENT_ACCOUNT_NAME', store.account.currentAccount.name.toString())), (password) {
                         store.settings.setPin(password);
 

@@ -1,6 +1,6 @@
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demoData.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/toggleButtonsWithTitle.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -49,7 +49,7 @@ class SearchResultsOfferingFiltered extends StatelessWidget {
         ToggleButtons(
             children: deliveryOptions.map((option) => Text(option)).toList(), isSelected: selectedDeliveryOptions),
         Text(
-          dic['product.newness'],
+          dic['productNewness'],
           style: titleStyle,
         ),
         ToggleButtons(
