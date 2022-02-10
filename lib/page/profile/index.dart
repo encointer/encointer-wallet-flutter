@@ -182,6 +182,7 @@ class _ProfileState extends State<Profile> {
                     onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
                   ),
                   ListTile(
+                    // Todo: Remove all accounts is buggy: #318
                     title: Text("Remove all Accounts"),
                     onTap: () => showCupertinoDialog(
                         context: context,
