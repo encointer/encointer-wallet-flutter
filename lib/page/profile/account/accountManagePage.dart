@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:encointer_wallet/common/theme.dart';
 
 class AccountManagePage extends StatefulWidget {
   AccountManagePage(this.store);
@@ -81,7 +82,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
               children: [
                 Text(
                   Fmt.doubleFormat(store.encointer.communityBalance),
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: encointerBlack),
                 ),
                 Container(width: 16),
               ],
@@ -179,15 +180,15 @@ class _AccountManagePageState extends State<AccountManagePage> {
                         ),
                       ],
                     ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16),
-                        child: Row(
-                          children: <Widget>[
-                            Text(dic['communities'],
-                                style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black54))
-                          ],
-                        ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 16),
+                      child: Row(
+                        children: <Widget>[
+                          Text(dic['communities'],
+                              style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack))
+                        ],
                       ),
+                    ),
                   ],
                 ),
               ),
@@ -197,7 +198,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
               Padding(
                 padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
                 child: Container(
-                  // color: Theme.of(context).colorScheme.secondary,
                   child: Center(
                     child: SizedBox(
                       width: double.infinity,
@@ -231,7 +231,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       Text(
                         dic['account.share'],
                         style: Theme.of(context).textTheme.headline3.copyWith(
-                              color: Color(0xffF4F8F9),
+                              color: encointerLightBlue,
                             ),
                       ),
                     ],
