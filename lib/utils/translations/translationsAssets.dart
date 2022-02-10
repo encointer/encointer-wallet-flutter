@@ -164,7 +164,7 @@ class TranslationsZhAssets implements TranslationsAssets {
   get assetsTest => '测试 Token';
   get available => '可用';
   get balance => '余额';
-  get bazaar =>'集市';
+  get bazaar => '集市';
   get block => '区块';
   get communitiesNotFound => '没有找到社区';
   get community => '币种';
@@ -174,9 +174,9 @@ class TranslationsZhAssets implements TranslationsAssets {
   get communitySelect => '选择社区';
   get copy => '复制';
   get crossChain => '跨链转账';
-  get currency =>'货币';
+  get currency => '货币';
   get detail => '详情';
-  get done =>'完成';
+  get done => '完成';
   get end => '加载完毕';
   get event => '交易ID';
   get fail => '失败';

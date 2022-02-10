@@ -51,14 +51,14 @@ abstract class TranslationsAccount {
   String get uosScan;
   String get uosSigner;
   String get uosTitle;
-
 }
 
 class TranslationsEnAccount implements TranslationsAccount {
   get advanced => 'Advanced Options';
   get backup => 'Confirm the mnemonic';
   get backupConfirm => 'Please click on the mnemonic in the correct order to confirm that the backup is correct';
-  get backupError =>      'This device does not support key type sr25519, you can select [Advanced Options -> Encrypt Type -> ed25519] to continue.';
+  get backupError =>
+      'This device does not support key type sr25519, you can select [Advanced Options -> Encrypt Type -> ed25519] to continue.';
   get backupReset => 'Reset';
   get create => 'Create Account';
   get createDefault => 'My Account';
@@ -78,7 +78,8 @@ class TranslationsEnAccount implements TranslationsAccount {
   get createWarn5 => 'If your phone is lost, stolen or damaged, the mnemonic will restore your assets';
   get createWarn6 => 'Offline storage';
   get createWarn7 => 'Keep it safe to a safe place on the isolated network';
-  get createWarn8 =>      'Do not share and store mnemonics in a networked environment, such as emails, photo albums, social applications';
+  get createWarn8 =>
+      'Do not share and store mnemonics in a networked environment, such as emails, photo albums, social applications';
   get createWarn9 => 'Do not take screenshots';
   get importDuplicate => 'Account exists, do you want to override the existing account?';
   get importEncrypt => 'Encrypt Type';
@@ -88,7 +89,8 @@ class TranslationsEnAccount implements TranslationsAccount {
   get list => 'Account Select';
   get mnemonic => 'Mnemonic';
   get observe => 'Observation';
-  get observeBrief =>      '\nMark this address as observation,\nthen you can select this address\nin account select page, to watch\nit\'s assets and actions\n';
+  get observeBrief =>
+      '\nMark this address as observation,\nthen you can select this address\nin account select page, to watch\nit\'s assets and actions\n';
   get observeInvalid => 'Invalid';
   get observeProxy => 'sign with proxy account';
   get observeProxyBrief => '\nA recoverable account can\nsend Tx through a proxy account\n';
@@ -105,14 +107,14 @@ class TranslationsEnAccount implements TranslationsAccount {
   get uosScan => 'Scan signed and send';
   get uosSigner => 'Signer';
   get uosTitle => 'Offline Signature';
-
 }
 
 class TranslationsDeAccount implements TranslationsAccount {
   get advanced => 'Erweiterte Optionen';
   get backup => 'Bestätige die Mnemonic';
   get backupConfirm => 'Bitte klicke auf die Mnemonic in der korrekten Reihenfolge um den Backup zu bestätigen';
-  get backupError =>      'Dieses Gerät unterstützt den key Typ sr25519 nicht, wähle [Erweiterte Optionen -> Verschlüsselungstyp -> ed225519] für den nächsten Schritt.';
+  get backupError =>
+      'Dieses Gerät unterstützt den key Typ sr25519 nicht, wähle [Erweiterte Optionen -> Verschlüsselungstyp -> ed225519] für den nächsten Schritt.';
   get backupReset => 'Wiederherstellen';
   get create => 'Konto registrieren';
   get createDefault => 'Mein Konto';
@@ -125,11 +127,13 @@ class TranslationsDeAccount implements TranslationsAccount {
   get createPassword2Error => 'Inkonsistente PINs';
   get createPasswordError => 'PIN muss aus mindestens 4 Ziffern bestehen und keinen anderen Zeichen';
   get createWarn1 => 'Backup prom';
-  get createWarn10 =>      'Mach keine Screenshots, welche von einer Drittpartei gesammelt werden können. Dies kann zum Verlust deines Vermögens führen';
+  get createWarn10 =>
+      'Mach keine Screenshots, welche von einer Drittpartei gesammelt werden können. Dies kann zum Verlust deines Vermögens führen';
   get createWarn2 => 'Der Besitz der Mnemonic ermöglicht den Zugriff auf das Vermögen des Wallets';
   get createWarn3 => 'Backup Mnemonic';
   get createWarn4 => 'Benutze Stift und Papier um die Mnemonics korrekt zu kopieren';
-  get createWarn5 =>      'Bei Verlust, Diebstahl oder Beschädigung deines Mobilgerätes wird die Mnemonic benötigt um dein Vermögen wiederherzustellen';
+  get createWarn5 =>
+      'Bei Verlust, Diebstahl oder Beschädigung deines Mobilgerätes wird die Mnemonic benötigt um dein Vermögen wiederherzustellen';
   get createWarn6 => 'Offline Speicher';
   get createWarn7 => 'Behalte es sicher im isolierten Netzwerk';
   get createWarn8 => 'Speichere deine Mnemonics nicht in einer Netzwerkumgebung wie Email, Photo Album etc.';
@@ -142,7 +146,8 @@ class TranslationsDeAccount implements TranslationsAccount {
   get list => 'Kontoauswahl';
   get mnemonic => 'Mnemonic';
   get observe => 'Observation';
-  get observeBrief =>      '\nMarkiere diese Adresse als Observation,\ndann kann diese Adresse in der Kontoauswahlseite ausgewählt werden,\n um dessen Vermögen und Aktionen zu beobachten.\n';
+  get observeBrief =>
+      '\nMarkiere diese Adresse als Observation,\ndann kann diese Adresse in der Kontoauswahlseite ausgewählt werden,\n um dessen Vermögen und Aktionen zu beobachten.\n';
   get observeInvalid => 'Ungültig';
   get observeProxy => 'Melde dich mit einem Proxy-Konto an';
   get observeProxyBrief => '\nEin wiederherstellbares Konto kann\nTransaktionen durch einen Proxy-Konto senden\n';
@@ -202,9 +207,9 @@ class TranslationsZhAccount implements TranslationsAccount {
   get observeProxyInvalid => '代理账户不可用';
   get observeTx => '仅供查看';
   get path => '加密派生路径';
-  get qrScan =>'请扫描二维码';
+  get qrScan => '请扫描二维码';
   get rawSeed => '私钥种子';
-  get uosAccMismatch =>'账户不匹配';
+  get uosAccMismatch => '账户不匹配';
   get uosAccInvalid => '账户不可用';
   get uosCanceled => '交易取消';
   get uosPush => '扫码发送交易';

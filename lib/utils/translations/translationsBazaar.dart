@@ -114,7 +114,7 @@ class TranslationsEnBazaar implements TranslationsBazaar {
   get lookingFor => 'What are you looking for?';
   get map => 'Map';
   get menu => 'Menu';
-  get no =>  'No.';
+  get no => 'No.';
   get noItems => 'No items found';
   get notifications => 'Notifications';
   get offeringAdd => '+ Add an offering';
@@ -224,8 +224,8 @@ class TranslationsZhBazaar implements TranslationsBazaar {
   get businessDescriptionHint => '激发对您的产品的兴趣并提供简洁的描述';
   get businesses => '企业';
   get businessesFound => '找到的企业';
-  get businessesMy =>'我的企业';
-  get businessesOffered =>'在企业中提供';
+  get businessesMy => '我的企业';
+  get businessesOffered => '在企业中提供';
   get businessesResults => '商业结果';
   get businessesVicinity => '我附近的企业';
   get businessName => '企业名称';
@@ -266,7 +266,7 @@ class TranslationsZhBazaar implements TranslationsBazaar {
   get offeringsMy => '我的奉献';
   get offeringsResults => '产品结果';
   get openningHours => '营业时间';
-  get openningHoursInputHint =>'eG. 8:15-14:45 或 9-5pm';
+  get openningHoursInputHint => 'eG. 8:15-14:45 或 9-5pm';
   get photoAdd => '添加照片';
   get photoTake => '拍照';
   get price => '价格';
