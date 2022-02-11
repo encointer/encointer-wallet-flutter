@@ -56,11 +56,11 @@ class _DownloadDialog extends State<DownloadDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final Translations dic = I18n.of(context).translationsForLocale();
     double progressWidth = 200;
     double progress = progressWidth * _downloadProgress / 100;
     return CupertinoAlertDialog(
-      title:
-          Text(_downloadStatus.isEmpty ? I18n.of(context).translationsForLocale().home.updateStart : _downloadStatus),
+      title: Text(_downloadStatus.isEmpty ? dic.home.updateStart : _downloadStatus),
       content: Padding(
         padding: EdgeInsets.only(top: 12),
         child: Stack(
@@ -84,10 +84,10 @@ class _DownloadDialog extends State<DownloadDialog> {
           ],
         ),
       ),
-      actions: _downloadStatus == I18n.of(context).translationsForLocale().home.updateError
+      actions: _downloadStatus == dic.home.updateError
           ? <Widget>[
               CupertinoButton(
-                child: Text(I18n.of(context).translationsForLocale().home.cancel),
+                child: Text(dic.home.cancel),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
