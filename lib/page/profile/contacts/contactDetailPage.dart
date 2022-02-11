@@ -101,47 +101,39 @@ class ContactDetailPage extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.all(16),
-              child: Container(
-                child: Center(
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Iconsax.send_sqaure_2),
-                          SizedBox(width: 12),
-                          Text(dic.profile.tokenSend, style: Theme.of(context).textTheme.headline3)
-                        ],
-                      ),
-                      onPressed: () async => {},
-                    ),
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Iconsax.send_sqaure_2),
+                      SizedBox(width: 12),
+                      Text(dic.profile.tokenSend, style: Theme.of(context).textTheme.headline3)
+                    ],
                   ),
+                  onPressed: () async => {},
                 ),
               ),
             ),
             Padding(
               padding: EdgeInsets.all(16),
-              child: Container(
-                child: Center(
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Iconsax.trash),
-                          SizedBox(width: 12),
-                          Text(dic.profile.contactDelete, style: Theme.of(context).textTheme.headline3)
-                        ],
-                      ),
-                      onPressed: () async => {
-                        _removeItem(context, args),
-                      },
-                    ),
+              child: SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Iconsax.trash),
+                      SizedBox(width: 12),
+                      Text(dic.profile.contactDelete, style: Theme.of(context).textTheme.headline3)
+                    ],
                   ),
+                  onPressed: () async => {
+                    _removeItem(context, args),
+                  },
                 ),
               ),
             ),
