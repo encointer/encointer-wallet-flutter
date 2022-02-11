@@ -64,44 +64,37 @@ class ContactDetailPage extends StatelessWidget {
         shadowColor: Colors.transparent,
       ),
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Expanded(
-              child: ListView(
-                padding: EdgeInsets.only(top: 8, bottom: 8),
-                children: <Widget>[
-                  SizedBox(height: 30),
-                  AddressIcon(
-                    args.address,
-                    size: 130,
-                    // addressToCopy: address,
-                    tapToCopy: false,
-                  ),
-                  SizedBox(height: 20),
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    Text(Fmt.address(args.address),
-                        style: Theme.of(context).textTheme.headline3.copyWith(color: Color(0xff353535))),
-                  ]),
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Row(children: [
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: <Widget>[
+              Expanded(
+                child: ListView(
+                  children: <Widget>[
+                    SizedBox(height: 30),
+                    AddressIcon(
+                      args.address,
+                      size: 130,
+                      // addressToCopy: address,
+                      tapToCopy: false,
+                    ),
+                    SizedBox(height: 20),
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      Text(Fmt.address(args.address),
+                          style: Theme.of(context).textTheme.headline3.copyWith(color: Color(0xff353535))),
+                    ]),
+                    Row(children: [
                       Text(dic.profile.reputation,
                           style: Theme.of(context).textTheme.headline3.copyWith(color: Color(0xff353535)))
                     ]),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Row(children: [
+                    Row(children: [
                       Text(dic.profile.ceremonies,
                           style: Theme.of(context).textTheme.headline3.copyWith(color: Color(0xff353535)))
                     ]),
-                  )
-                ],
+                  ],
+                ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(16),
-              child: SizedBox(
+              SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
@@ -116,10 +109,8 @@ class ContactDetailPage extends StatelessWidget {
                   onPressed: () async => {},
                 ),
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.all(16),
-              child: SizedBox(
+              SizedBox(height: 16),
+              SizedBox(
                 width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
@@ -136,8 +127,8 @@ class ContactDetailPage extends StatelessWidget {
                   },
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
