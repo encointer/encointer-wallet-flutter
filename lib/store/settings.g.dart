@@ -269,13 +269,6 @@ mixin _$SettingsStore on _SettingsStore, Store {
     return _$setLocalCodeAsyncAction.run(() => super.setLocalCode(code));
   }
 
-  final _$setDeveloperModeAsyncAction = AsyncAction('_SettingsStore.setDeveloperMode');
-
-  @override
-  Future<void> setDeveloperMode() {
-    return _$setDeveloperModeAsyncAction.run(() => super.setDeveloperMode());
-  }
-
   final _$loadLocalCodeAsyncAction = AsyncAction('_SettingsStore.loadLocalCode');
 
   @override
@@ -347,6 +340,16 @@ mixin _$SettingsStore on _SettingsStore, Store {
   }
 
   final _$_SettingsStoreActionController = ActionController(name: '_SettingsStore');
+
+  @override
+  void setDeveloperMode() {
+    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setDeveloperMode');
+    try {
+      return super.setDeveloperMode();
+    } finally {
+      _$_SettingsStoreActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void setNetworkLoading(bool isLoading) {
