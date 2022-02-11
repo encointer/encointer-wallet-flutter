@@ -199,39 +199,27 @@ class _ProfileState extends State<Profile> {
                   ),
                   Container(
                     height: 130,
-                    child: Stack(children: [
+                    child:
                       ShaderMask(
                         shaderCallback: (Rect bounds) {
                           return LinearGradient(
                             begin: Alignment.centerRight,
                             end: Alignment.centerLeft,
                             colors: [
-                              Theme
-                                  .of(context)
-                                  .scaffoldBackgroundColor
-                                  .withOpacity(0.0),
-                              Theme
-                                  .of(context)
-                                  .scaffoldBackgroundColor,
-                              Theme
-                                  .of(context)
-                                  .scaffoldBackgroundColor,
-                              Theme
-                                  .of(context)
-                                  .scaffoldBackgroundColor
-                                  .withOpacity(0.0),
+                              Theme.of(context).scaffoldBackgroundColor.withOpacity(0.0),
+                              Theme.of(context).scaffoldBackgroundColor,
+                              Theme.of(context).scaffoldBackgroundColor,
+                              Theme.of(context).scaffoldBackgroundColor.withOpacity(0.0),
                             ],
                             stops: [0.0, 0.1, 0.9, 1.0], // 10% purple, 80% transparent, 10% purple
                           ).createShader(bounds);
                         },
                         child: ListView(
-                          padding: EdgeInsets.all(16),
                           children: _buildAccountList(),
                           scrollDirection: Axis.horizontal,
                         ),
                         // blendMode: BlendMode.dstATop,
                       ),
-                    ]),
                   ),
                   ListTile(
                     title: Text(dic.profile.passChange, style: Theme
