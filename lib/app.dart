@@ -7,6 +7,8 @@ import 'package:encointer_wallet/page-encointer/phases/attesting/attestingPage.d
 import 'package:encointer_wallet/page-encointer/phases/registering/registerParticipantPanel.dart';
 import 'package:encointer_wallet/page-encointer/phases/registering/registeringPage.dart';
 import 'package:encointer_wallet/page/account/create/createAccountPage.dart';
+import 'package:encointer_wallet/page/account/create/createPinPage.dart';
+import 'package:encointer_wallet/page/account/create/addAccountPage.dart';
 import 'package:encointer_wallet/page/account/createAccountEntryPage.dart';
 import 'package:encointer_wallet/page/account/import/importAccountPage.dart';
 import 'package:encointer_wallet/page/account/scanPage.dart';
@@ -159,6 +161,8 @@ class _WalletAppState extends State<WalletApp> {
         // account
         CreateAccountEntryPage.route: (_) => CreateAccountEntryPage(),
         CreateAccountPage.route: (_) => CreateAccountPage(_appStore),
+        AddAccountPage.route: (_) => AddAccountPage(_appStore),
+        CreatePinPage.route: (_) => CreatePinPage(_appStore),
         ImportAccountPage.route: (_) => ImportAccountPage(_appStore),
         ScanPage.route: (_) => ScanPage(),
         TxConfirmPage.route: (_) => TxConfirmPage(_appStore),
