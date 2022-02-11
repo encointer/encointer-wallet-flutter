@@ -121,9 +121,13 @@ class _ChangePassword extends State<ChangePasswordPage> {
                   padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
                   children: <Widget>[
                     SizedBox(height: 80),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 16),
+                      child:
                     Center(
                       child: Text(dic['pin.hint1'],
                           textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline2),
+                    ),
                     ),
                     Center(
                       child: Text(
