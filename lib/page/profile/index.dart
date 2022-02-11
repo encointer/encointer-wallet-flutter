@@ -18,13 +18,16 @@ import 'package:iconsax/iconsax.dart';
 
 class Profile extends StatefulWidget {
   Profile(this.store);
+
   final AppStore store;
+
   @override
   _ProfileState createState() => _ProfileState(store);
 }
 
 class _ProfileState extends State<Profile> {
   _ProfileState(this.store);
+
   final AppStore store;
   final Api api = webApi;
   EndpointData _selectedNetwork;
@@ -67,8 +70,12 @@ class _ProfileState extends State<Profile> {
           child: showPasswordInputDialog(
             context,
             store.account.currentAccount,
-            Text(I18n.of(context).translationsForLocale().profile.unlock),
-            (password) {
+            Text(I18n
+                .of(context)
+                .translationsForLocale()
+                .profile
+                .unlock),
+                (password) {
               setState(() {
                 store.settings.setPin(password);
               });
@@ -110,13 +117,17 @@ class _ProfileState extends State<Profile> {
             SizedBox(height: 6),
             Text(
               Fmt.accountName(context, i),
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme
+                  .of(context)
+                  .textTheme
+                  .headline4,
             ),
             // This sizedBox is here to define a distance between the accounts
             SizedBox(width: 100),
           ],
         ),
-        onTap: () => {
+        onTap: () =>
+        {
           _onSelect(i, address),
           Navigator.pushNamed(context, AccountManagePage.route),
         },
@@ -170,23 +181,19 @@ class _ProfileState extends State<Profile> {
                       children: <Widget>[
                         Text(
                           '${dic.profile.accounts}',
-                          style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline2
+                              .copyWith(color: encointerBlack),
                         ),
-                        Row(children: <Widget>[
-                          IconButton(
-                              icon: Icon(Iconsax.add_square),
-                              color: encointerBlue,
-                              onPressed: () =>
-                                  {store.settings.cachedPin.isEmpty ? _showPasswordDialog(context) : _onAddAccount()}),
-                          developerMode
-                              ? IconButton(
-                                  // TODO design decision where to put this functionality
-                                  key: Key('choose-network'),
-                                  icon: Icon(Icons.menu, color: Colors.orange),
-                                  onPressed: () => Navigator.of(context).pushNamed('/network'),
-                                )
-                              : Container(),
-                        ])
+                        IconButton(
+                            icon: Icon(Iconsax.add_square),
+                            color: encointerBlue,
+                            onPressed: () {
+                              store.settings.cachedPin.isEmpty ? _showPasswordDialog(context) : _onAddAccount();
+                            }
+                        ),
                       ],
                     ),
                   ),
@@ -199,10 +206,20 @@ class _ProfileState extends State<Profile> {
                             begin: Alignment.centerRight,
                             end: Alignment.centerLeft,
                             colors: [
-                              Theme.of(context).scaffoldBackgroundColor.withOpacity(0.0),
-                              Theme.of(context).scaffoldBackgroundColor,
-                              Theme.of(context).scaffoldBackgroundColor,
-                              Theme.of(context).scaffoldBackgroundColor.withOpacity(0.0),
+                              Theme
+                                  .of(context)
+                                  .scaffoldBackgroundColor
+                                  .withOpacity(0.0),
+                              Theme
+                                  .of(context)
+                                  .scaffoldBackgroundColor,
+                              Theme
+                                  .of(context)
+                                  .scaffoldBackgroundColor,
+                              Theme
+                                  .of(context)
+                                  .scaffoldBackgroundColor
+                                  .withOpacity(0.0),
                             ],
                             stops: [0.0, 0.1, 0.9, 1.0], // 10% purple, 80% transparent, 10% purple
                           ).createShader(bounds);
@@ -217,28 +234,41 @@ class _ProfileState extends State<Profile> {
                     ]),
                   ),
                   ListTile(
-                    title: Text(dic.profile.passChange, style: Theme.of(context).textTheme.headline3),
+                    title: Text(dic.profile.passChange, style: Theme
+                        .of(context)
+                        .textTheme
+                        .headline3),
                     trailing: Icon(Icons.arrow_forward_ios, size: 18),
                     onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
                   ),
                   ListTile(
                     // Todo: Remove all accounts is buggy: #318
                     title: Text("Remove all Accounts"),
-                    onTap: () => showCupertinoDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return CupertinoAlertDialog(title: Text("Are you sure you want to remove all accounts?"),
-                              // content: Text(dic.profile.passErrorTxt),
-                              actions: <Widget>[
-                                CupertinoButton(
-                                  // key: Key('error-dialog-ok'),
-                                  child: Text(I18n.of(context).translationsForLocale().home.cancel),
-                                  onPressed: () => Navigator.of(context).pop(),
-                                ),
-                                CupertinoButton(
-                                    // key: Key('error-dialog-ok'),
-                                    child: Text(I18n.of(context).translationsForLocale().home.ok),
-                                    onPressed: () => {
+                    onTap: () =>
+                        showCupertinoDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return CupertinoAlertDialog(title: Text("Are you sure you want to remove all accounts?"),
+                                  // content: Text(dic.profile.passErrorTxt),
+                                  actions: <Widget>[
+                                    CupertinoButton(
+                                      // key: Key('error-dialog-ok'),
+                                      child: Text(I18n
+                                          .of(context)
+                                          .translationsForLocale()
+                                          .home
+                                          .cancel),
+                                      onPressed: () => Navigator.of(context).pop(),
+                                    ),
+                                    CupertinoButton(
+                                      // key: Key('error-dialog-ok'),
+                                        child: Text(I18n
+                                            .of(context)
+                                            .translationsForLocale()
+                                            .home
+                                            .ok),
+                                        onPressed: () =>
+                                        {
                                           print("remove ${store.account.accountListAll}"),
                                           store.account.accountListAll.forEach((acc) {
                                             print("removing the account: $acc");
@@ -246,16 +276,24 @@ class _ProfileState extends State<Profile> {
                                           }),
                                           Navigator.popUntil(context, ModalRoute.withName('/')),
                                         }),
-                              ]);
-                        }),
+                                  ]);
+                            }),
                   ),
                   ListTile(
                     title: Text(dic.profile.reputationOverall,
-                        style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey)),
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headline3
+                            .copyWith(color: encointerGrey)),
                   ),
                   ListTile(
                     title: Text(dic.profile.reputationHistory,
-                        style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey)),
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .headline3
+                            .copyWith(color: encointerGrey)),
                   ),
                   Padding(
                     padding: EdgeInsets.all(16),
@@ -263,7 +301,11 @@ class _ProfileState extends State<Profile> {
                       children: <Widget>[
                         Text(
                           dic.profile.developer,
-                          style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
+                          style: Theme
+                              .of(context)
+                              .textTheme
+                              .headline3
+                              .copyWith(color: encointerGrey),
                         ),
                         Checkbox(
                           value: developerMode,
@@ -282,10 +324,11 @@ class _ProfileState extends State<Profile> {
                         InkWell(
                           key: Key('choose-network'),
                           child: Observer(
-                            builder: (_) => Text(
-                              "change network (current: ${store.settings.endpoint.info})",
-                              style: TextStyle(color: Colors.orange),
-                            ),
+                            builder: (_) =>
+                                Text(
+                                  "change network (current: ${store.settings.endpoint.info})",
+                                  style: TextStyle(color: Colors.orange),
+                                ),
                           ),
                           onTap: () => Navigator.of(context).pushNamed('/network'),
                         ),
