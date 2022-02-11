@@ -2,7 +2,7 @@ import 'package:encointer_wallet/utils/translations/translationsHome.dart';
 import 'package:encointer_wallet/utils/translations/translationsAccount.dart';
 import 'package:encointer_wallet/utils/translations/translationsAssets.dart';
 import 'package:encointer_wallet/utils/translations/translationsProfile.dart';
-import 'package:encointer_wallet/utils/translations/TranslationsEncointer.dart';
+import 'package:encointer_wallet/utils/translations/translationsEncointer.dart';
 import 'package:encointer_wallet/utils/translations/translationsBazaar.dart';
 
 /// top level contains groups like 'account', 'profile' etc.
