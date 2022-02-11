@@ -3,7 +3,7 @@ import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -36,20 +36,20 @@ class _ContactDetail extends State<ContactDetailPage> {
   }
 
   void _removeItem(BuildContext context, AccountData i) {
-    var dic = I18n.of(context).profile;
+    var dic = I18n.of(context).translationsForLocale();
     showCupertinoDialog(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: Text(dic['contact.delete.warn']),
+          title: Text(dic.profile.contactDeleteWarn),
           content: Text(Fmt.accountName(context, i)),
           actions: <Widget>[
             CupertinoButton(
-              child: Text(I18n.of(context).home['cancel']),
+              child: Text(dic.home.cancel),
               onPressed: () => Navigator.of(context).pop(),
             ),
             CupertinoButton(
-              child: Text(I18n.of(context).home['ok']),
+              child: Text(dic.home.ok),
               onPressed: () {
                 Navigator.of(context).pop();
                 store.settings.removeContact(i);
@@ -67,7 +67,7 @@ class _ContactDetail extends State<ContactDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    Map<String, String> dic = I18n.of(context).profile;
+    var dic = I18n.of(context).translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -103,14 +103,14 @@ class _ContactDetail extends State<ContactDetailPage> {
                   Padding(
                     padding: const EdgeInsets.all(16),
                     child: Row(children: [
-                      Text(dic['reputation'],
+                      Text(dic.profile.reputation,
                           style: Theme.of(context).textTheme.headline3.copyWith(color: Color(0xff353535)))
                     ]),
                   ),
                   Padding(
                     padding: const EdgeInsets.all(16),
                     child: Row(children: [
-                      Text(dic['ceremonies'],
+                      Text(dic.profile.ceremonies,
                           style: Theme.of(context).textTheme.headline3.copyWith(color: Color(0xff353535)))
                     ]),
                   )
@@ -130,7 +130,7 @@ class _ContactDetail extends State<ContactDetailPage> {
                         children: [
                           Icon(Iconsax.send_sqaure_2),
                           SizedBox(width: 12),
-                          Text(dic['tokens.send'], style: Theme.of(context).textTheme.headline3)
+                          Text(dic.profile.tokenSend, style: Theme.of(context).textTheme.headline3)
                         ],
                       ),
                       onPressed: () async => {},
@@ -152,7 +152,7 @@ class _ContactDetail extends State<ContactDetailPage> {
                         children: [
                           Icon(Iconsax.trash),
                           SizedBox(width: 12),
-                          Text(dic['contact.delete'], style: Theme.of(context).textTheme.headline3)
+                          Text(dic.profile.contactDelete, style: Theme.of(context).textTheme.headline3)
                         ],
                       ),
                       onPressed: () async => {
