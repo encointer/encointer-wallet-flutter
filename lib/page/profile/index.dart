@@ -175,9 +175,8 @@ class _ProfileState extends State<Profile> {
                           IconButton(
                               icon: Icon(Iconsax.add_square),
                               color: encointerBlue,
-                              onPressed: () => {
-                                    store.settings.cachedPin.isEmpty ? _showPasswordDialog(context) : _onAddAccount()
-                                  }),
+                              onPressed: () =>
+                                  {store.settings.cachedPin.isEmpty ? _showPasswordDialog(context) : _onAddAccount()}),
                           developerMode
                               ? IconButton(
                                   // TODO design decision where to put this functionality
@@ -220,16 +219,16 @@ class _ProfileState extends State<Profile> {
                                   onPressed: () => Navigator.of(context).pop(),
                                 ),
                                 CupertinoButton(
-                                  // key: Key('error-dialog-ok'),
+                                    // key: Key('error-dialog-ok'),
                                     child: Text(I18n.of(context).home['ok']),
                                     onPressed: () => {
-                                      print("remove ${store.account.accountListAll}"),
-                                      store.account.accountListAll.forEach((acc) {
-                                        print("removing the account: $acc");
-                                        store.account.removeAccount(acc);
-                                      }),
-                                      Navigator.popUntil(context, ModalRoute.withName('/')),
-                                    }),
+                                          print("remove ${store.account.accountListAll}"),
+                                          store.account.accountListAll.forEach((acc) {
+                                            print("removing the account: $acc");
+                                            store.account.removeAccount(acc);
+                                          }),
+                                          Navigator.popUntil(context, ModalRoute.withName('/')),
+                                        }),
                               ]);
                         }),
                   ),

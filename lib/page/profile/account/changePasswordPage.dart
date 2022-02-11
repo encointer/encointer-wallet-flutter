@@ -124,11 +124,10 @@ class _ChangePassword extends State<ChangePasswordPage> {
                     SizedBox(height: 80),
                     Padding(
                       padding: EdgeInsets.only(bottom: 16),
-                      child:
-                    Center(
-                      child: Text(dic['pin.hint1'],
-                          textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline2),
-                    ),
+                      child: Center(
+                        child: Text(dic['pin.hint1'],
+                            textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline2),
+                      ),
                     ),
                     Center(
                       child: Text(
@@ -141,9 +140,8 @@ class _ChangePassword extends State<ChangePasswordPage> {
                     ),
                     SizedBox(height: 30),
                     EncointerTextFormField(
-                      // keyboardType: TextInputType.number,
-                      // hintText: dic['pass.old'],
                       labelText: dic['pass.old'],
+                      // todo make this conditional, if _passOldCtrl.text.length > 0, else return Container() or null.. didnt work
                       suffixIcon: IconButton(
                         iconSize: 18,
                         icon: Icon(
@@ -154,27 +152,6 @@ class _ChangePassword extends State<ChangePasswordPage> {
                           WidgetsBinding.instance.addPostFrameCallback((_) => _passOldCtrl.clear());
                         },
                       ),
-                      // decoration: InputDecoration(
-                      //   enabledBorder: const OutlineInputBorder(
-                      //     // width: 0.0 produces a thin "hairline" border
-                      //     borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
-                      //     borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
-                      //   ),
-                      //   filled: true,
-                      //   fillColor: Color(0xffF4F8F9),
-                      //   // hintText: dic['pass.old'],
-                      //   // labelText: dic['pass.old'],
-                      //   // suffixIcon: IconButton(
-                      //   //   iconSize: 18,
-                      //   //   icon: Icon(
-                      //   //     CupertinoIcons.clear_thick_circled,
-                      //   //     color: Theme.of(context).unselectedWidgetColor,
-                      //   //   ),
-                      //   //   onPressed: () {
-                      //   //     WidgetsBinding.instance.addPostFrameCallback((_) => _passOldCtrl.clear());
-                      //   //   },
-                      //   // ),
-                      // ),
                       controller: _passOldCtrl,
                       validator: (v) {
                         // TODO: fix me: disable validator for polkawallet-RN exported keystore importing
@@ -185,20 +162,19 @@ class _ChangePassword extends State<ChangePasswordPage> {
                       inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                     ),
                     SizedBox(height: 20),
-                EncointerTextFormField(
-                      // keyboardType: TextInputType.number,
-                  labelText: dic['pass.new'],
-
-                  // decoration: InputDecoration(
-                  //       // enabledBorder: const OutlineInputBorder(
-                  //       //   borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
-                  //       //   borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
-                  //       // ),
-                  //       // filled: true,
-                  //       // fillColor: Color(0xffF4F8F9),
-                  //       hintText: dic['pass.new'],
-                  //       labelText: dic['pass.new'],
-                  //     ),
+                    EncointerTextFormField(
+                      labelText: dic['pass.new'],
+                      // todo didnt use this before, but it could be handy
+                      // suffixIcon: IconButton(
+                      //   iconSize: 18,
+                      //   icon: Icon(
+                      //     CupertinoIcons.clear_thick_circled,
+                      //     color: Theme.of(context).unselectedWidgetColor,
+                      //   ),
+                      //   onPressed: () {
+                      //     WidgetsBinding.instance.addPostFrameCallback((_) => _passCtrl.clear());
+                      //   },
+                      // ),
                       controller: _passCtrl,
                       validator: (v) {
                         return Fmt.checkPassword(v.trim()) ? null : accDic['create.password.error'];
@@ -209,16 +185,15 @@ class _ChangePassword extends State<ChangePasswordPage> {
                     SizedBox(height: 20),
                     EncointerTextFormField(
                       labelText: dic['pass.new2'],
-                      // keyboardType: TextInputType.number,
-                      // decoration: InputDecoration(
-                      //   enabledBorder: const OutlineInputBorder(
-                      //     borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
-                      //     borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
+                      // suffixIcon: IconButton(
+                      //   iconSize: 18,
+                      //   icon: Icon(
+                      //     CupertinoIcons.clear_thick_circled,
+                      //     color: Theme.of(context).unselectedWidgetColor,
                       //   ),
-                      //   filled: true,
-                      //   fillColor: Color(0xffF4F8F9),
-                      //   hintText: dic['pass.new2'],
-                      //   labelText: dic['pass.new2'],
+                      //   onPressed: () {
+                      //     WidgetsBinding.instance.addPostFrameCallback((_) => _pass2Ctrl.clear());
+                      //   },
                       // ),
                       controller: _pass2Ctrl,
                       validator: (v) {
