@@ -112,7 +112,7 @@ class _ProfileState extends State<Profile> {
               Fmt.accountName(context, i),
               style: Theme.of(context).textTheme.headline4,
             ),
-            SizedBox(width: 80),
+            SizedBox(width: 100),
           ],
         ),
         onTap: () => {
