@@ -121,9 +121,8 @@ class _ChangePassword extends State<ChangePasswordPage> {
                 child: ListView(
                   padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
                   children: <Widget>[
-                    SizedBox(height: 80),
                     Padding(
-                      padding: EdgeInsets.only(bottom: 16),
+                      padding: EdgeInsets.only(top: 80, bottom: 16),
                       child: Center(
                         child: Text(dic['pin.hint1'],
                             textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline2),
@@ -138,69 +137,76 @@ class _ChangePassword extends State<ChangePasswordPage> {
                             ),
                       ),
                     ),
-                    SizedBox(height: 30),
-                    EncointerTextFormField(
-                      labelText: dic['pass.old'],
-                      // todo make this conditional, if _passOldCtrl.text.length > 0, else return Container() or null.. didnt work
-                      suffixIcon: IconButton(
-                        iconSize: 18,
-                        icon: Icon(
-                          CupertinoIcons.clear_thick_circled,
-                          color: Theme.of(context).unselectedWidgetColor,
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30),
+                      child: EncointerTextFormField(
+                        labelText: dic['pass.old'],
+                        // todo make this conditional, if _passOldCtrl.text.length > 0, else return Container() or null.. didnt work
+                        suffixIcon: IconButton(
+                          iconSize: 18,
+                          icon: Icon(
+                            CupertinoIcons.clear_thick_circled,
+                            color: Theme.of(context).unselectedWidgetColor,
+                          ),
+                          onPressed: () {
+                            WidgetsBinding.instance.addPostFrameCallback((_) => _passOldCtrl.clear());
+                          },
                         ),
-                        onPressed: () {
-                          WidgetsBinding.instance.addPostFrameCallback((_) => _passOldCtrl.clear());
+                        controller: _passOldCtrl,
+                        validator: (v) {
+                          // TODO: fix me: disable validator for polkawallet-RN exported keystore importing
+                          return null;
+                          // return Fmt.checkPassword(v.trim()) ? null : accDic['create.password.error'];
                         },
+                        obscureText: true,
+                        inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                       ),
-                      controller: _passOldCtrl,
-                      validator: (v) {
-                        // TODO: fix me: disable validator for polkawallet-RN exported keystore importing
-                        return null;
-                        // return Fmt.checkPassword(v.trim()) ? null : accDic['create.password.error'];
-                      },
-                      obscureText: true,
-                      inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                     ),
-                    SizedBox(height: 20),
-                    EncointerTextFormField(
-                      labelText: dic['pass.new'],
-                      // todo didnt use this before, but it could be handy
-                      // suffixIcon: IconButton(
-                      //   iconSize: 18,
-                      //   icon: Icon(
-                      //     CupertinoIcons.clear_thick_circled,
-                      //     color: Theme.of(context).unselectedWidgetColor,
-                      //   ),
-                      //   onPressed: () {
-                      //     WidgetsBinding.instance.addPostFrameCallback((_) => _passCtrl.clear());
-                      //   },
-                      // ),
-                      controller: _passCtrl,
-                      validator: (v) {
-                        return Fmt.checkPassword(v.trim()) ? null : accDic['create.password.error'];
-                      },
-                      obscureText: true,
-                      inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: EncointerTextFormField(
+                        labelText: dic['pass.new'],
+                        // todo didnt use this before, but it could be handy
+                        // suffixIcon: IconButton(
+                        //   iconSize: 18,
+                        //   icon: Icon(
+                        //     CupertinoIcons.clear_thick_circled,
+                        //     color: Theme.of(context).unselectedWidgetColor,
+                        //   ),
+                        //   onPressed: () {
+                        //     WidgetsBinding.instance.addPostFrameCallback((_) => _passCtrl.clear());
+                        //   },
+                        // ),
+                        controller: _passCtrl,
+                        validator: (v) {
+                          return Fmt.checkPassword(v.trim()) ? null : accDic['create.password.error'];
+                        },
+                        obscureText: true,
+                        inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                      ),
                     ),
-                    SizedBox(height: 20),
-                    EncointerTextFormField(
-                      labelText: dic['pass.new2'],
-                      // suffixIcon: IconButton(
-                      //   iconSize: 18,
-                      //   icon: Icon(
-                      //     CupertinoIcons.clear_thick_circled,
-                      //     color: Theme.of(context).unselectedWidgetColor,
-                      //   ),
-                      //   onPressed: () {
-                      //     WidgetsBinding.instance.addPostFrameCallback((_) => _pass2Ctrl.clear());
-                      //   },
-                      // ),
-                      controller: _pass2Ctrl,
-                      validator: (v) {
-                        return v.trim() != _passCtrl.text ? accDic['create.password2.error'] : null;
-                      },
-                      obscureText: true,
-                      inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20),
+                      child: EncointerTextFormField(
+                        labelText: dic['pass.new2'],
+                        // todo didnt use this before, but it could be handy
+                        // suffixIcon: IconButton(
+                        //   iconSize: 18,
+                        //   icon: Icon(
+                        //     CupertinoIcons.clear_thick_circled,
+                        //     color: Theme.of(context).unselectedWidgetColor,
+                        //   ),
+                        //   onPressed: () {
+                        //     WidgetsBinding.instance.addPostFrameCallback((_) => _pass2Ctrl.clear());
+                        //   },
+                        // ),
+                        controller: _pass2Ctrl,
+                        validator: (v) {
+                          return v.trim() != _passCtrl.text ? accDic['create.password2.error'] : null;
+                        },
+                        obscureText: true,
+                        inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                      ),
                     ),
                   ],
                 ),
