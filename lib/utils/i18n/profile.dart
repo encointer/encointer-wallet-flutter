@@ -55,6 +55,7 @@ const Map<String, String> enProfile = {
   'qr.scan.hint': 'Ask the recipient to scan this QR-code in the encointer app',
   'reputation.history': 'Reputation history',
   'reputation.overall': 'Overall reputation',
+  'qr.scan.hint': 'Please, enter the amount you wish to receive and let the sender scan the QR code.',
   'setting': 'Settings',
   'setting.lang': 'Language',
   'setting.lang.auto': 'Auto Detect',
@@ -118,6 +119,7 @@ const Map<String, String> deProfile = {
   'pin.info':
       'PIN muss mindestens 4 Ziffern enthalten. Bei PIN-Verlust ist der Account nicht wiederherstellbar, ausser man hat ein Backup auf der Profilseite gemacht.',
   'pin.secure': 'Sichere dein Konto mit einem PIN.',
+  'qr.scan.hint': 'Gib den Betrag den du erhalten möchtest ein und lasse den Sender den QR Code scannen.',
   'pin.hint1': 'Gib deinen jetzigen PIN ein\n um den PIN zu ändern.',
   'pin.hint2': 'Dann kannst du deinen\n neuen Pin eingeben.',
   'qr.scan.hint': 'Lass den Empfänger diesen QR-Code in der Encointer App scannen',
