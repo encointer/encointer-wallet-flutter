@@ -89,7 +89,6 @@ class ContactDetailPage extends StatelessWidget {
                           style: Theme.of(context).textTheme.headline3.copyWith(color: Color(0xff353535)))
                     ]),
                     SizedBox(height: 32),
-
                     Row(children: [
                       Text(dic.profile.ceremonies,
                           style: Theme.of(context).textTheme.headline3.copyWith(color: Color(0xff353535)))
