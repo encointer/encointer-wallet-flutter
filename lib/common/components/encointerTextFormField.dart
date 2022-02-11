@@ -23,7 +23,7 @@ class EncointerTextFormField extends StatelessWidget {
     this.textFormFieldKey,
     this.validator,
     this.suffixIcon,
-    this.obscureText,
+    this.obscureText = false,
   }) : super(key: key);
 
   @override
