@@ -10,10 +10,10 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:iconsax/iconsax.dart';
 
 class Profile extends StatefulWidget {
@@ -80,7 +80,6 @@ class _ProfileState extends State<Profile> {
   }
 
   List<Widget> _buildAccountList() {
-    final Translations dic = I18n.of(context).translationsForLocale();
     List<Widget> res = [];
 
     List<AccountData> accounts = store.account.accountListAll;
@@ -169,7 +168,7 @@ class _ProfileState extends State<Profile> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
                         Text(
-                          '${dic['accounts']}',
+                          '${dic.profile.accounts}',
                           style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
                         ),
                         Row(children: <Widget>[
@@ -254,7 +253,7 @@ class _ProfileState extends State<Profile> {
                         style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey)),
                   ),
                   ListTile(
-                    title: Text(dic.reputationHistory,
+                    title: Text(dic.profile.reputationHistory,
                         style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey)),
                   ),
                   Padding(

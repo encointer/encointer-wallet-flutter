@@ -36,6 +36,13 @@ abstract class TranslationsProfile {
   String get passErrorTxt;
   String get passNew;
   String get passNew2;
+  String get passHint1;
+  String get passHint2;
+  String get passHint;
+  String get passInfo;
+  String get passSecure;
+  String get reputationHistory;
+  String get reputationOverall;
   String get passOld;
   String get passSuccess;
   String get passSuccessTxt;
@@ -100,6 +107,14 @@ class TranslationsEnProfile implements TranslationsProfile {
   get passErrorTxt => 'Failed to unlock account, please check PIN.';
   get passNew => 'New PIN';
   get passNew2 => 'Confirm New PIN';
+  get passHint1 => 'To change your PIN please enter the current one.';
+  get passHint2 => 'Then you can choose a\n new one and you’re all set.';
+  get passHint => 'You will need this PIN for transactions and adding a new account.';
+  get passInfo =>
+      'PIN should consist of at least 4 digits. If the PIN is lost, there is no option to restore the account unless you made a backup via the profile page.';
+  get passSecure => 'Secure your account with a PIN.';
+  get reputationHistory => 'Reputation history';
+  get reputationOverall => 'Overall reputation';
   get passOld => 'Current PIN';
   get passSuccess => 'Success';
   get passSuccessTxt => 'PIN changed successfully';
@@ -133,7 +148,7 @@ class TranslationsDeProfile implements TranslationsProfile {
   get aboutBrif => 'Mobiles Wallet für Encointer';
   get aboutVersion => 'Version';
   get account => 'Konto';
-  get accounts => 'Kontos';
+  get accounts => 'Konten';
   get accountDelete => 'Bist du sicher, dass du den account löschen möchtest?';
   get accountShare => 'Konto teilen';
   get add => 'Hinzufügen';
@@ -165,10 +180,18 @@ class TranslationsDeProfile implements TranslationsProfile {
   get passErrorTxt => 'Konto konnte nicht entsperrt werden. Bitte überprüfe die eingegebene PIN.';
   get passNew => 'Neue PIN';
   get passNew2 => 'Bestätige neue PIN';
+  get passHint1 => 'Gib deinen jetzigen PIN ein\n um den PIN zu ändern.';
+  get passHint2 => 'Dann kannst du deinen\n neuen Pin eingeben.';
+  get passHint => 'Du wirst diese PIN benötigen um Transaktionen zu tätigen oder neue Konten hinzufügen.';
+  get passInfo =>
+      'PIN muss mindestens 4 Ziffern enthalten. Bei PIN-Verlust ist der Account nicht wiederherstellbar, ausser man hat ein Backup auf der Profilseite gemacht.';
+  get passSecure => 'Sichere dein Konto mit einem PIN.';
+  get reputationHistory => 'Reputation History';
+  get reputationOverall => 'Allgemeine Reputation';
   get passOld => 'Aktuelle PIN';
   get passSuccess => 'Erfolgreich';
   get passSuccessTxt => 'PIN wurde erfolgreich geändert';
-  get qrScanHint => 'Gib den Betrag den du erhalten möchtest ein und lasse den Sender den QR Code scannen.';
+  get qrScanHint => 'Gib den Betrag, den du erhalten möchtest ein und lasse den Sender den QR Code scannen.';
   get setting => 'Einstellungen';
   get settingLang => 'Sprache';
   get settingLangAuto => 'Automatisch';
@@ -190,7 +213,7 @@ class TranslationsDeProfile implements TranslationsProfile {
   get pinInfo =>
       'PIN muss mindestens 4 Ziffern enthalten. Bei PIN-Verlust ist der Account nicht wiederherstellbar, ausser man hat ein Backup auf der Profilseite gemacht.';
   get pinSecure => 'Sichere dein Konto mit einem PIN.';
-  get recoveryProxy => 'recovery proxy'; // TODO no idea what this is
+  get recoveryProxy => 'recovery proxy';
 }
 
 class TranslationsZhProfile implements TranslationsProfile {
@@ -253,5 +276,33 @@ class TranslationsZhProfile implements TranslationsProfile {
   get pinInfo => 'PIN 应至少包含 4 位数字。 如果 PIN 码丢失，则无法恢复帐户，除非您通过个人资料页面进行了备份。';
   get pinSecure => '使用 PIN 保护您的帐户。';
   get accountAdd => '添加帐户';
-  get recoveryProxy => 'recovery proxy'; // TODO no idea what this is
+  get recoveryProxy => 'recovery proxy';
+
+  @override
+  // TODO: implement passHint
+  String get passHint => throw UnimplementedError();
+
+  @override
+  // TODO: implement passHint1
+  String get passHint1 => throw UnimplementedError();
+
+  @override
+  // TODO: implement passHint2
+  String get passHint2 => throw UnimplementedError();
+
+  @override
+  // TODO: implement passInfo
+  String get passInfo => throw UnimplementedError();
+
+  @override
+  // TODO: implement passSecure
+  String get passSecure => throw UnimplementedError();
+
+  @override
+  // TODO: implement reputationHistory
+  String get reputationHistory => throw UnimplementedError();
+
+  @override
+  // TODO: implement reputationOverall
+  String get reputationOverall => throw UnimplementedError();
 }

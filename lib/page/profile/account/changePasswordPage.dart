@@ -180,7 +180,9 @@ class _ChangePassword extends State<ChangePasswordPage> {
                         // ),
                         controller: _passCtrl,
                         validator: (v) {
-                          return Fmt.checkPassword(v.trim()) ? null : accDic['create.password.error'];
+                          return Fmt.checkPassword(v.trim())
+                              ? null
+                              : I18n.of(context).translationsForLocale().account.createPasswordError;
                         },
                         obscureText: true,
                         inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
@@ -203,7 +205,9 @@ class _ChangePassword extends State<ChangePasswordPage> {
                         // ),
                         controller: _pass2Ctrl,
                         validator: (v) {
-                          return v.trim() != _passCtrl.text ? dic.profile.pass2Error : null;
+                          return v.trim() != _passCtrl.text
+                              ? I18n.of(context).translationsForLocale().account.createPassword2Error
+                              : null;
                         },
                         obscureText: true,
                         inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
