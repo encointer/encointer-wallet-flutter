@@ -8,32 +8,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
-class ContactDetailPage extends StatefulWidget {
+class ContactDetailPage extends StatelessWidget {
   ContactDetailPage(this.store);
 
   static final String route = '/profile/contactDetail';
+
   final AppStore store;
-
-  @override
-  _ContactDetail createState() => _ContactDetail(store);
-}
-
-class _ContactDetail extends State<ContactDetailPage> {
-  _ContactDetail(this.store);
-  final AppStore store;
-  AccountData _args;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-
-    _args = ModalRoute.of(context).settings.arguments;
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   void _removeItem(BuildContext context, AccountData i) {
     var dic = I18n.of(context).translationsForLocale();
@@ -67,11 +47,13 @@ class _ContactDetail extends State<ContactDetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    AccountData args = ModalRoute.of(context).settings.arguments;
     var dic = I18n.of(context).translationsForLocale();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          _args.name,
+          args.name,
           style: Theme.of(context).textTheme.headline3,
         ),
         iconTheme: IconThemeData(
@@ -90,14 +72,14 @@ class _ContactDetail extends State<ContactDetailPage> {
                 children: <Widget>[
                   SizedBox(height: 30),
                   AddressIcon(
-                    _args.address,
+                    args.address,
                     size: 130,
                     // addressToCopy: address,
                     tapToCopy: false,
                   ),
                   SizedBox(height: 20),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                    Text(Fmt.address(_args.address),
+                    Text(Fmt.address(args.address),
                         style: Theme.of(context).textTheme.headline3.copyWith(color: Color(0xff353535))),
                   ]),
                   Padding(
@@ -156,7 +138,7 @@ class _ContactDetail extends State<ContactDetailPage> {
                         ],
                       ),
                       onPressed: () async => {
-                        _removeItem(context, _args),
+                        _removeItem(context, args),
                       },
                     ),
                   ),
