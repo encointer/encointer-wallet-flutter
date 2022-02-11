@@ -17,16 +17,16 @@ class WillPopScopeWrapper extends StatelessWidget {
             ? showCupertinoDialog(
                 context: context,
                 builder: (context) => CupertinoAlertDialog(
-                  title: Text(I18n.of(context).home['exitConfirm']),
+                  title: Text(I18n.of(context).translationsForLocale().home.exitConfirm),
                   actions: <Widget>[
                     CupertinoButton(
                       onPressed: () => Navigator.of(context).pop(false),
-                      child: Text(I18n.of(context).home['cancel']),
+                      child: Text(I18n.of(context).translationsForLocale().home.cancel),
                     ),
                     CupertinoButton(
                       onPressed: () => Navigator.of(context).pop(true),
                       /*Navigator.of(context).pop(true)*/
-                      child: Text(I18n.of(context).home['ok']),
+                      child: Text(I18n.of(context).translationsForLocale().home.ok),
                     ),
                   ],
                 ),

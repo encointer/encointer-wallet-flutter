@@ -24,7 +24,7 @@ class PhotoTiles extends StatelessWidget {
           color: Colors.grey,
           child: ListTile(
             leading: Icon(Icons.add_a_photo),
-            title: Text(I18n.of(context).bazaar['photoAdd']),
+            title: Text(I18n.of(context).translationsForLocale().bazaar.photoAdd),
           ),
         ),
       ],

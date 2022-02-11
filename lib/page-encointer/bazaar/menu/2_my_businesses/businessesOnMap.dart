@@ -14,7 +14,7 @@ class BusinessesOnMap extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context).bazaar['businesses']),
+        title: Text(I18n.of(context).translationsForLocale().bazaar.businesses),
       ),
       body: BMap(data),
     );

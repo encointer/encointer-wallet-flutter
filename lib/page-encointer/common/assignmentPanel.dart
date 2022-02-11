@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class AssignmentPanel extends StatefulWidget {
   AssignmentPanel(this.store);
@@ -36,7 +37,7 @@ class _AssignmentPanelState extends State<AssignmentPanel> {
 
   @override
   Widget build(BuildContext context) {
-    final Map dic = I18n.of(context).assets;
+    final Translations dic = I18n.of(context).translationsForLocale();
     return Container(
         width: double.infinity,
         child: RoundedCard(
@@ -45,7 +46,7 @@ class _AssignmentPanelState extends State<AssignmentPanel> {
             Observer(
                 builder: (_) => store.encointer.meetupTime != null
                     ? store.encointer.communities == null
-                        ? Text(dic['communitiesNotFound'])
+                        ? Text(dic.assets.communitiesNotFound)
                         : Column(children: <Widget>[
                             store.encointer.meetupIndex > 0
                                 ? Column(children: <Widget>[

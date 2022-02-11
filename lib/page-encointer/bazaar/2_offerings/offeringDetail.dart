@@ -34,9 +34,10 @@ class OfferingDetail extends StatelessWidget {
               SizedBox(
                 height: 8,
               ),
-              ToggleButtonsWithTitle(I18n.of(context).bazaar['state'], productNewness, null),
+              ToggleButtonsWithTitle(I18n.of(context).translationsForLocale().bazaar.state, productNewness, null),
               // TODO state mananagement, TODO has to be an business.id not just the title
-              ToggleButtonsWithTitle(I18n.of(context).bazaar['deliveryOptions'], deliveryOptions, null),
+              ToggleButtonsWithTitle(
+                  I18n.of(context).translationsForLocale().bazaar.deliveryOptions, deliveryOptions, null),
               // TODO state mananagement, TODO has to be an business.id not just the title
             ],
           ),

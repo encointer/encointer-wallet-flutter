@@ -46,7 +46,7 @@ class _QrSenderPageState extends State<QrSenderPage> {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context).home['submitQr']),
+        title: Text(I18n.of(context).translationsForLocale().home.submitQr),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -71,7 +71,7 @@ class _QrSenderPageState extends State<QrSenderPage> {
                             padding: EdgeInsets.all(16),
                             child: RoundedButton(
                               icon: Image.asset('assets/images/assets/scanner.png'),
-                              text: I18n.of(context).account['uosScan'],
+                              text: I18n.of(context).translationsForLocale().account.uosScan,
                               onPressed: () {
                                 _handleScan(context);
                               },

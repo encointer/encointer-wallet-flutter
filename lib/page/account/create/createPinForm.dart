@@ -7,6 +7,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class CreatePinForm extends StatelessWidget {
   CreatePinForm({this.setNewAccount, this.submitting, this.onSubmit, this.name, this.store});
@@ -24,8 +25,7 @@ class CreatePinForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, String> dic = I18n.of(context).account;
-    final Map<String, String> dicProf = I18n.of(context).profile;
+    final Translations dic = I18n.of(context).translationsForLocale();
 
     return Form(
       key: _formKey,
@@ -37,14 +37,14 @@ class CreatePinForm extends StatelessWidget {
               children: <Widget>[
                 SizedBox(height: 80),
                 Center(
-                  child: Text(dicProf['pinSecure'], style: Theme.of(context).textTheme.headline2),
+                  child: Text(dic.profile.pinSecure, style: Theme.of(context).textTheme.headline2),
                 ),
                 SizedBox(height: 10),
                 Center(
                   child: Container(
                     width: 250,
                     child: Text(
-                      dicProf['pinHint'],
+                      dic.profile.pinHint,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headline2.copyWith(
                             color: encointerBlack,
@@ -64,12 +64,12 @@ class CreatePinForm extends StatelessWidget {
                     ),
                     filled: true,
                     fillColor: encointerLightBlue,
-                    hintText: dic['createPassword'],
-                    labelText: dic['createPassword'],
+                    hintText: dic.account.createPassword,
+                    labelText: dic.account.createPassword,
                   ),
                   controller: _passCtrl,
                   validator: (v) {
-                    return Fmt.checkPassword(v.trim()) ? null : dic['createPasswordError'];
+                    return Fmt.checkPassword(v.trim()) ? null : dic.account.createPasswordError;
                   },
                   obscureText: true,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
@@ -87,13 +87,13 @@ class CreatePinForm extends StatelessWidget {
                     filled: true,
                     //todo define color
                     fillColor: Color(0xffF4F8F9),
-                    hintText: dic['createPassword2'],
-                    labelText: dic['createPassword2'],
+                    hintText: dic.account.createPassword2,
+                    labelText: dic.account.createPassword2,
                   ),
                   controller: _pass2Ctrl,
                   obscureText: true,
                   validator: (v) {
-                    return _passCtrl.text != v ? dic['createPassword2Error'] : null;
+                    return _passCtrl.text != v ? dic.account.createPassword2Error : null;
                   },
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                 ),
@@ -107,7 +107,7 @@ class CreatePinForm extends StatelessWidget {
                       Container(
                         width: 250,
                         child: Text(
-                          dicProf['pinInfo'],
+                          dic.profile.pinInfo,
                           style: Theme.of(context).textTheme.headline4.copyWith(
                                 color: encointerGrey,
                               ),
@@ -124,7 +124,7 @@ class CreatePinForm extends StatelessWidget {
             padding: EdgeInsets.all(16),
             child: PrimaryButton(
               child: Text(
-                I18n.of(context).account['create'],
+                I18n.of(context).translationsForLocale().account.create,
                 style: Theme.of(context).textTheme.headline3.copyWith(
                       color: encointerLightBlue,
                     ),
@@ -132,10 +132,11 @@ class CreatePinForm extends StatelessWidget {
               onPressed: () {
                 if (_formKey.currentState.validate()) {
                   if (store.account.accountListAll.isEmpty) {
-                    setNewAccount(this.name.isNotEmpty ? this.name : dic['createDefault'], _passCtrl.text);
+                    setNewAccount(this.name.isNotEmpty ? this.name : dic.account.createDefault, _passCtrl.text);
                   } else {
                     // cachedPin won't be empty, because cachedPin is verified not to be empty before user adds an account in profile/index.dart
-                    setNewAccount(this.name.isNotEmpty ? this.name : dic['createDefault'], store.settings.cachedPin);
+                    setNewAccount(
+                        this.name.isNotEmpty ? this.name : dic.account.createDefault, store.settings.cachedPin);
                   }
 
                   onSubmit();

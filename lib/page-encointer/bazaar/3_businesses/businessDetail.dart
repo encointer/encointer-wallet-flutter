@@ -5,6 +5,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import "package:latlong2/latlong.dart";
+import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class BusinessDetail extends StatelessWidget {
   final BazaarBusinessData business;
@@ -13,7 +14,7 @@ class BusinessDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var dic = I18n.of(context).bazaar;
+    final Translations dic = I18n.of(context).translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -51,7 +52,10 @@ class BusinessDetail extends StatelessWidget {
                       Card(
                         margin: EdgeInsets.fromLTRB(4, 0, 2, 0),
                         child: DataTable(
-                          columns: [DataColumn(label: Text(dic['day'])), DataColumn(label: Text(dic['openningHours']))],
+                          columns: [
+                            DataColumn(label: Text(dic.bazaar.day)),
+                            DataColumn(label: Text(dic.bazaar.openningHours))
+                          ],
                           headingRowHeight: 32,
                           columnSpacing: 4,
                           horizontalMargin: 8,
@@ -75,7 +79,7 @@ class BusinessDetail extends StatelessWidget {
                   )
                 ],
               ),
-              HorizontalBazaarItemList(business.offerings, dic['offerings'], cardHeight, cardWidth),
+              HorizontalBazaarItemList(business.offerings, dic.bazaar.offerings, cardHeight, cardWidth),
             ],
           ),
         ],

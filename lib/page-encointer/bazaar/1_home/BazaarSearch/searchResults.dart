@@ -19,10 +19,10 @@ class SearchResults extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ResultSummaryListTile(businessResults, I18n.of(context).bazaar['businessesResults']),
-        ResultSummaryListTile(offeringsResults, I18n.of(context).bazaar['offeringsResults']),
+        ResultSummaryListTile(businessResults, I18n.of(context).translationsForLocale().bazaar.businessesResults),
+        ResultSummaryListTile(offeringsResults, I18n.of(context).translationsForLocale().bazaar.offeringsResults),
         Text(
-          I18n.of(context).bazaar['topResults'],
+          I18n.of(context).translationsForLocale().bazaar.topResults,
           style: TextStyle(fontWeight: FontWeight.bold, height: 2.5),
         ),
         Column(

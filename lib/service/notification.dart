@@ -55,7 +55,7 @@ class NotificationPlugin {
           actions: [
             CupertinoDialogAction(
               isDefaultAction: true,
-              child: Text(I18n.of(context).home['ok']),
+              child: Text(I18n.of(context).translationsForLocale().home.ok),
               onPressed: () async {
                 Navigator.of(context, rootNavigator: true).pop();
               },

@@ -50,6 +50,12 @@ abstract class TranslationsAssets {
   String get to;
   String get transfer;
   String get value;
+  String get amountToBeTransferred;
+  String get invoiceAmount;
+  String get shareQrCode;
+  String get pleaseEnterSomeText;
+  String get yourBalanceFor;
+  String get amountToTransfer;
 }
 
 class TranslationsEnAssets implements TranslationsAssets {
@@ -102,6 +108,12 @@ class TranslationsEnAssets implements TranslationsAssets {
   get to => 'To';
   get transfer => 'Send'; // as Alain requested 2022-01-2
   get value => 'Value';
+  get amountToBeTransferred => 'Send amount';
+  get invoiceAmount => 'Invoice amount';
+  get shareQrCode => 'Share QR code';
+  get pleaseEnterSomeText => 'Please enter some text';
+  get yourBalanceFor => 'Your balance for';
+  get amountToTransfer => 'amount to send';
 }
 
 class TranslationsDeAssets implements TranslationsAssets {
@@ -154,6 +166,12 @@ class TranslationsDeAssets implements TranslationsAssets {
   get to => 'Nach';
   get transfer => 'Transfer';
   get value => 'Wert';
+  get amountToBeTransferred => 'Rechnungsbetrag';
+  get invoiceAmount => 'Rechnungsbetrag';
+  get shareQrCode => 'Teile den QR Code';
+  get pleaseEnterSomeText => 'Bitte geben Sie einen Text ein';
+  get yourBalanceFor => 'Ihr Guthaben auf';
+  get amountToTransfer => 'Rechnungsbetrag';
 }
 
 class TranslationsZhAssets implements TranslationsAssets {
@@ -206,4 +224,10 @@ class TranslationsZhAssets implements TranslationsAssets {
   get to => '收款地址';
   get transfer => '转账';
   get value => '金额';
+  get amountToBeTransferred => '发票金额';
+  get invoiceAmount => '发票金额';
+  get shareQrCode => '分享二维码';
+  get pleaseEnterSomeText => '请输入一些文字';
+  get yourBalanceFor => '你的余额';
+  get amountToTransfer => '要转账的金额';
 }

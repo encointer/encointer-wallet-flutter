@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ota_update/ota_update.dart';
@@ -27,17 +28,17 @@ class _DownloadDialog extends State<DownloadDialog> {
         .listen(
       (OtaEvent event) {
         print('EVENT: ${event.status} : ${event.value}');
-        final Map dic = I18n.of(context).home;
-        String status = dic['updateStart'];
+        final Translations dic = I18n.of(context).translationsForLocale();
+        String status = dic.home.updateStart;
         switch (event.status.index) {
           case 0:
-            status = dic['updateDownload'];
+            status = dic.home.updateDownload;
             break;
           case 1:
-            status = dic['updateInstall'];
+            status = dic.home.updateInstall;
             break;
           default:
-            status = dic['updateError'];
+            status = dic.home.updateError;
         }
         setState(() {
           _downloadStatus = status;
@@ -55,11 +56,11 @@ class _DownloadDialog extends State<DownloadDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final Map dic = I18n.of(context).home;
     double progressWidth = 200;
     double progress = progressWidth * _downloadProgress / 100;
     return CupertinoAlertDialog(
-      title: Text(_downloadStatus.isEmpty ? dic['updateStart'] : _downloadStatus),
+      title:
+          Text(_downloadStatus.isEmpty ? I18n.of(context).translationsForLocale().home.updateStart : _downloadStatus),
       content: Padding(
         padding: EdgeInsets.only(top: 12),
         child: Stack(
@@ -83,10 +84,10 @@ class _DownloadDialog extends State<DownloadDialog> {
           ],
         ),
       ),
-      actions: _downloadStatus == dic['updateError']
+      actions: _downloadStatus == I18n.of(context).translationsForLocale().home.updateError
           ? <Widget>[
               CupertinoButton(
-                child: Text(dic['cancel']),
+                child: Text(I18n.of(context).translationsForLocale().home.cancel),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },

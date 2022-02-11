@@ -14,7 +14,7 @@ class SearchResultsOffering extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("${results.length} ${I18n.of(context).bazaar['offeringsFound']}"),
+        title: Text("${results.length} ${I18n.of(context).translationsForLocale().bazaar.offeringsFound}"),
       ),
       body: Column(
         children: [

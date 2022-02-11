@@ -35,7 +35,9 @@ class _ReceivePageState extends State<ReceivePage> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          title: isShare ? Text(I18n.of(context).profile['share']) : Text(I18n.of(context).assets['receive']),
+          title: isShare
+              ? Text(I18n.of(context).translationsForLocale().profile.share)
+              : Text(I18n.of(context).translationsForLocale().assets.receive),
           leading: Container(),
           actions: [
             IconButton(
@@ -55,7 +57,7 @@ class _ReceivePageState extends State<ReceivePage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 48),
                     child: Text(
-                      I18n.of(context).profile['qrScanHint'],
+                      I18n.of(context).translationsForLocale().profile.qrScanHint,
                       style: Theme.of(context).textTheme.headline3.copyWith(color: encointerBlack),
                       textAlign: TextAlign.center,
                     ),
@@ -64,14 +66,14 @@ class _ReceivePageState extends State<ReceivePage> {
                   Padding(
                     padding: const EdgeInsets.all(30),
                     child: EncointerTextFormField(
-                      labelText: I18n.of(context).assets['invoiceAmount'],
+                      labelText: I18n.of(context).translationsForLocale().assets.invoiceAmount,
                       textStyle: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
                       inputFormatters: [UI.decimalInputFormatter()],
                       controller: _amountController,
                       textFormFieldKey: Key('invoice-amount-input'),
                       validator: (String value) {
                         if (value == null || value.isEmpty) {
-                          return I18n.of(context).assets['amountError'];
+                          return I18n.of(context).translationsForLocale().assets.amountError;
                         }
                         return null;
                       },
@@ -105,7 +107,7 @@ class _ReceivePageState extends State<ReceivePage> {
                           Icon(Icons.share, color: ZurichLion.shade500),
                           SizedBox(width: 8),
                           Text(
-                            I18n.of(context).assets['shareQrCode'],
+                            I18n.of(context).translationsForLocale().assets.shareQrCode,
                             style: Theme.of(context).textTheme.headline3,
                           ),
                         ]),

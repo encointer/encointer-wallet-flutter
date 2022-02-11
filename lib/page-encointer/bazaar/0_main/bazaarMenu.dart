@@ -3,6 +3,8 @@ import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/myBu
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 
+import 'package:encointer_wallet/utils/translations/translations.dart';
+
 class BazaarMenu extends StatelessWidget {
   const BazaarMenu({
     Key key,
@@ -10,7 +12,7 @@ class BazaarMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var dic = I18n.of(context).bazaar;
+    final Translations dic = I18n.of(context).translationsForLocale();
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -25,7 +27,7 @@ class BazaarMenu extends StatelessWidget {
             ),
           ),
           ListTile(
-            title: Text(dic['offeringsMy']),
+            title: Text(dic.bazaar.offeringsMy),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
@@ -37,7 +39,7 @@ class BazaarMenu extends StatelessWidget {
             },
           ),
           ListTile(
-            title: Text(dic['businessesMy']),
+            title: Text(dic.bazaar.businessesMy),
             onTap: () {
               Navigator.pop(context);
               Navigator.push(
@@ -52,7 +54,7 @@ class BazaarMenu extends StatelessWidget {
             height: 50,
           ),
           ListTile(
-            title: Text(dic['notifications']),
+            title: Text(dic.bazaar.notifications),
             onTap: () {
               // Update the state of the app
               // ...

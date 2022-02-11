@@ -18,7 +18,9 @@ class ContactListPage extends StatelessWidget {
     final List<AccountData> args = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text(args == null ? I18n.of(context).profile['contact'] : I18n.of(context).account['list']),
+        title: Text(args == null
+            ? I18n.of(context).translationsForLocale().profile.contact
+            : I18n.of(context).translationsForLocale().account.list),
         centerTitle: true,
         actions: <Widget>[
           args == null

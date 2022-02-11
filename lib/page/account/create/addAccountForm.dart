@@ -6,6 +6,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class AddAccountForm extends StatelessWidget {
   AddAccountForm({this.isImporting, this.setNewAccount, this.submitting, this.onSubmit, this.store});
@@ -21,7 +22,7 @@ class AddAccountForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, String> dic = I18n.of(context).account;
+    final Translations dic = I18n.of(context).translationsForLocale();
 
     return Form(
       key: _formKey,
@@ -33,15 +34,15 @@ class AddAccountForm extends StatelessWidget {
               children: <Widget>[
                 SizedBox(height: 80),
                 Center(
-                  child:
-                      Text(I18n.of(context).profile['accountNameChoose'], style: Theme.of(context).textTheme.headline2),
+                  child: Text(I18n.of(context).translationsForLocale().profile.accountNameChoose,
+                      style: Theme.of(context).textTheme.headline2),
                 ),
                 SizedBox(height: 10),
                 Center(
                   child: Container(
                     width: 300,
                     child: Text(
-                      I18n.of(context).profile['accountNameChooseHint'],
+                      I18n.of(context).translationsForLocale().profile.accountNameChooseHint,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headline2.copyWith(
                             color: Colors.black,
@@ -62,8 +63,8 @@ class AddAccountForm extends StatelessWidget {
                         ),
                         filled: true,
                         fillColor: encointerLightBlue,
-                        hintText: dic['createHint'],
-                        labelText: I18n.of(context).profile['accountName'],
+                        hintText: dic.account.createHint,
+                        labelText: I18n.of(context).translationsForLocale().profile.accountName,
                       ),
                       controller: _nameCtrl,
                     ),
@@ -87,7 +88,7 @@ class AddAccountForm extends StatelessWidget {
                             children: [
                               Icon(Iconsax.import_2),
                               SizedBox(width: 10),
-                              Text(I18n.of(context).home['accountImport'],
+                              Text(I18n.of(context).translationsForLocale().home.accountImport,
                                   style: Theme.of(context).textTheme.headline3),
                             ],
                           ),
@@ -110,7 +111,7 @@ class AddAccountForm extends StatelessWidget {
                   Icon(Iconsax.add_square),
                   SizedBox(width: 12),
                   Text(
-                    I18n.of(context).profile['accountCreate'],
+                    I18n.of(context).translationsForLocale().profile.accountCreate,
                     style: Theme.of(context).textTheme.headline3.copyWith(
                           color: encointerLightBlue,
                         ),
@@ -120,7 +121,7 @@ class AddAccountForm extends StatelessWidget {
               onPressed: () {
                 if (_formKey.currentState.validate()) {
                   setNewAccount(
-                      _nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic['createDefault'], store.settings.cachedPin);
+                      _nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic.account.createDefault, store.settings.cachedPin);
                   onSubmit();
                 } else {
                   print("formKey.currentState.validate failed");

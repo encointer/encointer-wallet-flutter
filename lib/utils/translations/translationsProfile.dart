@@ -50,6 +50,17 @@ abstract class TranslationsProfile {
   String get share;
   String get title;
   String get unlock;
+  String get accountAdd;
+  String get accountCreate;
+  String get accountHave;
+  String get accountNameChooseHint;
+  String get accountNameChoose;
+  String get accountName;
+  String get import;
+  String get pinHint;
+  String get pinInfo;
+  String get pinSecure;
+  String get recoveryProxy;
 }
 
 class TranslationsEnProfile implements TranslationsProfile {
@@ -103,6 +114,18 @@ class TranslationsEnProfile implements TranslationsProfile {
   get share => 'Share';
   get title => 'Profile';
   get unlock => 'You need to enter your PIN to add a new account';
+  get accountAdd => 'Add account';
+  get accountCreate => 'Create account';
+  get accountHave => 'Already have an account?';
+  get accountNameChooseHint => 'You can change it later in your profile settings.';
+  get accountNameChoose => 'Choose an account name.';
+  get accountName => 'Account name';
+  get import => 'Import';
+  get pinHint => 'You will need this PIN for transactions and adding a new account.';
+  get pinInfo =>
+      'PIN should consist of at least 4 digits. If the PIN is lost, there is no option to restore the account unless you made a backup via the profile page.';
+  get pinSecure => 'Secure your account with a PIN.';
+  get recoveryProxy => 'recovery proxy'; // TODO no idea what this is
 }
 
 class TranslationsDeProfile implements TranslationsProfile {
@@ -156,6 +179,18 @@ class TranslationsDeProfile implements TranslationsProfile {
   get share => 'Teilen';
   get title => 'Profil';
   get unlock => 'Du musst deinen PIN eingeben um einen neuen Account hinzuzufügen';
+  get accountAdd => 'Konto hinzufügen';
+  get accountCreate => 'Konto kreieren';
+  get accountHave => 'Hast du bereits ein Konto?';
+  get accountNameChooseHint => 'You can change it later in your profile settings.';
+  get accountNameChoose => 'Wähle einen Kontonamen.';
+  get accountName => 'Kontoname';
+  get import => 'Importiere';
+  get pinHint => 'Du wirst diese PIN benötigen um Transaktionen zu tätigen oder neue Konten hinzufügen.';
+  get pinInfo =>
+      'PIN muss mindestens 4 Ziffern enthalten. Bei PIN-Verlust ist der Account nicht wiederherstellbar, ausser man hat ein Backup auf der Profilseite gemacht.';
+  get pinSecure => 'Sichere dein Konto mit einem PIN.';
+  get recoveryProxy => 'recovery proxy'; // TODO no idea what this is
 }
 
 class TranslationsZhProfile implements TranslationsProfile {
@@ -208,4 +243,15 @@ class TranslationsZhProfile implements TranslationsProfile {
   get share => '分享';
   get title => '设置';
   get unlock => '您需要输入您的 PIN 才能添加新帐户';
+  get accountCreate => '创建帐户';
+  get accountHave => '已经有账户了？';
+  get accountNameChooseHint => '您可以稍后在您的个人资料设置中更改它';
+  get accountNameChoose => '选择一个帐户名。';
+  get accountName => '账户名';
+  get import => '导入';
+  get pinHint => '您将需要此 PIN 进行交易和添加新帐户。';
+  get pinInfo => 'PIN 应至少包含 4 位数字。 如果 PIN 码丢失，则无法恢复帐户，除非您通过个人资料页面进行了备份。';
+  get pinSecure => '使用 PIN 保护您的帐户。';
+  get accountAdd => '添加帐户';
+  get recoveryProxy => 'recovery proxy'; // TODO no idea what this is
 }

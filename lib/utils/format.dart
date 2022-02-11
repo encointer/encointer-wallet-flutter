@@ -255,7 +255,7 @@ class Fmt {
   }
 
   static String accountName(BuildContext context, AccountData acc) {
-    return '${acc.name ?? ''}${(acc.observation ?? false) ? ' (${I18n.of(context).account['observe']})' : ''}';
+    return '${acc.name ?? ''}${(acc.observation ?? false) ? ' (${I18n.of(context).translationsForLocale().account.observe})' : ''}';
   }
 
   static List<int> hexToBytes(String hex) {

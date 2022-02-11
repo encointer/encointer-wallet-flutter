@@ -61,7 +61,7 @@ class ScanPage extends StatelessWidget {
           if (snapshot.hasData && snapshot.data == true) {
             return QrcodeReaderView(
                 key: _qrViewKey,
-                helpWidget: Text(I18n.of(context).account['qrScan']),
+                helpWidget: Text(I18n.of(context).translationsForLocale().account.qrScan),
                 headerWidget: SafeArea(
                   child: Align(
                     alignment: Alignment.topRight,

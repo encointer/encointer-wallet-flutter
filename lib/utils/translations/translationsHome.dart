@@ -46,7 +46,7 @@ abstract class TranslationsHome {
   String get submitSigner;
   String get submitTx;
   String get success;
-  String get switchTo;
+  String get switchAccount;
   String get txBroadcast;
   String get txInblock;
   String get txReady;
@@ -65,6 +65,7 @@ abstract class TranslationsHome {
   String get updateUp;
   String get wallet;
   String get yes;
+  String get accountImport;
 }
 
 class TranslationsEnHome implements TranslationsHome {
@@ -113,7 +114,7 @@ class TranslationsEnHome implements TranslationsHome {
   get submitSigner => 'Signer';
   get submitTx => 'Submit Transaction';
   get success => 'Success';
-  get switchTo => 'Switch Account';
+  get switchAccount => 'Switch Account';
   get txBroadcast => 'Broadcast';
   get txInblock => 'Inblock';
   get txReady => 'Ready';
@@ -133,6 +134,7 @@ class TranslationsEnHome implements TranslationsHome {
   get updateUp => 'New version found, update now?';
   get wallet => "Wallet";
   get yes => 'Yes';
+  get accountImport => 'Import account';
 }
 
 class TranslationsDeHome implements TranslationsHome {
@@ -181,7 +183,7 @@ class TranslationsDeHome implements TranslationsHome {
   String get submitSigner => 'Signierer';
   String get submitTx => 'Transaktion senden';
   String get success => 'Erfolgreich';
-  String get switchTo => 'Konto wechseln';
+  String get switchAccount => 'Konto wechseln';
   String get txBroadcast => 'Broadcast';
   String get txError => 'Inblock';
   String get txInblock => 'Bereit';
@@ -201,6 +203,7 @@ class TranslationsDeHome implements TranslationsHome {
   String get updateUp => 'Neue Version gefunden, jetzt aktualisieren?';
   String get wallet => "Wallet";
   String get yes => 'Ja';
+  get accountImport => 'Konto importieren';
 }
 
 class TranslationsZhHome implements TranslationsHome {
@@ -249,7 +252,7 @@ class TranslationsZhHome implements TranslationsHome {
   get submitSigner => '签名账户';
   get submitTx => '发送交易';
   get success => '操作成功';
-  get switchTo => '切换帐号';
+  get switchAccount => '切换帐号';
   get txBroadcast => '正在广播';
   get txInblock => '已被打包';
   get txReady => '准备广播';
@@ -268,4 +271,5 @@ class TranslationsZhHome implements TranslationsHome {
   get updateUp => '发现新版本，立即更新吗？';
   get wallet => "钱包";
   get yes => '是的';
+  get accountImport => '导入账户';
 }

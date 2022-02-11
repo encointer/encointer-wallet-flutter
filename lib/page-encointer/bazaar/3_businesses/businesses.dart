@@ -11,7 +11,7 @@ class Businesses extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      ToggleButtonsWithTitle(I18n.of(context).bazaar['categories'], allCategories, null), // TODO state management
+      ToggleButtonsWithTitle(I18n.of(context).translationsForLocale().bazaar.categories, allCategories, null),
       Expanded(
         child: ListView.builder(
           itemCount: data.length,
@@ -34,7 +34,7 @@ class Businesses extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             new Icon(Icons.map),
-            new Text(I18n.of(context).bazaar['map']),
+            new Text(I18n.of(context).translationsForLocale().bazaar.map),
           ],
         ),
       )

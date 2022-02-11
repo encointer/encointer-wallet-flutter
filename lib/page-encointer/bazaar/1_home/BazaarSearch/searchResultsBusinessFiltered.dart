@@ -21,22 +21,22 @@ class SearchResultsBusinessFiltered extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            "Filter ${I18n.of(context).bazaar['businessesFound']}",
+            "Filter ${I18n.of(context).translationsForLocale().bazaar.businessesFound}",
             style: titleStyle,
           ),
         ),
         body: ListView(children: [
-          ToggleButtonsWithTitle(I18n.of(context).bazaar['categories'], categories, null), // TODO state management
+          ToggleButtonsWithTitle(I18n.of(context).translationsForLocale().bazaar.categories, categories, null),
         ]),
         floatingActionButton: ButtonBar(
           children: [
             ElevatedButton(
               onPressed: () => null, // TODO state management
-              child: Text(I18n.of(context).bazaar['reset']),
+              child: Text(I18n.of(context).translationsForLocale().bazaar.reset),
             ),
             ElevatedButton(
               onPressed: () => null, //TODO state management
-              child: Text(I18n.of(context).bazaar['apply']),
+              child: Text(I18n.of(context).translationsForLocale().bazaar.apply),
             ),
           ],
         ));

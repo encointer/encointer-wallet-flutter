@@ -1,16 +1,8 @@
 import 'dart:async';
 
-import 'package:encointer_wallet/utils/i18n/assets.dart';
-import 'package:encointer_wallet/utils/i18n/bazaar.dart';
-import 'package:encointer_wallet/utils/i18n/encointer.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/foundation.dart' show SynchronousFuture;
 import 'package:flutter/material.dart';
-
-import '../i18n/account.dart';
-import '../i18n/bazaar.dart';
-import '../i18n/home.dart';
-import '../i18n/profile.dart';
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<I18n> {
   const AppLocalizationsDelegate(this.overriddenLocale);
@@ -48,48 +40,5 @@ class I18n {
   Translations translationsForLocale() {
     var translations = supportedLocales[locale];
     return translations != null ? translations : TranslationsEn();
-  }
-
-  static Map<String, Map<String, Map<String, String>>> _localizedValues = {
-    'en': {
-      'home': enHome,
-      'account': enAccount,
-      'assets': enAssets,
-      'profile': enProfile,
-      'encointer': enNctr,
-      'bazaar': enBazaar,
-    },
-    'de': {
-      'home': deHome,
-      'account': deAccount,
-      'assets': deAssets,
-      'profile': deProfile,
-      'encointer': deNctr,
-      'bazaar': deBazaar,
-    }
-  };
-
-  Map<String, String> get home {
-    return _localizedValues[locale.languageCode]['home'];
-  }
-
-  Map<String, String> get account {
-    return _localizedValues[locale.languageCode]['account'];
-  }
-
-  Map<String, String> get assets {
-    return _localizedValues[locale.languageCode]['assets'];
-  }
-
-  Map<String, String> get profile {
-    return _localizedValues[locale.languageCode]['profile'];
-  }
-
-  Map<String, String> get encointer {
-    return _localizedValues[locale.languageCode]['encointer'];
-  }
-
-  Map<String, String> get bazaar {
-    return _localizedValues[locale.languageCode]['bazaar'];
   }
 }

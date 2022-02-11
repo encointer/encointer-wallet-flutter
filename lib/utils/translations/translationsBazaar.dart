@@ -69,6 +69,7 @@ abstract class TranslationsBazaar {
   String get topResults;
   String get waiting;
   String get zipCode;
+  String get useDescriptiveName;
 }
 
 class TranslationsEnBazaar implements TranslationsBazaar {
@@ -140,6 +141,7 @@ class TranslationsEnBazaar implements TranslationsBazaar {
   get topResults => 'Top Results';
   get waiting => 'waiting...';
   get zipCode => 'Zip code';
+  get useDescriptiveName => 'Please, use a descriptive name';
 }
 
 class TranslationsDeBazaar implements TranslationsBazaar {
@@ -211,6 +213,7 @@ class TranslationsDeBazaar implements TranslationsBazaar {
   get topResults => 'Top Ergebnisse';
   get waiting => 'warte...';
   get zipCode => 'Postleitzahl';
+  get useDescriptiveName => 'Please, use a descriptive name';
 }
 
 class TranslationsZhBazaar implements TranslationsBazaar {
@@ -282,4 +285,5 @@ class TranslationsZhBazaar implements TranslationsBazaar {
   get topResults => '热门结果';
   get waiting => '等待...';
   get zipCode => '邮政编码';
+  get useDescriptiveName => 'Please, use a descriptive name';
 }

@@ -47,7 +47,7 @@ class DrawerMenu extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    I18n.of(context).home['menu'],
+                    I18n.of(context).translationsForLocale().home.menu,
                     style: TextStyle(fontSize: 16, color: Colors.white),
                   ),
                   IconButton(
@@ -80,7 +80,8 @@ class DrawerMenu extends StatelessWidget {
                 height: 40,
                 child: Image.asset('assets/images/assets/Menu_scan.png'),
               ),
-              title: Text(I18n.of(context).home['scan'], style: TextStyle(fontSize: 16, color: Colors.white)),
+              title: Text(I18n.of(context).translationsForLocale().home.scan,
+                  style: TextStyle(fontSize: 16, color: Colors.white)),
               onTap: () => Navigator.pushNamed(context, ScanPage.route, arguments: 'tx'),
             ),
             ListTile(
@@ -89,7 +90,8 @@ class DrawerMenu extends StatelessWidget {
                 height: 40,
                 child: Image.asset('assets/images/assets/Menu_wallet.png'),
               ),
-              title: Text(I18n.of(context).home['create'], style: TextStyle(fontSize: 16, color: Colors.white)),
+              title: Text(I18n.of(context).translationsForLocale().home.create,
+                  style: TextStyle(fontSize: 16, color: Colors.white)),
               onTap: () {
                 Navigator.pop(context);
                 Navigator.pushNamed(context, CreateAccountEntryPage.route);

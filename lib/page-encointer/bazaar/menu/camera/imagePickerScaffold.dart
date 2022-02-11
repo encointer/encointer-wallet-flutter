@@ -20,7 +20,7 @@ class ImagePickerScaffold extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context).bazaar['imagesAddRemove']),
+        title: Text(I18n.of(context).translationsForLocale().bazaar.imagesAddRemove),
       ),
       body: Center(
         child: !kIsWeb && defaultTargetPlatform == TargetPlatform.android
@@ -31,7 +31,7 @@ class ImagePickerScaffold extends StatelessWidget {
                     case ConnectionState.none:
                     case ConnectionState.waiting:
                       return Text(
-                        I18n.of(context).bazaar['waiting'],
+                        I18n.of(context).translationsForLocale().bazaar.waiting,
                         textAlign: TextAlign.center,
                       );
                     case ConnectionState.done:
@@ -44,7 +44,7 @@ class ImagePickerScaffold extends StatelessWidget {
                         );
                       } else {
                         return Text(
-                          I18n.of(context).bazaar['imageNotPicked'],
+                          I18n.of(context).translationsForLocale().bazaar.imageNotPicked,
                           textAlign: TextAlign.center,
                         );
                       }
@@ -67,7 +67,7 @@ class ImagePickerScaffold extends StatelessWidget {
                 );
               },
               heroTag: 'image1',
-              tooltip: I18n.of(context).bazaar['imagesMultiplePick'],
+              tooltip: I18n.of(context).translationsForLocale().bazaar.imagesMultiplePick,
               child: const Icon(Icons.photo_library),
             ),
           ),
@@ -78,7 +78,7 @@ class ImagePickerScaffold extends StatelessWidget {
                 _onImageButtonPressed(imagePickerState, ImageSource.camera, context: context);
               },
               heroTag: 'image2',
-              tooltip: I18n.of(context).bazaar['photoTake'],
+              tooltip: I18n.of(context).translationsForLocale().bazaar.photoTake,
               child: const Icon(Icons.camera_alt),
             ),
           ),

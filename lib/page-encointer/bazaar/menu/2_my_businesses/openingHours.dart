@@ -157,8 +157,8 @@ class AddOpeningIntervalForDay extends StatelessWidget {
         // ],
         autofocus: true,
         decoration: InputDecoration(
-            labelText: I18n.of(context).bazaar['timeIntervalAdd'],
-            hintText: I18n.of(context).bazaar['openningHoursInputHint'],
+            labelText: I18n.of(context).translationsForLocale().bazaar.timeIntervalAdd,
+            hintText: I18n.of(context).translationsForLocale().bazaar.openningHoursInputHint,
             contentPadding: EdgeInsets.all(8),
             errorText: openingHoursForDay.timeFormatError),
         controller: _textController,

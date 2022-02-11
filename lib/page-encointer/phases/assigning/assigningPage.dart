@@ -10,6 +10,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quiver/async.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class AssigningPage extends StatefulWidget {
   AssigningPage(this.store);
@@ -62,7 +63,7 @@ class _AssigningPageState extends State<AssigningPage> {
 
   @override
   Widget build(BuildContext context) {
-    Map dic = I18n.of(context).encointer;
+    final Translations dic = I18n.of(context).translationsForLocale();
 
     if (sub == null) {
       startTimer();
@@ -82,7 +83,7 @@ class _AssigningPageState extends State<AssigningPage> {
                       child: Container(
                         width: double.infinity,
                         child: Text(
-                          "${dic['meetupRemaining']} ${Fmt.hhmmss(timeToMeetup)}",
+                          "${dic.encointer.meetupRemaining} ${Fmt.hhmmss(timeToMeetup)}",
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 15),
                         ),
@@ -91,7 +92,7 @@ class _AssigningPageState extends State<AssigningPage> {
                     SizedBox(height: 16),
                     timeToMeetup < 60
                         ? RoundedButton(
-                            text: dic['meetupStart'],
+                            text: dic.encointer.meetupStart,
                             onPressed: () => startMeetup(context, store),
                           )
                         : Container(),

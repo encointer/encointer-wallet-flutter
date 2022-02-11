@@ -25,7 +25,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          I18n.of(context).home['create'],
+          I18n.of(context).translationsForLocale().home.create,
         ),
         leading: Container(),
         actions: <Widget>[

@@ -6,6 +6,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class AddAccountPage extends StatefulWidget {
   const AddAccountPage(this.store);
@@ -69,10 +70,10 @@ class _AddAccountPageState extends State<AddAccountPage> {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Container(),
-          content: Text(I18n.of(context).account['createError']),
+          content: Text(I18n.of(context).translationsForLocale().account.createError),
           actions: <Widget>[
             CupertinoButton(
-              child: Text(I18n.of(context).home['ok']),
+              child: Text(I18n.of(context).translationsForLocale().home.ok),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -86,11 +87,11 @@ class _AddAccountPageState extends State<AddAccountPage> {
   @override
   Widget build(BuildContext context) {
     final Map<String, dynamic> arg = ModalRoute.of(context).settings.arguments;
-    final Map<String, String> dic = I18n.of(context).profile;
+    final Translations dic = I18n.of(context).translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          dic['accountAdd'],
+          dic.profile.accountAdd,
         ),
         leading: Container(),
         actions: <Widget>[
