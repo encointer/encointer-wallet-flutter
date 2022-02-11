@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
@@ -139,29 +140,41 @@ class _ChangePassword extends State<ChangePasswordPage> {
                       ),
                     ),
                     SizedBox(height: 30),
-                    TextFormField(
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        enabledBorder: const OutlineInputBorder(
-                          // width: 0.0 produces a thin "hairline" border
-                          borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
-                          borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
+                    EncointerTextFormField(
+                      // keyboardType: TextInputType.number,
+                      // hintText: dic['pass.old'],
+                      labelText: dic['pass.old'],
+                      suffixIcon: IconButton(
+                        iconSize: 18,
+                        icon: Icon(
+                          CupertinoIcons.clear_thick_circled,
+                          color: Theme.of(context).unselectedWidgetColor,
                         ),
-                        filled: true,
-                        fillColor: Color(0xffF4F8F9),
-                        hintText: dic['pass.old'],
-                        labelText: dic['pass.old'],
-                        suffixIcon: IconButton(
-                          iconSize: 18,
-                          icon: Icon(
-                            CupertinoIcons.clear_thick_circled,
-                            color: Theme.of(context).unselectedWidgetColor,
-                          ),
-                          onPressed: () {
-                            WidgetsBinding.instance.addPostFrameCallback((_) => _passOldCtrl.clear());
-                          },
-                        ),
+                        onPressed: () {
+                          WidgetsBinding.instance.addPostFrameCallback((_) => _passOldCtrl.clear());
+                        },
                       ),
+                      // decoration: InputDecoration(
+                      //   enabledBorder: const OutlineInputBorder(
+                      //     // width: 0.0 produces a thin "hairline" border
+                      //     borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+                      //     borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
+                      //   ),
+                      //   filled: true,
+                      //   fillColor: Color(0xffF4F8F9),
+                      //   // hintText: dic['pass.old'],
+                      //   // labelText: dic['pass.old'],
+                      //   // suffixIcon: IconButton(
+                      //   //   iconSize: 18,
+                      //   //   icon: Icon(
+                      //   //     CupertinoIcons.clear_thick_circled,
+                      //   //     color: Theme.of(context).unselectedWidgetColor,
+                      //   //   ),
+                      //   //   onPressed: () {
+                      //   //     WidgetsBinding.instance.addPostFrameCallback((_) => _passOldCtrl.clear());
+                      //   //   },
+                      //   // ),
+                      // ),
                       controller: _passOldCtrl,
                       validator: (v) {
                         // TODO: fix me: disable validator for polkawallet-RN exported keystore importing
@@ -172,18 +185,20 @@ class _ChangePassword extends State<ChangePasswordPage> {
                       inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                     ),
                     SizedBox(height: 20),
-                    TextFormField(
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
-                          borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
-                        ),
-                        filled: true,
-                        fillColor: Color(0xffF4F8F9),
-                        hintText: dic['pass.new'],
-                        labelText: dic['pass.new'],
-                      ),
+                EncointerTextFormField(
+                      // keyboardType: TextInputType.number,
+                  labelText: dic['pass.new'],
+
+                  // decoration: InputDecoration(
+                  //       // enabledBorder: const OutlineInputBorder(
+                  //       //   borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+                  //       //   borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
+                  //       // ),
+                  //       // filled: true,
+                  //       // fillColor: Color(0xffF4F8F9),
+                  //       hintText: dic['pass.new'],
+                  //       labelText: dic['pass.new'],
+                  //     ),
                       controller: _passCtrl,
                       validator: (v) {
                         return Fmt.checkPassword(v.trim()) ? null : accDic['create.password.error'];
@@ -192,18 +207,19 @@ class _ChangePassword extends State<ChangePasswordPage> {
                       inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                     ),
                     SizedBox(height: 20),
-                    TextFormField(
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
-                          borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
-                        ),
-                        filled: true,
-                        fillColor: Color(0xffF4F8F9),
-                        hintText: dic['pass.new2'],
-                        labelText: dic['pass.new2'],
-                      ),
+                    EncointerTextFormField(
+                      labelText: dic['pass.new2'],
+                      // keyboardType: TextInputType.number,
+                      // decoration: InputDecoration(
+                      //   enabledBorder: const OutlineInputBorder(
+                      //     borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+                      //     borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
+                      //   ),
+                      //   filled: true,
+                      //   fillColor: Color(0xffF4F8F9),
+                      //   hintText: dic['pass.new2'],
+                      //   labelText: dic['pass.new2'],
+                      // ),
                       controller: _pass2Ctrl,
                       validator: (v) {
                         return v.trim() != _passCtrl.text ? accDic['create.password2.error'] : null;
