@@ -112,6 +112,7 @@ class _ProfileState extends State<Profile> {
               Fmt.accountName(context, i),
               style: Theme.of(context).textTheme.headline4,
             ),
+            // This sizedBox is here to define a distance between the accounts
             SizedBox(width: 100),
           ],
         ),
