@@ -133,7 +133,7 @@ abstract class _SettingsStore with Store {
   }
 
   @action
-  Future<void> setDeveloperMode() {
+  Future<void> setDeveloperMode() async {
     developerMode = !developerMode;
   }
 
