@@ -5,7 +5,8 @@ import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -38,7 +39,8 @@ class _ChangePassword extends State<ChangePasswordPage> {
       setState(() {
         _submitting = true;
       });
-      var dic = I18n.of(context).profile;
+
+      final Translations dic = I18n.of(context).translationsForLocale();
       final String passOld = _passOldCtrl.text.trim();
       final String passNew = _passCtrl.text.trim();
       // check password
@@ -48,11 +50,11 @@ class _ChangePassword extends State<ChangePasswordPage> {
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
-              title: Text(dic['pass.error']),
-              content: Text(dic['pass.error.txt']),
+              title: Text(dic.profile.passError),
+              content: Text(dic.profile.passErrorTxt),
               actions: <Widget>[
                 CupertinoButton(
-                  child: Text(I18n.of(context).home['ok']),
+                  child: Text(I18n.of(context).translationsForLocale().home.ok),
                   onPressed: () {
                     _passOldCtrl.clear();
                     setState(() {
@@ -86,11 +88,11 @@ class _ChangePassword extends State<ChangePasswordPage> {
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
-              title: Text(dic['pass.success']),
-              content: Text(dic['pass.success.txt']),
+              title: Text(dic.profile.passSuccess),
+              content: Text(dic.profile.passSuccessTxt),
               actions: <Widget>[
                 CupertinoButton(
-                    child: Text(I18n.of(context).home['ok']),
+                    child: Text(I18n.of(context).translationsForLocale().home.ok),
                     onPressed: () => {
                           // moving back to profile page after changing password
                           Navigator.popUntil(context, ModalRoute.withName('/')),
@@ -105,11 +107,10 @@ class _ChangePassword extends State<ChangePasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    var dic = I18n.of(context).profile;
-    var accDic = I18n.of(context).account;
+    final Translations dic = I18n.of(context).translationsForLocale();
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic['pass.change']),
+        title: Text(dic.profile.passChange),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -124,13 +125,13 @@ class _ChangePassword extends State<ChangePasswordPage> {
                     Padding(
                       padding: EdgeInsets.only(top: 80, bottom: 16),
                       child: Center(
-                        child: Text(dic['pin.hint1'],
+                        child: Text(dic.profile.passHint1,
                             textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline2),
                       ),
                     ),
                     Center(
                       child: Text(
-                        dic['pin.hint2'],
+                        dic.profile.passHint2,
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.headline2.copyWith(
                               color: Colors.black,
@@ -140,7 +141,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                     Padding(
                       padding: const EdgeInsets.only(top: 30),
                       child: EncointerTextFormField(
-                        labelText: dic['pass.old'],
+                        labelText: dic.profile.passOld,
                         // todo make this conditional, if _passOldCtrl.text.length > 0, else return Container() or null.. didnt work
                         suffixIcon: IconButton(
                           iconSize: 18,
@@ -165,7 +166,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
                       child: EncointerTextFormField(
-                        labelText: dic['pass.new'],
+                        labelText: dic.profile.passNew,
                         // todo didnt use this before, but it could be handy
                         // suffixIcon: IconButton(
                         //   iconSize: 18,
@@ -188,7 +189,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                     Padding(
                       padding: const EdgeInsets.only(top: 20),
                       child: EncointerTextFormField(
-                        labelText: dic['pass.new2'],
+                        labelText: dic.profile.passNew2,
                         // todo didnt use this before, but it could be handy
                         // suffixIcon: IconButton(
                         //   iconSize: 18,
@@ -202,7 +203,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                         // ),
                         controller: _pass2Ctrl,
                         validator: (v) {
-                          return v.trim() != _passCtrl.text ? accDic['create.password2.error'] : null;
+                          return v.trim() != _passCtrl.text ? dic.profile.pass2Error : null;
                         },
                         obscureText: true,
                         inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
@@ -220,7 +221,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                   children: [
                     _submitting ? CupertinoActivityIndicator() : Container(),
                     Text(
-                      dic['contact.save'],
+                      dic.profile.contactSave,
                       style: Theme.of(context).textTheme.headline3.copyWith(
                             color: Color(0xffF4F8F9),
                           ),

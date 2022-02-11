@@ -9,10 +9,11 @@ import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:iconsax/iconsax.dart';
 
 class Profile extends StatefulWidget {
@@ -66,7 +67,7 @@ class _ProfileState extends State<Profile> {
           child: showPasswordInputDialog(
             context,
             store.account.currentAccount,
-            Text(I18n.of(context).profile['unlock']),
+            Text(I18n.of(context).translationsForLocale().profile.unlock),
             (password) {
               setState(() {
                 store.settings.setPin(password);
@@ -79,6 +80,7 @@ class _ProfileState extends State<Profile> {
   }
 
   List<Widget> _buildAccountList() {
+    final Translations dic = I18n.of(context).translationsForLocale();
     List<Widget> res = [];
 
     List<AccountData> accounts = store.account.accountListAll;
@@ -139,15 +141,14 @@ class _ProfileState extends State<Profile> {
         Navigator.popUntil(context, ModalRoute.withName('/'));
       });
     }
-    final Map<String, String> dic = I18n.of(context).profile;
+    final Translations dic = I18n.of(context).translationsForLocale();
 
     return Observer(
       builder: (_) {
         return Scaffold(
           appBar: AppBar(
             title: Text(
-              dic['title'],
-              style: Theme.of(context).textTheme.headline3,
+              dic.profile.title,
             ),
             iconTheme: IconThemeData(
               color: encointerGrey, //change your color here
@@ -216,7 +217,7 @@ class _ProfileState extends State<Profile> {
                     ]),
                   ),
                   ListTile(
-                    title: Text(dic['pass.change'], style: Theme.of(context).textTheme.headline3),
+                    title: Text(dic.profile.passChange, style: Theme.of(context).textTheme.headline3),
                     trailing: Icon(Icons.arrow_forward_ios, size: 18),
                     onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
                   ),
@@ -227,16 +228,16 @@ class _ProfileState extends State<Profile> {
                         context: context,
                         builder: (BuildContext context) {
                           return CupertinoAlertDialog(title: Text("Are you sure you want to remove all accounts?"),
-                              // content: Text(dic['pass.error.txt']),
+                              // content: Text(dic.profile.passErrorTxt),
                               actions: <Widget>[
                                 CupertinoButton(
                                   // key: Key('error-dialog-ok'),
-                                  child: Text(I18n.of(context).home['cancel']),
+                                  child: Text(I18n.of(context).translationsForLocale().home.cancel),
                                   onPressed: () => Navigator.of(context).pop(),
                                 ),
                                 CupertinoButton(
                                     // key: Key('error-dialog-ok'),
-                                    child: Text(I18n.of(context).home['ok']),
+                                    child: Text(I18n.of(context).translationsForLocale().home.ok),
                                     onPressed: () => {
                                           print("remove ${store.account.accountListAll}"),
                                           store.account.accountListAll.forEach((acc) {
@@ -249,11 +250,11 @@ class _ProfileState extends State<Profile> {
                         }),
                   ),
                   ListTile(
-                    title: Text(dic['reputation.overall'],
+                    title: Text(dic.profile.reputationOverall,
                         style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey)),
                   ),
                   ListTile(
-                    title: Text(dic['reputation.history'],
+                    title: Text(dic.reputationHistory,
                         style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey)),
                   ),
                   Padding(
@@ -261,7 +262,7 @@ class _ProfileState extends State<Profile> {
                     child: Row(
                       children: <Widget>[
                         Text(
-                          dic['developer'],
+                          dic.profile.developer,
                           style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
                         ),
                         Checkbox(
