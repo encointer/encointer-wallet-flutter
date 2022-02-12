@@ -135,7 +135,9 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    var h3Grey = Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey);
     _selectedNetwork = store.settings.endpoint;
+
     // if all accounts are deleted, go to createAccountPage
     if (store.account.accountListAll.isEmpty) {
       store.settings.setPin('');
@@ -149,9 +151,7 @@ class _ProfileState extends State<Profile> {
       builder: (_) {
         return Scaffold(
           appBar: AppBar(
-            title: Text(
-              dic.profile.title,
-            ),
+            title: Text(dic.profile.title),
             iconTheme: IconThemeData(
               color: encointerGrey, //change your color here
             ),
@@ -243,25 +243,19 @@ class _ProfileState extends State<Profile> {
                         }),
                   ),
                   ListTile(
-                    title: Text(dic.profile.reputationOverall,
-                        style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey)),
+                    title: Text(dic.profile.reputationOverall, style: h3Grey),
                   ),
                   ListTile(
-                    title: Text(dic.profile.reputationHistory,
-                        style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey)),
+                    title: Text(dic.profile.reputationHistory, style: h3Grey),
                   ),
                   Padding(
                     padding: EdgeInsets.all(16),
                     child: Row(
                       children: <Widget>[
-                        Text(
-                          dic.profile.developer,
-                          style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
-                        ),
+                        Text(dic.profile.developer, style: h3Grey),
                         Checkbox(
-                          value: store.settings.developerMode,
-                          onChanged: (_) => store.settings.toggleDeveloperMode()
-                        ),
+                            value: store.settings.developerMode,
+                            onChanged: (_) => store.settings.toggleDeveloperMode()),
                       ],
                     ),
                   ),
