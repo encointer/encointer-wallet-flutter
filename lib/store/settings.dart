@@ -133,7 +133,7 @@ abstract class _SettingsStore with Store {
   }
 
   @action
-  void setDeveloperMode() {
+  void toggleDeveloperMode() {
     developerMode = !developerMode;
   }
 

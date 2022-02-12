@@ -342,10 +342,10 @@ mixin _$SettingsStore on _SettingsStore, Store {
   final _$_SettingsStoreActionController = ActionController(name: '_SettingsStore');
 
   @override
-  void setDeveloperMode() {
-    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setDeveloperMode');
+  void toggleDeveloperMode() {
+    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.toggleDeveloperMode');
     try {
-      return super.setDeveloperMode();
+      return super.toggleDeveloperMode();
     } finally {
       _$_SettingsStoreActionController.endAction(_$actionInfo);
     }
