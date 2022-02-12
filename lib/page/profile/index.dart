@@ -248,16 +248,12 @@ class _ProfileState extends State<Profile> {
                   ListTile(
                     title: Text(dic.profile.reputationHistory, style: h3Grey),
                   ),
-                  Padding(
-                    padding: EdgeInsets.all(16),
-                    child: Row(
-                      children: <Widget>[
-                        Text(dic.profile.developer, style: h3Grey),
-                        Checkbox(
+                  ListTile(
+                      title: Text(dic.profile.developer, style: h3Grey),
+                       trailing: Checkbox(
                             value: store.settings.developerMode,
-                            onChanged: (_) => store.settings.toggleDeveloperMode()),
-                      ],
-                    ),
+                            onChanged: (_) => store.settings.toggleDeveloperMode(),
+                       ),
                   ),
                   if (store.settings.developerMode)
                     Row(

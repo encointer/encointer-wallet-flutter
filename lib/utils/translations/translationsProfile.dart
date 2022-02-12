@@ -94,7 +94,7 @@ class TranslationsEnProfile implements TranslationsProfile {
   get contactSave => 'Save';
   get delete => 'Delete Account';
   get deleteConfirm => 'Input your PIN to confirm';
-  get developer => 'developer mode';
+  get developer => 'Developer mode';
   get export => 'Export Account';
   get exportKeystoreOk => 'Keystore was copied to clipboard.';
   get exportMnemonicOk => 'Mnemonic was copied to clipboard.';
