@@ -135,7 +135,6 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    bool developerMode = store.settings.developerMode;
     _selectedNetwork = store.settings.endpoint;
     // if all accounts are deleted, go to createAccountPage
     if (store.account.accountListAll.isEmpty) {
@@ -260,17 +259,13 @@ class _ProfileState extends State<Profile> {
                           style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
                         ),
                         Checkbox(
-                          value: developerMode,
-                          onChanged: (bool value) {
-                            setState(() {
-                              store.settings.toggleDeveloperMode();
-                            });
-                          },
+                          value: store.settings.developerMode,
+                          onChanged: (_) => store.settings.toggleDeveloperMode()
                         ),
                       ],
                     ),
                   ),
-                  if (developerMode == true)
+                  if (store.settings.developerMode)
                     Row(
                       children: [
                         InkWell(
