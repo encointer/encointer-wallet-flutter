@@ -249,11 +249,11 @@ class _ProfileState extends State<Profile> {
                     title: Text(dic.profile.reputationHistory, style: h3Grey),
                   ),
                   ListTile(
-                      title: Text(dic.profile.developer, style: h3Grey),
-                       trailing: Checkbox(
-                            value: store.settings.developerMode,
-                            onChanged: (_) => store.settings.toggleDeveloperMode(),
-                       ),
+                    title: Text(dic.profile.developer, style: h3Grey),
+                    trailing: Checkbox(
+                      value: store.settings.developerMode,
+                      onChanged: (_) => store.settings.toggleDeveloperMode(),
+                    ),
                   ),
                   if (store.settings.developerMode)
                     ListTile(
