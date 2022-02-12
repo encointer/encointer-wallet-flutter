@@ -256,23 +256,28 @@ class _ProfileState extends State<Profile> {
                     ),
                   ),
                   if (store.settings.developerMode)
-                    ListTile(
-                      title: InkWell(
-                        key: Key('choose-network'),
-                        child: Observer(
-                          builder: (_) => Text(
-                            "change network (current: ${store.settings.endpoint.info})",
-                            style: TextStyle(color: Colors.orange),
+                    // Column in case we add more developer options
+                    Column(
+                      children: <Widget>[
+                        ListTile(
+                          title: InkWell(
+                            key: Key('choose-network'),
+                            child: Observer(
+                              builder: (_) => Text(
+                                "Change network (current: ${store.settings.endpoint.info})",
+                                style: Theme.of(context).textTheme.headline4,
+                              ),
+                            ),
+                            onTap: () => Navigator.of(context).pushNamed('/network'),
+                          ),
+                          trailing: Padding(
+                            padding: EdgeInsets.only(right: 13), // align with developer checkbox above
+                            child: store.settings.isConnected
+                                ? Icon(Icons.check, color: Colors.green)
+                                : CupertinoActivityIndicator(),
                           ),
                         ),
-                        onTap: () => Navigator.of(context).pushNamed('/network'),
-                      ),
-                      trailing: Padding(
-                        padding: EdgeInsets.only(right: 13), // align with developer checkbox above
-                        child: store.settings.isConnected
-                            ? Icon(Icons.check, color: Colors.green)
-                            : CupertinoActivityIndicator(),
-                      ),
+                      ],
                     ),
                 ],
               );
