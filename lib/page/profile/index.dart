@@ -256,23 +256,23 @@ class _ProfileState extends State<Profile> {
                        ),
                   ),
                   if (store.settings.developerMode)
-                    Row(
-                      children: [
-                        InkWell(
-                          key: Key('choose-network'),
-                          child: Observer(
-                            builder: (_) => Text(
-                              "change network (current: ${store.settings.endpoint.info})",
-                              style: TextStyle(color: Colors.orange),
-                            ),
+                    ListTile(
+                      title: InkWell(
+                        key: Key('choose-network'),
+                        child: Observer(
+                          builder: (_) => Text(
+                            "change network (current: ${store.settings.endpoint.info})",
+                            style: TextStyle(color: Colors.orange),
                           ),
-                          onTap: () => Navigator.of(context).pushNamed('/network'),
                         ),
-                        SizedBox(width: 8),
-                        store.settings.isConnected
+                        onTap: () => Navigator.of(context).pushNamed('/network'),
+                      ),
+                      trailing: Padding(
+                        padding: EdgeInsets.only(right: 13), // align with developer checkbox above
+                        child: store.settings.isConnected
                             ? Icon(Icons.check, color: Colors.green)
                             : CupertinoActivityIndicator(),
-                      ],
+                      ),
                     ),
                 ],
               );
