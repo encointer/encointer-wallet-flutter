@@ -1,19 +1,21 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
+import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class AccountManagePage extends StatefulWidget {
   AccountManagePage(this.store);
@@ -47,15 +49,28 @@ class _AccountManagePageState extends State<AccountManagePage> {
     showCupertinoDialog(
       context: context,
       builder: (BuildContext context) {
-        return showPasswordInputDialog(
-            context, store.account.currentAccount, Text(I18n.of(context).profile['delete.confirm']), (_) {
-          store.account.removeAccount(store.account.currentAccount).then((_) {
-            // refresh balance
-            store.assets.loadAccountCache();
-            webApi.assets.fetchBalance();
-          });
-          Navigator.of(context).pop();
-        });
+        return CupertinoAlertDialog(
+          title: Text(I18n.of(context).translationsForLocale().profile.accountDelete),
+          actions: <Widget>[
+            CupertinoButton(
+              child: Text(I18n.of(context).translationsForLocale().home.cancel),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            CupertinoButton(
+              child: Text(I18n.of(context).translationsForLocale().home.ok),
+              onPressed: () => {
+                store.account.removeAccount(store.account.currentAccount).then(
+                  (_) {
+                    // refresh balance
+                    store.assets.loadAccountCache();
+                    webApi.assets.fetchBalance();
+                    Navigator.of(context).pop();
+                  },
+                ),
+              },
+            ),
+          ],
+        );
       },
     );
   }
@@ -100,9 +115,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
     _nameCtrl = TextEditingController(text: store.account.currentAccount.name);
     _nameCtrl.selection = TextSelection.fromPosition(TextPosition(offset: _nameCtrl.text.length));
 
-    final Map<String, String> dic = I18n.of(context).profile;
-    // Color primaryColor = Theme.of(context).primaryColor;
-
+    final Translations dic = I18n.of(context).translationsForLocale();
+    Color primaryColor = Theme.of(context).primaryColor;
     var args = {
       "isShare": true,
     };
@@ -115,11 +129,11 @@ class _AccountManagePageState extends State<AccountManagePage> {
                   validator: (v) {
                     String name = v.trim();
                     if (name.length == 0) {
-                      return dic['contact.name.error'];
+                      return dic.profile.contactNameError;;
                     }
                     int exist = store.account.optionalAccounts.indexWhere((i) => i.name == name);
                     if (exist > -1) {
-                      return dic['contact.name.exist'];
+                      return dic.profile.contactNameExist;
                     }
                     return null;
                   },
@@ -184,7 +198,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       padding: const EdgeInsets.only(left: 16),
                       child: Row(
                         children: <Widget>[
-                          Text(dic['communities'],
+                          Text(dic.communties,
                               style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack))
                         ],
                       ),
@@ -208,7 +222,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           children: [
                             Icon(Iconsax.trash),
                             SizedBox(width: 12),
-                            Text(dic['delete'], style: Theme.of(context).textTheme.headline3),
+                            Text(dic.profile.delete, style: Theme.of(context).textTheme.headline3),
                           ],
                         ),
                         onPressed: () {
@@ -229,7 +243,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       Icon(Iconsax.share),
                       SizedBox(width: 12),
                       Text(
-                        dic['account.share'],
+                        dic.profile.delete,
                         style: Theme.of(context).textTheme.headline3.copyWith(
                               color: encointerLightBlue,
                             ),
