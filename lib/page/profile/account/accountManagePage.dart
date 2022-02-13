@@ -80,26 +80,26 @@ class _AccountManagePageState extends State<AccountManagePage> {
     final String tokenView = Fmt.tokenView(symbol);
     return store.encointer.balanceEntries.entries.map((i) {
       if (cm != null) {
-          return ListTile(
-            contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
-            leading: Container(
-              width: 50,
-              child: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio),
-            ),
-            title: Text(name, style: Theme.of(context).textTheme.headline3),
-            subtitle: Text(tokenView, style: Theme.of(context).textTheme.headline3),
-            trailing: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ',
-                  style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
-                ),
-                // Container(width: 16),
-              ],
-            ),
-          );
+        return ListTile(
+          contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
+          leading: Container(
+            width: 50,
+            child: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio),
+          ),
+          title: Text(name, style: Theme.of(context).textTheme.headline3),
+          subtitle: Text(tokenView, style: Theme.of(context).textTheme.headline3),
+          trailing: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ',
+                style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
+              ),
+              // Container(width: 16),
+            ],
+          ),
+        );
       } else
         return Container();
     }).toList();
@@ -240,7 +240,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       Icon(Iconsax.share),
                       SizedBox(width: 12),
                       Text(
-                        dic.profile.delete,
+                        dic.profile.accountShare,
                         style: Theme.of(context).textTheme.headline3.copyWith(
                               color: ZurichLion.shade50,
                             ),
