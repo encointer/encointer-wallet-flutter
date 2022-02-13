@@ -1,21 +1,18 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
-import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
-import 'package:encointer_wallet/common/components/roundedButton.dart';
-import 'package:encointer_wallet/common/components/roundedCard.dart';
+import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class AccountManagePage extends StatefulWidget {
   AccountManagePage(this.store);
@@ -76,34 +73,33 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 
   List<Widget> _getBalances() {
+    final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
     CommunityMetadata cm = store.encointer.communityMetadata;
     String name = cm != null ? cm.name : '';
     String symbol = cm != null ? cm.symbol : '';
     final String tokenView = Fmt.tokenView(symbol);
     return store.encointer.balanceEntries.entries.map((i) {
       if (cm != null) {
-        return RoundedCard(
-          margin: EdgeInsets.only(top: 16),
-          child: ListTile(
+          return ListTile(
+            contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
             leading: Container(
-              width: 36,
-              child: Image.asset('assets/images/assets/${symbol.isNotEmpty ? symbol : 'DOT'}.png'),
+              width: 50,
+              child: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio),
             ),
-            title: Text(name),
-            subtitle: Text(tokenView),
+            title: Text(name, style: Theme.of(context).textTheme.headline3),
+            subtitle: Text(tokenView, style: Theme.of(context).textTheme.headline3),
             trailing: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  Fmt.doubleFormat(store.encointer.communityBalance),
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: encointerBlack),
+                  '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ',
+                  style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
                 ),
-                Container(width: 16),
+                // Container(width: 16),
               ],
             ),
-          ),
-        );
+          );
       } else
         return Container();
     }).toList();
@@ -116,7 +112,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
     _nameCtrl.selection = TextSelection.fromPosition(TextPosition(offset: _nameCtrl.text.length));
 
     final Translations dic = I18n.of(context).translationsForLocale();
-    Color primaryColor = Theme.of(context).primaryColor;
     var args = {
       "isShare": true,
     };
@@ -129,7 +124,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                   validator: (v) {
                     String name = v.trim();
                     if (name.length == 0) {
-                      return dic.profile.contactNameError;;
+                      return dic.profile.contactNameError;
                     }
                     int exist = store.account.optionalAccounts.indexWhere((i) => i.name == name);
                     if (exist > -1) {
@@ -181,9 +176,11 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(Fmt.address(store.account.currentAddress), style: TextStyle(fontSize: 20)),
-                        ElevatedButton(
-                          style: ElevatedButton.styleFrom(shadowColor: Colors.transparent),
-                          child: Icon(Iconsax.copy),
+                        IconButton(
+                          // style: ElevatedButton.styleFrom(shadowColor: Colors.transparent),
+                          icon: Icon(Iconsax.copy),
+                          color: ZurichLion.shade500,
+                          // border: 2px solid,
                           onPressed: () {
                             final data = ClipboardData(text: store.account.currentAddress);
                             Clipboard.setData(data);
@@ -198,8 +195,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       padding: const EdgeInsets.only(left: 16),
                       child: Row(
                         children: <Widget>[
-                          Text(dic.communties,
-                              style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack))
+                          Text(dic.encointer.communities,
+                              style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey))
                         ],
                       ),
                     ),
@@ -245,7 +242,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       Text(
                         dic.profile.delete,
                         style: Theme.of(context).textTheme.headline3.copyWith(
-                              color: encointerLightBlue,
+                              color: ZurichLion.shade50,
                             ),
                       ),
                     ],
