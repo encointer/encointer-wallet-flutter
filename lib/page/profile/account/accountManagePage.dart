@@ -1,5 +1,4 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
-import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
@@ -61,7 +60,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     // refresh balance
                     store.assets.loadAccountCache();
                     webApi.assets.fetchBalance();
-                    Navigator.of(context).pop();
+                    Navigator.popUntil(context, ModalRoute.withName('/'));
                   },
                 ),
               },
@@ -103,6 +102,42 @@ class _AccountManagePageState extends State<AccountManagePage> {
       } else
         return Container();
     }).toList();
+  }
+
+  void _showActions(BuildContext pageContext) {
+    final Translations dic = I18n.of(context).translationsForLocale();
+    showCupertinoModalPopup(
+      context: pageContext,
+      builder: (BuildContext context) => CupertinoActionSheet(
+        actions: <Widget>[
+          CupertinoActionSheetAction(
+            child: Text(
+              dic.profile.delete,
+            ),
+            onPressed: () {
+              _onDeleteAccount(context);
+              // Navigator.of(context).pop();
+            },
+          ),
+          CupertinoActionSheetAction(
+            child: Text(
+              dic.profile.export,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+              // Navigator.of(context).pushNamed(ContactPage.route, arguments: i);
+            },
+          ),
+        ],
+
+        cancelButton: CupertinoActionSheetAction(
+          child: Text(I18n.of(context).translationsForLocale().home.cancel),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+    );
   }
 
   @override
@@ -206,49 +241,125 @@ class _AccountManagePageState extends State<AccountManagePage> {
               Expanded(
                 child: ListView(padding: EdgeInsets.all(16), children: _getBalances()),
               ),
-              Padding(
-                padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                child: Container(
-                  child: Center(
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Iconsax.trash),
-                            SizedBox(width: 12),
-                            Text(dic.profile.delete, style: Theme.of(context).textTheme.headline3),
-                          ],
-                        ),
-                        onPressed: () {
-                          _onDeleteAccount(context);
-                        },
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.all(16),
-                child: PrimaryButton(
-                  onPressed: () => Navigator.pushNamed(context, ReceivePage.route, arguments: args),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Iconsax.share),
-                      SizedBox(width: 12),
-                      Text(
-                        dic.profile.accountShare,
-                        style: Theme.of(context).textTheme.headline3.copyWith(
-                              color: ZurichLion.shade50,
+
+              // FORMER DELETE BUTTON
+              // Padding(
+              //   padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
+              //   child: SizedBox(
+              //     width: double.infinity,
+              //     child: ElevatedButton(
+              //       style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
+              //       child: Row(
+              //         mainAxisAlignment: MainAxisAlignment.center,
+              //         children: [
+              //           Icon(Iconsax.trash),
+              //           SizedBox(width: 12),
+              //           Text(dic.profile.delete, style: Theme.of(context).textTheme.headline3),
+              //         ],
+              //       ),
+              //       onPressed: () {
+              //         _onDeleteAccount(context);
+              //       },
+              //     ),
+              //   ),
+              // ),
+              Row(
+                // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                Container(
+                      width: MediaQuery.of(context).size.width * 0.75,
+                      // child: PrimaryButton(
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              // primary: Colors.transparent,
+                              // onPrimary: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                // don't redefine the entire style just the border radii
+                                borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.zero),
+                              ),
                             ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Iconsax.share),
+                                  SizedBox(width: 12),
+                                  Text(dic.profile.accountShare),
+                                ],
+                              ),
+                            ),
+                            onPressed: () {
+                              // if (acc.address != '') {
+                              Navigator.pushNamed(context, ReceivePage.route, arguments: args);
+                            }),
+                      // ),
+                    ),
+                  SizedBox(width: 2),
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.25 - 2,
+                      // child: PrimaryButton(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            // primary: Colors.transparent,
+                            // onPrimary: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              // don't redefine the entire style just the border radii
+                              borderRadius: BorderRadius.horizontal(left: Radius.zero, right: Radius.circular(15)),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                SizedBox(width: 12),
+                                Icon(Icons.more_vert),
+                              ],
+                            ),
+                          ),
+                          onPressed: () => _showActions(context),
+                        ),
                       ),
-                    ],
-                  ),
-                ),
+                    // ),
+                ],
               ),
+
+              // ONE WAY OF IMPLEMENTING THE SHARE PART
+              // ListTile(
+              //   leading: Icon(Iconsax.share),
+              //   title: Text(
+              //     dic.profile.accountShare,
+              //     style: Theme.of(context).textTheme.headline3.copyWith(
+              //           color: Colors.blue,
+              //         ),
+              //   ),
+              //   trailing: Container(
+              //     width: 36,
+              //     child: IconButton(
+              //       icon: Icon(Icons.more_vert),
+              //       onPressed: () => _showActions(context),
+              //     ),
+              //   ),
+              // ),
+
+              // FORMER SHARE BUTTON
+              // PrimaryButton(
+              //   onPressed: () => Navigator.pushNamed(context, ReceivePage.route, arguments: args),
+              //   child: Row(
+              //     mainAxisAlignment: MainAxisAlignment.center,
+              //     children: [
+              //       Icon(Iconsax.share),
+              //       SizedBox(width: 12),
+              //       Text(
+              //         dic.profile.accountShare,
+              //         style: Theme.of(context).textTheme.headline3.copyWith(
+              //               color: ZurichLion.shade50,
+              //             ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ),
