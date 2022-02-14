@@ -180,7 +180,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
             title: Container(),
-            content: Text(dic.profile.contactExist),
+            content: Text(dic.profile.contactAlreadyExists),
             actions: <Widget>[
               CupertinoButton(
                 child: Text(I18n.of(context).translationsForLocale().home.ok),

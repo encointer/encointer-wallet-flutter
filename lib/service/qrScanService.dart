@@ -43,7 +43,7 @@ class QrScanData {
   /// version of our format definition
   final String version;
 
-  /// ss58 encoded public key of the account.
+  /// ss58 encoded public key of the account address.
   /// Payment: account of the receiver of the payment;
   /// contact: account to add to contacts;
   /// claim: ????????????????? whose account is it in this case?
