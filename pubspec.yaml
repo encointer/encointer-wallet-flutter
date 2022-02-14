@@ -45,6 +45,7 @@ dependencies:
   quiver: ^3.0.1
   share: ^0.6.5+4
   dio: ^4.0.0
+  sliding_up_panel: ^2.0.0+1
 #  image_cropper: ^1.4.0
   image_picker: ^0.7.5+2
 
