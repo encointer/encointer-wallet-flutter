@@ -155,9 +155,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                         ),
                         controller: _passOldCtrl,
                         validator: (v) {
-                          // TODO: fix me: disable validator for polkawallet-RN exported keystore importing
-                          return null;
-                          // return Fmt.checkPassword(v.trim()) ? null : accDic['create.password.error'];
+                          return Fmt.checkPassword(v.trim()) ? null : dic.account.createPasswordError;
                         },
                         obscureText: true,
                         inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
