@@ -51,7 +51,6 @@ class _TransferPageState extends State<TransferPage> {
 
   AccountData _accountTo;
   String _tokenSymbol;
-  bool _isEncointerCommunityCurrency;
   String _communitySymbol;
 
   @override
@@ -61,10 +60,8 @@ class _TransferPageState extends State<TransferPage> {
         final Translations dic = I18n.of(context).translationsForLocale();
 
         TransferPageParams params = ModalRoute.of(context).settings.arguments;
-        _isEncointerCommunityCurrency = params.isEncointerCommunityCurrency;
-        if (_isEncointerCommunityCurrency) {
-          _communitySymbol = params.communitySymbol;
-        }
+
+        _communitySymbol = params.communitySymbol;
         _tokenSymbol = params.symbol;
 
         int decimals = ert_decimals;
@@ -184,48 +181,31 @@ class _TransferPageState extends State<TransferPage> {
   void _handleSubmit() {
     if (_formKey.currentState.validate()) {
       String symbol = _tokenSymbol ?? store.settings.networkState.tokenSymbol;
-      int decimals = store.settings.networkState.tokenDecimals;
       final String tokenView = Fmt.tokenView(symbol);
       final address = Fmt.addressOfAccount(_accountTo, store);
+
       var args = {
         "title": I18n.of(context).translationsForLocale().assets.transfer + ' $tokenView',
         "txInfo": {
-          "module": 'balances',
-          "call": 'transfer',
-        },
-        "detail": jsonEncode({
-          "destination": address,
-          "currency": tokenView,
-          "amount": _amountCtrl.text.trim(),
-        }),
-        "params": [
-          // params.to
-          address,
-          // params.amount
-          Fmt.tokenInt(_amountCtrl.text.trim(), decimals).toString(),
-        ],
-      };
-      // Todo: why was it here depending on the endpoint? Do we not want to facilitate ERT transfers?
-      if (_isEncointerCommunityCurrency) {
-        args['txInfo'] = {
           "module": 'encointerBalances',
           "call": 'transfer',
           "cid": symbol,
-        };
-        args["detail"] = jsonEncode({
+        },
+        "detail": jsonEncode({
           "destination": address,
           "currency": _communitySymbol,
           "amount": _amountCtrl.text.trim(),
-        });
-        args['params'] = [
+        }),
+        "params": [
           // params.to
           address,
           // params.currencyId
           symbol,
           // params.amount
           _amountCtrl.text.trim(),
-        ];
-      }
+        ],
+      };
+
       args['onFinish'] = (BuildContext txPageContext, Map res) {
         final TransferPageParams routeArgs = ModalRoute.of(context).settings.arguments;
         if (store.settings.endpointIsEncointer) {
@@ -279,7 +259,7 @@ class _TransferPageState extends State<TransferPage> {
   }
 
   bool balanceTooLow(String v, double available, int decimals) {
-      return double.parse(v.trim()) >= available;
+    return double.parse(v.trim()) >= available;
   }
 }
 
