@@ -142,17 +142,6 @@ class _ChangePassword extends State<ChangePasswordPage> {
                       padding: const EdgeInsets.only(top: 30),
                       child: EncointerTextFormField(
                         labelText: dic.profile.passOld,
-                        // todo make this conditional, if _passOldCtrl.text.length > 0, else return Container() or null.. didnt work
-                        suffixIcon: IconButton(
-                          iconSize: 18,
-                          icon: Icon(
-                            CupertinoIcons.clear_thick_circled,
-                            color: Theme.of(context).unselectedWidgetColor,
-                          ),
-                          onPressed: () {
-                            WidgetsBinding.instance.addPostFrameCallback((_) => _passOldCtrl.clear());
-                          },
-                        ),
                         controller: _passOldCtrl,
                         validator: (v) {
                           return Fmt.checkPassword(v.trim()) ? null : dic.account.createPasswordError;
@@ -165,17 +154,6 @@ class _ChangePassword extends State<ChangePasswordPage> {
                       padding: const EdgeInsets.only(top: 20),
                       child: EncointerTextFormField(
                         labelText: dic.profile.passNew,
-                        // todo didnt use this before, but it could be handy
-                        // suffixIcon: IconButton(
-                        //   iconSize: 18,
-                        //   icon: Icon(
-                        //     CupertinoIcons.clear_thick_circled,
-                        //     color: Theme.of(context).unselectedWidgetColor,
-                        //   ),
-                        //   onPressed: () {
-                        //     WidgetsBinding.instance.addPostFrameCallback((_) => _passCtrl.clear());
-                        //   },
-                        // ),
                         controller: _passCtrl,
                         validator: (v) {
                           return Fmt.checkPassword(v.trim())
@@ -190,17 +168,6 @@ class _ChangePassword extends State<ChangePasswordPage> {
                       padding: const EdgeInsets.only(top: 20),
                       child: EncointerTextFormField(
                         labelText: dic.profile.passNew2,
-                        // todo didnt use this before, but it could be handy
-                        // suffixIcon: IconButton(
-                        //   iconSize: 18,
-                        //   icon: Icon(
-                        //     CupertinoIcons.clear_thick_circled,
-                        //     color: Theme.of(context).unselectedWidgetColor,
-                        //   ),
-                        //   onPressed: () {
-                        //     WidgetsBinding.instance.addPostFrameCallback((_) => _pass2Ctrl.clear());
-                        //   },
-                        // ),
                         controller: _pass2Ctrl,
                         validator: (v) {
                           return v.trim() != _passCtrl.text
