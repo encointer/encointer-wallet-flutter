@@ -107,8 +107,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                         child: Icon(Iconsax.star, color: Colors.yellow),
                       );
                     }
-                  }
-                  else
+                  } else
                     return Container(width: 0, height: 0);
                 },
               ),

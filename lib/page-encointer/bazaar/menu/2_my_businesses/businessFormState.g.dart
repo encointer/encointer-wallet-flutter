@@ -99,13 +99,11 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
     });
   }
 
-  final _$_BusinessFormStateActionController =
-      ActionController(name: '_BusinessFormState');
+  final _$_BusinessFormStateActionController = ActionController(name: '_BusinessFormState');
 
   @override
   void validateName(dynamic value) {
-    final _$actionInfo = _$_BusinessFormStateActionController.startAction(
-        name: '_BusinessFormState.validateName');
+    final _$actionInfo = _$_BusinessFormStateActionController.startAction(name: '_BusinessFormState.validateName');
     try {
       return super.validateName(value);
     } finally {
@@ -115,8 +113,8 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
 
   @override
   void validateDescription(dynamic value) {
-    final _$actionInfo = _$_BusinessFormStateActionController.startAction(
-        name: '_BusinessFormState.validateDescription');
+    final _$actionInfo =
+        _$_BusinessFormStateActionController.startAction(name: '_BusinessFormState.validateDescription');
     try {
       return super.validateDescription(value);
     } finally {
@@ -126,8 +124,7 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
 
   @override
   void validateStreet(dynamic value) {
-    final _$actionInfo = _$_BusinessFormStateActionController.startAction(
-        name: '_BusinessFormState.validateStreet');
+    final _$actionInfo = _$_BusinessFormStateActionController.startAction(name: '_BusinessFormState.validateStreet');
     try {
       return super.validateStreet(value);
     } finally {
@@ -137,8 +134,8 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
 
   @override
   void validateStreetAddendum(dynamic value) {
-    final _$actionInfo = _$_BusinessFormStateActionController.startAction(
-        name: '_BusinessFormState.validateStreetAddendum');
+    final _$actionInfo =
+        _$_BusinessFormStateActionController.startAction(name: '_BusinessFormState.validateStreetAddendum');
     try {
       return super.validateStreetAddendum(value);
     } finally {
@@ -148,8 +145,7 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
 
   @override
   void validateZipCode(dynamic value) {
-    final _$actionInfo = _$_BusinessFormStateActionController.startAction(
-        name: '_BusinessFormState.validateZipCode');
+    final _$actionInfo = _$_BusinessFormStateActionController.startAction(name: '_BusinessFormState.validateZipCode');
     try {
       return super.validateZipCode(value);
     } finally {
@@ -159,8 +155,7 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
 
   @override
   void validateCity(dynamic value) {
-    final _$actionInfo = _$_BusinessFormStateActionController.startAction(
-        name: '_BusinessFormState.validateCity');
+    final _$actionInfo = _$_BusinessFormStateActionController.startAction(name: '_BusinessFormState.validateCity');
     try {
       return super.validateCity(value);
     } finally {
@@ -186,9 +181,7 @@ mixin _$BusinessFormErrorState on _BusinessFormErrorState, Store {
 
   @override
   bool get hasErrors =>
-      (_$hasErrorsComputed ??= Computed<bool>(() => super.hasErrors,
-              name: '_BusinessFormErrorState.hasErrors'))
-          .value;
+      (_$hasErrorsComputed ??= Computed<bool>(() => super.hasErrors, name: '_BusinessFormErrorState.hasErrors')).value;
 
   final _$nameAtom = Atom(name: '_BusinessFormErrorState.name');
 
@@ -235,8 +228,7 @@ mixin _$BusinessFormErrorState on _BusinessFormErrorState, Store {
     });
   }
 
-  final _$streetAddendumAtom =
-      Atom(name: '_BusinessFormErrorState.streetAddendum');
+  final _$streetAddendumAtom = Atom(name: '_BusinessFormErrorState.streetAddendum');
 
   @override
   String get streetAddendum {
