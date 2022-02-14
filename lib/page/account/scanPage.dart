@@ -19,9 +19,9 @@ class ScanPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future onScan(String txt, String rawData) async {
+    Future onScan(String text, String rawData) async {
       String address = '';
-      final String data = txt.trim();
+      final String data = text.trim();
       if (data != null) {
         List<String> ls = data.split(':');
         for (String item in ls) {
