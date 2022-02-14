@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:encointer_wallet/common/components/AddressInputField.dart';
 import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
@@ -14,11 +13,11 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class TransferPageParams {
   TransferPageParams(
@@ -60,9 +59,6 @@ class _TransferPageState extends State<TransferPage> {
     return Observer(
       builder: (_) {
         final Translations dic = I18n.of(context).translationsForLocale();
-        final String baseTokenSymbol = store.settings.networkState.tokenSymbol;
-        String symbol = _tokenSymbol ?? baseTokenSymbol;
-        final bool isBaseToken = _tokenSymbol == baseTokenSymbol;
 
         TransferPageParams params = ModalRoute.of(context).settings.arguments;
         _isEncointerCommunityCurrency = params.isEncointerCommunityCurrency;
@@ -71,12 +67,9 @@ class _TransferPageState extends State<TransferPage> {
         }
         _tokenSymbol = params.symbol;
 
-        int decimals = _isEncointerCommunityCurrency
-            ? encointer_currencies_decimals
-            : store.settings.networkState.tokenDecimals ?? ert_decimals;
+        int decimals = ert_decimals;
 
-        BigInt available; // BigInt
-        available = _getAvailableEncointerOrBaseToken(isBaseToken, symbol);
+        double available = store.encointer.communityBalance;
         print('Available: $available');
 
         return Form(
@@ -285,22 +278,8 @@ class _TransferPageState extends State<TransferPage> {
     super.dispose();
   }
 
-  bool balanceTooLow(String v, BigInt available, int decimals) {
-    if (_isEncointerCommunityCurrency) {
-      return double.parse(v.trim()) >= available.toDouble() - 0.0001;
-    } else {
-      return double.parse(v.trim()) >= available / BigInt.from(pow(10, decimals)) - 0.0001;
-    }
-  }
-
-  BigInt _getAvailableEncointerOrBaseToken(bool isBaseToken, String symbol) {
-    if (_isEncointerCommunityCurrency) {
-      return Fmt.tokenInt(store.encointer.communityBalance.toString(), encointer_currencies_decimals);
-    } else {
-      return isBaseToken
-          ? store.assets.balances[symbol.toUpperCase()].transferable
-          : Fmt.balanceInt(store.assets.tokenBalances[symbol.toUpperCase()]);
-    }
+  bool balanceTooLow(String v, double available, int decimals) {
+      return double.parse(v.trim()) >= available;
   }
 }
 
@@ -313,19 +292,18 @@ class AccountBalanceWithMoreDigits extends StatelessWidget {
   }) : super(key: key);
 
   final AppStore store;
-  final BigInt available;
+  final double available;
   final int decimals;
 
   @override
   Widget build(BuildContext context) {
     return Center(
       child: RichText(
-        // need text base line aligment
+        // need text base line alignment
         text: TextSpan(
-          text: '${Fmt.priceFloorBigInt(
+          text: '${Fmt.doubleFormat(
             available,
-            decimals,
-            lengthMax: 6,
+            length: 6,
           )} ',
           style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
           children: const <TextSpan>[
