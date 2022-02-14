@@ -29,64 +29,64 @@ class _AccountSharePageState extends State<AccountSharePage> {
     // final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
 
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          title: Text(I18n.of(context).translationsForLocale().profile.share),
-          leading: Container(),
-          actions: [
-            IconButton(
-              key: Key('close-share-page'),
-              icon: Icon(Icons.close),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            )
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: Text(I18n.of(context).translationsForLocale().profile.share),
+        leading: Container(),
+        actions: [
+          IconButton(
+            key: Key('close-share-page'),
+            icon: Icon(Icons.close),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          )
+        ],
+      ),
+      body: SafeArea(
+        child: ListView(
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 48),
+                  child: Text(
+                    I18n.of(context).translationsForLocale().profile.qrScanHintAccount,
+                    style: Theme.of(context).textTheme.headline3.copyWith(color: encointerBlack),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                Column(
+                  children: [
+                    Container(
+                      child: QrImage(
+                        data: contact.join('\n'),
+                        embeddedImage: AssetImage('assets/images/public/app.png'),
+                        // webApi.ipfs.getCommunityIcon(widget.store.encointer.communityIconsCid, devicePixelRatio).image,
+                        embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
+                      ),
+                    ),
+                    Text("Or you can share a link:",
+                        style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey)),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.share, color: ZurichLion.shade500),
+                          SizedBox(width: 12),
+                          Text(I18n.of(context).translationsForLocale().profile.sendLink,
+                              style: Theme.of(context).textTheme.headline3),
+                        ],
+                      ),
+                      onPressed: () => Share.share(contact.join('\n')),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ],
         ),
-        body: SafeArea(
-          child: ListView(
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 48),
-                    child: Text(
-                      I18n.of(context).translationsForLocale().profile.qrScanHintAccount,
-                      style: Theme.of(context).textTheme.headline3.copyWith(color: encointerBlack),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-              Column(
-                children: [
-                  Container(
-                    child: QrImage(
-                      data: contact.join('\n'),
-                      embeddedImage: AssetImage('assets/images/public/app.png'),
-                      // webApi.ipfs.getCommunityIcon(widget.store.encointer.communityIconsCid, devicePixelRatio).image,
-                      embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
-                    ),
-                  ),
-                  Text("Or you can share a link:",
-                      style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey)),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.share, color: ZurichLion.shade500),
-                        SizedBox(width: 12),
-                        Text(I18n.of(context).translationsForLocale().profile.sendLink,
-                            style: Theme.of(context).textTheme.headline3),
-                      ],
-                    ),
-                      onPressed: () => Share.share(contact.join('\n')),
-                  ),
-                  ],
-              ),
-            ],
-          ),
-        ],
-          ),
       ),
     );
   }

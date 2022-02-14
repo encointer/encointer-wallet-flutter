@@ -108,16 +108,16 @@ class _ReceivePageState extends State<ReceivePage> {
               SizedBox(height: 8),
               Column(children: [
                 Container(
-                  child:
-                      // NOT WORKING YET, should probably add observer
-                  // _amountController.text.isNotEmpty ?
-                  QrImage(
-                    data: invoice.join('\n'),
-                    embeddedImage: AssetImage('assets/images/public/app.png'),
-                    embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
-                  )
-        // : Container(),
-                ),
+                    child:
+                        // NOT WORKING YET, should probably add observer
+                        // _amountController.text.isNotEmpty ?
+                        QrImage(
+                  data: invoice.join('\n'),
+                  embeddedImage: AssetImage('assets/images/public/app.png'),
+                  embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
+                )
+                    // : Container(),
+                    ),
                 InkWell(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 24),
@@ -134,17 +134,18 @@ class _ReceivePageState extends State<ReceivePage> {
                         ]),
                   ),
                   onTap: () => {
-                    if(_formKey.currentState.validate()) {
-                      print("amount ${_amountController.text} is stored"),
-                      invoice[4] = _amountController.text,
-                      print("the final share message is: ${invoice.join('\n')}"),
-                      // not working yet with map..
-                      // invoiceMap['amount'] = '${_amountController.text}',
-                      // how to define type?
-                      // var invoiceString = '',
-                      // invoiceMap.values.map((e) => invoiceString.join(e.toString(),'\n')),
-                      Share.share(invoice.join('\n')),
-                    }
+                    if (_formKey.currentState.validate())
+                      {
+                        print("amount ${_amountController.text} is stored"),
+                        invoice[4] = _amountController.text,
+                        print("the final share message is: ${invoice.join('\n')}"),
+                        // not working yet with map..
+                        // invoiceMap['amount'] = '${_amountController.text}',
+                        // how to define type?
+                        // var invoiceString = '',
+                        // invoiceMap.values.map((e) => invoiceString.join(e.toString(),'\n')),
+                        Share.share(invoice.join('\n')),
+                      }
                   },
                 ),
               ])
