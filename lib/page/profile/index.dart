@@ -152,9 +152,7 @@ class _ProfileState extends State<Profile> {
         return Scaffold(
           appBar: AppBar(
             title: Text(dic.profile.title),
-            iconTheme: IconThemeData(
-              color: encointerGrey, //change your color here
-            ),
+            iconTheme: IconThemeData(color: encointerGrey), //change your color here,
             centerTitle: true,
             backgroundColor: Colors.transparent,
             shadowColor: Colors.transparent,
@@ -163,7 +161,6 @@ class _ProfileState extends State<Profile> {
             builder: (_) {
               if (_selectedNetwork == null) return Container();
               return ListView(
-                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
                   Container(
                     padding: EdgeInsets.all(16),
