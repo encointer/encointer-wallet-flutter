@@ -82,7 +82,7 @@ abstract class _EncointerStore with Store {
   List<CommunityIdentifier> communityIdentifiers;
 
   @observable
-  List<String> bootstrappers;
+  List<dynamic> bootstrappers;
 
   @observable
   List<CidName> communities;
@@ -256,7 +256,7 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setBootstrappers(List<String> btstrps) {
+  void setBootstrappers(List<dynamic> btstrps) {
     print("store: set communityIdentifiers to $btstrps");
     bootstrappers = btstrps;
   }
