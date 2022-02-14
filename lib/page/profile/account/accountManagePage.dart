@@ -30,13 +30,14 @@ class _AccountManagePageState extends State<AccountManagePage> {
   _AccountManagePageState(this.store);
 
   final AppStore store;
-  final Api api = webApi;
+  // final Api api = webApi;
   TextEditingController _nameCtrl;
   // final TextEditingController _passCtrl = new TextEditingController();
   bool _isEditingText = false;
 
   @override
   void initState() {
+    if(store.encointer.chosenCid != null) webApi.encointer.getBootstrappers(store.encointer.chosenCid);
     super.initState();
   }
 

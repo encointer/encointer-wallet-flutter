@@ -357,6 +357,20 @@ class ApiEncointer {
     return cids;
   }
 
+  /// Queries the EncointerCommunities pallet: encointerCommunities.bootstrappers(cid).
+  ///
+  Future<List<String>> getBootstrappers(CommunityIdentifier cid) async {
+    // List bts = [];
+    List<String> bootstrappers = await apiRoot
+        .evalJavascript('encointer.getBootstrappers()');
+        // .then((res) => res.map((btstrp) = btstrp).toList());
+        // List.from(res['bootstrappers']).map((cn) => CommunityIdentifier.fromJson(cn)).toList());
+
+    print("bootstrappers: " + bootstrappers.toString());
+    store.encointer.setBootstrappers(bootstrappers);
+    return bootstrappers;
+  }
+
   Future<dynamic> sendFaucetTx() async {
     var address = store.account.currentAddress;
     var amount = Fmt.tokenInt(faucetAmount.toString(), ert_decimals);
