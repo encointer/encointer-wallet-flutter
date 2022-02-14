@@ -32,9 +32,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
   final AppStore store;
   final Api api = webApi;
   TextEditingController _nameCtrl;
-  final TextEditingController _passCtrl = new TextEditingController();
+  // final TextEditingController _passCtrl = new TextEditingController();
   bool _isEditingText = false;
-
 
   @override
   void initState() {
@@ -131,16 +130,17 @@ class _AccountManagePageState extends State<AccountManagePage> {
                 dic.profile.export,
               ),
               onPressed: () {
-                // Navigator.of(context).pop();
-                if (store.settings.cachedPin.isEmpty)
-                  // _showPasswordDialog(context, AccountStore.seedTypeMnemonic);
-                  _showPass(context);
-                else {
-                  Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
-                    // 'key': seed,
-                    'type': AccountStore.seedTypeMnemonic,
-                  });
-                }
+                Navigator.of(context).pop();
+                // if (store.settings.cachedPin.isEmpty)
+                _showPasswordDialog(context);
+                // cant evade password input, because decryptSeed requires pin.. need to pass with TextEditingController _passCtrl, but didn't work
+                // else {
+                //   String seed = await store.account.decryptSeed(store.account.currentAccount.pubKey, AccountStore.seedTypeMnemonic, _passCtrl);
+                //   Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
+                //     // 'key': seed,
+                //     'type': AccountStore.seedTypeMnemonic,
+                //   });
+                // }
               }),
         ],
         cancelButton: CupertinoActionSheetAction(
@@ -153,76 +153,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
     );
   }
 
-  void _showPasswordDialog(BuildContext context, String seedType) {
-    final Translations dic = I18n.of(context).translationsForLocale();
-
-    Future<void> onOk() async {
-      var res = await webApi.account.checkAccountPassword(store.account.currentAccount, _passCtrl.text);
-      if (res == null) {
-        showCupertinoDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return CupertinoAlertDialog(
-              title: Text(dic.profile.passError),
-              content: Text(dic.profile.passErrorTxt),
-              actions: <Widget>[
-                CupertinoButton(
-                  child: Text(I18n.of(context).translationsForLocale().home.ok),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-              ],
-            );
-          },
-        );
-      } else {
-        Navigator.of(context).pop();
-        String seed =
-            await store.account.decryptSeed(store.account.currentAccount.pubKey, seedType, _passCtrl.text.trim());
-        Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
-          'key': seed,
-          'type': seedType,
-        });
-      }
-    }
-
-    showCupertinoDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return CupertinoAlertDialog(
-          title: Text(dic.profile.deleteConfirm),
-          content: Padding(
-            padding: EdgeInsets.only(top: 16),
-            child: CupertinoTextField(
-              keyboardType: TextInputType.number,
-              placeholder: dic.profile.passOld,
-              controller: _passCtrl,
-              clearButtonMode: OverlayVisibilityMode.editing,
-              onChanged: (v) {
-                return Fmt.checkPassword(v.trim()) ? null : dic.account.createPasswordError;
-              },
-              obscureText: true,
-              inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-            ),
-          ),
-          actions: <Widget>[
-            CupertinoButton(
-              child: Text(I18n.of(context).translationsForLocale().home.cancel),
-              onPressed: () {
-                Navigator.of(context).pop();
-                _passCtrl.clear();
-              },
-            ),
-            CupertinoButton(
-              child: Text(I18n.of(context).translationsForLocale().home.ok),
-              onPressed: onOk,
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void _showPass(BuildContext context) {
+  void _showPasswordDialog(BuildContext context) {
     final Translations dic = I18n.of(context).translationsForLocale();
     showCupertinoDialog(
       context: context,
@@ -233,12 +164,17 @@ class _AccountManagePageState extends State<AccountManagePage> {
           setState(() {
             store.settings.setPin(password);
           });
-
+          String seed = await store.account
+              .decryptSeed(store.account.currentAccount.pubKey, AccountStore.seedTypeMnemonic, password);
           Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
-            // 'key': seed,
+            'key': seed,
             'type': AccountStore.seedTypeMnemonic,
           });
-          Navigator.of(context).pop();
+          // Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
+          //   'key': seed,
+          //   'type': AccountStore.seedTypeMnemonic,
+          // });
+          // Navigator.of(context).pop();
         });
       },
     );
@@ -346,9 +282,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
               Expanded(
                 child: ListView(padding: EdgeInsets.all(16), children: _getBalances()),
               ),
-
               Padding(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.fromLTRB(16, 0, 16, 50),
                 child: Container(
                   // width: double.infinity,
                   decoration: BoxDecoration(
@@ -365,7 +300,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           shadowColor: Colors.transparent,
                         ),
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 26, top: 8, bottom: 8),
+                          padding: const EdgeInsets.fromLTRB(26, 8, 0, 8),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -385,98 +320,18 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       Container(
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                            // primary: Colors.transparent,
                             primary: Colors.transparent,
                             onPrimary: Colors.white,
                             shadowColor: Colors.transparent,
-                            // shape: RoundedRectangleBorder(
-                            //   // don't redefine the entire style just the border radii
-                            //   borderRadius: BorderRadius.horizontal(left: Radius.zero, right: Radius.circular(15)),
-                            // ),
                           ),
                           child: Icon(Icons.more_horiz),
-                          // child: Padding(
-                          //     padding: const EdgeInsets.all(16.0),
-                          //     child: Row(
-                          //       mainAxisAlignment: MainAxisAlignment.center,
-                          //       children: [
-                          //         SizedBox(width: 12),
-                          //         Icon(Icons.more_horiz),
-                          //       ],
-                          //     ),
-                          // ),
                           onPressed: () => _showActions(context),
                         ),
-    ),
+                      ),
                     ],
                   ),
                 ),
               ),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //   children: [
-              //     Container(
-              //       width: MediaQuery.of(context).size.width * 0.75,
-              //       child: PrimaryButton(
-              //           borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.zero),
-              //           // child: ElevatedButton(
-              //           //     style: ElevatedButton.styleFrom(
-              //           // primary: Colors.transparent,
-              //           // onPrimary: Colors.white,
-              //           // primary: ZurichLion.shade600,
-              //           // shape: RoundedRectangleBorder(
-              //           // don't redefine the entire style just the border radii
-              //           // borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.zero),
-              //           // ),
-              //           // ),
-              //           child: Padding(
-              //             padding: const EdgeInsets.all(16.0),
-              //             child: Row(
-              //               mainAxisAlignment: MainAxisAlignment.center,
-              //               children: [
-              //                 Icon(Iconsax.share),
-              //                 SizedBox(width: 12),
-              //                 Text(dic.profile.accountShare),
-              //               ],
-              //             ),
-              //           ),
-              //           onPressed: () {
-              //             // if (acc.address != '') {
-              //             Navigator.pushNamed(context, ReceivePage.route, arguments: args);
-              //           }),
-              //       // ),
-              //     ),
-              //     SizedBox(width: 2),
-              //     Container(
-              //       width: MediaQuery.of(context).size.width * 0.25 - 2,
-              //       child: PrimaryButton(
-              //         borderRadius: BorderRadius.horizontal(left: Radius.zero, right: Radius.circular(15)),
-              //         // child: ElevatedButton(
-              //         //   style: ElevatedButton.styleFrom(
-              //         //     // primary: Colors.transparent,
-              //         //     onPrimary: Colors.white,
-              //         //     primary: ZurichLion.shade600,
-              //         //     shape: RoundedRectangleBorder(
-              //         //       // don't redefine the entire style just the border radii
-              //         //       borderRadius: BorderRadius.horizontal(left: Radius.zero, right: Radius.circular(15)),
-              //         //     ),
-              //         //   ),
-              //         child: Padding(
-              //           padding: const EdgeInsets.all(16.0),
-              //           child: Row(
-              //             mainAxisAlignment: MainAxisAlignment.center,
-              //             children: [
-              //               SizedBox(width: 12),
-              //               Icon(Icons.more_horiz),
-              //             ],
-              //           ),
-              //         ),
-              //         onPressed: () => _showActions(context),
-              //       ),
-              //     ),
-              //     // ),
-              //   ],
-              // ),
             ],
           ),
         ),
