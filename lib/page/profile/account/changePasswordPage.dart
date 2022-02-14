@@ -125,10 +125,9 @@ class _ChangePassword extends State<ChangePasswordPage> {
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.only(top: 80, bottom: 16),
-                      child: Center(
-                        child: Text(dic.profile.passHint1,
-                            textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline2),
-                      ),
+                      child: Text(
+                          dic.profile.passHint1,
+                          textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline2),
                     ),
                     Text(
                       dic.profile.passHint2,
