@@ -1,5 +1,6 @@
 import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
+import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
@@ -178,9 +179,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                     _submitting ? CupertinoActivityIndicator() : Container(),
                     Text(
                       dic.profile.contactSave,
-                      style: Theme.of(context).textTheme.headline3.copyWith(
-                            color: Color(0xffF4F8F9),
-                          ),
+                      style: Theme.of(context).textTheme.headline3.copyWith(color: encointerLightBlue),
                     ),
                   ],
                 ),
