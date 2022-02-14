@@ -17,6 +17,7 @@ class ChangePasswordPage extends StatefulWidget {
   static final String route = '/profile/password';
   final AccountStore store;
   final SettingsStore settingsStore;
+
   @override
   _ChangePassword createState() => _ChangePassword(store, settingsStore);
 }
@@ -129,14 +130,10 @@ class _ChangePassword extends State<ChangePasswordPage> {
                             textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline2),
                       ),
                     ),
-                    Center(
-                      child: Text(
-                        dic.profile.passHint2,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline2.copyWith(
-                              color: Colors.black,
-                            ),
-                      ),
+                    Text(
+                      dic.profile.passHint2,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 30),
