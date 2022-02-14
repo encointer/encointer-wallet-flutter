@@ -188,10 +188,7 @@ class _AssetsState extends State<Assets> {
                           key: Key('qr-receive'),
                           onPressed: () {
                             if (acc.address != '') {
-                              var args = {
-                                'receive': true,
-                              };
-                              Navigator.pushNamed(context, ReceivePage.route, arguments: args);
+                              Navigator.pushNamed(context, ReceivePage.route);
                             }
                           },
                         ),

@@ -40,6 +40,8 @@ abstract class TranslationsProfile {
   String get passSuccess;
   String get passSuccessTxt;
   String get qrScanHint;
+  String get qrScanHintAccount;
+  String get sendLink;
   String get setting;
   String get settingLang;
   String get settingLangAuto;
@@ -106,7 +108,9 @@ class TranslationsEnProfile implements TranslationsProfile {
   get passOld => 'Current PIN';
   get passSuccess => 'Success';
   get passSuccessTxt => 'PIN changed successfully';
-  get qrScanHint => 'Please, enter the amount you wish to receive and let the sender scan the QR code.';
+  get qrScanHint => 'Enter the amount you wish to receive and let the sender scan the QR code.';
+  get qrScanHintAccount => 'Ask the recipient to scan the QR-code in the encointer app.';
+  get sendLink => 'Send link';
   get setting => 'Settings';
   get settingLang => 'Language';
   get settingLangAuto => 'Auto Detect';
@@ -175,6 +179,8 @@ class TranslationsDeProfile implements TranslationsProfile {
   get passSuccess => 'Erfolgreich';
   get passSuccessTxt => 'PIN wurde erfolgreich geändert';
   get qrScanHint => 'Gib den Betrag den du erhalten möchtest ein und lasse den Sender den QR Code scannen.';
+  get qrScanHintAccount => 'Bitte den Empfänger den QR-Code in der Encointer App zu scannen.';
+  get sendLink => 'Link senden';
   get setting => 'Einstellungen';
   get settingLang => 'Sprache';
   get settingLangAuto => 'Automatisch';
@@ -265,5 +271,7 @@ class TranslationsZhProfile implements TranslationsProfile {
   get recoveryProxy => 'recovery proxy';
   get ceremonies => throw UnimplementedError();
   get reputation => throw UnimplementedError();
+  get sendLink => throw UnimplementedError();
   get tokenSend => throw UnimplementedError();
+  get qrScanHintAccount => throw UnimplementedError();
 }

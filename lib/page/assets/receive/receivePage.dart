@@ -6,6 +6,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:share/share.dart';
 
 class ReceivePage extends StatefulWidget {
   ReceivePage(this.store);
@@ -18,14 +19,28 @@ class ReceivePage extends StatefulWidget {
 class _ReceivePageState extends State<ReceivePage> {
   @override
   Widget build(BuildContext context) {
-    bool isShare = false;
-    final Map args = ModalRoute.of(context).settings.arguments;
-    if (args != null) {
-      isShare = args['isShare'];
-    }
+    // final Map args = ModalRoute.of(context).settings.arguments;
+    //
+    // String codeAddress =
+    //     'substrate:${widget.store.account.currentAddress}:${widget.store.account.currentAccount.pubKey}:${widget.store.account.currentAccount.name}';
 
-    String codeAddress =
-        'substrate:${widget.store.account.currentAddress}:${widget.store.account.currentAccount.pubKey}:${widget.store.account.currentAccount.name}';
+    var invoice = [
+      'encointer-contact',
+      'V1.0',
+      '',
+      widget.store.account.currentAccount.address,
+      0,
+      widget.store.account.currentAccount.name
+    ];
+
+    // Map<String, String> invoiceMap = {
+    //   'header': 'encointer-contact',
+    //   'versrion': 'V1.0',
+    //   'community': '',
+    //   'accountAddress': '${widget.store.account.currentAccount.address}',
+    //   'amount': (0.0).toString(),
+    //   'name': '${widget.store.account.currentAccount.name}'
+    // };
 
     final TextEditingController _amountController = new TextEditingController();
     final _formKey = GlobalKey<FormState>();
@@ -35,9 +50,7 @@ class _ReceivePageState extends State<ReceivePage> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          title: isShare
-              ? Text(I18n.of(context).translationsForLocale().profile.share)
-              : Text(I18n.of(context).translationsForLocale().assets.receive),
+          title: Text(I18n.of(context).translationsForLocale().assets.receive),
           leading: Container(),
           actions: [
             IconButton(
@@ -72,7 +85,8 @@ class _ReceivePageState extends State<ReceivePage> {
                       controller: _amountController,
                       textFormFieldKey: Key('invoice-amount-input'),
                       validator: (String value) {
-                        if (value == null || value.isEmpty) {
+                        print("value is ${double.parse(value)}");
+                        if (value == null || value.isEmpty || double.parse(value) == 0.0) {
                           return I18n.of(context).translationsForLocale().assets.amountError;
                         }
                         return null;
@@ -88,14 +102,21 @@ class _ReceivePageState extends State<ReceivePage> {
                   ),
                 ],
               ),
+              Text('Receiver account: ${widget.store.account.currentAccount.name}',
+                  style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
+                  textAlign: TextAlign.center),
               SizedBox(height: 8),
               Column(children: [
                 Container(
-                  child: QrImage(
-                    data: codeAddress,
+                  child:
+                      // NOT WORKING YET, should probably add observer
+                  // _amountController.text.isNotEmpty ?
+                  QrImage(
+                    data: invoice.join('\n'),
                     embeddedImage: AssetImage('assets/images/public/app.png'),
                     embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
-                  ),
+                  )
+        // : Container(),
                 ),
                 InkWell(
                   child: Padding(
@@ -113,8 +134,17 @@ class _ReceivePageState extends State<ReceivePage> {
                         ]),
                   ),
                   onTap: () => {
-                    _formKey.currentState.validate()
-                    // TODO add functionality to share the QR code
+                    if(_formKey.currentState.validate()) {
+                      print("amount ${_amountController.text} is stored"),
+                      invoice[4] = _amountController.text,
+                      print("the final share message is: ${invoice.join('\n')}"),
+                      // not working yet with map..
+                      // invoiceMap['amount'] = '${_amountController.text}',
+                      // how to define type?
+                      // var invoiceString = '',
+                      // invoiceMap.values.map((e) => invoiceString.join(e.toString(),'\n')),
+                      Share.share(invoice.join('\n')),
+                    }
                   },
                 ),
               ])
