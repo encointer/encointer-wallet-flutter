@@ -27,7 +27,6 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
   final List<String> _keyOptions = [
     AccountStore.seedTypeMnemonic,
     AccountStore.seedTypeRawSeed,
-    AccountStore.seedTypeKeystore,
     'observe',
   ];
 
@@ -220,14 +219,6 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
           passed = true;
         }
         break;
-      case KeySelection.KEYSTORE_JSON:
-        try {
-          jsonDecode(input);
-          passed = true;
-        } catch (_) {
-          // ignore
-        }
-        break;
       case KeySelection.OBSERVATION:
         break;
     }
@@ -235,15 +226,6 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
   }
 
   void _onKeyChange(String v) {
-    if (_keySelection == KeySelection.KEYSTORE_JSON) {
-      // auto set account name
-      var json = jsonDecode(v.trim());
-      if (json['meta']['name'] != null) {
-        setState(() {
-          _nameCtrl.value = TextEditingValue(text: json['meta']['name']);
-        });
-      }
-    }
     setState(() {
       _keyCtrlText = v.trim();
     });
@@ -266,14 +248,12 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
     final Map<KeySelection, String> translationsByKeySelection = {
       KeySelection.MNEMONIC: dic.account.mnemonic,
       KeySelection.RAW_SEED: dic.account.rawSeed,
-      KeySelection.KEYSTORE_JSON: dic.account.keystore,
       KeySelection.OBSERVATION: dic.account.observe,
     };
     final Map<String, String> translationsByKeyOption = {
       _keyOptions[0]: dic.account.mnemonic,
       _keyOptions[1]: dic.account.rawSeed,
-      _keyOptions[2]: dic.account.keystore,
-      _keyOptions[3]: dic.account.observe,
+      _keyOptions[2]: dic.account.observe,
     };
     String selected = translationsByKeySelection[_keySelection];
     return Column(
@@ -328,18 +308,6 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                         ),
                       )
                     : Container(),
-                _keySelection == KeySelection.KEYSTORE_JSON
-                    ? _buildNameAndPassInput()
-                    : _keySelection == KeySelection.OBSERVATION
-                        ? _buildAddressAndNameInput()
-                        : AccountAdvanceOption(
-                            seed: _keyCtrlText,
-                            onChange: (data) {
-                              setState(() {
-                                _advanceOptions = data;
-                              });
-                            },
-                          ),
               ],
             ),
           ),
@@ -355,17 +323,12 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                   _onAddObservationAccount();
                   return;
                 }
-                if (_keySelection == KeySelection.KEYSTORE_JSON) {
-                  widget.store.account.setNewAccount(
-                      _nameCtrl.text.isNotEmpty ? _nameCtrl.text.trim() : dic.account.createDefault,
-                      _passCtrl.text.trim());
-                }
                 widget.store.account.setNewAccountKey(_keyCtrl.text.trim());
                 widget.onSubmit({
                   'keyType': _keyOptions[_keySelection.index],
                   'cryptoType': _advanceOptions.type ?? AccountAdvanceOptionParams.encryptTypeSR,
                   'derivePath': _advanceOptions.path ?? '',
-                  'finish': _keySelection == KeySelection.KEYSTORE_JSON ? true : null,
+                  'finish': null, // TODO chrigi check obsolete code KeyStoreJson
                 });
               }
             },
@@ -376,9 +339,23 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
   }
 }
 
+class QRCodeAddressResult {
+  QRCodeAddressResult(this.rawData)
+      : chainType = rawData[0],
+        address = rawData[1],
+        pubKey = rawData[2],
+        name = rawData[3];
+
+  final List<String> rawData;
+
+  final String chainType;
+  final String address;
+  final String pubKey;
+  final String name;
+}
+
 enum KeySelection {
   MNEMONIC,
   RAW_SEED,
-  KEYSTORE_JSON,
   OBSERVATION,
 }
