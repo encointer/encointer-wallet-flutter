@@ -156,9 +156,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                         labelText: dic.profile.passNew,
                         controller: _passCtrl,
                         validator: (v) {
-                          return Fmt.checkPassword(v.trim())
-                              ? null
-                              : I18n.of(context).translationsForLocale().account.createPasswordError;
+                          return Fmt.checkPassword(v.trim()) ? null : dic.account.createPasswordError;
                         },
                         obscureText: true,
                         inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
@@ -170,9 +168,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                         labelText: dic.profile.passNew2,
                         controller: _pass2Ctrl,
                         validator: (v) {
-                          return v.trim() != _passCtrl.text
-                              ? I18n.of(context).translationsForLocale().account.createPassword2Error
-                              : null;
+                          return v.trim() != _passCtrl.text ? dic.account.createPassword2Error : null;
                         },
                         obscureText: true,
                         inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
