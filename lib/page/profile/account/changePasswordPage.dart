@@ -123,52 +123,47 @@ class _ChangePassword extends State<ChangePasswordPage> {
                 child: ListView(
                   padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
                   children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(top: 80, bottom: 16),
-                      child: Text(
-                          dic.profile.passHint1,
-                          textAlign: TextAlign.center, style: Theme.of(context).textTheme.headline2),
+                    SizedBox(height: 80),
+                    Text(
+                      dic.profile.passHint1,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headline2,
                     ),
+                    SizedBox(height: 16),
                     Text(
                       dic.profile.passHint2,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 30),
-                      child: EncointerTextFormField(
-                        labelText: dic.profile.passOld,
-                        controller: _passOldCtrl,
-                        validator: (v) {
-                          return Fmt.checkPassword(v.trim()) ? null : dic.account.createPasswordError;
-                        },
-                        obscureText: true,
-                        inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-                      ),
+                    SizedBox(height: 30),
+                    EncointerTextFormField(
+                      labelText: dic.profile.passOld,
+                      controller: _passOldCtrl,
+                      validator: (v) {
+                        return Fmt.checkPassword(v.trim()) ? null : dic.account.createPasswordError;
+                      },
+                      obscureText: true,
+                      inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: EncointerTextFormField(
-                        labelText: dic.profile.passNew,
-                        controller: _passCtrl,
-                        validator: (v) {
-                          return Fmt.checkPassword(v.trim()) ? null : dic.account.createPasswordError;
-                        },
-                        obscureText: true,
-                        inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-                      ),
+                    SizedBox(height: 20),
+                    EncointerTextFormField(
+                      labelText: dic.profile.passNew,
+                      controller: _passCtrl,
+                      validator: (v) {
+                        return Fmt.checkPassword(v.trim()) ? null : dic.account.createPasswordError;
+                      },
+                      obscureText: true,
+                      inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: EncointerTextFormField(
-                        labelText: dic.profile.passNew2,
-                        controller: _pass2Ctrl,
-                        validator: (v) {
-                          return v.trim() != _passCtrl.text ? dic.account.createPassword2Error : null;
-                        },
-                        obscureText: true,
-                        inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-                      ),
+                    SizedBox(height: 20),
+                    EncointerTextFormField(
+                      labelText: dic.profile.passNew2,
+                      controller: _pass2Ctrl,
+                      validator: (v) {
+                        return v.trim() != _passCtrl.text ? dic.account.createPassword2Error : null;
+                      },
+                      obscureText: true,
+                      inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                     ),
                   ],
                 ),
