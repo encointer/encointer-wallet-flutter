@@ -315,6 +315,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           Navigator.pushNamed(context, ReceivePage.route, arguments: args);
                         },
                       ),
+                      // THIS WAS HERE TO SET A SPLIT, but now it doesnt work with the new implementation
                       // SizedBox(width: 24),
                       Spacer(),
                       Container(
