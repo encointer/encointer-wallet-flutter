@@ -1,6 +1,6 @@
-import 'package:encointer_wallet/page/account/uos/qrSenderPage.dart';
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
-import 'package:encointer_wallet/utils/format.dart';
+import 'package:encointer_wallet/page/profile/contacts/contactPage.dart';
+import 'package:encointer_wallet/service/qrScanService.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +11,7 @@ import 'package:permission_handler/permission_handler.dart';
 class ScanPage extends StatelessWidget {
   static final String route = '/account/scan';
   final GlobalKey<QrcodeReaderViewState> _qrViewKey = GlobalKey();
+  final QrScanService qrScanService = QrScanService();
 
   Future<bool> canOpenCamera() async {
     // will do nothing if already granted
@@ -19,82 +20,65 @@ class ScanPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future onScan(String text, String rawData) async {
-      String address = '';
-      final String data = text.trim();
-      if (data != null) {
-        List<String> ls = data.split(':');
-        for (String item in ls) {
-          if (Fmt.isAddress(item)) {
-            address = item;
-            break;
-          }
-        }
-
-        final String args = ModalRoute.of(context).settings.arguments;
-        if (address.length > 0) {
-          print('address detected in Qr');
-          if (args == 'tx') {
-            Navigator.of(context).popAndPushNamed(
-              TransferPage.route,
-              arguments: TransferPageParams(address: address, redirect: '/'),
-            );
-          } else {
-            Navigator.of(context).pop(QRCodeAddressResult(ls));
-          }
-        } else if (args == QrSenderPage.route && Fmt.isHexString(data)) {
-          print('hex detected in Qr');
-          Navigator.of(context).pop(data);
-        } else if (rawData != null && (rawData.endsWith('ec') || rawData.endsWith('ec11'))) {
-          print('rawBytes detected in Qr');
-          Navigator.of(context).pop(rawData);
-        } else {
-          _qrViewKey.currentState.startScan();
-        }
+    Future onScan(String data, String rawData) {
+      QrScanData qrScanData = qrScanService.parse(data);
+      switch (qrScanData.context) {
+        case QrScanContext.contact:
+          // show add contact and auto-fill data
+          Navigator.of(context).popAndPushNamed(
+            ContactPage.route,
+            arguments: qrScanData,
+          );
+          break;
+        case QrScanContext.invoice:
+          // go to transfer page and aut-fill data
+          Navigator.of(context).popAndPushNamed(
+            TransferPage.route,
+            arguments: TransferPageParams(address: qrScanData.account, redirect: '/'),
+          );
+          break;
+        default:
+          throw UnimplementedError(
+              'Scan functionality for the case [${qrScanData.context}] has not yet been implemented!');
       }
     }
 
     return Scaffold(
-      body: FutureBuilder<bool>(
-        future: canOpenCamera(),
-        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          if (snapshot.hasData && snapshot.data == true) {
-            return QrcodeReaderView(
+      body: SafeArea(
+        child: FutureBuilder<bool>(
+          future: canOpenCamera(),
+          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+            if (snapshot.hasData && snapshot.data == true) {
+              return QrcodeReaderView(
+                headerWidget: Row(children: [
+                  ElevatedButton(
+                    child: Text('addContact'),
+                    onPressed: () => onScan(
+                        "encointer-contact\nV1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nsqm1v79dF6b\n\nAlice",
+                        null),
+                  ),
+                  ElevatedButton(
+                    child: Text('invoice'),
+                    onPressed: () => onScan(
+                        "encointer-invoice\nV1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX"
+                        "\nsqm1v79dF6b\n0.2343\nAubrey",
+                        null),
+                  ),
+                  Text(
+                    ' <<< Devs only',
+                    style: TextStyle(color: Colors.orange),
+                  ), // TODO only show for Devs
+                ]),
                 key: _qrViewKey,
                 helpWidget: Text(I18n.of(context).translationsForLocale().account.qrScan),
-                headerWidget: SafeArea(
-                  child: Align(
-                    alignment: Alignment.topRight,
-                    child: IconButton(
-                      icon: Icon(
-                        Icons.close,
-                        color: Theme.of(context).cardColor,
-                      ),
-                      onPressed: () => Navigator.of(context).pop(),
-                    ),
-                  ),
-                ),
-                onScan: onScan);
-          } else {
-            return Container();
-          }
-        },
+                onScan: onScan,
+              );
+            } else {
+              return Container();
+            }
+          },
+        ),
       ),
     );
   }
-}
-
-class QRCodeAddressResult {
-  QRCodeAddressResult(this.rawData)
-      : chainType = rawData[0],
-        address = rawData[1],
-        pubKey = rawData[2],
-        name = rawData[3];
-
-  final List<String> rawData;
-
-  final String chainType;
-  final String address;
-  final String pubKey;
-  final String name;
 }
