@@ -114,7 +114,8 @@ mixin _$OpeningHoursState on _OpeningHoursState, Store {
     });
   }
 
-  final _$copiedOpeningHoursAtom = Atom(name: '_OpeningHoursState.copiedOpeningHours');
+  final _$copiedOpeningHoursAtom =
+      Atom(name: '_OpeningHoursState.copiedOpeningHours');
 
   @override
   OpeningHoursForDayState get copiedOpeningHours {
@@ -159,11 +160,13 @@ mixin _$OpeningHoursState on _OpeningHoursState, Store {
     });
   }
 
-  final _$_OpeningHoursStateActionController = ActionController(name: '_OpeningHoursState');
+  final _$_OpeningHoursStateActionController =
+      ActionController(name: '_OpeningHoursState');
 
   @override
   dynamic copyFrom(int day) {
-    final _$actionInfo = _$_OpeningHoursStateActionController.startAction(name: '_OpeningHoursState.copyFrom');
+    final _$actionInfo = _$_OpeningHoursStateActionController.startAction(
+        name: '_OpeningHoursState.copyFrom');
     try {
       return super.copyFrom(day);
     } finally {
@@ -173,7 +176,8 @@ mixin _$OpeningHoursState on _OpeningHoursState, Store {
 
   @override
   dynamic setDayOnFocus(int day) {
-    final _$actionInfo = _$_OpeningHoursStateActionController.startAction(name: '_OpeningHoursState.setDayOnFocus');
+    final _$actionInfo = _$_OpeningHoursStateActionController.startAction(
+        name: '_OpeningHoursState.setDayOnFocus');
     try {
       return super.setDayOnFocus(day);
     } finally {
@@ -183,8 +187,8 @@ mixin _$OpeningHoursState on _OpeningHoursState, Store {
 
   @override
   dynamic pasteOpeningHoursTo(int day) {
-    final _$actionInfo =
-        _$_OpeningHoursStateActionController.startAction(name: '_OpeningHoursState.pasteOpeningHoursTo');
+    final _$actionInfo = _$_OpeningHoursStateActionController.startAction(
+        name: '_OpeningHoursState.pasteOpeningHoursTo');
     try {
       return super.pasteOpeningHoursTo(day);
     } finally {
@@ -210,7 +214,8 @@ dayToCopyFrom: ${dayToCopyFrom}
 }
 
 mixin _$OpeningHoursForDayState on _OpeningHoursForDayState, Store {
-  final _$openingIntervalsAtom = Atom(name: '_OpeningHoursForDayState.openingIntervals');
+  final _$openingIntervalsAtom =
+      Atom(name: '_OpeningHoursForDayState.openingIntervals');
 
   @override
   ObservableList<OpeningIntervalState> get openingIntervals {
@@ -225,7 +230,8 @@ mixin _$OpeningHoursForDayState on _OpeningHoursForDayState, Store {
     });
   }
 
-  final _$timeFormatErrorAtom = Atom(name: '_OpeningHoursForDayState.timeFormatError');
+  final _$timeFormatErrorAtom =
+      Atom(name: '_OpeningHoursForDayState.timeFormatError');
 
   @override
   String get timeFormatError {
@@ -240,7 +246,8 @@ mixin _$OpeningHoursForDayState on _OpeningHoursForDayState, Store {
     });
   }
 
-  final _$_OpeningHoursForDayStateActionController = ActionController(name: '_OpeningHoursForDayState');
+  final _$_OpeningHoursForDayStateActionController =
+      ActionController(name: '_OpeningHoursForDayState');
 
   @override
   dynamic addParsedIntervalIfValid(String startEnd) {
@@ -255,8 +262,8 @@ mixin _$OpeningHoursForDayState on _OpeningHoursForDayState, Store {
 
   @override
   dynamic addInterval(OpeningIntervalState interval) {
-    final _$actionInfo =
-        _$_OpeningHoursForDayStateActionController.startAction(name: '_OpeningHoursForDayState.addInterval');
+    final _$actionInfo = _$_OpeningHoursForDayStateActionController.startAction(
+        name: '_OpeningHoursForDayState.addInterval');
     try {
       return super.addInterval(interval);
     } finally {
@@ -266,8 +273,8 @@ mixin _$OpeningHoursForDayState on _OpeningHoursForDayState, Store {
 
   @override
   dynamic removeInterval(int index) {
-    final _$actionInfo =
-        _$_OpeningHoursForDayStateActionController.startAction(name: '_OpeningHoursForDayState.removeInterval');
+    final _$actionInfo = _$_OpeningHoursForDayStateActionController.startAction(
+        name: '_OpeningHoursForDayState.removeInterval');
     try {
       return super.removeInterval(index);
     } finally {

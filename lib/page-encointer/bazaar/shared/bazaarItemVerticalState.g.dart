@@ -24,12 +24,13 @@ mixin _$BazaarItemVerticalState on _BazaarItemVerticalState, Store {
     });
   }
 
-  final _$_BazaarItemVerticalStateActionController = ActionController(name: '_BazaarItemVerticalState');
+  final _$_BazaarItemVerticalStateActionController =
+      ActionController(name: '_BazaarItemVerticalState');
 
   @override
   void toggleLiked() {
-    final _$actionInfo =
-        _$_BazaarItemVerticalStateActionController.startAction(name: '_BazaarItemVerticalState.toggleLiked');
+    final _$actionInfo = _$_BazaarItemVerticalStateActionController.startAction(
+        name: '_BazaarItemVerticalState.toggleLiked');
     try {
       return super.toggleLiked();
     } finally {
