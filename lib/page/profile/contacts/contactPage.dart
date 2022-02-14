@@ -1,14 +1,13 @@
 import 'package:encointer_wallet/common/components/TapTooltip.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
-import 'package:encointer_wallet/page/account/scanPage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class ContactPage extends StatefulWidget {
   ContactPage(this.store);
@@ -123,20 +122,9 @@ class _Contact extends State<ContactPage> {
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context).translationsForLocale();
-    List<Widget> action = <Widget>[
-      IconButton(
-        icon: Image.asset('assets/images/assets/Menu_scan.png'),
-        onPressed: () async {
-          final to = await Navigator.of(context).pushNamed(ScanPage.route);
-          _addressCtrl.text = (to as QRCodeAddressResult).address;
-        },
-      )
-    ];
     return Scaffold(
       appBar: AppBar(
         title: Text(dic.profile.contact),
-        centerTitle: true,
-        actions: _args == null ? action : null,
       ),
       body: SafeArea(
         child: Column(
