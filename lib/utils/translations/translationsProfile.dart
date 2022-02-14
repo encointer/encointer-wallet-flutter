@@ -68,6 +68,9 @@ abstract class TranslationsProfile {
   String get pinInfo;
   String get pinSecure;
   String get recoveryProxy;
+  String get ceremonies;
+  String get tokenSend;
+  String get reputation;
 }
 
 class TranslationsEnProfile implements TranslationsProfile {
@@ -140,7 +143,10 @@ class TranslationsEnProfile implements TranslationsProfile {
   get pinInfo =>
       'PIN should consist of at least 4 digits. If the PIN is lost, there is no option to restore the account unless you made a backup via the profile page.';
   get pinSecure => 'Secure your account with a PIN.';
-  get recoveryProxy => 'recovery proxy'; // TODO no idea what this is
+  get recoveryProxy => 'recovery proxy';
+  get ceremonies => 'Ceremonies';
+  get reputation => 'Reputation';
+  get tokenSend => 'Send Tokens';
 }
 
 class TranslationsDeProfile implements TranslationsProfile {
@@ -214,6 +220,9 @@ class TranslationsDeProfile implements TranslationsProfile {
       'PIN muss mindestens 4 Ziffern enthalten. Bei PIN-Verlust ist der Account nicht wiederherstellbar, ausser man hat ein Backup auf der Profilseite gemacht.';
   get pinSecure => 'Sichere dein Konto mit einem PIN.';
   get recoveryProxy => 'recovery proxy';
+  get ceremonies => 'Zeremonien';
+  get reputation => 'Reputation';
+  get tokenSend => 'Sende Tokens';
 }
 
 class TranslationsZhProfile implements TranslationsProfile {
@@ -277,32 +286,14 @@ class TranslationsZhProfile implements TranslationsProfile {
   get pinSecure => '使用 PIN 保护您的帐户。';
   get accountAdd => '添加帐户';
   get recoveryProxy => 'recovery proxy';
-
-  @override
-  // TODO: implement passHint
-  String get passHint => throw UnimplementedError();
-
-  @override
-  // TODO: implement passHint1
-  String get passHint1 => throw UnimplementedError();
-
-  @override
-  // TODO: implement passHint2
-  String get passHint2 => throw UnimplementedError();
-
-  @override
-  // TODO: implement passInfo
-  String get passInfo => throw UnimplementedError();
-
-  @override
-  // TODO: implement passSecure
-  String get passSecure => throw UnimplementedError();
-
-  @override
-  // TODO: implement reputationHistory
-  String get reputationHistory => throw UnimplementedError();
-
-  @override
-  // TODO: implement reputationOverall
-  String get reputationOverall => throw UnimplementedError();
+  get ceremonies => throw UnimplementedError();
+  get reputation => throw UnimplementedError();
+  get tokenSend => throw UnimplementedError();
+  get passHint => throw UnimplementedError();
+  get passHint1 => throw UnimplementedError();
+  get passHint2 => throw UnimplementedError();
+  get passInfo => throw UnimplementedError();
+  get passSecure => throw UnimplementedError();
+  get reputationHistory => throw UnimplementedError();
+  get reputationOverall => throw UnimplementedError();
 }
