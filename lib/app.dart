@@ -1,12 +1,14 @@
 import 'package:encointer_wallet/common/components/willPopScopeWrapper.dart';
 import 'package:encointer_wallet/config.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaarMain.dart';
 import 'package:encointer_wallet/page-encointer/homePage.dart';
 import 'package:encointer_wallet/page-encointer/phases/assigning/assigningPage.dart';
 import 'package:encointer_wallet/page-encointer/phases/attesting/attestingPage.dart';
 import 'package:encointer_wallet/page-encointer/phases/registering/registerParticipantPanel.dart';
 import 'package:encointer_wallet/page-encointer/phases/registering/registeringPage.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaarMain.dart';
+import 'package:encointer_wallet/page/account/create/addAccountPage.dart';
 import 'package:encointer_wallet/page/account/create/createAccountPage.dart';
+import 'package:encointer_wallet/page/account/create/createPinPage.dart';
 import 'package:encointer_wallet/page/account/createAccountEntryPage.dart';
 import 'package:encointer_wallet/page/account/import/importAccountPage.dart';
 import 'package:encointer_wallet/page/account/scanPage.dart';
@@ -22,6 +24,7 @@ import 'package:encointer_wallet/page/profile/account/accountManagePage.dart';
 import 'package:encointer_wallet/page/profile/account/changePasswordPage.dart';
 import 'package:encointer_wallet/page/profile/account/exportAccountPage.dart';
 import 'package:encointer_wallet/page/profile/account/exportResultPage.dart';
+import 'package:encointer_wallet/page/profile/contacts/contactDetailPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactListPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactsPage.dart';
@@ -40,7 +43,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'common/theme.dart';
 import 'mocks/api/api.dart';
 import 'mocks/storage/localStorage.dart';
-import 'utils/i18n/index.dart';
+import 'utils/translations/index.dart';
 
 class WalletApp extends StatefulWidget {
   const WalletApp(this.config);
@@ -158,6 +161,8 @@ class _WalletAppState extends State<WalletApp> {
         // account
         CreateAccountEntryPage.route: (_) => CreateAccountEntryPage(),
         CreateAccountPage.route: (_) => CreateAccountPage(_appStore),
+        AddAccountPage.route: (_) => AddAccountPage(_appStore),
+        CreatePinPage.route: (_) => CreatePinPage(_appStore),
         ImportAccountPage.route: (_) => ImportAccountPage(_appStore),
         ScanPage.route: (_) => ScanPage(),
         TxConfirmPage.route: (_) => TxConfirmPage(_appStore),
@@ -173,6 +178,7 @@ class _WalletAppState extends State<WalletApp> {
         ContactListPage.route: (_) => ContactListPage(_appStore),
         ContactPage.route: (_) => ContactPage(_appStore),
         ChangePasswordPage.route: (_) => ChangePasswordPage(_appStore.account, _appStore.settings),
+        ContactDetailPage.route: (_) => ContactDetailPage(_appStore),
         SettingsPage.route: (_) => SettingsPage(_appStore.settings, _changeLang),
         ExportAccountPage.route: (_) => ExportAccountPage(_appStore.account),
         ExportResultPage.route: (_) => ExportResultPage(),
