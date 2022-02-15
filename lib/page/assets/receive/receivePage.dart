@@ -17,6 +17,11 @@ class ReceivePage extends StatefulWidget {
 }
 
 class _ReceivePageState extends State<ReceivePage> {
+  final TextEditingController _amountController = new TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  bool generateQR = false;
+
+
   @override
   Widget build(BuildContext context) {
     // final Map args = ModalRoute.of(context).settings.arguments;
@@ -27,7 +32,7 @@ class _ReceivePageState extends State<ReceivePage> {
     var invoice = [
       'encointer-contact',
       'V1.0',
-      '',
+      widget.store.encointer.chosenCid != null ? (widget.store.encointer.chosenCid).toFmtString() : '',
       widget.store.account.currentAccount.address,
       0,
       widget.store.account.currentAccount.name
@@ -42,8 +47,38 @@ class _ReceivePageState extends State<ReceivePage> {
     //   'name': '${widget.store.account.currentAccount.name}'
     // };
 
-    final TextEditingController _amountController = new TextEditingController();
-    final _formKey = GlobalKey<FormState>();
+    Widget generateQRforValueGreaterZero() {
+      print("latest value ${_amountController.text}");
+      if (_amountController.text != null &&
+          _amountController.text.isNotEmpty &&
+          double.parse(_amountController.text) != 0.0) {
+          return Container(
+            child:
+                // NOT WORKING YET, should probably add observer
+                QrImage(
+              data: invoice.join('\n'),
+              embeddedImage: AssetImage('assets/images/public/app.png'),
+              embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
+            ),
+          );
+        } else
+          return Container();
+      }
+
+    @override
+    void initState() {
+      super.initState();
+      // Start listening to changes.
+      _amountController.addListener(generateQRforValueGreaterZero);
+    }
+
+    @override
+    void dispose() {
+      // Clean up the controller when the widget is removed from the
+      // widget tree.
+      _amountController.dispose();
+      super.dispose();
+    }
 
     return Form(
       key: _formKey,
@@ -91,6 +126,10 @@ class _ReceivePageState extends State<ReceivePage> {
                         }
                         return null;
                       },
+                      onChanged: (value) {
+                        setState(() {
+                        });
+                      },
                       suffixIcon: Text(
                         "ⵐ",
                         style: TextStyle(
@@ -102,22 +141,13 @@ class _ReceivePageState extends State<ReceivePage> {
                   ),
                 ],
               ),
-              Text('Receiver account: ${widget.store.account.currentAccount.name}',
+              Text(
+                  '${I18n.of(context).translationsForLocale().profile.receiverAccount} ${widget.store.account.currentAccount.name}',
                   style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
                   textAlign: TextAlign.center),
               SizedBox(height: 8),
               Column(children: [
-                Container(
-                    child:
-                        // NOT WORKING YET, should probably add observer
-                        // _amountController.text.isNotEmpty ?
-                        QrImage(
-                  data: invoice.join('\n'),
-                  embeddedImage: AssetImage('assets/images/public/app.png'),
-                  embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
-                )
-                    // : Container(),
-                    ),
+                generateQRforValueGreaterZero(),
                 InkWell(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 24),

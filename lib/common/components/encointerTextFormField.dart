@@ -12,6 +12,7 @@ class EncointerTextFormField extends StatelessWidget {
   final Key textFormFieldKey;
   final String Function(String) validator;
   final Widget suffixIcon;
+  final ValueChanged<String> onChanged;
 
   const EncointerTextFormField({
     Key key,
@@ -22,6 +23,7 @@ class EncointerTextFormField extends StatelessWidget {
     this.textFormFieldKey,
     this.validator,
     this.suffixIcon,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -50,6 +52,7 @@ class EncointerTextFormField extends StatelessWidget {
         controller: controller,
         keyboardType: TextInputType.numberWithOptions(decimal: true),
         validator: validator,
+        onChanged: onChanged,
       ),
     );
   }
