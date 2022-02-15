@@ -53,7 +53,7 @@ class _TransferPageState extends State<TransferPage> {
   final TextEditingController _amountCtrl = new TextEditingController();
 
   AccountData _accountTo;
-  String _tokenSymbol;
+  String _cid;
   String _communitySymbol;
 
   @override
@@ -65,7 +65,7 @@ class _TransferPageState extends State<TransferPage> {
         TransferPageParams params = ModalRoute.of(context).settings.arguments;
 
         _communitySymbol = params.communitySymbol;
-        _tokenSymbol = params.cid;
+        _cid = params.cid;
 
         int decimals = ert_decimals;
 
@@ -183,7 +183,7 @@ class _TransferPageState extends State<TransferPage> {
 
   void _handleSubmit() {
     if (_formKey.currentState.validate()) {
-      String symbol = _tokenSymbol ?? store.settings.networkState.tokenSymbol;
+      String symbol = _cid ?? store.settings.networkState.tokenSymbol;
       final address = Fmt.addressOfAccount(_accountTo, store);
 
       var args = {
@@ -246,7 +246,7 @@ class _TransferPageState extends State<TransferPage> {
         }
       }
       setState(() {
-        _tokenSymbol = args.cid;
+        _cid = args.cid;
       });
 
       webApi.assets.fetchBalance();
