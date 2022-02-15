@@ -51,6 +51,7 @@ abstract class TranslationsProfile {
   String get settingPrefix;
   String get settingPrefixList;
   String get share;
+  String get shareLinkHint;
   String get title;
   String get unlock;
   String get accountAdd;
@@ -137,6 +138,7 @@ class TranslationsEnProfile implements TranslationsProfile {
   get recoveryProxy => 'recovery proxy';
   get ceremonies => 'Ceremonies';
   get reputation => 'Reputation';
+  get shareLinkHint => 'Or you can share a link:';
   get tokenSend => 'Send Tokens';
 }
 
@@ -192,6 +194,7 @@ class TranslationsDeProfile implements TranslationsProfile {
   get settingPrefix => 'Adressenprefix';
   get settingPrefixList => 'Verfügbare Prefix';
   get share => 'Teilen';
+  get shareLinkHint => 'Oder über Link teilen:';
   get title => 'Profil';
   get unlock => 'Du musst deinen PIN eingeben um einen neuen Account hinzuzufügen';
   get accountAdd => 'Konto hinzufügen';
@@ -278,4 +281,5 @@ class TranslationsZhProfile implements TranslationsProfile {
   get tokenSend => throw UnimplementedError();
   get qrScanHintAccount => throw UnimplementedError();
   get receiverAccount => throw UnimplementedError();
+  get shareLinkHint => throw UnimplementedError();
 }

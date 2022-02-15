@@ -49,10 +49,10 @@ class _AccountSharePageState extends State<AccountSharePage> {
             Column(
               children: <Widget>[
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 48),
+                  padding: const EdgeInsets.only(top: 20, left: 60, right: 60, bottom: 20),
                   child: Text(
                     I18n.of(context).translationsForLocale().profile.qrScanHintAccount,
-                    style: Theme.of(context).textTheme.headline3.copyWith(color: encointerBlack),
+                    style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -60,31 +60,60 @@ class _AccountSharePageState extends State<AccountSharePage> {
                   children: [
                     Container(
                       child: QrImage(
+                        size: MediaQuery.of(context).copyWith().size.height / 2,
                         data: contact.join('\n'),
                         embeddedImage: AssetImage('assets/images/public/app.png'),
                         // webApi.ipfs.getCommunityIcon(widget.store.encointer.communityIconsCid, devicePixelRatio).image,
                         embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
                       ),
                     ),
-                    Text("Or you can share a link:",
-                        style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey)),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.share, color: ZurichLion.shade500),
-                          SizedBox(width: 12),
-                          Text(I18n.of(context).translationsForLocale().profile.sendLink,
-                              style: Theme.of(context).textTheme.headline3),
-                        ],
-                      ),
-                      onPressed: () => Share.share(contact.join('\n')),
-                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 10, bottom: 30),
+                      child: Text(
+                          '${widget.store.account.currentAccount.name}',
+                          style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
+                          textAlign: TextAlign.center),
+                    )
+                    // SizedBox(
+                    //   width: double.infinity,
+                    //   child: ElevatedButton(
+                    //     style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
+                    //     child: Row(
+                    //       mainAxisAlignment: MainAxisAlignment.center,
+                    //       children: [
+                    //         // Icon(Iconsax.trash),
+                    //         SizedBox(width: 12),
+                    //         Text("dic.profile.contactDelete", style: Theme.of(context).textTheme.headline3)
+                    //       ],
+                    //     ),
+                    //     onPressed: () async => {
+                    //       // _removeItem(context, args),
+                    //     },
+                    //   ),
+                    // ),
                   ],
                 ),
               ],
             ),
+                Text(I18n.of(context).translationsForLocale().profile.shareLinkHint, textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey)),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(30,10,30,0),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.share, color: ZurichLion.shade500),
+                        SizedBox(width: 12),
+                        Text(I18n.of(context).translationsForLocale().profile.sendLink,
+                            style: Theme.of(context).textTheme.headline3),
+                      ],
+                    ),
+                    onPressed: () => Share.share(contact.join('\n')),
+                  ),
+                )
+
           ],
         ),
       ),
