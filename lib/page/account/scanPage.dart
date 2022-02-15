@@ -41,6 +41,7 @@ class ScanPage extends StatelessWidget {
           throw UnimplementedError(
               'Scan functionality for the case [${qrScanData.context}] has not yet been implemented!');
       }
+      return null;
     }
 
     return Scaffold(

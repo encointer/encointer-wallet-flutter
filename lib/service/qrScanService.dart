@@ -8,14 +8,14 @@ class QrScanService {
     String rawContext = 'QrScanContext.${data[0].substring(10)}';
     if (data[1].toLowerCase() == 'v1.0') {
       if (data.length != numberOfRowsV1) {
-        throw FormatException('QR scan data illegal number of rows [${data.length}] expected: ${numberOfRowsV1}');
+        throw FormatException('QR scan data illegal number of rows [${data.length}] expected: $numberOfRowsV1');
       }
       return QrScanData(
         context: QrScanContext.values.firstWhere(
           (qrContext) => qrContext.toString() == rawContext,
           orElse: () {
             throw FormatException(
-                'QR scan context [${data[0]}] -> [${rawContext}] is not supported; supported values are: ${QrScanContext.values}');
+                'QR scan context [${data[0]}] -> [$rawContext] is not supported; supported values are: ${QrScanContext.values}');
           },
         ),
         version: data[1].toLowerCase(),

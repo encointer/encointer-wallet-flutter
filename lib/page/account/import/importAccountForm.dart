@@ -1,12 +1,8 @@
-import 'dart:convert';
-
 import 'package:encointer_wallet/common/components/accountAdvanceOption.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
-import 'package:encointer_wallet/page/account/scanPage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
@@ -42,108 +38,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
   final TextEditingController _observationNameCtrl = new TextEditingController();
   final TextEditingController _memoCtrl = new TextEditingController();
 
-  String _keyCtrlText = '';
   AccountAdvanceOptionParams _advanceOptions = AccountAdvanceOptionParams();
-
-  Widget _buildNameAndPassInput() {
-    final Translations dic = I18n.of(context).translationsForLocale();
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(left: 16, right: 16),
-          child: TextFormField(
-            decoration: InputDecoration(
-              hintText: dic.account.createHint,
-              labelText: "${dic.account.createName}: ${dic.account.createHint}",
-            ),
-            controller: _nameCtrl,
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: 16, right: 16),
-          child: TextFormField(
-            decoration: InputDecoration(
-              hintText: dic.account.createPassword,
-              labelText: dic.account.createPassword,
-              suffixIcon: IconButton(
-                iconSize: 18,
-                icon: Icon(CupertinoIcons.clear_thick_circled, color: Theme.of(context).unselectedWidgetColor),
-                onPressed: () {
-                  WidgetsBinding.instance.addPostFrameCallback((_) => _passCtrl.clear());
-                },
-              ),
-            ),
-            controller: _passCtrl,
-            obscureText: true,
-            validator: (v) {
-              // TODO: fix me: disable validator for polkawallet-RN exported keystore importing
-              return null;
-              // return v.trim().length > 0 ? null : dic.account.createPasswordError;
-            },
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildAddressAndNameInput() {
-    final Translations dic = I18n.of(context).translationsForLocale();
-    return Column(
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(left: 16, right: 16),
-          child: TextFormField(
-            decoration: InputDecoration(
-              hintText: dic.profile.contactAddress,
-              labelText: dic.profile.contactAddress,
-              suffix: GestureDetector(
-                child: Icon(Icons.camera_alt),
-                onTap: () async {
-                  final acc = (await Navigator.of(context).pushNamed(ScanPage.route)) as QRCodeAddressResult;
-                  if (acc != null) {
-                    setState(() {
-                      _observationAddressCtrl.text = acc.address;
-                      _observationNameCtrl.text = acc.name;
-                    });
-                  }
-                },
-              ),
-            ),
-            controller: _observationAddressCtrl,
-            validator: (v) {
-              if (!Fmt.isAddress(v.trim())) {
-                return dic.profile.contactAddressError;
-              }
-              return null;
-            },
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: 16, right: 16),
-          child: TextFormField(
-            decoration: InputDecoration(
-              hintText: dic.profile.contactName,
-              labelText: dic.profile.contactName,
-            ),
-            controller: _observationNameCtrl,
-            validator: (v) {
-              return v.trim().length > 0 ? null : dic.profile.contactNameError;
-            },
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(left: 16, right: 16),
-          child: TextFormField(
-            decoration: InputDecoration(
-              hintText: dic.profile.contactMemo,
-              labelText: dic.profile.contactMemo,
-            ),
-            controller: _memoCtrl,
-          ),
-        ),
-      ],
-    );
-  }
 
   Future<void> _onAddObservationAccount() async {
     setState(() {});
@@ -227,7 +122,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
 
   void _onKeyChange(String v) {
     setState(() {
-      _keyCtrlText = v.trim();
+      _keyCtrl.text = v.trim();
     });
   }
 
