@@ -20,12 +20,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 
 class TransferPageParams {
-  TransferPageParams({
-    @required this.cid,
-    @required this.communitySymbol,
-    @required this.address,
-    @required this.redirect
-  });
+  TransferPageParams({this.cid, this.communitySymbol, this.address, this.redirect});
 
   final String cid;
   final String communitySymbol;
@@ -70,7 +65,6 @@ class _TransferPageState extends State<TransferPage> {
         int decimals = ert_decimals;
 
         double available = store.encointer.communityBalance;
-        print('Available: $available');
 
         return Form(
           key: _formKey,
@@ -120,13 +114,7 @@ class _TransferPageState extends State<TransferPage> {
                             }
                             return null;
                           },
-                          suffixIcon: Text(
-                            "ⵐ",
-                            style: TextStyle(
-                              color: encointerGrey,
-                              fontSize: 44,
-                            ),
-                          ),
+                          suffixIcon: Text("ⵐ", style: TextStyle(color: encointerGrey, fontSize: 44)),
                         ),
                         SizedBox(height: 24),
                         Row(
@@ -157,19 +145,17 @@ class _TransferPageState extends State<TransferPage> {
                     ),
                   ),
                   SizedBox(height: 8),
-                  Container(
+                  PrimaryButton(
                     key: Key('make-transfer'),
-                    child: PrimaryButton(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Iconsax.send_sqaure_2),
-                          SizedBox(width: 12),
-                          Text(dic.assets.amountToBeTransferred),
-                        ],
-                      ),
-                      onPressed: _handleSubmit,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Iconsax.send_sqaure_2),
+                        SizedBox(width: 12),
+                        Text(dic.assets.amountToBeTransferred),
+                      ],
                     ),
+                    onPressed: _handleSubmit,
                   ),
                   SizedBox(height: 8),
                 ],
