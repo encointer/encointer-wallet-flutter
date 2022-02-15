@@ -41,6 +41,7 @@ abstract class TranslationsProfile {
   String get passSuccessTxt;
   String get qrScanHint;
   String get qrScanHintAccount;
+  String get receiverAccount;
   String get sendLink;
   String get setting;
   String get settingLang;
@@ -110,6 +111,7 @@ class TranslationsEnProfile implements TranslationsProfile {
   get passSuccessTxt => 'PIN changed successfully';
   get qrScanHint => 'Enter the amount you wish to receive and let the sender scan the QR code.';
   get qrScanHintAccount => 'Ask the recipient to scan the QR-code in the encointer app.';
+  get receiverAccount => 'Receiving account:';
   get sendLink => 'Send link';
   get setting => 'Settings';
   get settingLang => 'Language';
@@ -178,6 +180,7 @@ class TranslationsDeProfile implements TranslationsProfile {
   get passOld => 'Aktuelle PIN';
   get passSuccess => 'Erfolgreich';
   get passSuccessTxt => 'PIN wurde erfolgreich geändert';
+  get receiverAccount => 'Empfangendes Konto:';
   get qrScanHint => 'Gib den Betrag den du erhalten möchtest ein und lasse den Sender den QR Code scannen.';
   get qrScanHintAccount => 'Bitte den Empfänger den QR-Code in der Encointer App zu scannen.';
   get sendLink => 'Link senden';
@@ -274,4 +277,5 @@ class TranslationsZhProfile implements TranslationsProfile {
   get sendLink => throw UnimplementedError();
   get tokenSend => throw UnimplementedError();
   get qrScanHintAccount => throw UnimplementedError();
+  get receiverAccount => throw UnimplementedError();
 }
