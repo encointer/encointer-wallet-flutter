@@ -26,8 +26,6 @@ class _AccountSharePageState extends State<AccountSharePage> {
       widget.store.account.currentAccount.name
     ];
 
-    // final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -63,7 +61,6 @@ class _AccountSharePageState extends State<AccountSharePage> {
                         size: MediaQuery.of(context).copyWith().size.height / 2,
                         data: contact.join('\n'),
                         embeddedImage: AssetImage('assets/images/public/app.png'),
-                        // webApi.ipfs.getCommunityIcon(widget.store.encointer.communityIconsCid, devicePixelRatio).image,
                         embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
                       ),
                     ),
@@ -73,23 +70,6 @@ class _AccountSharePageState extends State<AccountSharePage> {
                           style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
                           textAlign: TextAlign.center),
                     )
-                    // SizedBox(
-                    //   width: double.infinity,
-                    //   child: ElevatedButton(
-                    //     style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
-                    //     child: Row(
-                    //       mainAxisAlignment: MainAxisAlignment.center,
-                    //       children: [
-                    //         // Icon(Iconsax.trash),
-                    //         SizedBox(width: 12),
-                    //         Text("dic.profile.contactDelete", style: Theme.of(context).textTheme.headline3)
-                    //       ],
-                    //     ),
-                    //     onPressed: () async => {
-                    //       // _removeItem(context, args),
-                    //     },
-                    //   ),
-                    // ),
                   ],
                 ),
               ],

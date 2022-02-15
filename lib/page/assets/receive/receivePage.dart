@@ -22,57 +22,42 @@ class _ReceivePageState extends State<ReceivePage> {
   bool generateQR = false;
   var invoice = [];
 
+  Widget generateQRforValueGreaterZero() {
+    print("latest value ${_amountController.text}");
+    if (_amountController.text != null &&
+        _amountController.text.isNotEmpty &&
+        double.parse(_amountController.text) != 0.0) {
+      return Container(
+        child: QrImage(
+          size: MediaQuery.of(context).copyWith().size.height / 2,
+          data: invoice.join('\n'),
+          embeddedImage: AssetImage('assets/images/public/app.png'),
+          embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
+        ),
+      );
+    } else
+      return Container();
+  }
+
+  // DO WE NOT NEED InitState? ITS ALWAYS recomended when handling states
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // Start listening to changes.
+  //   _amountController.addListener(generateQRforValueGreaterZero);
+  // }
+
+  // DO WE NOT NEED DISPOSE? ITS ALWAYS recomended when handling states
+  // @override
+  // void dispose() {
+  //   // Clean up the controller when the widget is removed from the
+  //   // widget tree.
+  //   _amountController.dispose();
+  //   super.dispose();
+  // }
+
   @override
   Widget build(BuildContext context) {
-    // final Map args = ModalRoute.of(context).settings.arguments;
-    //
-    // String codeAddress =
-    //     'substrate:${widget.store.account.currentAddress}:${widget.store.account.currentAccount.pubKey}:${widget.store.account.currentAccount.name}';
-
-    // Map<String, String> invoiceMap = {
-    //   'header': 'encointer-contact',
-    //   'versrion': 'V1.0',
-    //   'community': '',
-    //   'accountAddress': '${widget.store.account.currentAccount.address}',
-    //   'amount': (0.0).toString(),
-    //   'name': '${widget.store.account.currentAccount.name}'
-    // };
-
-    Widget generateQRforValueGreaterZero() {
-      print("latest value ${_amountController.text}");
-      if (_amountController.text != null &&
-          _amountController.text.isNotEmpty &&
-          double.parse(_amountController.text) != 0.0) {
-        return Container(
-          child:
-              // NOT WORKING YET, should probably add observer
-              QrImage(
-            size: MediaQuery.of(context).copyWith().size.height / 2,
-            data: invoice.join('\n'),
-            embeddedImage: AssetImage('assets/images/public/app.png'),
-            embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
-          ),
-        );
-      } else
-        return Container();
-    }
-
-    // @override
-    // void initState() {
-    //   super.initState();
-    //   // Start listening to changes.
-    //   _amountController.addListener(generateQRforValueGreaterZero);
-    // }
-
-    // DO WE NOT NEED DISPOSE? ITS ALWAYS recomended when handling states
-    // @override
-    // void dispose() {
-    //   // Clean up the controller when the widget is removed from the
-    //   // widget tree.
-    //   _amountController.dispose();
-    //   super.dispose();
-    // }
-
     return Form(
       key: _formKey,
       child: Scaffold(
@@ -169,14 +154,6 @@ class _ReceivePageState extends State<ReceivePage> {
                   onTap: () => {
                     if (_formKey.currentState.validate())
                       {
-                        print("amount ${_amountController.text} is stored"),
-                        invoice[4] = _amountController.text,
-                        print("the final share message is: ${invoice.join('\n')}"),
-                        // not working yet with map..
-                        // invoiceMap['amount'] = '${_amountController.text}',
-                        // how to define type?
-                        // var invoiceString = '',
-                        // invoiceMap.values.map((e) => invoiceString.join(e.toString(),'\n')),
                         Share.share(invoice.join('\n')),
                       }
                   },
