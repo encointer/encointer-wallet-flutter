@@ -205,9 +205,8 @@ class TranslationsDeProfile implements TranslationsProfile {
   get passOld => 'Aktuelle PIN';
   get passSuccess => 'Erfolgreich';
   get passSuccessTxt => 'PIN wurde erfolgreich geändert';
-  get qrScanHint => 'Gib den Betrag, den du erhalten möchtest ein und lasse den Sender den QR Code scannen.';
   get receiverAccount => 'Empfangendes Konto:';
-  get qrScanHint => 'Gib den Betrag den du erhalten möchtest ein und lasse den Sender den QR Code scannen.';
+  get qrScanHint => 'Gib den Betrag, den du erhalten möchtest ein und lasse den Sender den QR Code scannen.';
   get qrScanHintAccount => 'Bitte den Empfänger den QR-Code in der Encointer App zu scannen.';
   get sendLink => 'Link senden';
   get setting => 'Einstellungen';
