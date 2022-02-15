@@ -20,12 +20,17 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 
 class TransferPageParams {
-  TransferPageParams({this.symbol, this.address, this.redirect, this.communitySymbol});
+  TransferPageParams({
+    @required this.cid,
+    @required this.communitySymbol,
+    @required this.address,
+    @required this.redirect
+  });
 
+  final String cid;
+  final String communitySymbol;
   final String address;
   final String redirect;
-  final String symbol;
-  final String communitySymbol;
 }
 
 class TransferPage extends StatefulWidget {
@@ -60,7 +65,7 @@ class _TransferPageState extends State<TransferPage> {
         TransferPageParams params = ModalRoute.of(context).settings.arguments;
 
         _communitySymbol = params.communitySymbol;
-        _tokenSymbol = params.symbol;
+        _tokenSymbol = params.cid;
 
         int decimals = ert_decimals;
 
@@ -179,11 +184,10 @@ class _TransferPageState extends State<TransferPage> {
   void _handleSubmit() {
     if (_formKey.currentState.validate()) {
       String symbol = _tokenSymbol ?? store.settings.networkState.tokenSymbol;
-      final String tokenView = Fmt.tokenView(symbol);
       final address = Fmt.addressOfAccount(_accountTo, store);
 
       var args = {
-        "title": I18n.of(context).translationsForLocale().assets.transfer + ' $tokenView',
+        "title": I18n.of(context).translationsForLocale().assets.transfer, // Todo: Cleanup
         "txInfo": {
           "module": 'encointerBalances',
           "call": 'transfer',
@@ -242,7 +246,7 @@ class _TransferPageState extends State<TransferPage> {
         }
       }
       setState(() {
-        _tokenSymbol = args.symbol ?? store.settings.networkState.tokenSymbol;
+        _tokenSymbol = args.cid;
       });
 
       webApi.assets.fetchBalance();
