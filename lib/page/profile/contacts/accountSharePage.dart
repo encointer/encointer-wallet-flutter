@@ -69,8 +69,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, bottom: 30),
-                      child: Text(
-                          '${widget.store.account.currentAccount.name}',
+                      child: Text('${widget.store.account.currentAccount.name}',
                           style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
                           textAlign: TextAlign.center),
                     )
@@ -95,25 +94,25 @@ class _AccountSharePageState extends State<AccountSharePage> {
                 ),
               ],
             ),
-                Text(I18n.of(context).translationsForLocale().profile.shareLinkHint, textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey)),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(30,10,30,0),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.share, color: ZurichLion.shade500),
-                        SizedBox(width: 12),
-                        Text(I18n.of(context).translationsForLocale().profile.sendLink,
-                            style: Theme.of(context).textTheme.headline3),
-                      ],
-                    ),
-                    onPressed: () => Share.share(contact.join('\n')),
-                  ),
-                )
-
+            Text(I18n.of(context).translationsForLocale().profile.shareLinkHint,
+                textAlign: TextAlign.center,
+                style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey)),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(30, 10, 30, 0),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.share, color: ZurichLion.shade500),
+                    SizedBox(width: 12),
+                    Text(I18n.of(context).translationsForLocale().profile.sendLink,
+                        style: Theme.of(context).textTheme.headline3),
+                  ],
+                ),
+                onPressed: () => Share.share(contact.join('\n')),
+              ),
+            )
           ],
         ),
       ),

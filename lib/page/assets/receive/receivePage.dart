@@ -47,8 +47,8 @@ class _ReceivePageState extends State<ReceivePage> {
           child:
               // NOT WORKING YET, should probably add observer
               QrImage(
-                size: MediaQuery.of(context).copyWith().size.height / 2,
-                data: invoice.join('\n'),
+            size: MediaQuery.of(context).copyWith().size.height / 2,
+            data: invoice.join('\n'),
             embeddedImage: AssetImage('assets/images/public/app.png'),
             embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
           ),
