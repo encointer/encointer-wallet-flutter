@@ -1,14 +1,11 @@
 import 'package:encointer_wallet/common/components/BorderedTitle.dart';
-import 'package:encointer_wallet/common/components/TapTooltip.dart';
 import 'package:encointer_wallet/common/components/listTail.dart';
-import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
 import 'package:encointer_wallet/page/assets/transfer/detailPage.dart';
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
 import 'package:encointer_wallet/service/subscan.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/assets/types/balancesInfo.dart';
 import 'package:encointer_wallet/store/assets/types/transferData.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -16,15 +13,11 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class AssetPageParams {
-  AssetPageParams(
-      {@required this.token, @required this.isEncointerCommunityCurrency, this.communityName, this.communitySymbol});
+  AssetPageParams({@required this.cid, this.communityName, this.communitySymbol});
 
-  /// token equals cid if `isEncointerCommunityCurrency == true`
-  final String token;
-  final bool isEncointerCommunityCurrency;
+  final String cid;
   final String communityName;
   final String communitySymbol;
 }
@@ -119,15 +112,15 @@ class _AssetPageState extends State<AssetPage> with SingleTickerProviderStateMix
   List<Widget> _buildTxList() {
     List<Widget> res = [];
     final AssetPageParams params = ModalRoute.of(context).settings.arguments;
-    final String token = params.token;
+    final String cid = params.cid;
     List<TransferData> ls = store.encointer.txsTransfer.reversed.toList();
-    final String symbol = store.settings.networkState.tokenSymbol;
+
     ls.retainWhere(
-        (i) => i.token.toUpperCase() == token.toUpperCase() && i.concernsCurrentAccount(store.account.currentAddress));
+        (i) => i.token.toUpperCase() == cid.toUpperCase() && i.concernsCurrentAccount(store.account.currentAddress));
     res.addAll(ls.map((i) {
       return TransferListItem(
         data: i,
-        token: token == symbol ? token : "",
+        cid: cid ?? "",
         isOut: i.from == store.account.currentAddress,
         hasDetail: false,
       );
@@ -142,154 +135,35 @@ class _AssetPageState extends State<AssetPage> with SingleTickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     final AssetPageParams params = ModalRoute.of(context).settings.arguments;
-    final bool isEncointerCommunityCurrency = params.isEncointerCommunityCurrency;
-    final String token = params.token;
+    final String token = params.cid;
 
-    final Translations dic = I18n.of(context).translationsForLocale();
-
-    final String symbol = store.settings.networkState.tokenSymbol;
-    final String tokenView = Fmt.tokenView(token);
-
-    final primaryColor = Theme.of(context).primaryColor;
     final titleColor = Theme.of(context).cardColor;
 
     return Scaffold(
       appBar: AppBar(
-        title: isEncointerCommunityCurrency ? Text(params.communitySymbol) : Text(tokenView),
+        title: Text(params.communitySymbol),
         centerTitle: true,
         elevation: 0.0,
       ),
       body: SafeArea(
         child: Observer(
           builder: (_) {
-            int decimals = isEncointerCommunityCurrency
-                ? encointer_currencies_decimals
-                : store.settings.networkState.tokenDecimals ?? ert_decimals;
-
-            BigInt balance = isEncointerCommunityCurrency
-                ? Fmt.tokenInt(store.encointer.communityBalance.toString(), decimals)
-                : Fmt.balanceInt(store.assets.tokenBalances[token.toUpperCase()]);
-
-            BalancesInfo balancesInfo = store.assets.balances[symbol];
-            String lockedInfo = '\n';
-            if (balancesInfo != null && balancesInfo.lockedBreakdown != null) {
-              balancesInfo.lockedBreakdown.forEach((i) {
-                if (i.amount > BigInt.zero) {
-                  lockedInfo += '${Fmt.priceFloorBigInt(
-                    i.amount,
-                    decimals,
-                    lengthMax: 3,
-                  )} $tokenView "{dic[lock.dollar i.use ]}"\n'; // TODO armin
-                }
-              });
-            }
-
-            // Todo: Token price not available on encointer network. Subject to change?
-            String tokenPrice;
-
             return Column(
               children: <Widget>[
                 Container(
                   width: MediaQuery.of(context).size.width,
-                  color: primaryColor,
+                  color: Theme.of(context).primaryColor,
                   padding: EdgeInsets.only(bottom: 24),
                   child: Column(
                     children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(bottom: tokenPrice != null ? 4 : 16),
-                        child: Text(
-                          Fmt.token(!isEncointerCommunityCurrency ? balancesInfo.total : balance, decimals, length: 8),
-                          style: TextStyle(
-                            color: titleColor,
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      Text(
+                        Fmt.doubleFormat(store.encointer.communityBalance, length: 8),
+                        style: TextStyle(
+                          color: titleColor,
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      tokenPrice != null
-                          ? Padding(
-                              padding: EdgeInsets.only(bottom: 16),
-                              child: Text(
-                                '≈ \$ ${tokenPrice ?? '--.--'}',
-                                style: TextStyle(
-                                  color: Theme.of(context).cardColor,
-                                ),
-                              ),
-                            )
-                          : Container(),
-                      !isEncointerCommunityCurrency
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget>[
-                                Column(
-                                  children: [
-                                    Text(
-                                      dic.assets.locked,
-                                      style: TextStyle(color: titleColor, fontSize: 12),
-                                    ),
-                                    Row(
-                                      children: [
-                                        lockedInfo.length > 2
-                                            ? TapTooltip(
-                                                message: lockedInfo,
-                                                child: Padding(
-                                                  padding: EdgeInsets.only(right: 6),
-                                                  child: Icon(
-                                                    Icons.info,
-                                                    size: 16,
-                                                    color: titleColor,
-                                                  ),
-                                                ),
-                                                waitDuration: Duration(seconds: 0),
-                                              )
-                                            : Container(),
-                                        Text(
-                                          Fmt.priceFloorBigInt(
-                                            balancesInfo.lockedBalance,
-                                            decimals,
-                                            lengthMax: 3,
-                                          ),
-                                          style: TextStyle(color: titleColor),
-                                        )
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  children: [
-                                    Text(
-                                      dic.assets.available,
-                                      style: TextStyle(color: titleColor, fontSize: 12),
-                                    ),
-                                    Text(
-                                      Fmt.priceFloorBigInt(
-                                        balancesInfo.transferable,
-                                        decimals,
-                                        lengthMax: 3,
-                                      ),
-                                      style: TextStyle(color: titleColor),
-                                    )
-                                  ],
-                                ),
-                                Column(
-                                  children: [
-                                    Text(
-                                      dic.assets.reserved,
-                                      style: TextStyle(color: titleColor, fontSize: 12),
-                                    ),
-                                    Text(
-                                      Fmt.priceFloorBigInt(
-                                        balancesInfo.reserved,
-                                        decimals,
-                                        lengthMax: 3,
-                                      ),
-                                      style: TextStyle(color: titleColor),
-                                    )
-                                  ],
-                                ),
-                              ],
-                            )
-                          : Container(),
                     ],
                   ),
                 ),
@@ -354,9 +228,7 @@ class _AssetPageState extends State<AssetPage> with SingleTickerProviderStateMix
                               context,
                               TransferPage.route,
                               arguments: TransferPageParams(
-                                  redirect: AssetPage.route,
-                                  symbol: token,
-                                  communitySymbol: params.communitySymbol),
+                                  redirect: AssetPage.route, symbol: token, communitySymbol: params.communitySymbol),
                             );
                           },
                         ),
@@ -400,15 +272,13 @@ class _AssetPageState extends State<AssetPage> with SingleTickerProviderStateMix
 class TransferListItem extends StatelessWidget {
   TransferListItem({
     this.data,
-    this.token,
+    this.cid,
     this.isOut,
     this.hasDetail,
-    this.crossChain,
   });
 
   final TransferData data;
-  final String token;
-  final String crossChain;
+  final String cid;
   final bool isOut;
   final bool hasDetail;
 
@@ -421,7 +291,7 @@ class TransferListItem extends StatelessWidget {
         border: Border(bottom: BorderSide(width: 0.5, color: Colors.black12)),
       ),
       child: ListTile(
-        title: Text('$title${crossChain != null ? ' ($crossChain)' : ''}'),
+        title: Text('$title'),
         subtitle: Text(Fmt.dateTime(DateTime.fromMillisecondsSinceEpoch(data.blockTimestamp * 1000))),
         trailing: Container(
           width: 110,
@@ -429,7 +299,7 @@ class TransferListItem extends StatelessWidget {
             children: <Widget>[
               Expanded(
                   child: Text(
-                '${data.amount} $token',
+                '${data.amount} $cid',
                 style: Theme.of(context).textTheme.headline4,
                 textAlign: TextAlign.end,
               )),
