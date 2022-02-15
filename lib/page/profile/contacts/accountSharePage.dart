@@ -20,7 +20,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
     var contact = [
       'encointer-contact',
       'V1.0',
-      '',
+      widget.store.encointer.chosenCid != null ? (widget.store.encointer.chosenCid).toFmtString() : '',
       widget.store.account.currentAccount.address,
       '',
       widget.store.account.currentAccount.name
