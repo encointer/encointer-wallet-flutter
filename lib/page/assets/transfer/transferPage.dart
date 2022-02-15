@@ -20,8 +20,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 
 class TransferPageParams {
-  TransferPageParams(
-      {this.symbol, this.address, this.redirect, this.communitySymbol});
+  TransferPageParams({this.symbol, this.address, this.redirect, this.communitySymbol});
 
   final String address;
   final String redirect;
