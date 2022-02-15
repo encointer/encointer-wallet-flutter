@@ -110,8 +110,10 @@ class _Contact extends State<ContactPage> {
   Widget build(BuildContext context) {
     QrScanData qrScanData = ModalRoute.of(context).settings.arguments;
     final Translations dic = I18n.of(context).translationsForLocale();
-    _addressCtrl.text = qrScanData.account;
-    _nameCtrl.text = qrScanData.label;
+    if (qrScanData != null) {
+      _addressCtrl.text = qrScanData.account;
+      _nameCtrl.text = qrScanData.label;
+    }
 
     return Scaffold(
       appBar: AppBar(

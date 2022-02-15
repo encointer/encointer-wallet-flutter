@@ -34,7 +34,7 @@ class ScanPage extends StatelessWidget {
           // go to transfer page and aut-fill data
           Navigator.of(context).popAndPushNamed(
             TransferPage.route,
-            arguments: TransferPageParams(address: qrScanData.account, redirect: '/'),
+            arguments: TransferPageParams(qrScanData: qrScanData, redirect: '/'),
           );
           break;
         default:
@@ -54,7 +54,7 @@ class ScanPage extends StatelessWidget {
                   ElevatedButton(
                     child: Text('addContact'),
                     onPressed: () => onScan(
-                        "encointer-contact\nV1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nsqm1v79dF6b\n\nAlice",
+                        "encointer-contact\nV1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nsqm1v79dF6b\n\nSara",
                         null),
                   ),
                   ElevatedButton(
