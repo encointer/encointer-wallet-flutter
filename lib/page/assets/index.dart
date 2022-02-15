@@ -222,7 +222,6 @@ class _AssetsState extends State<Assets> {
                                     arguments: TransferPageParams(
                                         redirect: '/',
                                         symbol: store.encointer.chosenCid.toFmtString(),
-                                        isEncointerCommunityCurrency: true,
                                         communitySymbol: store.encointer.communitySymbol),
                                   );
                                 }

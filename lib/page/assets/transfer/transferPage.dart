@@ -21,12 +21,11 @@ import 'package:iconsax/iconsax.dart';
 
 class TransferPageParams {
   TransferPageParams(
-      {this.symbol, this.address, this.redirect, this.isEncointerCommunityCurrency = false, this.communitySymbol});
+      {this.symbol, this.address, this.redirect, this.communitySymbol});
 
   final String address;
   final String redirect;
   final String symbol;
-  final bool isEncointerCommunityCurrency;
   final String communitySymbol;
 }
 
