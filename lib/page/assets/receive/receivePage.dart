@@ -20,7 +20,7 @@ class _ReceivePageState extends State<ReceivePage> {
   final TextEditingController _amountController = new TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool generateQR = false;
-
+  var invoice = [];
 
   @override
   Widget build(BuildContext context) {
@@ -28,15 +28,6 @@ class _ReceivePageState extends State<ReceivePage> {
     //
     // String codeAddress =
     //     'substrate:${widget.store.account.currentAddress}:${widget.store.account.currentAccount.pubKey}:${widget.store.account.currentAccount.name}';
-
-    var invoice = [
-      'encointer-contact',
-      'V1.0',
-      widget.store.encointer.chosenCid != null ? (widget.store.encointer.chosenCid).toFmtString() : '',
-      widget.store.account.currentAccount.address,
-      0,
-      widget.store.account.currentAccount.name
-    ];
 
     // Map<String, String> invoiceMap = {
     //   'header': 'encointer-contact',
@@ -52,33 +43,33 @@ class _ReceivePageState extends State<ReceivePage> {
       if (_amountController.text != null &&
           _amountController.text.isNotEmpty &&
           double.parse(_amountController.text) != 0.0) {
-          return Container(
-            child:
-                // NOT WORKING YET, should probably add observer
-                QrImage(
-              data: invoice.join('\n'),
-              embeddedImage: AssetImage('assets/images/public/app.png'),
-              embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
-            ),
-          );
-        } else
-          return Container();
-      }
-
-    @override
-    void initState() {
-      super.initState();
-      // Start listening to changes.
-      _amountController.addListener(generateQRforValueGreaterZero);
+        return Container(
+          child:
+              // NOT WORKING YET, should probably add observer
+              QrImage(
+            data: invoice.join('\n'),
+            embeddedImage: AssetImage('assets/images/public/app.png'),
+            embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
+          ),
+        );
+      } else
+        return Container();
     }
 
-    @override
-    void dispose() {
-      // Clean up the controller when the widget is removed from the
-      // widget tree.
-      _amountController.dispose();
-      super.dispose();
-    }
+    // @override
+    // void initState() {
+    //   super.initState();
+    //   // Start listening to changes.
+    //   _amountController.addListener(generateQRforValueGreaterZero);
+    // }
+
+    // @override
+    // void dispose() {
+    //   // Clean up the controller when the widget is removed from the
+    //   // widget tree.
+    //   _amountController.dispose();
+    //   super.dispose();
+    // }
 
     return Form(
       key: _formKey,
@@ -128,6 +119,16 @@ class _ReceivePageState extends State<ReceivePage> {
                       },
                       onChanged: (value) {
                         setState(() {
+                          invoice = [
+                            'encointer-contact',
+                            'V1.0',
+                            widget.store.encointer.chosenCid != null
+                                ? (widget.store.encointer.chosenCid).toFmtString()
+                                : '',
+                            widget.store.account.currentAccount.address,
+                            _amountController.text,
+                            widget.store.account.currentAccount.name
+                          ];
                         });
                       },
                       suffixIcon: Text(
