@@ -30,13 +30,16 @@ class QrScanService {
   }
 }
 
-/// format of our scanned data, (separator: newLine)
+/// Format of QR-code, (separator: newLine).
+/// Values in `[]` are optional and will be empty lines in the QR-code.
+///
 /// encointer-<context>
 /// <QR-version-for-context>
 /// <account ss58>
 /// [<cid>]
 /// [<amount>]
 /// [<label>]
+///
 class QrScanData {
   final QrScanContext context;
 
@@ -46,16 +49,15 @@ class QrScanData {
   /// ss58 encoded public key of the account address.
   /// Payment: account of the receiver of the payment;
   /// contact: account to add to contacts;
-  /// claim: ????????????????? whose account is it in this case?
   final String account;
 
   /// id of the community as hexadecimal String
   final String cid;
 
-  /// for a payment the amount in community currency, otherwise an empty line
+  /// Optional payment amount for the invoice. Will be emp
   final num amount;
 
-  /// ????????????? what is it used for? should it be called label? or info or text or comment??
+  /// name or other identifier for `account`.
   final String label;
 
   QrScanData({this.context, this.version, this.account, this.cid, this.amount, this.label});
@@ -67,5 +69,5 @@ class QrScanData {
 enum QrScanContext {
   contact,
   invoice,
-  claim,
+  // claim, currently unsupported and might not be merged into this. Let's see.
 }
