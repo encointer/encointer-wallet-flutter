@@ -227,21 +227,6 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
   }
 }
 
-class QRCodeAddressResult {
-  QRCodeAddressResult(this.rawData)
-      : chainType = rawData[0],
-        address = rawData[1],
-        pubKey = rawData[2],
-        name = rawData[3];
-
-  final List<String> rawData;
-
-  final String chainType;
-  final String address;
-  final String pubKey;
-  final String name;
-}
-
 enum KeySelection {
   MNEMONIC,
   RAW_SEED,
