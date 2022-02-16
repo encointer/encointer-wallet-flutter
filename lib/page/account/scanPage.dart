@@ -71,10 +71,7 @@ class ScanPage extends StatelessWidget {
                               "\nsqm1v79dF6b\n0.2343\nAubrey",
                               null),
                         ),
-                        Text(
-                          ' <<< Devs only',
-                          style: TextStyle(color: Colors.orange),
-                        ), // TODO only show for Devs
+                        Text(' <<< Devs only', style: TextStyle(color: Colors.orange)),
                       ])
                     : Container(),
                 key: _qrViewKey,
