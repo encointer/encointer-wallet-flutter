@@ -120,12 +120,6 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
     return passed ? null : '${dic.account.importInvalid} ${translationsByKeySelection[_keySelection]}'; // TODO armin
   }
 
-  void _onKeyChange(String v) {
-    setState(() {
-      _keyCtrl.text = v.trim();
-    });
-  }
-
   @override
   void dispose() {
     _nameCtrl.dispose();
@@ -199,7 +193,6 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                           controller: _keyCtrl,
                           maxLines: 2,
                           validator: (String value) => _validateInput(value, translationsByKeySelection),
-                          onChanged: _onKeyChange,
                         ),
                       )
                     : Container(),
