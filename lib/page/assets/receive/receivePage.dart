@@ -24,19 +24,22 @@ class _ReceivePageState extends State<ReceivePage> {
 
   Widget generateQRforValueGreaterZero() {
     print("latest value ${_amountController.text}");
-    if (_amountController.text != null &&
-        _amountController.text.isNotEmpty &&
-        double.parse(_amountController.text) != 0.0) {
-      return Container(
-        child: QrImage(
-          size: MediaQuery.of(context).copyWith().size.height / 2,
-          data: invoice.join('\n'),
-          embeddedImage: AssetImage('assets/images/public/app.png'),
-          embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
-        ),
-      );
-    } else
-      return Container();
+    invoice = [
+      'encointer-invoice',
+      'V1.0',
+      widget.store.account.currentAddress,
+      widget.store.encointer.chosenCid != null ? (widget.store.encointer.chosenCid).toFmtString() : '',
+      _amountController.text,
+      widget.store.account.currentAccount.name
+    ];
+    return Container(
+      child: QrImage(
+        size: MediaQuery.of(context).copyWith().size.height / 2,
+        data: invoice.join('\n'),
+        embeddedImage: AssetImage('assets/images/public/app.png'),
+        embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
+      ),
+    );
   }
 
   // DO WE NOT NEED InitState? ITS ALWAYS recomended when handling states
@@ -107,12 +110,12 @@ class _ReceivePageState extends State<ReceivePage> {
                       onChanged: (value) {
                         setState(() {
                           invoice = [
-                            'encointer-contact',
+                            'encointer-invoice',
                             'V1.0',
+                            widget.store.account.currentAddress,
                             widget.store.encointer.chosenCid != null
                                 ? (widget.store.encointer.chosenCid).toFmtString()
                                 : '',
-                            widget.store.account.currentAccount.address,
                             _amountController.text,
                             widget.store.account.currentAccount.name
                           ];
@@ -146,7 +149,7 @@ class _ReceivePageState extends State<ReceivePage> {
                           Icon(Icons.share, color: ZurichLion.shade500),
                           SizedBox(width: 8),
                           Text(
-                            I18n.of(context).translationsForLocale().assets.shareQrCode,
+                            I18n.of(context).translationsForLocale().assets.shareInvoice,
                             style: Theme.of(context).textTheme.headline3,
                           ),
                         ]),
