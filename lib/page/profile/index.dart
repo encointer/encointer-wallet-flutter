@@ -106,7 +106,7 @@ class _ProfileState extends State<Profile> {
                 ),
                 Positioned(
                   bottom: 0, right: 0, //give the values according to your requirement
-                  child: Icon(Iconsax.edit, color: encointerBlue),
+                  child: Icon(Iconsax.edit, color: ZurichLion.shade50),
                 ),
               ],
             ),
@@ -173,7 +173,7 @@ class _ProfileState extends State<Profile> {
                         ),
                         IconButton(
                             icon: Icon(Iconsax.add_square),
-                            color: encointerBlue,
+                            color: ZurichLion.shade50,
                             onPressed: () {
                               store.settings.cachedPin.isEmpty ? _showPasswordDialog(context) : _onAddAccount();
                             }),
