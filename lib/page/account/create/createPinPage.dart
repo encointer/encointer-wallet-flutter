@@ -56,6 +56,8 @@ class _CreatePinPageState extends State<CreatePinPage> {
     webApi.account.getPubKeyIcons([pubKey]);
     store.account.setCurrentAccount(pubKey);
 
+    if (!mounted) return;
+
     setState(() {
       _submitting = false;
     });
