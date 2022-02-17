@@ -173,7 +173,7 @@ class _ProfileState extends State<Profile> {
                         ),
                         IconButton(
                             icon: Icon(Iconsax.add_square),
-                            color: ZurichLion.shade50,
+                            color: ZurichLion.shade500,
                             onPressed: () {
                               store.settings.cachedPin.isEmpty ? _showPasswordDialog(context) : _onAddAccount();
                             }),
