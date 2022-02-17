@@ -145,6 +145,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
               // Navigator.of(context).pop();
             },
           ),
+          // todo: temporarly deactivated possibility to export account, because it crashes if wanting to export imported raw_seed accounts like //Alice
           // CupertinoActionSheetAction(
           //     child: Text(
           //       dic.profile.export,
