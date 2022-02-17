@@ -22,8 +22,7 @@ class _ReceivePageState extends State<ReceivePage> {
   bool generateQR = false;
   var invoice = [];
 
-  Widget generateQRforValueGreaterZero() {
-    print("latest value ${_amountController.text}");
+  Widget generateQRWithInvoiceData() {
     invoice = [
       'encointer-invoice',
       'V1.0',
@@ -42,22 +41,13 @@ class _ReceivePageState extends State<ReceivePage> {
     );
   }
 
-  // DO WE NOT NEED InitState? ITS ALWAYS recomended when handling states
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   // Start listening to changes.
-  //   _amountController.addListener(generateQRforValueGreaterZero);
-  // }
-
-  // DO WE NOT NEED DISPOSE? ITS ALWAYS recomended when handling states
-  // @override
-  // void dispose() {
-  //   // Clean up the controller when the widget is removed from the
-  //   // widget tree.
-  //   _amountController.dispose();
-  //   super.dispose();
-  // }
+  @override
+  void dispose() {
+    // Clean up the controller when the widget is removed from the
+    // widget tree.
+    _amountController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +91,6 @@ class _ReceivePageState extends State<ReceivePage> {
                       controller: _amountController,
                       textFormFieldKey: Key('invoice-amount-input'),
                       validator: (String value) {
-                        print("value is ${double.parse(value)}");
                         if (value == null || value.isEmpty || double.parse(value) == 0.0) {
                           return I18n.of(context).translationsForLocale().assets.amountError;
                         }
@@ -138,7 +127,7 @@ class _ReceivePageState extends State<ReceivePage> {
                   textAlign: TextAlign.center),
               SizedBox(height: 8),
               Column(children: [
-                generateQRforValueGreaterZero(),
+                generateQRWithInvoiceData(),
                 InkWell(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 24),
