@@ -1,4 +1,5 @@
-import 'package:encointer_wallet/page/account/create/createPinForm.dart';
+import 'package:encointer_wallet/page/account/create/createAccountForm.dart';
+import 'package:encointer_wallet/page/account/create/addAccountForm.dart';
 import 'package:encointer_wallet/page/account/import/importAccountForm.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -8,20 +9,6 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-// THIS IS THE CODE TO SAVE A "NEW ACCOUNT" THIS WAS IN THE CREATE ACCOUNT FORM
-// onPressed: () {
-// if (_formKey.currentState.validate()) {
-// if (store.account.accountListAll.isEmpty) {
-// setNewAccount(_nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic['create.default'], _passCtrl.text);
-// } else {
-// // cachedPin won't be empty, because cachedPin is verified not to be empty before user adds an account in profile/index.dart
-// setNewAccount(
-// _nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic['create.default'], store.settings.cachedPin);
-// }
-// onSubmit();
-// }
-// },
 
 class ImportAccountPage extends StatefulWidget {
   const ImportAccountPage(this.store);
@@ -42,12 +29,6 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   String _cryptoType = '';
   String _derivePath = '';
   bool _submitting = false;
-  final TextEditingController _nameCtrl = new TextEditingController();
-  @override
-  void dispose() {
-    _nameCtrl.dispose();
-    super.dispose();
-  }
 
   Future<void> _importAccount() async {
     setState(() {
@@ -69,8 +50,6 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       cryptoType: _cryptoType,
       derivePath: _derivePath,
     );
-
-    // Navigator.of(context).pop();
 
     /// check if account duplicate
     if (acc != null) {
@@ -216,28 +195,16 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
           ),
         ),
         body: SafeArea(
-              child: !_submitting && store.account.accountListAll.isEmpty
-                  ?
-              CreatePinForm(
-                  setNewAccount: store.account.setNewAccount,
-                  submitting: _submitting,
-                  onSubmit: _importAccount,
-                  name: _nameCtrl.text,
-                  store: store)
-                  : CreatePinForm(
-                  setNewAccount: store.account.setNewAccount,
-                  submitting: _submitting,
-                  onSubmit: _importAccount,
-                  name: "johan",
-                  store: store)
-              // Should be replaced with just creating account:
-          // ? AddAccountForm(
-          //             isImporting: true,
-          //             setNewAccount: store.account.setNewAccount,
-          //             submitting: _submitting,
-          //             onSubmit: _importAccount,
-          //             store: store)
-          //         : Center(child: CupertinoActivityIndicator()),
+          child: !_submitting && store.account.accountListAll.isEmpty
+              ? CreateAccountForm(store: store)
+              : (!_submitting && store.account.accountListAll.isNotEmpty)
+                  ? AddAccountForm(
+                      isImporting: true,
+                      setNewAccount: store.account.setNewAccount,
+                      submitting: _submitting,
+                      onSubmit: _importAccount,
+                      store: store)
+                  : Center(child: CupertinoActivityIndicator()),
         ),
       );
     }
@@ -245,23 +212,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     return Scaffold(
       appBar: AppBar(title: Text(I18n.of(context).translationsForLocale().home.accountImport)),
       body: SafeArea(
-        child:
-        // TextFormField(
-        //   key: Key('create-account-name'),
-        //   decoration: InputDecoration(
-        //     enabledBorder: const OutlineInputBorder(
-        //       // width: 0.0 produces a thin "hairline" border
-        //       borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
-        //       borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
-        //     ),
-        //     filled: true,
-        //     fillColor: ZurichLion.shade50,
-        //     // hintText: dic.account.createHint,
-        //     labelText: I18n.of(context).translationsForLocale().profile.accountName,
-        //   ),
-        //   controller: _nameCtrl,
-        // ),
-        !_submitting
+        child: !_submitting
             ? ImportAccountForm(store, (Map<String, dynamic> data) {
                 if (data['finish'] == null) {
                   setState(() {
