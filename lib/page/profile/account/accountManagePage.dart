@@ -1,7 +1,6 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
 import 'package:encointer_wallet/page/profile/account/ExportResultPage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
@@ -14,7 +13,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/page/profile/contacts/accountSharePage.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -32,9 +30,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   _AccountManagePageState(this.store);
 
   final AppStore store;
-  // final Api api = webApi;
   TextEditingController _nameCtrl;
-  // final TextEditingController _passCtrl = new TextEditingController();
   bool _isEditingText = false;
 
   @override
@@ -115,10 +111,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
               ),
             ],
           ),
-          // Container(
-          //   width: 50,
-          //   child: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio),
-          // ),
           title: Text(name, style: h3),
           subtitle: Text(tokenView, style: h3),
           trailing: Column(
@@ -159,16 +151,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
               ),
               onPressed: () {
                 Navigator.of(context).pop();
-                // if (store.settings.cachedPin.isEmpty)
                 _showPasswordDialog(context);
-                // cant evade password input, because decryptSeed requires pin.. need to pass with TextEditingController _passCtrl, but didn't work
-                // else {
-                //   String seed = await store.account.decryptSeed(store.account.currentAccount.pubKey, AccountStore.seedTypeMnemonic, _passCtrl);
-                //   Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
-                //     // 'key': seed,
-                //     'type': AccountStore.seedTypeMnemonic,
-                //   });
-                // }
               }),
         ],
         cancelButton: CupertinoActionSheetAction(
@@ -198,11 +181,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
             'key': seed,
             'type': AccountStore.seedTypeMnemonic,
           });
-          // Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
-          //   'key': seed,
-          //   'type': AccountStore.seedTypeMnemonic,
-          // });
-          // Navigator.of(context).pop();
         });
       },
     );
@@ -278,7 +256,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       children: [
                         Text(Fmt.address(store.account.currentAddress), style: TextStyle(fontSize: 20)),
                         IconButton(
-                          // style: ElevatedButton.styleFrom(shadowColor: Colors.transparent),
                           icon: Icon(Iconsax.copy),
                           color: ZurichLion.shade500,
                           // border: 2px solid,
@@ -338,7 +315,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                         ),
                         onPressed: () {
                           // if (acc.address != '') {
-                          Navigator.pushNamed(context, ReceivePage.route, arguments: args);
+                          Navigator.pushNamed(context, AccountSharePage.route);
                         },
                       ),
                       // THIS WAS HERE TO SET A SPLIT, but now it doesnt work with the new implementation
