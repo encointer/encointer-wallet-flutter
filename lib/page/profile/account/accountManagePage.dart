@@ -47,15 +47,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
     super.dispose();
   }
 
-  void handleClick(String value) {
-    switch (value) {
-      case 'Logout':
-        break;
-      case 'Settings':
-        break;
-    }
-  }
-
   void _onDeleteAccount(BuildContext context) {
     showCupertinoDialog(
       context: context,
@@ -135,52 +126,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
       } else
         return Container();
     }).toList();
-  }
-
-  void _showActions(BuildContext pageContext) {
-    final Translations dic = I18n.of(context).translationsForLocale();
-    showCupertinoModalPopup(
-      context: pageContext,
-      builder: (BuildContext context) => CupertinoActionSheet(
-        actions: <Widget>[
-          PopupMenuButton<String>(
-            onSelected: handleClick,
-            itemBuilder: (BuildContext context) {
-              return {'Logout', 'Settings'}.map((String choice) {
-                return PopupMenuItem<String>(
-                  value: choice,
-                  child: Text(choice),
-                );
-              }).toList();
-            },
-          ),
-          //   CupertinoActionSheetAction(
-          //     child: Text(
-          //       dic.profile.delete,
-          //     ),
-          //     onPressed: () {
-          //       _onDeleteAccount(context);
-          //       // Navigator.of(context).pop();
-          //     },
-          //   ),
-          //   CupertinoActionSheetAction(
-          //       child: Text(
-          //         dic.profile.export,
-          //       ),
-          //       onPressed: () {
-          //         Navigator.of(context).pop();
-          //         _showPasswordDialog(context);
-          //       }),
-          // ],
-          // cancelButton: CupertinoActionSheetAction(
-          //   child: Text(I18n.of(context).translationsForLocale().home.cancel),
-          //   onPressed: () {
-          //     Navigator.pop(context);
-          //   },
-          // ),
-        ],
-      ),
-    );
   }
 
   void _showPasswordDialog(BuildContext context) {
@@ -344,12 +289,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       // SizedBox(width: 2),
                       Spacer(),
                       Container(
-                        // child: ElevatedButton(
-                        //   style: ElevatedButton.styleFrom(
-                          //   // primary: Colors.transparent,
-                          //   onPrimary: Colors.white,
-                          //   // shadowColor: Colors.transparent,
-                          // ),
                           child: PopupMenuButton<options>(
                             offset: Offset(-10, -150),
                             icon: Icon(Iconsax.more, color: Colors.white),
@@ -389,11 +328,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
                               ),
                             ],
                           ),
-                          // Icon(Icons.more_horiz),
-                          // onPressed: () =>
-                          //     _showActions(context),
-                          //     // _simplePopup(),
-                        // ),
                       ),
                     ],
                   ),
