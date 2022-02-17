@@ -26,6 +26,8 @@ class AccountManagePage extends StatefulWidget {
   _AccountManagePageState createState() => _AccountManagePageState(store);
 }
 
+enum options { delete, export }
+
 class _AccountManagePageState extends State<AccountManagePage> {
   _AccountManagePageState(this.store);
 
@@ -43,6 +45,15 @@ class _AccountManagePageState extends State<AccountManagePage> {
   void dispose() {
     _nameCtrl.dispose();
     super.dispose();
+  }
+
+  void handleClick(String value) {
+    switch (value) {
+      case 'Logout':
+        break;
+      case 'Settings':
+        break;
+    }
   }
 
   void _onDeleteAccount(BuildContext context) {
@@ -132,30 +143,42 @@ class _AccountManagePageState extends State<AccountManagePage> {
       context: pageContext,
       builder: (BuildContext context) => CupertinoActionSheet(
         actions: <Widget>[
-          CupertinoActionSheetAction(
-            child: Text(
-              dic.profile.delete,
-            ),
-            onPressed: () {
-              _onDeleteAccount(context);
-              // Navigator.of(context).pop();
+          PopupMenuButton<String>(
+            onSelected: handleClick,
+            itemBuilder: (BuildContext context) {
+              return {'Logout', 'Settings'}.map((String choice) {
+                return PopupMenuItem<String>(
+                  value: choice,
+                  child: Text(choice),
+                );
+              }).toList();
             },
           ),
-          CupertinoActionSheetAction(
-              child: Text(
-                dic.profile.export,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-                _showPasswordDialog(context);
-              }),
+          //   CupertinoActionSheetAction(
+          //     child: Text(
+          //       dic.profile.delete,
+          //     ),
+          //     onPressed: () {
+          //       _onDeleteAccount(context);
+          //       // Navigator.of(context).pop();
+          //     },
+          //   ),
+          //   CupertinoActionSheetAction(
+          //       child: Text(
+          //         dic.profile.export,
+          //       ),
+          //       onPressed: () {
+          //         Navigator.of(context).pop();
+          //         _showPasswordDialog(context);
+          //       }),
+          // ],
+          // cancelButton: CupertinoActionSheetAction(
+          //   child: Text(I18n.of(context).translationsForLocale().home.cancel),
+          //   onPressed: () {
+          //     Navigator.pop(context);
+          //   },
+          // ),
         ],
-        cancelButton: CupertinoActionSheetAction(
-          child: Text(I18n.of(context).translationsForLocale().home.cancel),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
       ),
     );
   }
@@ -321,15 +344,56 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       // SizedBox(width: 2),
                       Spacer(),
                       Container(
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: Colors.transparent,
-                            onPrimary: Colors.white,
-                            shadowColor: Colors.transparent,
+                        // child: ElevatedButton(
+                        //   style: ElevatedButton.styleFrom(
+                          //   // primary: Colors.transparent,
+                          //   onPrimary: Colors.white,
+                          //   // shadowColor: Colors.transparent,
+                          // ),
+                          child: PopupMenuButton<options>(
+                            offset: Offset(-10, -150),
+                            icon: Icon(Iconsax.more, color: Colors.white),
+                            color: ZurichLion.shade50,
+                            padding: EdgeInsets.all(20),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            onSelected: (options result) {
+                              switch(result) {
+                                case options.delete: {
+                                  _onDeleteAccount(context);
+                                }
+                                break;
+                                case options.export: {
+                                  _showPasswordDialog(context);
+                                }
+                                break;
+                              }
+                            },
+                            itemBuilder: (BuildContext context) => <PopupMenuEntry<options>>[
+                              const PopupMenuItem<options>(
+                                value: options.delete,
+                                child: ListTile(
+                                  minLeadingWidth : 0,
+                                  title: Text('Delete'),
+                                  leading: Icon(Iconsax.trash, color: Color(0xFF3969AC)),
+                                ),
+                              ),
+                              const PopupMenuItem<options>(
+                                value: options.export,
+                                child: ListTile(
+                                  minLeadingWidth : 0,
+                                  title: Text('Export'),
+                                  leading: Icon(Iconsax.export_3, color: Color(0xFF3969AC)),
+                                ),
+                              ),
+                            ],
                           ),
-                          child: Icon(Icons.more_horiz),
-                          onPressed: () => _showActions(context),
-                        ),
+                          // Icon(Icons.more_horiz),
+                          // onPressed: () =>
+                          //     _showActions(context),
+                          //     // _simplePopup(),
+                        // ),
                       ),
                     ],
                   ),
