@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
-class CreatePinForm extends StatelessWidget {
+class CreatePinForm extends StatefulWidget {
   CreatePinForm({this.setNewAccount, this.submitting, this.onSubmit, this.name, this.store});
 //todo get rid of the setNewAccount method where password is stored
   final Function setNewAccount;
@@ -18,10 +18,22 @@ class CreatePinForm extends StatelessWidget {
   final AppStore store;
   final String name;
 
+  @override
+  _CreatePinFormState createState() => _CreatePinFormState();
+}
+
+class _CreatePinFormState extends State<CreatePinForm> {
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _passCtrl = new TextEditingController();
   final TextEditingController _pass2Ctrl = new TextEditingController();
+
+  @override
+  void dispose() {
+    _passCtrl.dispose();
+    _pass2Ctrl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +75,7 @@ class CreatePinForm extends StatelessWidget {
                       borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
                     ),
                     filled: true,
-                    fillColor: encointerLightBlue,
+                    fillColor: ZurichLion.shade50,
                     hintText: dic.account.createPassword,
                     labelText: dic.account.createPassword,
                   ),
@@ -126,27 +138,27 @@ class CreatePinForm extends StatelessWidget {
               child: Text(
                 I18n.of(context).translationsForLocale().account.create,
                 style: Theme.of(context).textTheme.headline3.copyWith(
-                      color: encointerLightBlue,
+                      color: ZurichLion.shade50,
                     ),
               ),
               onPressed: () {
                 if (_formKey.currentState.validate()) {
-                  if (store.account.accountListAll.isEmpty) {
-                    setNewAccount(this.name.isNotEmpty ? this.name : dic.account.createDefault, _passCtrl.text);
+                  if (widget.store.account.accountListAll.isEmpty) {
+                    widget.setNewAccount(this.widget.name.isNotEmpty ? this.widget.name : dic.account.createDefault, _passCtrl.text);
                   } else {
                     // cachedPin won't be empty, because cachedPin is verified not to be empty before user adds an account in profile/index.dart
-                    setNewAccount(
-                        this.name.isNotEmpty ? this.name : dic.account.createDefault, store.settings.cachedPin);
+                    widget.setNewAccount(
+                        this.widget.name.isNotEmpty ? this.widget.name : dic.account.createDefault, widget.store.settings.cachedPin);
                   }
 
-                  onSubmit();
+                  widget.onSubmit();
 
                   // Even if we do not choose a community, we go back to the home screen.
                   Navigator.popUntil(context, ModalRoute.withName('/'));
 
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)),
+                    MaterialPageRoute(builder: (_) => CommunityChooserOnMap(widget.store)),
                   );
                 }
               },
