@@ -217,22 +217,22 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
           ),
         ),
         body: SafeArea(
-              child: !_submitting && store.account.accountListAll.isEmpty
-                  ?
-              CreatePinForm(
+          child: !_submitting && store.account.accountListAll.isEmpty
+              ? CreatePinForm(
                   setNewAccount: store.account.setNewAccount,
                   submitting: _submitting,
                   onSubmit: _importAccount,
                   name: "default",
                   store: store)
-                  // : CreatePinForm(
-                  // setNewAccount: store.account.setNewAccount,
-                  // submitting: _submitting,
-                  // onSubmit: _importAccount,
-                  // name: "johan",
-                  // store: store)
+              // : CreatePinForm(
+              // setNewAccount: store.account.setNewAccount,
+              // submitting: _submitting,
+              // onSubmit: _importAccount,
+              // name: "johan",
+              // store: store)
               // Should be replaced with just creating account:
-          : !_submitting && store.account.accountListAll.isNotEmpty ? AddAccountForm(
+              : !_submitting && store.account.accountListAll.isNotEmpty
+                  ? AddAccountForm(
                       isImporting: true,
                       setNewAccount: store.account.setNewAccount,
                       submitting: _submitting,
@@ -247,40 +247,40 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       appBar: AppBar(title: Text(I18n.of(context).translationsForLocale().home.accountImport)),
       body: SafeArea(
         child:
-        // TextFormField(
-        //   key: Key('create-account-name'),
-        //   decoration: InputDecoration(
-        //     enabledBorder: const OutlineInputBorder(
-        //       // width: 0.0 produces a thin "hairline" border
-        //       borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
-        //       borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
-        //     ),
-        //     filled: true,
-        //     fillColor: ZurichLion.shade50,
-        //     // hintText: dic.account.createHint,
-        //     labelText: I18n.of(context).translationsForLocale().profile.accountName,
-        //   ),
-        //   controller: _nameCtrl,
-        // ),
-        !_submitting
-            ? ImportAccountForm(store, (Map<String, dynamic> data) {
-                if (data['finish'] == null) {
-                  setState(() {
-                    _keyType = data['keyType'];
-                    _cryptoType = data['cryptoType'];
-                    _derivePath = data['derivePath'];
-                    _step = 1;
-                  });
-                } else {
-                  setState(() {
-                    _keyType = data['keyType'];
-                    _cryptoType = data['cryptoType'];
-                    _derivePath = data['derivePath'];
-                  });
-                  _importAccount();
-                }
-              })
-            : Center(child: CupertinoActivityIndicator()),
+            // TextFormField(
+            //   key: Key('create-account-name'),
+            //   decoration: InputDecoration(
+            //     enabledBorder: const OutlineInputBorder(
+            //       // width: 0.0 produces a thin "hairline" border
+            //       borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+            //       borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
+            //     ),
+            //     filled: true,
+            //     fillColor: ZurichLion.shade50,
+            //     // hintText: dic.account.createHint,
+            //     labelText: I18n.of(context).translationsForLocale().profile.accountName,
+            //   ),
+            //   controller: _nameCtrl,
+            // ),
+            !_submitting
+                ? ImportAccountForm(store, (Map<String, dynamic> data) {
+                    if (data['finish'] == null) {
+                      setState(() {
+                        _keyType = data['keyType'];
+                        _cryptoType = data['cryptoType'];
+                        _derivePath = data['derivePath'];
+                        _step = 1;
+                      });
+                    } else {
+                      setState(() {
+                        _keyType = data['keyType'];
+                        _cryptoType = data['cryptoType'];
+                        _derivePath = data['derivePath'];
+                      });
+                      _importAccount();
+                    }
+                  })
+                : Center(child: CupertinoActivityIndicator()),
       ),
     );
   }

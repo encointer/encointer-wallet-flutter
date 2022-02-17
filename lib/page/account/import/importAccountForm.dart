@@ -175,7 +175,8 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
               if (_formKey.currentState.validate() && !(_advanceOptions.error ?? false)) {
                 print("selected: $selected");
                 // widget.store.account.setNewAccountKey(_keyCtrl.text.trim());
-                widget.store.account.setNewAccountKey(_keySelection == KeySelection.MNEMONIC ? _keyCtrl.text.trim() : _nameCtrl.text.trim());
+                widget.store.account.setNewAccountKey(
+                    _keySelection == KeySelection.MNEMONIC ? _keyCtrl.text.trim() : _nameCtrl.text.trim());
                 widget.onSubmit({
                   'keyType': _keyOptions[_keySelection.index],
                   'cryptoType': _advanceOptions.type ?? AccountAdvanceOptionParams.encryptTypeSR,
