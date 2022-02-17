@@ -55,19 +55,18 @@ class _TransferPageState extends State<TransferPage> {
 
   @override
   Widget build(BuildContext context) {
+    final Translations dic = I18n.of(context).translationsForLocale();
+    TransferPageParams params = ModalRoute.of(context).settings.arguments;
+
+    _communitySymbol = params.communitySymbol;
+    _cid = params.cid;
+
+    int decimals = ert_decimals;
+
+    double available = store.encointer.communityBalance;
+
     return Observer(
       builder: (_) {
-        final Translations dic = I18n.of(context).translationsForLocale();
-
-        TransferPageParams params = ModalRoute.of(context).settings.arguments;
-
-        _communitySymbol = params.communitySymbol;
-        _cid = params.cid;
-
-        int decimals = ert_decimals;
-
-        double available = store.encointer.communityBalance;
-
         return Form(
           key: _formKey,
           child: Scaffold(
@@ -171,7 +170,7 @@ class _TransferPageState extends State<TransferPage> {
 
   void _handleSubmit() {
     if (_formKey.currentState.validate()) {
-      String symbol = _cid ?? store.settings.networkState.tokenSymbol;
+      String cid = _cid ?? store.encointer.chosenCid;
       final address = Fmt.addressOfAccount(_accountTo, store);
 
       var args = {
@@ -179,7 +178,7 @@ class _TransferPageState extends State<TransferPage> {
         "txInfo": {
           "module": 'encointerBalances',
           "call": 'transfer',
-          "cid": symbol,
+          "cid": cid,
         },
         "detail": jsonEncode({
           "destination": address,
@@ -189,8 +188,8 @@ class _TransferPageState extends State<TransferPage> {
         "params": [
           // params.to
           address,
-          // params.currencyId
-          symbol,
+          // params.communityId
+          cid,
           // params.amount
           _amountCtrl.text.trim(),
         ],
