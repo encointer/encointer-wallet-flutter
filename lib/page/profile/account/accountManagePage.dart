@@ -82,6 +82,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
     String name = cm != null ? cm.name : '';
     String symbol = cm != null ? cm.symbol : '';
     final String tokenView = Fmt.tokenView(symbol);
+
     return store.encointer.balanceEntries.entries.map((i) {
       if (cm != null) {
         return ListTile(
@@ -270,12 +271,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 16),
-                      child: Row(
-                        children: <Widget>[
-                          Text(dic.encointer.communities,
-                              style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey))
-                        ],
-                      ),
+                      child: Text(dic.encointer.communities,
+                          style: h3.copyWith(color: encointerGrey), textAlign: TextAlign.left),
                     ),
                   ],
                 ),
