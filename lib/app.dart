@@ -166,7 +166,7 @@ class _WalletAppState extends State<WalletApp> {
         AccountSharePage.route: (_) => AccountSharePage(_appStore),
         CreatePinPage.route: (_) => CreatePinPage(_appStore),
         ImportAccountPage.route: (_) => ImportAccountPage(_appStore),
-        ScanPage.route: (_) => ScanPage(),
+        ScanPage.route: (_) => ScanPage(_appStore),
         TxConfirmPage.route: (_) => TxConfirmPage(_appStore),
         // assets
         AssetPage.route: (_) => AssetPage(_appStore),
