@@ -2,6 +2,7 @@ import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/profile/account/ExportResultPage.dart';
+import 'package:encointer_wallet/page/profile/contacts/accountSharePage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -13,7 +14,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:encointer_wallet/page/profile/contacts/accountSharePage.dart';
 import 'package:iconsax/iconsax.dart';
 
 class AccountManagePage extends StatefulWidget {
@@ -145,14 +145,14 @@ class _AccountManagePageState extends State<AccountManagePage> {
               // Navigator.of(context).pop();
             },
           ),
-          CupertinoActionSheetAction(
-              child: Text(
-                dic.profile.export,
-              ),
-              onPressed: () {
-                Navigator.of(context).pop();
-                _showPasswordDialog(context);
-              }),
+          // CupertinoActionSheetAction(
+          //     child: Text(
+          //       dic.profile.export,
+          //     ),
+          //     onPressed: () {
+          //       Navigator.of(context).pop();
+          //       _showPasswordDialog(context);
+          //     }),
         ],
         cancelButton: CupertinoActionSheetAction(
           child: Text(I18n.of(context).translationsForLocale().home.cancel),
@@ -175,6 +175,9 @@ class _AccountManagePageState extends State<AccountManagePage> {
           setState(() {
             store.settings.setPin(password);
           });
+          //todo: THIS IS NOT CORRECT YET, IT ONLY WORKS FOR NORMAL CREATED ACCOUNTS. IF ACCOUNT IS IMPORTED,
+          //todo: THIS FAILS, PROBABLY NEED TO CHANGE THE SEEDTYPE TO seedTypeRaw_Seed,
+          //todo: BUT THIS STILL DIDNT SOLVE PROBLEM, MNEMONIC WAS SHORT, is there a mnemonic if account imported??
           String seed = await store.account
               .decryptSeed(store.account.currentAccount.pubKey, AccountStore.seedTypeMnemonic, password);
           Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
