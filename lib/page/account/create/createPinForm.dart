@@ -11,7 +11,6 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class CreatePinForm extends StatefulWidget {
   CreatePinForm({this.setNewAccount, this.submitting, this.onSubmit, this.name, this.store});
-//todo get rid of the setNewAccount method where password is stored
   final Function setNewAccount;
   final Function onSubmit;
   final bool submitting;
