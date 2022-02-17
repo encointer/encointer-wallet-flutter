@@ -280,53 +280,57 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       // SizedBox(width: 2),
                       Spacer(),
                       Container(
-                          child: PopupMenuButton<options>(
-                            offset: Offset(-10, -150),
-                            icon: Icon(Iconsax.more, color: Colors.white),
-                            color: ZurichLion.shade50,
-                            padding: EdgeInsets.all(20),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            onSelected: (options result) {
-                              switch(result) {
-                                case options.delete: {
+                        child: PopupMenuButton<options>(
+                          offset: Offset(-10, -150),
+                          icon: Icon(Iconsax.more, color: Colors.white),
+                          color: ZurichLion.shade50,
+                          padding: EdgeInsets.all(20),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          onSelected: (options result) {
+                            switch (result) {
+                              case options.delete:
+                                {
                                   _onDeleteAccount(context);
                                 }
                                 break;
-                                case options.export: {
+                              case options.export:
+                                {
                                   _showPasswordDialog(context);
                                 }
                                 break;
-                              }
-                            },
-                            itemBuilder: (BuildContext context) => <PopupMenuEntry<options>>[
-                              const PopupMenuItem<options>(
-                                value: options.delete,
-                                child: ListTileTheme(
-                                  textColor: Color(0xFF3969AC),
-                                  iconColor: Color(0xFF3969AC),
-                                  child: ListTile(
-                                  minLeadingWidth : 0,
-                                  title: const Text('Delete',),
+                            }
+                          },
+                          itemBuilder: (BuildContext context) => <PopupMenuEntry<options>>[
+                            const PopupMenuItem<options>(
+                              value: options.delete,
+                              child: ListTileTheme(
+                                textColor: Color(0xFF3969AC),
+                                iconColor: Color(0xFF3969AC),
+                                child: ListTile(
+                                  minLeadingWidth: 0,
+                                  title: const Text(
+                                    'Delete',
+                                  ),
                                   leading: Icon(Iconsax.trash),
                                 ),
-                                ),
                               ),
-                              const PopupMenuItem<options>(
-                                value: options.export,
-                                child: ListTileTheme(
-                                  textColor: Color(0xFF3969AC),
-                                  iconColor: Color(0xFF3969AC),
+                            ),
+                            const PopupMenuItem<options>(
+                              value: options.export,
+                              child: ListTileTheme(
+                                textColor: Color(0xFF3969AC),
+                                iconColor: Color(0xFF3969AC),
                                 child: ListTile(
-                                  minLeadingWidth : 0,
+                                  minLeadingWidth: 0,
                                   title: Text('Export'),
                                   leading: Icon(Iconsax.export_3, color: Color(0xFF3969AC)),
                                 ),
-                                ),
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
