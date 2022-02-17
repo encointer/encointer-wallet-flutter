@@ -88,6 +88,9 @@ abstract class _EncointerStore with Store {
   List<CidName> communities;
 
   @observable
+  List<String> reputations;
+
+  @observable
   CommunityIdentifier chosenCid;
 
   @observable
@@ -276,6 +279,13 @@ abstract class _EncointerStore with Store {
   }
 
   @action
+  void setReputations(List<String> rep) {
+    print("store: set communities to $rep");
+    reputations = rep;
+    // cacheObject(encointerCommunitiesKey, c);
+  }
+
+  @action
   void setDemurrage(double d) {
     demurrage = d;
   }
@@ -321,6 +331,7 @@ abstract class _EncointerStore with Store {
 
   @action
   void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
+    print("balanceEntry $balanceEntry added to cid $cid added");
     balanceEntries[cid] = balanceEntry;
   }
 
