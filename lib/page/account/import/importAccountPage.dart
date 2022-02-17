@@ -1,5 +1,6 @@
 import 'package:encointer_wallet/page/account/create/createPinForm.dart';
 import 'package:encointer_wallet/page/account/import/importAccountForm.dart';
+import 'package:encointer_wallet/page/account/create/addAccountForm.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/UI.dart';
@@ -222,22 +223,22 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
                   setNewAccount: store.account.setNewAccount,
                   submitting: _submitting,
                   onSubmit: _importAccount,
-                  name: _nameCtrl.text,
+                  name: "default",
                   store: store)
-                  : CreatePinForm(
-                  setNewAccount: store.account.setNewAccount,
-                  submitting: _submitting,
-                  onSubmit: _importAccount,
-                  name: "johan",
-                  store: store)
+                  // : CreatePinForm(
+                  // setNewAccount: store.account.setNewAccount,
+                  // submitting: _submitting,
+                  // onSubmit: _importAccount,
+                  // name: "johan",
+                  // store: store)
               // Should be replaced with just creating account:
-          // ? AddAccountForm(
-          //             isImporting: true,
-          //             setNewAccount: store.account.setNewAccount,
-          //             submitting: _submitting,
-          //             onSubmit: _importAccount,
-          //             store: store)
-          //         : Center(child: CupertinoActivityIndicator()),
+          : !_submitting && store.account.accountListAll.isNotEmpty ? AddAccountForm(
+                      isImporting: true,
+                      setNewAccount: store.account.setNewAccount,
+                      submitting: _submitting,
+                      onSubmit: _importAccount,
+                      store: store)
+                  : Center(child: CupertinoActivityIndicator()),
         ),
       );
     }

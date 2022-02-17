@@ -1,6 +1,6 @@
 import 'package:encointer_wallet/common/components/accountAdvanceOption.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -23,7 +23,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
   final List<String> _keyOptions = [
     AccountStore.seedTypeMnemonic,
     AccountStore.seedTypeRawSeed,
-    'observe',
+    // 'observe',
   ];
 
   KeySelection _keySelection = KeySelection.MNEMONIC;
@@ -32,71 +32,8 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
 
   final TextEditingController _keyCtrl = new TextEditingController();
   final TextEditingController _nameCtrl = new TextEditingController();
-  final TextEditingController _passCtrl = new TextEditingController();
-
-  final TextEditingController _observationAddressCtrl = new TextEditingController();
-  final TextEditingController _observationNameCtrl = new TextEditingController();
-  final TextEditingController _memoCtrl = new TextEditingController();
 
   AccountAdvanceOptionParams _advanceOptions = AccountAdvanceOptionParams();
-
-  Future<void> _onAddObservationAccount() async {
-    setState(() {});
-    showCupertinoDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return CupertinoAlertDialog(
-          title: Container(),
-          content: Container(height: 64, child: CupertinoActivityIndicator()),
-        );
-      },
-    );
-
-    final Translations dic = I18n.of(context).translationsForLocale();
-    String address = _observationAddressCtrl.text.trim();
-    Map pubKeyAddress = await webApi.account.decodeAddress([address]);
-    String pubKey = pubKeyAddress.keys.toList()[0];
-    Map<String, dynamic> acc = {
-      'address': address,
-      'name': _observationNameCtrl.text,
-      'memo': _memoCtrl.text,
-      'observation': true,
-      'pubKey': pubKey,
-    };
-    // create new contact
-    int exist = widget.store.settings.contactList.indexWhere((i) => i.address == address);
-    if (exist > -1) {
-      setState(() {});
-      Navigator.of(context).pop();
-
-      showCupertinoDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return CupertinoAlertDialog(
-            title: Container(),
-            content: Text(dic.profile.contactAlreadyExists),
-            actions: <Widget>[
-              CupertinoButton(
-                child: Text(I18n.of(context).translationsForLocale().home.ok),
-                onPressed: () => Navigator.of(context).pop(),
-              ),
-            ],
-          );
-        },
-      );
-    } else {
-      // should this also be done in addAccountForm & createPinForm? probably..
-      await widget.store.settings.addContact(acc);
-
-      webApi.account.changeCurrentAccount(pubKey: pubKey);
-      webApi.assets.fetchBalance();
-      webApi.account.encodeAddress([pubKey]);
-      webApi.account.getPubKeyIcons([pubKey]);
-      setState(() {});
-      // go to home page
-      Navigator.popUntil(context, ModalRoute.withName('/'));
-    }
-  }
 
   String _validateInput(String v, Map<KeySelection, String> translationsByKeySelection) {
     bool passed = false;
@@ -110,11 +47,10 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
         }
         break;
       case KeySelection.RAW_SEED:
-        if (input.length <= 32 || input.length == 66) {
+        if (input[0] == '/' && (input.length <= 32 || input.length == 66)) {
           passed = true;
         }
-        break;
-      case KeySelection.OBSERVATION:
+        print("we are here and input is: $input");
         break;
     }
     return passed ? null : '${dic.account.importInvalid} ${translationsByKeySelection[_keySelection]}'; // TODO armin
@@ -123,11 +59,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
   @override
   void dispose() {
     _nameCtrl.dispose();
-    _passCtrl.dispose();
     _keyCtrl.dispose();
-    _observationAddressCtrl.dispose();
-    _observationNameCtrl.dispose();
-    _memoCtrl.dispose();
     super.dispose();
   }
 
@@ -137,12 +69,10 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
     final Map<KeySelection, String> translationsByKeySelection = {
       KeySelection.MNEMONIC: dic.account.mnemonic,
       KeySelection.RAW_SEED: dic.account.rawSeed,
-      KeySelection.OBSERVATION: dic.account.observe,
     };
     final Map<String, String> translationsByKeyOption = {
       _keyOptions[0]: dic.account.mnemonic,
       _keyOptions[1]: dic.account.rawSeed,
-      _keyOptions[2]: dic.account.observe,
     };
     String selected = translationsByKeySelection[_keySelection];
     return Column(
@@ -152,7 +82,43 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
             key: _formKey,
 //            autovalidate: true,
             child: ListView(
+              padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
               children: <Widget>[
+                SizedBox(height: 80),
+                Center(
+                  child: Text(I18n.of(context).translationsForLocale().profile.detailsEnter,
+                      style: Theme.of(context).textTheme.headline2),
+                ),
+                SizedBox(height: 10),
+                Center(
+                  child: Container(
+                    width: 300,
+                    child: Text(
+                      I18n.of(context).translationsForLocale().profile.personalKeyEnter,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headline2.copyWith(
+                            color: Colors.black,
+                          ),
+                    ),
+                  ),
+                ),
+                SizedBox(height: 30),
+                TextFormField(
+                  key: Key('create-account-name'),
+                  decoration: InputDecoration(
+                    enabledBorder: const OutlineInputBorder(
+                      // width: 0.0 produces a thin "hairline" border
+                      borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+                      borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
+                    ),
+                    filled: true,
+                    fillColor: ZurichLion.shade50,
+                    hintText: dic.account.createHint,
+                    labelText: I18n.of(context).translationsForLocale().profile.accountName,
+                  ),
+                  controller: _nameCtrl,
+                  validator: (String value) => _validateInput(value, translationsByKeySelection),
+                ),
                 ListTile(
                   title: Text(I18n.of(context).translationsForLocale().home.accountImport),
                   subtitle: Text(selected),
@@ -181,14 +147,14 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                     );
                   },
                 ),
-                _keySelection != KeySelection.OBSERVATION
+                _keySelection != KeySelection.RAW_SEED
                     ? Padding(
                         key: Key('account-source'),
                         padding: EdgeInsets.only(left: 16, right: 16),
                         child: TextFormField(
                           decoration: InputDecoration(
                             hintText: selected,
-                            labelText: selected,
+                            labelText: dic.profile.personalKey,
                           ),
                           controller: _keyCtrl,
                           maxLines: 2,
@@ -207,11 +173,9 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
             child: Text(I18n.of(context).translationsForLocale().home.next),
             onPressed: () async {
               if (_formKey.currentState.validate() && !(_advanceOptions.error ?? false)) {
-                if (_keySelection == KeySelection.OBSERVATION) {
-                  _onAddObservationAccount();
-                  return;
-                }
-                widget.store.account.setNewAccountKey(_keyCtrl.text.trim());
+                print("selected: $selected");
+                // widget.store.account.setNewAccountKey(_keyCtrl.text.trim());
+                widget.store.account.setNewAccountKey(_keySelection == KeySelection.MNEMONIC ? _keyCtrl.text.trim() : _nameCtrl.text.trim());
                 widget.onSubmit({
                   'keyType': _keyOptions[_keySelection.index],
                   'cryptoType': _advanceOptions.type ?? AccountAdvanceOptionParams.encryptTypeSR,
@@ -230,5 +194,4 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
 enum KeySelection {
   MNEMONIC,
   RAW_SEED,
-  OBSERVATION,
 }
