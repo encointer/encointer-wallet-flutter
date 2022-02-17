@@ -14,6 +14,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:encointer_wallet/page/profile/contacts/accountSharePage.dart';
 import 'package:iconsax/iconsax.dart';
 
 class AccountManagePage extends StatefulWidget {
@@ -214,9 +216,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
     _nameCtrl.selection = TextSelection.fromPosition(TextPosition(offset: _nameCtrl.text.length));
 
     final Translations dic = I18n.of(context).translationsForLocale();
-    var args = {
-      "isShare": true,
-    };
     return Observer(
       builder: (_) => Scaffold(
         appBar: AppBar(
