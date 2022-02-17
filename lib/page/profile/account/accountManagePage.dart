@@ -84,6 +84,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
     String name = cm != null ? cm.name : '';
     String symbol = cm != null ? cm.symbol : '';
     final String tokenView = Fmt.tokenView(symbol);
+
     return store.encointer.balanceEntries.entries.map((i) {
       if (cm != null) {
         return ListTile(
@@ -206,54 +207,44 @@ class _AccountManagePageState extends State<AccountManagePage> {
           ],
         ),
         body: SafeArea(
-          child: Column(
-            children: <Widget>[
-              SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    SizedBox(height: 20),
-                    if (!isKeyboard)
-                      AddressIcon(
-                        '',
-                        size: 130,
-                        pubKey: store.account.currentAccount.pubKey,
-                      ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(Fmt.address(store.account.currentAddress), style: TextStyle(fontSize: 20)),
-                        IconButton(
-                          icon: Icon(Iconsax.copy),
-                          color: ZurichLion.shade500,
-                          // border: 2px solid,
-                          onPressed: () {
-                            final data = ClipboardData(text: store.account.currentAddress);
-                            Clipboard.setData(data);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text('✓   Copied to Clipboard')),
-                            );
-                          },
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: <Widget>[
+                SingleChildScrollView(
+                  child: Column(
+                    children: <Widget>[
+                      SizedBox(height: 20),
+                      if (!isKeyboard)
+                        AddressIcon(
+                          '',
+                          size: 130,
+                          pubKey: store.account.currentAccount.pubKey,
                         ),
-                      ],
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 16),
-                      child: Row(
-                        children: <Widget>[
-                          Text(dic.encointer.communities,
-                              style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey))
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(Fmt.address(store.account.currentAddress), style: TextStyle(fontSize: 20)),
+                          IconButton(
+                            icon: Icon(Iconsax.copy),
+                            color: ZurichLion.shade500,
+                            onPressed: () {
+                              final data = ClipboardData(text: store.account.currentAddress);
+                              Clipboard.setData(data);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text('✓   Copied to Clipboard')),
+                              );
+                            },
+                          ),
                         ],
                       ),
-                    ),
-                  ],
+                      Text(dic.encointer.communities,
+                          style: h3.copyWith(color: encointerGrey), textAlign: TextAlign.left),
+                    ],
+                  ),
                 ),
-              ),
-              Expanded(
-                child: ListView(padding: EdgeInsets.all(16), children: _getBalances()),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(16, 0, 16, 50),
-                child: Container(
+                Expanded(child: ListView(children: _getBalances())),
+                Container(
                   // width: double.infinity,
                   decoration: BoxDecoration(
                     gradient: primaryGradient,
@@ -340,8 +331,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     ],
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
