@@ -1,7 +1,10 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
+import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/page/profile/account/ExportResultPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/accountSharePage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -12,11 +15,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
-
-// todo: put back in, when export account functional
-// import 'package:encointer_wallet/page/profile/account/ExportResultPage.dart';
-// import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
-// import 'package:encointer_wallet/store/account/account.dart';
 
 class AccountManagePage extends StatefulWidget {
   AccountManagePage(this.store);
@@ -38,7 +36,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
   @override
   void initState() {
     if (store.encointer.chosenCid != null) webApi.encointer.getBootstrappers(store.encointer.chosenCid);
-    print("bootstrappers in initState are: ${store.encointer.bootstrappers}");
     super.initState();
   }
 
@@ -98,11 +95,12 @@ class _AccountManagePageState extends State<AccountManagePage> {
               ),
               Observer(
                 builder: (_) {
-                    if (store.encointer.bootstrappers != null && store.encointer.bootstrappers.contains(store.account.currentAddress)) {
-                      return Positioned(
-                        bottom: 0, right: 0, //give the values according to your requirement
-                        child: Icon(Iconsax.star, color: Colors.yellow),
-                      );
+                  if (store.encointer.bootstrappers != null &&
+                      store.encointer.bootstrappers.contains(store.account.currentAddress)) {
+                    return Positioned(
+                      bottom: 0, right: 0, //give the values according to your requirement
+                      child: Icon(Iconsax.star, color: Colors.yellow),
+                    );
                   } else
                     return Container(width: 0, height: 0);
                 },
@@ -143,15 +141,14 @@ class _AccountManagePageState extends State<AccountManagePage> {
               // Navigator.of(context).pop();
             },
           ),
-          // todo: temporarly deactivated possibility to export account, because it crashes if wanting to export imported raw_seed accounts like //Alice
-          // CupertinoActionSheetAction(
-          //     child: Text(
-          //       dic.profile.export,
-          //     ),
-          //     onPressed: () {
-          //       Navigator.of(context).pop();
-          //       _showPasswordDialog(context);
-          //     }),
+          CupertinoActionSheetAction(
+              child: Text(
+                dic.profile.export,
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+                _showPasswordDialog(context);
+              }),
         ],
         cancelButton: CupertinoActionSheetAction(
           child: Text(I18n.of(context).translationsForLocale().home.cancel),
@@ -163,31 +160,30 @@ class _AccountManagePageState extends State<AccountManagePage> {
     );
   }
 
-  // todo: comment back in, for export account
-  // void _showPasswordDialog(BuildContext context) {
-  //   final Translations dic = I18n.of(context).translationsForLocale();
-  //   showCupertinoDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return showPasswordInputDialog(context, store.account.currentAccount, Text(dic.profile.deleteConfirm),
-  //           (password) async {
-  //         print('password is: $password');
-  //         setState(() {
-  //           store.settings.setPin(password);
-  //         });
-  //         //todo: THIS IS NOT CORRECT YET, IT ONLY WORKS FOR NORMAL CREATED ACCOUNTS. IF ACCOUNT IS IMPORTED,
-  //         //todo: THIS FAILS, PROBABLY NEED TO CHANGE THE SEEDTYPE TO seedTypeRaw_Seed,
-  //         //todo: BUT THIS STILL DIDNT SOLVE PROBLEM, MNEMONIC WAS SHORT, is there a mnemonic if account imported??
-  //         String seed = await store.account
-  //             .decryptSeed(store.account.currentAccount.pubKey, AccountStore.seedTypeMnemonic, password);
-  //         Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
-  //           'key': seed,
-  //           'type': AccountStore.seedTypeMnemonic,
-  //         });
-  //       });
-  //     },
-  //   );
-  // }
+  void _showPasswordDialog(BuildContext context) {
+    final Translations dic = I18n.of(context).translationsForLocale();
+    showCupertinoDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return showPasswordInputDialog(context, store.account.currentAccount, Text(dic.profile.deleteConfirm),
+            (password) async {
+          print('password is: $password');
+          setState(() {
+            store.settings.setPin(password);
+          });
+          //todo: #367 export fails for imported accounts via raw_seed
+          //todo: change here the seedtype to seedTypeRaw_Seed, no more red screen,
+          //todo: BUT THIS STILL DIDNT SOLVE PROBLEM, MNEMONIC WAS SHORT
+          String seed = await store.account
+              .decryptSeed(store.account.currentAccount.pubKey, AccountStore.seedTypeMnemonic, password);
+          Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
+            'key': seed,
+            'type': AccountStore.seedTypeMnemonic,
+          });
+        });
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
