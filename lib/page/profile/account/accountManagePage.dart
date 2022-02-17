@@ -312,18 +312,26 @@ class _AccountManagePageState extends State<AccountManagePage> {
                             itemBuilder: (BuildContext context) => <PopupMenuEntry<options>>[
                               const PopupMenuItem<options>(
                                 value: options.delete,
-                                child: ListTile(
+                                child: ListTileTheme(
+                                  textColor: Color(0xFF3969AC),
+                                  iconColor: Color(0xFF3969AC),
+                                  child: ListTile(
                                   minLeadingWidth : 0,
-                                  title: Text('Delete'),
-                                  leading: Icon(Iconsax.trash, color: Color(0xFF3969AC)),
+                                  title: const Text('Delete',),
+                                  leading: Icon(Iconsax.trash),
+                                ),
                                 ),
                               ),
                               const PopupMenuItem<options>(
                                 value: options.export,
+                                child: ListTileTheme(
+                                  textColor: Color(0xFF3969AC),
+                                  iconColor: Color(0xFF3969AC),
                                 child: ListTile(
                                   minLeadingWidth : 0,
                                   title: Text('Export'),
                                   leading: Icon(Iconsax.export_3, color: Color(0xFF3969AC)),
+                                ),
                                 ),
                               ),
                             ],
