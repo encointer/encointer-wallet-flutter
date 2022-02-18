@@ -1,7 +1,7 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/page/profile/account/ExportResultPage.dart';
+import 'package:encointer_wallet/page/profile/account/exportResultPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/accountSharePage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
