@@ -306,8 +306,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
                             const PopupMenuItem<options>(
                               value: options.delete,
                               child: ListTileTheme(
-                                textColor: Color(0xFF3969AC),
-                                iconColor: Color(0xFF3969AC),
+                                textColor: Color(0xFF3969AC), // ZurichLion.shade500 or 600
+                                iconColor: Color(0xFF3969AC), // ZurichLion.shade500 or 600
                                 child: ListTile(
                                   minLeadingWidth: 0,
                                   title: const Text(
@@ -320,12 +320,12 @@ class _AccountManagePageState extends State<AccountManagePage> {
                             const PopupMenuItem<options>(
                               value: options.export,
                               child: ListTileTheme(
-                                textColor: Color(0xFF3969AC),
-                                iconColor: Color(0xFF3969AC),
+                                textColor: Color(0xFF3969AC), // ZurichLion.shade500 or 600
+                                iconColor: Color(0xFF3969AC), // ZurichLion.shade500 or 600
                                 child: ListTile(
                                   minLeadingWidth: 0,
                                   title: Text('Export'),
-                                  leading: Icon(Iconsax.export_3, color: Color(0xFF3969AC)),
+                                  leading: Icon(Iconsax.export_3, color: Color(0xFF3969AC)), // ZurichLion.shade500 or 600
                                 ),
                               ),
                             ),
