@@ -35,25 +35,27 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
 
   AccountAdvanceOptionParams _advanceOptions = AccountAdvanceOptionParams();
 
-  String _validateInput(String v, Map<KeySelection, String> translationsByKeySelection) {
+  String _validateMnemonic(String v, Map<KeySelection, String> translationsByKeySelection) {
     bool passed = false;
     final Translations dic = I18n.of(context).translationsForLocale();
     String input = v.trim();
-    switch (_keySelection) {
-      case KeySelection.MNEMONIC:
-        int len = input.split(' ').length;
-        if (len == 12 || len == 24) {
-          passed = true;
-        }
-        break;
-      case KeySelection.RAW_SEED:
-        if (input[0] == '/' && (input.length <= 32 || input.length == 66)) {
-          passed = true;
-        }
-        print("we are here and input is: $input");
-        break;
+    int len = input.split(' ').length;
+    if (len == 12 || len == 24) {
+      passed = true;
     }
     return passed ? null : '${dic.account.importInvalid} ${translationsByKeySelection[_keySelection]}'; // TODO armin
+  }
+
+  String _validateRawSeed(String v, Map<KeySelection, String> translationsByKeySelection) {
+    bool passed = true;
+    final Translations dic = I18n.of(context).translationsForLocale();
+    String input = v.trim();
+    if (_keySelection == KeySelection.RAW_SEED) {
+      if (input[0] != '/' && (input.length >= 32 || input.length != 66)) {
+        passed = false;
+      }
+    }
+    return passed ? null : '${dic.account.importInvalid} ${translationsByKeySelection[_keySelection]}';
   }
 
   @override
@@ -117,7 +119,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                     labelText: I18n.of(context).translationsForLocale().profile.accountName,
                   ),
                   controller: _nameCtrl,
-                  validator: (String value) => _validateInput(value, translationsByKeySelection),
+                  validator: (String value) => _validateRawSeed(value, translationsByKeySelection),
                 ),
                 ListTile(
                   title: Text(I18n.of(context).translationsForLocale().home.accountImport),
@@ -158,7 +160,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                           ),
                           controller: _keyCtrl,
                           maxLines: 2,
-                          validator: (String value) => _validateInput(value, translationsByKeySelection),
+                          validator: (String value) => _validateMnemonic(value, translationsByKeySelection),
                         ),
                       )
                     : Container(),
