@@ -10,20 +10,6 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-// THIS IS THE CODE TO SAVE A "NEW ACCOUNT" THIS WAS IN THE CREATE ACCOUNT FORM
-// onPressed: () {
-// if (_formKey.currentState.validate()) {
-// if (store.account.accountListAll.isEmpty) {
-// setNewAccount(_nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic['create.default'], _passCtrl.text);
-// } else {
-// // cachedPin won't be empty, because cachedPin is verified not to be empty before user adds an account in profile/index.dart
-// setNewAccount(
-// _nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic['create.default'], store.settings.cachedPin);
-// }
-// onSubmit();
-// }
-// },
-
 class ImportAccountPage extends StatefulWidget {
   const ImportAccountPage(this.store);
 
@@ -70,6 +56,10 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       cryptoType: _cryptoType,
       derivePath: _derivePath,
     );
+
+    // THIS LINE CAUSES A PROBLEM IF NOT COMMENTED, but when it is uncommented and you import an already existing account (second time //Alice i.e.)
+    // you will get a warning that account already exists, if you then press cancel, you get back to a "loading spinner",
+    // which will not end unless you press the back button of the phone..
 
     // Navigator.of(context).pop();
 
@@ -224,12 +214,6 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
                   onSubmit: _importAccount,
                   name: "default",
                   store: store)
-              // : CreatePinForm(
-              // setNewAccount: store.account.setNewAccount,
-              // submitting: _submitting,
-              // onSubmit: _importAccount,
-              // name: "johan",
-              // store: store)
               // Should be replaced with just creating account:
               : !_submitting && store.account.accountListAll.isNotEmpty
                   ? AddAccountForm(
