@@ -7,6 +7,7 @@ import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountBondedInfo.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/account/types/accountRecoveryInfo.dart';
+import 'package:encointer_wallet/store/account/types/txStatus.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:mobx/mobx.dart';
@@ -39,7 +40,7 @@ abstract class _AccountStore with Store {
   bool loading = true;
 
   @observable
-  String txStatus = '';
+  TxStatus txStatus;
 
   @observable
   AccountCreate newAccount = AccountCreate();
@@ -116,7 +117,7 @@ abstract class _AccountStore with Store {
   }
 
   @action
-  void setTxStatus(String status) {
+  void setTxStatus(TxStatus status) {
     txStatus = status;
   }
 

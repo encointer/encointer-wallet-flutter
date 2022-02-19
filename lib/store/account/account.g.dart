@@ -52,13 +52,13 @@ mixin _$AccountStore on _AccountStore, Store {
   final _$txStatusAtom = Atom(name: '_AccountStore.txStatus');
 
   @override
-  String get txStatus {
+  TxStatus get txStatus {
     _$txStatusAtom.reportRead();
     return super.txStatus;
   }
 
   @override
-  set txStatus(String value) {
+  set txStatus(TxStatus value) {
     _$txStatusAtom.reportWrite(value, super.txStatus, () {
       super.txStatus = value;
     });
@@ -309,7 +309,7 @@ mixin _$AccountStore on _AccountStore, Store {
   final _$_AccountStoreActionController = ActionController(name: '_AccountStore');
 
   @override
-  void setTxStatus(String status) {
+  void setTxStatus(TxStatus status) {
     final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setTxStatus');
     try {
       return super.setTxStatus(status);
