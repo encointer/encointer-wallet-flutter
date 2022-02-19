@@ -117,8 +117,13 @@ abstract class _AccountStore with Store {
   }
 
   @action
-  void setTxStatus(TxStatus status) {
+  void setTxStatus([TxStatus status]) {
     txStatus = status;
+  }
+
+  @action
+  void clearTxStatus() {
+    txStatus = null;
   }
 
   @action
@@ -166,7 +171,7 @@ abstract class _AccountStore with Store {
           }
         });
         rootStore.assets.setSubmitting(false);
-        rootStore.account.setTxStatus();
+        rootStore.account.clearTxStatus();
         timer.cancel();
         queuedTxs = [];
       } else {

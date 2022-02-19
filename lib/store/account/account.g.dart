@@ -309,10 +309,20 @@ mixin _$AccountStore on _AccountStore, Store {
   final _$_AccountStoreActionController = ActionController(name: '_AccountStore');
 
   @override
-  void setTxStatus(TxStatus status) {
+  void setTxStatus([TxStatus status]) {
     final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setTxStatus');
     try {
       return super.setTxStatus(status);
+    } finally {
+      _$_AccountStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void clearTxStatus() {
+    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.clearTxStatus');
+    try {
+      return super.clearTxStatus();
     } finally {
       _$_AccountStoreActionController.endAction(_$actionInfo);
     }
