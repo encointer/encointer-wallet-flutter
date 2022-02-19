@@ -166,7 +166,7 @@ abstract class _AccountStore with Store {
           }
         });
         rootStore.assets.setSubmitting(false);
-        rootStore.account.setTxStatus('');
+        rootStore.account.setTxStatus();
         timer.cancel();
         queuedTxs = [];
       } else {

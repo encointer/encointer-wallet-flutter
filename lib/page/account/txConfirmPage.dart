@@ -4,7 +4,6 @@ import 'package:encointer_wallet/common/components/TapTooltip.dart';
 import 'package:encointer_wallet/common/components/addressFormItem.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/page/account/uos/qrSenderPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactListPage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
@@ -106,29 +105,6 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
     }
   }
 
-  void _onTxError(BuildContext context, String errorMsg) {
-    final Translations dic = I18n.of(context).translationsForLocale();
-    store.assets.setSubmitting(false);
-    if (mounted) {
-      ScaffoldMessenger.of(context).removeCurrentSnackBar();
-    }
-    showCupertinoDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return CupertinoAlertDialog(
-          title: Container(),
-          content: Text(errorMsg),
-          actions: <Widget>[
-            CupertinoButton(
-              child: Text(dic.home.ok),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   Future<bool> _validateProxy() async {
     List proxies = await webApi.account.queryRecoveryProxies([_proxyAccount.address]);
     print(proxies);
@@ -174,90 +150,6 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
             ),
             (password) => _onSubmit(context, password: password));
       },
-    );
-  }
-
-  Future<void> _onSubmit(
-    BuildContext context, {
-    String password,
-    bool viaQr = false,
-  }) async {
-    final Translations dic = I18n.of(context).translationsForLocale();
-    final Map args = ModalRoute.of(context).settings.arguments;
-
-    store.assets.setSubmitting(true);
-    store.account.setTxStatus('queued');
-
-    Map txInfo = args['txInfo'];
-    txInfo['pubKey'] = store.account.currentAccount.pubKey;
-    txInfo['address'] = store.account.currentAddress;
-    txInfo['password'] = password;
-    txInfo['tip'] = _tipValue.toString();
-    if (_proxyAccount != null) {
-      txInfo['proxy'] = _proxyAccount.pubKey;
-      txInfo['ss58'] = store.settings.endpoint.ss58.toString();
-    }
-    print(txInfo);
-    print(args['params']);
-
-    var onTxFinishFn = (args['onFinish'] as Function(BuildContext, Map));
-
-    if (await webApi.isConnected()) {
-      _showTxStatusSnackbar(
-        context,
-        "dic['tx.${store.account.txStatus}']" ?? dic.home.txQueued,
-        CupertinoActivityIndicator(),
-      ); // TODO armin, fix transfer status logic
-      final Map res = viaQr ? await _sendTxViaQr(context, args) : await _sendTx(context, args);
-      if (res['hash'] == null) {
-        _onTxError(context, res['error']);
-      } else {
-        _onTxFinish(context, res, onTxFinishFn);
-      }
-    } else {
-      _showTxStatusSnackbar(context, dic.home.txQueuedOffline, null);
-      args['notificationTitle'] = I18n.of(context).translationsForLocale().home.notifySubmittedQueued;
-      store.account.queueTx(args);
-    }
-  }
-
-  void _showTxStatusSnackbar(BuildContext context, String status, Widget leading) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: Theme.of(context).cardColor,
-      content: ListTile(
-        leading: leading,
-        title: Text(
-          status,
-          style: TextStyle(color: Colors.black54),
-        ),
-      ),
-      duration: Duration(seconds: 12),
-    ));
-  }
-
-  Future<Map> _sendTx(BuildContext context, Map args) async {
-    return await webApi.account.sendTx(
-      args['txInfo'],
-      args['params'],
-      args['title'],
-      I18n.of(context).translationsForLocale().home.notifySubmitted,
-      rawParam: args['rawParam'],
-    );
-  }
-
-  Future<Map> _sendTxViaQr(BuildContext context, Map args) async {
-    final Translations dic = I18n.of(context).translationsForLocale();
-    print('show qr');
-    final signed = await Navigator.of(context).pushNamed(QrSenderPage.route, arguments: args);
-    if (signed == null) {
-      store.assets.setSubmitting(false);
-      return {'error': dic.account.uosCanceled};
-    }
-    return await webApi.account.addSignatureAndSend(
-      signed.toString(),
-      args['txInfo'],
-      args['title'],
-      I18n.of(context).translationsForLocale().home.notifySubmitted,
     );
   }
 
