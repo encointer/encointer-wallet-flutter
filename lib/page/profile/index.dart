@@ -265,6 +265,15 @@ class _ProfileState extends State<Profile> {
                                 : CupertinoActivityIndicator(),
                           ),
                         ),
+                        ListTile(
+                          title: Text(dic.profile.enableBazaar, style: h3Grey),
+                          trailing: Checkbox(
+                            value: store.settings.enableBazaar,
+                            // Fixme: this does not rebuild the tabList, but do we care? This is only a temporary and
+                            // a developer option. Changing the tab will add the bazaar to the tabList.
+                            onChanged: (_) => store.settings.toggleEnableBazaar(),
+                          ),
+                        ),
                       ],
                     ),
                 ],
