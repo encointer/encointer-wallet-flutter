@@ -196,7 +196,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         ),
         body: SafeArea(
           child: !_submitting && store.account.accountListAll.isEmpty
-          // SHOULD CHECK IF THIS IS THE SOURCE OF ERROR, maybe anyway skip create account form.. we want to set pin straight away and name in the current importForm
+              // SHOULD CHECK IF THIS IS THE SOURCE OF ERROR, maybe anyway skip create account form.. we want to set pin straight away and name in the current importForm
               ? CreateAccountForm(store: store)
               : (!_submitting && store.account.accountListAll.isNotEmpty)
                   ? AddAccountForm(
