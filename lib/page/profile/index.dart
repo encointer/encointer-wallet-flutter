@@ -269,8 +269,9 @@ class _ProfileState extends State<Profile> {
                           title: Text(dic.profile.enableBazaar, style: h3Grey),
                           trailing: Checkbox(
                             value: store.settings.enableBazaar,
-                            // Fixme: this does not rebuild the tabList, but do we care? This is only a temporary and
-                            // a developer option. Changing the tab will add the bazaar to the tabList.
+                            // Fixme: Need to change the tab to update the tabList. But, do we care? This is only
+                            // temporary, and a developer option. It is unnecessary to include the complexity to update
+                            // the parent widget from here.
                             onChanged: (_) => store.settings.toggleEnableBazaar(),
                           ),
                         ),
