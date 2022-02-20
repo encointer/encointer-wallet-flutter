@@ -13,7 +13,6 @@ class EditIcon extends StatelessWidget {
   final double size;
   final AppStore store;
 
-
   Future<void> _onSelect(AccountData i, String address) async {
     if (address != store.account.currentAddress) {
       print("[editIcon] changing from address ${store.account.currentAddress} to $address");

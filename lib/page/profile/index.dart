@@ -32,7 +32,6 @@ class _ProfileState extends State<Profile> {
   final Api api = webApi;
   EndpointData _selectedNetwork;
 
-
   Future<void> _onSelect(AccountData i, String address) async {
     if (address != store.account.currentAddress) {
       print("changing from addres ${store.account.currentAddress} to $address");

@@ -88,7 +88,6 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         await store.loadAccountCache();
 
         webApi.fetchAccountData();
-
       } else {
         /// set new network and reload web view
         // todo  remove the two options here, and fix the caching issue, explained in #219

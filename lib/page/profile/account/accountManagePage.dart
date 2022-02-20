@@ -57,7 +57,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
               child: Text(I18n.of(context).translationsForLocale().home.ok),
               onPressed: () => {
                 store.account.removeAccount(store.account.currentAccount).then(
-                  (_) async{
+                  (_) async {
                     // refresh balance
                     await store.loadAccountCache();
                     webApi.fetchAccountData();
