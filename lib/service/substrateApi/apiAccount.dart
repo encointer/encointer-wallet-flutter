@@ -90,9 +90,10 @@ class ApiAccount {
 
     // refresh balance
     store.assets.clearTxs();
-    store.assets.loadAccountCache();
+    await store.loadAccountCache();
     if (fetchData) {
       webApi.assets.fetchBalance();
+      webApi.fetchEncointerCommunityData();
     }
   }
 

@@ -48,7 +48,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
     await store.account.addAccount(acc, store.account.newAccount.password);
     webApi.account.encodeAddress([acc['pubKey']]);
 
-    store.assets.loadAccountCache();
+    await store.loadAccountCache();
 
     // fetch info for the imported account
     String pubKey = acc['pubKey'];

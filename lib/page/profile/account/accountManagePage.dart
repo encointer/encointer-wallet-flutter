@@ -57,10 +57,11 @@ class _AccountManagePageState extends State<AccountManagePage> {
               child: Text(I18n.of(context).translationsForLocale().home.ok),
               onPressed: () => {
                 store.account.removeAccount(store.account.currentAccount).then(
-                  (_) {
+                  (_) async{
                     // refresh balance
-                    store.assets.loadAccountCache();
+                    await store.loadAccountCache();
                     webApi.assets.fetchBalance();
+                    webApi.fetchEncointerCommunityData();
                     Navigator.of(context).pop();
                   },
                 ),

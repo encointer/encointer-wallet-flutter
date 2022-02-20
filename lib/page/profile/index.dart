@@ -32,12 +32,6 @@ class _ProfileState extends State<Profile> {
   final Api api = webApi;
   EndpointData _selectedNetwork;
 
-  void _loadAccountCache() {
-    // refresh balance
-    store.assets.clearTxs();
-    store.assets.loadAccountCache();
-    store.encointer.loadCache();
-  }
 
   Future<void> _onSelect(AccountData i, String address) async {
     if (address != store.account.currentAddress) {
@@ -45,10 +39,13 @@ class _ProfileState extends State<Profile> {
 
       /// set current account
       store.account.setCurrentAccount(i.pubKey);
-      _loadAccountCache();
+      await store.loadAccountCache();
 
       /// reload account info
+      print("onSelect: assets.fetchBalance");
       webApi.assets.fetchBalance();
+      print("onSelct: fetching encointerCommunityData");
+      webApi.fetchEncointerCommunityData();
     }
   }
 
