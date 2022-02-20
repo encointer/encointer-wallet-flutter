@@ -223,6 +223,11 @@ class Api {
     fetchEncointerCommunityData();
   }
 
+  void fetchAccountData() {
+    webApi.assets.fetchBalance();
+    fetchEncointerCommunityData();
+  }
+
   void fetchEncointerCommunityData() {
     webApi.encointer.getBusinesses();
     webApi.encointer.getMeetupIndex();

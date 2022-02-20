@@ -88,12 +88,9 @@ class ApiAccount {
     }
     store.account.setCurrentAccount(current);
 
-    // refresh balance
-    store.assets.clearTxs();
     await store.loadAccountCache();
     if (fetchData) {
-      webApi.assets.fetchBalance();
-      webApi.fetchEncointerCommunityData();
+      webApi.fetchAccountData();
     }
   }
 

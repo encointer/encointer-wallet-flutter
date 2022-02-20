@@ -60,8 +60,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                   (_) async{
                     // refresh balance
                     await store.loadAccountCache();
-                    webApi.assets.fetchBalance();
-                    webApi.fetchEncointerCommunityData();
+                    webApi.fetchAccountData();
                     Navigator.of(context).pop();
                   },
                 ),

@@ -37,15 +37,10 @@ class _ProfileState extends State<Profile> {
     if (address != store.account.currentAddress) {
       print("changing from addres ${store.account.currentAddress} to $address");
 
-      /// set current account
       store.account.setCurrentAccount(i.pubKey);
       await store.loadAccountCache();
 
-      /// reload account info
-      print("onSelect: assets.fetchBalance");
-      webApi.assets.fetchBalance();
-      print("onSelct: fetching encointerCommunityData");
-      webApi.fetchEncointerCommunityData();
+      webApi.fetchAccountData();
     }
   }
 
