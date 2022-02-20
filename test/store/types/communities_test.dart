@@ -25,7 +25,11 @@ void main() {
       var cid = CommunityIdentifier([103, 98, 115, 117, 118], [255, 255, 255, 255]);
       var cid2 = CommunityIdentifier([103, 98, 115, 117, 118], [255, 255, 255, 255]);
 
+      Map<CommunityIdentifier, String> cidMap = new Map();
+      cidMap[cid] = "Hello";
+
       expect(cid, cid2);
+      expect(cidMap[cid2], "Hello"); // <- Fail!! contains null
     });
 
     test('Json encode returns same value as received by JS', () {
