@@ -30,6 +30,10 @@ abstract class _SettingsStore with Store {
     return '${endpoint.info}_$key';
   }
 
+  /// The bazaar is not active currently.
+  @observable
+  bool enableBazaar = false;
+
   @observable
   String cachedPin = '';
 
