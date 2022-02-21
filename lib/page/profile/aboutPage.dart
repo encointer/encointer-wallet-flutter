@@ -19,40 +19,30 @@ class AboutPage extends StatelessWidget {
       ),
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Padding(
               padding: EdgeInsets.all(48),
               child: Image.asset('assets/images/public/logo_about.png'),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text(
-                  dic.profile.aboutBrief,
-                  style: Theme.of(context).textTheme.headline4,
-                ),
-              ],
+            Text(
+              dic.profile.aboutBrief,
+              style: Theme.of(context).textTheme.headline4,
             ),
-            Padding(
-              padding: EdgeInsets.all(8),
-              child: FutureBuilder<PackageInfo>(
-                future: PackageInfo.fromPlatform(),
-                builder: (_, AsyncSnapshot<PackageInfo> snapshot) {
-                  print(snapshot);
-                  if (snapshot.hasData) {
-                    return Text('${dic.profile.aboutVersion}: v${snapshot.data.version}+${snapshot.data.buildNumber}');
-                  } else {
-                    return CupertinoActivityIndicator();
-                  }
-                },
-              ),
+            SizedBox(height: 8),
+            FutureBuilder<PackageInfo>(
+              future: PackageInfo.fromPlatform(),
+              builder: (_, AsyncSnapshot<PackageInfo> snapshot) {
+                print(snapshot);
+                if (snapshot.hasData) {
+                  return Text('${dic.profile.aboutVersion}: v${snapshot.data.version}+${snapshot.data.buildNumber}');
+                } else {
+                  return CupertinoActivityIndicator();
+                }
+              },
             ),
-            Padding(
-              padding: EdgeInsets.only(top: 16),
-              child: JumpToBrowserLink('https://encointer.org'),
-            ),
-            Expanded(child: Container()),
+            SizedBox(height: 16),
+            JumpToBrowserLink('https://encointer.org'),
           ],
         ),
       ),
