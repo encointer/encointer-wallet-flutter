@@ -2,6 +2,7 @@ import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/create/addAccountPage.dart';
+import 'package:encointer_wallet/page/profile/aboutPage.dart';
 import 'package:encointer_wallet/page/profile/account/accountManagePage.dart';
 import 'package:encointer_wallet/page/profile/account/changePasswordPage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
@@ -237,6 +238,11 @@ class _ProfileState extends State<Profile> {
                     title: Text(dic.profile.reputationHistory, style: h3Grey),
                   ),
                   ListTile(
+                    title: Text(dic.profile.about, style: Theme.of(context).textTheme.headline3),
+                    trailing: Icon(Icons.arrow_forward_ios, size: 18),
+                    onTap: () => Navigator.pushNamed(context, AboutPage.route),
+                  ),
+                  ListTile(
                     title: Text(dic.profile.developer, style: h3Grey),
                     trailing: Checkbox(
                       value: store.settings.developerMode,
@@ -263,6 +269,16 @@ class _ProfileState extends State<Profile> {
                             child: store.settings.isConnected
                                 ? Icon(Icons.check, color: Colors.green)
                                 : CupertinoActivityIndicator(),
+                          ),
+                        ),
+                        ListTile(
+                          title: Text(dic.profile.enableBazaar, style: h3Grey),
+                          trailing: Checkbox(
+                            value: store.settings.enableBazaar,
+                            // Fixme: Need to change the tab to update the tabList. But, do we care? This is only
+                            // temporary, and a developer option. It is unnecessary to include the complexity to update
+                            // the parent widget from here.
+                            onChanged: (_) => store.settings.toggleEnableBazaar(),
                           ),
                         ),
                       ],
