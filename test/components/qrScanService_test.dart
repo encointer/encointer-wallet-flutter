@@ -20,7 +20,7 @@ void main() {
         context: QrScanContext.invoice,
         version: 'v1.0',
         account: 'HgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX',
-        cid:  CommunityIdentifier.fromFmtString('sqm1v79dF6b'),
+        cid: CommunityIdentifier.fromFmtString('sqm1v79dF6b'),
         label: 'Aubrey',
         amount: .2343,
       ),

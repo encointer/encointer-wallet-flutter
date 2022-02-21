@@ -131,7 +131,7 @@ abstract class _EncointerStore with Store {
   double applyDemurrage(BalanceEntry entry) {
     double res;
     if (rootStore.chain.latestHeaderNumber != null && entry != null && demurrage != null) {
-      int elapsed = rootStore.chain.latestHeaderNumber- entry.lastUpdate;
+      int elapsed = rootStore.chain.latestHeaderNumber - entry.lastUpdate;
       double exponent = -demurrage * elapsed;
       res = entry.principal * pow(e, exponent);
     }

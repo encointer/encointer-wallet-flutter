@@ -39,7 +39,8 @@ class ScanPage extends StatelessWidget {
           // go to transfer page and auto-fill data
           Navigator.of(context).popAndPushNamed(
             TransferPage.route,
-            arguments: TransferPageParams(cid: qrScanData.cid, address: qrScanData.account, amount: qrScanData.amount, redirect: '/'),
+            arguments: TransferPageParams(
+                cid: qrScanData.cid, address: qrScanData.account, amount: qrScanData.amount, redirect: '/'),
           );
           break;
         default:

@@ -22,7 +22,7 @@ class QrScanService {
         ),
         version: data[1].toLowerCase(),
         account: data[2],
-        cid: data[3].isNotEmpty ? CommunityIdentifier.fromFmtString(data[3]): null,
+        cid: data[3].isNotEmpty ? CommunityIdentifier.fromFmtString(data[3]) : null,
         amount: data[4].trim().isNotEmpty ? double.parse(data[4]) : null,
         label: data[5],
       );
