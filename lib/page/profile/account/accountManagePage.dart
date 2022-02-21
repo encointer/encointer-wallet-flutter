@@ -140,14 +140,34 @@ class _AccountManagePageState extends State<AccountManagePage> {
             store.settings.setPin(password);
           });
           //todo: #367 export fails for imported accounts via raw_seed
-          //todo: change here the seedtype to seedTypeRaw_Seed, no more red screen,
-          //todo: BUT THIS STILL DIDNT SOLVE PROBLEM, MNEMONIC WAS SHORT
-          String seed = await store.account
-              .decryptSeed(store.account.currentAccount.pubKey, AccountStore.seedTypeMnemonic, password);
-          Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
-            'key': seed,
-            'type': AccountStore.seedTypeMnemonic,
-          });
+          // we check here if raw seed, else it should have a mnemonic, maybe better to actually check if seed type mnemonic if in future we have more options
+          bool isRawSeed = await store.account.checkSeedExist(AccountStore.seedTypeRawSeed, store.account.currentAccount.pubKey);
+          if (!isRawSeed) {
+            String seed = await store.account
+                .decryptSeed(store.account.currentAccount.pubKey, AccountStore.seedTypeMnemonic, password);
+            Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
+              'key': seed,
+              'type': AccountStore.seedTypeMnemonic,
+            });
+          }
+          else {
+            showCupertinoDialog(
+              context: context,
+              builder: (BuildContext context) {
+                final Translations dic = I18n.of(context).translationsForLocale();
+                return CupertinoAlertDialog(
+                  title: Text(dic.profile.noMnemonic),
+                  content: Text(dic.profile.noMnemonicTxt),
+                  actions: <Widget>[
+                    CupertinoButton(
+                      child: Text(I18n.of(context).translationsForLocale().home.ok),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ],
+                );
+              },
+            );
+          }
         });
       },
     );

@@ -33,6 +33,8 @@ abstract class TranslationsProfile {
   String get exportMnemonicOk;
   String get exportRawSeedOk;
   String get exportWarn;
+  String get noMnemonic;
+  String get noMnemonicTxt;
   String get nameChange;
   String get passChange;
   String get passError;
@@ -114,6 +116,8 @@ class TranslationsEnProfile implements TranslationsProfile {
   get exportRawSeedOk => 'Raw Seed was copied to clipboard.';
   get exportWarn =>
       'Write these words down on paper. Keep the backup paper safe. These words allows anyone to recover this account and access its funds.';
+  get noMnemonic => 'No Mnemonic found';
+  get noMnemonicTxt => 'Account was imported with a raw seed and therefore does not have a mnemonic';
   get nameChange => 'Change Name';
   get passChange => 'Change PIN';
   get passError => 'Wrong PIN';
@@ -197,6 +201,8 @@ class TranslationsDeProfile implements TranslationsProfile {
   get exportRawSeedOk => 'Raw Seed wurde in die Zwischenablage kopiert.';
   get exportWarn =>
       'Schreibe diese Wörter auf ein Papier. Behalte das Papier an einem sicheren Ort. Diese Wörter geben jedem Zugriff auf das Konto und das Vermögen';
+  get noMnemonic => 'Keine Mnemonic gefunden';
+  get noMnemonicTxt => 'Konto wurde mit einem Raw Seed importiert und hat deshalb keine Mnemonic';
   get nameChange => 'Name ändern';
   get passChange => 'PIN ändern';
   get passError => 'Falsche PIN';
@@ -324,4 +330,6 @@ class TranslationsZhProfile implements TranslationsProfile {
   get accountsDelete => throw UnimplementedError();
   get accountsDeleteAll => throw UnimplementedError();
   get enableBazaar => throw UnimplementedError();
+  get noMnemonic => throw UnimplementedError();
+  get noMnemonicTxt => throw UnimplementedError();
 }
