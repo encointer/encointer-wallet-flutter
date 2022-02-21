@@ -37,8 +37,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
   @override
   void initState() {
-    if (store.encointer.chosenCid != null) webApi.encointer.getBootstrappers(store.encointer.chosenCid);
     super.initState();
+    if (store.encointer.chosenCid != null) webApi.encointer.getBootstrappers();
   }
 
   @override
@@ -88,27 +88,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
       if (cm != null) {
         return ListTile(
           contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
-          leading: Stack(
-            children: [
-              Container(
-                width: 50,
-                height: 50,
-                child: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio),
-              ),
-              Observer(
-                builder: (_) {
-                  if (store.encointer.bootstrappers != null &&
-                      store.encointer.bootstrappers.contains(store.account.currentAddress)) {
-                    return Positioned(
-                      bottom: 0, right: 0, //give the values according to your requirement
-                      child: Icon(Iconsax.star, color: Colors.yellow),
-                    );
-                  } else
-                    return Container(width: 0, height: 0);
-                },
-              ),
-            ],
-          ),
+          leading: CommunityIcon(
+              store: store, icon: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio)),
           title: Text(name, style: h3),
           subtitle: Text(tokenView, style: h3),
           trailing: Column(
@@ -359,6 +340,42 @@ class _AccountManagePageState extends State<AccountManagePage> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class CommunityIcon extends StatelessWidget {
+  const CommunityIcon({
+    Key key,
+    @required this.store,
+    @required this.icon,
+  }) : super(key: key);
+
+  final AppStore store;
+  final Image icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          width: 50,
+          height: 50,
+          child: icon,
+        ),
+        Observer(
+          builder: (_) {
+            if (store.encointer.bootstrappers != null &&
+                store.encointer.bootstrappers.contains(store.account.currentAddress)) {
+              return Positioned(
+                bottom: 0, right: 0, //give the values according to your requirement
+                child: Icon(Iconsax.star, color: Colors.yellow),
+              );
+            } else
+              return Container(width: 0, height: 0);
+          },
+        ),
+      ],
     );
   }
 }

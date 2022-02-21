@@ -220,13 +220,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
   final _$bootstrappersAtom = Atom(name: '_EncointerStore.bootstrappers');
 
   @override
-  List<dynamic> get bootstrappers {
+  List<String> get bootstrappers {
     _$bootstrappersAtom.reportRead();
     return super.bootstrappers;
   }
 
   @override
-  set bootstrappers(List<dynamic> value) {
+  set bootstrappers(List<String> value) {
     _$bootstrappersAtom.reportWrite(value, super.bootstrappers, () {
       super.bootstrappers = value;
     });
@@ -477,10 +477,10 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setBootstrappers(List<dynamic> btstrps) {
+  void setBootstrappers(List<String> bs) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setBootstrappers');
     try {
-      return super.setBootstrappers(btstrps);
+      return super.setBootstrappers(bs);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }
