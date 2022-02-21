@@ -29,7 +29,7 @@ class AboutPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 Text(
-                  dic.profile.aboutBrif,
+                  dic.profile.aboutBrief,
                   style: Theme.of(context).textTheme.headline4,
                 ),
               ],
