@@ -260,12 +260,12 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           shadowColor: Colors.transparent,
                         ),
                         child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Icon(Iconsax.share),
-                              SizedBox(width: 12),
-                              Text(dic.profile.accountShare, style: h3.copyWith(color: Colors.white)),
-                            ],
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Icon(Iconsax.share),
+                            SizedBox(width: 12),
+                            Text(dic.profile.accountShare, style: h3.copyWith(color: Colors.white)),
+                          ],
                         ),
                         onPressed: () => Navigator.pushNamed(context, AccountSharePage.route),
                       ),
@@ -282,14 +282,10 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           onSelected: (options result) {
                             switch (result) {
                               case options.delete:
-                                {
-                                  _onDeleteAccount(context);
-                                }
+                                _onDeleteAccount(context);
                                 break;
                               case options.export:
-                                {
-                                  _showPasswordDialog(context);
-                                }
+                                _showPasswordDialog(context);
                                 break;
                             }
                           },
@@ -301,9 +297,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                                 iconColor: Color(0xFF3969AC), // ZurichLion.shade500 or 600
                                 child: ListTile(
                                   minLeadingWidth: 0,
-                                  title: const Text(
-                                    'Delete',
-                                  ),
+                                  title: Text('Delete'),
                                   leading: Icon(Iconsax.trash),
                                 ),
                               ),
