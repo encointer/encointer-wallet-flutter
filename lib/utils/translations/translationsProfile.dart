@@ -6,6 +6,8 @@ abstract class TranslationsProfile {
   String get aboutVersion;
   String get account;
   String get accountDelete;
+  String get accountsDelete;
+  String get accountsDeleteAll;
   String get accounts;
   String get accountShare;
   String get add;
@@ -84,6 +86,8 @@ class TranslationsEnProfile implements TranslationsProfile {
   get account => 'Manage Account';
   get accounts => 'Accounts';
   get accountDelete => 'Are you sure you want to delete the account?';
+  get accountsDelete => 'Are you sure you want to delete all accounts?';
+  get accountsDeleteAll => 'Remove all Accounts';
   get accountShare => 'Share Account';
   get add => 'Add';
   get addressBook => 'Address Book';
@@ -163,7 +167,9 @@ class TranslationsDeProfile implements TranslationsProfile {
   get aboutVersion => 'Version';
   get account => 'Konto';
   get accounts => 'Konten';
-  get accountDelete => 'Bist du sicher, dass du den account löschen möchtest?';
+  get accountDelete => 'Bist du sicher, dass du das Konto löschen möchtest?';
+  get accountsDelete => 'Bist du sicher, dass du alle Konten löschen möchtest?';
+  get accountsDeleteAll => 'Lösche alle Konten';
   get accountShare => 'Konto teilen';
   get add => 'Hinzufügen';
   get addressBook => 'Adressbuch';
@@ -312,4 +318,6 @@ class TranslationsZhProfile implements TranslationsProfile {
   get passSecure => throw UnimplementedError();
   get reputationHistory => throw UnimplementedError();
   get reputationOverall => throw UnimplementedError();
+  get accountsDelete => throw UnimplementedError();
+  get accountsDeleteAll => throw UnimplementedError();
 }
