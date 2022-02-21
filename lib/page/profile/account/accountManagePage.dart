@@ -100,7 +100,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
                 '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ',
                 style: h3.copyWith(color: encointerGrey),
               ),
-              // Container(width: 16),
             ],
           ),
         );
@@ -270,13 +269,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
                             ],
                           ),
                         ),
-                        onPressed: () {
-                          // if (acc.address != '') {
-                          Navigator.pushNamed(context, AccountSharePage.route);
-                        },
+                        onPressed: () => Navigator.pushNamed(context, AccountSharePage.route),
                       ),
-                      // THIS WAS HERE TO SET A SPLIT, but now it doesnt work with the new implementation
-                      // SizedBox(width: 2),
                       Spacer(),
                       Container(
                         child: PopupMenuButton<options>(
