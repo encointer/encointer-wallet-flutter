@@ -1,9 +1,9 @@
 import 'package:encointer_wallet/common/components/JumpToBrowserLink.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:package_info/package_info.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class AboutPage extends StatelessWidget {
   static final String route = '/profile/about';
@@ -41,7 +41,7 @@ class AboutPage extends StatelessWidget {
                 builder: (_, AsyncSnapshot<PackageInfo> snapshot) {
                   print(snapshot);
                   if (snapshot.hasData) {
-                    return Text('${dic.profile.aboutVersion}: v${snapshot.data.version}');
+                    return Text('${dic.profile.aboutVersion}: v${snapshot.data.version}+${snapshot.data.buildNumber}');
                   } else {
                     return CupertinoActivityIndicator();
                   }
