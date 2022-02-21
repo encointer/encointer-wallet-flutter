@@ -1,6 +1,7 @@
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaarItemVertical.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demoData.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaarItemData.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -18,10 +19,10 @@ class SearchResults extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ResultSummaryListTile(businessResults, "Results in Businesses"),
-        ResultSummaryListTile(offeringsResults, "Results in Offerings"),
+        ResultSummaryListTile(businessResults, I18n.of(context).translationsForLocale().bazaar.businessesResults),
+        ResultSummaryListTile(offeringsResults, I18n.of(context).translationsForLocale().bazaar.offeringsResults),
         Text(
-          "Top Results",
+          I18n.of(context).translationsForLocale().bazaar.topResults,
           style: TextStyle(fontWeight: FontWeight.bold, height: 2.5),
         ),
         Column(

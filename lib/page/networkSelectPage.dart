@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
+import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page/account/createAccountEntryPage.dart';
@@ -7,7 +8,8 @@ import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -40,13 +42,6 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   EndpointData _selectedNetwork;
   bool _networkChanging = false;
 
-  void _loadAccountCache() {
-    // refresh balance
-    store.assets.clearTxs();
-    store.assets.loadAccountCache();
-    store.encointer.loadCache();
-  }
-
   Future<void> _reloadNetwork() async {
     setState(() {
       _networkChanging = true;
@@ -55,7 +50,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: Text(I18n.of(context).home['loading']),
+          title: Text(I18n.of(context).translationsForLocale().home.loading),
           content: Container(height: 64, child: CupertinoActivityIndicator()),
         );
       },
@@ -65,13 +60,12 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     await store.settings.setNetworkConst({}, needCache: false);
     store.settings.setEndpoint(_selectedNetwork);
 
-    _loadAccountCache();
-    //webApi.closeWebView();
-
-    await store.settings.loadNetworkStateCache();
-
-    store.assets.loadCache();
-    store.encointer.loadCache();
+    await Future.wait([
+      store.loadAccountCache(),
+      store.settings.loadNetworkStateCache(),
+      store.assets.loadCache(),
+      store.encointer.loadCache()
+    ]);
 
     webApi.launchWebview();
     changeTheme();
@@ -90,10 +84,9 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       store.account.setCurrentAccount(i.pubKey);
 
       if (isCurrentNetwork) {
-        _loadAccountCache();
+        await store.loadAccountCache();
 
-        /// reload account info
-        webApi.assets.fetchBalance();
+        webApi.fetchAccountData();
       } else {
         /// set new network and reload web view
         // todo  remove the two options here, and fix the caching issue, explained in #219
@@ -113,6 +106,26 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     Navigator.of(context).pushNamed(CreateAccountEntryPage.route);
   }
 
+  Future<void> _showPasswordDialog(BuildContext context) async {
+    await showCupertinoDialog(
+      context: context,
+      builder: (_) {
+        return Container(
+          child: showPasswordInputDialog(
+            context,
+            store.account.currentAccount,
+            Text(I18n.of(context).translationsForLocale().profile.unlock),
+            (password) {
+              setState(() {
+                store.settings.setPin(password);
+              });
+            },
+          ),
+        );
+      },
+    );
+  }
+
   List<Widget> _buildAccountList() {
     Color primaryColor = Theme.of(context).primaryColor;
     List<Widget> res = [
@@ -124,10 +137,18 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
             style: Theme.of(context).textTheme.headline4,
           ),
           IconButton(
-            icon: Image.asset('assets/images/assets/plus_indigo.png'),
-            color: primaryColor,
-            onPressed: () => _onCreateAccount(),
-          )
+              icon: Image.asset('assets/images/assets/plus_indigo.png'),
+              color: primaryColor,
+              onPressed: () async => {
+                    if (store.settings.cachedPin.isEmpty)
+                      {
+                        await _showPasswordDialog(context),
+                      }
+                    else
+                      {
+                        _onCreateAccount(),
+                      }
+                  })
         ],
       ),
     ];
@@ -178,10 +199,10 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Map doc = I18n.of(context).home;
+    final Translations dic = I18n.of(context).translationsForLocale();
     return Scaffold(
       appBar: AppBar(
-        title: Text(doc['setting.network']),
+        title: Text(dic.home.settingNetwork),
         centerTitle: true,
       ),
       body: Observer(
@@ -235,7 +256,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
                   padding: EdgeInsets.all(16),
                   children: _buildAccountList(),
                 ),
-              )
+              ),
             ],
           );
         },

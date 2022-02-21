@@ -99,6 +99,41 @@ mixin _$SettingsStore on _SettingsStore, Store {
   String get transactionByteFee => (_$transactionByteFeeComputed ??=
           Computed<String>(() => super.transactionByteFee, name: '_SettingsStore.transactionByteFee'))
       .value;
+  Computed<bool> _$isConnectedComputed;
+
+  @override
+  bool get isConnected =>
+      (_$isConnectedComputed ??= Computed<bool>(() => super.isConnected, name: '_SettingsStore.isConnected')).value;
+
+  final _$enableBazaarAtom = Atom(name: '_SettingsStore.enableBazaar');
+
+  @override
+  bool get enableBazaar {
+    _$enableBazaarAtom.reportRead();
+    return super.enableBazaar;
+  }
+
+  @override
+  set enableBazaar(bool value) {
+    _$enableBazaarAtom.reportWrite(value, super.enableBazaar, () {
+      super.enableBazaar = value;
+    });
+  }
+
+  final _$cachedPinAtom = Atom(name: '_SettingsStore.cachedPin');
+
+  @override
+  String get cachedPin {
+    _$cachedPinAtom.reportRead();
+    return super.cachedPin;
+  }
+
+  @override
+  set cachedPin(String value) {
+    _$cachedPinAtom.reportWrite(value, super.cachedPin, () {
+      super.cachedPin = value;
+    });
+  }
 
   final _$loadingAtom = Atom(name: '_SettingsStore.loading');
 
@@ -220,6 +255,21 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
+  final _$developerModeAtom = Atom(name: '_SettingsStore.developerMode');
+
+  @override
+  bool get developerMode {
+    _$developerModeAtom.reportRead();
+    return super.developerMode;
+  }
+
+  @override
+  set developerMode(bool value) {
+    _$developerModeAtom.reportWrite(value, super.developerMode, () {
+      super.developerMode = value;
+    });
+  }
+
   final _$initAsyncAction = AsyncAction('_SettingsStore.init');
 
   @override
@@ -307,6 +357,16 @@ mixin _$SettingsStore on _SettingsStore, Store {
   final _$_SettingsStoreActionController = ActionController(name: '_SettingsStore');
 
   @override
+  void toggleDeveloperMode() {
+    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.toggleDeveloperMode');
+    try {
+      return super.toggleDeveloperMode();
+    } finally {
+      _$_SettingsStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setNetworkLoading(bool isLoading) {
     final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setNetworkLoading');
     try {
@@ -321,6 +381,16 @@ mixin _$SettingsStore on _SettingsStore, Store {
     final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setNetworkName');
     try {
       return super.setNetworkName(name);
+    } finally {
+      _$_SettingsStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setPin(String pin) {
+    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setPin');
+    try {
+      return super.setPin(pin);
     } finally {
       _$_SettingsStoreActionController.endAction(_$actionInfo);
     }
@@ -349,6 +419,8 @@ mixin _$SettingsStore on _SettingsStore, Store {
   @override
   String toString() {
     return '''
+enableBazaar: ${enableBazaar},
+cachedPin: ${cachedPin},
 loading: ${loading},
 localeCode: ${localeCode},
 endpoint: ${endpoint},
@@ -357,6 +429,7 @@ networkName: ${networkName},
 networkState: ${networkState},
 networkConst: ${networkConst},
 contactList: ${contactList},
+developerMode: ${developerMode},
 endpointIsEncointer: ${endpointIsEncointer},
 endpointIsGesell: ${endpointIsGesell},
 endpointIsCantillon: ${endpointIsCantillon},
@@ -365,7 +438,8 @@ endpointList: ${endpointList},
 contactListAll: ${contactListAll},
 existentialDeposit: ${existentialDeposit},
 transactionBaseFee: ${transactionBaseFee},
-transactionByteFee: ${transactionByteFee}
+transactionByteFee: ${transactionByteFee},
+isConnected: ${isConnected}
     ''';
   }
 }

@@ -1,6 +1,7 @@
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/config/node.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58PrefixListPage.dart';
+import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -29,6 +30,13 @@ abstract class _SettingsStore with Store {
     return '${endpoint.info}_$key';
   }
 
+  /// The bazaar is not active currently. This variable can only be set under profile -> developer options.
+  @observable
+  bool enableBazaar = false;
+
+  @observable
+  String cachedPin = '';
+
   @observable
   bool loading = true;
 
@@ -52,6 +60,9 @@ abstract class _SettingsStore with Store {
 
   @observable
   ObservableList<AccountData> contactList = ObservableList<AccountData>();
+
+  @observable
+  bool developerMode = false;
 
   @computed
   bool get endpointIsEncointer {
@@ -126,6 +137,16 @@ abstract class _SettingsStore with Store {
   }
 
   @action
+  void toggleDeveloperMode() {
+    developerMode = !developerMode;
+  }
+
+  @action
+  void toggleEnableBazaar() {
+    enableBazaar = !enableBazaar;
+  }
+
+  @action
   Future<void> loadLocalCode() async {
     String stored = await rootStore.localStorage.getObject(localStorageLocaleKey);
     if (stored != null) {
@@ -142,6 +163,20 @@ abstract class _SettingsStore with Store {
   void setNetworkName(String name) {
     networkName = name;
     loading = false;
+  }
+
+  @action
+  void setPin(String pin) {
+    cachedPin = pin;
+    if (pin.isNotEmpty) {
+      rootStore.encointer.updateState();
+      webApi.encointer.getEncointerBalance();
+    }
+  }
+
+  @computed
+  bool get isConnected {
+    return !loading && networkName.isNotEmpty;
   }
 
   @action
@@ -231,8 +266,6 @@ abstract class _SettingsStore with Store {
     } else {
       endpoint = EndpointData.fromJson(value);
     }
-    //TODO: remove this. it will force Kusama for safe start
-    //endpoint = networkEndpointKusama;
   }
 
   @action

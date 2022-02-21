@@ -187,31 +187,16 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
-  final _$participantCountAtom = Atom(name: '_EncointerStore.participantCount');
-
-  @override
-  int get participantCount {
-    _$participantCountAtom.reportRead();
-    return super.participantCount;
-  }
-
-  @override
-  set participantCount(int value) {
-    _$participantCountAtom.reportWrite(value, super.participantCount, () {
-      super.participantCount = value;
-    });
-  }
-
   final _$balanceEntriesAtom = Atom(name: '_EncointerStore.balanceEntries');
 
   @override
-  Map<String, BalanceEntry> get balanceEntries {
+  ObservableMap<CommunityIdentifier, BalanceEntry> get balanceEntries {
     _$balanceEntriesAtom.reportRead();
     return super.balanceEntries;
   }
 
   @override
-  set balanceEntries(Map<String, BalanceEntry> value) {
+  set balanceEntries(ObservableMap<CommunityIdentifier, BalanceEntry> value) {
     _$balanceEntriesAtom.reportWrite(value, super.balanceEntries, () {
       super.balanceEntries = value;
     });
@@ -220,13 +205,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
   final _$communityIdentifiersAtom = Atom(name: '_EncointerStore.communityIdentifiers');
 
   @override
-  List<String> get communityIdentifiers {
+  List<CommunityIdentifier> get communityIdentifiers {
     _$communityIdentifiersAtom.reportRead();
     return super.communityIdentifiers;
   }
 
   @override
-  set communityIdentifiers(List<String> value) {
+  set communityIdentifiers(List<CommunityIdentifier> value) {
     _$communityIdentifiersAtom.reportWrite(value, super.communityIdentifiers, () {
       super.communityIdentifiers = value;
     });
@@ -247,16 +232,31 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
+  final _$reputationsAtom = Atom(name: '_EncointerStore.reputations');
+
+  @override
+  List<String> get reputations {
+    _$reputationsAtom.reportRead();
+    return super.reputations;
+  }
+
+  @override
+  set reputations(List<String> value) {
+    _$reputationsAtom.reportWrite(value, super.reputations, () {
+      super.reputations = value;
+    });
+  }
+
   final _$chosenCidAtom = Atom(name: '_EncointerStore.chosenCid');
 
   @override
-  String get chosenCid {
+  CommunityIdentifier get chosenCid {
     _$chosenCidAtom.reportRead();
     return super.chosenCid;
   }
 
   @override
-  set chosenCid(String value) {
+  set chosenCid(CommunityIdentifier value) {
     _$chosenCidAtom.reportWrite(value, super.chosenCid, () {
       super.chosenCid = value;
     });
@@ -452,7 +452,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setCommunityIdentifiers(List<String> cids) {
+  void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunityIdentifiers');
     try {
       return super.setCommunityIdentifiers(cids);
@@ -482,6 +482,16 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
+  void setReputations(List<String> rep) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setReputations');
+    try {
+      return super.setReputations(rep);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setDemurrage(double d) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setDemurrage');
     try {
@@ -492,7 +502,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setChosenCid([String cid]) {
+  void setChosenCid([CommunityIdentifier cid]) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setChosenCid');
     try {
       return super.setChosenCid(cid);
@@ -522,7 +532,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void addBalanceEntry(String cid, BalanceEntry balanceEntry) {
+  void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.addBalanceEntry');
     try {
       return super.addBalanceEntry(cid, balanceEntry);
@@ -536,16 +546,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setParticipantIndex');
     try {
       return super.setParticipantIndex(pIndex);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setParticipantCount(int pCount) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setParticipantCount');
-    try {
-      return super.setParticipantCount(pCount);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }
@@ -573,10 +573,10 @@ meetupTime: ${meetupTime},
 meetupRegistry: ${meetupRegistry},
 myMeetupRegistryIndex: ${myMeetupRegistryIndex},
 participantIndex: ${participantIndex},
-participantCount: ${participantCount},
 balanceEntries: ${balanceEntries},
 communityIdentifiers: ${communityIdentifiers},
 communities: ${communities},
+reputations: ${reputations},
 chosenCid: ${chosenCid},
 communityMetadata: ${communityMetadata},
 demurrage: ${demurrage},

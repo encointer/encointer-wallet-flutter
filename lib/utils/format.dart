@@ -3,12 +3,10 @@ import 'dart:core';
 import 'dart:math';
 import 'dart:typed_data';
 
-import 'package:base58check/base58.dart';
-import 'package:base58check/base58check.dart';
 import 'package:convert/convert.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
@@ -26,13 +24,6 @@ class Fmt {
       return addr;
     }
     return addr.substring(0, pad) + '...' + addr.substring(addr.length - pad);
-  }
-
-  static String communityIdentifier(String cid, {int pad = 8}) {
-    List<int> cidBytes = hexToBytes(cid);
-    Base58Codec codec = Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
-    var cidBase58 = codec.encode(cidBytes);
-    return address(cidBase58, pad: pad);
   }
 
   static String dateTime(DateTime time) {
@@ -82,6 +73,20 @@ class Fmt {
     value.toStringAsFixed(3);
     NumberFormat f = NumberFormat(",##0${length > 0 ? '.' : ''}${'#' * length}", "en_US");
     return f.format(value);
+  }
+
+  /// number transform 3a:
+  /// from <String> to <String> in token format of ",##0.000"
+  static String numberFormat(
+    String value, {
+    int length = 3,
+    int round = 0,
+  }) {
+    if (value == null) {
+      return '~';
+    }
+
+    return doubleFormat(double.parse(value), length: length);
   }
 
   /// combined number transform 1-3:
@@ -250,7 +255,7 @@ class Fmt {
   }
 
   static String accountName(BuildContext context, AccountData acc) {
-    return '${acc.name ?? ''}${(acc.observation ?? false) ? ' (${I18n.of(context).account['observe']})' : ''}';
+    return '${acc.name ?? ''}${(acc.observation ?? false) ? ' (${I18n.of(context).translationsForLocale().account.observe})' : ''}';
   }
 
   static List<int> hexToBytes(String hex) {
@@ -268,6 +273,10 @@ class Fmt {
       result[i] = value;
     }
     return result;
+  }
+
+  static String bytesToHex(List<int> bytes) {
+    return "0x" + hex.encode(bytes);
   }
 
   static String accountDisplayNameString(String address, Map accInfo) {
@@ -313,12 +322,7 @@ class Fmt {
   }
 
   /// Formats fixed point number with the amount of fractional digits given by [fixedPointFraction].
-  static String degree(BigInt degree, {int fixedPointFraction = 64, int fractionDisplay = 3}) {
-    return (degree / BigInt.two.pow(fixedPointFraction)).toStringAsFixed(fractionDisplay);
-  }
-
-  /// Formats fixed point number with the amount of fractional digits given by [fixedPointFraction].
-  static String degreeFromHex(String degree, {int fixedPointFraction = 64, int fractionDisplay = 3}) {
-    return Fmt.degree(BigInt.parse(degree));
+  static String degree(String degree, {int fixedPointFraction = 64, int fractionDisplay = 3}) {
+    return (double.tryParse(degree) ?? 0.0).toStringAsFixed(fractionDisplay);
   }
 }

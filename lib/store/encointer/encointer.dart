@@ -76,19 +76,19 @@ abstract class _EncointerStore with Store {
   int participantIndex;
 
   @observable
-  int participantCount;
+  ObservableMap<CommunityIdentifier, BalanceEntry> balanceEntries = new ObservableMap();
 
   @observable
-  Map<String, BalanceEntry> balanceEntries = new ObservableMap();
-
-  @observable
-  List<String> communityIdentifiers;
+  List<CommunityIdentifier> communityIdentifiers;
 
   @observable
   List<CidName> communities;
 
   @observable
-  String chosenCid;
+  List<String> reputations;
+
+  @observable
+  CommunityIdentifier chosenCid;
 
   @observable
   CommunityMetadata communityMetadata;
@@ -96,6 +96,7 @@ abstract class _EncointerStore with Store {
   @observable
   double demurrage;
 
+  // claimantPublic -> ClaimOfAttendance
   @observable
   ObservableMap<String, ClaimOfAttendance> participantsClaims = new ObservableMap();
 
@@ -249,7 +250,7 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setCommunityIdentifiers(List<String> cids) {
+  void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
     print("store: set communityIdentifiers to $cids");
     communityIdentifiers = cids;
   }
@@ -269,12 +270,19 @@ abstract class _EncointerStore with Store {
   }
 
   @action
+  void setReputations(List<String> rep) {
+    print("store: set communities to $rep");
+    reputations = rep;
+    // cacheObject(encointerCommunitiesKey, c);
+  }
+
+  @action
   void setDemurrage(double d) {
     demurrage = d;
   }
 
   @action
-  void setChosenCid([String cid]) {
+  void setChosenCid([CommunityIdentifier cid]) {
     if (chosenCid != cid) {
       chosenCid = cid;
       cacheObject(encointerCommunityKey, cid);
@@ -290,7 +298,6 @@ abstract class _EncointerStore with Store {
       webApi.encointer.getBusinesses();
       webApi.encointer.getMeetupIndex();
       webApi.encointer.getParticipantIndex();
-      webApi.encointer.getParticipantCount();
       webApi.encointer.getEncointerBalance();
       webApi.encointer.getCommunityMetadata();
       webApi.encointer.getDemurrage();
@@ -314,18 +321,13 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void addBalanceEntry(String cid, BalanceEntry balanceEntry) {
+  void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
     balanceEntries[cid] = balanceEntry;
   }
 
   @action
   void setParticipantIndex([int pIndex]) {
     participantIndex = pIndex;
-  }
-
-  @action
-  void setParticipantCount(int pCount) {
-    participantCount = pCount;
   }
 
   @action
@@ -338,8 +340,10 @@ abstract class _EncointerStore with Store {
         "success": true,
         "from": rootStore.account.currentAddress,
         "to": i['params'][0],
-        "token": isCommunityCurrency ? i['params'][1] : rootStore.settings.networkState.tokenSymbol,
-        "amount": isCommunityCurrency ? Fmt.doubleFormat(i['params'][2]) : Fmt.balance(i['params'][1], ert_decimals),
+        "token": isCommunityCurrency
+            ? CommunityIdentifier.fromJson(i['params'][1]).toFmtString()
+            : rootStore.settings.networkState.tokenSymbol,
+        "amount": isCommunityCurrency ? Fmt.numberFormat(i['params'][2]) : Fmt.balance(i['params'][1], ert_decimals),
       };
     }).toList();
     if (reset) {
@@ -369,8 +373,8 @@ abstract class _EncointerStore with Store {
   Future<void> loadCache() async {
     var cachedCid = await loadObject(encointerCommunityKey);
     if (cachedCid != null) {
-      print("found cached choice of cid. will recover it: " + cachedCid.toString());
-      chosenCid = cachedCid;
+      chosenCid = CommunityIdentifier.fromJson(cachedCid);
+      print("found cached choice of cid. will recover it: " + chosenCid.toFmtString());
     }
     var cachedCommunityMetadata = await loadObject(encointerCommunityMetadataKey);
     if (cachedCommunityMetadata != null) {
@@ -379,8 +383,7 @@ abstract class _EncointerStore with Store {
     }
     List<dynamic> cachedCommunitiesInternalList = await loadObject(encointerCommunitiesKey);
     if (cachedCommunitiesInternalList != null) {
-      List<CidName> cachedCommunities =
-          cachedCommunitiesInternalList.map((s) => new CidName(s['cid'], s['name'])).toList();
+      List<CidName> cachedCommunities = cachedCommunitiesInternalList.map((s) => CidName.fromJson(s)).toList();
       print("found cached communities. will recover it: " + cachedCommunities.toString());
       communities = cachedCommunities;
     }

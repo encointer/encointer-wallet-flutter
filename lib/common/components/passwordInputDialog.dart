@@ -1,7 +1,8 @@
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 
@@ -11,16 +12,6 @@ showPasswordInputDialog(context, account, title, onOk) {
     title: title,
     onCancel: () => Navigator.of(context).pop(),
     onOk: onOk,
-  );
-}
-
-showPasswordDialogWithAccountSwitch(context, currentAccount, onOk, onAccountSwitch) {
-  return PasswordInputDialog(
-    account: currentAccount,
-    title: Text(
-        I18n.of(context).home['unlock.account'].replaceAll('CURRENT_ACCOUNT_NAME', currentAccount.name.toString())),
-    onOk: onOk,
-    onAccountSwitch: onAccountSwitch,
   );
 }
 
@@ -52,17 +43,17 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
       });
     }
     if (res == null) {
-      final Map<String, String> dic = I18n.of(context).profile;
       showCupertinoDialog(
         context: context,
         builder: (BuildContext context) {
+          final Translations dic = I18n.of(context).translationsForLocale();
           return CupertinoAlertDialog(
-            title: Text(dic['pass.error']),
-            content: Text(dic['pass.error.txt']),
+            title: Text(dic.profile.passError),
+            content: Text(dic.profile.passErrorTxt),
             actions: <Widget>[
               CupertinoButton(
                 key: Key('error-dialog-ok'),
-                child: Text(I18n.of(context).home['ok']),
+                child: Text(I18n.of(context).translationsForLocale().home.ok),
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ],
@@ -83,7 +74,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, String> dic = I18n.of(context).home;
+    final Translations dic = I18n.of(context).translationsForLocale();
 
     return CupertinoAlertDialog(
       title: widget.title ?? Container(),
@@ -92,10 +83,12 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
         child: CupertinoTextField(
           autofocus: true,
           keyboardType: TextInputType.number,
-          placeholder: I18n.of(context).profile['pass.old'],
+          placeholder: I18n.of(context).translationsForLocale().profile.passOld,
           controller: _passCtrl,
           onChanged: (v) {
-            return Fmt.checkPassword(v.trim()) ? null : I18n.of(context).account['create.password.error'];
+            return Fmt.checkPassword(v.trim())
+                ? null
+                : I18n.of(context).translationsForLocale().account.createPasswordError;
           },
           obscureText: true,
           clearButtonMode: OverlayVisibilityMode.editing,
@@ -105,7 +98,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
       actions: <Widget>[
         widget.onAccountSwitch != null
             ? CupertinoButton(
-                child: Text(dic['switch']),
+                child: Text(dic.home.switchAccount),
                 onPressed: () {
                   widget.onAccountSwitch();
                 },
@@ -113,7 +106,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
             : Container(),
         widget.onCancel != null
             ? CupertinoButton(
-                child: Text(dic['cancel']),
+                child: Text(dic.home.cancel),
                 onPressed: () {
                   widget.onCancel();
                 },
@@ -123,9 +116,13 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
           key: Key('password-ok'),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [_submitting ? CupertinoActivityIndicator() : Container(), Text(dic['ok'])],
+            children: [_submitting ? CupertinoActivityIndicator() : Container(), Text(dic.home.ok)],
           ),
-          onPressed: _submitting ? null : () => _onOk(_passCtrl.text.trim()),
+          onPressed: _submitting
+              ? null
+              : () {
+                  _onOk(_passCtrl.text.trim());
+                },
         ),
       ],
     );

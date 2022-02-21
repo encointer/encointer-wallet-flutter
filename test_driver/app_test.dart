@@ -35,6 +35,8 @@ void main() {
       await driver.tap(find.byValueKey('create-account-name'));
       await driver.enterText(endoEncointer['name']);
 
+      await driver.tap(find.byValueKey('create-account-next'));
+
       await driver.tap(find.byValueKey('create-account-pin'));
       await driver.enterText(defaultPin);
 
@@ -44,10 +46,10 @@ void main() {
       await driver.tap(find.byValueKey('create-account-confirm'));
     });
 
-    // Note: The seconds test continues where the first one ended
+    // Note: The second test continues where the first one ended
     test('choosing cid', () async {
-      await driver.tap(find.byValueKey('cid-dropdown'));
-      await driver.tap(find.byValueKey('cid-0'));
+      await driver.tap(find.byValueKey('cid-0-marker-icon'));
+      await driver.tap(find.byValueKey('cid-0-marker-description'));
 
       // Here we get the metadata because it is reset to null in the setChosenCid() method which is called, when a community is chosen
       await driver.requestData(StorageSetup.GET_METADATA);
@@ -60,28 +62,35 @@ void main() {
       await screenshot(driver, config, 'receive-funds');
 
       // go back to homepage
-      await driver.tap(find.pageBack());
+      await driver.tap(find.byValueKey('close-receive-page'));
     });
 
     test('transfer-page', () async {
       // go to transfer page
-      await driver.tap(find.byValueKey('cid-asset'));
+      // await driver.tap(find.byValueKey('cid-asset'));
 
+      print('---find transfer');
       await driver.tap(find.byValueKey('transfer'));
 
+      print('---find transfer-amount-input');
       await driver.tap(find.byValueKey('transfer-amount-input'));
+
+      print('---enter 3.4');
       await driver.enterText('3.4');
 
+      print('---screenshot transfer-page');
       await screenshot(driver, config, 'transfer-page');
 
       // go back to homepage
-      await driver.tap(find.pageBack());
-      await driver.tap(find.pageBack());
+
+      print('---close-transfer-page');
+      await driver.tap(find.byValueKey('close-transfer-page'));
     });
 
     test('encointerEntryPage', () async {
       log("tapping encointerEntry tap");
-      await driver.tap(find.byValueKey('tab-ceremonies'));
+      // key is directly derived by `TabKey` enum to string
+      await driver.tap(find.byValueKey('TabKey.Ceremonies'));
 
       // communicate to the app isolate how to setup the store
       await driver.requestData(StorageSetup.UNREGISTERED_PARTICIPANT);

@@ -1,5 +1,6 @@
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demoData.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/toggleButtonsWithTitle.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -20,22 +21,22 @@ class SearchResultsBusinessFiltered extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            "Filter found businesses",
+            "Filter ${I18n.of(context).translationsForLocale().bazaar.businessesFound}",
             style: titleStyle,
           ),
         ),
         body: ListView(children: [
-          ToggleButtonsWithTitle("Categories", categories, null), // TODO state management
+          ToggleButtonsWithTitle(I18n.of(context).translationsForLocale().bazaar.categories, categories, null),
         ]),
         floatingActionButton: ButtonBar(
           children: [
             ElevatedButton(
               onPressed: () => null, // TODO state management
-              child: Text("Reset"),
+              child: Text(I18n.of(context).translationsForLocale().bazaar.reset),
             ),
             ElevatedButton(
               onPressed: () => null, //TODO state management
-              child: Text("Apply"),
+              child: Text(I18n.of(context).translationsForLocale().bazaar.apply),
             ),
           ],
         ));

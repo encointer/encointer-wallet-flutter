@@ -1,9 +1,11 @@
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/businessesOnMap.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaarItemHorizontal.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaarItemData.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import "package:latlong2/latlong.dart";
+import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class BusinessDetail extends StatelessWidget {
   final BazaarBusinessData business;
@@ -12,6 +14,7 @@ class BusinessDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Translations dic = I18n.of(context).translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         title: Row(
@@ -49,7 +52,10 @@ class BusinessDetail extends StatelessWidget {
                       Card(
                         margin: EdgeInsets.fromLTRB(4, 0, 2, 0),
                         child: DataTable(
-                          columns: [DataColumn(label: Text("Day")), DataColumn(label: Text("Opening Hours"))],
+                          columns: [
+                            DataColumn(label: Text(dic.bazaar.day)),
+                            DataColumn(label: Text(dic.bazaar.openningHours))
+                          ],
                           headingRowHeight: 32,
                           columnSpacing: 4,
                           horizontalMargin: 8,
@@ -73,7 +79,7 @@ class BusinessDetail extends StatelessWidget {
                   )
                 ],
               ),
-              HorizontalBazaarItemList(business.offerings, "Offerings", cardHeight, cardWidth),
+              HorizontalBazaarItemList(business.offerings, dic.bazaar.offerings, cardHeight, cardWidth),
             ],
           ),
         ],

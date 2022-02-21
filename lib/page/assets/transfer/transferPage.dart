@@ -1,33 +1,33 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:encointer_wallet/common/components/AddressInputField.dart';
-import 'package:encointer_wallet/common/components/currencyWithIcon.dart';
-import 'package:encointer_wallet/common/components/roundedButton.dart';
+import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
+import 'package:encointer_wallet/common/components/gradientElements.dart';
+import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/page/account/scanPage.dart';
+import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
-import 'package:encointer_wallet/page/assets/asset/assetPage.dart';
-import 'package:encointer_wallet/page/assets/transfer/currencySelectPage.dart';
+import 'package:encointer_wallet/service/qrScanService.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:iconsax/iconsax.dart';
 
 class TransferPageParams {
-  TransferPageParams(
-      {this.symbol, this.address, this.redirect, this.isEncointerCommunityCurrency = false, this.communitySymbol});
-  final String address;
-  final String redirect;
-  final String symbol;
-  final bool isEncointerCommunityCurrency;
+  TransferPageParams({this.cid, this.communitySymbol, this.address, this.qrScanData, this.redirect});
+
+  final String cid;
   final String communitySymbol;
+  final String address;
+  final QrScanData qrScanData;
+  final String redirect;
 }
 
 class TransferPage extends StatefulWidget {
@@ -50,89 +50,157 @@ class _TransferPageState extends State<TransferPage> {
   final TextEditingController _amountCtrl = new TextEditingController();
 
   AccountData _accountTo;
-  String _tokenSymbol;
-  bool _isEncointerCommunityCurrency;
+  String _cid;
   String _communitySymbol;
 
-  Future<void> _onScan() async {
-    final to = await Navigator.of(context).pushNamed(ScanPage.route);
-    if (to == null) return;
-    AccountData acc = AccountData();
-    acc.address = (to as QRCodeAddressResult).address;
-    acc.name = (to as QRCodeAddressResult).name;
-    setState(() {
-      _accountTo = acc;
-    });
-  }
+  @override
+  Widget build(BuildContext context) {
+    final Translations dic = I18n.of(context).translationsForLocale();
+    TransferPageParams params = ModalRoute.of(context).settings.arguments;
 
-  Future<void> _selectCommunity() async {
-    List<String> symbolOptions = List<String>.from(store.settings.networkConst['currencyIds']);
+    _communitySymbol = params.communitySymbol;
+    _cid = params.cid;
 
-    var currency = await Navigator.of(context).pushNamed(CommunitySelectPage.route, arguments: symbolOptions);
+    int decimals = ert_decimals;
 
-    if (currency != null) {
-      setState(() {
-        _tokenSymbol = currency;
-      });
-    }
+    double available = store.encointer.communityBalance;
+
+    return Observer(
+      builder: (_) {
+        return Form(
+          key: _formKey,
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(dic.assets.transfer),
+              leading: Container(),
+              actions: [
+                IconButton(
+                  key: Key('close-transfer-page'),
+                  icon: Icon(Icons.close),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                )
+              ],
+            ),
+            body: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8),
+              child: Column(
+                children: [
+                  Expanded(
+                    child: ListView(
+                      children: [
+                        CommunityWithCommunityChooser(store),
+                        store.encointer.communityBalance != null
+                            ? AccountBalanceWithMoreDigits(store: store, available: available, decimals: decimals)
+                            : CupertinoActivityIndicator(),
+                        Text(
+                          "${I18n.of(context).translationsForLocale().assets.yourBalanceFor} ${Fmt.accountName(context, store.account.currentAccount)}",
+                          style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: 48),
+                        EncointerTextFormField(
+                          labelText: dic.assets.amountToBeTransferred,
+                          textStyle: Theme.of(context).textTheme.headline1.copyWith(color: encointerBlack),
+                          inputFormatters: [UI.decimalInputFormatter(decimals: decimals)],
+                          controller: _amountCtrl,
+                          textFormFieldKey: Key('transfer-amount-input'),
+                          validator: (String value) {
+                            if (value.isEmpty) {
+                              return dic.assets.amountError;
+                            }
+                            if (balanceTooLow(value, available, decimals)) {
+                              return dic.assets.amountLow;
+                            }
+                            return null;
+                          },
+                          suffixIcon: Text("ⵐ", style: TextStyle(color: encointerGrey, fontSize: 44)),
+                        ),
+                        SizedBox(height: 24),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: AddressInputField(
+                                widget.store,
+                                label: dic.assets.address,
+                                initialValue: _accountTo,
+                                onChanged: (AccountData acc) {
+                                  setState(() {
+                                    _accountTo = acc;
+                                  });
+                                },
+                                hideIdenticon: true,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(height: 48),
+                  Center(
+                    child: Text(
+                      "Fee: TODO compute Fee",
+                      style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
+                    ),
+                  ),
+                  SizedBox(height: 8),
+                  PrimaryButton(
+                    key: Key('make-transfer'),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Iconsax.send_sqaure_2),
+                        SizedBox(width: 12),
+                        Text(dic.assets.amountToBeTransferred),
+                      ],
+                    ),
+                    onPressed: _handleSubmit,
+                  ),
+                  SizedBox(height: 8),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   void _handleSubmit() {
     if (_formKey.currentState.validate()) {
-      String symbol = _tokenSymbol ?? store.settings.networkState.tokenSymbol;
-      int decimals = store.settings.networkState.tokenDecimals;
-      final String tokenView = Fmt.tokenView(symbol);
+      String cid = _cid ?? store.encointer.chosenCid;
       final address = Fmt.addressOfAccount(_accountTo, store);
+
       var args = {
-        "title": I18n.of(context).assets['transfer'] + ' $tokenView',
+        "title": I18n.of(context).translationsForLocale().assets.transfer, // Todo: Cleanup
         "txInfo": {
-          "module": 'balances',
+          "module": 'encointerBalances',
           "call": 'transfer',
+          "cid": cid,
         },
         "detail": jsonEncode({
           "destination": address,
-          "currency": tokenView,
+          "currency": _communitySymbol,
           "amount": _amountCtrl.text.trim(),
         }),
         "params": [
           // params.to
           address,
-          // params.amount
-          Fmt.tokenInt(_amountCtrl.text.trim(), decimals).toString(),
-        ],
-      };
-      // Todo: why was it here depending on the endpoint? Do we not want to facilitate ERT transfers?
-      if (_isEncointerCommunityCurrency) {
-        args['txInfo'] = {
-          "module": 'encointerBalances',
-          "call": 'transfer',
-          "cid": symbol,
-        };
-        args["detail"] = jsonEncode({
-          "destination": address,
-          "currency": _communitySymbol,
-          "amount": _amountCtrl.text.trim(),
-        });
-        args['params'] = [
-          // params.to
-          address,
-          // params.currencyId
-          symbol,
+          // params.communityId
+          cid,
           // params.amount
           _amountCtrl.text.trim(),
-        ];
-      }
+        ],
+      };
+
       args['onFinish'] = (BuildContext txPageContext, Map res) {
         final TransferPageParams routeArgs = ModalRoute.of(context).settings.arguments;
         if (store.settings.endpointIsEncointer) {
           store.encointer.setTransferTxs([res]);
         }
         Navigator.popUntil(txPageContext, ModalRoute.withName(routeArgs.redirect));
-        // user may route to transfer page from asset page
-        // or from home page with QRCode Scanner
-        if (routeArgs.redirect == AssetPage.route) {
-          globalAssetRefreshKey.currentState.show();
-        }
         if (routeArgs.redirect == '/') {
           globalBalanceRefreshKey.currentState.show();
         }
@@ -147,9 +215,11 @@ class _TransferPageState extends State<TransferPage> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final TransferPageParams args = ModalRoute.of(context).settings.arguments;
-      if (args.address != null) {
+      if (args.qrScanData != null) {
+        _amountCtrl.text = '${args.qrScanData.amount}';
+
         final AccountData acc = AccountData();
-        acc.address = args.address;
+        acc.address = args.qrScanData.account;
         setState(() {
           _accountTo = acc;
         });
@@ -165,11 +235,10 @@ class _TransferPageState extends State<TransferPage> {
         }
       }
       setState(() {
-        _tokenSymbol = args.symbol ?? store.settings.networkState.tokenSymbol;
+        _cid = args.cid;
       });
 
-      webApi.assets.fetchBalance();
-      webApi.encointer.getEncointerBalance();
+      webApi.fetchAccountData();
     });
   }
 
@@ -179,172 +248,42 @@ class _TransferPageState extends State<TransferPage> {
     super.dispose();
   }
 
+  bool balanceTooLow(String v, double available, int decimals) {
+    return double.parse(v.trim()) >= available;
+  }
+}
+
+class AccountBalanceWithMoreDigits extends StatelessWidget {
+  const AccountBalanceWithMoreDigits({
+    Key key,
+    @required this.store,
+    @required this.available,
+    @required this.decimals,
+  }) : super(key: key);
+
+  final AppStore store;
+  final double available;
+  final int decimals;
+
   @override
   Widget build(BuildContext context) {
-    return Observer(
-      builder: (_) {
-        final Map<String, String> dic = I18n.of(context).assets;
-        final String baseTokenSymbol = store.settings.networkState.tokenSymbol;
-        final String baseTokenSymbolView = Fmt.tokenView(baseTokenSymbol);
-        String symbol = _tokenSymbol ?? baseTokenSymbol;
-        final bool isBaseToken = _tokenSymbol == baseTokenSymbol;
-        List symbolOptions = store.settings.networkConst['currencyIds'];
-
-        TransferPageParams params = ModalRoute.of(context).settings.arguments;
-        _isEncointerCommunityCurrency = params.isEncointerCommunityCurrency;
-        if (_isEncointerCommunityCurrency) {
-          _communitySymbol = params.communitySymbol;
-        }
-        _tokenSymbol = params.symbol;
-
-        int decimals = _isEncointerCommunityCurrency
-            ? encointer_currencies_decimals
-            : store.settings.networkState.tokenDecimals ?? ert_decimals;
-
-        BigInt available; // BigInt
-        available = _getAvailableEncointerOrBaseToken(isBaseToken, symbol);
-        print('Available: $available');
-
-        return Scaffold(
-          appBar: AppBar(
-            title: Text(dic['transfer']),
-            centerTitle: true,
-            actions: <Widget>[
-              IconButton(
-                icon: Image.asset('assets/images/assets/Menu_scan.png'),
-                onPressed: _onScan,
-              )
-            ],
-          ),
-          body: SafeArea(
-            child: Builder(
-              builder: (BuildContext context) {
-                return Column(
-                  children: <Widget>[
-                    Expanded(
-                      child: Form(
-                        key: _formKey,
-                        child: ListView(
-                          padding: EdgeInsets.all(16),
-                          children: <Widget>[
-                            AddressInputField(
-                              widget.store,
-                              label: dic['address'],
-                              initialValue: _accountTo,
-                              onChanged: (AccountData acc) {
-                                setState(() {
-                                  _accountTo = acc;
-                                });
-                              },
-                            ),
-                            TextFormField(
-                              key: Key('transfer-amount-input'),
-                              decoration: InputDecoration(
-                                hintText: dic['amount'],
-                                labelText: '${dic['amount']} (${dic['balance']}: ${Fmt.priceFloorBigInt(
-                                  available,
-                                  decimals,
-                                  lengthMax: 6,
-                                )})',
-                              ),
-                              inputFormatters: [UI.decimalInputFormatter(decimals)],
-                              controller: _amountCtrl,
-                              keyboardType: TextInputType.numberWithOptions(decimal: true),
-                              validator: (v) {
-                                if (v.isEmpty) {
-                                  return dic['amount.error'];
-                                }
-                                if (balanceToLow(v, available, decimals)) {
-                                  return dic['amount.low'];
-                                }
-                                return null;
-                              },
-                            ),
-                            GestureDetector(
-                              child: Container(
-                                color: Theme.of(context).canvasColor,
-                                margin: EdgeInsets.only(top: 16, bottom: 16),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: <Widget>[
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Text(
-                                          dic['currency'],
-                                          style: TextStyle(color: Theme.of(context).unselectedWidgetColor),
-                                        ),
-                                        !_isEncointerCommunityCurrency
-                                            ? CurrencyWithIcon(_tokenSymbol ?? baseTokenSymbol)
-                                            : Text(_communitySymbol),
-                                      ],
-                                    ),
-                                    // Icon(
-                                    //   Icons.arrow_forward_ios,
-                                    //   size: 18,
-                                    // )
-                                  ],
-                                ),
-                              ),
-                              onTap: symbolOptions != null ? () => _selectCommunity() : null,
-                            ),
-                            Divider(),
-                            Padding(
-                              padding: EdgeInsets.only(top: 16),
-                              child: Text(
-                                  'existentialDeposit: ${store.settings.existentialDeposit} $baseTokenSymbolView',
-                                  style: TextStyle(fontSize: 16, color: Colors.black54)),
-                            ),
-//                            Padding(
-//                              padding: EdgeInsets.only(top: 16),
-//                              child: Text(
-//                                  'TransferFee: ${store.settings.transactionBaseFee} $baseTokenSymbol',
-//                                  style: TextStyle(
-//                                      fontSize: 16, color: Colors.black54)),
-//                            ),
-                            Padding(
-                              padding: EdgeInsets.only(top: 16),
-                              child: Text(
-                                  'transactionByteFee: ${store.settings.transactionByteFee} $baseTokenSymbolView',
-                                  style: TextStyle(fontSize: 16, color: Colors.black54)),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Container(
-                      key: Key('make-transfer'),
-                      padding: EdgeInsets.all(16),
-                      child: RoundedButton(
-                        text: I18n.of(context).assets['make'],
-                        onPressed: _handleSubmit,
-                      ),
-                    )
-                  ],
-                );
-              },
+    return Center(
+      child: RichText(
+        // need text base line alignment
+        text: TextSpan(
+          text: '${Fmt.doubleFormat(
+            available,
+            length: 6,
+          )} ',
+          style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
+          children: const <TextSpan>[
+            TextSpan(
+              text: 'ⵐ',
+              style: TextStyle(color: encointerGrey),
             ),
-          ),
-        );
-      },
+          ],
+        ),
+      ),
     );
-  }
-
-  bool balanceToLow(String v, BigInt available, int decimals) {
-    if (_isEncointerCommunityCurrency) {
-      return double.parse(v.trim()) >= available.toDouble() - 0.0001;
-    } else {
-      return double.parse(v.trim()) >= available / BigInt.from(pow(10, decimals)) - 0.0001;
-    }
-  }
-
-  BigInt _getAvailableEncointerOrBaseToken(bool isBaseToken, String symbol) {
-    if (_isEncointerCommunityCurrency) {
-      return Fmt.tokenInt(store.encointer.communityBalance.toString(), encointer_currencies_decimals);
-    } else {
-      return isBaseToken
-          ? store.assets.balances[symbol.toUpperCase()].transferable
-          : Fmt.balanceInt(store.assets.tokenBalances[symbol.toUpperCase()]);
-    }
   }
 }

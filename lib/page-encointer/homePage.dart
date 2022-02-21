@@ -1,11 +1,16 @@
+import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/encointerEntry.dart';
+import 'package:encointer_wallet/page/account/scanPage.dart';
 import 'package:encointer_wallet/page/assets/index.dart';
+import 'package:encointer_wallet/page/profile/contacts/contactsPage.dart';
 import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+
+import 'bazaar/0_main/bazaarMain.dart';
 
 class EncointerHomePage extends StatefulWidget {
   EncointerHomePage(this.store);
@@ -27,116 +32,44 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   NotificationPlugin _notificationPlugin;
 
-  List<String> _tabList;
+  List<TabData> _tabList;
   int _tabIndex = 0;
 
   List<BottomNavigationBarItem> _navBarItems(int activeItem) {
-    Map<String, String> tabs = I18n.of(context).home;
     return _tabList
-        .map((i) => BottomNavigationBarItem(
-              icon: Image.asset(
-                  _tabList[activeItem] == i
-                      ? 'assets/images/public/${i}_indigo.png'
-                      : 'assets/images/public/${i}_dark.png',
-                  key: Key('tab-${i.toLowerCase()}')),
-              label: tabs[i.toLowerCase()],
-            ))
-        .toList();
-  }
-
-  Widget _getPage(i) {
-    if (store.settings.endpointIsGesell) {
-      switch (i) {
-        case 0:
-          return Assets(store);
-        // case 1:
-        //   return BazaarMain(); // TODO provider pattern everywhere https://mobx.netlify.app/examples/todos
-        case 1:
-          return EncointerEntry(store);
-        default:
-          return Profile(store);
-      }
-    } else {
-      switch (i) {
-        case 0:
-          return Assets(store);
-        // case 1:
-        //   return BazaarMain();
-        case 1:
-          return EncointerEntry(store);
-        default:
-          return Profile(store);
-      }
-    }
-  }
-
-  List<Widget> _buildPages() {
-    return [0, 1, 2, 3].map((i) {
-      if (i == 0) {
-        // return assets page
-        return Stack(
-          fit: StackFit.expand,
-          children: <Widget>[
-            Container(
-              width: double.infinity,
-              height: double.infinity,
-              color: Theme.of(context).canvasColor,
-            ),
-            Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  alignment: Alignment.topLeft,
-                  image: AssetImage("assets/images/assets/top_bg_indigo.png"),
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
-            Scaffold(
-              backgroundColor: Colors.transparent,
-              appBar: AppBar(
-                title: Image.asset('assets/images/assets/logo.png'),
-                centerTitle: false,
-                backgroundColor: Colors.transparent,
-                elevation: 0.0,
-                actions: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.menu),
-                    onPressed: () => Navigator.of(context).pushNamed('/network'),
+        .map(
+          (i) => BottomNavigationBarItem(
+            icon: _tabList[activeItem] == i
+                ? ShaderMask(
+                    blendMode: BlendMode.srcIn,
+                    shaderCallback: (bounds) => primaryGradient.createShader(
+                      Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+                    ),
+                    child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      Icon(
+                        i.iconData,
+                        key: Key('${i.key.toString()}'),
+                      ),
+                      Container(
+                        height: 4,
+                        width: 16,
+                        decoration: BoxDecoration(
+                          border: Border(
+                            bottom: BorderSide(width: 2.0),
+                          ),
+                        ),
+                      )
+                    ]),
+                  )
+                : Icon(
+                    i.iconData,
+                    key: Key('${i.key.toString()}'),
+                    color: i.key == TabKey.Scan ? ZurichLion.shade900 : encointerGrey,
                   ),
-                ],
-              ),
-              body: _getPage(i),
-            )
-          ],
-        );
-      }
-
-      return Stack(
-        fit: StackFit.expand,
-        children: <Widget>[
-          Container(
-            width: double.infinity,
-            height: double.infinity,
-            color: Theme.of(context).canvasColor,
+            label: '',
           ),
-          Container(
-            width: double.infinity,
-            decoration: BoxDecoration(
-              image: DecorationImage(
-                alignment: Alignment.topLeft,
-                image: AssetImage("assets/images/${i == 1 ? 'staking' : 'assets'}/top_bg_indigo.png"),
-                fit: BoxFit.contain,
-              ),
-            ),
-          ),
-          Scaffold(
-            backgroundColor: Colors.transparent,
-            body: _getPage(i),
-          )
-        ],
-      );
-    }).toList();
+        )
+        .toList();
   }
 
   @override
@@ -151,41 +84,86 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    _tabList = store.settings.endpointIsGesell
-        ? [
-            'Wallet',
-            // 'Bazaar',
-            'Ceremonies',
-            'Profile',
-          ]
-        : [
-            'Wallet',
-            'Ceremonies',
-            'Profile',
-          ];
+    _tabList = <TabData>[
+      TabData(
+        TabKey.Wallet,
+        Iconsax.home_2,
+      ),
+      if (store.settings.enableBazaar)
+        TabData(
+          TabKey.Bazaar,
+          Iconsax.shop,
+        ), // dart collection if
+      TabData(
+        TabKey.Ceremonies,
+        Iconsax.calendar,
+      ),
+      TabData(
+        TabKey.Scan,
+        Iconsax.scan_barcode,
+      ),
+      TabData(
+        TabKey.Contacts,
+        Iconsax.profile_2user,
+      ),
+      TabData(
+        TabKey.Profile,
+        Iconsax.profile_circle,
+      ),
+    ];
+
     return Scaffold(
       key: EncointerHomePage.encointerHomePageKey,
+      backgroundColor: Colors.white,
       body: PageView(
         controller: _pageController,
-        onPageChanged: (index) {
-          setState(() {
-            _tabIndex = index;
-          });
-        },
-        children: _buildPages(),
+        children: [
+          Assets(store),
+          if (store.settings.enableBazaar) BazaarMain(store), // dart collection if
+          EncointerEntry(store), // #272 we leave it in for now until we have a replacement
+          ScanPage(store),
+          ContactsPage(store),
+          Profile(store),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _tabIndex,
         iconSize: 22.0,
-        onTap: (index) {
-          setState(() {
-            _tabIndex = index;
-          });
-          _pageController.jumpToPage(index);
+        onTap: (index) async {
+          if (_tabList[index].key == TabKey.Scan) {
+            // Push `ScanPage.Route`instead of changing the Page.
+            Navigator.of(context).pushNamed(ScanPage.route);
+          } else {
+            setState(() {
+              _tabIndex = index;
+              _pageController.jumpToPage(index);
+            });
+          }
         },
         type: BottomNavigationBarType.fixed,
         items: _navBarItems(_tabIndex),
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
       ),
     );
   }
+}
+
+class TabData {
+  /// used for our integration tests to click on a UI element
+  final TabKey key;
+
+  /// used for our integration tests to click on a UI element
+  final IconData iconData;
+
+  TabData(this.key, this.iconData);
+}
+
+enum TabKey {
+  Wallet,
+  Bazaar,
+  Ceremonies,
+  Scan,
+  Contacts,
+  Profile,
 }

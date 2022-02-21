@@ -1,15 +1,17 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/proofOfAttendance.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class RegisterParticipantPanel extends StatefulWidget {
   RegisterParticipantPanel(this.store);
@@ -67,7 +69,7 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
   @override
   Widget build(BuildContext context) {
     // only build dropdown after we have fetched the community identifiers
-    Map dic = I18n.of(context).encointer;
+    final Translations dic = I18n.of(context).translationsForLocale();
 
     return Observer(
       builder: (_) => Column(
@@ -76,16 +78,36 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
               ? Container()
               : Column(
                   children: <Widget>[
-                    Text(dic["ceremony.next"]),
+                    Text(dic.encointer.ceremonyNext),
                     Text(DateFormat('yyyy-MM-dd')
                         .format(new DateTime.fromMillisecondsSinceEpoch(store.encointer.meetupTime)))
                   ],
                 ),
           CheckboxListTile(
-            title: Text(dic["meetup.attended"]),
-            onChanged: (bool value) {
-              if (value && proof == null) {
-                proof = webApi.encointer.getProofOfAttendance();
+            title: Text(dic.encointer.meetupAttended),
+            onChanged: (bool value) async {
+              if (value) {
+                if (store.settings.cachedPin.isNotEmpty) {
+                  proof = webApi.encointer.getProofOfAttendance();
+                } else {
+                  showCupertinoDialog(
+                    context: context,
+                    builder: (context) {
+                      return showPasswordInputDialog(
+                          context,
+                          store.account.currentAccount,
+                          Text(I18n.of(context).translationsForLocale().home.unlockAccount.replaceAll(
+                              'CURRENT_ACCOUNT_NAME', store.account.currentAccount.name.toString())), (password) {
+                        store.settings.setPin(password);
+
+                        // If we don't wait, the pin has not propagated to the state and we will get a password check error
+                        Future.delayed(const Duration(milliseconds: 1000), () {
+                          proof = webApi.encointer.getProofOfAttendance();
+                        });
+                      });
+                    },
+                  );
+                }
               }
               setState(() {
                 attendedLastMeetup = value;
@@ -96,8 +118,9 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
           store.encointer.participantIndex == null
               ? CupertinoActivityIndicator()
               : store.encointer.participantIndex == 0
-                  ? RoundedButton(text: dic["register.participant"], onPressed: () => _submit())
-                  : RoundedButton(text: dic["registered"], onPressed: null, color: Theme.of(context).disabledColor),
+                  ? RoundedButton(text: dic.encointer.registerParticipant, onPressed: () => _submit())
+                  : RoundedButton(
+                      text: dic.encointer.registered, onPressed: null, color: Theme.of(context).disabledColor),
         ],
       ),
     );

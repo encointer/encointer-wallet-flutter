@@ -1,93 +1,215 @@
+import 'package:encointer_wallet/common/components/BorderedTitle.dart';
 import 'package:encointer_wallet/common/components/addressIcon.dart';
-import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
-import 'package:encointer_wallet/page/profile/account/changeNamePage.dart';
-import 'package:encointer_wallet/page/profile/account/changePasswordPage.dart';
-import 'package:encointer_wallet/page/profile/account/exportAccountPage.dart';
+import 'package:encointer_wallet/common/components/roundedButton.dart';
+import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:encointer_wallet/page/profile/contacts/accountSharePage.dart';
 
-class AccountManagePage extends StatelessWidget {
+class AccountManagePage extends StatefulWidget {
   AccountManagePage(this.store);
 
   static final String route = '/profile/account';
-  final Api api = webApi;
   final AppStore store;
+
+  @override
+  _AccountManagePageState createState() => _AccountManagePageState(store);
+}
+
+class _AccountManagePageState extends State<AccountManagePage> {
+  _AccountManagePageState(this.store);
+  final AppStore store;
+  final Api api = webApi;
+  TextEditingController _nameCtrl;
+  bool _isEditingText = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _nameCtrl.dispose();
+    super.dispose();
+  }
 
   void _onDeleteAccount(BuildContext context) {
     showCupertinoDialog(
       context: context,
       builder: (BuildContext context) {
-        return showPasswordInputDialog(
-            context, store.account.currentAccount, Text(I18n.of(context).profile['delete.confirm']), (_) {
-          store.account.removeAccount(store.account.currentAccount).then((_) {
-            // refresh balance
-            store.assets.loadAccountCache();
-            webApi.assets.fetchBalance();
-          });
-          Navigator.of(context).pop();
-        });
+        return CupertinoAlertDialog(
+          title: Text(I18n.of(context).translationsForLocale().profile.accountDelete),
+          actions: <Widget>[
+            CupertinoButton(
+              child: Text(I18n.of(context).translationsForLocale().home.cancel),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            CupertinoButton(
+              child: Text(I18n.of(context).translationsForLocale().home.ok),
+              onPressed: () => {
+                store.account.removeAccount(store.account.currentAccount).then(
+                  (_) async {
+                    // refresh balance
+                    await store.loadAccountCache();
+                    webApi.fetchAccountData();
+                    Navigator.of(context).pop();
+                  },
+                ),
+              },
+            ),
+          ],
+        );
       },
     );
   }
 
+  List<Widget> _getBalances() {
+    CommunityMetadata cm = store.encointer.communityMetadata;
+    String name = cm != null ? cm.name : '';
+    String symbol = cm != null ? cm.symbol : '';
+    final String tokenView = Fmt.tokenView(symbol);
+    return store.encointer.balanceEntries.entries.map((i) {
+      if (cm != null) {
+        return RoundedCard(
+          margin: EdgeInsets.only(top: 16),
+          child: ListTile(
+            leading: Container(
+              width: 36,
+              // child: Image.asset('assets/images/assets/${symbol.isNotEmpty ? symbol : 'ERT'}.png'),
+              // Todo: #365
+              child: Image.asset('assets/images/assets/ERT.png'),
+            ),
+            title: Text(name),
+            subtitle: Text(tokenView),
+            trailing: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  Fmt.doubleFormat(store.encointer.communityBalance),
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20, color: Colors.black54),
+                ),
+                Container(width: 16),
+              ],
+            ),
+          ),
+        );
+      } else
+        return Container();
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final Map<String, String> dic = I18n.of(context).profile;
+    _nameCtrl = TextEditingController(text: store.account.currentAccount.name);
+    _nameCtrl.selection = TextSelection.fromPosition(TextPosition(offset: _nameCtrl.text.length));
 
+    final Translations dic = I18n.of(context).translationsForLocale();
     Color primaryColor = Theme.of(context).primaryColor;
     return Observer(
       builder: (_) => Scaffold(
         appBar: AppBar(
-          title: Text(dic['account']),
-          centerTitle: true,
-          elevation: 0.0,
+          title: TextFormField(
+            controller: _nameCtrl,
+            onTap: () {
+              setState(() {
+                _isEditingText = true;
+              });
+            },
+            validator: (v) {
+              String name = v.trim();
+              if (name.length == 0) {
+                return dic.profile.contactNameError;
+              }
+              int exist = store.account.optionalAccounts.indexWhere((i) => i.name == name);
+              if (exist > -1) {
+                return dic.profile.contactNameExist;
+              }
+              return null;
+            },
+          ),
         ),
         body: SafeArea(
           child: Column(
             children: <Widget>[
-              Expanded(
-                child: ListView(
-                  children: <Widget>[
-                    Container(
-                      color: primaryColor,
-                      padding: EdgeInsets.only(bottom: 16),
-                      child: ListTile(
-                        leading: AddressIcon(
-                          '',
-                          pubKey: store.account.currentAccount.pubKey,
-                        ),
-                        title: Text(store.account.currentAccount.name ?? 'name',
-                            style: TextStyle(fontSize: 16, color: Colors.white)),
-                        subtitle: Text(
-                          Fmt.address(store.account.currentAddress) ?? '',
-                          style: TextStyle(fontSize: 16, color: Colors.white70),
-                        ),
-                      ),
-                    ),
-                    Container(padding: EdgeInsets.only(top: 16)),
-                    ListTile(
-                      title: Text(dic['name.change']),
-                      trailing: Icon(Icons.arrow_forward_ios, size: 18),
-                      onTap: () => Navigator.pushNamed(context, ChangeNamePage.route),
-                    ),
-                    ListTile(
-                      title: Text(dic['pass.change']),
-                      trailing: Icon(Icons.arrow_forward_ios, size: 18),
-                      onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
-                    ),
-                    ListTile(
-                      title: Text(dic['export']),
-                      trailing: Icon(Icons.arrow_forward_ios, size: 18),
-                      onTap: () => Navigator.of(context).pushNamed(ExportAccountPage.route),
-                    ),
-                  ],
-                ),
+              Container(
+                margin: EdgeInsets.all(16),
+                child: _isEditingText
+                    ? RoundedButton(
+                        text: dic.profile.contactNameSave,
+                        onPressed: () {
+                          store.account.updateAccountName(_nameCtrl.text.trim());
+                          setState(() {
+                            _isEditingText = false;
+                          });
+                        })
+                    : Container(),
               ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  AddressIcon(
+                    '',
+                    size: 100,
+                    pubKey: store.account.currentAccount.pubKey,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(Fmt.address(store.account.currentAddress), style: TextStyle(fontSize: 20)),
+                      ElevatedButton(
+                        child: Icon(Icons.copy),
+                        onPressed: () {
+                          final data = ClipboardData(text: store.account.currentAddress);
+                          Clipboard.setData(data);
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text('✓   Copied to Clipboard')),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  Text(Fmt.address(store.account.currentAddress) ?? '',
+                      style: TextStyle(fontSize: 16, color: Colors.white)),
+                  Container(padding: EdgeInsets.only(top: 16)),
+                  Padding(
+                    padding: EdgeInsets.only(top: 4),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        BorderedTitle(
+                          title: 'Communities',
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+              Expanded(
+                child: ListView(padding: EdgeInsets.all(16), children: _getBalances()),
+              ),
+              ElevatedButton(
+                  style: TextButton.styleFrom(
+                    padding: EdgeInsets.fromLTRB(24, 8, 24, 8),
+                    backgroundColor: primaryColor,
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+                  ),
+                  child: Text(
+                    dic.profile.accountShare,
+                    style: Theme.of(context).textTheme.button,
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, AccountSharePage.route);
+                  }),
               Row(
                 children: <Widget>[
                   Expanded(
@@ -97,7 +219,7 @@ class AccountManagePage extends StatelessWidget {
                         backgroundColor: Colors.white,
                         textStyle: TextStyle(color: Colors.red),
                       ),
-                      child: Text(dic['delete']),
+                      child: Text(dic.profile.delete),
                       onPressed: () => _onDeleteAccount(context),
                     ),
                   ),

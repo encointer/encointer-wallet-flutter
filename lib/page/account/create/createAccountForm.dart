@@ -1,86 +1,96 @@
-import 'package:encointer_wallet/common/components/roundedButton.dart';
-import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/i18n/index.dart';
+import 'package:encointer_wallet/common/components/gradientElements.dart';
+import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/page/account/create/createPinPage.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class CreateAccountForm extends StatelessWidget {
-  CreateAccountForm({this.setNewAccount, this.submitting, this.onSubmit});
-
-  final Function setNewAccount;
-  final Function onSubmit;
-  final bool submitting;
+  CreateAccountForm({this.store});
+//todo get rid of the setNewAccount method where password is stored
+  final AppStore store;
 
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _nameCtrl = new TextEditingController();
-  final TextEditingController _passCtrl = new TextEditingController();
-  final TextEditingController _pass2Ctrl = new TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final Map<String, String> dic = I18n.of(context).account;
+    final Translations dic = I18n.of(context).translationsForLocale();
 
     return Form(
       key: _formKey,
       child: Column(
         children: <Widget>[
+          SizedBox(height: 80),
           Expanded(
             child: ListView(
               padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
               children: <Widget>[
-                TextFormField(
-                  key: Key('create-account-name'),
-                  decoration: InputDecoration(
-                    icon: Icon(Icons.person),
-                    hintText: dic['create.hint'],
-                    labelText: "${dic['create.name']}: ${dic['create.hint']}",
-                  ),
-                  controller: _nameCtrl,
+                Center(
+                  child: Text(I18n.of(context).translationsForLocale().profile.accountNameChoose,
+                      style: Theme.of(context).textTheme.headline2),
                 ),
-                TextFormField(
-                  key: Key('create-account-pin'),
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    icon: Icon(Icons.lock),
-                    hintText: dic['create.password'],
-                    labelText: dic['create.password'],
+                SizedBox(height: 10),
+                Center(
+                  child: Container(
+                    width: 300,
+                    child: Text(
+                      I18n.of(context).translationsForLocale().profile.accountNameChooseHint,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headline2.copyWith(
+                            color: encointerBlack,
+                          ),
+                    ),
                   ),
-                  controller: _passCtrl,
-                  validator: (v) {
-                    return Fmt.checkPassword(v.trim()) ? null : dic['create.password.error'];
-                  },
-                  obscureText: true,
-                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                 ),
-                TextFormField(
-                  key: Key('create-account-pin2'),
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    icon: Icon(Icons.lock),
-                    hintText: dic['create.password2'],
-                    labelText: dic['create.password2'],
-                  ),
-                  controller: _pass2Ctrl,
-                  obscureText: true,
-                  validator: (v) {
-                    return _passCtrl.text != v ? dic['create.password2.error'] : null;
-                  },
-                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                SizedBox(height: 50),
+                Column(
+                  children: <Widget>[
+                    TextFormField(
+                      key: Key('create-account-name'),
+                      decoration: InputDecoration(
+                        enabledBorder: const OutlineInputBorder(
+                          // width: 0.0 produces a thin "hairline" border
+                          borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+                          borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
+                        ),
+                        filled: true,
+                        fillColor: encointerLightBlue,
+                        hintText: dic.account.createHint,
+                        labelText: I18n.of(context).translationsForLocale().profile.accountName,
+                      ),
+                      controller: _nameCtrl,
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
           Container(
-            key: Key('create-account-confirm'),
+            key: Key('create-account-next'),
             padding: EdgeInsets.all(16),
-            child: RoundedButton(
-              text: I18n.of(context).account['create'],
+            child: PrimaryButton(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Iconsax.login_1),
+                  SizedBox(width: 12),
+                  Text(
+                    dic.account.next,
+                    style: Theme.of(context).textTheme.headline3.copyWith(
+                          color: encointerLightBlue,
+                        ),
+                  ),
+                ],
+              ),
               onPressed: () {
                 if (_formKey.currentState.validate()) {
-                  setNewAccount(_nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic['create.default'], _passCtrl.text);
-                  onSubmit();
+                  var args = {"name": '${_nameCtrl.text}'};
+                  Navigator.pushNamed(context, CreatePinPage.route, arguments: args);
                 }
               },
             ),

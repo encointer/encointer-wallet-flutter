@@ -1,16 +1,18 @@
 import 'package:encointer_wallet/common/components/willPopScopeWrapper.dart';
 import 'package:encointer_wallet/config.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaarMain.dart';
 import 'package:encointer_wallet/page-encointer/homePage.dart';
 import 'package:encointer_wallet/page-encointer/phases/assigning/assigningPage.dart';
 import 'package:encointer_wallet/page-encointer/phases/attesting/attestingPage.dart';
 import 'package:encointer_wallet/page-encointer/phases/registering/registerParticipantPanel.dart';
 import 'package:encointer_wallet/page-encointer/phases/registering/registeringPage.dart';
+import 'package:encointer_wallet/page/account/create/addAccountPage.dart';
 import 'package:encointer_wallet/page/account/create/createAccountPage.dart';
+import 'package:encointer_wallet/page/account/create/createPinPage.dart';
 import 'package:encointer_wallet/page/account/createAccountEntryPage.dart';
 import 'package:encointer_wallet/page/account/import/importAccountPage.dart';
 import 'package:encointer_wallet/page/account/scanPage.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
-import 'package:encointer_wallet/page/assets/asset/assetPage.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
 import 'package:encointer_wallet/page/assets/transfer/currencySelectPage.dart';
 import 'package:encointer_wallet/page/assets/transfer/detailPage.dart';
@@ -18,10 +20,11 @@ import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
 import 'package:encointer_wallet/page/networkSelectPage.dart';
 import 'package:encointer_wallet/page/profile/aboutPage.dart';
 import 'package:encointer_wallet/page/profile/account/accountManagePage.dart';
-import 'package:encointer_wallet/page/profile/account/changeNamePage.dart';
 import 'package:encointer_wallet/page/profile/account/changePasswordPage.dart';
 import 'package:encointer_wallet/page/profile/account/exportAccountPage.dart';
 import 'package:encointer_wallet/page/profile/account/exportResultPage.dart';
+import 'package:encointer_wallet/page/profile/contacts/contactDetailPage.dart';
+import 'package:encointer_wallet/page/profile/contacts/accountSharePage.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactListPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactsPage.dart';
@@ -40,7 +43,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'common/theme.dart';
 import 'mocks/api/api.dart';
 import 'mocks/storage/localStorage.dart';
-import 'utils/i18n/index.dart';
+import 'utils/translations/index.dart';
 
 class WalletApp extends StatefulWidget {
   const WalletApp(this.config);
@@ -73,6 +76,9 @@ class _WalletAppState extends State<WalletApp> {
     switch (code) {
       case 'en':
         res = const Locale('en', '');
+        break;
+      case 'de':
+        res = const Locale('de', '');
         break;
       default:
         res = Localizations.localeOf(context);
@@ -129,6 +135,7 @@ class _WalletAppState extends State<WalletApp> {
       ],
       supportedLocales: [
         const Locale('en', ''),
+        const Locale('de', ''),
       ],
       initialRoute: widget.config.initialRoute,
       theme: _theme,
@@ -154,11 +161,13 @@ class _WalletAppState extends State<WalletApp> {
         // account
         CreateAccountEntryPage.route: (_) => CreateAccountEntryPage(),
         CreateAccountPage.route: (_) => CreateAccountPage(_appStore),
+        AddAccountPage.route: (_) => AddAccountPage(_appStore),
+        AccountSharePage.route: (_) => AccountSharePage(_appStore),
+        CreatePinPage.route: (_) => CreatePinPage(_appStore),
         ImportAccountPage.route: (_) => ImportAccountPage(_appStore),
-        ScanPage.route: (_) => ScanPage(),
+        ScanPage.route: (_) => ScanPage(_appStore),
         TxConfirmPage.route: (_) => TxConfirmPage(_appStore),
         // assets
-        AssetPage.route: (_) => AssetPage(_appStore),
         TransferPage.route: (_) => TransferPage(_appStore),
         ReceivePage.route: (_) => ReceivePage(_appStore),
         TransferDetailPage.route: (_) => TransferDetailPage(_appStore),
@@ -168,8 +177,8 @@ class _WalletAppState extends State<WalletApp> {
         ContactsPage.route: (_) => ContactsPage(_appStore),
         ContactListPage.route: (_) => ContactListPage(_appStore),
         ContactPage.route: (_) => ContactPage(_appStore),
-        ChangeNamePage.route: (_) => ChangeNamePage(_appStore.account),
-        ChangePasswordPage.route: (_) => ChangePasswordPage(_appStore.account),
+        ChangePasswordPage.route: (_) => ChangePasswordPage(_appStore.account, _appStore.settings),
+        ContactDetailPage.route: (_) => ContactDetailPage(_appStore),
         SettingsPage.route: (_) => SettingsPage(_appStore.settings, _changeLang),
         ExportAccountPage.route: (_) => ExportAccountPage(_appStore.account),
         ExportResultPage.route: (_) => ExportResultPage(),
@@ -182,6 +191,7 @@ class _WalletAppState extends State<WalletApp> {
         AssigningPage.route: (_) => AssigningPage(_appStore),
         AttestingPage.route: (_) => AttestingPage(_appStore),
         // bazaar
+        BazaarMain.route: (_) => BazaarMain(_appStore),
         // TODO add routes for bazaar
       },
     );
