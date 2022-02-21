@@ -254,22 +254,18 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     children: [
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.symmetric(vertical: 16), // make splash animation as high as the container
+                          padding: EdgeInsets.all(16), // make splash animation as high as the container
                           primary: Colors.transparent,
                           onPrimary: Colors.white,
                           shadowColor: Colors.transparent,
                         ),
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(26, 8, 0, 8),
-                          child: Row(
+                        child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Icon(Iconsax.share),
                               SizedBox(width: 12),
                               Text(dic.profile.accountShare, style: h3.copyWith(color: Colors.white)),
-                              SizedBox(width: 2),
                             ],
-                          ),
                         ),
                         onPressed: () => Navigator.pushNamed(context, AccountSharePage.route),
                       ),
