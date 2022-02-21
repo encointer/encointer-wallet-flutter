@@ -119,21 +119,23 @@ class _AccountManagePageState extends State<AccountManagePage> {
           setState(() {
             store.settings.setPin(password);
           });
+
           bool isMnemonic =
               await store.account.checkSeedExist(AccountStore.seedTypeMnemonic, store.account.currentAccount.pubKey);
+
           if (isMnemonic) {
             String seed = await store.account
                 .decryptSeed(store.account.currentAccount.pubKey, AccountStore.seedTypeMnemonic, password);
+
             Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
               'key': seed,
               'type': AccountStore.seedTypeMnemonic,
             });
           } else {
-            // I assume, that because no mnemonic found account was imported via raw seed. if in future we can import differently, it would still say because of raw seed import no mnemonic..
+            // Assume that the account was imported via `RawSeed` if mnemonic does not exist.
             showCupertinoDialog(
               context: context,
               builder: (BuildContext context) {
-                final Translations dic = I18n.of(context).translationsForLocale();
                 return CupertinoAlertDialog(
                   title: Text(dic.profile.noMnemonic),
                   content: Text(dic.profile.noMnemonicTxt),
