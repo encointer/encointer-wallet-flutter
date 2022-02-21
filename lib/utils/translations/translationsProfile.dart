@@ -24,6 +24,7 @@ abstract class TranslationsProfile {
   String get contactNameExist;
   String get contactNameSave;
   String get contactSave;
+  String get copiedToClipBoard;
   String get delete;
   String get deleteConfirm;
   String get developer;
@@ -106,6 +107,7 @@ class TranslationsEnProfile implements TranslationsProfile {
   get contactNameExist => 'Name exists already';
   get contactNameSave => 'Save name';
   get contactSave => 'Save';
+  get copiedToClipBoard => 'Copied to Clipboard';
   get delete => 'Delete Account';
   get deleteConfirm => 'Input your PIN to confirm';
   get developer => 'Developer mode';
@@ -191,6 +193,7 @@ class TranslationsDeProfile implements TranslationsProfile {
   get contactNameExist => 'Name existiert bereits';
   get contactNameSave => 'Speichere Name';
   get contactSave => 'Speichere';
+  get copiedToClipBoard => 'In die Zwischenablage kopiert';
   get delete => 'Konto löschen';
   get deleteConfirm => 'Gebe die PIN ein um zu bestätigen';
   get developer => 'Entwickler-Modus';
@@ -332,4 +335,5 @@ class TranslationsZhProfile implements TranslationsProfile {
   get enableBazaar => throw UnimplementedError();
   get noMnemonic => throw UnimplementedError();
   get noMnemonicTxt => throw UnimplementedError();
+  get copiedToClipBoard => throw UnimplementedError();
 }

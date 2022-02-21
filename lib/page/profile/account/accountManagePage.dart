@@ -232,7 +232,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                               final data = ClipboardData(text: store.account.currentAddress);
                               Clipboard.setData(data);
                               ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('✓   Copied to Clipboard')),
+                                SnackBar(content: Text('✓   ${dic.profile.copiedToClipBoard}')),
                               );
                             },
                           ),
