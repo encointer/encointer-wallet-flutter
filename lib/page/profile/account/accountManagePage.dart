@@ -324,7 +324,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
                                 child: ListTile(
                                   minLeadingWidth: 0,
                                   title: Text('Export'),
-                                  leading: Icon(Iconsax.export_3, color: Color(0xFF3969AC)), // ZurichLion.shade500 or 600
+                                  leading:
+                                      Icon(Iconsax.export_3, color: Color(0xFF3969AC)), // ZurichLion.shade500 or 600
                                 ),
                               ),
                             ),
