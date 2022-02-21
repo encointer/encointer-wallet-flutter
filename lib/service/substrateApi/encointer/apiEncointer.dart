@@ -389,9 +389,8 @@ class ApiEncointer {
     List<dynamic> bootstrappers =
         await apiRoot.evalJavascript('encointer.getBootstrappers(${store.encointer.chosenCid})');
     print("bootstrappers in apiEncointer: " + bootstrappers.toString());
-    // final bs = [...json[bootstrappers]];
     List<String> bs = bootstrappers.map((bootstrapper) => bootstrapper as String)?.toList();
-    store.encointer.setBootstrappers(bootstrappers);
+    store.encointer.setBootstrappers(bs);
     return bootstrappers;
   }
 

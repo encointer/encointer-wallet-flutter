@@ -137,8 +137,5 @@ class TranslationsZhEncointer implements TranslationsEncointer {
   get registered => '已经注册';
   get scan => '扫描';
   get txsAction => '动作';
-
-  @override
-  // TODO: implement communities
-  String get communities => throw UnimplementedError();
+  get communities => throw UnimplementedError();
 }
