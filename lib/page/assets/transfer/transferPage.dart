@@ -21,11 +21,11 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 
 class TransferPageParams {
-  TransferPageParams({this.cid, this.communitySymbol, this.address, this.amount, this.redirect});
+  TransferPageParams({this.cid, this.communitySymbol, this.recipient, this.amount, this.redirect});
 
   final CommunityIdentifier cid;
   final String communitySymbol;
-  final String address;
+  final String recipient;
   final double amount;
   final String redirect;
 }
@@ -221,9 +221,9 @@ class _TransferPageState extends State<TransferPage> {
         _amountCtrl.text = '${args.amount}';
       }
 
-      if (args.address != null) {
+      if (args.recipient != null) {
         final AccountData acc = AccountData();
-        acc.address = args.address;
+        acc.address = args.recipient;
         setState(() {
           _accountTo = acc;
         });

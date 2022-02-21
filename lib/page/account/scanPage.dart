@@ -40,7 +40,7 @@ class ScanPage extends StatelessWidget {
           Navigator.of(context).popAndPushNamed(
             TransferPage.route,
             arguments: TransferPageParams(
-                cid: qrScanData.cid, address: qrScanData.account, amount: qrScanData.amount, redirect: '/'),
+                cid: qrScanData.cid, recipient: qrScanData.account, amount: qrScanData.amount, redirect: '/'),
           );
           break;
         default:
