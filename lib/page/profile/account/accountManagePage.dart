@@ -57,10 +57,10 @@ class _AccountManagePageState extends State<AccountManagePage> {
               child: Text(I18n.of(context).translationsForLocale().home.ok),
               onPressed: () => {
                 store.account.removeAccount(store.account.currentAccount).then(
-                  (_) {
+                  (_) async {
                     // refresh balance
-                    store.assets.loadAccountCache();
-                    webApi.assets.fetchBalance();
+                    await store.loadAccountCache();
+                    webApi.fetchAccountData();
                     Navigator.of(context).pop();
                   },
                 ),
@@ -84,7 +84,9 @@ class _AccountManagePageState extends State<AccountManagePage> {
           child: ListTile(
             leading: Container(
               width: 36,
-              child: Image.asset('assets/images/assets/${symbol.isNotEmpty ? symbol : 'DOT'}.png'),
+              // child: Image.asset('assets/images/assets/${symbol.isNotEmpty ? symbol : 'ERT'}.png'),
+              // Todo: #365
+              child: Image.asset('assets/images/assets/ERT.png'),
             ),
             title: Text(name),
             subtitle: Text(tokenView),

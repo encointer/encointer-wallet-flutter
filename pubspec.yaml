@@ -12,7 +12,7 @@ description: EncointerWallet made with Flutter.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.0.3+811F
+version: 1.1.0+812
 
 publish_to: none
 
@@ -184,7 +184,6 @@ flutter:
     - assets/images/assets/qrcode_pink.png
     - assets/images/assets/plus_pink.png
     - assets/images/assets/Menu_scan.png
-    - assets/images/assets/Menu_wallet.png
     - assets/images/assets/assets_send.png
     - assets/images/assets/assets_receive.png
     - assets/images/assets/assets_up.png

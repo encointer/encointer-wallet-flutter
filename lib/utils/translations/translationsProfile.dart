@@ -2,7 +2,7 @@
 /// always add a new getter here in the abstract class first, then generate/implement the getters in the subclasses
 abstract class TranslationsProfile {
   String get about;
-  String get aboutBrif;
+  String get aboutBrief;
   String get aboutVersion;
   String get account;
   String get accountDelete;
@@ -26,6 +26,7 @@ abstract class TranslationsProfile {
   String get detailsEnter;
   String get deleteConfirm;
   String get developer;
+  String get enableBazaar;
   String get export;
   String get exportKeystoreOk;
   String get exportMnemonicOk;
@@ -83,7 +84,7 @@ abstract class TranslationsProfile {
 
 class TranslationsEnProfile implements TranslationsProfile {
   get about => 'About';
-  get aboutBrif => 'Mobile Wallet for Encointer';
+  get aboutBrief => 'Mobile Wallet for Encointer';
   get aboutVersion => 'Version';
   get account => 'Manage Account';
   get accounts => 'Accounts';
@@ -106,6 +107,7 @@ class TranslationsEnProfile implements TranslationsProfile {
   get delete => 'Delete Account';
   get deleteConfirm => 'Input your PIN to confirm';
   get developer => 'Developer mode';
+  get enableBazaar => 'Enable Bazaar';
   get export => 'Export Account';
   get exportKeystoreOk => 'Keystore was copied to clipboard.';
   get exportMnemonicOk => 'Mnemonic was copied to clipboard.';
@@ -166,7 +168,7 @@ class TranslationsEnProfile implements TranslationsProfile {
 
 class TranslationsDeProfile implements TranslationsProfile {
   get about => 'Über';
-  get aboutBrif => 'Mobiles Wallet für Encointer';
+  get aboutBrief => 'Mobiles Wallet für Encointer';
   get aboutVersion => 'Version';
   get account => 'Konto';
   get accounts => 'Konten';
@@ -189,6 +191,7 @@ class TranslationsDeProfile implements TranslationsProfile {
   get delete => 'Konto löschen';
   get deleteConfirm => 'Gebe die PIN ein um zu bestätigen';
   get developer => 'Entwickler-Modus';
+  get enableBazaar => 'Bazaar aktivieren';
   get export => 'Konto exportieren';
   get exportKeystoreOk => 'Keystore wurde in die Zwischenablage kopiert.';
   get exportMnemonicOk => 'Mnemonic wurde in die Zwischenablage kopiert.';
@@ -249,7 +252,7 @@ class TranslationsDeProfile implements TranslationsProfile {
 
 class TranslationsZhProfile implements TranslationsProfile {
   get about => '关于';
-  get aboutBrif => 'Encointer 手机钱包';
+  get aboutBrief => 'Encointer 手机钱包';
   get aboutVersion => '版本';
   get account => '账户管理';
   get accounts => '帐户';
@@ -325,4 +328,5 @@ class TranslationsZhProfile implements TranslationsProfile {
   get personalKeyEnter => throw UnimplementedError();
   get detailsEnter => throw UnimplementedError();
   get personalKey => throw UnimplementedError();
+  get enableBazaar => throw UnimplementedError();
 }
