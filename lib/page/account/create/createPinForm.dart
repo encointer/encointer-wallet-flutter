@@ -4,10 +4,10 @@ import 'package:encointer_wallet/page-encointer/common/communityChooserOnMap.dar
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class CreatePinForm extends StatefulWidget {
   CreatePinForm({this.setNewAccount, this.submitting, this.onSubmit, this.name, this.store});
@@ -18,10 +18,14 @@ class CreatePinForm extends StatefulWidget {
   final String name;
 
   @override
-  _CreatePinFormState createState() => _CreatePinFormState();
+  _CreatePinFormState createState() => _CreatePinFormState(store);
 }
 
 class _CreatePinFormState extends State<CreatePinForm> {
+  _CreatePinFormState(this.store);
+  
+  final AppStore store;
+  
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _passCtrl = new TextEditingController();
@@ -142,14 +146,14 @@ class _CreatePinFormState extends State<CreatePinForm> {
               ),
               onPressed: () {
                 if (_formKey.currentState.validate()) {
-                  if (widget.store.account.accountListAll.isEmpty) {
+                  if (store.account.accountListAll.isEmpty) {
                     widget.setNewAccount(
                         this.widget.name.isNotEmpty ? this.widget.name : dic.account.createDefault, _passCtrl.text);
-                    widget.store.settings.setPin(_passCtrl.text);
+                    store.settings.setPin(_passCtrl.text);
                   } else {
                     // cachedPin won't be empty, because cachedPin is verified not to be empty before user adds an account in profile/index.dart
                     widget.setNewAccount(this.widget.name.isNotEmpty ? this.widget.name : dic.account.createDefault,
-                        widget.store.settings.cachedPin);
+                        store.settings.cachedPin);
                   }
 
                   widget.onSubmit();
@@ -159,7 +163,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
 
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => CommunityChooserOnMap(widget.store)),
+                    MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)),
                   );
                 }
               },
