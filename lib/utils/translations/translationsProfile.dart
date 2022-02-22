@@ -79,12 +79,12 @@ abstract class TranslationsProfile {
   String get pinHint;
   String get pinInfo;
   String get pinSecure;
+  String get personalKey;
   String get recoveryProxy;
   String get ceremonies;
   String get tokenSend;
   String get reputation;
 
-  String get personalKey;
 }
 
 class TranslationsEnProfile implements TranslationsProfile {
