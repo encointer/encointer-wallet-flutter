@@ -205,11 +205,11 @@ class _ProfileState extends State<Profile> {
                   ),
                   ListTile(
                     // Todo: Remove all accounts is buggy: #318
-                    title: Text("Remove all Accounts"),
+                    title: Text(dic.profile.accountsDeleteAll, style: h3Grey),
                     onTap: () => showCupertinoDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return CupertinoAlertDialog(title: Text("Are you sure you want to remove all accounts?"),
+                          return CupertinoAlertDialog(title: Text(dic.profile.accountsDelete),
                               // content: Text(dic.profile.passErrorTxt),
                               actions: <Widget>[
                                 CupertinoButton(
