@@ -4,7 +4,6 @@ import 'package:base58check/base58.dart';
 import 'package:base58check/base58check.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 // Run: `flutter pub run build_runner build` in order to create/update the *.g.dart
@@ -21,7 +20,7 @@ class CommunityMetadata {
   String symbol;
   String icons;
   String url;
-  CustomTheme theme;
+  String theme;
 
   @override
   String toString() {
@@ -31,25 +30,6 @@ class CommunityMetadata {
   factory CommunityMetadata.fromJson(Map<String, dynamic> json) => _$CommunityMetadataFromJson(json);
 
   Map<String, dynamic> toJson() => _$CommunityMetadataToJson(this);
-}
-
-class CustomTheme {
-  CustomTheme(this.primarySwatch);
-
-  Color primarySwatch;
-
-  @override
-  String toString() {
-    return jsonEncode(this);
-  }
-
-  factory CustomTheme.fromJson(Map<String, dynamic> json) {
-    return CustomTheme(Color(json['primary_swatch']));
-  }
-
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'primary_swatch': primarySwatch.value,
-      };
 }
 
 /// CommunityIdentifier consisting of a geohash and a 4-bytes crc code.
