@@ -145,6 +145,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
                   if (widget.store.account.accountListAll.isEmpty) {
                     widget.setNewAccount(
                         this.widget.name.isNotEmpty ? this.widget.name : dic.account.createDefault, _passCtrl.text);
+                        widget.store.settings.setPin(_passCtrl.text);
                   } else {
                     // cachedPin won't be empty, because cachedPin is verified not to be empty before user adds an account in profile/index.dart
                     widget.setNewAccount(this.widget.name.isNotEmpty ? this.widget.name : dic.account.createDefault,
