@@ -84,7 +84,6 @@ abstract class TranslationsProfile {
   String get ceremonies;
   String get tokenSend;
   String get reputation;
-
 }
 
 class TranslationsEnProfile implements TranslationsProfile {

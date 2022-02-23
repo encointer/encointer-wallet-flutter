@@ -23,9 +23,9 @@ class CreatePinForm extends StatefulWidget {
 
 class _CreatePinFormState extends State<CreatePinForm> {
   _CreatePinFormState(this.store);
-  
+
   final AppStore store;
-  
+
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _passCtrl = new TextEditingController();
