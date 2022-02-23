@@ -5,6 +5,8 @@ import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:encointer_wallet/utils/translations/translationsAccount.dart';
+import 'package:encointer_wallet/utils/validateKeys.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -35,29 +37,6 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
 
   AccountAdvanceOptionParams _advanceOptions = AccountAdvanceOptionParams();
 
-  String _validateMnemonic(String v, Map<KeySelection, String> translationsByKeySelection) {
-    bool passed = false;
-    final Translations dic = I18n.of(context).translationsForLocale();
-    String input = v.trim();
-    int len = input.split(' ').length;
-    if (len == 12 || len == 24) {
-      passed = true;
-    }
-    return passed ? null : '${dic.account.importInvalid} ${translationsByKeySelection[_keySelection]}'; // TODO armin
-  }
-
-  String _validateRawSeed(String v, Map<KeySelection, String> translationsByKeySelection) {
-    bool passed = true;
-    final Translations dic = I18n.of(context).translationsForLocale();
-    String input = v.trim();
-    if (_keySelection == KeySelection.RAW_SEED) {
-      if (input[0] != '/' && (input.length >= 32 || input.length != 66)) {
-        passed = false;
-      }
-    }
-    return passed ? null : '${dic.account.importInvalid} ${translationsByKeySelection[_keySelection]}';
-  }
-
   @override
   void dispose() {
     _nameCtrl.dispose();
@@ -72,10 +51,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
       KeySelection.MNEMONIC: dic.account.mnemonic,
       KeySelection.RAW_SEED: dic.account.rawSeed,
     };
-    final Map<String, String> translationsByKeyOption = {
-      _keyOptions[0]: dic.account.mnemonic,
-      _keyOptions[1]: dic.account.rawSeed,
-    };
+
     String selected = translationsByKeySelection[_keySelection];
     return Column(
       children: <Widget>[
@@ -119,51 +95,20 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                     labelText: I18n.of(context).translationsForLocale().profile.accountName,
                   ),
                   controller: _nameCtrl,
-                  validator: (String value) => _validateRawSeed(value, translationsByKeySelection),
                 ),
-                ListTile(
-                  title: Text(I18n.of(context).translationsForLocale().home.accountImport),
-                  subtitle: Text(selected),
-                  trailing: Icon(Icons.arrow_forward_ios, size: 18),
-                  onTap: () {
-                    showCupertinoModalPopup(
-                      context: context,
-                      builder: (_) => Container(
-                        height: MediaQuery.of(context).copyWith().size.height / 3,
-                        child: CupertinoPicker(
-                          backgroundColor: Colors.white,
-                          itemExtent: 56,
-                          scrollController: FixedExtentScrollController(initialItem: _keySelection.index),
-                          children: _keyOptions
-                              .map((i) => Padding(
-                                  padding: EdgeInsets.all(12), child: Text(translationsByKeyOption[i]))) // TODO armin
-                              .toList(),
-                          onSelectedItemChanged: (v) {
-                            setState(() {
-                              _keyCtrl.value = TextEditingValue(text: '');
-                              _keySelection = KeySelection.values[v];
-                            });
-                          },
-                        ),
-                      ),
-                    );
-                  },
-                ),
-                _keySelection != KeySelection.RAW_SEED
-                    ? Padding(
-                        key: Key('account-source'),
-                        padding: EdgeInsets.only(left: 16, right: 16),
-                        child: TextFormField(
-                          decoration: InputDecoration(
-                            hintText: selected,
-                            labelText: dic.profile.personalKey,
-                          ),
-                          controller: _keyCtrl,
-                          maxLines: 2,
-                          validator: (String value) => _validateMnemonic(value, translationsByKeySelection),
-                        ),
-                      )
-                    : Container(),
+                Padding(
+                  key: Key('account-source'),
+                  padding: EdgeInsets.only(left: 16, right: 16),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      hintText: selected,
+                      labelText: dic.profile.personalKey,
+                    ),
+                    controller: _keyCtrl,
+                    maxLines: 2,
+                    validator: (String value) => _validateAccountSource(context, value),
+                  ),
+                )
               ],
             ),
           ),
@@ -177,6 +122,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
               if (_formKey.currentState.validate() && !(_advanceOptions.error ?? false)) {
                 widget.store.account.setNewAccountKey(
                     _keySelection == KeySelection.MNEMONIC ? _keyCtrl.text.trim() : _nameCtrl.text.trim());
+
                 widget.onSubmit({
                   'keyType': _keyOptions[_keySelection.index],
                   'cryptoType': _advanceOptions.type ?? AccountAdvanceOptionParams.encryptTypeSR,
@@ -195,4 +141,24 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
 enum KeySelection {
   MNEMONIC,
   RAW_SEED,
+}
+
+String _validateAccountSource(BuildContext context, String v) {
+  final TranslationsAccount dic = I18n.of(context).translationsForLocale().account;
+
+  String input = v.trim();
+
+  if (input.isEmpty) {
+    return null;
+  }
+
+  if (ValidateKeys.isRawSeed(input)) {
+    return ValidateKeys.validateRawSeed(input) ? null : dic.importInvalidRawSeed;
+  } else if (ValidateKeys.isPrivateKey(input)) {
+    // Todo: #426
+    return dic.importPrivateKeyUnsupported;
+    // return ValidateKeys.validatePrivateKey(input);
+  } else {
+    return ValidateKeys.validateMnemonic(input) ? null : dic.importInvalidMnemonic;
+  }
 }
