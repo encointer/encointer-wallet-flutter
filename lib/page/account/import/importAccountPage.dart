@@ -21,12 +21,14 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   _ImportAccountPageState(this.store);
 
   final AppStore store;
-  int _step = 0;
+
   String _keyType = '';
   String _cryptoType = '';
   String _derivePath = '';
   bool _submitting = false;
+
   final TextEditingController _nameCtrl = new TextEditingController();
+
   @override
   void dispose() {
     _nameCtrl.dispose();
@@ -80,7 +82,6 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
                   child: Text(I18n.of(context).translationsForLocale().home.ok),
                   onPressed: () {
                     setState(() {
-                      _step = 0;
                       _submitting = false;
                     });
                     Navigator.of(context).pop();
