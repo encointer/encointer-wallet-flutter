@@ -1,8 +1,7 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:encointer_wallet/store/app.dart';
-
 import 'package:encointer_wallet/mocks/data/mockAccountData.dart';
 import 'package:encointer_wallet/mocks/storage/localStorage.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -25,7 +24,8 @@ void main() {
       expect(store.currentAccount.address, accList[0]['address']);
 
       /// create new account
-      store.setNewAccount('test', 'a111111');
+      store.setNewAccountName('test');
+      store.setNewAccountPin('a111111');
       expect(store.newAccount.name, 'test');
       expect(store.newAccount.password, 'a111111');
       store.setNewAccountKey('new_key');
