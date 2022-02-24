@@ -44,7 +44,6 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
     super.dispose();
   }
 
-
   String _validateAccountSource(BuildContext context, String v) {
     final TranslationsAccount dic = I18n.of(context).translationsForLocale().account;
 
@@ -85,9 +84,10 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
               padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
               children: <Widget>[
                 SizedBox(height: 80),
-                Center(
-                  child: Text(I18n.of(context).translationsForLocale().profile.detailsEnter,
-                      style: Theme.of(context).textTheme.headline2),
+                Text(
+                  I18n.of(context).translationsForLocale().profile.detailsEnter,
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.headline2,
                 ),
                 SizedBox(height: 10),
                 Center(
