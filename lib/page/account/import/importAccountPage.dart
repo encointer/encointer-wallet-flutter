@@ -176,7 +176,6 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     store.account.setCurrentAccount(pubKey);
 
     // go to home page
-    if (!mounted) return;
     Navigator.popUntil(context, ModalRoute.withName('/'));
   }
 
