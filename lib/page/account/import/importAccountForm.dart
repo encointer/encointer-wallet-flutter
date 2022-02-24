@@ -74,54 +74,46 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context).translationsForLocale();
 
-    return Column(
-      children: <Widget>[
-        Expanded(
-          child: Form(
-            key: _formKey,
+    return Padding(
+      padding: EdgeInsets.fromLTRB(32, 0, 16, 32),
+      child: Column(
+        children: <Widget>[
+          Expanded(
+            child: Form(
+              key: _formKey,
 //            autovalidate: true,
-            child: ListView(
-              padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
-              children: <Widget>[
-                SizedBox(height: 80),
-                Text(
-                  I18n.of(context).translationsForLocale().profile.detailsEnter,
-                  textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.headline2,
-                ),
-                SizedBox(height: 10),
-                Center(
-                  child: Container(
-                    width: 300,
-                    child: Text(
-                      I18n.of(context).translationsForLocale().profile.personalKeyEnter,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline2.copyWith(
-                            color: Colors.black,
-                          ),
-                    ),
+              child: ListView(
+                children: <Widget>[
+                  SizedBox(height: 80),
+                  Text(
+                    I18n.of(context).translationsForLocale().profile.detailsEnter,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headline2,
                   ),
-                ),
-                SizedBox(height: 30),
-                TextFormField(
-                  key: Key('create-account-name'),
-                  decoration: InputDecoration(
-                    enabledBorder: const OutlineInputBorder(
-                      // width: 0.0 produces a thin "hairline" border
-                      borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
-                      borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
-                    ),
-                    filled: true,
-                    fillColor: ZurichLion.shade50,
-                    hintText: dic.account.createHint,
-                    labelText: I18n.of(context).translationsForLocale().profile.accountName,
+                  SizedBox(height: 10),
+                  Text(
+                    I18n.of(context).translationsForLocale().profile.personalKeyEnter,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black),
                   ),
-                  controller: _nameCtrl,
-                ),
-                Padding(
-                  key: Key('account-source'),
-                  padding: EdgeInsets.only(left: 16, right: 16),
-                  child: TextFormField(
+                  SizedBox(height: 30),
+                  TextFormField(
+                    key: Key('create-account-name'),
+                    decoration: InputDecoration(
+                      enabledBorder: const OutlineInputBorder(
+                        // width: 0.0 produces a thin "hairline" border
+                        borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+                        borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
+                      ),
+                      filled: true,
+                      fillColor: ZurichLion.shade50,
+                      hintText: dic.account.createHint,
+                      labelText: I18n.of(context).translationsForLocale().profile.accountName,
+                    ),
+                    controller: _nameCtrl,
+                  ),
+                  TextFormField(
+                    key: Key('account-source'),
                     decoration: InputDecoration(
                       hintText: dic.account.mnemonic,
                       labelText: dic.profile.personalKey,
@@ -130,15 +122,12 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                     maxLines: 2,
                     validator: (String value) => _validateAccountSource(context, value),
                   ),
-                )
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-        Container(
-          key: Key('account-import-next'),
-          padding: EdgeInsets.all(16),
-          child: PrimaryButton(
+          PrimaryButton(
+            key: Key('account-import-next'),
             child: Text(I18n.of(context).translationsForLocale().home.next),
             onPressed: () async {
               if (_formKey.currentState.validate() && !(_advanceOptions.error ?? false)) {
@@ -154,8 +143,8 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
               }
             },
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
