@@ -89,8 +89,8 @@ class CreateAccountForm extends StatelessWidget {
               ),
               onPressed: () {
                 if (_formKey.currentState.validate()) {
-                  var args = {"name": '${_nameCtrl.text}'};
-                  Navigator.pushNamed(context, CreatePinPage.route, arguments: args);
+                  store.account.setNewAccountName(_nameCtrl.text.trim());
+                  Navigator.pushNamed(context, CreatePinPage.route);
                 }
               },
             ),

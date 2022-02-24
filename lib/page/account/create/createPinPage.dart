@@ -85,7 +85,7 @@ class _CreatePinPageState extends State<CreatePinPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Map args = ModalRoute.of(context).settings.arguments;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -115,7 +115,6 @@ class _CreatePinPageState extends State<CreatePinPage> {
                   });
                 },
                 store: store,
-                name: args['name'],
               )
             : Center(child: CupertinoActivityIndicator()),
       ),

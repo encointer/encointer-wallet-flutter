@@ -10,10 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CreatePinForm extends StatefulWidget {
-  CreatePinForm({this.onSubmit, this.name, this.store});
+  CreatePinForm({this.onSubmit, this.store});
   final Function onSubmit;
   final AppStore store;
-  final String name;
 
   @override
   _CreatePinFormState createState() => _CreatePinFormState(store);
@@ -144,9 +143,6 @@ class _CreatePinFormState extends State<CreatePinForm> {
               ),
               onPressed: () {
                 if (_formKey.currentState.validate()) {
-                  store.account
-                      .setNewAccountName(this.widget.name.isNotEmpty ? this.widget.name : dic.account.createDefault);
-
                   store.account.setNewAccountPin(_passCtrl.text);
 
                   store.settings.setPin(_passCtrl.text);
