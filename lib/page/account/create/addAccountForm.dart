@@ -32,9 +32,11 @@ class AddAccountForm extends StatelessWidget {
               child: ListView(
                 children: <Widget>[
                   SizedBox(height: 80),
-                  Text(I18n.of(context).translationsForLocale().profile.accountNameChoose,
-                      textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline2),
+                  Text(
+                    I18n.of(context).translationsForLocale().profile.accountNameChoose,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
                   SizedBox(height: 10),
                   Container(
                     width: 300,
