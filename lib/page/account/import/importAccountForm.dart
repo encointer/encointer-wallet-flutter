@@ -24,13 +24,8 @@ class ImportAccountForm extends StatefulWidget {
 class _ImportAccountFormState extends State<ImportAccountForm> {
   _ImportAccountFormState(this.store);
 
-  final List<String> _keyOptions = [
-    AccountStore.seedTypeMnemonic,
-    AccountStore.seedTypeRawSeed,
-    // 'observe',
-  ];
-
-  KeySelection _keySelection = KeySelection.MNEMONIC;
+  // Todo: introduce enum/class for that
+  String _keyType;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -59,7 +54,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
 
     if (ValidateKeys.isRawSeed(input)) {
       setState(() {
-        _keySelection = KeySelection.RAW_SEED;
+        _keyType = AccountStore.seedTypeRawSeed;
       });
       return ValidateKeys.validateRawSeed(input) ? null : dic.importInvalidRawSeed;
     } else if (ValidateKeys.isPrivateKey(input)) {
@@ -68,7 +63,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
       // return ValidateKeys.validatePrivateKey(input);
     } else {
       setState(() {
-        _keySelection = KeySelection.MNEMONIC;
+        _keyType = AccountStore.seedTypeMnemonic;
       });
       return ValidateKeys.validateMnemonic(input) ? null : dic.importInvalidMnemonic;
     }
@@ -141,7 +136,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                 store.account.setNewAccount(_keyCtrl.text.trim(), store.settings.cachedPin);
 
                 widget.onSubmit({
-                  'keyType': _keyOptions[_keySelection.index],
+                  'keyType': _keyType,
                   'cryptoType': _advanceOptions.type ?? AccountAdvanceOptionParams.encryptTypeSR,
                   'derivePath': _advanceOptions.path ?? '',
                   'finish': null, // TODO chrigi check obsolete code KeyStoreJson
@@ -153,9 +148,4 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
       ),
     );
   }
-}
-
-enum KeySelection {
-  MNEMONIC,
-  RAW_SEED,
 }
