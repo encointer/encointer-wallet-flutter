@@ -223,15 +223,15 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       appBar: AppBar(title: Text(I18n.of(context).translationsForLocale().home.accountImport)),
       body: SafeArea(
         child: !_submitting
-                ? ImportAccountForm(store, (Map<String, dynamic> data) {
-                    setState(() {
-                      _keyType = data['keyType'];
-                      _cryptoType = data['cryptoType'];
-                      _derivePath = data['derivePath'];
-                      _importAccount();
-                    });
-                  })
-                : Center(child: CupertinoActivityIndicator()),
+            ? ImportAccountForm(store, (Map<String, dynamic> data) {
+                setState(() {
+                  _keyType = data['keyType'];
+                  _cryptoType = data['cryptoType'];
+                  _derivePath = data['derivePath'];
+                  _importAccount();
+                });
+              })
+            : Center(child: CupertinoActivityIndicator()),
       ),
     );
   }

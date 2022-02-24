@@ -9,8 +9,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class AddAccountForm extends StatelessWidget {
-  AddAccountForm({this.isImporting, this.setNewAccount, this.submitting, this.onSubmit, this.store});
-  final Function setNewAccount;
+  AddAccountForm({this.isImporting, this.submitting, this.onSubmit, this.store});
   final Function onSubmit;
   final bool submitting;
   final AppStore store;
@@ -120,8 +119,11 @@ class AddAccountForm extends StatelessWidget {
               ),
               onPressed: () {
                 if (_formKey.currentState.validate()) {
-                  setNewAccount(
-                      _nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic.account.createDefault, store.settings.cachedPin);
+                  store.account
+                      .setNewAccountName(_nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic.account.createDefault);
+
+                  store.account.setNewAccountPin(store.settings.cachedPin);
+
                   onSubmit();
                 } else {
                   print("formKey.currentState.validate failed");

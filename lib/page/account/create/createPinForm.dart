@@ -10,8 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CreatePinForm extends StatefulWidget {
-  CreatePinForm({this.setNewAccount, this.submitting, this.onSubmit, this.name, this.store});
-  final Function setNewAccount;
+  CreatePinForm({this.submitting, this.onSubmit, this.name, this.store});
   final Function onSubmit;
   final bool submitting;
   final AppStore store;
@@ -147,13 +146,12 @@ class _CreatePinFormState extends State<CreatePinForm> {
               onPressed: () {
                 if (_formKey.currentState.validate()) {
                   if (store.account.accountListAll.isEmpty) {
-                    widget.setNewAccount(
-                        this.widget.name.isNotEmpty ? this.widget.name : dic.account.createDefault, _passCtrl.text);
+                    store.account
+                        .setNewAccountName(this.widget.name.isNotEmpty ? this.widget.name : dic.account.createDefault);
+
+                    store.account.setNewAccountPin(_passCtrl.text);
+
                     store.settings.setPin(_passCtrl.text);
-                  } else {
-                    // cachedPin won't be empty, because cachedPin is verified not to be empty before user adds an account in profile/index.dart
-                    widget.setNewAccount(this.widget.name.isNotEmpty ? this.widget.name : dic.account.createDefault,
-                        store.settings.cachedPin);
                   }
 
                   widget.onSubmit();

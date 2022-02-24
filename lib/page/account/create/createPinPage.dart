@@ -109,7 +109,6 @@ class _CreatePinPageState extends State<CreatePinPage> {
       body: SafeArea(
         child: !_submitting
             ? CreatePinForm(
-                setNewAccount: store.account.setNewAccount,
                 submitting: _submitting,
                 onSubmit: () {
                   setState(() {

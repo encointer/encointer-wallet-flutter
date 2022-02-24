@@ -133,7 +133,8 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
             child: Text(I18n.of(context).translationsForLocale().home.next),
             onPressed: () async {
               if (_formKey.currentState.validate() && !(_advanceOptions.error ?? false)) {
-                store.account.setNewAccount(_nameCtrl.text.trim(), store.settings.cachedPin);
+                store.account.setNewAccountName(_nameCtrl.text.trim());
+                store.account.setNewAccountPin(_nameCtrl.text.trim());
                 store.account.setNewAccountKey(_keyCtrl.text.trim());
 
                 widget.onSubmit({

@@ -10,7 +10,7 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class CreateAccountForm extends StatelessWidget {
   CreateAccountForm({this.store});
-//todo get rid of the setNewAccount method where password is stored
+
   final AppStore store;
 
   final _formKey = GlobalKey<FormState>();

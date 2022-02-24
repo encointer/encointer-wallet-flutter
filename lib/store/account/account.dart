@@ -127,6 +127,16 @@ abstract class _AccountStore with Store {
   }
 
   @action
+  void setNewAccountName(String name) {
+    newAccount.name = name;
+  }
+
+  @action
+  void setNewAccountPin(String pin) {
+    newAccount.password = pin;
+  }
+
+  @action
   void setNewAccountKey(String key) {
     newAccount.key = key;
   }

@@ -110,7 +110,6 @@ class _AddAccountPageState extends State<AddAccountPage> {
         child: !_submitting
             ? AddAccountForm(
                 isImporting: arg['isImporting'],
-                setNewAccount: store.account.setNewAccount,
                 submitting: _submitting,
                 onSubmit: () {
                   setState(() {

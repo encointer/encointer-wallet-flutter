@@ -329,6 +329,26 @@ mixin _$AccountStore on _AccountStore, Store {
   }
 
   @override
+  void setNewAccountName(String name) {
+    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setNewAccountName');
+    try {
+      return super.setNewAccountName(name);
+    } finally {
+      _$_AccountStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setNewAccountPin(String pin) {
+    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setNewAccountPin');
+    try {
+      return super.setNewAccountPin(pin);
+    } finally {
+      _$_AccountStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setNewAccountKey(String key) {
     final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setNewAccountKey');
     try {
