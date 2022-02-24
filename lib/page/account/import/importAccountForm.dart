@@ -48,7 +48,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
     String input = v.trim();
 
     if (input.isEmpty) {
-      return null;
+      return dic.importMustNotBeEmpty;
     }
 
     if (ValidateKeys.isRawSeed(input)) {

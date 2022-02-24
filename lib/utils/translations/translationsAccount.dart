@@ -31,6 +31,7 @@ abstract class TranslationsAccount {
   String get importInvalid;
   String get importInvalidRawSeed;
   String get importInvalidMnemonic;
+  String get importMustNotBeEmpty;
   String get importPrivateKeyUnsupported;
   String get importType;
   String get keystore;
@@ -90,6 +91,7 @@ class TranslationsEnAccount implements TranslationsAccount {
   get importInvalid => 'Invalid';
   get importInvalidRawSeed => 'Invalid raw seed supplied';
   get importInvalidMnemonic => 'Invalid mnemonic supplied';
+  get importMustNotBeEmpty => 'Input must not be empty';
   get importPrivateKeyUnsupported => 'Private key account import is not yet supported.';
   get importType => 'Source Type';
   get keystore => 'Keystore (json)';
@@ -151,6 +153,7 @@ class TranslationsDeAccount implements TranslationsAccount {
   get importInvalid => 'Ungültig';
   get importInvalidRawSeed => 'Ungültiger raw seed eingegeben.';
   get importInvalidMnemonic => 'Ungültiger Mnemonic eingegeben.';
+  get importMustNotBeEmpty => 'Eingabe darf nicht lehr sein.';
   get importPrivateKeyUnsupported => 'Accountimport mit private key wird noch nicht unterstützt.';
   get importType => 'Ursprungstyp';
   get keystore => 'Keystore (json)';
@@ -209,6 +212,7 @@ class TranslationsZhAccount implements TranslationsAccount {
   get importInvalid => '无效';
   get importInvalidRawSeed => throw UnimplementedError();
   get importInvalidMnemonic => throw UnimplementedError();
+  get importMustNotBeEmpty => throw UnimplementedError();
   get importPrivateKeyUnsupported => throw UnimplementedError();
   get importType => '源类型';
   get keystore => '密钥库 (json)';

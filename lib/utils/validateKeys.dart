@@ -1,7 +1,7 @@
 class ValidateKeys {
   static bool isPrivateKey(String privateKey) {
     privateKey = privateKey.trim();
-    return privateKey.substring(0, 2) == "0x";
+    return (privateKey.length >= 2) && privateKey.substring(0, 2) == "0x";
   }
 
   static bool validatePrivateKey(String privateKey) {
@@ -11,7 +11,7 @@ class ValidateKeys {
 
   static bool isRawSeed(String seed) {
     seed = seed.trim();
-    return seed.isNotEmpty && seed.substring(0, 2) == '//';
+    return seed.isNotEmpty && (seed.length >= 2) && seed.substring(0, 2) == '//';
   }
 
   static bool validateRawSeed(String seed) {
