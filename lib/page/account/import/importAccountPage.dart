@@ -27,7 +27,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   String _cryptoType = '';
   String _derivePath = '';
   bool _submitting = false;
-  Stage _step = Stage.import;
+  Stage _stage = Stage.import;
 
   final TextEditingController _nameCtrl = new TextEditingController();
 
@@ -183,7 +183,19 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(I18n.of(context).translationsForLocale().home.accountImport)),
+      appBar: AppBar(
+          title: Text(I18n.of(context).translationsForLocale().home.accountImport),
+          leading: _stage == Stage.createPin
+              ? IconButton(
+                  icon: Icon(Icons.arrow_back_ios),
+                  onPressed: () {
+                    setState(() {
+                      _stage = Stage.import;
+                    });
+                  },
+                )
+              : null // null means the regular pack button is used leading back to the entry page
+          ),
       body: SafeArea(
         child: !_submitting ? _getImportOrPinForm() : Center(child: CupertinoActivityIndicator()),
       ),
@@ -191,7 +203,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   }
 
   Widget _getImportOrPinForm() {
-    if (_step == Stage.import) {
+    if (_stage == Stage.import) {
       return ImportAccountForm(store, (Map<String, dynamic> data) {
         setState(() {
           _keyType = data['keyType'];
@@ -201,7 +213,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
 
         if (store.account.isFirstAccount) {
           setState(() {
-            _step = Stage.createPin;
+            _stage = Stage.createPin;
           });
         } else {
           store.account.setNewAccountPin(store.settings.cachedPin);
