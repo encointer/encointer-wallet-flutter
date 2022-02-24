@@ -121,12 +121,6 @@ abstract class _AccountStore with Store {
   }
 
   @action
-  void setNewAccount(String name, String password) {
-    newAccount.name = name;
-    newAccount.password = password;
-  }
-
-  @action
   void setNewAccountName(String name) {
     newAccount.name = name;
   }

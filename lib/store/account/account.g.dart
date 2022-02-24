@@ -319,16 +319,6 @@ mixin _$AccountStore on _AccountStore, Store {
   }
 
   @override
-  void setNewAccount(String name, String password) {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setNewAccount');
-    try {
-      return super.setNewAccount(name, password);
-    } finally {
-      _$_AccountStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setNewAccountName(String name) {
     final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setNewAccountName');
     try {
