@@ -1,6 +1,4 @@
-import 'package:encointer_wallet/page/account/create/createPinForm.dart';
 import 'package:encointer_wallet/page/account/import/importAccountForm.dart';
-import 'package:encointer_wallet/page/account/create/addAccountForm.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -181,45 +179,45 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_step == 1) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            I18n.of(context).translationsForLocale().home.accountImport,
-            style: Theme.of(context).textTheme.headline3,
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              setState(() {
-                _step = 0;
-              });
-            },
-          ),
-        ),
-        body: SafeArea(
-          child: !_submitting && store.account.accountListAll.isEmpty
-              ? CreatePinForm(
-                  setNewAccount: store.account.setNewAccount,
-                  submitting: _submitting,
-                  onSubmit: _importAccount,
-                  name: "default",
-                  store: store)
-              // Should be replaced with just creating account:
-              : !_submitting && store.account.accountListAll.isNotEmpty
-                  ? AddAccountForm(
-                      isImporting: true,
-                      setNewAccount: store.account.setNewAccount,
-                      submitting: _submitting,
-                      onSubmit: _importAccount,
-                      store: store)
-                  : Center(child: CupertinoActivityIndicator()),
-        ),
-      );
-    }
+    // if (_step == 1) {
+    //   return Scaffold(
+    //     appBar: AppBar(
+    //       title: Text(
+    //         I18n.of(context).translationsForLocale().home.accountImport,
+    //         style: Theme.of(context).textTheme.headline3,
+    //       ),
+    //       centerTitle: true,
+    //       backgroundColor: Colors.transparent,
+    //       shadowColor: Colors.transparent,
+    //       leading: IconButton(
+    //         icon: Icon(Icons.arrow_back_ios),
+    //         onPressed: () {
+    //           setState(() {
+    //             _step = 0;
+    //           });
+    //         },
+    //       ),
+    //     ),
+    //     body: SafeArea(
+    //       child: !_submitting && store.account.accountListAll.isEmpty
+    //           ? CreatePinForm(
+    //               setNewAccount: store.account.setNewAccount,
+    //               submitting: _submitting,
+    //               onSubmit: _importAccount,
+    //               name: "default",
+    //               store: store)
+    //           // Should be replaced with just creating account:
+    //           : !_submitting && store.account.accountListAll.isNotEmpty
+    //               ? AddAccountForm(
+    //                   isImporting: true,
+    //                   setNewAccount: store.account.setNewAccount,
+    //                   submitting: _submitting,
+    //                   onSubmit: _importAccount,
+    //                   store: store)
+    //               : Center(child: CupertinoActivityIndicator()),
+    //     ),
+    //   );
+    // }
     // todo what are the different steps 1 and 0? do i need here to add also the AddAccountForm?
     return Scaffold(
       appBar: AppBar(title: Text(I18n.of(context).translationsForLocale().home.accountImport)),
@@ -247,7 +245,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
                         _keyType = data['keyType'];
                         _cryptoType = data['cryptoType'];
                         _derivePath = data['derivePath'];
-                        _step = 1;
+                        _importAccount();
                       });
                     } else {
                       setState(() {
