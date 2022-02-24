@@ -240,21 +240,12 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
             // ),
             !_submitting
                 ? ImportAccountForm(store, (Map<String, dynamic> data) {
-                    if (data['finish'] == null) {
-                      setState(() {
-                        _keyType = data['keyType'];
-                        _cryptoType = data['cryptoType'];
-                        _derivePath = data['derivePath'];
-                        _importAccount();
-                      });
-                    } else {
-                      setState(() {
-                        _keyType = data['keyType'];
-                        _cryptoType = data['cryptoType'];
-                        _derivePath = data['derivePath'];
-                      });
+                    setState(() {
+                      _keyType = data['keyType'];
+                      _cryptoType = data['cryptoType'];
+                      _derivePath = data['derivePath'];
                       _importAccount();
-                    }
+                    });
                   })
                 : Center(child: CupertinoActivityIndicator()),
       ),

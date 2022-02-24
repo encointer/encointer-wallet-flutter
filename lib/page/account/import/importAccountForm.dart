@@ -140,7 +140,6 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                   'keyType': _keyType,
                   'cryptoType': _advanceOptions.type ?? AccountAdvanceOptionParams.encryptTypeSR,
                   'derivePath': _advanceOptions.path ?? '',
-                  'finish': null, // TODO chrigi check obsolete code KeyStoreJson
                 });
               }
             },
