@@ -64,9 +64,9 @@ class CeremonyBoxService {
       int phase1register, int phase2assign, int phase3attest) {
     DateTime now = DateTime.now();
     DateTime lastCeremonyDate = nextCeremonyDate.subtract(Duration(days: 41));
-    Duration entirePhase;
-    Duration elapsedPart;
-    int phaseLengthCoarse;
+    Duration entirePhase; // TODO get these from the back end
+    Duration elapsedPart; // TODO get these from the back end
+    int phaseLengthCoarse = 1; // init so it does not go red screen
     int subdivisions = 16;
     int pastPhasesOffset = 0;
     int totalSubdivisions = subdivisions * (phase1register + phase2assign + phase3attest);
@@ -83,7 +83,7 @@ class CeremonyBoxService {
         pastPhasesOffset = phase1register;
         break;
       case (CeremonyPhase.ATTESTING):
-        entirePhase = Duration(minutes: 30); // arbitrarily defined
+        entirePhase = Duration(minutes: 60); // arbitrarily defined
         elapsedPart = now.difference(nextCeremonyDate);
         phaseLengthCoarse = phase3attest;
         pastPhasesOffset = phase1register + phase2assign;

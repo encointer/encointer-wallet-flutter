@@ -13,13 +13,13 @@ import 'ceremonyInfoAndCalendar.dart';
 import 'ceremonyProgressBar.dart';
 import 'ceremonySchedule.dart';
 import 'ceremonyStartButton.dart';
-import 'package:mobx/mobx.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class CeremonyBox extends StatelessWidget {
   final AppStore store;
   final int groupSizeAssigned = 9;
   final LatLng coordinatesOfCeremony = LatLng(47.389712, 8.517076);
-  final DateTime registerUntilDate = DateTime.now().subtract(Duration(hours: 16));
+  final DateTime registerUntilDate = DateTime.now().subtract(Duration(hours: 1));
   final DateTime nextCeremonyDate = DateTime.now().subtract(Duration(minutes: 15));
   final String notification = 'you are assigned bla bla bla bla bla asdf asdf sadf ';
   final IconData notificationIconData = Iconsax.tick_square;
@@ -34,73 +34,75 @@ class CeremonyBox extends StatelessWidget {
   Widget build(BuildContext context) {
     String languageCode = Localizations.localeOf(context).languageCode;
     CeremonyPhase currentPhase = store.encointer.currentPhase;
-    return Column(
-      children: [
-        Container(
-          padding: EdgeInsets.fromLTRB(24, 24, 24, 0),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.vertical(
-                top: Radius.circular(15), bottom: Radius.circular(store.encointer.showTwoBoxes ? 0 : 15)),
-            color: ZurichLion.shade50,
-          ),
-          child: Column(
-            children: [
-              CeremonyProgressBar(
-                registerUntilDate: registerUntilDate,
-                nextCeremonyDate: nextCeremonyDate,
-                currentPhase: currentPhase,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CeremonySchedule(
-                    nextCeremonyDate: nextCeremonyDate,
-                    languageCode: languageCode,
-                  ),
-                  CeremonyInfoAndCalendar(
-                    nextCeremonyDate: nextCeremonyDate,
-                    infoLink: infoLink,
-                  ),
-                ],
-              ),
-              if (store.encointer.showRegisterButton)
-                CeremonyRegisterButton(
-                  languageCode: languageCode,
-                  registerUntilDate: registerUntilDate,
-                  onPressed: onPressedRegister,
-                ),
-              if (store.encointer.showStartCeremonyButton)
-                CeremonyStartButton(
-                  onPressed: onPressedStartCeremony,
-                )
-            ],
-          ),
-        ),
-        if (store.encointer.showTwoBoxes) // dart "collection if"
+    return Observer(
+      builder: (BuildContext context) => Column(
+        children: [
           Container(
-            margin: EdgeInsets.only(top: 2),
-            padding: EdgeInsets.all(24),
+            padding: EdgeInsets.fromLTRB(24, 24, 24, 0),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(0), bottom: Radius.circular(15)),
+              borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(15), bottom: Radius.circular(store.encointer.showTwoBoxes ? 0 : 15)),
               color: ZurichLion.shade50,
             ),
             child: Column(
               children: [
-                CeremonyNotification(
-                  notificationIconData: notificationIconData,
-                  notification: notification,
+                CeremonyProgressBar(
+                  registerUntilDate: registerUntilDate,
+                  nextCeremonyDate: nextCeremonyDate,
+                  currentPhase: currentPhase,
                 ),
-                SizedBox(
-                  height: 16,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CeremonySchedule(
+                      nextCeremonyDate: nextCeremonyDate,
+                      languageCode: languageCode,
+                    ),
+                    CeremonyInfoAndCalendar(
+                      nextCeremonyDate: nextCeremonyDate,
+                      infoLink: infoLink,
+                    ),
+                  ],
                 ),
-                if (onPressedLocation != null)
-                  CeremonyLocationButton(
-                    onPressedLocation: onPressedLocation,
+                if (store.encointer.showRegisterButton)
+                  CeremonyRegisterButton(
+                    languageCode: languageCode,
+                    registerUntilDate: registerUntilDate,
+                    onPressed: onPressedRegister,
+                  ),
+                if (store.encointer.showStartCeremonyButton)
+                  CeremonyStartButton(
+                    onPressed: onPressedStartCeremony,
                   )
               ],
             ),
           ),
-      ],
+          if (store.encointer.showTwoBoxes) // dart "collection if"
+            Container(
+              margin: EdgeInsets.only(top: 2),
+              padding: EdgeInsets.all(24),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(0), bottom: Radius.circular(15)),
+                color: ZurichLion.shade50,
+              ),
+              child: Column(
+                children: [
+                  CeremonyNotification(
+                    notificationIconData: notificationIconData,
+                    notification: notification,
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  if (onPressedLocation != null)
+                    CeremonyLocationButton(
+                      onPressedLocation: onPressedLocation,
+                    )
+                ],
+              ),
+            ),
+        ],
+      ),
     );
   }
 }
