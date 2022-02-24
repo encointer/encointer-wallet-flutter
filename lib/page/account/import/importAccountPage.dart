@@ -185,9 +185,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     return Scaffold(
       appBar: AppBar(title: Text(I18n.of(context).translationsForLocale().home.accountImport)),
       body: SafeArea(
-        child: !_submitting
-            ? _getImportOrPinForm()
-            : Center(child: CupertinoActivityIndicator()),
+        child: !_submitting ? _getImportOrPinForm() : Center(child: CupertinoActivityIndicator()),
       ),
     );
   }
