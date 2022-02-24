@@ -92,7 +92,7 @@ class _AssigningPageState extends State<AssigningPage> {
                     SizedBox(height: 16),
                     timeToMeetup < 60
                         ? RoundedButton(
-                            text: dic.encointer.meetupStart,
+                            text: dic.encointer.startCeremony,
                             onPressed: () => startMeetup(context, store),
                           )
                         : Container(),

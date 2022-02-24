@@ -11,7 +11,7 @@ class ConfirmAttendeesDialog extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          title: Text(dic.encointer.ceremony),
+          title: Text(dic.encointer.encointerCeremony),
           centerTitle: true,
         ),
         backgroundColor: Theme.of(context).canvasColor,

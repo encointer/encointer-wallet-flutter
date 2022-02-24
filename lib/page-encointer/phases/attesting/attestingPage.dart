@@ -43,7 +43,7 @@ class _AttestingPageState extends State<AttestingPage> {
                     : Container(
                         key: Key('start-meetup'),
                         child: RoundedButton(
-                            text: dic.encointer.meetupStart, onPressed: () => startMeetup(context, store))),
+                            text: dic.encointer.startCeremony, onPressed: () => startMeetup(context, store))),
               ),
             ]),
           ),
