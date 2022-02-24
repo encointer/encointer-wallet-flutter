@@ -10,9 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CreatePinForm extends StatefulWidget {
-  CreatePinForm({this.submitting, this.onSubmit, this.name, this.store});
+  CreatePinForm({this.onSubmit, this.name, this.store});
   final Function onSubmit;
-  final bool submitting;
   final AppStore store;
   final String name;
 
