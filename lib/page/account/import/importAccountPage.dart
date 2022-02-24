@@ -78,6 +78,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
                   child: Text(I18n.of(context).translationsForLocale().home.ok),
                   onPressed: () {
                     setState(() {
+                      _stage = Stage.import;
                       _submitting = false;
                     });
                     Navigator.of(context).pop();
