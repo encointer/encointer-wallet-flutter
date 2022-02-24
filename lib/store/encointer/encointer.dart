@@ -76,10 +76,13 @@ abstract class _EncointerStore with Store {
   int participantIndex;
 
   @observable
-  Map<CommunityIdentifier, BalanceEntry> balanceEntries = new ObservableMap();
+  ObservableMap<CommunityIdentifier, BalanceEntry> balanceEntries = new ObservableMap();
 
   @observable
   List<CommunityIdentifier> communityIdentifiers;
+
+  @observable
+  List<String> bootstrappers;
 
   @observable
   List<CidName> communities;
@@ -125,11 +128,15 @@ abstract class _EncointerStore with Store {
 
   @computed
   double get communityBalance {
+    return applyDemurrage(communityBalanceEntry);
+  }
+
+  double applyDemurrage(BalanceEntry entry) {
     double res;
-    if (rootStore.chain.latestHeaderNumber != null && communityBalanceEntry != null && demurrage != null) {
-      int elapsed = rootStore.chain.latestHeaderNumber - communityBalanceEntry.lastUpdate;
+    if (rootStore.chain.latestHeaderNumber != null && entry != null && demurrage != null) {
+      int elapsed = rootStore.chain.latestHeaderNumber - entry.lastUpdate;
       double exponent = -demurrage * elapsed;
-      res = communityBalanceEntry.principal * pow(e, exponent);
+      res = entry.principal * pow(e, exponent);
     }
     return res;
   }
@@ -256,6 +263,12 @@ abstract class _EncointerStore with Store {
   }
 
   @action
+  void setBootstrappers(List<String> bs) {
+    print("store: set communityIdentifiers to $bs");
+    bootstrappers = bs;
+  }
+
+  @action
   void setCommunityMetadata([CommunityMetadata meta]) {
     print("store: set communityMetadata to $meta");
     communityMetadata = meta;
@@ -322,6 +335,7 @@ abstract class _EncointerStore with Store {
 
   @action
   void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
+    print("balanceEntry $balanceEntry added to cid $cid added");
     balanceEntries[cid] = balanceEntry;
   }
 

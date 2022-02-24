@@ -15,12 +15,12 @@ import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class Assets extends StatefulWidget {
   Assets(this.store);
@@ -221,7 +221,7 @@ class _AssetsState extends State<Assets> {
                                     TransferPage.route,
                                     arguments: TransferPageParams(
                                         redirect: '/',
-                                        cid: store.encointer.chosenCid.toFmtString(),
+                                        cid: store.encointer.chosenCid,
                                         communitySymbol: store.encointer.communitySymbol),
                                   );
                                 }

@@ -190,13 +190,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
   final _$balanceEntriesAtom = Atom(name: '_EncointerStore.balanceEntries');
 
   @override
-  Map<CommunityIdentifier, BalanceEntry> get balanceEntries {
+  ObservableMap<CommunityIdentifier, BalanceEntry> get balanceEntries {
     _$balanceEntriesAtom.reportRead();
     return super.balanceEntries;
   }
 
   @override
-  set balanceEntries(Map<CommunityIdentifier, BalanceEntry> value) {
+  set balanceEntries(ObservableMap<CommunityIdentifier, BalanceEntry> value) {
     _$balanceEntriesAtom.reportWrite(value, super.balanceEntries, () {
       super.balanceEntries = value;
     });
@@ -214,6 +214,21 @@ mixin _$EncointerStore on _EncointerStore, Store {
   set communityIdentifiers(List<CommunityIdentifier> value) {
     _$communityIdentifiersAtom.reportWrite(value, super.communityIdentifiers, () {
       super.communityIdentifiers = value;
+    });
+  }
+
+  final _$bootstrappersAtom = Atom(name: '_EncointerStore.bootstrappers');
+
+  @override
+  List<String> get bootstrappers {
+    _$bootstrappersAtom.reportRead();
+    return super.bootstrappers;
+  }
+
+  @override
+  set bootstrappers(List<String> value) {
+    _$bootstrappersAtom.reportWrite(value, super.bootstrappers, () {
+      super.bootstrappers = value;
     });
   }
 
@@ -462,6 +477,16 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
+  void setBootstrappers(List<String> bs) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setBootstrappers');
+    try {
+      return super.setBootstrappers(bs);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setCommunityMetadata([CommunityMetadata meta]) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunityMetadata');
     try {
@@ -575,6 +600,7 @@ myMeetupRegistryIndex: ${myMeetupRegistryIndex},
 participantIndex: ${participantIndex},
 balanceEntries: ${balanceEntries},
 communityIdentifiers: ${communityIdentifiers},
+bootstrappers: ${bootstrappers},
 communities: ${communities},
 reputations: ${reputations},
 chosenCid: ${chosenCid},

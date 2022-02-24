@@ -2,10 +2,12 @@
 /// always add a new getter here in the abstract class first, then generate/implement the getters in the subclasses
 abstract class TranslationsProfile {
   String get about;
-  String get aboutBrif;
+  String get aboutBrief;
   String get aboutVersion;
   String get account;
   String get accountDelete;
+  String get accountsDelete;
+  String get accountsDeleteAll;
   String get accounts;
   String get accountShare;
   String get add;
@@ -22,14 +24,18 @@ abstract class TranslationsProfile {
   String get contactNameExist;
   String get contactNameSave;
   String get contactSave;
+  String get copiedToClipBoard;
   String get delete;
   String get deleteConfirm;
   String get developer;
+  String get enableBazaar;
   String get export;
   String get exportKeystoreOk;
   String get exportMnemonicOk;
   String get exportRawSeedOk;
   String get exportWarn;
+  String get noMnemonic;
+  String get noMnemonicTxt;
   String get nameChange;
   String get passChange;
   String get passError;
@@ -79,11 +85,13 @@ abstract class TranslationsProfile {
 
 class TranslationsEnProfile implements TranslationsProfile {
   get about => 'About';
-  get aboutBrif => 'Mobile Wallet for Encointer';
+  get aboutBrief => 'Mobile Wallet for Encointer';
   get aboutVersion => 'Version';
   get account => 'Manage Account';
   get accounts => 'Accounts';
   get accountDelete => 'Are you sure you want to delete the account?';
+  get accountsDelete => 'Are you sure you want to delete all accounts?';
+  get accountsDeleteAll => 'Remove all Accounts';
   get accountShare => 'Share Account';
   get add => 'Add';
   get addressBook => 'Address Book';
@@ -99,15 +107,19 @@ class TranslationsEnProfile implements TranslationsProfile {
   get contactNameExist => 'Name exists already';
   get contactNameSave => 'Save name';
   get contactSave => 'Save';
+  get copiedToClipBoard => 'Copied to Clipboard';
   get delete => 'Delete Account';
   get deleteConfirm => 'Input your PIN to confirm';
   get developer => 'Developer mode';
+  get enableBazaar => 'Enable Bazaar';
   get export => 'Export Account';
   get exportKeystoreOk => 'Keystore was copied to clipboard.';
   get exportMnemonicOk => 'Mnemonic was copied to clipboard.';
   get exportRawSeedOk => 'Raw Seed was copied to clipboard.';
   get exportWarn =>
       'Write these words down on paper. Keep the backup paper safe. These words allows anyone to recover this account and access its funds.';
+  get noMnemonic => 'No Mnemonic found';
+  get noMnemonicTxt => 'Account was imported with a raw seed and therefore does not have a mnemonic';
   get nameChange => 'Change Name';
   get passChange => 'Change PIN';
   get passError => 'Wrong PIN';
@@ -159,11 +171,13 @@ class TranslationsEnProfile implements TranslationsProfile {
 
 class TranslationsDeProfile implements TranslationsProfile {
   get about => 'Über';
-  get aboutBrif => 'Mobiles Wallet für Encointer';
+  get aboutBrief => 'Mobiles Wallet für Encointer';
   get aboutVersion => 'Version';
   get account => 'Konto';
   get accounts => 'Konten';
-  get accountDelete => 'Bist du sicher, dass du den account löschen möchtest?';
+  get accountDelete => 'Bist du sicher, dass du das Konto löschen möchtest?';
+  get accountsDelete => 'Bist du sicher, dass du alle Konten löschen möchtest?';
+  get accountsDeleteAll => 'Lösche alle Konten';
   get accountShare => 'Konto teilen';
   get add => 'Hinzufügen';
   get addressBook => 'Adressbuch';
@@ -179,15 +193,19 @@ class TranslationsDeProfile implements TranslationsProfile {
   get contactNameExist => 'Name existiert bereits';
   get contactNameSave => 'Speichere Name';
   get contactSave => 'Speichere';
+  get copiedToClipBoard => 'In die Zwischenablage kopiert';
   get delete => 'Konto löschen';
   get deleteConfirm => 'Gebe die PIN ein um zu bestätigen';
   get developer => 'Entwickler-Modus';
+  get enableBazaar => 'Bazaar aktivieren';
   get export => 'Konto exportieren';
   get exportKeystoreOk => 'Keystore wurde in die Zwischenablage kopiert.';
   get exportMnemonicOk => 'Mnemonic wurde in die Zwischenablage kopiert.';
   get exportRawSeedOk => 'Raw Seed wurde in die Zwischenablage kopiert.';
   get exportWarn =>
       'Schreibe diese Wörter auf ein Papier. Behalte das Papier an einem sicheren Ort. Diese Wörter geben jedem Zugriff auf das Konto und das Vermögen';
+  get noMnemonic => 'Keine Mnemonic gefunden';
+  get noMnemonicTxt => 'Konto wurde mit einem Raw Seed importiert und hat deshalb keine Mnemonic';
   get nameChange => 'Name ändern';
   get passChange => 'PIN ändern';
   get passError => 'Falsche PIN';
@@ -239,7 +257,7 @@ class TranslationsDeProfile implements TranslationsProfile {
 
 class TranslationsZhProfile implements TranslationsProfile {
   get about => '关于';
-  get aboutBrif => 'Encointer 手机钱包';
+  get aboutBrief => 'Encointer 手机钱包';
   get aboutVersion => '版本';
   get account => '账户管理';
   get accounts => '帐户';
@@ -312,4 +330,10 @@ class TranslationsZhProfile implements TranslationsProfile {
   get passSecure => throw UnimplementedError();
   get reputationHistory => throw UnimplementedError();
   get reputationOverall => throw UnimplementedError();
+  get accountsDelete => throw UnimplementedError();
+  get accountsDeleteAll => throw UnimplementedError();
+  get enableBazaar => throw UnimplementedError();
+  get noMnemonic => throw UnimplementedError();
+  get noMnemonicTxt => throw UnimplementedError();
+  get copiedToClipBoard => throw UnimplementedError();
 }
