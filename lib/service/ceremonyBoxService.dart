@@ -55,14 +55,6 @@ class CeremonyBoxService {
     return true;
   }
 
-  static bool shouldShowRegisterButton(CeremonyPhase currentPhase, bool isRegistered) {
-    return (currentPhase == CeremonyPhase.REGISTERING && !isRegistered);
-  }
-
-  static bool shouldShowStartCeremonyButton(CeremonyPhase currentPhase, bool isRegistered) {
-    return (currentPhase == CeremonyPhase.ATTESTING && isRegistered);
-  }
-
   /// for rendering the progress consider the following assumptions:
   /// reg phase: nextCeremonyDate.subtract(Duration(days: 41)) until registerUntilDate
   /// assign phase: registerUntilDate until nextCeremonyDate
@@ -102,4 +94,3 @@ class CeremonyBoxService {
     return timeElapsed < totalSubdivisions ? timeElapsed : totalSubdivisions;
   }
 }
-

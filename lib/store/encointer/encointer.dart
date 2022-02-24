@@ -450,4 +450,29 @@ abstract class _EncointerStore with Store {
     Object obj = await rootStore.loadObject(encointerCurrentPhaseKey);
     return ceremonyPhaseFromString(obj);
   }
+
+  @computed
+  bool get isRegistered {
+    return participantIndex != null && participantIndex != 0;
+  }
+
+  @computed
+  bool get showRegisterButton {
+    return (currentPhase == CeremonyPhase.REGISTERING && !isRegistered);
+  }
+
+  @computed
+  bool get showStartCeremonyButton {
+    return (currentPhase == CeremonyPhase.ATTESTING && isRegistered);
+  }
+
+  @computed
+  bool get showTwoBoxes {
+    return !showRegisterButton && !showStartCeremonyButton;
+  }
+
+  @computed
+  int get numberOfParticipantsAtUpcomingCeremony {
+    return meetupRegistry.length;
+  }
 }

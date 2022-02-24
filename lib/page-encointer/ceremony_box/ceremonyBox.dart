@@ -13,10 +13,10 @@ import 'ceremonyInfoAndCalendar.dart';
 import 'ceremonyProgressBar.dart';
 import 'ceremonySchedule.dart';
 import 'ceremonyStartButton.dart';
+import 'package:mobx/mobx.dart';
 
 class CeremonyBox extends StatelessWidget {
   final AppStore store;
-  final bool isRegistered = false;
   final int groupSizeAssigned = 9;
   final LatLng coordinatesOfCeremony = LatLng(47.389712, 8.517076);
   final DateTime registerUntilDate = DateTime.now().subtract(Duration(hours: 16));
@@ -34,16 +34,13 @@ class CeremonyBox extends StatelessWidget {
   Widget build(BuildContext context) {
     String languageCode = Localizations.localeOf(context).languageCode;
     CeremonyPhase currentPhase = store.encointer.currentPhase;
-    bool showRegisterButton = CeremonyBoxService.shouldShowRegisterButton(currentPhase, isRegistered);
-    bool showStartCeremonyButton = CeremonyBoxService.shouldShowStartCeremonyButton(currentPhase, isRegistered);
-    bool showTwoBoxes = !showRegisterButton && !showStartCeremonyButton;
     return Column(
       children: [
         Container(
           padding: EdgeInsets.fromLTRB(24, 24, 24, 0),
           decoration: BoxDecoration(
-            borderRadius:
-                BorderRadius.vertical(top: Radius.circular(15), bottom: Radius.circular(showTwoBoxes ? 0 : 15)),
+            borderRadius: BorderRadius.vertical(
+                top: Radius.circular(15), bottom: Radius.circular(store.encointer.showTwoBoxes ? 0 : 15)),
             color: ZurichLion.shade50,
           ),
           child: Column(
@@ -66,20 +63,20 @@ class CeremonyBox extends StatelessWidget {
                   ),
                 ],
               ),
-              if (showRegisterButton)
+              if (store.encointer.showRegisterButton)
                 CeremonyRegisterButton(
                   languageCode: languageCode,
                   registerUntilDate: registerUntilDate,
                   onPressed: onPressedRegister,
                 ),
-              if (showStartCeremonyButton)
+              if (store.encointer.showStartCeremonyButton)
                 CeremonyStartButton(
                   onPressed: onPressedStartCeremony,
                 )
             ],
           ),
         ),
-        if (showTwoBoxes) // dart "collection if"
+        if (store.encointer.showTwoBoxes) // dart "collection if"
           Container(
             margin: EdgeInsets.only(top: 2),
             padding: EdgeInsets.all(24),
