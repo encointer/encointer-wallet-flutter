@@ -1,3 +1,5 @@
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -13,6 +15,7 @@ import 'ceremonySchedule.dart';
 import 'ceremonyStartButton.dart';
 
 class CeremonyBox extends StatelessWidget {
+  final AppStore store;
   final bool isRegistered = false;
   final int groupSizeAssigned = 9;
   final LatLng coordinatesOfCeremony = LatLng(47.389712, 8.517076);
@@ -25,14 +28,16 @@ class CeremonyBox extends StatelessWidget {
   final Function onPressedLocation = () => print('TODO show map');
   final Function onPressedStartCeremony = () => print('TODO start ceremony');
 
+  CeremonyBox({Key key, this.store}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     String languageCode = Localizations.localeOf(context).languageCode;
-    CeremonyPhase currentPhase = CeremonyBoxService.getCurrentPhase(registerUntilDate, nextCeremonyDate);
+    CeremonyPhase currentPhase = store.encointer.currentPhase;
     bool showRegisterButton = CeremonyBoxService.shouldShowRegisterButton(currentPhase, isRegistered);
     bool showStartCeremonyButton = CeremonyBoxService.shouldShowStartCeremonyButton(currentPhase, isRegistered);
     bool showTwoBoxes = !showRegisterButton && !showStartCeremonyButton;
-    return ListView(
+    return Column(
       children: [
         Container(
           padding: EdgeInsets.fromLTRB(24, 24, 24, 0),

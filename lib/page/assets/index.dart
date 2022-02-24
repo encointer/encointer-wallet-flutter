@@ -5,6 +5,7 @@ import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/ceremonyBox.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
@@ -264,34 +265,8 @@ class _AssetsState extends State<Assets> {
                     )
                   : Container();
             }),
-            Container(
-              decoration: BoxDecoration(
-                color: Color(0xffF4F8F9),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              height: 150,
-              width: double.infinity,
-              child: Center(
-                child: Text(
-                  "Placeholder TODO add ceremony guide",
-                  style: TextStyle(color: Colors.orange),
-                ),
-              ),
-            ),
-            SizedBox(height: 12),
-            PrimaryButton(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Iconsax.login_1),
-                  SizedBox(width: 12),
-                  Text("Register now"),
-                ],
-              ),
-              onPressed: () {
-                print("TODO register");
-              },
-            ),
+            SizedBox(height: 24),
+            CeremonyBox(),
           ],
         ),
       ),

@@ -1,6 +1,7 @@
 import 'package:intl/intl.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:add_2_calendar/add_2_calendar.dart';
+import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
 
 /// stateless service that computes some of the view logic of the ceremony box
 class CeremonyBoxService {
@@ -55,18 +56,11 @@ class CeremonyBoxService {
   }
 
   static bool shouldShowRegisterButton(CeremonyPhase currentPhase, bool isRegistered) {
-    return (currentPhase == CeremonyPhase.register && !isRegistered);
+    return (currentPhase == CeremonyPhase.REGISTERING && !isRegistered);
   }
 
   static bool shouldShowStartCeremonyButton(CeremonyPhase currentPhase, bool isRegistered) {
-    return (currentPhase == CeremonyPhase.attest && isRegistered);
-  }
-
-  static CeremonyPhase getCurrentPhase(DateTime registerUntilDate, DateTime nextCeremonyDate) {
-    DateTime now = DateTime.now();
-    if (now.compareTo(registerUntilDate) < 0) return CeremonyPhase.register;
-    if (now.compareTo(nextCeremonyDate) > 0) return CeremonyPhase.attest;
-    return CeremonyPhase.assign;
+    return (currentPhase == CeremonyPhase.ATTESTING && isRegistered);
   }
 
   /// for rendering the progress consider the following assumptions:
@@ -85,18 +79,18 @@ class CeremonyBoxService {
     int pastPhasesOffset = 0;
     int totalSubdivisions = subdivisions * (phase1register + phase2assign + phase3attest);
     switch (currentPhase) {
-      case (CeremonyPhase.register):
+      case (CeremonyPhase.REGISTERING):
         entirePhase = registerUntilDate.difference(lastCeremonyDate);
         elapsedPart = now.difference(lastCeremonyDate);
         phaseLengthCoarse = phase1register;
         break;
-      case (CeremonyPhase.assign):
+      case (CeremonyPhase.ASSIGNING):
         entirePhase = nextCeremonyDate.difference(registerUntilDate);
         elapsedPart = now.difference(registerUntilDate);
         phaseLengthCoarse = phase2assign;
         pastPhasesOffset = phase1register;
         break;
-      case (CeremonyPhase.attest):
+      case (CeremonyPhase.ATTESTING):
         entirePhase = Duration(minutes: 30); // arbitrarily defined
         elapsedPart = now.difference(nextCeremonyDate);
         phaseLengthCoarse = phase3attest;
@@ -109,8 +103,3 @@ class CeremonyBoxService {
   }
 }
 
-enum CeremonyPhase {
-  register,
-  assign,
-  attest,
-}

@@ -89,7 +89,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get attestationsSubmit => 'Anwesenheit einreichen';
   get encointerCeremony => 'Encointer Zeremonie';
   get nextCeremonyTimeLeft => 'Nächste Zeremonie ist in';
-  get nextCeremonyDate => 'Nächste Zeremonie ist am';
+  get nextCeremonyDate => 'Nächste Zeremonie:';
   get claimQr => 'Meine Behauptung der Anwesenheit';
   get claimsScanned => 'Du hast AMOUNT_PLACEHOLDER Behauptungen gescannt';
   get claimsScannedAlready => 'Letzte gescannte Behauptung wurde aktualisiert';
