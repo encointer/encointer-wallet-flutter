@@ -2,7 +2,7 @@ import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:encointer_wallet/service/ceremonyBoxService.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CeremonyInfoAndCalendar extends StatelessWidget {
   const CeremonyInfoAndCalendar({
@@ -21,8 +21,7 @@ class CeremonyInfoAndCalendar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // var dic = I18n.of(context).translationsForLocale(); // TODO should be this, delete next line
-    Translations dic = TranslationsDe();
+    var dic = I18n.of(context).translationsForLocale();
     Event calendarEventToAdd = CeremonyBoxService.createCalendarEvent(nextCeremonyDate, dic);
     bool showAddToCalendarIconButton = CeremonyBoxService.showAddToCalendarIconButton();
     return Column(

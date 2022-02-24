@@ -266,7 +266,7 @@ class _AssetsState extends State<Assets> {
                   : Container();
             }),
             SizedBox(height: 24),
-            CeremonyBox(),
+            CeremonyBox(store: store),
           ],
         ),
       ),

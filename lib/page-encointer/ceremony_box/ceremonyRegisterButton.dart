@@ -3,6 +3,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CeremonyRegisterButton extends StatelessWidget {
   const CeremonyRegisterButton({
@@ -18,8 +19,7 @@ class CeremonyRegisterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // var dic = I18n.of(context).translationsForLocale(); // TODO should be this, delete next line
-    Translations dic = TranslationsDe();
+    var dic = I18n.of(context).translationsForLocale();
     return Padding(
       padding: const EdgeInsets.only(bottom: 24.0),
       child: PrimaryButton(
