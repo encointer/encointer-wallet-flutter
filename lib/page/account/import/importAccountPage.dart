@@ -58,13 +58,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       derivePath: _derivePath,
     );
 
-    // THIS LINE CAUSES A PROBLEM IF NOT COMMENTED, but when it is uncommented and you import an already existing account (second time //Alice i.e.)
-    // you will get a warning that account already exists, if you then press cancel, you get back to a "loading spinner",
-    // which will not end unless you press the back button of the phone..
-
-    // Navigator.of(context).pop();
-
-    /// check if account duplicate
+    // check if account duplicate
     if (acc != null) {
       if (acc['error'] != null) {
         var msg = acc['error'];
@@ -86,6 +80,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
                     setState(() {
                       _submitting = false;
                     });
+                    Navigator.of(context).pop();
                     Navigator.of(context).pop();
                   },
                 ),
@@ -142,6 +137,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
                     setState(() {
                       _submitting = false;
                     });
+                    Navigator.of(context).pop();
                     Navigator.of(context).pop();
                   },
                 ),
