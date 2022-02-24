@@ -33,16 +33,15 @@ class AddAccountForm extends StatelessWidget {
                 children: <Widget>[
                   SizedBox(height: 80),
                   Text(I18n.of(context).translationsForLocale().profile.accountNameChoose,
+                      textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headline2),
                   SizedBox(height: 10),
-                  Center(
-                    child: Container(
-                      width: 300,
-                      child: Text(
-                        I18n.of(context).translationsForLocale().profile.accountNameChooseHint,
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black),
-                      ),
+                  Container(
+                    width: 300,
+                    child: Text(
+                      I18n.of(context).translationsForLocale().profile.accountNameChooseHint,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black),
                     ),
                   ),
                   SizedBox(height: 30),
