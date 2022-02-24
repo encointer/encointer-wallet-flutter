@@ -17,11 +17,13 @@ class ImportAccountForm extends StatefulWidget {
   final Function onSubmit;
 
   @override
-  _ImportAccountFormState createState() => _ImportAccountFormState();
+  _ImportAccountFormState createState() => _ImportAccountFormState(this.store);
 }
 
 // TODO: add mnemonic word check & selection
 class _ImportAccountFormState extends State<ImportAccountForm> {
+  _ImportAccountFormState(this.store);
+
   final List<String> _keyOptions = [
     AccountStore.seedTypeMnemonic,
     AccountStore.seedTypeRawSeed,
@@ -31,6 +33,8 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
   KeySelection _keySelection = KeySelection.MNEMONIC;
 
   final _formKey = GlobalKey<FormState>();
+
+  final AppStore store;
 
   final TextEditingController _keyCtrl = new TextEditingController();
   final TextEditingController _nameCtrl = new TextEditingController();
@@ -134,8 +138,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
             child: Text(I18n.of(context).translationsForLocale().home.next),
             onPressed: () async {
               if (_formKey.currentState.validate() && !(_advanceOptions.error ?? false)) {
-                widget.store.account.setNewAccountKey(
-                    _keySelection == KeySelection.MNEMONIC ? _keyCtrl.text.trim() : _nameCtrl.text.trim());
+                store.account.setNewAccount(_keyCtrl.text.trim(), store.settings.cachedPin);
 
                 widget.onSubmit({
                   'keyType': _keyOptions[_keySelection.index],
