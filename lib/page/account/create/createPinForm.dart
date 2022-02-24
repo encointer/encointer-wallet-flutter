@@ -145,14 +145,12 @@ class _CreatePinFormState extends State<CreatePinForm> {
               ),
               onPressed: () {
                 if (_formKey.currentState.validate()) {
-                  if (store.account.accountListAll.isEmpty) {
-                    store.account
-                        .setNewAccountName(this.widget.name.isNotEmpty ? this.widget.name : dic.account.createDefault);
+                  store.account
+                      .setNewAccountName(this.widget.name.isNotEmpty ? this.widget.name : dic.account.createDefault);
 
-                    store.account.setNewAccountPin(_passCtrl.text);
+                  store.account.setNewAccountPin(_passCtrl.text);
 
-                    store.settings.setPin(_passCtrl.text);
-                  }
+                  store.settings.setPin(_passCtrl.text);
 
                   widget.onSubmit();
 
