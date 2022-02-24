@@ -32,10 +32,8 @@ class AddAccountForm extends StatelessWidget {
               child: ListView(
                 children: <Widget>[
                   SizedBox(height: 80),
-                  Center(
-                    child: Text(I18n.of(context).translationsForLocale().profile.accountNameChoose,
-                        style: Theme.of(context).textTheme.headline2),
-                  ),
+                  Text(I18n.of(context).translationsForLocale().profile.accountNameChoose,
+                      style: Theme.of(context).textTheme.headline2),
                   SizedBox(height: 10),
                   Center(
                     child: Container(
@@ -43,9 +41,7 @@ class AddAccountForm extends StatelessWidget {
                       child: Text(
                         I18n.of(context).translationsForLocale().profile.accountNameChooseHint,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline2.copyWith(
-                              color: Colors.black,
-                            ),
+                        style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black),
                       ),
                     ),
                   ),
@@ -74,21 +70,18 @@ class AddAccountForm extends StatelessWidget {
               ),
             ),
             ElevatedButton(
-              style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
-              key: Key('import-account'),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Iconsax.import_2),
-                  SizedBox(width: 10),
-                  Text(I18n.of(context).translationsForLocale().home.accountImport,
-                      style: Theme.of(context).textTheme.headline3),
-                ],
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, ImportAccountPage.route);
-              },
-            ),
+                style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
+                key: Key('import-account'),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Iconsax.import_2),
+                    SizedBox(width: 10),
+                    Text(I18n.of(context).translationsForLocale().home.accountImport,
+                        style: Theme.of(context).textTheme.headline3),
+                  ],
+                ),
+                onPressed: () => Navigator.pushNamed(context, ImportAccountPage.route)),
             SizedBox(height: 10),
             PrimaryButton(
               key: Key('create-account-confirm'),
@@ -99,17 +92,15 @@ class AddAccountForm extends StatelessWidget {
                   SizedBox(width: 12),
                   Text(
                     I18n.of(context).translationsForLocale().profile.accountCreate,
-                    style: Theme.of(context).textTheme.headline3.copyWith(
-                          color: ZurichLion.shade50,
-                        ),
+                    style: Theme.of(context).textTheme.headline3.copyWith(color: ZurichLion.shade50),
                   ),
                 ],
               ),
               onPressed: () {
                 if (_formKey.currentState.validate()) {
-                  store.account
-                      .setNewAccountName(_nameCtrl.text.isNotEmpty ? _nameCtrl.text : dic.account.createDefault);
+                  var name = _nameCtrl.text.trim();
 
+                  store.account.setNewAccountName(name.isNotEmpty ? name : dic.account.createDefault);
                   store.account.setNewAccountPin(store.settings.cachedPin);
 
                   onSubmit();
