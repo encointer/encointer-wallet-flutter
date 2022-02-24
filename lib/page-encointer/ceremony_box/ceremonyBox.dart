@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremonyRegisterButton.dart';
-import 'package:encointer_wallet/service/ceremonyBoxService.dart';
 import "package:latlong2/latlong.dart";
 
 import 'ceremonyLocationButton.dart';
