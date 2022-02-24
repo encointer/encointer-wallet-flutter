@@ -74,12 +74,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context).translationsForLocale();
-    final Map<KeySelection, String> translationsByKeySelection = {
-      KeySelection.MNEMONIC: dic.account.mnemonic,
-      KeySelection.RAW_SEED: dic.account.rawSeed,
-    };
 
-    String selected = translationsByKeySelection[_keySelection];
     return Column(
       children: <Widget>[
         Expanded(
@@ -128,7 +123,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                   padding: EdgeInsets.only(left: 16, right: 16),
                   child: TextFormField(
                     decoration: InputDecoration(
-                      hintText: selected,
+                      hintText: dic.account.mnemonic,
                       labelText: dic.profile.personalKey,
                     ),
                     controller: _keyCtrl,
