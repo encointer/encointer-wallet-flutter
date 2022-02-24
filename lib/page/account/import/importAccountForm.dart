@@ -44,6 +44,33 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
     super.dispose();
   }
 
+
+  String _validateAccountSource(BuildContext context, String v) {
+    final TranslationsAccount dic = I18n.of(context).translationsForLocale().account;
+
+    String input = v.trim();
+
+    if (input.isEmpty) {
+      return null;
+    }
+
+    if (ValidateKeys.isRawSeed(input)) {
+      setState(() {
+        _keySelection = KeySelection.RAW_SEED;
+      });
+      return ValidateKeys.validateRawSeed(input) ? null : dic.importInvalidRawSeed;
+    } else if (ValidateKeys.isPrivateKey(input)) {
+      // Todo: #426
+      return dic.importPrivateKeyUnsupported;
+      // return ValidateKeys.validatePrivateKey(input);
+    } else {
+      setState(() {
+        _keySelection = KeySelection.MNEMONIC;
+      });
+      return ValidateKeys.validateMnemonic(input) ? null : dic.importInvalidMnemonic;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context).translationsForLocale();
@@ -141,24 +168,4 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
 enum KeySelection {
   MNEMONIC,
   RAW_SEED,
-}
-
-String _validateAccountSource(BuildContext context, String v) {
-  final TranslationsAccount dic = I18n.of(context).translationsForLocale().account;
-
-  String input = v.trim();
-
-  if (input.isEmpty) {
-    return null;
-  }
-
-  if (ValidateKeys.isRawSeed(input)) {
-    return ValidateKeys.validateRawSeed(input) ? null : dic.importInvalidRawSeed;
-  } else if (ValidateKeys.isPrivateKey(input)) {
-    // Todo: #426
-    return dic.importPrivateKeyUnsupported;
-    // return ValidateKeys.validatePrivateKey(input);
-  } else {
-    return ValidateKeys.validateMnemonic(input) ? null : dic.importInvalidMnemonic;
-  }
 }
