@@ -10,7 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-Future<void> _onSubmit(BuildContext context, AppStore store, Api api, bool mounted,
+Future<void> onSubmit(BuildContext context, AppStore store, Api api, bool mounted,
     {String password, bool viaQr = false, BigInt tip}) async {
   final Translations dic = I18n.of(context).translationsForLocale();
   final Map args = ModalRoute.of(context).settings.arguments;

@@ -4,6 +4,7 @@ import 'package:encointer_wallet/common/components/TapTooltip.dart';
 import 'package:encointer_wallet/common/components/addressFormItem.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/page/account/txConfirmLogic.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactListPage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
@@ -30,6 +31,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
   _TxConfirmPageState(this.store);
 
   final AppStore store;
+  final api = webApi;
 
   bool appConnected = true;
 
@@ -80,30 +82,6 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
     _getTxFee(reload: true);
   }
 
-  void _onTxFinish(BuildContext context, Map res, Function(BuildContext, Map) onTxFinish) {
-    print('callback triggered, blockHash: ${res['hash']}');
-    store.assets.setSubmitting(false);
-
-    onTxFinish(context, res);
-
-    if (mounted) {
-      ScaffoldMessenger.of(context).removeCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: Colors.white,
-        content: ListTile(
-          leading: Container(
-            width: 24,
-            child: Image.asset('assets/images/assets/success.png'),
-          ),
-          title: Text(
-            I18n.of(context).translationsForLocale().assets.success,
-            style: TextStyle(color: Colors.black54),
-          ),
-        ),
-        duration: Duration(seconds: 2),
-      ));
-    }
-  }
 
   Future<bool> _validateProxy() async {
     List proxies = await webApi.account.queryRecoveryProxies([_proxyAccount.address]);
@@ -148,7 +126,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
               I18n.of(context).translationsForLocale().home.unlock,
               key: Key('password-input-field'),
             ),
-            (password) => _onSubmit(context, password: password));
+            (password) => onSubmit(context, store, api, mounted, password: password));
       },
     );
   }
@@ -401,10 +379,8 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
                           style: TextStyle(color: Colors.white),
                         ),
                         onPressed: isUnsigned
-                            ? () => _onSubmit(context)
-                            : (isObservation && _proxyAccount == null) || isProxyObservation
-                                ? () => _onSubmit(context, viaQr: true)
-                                : store.assets.submitting
+                            ? () => onSubmit(context, store, api, mounted)
+                            : store.assets.submitting
                                     ? null
                                     : () => _showPasswordDialog(context),
                       ),
