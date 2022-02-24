@@ -222,23 +222,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     return Scaffold(
       appBar: AppBar(title: Text(I18n.of(context).translationsForLocale().home.accountImport)),
       body: SafeArea(
-        child:
-            // TextFormField(
-            //   key: Key('create-account-name'),
-            //   decoration: InputDecoration(
-            //     enabledBorder: const OutlineInputBorder(
-            //       // width: 0.0 produces a thin "hairline" border
-            //       borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
-            //       borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
-            //     ),
-            //     filled: true,
-            //     fillColor: ZurichLion.shade50,
-            //     // hintText: dic.account.createHint,
-            //     labelText: I18n.of(context).translationsForLocale().profile.accountName,
-            //   ),
-            //   controller: _nameCtrl,
-            // ),
-            !_submitting
+        child: !_submitting
                 ? ImportAccountForm(store, (Map<String, dynamic> data) {
                     setState(() {
                       _keyType = data['keyType'];
