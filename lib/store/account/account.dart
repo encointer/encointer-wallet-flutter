@@ -103,6 +103,11 @@ abstract class _AccountStore with Store {
   }
 
   @computed
+  bool get isFirstAccount {
+    return accountListAll.isEmpty;
+  }
+
+  @computed
   String get currentAddress {
 //    int ss58 = rootStore.settings.endpoint.ss58;
     int ss58 = rootStore.settings.customSS58Format['value'];

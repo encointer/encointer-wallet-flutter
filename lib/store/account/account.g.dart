@@ -27,6 +27,12 @@ mixin _$AccountStore on _AccountStore, Store {
   List<AccountData> get accountListAll => (_$accountListAllComputed ??=
           Computed<List<AccountData>>(() => super.accountListAll, name: '_AccountStore.accountListAll'))
       .value;
+  Computed<bool> _$isFirstAccountComputed;
+
+  @override
+  bool get isFirstAccount =>
+      (_$isFirstAccountComputed ??= Computed<bool>(() => super.isFirstAccount, name: '_AccountStore.isFirstAccount'))
+          .value;
   Computed<String> _$currentAddressComputed;
 
   @override
@@ -457,6 +463,7 @@ queuedTxs: ${queuedTxs},
 currentAccount: ${currentAccount},
 optionalAccounts: ${optionalAccounts},
 accountListAll: ${accountListAll},
+isFirstAccount: ${isFirstAccount},
 currentAddress: ${currentAddress}
     ''';
   }
