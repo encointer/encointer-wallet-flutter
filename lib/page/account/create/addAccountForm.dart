@@ -9,11 +9,10 @@ import 'package:iconsax/iconsax.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class AddAccountForm extends StatelessWidget {
-  AddAccountForm({this.isImporting, this.submitting, this.onSubmit, this.store});
+  AddAccountForm({this.submitting, this.onSubmit, this.store});
   final Function onSubmit;
   final bool submitting;
   final AppStore store;
-  final bool isImporting;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -72,34 +71,6 @@ class AddAccountForm extends StatelessWidget {
               ],
             ),
           ),
-          !isImporting
-              ? Padding(
-                  padding: EdgeInsets.fromLTRB(16, 0, 16, 0),
-                  child: Container(
-                    child: Center(
-                      child: SizedBox(
-                        width: double.infinity,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
-                          key: Key('import-account'),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Iconsax.import_2),
-                              SizedBox(width: 10),
-                              Text(I18n.of(context).translationsForLocale().home.accountImport,
-                                  style: Theme.of(context).textTheme.headline3),
-                            ],
-                          ),
-                          onPressed: () {
-                            Navigator.pushNamed(context, ImportAccountPage.route);
-                          },
-                        ),
-                      ),
-                    ),
-                  ),
-                )
-              : Container(),
           Container(
             key: Key('create-account-confirm'),
             padding: EdgeInsets.all(16),

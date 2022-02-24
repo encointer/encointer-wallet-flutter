@@ -45,8 +45,7 @@ class _ProfileState extends State<Profile> {
   }
 
   Future<void> _onAddAccount() async {
-    var arg = {'isImporting': false};
-    Navigator.of(context).pushNamed(AddAccountPage.route, arguments: arg);
+    Navigator.of(context).pushNamed(AddAccountPage.route);
   }
 
   // What type is a reputations? is it a string?
