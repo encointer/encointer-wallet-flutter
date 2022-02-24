@@ -20,7 +20,6 @@ class ImportAccountForm extends StatefulWidget {
   _ImportAccountFormState createState() => _ImportAccountFormState(this.store);
 }
 
-// TODO: add mnemonic word check & selection
 class _ImportAccountFormState extends State<ImportAccountForm> {
   _ImportAccountFormState(this.store);
 
