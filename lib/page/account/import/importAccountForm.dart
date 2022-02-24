@@ -91,10 +91,13 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                     style: Theme.of(context).textTheme.headline2,
                   ),
                   SizedBox(height: 10),
-                  Text(
-                    I18n.of(context).translationsForLocale().profile.personalKeyEnter,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16),
+                    child: Text(
+                      I18n.of(context).translationsForLocale().profile.personalKeyEnter,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black),
+                    ),
                   ),
                   SizedBox(height: 30),
                   TextFormField(
