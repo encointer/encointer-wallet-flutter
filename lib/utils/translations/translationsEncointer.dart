@@ -2,7 +2,8 @@
 /// always add a new getter here in the abstract class first, then generate/implement the getters in the subclasses
 abstract class TranslationsEncointer {
   String get registerParticipant;
-  String get attestationsSubmit;
+  String get claimsSubmit;
+  String get claimsPurge;
   String get ceremony;
   String get ceremonyNext;
   String get claimQr;
@@ -37,7 +38,8 @@ abstract class TranslationsEncointer {
 
 class TranslationsEnEncointer implements TranslationsEncointer {
   get registerParticipant => 'Register Participant';
-  get attestationsSubmit => 'Submit attestations';
+  get claimsSubmit => 'Submit claims';
+  get claimsPurge => 'Purge previously scanned claims';
   get ceremony => 'Encointer Ceremony';
   get ceremonyNext => 'Next ceremony will happen at high sun on:';
   get claimQr => 'My Claim of Attendance';
@@ -72,7 +74,8 @@ class TranslationsEnEncointer implements TranslationsEncointer {
 
 class TranslationsDeEncointer implements TranslationsEncointer {
   get registerParticipant => 'Registeriere Teilnehmer';
-  get attestationsSubmit => 'Attestierungen einreichen';
+  get claimsSubmit => 'Meetupbestätigung einreichen';
+  get claimsPurge => 'Bereits gescannte Meetupbestätigung löschen';
   get ceremony => 'Encointer Zeremonie';
   get ceremonyNext => 'Nächste Zeremonie findet statt am Mittag am:';
   get claimQr => 'Meine Behauptung der Anwesenheit';
@@ -107,7 +110,8 @@ class TranslationsDeEncointer implements TranslationsEncointer {
 
 class TranslationsZhEncointer implements TranslationsEncointer {
   get registerParticipant => '注册参与者';
-  get attestationsSubmit => '提交证明';
+  get claimsSubmit => '提交证明';
+  get claimsPurge => throw UnimplementedError();
   get ceremony => 'Encointer 仪式';
   get ceremonyNext => '下一个仪式将在烈日下举行：';
   get claimQr => '我的出席声明';
