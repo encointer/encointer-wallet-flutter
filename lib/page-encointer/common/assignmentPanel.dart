@@ -51,7 +51,17 @@ class _AssignmentPanelState extends State<AssignmentPanel> {
                                           .toIso8601String()),
                                       Text("at location:"),
                                       ElevatedButton(
-                                        child: Text("Show location on the map"),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min ,
+                                          children: [
+                                            Icon(
+                                              Icons.location_on,
+                                              size: 25,
+                                              color: Colors.blueAccent,
+                                            ),
+                                            Text(dic.encointer.meetupLocation),
+                                          ],
+                                        ),
                                         onPressed: () => Navigator.push(
                                           context,
                                           MaterialPageRoute(
