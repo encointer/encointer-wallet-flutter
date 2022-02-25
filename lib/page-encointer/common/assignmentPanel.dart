@@ -52,7 +52,7 @@ class _AssignmentPanelState extends State<AssignmentPanel> {
                                       Text("at location:"),
                                       ElevatedButton(
                                         child: Row(
-                                          mainAxisSize: MainAxisSize.min ,
+                                          mainAxisSize: MainAxisSize.min,
                                           children: [
                                             Icon(
                                               Icons.location_on,
