@@ -67,7 +67,7 @@ class _AttestingPageState extends State<AttestingPage> {
                   children: [Text(dic.encointer.claimsPurge)],
                 ),
                 onPressed: () =>
-                    store.encointer.scannedClaimsCount > 0 ? store.encointer.purgeParticipantsClaims() : null,
+                    store.encointer.scannedClaimsCount > 0 ? _confirmPurgeClaimsDialog(context, store) : null,
               ),
             ],
           ),
@@ -93,4 +93,32 @@ class _AttestingPageState extends State<AttestingPage> {
     };
     Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
   }
+}
+
+void _confirmPurgeClaimsDialog(BuildContext context, AppStore store) {
+  var dic = I18n
+      .of(context)
+      .translationsForLocale();
+
+  showCupertinoDialog(
+    context: context,
+    builder: (_) {
+      return CupertinoAlertDialog(
+        title: Text(dic.encointer.claimsPurgeConfirm),
+        actions: <Widget>[
+          CupertinoButton(
+            child: Text(dic.home.cancel),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          CupertinoButton(
+            child: Text(dic.home.ok),
+            onPressed: () {
+              store.encointer.purgeParticipantsClaims();
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
