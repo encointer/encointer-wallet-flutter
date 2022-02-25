@@ -30,12 +30,10 @@ void main() {
       await driver.tap(find.byValueKey('account-source'));
       await driver.enterText(endoEncointer['mnemonic']);
 
-      await driver.tap(find.byValueKey('account-import-next'));
-
       await driver.tap(find.byValueKey('create-account-name'));
       await driver.enterText(endoEncointer['name']);
 
-      await driver.tap(find.byValueKey('create-account-next'));
+      await driver.tap(find.byValueKey('account-import-next'));
 
       await driver.tap(find.byValueKey('create-account-pin'));
       await driver.enterText(defaultPin);
