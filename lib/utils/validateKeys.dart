@@ -3,6 +3,11 @@ import 'package:bip39/bip39.dart' as bip39;
 class ValidateKeys {
   static bool isPrivateKey(String privateKey) {
     privateKey = privateKey.trim();
+
+    if (privateKey.length == 1) {
+      return privateKey.startsWith("0");
+    }
+
     return (privateKey.length >= 2) && privateKey.substring(0, 2) == "0x";
   }
 
