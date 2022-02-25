@@ -31,39 +31,46 @@ class _AttestingPageState extends State<AttestingPage> {
     return SafeArea(
       child: Column(children: <Widget>[
         AssignmentPanel(store),
-        ListView(
-          shrinkWrap: true,
-          children: <Widget>[
-            SizedBox(height: 16),
-            Observer(
-              builder: (_) => ((store.encointer.meetupIndex == null) | (store.encointer.meetupIndex == 0))
-                  ? Text(dic.encointer.meetupNotAssigned)
-                  : PrimaryButton(
-                      key: Key('start-meetup'),
-                      child: Text(dic.encointer.meetupStart),
-                      onPressed: () => startMeetup(context, store),
-                    ),
-            ),
-            SizedBox(height: 16),
-            Observer(
-              builder: (_) => Text(
-                dic.encointer.claimsScanned
-                    .replaceAll('AMOUNT_PLACEHOLDER', store.encointer.scannedClaimsCount.toString()),
-                style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            SizedBox(height: 16),
-            ElevatedButton(
+        Observer(
+          builder: (_) => ListView(
+            shrinkWrap: true,
+            children: <Widget>[
+              SizedBox(height: 16),
+              ((store.encointer.meetupIndex == null) | (store.encointer.meetupIndex == 0))
+                    ? Text(dic.encointer.meetupNotAssigned)
+                    : PrimaryButton(
+                        key: Key('start-meetup'),
+                        child: Text(dic.encointer.meetupStart),
+                        onPressed: () => startMeetup(context, store),
+                      ),
+              SizedBox(height: 16),
+              Text(
+                  dic.encointer.claimsScanned
+                      .replaceAll('AMOUNT_PLACEHOLDER', store.encointer.scannedClaimsCount.toString()),
+                  style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
+                  textAlign: TextAlign.center,
+                ),
+              SizedBox(height: 16),
+              ElevatedButton(
                 style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(dic.encointer.attestationsSubmit)
-                  ],
+                  children: [Text(dic.encointer.claimsSubmit)],
                 ),
-                onPressed: () =>  store.encointer.scannedClaimsCount > 0 ? () => _submit(context) : null),
-          ],
+                onPressed: () => store.encointer.scannedClaimsCount > 0 ? () => _submit(context) : null,
+              ),
+              SizedBox(height: 16),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [Text(dic.encointer.claimsPurge)],
+                ),
+                onPressed: () =>
+                    store.encointer.scannedClaimsCount > 0 ? store.encointer.purgeParticipantsClaims() : null,
+              ),
+            ],
+          ),
         ),
       ]),
     );
