@@ -60,7 +60,7 @@ class _AssignmentPanelState extends State<AssignmentPanel> {
                                                 widget.store,
                                                 popupBuilder: (BuildContext context, Marker marker) => SizedBox(),
                                                 markers: buildMarkers(meetupLocation),
-                                                title: "TODO dic entry show meetup location",
+                                                title: dic.encointer.meetupLocation,
                                                 center: meetupLocation,
                                                 initialZoom: initialZoom,
                                               );
