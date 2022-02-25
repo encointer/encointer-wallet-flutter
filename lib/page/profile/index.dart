@@ -45,8 +45,7 @@ class _ProfileState extends State<Profile> {
   }
 
   Future<void> _onAddAccount() async {
-    var arg = {'isImporting': false};
-    Navigator.of(context).pushNamed(AddAccountPage.route, arguments: arg);
+    Navigator.of(context).pushNamed(AddAccountPage.route);
   }
 
   // What type is a reputations? is it a string?
@@ -98,7 +97,7 @@ class _ProfileState extends State<Profile> {
                 ),
                 Positioned(
                   bottom: 0, right: 0, //give the values according to your requirement
-                  child: Icon(Iconsax.edit, color: ZurichLion.shade500),
+                  child: Icon(Iconsax.edit, color: ZurichLion.shade50),
                 ),
               ],
             ),

@@ -27,6 +27,12 @@ mixin _$AccountStore on _AccountStore, Store {
   List<AccountData> get accountListAll => (_$accountListAllComputed ??=
           Computed<List<AccountData>>(() => super.accountListAll, name: '_AccountStore.accountListAll'))
       .value;
+  Computed<bool> _$isFirstAccountComputed;
+
+  @override
+  bool get isFirstAccount =>
+      (_$isFirstAccountComputed ??= Computed<bool>(() => super.isFirstAccount, name: '_AccountStore.isFirstAccount'))
+          .value;
   Computed<String> _$currentAddressComputed;
 
   @override
@@ -329,10 +335,20 @@ mixin _$AccountStore on _AccountStore, Store {
   }
 
   @override
-  void setNewAccount(String name, String password) {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setNewAccount');
+  void setNewAccountName(String name) {
+    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setNewAccountName');
     try {
-      return super.setNewAccount(name, password);
+      return super.setNewAccountName(name);
+    } finally {
+      _$_AccountStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setNewAccountPin(String pin) {
+    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setNewAccountPin');
+    try {
+      return super.setNewAccountPin(pin);
     } finally {
       _$_AccountStoreActionController.endAction(_$actionInfo);
     }
@@ -457,6 +473,7 @@ queuedTxs: ${queuedTxs},
 currentAccount: ${currentAccount},
 optionalAccounts: ${optionalAccounts},
 accountListAll: ${accountListAll},
+isFirstAccount: ${isFirstAccount},
 currentAddress: ${currentAddress}
     ''';
   }

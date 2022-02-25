@@ -180,7 +180,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                     _submitting ? CupertinoActivityIndicator() : Container(),
                     Text(
                       dic.profile.contactSave,
-                      style: Theme.of(context).textTheme.headline3.copyWith(color: encointerLightBlue),
+                      style: Theme.of(context).textTheme.headline3.copyWith(color: ZurichLion.shade50),
                     ),
                   ],
                 ),

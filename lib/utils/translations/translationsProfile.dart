@@ -26,6 +26,7 @@ abstract class TranslationsProfile {
   String get contactSave;
   String get copiedToClipBoard;
   String get delete;
+  String get detailsEnter;
   String get deleteConfirm;
   String get developer;
   String get enableBazaar;
@@ -74,9 +75,11 @@ abstract class TranslationsProfile {
   String get accountNameChoose;
   String get accountName;
   String get import;
+  String get personalKeyEnter;
   String get pinHint;
   String get pinInfo;
   String get pinSecure;
+  String get personalKey;
   String get recoveryProxy;
   String get ceremonies;
   String get tokenSend;
@@ -132,6 +135,9 @@ class TranslationsEnProfile implements TranslationsProfile {
   get passInfo =>
       'PIN should consist of at least 4 digits. If the PIN is lost, there is no option to restore the account unless you made a backup via the profile page.';
   get passSecure => 'Secure your account with a PIN.';
+  get personalKey => 'Personal key';
+  get detailsEnter => 'Enter your details.';
+  get personalKeyEnter => 'Please enter your personal key (12 words) to import the new account.';
   get reputationHistory => 'Reputation history';
   get reputationOverall => 'Overall reputation';
   get passOld => 'Current PIN';
@@ -218,12 +224,15 @@ class TranslationsDeProfile implements TranslationsProfile {
   get passInfo =>
       'PIN muss mindestens 4 Ziffern enthalten. Bei PIN-Verlust ist der Account nicht wiederherstellbar, ausser man hat ein Backup auf der Profilseite gemacht.';
   get passSecure => 'Sichere dein Konto mit einem PIN.';
+  get detailsEnter => 'Gib deine Details ein.';
+  get personalKeyEnter => 'Gib deinen persönlichen Key ein (12 Wörter), um dein Konto zu importieren.';
   get reputationHistory => 'Reputation History';
   get reputationOverall => 'Allgemeine Reputation';
   get passOld => 'Aktuelle PIN';
   get passSuccess => 'Erfolgreich';
   get passSuccessTxt => 'PIN wurde erfolgreich geändert';
   get receiverAccount => 'Empfangendes Konto:';
+  get personalKey => 'Persönlicher Key';
   get qrScanHint => 'Gib den Betrag, den du erhalten möchtest ein und lasse den Sender den QR Code scannen.';
   get qrScanHintAccount => 'Bitte den Empfänger den QR-Code in der Encointer App zu scannen.';
   get sendLink => 'Link senden';
@@ -332,6 +341,9 @@ class TranslationsZhProfile implements TranslationsProfile {
   get reputationOverall => throw UnimplementedError();
   get accountsDelete => throw UnimplementedError();
   get accountsDeleteAll => throw UnimplementedError();
+  get personalKeyEnter => throw UnimplementedError();
+  get detailsEnter => throw UnimplementedError();
+  get personalKey => throw UnimplementedError();
   get enableBazaar => throw UnimplementedError();
   get noMnemonic => throw UnimplementedError();
   get noMnemonicTxt => throw UnimplementedError();

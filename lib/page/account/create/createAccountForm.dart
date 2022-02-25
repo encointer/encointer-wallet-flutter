@@ -10,7 +10,7 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class CreateAccountForm extends StatelessWidget {
   CreateAccountForm({this.store});
-//todo get rid of the setNewAccount method where password is stored
+
   final AppStore store;
 
   final _formKey = GlobalKey<FormState>();
@@ -59,7 +59,7 @@ class CreateAccountForm extends StatelessWidget {
                           borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
                         ),
                         filled: true,
-                        fillColor: encointerLightBlue,
+                        fillColor: ZurichLion.shade50,
                         hintText: dic.account.createHint,
                         labelText: I18n.of(context).translationsForLocale().profile.accountName,
                       ),
@@ -82,15 +82,15 @@ class CreateAccountForm extends StatelessWidget {
                   Text(
                     dic.account.next,
                     style: Theme.of(context).textTheme.headline3.copyWith(
-                          color: encointerLightBlue,
+                          color: ZurichLion.shade50,
                         ),
                   ),
                 ],
               ),
               onPressed: () {
                 if (_formKey.currentState.validate()) {
-                  var args = {"name": '${_nameCtrl.text}'};
-                  Navigator.pushNamed(context, CreatePinPage.route, arguments: args);
+                  store.account.setNewAccountName(_nameCtrl.text.trim());
+                  Navigator.pushNamed(context, CreatePinPage.route);
                 }
               },
             ),

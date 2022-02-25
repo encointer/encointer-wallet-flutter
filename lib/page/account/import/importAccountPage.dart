@@ -1,5 +1,4 @@
-import 'package:encointer_wallet/page/account/create/addAccountForm.dart';
-import 'package:encointer_wallet/page/account/create/createAccountForm.dart';
+import 'package:encointer_wallet/page/account/create/createPinForm.dart';
 import 'package:encointer_wallet/page/account/import/importAccountForm.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -24,11 +23,19 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
 
   final AppStore store;
 
-  int _step = 0;
   String _keyType = '';
   String _cryptoType = '';
   String _derivePath = '';
   bool _submitting = false;
+  Stage _stage = Stage.import;
+
+  final TextEditingController _nameCtrl = new TextEditingController();
+
+  @override
+  void dispose() {
+    _nameCtrl.dispose();
+    super.dispose();
+  }
 
   Future<void> _importAccount() async {
     setState(() {
@@ -51,9 +58,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       derivePath: _derivePath,
     );
 
-    Navigator.of(context).pop();
-
-    /// check if account duplicate
+    // check if account duplicate
     if (acc != null) {
       if (acc['error'] != null) {
         var msg = acc['error'];
@@ -73,9 +78,10 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
                   child: Text(I18n.of(context).translationsForLocale().home.ok),
                   onPressed: () {
                     setState(() {
-                      _step = 0;
+                      _stage = Stage.import;
                       _submitting = false;
                     });
+                    Navigator.of(context).pop();
                     Navigator.of(context).pop();
                   },
                 ),
@@ -133,6 +139,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
                       _submitting = false;
                     });
                     Navigator.of(context).pop();
+                    Navigator.of(context).pop();
                   },
                 ),
                 CupertinoButton(
@@ -171,63 +178,48 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    if (_step == 1) {
-      return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            I18n.of(context).translationsForLocale().home.accountImport,
-            style: Theme.of(context).textTheme.headline3,
-          ),
-          centerTitle: true,
-          backgroundColor: Colors.transparent,
-          shadowColor: Colors.transparent,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
-            onPressed: () {
-              setState(() {
-                _step = 0;
-              });
-            },
-          ),
-        ),
-        body: SafeArea(
-          child: !_submitting && store.account.accountListAll.isEmpty
-              ? CreateAccountForm(store: store)
-              : (!_submitting && store.account.accountListAll.isNotEmpty)
-                  ? AddAccountForm(
-                      isImporting: true,
-                      setNewAccount: store.account.setNewAccount,
-                      submitting: _submitting,
-                      onSubmit: _importAccount,
-                      store: store)
-                  : Center(child: CupertinoActivityIndicator()),
-        ),
-      );
-    }
-    // todo what are the different steps 1 and 0? do i need here to add also the AddAccountForm?
     return Scaffold(
-      appBar: AppBar(title: Text(I18n.of(context).translationsForLocale().home.accountImport)),
+      appBar: AppBar(
+          title: Text(I18n.of(context).translationsForLocale().home.accountImport),
+          leading: _stage == Stage.createPin
+              ? IconButton(
+                  icon: Icon(Icons.arrow_back_ios),
+                  onPressed: () {
+                    setState(() {
+                      _stage = Stage.import;
+                    });
+                  },
+                )
+              : null // null means the regular pack button is used leading back to the entry page
+          ),
       body: SafeArea(
-        child: !_submitting
-            ? ImportAccountForm(store, (Map<String, dynamic> data) {
-                if (data['finish'] == null) {
-                  setState(() {
-                    _keyType = data['keyType'];
-                    _cryptoType = data['cryptoType'];
-                    _derivePath = data['derivePath'];
-                    _step = 1;
-                  });
-                } else {
-                  setState(() {
-                    _keyType = data['keyType'];
-                    _cryptoType = data['cryptoType'];
-                    _derivePath = data['derivePath'];
-                  });
-                  _importAccount();
-                }
-              })
-            : Center(child: CupertinoActivityIndicator()),
+        child: !_submitting ? _getImportOrPinForm() : Center(child: CupertinoActivityIndicator()),
       ),
     );
   }
+
+  Widget _getImportOrPinForm() {
+    if (_stage == Stage.import) {
+      return ImportAccountForm(store, (Map<String, dynamic> data) {
+        setState(() {
+          _keyType = data['keyType'];
+          _cryptoType = data['cryptoType'];
+          _derivePath = data['derivePath'];
+        });
+
+        if (store.account.isFirstAccount) {
+          setState(() {
+            _stage = Stage.createPin;
+          });
+        } else {
+          store.account.setNewAccountPin(store.settings.cachedPin);
+          _importAccount();
+        }
+      });
+    } else {
+      return CreatePinForm(onSubmit: _importAccount, store: store);
+    }
+  }
 }
+
+enum Stage { import, createPin }

@@ -4,24 +4,36 @@ import 'package:encointer_wallet/page-encointer/common/communityChooserOnMap.dar
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
-class CreatePinForm extends StatelessWidget {
-  CreatePinForm({this.setNewAccount, this.submitting, this.onSubmit, this.name, this.store});
-//todo get rid of the setNewAccount method where password is stored
-  final Function setNewAccount;
+class CreatePinForm extends StatefulWidget {
+  CreatePinForm({this.onSubmit, this.store});
   final Function onSubmit;
-  final bool submitting;
   final AppStore store;
-  final String name;
+
+  @override
+  _CreatePinFormState createState() => _CreatePinFormState(store);
+}
+
+class _CreatePinFormState extends State<CreatePinForm> {
+  _CreatePinFormState(this.store);
+
+  final AppStore store;
 
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _passCtrl = new TextEditingController();
   final TextEditingController _pass2Ctrl = new TextEditingController();
+
+  @override
+  void dispose() {
+    _passCtrl.dispose();
+    _pass2Ctrl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +75,7 @@ class CreatePinForm extends StatelessWidget {
                       borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
                     ),
                     filled: true,
-                    fillColor: encointerLightBlue,
+                    fillColor: ZurichLion.shade50,
                     hintText: dic.account.createPassword,
                     labelText: dic.account.createPassword,
                   ),
@@ -126,21 +138,16 @@ class CreatePinForm extends StatelessWidget {
               child: Text(
                 I18n.of(context).translationsForLocale().account.create,
                 style: Theme.of(context).textTheme.headline3.copyWith(
-                      color: encointerLightBlue,
+                      color: ZurichLion.shade50,
                     ),
               ),
               onPressed: () {
                 if (_formKey.currentState.validate()) {
-                  if (store.account.accountListAll.isEmpty) {
-                    setNewAccount(this.name.isNotEmpty ? this.name : dic.account.createDefault, _passCtrl.text);
-                    store.settings.setPin(_passCtrl.text);
-                  } else {
-                    // cachedPin won't be empty, because cachedPin is verified not to be empty before user adds an account in profile/index.dart
-                    setNewAccount(
-                        this.name.isNotEmpty ? this.name : dic.account.createDefault, store.settings.cachedPin);
-                  }
+                  store.account.setNewAccountPin(_passCtrl.text);
 
-                  onSubmit();
+                  store.settings.setPin(_passCtrl.text);
+
+                  widget.onSubmit();
 
                   // Even if we do not choose a community, we go back to the home screen.
                   Navigator.popUntil(context, ModalRoute.withName('/'));
