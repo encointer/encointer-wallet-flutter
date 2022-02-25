@@ -37,19 +37,19 @@ class _AttestingPageState extends State<AttestingPage> {
             children: <Widget>[
               SizedBox(height: 16),
               ((store.encointer.meetupIndex == null) | (store.encointer.meetupIndex == 0))
-                    ? Text(dic.encointer.meetupNotAssigned)
-                    : PrimaryButton(
-                        key: Key('start-meetup'),
-                        child: Text(dic.encointer.meetupStart),
-                        onPressed: () => startMeetup(context, store),
-                      ),
+                  ? Text(dic.encointer.meetupNotAssigned)
+                  : PrimaryButton(
+                      key: Key('start-meetup'),
+                      child: Text(dic.encointer.meetupStart),
+                      onPressed: () => startMeetup(context, store),
+                    ),
               SizedBox(height: 16),
               Text(
-                  dic.encointer.claimsScanned
-                      .replaceAll('AMOUNT_PLACEHOLDER', store.encointer.scannedClaimsCount.toString()),
-                  style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
-                  textAlign: TextAlign.center,
-                ),
+                dic.encointer.claimsScanned
+                    .replaceAll('AMOUNT_PLACEHOLDER', store.encointer.scannedClaimsCount.toString()),
+                style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
+                textAlign: TextAlign.center,
+              ),
               SizedBox(height: 16),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
