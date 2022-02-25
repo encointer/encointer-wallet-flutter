@@ -49,6 +49,13 @@ void main() {
     test('validateMnemonic works', () {
       // length ok, but not part of the bip39 dic.
       expect(ValidateKeys.validateMnemonic("a a a a a a a a a a a a"), false);
+
+      // valid bip39, but illegal length.
+      expect(
+        ValidateKeys.validateMnemonic("spray trust gown toast route merge awful sight ghost all degree"),
+        false,
+      );
+
       expect(
         ValidateKeys.validateMnemonic("spray trust gown toast route merge awful sight ghost all degree exit"),
         true,
