@@ -96,9 +96,7 @@ class _AttestingPageState extends State<AttestingPage> {
 }
 
 void _confirmPurgeClaimsDialog(BuildContext context, AppStore store) {
-  var dic = I18n
-      .of(context)
-      .translationsForLocale();
+  var dic = I18n.of(context).translationsForLocale();
 
   showCupertinoDialog(
     context: context,
