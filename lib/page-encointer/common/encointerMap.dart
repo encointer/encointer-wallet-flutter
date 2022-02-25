@@ -6,6 +6,8 @@ import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import "package:latlong2/latlong.dart";
 
 class EncointerMap extends StatelessWidget {
+  EncointerMap(this.store, {this.popupBuilder, this.markers, this.title, this.center, this.initialZoom = 0});
+
   final AppStore store;
 
   /// Used to trigger showing/hiding of popups.
@@ -15,8 +17,6 @@ class EncointerMap extends StatelessWidget {
   final String title;
   final LatLng center;
   final double initialZoom;
-
-  EncointerMap(this.store, {this.popupBuilder, this.markers, this.title, this.center, this.initialZoom = 0});
 
   @override
   Widget build(BuildContext context) {
