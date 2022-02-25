@@ -51,6 +51,18 @@ class ScanPage extends StatelessWidget {
     }
 
     return Scaffold(
+      appBar: AppBar(
+        leading: Container(),
+        actions: [
+          IconButton(
+            key: Key('close-scanner'),
+            icon: Icon(Icons.close),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          )
+        ],
+      ),
       body: SafeArea(
         child: FutureBuilder<bool>(
           future: canOpenCamera(),
