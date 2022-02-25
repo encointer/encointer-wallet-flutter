@@ -74,8 +74,8 @@ class TranslationsEnEncointer implements TranslationsEncointer {
 
 class TranslationsDeEncointer implements TranslationsEncointer {
   get registerParticipant => 'Registeriere Teilnehmer';
-  get claimsSubmit => 'Meetupbestätigung einreichen';
-  get claimsPurge => 'Bereits gescannte Meetupbestätigung löschen';
+  get claimsSubmit => 'Meetupbestätigungen einreichen';
+  get claimsPurge => 'Bereits gescannte Meetupbestätigungen löschen';
   get ceremony => 'Encointer Zeremonie';
   get ceremonyNext => 'Nächste Zeremonie findet statt am Mittag am:';
   get claimQr => 'Meine Behauptung der Anwesenheit';
