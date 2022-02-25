@@ -8,7 +8,7 @@ class ValidateKeys {
       return privateKey.startsWith("0");
     }
 
-    return (privateKey.length >= 2) && privateKey.substring(0, 2) == "0x";
+    return (privateKey.length >= 2) && privateKey.startsWith("0x");
   }
 
   static bool validatePrivateKey(String privateKey) {
@@ -18,12 +18,17 @@ class ValidateKeys {
 
   static bool isRawSeed(String seed) {
     seed = seed.trim();
-    return seed.isNotEmpty && (seed.length >= 2) && seed.substring(0, 2) == '//';
+
+    if (seed.length == 1) {
+      return seed.startsWith('/');
+    }
+
+    return (seed.length >= 2) && seed.startsWith('//');
   }
 
   static bool validateRawSeed(String seed) {
     seed = seed.trim();
-    return isRawSeed(seed) && (seed.length > 2) && (seed.length <= 32 || seed.length == 66);
+    return isRawSeed(seed) && (seed.length > 2) && (seed.length <= 32);
   }
 
   static bool validateMnemonic(String mnemonic) {
