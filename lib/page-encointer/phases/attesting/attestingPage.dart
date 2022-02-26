@@ -57,7 +57,7 @@ class _AttestingPageState extends State<AttestingPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [Text(dic.encointer.claimsSubmit)],
                 ),
-                onPressed: () => store.encointer.scannedClaimsCount > 0 ? () => _submit(context) : null,
+                onPressed: () => store.encointer.scannedClaimsCount > 0 ? _submit(context) : null,
               ),
               SizedBox(height: 16),
               ElevatedButton(
