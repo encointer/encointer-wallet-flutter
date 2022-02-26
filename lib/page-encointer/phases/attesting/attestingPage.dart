@@ -1,14 +1,14 @@
-import 'package:encointer_wallet/common/components/roundedButton.dart';
-import 'package:encointer_wallet/common/components/roundedCard.dart';
+import 'package:encointer_wallet/common/components/gradientElements.dart';
+import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/common/assignmentPanel.dart';
 import 'package:encointer_wallet/page-encointer/meetup/startMeetup.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class AttestingPage extends StatefulWidget {
   AttestingPage(this.store);
@@ -31,37 +31,47 @@ class _AttestingPageState extends State<AttestingPage> {
     return SafeArea(
       child: Column(children: <Widget>[
         AssignmentPanel(store),
-        SizedBox(height: 16),
-        Container(
-          width: double.infinity,
-          child: RoundedCard(
-            padding: EdgeInsets.all(8),
-            child: Column(children: <Widget>[
-              Observer(
-                builder: (_) => ((store.encointer.meetupIndex == null) | (store.encointer.meetupIndex == 0))
-                    ? Text(dic.encointer.meetupNotAssigned)
-                    : Container(
-                        key: Key('start-meetup'),
-                        child: RoundedButton(
-                            text: dic.encointer.meetupStart, onPressed: () => startMeetup(context, store))),
+        Observer(
+          builder: (_) => ListView(
+            shrinkWrap: true,
+            children: <Widget>[
+              SizedBox(height: 16),
+              ((store.encointer.meetupIndex == null) | (store.encointer.meetupIndex == 0))
+                  ? Text(dic.encointer.meetupNotAssigned)
+                  : PrimaryButton(
+                      key: Key('start-meetup'),
+                      child: Text(dic.encointer.meetupStart),
+                      onPressed: () => startMeetup(context, store),
+                    ),
+              SizedBox(height: 16),
+              Text(
+                dic.encointer.claimsScanned
+                    .replaceAll('AMOUNT_PLACEHOLDER', store.encointer.scannedClaimsCount.toString()),
+                style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
+                textAlign: TextAlign.center,
               ),
-            ]),
+              SizedBox(height: 16),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [Text(dic.encointer.claimsSubmit)],
+                ),
+                onPressed: () => store.encointer.scannedClaimsCount > 0 ? _submit(context) : null,
+              ),
+              SizedBox(height: 16),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [Text(dic.encointer.claimsPurge)],
+                ),
+                onPressed: () =>
+                    store.encointer.scannedClaimsCount > 0 ? _confirmPurgeClaimsDialog(context, store) : null,
+              ),
+            ],
           ),
         ),
-        SizedBox(height: 16),
-        Container(
-          width: double.infinity,
-          child: Observer(
-              builder: (_) => RoundedCard(
-                  padding: const EdgeInsets.only(top: 16, bottom: 16),
-                  child: Column(children: <Widget>[
-                    Text(dic.encointer.claimsScanned
-                        .replaceAll('AMOUNT_PLACEHOLDER', store.encointer.scannedClaimsCount.toString())),
-                    ElevatedButton(
-                        child: Text(dic.encointer.attestationsSubmit),
-                        onPressed: store.encointer.scannedClaimsCount > 0 ? () => _submit(context) : null)
-                  ]))),
-        )
       ]),
     );
   }
@@ -83,4 +93,30 @@ class _AttestingPageState extends State<AttestingPage> {
     };
     Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
   }
+}
+
+void _confirmPurgeClaimsDialog(BuildContext context, AppStore store) {
+  final dic = I18n.of(context).translationsForLocale();
+
+  showCupertinoDialog(
+    context: context,
+    builder: (_) {
+      return CupertinoAlertDialog(
+        title: Text(dic.encointer.claimsPurgeConfirm),
+        actions: <Widget>[
+          CupertinoButton(
+            child: Text(dic.home.cancel),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          CupertinoButton(
+            child: Text(dic.home.ok),
+            onPressed: () {
+              store.encointer.purgeParticipantsClaims();
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
