@@ -12,7 +12,9 @@ description: EncointerWallet made with Flutter.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
 
-version: 1.1.1+813
+# bump version already while working on new release, bumping build number at the same time
+# bump build number even more, if needed to clarify what's deployed
+version: 1.1.2+814
 
 publish_to: none
 
