@@ -5,7 +5,7 @@ set -euo pipefail
 
 brew upgrade
 
-brew tap SConaway/brew
+brew tap sconaway/brew https://github.com/SConaway/homebrew-brew/tree/patch-1
 brew install applesimutils
 
 # show available simulator runtimes
