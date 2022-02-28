@@ -5,7 +5,7 @@ set -euo pipefail
 
 brew update
 
-brew tap wix/brew
+brew tap SConaway/brew
 brew install applesimutils
 
 # show available simulator runtimes
