@@ -1,13 +1,13 @@
 import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
-import "package:latlong2/latlong.dart";
-import 'package:flutter_map/flutter_map.dart';
 
 import 'encointerMap.dart';
 
@@ -28,8 +28,6 @@ class _AssignmentPanelState extends State<AssignmentPanel> {
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context).translationsForLocale();
-    LatLng meetupLocation = LatLng(double.parse(widget.store.encointer.meetupLocation.lat),
-        double.parse(widget.store.encointer.meetupLocation.lon));
     return Container(
       width: double.infinity,
       child: RoundedCard(
@@ -54,29 +52,34 @@ class _AssignmentPanelState extends State<AssignmentPanel> {
                                         child: Row(
                                           mainAxisSize: MainAxisSize.min,
                                           children: [
-                                            Icon(
-                                              Icons.location_on,
-                                              size: 25,
-                                              color: Colors.blueAccent,
-                                            ),
+                                            widget.store.encointer.meetupLocation != null
+                                                ? Icon(
+                                                    Icons.location_on,
+                                                    size: 25,
+                                                    color: Colors.blueAccent,
+                                                  )
+                                                : CupertinoActivityIndicator(),
                                             Text(dic.encointer.meetupLocation),
                                           ],
                                         ),
-                                        onPressed: () => Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) {
-                                              return EncointerMap(
-                                                widget.store,
-                                                popupBuilder: (BuildContext context, Marker marker) => SizedBox(),
-                                                markers: buildMarkers(meetupLocation),
-                                                title: dic.encointer.meetupLocation,
-                                                center: meetupLocation,
-                                                initialZoom: initialZoom,
-                                              );
-                                            },
-                                          ),
-                                        ),
+                                        onPressed: widget.store.encointer.meetupLocation != null
+                                            ? () => Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) {
+                                                      return EncointerMap(
+                                                        widget.store,
+                                                        popupBuilder: (BuildContext context, Marker marker) =>
+                                                            SizedBox(),
+                                                        markers: buildMarkers(widget.store.encointer.meetupLocation),
+                                                        title: dic.encointer.meetupLocation,
+                                                        center: widget.store.encointer.meetupLocation.toLatLng(),
+                                                        initialZoom: initialZoom,
+                                                      );
+                                                    },
+                                                  ),
+                                                )
+                                            : null,
                                       )
                                     ],
                                   )
@@ -97,14 +100,14 @@ class _AssignmentPanelState extends State<AssignmentPanel> {
     );
   }
 
-  List<Marker> buildMarkers(LatLng meetupLocation) {
+  List<Marker> buildMarkers(Location meetupLocation) {
     List<Marker> markers = <Marker>[];
     markers.add(
       Marker(
         // marker is not a widget, hence test_driver cannot find it (it can find it in the Icon inside, though).
         // But we need the key to derive the popup key
         key: Key('meetup-location'),
-        point: meetupLocation,
+        point: meetupLocation.toLatLng(),
         width: 40,
         height: 40,
         builder: (_) => Icon(
