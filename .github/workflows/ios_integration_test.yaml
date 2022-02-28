@@ -42,6 +42,10 @@ jobs:
         with:
           config_files: ./.github/action-config.json
 
+      - name: "Prepare environment for ios"
+        working-directory: ./scripts
+        run: ./ios_init_env.sh
+
       - uses: actions/setup-java@v1
         with:
           java-version: ${{ steps.config.outputs.java-version }}
@@ -49,10 +53,6 @@ jobs:
       - uses: subosito/flutter-action@v1
         with:
           flutter-version: ${{ steps.config.outputs.flutter-version }}
-
-      - name: "Prepare environment for ios"
-        working-directory: ./scripts
-        run: ./ios_init_env.sh
 
       - name: "Create Simulator if iPad Pro 2nd gen"
         if: ${{ matrix.device == 'iPad Pro (12.9-inch) (2nd generation)' }}
