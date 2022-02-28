@@ -3,7 +3,7 @@ set -euo pipefail
 
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-brew update
+brew upgrade
 
 brew tap SConaway/brew
 brew install applesimutils
