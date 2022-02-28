@@ -27,7 +27,7 @@ class ScanPage extends StatelessWidget {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       backgroundColor: Colors.white,
       content: Text(msg, style: TextStyle(color: Colors.black54)),
-      duration: Duration(milliseconds: 1500),
+      duration: Duration(milliseconds: 2000),
     ));
   }
 
