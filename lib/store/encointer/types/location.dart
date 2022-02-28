@@ -1,4 +1,5 @@
 import 'dart:convert';
+import "package:latlong2/latlong.dart";
 
 import 'package:json_annotation/json_annotation.dart';
 
@@ -15,6 +16,10 @@ class Location {
   @override
   String toString() {
     return jsonEncode(this);
+  }
+
+  LatLng toLatLng() {
+    return LatLng(double.parse(lat), double.parse(lon));
   }
 
   // explicitly use `toString()`, which works for the old `Degree` type `i64` and the new one `i128`
