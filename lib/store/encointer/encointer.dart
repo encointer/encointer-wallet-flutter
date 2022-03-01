@@ -222,6 +222,11 @@ abstract class _EncointerStore with Store {
       cacheObject(encointerMeetupLocationKey, location);
       meetupLocation = location;
     }
+
+    if (location != null) {
+      // update depending values
+      webApi.encointer.getMeetupTime();
+    }
   }
 
   @action
