@@ -232,7 +232,8 @@ class ApiEncointer {
   /// We could fetch the phaseDurations at application startup, cache them and supply them in the call here.
   Future<DateTime> getMeetupTime() async {
     print("api: getMeetupTime");
-    var mLocation = store.encointer.meetupLocation;
+
+    var mLocation = store.encointer.communityLocations.first;
 
     if (mLocation == null) {
       print("No meetup location set. Can't get meetup time");
