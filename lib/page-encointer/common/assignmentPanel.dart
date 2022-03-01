@@ -35,65 +35,60 @@ class _AssignmentPanelState extends State<AssignmentPanel> {
         child: Column(
           children: <Widget>[
             Observer(
-              builder: (_) => widget.store.encointer.meetupTime != null
-                  ? widget.store.encointer.communities == null
-                      ? Text(dic.assets.communitiesNotFound)
-                      : Column(
-                          children: <Widget>[
-                            widget.store.encointer.meetupIndex > 0
-                                ? Column(
-                                    children: <Widget>[
-                                      Text("You are registered! ", style: TextStyle(color: Colors.green)),
-                                      Text("Ceremony will take place on:"),
-                                      Text(new DateTime.fromMillisecondsSinceEpoch(widget.store.encointer.meetupTime)
-                                          .toIso8601String()),
-                                      Text("at location:"),
-                                      ElevatedButton(
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            widget.store.encointer.meetupLocation != null
-                                                ? Icon(
-                                                    Icons.location_on,
-                                                    size: 25,
-                                                    color: Colors.blueAccent,
-                                                  )
-                                                : CupertinoActivityIndicator(),
-                                            Text(dic.encointer.meetupLocation),
-                                          ],
-                                        ),
-                                        onPressed: widget.store.encointer.meetupLocation != null
-                                            ? () => Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) {
-                                                      return EncointerMap(
-                                                        widget.store,
-                                                        popupBuilder: (BuildContext context, Marker marker) =>
-                                                            SizedBox(),
-                                                        markers: buildMarkers(widget.store.encointer.meetupLocation),
-                                                        title: dic.encointer.meetupLocation,
-                                                        center: widget.store.encointer.meetupLocation.toLatLng(),
-                                                        initialZoom: initialZoom,
-                                                      );
-                                                    },
-                                                  ),
+                builder: (_) => widget.store.encointer.communities == null
+                    ? Text(dic.assets.communitiesNotFound)
+                    : Column(
+                        children: <Widget>[
+                          widget.store.encointer.meetupIndex > 0
+                              ? Column(
+                                  children: <Widget>[
+                                    Text("You are registered! ", style: TextStyle(color: Colors.green)),
+                                    Text("Ceremony will take place on:"),
+                                    Text(new DateTime.fromMillisecondsSinceEpoch(widget.store.encointer.meetupTime)
+                                        .toIso8601String()),
+                                    ElevatedButton(
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          widget.store.encointer.meetupLocation != null
+                                              ? Icon(
+                                                  Icons.location_on,
+                                                  size: 25,
+                                                  color: Colors.blueAccent,
                                                 )
-                                            : null,
-                                      )
-                                    ],
-                                  )
-                                : Text(
-                                    "You are not registered for ceremony on " +
-                                        DateFormat('yyyy-MM-dd').format(new DateTime.fromMillisecondsSinceEpoch(
-                                            widget.store.encointer.meetupTime)) +
-                                        " for the selected community",
-                                    style: TextStyle(color: Colors.red),
-                                  ),
-                          ],
-                        )
-                  : CupertinoActivityIndicator(),
-            )
+                                              : CupertinoActivityIndicator(),
+                                          Text(dic.encointer.meetupLocation),
+                                        ],
+                                      ),
+                                      onPressed: widget.store.encointer.meetupLocation != null
+                                          ? () => Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) {
+                                                    return EncointerMap(
+                                                      widget.store,
+                                                      popupBuilder: (BuildContext context, Marker marker) => SizedBox(),
+                                                      markers: buildMarkers(widget.store.encointer.meetupLocation),
+                                                      title: dic.encointer.meetupLocation,
+                                                      center: widget.store.encointer.meetupLocation.toLatLng(),
+                                                      initialZoom: initialZoom,
+                                                    );
+                                                  },
+                                                ),
+                                              )
+                                          : null,
+                                    )
+                                  ],
+                                )
+                              : Text(
+                                  "You are not registered for ceremony on " +
+                                      DateFormat('yyyy-MM-dd').format(
+                                          new DateTime.fromMillisecondsSinceEpoch(widget.store.encointer.meetupTime)) +
+                                      " for the selected community",
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                        ],
+                      ))
           ],
         ),
       ),
