@@ -2,7 +2,8 @@ import 'package:encointer_wallet/mocks/data/mockAccountData.dart';
 import 'package:encointer_wallet/mocks/storage/storageSetup.dart';
 import 'package:encointer_wallet/utils/screenshot.dart';
 import 'package:flutter_driver/flutter_driver.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:integration_test/integration_test.dart';
 
 void main() {
   FlutterDriver driver;
