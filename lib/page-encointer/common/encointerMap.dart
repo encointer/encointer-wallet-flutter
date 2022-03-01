@@ -39,7 +39,7 @@ class EncointerMap extends StatelessWidget {
           center: center,
           zoom: initialZoom,
           maxZoom: 18.4,
-          onTap: (_) => _popupLayerController.hideAllPopups(), // Hide popup when the map is tapped.
+          onTap: (_, __) => _popupLayerController.hideAllPopups(), // Hide popup when the map is tapped.
         ),
         children: [
           TileLayerWidget(
