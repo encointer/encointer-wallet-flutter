@@ -82,7 +82,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
     return '${Fmt.accountDisplayNameString(address, accInfo)} $idx $address ${item.address}';
   }
 
-  Widget _selectedItemBuilder(BuildContext context, AccountData item, String itemDesignation) {
+  Widget _selectedItemBuilder(BuildContext context, AccountData item) {
     if (item == null) {
       return Container();
     }
@@ -162,8 +162,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
         mode: Mode.BOTTOM_SHEET,
         isFilteredOnline: true,
         showSearchBox: true,
-        showSelectedItem: true,
-        autoFocusSearchBox: true,
+        showSelectedItems: true,
         dropdownSearchDecoration: InputDecoration(
           labelText: widget.label,
           labelStyle: Theme.of(context).textTheme.headline4,
@@ -175,7 +174,6 @@ class _AddressInputFieldState extends State<AddressInputField> {
             ),
           ),
         ),
-        label: widget.label,
         selectedItem: widget.initialValue,
         compareFn: (AccountData i, s) => i.pubKey == s?.pubKey,
         validator: (AccountData u) => u == null ? "user field is required " : null,
