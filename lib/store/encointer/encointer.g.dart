@@ -352,6 +352,21 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
+  final _$communityLocationsAtom = Atom(name: '_EncointerStore.communityLocations');
+
+  @override
+  ObservableList<Location> get communityLocations {
+    _$communityLocationsAtom.reportRead();
+    return super.communityLocations;
+  }
+
+  @override
+  set communityLocations(ObservableList<Location> value) {
+    _$communityLocationsAtom.reportWrite(value, super.communityLocations, () {
+      super.communityLocations = value;
+    });
+  }
+
   final _$setTransferTxsAsyncAction = AsyncAction('_EncointerStore.setTransferTxs');
 
   @override
@@ -507,6 +522,16 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
+  void setCommunityLocations([List<Location> locations]) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunityLocations');
+    try {
+      return super.setCommunityLocations(locations);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setReputations(List<String> rep) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setReputations');
     try {
@@ -609,6 +634,7 @@ demurrage: ${demurrage},
 participantsClaims: ${participantsClaims},
 txsTransfer: ${txsTransfer},
 businessRegistry: ${businessRegistry},
+communityLocations: ${communityLocations},
 currentPhaseDuration: ${currentPhaseDuration},
 scannedClaimsCount: ${scannedClaimsCount},
 communityName: ${communityName},

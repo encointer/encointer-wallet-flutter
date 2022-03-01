@@ -11,17 +11,10 @@ import 'package:intl/intl.dart';
 
 import 'encointerMap.dart';
 
-class AssignmentPanel extends StatefulWidget {
+class AssignmentPanel extends StatelessWidget {
   AssignmentPanel(this.store);
 
   final AppStore store;
-
-  @override
-  _AssignmentPanelState createState() => _AssignmentPanelState();
-}
-
-class _AssignmentPanelState extends State<AssignmentPanel> {
-  _AssignmentPanelState();
 
   final double initialZoom = 14;
 
@@ -35,64 +28,62 @@ class _AssignmentPanelState extends State<AssignmentPanel> {
         child: Column(
           children: <Widget>[
             Observer(
-              builder: (_) => widget.store.encointer.meetupTime != null
-                  ? widget.store.encointer.communities == null
-                      ? Text(dic.assets.communitiesNotFound)
-                      : Column(
-                          children: <Widget>[
-                            widget.store.encointer.meetupIndex > 0
-                                ? Column(
-                                    children: <Widget>[
-                                      Text("You are registered! ", style: TextStyle(color: Colors.green)),
-                                      Text("Ceremony will take place on:"),
-                                      Text(new DateTime.fromMillisecondsSinceEpoch(widget.store.encointer.meetupTime)
-                                          .toIso8601String()),
-                                      Text("at location:"),
-                                      ElevatedButton(
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            widget.store.encointer.meetupLocation != null
-                                                ? Icon(
-                                                    Icons.location_on,
-                                                    size: 25,
-                                                    color: Colors.blueAccent,
-                                                  )
-                                                : CupertinoActivityIndicator(),
-                                            Text(dic.encointer.meetupLocation),
-                                          ],
-                                        ),
-                                        onPressed: widget.store.encointer.meetupLocation != null
-                                            ? () => Navigator.push(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) {
-                                                      return EncointerMap(
-                                                        widget.store,
-                                                        popupBuilder: (BuildContext context, Marker marker) =>
-                                                            SizedBox(),
-                                                        markers: buildMarkers(widget.store.encointer.meetupLocation),
-                                                        title: dic.encointer.meetupLocation,
-                                                        center: widget.store.encointer.meetupLocation.toLatLng(),
-                                                        initialZoom: initialZoom,
-                                                      );
-                                                    },
-                                                  ),
-                                                )
-                                            : null,
-                                      )
-                                    ],
+              builder: (_) => store.encointer.communities == null
+                  ? Text(dic.assets.communitiesNotFound)
+                  : Column(
+                      children: <Widget>[
+                        store.encointer.isRegistered
+                            ? Column(
+                                children: <Widget>[
+                                  Text("You are registered! ", style: TextStyle(color: Colors.green)),
+                                  Text("Ceremony will take place on:"),
+                                  MaybeMeetupTime(store.encointer.meetupTime, dateFormat: 'yyyy-MM-dd-hh:mm'),
+                                  ElevatedButton(
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        store.encointer.meetupLocation != null
+                                            ? Icon(
+                                                Icons.location_on,
+                                                size: 25,
+                                                color: Colors.blueAccent,
+                                              )
+                                            : CupertinoActivityIndicator(),
+                                        Text(dic.encointer.meetupLocation),
+                                      ],
+                                    ),
+                                    onPressed: store.encointer.meetupLocation != null
+                                        ? () => Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) {
+                                                  return EncointerMap(
+                                                    store,
+                                                    popupBuilder: (BuildContext context, Marker marker) => SizedBox(),
+                                                    markers: buildMarkers(store.encointer.meetupLocation),
+                                                    title: dic.encointer.meetupLocation,
+                                                    center: store.encointer.meetupLocation.toLatLng(),
+                                                    initialZoom: initialZoom,
+                                                  );
+                                                },
+                                              ),
+                                            )
+                                        : null,
                                   )
-                                : Text(
-                                    "You are not registered for ceremony on " +
-                                        DateFormat('yyyy-MM-dd').format(new DateTime.fromMillisecondsSinceEpoch(
-                                            widget.store.encointer.meetupTime)) +
-                                        " for the selected community",
+                                ],
+                              )
+                            : Column(
+                                children: [
+                                  Text(
+                                    "You are not registered for a ceremony for the selected community on:",
                                     style: TextStyle(color: Colors.red),
+                                    textAlign: TextAlign.center,
                                   ),
-                          ],
-                        )
-                  : CupertinoActivityIndicator(),
+                                  MaybeMeetupTime(store.encointer.meetupTime),
+                                ],
+                              ),
+                      ],
+                    ),
             )
           ],
         ),
@@ -120,5 +111,25 @@ class _AssignmentPanelState extends State<AssignmentPanel> {
       ),
     );
     return markers;
+  }
+}
+
+class MaybeMeetupTime extends StatelessWidget {
+  MaybeMeetupTime(this.meetupTime, {this.dateFormat = 'yyyy-MM-dd', this.style});
+
+  final int meetupTime;
+
+  final String dateFormat;
+  final TextStyle style;
+
+  @override
+  Widget build(BuildContext context) {
+    String date;
+
+    if (meetupTime != null) {
+      date = DateFormat(dateFormat).format(new DateTime.fromMillisecondsSinceEpoch(meetupTime));
+    }
+
+    return meetupTime != null ? Text(date, style: this.style) : CupertinoActivityIndicator();
   }
 }
