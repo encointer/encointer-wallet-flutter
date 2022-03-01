@@ -233,12 +233,12 @@ class ApiEncointer {
   Future<DateTime> getMeetupTime() async {
     print("api: getMeetupTime");
 
-    var mLocation = store.encointer.communityLocations.first;
-
-    if (mLocation == null) {
-      print("No meetup location set. Can't get meetup time");
+    if (store.encointer.communityLocations.isEmpty) {
+      print("No meetup locations found, can't get meetup time.");
       return null;
     }
+
+    var mLocation = store.encointer.communityLocations.first;
 
     int time = await apiRoot
         .evalJavascript(
