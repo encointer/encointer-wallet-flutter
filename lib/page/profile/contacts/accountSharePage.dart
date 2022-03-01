@@ -3,7 +3,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_flutter_fork/qr_flutter.dart';
+import 'package:qr_flutter_fork/qr_flutter_fork.dart';
 import 'package:share/share.dart';
 
 class AccountSharePage extends StatefulWidget {
