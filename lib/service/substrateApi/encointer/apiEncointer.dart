@@ -233,6 +233,8 @@ class ApiEncointer {
   Future<DateTime> getMeetupTime() async {
     print("api: getMeetupTime");
 
+    // I we are not assigned to a meetup, we just get any location to get an estimate of the chosen community's meetup
+    // times.
     var mLocation = store.encointer.meetupLocation ?? store.encointer.communityLocations.isEmpty
         ? store.encointer.communityLocations.first
         : null;
