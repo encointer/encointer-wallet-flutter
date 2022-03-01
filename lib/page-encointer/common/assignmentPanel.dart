@@ -37,7 +37,7 @@ class AssignmentPanel extends StatelessWidget {
                                 children: <Widget>[
                                   Text("You are registered! ", style: TextStyle(color: Colors.green)),
                                   Text("Ceremony will take place on:"),
-                                  MaybeMeetupTime(store.encointer.meetupTime, dateFormat: 'yyyy-mm-dd-hh:mm'),
+                                  MaybeMeetupTime(store.encointer.meetupTime, dateFormat: 'yyyy-MM-dd-hh:mm'),
                                   ElevatedButton(
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
