@@ -177,6 +177,7 @@ abstract class _EncointerStore with Store {
   void updateState() {
     switch (currentPhase) {
       case CeremonyPhase.REGISTERING:
+        webApi.encointer.getMeetupTime();
         break;
       case CeremonyPhase.ASSIGNING:
         webApi.encointer.getMeetupIndex();
@@ -220,11 +221,6 @@ abstract class _EncointerStore with Store {
     if (meetupLocation != location) {
       cacheObject(encointerMeetupLocationKey, location);
       meetupLocation = location;
-    }
-
-    if (location != null) {
-      // update depending values
-      webApi.encointer.getMeetupTime();
     }
   }
 
@@ -294,6 +290,8 @@ abstract class _EncointerStore with Store {
     print("store: set communityLocations to ${locations.toString()}");
     communityLocations = ObservableList.of(locations);
     cacheObject(encointerCommunityLocationsKey, locations);
+
+    webApi.encointer.getMeetupTime();
   }
 
   @action
