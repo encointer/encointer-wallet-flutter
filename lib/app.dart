@@ -14,7 +14,6 @@ import 'package:encointer_wallet/page/account/import/importAccountPage.dart';
 import 'package:encointer_wallet/page/account/scanPage.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
-import 'package:encointer_wallet/page/assets/transfer/currencySelectPage.dart';
 import 'package:encointer_wallet/page/assets/transfer/detailPage.dart';
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
 import 'package:encointer_wallet/page/networkSelectPage.dart';
@@ -171,7 +170,6 @@ class _WalletAppState extends State<WalletApp> {
         TransferPage.route: (_) => TransferPage(_appStore),
         ReceivePage.route: (_) => ReceivePage(_appStore),
         TransferDetailPage.route: (_) => TransferDetailPage(_appStore),
-        CommunitySelectPage.route: (_) => CommunitySelectPage(),
         // profile
         AccountManagePage.route: (_) => AccountManagePage(_appStore),
         ContactsPage.route: (_) => ContactsPage(_appStore),
