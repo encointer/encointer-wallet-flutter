@@ -37,8 +37,10 @@ class AssignmentPanel extends StatelessWidget {
                                   children: <Widget>[
                                     Text("You are registered! ", style: TextStyle(color: Colors.green)),
                                     Text("Ceremony will take place on:"),
-                                    Text(new DateTime.fromMillisecondsSinceEpoch(store.encointer.meetupTime)
-                                        .toIso8601String()),
+                                    store.encointer.meetupTime != null
+                                        ? Text(new DateTime.fromMillisecondsSinceEpoch(store.encointer.meetupTime)
+                                            .toIso8601String())
+                                        : CupertinoActivityIndicator(),
                                     ElevatedButton(
                                       child: Row(
                                         mainAxisSize: MainAxisSize.min,
