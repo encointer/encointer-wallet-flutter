@@ -146,6 +146,25 @@ class ApiEncointer {
     }
   }
 
+  /// Queries the Communities pallet's RPC: api.rpc.communities.getLocations(cid)
+  ///
+  /// This is on-chain in Cantillon
+  Future<void> getAllMeetupLocations() async {
+    print("api: getAllMeetupLocations");
+    CommunityIdentifier cid = store.encointer.chosenCid;
+
+    if (cid == null) {
+      return;
+    }
+
+    List<Location> locs = await apiRoot
+        .evalJavascript('encointer.getAllMeetupLocations(${jsonEncode(cid)})')
+        .then((list) => List.from(list).map((l) => Location.fromJson(l)).toList());
+
+    print("api: getAllMeetupLocations: " + locs.toString());
+    store.encointer.setCommunityLocations(locs);
+  }
+
   /// Queries the Communities pallet: encointerCommunities.communityMetadata(cid)
   ///
   /// This is on-chain in Cantillon

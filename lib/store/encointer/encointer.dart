@@ -28,6 +28,7 @@ abstract class _EncointerStore with Store {
   final String encointerCommunityKey = 'wallet_encointer_community';
   final String encointerCommunityMetadataKey = 'wallet_encointer_community_metadata';
   final String encointerCommunitiesKey = 'wallet_encointer_communities';
+  final String encointerCommunityLocationsKey = 'wallet_encointer_community_locations';
 
   // offline meetup cache.
   final String encointerCurrentCeremonyIndexKey = 'wallet_encointer_current_ceremony_index';
@@ -111,6 +112,9 @@ abstract class _EncointerStore with Store {
 
   @observable
   ObservableList<AccountBusinessTuple> businessRegistry;
+
+  @observable
+  ObservableList<Location> communityLocations = new ObservableList();
 
   @computed
   String get communityName => communityMetadata?.name;
@@ -283,6 +287,13 @@ abstract class _EncointerStore with Store {
   }
 
   @action
+  void setCommunityLocations([List<Location> locations]) {
+    print("store: set communityLocations to ${locations.toString()}");
+    communityLocations = ObservableList.of(locations);
+    cacheObject(encointerCommunityLocationsKey, locations);
+  }
+
+  @action
   void setReputations(List<String> rep) {
     print("store: set communities to $rep");
     reputations = rep;
@@ -313,6 +324,7 @@ abstract class _EncointerStore with Store {
       webApi.encointer.getParticipantIndex();
       webApi.encointer.getEncointerBalance();
       webApi.encointer.getCommunityMetadata();
+      webApi.encointer.getAllMeetupLocations();
       webApi.encointer.getDemurrage();
     }
   }
@@ -401,6 +413,14 @@ abstract class _EncointerStore with Store {
       print("found cached communities. will recover it: " + cachedCommunities.toString());
       communities = cachedCommunities;
     }
+
+    List<dynamic> cachedLocations = await loadObject(encointerCommunityLocationsKey);
+    if (cachedLocations != null) {
+      List<Location> locations = cachedLocations.map((s) => Location.fromJson(s)).toList();
+      print("found cached communities. will recover it: " + locations.toString());
+      communityLocations = ObservableList.of(locations);
+    }
+
     // get meetup related data
     var data = await loadObject(encointerParticipantsClaimsKey);
     if (data != null) {
