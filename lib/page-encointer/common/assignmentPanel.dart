@@ -75,7 +75,7 @@ class AssignmentPanel extends StatelessWidget {
                             : Column(
                                 children: [
                                   Text(
-                                    "You are not registered for ceremony on  for the selected community on:",
+                                    "You are not registered for a ceremony for the selected community on:",
                                     style: TextStyle(color: Colors.red),
                                     textAlign: TextAlign.center,
                                   ),
