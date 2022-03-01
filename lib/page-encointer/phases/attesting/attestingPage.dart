@@ -36,13 +36,13 @@ class _AttestingPageState extends State<AttestingPage> {
             shrinkWrap: true,
             children: <Widget>[
               SizedBox(height: 16),
-              ((store.encointer.meetupIndex == null) | (store.encointer.meetupIndex == 0))
-                  ? Text(dic.encointer.meetupNotAssigned)
-                  : PrimaryButton(
+              store.encointer.isRegistered
+                  ? PrimaryButton(
                       key: Key('start-meetup'),
                       child: Text(dic.encointer.meetupStart),
                       onPressed: () => startMeetup(context, store),
-                    ),
+                    )
+                  : Text(dic.encointer.meetupNotAssigned),
               SizedBox(height: 16),
               Text(
                 dic.encointer.claimsScanned

@@ -135,6 +135,9 @@ abstract class _EncointerStore with Store {
     return applyDemurrage(communityBalanceEntry);
   }
 
+  @computed
+  bool get isRegistered => meetupIndex != null && meetupIndex > 0;
+
   double applyDemurrage(BalanceEntry entry) {
     double res;
     if (rootStore.chain.latestHeaderNumber != null && entry != null && demurrage != null) {
