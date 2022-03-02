@@ -71,9 +71,6 @@ abstract class _EncointerStore with Store {
   List<String> meetupRegistry;
 
   @observable
-  int myMeetupRegistryIndex;
-
-  @observable
   int participantIndex;
 
   @observable
@@ -197,7 +194,6 @@ abstract class _EncointerStore with Store {
     setMeetupLocation();
     setMeetupTime();
     setMeetupRegistry();
-    setMyMeetupRegistryIndex();
   }
 
   @action
@@ -257,11 +253,6 @@ abstract class _EncointerStore with Store {
     print("store: set meetupRegistry to $reg");
     cacheObject(encointerMeetupRegistryKey, reg);
     meetupRegistry = reg;
-  }
-
-  @action
-  void setMyMeetupRegistryIndex([int index]) {
-    myMeetupRegistryIndex = index;
   }
 
   @action
