@@ -235,9 +235,8 @@ class ApiEncointer {
 
     // I we are not assigned to a meetup, we just get any location to get an estimate of the chosen community's meetup
     // times.
-    var mLocation = store.encointer.meetupLocation ?? store.encointer.communityLocations.isNotEmpty
-        ? store.encointer.communityLocations.first
-        : null;
+    var mLocation = store.encointer.meetupLocation ??
+        (store.encointer.communityLocations.isNotEmpty ? store.encointer.communityLocations.first : null);
 
     if (mLocation == null) {
       print("No meetup locations found, can't get meetup time.");
