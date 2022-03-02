@@ -38,6 +38,7 @@ abstract class _EncointerStore with Store {
   final String encointerMeetupRegistryKey = 'wallet_encointer_meetup_registry';
   final String encointerParticipantsClaimsKey = 'wallet_encointer_participants_claims';
   final String encointerMeetupTimeKey = 'wallet_encointer_meetup_time';
+
   // Note: In synchronous code, every modification of an @observable is tracked by mobx and
   // fires a reaction. However, modifications in asynchronous code must be wrapped in
   // a `@action` block to fire a reaction.
@@ -206,7 +207,7 @@ abstract class _EncointerStore with Store {
 
     if (index != null) {
       // update depending values
-      webApi.encointer.getMeetupLocation();
+      webApi.encointer.getMeetupLocation().then((_) => webApi.encointer.getMeetupTime());
       webApi.encointer.getMeetupRegistry();
     }
   }

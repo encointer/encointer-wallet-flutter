@@ -79,6 +79,7 @@ class AssignmentPanel extends StatelessWidget {
                                     style: TextStyle(color: Colors.red),
                                     textAlign: TextAlign.center,
                                   ),
+                                  SizedBox(height: 4),
                                   MaybeMeetupTime(store.encointer.meetupTime),
                                 ],
                               ),
