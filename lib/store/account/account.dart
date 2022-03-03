@@ -103,6 +103,11 @@ abstract class _AccountStore with Store {
   }
 
   @computed
+  bool get isFirstAccount {
+    return accountListAll.isEmpty;
+  }
+
+  @computed
   String get currentAddress {
 //    int ss58 = rootStore.settings.endpoint.ss58;
     int ss58 = rootStore.settings.customSS58Format['value'];
@@ -121,9 +126,13 @@ abstract class _AccountStore with Store {
   }
 
   @action
-  void setNewAccount(String name, String password) {
+  void setNewAccountName(String name) {
     newAccount.name = name;
-    newAccount.password = password;
+  }
+
+  @action
+  void setNewAccountPin(String pin) {
+    newAccount.password = pin;
   }
 
   @action

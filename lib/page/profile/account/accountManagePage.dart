@@ -7,6 +7,7 @@ import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
+import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
@@ -228,13 +229,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           IconButton(
                             icon: Icon(Iconsax.copy),
                             color: ZurichLion.shade500,
-                            onPressed: () {
-                              final data = ClipboardData(text: store.account.currentAddress);
-                              Clipboard.setData(data);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text('✓   ${dic.profile.copiedToClipBoard}')),
-                              );
-                            },
+                            onPressed: () => UI.copyAndNotify(context, store.account.currentAddress),
                           ),
                         ],
                       ),

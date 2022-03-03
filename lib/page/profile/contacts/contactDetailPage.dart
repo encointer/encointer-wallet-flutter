@@ -1,7 +1,9 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
+import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
@@ -75,14 +77,22 @@ class ContactDetailPage extends StatelessWidget {
                     AddressIcon(
                       args.address,
                       size: 130,
-                      // addressToCopy: address,
-                      tapToCopy: false,
+                      tapToCopy: true,
                     ),
                     SizedBox(height: 20),
-                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                      Text(Fmt.address(args.address),
-                          style: Theme.of(context).textTheme.headline3.copyWith(color: Color(0xff353535))),
-                    ]),
+                    // The below is duplicate code of `accountManagePage`, but according to figma the design will
+                    // change here.
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(Fmt.address(args.address), style: TextStyle(fontSize: 20)),
+                        IconButton(
+                          icon: Icon(Iconsax.copy),
+                          color: ZurichLion.shade500,
+                          onPressed: () => UI.copyAndNotify(context, args.address),
+                        ),
+                      ],
+                    ),
                     SizedBox(height: 32),
                     Row(children: [
                       Text(dic.profile.reputation,

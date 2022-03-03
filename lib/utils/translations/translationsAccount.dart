@@ -29,6 +29,10 @@ abstract class TranslationsAccount {
   String get importDuplicate;
   String get importEncrypt;
   String get importInvalid;
+  String get importInvalidRawSeed;
+  String get importInvalidMnemonic;
+  String get importMustNotBeEmpty;
+  String get importPrivateKeyUnsupported;
   String get importType;
   String get keystore;
   String get list;
@@ -85,11 +89,15 @@ class TranslationsEnAccount implements TranslationsAccount {
   get importDuplicate => 'Account exists, do you want to override the existing account?';
   get importEncrypt => 'Encrypt Type';
   get importInvalid => 'Invalid';
+  get importInvalidRawSeed => 'Invalid raw seed supplied';
+  get importInvalidMnemonic => 'Invalid mnemonic supplied';
+  get importMustNotBeEmpty => 'Input must not be empty';
+  get importPrivateKeyUnsupported => 'Private key account import is not yet supported.';
   get importType => 'Source Type';
   get keystore => 'Keystore (json)';
   get list => 'Account Select';
   get mnemonic => 'Mnemonic';
-  get next => 'Weiter';
+  get next => 'Next';
   get observe => 'Observation';
   get observeBrief =>
       '\nMark this address as observation,\nthen you can select this address\nin account select page, to watch\nit\'s assets and actions\n';
@@ -143,6 +151,10 @@ class TranslationsDeAccount implements TranslationsAccount {
   get importDuplicate => 'Konto existiert bereits, möchtest du es überschreiben?';
   get importEncrypt => 'Verschlüsselungstyp';
   get importInvalid => 'Ungültig';
+  get importInvalidRawSeed => 'Ungültiger raw seed eingegeben.';
+  get importInvalidMnemonic => 'Ungültiger Mnemonic eingegeben.';
+  get importMustNotBeEmpty => 'Eingabe darf nicht lehr sein.';
+  get importPrivateKeyUnsupported => 'Accountimport mit private key wird noch nicht unterstützt.';
   get importType => 'Ursprungstyp';
   get keystore => 'Keystore (json)';
   get list => 'Kontoauswahl';
@@ -198,6 +210,10 @@ class TranslationsZhAccount implements TranslationsAccount {
   get importDuplicate => '账户存在，是否覆盖现有账户？';
   get importEncrypt => '加密类型';
   get importInvalid => '无效';
+  get importInvalidRawSeed => throw UnimplementedError();
+  get importInvalidMnemonic => throw UnimplementedError();
+  get importMustNotBeEmpty => throw UnimplementedError();
+  get importPrivateKeyUnsupported => throw UnimplementedError();
   get importType => '源类型';
   get keystore => '密钥库 (json)';
   get list => '账户选择';
