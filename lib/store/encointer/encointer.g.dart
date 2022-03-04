@@ -169,21 +169,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
-  final _$myMeetupRegistryIndexAtom = Atom(name: '_EncointerStore.myMeetupRegistryIndex');
-
-  @override
-  int get myMeetupRegistryIndex {
-    _$myMeetupRegistryIndexAtom.reportRead();
-    return super.myMeetupRegistryIndex;
-  }
-
-  @override
-  set myMeetupRegistryIndex(int value) {
-    _$myMeetupRegistryIndexAtom.reportWrite(value, super.myMeetupRegistryIndex, () {
-      super.myMeetupRegistryIndex = value;
-    });
-  }
-
   final _$participantIndexAtom = Atom(name: '_EncointerStore.participantIndex');
 
   @override
@@ -483,17 +468,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setMyMeetupRegistryIndex([int index]) {
-    final _$actionInfo =
-        _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setMyMeetupRegistryIndex');
-    try {
-      return super.setMyMeetupRegistryIndex(index);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunityIdentifiers');
     try {
@@ -633,7 +607,6 @@ meetupIndex: ${meetupIndex},
 meetupLocation: ${meetupLocation},
 meetupTime: ${meetupTime},
 meetupRegistry: ${meetupRegistry},
-myMeetupRegistryIndex: ${myMeetupRegistryIndex},
 participantIndex: ${participantIndex},
 balanceEntries: ${balanceEntries},
 communityIdentifiers: ${communityIdentifiers},
