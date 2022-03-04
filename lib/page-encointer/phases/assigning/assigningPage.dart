@@ -73,7 +73,7 @@ class _AssigningPageState extends State<AssigningPage> {
       child: Column(children: <Widget>[
         AssignmentPanel(store),
         SizedBox(height: 16),
-        store.encointer.isRegistered
+        store.encointer.isAssigned
             ? Container(
                 key: Key('start-meetup'),
                 child: Column(

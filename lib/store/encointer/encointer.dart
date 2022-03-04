@@ -134,7 +134,7 @@ abstract class _EncointerStore with Store {
   }
 
   @computed
-  bool get isRegistered => meetupIndex != null && meetupIndex > 0;
+  bool get isAssigned => meetupIndex != null && meetupIndex > 0;
 
   double applyDemurrage(BalanceEntry entry) {
     double res;

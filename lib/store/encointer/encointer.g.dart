@@ -51,11 +51,40 @@ mixin _$EncointerStore on _EncointerStore, Store {
   double get communityBalance => (_$communityBalanceComputed ??=
           Computed<double>(() => super.communityBalance, name: '_EncointerStore.communityBalance'))
       .value;
+  Computed<bool> _$isAssignedComputed;
+
+  @override
+  bool get isAssigned =>
+      (_$isAssignedComputed ??= Computed<bool>(() => super.isAssigned, name: '_EncointerStore.isAssigned')).value;
   Computed<bool> _$isRegisteredComputed;
 
   @override
   bool get isRegistered =>
       (_$isRegisteredComputed ??= Computed<bool>(() => super.isRegistered, name: '_EncointerStore.isRegistered')).value;
+  Computed<bool> _$showRegisterButtonComputed;
+
+  @override
+  bool get showRegisterButton => (_$showRegisterButtonComputed ??=
+          Computed<bool>(() => super.showRegisterButton, name: '_EncointerStore.showRegisterButton'))
+      .value;
+  Computed<bool> _$showStartCeremonyButtonComputed;
+
+  @override
+  bool get showStartCeremonyButton => (_$showStartCeremonyButtonComputed ??=
+          Computed<bool>(() => super.showStartCeremonyButton, name: '_EncointerStore.showStartCeremonyButton'))
+      .value;
+  Computed<bool> _$showTwoBoxesComputed;
+
+  @override
+  bool get showTwoBoxes =>
+      (_$showTwoBoxesComputed ??= Computed<bool>(() => super.showTwoBoxes, name: '_EncointerStore.showTwoBoxes')).value;
+  Computed<int> _$numberOfParticipantsAtUpcomingCeremonyComputed;
+
+  @override
+  int get numberOfParticipantsAtUpcomingCeremony => (_$numberOfParticipantsAtUpcomingCeremonyComputed ??= Computed<int>(
+          () => super.numberOfParticipantsAtUpcomingCeremony,
+          name: '_EncointerStore.numberOfParticipantsAtUpcomingCeremony'))
+      .value;
 
   final _$currentPhaseAtom = Atom(name: '_EncointerStore.currentPhase');
 
@@ -620,7 +649,12 @@ communitySymbol: ${communitySymbol},
 communityIconsCid: ${communityIconsCid},
 communityBalanceEntry: ${communityBalanceEntry},
 communityBalance: ${communityBalance},
-isRegistered: ${isRegistered}
+isAssigned: ${isAssigned},
+isRegistered: ${isRegistered},
+showRegisterButton: ${showRegisterButton},
+showStartCeremonyButton: ${showStartCeremonyButton},
+showTwoBoxes: ${showTwoBoxes},
+numberOfParticipantsAtUpcomingCeremony: ${numberOfParticipantsAtUpcomingCeremony}
     ''';
   }
 }
