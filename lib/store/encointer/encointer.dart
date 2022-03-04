@@ -28,6 +28,7 @@ abstract class _EncointerStore with Store {
   final String encointerCommunityKey = 'wallet_encointer_community';
   final String encointerCommunityMetadataKey = 'wallet_encointer_community_metadata';
   final String encointerCommunitiesKey = 'wallet_encointer_communities';
+  final String encointerCommunityLocationsKey = 'wallet_encointer_community_locations';
 
   // offline meetup cache.
   final String encointerCurrentCeremonyIndexKey = 'wallet_encointer_current_ceremony_index';
@@ -37,6 +38,7 @@ abstract class _EncointerStore with Store {
   final String encointerMeetupRegistryKey = 'wallet_encointer_meetup_registry';
   final String encointerParticipantsClaimsKey = 'wallet_encointer_participants_claims';
   final String encointerMeetupTimeKey = 'wallet_encointer_meetup_time';
+
   // Note: In synchronous code, every modification of an @observable is tracked by mobx and
   // fires a reaction. However, modifications in asynchronous code must be wrapped in
   // a `@action` block to fire a reaction.
@@ -68,9 +70,6 @@ abstract class _EncointerStore with Store {
 
   @observable
   List<String> meetupRegistry;
-
-  @observable
-  int myMeetupRegistryIndex;
 
   @observable
   int participantIndex;
@@ -112,6 +111,9 @@ abstract class _EncointerStore with Store {
   @observable
   ObservableList<AccountBusinessTuple> businessRegistry;
 
+  @observable
+  ObservableList<Location> communityLocations = new ObservableList();
+
   @computed
   String get communityName => communityMetadata?.name;
 
@@ -130,6 +132,9 @@ abstract class _EncointerStore with Store {
   double get communityBalance {
     return applyDemurrage(communityBalanceEntry);
   }
+
+  @computed
+  bool get isRegistered => meetupIndex != null && meetupIndex > 0;
 
   double applyDemurrage(BalanceEntry entry) {
     double res;
@@ -170,6 +175,7 @@ abstract class _EncointerStore with Store {
   void updateState() {
     switch (currentPhase) {
       case CeremonyPhase.REGISTERING:
+        webApi.encointer.getMeetupTime();
         break;
       case CeremonyPhase.ASSIGNING:
         webApi.encointer.getMeetupIndex();
@@ -189,7 +195,6 @@ abstract class _EncointerStore with Store {
     setMeetupLocation();
     setMeetupTime();
     setMeetupRegistry();
-    setMyMeetupRegistryIndex();
   }
 
   @action
@@ -202,7 +207,7 @@ abstract class _EncointerStore with Store {
 
     if (index != null) {
       // update depending values
-      webApi.encointer.getMeetupLocation();
+      webApi.encointer.getMeetupLocation().then((_) => webApi.encointer.getMeetupTime());
       webApi.encointer.getMeetupRegistry();
     }
   }
@@ -252,11 +257,6 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setMyMeetupRegistryIndex([int index]) {
-    myMeetupRegistryIndex = index;
-  }
-
-  @action
   void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
     print("store: set communityIdentifiers to $cids");
     communityIdentifiers = cids;
@@ -280,6 +280,17 @@ abstract class _EncointerStore with Store {
     print("store: set communities to $c");
     communities = c;
     cacheObject(encointerCommunitiesKey, c);
+  }
+
+  @action
+  void setCommunityLocations([List<Location> locations]) {
+    print("store: set communityLocations to ${locations.toString()}");
+    communityLocations = ObservableList.of(locations);
+    cacheObject(encointerCommunityLocationsKey, locations);
+
+    // There is no race-condition with the `getMeetupTime` call in `setMeetupLocation` because `getMeetupTime` uses
+    // internally the `meetupLocation`. Hence, the worst case scenario is a redundant rpc call.
+    webApi.encointer.getMeetupTime();
   }
 
   @action
@@ -313,6 +324,7 @@ abstract class _EncointerStore with Store {
       webApi.encointer.getParticipantIndex();
       webApi.encointer.getEncointerBalance();
       webApi.encointer.getCommunityMetadata();
+      webApi.encointer.getAllMeetupLocations();
       webApi.encointer.getDemurrage();
     }
   }
@@ -401,6 +413,14 @@ abstract class _EncointerStore with Store {
       print("found cached communities. will recover it: " + cachedCommunities.toString());
       communities = cachedCommunities;
     }
+
+    List<dynamic> cachedLocations = await loadObject(encointerCommunityLocationsKey);
+    if (cachedLocations != null) {
+      List<Location> locations = cachedLocations.map((s) => Location.fromJson(s)).toList();
+      print("found cached communities. will recover it: " + locations.toString());
+      communityLocations = ObservableList.of(locations);
+    }
+
     // get meetup related data
     var data = await loadObject(encointerParticipantsClaimsKey);
     if (data != null) {

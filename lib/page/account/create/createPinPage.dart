@@ -83,7 +83,6 @@ class _CreatePinPageState extends State<CreatePinPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Map args = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -107,15 +106,12 @@ class _CreatePinPageState extends State<CreatePinPage> {
       body: SafeArea(
         child: !_submitting
             ? CreatePinForm(
-                setNewAccount: store.account.setNewAccount,
-                submitting: _submitting,
                 onSubmit: () {
                   setState(() {
                     _createAndImportAccount();
                   });
                 },
                 store: store,
-                name: args['name'],
               )
             : Center(child: CupertinoActivityIndicator()),
       ),

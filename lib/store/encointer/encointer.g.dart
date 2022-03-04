@@ -51,6 +51,11 @@ mixin _$EncointerStore on _EncointerStore, Store {
   double get communityBalance => (_$communityBalanceComputed ??=
           Computed<double>(() => super.communityBalance, name: '_EncointerStore.communityBalance'))
       .value;
+  Computed<bool> _$isRegisteredComputed;
+
+  @override
+  bool get isRegistered =>
+      (_$isRegisteredComputed ??= Computed<bool>(() => super.isRegistered, name: '_EncointerStore.isRegistered')).value;
 
   final _$currentPhaseAtom = Atom(name: '_EncointerStore.currentPhase');
 
@@ -154,21 +159,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   set meetupRegistry(List<String> value) {
     _$meetupRegistryAtom.reportWrite(value, super.meetupRegistry, () {
       super.meetupRegistry = value;
-    });
-  }
-
-  final _$myMeetupRegistryIndexAtom = Atom(name: '_EncointerStore.myMeetupRegistryIndex');
-
-  @override
-  int get myMeetupRegistryIndex {
-    _$myMeetupRegistryIndexAtom.reportRead();
-    return super.myMeetupRegistryIndex;
-  }
-
-  @override
-  set myMeetupRegistryIndex(int value) {
-    _$myMeetupRegistryIndexAtom.reportWrite(value, super.myMeetupRegistryIndex, () {
-      super.myMeetupRegistryIndex = value;
     });
   }
 
@@ -352,6 +342,21 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
+  final _$communityLocationsAtom = Atom(name: '_EncointerStore.communityLocations');
+
+  @override
+  ObservableList<Location> get communityLocations {
+    _$communityLocationsAtom.reportRead();
+    return super.communityLocations;
+  }
+
+  @override
+  set communityLocations(ObservableList<Location> value) {
+    _$communityLocationsAtom.reportWrite(value, super.communityLocations, () {
+      super.communityLocations = value;
+    });
+  }
+
   final _$setTransferTxsAsyncAction = AsyncAction('_EncointerStore.setTransferTxs');
 
   @override
@@ -456,17 +461,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setMyMeetupRegistryIndex([int index]) {
-    final _$actionInfo =
-        _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setMyMeetupRegistryIndex');
-    try {
-      return super.setMyMeetupRegistryIndex(index);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunityIdentifiers');
     try {
@@ -501,6 +495,16 @@ mixin _$EncointerStore on _EncointerStore, Store {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunities');
     try {
       return super.setCommunities(c);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setCommunityLocations([List<Location> locations]) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunityLocations');
+    try {
+      return super.setCommunityLocations(locations);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }
@@ -596,7 +600,6 @@ meetupIndex: ${meetupIndex},
 meetupLocation: ${meetupLocation},
 meetupTime: ${meetupTime},
 meetupRegistry: ${meetupRegistry},
-myMeetupRegistryIndex: ${myMeetupRegistryIndex},
 participantIndex: ${participantIndex},
 balanceEntries: ${balanceEntries},
 communityIdentifiers: ${communityIdentifiers},
@@ -609,13 +612,15 @@ demurrage: ${demurrage},
 participantsClaims: ${participantsClaims},
 txsTransfer: ${txsTransfer},
 businessRegistry: ${businessRegistry},
+communityLocations: ${communityLocations},
 currentPhaseDuration: ${currentPhaseDuration},
 scannedClaimsCount: ${scannedClaimsCount},
 communityName: ${communityName},
 communitySymbol: ${communitySymbol},
 communityIconsCid: ${communityIconsCid},
 communityBalanceEntry: ${communityBalanceEntry},
-communityBalance: ${communityBalance}
+communityBalance: ${communityBalance},
+isRegistered: ${isRegistered}
     ''';
   }
 }

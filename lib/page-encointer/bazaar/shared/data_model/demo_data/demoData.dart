@@ -94,7 +94,7 @@ final List<BazaarBusinessData> allBusinesses = [
     <BazaarOfferingData>[allOfferings[7]],
   ),
   BazaarBusinessData(
-    "Bakery Meier",
+    "Bakery Magdalena",
     "Bread, Croissants,  Lorem ipsum dolor sit amet, consectetur adipiscing "
         "elit. Quisque hendrerit dolor orci, porttitor gravida nisl efficitur "
         "eu. Nullam augue orci, bibendum ac vestibulum eget, suscipit eget mi."
@@ -116,9 +116,8 @@ final List<BazaarBusinessData> allBusinesses = [
     <BazaarOfferingData>[allOfferings[8], allOfferings[9], allOfferings[10]],
   ),
   BazaarBusinessData(
-      "Galaxus",
-      "Der Schweizer Online-Marktführer digitec ist Spezialist in Sachen IT, "
-          "Unterhaltungselektronik und Telekommunikation. Galaxus als grösstes "
+      "Malaxis",
+      "IT, Unterhaltungselektronik und Telekommunikation. Malaxis als grösstes "
           "Online-Warenhaus der Schweiz führt ein ständig wachsendes Sortiment "
           "mit Produkten für fast alle alltäglichen und nicht alltäglichen "
           "Bedürfnisse. Stets zu tiefen Preisen und zuverlässig, schnell und "
@@ -136,7 +135,7 @@ final List<BazaarBusinessData> allBusinesses = [
       ),
       <BazaarOfferingData>[allOfferings[11], allOfferings[12]]),
   BazaarBusinessData(
-      "Coop Supermarkt Zürich Puls 5",
+      "Poop Supermarkt",
       "Fruits, legumes, bread, meat, fish, sweets, beverages. Self-Checkout, TWINT.",
       LatLng(47.3907031, 8.5183213),
       Image.network('https://picsum.photos/id/1016/160/100'),
@@ -150,7 +149,7 @@ final List<BazaarBusinessData> allBusinesses = [
           OpeningHoursForDay([])),
       <BazaarOfferingData>[allOfferings[2], allOfferings[3]]),
   BazaarBusinessData(
-      "PhotoPro Johnson",
+      "Photo Jordan",
       "Professional Portraits, Wedding photography, Company events, etc.",
       LatLng(47.3900911, 8.5128345),
       Image.network('https://picsum.photos/id/1011/160/100'),

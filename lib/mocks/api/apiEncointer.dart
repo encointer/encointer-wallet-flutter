@@ -100,7 +100,7 @@ class MockApiEncointer extends ApiEncointer {
   }
 
   @override
-  Future<DateTime> getMeetupTime() async {
+  Future<void> getMeetupTime() async {
     return DateTime.fromMillisecondsSinceEpoch(claim['timestamp']);
   }
 }

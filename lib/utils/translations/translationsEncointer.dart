@@ -2,7 +2,11 @@
 /// always add a new getter here in the abstract class first, then generate/implement the getters in the subclasses
 abstract class TranslationsEncointer {
   String get registerParticipant;
-  String get attestationsSubmit;
+  String get claimsSubmit;
+  String get claimsPurge;
+  String get claimsPurgeConfirm;
+  String get ceremony;
+  String get ceremonyNext;
   String get encointerCeremony;
   String get nextCeremonyTimeLeft;
   String get nextCeremonyDate;
@@ -28,8 +32,10 @@ abstract class TranslationsEncointer {
   String get loanTxs;
   String get meetupAttended;
   String get meetupClaimantInvalid;
+  String get meetupLocation;
   String get meetupNotAssigned;
   String get meetupRemaining;
+  String get meetupStart;
   String get startCeremony;
   String get registered;
   String get scan;
@@ -44,7 +50,11 @@ abstract class TranslationsEncointer {
 
 class TranslationsEnEncointer implements TranslationsEncointer {
   get registerParticipant => 'Register Participant';
-  get attestationsSubmit => 'Submit attestations';
+  get claimsSubmit => 'Submit claims';
+  get claimsPurge => 'Purge previously scanned claims';
+  get claimsPurgeConfirm => 'Are you sure, you want to purge all scanned claims?';
+  get ceremony => 'Encointer Ceremony';
+  get ceremonyNext => 'Next ceremony will happen at high sun on:';
   get encointerCeremony => 'Encointer Ceremony';
   get nextCeremonyTimeLeft => 'Next ceremony is in';
   get nextCeremonyDate => 'Next ceremony is on';
@@ -70,8 +80,10 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   get loanTxs => 'History';
   get meetupAttended => 'Attended last meetup';
   get meetupClaimantInvalid => 'This claimant is not part of the meetup. Claim is not stored.';
+  get meetupLocation => 'Meetup Location';
   get meetupNotAssigned => 'You are not assigned to a meetup';
   get meetupRemaining => 'Time to meetup:';
+  get meetupStart => 'start meetup';
   get startCeremony => 'Start ceremony';
   get registered => 'Already Registered';
   get scan => 'Scan';
@@ -86,7 +98,11 @@ class TranslationsEnEncointer implements TranslationsEncointer {
 
 class TranslationsDeEncointer implements TranslationsEncointer {
   get registerParticipant => 'Registeriere Teilnehmer';
-  get attestationsSubmit => 'Anwesenheit einreichen';
+  get claimsSubmit => 'Meetupbestätigungen einreichen';
+  get claimsPurge => 'Bereits gescannte Meetupbestätigungen löschen';
+  get claimsPurgeConfirm => 'Bist du sicher, dass du alles gescannte Meetupbestätigungen löschen möchtest?';
+  get ceremony => 'Encointer Zeremonie';
+  get ceremonyNext => 'Nächste Zeremonie findet statt am Mittag am:';
   get encointerCeremony => 'Encointer Zeremonie';
   get nextCeremonyTimeLeft => 'Nächste Zeremonie ist in';
   get nextCeremonyDate => 'Nächste Zeremonie:';
@@ -112,6 +128,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get loanTxs => 'History';
   get meetupAttended => 'Am letzen Treffen teilgenommen';
   get meetupClaimantInvalid => 'Dieser Antragssteller gehört nicht zum Treffen. Behauptung wurde nicht gespeichert.';
+  get meetupLocation => 'Meetup Treffpunkt';
   get meetupNotAssigned => 'Du wurdest keinem Treffen zugewiesen';
   get meetupRemaining => 'Zeit bis zum Treffen:';
   get startCeremony => 'Zeremonie starten';
@@ -128,7 +145,11 @@ class TranslationsDeEncointer implements TranslationsEncointer {
 
 class TranslationsZhEncointer implements TranslationsEncointer {
   get registerParticipant => '注册参与者';
-  get attestationsSubmit => '提交证明';
+  get claimsSubmit => '提交证明';
+  get claimsPurge => throw UnimplementedError();
+  get claimsPurgeConfirm => throw UnimplementedError();
+  get ceremony => 'Encointer 仪式';
+  get ceremonyNext => '下一个仪式将在烈日下举行：';
   get encointerCeremony => 'Encointer 仪式';
   get nextCeremonyTimeLeft => throw UnimplementedError();
   get nextCeremonyDate => throw UnimplementedError();
@@ -153,8 +174,10 @@ class TranslationsZhEncointer implements TranslationsEncointer {
   get loanTxs => '历史';
   get meetupAttended => '参加了上次聚会';
   get meetupClaimantInvalid => '此索赔人不是聚会的一部分。声明未存储。';
+  get meetupLocation => throw UnimplementedError();
   get meetupNotAssigned => '你没有被分配到一个聚会';
   get meetupRemaining => '聚会时间：';
+  get meetupStart => '开始聚会';
   get startCeremony => throw UnimplementedError();
   get registered => '已经注册';
   get scan => '扫描';
