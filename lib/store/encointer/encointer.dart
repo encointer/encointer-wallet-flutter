@@ -136,6 +136,15 @@ abstract class _EncointerStore with Store {
   @computed
   bool get isAssigned => meetupIndex != null && meetupIndex > 0;
 
+  /// Checks if the chosenCid is contained in the communities.
+  ///
+  /// This is only relevant for edge-cases, where the chain does no longer contain a community. E.g. a dev-chain was
+  /// purged or a community as been marked as inactive and was removed.
+  @computed
+  get communitiesContainsChosenCid {
+    return chosenCid != null && communities.isNotEmpty && communities.where((cn) => cn.cid == chosenCid).isNotEmpty;
+  }
+
   double applyDemurrage(BalanceEntry entry) {
     double res;
     if (rootStore.chain.latestHeaderNumber != null && entry != null && demurrage != null) {
@@ -260,6 +269,11 @@ abstract class _EncointerStore with Store {
   void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
     print("store: set communityIdentifiers to $cids");
     communityIdentifiers = cids;
+
+    if (!communitiesContainsChosenCid) {
+      // inconsistency found, reset state
+      setChosenCid();
+    }
   }
 
   @action

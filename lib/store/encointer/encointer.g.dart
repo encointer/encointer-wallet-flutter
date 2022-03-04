@@ -56,6 +56,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
   @override
   bool get isAssigned =>
       (_$isAssignedComputed ??= Computed<bool>(() => super.isAssigned, name: '_EncointerStore.isAssigned')).value;
+  Computed<dynamic> _$communitiesContainsChosenCidComputed;
+
+  @override
+  dynamic get communitiesContainsChosenCid =>
+      (_$communitiesContainsChosenCidComputed ??= Computed<dynamic>(() => super.communitiesContainsChosenCid,
+              name: '_EncointerStore.communitiesContainsChosenCid'))
+          .value;
   Computed<bool> _$isRegisteredComputed;
 
   @override
@@ -650,6 +657,7 @@ communityIconsCid: ${communityIconsCid},
 communityBalanceEntry: ${communityBalanceEntry},
 communityBalance: ${communityBalance},
 isAssigned: ${isAssigned},
+communitiesContainsChosenCid: ${communitiesContainsChosenCid},
 isRegistered: ${isRegistered},
 showRegisterButton: ${showRegisterButton},
 showStartCeremonyButton: ${showStartCeremonyButton},
