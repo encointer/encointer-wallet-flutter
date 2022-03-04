@@ -134,7 +134,7 @@ abstract class _EncointerStore with Store {
   }
 
   @computed
-  bool get isRegistered => meetupIndex != null && meetupIndex > 0;
+  bool get isAssigned => meetupIndex != null && meetupIndex > 0;
 
   /// Checks if the chosenCid is contained in the communities.
   ///
@@ -483,5 +483,30 @@ abstract class _EncointerStore with Store {
   Future<CeremonyPhase> loadCurrentPhase() async {
     Object obj = await rootStore.loadObject(encointerCurrentPhaseKey);
     return ceremonyPhaseFromString(obj);
+  }
+
+  @computed
+  bool get isRegistered {
+    return participantIndex != null && participantIndex != 0;
+  }
+
+  @computed
+  bool get showRegisterButton {
+    return (currentPhase == CeremonyPhase.REGISTERING && !isRegistered);
+  }
+
+  @computed
+  bool get showStartCeremonyButton {
+    return (currentPhase == CeremonyPhase.ATTESTING && isRegistered);
+  }
+
+  @computed
+  bool get showTwoBoxes {
+    return !showRegisterButton && !showStartCeremonyButton;
+  }
+
+  @computed
+  int get numberOfParticipantsAtUpcomingCeremony {
+    return meetupRegistry.length;
   }
 }

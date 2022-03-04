@@ -73,7 +73,7 @@ class _AssigningPageState extends State<AssigningPage> {
       child: Column(children: <Widget>[
         AssignmentPanel(store),
         SizedBox(height: 16),
-        store.encointer.isRegistered
+        store.encointer.isAssigned
             ? Container(
                 key: Key('start-meetup'),
                 child: Column(
@@ -92,7 +92,7 @@ class _AssigningPageState extends State<AssigningPage> {
                     SizedBox(height: 16),
                     timeToMeetup < 60
                         ? RoundedButton(
-                            text: dic.encointer.meetupStart,
+                            text: dic.encointer.startCeremony,
                             onPressed: () => startMeetup(context, store),
                           )
                         : Container(),

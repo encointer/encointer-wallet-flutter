@@ -104,6 +104,9 @@ final appThemeEncointer = ThemeData(
       ),
     ),
   ),
+  iconTheme: IconThemeData(
+    color: ZurichLion.shade500,
+  ),
   appBarTheme: AppBarTheme(
     // foregroundColor: Colors.orange, // this gets for some reason ignored and we have to define iconTheme and textTheme
     backgroundColor: Colors.white,
@@ -129,7 +132,7 @@ const MaterialColor ZurichLion = const MaterialColor(
     50: const Color(0xffF4F8F9), // <--- used for light blue buttons (i.e. secondary buttons)
     100: const Color(0xffF4F8F9),
     200: const Color(0xffF4F8F9),
-    300: const Color(0xffF4F8F9),
+    300: const Color(0xffBCCEE0), // <--- medium blue border color of progress bar
     400: const Color(0xFF3880BD), // <--- starting color of gradient
     500: const Color(0xff4374A3), // <--- main color for almost all texts
     600: const Color(0xFF3969AC), // <--- end color of gradient

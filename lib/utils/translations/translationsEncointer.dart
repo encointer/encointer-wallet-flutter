@@ -7,6 +7,9 @@ abstract class TranslationsEncointer {
   String get claimsPurgeConfirm;
   String get ceremony;
   String get ceremonyNext;
+  String get encointerCeremony;
+  String get nextCeremonyTimeLeft;
+  String get nextCeremonyDate;
   String get claimQr;
   String get claimsScanned;
   String get claimsScannedAlready;
@@ -33,9 +36,16 @@ abstract class TranslationsEncointer {
   String get meetupNotAssigned;
   String get meetupRemaining;
   String get meetupStart;
+  String get startCeremony;
   String get registered;
   String get scan;
   String get txsAction;
+  String get registerUntil;
+  String get showCeremonyLocation;
+  String get ceremonyIsOver;
+  String get today;
+  String get tomorrow;
+  String get calendarEntryDescription;
 }
 
 class TranslationsEnEncointer implements TranslationsEncointer {
@@ -45,6 +55,9 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   get claimsPurgeConfirm => 'Are you sure, you want to purge all scanned claims?';
   get ceremony => 'Encointer Ceremony';
   get ceremonyNext => 'Next ceremony will happen at high sun on:';
+  get encointerCeremony => 'Encointer Ceremony';
+  get nextCeremonyTimeLeft => 'Next ceremony is in';
+  get nextCeremonyDate => 'Next ceremony is on';
   get claimQr => 'My Claim of Attendance';
   get claimsScanned => 'You have scanned AMOUNT_PLACEHOLDER claims';
   get claimsScannedAlready => 'Updated previously scanned claim';
@@ -71,9 +84,16 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   get meetupNotAssigned => 'You are not assigned to a meetup';
   get meetupRemaining => 'Time to meetup:';
   get meetupStart => 'start meetup';
+  get startCeremony => 'Start ceremony';
   get registered => 'Already Registered';
   get scan => 'Scan';
   get txsAction => 'Action';
+  get registerUntil => 'Register until';
+  get showCeremonyLocation => 'Ceremony location';
+  get ceremonyIsOver => 'The ceremony is over';
+  get today => 'Today';
+  get tomorrow => 'Tomorrow';
+  get calendarEntryDescription => 'Meetup to get your community income';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
@@ -83,6 +103,9 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get claimsPurgeConfirm => 'Bist du sicher, dass du alles gescannte Meetupbestätigungen löschen möchtest?';
   get ceremony => 'Encointer Zeremonie';
   get ceremonyNext => 'Nächste Zeremonie findet statt am Mittag am:';
+  get encointerCeremony => 'Encointer Zeremonie';
+  get nextCeremonyTimeLeft => 'Nächste Zeremonie ist in';
+  get nextCeremonyDate => 'Nächste Zeremonie:';
   get claimQr => 'Meine Behauptung der Anwesenheit';
   get claimsScanned => 'Du hast AMOUNT_PLACEHOLDER Behauptungen gescannt';
   get claimsScannedAlready => 'Letzte gescannte Behauptung wurde aktualisiert';
@@ -108,10 +131,17 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get meetupLocation => 'Meetup Treffpunkt';
   get meetupNotAssigned => 'Du wurdest keinem Treffen zugewiesen';
   get meetupRemaining => 'Zeit bis zum Treffen:';
-  get meetupStart => 'Treffen starten';
+  get meetupStart => 'Meetup starten';
+  get startCeremony => 'Zeremonie starten';
   get registered => 'Bereits registriert';
   get scan => 'Scan';
   get txsAction => 'Aktion';
+  get registerUntil => 'Registriere dich bis am';
+  get showCeremonyLocation => 'Ort der Zeremonie';
+  get ceremonyIsOver => 'Die Zeremonie ist vorbei';
+  get today => 'Heute';
+  get tomorrow => 'Morgen';
+  get calendarEntryDescription => 'Nimm am Treffen teil um dein Einkommen zu erhalten';
 }
 
 class TranslationsZhEncointer implements TranslationsEncointer {
@@ -121,6 +151,9 @@ class TranslationsZhEncointer implements TranslationsEncointer {
   get claimsPurgeConfirm => throw UnimplementedError();
   get ceremony => 'Encointer 仪式';
   get ceremonyNext => '下一个仪式将在烈日下举行：';
+  get encointerCeremony => 'Encointer 仪式';
+  get nextCeremonyTimeLeft => throw UnimplementedError();
+  get nextCeremonyDate => throw UnimplementedError();
   get claimQr => '我的出席声明';
   get claimsScanned => '您已扫描 AMOUNT_PLACEHOLDER 声明';
   get claimsScannedAlready => '更新了之前扫描的声明';
@@ -146,8 +179,15 @@ class TranslationsZhEncointer implements TranslationsEncointer {
   get meetupNotAssigned => '你没有被分配到一个聚会';
   get meetupRemaining => '聚会时间：';
   get meetupStart => '开始聚会';
+  get startCeremony => throw UnimplementedError();
   get registered => '已经注册';
   get scan => '扫描';
   get txsAction => '动作';
   get communities => throw UnimplementedError();
+  get registerUntil => throw UnimplementedError();
+  get showCeremonyLocation => throw UnimplementedError();
+  get ceremonyIsOver => throw UnimplementedError();
+  get today => throw UnimplementedError();
+  get tomorrow => throw UnimplementedError();
+  get calendarEntryDescription => throw UnimplementedError();
 }
