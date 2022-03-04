@@ -131,6 +131,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get meetupLocation => 'Meetup Treffpunkt';
   get meetupNotAssigned => 'Du wurdest keinem Treffen zugewiesen';
   get meetupRemaining => 'Zeit bis zum Treffen:';
+  get meetupStart => 'Meetup starten';
   get startCeremony => 'Zeremonie starten';
   get registered => 'Bereits registriert';
   get scan => 'Scan';
