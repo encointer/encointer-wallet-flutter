@@ -1,7 +1,7 @@
-import 'package:intl/intl.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:intl/intl.dart';
 
 /// stateless service that computes some of the view logic of the ceremony box
 class CeremonyBoxService {
@@ -89,8 +89,9 @@ class CeremonyBoxService {
         pastPhasesOffset = phase1register + phase2assign;
         break;
     }
-    int timeElapsed = pastPhasesOffset * subdivisions +
-        (phaseLengthCoarse * subdivisions * elapsedPart.inSeconds / entirePhase.inSeconds).round();
-    return timeElapsed < totalSubdivisions ? timeElapsed : totalSubdivisions;
+    // int timeElapsed = pastPhasesOffset * subdivisions +
+    //     (phaseLengthCoarse * subdivisions * elapsedPart.inSeconds / entirePhase.inSeconds).round();
+    // return timeElapsed < totalSubdivisions ? timeElapsed : totalSubdivisions;
+    return 0;
   }
 }
