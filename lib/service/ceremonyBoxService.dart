@@ -92,6 +92,5 @@ class CeremonyBoxService {
     int timeElapsed = pastPhasesOffset * subdivisions +
         (phaseLengthCoarse * subdivisions * elapsedPart.inSeconds / entirePhase.inSeconds).round();
     return timeElapsed < totalSubdivisions ? timeElapsed : totalSubdivisions;
-    // return 0;
   }
 }
