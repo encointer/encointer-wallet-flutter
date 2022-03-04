@@ -1,18 +1,18 @@
+import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/ceremonyRegisterButton.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/page-encointer/ceremony_box/ceremonyRegisterButton.dart';
 import "package:latlong2/latlong.dart";
 
+import 'ceremonyInfoAndCalendar.dart';
 import 'ceremonyLocationButton.dart';
 import 'ceremonyNotification.dart';
-import 'ceremonyInfoAndCalendar.dart';
 import 'ceremonyProgressBar.dart';
 import 'ceremonySchedule.dart';
 import 'ceremonyStartButton.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 
 class CeremonyBox extends StatelessWidget {
   final AppStore store;
@@ -45,6 +45,11 @@ class CeremonyBox extends StatelessWidget {
             ),
             child: Column(
               children: [
+                Text(
+                  "This box is only the skeleton. It has no features.",
+                  style: TextStyle(color: Colors.orange),
+                ),
+                SizedBox(height: 8),
                 CeremonyProgressBar(
                   registerUntilDate: registerUntilDate,
                   nextCeremonyDate: nextCeremonyDate,
