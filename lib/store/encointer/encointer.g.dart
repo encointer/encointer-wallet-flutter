@@ -56,6 +56,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
   @override
   bool get isRegistered =>
       (_$isRegisteredComputed ??= Computed<bool>(() => super.isRegistered, name: '_EncointerStore.isRegistered')).value;
+  Computed<dynamic> _$communitiesContainsChosenCidComputed;
+
+  @override
+  dynamic get communitiesContainsChosenCid =>
+      (_$communitiesContainsChosenCidComputed ??= Computed<dynamic>(() => super.communitiesContainsChosenCid,
+              name: '_EncointerStore.communitiesContainsChosenCid'))
+          .value;
 
   final _$currentPhaseAtom = Atom(name: '_EncointerStore.currentPhase');
 
@@ -620,7 +627,8 @@ communitySymbol: ${communitySymbol},
 communityIconsCid: ${communityIconsCid},
 communityBalanceEntry: ${communityBalanceEntry},
 communityBalance: ${communityBalance},
-isRegistered: ${isRegistered}
+isRegistered: ${isRegistered},
+communitiesContainsChosenCid: ${communitiesContainsChosenCid}
     ''';
   }
 }

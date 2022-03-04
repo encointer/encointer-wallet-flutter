@@ -111,12 +111,7 @@ class _CommunityWithCommunityChooserState extends State<CommunityWithCommunityCh
                 ),
                 SizedBox(height: 6),
                 Text(
-                  store.encointer.communities != null && store.encointer.chosenCid != null
-                      ? store.encointer.communities
-                          .firstWhere((c) => c.cid == store.encointer.chosenCid)
-                          .name
-                          .toString()
-                      : '...',
+                  store.encointer.communityName ?? '...',
                   style: Theme.of(context).textTheme.headline4,
                 ),
               ],
