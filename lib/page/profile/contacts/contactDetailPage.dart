@@ -18,14 +18,14 @@ class ContactDetailPage extends StatelessWidget {
 
   final AppStore store;
 
-  void _removeItem(BuildContext context, AccountData i) {
+  void _removeItem(BuildContext context, AccountData account) {
     var dic = I18n.of(context).translationsForLocale();
     showCupertinoDialog(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Text(dic.profile.contactDeleteWarn),
-          content: Text(Fmt.accountName(context, i)),
+          content: Text(Fmt.accountName(context, account)),
           actions: <Widget>[
             CupertinoButton(
               child: Text(dic.home.cancel),
@@ -35,8 +35,8 @@ class ContactDetailPage extends StatelessWidget {
               child: Text(dic.home.ok),
               onPressed: () {
                 Navigator.of(context).pop();
-                store.settings.removeContact(i);
-                if (i.pubKey == store.account.currentAccountPubKey) {
+                store.settings.removeContact(account);
+                if (account.pubKey == store.account.currentAccountPubKey) {
                   webApi.account.changeCurrentAccount(fetchData: true);
                 }
                 Navigator.of(context).pop();
