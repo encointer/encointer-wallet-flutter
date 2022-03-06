@@ -17,6 +17,7 @@ abstract class TranslationsProfile {
   String get contactDelete;
   String get contactDeleteWarn;
   String get contactEdit;
+  String get contactEndorse;
   String get contactAlreadyExists;
   String get contactMemo;
   String get contactName;
@@ -103,6 +104,7 @@ class TranslationsEnProfile implements TranslationsProfile {
   get contactDelete => 'Delete';
   get contactDeleteWarn => 'Are you sure you want to delete this address?';
   get contactEdit => 'Edit';
+  get contactEndorse => 'Endorse as trusted contact';
   get contactAlreadyExists => 'Address exists already';
   get contactMemo => 'Memo';
   get contactName => 'Name';
@@ -192,6 +194,7 @@ class TranslationsDeProfile implements TranslationsProfile {
   get contactDelete => 'Lösche';
   get contactDeleteWarn => 'Bist du sicher, dass du diese Adresse löschen möchtest?';
   get contactEdit => 'Bearbeiten';
+  get contactEndorse => 'Als vertrauenswürdig bestätigen';
   get contactAlreadyExists => 'Adresse existiert bereits';
   get contactMemo => 'Memo';
   get contactName => 'Name';
@@ -279,6 +282,7 @@ class TranslationsZhProfile implements TranslationsProfile {
   get contactDelete => '删除';
   get contactDeleteWarn => '确认删除该地址吗？';
   get contactEdit => '编辑';
+  get contactEndorse => throw UnimplementedError();
   get contactAlreadyExists => '地址已存在';
   get contactMemo => '备注';
   get contactName => '名称';

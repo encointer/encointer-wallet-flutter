@@ -113,6 +113,18 @@ class ContactDetailPage extends StatelessWidget {
                   children: [
                     Icon(Iconsax.send_sqaure_2),
                     SizedBox(width: 12),
+                    Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
+                  ],
+                ),
+                onPressed: null, // Todo: #417
+              ),
+              SizedBox(height: 16),
+              SecondaryButtonWide(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Iconsax.send_sqaure_2),
+                    SizedBox(width: 12),
                     Text(dic.profile.tokenSend, style: Theme.of(context).textTheme.headline3)
                   ],
                 ),
