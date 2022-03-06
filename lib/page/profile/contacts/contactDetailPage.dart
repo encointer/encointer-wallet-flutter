@@ -6,6 +6,7 @@ import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:encointer_wallet/utils/tx.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -116,7 +117,9 @@ class ContactDetailPage extends StatelessWidget {
                     Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
                   ],
                 ),
-                onPressed: null, // Todo: #417
+                onPressed: store.encointer.bootstrappers.contains(account.address)
+                    ? null
+                    : () => submitEndorseNewcomer(context, store.encointer.chosenCid, account.address),
               ),
               SizedBox(height: 16),
               SecondaryButtonWide(
