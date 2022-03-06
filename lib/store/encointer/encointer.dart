@@ -340,6 +340,7 @@ abstract class _EncointerStore with Store {
       webApi.encointer.getCommunityMetadata();
       webApi.encointer.getAllMeetupLocations();
       webApi.encointer.getDemurrage();
+      webApi.encointer.getBootstrappers();
     }
   }
 
