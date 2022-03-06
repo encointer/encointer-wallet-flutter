@@ -409,14 +409,12 @@ class ApiEncointer {
   /// Queries the EncointerCommunities pallet: encointerCommunities.bootstrappers(cid).
   ///
   Future<void> getBootstrappers() async {
-
     var cid = store.encointer.chosenCid;
 
     if (cid == null) return;
 
     List<String> bootstrappers =
-        await apiRoot.evalJavascript('encointer.getBootstrappers($cid)')
-        .then((bs) => List<String>.from(bs));
+        await apiRoot.evalJavascript('encointer.getBootstrappers($cid)').then((bs) => List<String>.from(bs));
 
     print("api: bootstrappers " + bootstrappers.toString());
 

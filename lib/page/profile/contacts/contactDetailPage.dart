@@ -135,16 +135,16 @@ class ContactDetailPage extends StatelessWidget {
               ),
               SizedBox(height: 16),
               SecondaryButtonWide(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Iconsax.trash),
-                      SizedBox(width: 12),
-                      Text(dic.profile.contactDelete, style: Theme.of(context).textTheme.headline3)
-                    ],
-                  ),
-                  onPressed: () => _removeItem(context, account),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Iconsax.trash),
+                    SizedBox(width: 12),
+                    Text(dic.profile.contactDelete, style: Theme.of(context).textTheme.headline3)
+                  ],
                 ),
+                onPressed: () => _removeItem(context, account),
+              ),
             ],
           ),
         ),
