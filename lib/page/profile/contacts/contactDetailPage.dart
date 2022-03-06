@@ -50,13 +50,13 @@ class ContactDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AccountData args = ModalRoute.of(context).settings.arguments;
+    AccountData account = ModalRoute.of(context).settings.arguments;
     var dic = I18n.of(context).translationsForLocale();
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          args.name,
+          account.name,
           style: Theme.of(context).textTheme.headline3,
         ),
         iconTheme: IconThemeData(
@@ -76,7 +76,7 @@ class ContactDetailPage extends StatelessWidget {
                   children: <Widget>[
                     SizedBox(height: 30),
                     AddressIcon(
-                      args.address,
+                      account.address,
                       size: 130,
                       tapToCopy: true,
                     ),
@@ -86,11 +86,11 @@ class ContactDetailPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(Fmt.address(args.address), style: TextStyle(fontSize: 20)),
+                        Text(Fmt.address(account.address), style: TextStyle(fontSize: 20)),
                         IconButton(
                           icon: Icon(Iconsax.copy),
                           color: ZurichLion.shade500,
-                          onPressed: () => UI.copyAndNotify(context, args.address),
+                          onPressed: () => UI.copyAndNotify(context, account.address),
                         ),
                       ],
                     ),
@@ -140,7 +140,7 @@ class ContactDetailPage extends StatelessWidget {
                       Text(dic.profile.contactDelete, style: Theme.of(context).textTheme.headline3)
                     ],
                   ),
-                  onPressed: () => _removeItem(context, args),
+                  onPressed: () => _removeItem(context, account),
                 ),
             ],
           ),
