@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
+import 'package:encointer_wallet/common/components/secondaryButtonWide.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
@@ -106,26 +107,19 @@ class ContactDetailPage extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Iconsax.send_sqaure_2),
-                      SizedBox(width: 12),
-                      Text(dic.profile.tokenSend, style: Theme.of(context).textTheme.headline3)
-                    ],
-                  ),
-                  onPressed: () async => {},
+              SecondaryButtonWide(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Iconsax.send_sqaure_2),
+                    SizedBox(width: 12),
+                    Text(dic.profile.tokenSend, style: Theme.of(context).textTheme.headline3)
+                  ],
                 ),
+                onPressed: null, // Todo: #417
               ),
               SizedBox(height: 16),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
+              SecondaryButtonWide(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -134,11 +128,8 @@ class ContactDetailPage extends StatelessWidget {
                       Text(dic.profile.contactDelete, style: Theme.of(context).textTheme.headline3)
                     ],
                   ),
-                  onPressed: () async => {
-                    _removeItem(context, args),
-                  },
+                  onPressed: () => _removeItem(context, args),
                 ),
-              ),
             ],
           ),
         ),
