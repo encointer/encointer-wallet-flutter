@@ -125,7 +125,7 @@ class ContactDetailPage extends StatelessWidget {
                   children: [
                     Icon(Iconsax.send_sqaure_2),
                     SizedBox(width: 12),
-                    Text(dic.profile.tokenSend, style: Theme.of(context).textTheme.headline3)
+                    Text("${dic.profile.tokenSend} (Todo)", style: Theme.of(context).textTheme.headline3),
                   ],
                 ),
                 onPressed: null, // Todo: #417
