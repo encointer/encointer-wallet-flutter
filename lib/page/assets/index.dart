@@ -108,10 +108,8 @@ class _AssetsState extends State<Assets> {
                             ),
                           ],
                         ),
-                        onTap: () => Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (BuildContext context) => AccountManagePage(store),
-                          ),
+                        onTap: () => Navigator.of(context).pushNamed(
+                          AccountManagePage.route,
                         ),
                       ),
                     ],
