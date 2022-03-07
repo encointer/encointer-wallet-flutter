@@ -28,6 +28,7 @@ abstract class _EncointerStore with Store {
   final String encointerCommunityKey = 'wallet_encointer_community';
   final String encointerCommunityMetadataKey = 'wallet_encointer_community_metadata';
   final String encointerCommunitiesKey = 'wallet_encointer_communities';
+  final String encointerBootstrappersKey = 'wallet_encointer_bootstrappers';
   final String encointerCommunityLocationsKey = 'wallet_encointer_community_locations';
 
   // offline meetup cache.
@@ -280,6 +281,7 @@ abstract class _EncointerStore with Store {
   void setBootstrappers(List<String> bs) {
     print("store: set communityIdentifiers to $bs");
     bootstrappers = bs;
+    cacheObject(encointerBootstrappersKey, bs);
   }
 
   @action
@@ -340,6 +342,7 @@ abstract class _EncointerStore with Store {
       webApi.encointer.getCommunityMetadata();
       webApi.encointer.getAllMeetupLocations();
       webApi.encointer.getDemurrage();
+      webApi.encointer.getBootstrappers();
     }
   }
 
@@ -428,10 +431,16 @@ abstract class _EncointerStore with Store {
       communities = cachedCommunities;
     }
 
+    List<dynamic> _cachedBootstrapperList = await loadObject(encointerBootstrappersKey);
+    if (_cachedBootstrapperList != null) {
+      bootstrappers = List<String>.from(_cachedBootstrapperList);
+      print("found cached bootstrappers. will recover it: $bootstrappers");
+    }
+
     List<dynamic> cachedLocations = await loadObject(encointerCommunityLocationsKey);
     if (cachedLocations != null) {
       List<Location> locations = cachedLocations.map((s) => Location.fromJson(s)).toList();
-      print("found cached communities. will recover it: " + locations.toString());
+      print("found cached locations. will recover it: " + locations.toString());
       communityLocations = ObservableList.of(locations);
     }
 
