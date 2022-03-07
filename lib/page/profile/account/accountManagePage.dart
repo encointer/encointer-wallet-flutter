@@ -20,7 +20,7 @@ import 'package:iconsax/iconsax.dart';
 class AccountManagePage extends StatefulWidget {
   AccountManagePage(this.store);
 
-  static final String route = '/profile/account';
+  static const String route = '/profile/account';
   final AppStore store;
 
   @override

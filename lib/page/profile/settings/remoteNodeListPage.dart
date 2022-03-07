@@ -9,7 +9,7 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 class RemoteNodeListPage extends StatelessWidget {
   RemoteNodeListPage(this.store);
 
-  static final String route = '/profile/endpoint';
+  static const String route = '/profile/endpoint';
   final Api api = webApi;
   final SettingsStore store;
 

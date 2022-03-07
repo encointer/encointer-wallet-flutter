@@ -20,7 +20,7 @@ const prefixList = [
 class SS58PrefixListPage extends StatelessWidget {
   SS58PrefixListPage(this.store);
 
-  static final String route = '/profile/ss58';
+  static const String route = '/profile/ss58';
   final Api api = webApi;
   final SettingsStore store;
 

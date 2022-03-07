@@ -17,7 +17,7 @@ import 'package:iconsax/iconsax.dart';
 class ContactDetailPage extends StatelessWidget {
   ContactDetailPage(this.store);
 
-  static final String route = '/profile/contactDetail';
+  static const String route = '/profile/contactDetail';
 
   final AppStore store;
 

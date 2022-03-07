@@ -20,7 +20,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 class TxConfirmPage extends StatefulWidget {
   const TxConfirmPage(this.store);
 
-  static final String route = '/tx/confirm';
+  static const String route = '/tx/confirm';
   final AppStore store;
 
   @override

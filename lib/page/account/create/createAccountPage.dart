@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage(this.store);
 
-  static final String route = '/account/createAccount';
+  static const String route = '/account/createAccount';
   final AppStore store;
 
   @override
