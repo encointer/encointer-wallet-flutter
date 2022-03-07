@@ -54,6 +54,11 @@ class ContactDetailPage extends StatelessWidget {
     AccountData account = ModalRoute.of(context).settings.arguments;
     var dic = I18n.of(context).translationsForLocale();
 
+    // Because of caching inconsistency with pre-v1.2.0. It would fetch
+    // the bootstrappers together from the cache, but it did not exist before.
+    // Todo: remove in the process of: #479
+    if (store.encointer.chosenCid != null) webApi.encointer.getBootstrappers();
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
