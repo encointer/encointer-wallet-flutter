@@ -440,7 +440,7 @@ abstract class _EncointerStore with Store {
     List<dynamic> cachedLocations = await loadObject(encointerCommunityLocationsKey);
     if (cachedLocations != null) {
       List<Location> locations = cachedLocations.map((s) => Location.fromJson(s)).toList();
-      print("found cached communities. will recover it: " + locations.toString());
+      print("found cached locations. will recover it: " + locations.toString());
       communityLocations = ObservableList.of(locations);
     }
 
