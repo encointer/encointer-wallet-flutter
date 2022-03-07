@@ -42,6 +42,8 @@
 	<string>Read QR Code of addresses.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Read QR Code of addresses from photos.</string>
+    <key>NSCalendarsUsageDescription</key>
+    <string>Add calendar entries for the next community ceremony</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
