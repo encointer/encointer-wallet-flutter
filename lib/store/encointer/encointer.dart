@@ -82,7 +82,7 @@ abstract class _EncointerStore with Store {
   List<CommunityIdentifier> communityIdentifiers;
 
   @observable
-  List<String> bootstrappers = [];
+  List<String> bootstrappers;
 
   @observable
   List<CidName> communities;

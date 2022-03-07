@@ -10,6 +10,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/tx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 
 class ContactDetailPage extends StatelessWidget {
@@ -113,20 +114,15 @@ class ContactDetailPage extends StatelessWidget {
                   ],
                 ),
               ),
-              if (store.encointer.bootstrappers.contains(store.account.currentAddress))
-                SecondaryButtonWide(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Iconsax.send_sqaure_2),
-                      SizedBox(width: 12),
-                      Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
-                    ],
-                  ),
-                  onPressed: store.encointer.bootstrappers.contains(account.address)
-                      ? null
-                      : () => submitEndorseNewcomer(context, store.encointer.chosenCid, account.address),
-                ),
+              Observer(builder: (_) {
+                if (store.encointer.bootstrappers != null) {
+                  return store.encointer.bootstrappers.contains(store.account.currentAddress)
+                      ? EndorseButton(store, account)
+                      : Container();
+                } else {
+                  return CupertinoActivityIndicator();
+                }
+              }),
               SizedBox(height: 16),
               SecondaryButtonWide(
                 child: Row(
@@ -155,6 +151,32 @@ class ContactDetailPage extends StatelessWidget {
           ),
         ),
       ),
+    );
+  }
+}
+
+class EndorseButton extends StatelessWidget {
+  EndorseButton(this.store, this.contact);
+
+  final AppStore store;
+  final AccountData contact;
+
+  @override
+  Widget build(BuildContext context) {
+    var dic = I18n.of(context).translationsForLocale();
+
+    return SecondaryButtonWide(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(Iconsax.send_sqaure_2),
+          SizedBox(width: 12),
+          Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
+        ],
+      ),
+      onPressed: store.encointer.bootstrappers.contains(contact.address)
+          ? null
+          : () => submitEndorseNewcomer(context, store.encointer.chosenCid, contact.address),
     );
   }
 }
