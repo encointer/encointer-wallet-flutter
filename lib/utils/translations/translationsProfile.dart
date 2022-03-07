@@ -12,6 +12,8 @@ abstract class TranslationsProfile {
   String get accountShare;
   String get add;
   String get addressBook;
+  String get cantEndorseBootstrapper;
+  String get canEndorseInRegisteringPhaseOnly;
   String get contactAddress;
   String get contactAddressError;
   String get contactDelete;
@@ -99,6 +101,8 @@ class TranslationsEnProfile implements TranslationsProfile {
   get accountShare => 'Share Account';
   get add => 'Add';
   get addressBook => 'Address Book';
+  get cantEndorseBootstrapper => 'Bootstrappers are already marked as trusted';
+  get canEndorseInRegisteringPhaseOnly => 'Can endorse in registering phase only';
   get contactAddress => 'Address';
   get contactAddressError => 'Invalid address';
   get contactDelete => 'Delete';
@@ -189,6 +193,8 @@ class TranslationsDeProfile implements TranslationsProfile {
   get accountShare => 'Konto teilen';
   get add => 'Hinzufügen';
   get addressBook => 'Adressbuch';
+  get cantEndorseBootstrapper => 'Bootstrapper sind bereits als zuverlässig markiert';
+  get canEndorseInRegisteringPhaseOnly => 'Du kannst nur in der Registrierungsphase jemanden als zuverlässig markieren';
   get contactAddress => 'Addresse';
   get contactAddressError => 'Ungültige Adresse';
   get contactDelete => 'Lösche';
@@ -277,6 +283,8 @@ class TranslationsZhProfile implements TranslationsProfile {
   get accountShare => '共享账户';
   get add => '添加';
   get addressBook => '地址簿';
+  get cantEndorseBootstrapper => throw UnimplementedError();
+  get canEndorseInRegisteringPhaseOnly => throw UnimplementedError();
   get contactAddress => '地址';
   get contactAddressError => '无效地址';
   get contactDelete => '删除';
