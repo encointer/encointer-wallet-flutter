@@ -22,8 +22,8 @@ import 'package:encointer_wallet/page/profile/account/accountManagePage.dart';
 import 'package:encointer_wallet/page/profile/account/changePasswordPage.dart';
 import 'package:encointer_wallet/page/profile/account/exportAccountPage.dart';
 import 'package:encointer_wallet/page/profile/account/exportResultPage.dart';
-import 'package:encointer_wallet/page/profile/contacts/contactDetailPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/accountSharePage.dart';
+import 'package:encointer_wallet/page/profile/contacts/contactDetailPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactListPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactsPage.dart';
@@ -59,7 +59,9 @@ class _WalletAppState extends State<WalletApp> {
   ThemeData _theme = appThemeEncointer;
 
   void _changeTheme() {
-    // todo this was network dependent theme
+    // todo: Remove this. It was for the network dependent theme.
+    // But his can be done at the same time, when we refactor
+    // the network selection page.
   }
 
   void _changeLang(BuildContext context, String code) {
