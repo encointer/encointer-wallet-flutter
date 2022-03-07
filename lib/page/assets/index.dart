@@ -5,8 +5,8 @@ import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/ceremonyBox.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
-import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
 import 'package:encointer_wallet/page/profile/account/accountManagePage.dart';
@@ -15,12 +15,13 @@ import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:encointer_wallet/utils/tx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class Assets extends StatefulWidget {
   Assets(this.store);
@@ -51,23 +52,6 @@ class _AssetsState extends State<Assets> {
 
   @override
   Widget build(BuildContext context) {
-    Future<void> _submitClaimRewards(BuildContext context) async {
-      var args = {
-        "title": 'claim_rewards',
-        "txInfo": {
-          "module": 'encointerCeremonies',
-          "call": 'claimRewards',
-          "cid": store.encointer.chosenCid,
-        },
-        "detail": "cid: ${store.encointer.chosenCid.toFmtString()}",
-        "params": [store.encointer.chosenCid],
-        'onFinish': (BuildContext txPageContext, Map res) {
-          Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
-        }
-      };
-      Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
-    }
-
     final Translations dic = I18n.of(context).translationsForLocale();
     return Scaffold(
       appBar: AppBar(
@@ -249,7 +233,7 @@ class _AssetsState extends State<Assets> {
                           if (hasPendingIssuance) {
                             return ElevatedButton(
                               child: Text(dic.assets.issuancePending),
-                              onPressed: () => _submitClaimRewards(context),
+                              onPressed: () => submitClaimRewards(context, store.encointer.chosenCid),
                             );
                           } else {
                             return ElevatedButton(
@@ -264,34 +248,8 @@ class _AssetsState extends State<Assets> {
                     )
                   : Container();
             }),
-            Container(
-              decoration: BoxDecoration(
-                color: Color(0xffF4F8F9),
-                borderRadius: BorderRadius.circular(15),
-              ),
-              height: 150,
-              width: double.infinity,
-              child: Center(
-                child: Text(
-                  "Placeholder TODO add ceremony guide",
-                  style: TextStyle(color: Colors.orange),
-                ),
-              ),
-            ),
-            SizedBox(height: 12),
-            PrimaryButton(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Iconsax.login_1),
-                  SizedBox(width: 12),
-                  Text("Register now"),
-                ],
-              ),
-              onPressed: () {
-                print("TODO register");
-              },
-            ),
+            SizedBox(height: 24),
+            CeremonyBox(store: store),
           ],
         ),
       ),

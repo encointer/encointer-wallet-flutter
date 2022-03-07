@@ -28,6 +28,7 @@ abstract class _EncointerStore with Store {
   final String encointerCommunityKey = 'wallet_encointer_community';
   final String encointerCommunityMetadataKey = 'wallet_encointer_community_metadata';
   final String encointerCommunitiesKey = 'wallet_encointer_communities';
+  final String encointerBootstrappersKey = 'wallet_encointer_bootstrappers';
   final String encointerCommunityLocationsKey = 'wallet_encointer_community_locations';
 
   // offline meetup cache.
@@ -134,7 +135,16 @@ abstract class _EncointerStore with Store {
   }
 
   @computed
-  bool get isRegistered => meetupIndex != null && meetupIndex > 0;
+  bool get isAssigned => meetupIndex != null && meetupIndex > 0;
+
+  /// Checks if the chosenCid is contained in the communities.
+  ///
+  /// This is only relevant for edge-cases, where the chain does no longer contain a community. E.g. a dev-chain was
+  /// purged or a community as been marked as inactive and was removed.
+  @computed
+  get communitiesContainsChosenCid {
+    return chosenCid != null && communities.isNotEmpty && communities.where((cn) => cn.cid == chosenCid).isNotEmpty;
+  }
 
   double applyDemurrage(BalanceEntry entry) {
     double res;
@@ -260,12 +270,18 @@ abstract class _EncointerStore with Store {
   void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
     print("store: set communityIdentifiers to $cids");
     communityIdentifiers = cids;
+
+    if (!communitiesContainsChosenCid) {
+      // inconsistency found, reset state
+      setChosenCid();
+    }
   }
 
   @action
   void setBootstrappers(List<String> bs) {
     print("store: set communityIdentifiers to $bs");
     bootstrappers = bs;
+    cacheObject(encointerBootstrappersKey, bs);
   }
 
   @action
@@ -326,6 +342,7 @@ abstract class _EncointerStore with Store {
       webApi.encointer.getCommunityMetadata();
       webApi.encointer.getAllMeetupLocations();
       webApi.encointer.getDemurrage();
+      webApi.encointer.getBootstrappers();
     }
   }
 
@@ -414,10 +431,16 @@ abstract class _EncointerStore with Store {
       communities = cachedCommunities;
     }
 
+    List<dynamic> _cachedBootstrapperList = await loadObject(encointerBootstrappersKey);
+    if (_cachedBootstrapperList != null) {
+      bootstrappers = List<String>.from(_cachedBootstrapperList);
+      print("found cached bootstrappers. will recover it: $bootstrappers");
+    }
+
     List<dynamic> cachedLocations = await loadObject(encointerCommunityLocationsKey);
     if (cachedLocations != null) {
       List<Location> locations = cachedLocations.map((s) => Location.fromJson(s)).toList();
-      print("found cached communities. will recover it: " + locations.toString());
+      print("found cached locations. will recover it: " + locations.toString());
       communityLocations = ObservableList.of(locations);
     }
 
@@ -469,5 +492,30 @@ abstract class _EncointerStore with Store {
   Future<CeremonyPhase> loadCurrentPhase() async {
     Object obj = await rootStore.loadObject(encointerCurrentPhaseKey);
     return ceremonyPhaseFromString(obj);
+  }
+
+  @computed
+  bool get isRegistered {
+    return participantIndex != null && participantIndex != 0;
+  }
+
+  @computed
+  bool get showRegisterButton {
+    return (currentPhase == CeremonyPhase.REGISTERING && !isRegistered);
+  }
+
+  @computed
+  bool get showStartCeremonyButton {
+    return (currentPhase == CeremonyPhase.ATTESTING && isRegistered);
+  }
+
+  @computed
+  bool get showTwoBoxes {
+    return !showRegisterButton && !showStartCeremonyButton;
+  }
+
+  @computed
+  int get numberOfParticipantsAtUpcomingCeremony {
+    return meetupRegistry.length;
   }
 }

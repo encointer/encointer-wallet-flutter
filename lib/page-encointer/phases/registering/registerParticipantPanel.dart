@@ -78,7 +78,7 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
               ? Container()
               : Column(
                   children: <Widget>[
-                    Text(dic.encointer.ceremonyNext),
+                    Text(dic.encointer.nextCeremonyDate),
                     Text(DateFormat('yyyy-MM-dd')
                         .format(new DateTime.fromMillisecondsSinceEpoch(store.encointer.meetupTime)))
                   ],

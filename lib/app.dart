@@ -22,8 +22,8 @@ import 'package:encointer_wallet/page/profile/account/accountManagePage.dart';
 import 'package:encointer_wallet/page/profile/account/changePasswordPage.dart';
 import 'package:encointer_wallet/page/profile/account/exportAccountPage.dart';
 import 'package:encointer_wallet/page/profile/account/exportResultPage.dart';
-import 'package:encointer_wallet/page/profile/contacts/contactDetailPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/accountSharePage.dart';
+import 'package:encointer_wallet/page/profile/contacts/contactDetailPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactListPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactsPage.dart';
@@ -56,18 +56,12 @@ class WalletApp extends StatefulWidget {
 class _WalletAppState extends State<WalletApp> {
   AppStore _appStore;
   Locale _locale = const Locale('en', '');
-  ThemeData _theme = appTheme;
+  ThemeData _theme = appThemeEncointer;
 
   void _changeTheme() {
-    if (_appStore.settings.endpointIsEncointer) {
-      setState(() {
-        _theme = appThemeEncointer;
-      });
-    } else {
-      setState(() {
-        _theme = appTheme;
-      });
-    }
+    // todo: Remove this. It was for the network dependent theme.
+    // But his can be done at the same time, when we refactor
+    // the network selection page.
   }
 
   void _changeLang(BuildContext context, String code) {
@@ -101,7 +95,6 @@ class _WalletAppState extends State<WalletApp> {
       webApi.init();
 
       _changeLang(context, _appStore.settings.localeCode);
-      _changeTheme();
     }
     return _appStore.account.accountListAll.length;
   }

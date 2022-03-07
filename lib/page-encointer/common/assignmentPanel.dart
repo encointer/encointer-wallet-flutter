@@ -32,7 +32,7 @@ class AssignmentPanel extends StatelessWidget {
                   ? Text(dic.assets.communitiesNotFound)
                   : Column(
                       children: <Widget>[
-                        store.encointer.isRegistered
+                        store.encointer.isAssigned
                             ? Column(
                                 children: <Widget>[
                                   Text("You are registered! ", style: TextStyle(color: Colors.green)),
