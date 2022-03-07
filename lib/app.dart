@@ -56,18 +56,10 @@ class WalletApp extends StatefulWidget {
 class _WalletAppState extends State<WalletApp> {
   AppStore _appStore;
   Locale _locale = const Locale('en', '');
-  ThemeData _theme = appTheme;
+  ThemeData _theme = appThemeEncointer;
 
   void _changeTheme() {
-    if (_appStore.settings.endpointIsEncointer) {
-      setState(() {
-        _theme = appThemeEncointer;
-      });
-    } else {
-      setState(() {
-        _theme = appTheme;
-      });
-    }
+    // todo this was network dependent theme
   }
 
   void _changeLang(BuildContext context, String code) {
@@ -101,7 +93,6 @@ class _WalletAppState extends State<WalletApp> {
       webApi.init();
 
       _changeLang(context, _appStore.settings.localeCode);
-      _changeTheme();
     }
     return _appStore.account.accountListAll.length;
   }
