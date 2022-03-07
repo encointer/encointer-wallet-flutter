@@ -4,6 +4,7 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -175,8 +176,30 @@ class EndorseButton extends StatelessWidget {
         ],
       ),
       onPressed: store.encointer.bootstrappers.contains(contact.address)
-          ? null
-          : () => submitEndorseNewcomer(context, store.encointer.chosenCid, contact.address),
+          ? () => _popupDialog(context, "Can't endorse other bootstrapper")
+          : store.encointer.currentPhase != CeremonyPhase.REGISTERING
+              ? () => _popupDialog(context, "Can't endorse outside of registering phase")
+              : () => submitEndorseNewcomer(context, store.encointer.chosenCid, contact.address),
     );
   }
+}
+
+Future<void> _popupDialog(BuildContext context, String content) async {
+  showCupertinoDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return CupertinoAlertDialog(
+        title: Container(),
+        content: Text(content),
+        actions: <Widget>[
+          CupertinoButton(
+            child: Text(I18n.of(context).translationsForLocale().home.ok),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
