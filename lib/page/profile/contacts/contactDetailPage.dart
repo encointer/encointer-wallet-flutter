@@ -6,8 +6,8 @@ import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/tx.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/tx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -108,19 +108,20 @@ class ContactDetailPage extends StatelessWidget {
                   ],
                 ),
               ),
-              SecondaryButtonWide(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Iconsax.send_sqaure_2),
-                    SizedBox(width: 12),
-                    Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
-                  ],
+              if (store.encointer.bootstrappers.contains(store.account.currentAddress))
+                SecondaryButtonWide(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Iconsax.send_sqaure_2),
+                      SizedBox(width: 12),
+                      Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
+                    ],
+                  ),
+                  onPressed: store.encointer.bootstrappers.contains(account.address)
+                      ? null
+                      : () => submitEndorseNewcomer(context, store.encointer.chosenCid, account.address),
                 ),
-                onPressed: store.encointer.bootstrappers.contains(account.address)
-                    ? null
-                    : () => submitEndorseNewcomer(context, store.encointer.chosenCid, account.address),
-              ),
               SizedBox(height: 16),
               SecondaryButtonWide(
                 child: Row(
