@@ -1,6 +1,7 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/secondaryButtonWide.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -126,16 +127,25 @@ class ContactDetailPage extends StatelessWidget {
               }),
               SizedBox(height: 16),
               SecondaryButtonWide(
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Iconsax.send_sqaure_2),
-                    SizedBox(width: 12),
-                    Text("${dic.profile.tokenSend} (Todo)", style: Theme.of(context).textTheme.headline3),
-                  ],
-                ),
-                onPressed: null, // Todo: #417
-              ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Iconsax.send_sqaure_2),
+                      SizedBox(width: 12),
+                      Text("${dic.profile.tokenSend} (Todo)", style: Theme.of(context).textTheme.headline3),
+                    ],
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(
+                      TransferPage.route,
+                      arguments: TransferPageParams(
+                          cid: store.encointer.chosenCid,
+                          communitySymbol: store.encointer.communitySymbol,
+                          recipient: account.address,
+                          amount: null,
+                          redirect: '/'),
+                    );
+                  }),
               SizedBox(height: 16),
               SecondaryButtonWide(
                 child: Row(
