@@ -205,7 +205,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
     if (await webApi.isConnected()) {
       _showTxStatusSnackbar(
         context,
-        "dic['tx.${store.account.txStatus}']" ?? dic.home.txQueued,
+        "dic['tx.${store.account.txStatus}']" ?? dic.home.transactionQueued,
         CupertinoActivityIndicator(),
       ); // TODO armin, fix transfer status logic
       final Map res = viaQr ? await _sendTxViaQr(context, args) : await _sendTx(context, args);
@@ -215,7 +215,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
         _onTxFinish(context, res, onTxFinishFn);
       }
     } else {
-      _showTxStatusSnackbar(context, dic.home.txQueuedOffline, null);
+      _showTxStatusSnackbar(context, dic.home.transactionQueuedOffline, null);
       args['notificationTitle'] = I18n.of(context).translationsForLocale().home.notifySubmittedQueued;
       store.account.queueTx(args);
     }
@@ -324,7 +324,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
                     Padding(
                       padding: EdgeInsets.all(16),
                       child: Text(
-                        dic.home.submitTx,
+                        dic.home.submitTransaction,
                         style: Theme.of(context).textTheme.headline4,
                       ),
                     ),

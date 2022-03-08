@@ -65,7 +65,7 @@ class TranslationsEnAccount implements TranslationsAccount {
   get path => 'Secret derivation path';
   get qrScan => 'Scan QR code';
   get rawSeed => 'Raw Seed';
-  get uosCanceled => 'Tx canceled';
+  get uosCanceled => 'Transaction canceled';
   get uosPush => 'Scan to publish';
   get uosScan => 'Scan signed and send';
   get uosSigner => 'Signer';
@@ -137,7 +137,7 @@ class TranslationsZhAccount implements TranslationsAccount {
   get path => '秘密推导路径';
   get qrScan => '扫描二维码';
   get rawSeed => '原始种子';
-  get uosCanceled => 'Tx 取消';
+  get uosCanceled => 'Transaction 取消';
   get uosPush => '扫描发布';
   get uosScan => '扫描签名并发送';
   get uosSigner => '签名者';
