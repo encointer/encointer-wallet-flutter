@@ -127,25 +127,27 @@ class ContactDetailPage extends StatelessWidget {
               }),
               SizedBox(height: 16),
               SecondaryButtonWide(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Iconsax.send_sqaure_2),
-                      SizedBox(width: 12),
-                      Text("${dic.profile.tokenSend} (Todo)", style: Theme.of(context).textTheme.headline3),
-                    ],
-                  ),
-                  onPressed: () {
-                    Navigator.of(context).pushNamed(
-                      TransferPage.route,
-                      arguments: TransferPageParams(
-                          cid: store.encointer.chosenCid,
-                          communitySymbol: store.encointer.communitySymbol,
-                          recipient: account.address,
-                          amount: null,
-                          redirect: '/'),
-                    );
-                  }),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Iconsax.send_sqaure_2),
+                    SizedBox(width: 12),
+                    Text("${dic.profile.tokenSend} (Todo)", style: Theme.of(context).textTheme.headline3),
+                  ],
+                ),
+                onPressed: () {
+                  Navigator.of(context).pushNamed(
+                    TransferPage.route,
+                    arguments: TransferPageParams(
+                      cid: store.encointer.chosenCid,
+                      communitySymbol: store.encointer.communitySymbol,
+                      recipient: account.address,
+                      amount: null,
+                      redirect: '/',
+                    ),
+                  );
+                },
+              ),
               SizedBox(height: 16),
               SecondaryButtonWide(
                 child: Row(
