@@ -449,7 +449,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
                           ),
                           Text('${Fmt.token(_tipValue, decimals)} $tokenView'),
                           TapTooltip(
-                            message: dic.assets.tipTip,
+                            message: dic.assets.tipHint,
                             child: Icon(
                               Icons.info,
                               color: Theme.of(context).unselectedWidgetColor,
