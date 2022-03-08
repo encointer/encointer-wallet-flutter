@@ -504,7 +504,6 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
                               ? dic.home.submitNoSign
                               : (isObservation && _proxyAccount == null) || isProxyObservation
                                   ? dic.home.submitQr
-                                  // dic.account.observeInvalid
                                   : dic.home.submit,
                           style: TextStyle(color: Colors.white),
                         ),
