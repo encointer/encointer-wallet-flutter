@@ -36,8 +36,8 @@ class _AddressInputFieldState extends State<AddressInputField> {
       return listLocal;
     }
 
-    final acc = AccountData();
-    acc.address = input;
+    final accountData = AccountData();
+    accountData.address = input;
     if (input.length < 47) {
       // check if input indices in local account list
       final int indicesIndex = listLocal.indexWhere((e) {
@@ -50,8 +50,8 @@ class _AddressInputFieldState extends State<AddressInputField> {
       // query account address with account indices
       final queryRes = await webApi.account.queryAddressWithAccountIndex(input);
       if (queryRes != null) {
-        acc.address = queryRes[0];
-        acc.name = input;
+        accountData.address = queryRes[0];
+        accountData.name = input;
       }
     } else {
       // check if input address in local account list
@@ -62,11 +62,11 @@ class _AddressInputFieldState extends State<AddressInputField> {
     }
 
     // fetch address info if it's a new address
-    final res = await webApi.account.getAddressIcons([acc.address]);
+    final res = await webApi.account.getAddressIcons([accountData.address]);
     if (res != null) {
-      await webApi.account.fetchAddressIndex([acc.address]);
+      await webApi.account.fetchAddressIndex([accountData.address]);
     }
-    return [acc];
+    return [accountData];
   }
 
   String _itemAsString(AccountData item) {

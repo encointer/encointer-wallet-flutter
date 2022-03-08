@@ -242,7 +242,7 @@ class UI {
         context: context,
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
-            title: Text(I18n.of(context).translationsForLocale().assets.amountLow),
+            title: Text(I18n.of(context).translationsForLocale().assets.insufficientBalance),
             content: Container(),
             actions: <Widget>[
               CupertinoButton(

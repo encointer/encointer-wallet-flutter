@@ -121,7 +121,7 @@ class _TransferPageState extends State<TransferPage> {
                               return dic.assets.amountError;
                             }
                             if (balanceTooLow(value, available, decimals)) {
-                              return dic.assets.amountLow;
+                              return dic.assets.insufficientBalance;
                             }
                             return null;
                           },

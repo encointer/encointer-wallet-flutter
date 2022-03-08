@@ -85,7 +85,7 @@ class _AssetsState extends State<Assets> {
                 );
               }
 
-              AccountData acc = store.account.currentAccount;
+              AccountData accountData = store.account.currentAccount;
 
               return Column(
                 children: <Widget>[
@@ -103,7 +103,7 @@ class _AssetsState extends State<Assets> {
                             ),
                             SizedBox(height: 6),
                             Text(
-                              Fmt.accountName(context, acc),
+                              Fmt.accountName(context, accountData),
                               style: Theme.of(context).textTheme.headline4,
                             ),
                           ],
@@ -171,7 +171,7 @@ class _AssetsState extends State<Assets> {
                           ),
                           key: Key('qr-receive'),
                           onPressed: () {
-                            if (acc.address != '') {
+                            if (accountData.address != '') {
                               Navigator.pushNamed(context, ReceivePage.route);
                             }
                           },
