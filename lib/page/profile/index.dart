@@ -196,7 +196,7 @@ class _ProfileState extends State<Profile> {
                   ),
                   ListTile(
                     title: Text(
-                      dic.profile.passChange,
+                      dic.profile.changeYourPin,
                       style: Theme.of(context).textTheme.headline3,
                     ),
                     trailing: Icon(Icons.arrow_forward_ios, size: 18),
@@ -209,7 +209,7 @@ class _ProfileState extends State<Profile> {
                         context: context,
                         builder: (BuildContext context) {
                           return CupertinoAlertDialog(title: Text(dic.profile.accountsDelete),
-                              // content: Text(dic.profile.passErrorTxt),
+                              // content: Text(dic.profile.wrongPinHint),
                               actions: <Widget>[
                                 CupertinoButton(
                                   // key: Key('error-dialog-ok'),

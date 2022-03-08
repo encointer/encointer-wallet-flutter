@@ -138,8 +138,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
               context: context,
               builder: (BuildContext context) {
                 return CupertinoAlertDialog(
-                  title: Text(dic.profile.noMnemonic),
-                  content: Text(dic.profile.noMnemonicTxt),
+                  title: Text(dic.profile.noMnemonicFound),
+                  content: Text(dic.profile.importedWithRawSeedHenceNoMnemonic),
                   actions: <Widget>[
                     CupertinoButton(
                       child: Text(I18n.of(context).translationsForLocale().home.ok),
@@ -176,7 +176,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     }
                     int exist = store.account.optionalAccounts.indexWhere((i) => i.name == name);
                     if (exist > -1) {
-                      return dic.profile.contactNameExist;
+                      return dic.profile.contactNameAlreadyExists;
                     }
                     return null;
                   },
