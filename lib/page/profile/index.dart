@@ -48,11 +48,6 @@ class _ProfileState extends State<Profile> {
     Navigator.of(context).pushNamed(AddAccountPage.route);
   }
 
-  // What type is a reputations? is it a string?
-  // Future<void> _getReputations() async {
-  //   await webApi.encointer.getReputations();
-  // }
-
   Future<void> _showPasswordDialog(BuildContext context) async {
     await showCupertinoDialog(
       context: context,

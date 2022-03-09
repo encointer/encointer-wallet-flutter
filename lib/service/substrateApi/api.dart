@@ -244,6 +244,7 @@ class Api {
     encointer.getEncointerBalance();
     encointer.getCommunityMetadata();
     encointer.getDemurrage();
+    encointer.getReputations();
   }
 
   Future<void> fetchNetworkProps() async {

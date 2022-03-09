@@ -213,19 +213,6 @@ class ApiEncointer {
     store.encointer.setCommunities(cn);
   }
 
-  /// Calls the custom rpc: api.rpc.ceremonies.getReputations()
-  Future<void> getReputations() async {
-    // List<String> rep = await apiRoot
-    //     .evalJavascript('encointer.ceremoniesGetReputations()')
-    //     .then(
-    //         (list) =>
-    //     List.from(list).map((rep) => CidName.fromJson(rep)).toList()
-    // );
-    //
-    // print("api: Reputations: " + rep.toString());
-    // store.encointer.setReputations(rep);
-  }
-
   /// Queries the Scheduler pallet: encointerScheduler./-currentPhase(), -phaseDurations(phase), -nextPhaseTimestamp().
   ///
   /// Fixme: Sometimes the PhaseAwareBox takes ages to update. This might be due to multiple network requests on JS side.
@@ -419,6 +406,14 @@ class ApiEncointer {
     print("api: bootstrappers " + bootstrappers.toString());
 
     store.encointer.setBootstrappers(bootstrappers);
+  }
+
+  Future<void> getReputations() async {
+    var address = store.account.currentAddress;
+
+    dynamic reputations = await apiRoot.evalJavascript('encointer.getReputations("$address")');
+
+    print("GetReputations: ${reputations.toString()}");
   }
 
   Future<dynamic> sendFaucetTx() async {
