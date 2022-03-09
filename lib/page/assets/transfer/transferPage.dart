@@ -19,6 +19,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:encointer_wallet/page/account/scanPage.dart';
 
 class TransferPageParams {
   TransferPageParams({this.cid, this.communitySymbol, this.recipient, this.amount, this.redirect});
@@ -101,7 +102,14 @@ class _TransferPageState extends State<TransferPage> {
                           style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
                           textAlign: TextAlign.center,
                         ),
-                        SizedBox(height: 48),
+                        SizedBox(height: 24),
+                        IconButton(
+                          iconSize: 48,
+                          icon: Icon(Iconsax.scan_barcode),
+                          onPressed: () => Navigator.of(context)
+                              .pushNamed(ScanPage.route), // same as for clicking the scan button in the bottom bar
+                        ),
+                        SizedBox(height: 24),
                         EncointerTextFormField(
                           labelText: dic.assets.amountToBeTransferred,
                           textStyle: Theme.of(context).textTheme.headline1.copyWith(color: encointerBlack),
