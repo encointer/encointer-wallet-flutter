@@ -75,6 +75,10 @@ abstract class TranslationsProfile {
   String get ceremonies;
   String get tokenSend;
   String get reputation;
+  String get addContact;
+  String get deleteAccount;
+  String get exportAccount;
+  String get errorUserNameIsRequired;
 }
 
 class TranslationsEnProfile implements TranslationsProfile {
@@ -156,6 +160,10 @@ class TranslationsEnProfile implements TranslationsProfile {
   get reputation => 'Reputation';
   get shareLinkHint => 'Or you can share a link:';
   get tokenSend => 'Send Tokens';
+  get addContact => 'Add contact';
+  get deleteAccount => 'delete';
+  get exportAccount => 'export';
+  get errorUserNameIsRequired => 'User name cannot be blank';
 }
 
 class TranslationsDeProfile implements TranslationsProfile {
@@ -235,6 +243,10 @@ class TranslationsDeProfile implements TranslationsProfile {
   get ceremonies => 'Zeremonien';
   get reputation => 'Reputation';
   get tokenSend => 'Sende Tokens';
+  get addContact => 'Kontakt hinzufügen';
+  get deleteAccount => 'löschen';
+  get exportAccount => 'exportieren';
+  get errorUserNameIsRequired => 'Benutzername darf nicht leer sein';
 }
 
 class TranslationsZhProfile implements TranslationsProfile {
@@ -312,4 +324,8 @@ class TranslationsZhProfile implements TranslationsProfile {
   get enableBazaar => throw UnimplementedError();
   get noMnemonicFound => throw UnimplementedError();
   get importedWithRawSeedHenceNoMnemonic => throw UnimplementedError();
+  get addContact => throw UnimplementedError();
+  get deleteAccount => throw UnimplementedError();
+  get exportAccount => throw UnimplementedError();
+  get errorUserNameIsRequired => throw UnimplementedError();
 }

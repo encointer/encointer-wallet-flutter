@@ -123,7 +123,7 @@ class _AssetsState extends State<Assets> {
                               children: [
                                 TextGradient(text: '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ'),
                                 Text(
-                                  "Balance, ${store.encointer.communitySymbol}",
+                                  "${dic.assets.balance}, ${store.encointer.communitySymbol}",
                                   style: Theme.of(context).textTheme.headline4.copyWith(
                                         color: encointerGrey,
                                       ),

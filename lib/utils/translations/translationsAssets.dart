@@ -31,6 +31,8 @@ abstract class TranslationsAssets {
   String get invoiceAmount;
   String get shareInvoice;
   String get yourBalanceFor;
+  String get balance;
+  String get invoice;
 }
 
 class TranslationsEnAssets implements TranslationsAssets {
@@ -64,6 +66,8 @@ class TranslationsEnAssets implements TranslationsAssets {
   get invoiceAmount => 'Invoice amount';
   get shareInvoice => 'Share Invoice';
   get yourBalanceFor => 'Your balance for';
+  get balance => 'Balance';
+  get invoice => 'Invoice';
 }
 
 class TranslationsDeAssets implements TranslationsAssets {
@@ -97,6 +101,8 @@ class TranslationsDeAssets implements TranslationsAssets {
   get invoiceAmount => 'Rechnungsbetrag';
   get shareInvoice => 'Teile als Rechnung';
   get yourBalanceFor => 'Ihr Guthaben auf';
+  get balance => 'Guthaben';
+  get invoice => 'Rechnungsbetrag';
 }
 
 class TranslationsZhAssets implements TranslationsAssets {
@@ -130,4 +136,6 @@ class TranslationsZhAssets implements TranslationsAssets {
   get invoiceAmount => '发票金额';
   get shareInvoice => '分享二维码';
   get yourBalanceFor => '你的余额';
+  get balance => throw UnimplementedError();
+  get invoice => throw UnimplementedError();
 }

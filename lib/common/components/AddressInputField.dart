@@ -7,6 +7,8 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 import '../theme.dart';
 
@@ -153,6 +155,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
 
   @override
   Widget build(BuildContext context) {
+    final Translations dic = I18n.of(context).translationsForLocale();
     return Container(
       decoration: BoxDecoration(
         color: ZurichLion.shade50,
@@ -178,7 +181,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
         label: widget.label,
         selectedItem: widget.initialValue,
         compareFn: (AccountData i, s) => i.pubKey == s?.pubKey,
-        validator: (AccountData u) => u == null ? "user field is required " : null,
+        validator: (AccountData u) => u == null ? dic.profile.errorUserNameIsRequired : null,
         onFind: (String filter) => _getAccountsFromInput(filter),
         itemAsString: _itemAsString,
         onChanged: (AccountData data) {

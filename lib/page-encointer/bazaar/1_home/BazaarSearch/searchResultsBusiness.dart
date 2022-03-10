@@ -2,6 +2,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaarItemVertical
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 
 import 'searchResultsBusinessFiltered.dart';
 
@@ -12,6 +13,7 @@ class SearchResultsBusiness extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Translations dic = I18n.of(context).translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         title: Text('${results.length} ${I18n.of(context).translationsForLocale().bazaar.businessesFound}'),
@@ -22,7 +24,7 @@ class SearchResultsBusiness extends StatelessWidget {
             aspectRatio: 6,
             child: ListTile(
               leading: Icon(Icons.filter_alt),
-              title: Text("Filter"),
+              title: Text(dic.bazaar.filter),
               onTap: () {
                 Navigator.push(
                   context,

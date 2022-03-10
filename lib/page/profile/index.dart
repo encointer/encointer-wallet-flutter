@@ -257,7 +257,7 @@ class _ProfileState extends State<Profile> {
                             key: Key('choose-network'),
                             child: Observer(
                               builder: (_) => Text(
-                                "Change network (current: ${store.settings.endpoint.info})",
+                                "Change network (current: ${store.settings.endpoint.info})", // for devs only
                                 style: Theme.of(context).textTheme.headline4,
                               ),
                             ),
