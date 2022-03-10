@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 import 'searchResultsOfferingFiltered.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
 
 class SearchResultsOffering extends StatelessWidget {
   final results;
