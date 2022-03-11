@@ -58,7 +58,7 @@ class TranslationsEnAssets implements TranslationsAssets {
   get scan => 'Scan';
   get success => 'Success';
   get tip => 'Tip';
-  get tipHint => '\nAdding a tip to this transfer, paying\nthe block author for greater priority.\n';
+  get tipHint => 'Adding a tip to this transfer, paying the block author for greater priority.';
   get to => 'To';
   get transfer => 'Send'; // as Alain requested 2022-01-2
   get value => 'Value';
@@ -93,7 +93,7 @@ class TranslationsDeAssets implements TranslationsAssets {
   get scan => 'Scannen';
   get success => 'Erfolgreich';
   get tip => 'Trinkgeld';
-  get tipHint => '\nTrinkgeld für diese Überweisung hinzufügen, bezahle\ndem Block Author für höhere Priorität.\n';
+  get tipHint => 'Trinkgeld für diese Überweisung hinzufügen, bezahle dem Block Author für höhere Priorität.';
   get to => 'Nach';
   get transfer => 'Transfer';
   get value => 'Wert';
@@ -128,7 +128,7 @@ class TranslationsZhAssets implements TranslationsAssets {
   get scan => '扫描';
   get success => '成功';
   get tip => '小费';
-  get tipHint => '\n为出块人支付额外的费用，\n可以提高交易打包优先级。\n';
+  get tipHint => '为出块人支付额外的费用，可以提高交易打包优先级。';
   get to => '收款地址';
   get transfer => '转账';
   get value => '金额';

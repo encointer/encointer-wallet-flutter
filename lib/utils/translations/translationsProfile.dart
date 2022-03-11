@@ -121,7 +121,7 @@ class TranslationsEnProfile implements TranslationsProfile {
   get yourNewPin => 'New PIN';
   get pleaseConfirmYourNewPin => 'Confirm New PIN';
   get hintEnterCurrentPin => 'To change your PIN please enter the current one.';
-  get hintThenEnterANewPin => 'Then you can choose a\n new one and you’re all set.';
+  get hintThenEnterANewPin => 'Then you can choose a new one and you’re all set.';
   get personalKey => 'Personal key';
   get detailsEnter => 'Enter your details.';
   get personalKeyEnter => 'Please enter your personal key (12 words) to import the new account.';
@@ -203,8 +203,8 @@ class TranslationsDeProfile implements TranslationsProfile {
   get wrongPinHint => 'Konto konnte nicht entsperrt werden. Bitte überprüfe die eingegebene PIN.';
   get yourNewPin => 'Neue PIN';
   get pleaseConfirmYourNewPin => 'Bestätige neue PIN';
-  get hintEnterCurrentPin => 'Gib deinen jetzigen PIN ein\n um den PIN zu ändern.';
-  get hintThenEnterANewPin => 'Dann kannst du deinen\n neuen Pin eingeben.';
+  get hintEnterCurrentPin => 'Gib deinen jetzigen PIN ein um den PIN zu ändern.';
+  get hintThenEnterANewPin => 'Dann kannst du deinen neuen Pin eingeben.';
   get detailsEnter => 'Gib deine Details ein.';
   get personalKeyEnter => 'Gib deinen persönlichen Key ein (12 Wörter), um dein Konto zu importieren.';
   get reputationHistory => 'Reputation History';

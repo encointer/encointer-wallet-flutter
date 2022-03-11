@@ -60,7 +60,7 @@ class TranslationsEnAccount implements TranslationsAccount {
   get next => 'Next';
   get observe => 'Observation';
   get observeBrief =>
-      '\nMark this address as observation,\nthen you can select this address\nin account select page, to watch\nit\'s assets and actions\n';
+      'Mark this address as observation, then you can select this address in account select page, to watch it\'s assets and actions';
   get observeProxyInvalid => 'Invalid proxy account';
   get path => 'Secret derivation path';
   get qrScan => 'Scan QR code';
@@ -97,7 +97,7 @@ class TranslationsDeAccount implements TranslationsAccount {
   get next => 'Nächster Schritt';
   get observe => 'Überwachen';
   get observeBrief =>
-      '\nMarkiere diese Adresse als zu überwachen,\ndann kann diese Adresse in der Kontoauswahlseite ausgewählt werden,\n um dessen Vermögen und Aktionen zu überwachen.\n';
+      'Markiere diese Adresse als zu überwachen, dann kann diese Adresse in der Kontoauswahlseite ausgewählt werden, um dessen Vermögen und Aktionen zu überwachen.';
   get observeProxyInvalid => 'Ungültiges Proxy-Konto';
   get path => 'Geheimer Derivationspfad';
   get qrScan => 'Scanne QR Code';
@@ -132,7 +132,7 @@ class TranslationsZhAccount implements TranslationsAccount {
   get mnemonic => '助记符';
   get next => '韦特';
   get observe => '观察';
-  get observeBrief => '\n将此地址标记为观察，\n然后您可以在帐户选择页面中选择此地址\nit\n的资产和操作\n';
+  get observeBrief => throw UnimplementedError();
   get observeProxyInvalid => '无效的代理帐户';
   get path => '秘密推导路径';
   get qrScan => '扫描二维码';
