@@ -71,18 +71,18 @@ class CeremonyBoxService {
     int pastPhasesOffset = 0;
     int totalSubdivisions = subdivisions * (phase1register + phase2assign + phase3attest);
     switch (currentPhase) {
-      case (CeremonyPhase.REGISTERING):
+      case (CeremonyPhase.Registering):
         entirePhase = registerUntilDate.difference(lastCeremonyDate);
         elapsedPart = now.difference(lastCeremonyDate);
         phaseLengthCoarse = phase1register;
         break;
-      case (CeremonyPhase.ASSIGNING):
+      case (CeremonyPhase.Assigning):
         entirePhase = nextCeremonyDate.difference(registerUntilDate);
         elapsedPart = now.difference(registerUntilDate);
         phaseLengthCoarse = phase2assign;
         pastPhasesOffset = phase1register;
         break;
-      case (CeremonyPhase.ATTESTING):
+      case (CeremonyPhase.Attesting):
         entirePhase = Duration(minutes: 60); // arbitrarily defined
         elapsedPart = now.difference(nextCeremonyDate);
         phaseLengthCoarse = phase3attest;

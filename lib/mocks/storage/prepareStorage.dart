@@ -28,7 +28,7 @@ abstract class PrepareStorage {
   }
 
   static void readyForMeetup(AppStore store) {
-    store.encointer.setCurrentPhase(CeremonyPhase.ATTESTING);
+    store.encointer.setCurrentPhase(CeremonyPhase.Attesting);
     store.encointer.setParticipantIndex(1);
     store.encointer.setMeetupIndex(1);
     store.encointer.setMeetupLocation(Location.fromJson(claim['location']));

@@ -1,11 +1,13 @@
 import 'package:encointer_wallet/utils/enum.dart';
 
-enum CeremonyPhase { REGISTERING, ASSIGNING, ATTESTING }
+enum CeremonyPhase { Registering, Assigning, Attesting }
 
 CeremonyPhase ceremonyPhaseFromString(String value) {
   return getEnumFromString(CeremonyPhase.values, value);
 }
 
-String toEnumValue(CeremonyPhase phase) {
-  return toValue(phase);
+enum Reputation { Unverified, UnverifiedReputable, VerifiedUnlinked, VerifiedLinked }
+
+Reputation reputationFromString(String value) {
+  return getEnumFromString(Reputation.values, value);
 }
