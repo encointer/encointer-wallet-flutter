@@ -56,7 +56,7 @@ class CreateAccountEntryPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        '${dic.profile.accountHave} ',
+                        '${dic.profile.doYouAlreadyHaveAnAccount} ',
                         style: TextStyle(
                           color: ZurichLion.shade50,
                         ),

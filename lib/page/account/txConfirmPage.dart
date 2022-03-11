@@ -205,7 +205,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
     if (await webApi.isConnected()) {
       _showTxStatusSnackbar(
         context,
-        "dic['tx.${store.account.txStatus}']" ?? dic.home.txQueued,
+        "dic['tx.${store.account.txStatus}']" ?? dic.home.transactionQueued,
         CupertinoActivityIndicator(),
       ); // TODO armin, fix transfer status logic
       final Map res = viaQr ? await _sendTxViaQr(context, args) : await _sendTx(context, args);
@@ -215,7 +215,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
         _onTxFinish(context, res, onTxFinishFn);
       }
     } else {
-      _showTxStatusSnackbar(context, dic.home.txQueuedOffline, null);
+      _showTxStatusSnackbar(context, dic.home.transactionQueuedOffline, null);
       args['notificationTitle'] = I18n.of(context).translationsForLocale().home.notifySubmittedQueued;
       store.account.queueTx(args);
     }
@@ -324,7 +324,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
                     Padding(
                       padding: EdgeInsets.all(16),
                       child: Text(
-                        dic.home.submitTx,
+                        dic.home.submitTransaction,
                         style: Theme.of(context).textTheme.headline4,
                       ),
                     ),
@@ -449,7 +449,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
                           ),
                           Text('${Fmt.token(_tipValue, decimals)} $tokenView'),
                           TapTooltip(
-                            message: dic.assets.tipTip,
+                            message: dic.assets.tipHint,
                             child: Icon(
                               Icons.info,
                               color: Theme.of(context).unselectedWidgetColor,
@@ -504,7 +504,6 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
                               ? dic.home.submitNoSign
                               : (isObservation && _proxyAccount == null) || isProxyObservation
                                   ? dic.home.submitQr
-                                  // dic.account.observeInvalid
                                   : dic.home.submit,
                           style: TextStyle(color: Colors.white),
                         ),

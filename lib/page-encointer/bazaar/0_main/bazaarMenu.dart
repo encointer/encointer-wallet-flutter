@@ -23,7 +23,7 @@ class BazaarMenu extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Theme.of(context).primaryColor,
               ),
-              child: Text('Menu'),
+              child: Text(dic.bazaar.menu),
             ),
           ),
           ListTile(
