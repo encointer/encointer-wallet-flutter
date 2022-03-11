@@ -1,5 +1,5 @@
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
-import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
+import 'package:encointer_wallet/store/encointer/types/ceremonies.dart';
 
 const String zueriLoi = 'Züri Loi';
 const String zul = 'ZUL';

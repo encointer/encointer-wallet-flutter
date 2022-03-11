@@ -5,10 +5,10 @@ import 'package:encointer_wallet/mocks/data/mockBazaarData.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
+import 'package:encointer_wallet/store/encointer/types/ceremonies.dart';
 import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
-import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
 import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:encointer_wallet/store/encointer/types/proofOfAttendance.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -245,7 +245,7 @@ class ApiEncointer {
 
     int time = await apiRoot
         .evalJavascript(
-            'encointer.getNextMeetupTime(${jsonEncode(mLocation)}, "${toValue(store.encointer.currentPhase)}", ${store.encointer.currentPhaseDuration})')
+            'encointer.getNextMeetupTime(${jsonEncode(mLocation)}, "${toEnumValue(store.encointer.currentPhase)}", ${store.encointer.currentPhaseDuration})')
         .then((value) => int.parse(value));
 
     print("api: Next Meetup Time: $time");
