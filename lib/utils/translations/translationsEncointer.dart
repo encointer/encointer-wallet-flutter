@@ -29,7 +29,7 @@ abstract class TranslationsEncointer {
   String get today;
   String get tomorrow;
   String get calendarEntryDescription;
-  String get youRegisteredFor;
+  String get youAreNotRegistered;
   String get howManyParticipantsShowedUp;
   String get ceremonyWillTakePlaceOn;
 }
@@ -63,7 +63,7 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   get today => 'Today';
   get tomorrow => 'Tomorrow';
   get calendarEntryDescription => 'Meetup to get your community income';
-  get youRegisteredFor => 'You are not registered for a ceremony for the selected community on:';
+  get youAreNotRegistered => 'You are not registered for a ceremony for the selected community on:';
   get howManyParticipantsShowedUp => 'How many attendees are present?';
   get ceremonyWillTakePlaceOn => 'The ceremony will take place on';
 }
@@ -97,7 +97,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get today => 'Heute';
   get tomorrow => 'Morgen';
   get calendarEntryDescription => 'Nimm am Treffen teil um dein Einkommen zu erhalten';
-  get youRegisteredFor => 'Du hast dich für eine Zeremonie der gewählten Gemeinschaft registriert am:';
+  get youAreNotRegistered => 'Du hast dich für eine Zeremonie der gewählten Gemeinschaft registriert am:';
   get howManyParticipantsShowedUp => 'Wieviele Teilnehmende sind da?';
   get ceremonyWillTakePlaceOn => 'Die Zeremonie wird stattfinden am';
 }
@@ -131,7 +131,7 @@ class TranslationsZhEncointer implements TranslationsEncointer {
   get today => throw UnimplementedError();
   get tomorrow => throw UnimplementedError();
   get calendarEntryDescription => throw UnimplementedError();
-  get youRegisteredFor => throw UnimplementedError();
+  get youAreNotRegistered => throw UnimplementedError();
   get howManyParticipantsShowedUp => throw UnimplementedError();
   get ceremonyWillTakePlaceOn => throw UnimplementedError();
 }

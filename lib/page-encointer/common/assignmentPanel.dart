@@ -75,7 +75,7 @@ class AssignmentPanel extends StatelessWidget {
                             : Column(
                                 children: [
                                   Text(
-                                    dic.encointer.youRegisteredFor,
+                                    dic.encointer.youAreNotRegistered,
                                     style: TextStyle(color: Colors.red),
                                     textAlign: TextAlign.center,
                                   ),
