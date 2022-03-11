@@ -85,7 +85,7 @@ class TranslationsDeAssets implements TranslationsAssets {
   get fail => 'Fehlgeschlagen';
   get fee => 'Gebühr';
   get from => 'Von';
-  get hash => 'Hash der Überweisung';
+  get hash => 'Hash der Transaktion';
   get home => 'Startbildschirm';
   get issuanceClaimed => 'Kein ausstehendes Gemeinschaftseinkommen';
   get issuancePending => 'Ausstehendes Gemeinschaftseinkommen einfordern';
@@ -93,15 +93,15 @@ class TranslationsDeAssets implements TranslationsAssets {
   get scan => 'Scannen';
   get success => 'Erfolgreich';
   get tip => 'Trinkgeld';
-  get tipHint => 'Trinkgeld für diese Überweisung hinzufügen, bezahle dem Block Author für höhere Priorität.';
+  get tipHint => 'Trinkgeld für diese Transaktion hinzufügen, bezahle dem Block Author für höhere Priorität.';
   get to => 'Nach';
   get transfer => 'Transfer';
   get value => 'Wert';
   get amountToBeTransferred => 'Rechnungsbetrag';
   get invoiceAmount => 'Rechnungsbetrag';
   get shareInvoice => 'Teile als Rechnung';
-  get yourBalanceFor => 'Ihr Guthaben auf';
-  get balance => 'Guthaben';
+  get yourBalanceFor => 'Ihr Kontostand auf';
+  get balance => 'Kontostand';
   get invoice => 'Rechnungsbetrag';
 }
 
