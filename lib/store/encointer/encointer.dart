@@ -335,14 +335,7 @@ abstract class _EncointerStore with Store {
     }
     // update depending values without awaiting
     if (!rootStore.settings.loading) {
-      webApi.encointer.getBusinesses();
-      webApi.encointer.getMeetupIndex();
-      webApi.encointer.getParticipantIndex();
-      webApi.encointer.getEncointerBalance();
-      webApi.encointer.getCommunityMetadata();
-      webApi.encointer.getAllMeetupLocations();
-      webApi.encointer.getDemurrage();
-      webApi.encointer.getBootstrappers();
+      webApi.encointer.getCommunityData();
     }
   }
 

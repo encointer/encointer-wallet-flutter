@@ -64,6 +64,18 @@ class ApiEncointer {
     }
   }
 
+  void getCommunityData() {
+    getBusinesses();
+    getMeetupIndex();
+    getParticipantIndex();
+    getEncointerBalance();
+    getCommunityMetadata();
+    getAllMeetupLocations();
+    getDemurrage();
+    getBootstrappers();
+    getReputations();
+  }
+
   /// Queries the Scheduler pallet: encointerScheduler.currentPhase().
   ///
   /// This is on-chain in Cantillon.
