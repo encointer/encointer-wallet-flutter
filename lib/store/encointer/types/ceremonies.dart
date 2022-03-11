@@ -11,3 +11,15 @@ enum Reputation { Unverified, UnverifiedReputable, VerifiedUnlinked, VerifiedLin
 Reputation reputationFromString(String value) {
   return getEnumFromString(Reputation.values, value);
 }
+
+extension toReputationExtension on Reputation {
+  String toValue() {
+    return toEnumValue(this);
+  }
+}
+
+extension toCeremonyPhaseExtension on CeremonyPhase {
+  String toValue() {
+    return toEnumValue(this);
+  }
+}
