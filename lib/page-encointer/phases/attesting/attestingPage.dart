@@ -39,7 +39,7 @@ class _AttestingPageState extends State<AttestingPage> {
               if (store.encointer.isAssigned)
                 PrimaryButton(
                   key: Key('start-meetup'),
-                  child: Text(dic.encointer.meetupStart),
+                  child: Text(dic.encointer.startCeremony),
                   onPressed: () => startMeetup(context, store),
                 ),
               SizedBox(height: 16),

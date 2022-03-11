@@ -78,7 +78,7 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
               ? Container()
               : Column(
                   children: <Widget>[
-                    Text(dic.encointer.nextCeremonyDate),
+                    Text(dic.encointer.nextCeremonyDateLabel),
                     Text(DateFormat('yyyy-MM-dd')
                         .format(new DateTime.fromMillisecondsSinceEpoch(store.encointer.meetupTime)))
                   ],
@@ -120,7 +120,7 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
               : store.encointer.participantIndex == 0
                   ? RoundedButton(text: dic.encointer.registerParticipant, onPressed: () => _submit())
                   : RoundedButton(
-                      text: dic.encointer.registered, onPressed: null, color: Theme.of(context).disabledColor),
+                      text: dic.encointer.youAreRegistered, onPressed: null, color: Theme.of(context).disabledColor),
         ],
       ),
     );

@@ -35,8 +35,8 @@ class AssignmentPanel extends StatelessWidget {
                         store.encointer.isAssigned
                             ? Column(
                                 children: <Widget>[
-                                  Text("You are registered! ", style: TextStyle(color: Colors.green)),
-                                  Text("Ceremony will take place on:"),
+                                  Text(dic.encointer.youAreRegistered, style: TextStyle(color: Colors.green)),
+                                  Text(dic.encointer.ceremonyWillTakePlaceOn),
                                   MaybeMeetupTime(store.encointer.meetupTime, dateFormat: 'yyyy-MM-dd-hh:mm'),
                                   ElevatedButton(
                                     child: Row(
@@ -75,7 +75,7 @@ class AssignmentPanel extends StatelessWidget {
                             : Column(
                                 children: [
                                   Text(
-                                    "You are not registered for a ceremony for the selected community on:",
+                                    dic.encointer.youAreNotRegistered,
                                     style: TextStyle(color: Colors.red),
                                     textAlign: TextAlign.center,
                                   ),

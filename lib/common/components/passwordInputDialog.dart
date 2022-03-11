@@ -48,8 +48,8 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
         builder: (BuildContext context) {
           final Translations dic = I18n.of(context).translationsForLocale();
           return CupertinoAlertDialog(
-            title: Text(dic.profile.passError),
-            content: Text(dic.profile.passErrorTxt),
+            title: Text(dic.profile.wrongPin),
+            content: Text(dic.profile.wrongPinHint),
             actions: <Widget>[
               CupertinoButton(
                 key: Key('error-dialog-ok'),

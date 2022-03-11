@@ -9,7 +9,7 @@ import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
 import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
-import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
+import 'package:encointer_wallet/store/encointer/types/ceremonies.dart';
 import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:mobx/mobx.dart';
@@ -171,7 +171,7 @@ abstract class _EncointerStore with Store {
   @action
   void setCurrentCeremonyIndex(index) {
     print("store: set currentCeremonyIndex to $index");
-    if (currentCeremonyIndex != index && currentPhase == CeremonyPhase.REGISTERING) {
+    if (currentCeremonyIndex != index && currentPhase == CeremonyPhase.Registering) {
       resetState();
     }
 
@@ -184,13 +184,13 @@ abstract class _EncointerStore with Store {
   @action
   void updateState() {
     switch (currentPhase) {
-      case CeremonyPhase.REGISTERING:
+      case CeremonyPhase.Registering:
         webApi.encointer.getMeetupTime();
         break;
-      case CeremonyPhase.ASSIGNING:
+      case CeremonyPhase.Assigning:
         webApi.encointer.getMeetupIndex();
         break;
-      case CeremonyPhase.ATTESTING:
+      case CeremonyPhase.Attesting:
         webApi.encointer.getMeetupIndex();
         break;
     }
@@ -501,12 +501,12 @@ abstract class _EncointerStore with Store {
 
   @computed
   bool get showRegisterButton {
-    return (currentPhase == CeremonyPhase.REGISTERING && !isRegistered);
+    return (currentPhase == CeremonyPhase.Registering && !isRegistered);
   }
 
   @computed
   bool get showStartCeremonyButton {
-    return (currentPhase == CeremonyPhase.ATTESTING && isRegistered);
+    return (currentPhase == CeremonyPhase.Attesting && isRegistered);
   }
 
   @computed

@@ -1,10 +1,11 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/secondaryButtonWide.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
+import 'package:encointer_wallet/store/encointer/types/ceremonies.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -131,10 +132,21 @@ class ContactDetailPage extends StatelessWidget {
                   children: [
                     Icon(Iconsax.send_sqaure_2),
                     SizedBox(width: 12),
-                    Text("${dic.profile.tokenSend} (Todo)", style: Theme.of(context).textTheme.headline3),
+                    Text("${dic.profile.tokenSend}", style: Theme.of(context).textTheme.headline3),
                   ],
                 ),
-                onPressed: null, // Todo: #417
+                onPressed: () {
+                  Navigator.of(context).pushNamed(
+                    TransferPage.route,
+                    arguments: TransferPageParams(
+                      cid: store.encointer.chosenCid,
+                      communitySymbol: store.encointer.communitySymbol,
+                      recipient: account.address,
+                      amount: null,
+                      redirect: '/',
+                    ),
+                  );
+                },
               ),
               SizedBox(height: 16),
               SecondaryButtonWide(
@@ -177,7 +189,7 @@ class EndorseButton extends StatelessWidget {
       ),
       onPressed: store.encointer.bootstrappers.contains(contact.address)
           ? () => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
-          : store.encointer.currentPhase != CeremonyPhase.REGISTERING
+          : store.encointer.currentPhase != CeremonyPhase.Registering
               ? () => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)
               : () => submitEndorseNewcomer(context, store.encointer.chosenCid, contact.address),
     );

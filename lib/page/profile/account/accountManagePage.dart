@@ -138,8 +138,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
               context: context,
               builder: (BuildContext context) {
                 return CupertinoAlertDialog(
-                  title: Text(dic.profile.noMnemonic),
-                  content: Text(dic.profile.noMnemonicTxt),
+                  title: Text(dic.profile.noMnemonicFound),
+                  content: Text(dic.profile.importedWithRawSeedHenceNoMnemonic),
                   actions: <Widget>[
                     CupertinoButton(
                       child: Text(I18n.of(context).translationsForLocale().home.ok),
@@ -176,7 +176,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     }
                     int exist = store.account.optionalAccounts.indexWhere((i) => i.name == name);
                     if (exist > -1) {
-                      return dic.profile.contactNameExist;
+                      return dic.profile.contactNameAlreadyExists;
                     }
                     return null;
                   },
@@ -285,26 +285,26 @@ class _AccountManagePageState extends State<AccountManagePage> {
                             }
                           },
                           itemBuilder: (BuildContext context) => <PopupMenuEntry<options>>[
-                            const PopupMenuItem<options>(
+                            PopupMenuItem<options>(
                               value: options.delete,
                               child: ListTileTheme(
                                 textColor: Color(0xFF3969AC), // ZurichLion.shade500 or 600
                                 iconColor: Color(0xFF3969AC), // ZurichLion.shade500 or 600
                                 child: ListTile(
                                   minLeadingWidth: 0,
-                                  title: Text('Delete'),
+                                  title: Text(dic.profile.deleteAccount),
                                   leading: Icon(Iconsax.trash),
                                 ),
                               ),
                             ),
-                            const PopupMenuItem<options>(
+                            PopupMenuItem<options>(
                               value: options.export,
                               child: ListTileTheme(
                                 textColor: Color(0xFF3969AC), // ZurichLion.shade500 or 600
                                 iconColor: Color(0xFF3969AC), // ZurichLion.shade500 or 600
                                 child: ListTile(
                                   minLeadingWidth: 0,
-                                  title: Text('Export'),
+                                  title: Text(dic.profile.exportAccount),
                                   leading:
                                       Icon(Iconsax.export_3, color: Color(0xFF3969AC)), // ZurichLion.shade500 or 600
                                 ),

@@ -28,8 +28,8 @@ class ExportAccountPage extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
-              title: Text(dic.profile.passError),
-              content: Text(dic.profile.passErrorTxt),
+              title: Text(dic.profile.wrongPin),
+              content: Text(dic.profile.wrongPinHint),
               actions: <Widget>[
                 CupertinoButton(
                   child: Text(I18n.of(context).translationsForLocale().home.ok),

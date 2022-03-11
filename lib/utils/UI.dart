@@ -81,7 +81,7 @@ class UI {
             children: [
               Padding(
                 padding: EdgeInsets.only(top: 12, bottom: 8),
-                child: Text(needUpdate ? dic.home.updateUp : dic.home.updateLatest),
+                child: Text(needUpdate ? dic.home.updateToNewerVersionQ : dic.home.updateLatest),
               ),
               needUpdate
                   ? Column(
@@ -242,7 +242,7 @@ class UI {
         context: context,
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
-            title: Text(I18n.of(context).translationsForLocale().assets.amountLow),
+            title: Text(I18n.of(context).translationsForLocale().assets.insufficientBalance),
             content: Container(),
             actions: <Widget>[
               CupertinoButton(
