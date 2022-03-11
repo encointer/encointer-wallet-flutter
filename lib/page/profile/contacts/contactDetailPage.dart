@@ -5,7 +5,7 @@ import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
+import 'package:encointer_wallet/store/encointer/types/ceremonies.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -189,7 +189,7 @@ class EndorseButton extends StatelessWidget {
       ),
       onPressed: store.encointer.bootstrappers.contains(contact.address)
           ? () => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
-          : store.encointer.currentPhase != CeremonyPhase.REGISTERING
+          : store.encointer.currentPhase != CeremonyPhase.Registering
               ? () => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)
               : () => submitEndorseNewcomer(context, store.encointer.chosenCid, contact.address),
     );

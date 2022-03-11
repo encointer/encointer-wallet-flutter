@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/service/ceremonyBoxService.dart';
-import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
+import 'package:encointer_wallet/store/encointer/types/ceremonies.dart';
+import 'package:flutter/material.dart';
 
 /// This bar shows the progress in the meetup cycle, it visualizes the overall progress
 /// and indicates the three phases.

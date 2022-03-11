@@ -1,7 +1,7 @@
 import 'package:encointer_wallet/mocks/api/api.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
+import 'package:encointer_wallet/store/encointer/types/ceremonies.dart';
 import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -26,9 +26,9 @@ void main() {
 
       final store = root.encointer;
 
-      var phase = CeremonyPhase.REGISTERING;
+      var phase = CeremonyPhase.Registering;
 
-      store.setCurrentPhase(CeremonyPhase.ASSIGNING);
+      store.setCurrentPhase(CeremonyPhase.Assigning);
       store.setCurrentPhase(phase);
       expect(store.currentPhase, phase);
 
