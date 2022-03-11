@@ -121,7 +121,7 @@ class _TransferPageState extends State<TransferPage> {
                               return dic.assets.amountError;
                             }
                             if (balanceTooLow(value, available, decimals)) {
-                              return dic.assets.amountLow;
+                              return dic.assets.insufficientBalance;
                             }
                             return null;
                           },
@@ -151,7 +151,7 @@ class _TransferPageState extends State<TransferPage> {
                   SizedBox(height: 48),
                   Center(
                     child: Text(
-                      "Fee: TODO compute Fee",
+                      "${dic.assets.fee}: TODO compute Fee", // compute fee #147
                       style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
                     ),
                   ),

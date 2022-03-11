@@ -80,7 +80,7 @@ class NotificationPlugin {
 
   static Future<void> showNotification(int id, String title, String body, {String payload}) async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'transaction_submitted', 'Tx Submitted', 'transaction submitted to blockchain network',
+        'transaction_submitted', 'Transaction Submitted', 'transaction submitted to blockchain network',
         importance: Importance.max, priority: Priority.high, ticker: 'ticker');
     var iOSPlatformChannelSpecifics = IOSNotificationDetails();
     var platformChannelSpecifics =

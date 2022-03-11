@@ -23,7 +23,7 @@ class ConfirmAttendeesDialog extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    'How many attendees are present?',
+                    dic.encointer.howManyParticipantsShowedUp,
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w500,

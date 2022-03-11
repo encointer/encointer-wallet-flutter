@@ -83,7 +83,7 @@ class _AssigningPageState extends State<AssigningPage> {
                       child: Container(
                         width: double.infinity,
                         child: Text(
-                          "${dic.encointer.meetupRemaining} ${Fmt.hhmmss(timeToMeetup)}",
+                          "${dic.encointer.timeUntilCeremonyStarts} ${Fmt.hhmmss(timeToMeetup)}",
                           textAlign: TextAlign.center,
                           style: TextStyle(fontSize: 15),
                         ),

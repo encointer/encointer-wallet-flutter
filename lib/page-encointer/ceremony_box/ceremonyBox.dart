@@ -46,7 +46,7 @@ class CeremonyBox extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  "This box is only the skeleton. It has no features.",
+                  "This box is only the skeleton. It has no features.", // this text will be removed
                   style: TextStyle(color: Colors.orange),
                 ),
                 SizedBox(height: 8),

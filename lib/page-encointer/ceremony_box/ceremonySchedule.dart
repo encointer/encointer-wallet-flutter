@@ -44,7 +44,7 @@ class CeremonySchedule extends StatelessWidget {
         ),
         RichText(
           text: TextSpan(
-            text: '${showCountDown ? dic.encointer.nextCeremonyDate : dic.encointer.nextCeremonyTimeLeft} ',
+            text: '${showCountDown ? dic.encointer.nextCeremonyDateLabel : dic.encointer.nextCeremonyTimeLeft} ',
             style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
             children: [
               TextSpan(
