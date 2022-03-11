@@ -19,7 +19,6 @@ abstract class TranslationsHome {
   String get encointer;
   String get exchange;
   String get exitConfirm;
-  String get import;
   String get inputInvalid;
   String get loading;
   String get menu;
@@ -87,7 +86,6 @@ class TranslationsEnHome implements TranslationsHome {
   get encointer => 'Encointer';
   get exchange => 'Exchange';
   get exitConfirm => 'Do you want to exit the App?';
-  get import => 'Import Account';
   get inputInvalid => 'Invalid input';
   get loading => 'Loading...';
   get menu => 'Menu';
