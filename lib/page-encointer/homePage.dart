@@ -116,6 +116,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       key: EncointerHomePage.encointerHomePageKey,
       backgroundColor: Colors.white,
       body: PageView(
+        physics: NeverScrollableScrollPhysics(),
         controller: _pageController,
         children: [
           Assets(store),
