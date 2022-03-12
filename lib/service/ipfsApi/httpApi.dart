@@ -58,7 +58,7 @@ class Ipfs {
   }
 
   String getCommunityIconsUrl(String cid, double devicePixelRatio) {
-    return '$gateway/ipfs/$cid/icons/${devicePixelRatioToResolution(devicePixelRatio)}community_icon.png';
+    return '$gateway/ipfs/$cid/assets/icons/${devicePixelRatioToResolution(devicePixelRatio)}community_icon.png';
   }
 
   /// The [ratio] should be obtained via ' MediaQuery.of(context).devicePixelRatio'.
