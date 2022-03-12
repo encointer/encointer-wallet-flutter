@@ -17,7 +17,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 class NetworkSelectPage extends StatefulWidget {
   NetworkSelectPage(this.store, this.changeTheme);
 
-  static final String route = '/network';
+  static const String route = '/network';
   final AppStore store;
   final Function changeTheme;
 

@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class ExportResultPage extends StatelessWidget {
-  static final String route = '/account/key';
+  static const String route = '/account/key';
 
   void _showExportDialog(BuildContext context, Map args) {
     final Translations dic = I18n.of(context).translationsForLocale();

@@ -15,7 +15,7 @@ import 'package:flutter/services.dart';
 class ChangePasswordPage extends StatefulWidget {
   ChangePasswordPage(this.store, this.settingsStore);
 
-  static final String route = '/profile/password';
+  static const String route = '/profile/password';
   final AccountStore store;
   final SettingsStore settingsStore;
 

@@ -8,7 +8,7 @@ import 'package:share/share.dart';
 
 class AccountSharePage extends StatefulWidget {
   AccountSharePage(this.store);
-  static final String route = '/profile/share';
+  static const String route = '/profile/share';
   final AppStore store;
   @override
   _AccountSharePageState createState() => _AccountSharePageState();
