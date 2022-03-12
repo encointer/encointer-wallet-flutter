@@ -11,7 +11,7 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 class AddAccountPage extends StatefulWidget {
   const AddAccountPage(this.store);
 
-  static final String route = '/account/addAccount';
+  static const String route = '/account/addAccount';
   final AppStore store;
 
   @override

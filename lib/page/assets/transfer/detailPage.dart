@@ -10,7 +10,7 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 class TransferDetailPage extends StatelessWidget {
   TransferDetailPage(this.store);
 
-  static final String route = '/assets/tx';
+  static const String route = '/assets/tx';
   final AppStore store;
 
   @override

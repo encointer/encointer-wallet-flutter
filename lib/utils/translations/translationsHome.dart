@@ -47,6 +47,7 @@ class TranslationsEnHome implements TranslationsHome {
   get create => 'Create Account';
   get detail => 'Detail';
   get exitConfirm => 'Do you want to exit the App?';
+  get inputInvalid => 'Invalid input';
   get loading => 'Loading...';
   get next => 'Next Step';
   get notifySubmitted => 'transaction Submitted';

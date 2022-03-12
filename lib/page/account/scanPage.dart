@@ -12,7 +12,7 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 class ScanPage extends StatelessWidget {
   ScanPage(this.store);
 
-  static final String route = '/account/scan';
+  static const String route = '/account/scan';
   final GlobalKey<QrcodeReaderViewState> _qrViewKey = GlobalKey();
 
   final QrScanService qrScanService = QrScanService();
