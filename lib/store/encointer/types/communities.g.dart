@@ -10,7 +10,7 @@ CommunityMetadata _$CommunityMetadataFromJson(Map<String, dynamic> json) {
   return CommunityMetadata(
     json['name'] as String,
     json['symbol'] as String,
-    json['icons'] as String,
+    json['assets'] as String,
     json['url'] as String,
     json['theme'] as String,
   );
@@ -19,7 +19,7 @@ CommunityMetadata _$CommunityMetadataFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$CommunityMetadataToJson(CommunityMetadata instance) => <String, dynamic>{
       'name': instance.name,
       'symbol': instance.symbol,
-      'icons': instance.icons,
+      'assets': instance.assets,
       'url': instance.url,
       'theme': instance.theme,
     };
