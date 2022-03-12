@@ -11,7 +11,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 class ContactsPage extends StatelessWidget {
   ContactsPage(this.store);
 
-  static final String route = '/profile/contacts';
+  static const String route = '/profile/contacts';
   final AppStore store;
 
   @override

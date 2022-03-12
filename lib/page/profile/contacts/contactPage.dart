@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 class ContactPage extends StatefulWidget {
   ContactPage(this.store);
 
-  static final String route = '/profile/contact';
+  static const String route = '/profile/contact';
   final AppStore store;
 
   @override

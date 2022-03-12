@@ -13,7 +13,7 @@ import 'package:flutter/services.dart';
 
 class ExportAccountPage extends StatelessWidget {
   ExportAccountPage(this.store);
-  static final String route = '/profile/export';
+  static const String route = '/profile/export';
   final AccountStore store;
 
   final TextEditingController _passCtrl = new TextEditingController();

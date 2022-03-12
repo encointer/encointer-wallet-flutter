@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 class CreatePinPage extends StatefulWidget {
   const CreatePinPage(this.store);
 
-  static final String route = '/account/createPin';
+  static const String route = '/account/createPin';
   final AppStore store;
 
   @override

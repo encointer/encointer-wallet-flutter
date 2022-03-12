@@ -10,7 +10,7 @@ import 'package:share/share.dart';
 
 class ReceivePage extends StatefulWidget {
   ReceivePage(this.store);
-  static final String route = '/assets/receive';
+  static const String route = '/assets/receive';
   final AppStore store;
   @override
   _ReceivePageState createState() => _ReceivePageState();
