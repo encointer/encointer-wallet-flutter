@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:math';
 
@@ -88,9 +89,6 @@ abstract class _EncointerStore with Store {
   List<CidName> communities;
 
   @observable
-  List<String> reputations;
-
-  @observable
   CommunityIdentifier chosenCid;
 
   @observable
@@ -108,6 +106,10 @@ abstract class _EncointerStore with Store {
 
   @observable
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
+
+  // splay tree set does automatically order the keys.
+  @observable
+  SplayTreeMap<int, CommunityReputation> reputations;
 
   @observable
   ObservableList<AccountBusinessTuple> businessRegistry;
@@ -307,13 +309,6 @@ abstract class _EncointerStore with Store {
     // There is no race-condition with the `getMeetupTime` call in `setMeetupLocation` because `getMeetupTime` uses
     // internally the `meetupLocation`. Hence, the worst case scenario is a redundant rpc call.
     webApi.encointer.getMeetupTime();
-  }
-
-  @action
-  void setReputations(List<String> rep) {
-    print("store: set communities to $rep");
-    reputations = rep;
-    // cacheObject(encointerCommunitiesKey, c);
   }
 
   @action
