@@ -432,7 +432,7 @@ class ApiEncointer {
     reputations.forEach((v) => print("v0: ${v[0]}, v1: ${v[1]}"));
 
     Map<int, CommunityReputation> r =
-        Map.from(reputations.map((cr) => MapEntry(cr[0] as int, CommunityReputation.fromJson(cr[1]))));
+        Map.fromIterable(reputations, key: (cr) => cr[0], value: (cr) => CommunityReputation.fromJson(cr[1]));
 
     // SplayTreeMap<int, CommunityReputation> myset = SplayTreeMap.of(r.map((v) => MapEntry(v[0], v[1])));
 
