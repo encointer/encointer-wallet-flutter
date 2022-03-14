@@ -2,7 +2,6 @@ import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/encointer/types/proofOfAttendance.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/tx.dart';
@@ -79,7 +78,13 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
           store.encointer.participantIndex == null
               ? CupertinoActivityIndicator()
               : store.encointer.participantIndex == 0
-                  ? RoundedButton(text: dic.encointer.registerParticipant, onPressed: () => _submit())
+                  ? store.encointer.reputations != null
+                      ? RoundedButton(text: dic.encointer.registerParticipant, onPressed: () => _submit())
+                      : RoundedButton(
+                          text: dic.encointer.fetchingReputations,
+                          onPressed: null,
+                          color: Theme.of(context).disabledColor,
+                        )
                   : RoundedButton(
                       text: dic.encointer.youAreRegistered, onPressed: null, color: Theme.of(context).disabledColor),
         ],
