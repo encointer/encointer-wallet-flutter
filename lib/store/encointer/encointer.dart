@@ -457,10 +457,10 @@ abstract class _EncointerStore with Store {
     }
 
     // get meetup related data
-    var data = await loadObject(encointerParticipantsClaimsKey);
+    var data = await loadMap(encointerParticipantsClaimsKey);
     if (data != null) {
       print("found cached participants' claims. will recover them: $data");
-      participantsClaims = ObservableMap.of(jsonDecode(data).cast<String, ClaimOfAttendance>());
+      participantsClaims = ObservableMap.of(data.cast<String, ClaimOfAttendance>());
     }
     currentPhase = await loadCurrentPhase();
     currentCeremonyIndex = await loadObject(encointerCurrentCeremonyIndexKey);
@@ -502,9 +502,8 @@ abstract class _EncointerStore with Store {
     return cacheObject(cacheKey, encoded);
   }
 
-  /// Cache a map in the local storage.
+  /// Load a map in the local storage.
   ///
-  /// We use this because `jsonEncode` fails for maps with key types other than String
   ///
   Future<Map<dynamic, dynamic>> loadMap<Key, Value>(String cacheKey) async {
     print("[store.encointer]: loading map. cacheKey: $cacheKey");
