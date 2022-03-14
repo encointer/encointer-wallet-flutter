@@ -26,9 +26,6 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
 
   final AppStore store;
 
-  bool attendedLastMeetup = false;
-  Future<ProofOfAttendance> proof;
-
   @override
   void initState() {
     webApi.encointer.getParticipantIndex();
@@ -79,38 +76,6 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
                         .format(new DateTime.fromMillisecondsSinceEpoch(store.encointer.meetupTime)))
                   ],
                 ),
-          CheckboxListTile(
-            title: Text(dic.encointer.meetupAttended),
-            onChanged: (bool value) async {
-              if (value) {
-                if (store.settings.cachedPin.isNotEmpty) {
-                  proof = webApi.encointer.getProofOfAttendance();
-                } else {
-                  showCupertinoDialog(
-                    context: context,
-                    builder: (context) {
-                      return showPasswordInputDialog(
-                          context,
-                          store.account.currentAccount,
-                          Text(I18n.of(context).translationsForLocale().home.unlockAccount.replaceAll(
-                              'CURRENT_ACCOUNT_NAME', store.account.currentAccount.name.toString())), (password) {
-                        store.settings.setPin(password);
-
-                        // If we don't wait, the pin has not propagated to the state and we will get a password check error
-                        Future.delayed(const Duration(milliseconds: 1000), () {
-                          proof = webApi.encointer.getProofOfAttendance();
-                        });
-                      });
-                    },
-                  );
-                }
-              }
-              setState(() {
-                attendedLastMeetup = value;
-              });
-            },
-            value: attendedLastMeetup,
-          ),
           store.encointer.participantIndex == null
               ? CupertinoActivityIndicator()
               : store.encointer.participantIndex == 0
