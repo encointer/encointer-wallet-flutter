@@ -504,7 +504,6 @@ abstract class _EncointerStore with Store {
 
   /// Load a map in the local storage.
   ///
-  ///
   Future<Map<dynamic, dynamic>> loadMap<Key, Value>(String cacheKey) async {
     print("[store.encointer]: loading map. cacheKey: $cacheKey");
 
@@ -514,6 +513,7 @@ abstract class _EncointerStore with Store {
       print("found cache: $cacheKey': data: $data");
       return jsonDecode(data);
     }
+    return null;
   }
 
   Future<void> cacheObject(String key, value) {
