@@ -57,7 +57,7 @@ Future<void> submitRegisterParticipant(BuildContext context, Api api, CommunityI
     "detail": jsonEncode({
       "cid": chosenCid.toFmtString(),
       "proof": p == null
-          ? "No proof for past attendance" // Note: hardcoded strings are ok here, the page  will be removed.
+          ? "No proof of past attendance found" // Note: hardcoded strings are ok here, the page  will be removed.
           : "Sending proof for cIndex: ${p.ceremonyIndex}, community: ${p.communityIdentifier.toFmtString()}",
     }),
     "params": [
