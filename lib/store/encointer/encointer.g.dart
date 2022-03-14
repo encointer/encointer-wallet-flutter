@@ -21,6 +21,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
   dynamic get scannedClaimsCount => (_$scannedClaimsCountComputed ??=
           Computed<dynamic>(() => super.scannedClaimsCount, name: '_EncointerStore.scannedClaimsCount'))
       .value;
+  Computed<dynamic> _$ceremonyIndexForProofOfAttendanceComputed;
+
+  @override
+  dynamic get ceremonyIndexForProofOfAttendance =>
+      (_$ceremonyIndexForProofOfAttendanceComputed ??= Computed<dynamic>(() => super.ceremonyIndexForProofOfAttendance,
+              name: '_EncointerStore.ceremonyIndexForProofOfAttendance'))
+          .value;
   Computed<String> _$communityNameComputed;
 
   @override
@@ -651,6 +658,7 @@ businessRegistry: ${businessRegistry},
 communityLocations: ${communityLocations},
 currentPhaseDuration: ${currentPhaseDuration},
 scannedClaimsCount: ${scannedClaimsCount},
+ceremonyIndexForProofOfAttendance: ${ceremonyIndexForProofOfAttendance},
 communityName: ${communityName},
 communitySymbol: ${communitySymbol},
 communityIconsCid: ${communityIconsCid},

@@ -112,7 +112,7 @@ abstract class _EncointerStore with Store {
   @observable
   SplayTreeMap<int, CommunityReputation> reputations;
 
-  @observable
+  @computed
   get ceremonyIndexForProofOfAttendance {
     if (reputations != null && reputations.isNotEmpty) {
       return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
