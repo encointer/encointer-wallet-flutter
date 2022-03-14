@@ -40,8 +40,12 @@ Future<void> submitEndorseNewcomer(BuildContext context, CommunityIdentifier cho
   Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
 }
 
-Future<void> submitRegisterParticipant(BuildContext context, Api api, CommunityIdentifier chosenCid,
-    {Future<ProofOfAttendance> proof}) async {
+Future<void> submitRegisterParticipant(
+  BuildContext context,
+  Api api,
+  CommunityIdentifier chosenCid, {
+  Future<ProofOfAttendance> proof,
+}) async {
   ProofOfAttendance p;
   if (proof != null) {
     p = await proof;
