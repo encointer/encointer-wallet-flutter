@@ -7,10 +7,10 @@ import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/assets/types/transferData.dart';
 import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
+import 'package:encointer_wallet/store/encointer/types/ceremonies.dart';
 import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
-import 'package:encointer_wallet/store/encointer/types/ceremonies.dart';
 import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:mobx/mobx.dart';
@@ -31,6 +31,7 @@ abstract class _EncointerStore with Store {
   final String encointerCommunitiesKey = 'wallet_encointer_communities';
   final String encointerBootstrappersKey = 'wallet_encointer_bootstrappers';
   final String encointerCommunityLocationsKey = 'wallet_encointer_community_locations';
+  final String encointerCommunityReputationsKey = 'wallet_encointer_community_reputations';
 
   // offline meetup cache.
   final String encointerCurrentCeremonyIndexKey = 'wallet_encointer_current_ceremony_index';
@@ -351,6 +352,12 @@ abstract class _EncointerStore with Store {
   }
 
   @action
+  void setReputations(Map<int, CommunityReputation> reps) {
+    reputations = SplayTreeMap.of(reps);
+    cacheMap<int, CommunityReputation>(encointerCommunityReputationsKey, reps);
+  }
+
+  @action
   void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
     print("balanceEntry $balanceEntry added to cid $cid added");
     balanceEntries[cid] = balanceEntry;
@@ -432,6 +439,15 @@ abstract class _EncointerStore with Store {
       communityLocations = ObservableList.of(locations);
     }
 
+    var cachedReputations = await loadMap(encointerCommunityReputationsKey);
+    if (cachedReputations != null) {
+      // for some weird reason `cachedReputation.cast<int, CommunityReputation> did not throw an exception, but it did not
+      // cast successfully.
+      Map<int, CommunityReputation> r = Map.of(cachedReputations.map((k, v) => MapEntry(int.parse(k), CommunityReputation.fromJson(v))));
+      print("found cached reputations. will recover it: " + cachedReputations.toString());
+      reputations = SplayTreeMap.of(r);
+    }
+
     // get meetup related data
     var data = await loadObject(encointerParticipantsClaimsKey);
     if (data != null) {
@@ -465,8 +481,32 @@ abstract class _EncointerStore with Store {
   }
 
   Future<void> cacheParticipantsClaims(Map<String, ClaimOfAttendance> claims) {
-    print("jsonEncode claims: ${jsonEncode(claims)}");
-    return cacheObject(encointerParticipantsClaimsKey, jsonEncode(claims));
+    return cacheMap<String, ClaimOfAttendance>(encointerParticipantsClaimsKey, claims);
+  }
+
+  /// Cache a map in the local storage.
+  ///
+  /// We use this because `jsonEncode` fails for maps with key types other than String
+  ///
+  Future<void> cacheMap<Key, Value>(String cacheKey, Map<Key, Value> map) {
+    var encoded = jsonEncode(Map.of(map.map((k, v) => MapEntry(k.toString(), v))));
+    print("[store.encointer]: caching map. cacheKey: $cacheKey, map: $encoded");
+    return cacheObject(cacheKey, encoded);
+  }
+
+  /// Cache a map in the local storage.
+  ///
+  /// We use this because `jsonEncode` fails for maps with key types other than String
+  ///
+  Future<Map<dynamic, dynamic>> loadMap<Key, Value>(String cacheKey) async {
+    print("[store.encointer]: loading map. cacheKey: $cacheKey");
+
+    var data = await loadObject(cacheKey);
+
+    if (data != null) {
+      print("found cache: $cacheKey': data: $data");
+      return jsonDecode(data);
+    }
   }
 
   Future<void> cacheObject(String key, value) {

@@ -423,22 +423,14 @@ class ApiEncointer {
   Future<void> getReputations() async {
     var address = store.account.currentAddress;
 
-    // Map<CeremonyPhase, int> phaseDurations = await apiRoot
-    //     .evalJavascript('encointer.getPhaseDurations()')
-    //     .then((m) => Map.from(m).map((key, value) => MapEntry(ceremonyPhaseFromString(key), int.parse(value))));
+    List<dynamic> reputationsList = await apiRoot.evalJavascript('encointer.getReputations("$address")');
 
-    dynamic reputations = await apiRoot.evalJavascript('encointer.getReputations("$address")');
+    print("api: getReputations: ${reputationsList.toString()}");
 
-    reputations.forEach((v) => print("v0: ${v[0]}, v1: ${v[1]}"));
+    Map<int, CommunityReputation> reputations =
+        Map.fromIterable(reputationsList, key: (cr) => cr[0], value: (cr) => CommunityReputation.fromJson(cr[1]));
 
-    Map<int, CommunityReputation> r =
-        Map.fromIterable(reputations, key: (cr) => cr[0], value: (cr) => CommunityReputation.fromJson(cr[1]));
-
-    // SplayTreeMap<int, CommunityReputation> myset = SplayTreeMap.of(r.map((v) => MapEntry(v[0], v[1])));
-
-    print("GetReputations: ${reputations.toString()}");
-    print("GetReputations: ${r.toString()}");
-    // print("GetReputations: ${myset.toString()}");
+    store.encointer.setReputations(reputations);
   }
 
   Future<dynamic> sendFaucetTx() async {

@@ -587,6 +587,16 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
+  void setReputations(Map<int, CommunityReputation> reps) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setReputations');
+    try {
+      return super.setReputations(reps);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.addBalanceEntry');
     try {
