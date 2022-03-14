@@ -460,9 +460,9 @@ class ApiEncointer {
     return claimSigned;
   }
 
-  /// Gets a proof of attendance for the oldest attended ceremony, if available
+  /// Gets a proof of attendance for the oldest attended ceremony, if available.
   ///
-  /// returns null, if none available
+  /// returns null, if none available.
   Future<ProofOfAttendance> getProofOfAttendance() async {
     var pubKey = store.account.currentAccountPubKey;
     var cIndex = store.encointer.ceremonyIndexForProofOfAttendance;
