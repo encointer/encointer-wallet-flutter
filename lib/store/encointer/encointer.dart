@@ -331,14 +331,15 @@ abstract class _EncointerStore with Store {
       cacheObject(encointerCommunityKey, cid);
       setCommunityMetadata();
       resetState();
+
+      // update depending values without awaiting
+      if (!rootStore.settings.loading) {
+        webApi.encointer.getCommunityData();
+      }
     }
 
     if (rootStore.settings.endpointIsGesell) {
       webApi.encointer.subscribeBusinessRegistry();
-    }
-    // update depending values without awaiting
-    if (!rootStore.settings.loading) {
-      webApi.encointer.getCommunityData();
     }
   }
 
