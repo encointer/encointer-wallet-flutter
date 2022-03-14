@@ -460,13 +460,24 @@ class ApiEncointer {
     return claimSigned;
   }
 
+  /// Gets a proof of attendance for the oldest attended ceremony, if available
+  ///
+  /// returns null, if none available
   Future<ProofOfAttendance> getProofOfAttendance() async {
     var pubKey = store.account.currentAccountPubKey;
-    var cid = store.encointer.chosenCid;
-    var cIndex = store.encointer.currentCeremonyIndex;
+    var cIndex = store.encointer.ceremonyIndexForProofOfAttendance;
+
+    if (cIndex == null) {
+      return null;
+    }
+
+    var cid = store.encointer.reputations[cIndex].communityIdentifier;
     var pin = store.settings.cachedPin;
+
+    print("getProofOfAttendance: cachedPin: $pin");
+
     var proofJs = await apiRoot
-        .evalJavascript('encointer.getProofOfAttendance("$pubKey", ${jsonEncode(cid)}, "${cIndex - 1}", "$pin")');
+        .evalJavascript('encointer.getProofOfAttendance("$pubKey", ${jsonEncode(cid)}, "$cIndex", "$pin")');
     ProofOfAttendance proof = ProofOfAttendance.fromJson(proofJs);
     print("Proof: ${proof.toString()}");
     return proof;

@@ -113,6 +113,13 @@ abstract class _EncointerStore with Store {
   SplayTreeMap<int, CommunityReputation> reputations;
 
   @observable
+  get ceremonyIndexForProofOfAttendance {
+    if (reputations != null) {
+      return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
+    }
+  }
+
+  @observable
   ObservableList<AccountBusinessTuple> businessRegistry;
 
   @observable
@@ -443,7 +450,8 @@ abstract class _EncointerStore with Store {
     if (cachedReputations != null) {
       // for some weird reason `cachedReputation.cast<int, CommunityReputation> did not throw an exception, but it did not
       // cast successfully.
-      Map<int, CommunityReputation> r = Map.of(cachedReputations.map((k, v) => MapEntry(int.parse(k), CommunityReputation.fromJson(v))));
+      Map<int, CommunityReputation> r =
+          Map.of(cachedReputations.map((k, v) => MapEntry(int.parse(k), CommunityReputation.fromJson(v))));
       print("found cached reputations. will recover it: " + cachedReputations.toString());
       reputations = SplayTreeMap.of(r);
     }
