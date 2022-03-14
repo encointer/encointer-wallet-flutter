@@ -114,7 +114,7 @@ abstract class _EncointerStore with Store {
 
   @observable
   get ceremonyIndexForProofOfAttendance {
-    if (reputations != null) {
+    if (reputations != null && reputations.isNotEmpty) {
       return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
     }
   }
