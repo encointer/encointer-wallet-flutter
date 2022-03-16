@@ -52,7 +52,7 @@ class Ipfs {
     }
 
     try {
-      var data = await getData(getIconsPath("QmdpvkvK61B9LvxBj4XktyCsKmVHifx1xxyejXut62mVGB"));
+      var data = await getData(getIconsPath(cid));
       return SvgPicture.string(data);
     } catch (e) {
       print("[Ipfs] error getting communityIcon: $e");
