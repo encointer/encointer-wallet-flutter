@@ -42,7 +42,7 @@ class ScanClaimQrCode extends StatelessWidget {
           "[scanClaimQrCode] Claimant: ${claim.claimantPublic} is not part of registry: ${store.encointer.meetupRegistry}");
     } else {
       String msg =
-      store.encointer.containsClaim(claim) ? dic.encointer.claimsScannedAlready : dic.encointer.claimsScannedNew;
+          store.encointer.containsClaim(claim) ? dic.encointer.claimsScannedAlready : dic.encointer.claimsScannedNew;
 
       store.encointer.addParticipantClaim(claim);
       _showSnackBar(context, msg);
