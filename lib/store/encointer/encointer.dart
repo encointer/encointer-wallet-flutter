@@ -117,7 +117,7 @@ abstract class _EncointerStore with Store {
     if (reputations != null && reputations.isNotEmpty) {
       try {
         return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
-      } catch(_e) {
+      } catch (_e) {
         print("Has reputation, but none that has not been linked yet");
         return 0;
       }
