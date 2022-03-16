@@ -51,7 +51,11 @@ class Ipfs {
       return Image.asset('assets/images/assets/ERT.png');
     }
 
-    return Image.network(getCommunityIconsUrl(cid, devicePixelRatio), errorBuilder: (_, error, __) {
+    String ipfsSrc = getCommunityIconsUrl(cid, devicePixelRatio);
+
+    print("[IPFS] loading assets from src: $ipfsSrc");
+
+    return Image.network(ipfsSrc, errorBuilder: (_, error, __) {
       print("[IPFS]: Failed to retrieve community icon with ipfs-cid: $cid: ${error.toString()}");
       return Image.asset('assets/images/assets/ERT.png');
     });
