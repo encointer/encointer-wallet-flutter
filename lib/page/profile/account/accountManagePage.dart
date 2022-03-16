@@ -90,7 +90,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
         return ListTile(
           contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
           leading: CommunityIcon(
-            // store: store, icon: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio)),
             store: store,
             icon: FutureBuilder<SvgPicture>(
               future: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid),
