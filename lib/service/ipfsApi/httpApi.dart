@@ -45,14 +45,14 @@ class Ipfs {
     }
   }
 
-  Future<SvgPicture> getCommunityIcon(String cid, double devicePixelRatio) async {
+  Future<SvgPicture> getCommunityIcon(String cid) async {
     if (cid == null || cid.isEmpty) {
       print("[IPFS] return default encointer icon because ipfs-cid is not set");
       return SvgPicture.asset(fall_back_community_icon);
     }
 
     try {
-      var data = await getData(getIconsPath(cid));
+      var data = await getData(getIconsPath("QmdpvkvK61B9LvxBj4XktyCsKmVHifx1xxyejXut62mVGB"));
       return SvgPicture.string(data);
     } catch (e) {
       print("[Ipfs] error getting communityIcon: $e");

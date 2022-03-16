@@ -109,7 +109,7 @@ class _CommunityWithCommunityChooserState extends State<CommunityWithCommunityCh
                     width: 96,
                     height: 96,
                     child: FutureBuilder<SvgPicture>(
-                      future: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio),
+                      future: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid),
                       builder: (_, AsyncSnapshot<SvgPicture> snapshot) {
                         if (snapshot.hasData) {
                           return snapshot.data;

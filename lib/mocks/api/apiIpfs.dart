@@ -13,7 +13,7 @@ class MockIpfs extends Ipfs {
   }
 
   @override
-  Future<SvgPicture> getCommunityIcon(String cid, double devicePixelRatio) {
+  Future<SvgPicture> getCommunityIcon(String cid) {
     return Future.value(SvgPicture.asset('assets/images/assets/Assets_nav_0.png'));
   }
 
