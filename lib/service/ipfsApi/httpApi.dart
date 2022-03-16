@@ -7,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class Ipfs {
   // Todo: remove default -> migrate bazaar to use ipfs field from webApi instance
-  Ipfs({this.gateway = ipfs_gateway_local});
+  Ipfs({this.gateway = ipfs_gateway_encointer});
 
   final String gateway;
 
