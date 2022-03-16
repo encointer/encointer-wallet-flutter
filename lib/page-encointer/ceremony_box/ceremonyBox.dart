@@ -1,7 +1,7 @@
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremonyRegisterButton.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
+import 'package:encointer_wallet/store/encointer/types/ceremonies.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
@@ -46,7 +46,7 @@ class CeremonyBox extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  "This box is only the skeleton. It has no features.",
+                  "This box is only the skeleton. It has no features.", // this text will be removed
                   style: TextStyle(color: Colors.orange),
                 ),
                 SizedBox(height: 8),

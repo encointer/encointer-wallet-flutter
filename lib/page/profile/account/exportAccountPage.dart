@@ -13,7 +13,7 @@ import 'package:flutter/services.dart';
 
 class ExportAccountPage extends StatelessWidget {
   ExportAccountPage(this.store);
-  static final String route = '/profile/export';
+  static const String route = '/profile/export';
   final AccountStore store;
 
   final TextEditingController _passCtrl = new TextEditingController();
@@ -28,8 +28,8 @@ class ExportAccountPage extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
-              title: Text(dic.profile.passError),
-              content: Text(dic.profile.passErrorTxt),
+              title: Text(dic.profile.wrongPin),
+              content: Text(dic.profile.wrongPinHint),
               actions: <Widget>[
                 CupertinoButton(
                   child: Text(I18n.of(context).translationsForLocale().home.ok),

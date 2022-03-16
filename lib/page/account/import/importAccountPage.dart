@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 class ImportAccountPage extends StatefulWidget {
   const ImportAccountPage(this.store);
 
-  static final String route = '/account/import';
+  static const String route = '/account/import';
   final AppStore store;
 
   @override

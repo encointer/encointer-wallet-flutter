@@ -7,6 +7,8 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 import '../theme.dart';
 
@@ -36,8 +38,8 @@ class _AddressInputFieldState extends State<AddressInputField> {
       return listLocal;
     }
 
-    final acc = AccountData();
-    acc.address = input;
+    final accountData = AccountData();
+    accountData.address = input;
     if (input.length < 47) {
       // check if input indices in local account list
       final int indicesIndex = listLocal.indexWhere((e) {
@@ -50,8 +52,8 @@ class _AddressInputFieldState extends State<AddressInputField> {
       // query account address with account indices
       final queryRes = await webApi.account.queryAddressWithAccountIndex(input);
       if (queryRes != null) {
-        acc.address = queryRes[0];
-        acc.name = input;
+        accountData.address = queryRes[0];
+        accountData.name = input;
       }
     } else {
       // check if input address in local account list
@@ -62,11 +64,11 @@ class _AddressInputFieldState extends State<AddressInputField> {
     }
 
     // fetch address info if it's a new address
-    final res = await webApi.account.getAddressIcons([acc.address]);
+    final res = await webApi.account.getAddressIcons([accountData.address]);
     if (res != null) {
-      await webApi.account.fetchAddressIndex([acc.address]);
+      await webApi.account.fetchAddressIndex([accountData.address]);
     }
-    return [acc];
+    return [accountData];
   }
 
   String _itemAsString(AccountData item) {
@@ -153,6 +155,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
 
   @override
   Widget build(BuildContext context) {
+    final Translations dic = I18n.of(context).translationsForLocale();
     return Container(
       decoration: BoxDecoration(
         color: ZurichLion.shade50,
@@ -178,7 +181,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
         label: widget.label,
         selectedItem: widget.initialValue,
         compareFn: (AccountData i, s) => i.pubKey == s?.pubKey,
-        validator: (AccountData u) => u == null ? "user field is required " : null,
+        validator: (AccountData u) => u == null ? dic.profile.errorUserNameIsRequired : null,
         onFind: (String filter) => _getAccountsFromInput(filter),
         itemAsString: _itemAsString,
         onChanged: (AccountData data) {

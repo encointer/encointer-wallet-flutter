@@ -1,5 +1,5 @@
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
-import 'package:encointer_wallet/store/encointer/types/encointerTypes.dart';
+import 'package:encointer_wallet/store/encointer/types/ceremonies.dart';
 
 const String zueriLoi = 'Züri Loi';
 const String zul = 'ZUL';
@@ -41,6 +41,6 @@ const List<String> meetupRegistry = [
   "0x1cc4e46bbd2bb547d93d952c5de12ea7e3a3f3b638551a8eaf35ad086700c00c",
 ];
 
-const CeremonyPhase initialPhase = CeremonyPhase.REGISTERING;
+const CeremonyPhase initialPhase = CeremonyPhase.Registering;
 
 const Map<String, dynamic> balanceEntry = {'principal': 23.4, 'lastUpdate': 4};
