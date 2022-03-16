@@ -94,7 +94,8 @@ class _CommunityWithCommunityChooserState extends State<CommunityWithCommunityCh
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        InkWell(
+        Observer(
+          builder: (_) => InkWell(
             key: Key('cid-avatar'),
             child: Column(
               children: [
@@ -123,7 +124,9 @@ class _CommunityWithCommunityChooserState extends State<CommunityWithCommunityCh
                   builder: (context) => CommunityChooserOnMap(store),
                 ),
               );
-            }),
+            },
+          ),
+        ),
       ],
     );
   }
