@@ -201,6 +201,7 @@ abstract class _EncointerStore with Store {
     switch (currentPhase) {
       case CeremonyPhase.Registering:
         webApi.encointer.getMeetupTime();
+        webApi.encointer.getReputations();
         break;
       case CeremonyPhase.Assigning:
         webApi.encointer.getMeetupIndex();
@@ -220,6 +221,7 @@ abstract class _EncointerStore with Store {
     setMeetupLocation();
     setMeetupTime();
     setMeetupRegistry();
+    purgeReputations();
   }
 
   @action
@@ -368,6 +370,12 @@ abstract class _EncointerStore with Store {
   void setReputations(Map<int, CommunityReputation> reps) {
     reputations = SplayTreeMap.of(reps);
     cacheMap<int, CommunityReputation>(encointerCommunityReputationsKey, reps);
+  }
+
+  @action
+  void purgeReputations() {
+    reputations.clear();
+    cacheMap<int, CommunityReputation>(encointerCommunityReputationsKey, reputations);
   }
 
   @action

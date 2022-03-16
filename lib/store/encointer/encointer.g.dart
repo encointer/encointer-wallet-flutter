@@ -604,6 +604,16 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
+  void purgeReputations() {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.purgeReputations');
+    try {
+      return super.purgeReputations();
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.addBalanceEntry');
     try {
