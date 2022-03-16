@@ -115,7 +115,12 @@ abstract class _EncointerStore with Store {
   @computed
   get ceremonyIndexForProofOfAttendance {
     if (reputations != null && reputations.isNotEmpty) {
-      return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
+      try {
+        return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
+      } catch(_e) {
+        print("Has reputation, but none that has not been linked yet");
+        return 0;
+      }
     }
   }
 
