@@ -1,10 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Ipfs {
@@ -47,26 +45,14 @@ class Ipfs {
     }
   }
 
-  Image getCommunityIcon(String cid, double devicePixelRatio) {
+
+  Future<SvgPicture> getCommunityIcon(String cid, double devicePixelRatio) async {
     if (cid == null || cid.isEmpty) {
       print("[IPFS] return default encointer icon because ipfs-cid is not set");
-      return Image.asset('assets/images/assets/ERT.png');
+      return SvgPicture.asset(fall_back_community_icon);
     }
 
-    String ipfsSrc = getCommunityIconsUrl(cid, devicePixelRatio);
-
-    print("[IPFS] loading assets from src: $ipfsSrc");
-
-    return Image.network(ipfsSrc, errorBuilder: (_, error, __) {
-      print("[IPFS]: Failed to retrieve community icon with ipfs-cid: $cid: ${error.toString()}");
-      return Image.asset('assets/images/assets/ERT.png');
-    });
-  }
-
-  Future<SvgPicture> getCommunityIconAsData(String cid, double devicePixelRatio) async {
-
-
-    var data = await getDataTest(getIconsPath("QmWVgBAiZE5Z4F4d2eRS8SE5L3jYbMMYNYvBRrqZ23QjKy"));
+    var data = await getDataTest(getIconsPath("QmdpvkvK61B9LvxBj4XktyCsKmVHifx1xxyejXut62mVGB"));
 
     return SvgPicture.string(data);
   }
@@ -87,13 +73,12 @@ class Ipfs {
     return object.data;
   }
 
-
   String getCommunityIconsUrl(String cid, double devicePixelRatio) {
     return '$gateway/ipfs/$cid/assets/icons/${devicePixelRatioToResolution(devicePixelRatio)}community_icon.png';
   }
 
   String getIconsPath(String cid) {
-    return '$cid/assets/nctr_mosaic_background.svg';
+    return '$cid/assets/$community_icon_name';
   }
 
   /// The [ratio] should be obtained via ' MediaQuery.of(context).devicePixelRatio'.

@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -16,6 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class AccountManagePage extends StatefulWidget {
   AccountManagePage(this.store);
@@ -80,7 +82,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
   List<Widget> _getBalances() {
     final TextStyle h3 = Theme.of(context).textTheme.headline3;
-    final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
     CommunityMetadata cm = store.encointer.communityMetadata;
     String name = cm != null ? cm.name : '';
     String symbol = cm != null ? cm.symbol : '';
@@ -90,7 +91,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
         return ListTile(
           contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
           leading: CommunityIcon(
-              store: store, icon: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio)),
+              // store: store, icon: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio)),
+              store: store, icon: SvgPicture.asset(fall_back_community_icon)),
           title: Text(name, style: h3),
           subtitle: Text(tokenView, style: h3),
           trailing: Column(
@@ -333,7 +335,7 @@ class CommunityIcon extends StatelessWidget {
   }) : super(key: key);
 
   final AppStore store;
-  final Image icon;
+  final SvgPicture icon;
 
   @override
   Widget build(BuildContext context) {

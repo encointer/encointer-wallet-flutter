@@ -60,6 +60,9 @@ const network_ss58_map = {
   'substrate': 42,
 };
 
+const fall_back_community_icon = "assets/nctr_logo_faces_only_thick.svg";
+const community_icon_name = "community_icon.svg";
+
 const String ipfs_gateway_encointer = "http://ipfs.encointer.org:8080"; // AVD: 10.0.2.2 = 127.0.0.1
 const String ipfs_gateway_local = 'http://10.0.2.2:8080';
 
