@@ -90,8 +90,6 @@ class _CommunityWithCommunityChooserState extends State<CommunityWithCommunityCh
 
   @override
   Widget build(BuildContext context) {
-    final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
