@@ -45,32 +45,33 @@ class Ipfs {
     }
   }
 
-
   Future<SvgPicture> getCommunityIcon(String cid, double devicePixelRatio) async {
     if (cid == null || cid.isEmpty) {
       print("[IPFS] return default encointer icon because ipfs-cid is not set");
       return SvgPicture.asset(fall_back_community_icon);
     }
 
-    var data = await getDataTest(getIconsPath("QmdpvkvK61B9LvxBj4XktyCsKmVHifx1xxyejXut62mVGB"));
-
-    return SvgPicture.string(data);
+    try {
+      var data = await getData(getIconsPath(cid));
+      return SvgPicture.string(data);
+    } catch (e) {
+      print("[Ipfs] error getting communityIcon: $e");
+      return SvgPicture.asset(fall_back_community_icon);
+    }
   }
 
-  Future<String> getDataTest(String src) async {
-    print("[IPFS] getDataTest before");
-    print("[IPFS] gateway: $gateway");
-    print("[IPFS] src: $src");
+  Future<String> getData(String src) async {
+    final dio = IpfsDio(BaseOptions(baseUrl: gateway, connectTimeout: 5000, receiveTimeout: 3000));
 
-    final dio = IpfsDio(BaseOptions(baseUrl: gateway));
+    try {
+      final response = await dio.get(src);
+      var object = Object.fromJson(response.data);
 
-    final response = await dio.get(src);
-    var object = Object.fromJson(response.data);
-
-    print("[IPFS] getDataTest: $response");
-    print("[IPFS] getDataTest: ${object.toString()}");
-
-    return object.data;
+      return object.data;
+    } catch (e) {
+      // otherwise we would have to adjust the return type.
+      throw (e.toString());
+    }
   }
 
   String getIconsPath(String cid) {
@@ -138,7 +139,7 @@ class IpfsDio {
   Dio dio;
 
   Future<Response<T>> get<T>(String cid) async {
-    print("[ipfs] $getRequest$cid");
+    print("[IPFS] fetching data from: ${dio.options.baseUrl}$getRequest$cid}");
     return dio.get('$getRequest$cid');
   }
 }
