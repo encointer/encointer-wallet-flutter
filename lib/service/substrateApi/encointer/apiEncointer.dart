@@ -467,7 +467,7 @@ class ApiEncointer {
     var pubKey = store.account.currentAccountPubKey;
     var cIndex = store.encointer.ceremonyIndexForProofOfAttendance;
 
-    if (cIndex == null) {
+    if (cIndex == null || cIndex == 0) {
       return null;
     }
 
