@@ -105,19 +105,19 @@ class _CommunityWithCommunityChooserState extends State<CommunityWithCommunityCh
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(96),
                   ),
-                  child: FutureBuilder<SvgPicture>(
-                    future: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio),
-                    builder: (_, AsyncSnapshot<SvgPicture> snapshot) {
-                      if (snapshot.hasData) {
-                        return SizedBox(
-                          width: 96,
-                          height: 96,
-                          child: snapshot.data,
-                        );
-                      } else {
-                        return CupertinoActivityIndicator();
-                      }
-                    },
+                  child: SizedBox(
+                    width: 96,
+                    height: 96,
+                    child: FutureBuilder<SvgPicture>(
+                      future: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio),
+                      builder: (_, AsyncSnapshot<SvgPicture> snapshot) {
+                        if (snapshot.hasData) {
+                          return snapshot.data;
+                        } else {
+                          return CupertinoActivityIndicator();
+                        }
+                      },
+                    ),
                   ),
                 ),
                 SizedBox(height: 6),
