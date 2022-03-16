@@ -229,21 +229,12 @@ class Api {
     if (index < 0) return;
     store.settings.setEndpoint(store.settings.endpointList[index]);
     await fetchNetworkProps();
-    fetchEncointerCommunityData();
+    encointer.getCommunityData();
   }
 
   void fetchAccountData() {
     assets.fetchBalance();
-    fetchEncointerCommunityData();
-  }
-
-  void fetchEncointerCommunityData() {
-    encointer.getBusinesses();
-    encointer.getMeetupIndex();
-    encointer.getParticipantIndex();
-    encointer.getEncointerBalance();
-    encointer.getCommunityMetadata();
-    encointer.getDemurrage();
+    encointer.getCommunityData();
   }
 
   Future<void> fetchNetworkProps() async {

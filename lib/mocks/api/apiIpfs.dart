@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
-import 'package:encointer_wallet/service/ipfsApi/httpApi.dart';
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/service/ipfsApi/httpApi.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class MockIpfs extends Ipfs {
   MockIpfs({gateway = ipfs_gateway_local}) : super(gateway: gateway);
@@ -13,8 +13,8 @@ class MockIpfs extends Ipfs {
   }
 
   @override
-  Image getCommunityIcon(String cid, double devicePixelRatio) {
-    return Image.asset('assets/images/assets/Assets_nav_0.png');
+  Future<SvgPicture> getCommunityIcon(String cid) {
+    return Future.value(SvgPicture.asset('assets/images/assets/Assets_nav_0.png'));
   }
 
   @override

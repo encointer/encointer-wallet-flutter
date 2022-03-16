@@ -3,10 +3,11 @@ import 'package:encointer_wallet/page-encointer/common/communityChooserOnMap.dar
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CommunityChooserPanel extends StatefulWidget {
   CommunityChooserPanel(this.store);
@@ -89,12 +90,11 @@ class _CommunityWithCommunityChooserState extends State<CommunityWithCommunityCh
 
   @override
   Widget build(BuildContext context) {
-    final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
-
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        InkWell(
+        Observer(
+          builder: (_) => InkWell(
             key: Key('cid-avatar'),
             child: Column(
               children: [
@@ -106,7 +106,16 @@ class _CommunityWithCommunityChooserState extends State<CommunityWithCommunityCh
                   child: SizedBox(
                     width: 96,
                     height: 96,
-                    child: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio),
+                    child: FutureBuilder<SvgPicture>(
+                      future: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid),
+                      builder: (_, AsyncSnapshot<SvgPicture> snapshot) {
+                        if (snapshot.hasData) {
+                          return snapshot.data;
+                        } else {
+                          return CupertinoActivityIndicator();
+                        }
+                      },
+                    ),
                   ),
                 ),
                 SizedBox(height: 6),
@@ -123,7 +132,9 @@ class _CommunityWithCommunityChooserState extends State<CommunityWithCommunityCh
                   builder: (context) => CommunityChooserOnMap(store),
                 ),
               );
-            }),
+            },
+          ),
+        ),
       ],
     );
   }

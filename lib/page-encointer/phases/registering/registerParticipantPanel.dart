@@ -1,17 +1,14 @@
-import 'dart:convert';
-
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
-import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/encointer/types/proofOfAttendance.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:encointer_wallet/utils/tx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class RegisterParticipantPanel extends StatefulWidget {
   RegisterParticipantPanel(this.store);
@@ -28,9 +25,6 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
 
   final AppStore store;
 
-  bool attendedLastMeetup = false;
-  Future<ProofOfAttendance> proof;
-
   @override
   void initState() {
     webApi.encointer.getParticipantIndex();
@@ -38,32 +32,30 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
   }
 
   Future<void> _submit() async {
-    ProofOfAttendance p;
-    if (attendedLastMeetup) {
-      p = await proof;
+    if (store.settings.cachedPin.isEmpty) {
+      await showCupertinoDialog(
+        context: context,
+        builder: (context) {
+          return showPasswordInputDialog(
+              context,
+              store.account.currentAccount,
+              Text(I18n.of(context)
+                  .translationsForLocale()
+                  .home
+                  .unlockAccount
+                  .replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name.toString())), (password) {
+            store.settings.setPin(password);
+          });
+        },
+      );
     }
 
-    var args = {
-      "title": 'register_participant',
-      "txInfo": {
-        "module": 'encointerCeremonies',
-        "call": 'registerParticipant',
-        "cid": store.encointer.chosenCid,
-      },
-      "detail": jsonEncode({
-        "cid": store.encointer.chosenCid,
-        "proof": p ?? {},
-      }),
-      "params": [
-        store.encointer.chosenCid,
-        p,
-      ],
-      'onFinish': (BuildContext txPageContext, Map res) {
-        webApi.encointer.getParticipantIndex();
-        Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
-      }
-    };
-    Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
+    submitRegisterParticipant(
+      context,
+      webApi,
+      store.encointer.chosenCid,
+      proof: webApi.encointer.getProofOfAttendance(),
+    );
   }
 
   @override
@@ -83,42 +75,16 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
                         .format(new DateTime.fromMillisecondsSinceEpoch(store.encointer.meetupTime)))
                   ],
                 ),
-          CheckboxListTile(
-            title: Text(dic.encointer.meetupAttended),
-            onChanged: (bool value) async {
-              if (value) {
-                if (store.settings.cachedPin.isNotEmpty) {
-                  proof = webApi.encointer.getProofOfAttendance();
-                } else {
-                  showCupertinoDialog(
-                    context: context,
-                    builder: (context) {
-                      return showPasswordInputDialog(
-                          context,
-                          store.account.currentAccount,
-                          Text(I18n.of(context).translationsForLocale().home.unlockAccount.replaceAll(
-                              'CURRENT_ACCOUNT_NAME', store.account.currentAccount.name.toString())), (password) {
-                        store.settings.setPin(password);
-
-                        // If we don't wait, the pin has not propagated to the state and we will get a password check error
-                        Future.delayed(const Duration(milliseconds: 1000), () {
-                          proof = webApi.encointer.getProofOfAttendance();
-                        });
-                      });
-                    },
-                  );
-                }
-              }
-              setState(() {
-                attendedLastMeetup = value;
-              });
-            },
-            value: attendedLastMeetup,
-          ),
           store.encointer.participantIndex == null
               ? CupertinoActivityIndicator()
               : store.encointer.participantIndex == 0
-                  ? RoundedButton(text: dic.encointer.registerParticipant, onPressed: () => _submit())
+                  ? store.encointer.reputations != null
+                      ? RoundedButton(text: dic.encointer.registerParticipant, onPressed: () => _submit())
+                      : RoundedButton(
+                          text: dic.encointer.fetchingReputations,
+                          onPressed: null,
+                          color: Theme.of(context).disabledColor,
+                        )
                   : RoundedButton(
                       text: dic.encointer.youAreRegistered, onPressed: null, color: Theme.of(context).disabledColor),
         ],
