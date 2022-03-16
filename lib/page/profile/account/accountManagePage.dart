@@ -15,6 +15,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconsax/iconsax.dart';
 
 class AccountManagePage extends StatefulWidget {
@@ -80,7 +81,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
   List<Widget> _getBalances() {
     final TextStyle h3 = Theme.of(context).textTheme.headline3;
-    final double devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
     CommunityMetadata cm = store.encointer.communityMetadata;
     String name = cm != null ? cm.name : '';
     String symbol = cm != null ? cm.symbol : '';
@@ -90,7 +90,18 @@ class _AccountManagePageState extends State<AccountManagePage> {
         return ListTile(
           contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
           leading: CommunityIcon(
-              store: store, icon: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio)),
+            store: store,
+            icon: FutureBuilder<SvgPicture>(
+              future: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid),
+              builder: (_, AsyncSnapshot<SvgPicture> snapshot) {
+                if (snapshot.hasData) {
+                  return snapshot.data;
+                } else {
+                  return CupertinoActivityIndicator();
+                }
+              },
+            ),
+          ),
           title: Text(name, style: h3),
           subtitle: Text(tokenView, style: h3),
           trailing: Column(
@@ -333,7 +344,7 @@ class CommunityIcon extends StatelessWidget {
   }) : super(key: key);
 
   final AppStore store;
-  final Image icon;
+  final Widget icon;
 
   @override
   Widget build(BuildContext context) {

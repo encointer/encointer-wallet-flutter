@@ -1,9 +1,9 @@
-import 'dart:io';
 import 'dart:convert';
+import 'dart:io';
 
-import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class Ipfs {
   // Todo: remove default -> migrate bazaar to use ipfs field from webApi instance
@@ -45,41 +45,37 @@ class Ipfs {
     }
   }
 
-  Image getCommunityIcon(String cid, double devicePixelRatio) {
+  Future<SvgPicture> getCommunityIcon(String cid) async {
     if (cid == null || cid.isEmpty) {
       print("[IPFS] return default encointer icon because ipfs-cid is not set");
-      return Image.asset('assets/images/assets/ERT.png');
+      return SvgPicture.asset(fall_back_community_icon);
     }
 
-    String ipfsSrc = getCommunityIconsUrl(cid, devicePixelRatio);
-
-    print("[IPFS] loading assets from src: $ipfsSrc");
-
-    return Image.network(ipfsSrc, errorBuilder: (_, error, __) {
-      print("[IPFS]: Failed to retrieve community icon with ipfs-cid: $cid: ${error.toString()}");
-      return Image.asset('assets/images/assets/ERT.png');
-    });
-  }
-
-  String getCommunityIconsUrl(String cid, double devicePixelRatio) {
-    return '$gateway/ipfs/$cid/assets/icons/${devicePixelRatioToResolution(devicePixelRatio)}community_icon.png';
-  }
-
-  /// The [ratio] should be obtained via ' MediaQuery.of(context).devicePixelRatio'.
-  ///
-  /// Internally, Flutter handles asset resolution the same.
-  String devicePixelRatioToResolution(double ratio) {
-    if (ratio < 0) {
-      print("[Error] invalid devicePixelRation returning 1.0x");
-      return '';
-    } else if (ratio < 1.8) {
-      // '1.0x' resolution is on top level.
-      return '';
-    } else if (ratio < 2.7) {
-      return '2.0x/';
-    } else {
-      return '3.0x/';
+    try {
+      var data = await getData(getIconsPath(cid));
+      return SvgPicture.string(data);
+    } catch (e) {
+      print("[Ipfs] error getting communityIcon: $e");
+      return SvgPicture.asset(fall_back_community_icon);
     }
+  }
+
+  Future<String> getData(String src) async {
+    final dio = IpfsDio(BaseOptions(baseUrl: gateway, connectTimeout: 5000, receiveTimeout: 3000));
+
+    try {
+      final response = await dio.get(src);
+      var object = Object.fromJson(response.data);
+
+      return object.data;
+    } catch (e) {
+      // otherwise we would have to adjust the return type.
+      throw (e.toString());
+    }
+  }
+
+  String getIconsPath(String cid) {
+    return '$cid/$community_icon_name';
   }
 
   Future<String> uploadImage(File image) async {
@@ -143,6 +139,7 @@ class IpfsDio {
   Dio dio;
 
   Future<Response<T>> get<T>(String cid) async {
+    print("[IPFS] fetching data from: ${dio.options.baseUrl}$getRequest$cid}");
     return dio.get('$getRequest$cid');
   }
 }
