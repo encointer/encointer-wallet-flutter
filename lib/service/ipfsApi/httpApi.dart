@@ -73,29 +73,8 @@ class Ipfs {
     return object.data;
   }
 
-  String getCommunityIconsUrl(String cid, double devicePixelRatio) {
-    return '$gateway/ipfs/$cid/assets/icons/${devicePixelRatioToResolution(devicePixelRatio)}community_icon.png';
-  }
-
   String getIconsPath(String cid) {
     return '$cid/assets/$community_icon_name';
-  }
-
-  /// The [ratio] should be obtained via ' MediaQuery.of(context).devicePixelRatio'.
-  ///
-  /// Internally, Flutter handles asset resolution the same.
-  String devicePixelRatioToResolution(double ratio) {
-    if (ratio < 0) {
-      print("[Error] invalid devicePixelRation returning 1.0x");
-      return '';
-    } else if (ratio < 1.8) {
-      // '1.0x' resolution is on top level.
-      return '';
-    } else if (ratio < 2.7) {
-      return '2.0x/';
-    } else {
-      return '3.0x/';
-    }
   }
 
   Future<String> uploadImage(File image) async {
