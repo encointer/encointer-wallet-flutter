@@ -21,6 +21,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
   dynamic get scannedClaimsCount => (_$scannedClaimsCountComputed ??=
           Computed<dynamic>(() => super.scannedClaimsCount, name: '_EncointerStore.scannedClaimsCount'))
       .value;
+  Computed<dynamic> _$ceremonyIndexForProofOfAttendanceComputed;
+
+  @override
+  dynamic get ceremonyIndexForProofOfAttendance =>
+      (_$ceremonyIndexForProofOfAttendanceComputed ??= Computed<dynamic>(() => super.ceremonyIndexForProofOfAttendance,
+              name: '_EncointerStore.ceremonyIndexForProofOfAttendance'))
+          .value;
   Computed<String> _$communityNameComputed;
 
   @override
@@ -273,21 +280,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
-  final _$reputationsAtom = Atom(name: '_EncointerStore.reputations');
-
-  @override
-  List<String> get reputations {
-    _$reputationsAtom.reportRead();
-    return super.reputations;
-  }
-
-  @override
-  set reputations(List<String> value) {
-    _$reputationsAtom.reportWrite(value, super.reputations, () {
-      super.reputations = value;
-    });
-  }
-
   final _$chosenCidAtom = Atom(name: '_EncointerStore.chosenCid');
 
   @override
@@ -360,6 +352,21 @@ mixin _$EncointerStore on _EncointerStore, Store {
   set txsTransfer(ObservableList<TransferData> value) {
     _$txsTransferAtom.reportWrite(value, super.txsTransfer, () {
       super.txsTransfer = value;
+    });
+  }
+
+  final _$reputationsAtom = Atom(name: '_EncointerStore.reputations');
+
+  @override
+  SplayTreeMap<int, CommunityReputation> get reputations {
+    _$reputationsAtom.reportRead();
+    return super.reputations;
+  }
+
+  @override
+  set reputations(SplayTreeMap<int, CommunityReputation> value) {
+    _$reputationsAtom.reportWrite(value, super.reputations, () {
+      super.reputations = value;
     });
   }
 
@@ -547,16 +554,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setReputations(List<String> rep) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setReputations');
-    try {
-      return super.setReputations(rep);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setDemurrage(double d) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setDemurrage');
     try {
@@ -591,6 +588,26 @@ mixin _$EncointerStore on _EncointerStore, Store {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.addParticipantClaim');
     try {
       return super.addParticipantClaim(claim);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setReputations(Map<int, CommunityReputation> reps) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setReputations');
+    try {
+      return super.setReputations(reps);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void purgeReputations() {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.purgeReputations');
+    try {
+      return super.purgeReputations();
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }
@@ -641,16 +658,17 @@ balanceEntries: ${balanceEntries},
 communityIdentifiers: ${communityIdentifiers},
 bootstrappers: ${bootstrappers},
 communities: ${communities},
-reputations: ${reputations},
 chosenCid: ${chosenCid},
 communityMetadata: ${communityMetadata},
 demurrage: ${demurrage},
 participantsClaims: ${participantsClaims},
 txsTransfer: ${txsTransfer},
+reputations: ${reputations},
 businessRegistry: ${businessRegistry},
 communityLocations: ${communityLocations},
 currentPhaseDuration: ${currentPhaseDuration},
 scannedClaimsCount: ${scannedClaimsCount},
+ceremonyIndexForProofOfAttendance: ${ceremonyIndexForProofOfAttendance},
 communityName: ${communityName},
 communitySymbol: ${communitySymbol},
 communityIconsCid: ${communityIconsCid},

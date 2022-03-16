@@ -32,6 +32,7 @@ abstract class TranslationsEncointer {
   String get youAreNotRegistered;
   String get howManyParticipantsShowedUp;
   String get ceremonyWillTakePlaceOn;
+  String get fetchingReputations;
 }
 
 class TranslationsEnEncointer implements TranslationsEncointer {
@@ -66,6 +67,7 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   get youAreNotRegistered => 'You are not registered for a ceremony for the selected community on:';
   get howManyParticipantsShowedUp => 'How many attendees are present?';
   get ceremonyWillTakePlaceOn => 'The ceremony will take place on';
+  get fetchingReputations => 'Checking if you have reputation';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
@@ -100,6 +102,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get youAreNotRegistered => 'Du hast dich für eine Zeremonie der gewählten Gemeinschaft registriert am:';
   get howManyParticipantsShowedUp => 'Wieviele Teilnehmende sind da?';
   get ceremonyWillTakePlaceOn => 'Die Zeremonie wird stattfinden am';
+  get fetchingReputations => 'Es wird überprüft, ob du bereits Reputation hast';
 }
 
 class TranslationsZhEncointer implements TranslationsEncointer {
@@ -134,4 +137,5 @@ class TranslationsZhEncointer implements TranslationsEncointer {
   get youAreNotRegistered => throw UnimplementedError();
   get howManyParticipantsShowedUp => throw UnimplementedError();
   get ceremonyWillTakePlaceOn => throw UnimplementedError();
+  get fetchingReputations => throw UnimplementedError();
 }

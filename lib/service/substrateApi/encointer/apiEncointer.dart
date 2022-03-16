@@ -64,6 +64,18 @@ class ApiEncointer {
     }
   }
 
+  void getCommunityData() {
+    getBusinesses();
+    getMeetupIndex();
+    getParticipantIndex();
+    getEncointerBalance();
+    getCommunityMetadata();
+    getAllMeetupLocations();
+    getDemurrage();
+    getBootstrappers();
+    getReputations();
+  }
+
   /// Queries the Scheduler pallet: encointerScheduler.currentPhase().
   ///
   /// This is on-chain in Cantillon.
@@ -211,19 +223,6 @@ class ApiEncointer {
 
     print("api: CidNames: " + cn.toString());
     store.encointer.setCommunities(cn);
-  }
-
-  /// Calls the custom rpc: api.rpc.ceremonies.getReputations()
-  Future<void> getReputations() async {
-    // List<String> rep = await apiRoot
-    //     .evalJavascript('encointer.ceremoniesGetReputations()')
-    //     .then(
-    //         (list) =>
-    //     List.from(list).map((rep) => CidName.fromJson(rep)).toList()
-    // );
-    //
-    // print("api: Reputations: " + rep.toString());
-    // store.encointer.setReputations(rep);
   }
 
   /// Queries the Scheduler pallet: encointerScheduler./-currentPhase(), -phaseDurations(phase), -nextPhaseTimestamp().
@@ -421,6 +420,19 @@ class ApiEncointer {
     store.encointer.setBootstrappers(bootstrappers);
   }
 
+  Future<void> getReputations() async {
+    var address = store.account.currentAddress;
+
+    List<dynamic> reputationsList = await apiRoot.evalJavascript('encointer.getReputations("$address")');
+
+    print("api: getReputations: ${reputationsList.toString()}");
+
+    Map<int, CommunityReputation> reputations =
+        Map.fromIterable(reputationsList, key: (cr) => cr[0], value: (cr) => CommunityReputation.fromJson(cr[1]));
+
+    store.encointer.setReputations(reputations);
+  }
+
   Future<dynamic> sendFaucetTx() async {
     var address = store.account.currentAddress;
     var amount = Fmt.tokenInt(faucetAmount.toString(), ert_decimals);
@@ -448,13 +460,24 @@ class ApiEncointer {
     return claimSigned;
   }
 
+  /// Gets a proof of attendance for the oldest attended ceremony, if available.
+  ///
+  /// returns null, if none available.
   Future<ProofOfAttendance> getProofOfAttendance() async {
     var pubKey = store.account.currentAccountPubKey;
-    var cid = store.encointer.chosenCid;
-    var cIndex = store.encointer.currentCeremonyIndex;
+    var cIndex = store.encointer.ceremonyIndexForProofOfAttendance;
+
+    if (cIndex == null || cIndex == 0) {
+      return null;
+    }
+
+    var cid = store.encointer.reputations[cIndex].communityIdentifier;
     var pin = store.settings.cachedPin;
+
+    print("getProofOfAttendance: cachedPin: $pin");
+
     var proofJs = await apiRoot
-        .evalJavascript('encointer.getProofOfAttendance("$pubKey", ${jsonEncode(cid)}, "${cIndex - 1}", "$pin")');
+        .evalJavascript('encointer.getProofOfAttendance("$pubKey", ${jsonEncode(cid)}, "$cIndex", "$pin")');
     ProofOfAttendance proof = ProofOfAttendance.fromJson(proofJs);
     print("Proof: ${proof.toString()}");
     return proof;

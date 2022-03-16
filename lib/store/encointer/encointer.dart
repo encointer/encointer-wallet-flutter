@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:convert';
 import 'dart:math';
 
@@ -6,10 +7,10 @@ import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/assets/types/transferData.dart';
 import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
+import 'package:encointer_wallet/store/encointer/types/ceremonies.dart';
 import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
-import 'package:encointer_wallet/store/encointer/types/ceremonies.dart';
 import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:mobx/mobx.dart';
@@ -30,6 +31,7 @@ abstract class _EncointerStore with Store {
   final String encointerCommunitiesKey = 'wallet_encointer_communities';
   final String encointerBootstrappersKey = 'wallet_encointer_bootstrappers';
   final String encointerCommunityLocationsKey = 'wallet_encointer_community_locations';
+  final String encointerCommunityReputationsKey = 'wallet_encointer_community_reputations';
 
   // offline meetup cache.
   final String encointerCurrentCeremonyIndexKey = 'wallet_encointer_current_ceremony_index';
@@ -88,9 +90,6 @@ abstract class _EncointerStore with Store {
   List<CidName> communities;
 
   @observable
-  List<String> reputations;
-
-  @observable
   CommunityIdentifier chosenCid;
 
   @observable
@@ -108,6 +107,22 @@ abstract class _EncointerStore with Store {
 
   @observable
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
+
+  // splay tree set does automatically order the keys.
+  @observable
+  SplayTreeMap<int, CommunityReputation> reputations;
+
+  @computed
+  get ceremonyIndexForProofOfAttendance {
+    if (reputations != null && reputations.isNotEmpty) {
+      try {
+        return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
+      } catch (_e) {
+        print("Has reputation, but none that has not been linked yet");
+        return 0;
+      }
+    }
+  }
 
   @observable
   ObservableList<AccountBusinessTuple> businessRegistry;
@@ -186,6 +201,7 @@ abstract class _EncointerStore with Store {
     switch (currentPhase) {
       case CeremonyPhase.Registering:
         webApi.encointer.getMeetupTime();
+        webApi.encointer.getReputations();
         break;
       case CeremonyPhase.Assigning:
         webApi.encointer.getMeetupIndex();
@@ -205,6 +221,7 @@ abstract class _EncointerStore with Store {
     setMeetupLocation();
     setMeetupTime();
     setMeetupRegistry();
+    purgeReputations();
   }
 
   @action
@@ -310,13 +327,6 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setReputations(List<String> rep) {
-    print("store: set communities to $rep");
-    reputations = rep;
-    // cacheObject(encointerCommunitiesKey, c);
-  }
-
-  @action
   void setDemurrage(double d) {
     demurrage = d;
   }
@@ -333,16 +343,10 @@ abstract class _EncointerStore with Store {
     if (rootStore.settings.endpointIsGesell) {
       webApi.encointer.subscribeBusinessRegistry();
     }
+
     // update depending values without awaiting
     if (!rootStore.settings.loading) {
-      webApi.encointer.getBusinesses();
-      webApi.encointer.getMeetupIndex();
-      webApi.encointer.getParticipantIndex();
-      webApi.encointer.getEncointerBalance();
-      webApi.encointer.getCommunityMetadata();
-      webApi.encointer.getAllMeetupLocations();
-      webApi.encointer.getDemurrage();
-      webApi.encointer.getBootstrappers();
+      webApi.encointer.getCommunityData();
     }
   }
 
@@ -360,6 +364,20 @@ abstract class _EncointerStore with Store {
   void addParticipantClaim(ClaimOfAttendance claim) {
     participantsClaims[claim.claimantPublic] = claim;
     cacheParticipantsClaims(participantsClaims);
+  }
+
+  @action
+  void setReputations(Map<int, CommunityReputation> reps) {
+    reputations = SplayTreeMap.of(reps);
+    cacheMap<int, CommunityReputation>(encointerCommunityReputationsKey, reps);
+  }
+
+  @action
+  void purgeReputations() {
+    if (reputations != null) {
+      reputations.clear();
+      cacheMap<int, CommunityReputation>(encointerCommunityReputationsKey, reputations);
+    }
   }
 
   @action
@@ -444,11 +462,21 @@ abstract class _EncointerStore with Store {
       communityLocations = ObservableList.of(locations);
     }
 
+    var cachedReputations = await loadMap(encointerCommunityReputationsKey);
+    if (cachedReputations != null) {
+      // for some weird reason `cachedReputation.cast<int, CommunityReputation> did not throw an exception, but it did not
+      // cast successfully.
+      Map<int, CommunityReputation> r =
+          Map.of(cachedReputations.map((k, v) => MapEntry(int.parse(k), CommunityReputation.fromJson(v))));
+      print("found cached reputations. will recover it: " + cachedReputations.toString());
+      reputations = SplayTreeMap.of(r);
+    }
+
     // get meetup related data
-    var data = await loadObject(encointerParticipantsClaimsKey);
+    var data = await loadMap(encointerParticipantsClaimsKey);
     if (data != null) {
       print("found cached participants' claims. will recover them: $data");
-      participantsClaims = ObservableMap.of(jsonDecode(data).cast<String, ClaimOfAttendance>());
+      participantsClaims = ObservableMap.of(data.cast<String, ClaimOfAttendance>());
     }
     currentPhase = await loadCurrentPhase();
     currentCeremonyIndex = await loadObject(encointerCurrentCeremonyIndexKey);
@@ -477,8 +505,31 @@ abstract class _EncointerStore with Store {
   }
 
   Future<void> cacheParticipantsClaims(Map<String, ClaimOfAttendance> claims) {
-    print("jsonEncode claims: ${jsonEncode(claims)}");
-    return cacheObject(encointerParticipantsClaimsKey, jsonEncode(claims));
+    return cacheMap<String, ClaimOfAttendance>(encointerParticipantsClaimsKey, claims);
+  }
+
+  /// Cache a map in the local storage.
+  ///
+  /// We use this because `jsonEncode` fails for maps with key types other than String
+  ///
+  Future<void> cacheMap<Key, Value>(String cacheKey, Map<Key, Value> map) {
+    var encoded = jsonEncode(Map.of(map.map((k, v) => MapEntry(k.toString(), v))));
+    print("[store.encointer]: caching map. cacheKey: $cacheKey, map: $encoded");
+    return cacheObject(cacheKey, encoded);
+  }
+
+  /// Load a map in the local storage.
+  ///
+  Future<Map<dynamic, dynamic>> loadMap<Key, Value>(String cacheKey) async {
+    print("[store.encointer]: loading map. cacheKey: $cacheKey");
+
+    var data = await loadObject(cacheKey);
+
+    if (data != null) {
+      print("found cache: $cacheKey': data: $data");
+      return jsonDecode(data);
+    }
+    return null;
   }
 
   Future<void> cacheObject(String key, value) {
