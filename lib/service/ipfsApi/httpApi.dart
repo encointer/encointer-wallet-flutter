@@ -75,7 +75,7 @@ class Ipfs {
   }
 
   String getIconsPath(String cid) {
-    return '$cid/assets/$community_icon_name';
+    return '$cid/$community_icon_name';
   }
 
   Future<String> uploadImage(File image) async {
