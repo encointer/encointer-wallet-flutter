@@ -1,13 +1,15 @@
-import 'dart:io';
 import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
 
-import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class Ipfs {
   // Todo: remove default -> migrate bazaar to use ipfs field from webApi instance
-  Ipfs({this.gateway = ipfs_gateway_encointer});
+  Ipfs({this.gateway = ipfs_gateway_local});
 
   final String gateway;
 
@@ -61,8 +63,37 @@ class Ipfs {
     });
   }
 
+  Future<SvgPicture> getCommunityIconAsData(String cid, double devicePixelRatio) async {
+
+
+    var data = await getDataTest(getIconsPath("QmWVgBAiZE5Z4F4d2eRS8SE5L3jYbMMYNYvBRrqZ23QjKy"));
+
+    return SvgPicture.string(data);
+  }
+
+  Future<String> getDataTest(String src) async {
+    print("[IPFS] getDataTest before");
+    print("[IPFS] gateway: $gateway");
+    print("[IPFS] src: $src");
+
+    final dio = IpfsDio(BaseOptions(baseUrl: gateway));
+
+    final response = await dio.get(src);
+    var object = Object.fromJson(response.data);
+
+    print("[IPFS] getDataTest: $response");
+    print("[IPFS] getDataTest: ${object.toString()}");
+
+    return object.data;
+  }
+
+
   String getCommunityIconsUrl(String cid, double devicePixelRatio) {
     return '$gateway/ipfs/$cid/assets/icons/${devicePixelRatioToResolution(devicePixelRatio)}community_icon.png';
+  }
+
+  String getIconsPath(String cid) {
+    return '$cid/assets/nctr_mosaic_background.svg';
   }
 
   /// The [ratio] should be obtained via ' MediaQuery.of(context).devicePixelRatio'.
@@ -143,6 +174,7 @@ class IpfsDio {
   Dio dio;
 
   Future<Response<T>> get<T>(String cid) async {
+    print("[ipfs] $getRequest$cid");
     return dio.get('$getRequest$cid');
   }
 }

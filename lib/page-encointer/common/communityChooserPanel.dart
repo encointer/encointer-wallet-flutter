@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CommunityChooserPanel extends StatefulWidget {
   CommunityChooserPanel(this.store);
@@ -104,10 +105,19 @@ class _CommunityWithCommunityChooserState extends State<CommunityWithCommunityCh
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(96),
                   ),
-                  child: SizedBox(
-                    width: 96,
-                    height: 96,
-                    child: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid, devicePixelRatio),
+                  child: FutureBuilder<SvgPicture>(
+                    future: webApi.ipfs.getCommunityIconAsData(store.encointer.communityIconsCid, devicePixelRatio),
+                    builder: (_, AsyncSnapshot<SvgPicture> snapshot) {
+                      if (snapshot.hasData) {
+                        return SizedBox(
+                          width: 96,
+                          height: 96,
+                          child: snapshot.data,
+                        );
+                      } else {
+                        return CupertinoActivityIndicator();
+                      }
+                    },
                   ),
                 ),
                 SizedBox(height: 6),
