@@ -374,8 +374,10 @@ abstract class _EncointerStore with Store {
 
   @action
   void purgeReputations() {
-    reputations.clear();
-    cacheMap<int, CommunityReputation>(encointerCommunityReputationsKey, reputations);
+    if (reputations != null) {
+      reputations.clear();
+      cacheMap<int, CommunityReputation>(encointerCommunityReputationsKey, reputations);
+    }
   }
 
   @action
