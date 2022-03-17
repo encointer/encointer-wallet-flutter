@@ -79,7 +79,7 @@ class _AssetsState extends State<Assets> {
                 // The pin is not immeditally propagated to the store, hence we track if the pin has been entered to prevent
                 // showing the dialog multiple times.
                 WidgetsBinding.instance.addPostFrameCallback(
-                  (_) {
+                      (_) {
                     _showPasswordDialog(context);
                   },
                 );
@@ -118,28 +118,28 @@ class _AssetsState extends State<Assets> {
                     builder: (_) {
                       return (store.encointer.communityName != null) & (store.encointer.chosenCid != null)
                           ? Column(
-                              children: [
-                                TextGradient(text: '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ'),
-                                Text(
-                                  "${dic.assets.balance}, ${store.encointer.communitySymbol}",
-                                  style: Theme.of(context).textTheme.headline4.copyWith(
-                                        color: encointerGrey,
-                                      ),
-                                ),
-                              ],
-                            )
+                        children: [
+                          TextGradient(text: '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ'),
+                          Text(
+                            "${dic.assets.balance}, ${store.encointer.communitySymbol}",
+                            style: Theme.of(context).textTheme.headline4.copyWith(
+                              color: encointerGrey,
+                            ),
+                          ),
+                        ],
+                      )
                           : Container(
-                              margin: EdgeInsets.only(top: 16),
-                              padding: EdgeInsets.symmetric(vertical: 8),
-                              child: (store.encointer.chosenCid == null)
-                                  ? Container(
-                                      width: double.infinity,
-                                      child: Text(dic.assets.communityNotSelected, textAlign: TextAlign.center))
-                                  : Container(
-                                      width: double.infinity,
-                                      child: CupertinoActivityIndicator(),
-                                    ),
-                            );
+                        margin: EdgeInsets.only(top: 16),
+                        padding: EdgeInsets.symmetric(vertical: 8),
+                        child: (store.encointer.chosenCid == null)
+                            ? Container(
+                            width: double.infinity,
+                            child: Text(dic.assets.communityNotSelected, textAlign: TextAlign.center))
+                            : Container(
+                          width: double.infinity,
+                          child: CupertinoActivityIndicator(),
+                        ),
+                      );
                     },
                   ),
                   SizedBox(
@@ -198,15 +198,15 @@ class _AssetsState extends State<Assets> {
                           key: Key('transfer'),
                           onPressed: store.encointer.communityBalance != null
                               ? () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    TransferPage.route,
-                                    arguments: TransferPageParams(
-                                        redirect: '/',
-                                        cid: store.encointer.chosenCid,
-                                        communitySymbol: store.encointer.communitySymbol),
-                                  );
-                                }
+                            Navigator.pushNamed(
+                              context,
+                              TransferPage.route,
+                              arguments: TransferPageParams(
+                                  redirect: '/',
+                                  cid: store.encointer.chosenCid,
+                                  communitySymbol: store.encointer.communitySymbol),
+                            );
+                          }
                               : null,
                         ),
                       ),
@@ -223,27 +223,27 @@ class _AssetsState extends State<Assets> {
 
               return store.settings.isConnected
                   ? FutureBuilder<bool>(
-                      future: webApi.encointer.hasPendingIssuance(),
-                      builder: (_, AsyncSnapshot<bool> snapshot) {
-                        if (snapshot.hasData) {
-                          var hasPendingIssuance = snapshot.data;
+                future: webApi.encointer.hasPendingIssuance(),
+                builder: (_, AsyncSnapshot<bool> snapshot) {
+                  if (snapshot.hasData) {
+                    var hasPendingIssuance = snapshot.data;
 
-                          if (hasPendingIssuance) {
-                            return ElevatedButton(
-                              child: Text(dic.assets.issuancePending),
-                              onPressed: () => submitClaimRewards(context, store.encointer.chosenCid),
-                            );
-                          } else {
-                            return ElevatedButton(
-                              child: Text(dic.assets.issuanceClaimed),
-                              onPressed: null,
-                            );
-                          }
-                        } else {
-                          return CupertinoActivityIndicator();
-                        }
-                      },
-                    )
+                    if (hasPendingIssuance) {
+                      return ElevatedButton(
+                        child: Text(dic.assets.issuancePending),
+                        onPressed: () => submitClaimRewards(context, store.encointer.chosenCid),
+                      );
+                    } else {
+                      return ElevatedButton(
+                        child: Text(dic.assets.issuanceClaimed),
+                        onPressed: null,
+                      );
+                    }
+                  } else {
+                    return CupertinoActivityIndicator();
+                  }
+                },
+              )
                   : Container();
             }),
             SizedBox(height: 24),
@@ -263,7 +263,7 @@ class _AssetsState extends State<Assets> {
             context,
             store.account.currentAccount,
             Text(I18n.of(context).translationsForLocale().home.unlock),
-            (password) {
+                (password) {
               setState(() {
                 store.settings.setPin(password);
               });
