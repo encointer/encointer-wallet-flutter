@@ -29,8 +29,6 @@ import 'account_or_community/AccountOrCommunityData.dart';
 import 'account_or_community/switchAccountOrCommunity.dart';
 
 class Assets extends StatefulWidget {
-  PanelController panelController = new PanelController();
-
   Assets(this.store);
 
   final AppStore store;
@@ -46,6 +44,8 @@ class _AssetsState extends State<Assets> {
 
   bool _enteredPin = false;
 
+  PanelController panelController;
+
   @override
   void initState() {
     // if network connected failed, reconnect
@@ -54,11 +54,15 @@ class _AssetsState extends State<Assets> {
       webApi.connectNodeAll();
     }
 
+    if (panelController == null) {
+      panelController = new PanelController();
+    }
+
     super.initState();
   }
 
   double _panelHeightOpen = 0;
-  double _panelHeightClosed = 100;
+  double _panelHeightClosed = 0;
   int selectedAccountIndex = 0;
   int selectedCommunityIndex = 0;
 
@@ -99,8 +103,8 @@ class _AssetsState extends State<Assets> {
         parallaxEnabled: true,
         parallaxOffset: .5,
         backdropEnabled: true,
-        controller: widget.panelController,
-        // body: MyLeafletMap(widget.panelController),
+        controller: panelController,
+        // body: MyLeafletMap(panelController),
         body: SafeArea(
           child: ListView(
             padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
@@ -160,7 +164,9 @@ class _AssetsState extends State<Assets> {
                           icon: Icon(Icons.add),
                           onPressed: () {
                             print('aaaaaaaaa should open sliding up panel (should slide it up programmatically)');
-                            widget.panelController.open();
+                            if (panelController != null && panelController.isAttached) {
+                              panelController.open();
+                            }
                           },
                         ),
                       ],
@@ -302,6 +308,7 @@ class _AssetsState extends State<Assets> {
             ],
           ),
         ),
+        // panel entering from below
         panelBuilder: (scrollController) => MediaQuery.removePadding(
           context: context,
           removeTop: true,
