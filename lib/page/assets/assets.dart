@@ -25,8 +25,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-import 'accountorcommunity/AccountOrCommunityData.dart';
-import 'accountorcommunity/switchAccountOrCommunity.dart';
+import 'account_or_community/AccountOrCommunityData.dart';
+import 'account_or_community/switchAccountOrCommunity.dart';
 
 class Assets extends StatefulWidget {
   PanelController panelController = new PanelController();
