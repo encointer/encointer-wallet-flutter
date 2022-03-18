@@ -160,15 +160,16 @@ class _AssetsState extends State<Assets> {
                             AccountManagePage.route,
                           ),
                         ),
-                        if(store.settings.developerMode) IconButton(
-                          icon: Icon(Icons.add),
-                          onPressed: () {
-                            // open sliding up panel
-                            if (panelController != null && panelController.isAttached) {
-                              panelController.open();
-                            }
-                          },
-                        ),
+                        if (store.settings.developerMode)
+                          IconButton(
+                            icon: Icon(Icons.add),
+                            onPressed: () {
+                              // open sliding up panel
+                              if (panelController != null && panelController.isAttached) {
+                                panelController.open();
+                              }
+                            },
+                          ),
                       ],
                     ),
                     Observer(
