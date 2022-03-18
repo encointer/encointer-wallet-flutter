@@ -93,7 +93,7 @@ class _TransferPageState extends State<TransferPage> {
                   Expanded(
                     child: ListView(
                       children: [
-                        CommunityWithCommunityChooser(store),
+                        CombinedCommunityAndAccountAvatar(store),
                         store.encointer.communityBalance != null
                             ? AccountBalanceWithMoreDigits(store: store, available: available, decimals: decimals)
                             : CupertinoActivityIndicator(),

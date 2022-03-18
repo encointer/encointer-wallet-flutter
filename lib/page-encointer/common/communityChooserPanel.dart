@@ -8,6 +8,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:encointer_wallet/utils/format.dart';
+import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/common/components/addressIcon.dart';
 
 class CommunityChooserPanel extends StatefulWidget {
   CommunityChooserPanel(this.store);
@@ -74,19 +77,19 @@ class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
   }
 }
 
-class CommunityWithCommunityChooser extends StatefulWidget {
-  const CommunityWithCommunityChooser(this.store, {Key key}) : super(key: key);
+class CombinedCommunityAndAccountAvatar extends StatefulWidget {
+  const CombinedCommunityAndAccountAvatar(this.store, {Key key}) : super(key: key);
 
   final AppStore store;
 
   @override
-  _CommunityWithCommunityChooserState createState() => _CommunityWithCommunityChooserState(store);
+  _CombinedCommunityAndAccountAvatarState createState() => _CombinedCommunityAndAccountAvatarState(store);
 }
 
-class _CommunityWithCommunityChooserState extends State<CommunityWithCommunityChooser> {
+class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAndAccountAvatar> {
   final AppStore store;
 
-  _CommunityWithCommunityChooserState(this.store);
+  _CombinedCommunityAndAccountAvatarState(this.store);
 
   @override
   Widget build(BuildContext context) {
@@ -94,48 +97,76 @@ class _CommunityWithCommunityChooserState extends State<CommunityWithCommunityCh
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Observer(
-          builder: (_) => InkWell(
-            key: Key('cid-avatar'),
-            child: Column(
-              children: [
-                Card(
-                  elevation: 10,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(96),
+          builder: (_) => Column(
+            children: [
+              Stack(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 2, 2),
+                    child: CommunityAvatar(
+                        store: store,
+                        avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid),
+                        avatarSize: 96),
                   ),
-                  child: SizedBox(
-                    width: 96,
-                    height: 96,
-                    child: FutureBuilder<SvgPicture>(
-                      future: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid),
-                      builder: (_, AsyncSnapshot<SvgPicture> snapshot) {
-                        if (snapshot.hasData) {
-                          return snapshot.data;
-                        } else {
-                          return CupertinoActivityIndicator();
-                        }
-                      },
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: AddressIcon(
+                      '',
+                      size: 34,
+                      pubKey: store.account.currentAccount.pubKey,
+                      tapToCopy: false,
                     ),
-                  ),
-                ),
-                SizedBox(height: 6),
-                Text(
-                  store.encointer.communityName ?? '...',
-                  style: Theme.of(context).textTheme.headline4,
-                ),
-              ],
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CommunityChooserOnMap(store),
-                ),
-              );
-            },
+                  )
+                ],
+              ),
+              SizedBox(height: 4),
+              Text(
+                '${store.encointer.communityName}\n${Fmt.accountName(context, store.account.currentAccount)}',
+                style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
+                textAlign: TextAlign.center,
+              ),
+            ],
           ),
         ),
       ],
+    );
+  }
+}
+
+class CommunityAvatar extends StatelessWidget {
+  const CommunityAvatar({
+    Key key,
+    @required this.store,
+    @required this.avatarIcon,
+    this.avatarSize = 120,
+  }) : super(key: key);
+
+  final AppStore store;
+  final double avatarSize;
+  final Future<SvgPicture> avatarIcon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      elevation: 10,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(96),
+      ),
+      child: SizedBox(
+        width: avatarSize,
+        height: avatarSize,
+        child: FutureBuilder<SvgPicture>(
+          future: avatarIcon,
+          builder: (_, AsyncSnapshot<SvgPicture> snapshot) {
+            if (snapshot.hasData) {
+              return snapshot.data;
+            } else {
+              return CupertinoActivityIndicator();
+            }
+          },
+        ),
+      ),
     );
   }
 }

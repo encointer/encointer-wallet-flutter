@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:ui';
 import 'dart:math';
 
-import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/dragHandle.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
@@ -11,7 +10,6 @@ import 'package:encointer_wallet/page-encointer/ceremony_box/ceremonyBox.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
-import 'package:encointer_wallet/page/profile/account/accountManagePage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -144,36 +142,13 @@ class _AssetsState extends State<Assets> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        CommunityWithCommunityChooser(store),
                         InkWell(
-                          child: Column(
-                            children: [
-                              AddressIcon(
-                                '',
-                                pubKey: store.account.currentAccount.pubKey,
-                                tapToCopy: false,
-                              ),
-                              SizedBox(height: 6),
-                              Text(
-                                Fmt.accountName(context, accountData),
-                                style: Theme.of(context).textTheme.headline4,
-                              ),
-                            ],
-                          ),
-                          onTap: () => Navigator.of(context).pushNamed(
-                            AccountManagePage.route,
-                          ),
-                        ),
-                        if (store.settings.developerMode)
-                          IconButton(
-                            icon: Icon(Icons.add),
-                            onPressed: () {
-                              // open sliding up panel
+                            child: CombinedCommunityAndAccountAvatar(store),
+                            onTap: () {
                               if (panelController != null && panelController.isAttached) {
                                 panelController.open();
                               }
-                            },
-                          ),
+                            }),
                       ],
                     ),
                     Observer(
