@@ -33,11 +33,11 @@ class _ProfileState extends State<Profile> {
   final Api api = webApi;
   EndpointData _selectedNetwork;
 
-  Future<void> _onSelect(AccountData i, String address) async {
+  Future<void> _onSelect(AccountData account, String address) async {
     if (address != store.account.currentAddress) {
       print("changing from addres ${store.account.currentAddress} to $address");
 
-      store.account.setCurrentAccount(i.pubKey);
+      store.account.setCurrentAccount(account.pubKey);
       await store.loadAccountCache();
 
       webApi.fetchAccountData();
@@ -69,14 +69,14 @@ class _ProfileState extends State<Profile> {
   }
 
   List<Widget> _buildAccountList() {
-    List<Widget> res = [];
+    List<Widget> allAccountsAsWidgets = [];
 
     List<AccountData> accounts = store.account.accountListAll;
 
-    res.addAll(accounts.map((i) {
-      String address = i.address;
+    allAccountsAsWidgets.addAll(accounts.map((account) {
+      String address = account.address;
       if (store.account.pubKeyAddressMap[_selectedNetwork.ss58] != null) {
-        address = store.account.pubKeyAddressMap[_selectedNetwork.ss58][i.pubKey];
+        address = store.account.pubKeyAddressMap[_selectedNetwork.ss58][account.pubKey];
       }
       return InkWell(
         child: Column(
@@ -86,7 +86,7 @@ class _ProfileState extends State<Profile> {
                 AddressIcon(
                   '',
                   size: 70,
-                  pubKey: i.pubKey,
+                  pubKey: account.pubKey,
                   // addressToCopy: address,
                   tapToCopy: false,
                 ),
@@ -98,7 +98,7 @@ class _ProfileState extends State<Profile> {
             ),
             SizedBox(height: 6),
             Text(
-              Fmt.accountName(context, i),
+              Fmt.accountName(context, account),
               style: Theme.of(context).textTheme.headline4,
             ),
             // This sizedBox is here to define a distance between the accounts
@@ -106,12 +106,12 @@ class _ProfileState extends State<Profile> {
           ],
         ),
         onTap: () => {
-          _onSelect(i, address),
+          _onSelect(account, address),
           Navigator.pushNamed(context, AccountManagePage.route),
         },
       );
     }).toList());
-    return res;
+    return allAccountsAsWidgets;
   }
 
   @override
