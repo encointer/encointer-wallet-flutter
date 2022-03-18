@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:ui';
+import 'dart:math';
 
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/dragHandle.dart';
@@ -41,6 +42,8 @@ class _AssetsState extends State<Assets> {
   _AssetsState(this.store);
 
   final AppStore store;
+  static const double panelHeight = 396;
+  static const double fractionOfScreenHeight = .7;
 
   bool _enteredPin = false;
 
@@ -61,7 +64,7 @@ class _AssetsState extends State<Assets> {
     super.initState();
   }
 
-  double _panelHeightOpen = 0;
+  double _panelHeightOpen;
   double _panelHeightClosed = 0;
   int selectedAccountIndex = 0;
   int selectedCommunityIndex = 0;
@@ -69,7 +72,7 @@ class _AssetsState extends State<Assets> {
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context).translationsForLocale();
-    _panelHeightOpen = MediaQuery.of(context).size.height * .65;
+    _panelHeightOpen = min(MediaQuery.of(context).size.height * fractionOfScreenHeight, panelHeight); // should typically not be higher than panelHeight, but on really small devices it should not exceed fractionOfScreenHeight x the screen height.
 
     var communityData = [
       AccountOrCommunityData(
