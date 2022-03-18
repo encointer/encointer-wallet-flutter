@@ -160,10 +160,10 @@ class _AssetsState extends State<Assets> {
                             AccountManagePage.route,
                           ),
                         ),
-                        IconButton(
+                        if(store.settings.developerMode) IconButton(
                           icon: Icon(Icons.add),
                           onPressed: () {
-                            print('aaaaaaaaa should open sliding up panel (should slide it up programmatically)');
+                            // open sliding up panel
                             if (panelController != null && panelController.isAttached) {
                               panelController.open();
                             }
