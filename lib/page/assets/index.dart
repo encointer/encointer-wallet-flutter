@@ -24,6 +24,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserOnMap.dart';
+import 'package:encointer_wallet/page/account/create/addAccountPage.dart';
 
 import 'account_or_community/AccountOrCommunityData.dart';
 import 'account_or_community/switchAccountOrCommunity.dart';
@@ -324,6 +325,7 @@ class _AssetsState extends State<Assets> {
                     });
                     if (index == accountData.length - 1) {
                       print('TODO open add Account');
+                      Navigator.of(context).pushNamed(AddAccountPage.route);
                     }
                   },
                 ),
