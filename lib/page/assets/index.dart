@@ -23,6 +23,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:encointer_wallet/page-encointer/common/communityChooserOnMap.dart';
 
 import 'account_or_community/AccountOrCommunityData.dart';
 import 'account_or_community/switchAccountOrCommunity.dart';
@@ -82,9 +83,6 @@ class _AssetsState extends State<Assets> {
         name: 'Default Community',
       ),
       AccountOrCommunityData(avatar: Icon(Icons.account_balance), name: 'Ba Community'),
-      AccountOrCommunityData(avatar: Icon(Icons.add_a_photo_sharp), name: 'Photo Phhhhh'),
-      AccountOrCommunityData(avatar: Icon(Icons.shop), name: 'Shop shop shop'),
-      AccountOrCommunityData(avatar: Icon(Icons.gamepad), name: 'Gamepad'),
       AccountOrCommunityData(avatar: Icon(Icons.add), name: 'Add Community'),
     ];
     var accountData = [
@@ -310,6 +308,9 @@ class _AssetsState extends State<Assets> {
                     });
                     if (index == communityData.length - 1) {
                       print('TODO open add community');
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)));
                     }
                   },
                 ),

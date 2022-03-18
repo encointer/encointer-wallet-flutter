@@ -106,7 +106,8 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
                     child: CommunityAvatar(
                         store: store,
                         avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid),
-                        avatarSize: 96),
+                        avatarSize: 96,
+                    ),
                   ),
                   Positioned(
                     bottom: 0,
