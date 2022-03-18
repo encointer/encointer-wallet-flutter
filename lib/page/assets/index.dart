@@ -72,7 +72,8 @@ class _AssetsState extends State<Assets> {
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context).translationsForLocale();
-    _panelHeightOpen = min(MediaQuery.of(context).size.height * fractionOfScreenHeight, panelHeight); // should typically not be higher than panelHeight, but on really small devices it should not exceed fractionOfScreenHeight x the screen height.
+    _panelHeightOpen = min(MediaQuery.of(context).size.height * fractionOfScreenHeight,
+        panelHeight); // should typically not be higher than panelHeight, but on really small devices it should not exceed fractionOfScreenHeight x the screen height.
 
     var communityData = [
       AccountOrCommunityData(
