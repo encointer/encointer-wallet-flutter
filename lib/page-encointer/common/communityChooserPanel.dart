@@ -94,6 +94,8 @@ class CombinedCommunityAndAccountAvatar extends StatefulWidget {
 
 class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAndAccountAvatar> {
   final AppStore store;
+  static const double communityAvatarSize = 96;
+  static const double accountAvatarSize = 34;
 
   _CombinedCommunityAndAccountAvatarState(this.store);
 
@@ -112,12 +114,12 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
                     child: Card(
                       elevation: 10,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(96),
+                        borderRadius: BorderRadius.circular(communityAvatarSize),
                       ),
                       child: CommunityAvatar(
                       store: store,
                       avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid),
-                      avatarSize: 96,
+                      avatarSize: communityAvatarSize,
                     ),),
                   ),
                   Positioned(
@@ -125,7 +127,7 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
                     right: 0,
                     child: AddressIcon(
                       '',
-                      size: 34,
+                      size: accountAvatarSize,
                       pubKey: store.account.currentAccount.pubKey,
                       tapToCopy: false,
                     ),
