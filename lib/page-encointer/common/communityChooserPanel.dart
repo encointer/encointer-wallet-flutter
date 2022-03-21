@@ -109,11 +109,16 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
                 children: [
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 0, 2, 2),
-                    child: CommunityAvatar(
+                    child: Card(
+                      elevation: 10,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(96),
+                      ),
+                      child: CommunityAvatar(
                       store: store,
                       avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid),
                       avatarSize: 96,
-                    ),
+                    ),),
                   ),
                   Positioned(
                     bottom: 0,
@@ -156,24 +161,18 @@ class CommunityAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 10,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(avatarSize),
-      ),
-      child: SizedBox(
-        width: avatarSize,
-        height: avatarSize,
-        child: FutureBuilder<SvgPicture>(
-          future: avatarIcon,
-          builder: (_, AsyncSnapshot<SvgPicture> snapshot) {
-            if (snapshot.hasData) {
-              return snapshot.data;
-            } else {
-              return CupertinoActivityIndicator();
-            }
-          },
-        ),
+    return SizedBox(
+      width: avatarSize,
+      height: avatarSize,
+      child: FutureBuilder<SvgPicture>(
+        future: avatarIcon,
+        builder: (_, AsyncSnapshot<SvgPicture> snapshot) {
+          if (snapshot.hasData) {
+            return snapshot.data;
+          } else {
+            return CupertinoActivityIndicator();
+          }
+        },
       ),
     );
   }
