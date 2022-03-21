@@ -128,11 +128,12 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
                 ],
               ),
               SizedBox(height: 4),
-              if (widget.isClickable) Text(
-                '${store.encointer.communityName}\n${Fmt.accountName(context, store.account.currentAccount)}',
-                style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
-                textAlign: TextAlign.center,
-              ),
+              if (widget.isClickable)
+                Text(
+                  '${store.encointer.communityName}\n${Fmt.accountName(context, store.account.currentAccount)}',
+                  style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
+                  textAlign: TextAlign.center,
+                ),
             ],
           ),
         ),
@@ -158,7 +159,7 @@ class CommunityAvatar extends StatelessWidget {
     return Card(
       elevation: 10,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(96),
+        borderRadius: BorderRadius.circular(avatarSize),
       ),
       child: SizedBox(
         width: avatarSize,

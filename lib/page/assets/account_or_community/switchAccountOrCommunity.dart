@@ -21,14 +21,14 @@ class SwitchAccountOrCommunity extends StatefulWidget {
 }
 
 class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
-  static const double identiconPlusTextHeight = 110;
+  static const double identiconPlusTextHeight = 130;
   static const double itemExtent = 90;
 
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       SizedBox(
-        height: 20,
+        height: 15,
       ),
       Center(
         child: Text(
@@ -36,7 +36,7 @@ class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
           style: Theme.of(context).textTheme.headline2,
         ),
       ),
-      SizedBox(height: 20),
+      SizedBox(height: 15),
       SizedBox(
         height: identiconPlusTextHeight,
         // otherwise ListView would use infinite height

@@ -45,6 +45,7 @@ class _AssetsState extends State<Assets> {
   final AppStore store;
   static const double panelHeight = 396;
   static const double fractionOfScreenHeight = .7;
+  static const double avatarSize = 70;
 
   bool _enteredPin = false;
 
@@ -76,17 +77,7 @@ class _AssetsState extends State<Assets> {
     _panelHeightOpen = min(MediaQuery.of(context).size.height * fractionOfScreenHeight,
         panelHeight); // should typically not be higher than panelHeight, but on really small devices it should not exceed fractionOfScreenHeight x the screen height.
 
-    List<AccountOrCommunityData> allCommunities = [
-      AccountOrCommunityData(
-        avatar: SizedBox(
-          child: Image.asset('assets/images/assets/ERT.png'),
-          height: 24,
-        ),
-        name: 'Default Community',
-      ),
-      AccountOrCommunityData(avatar: Icon(Icons.account_balance), name: 'Ba Community'),
-      AccountOrCommunityData(avatar: Icon(Icons.add), name: 'Add Community'),
-    ];
+    List<AccountOrCommunityData> allCommunities = [];
     List<AccountOrCommunityData> allAccounts = [];
 
     return Scaffold(
@@ -120,7 +111,7 @@ class _AssetsState extends State<Assets> {
 
                 if (ModalRoute.of(context).isCurrent &&
                     !_enteredPin & store.settings.cachedPin.isEmpty & !store.settings.endpointIsGesell) {
-                  // The pin is not immeditally propagated to the store, hence we track if the pin has been entered to prevent
+                  // The pin is not immediately propagated to the store, hence we track if the pin has been entered to prevent
                   // showing the dialog multiple times.
                   WidgetsBinding.instance.addPostFrameCallback(
                     (_) {
@@ -294,27 +285,73 @@ class _AssetsState extends State<Assets> {
               ),
               DragHandle(),
               Column(children: [
-                SwitchAccountOrCommunity(
-                  rowTitle: 'Switch Community',
-                  data: allCommunities,
-                  selectedItem: selectedCommunityIndex,
-                  onAvatarTapped: (int index) {
-                    setState(() {
-                      selectedCommunityIndex = index;
-                    });
-                    if (index == allCommunities.length - 1) {
-                      print('TODO open add community');
-                      Navigator.push(context, MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)));
-                    }
+                Observer(
+                  builder: (BuildContext context) {
+                    allCommunities = [];
+                    // TODO add back end code so we can initialize the list of communities similar to the commented out code
+                    // allCommunities.addAll(store.communities.communitiesList.map((community) => AccountOrCommunityData(
+                    //     avatar: webApi.ipfs.getCommunityIcon(community),
+                    //     name: community.name)));
+
+                    // For now show the selected community if available and let the user add a community from the world map community chooser
+                    allCommunities.add(
+                      AccountOrCommunityData(
+                          avatar: CommunityAvatar(
+                            store: store,
+                            avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid),
+                            avatarSize: avatarSize,
+                          ),
+                          name: '${store.encointer.communityIconsCid ?? '...'}'),
+                    );
+                    allCommunities.add(
+                      AccountOrCommunityData(
+                          avatar: Container(
+                            height: avatarSize,
+                            width: avatarSize,
+                            decoration: BoxDecoration(
+                              color: ZurichLion.shade50,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(Icons.add, size: 36),
+                          ),
+                          name: 'Add Community',
+                      ),
+                    );
+
+                    return SwitchAccountOrCommunity(
+                      rowTitle: 'Switch Community',
+                      data: allCommunities,
+                      selectedItem: selectedCommunityIndex,
+                      onAvatarTapped: (int index) {
+                        setState(() {
+                          selectedCommunityIndex = index;
+                        });
+                        if (index == allCommunities.length - 1) {
+                          print('TODO open add community');
+                          Navigator.push(context, MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)));
+                        }
+                      },
+                    );
                   },
                 ),
                 Observer(builder: (BuildContext context) {
                   allAccounts = [];
-                  allAccounts.addAll(store.account.accountListAll.map((account) => AccountOrCommunityData(
-                      avatar: AddressIcon('', pubKey: account.pubKey, size: 36, tapToCopy: false),
-                      name: account.name)));
+                  allAccounts.addAll(store.account.accountListAll.map(
+                    (account) => AccountOrCommunityData(
+                        avatar: AddressIcon('', pubKey: account.pubKey, size: avatarSize, tapToCopy: false),
+                        name: account.name),
+                  ));
                   allAccounts.add(
-                    AccountOrCommunityData(avatar: Icon(Icons.add), name: 'Add Account'),
+                    AccountOrCommunityData(
+                      avatar: Container(
+                      height: avatarSize,
+                      width: avatarSize,
+                      decoration: BoxDecoration(
+                        color: ZurichLion.shade50,
+                        shape: BoxShape.circle,
+                      ),
+                      child: Icon(Icons.add, size: 36),
+                    ), name: 'Add Account'),
                   );
 
                   return SwitchAccountOrCommunity(
