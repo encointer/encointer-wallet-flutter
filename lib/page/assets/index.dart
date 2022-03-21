@@ -309,7 +309,6 @@ class _AssetsState extends State<Assets> {
                   },
                 ),
                 Observer(builder: (BuildContext context) {
-                  print('llllll: ${store.account.accountListAll.length}');
                   allAccounts = [];
                   allAccounts.addAll(store.account.accountListAll.map((account) => AccountOrCommunityData(
                       avatar: AddressIcon('', pubKey: account.pubKey, size: 36, tapToCopy: false),
