@@ -305,16 +305,16 @@ class _AssetsState extends State<Assets> {
                     );
                     allCommunities.add(
                       AccountOrCommunityData(
-                          avatar: Container(
-                            height: avatarSize,
-                            width: avatarSize,
-                            decoration: BoxDecoration(
-                              color: ZurichLion.shade50,
-                              shape: BoxShape.circle,
-                            ),
-                            child: Icon(Icons.add, size: 36),
+                        avatar: Container(
+                          height: avatarSize,
+                          width: avatarSize,
+                          decoration: BoxDecoration(
+                            color: ZurichLion.shade50,
+                            shape: BoxShape.circle,
                           ),
-                          name: 'Add Community',
+                          child: Icon(Icons.add, size: 36),
+                        ),
+                        name: 'Add Community',
                       ),
                     );
 
@@ -323,12 +323,13 @@ class _AssetsState extends State<Assets> {
                       data: allCommunities,
                       selectedItem: selectedCommunityIndex,
                       onAvatarTapped: (int index) {
-                        setState(() {
-                          selectedCommunityIndex = index;
-                        });
                         if (index == allCommunities.length - 1) {
                           print('TODO open add community');
                           Navigator.push(context, MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)));
+                        } else {
+                          setState(() {
+                            selectedCommunityIndex = index;
+                          });
                         }
                       },
                     );
@@ -343,15 +344,16 @@ class _AssetsState extends State<Assets> {
                   ));
                   allAccounts.add(
                     AccountOrCommunityData(
-                      avatar: Container(
-                      height: avatarSize,
-                      width: avatarSize,
-                      decoration: BoxDecoration(
-                        color: ZurichLion.shade50,
-                        shape: BoxShape.circle,
-                      ),
-                      child: Icon(Icons.add, size: 36),
-                    ), name: 'Add Account'),
+                        avatar: Container(
+                          height: avatarSize,
+                          width: avatarSize,
+                          decoration: BoxDecoration(
+                            color: ZurichLion.shade50,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(Icons.add, size: 36),
+                        ),
+                        name: 'Add Account'),
                   );
 
                   return SwitchAccountOrCommunity(
@@ -359,12 +361,13 @@ class _AssetsState extends State<Assets> {
                     data: allAccounts,
                     selectedItem: selectedAccountIndex,
                     onAvatarTapped: (int index) {
-                      setState(() {
-                        selectedAccountIndex = index;
-                      });
                       if (index == allAccounts.length - 1) {
                         print('TODO open add Account');
                         Navigator.of(context).pushNamed(AddAccountPage.route);
+                      } else {
+                        setState(() {
+                          selectedAccountIndex = index;
+                        });
                       }
                     },
                   );

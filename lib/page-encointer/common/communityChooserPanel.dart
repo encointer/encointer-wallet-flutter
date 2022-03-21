@@ -117,10 +117,11 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
                         borderRadius: BorderRadius.circular(communityAvatarSize),
                       ),
                       child: CommunityAvatar(
-                      store: store,
-                      avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid),
-                      avatarSize: communityAvatarSize,
-                    ),),
+                        store: store,
+                        avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid),
+                        avatarSize: communityAvatarSize,
+                      ),
+                    ),
                   ),
                   Positioned(
                     bottom: 0,
