@@ -1,5 +1,4 @@
 import 'package:encointer_wallet/common/components/roundedCard.dart';
-import 'package:encointer_wallet/page-encointer/common/communityChooserOnMap.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
