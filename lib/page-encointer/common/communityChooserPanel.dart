@@ -104,9 +104,9 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
                   Padding(
                     padding: EdgeInsets.fromLTRB(0, 0, 2, 2),
                     child: CommunityAvatar(
-                        store: store,
-                        avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid),
-                        avatarSize: 96,
+                      store: store,
+                      avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid),
+                      avatarSize: 96,
                     ),
                   ),
                   Positioned(
