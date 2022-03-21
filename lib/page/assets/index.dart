@@ -68,8 +68,6 @@ class _AssetsState extends State<Assets> {
 
   double _panelHeightOpen;
   double _panelHeightClosed = 0;
-  int selectedAccountIndex = 0;
-  int selectedCommunityIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -296,12 +294,14 @@ class _AssetsState extends State<Assets> {
                     // For now show the selected community if available and let the user add a community from the world map community chooser
                     allCommunities.add(
                       AccountOrCommunityData(
-                          avatar: CommunityAvatar(
-                            store: store,
-                            avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid),
-                            avatarSize: avatarSize,
-                          ),
-                          name: '${store.encointer.communityIconsCid ?? '...'}'),
+                        avatar: CommunityAvatar(
+                          store: store,
+                          avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid),
+                          avatarSize: avatarSize,
+                        ),
+                        name: '${store.encointer.communityName ?? '...'}',
+                        isSelected: true, // TODO this should later be a function applied on each community
+                      ),
                     );
                     allCommunities.add(
                       AccountOrCommunityData(
@@ -321,14 +321,13 @@ class _AssetsState extends State<Assets> {
                     return SwitchAccountOrCommunity(
                       rowTitle: 'Switch Community',
                       data: allCommunities,
-                      selectedItem: selectedCommunityIndex,
                       onAvatarTapped: (int index) {
                         if (index == allCommunities.length - 1) {
                           print('TODO open add community');
                           Navigator.push(context, MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)));
                         } else {
                           setState(() {
-                            selectedCommunityIndex = index;
+                            // TODO
                           });
                         }
                       },
@@ -339,8 +338,10 @@ class _AssetsState extends State<Assets> {
                   allAccounts = [];
                   allAccounts.addAll(store.account.accountListAll.map(
                     (account) => AccountOrCommunityData(
-                        avatar: AddressIcon('', pubKey: account.pubKey, size: avatarSize, tapToCopy: false),
-                        name: account.name),
+                      avatar: AddressIcon('', pubKey: account.pubKey, size: avatarSize, tapToCopy: false),
+                      name: account.name,
+                      isSelected: account.pubKey == store.account.currentAccountPubKey,
+                    ),
                   ));
                   allAccounts.add(
                     AccountOrCommunityData(
@@ -359,14 +360,13 @@ class _AssetsState extends State<Assets> {
                   return SwitchAccountOrCommunity(
                     rowTitle: 'Switch Account',
                     data: allAccounts,
-                    selectedItem: selectedAccountIndex,
                     onAvatarTapped: (int index) {
                       if (index == allAccounts.length - 1) {
                         print('TODO open add Account');
                         Navigator.of(context).pushNamed(AddAccountPage.route);
                       } else {
                         setState(() {
-                          selectedAccountIndex = index;
+                          switchAccount(store.account.accountListAll[index]);
                         });
                       }
                     },
@@ -379,6 +379,15 @@ class _AssetsState extends State<Assets> {
         borderRadius: BorderRadius.only(topLeft: Radius.circular(40.0), topRight: Radius.circular(40.0)),
       ),
     );
+  }
+
+  Future<void> switchAccount(AccountData account) async {
+    if (account.pubKey != store.account.currentAccountPubKey) {
+      store.account.setCurrentAccount(account.pubKey);
+      await store.loadAccountCache();
+
+      webApi.fetchAccountData();
+    }
   }
 
   Future<void> _showPasswordDialog(BuildContext context) async {

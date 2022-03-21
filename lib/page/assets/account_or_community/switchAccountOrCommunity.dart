@@ -7,13 +7,11 @@ class SwitchAccountOrCommunity extends StatefulWidget {
   SwitchAccountOrCommunity({
     this.rowTitle,
     this.data,
-    this.selectedItem,
     this.onAvatarTapped,
   });
 
   final String rowTitle;
   final List<AccountOrCommunityData> data;
-  final int selectedItem;
   final Function onAvatarTapped;
 
   @override
@@ -47,7 +45,6 @@ class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
           itemBuilder: (context, index) => AccountOrCommunityItemHorizontal(
             itemData: widget.data[index],
             index: index,
-            isSelected: index == widget.selectedItem,
             onAvatarTapped: widget.onAvatarTapped,
           ),
         ),

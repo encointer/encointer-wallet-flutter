@@ -7,14 +7,12 @@ class AccountOrCommunityItemHorizontal extends StatefulWidget {
   final AccountOrCommunityData itemData;
   final int index;
   final Function onAvatarTapped;
-  final bool isSelected;
 
   const AccountOrCommunityItemHorizontal({
     Key key,
     @required this.itemData,
     @required this.index,
     @required this.onAvatarTapped,
-    @required this.isSelected,
   }) : super(key: key);
 
   @override
@@ -32,7 +30,8 @@ class _AccountOrCommunityItemHorizontalState extends State<AccountOrCommunityIte
             padding: EdgeInsets.all(4),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border: Border.all(width: 2, color: widget.isSelected ? ZurichLion.shade500 : Colors.transparent),
+              border:
+                  Border.all(width: 2, color: widget.itemData.isSelected ? ZurichLion.shade500 : Colors.transparent),
             ),
             child: widget.itemData.avatar,
           ),
