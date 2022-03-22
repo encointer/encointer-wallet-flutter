@@ -21,6 +21,8 @@ class SwitchAccountOrCommunity extends StatefulWidget {
 class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
   static const double identiconPlusTextHeight = 130;
   static const double itemExtent = 90;
+  static const double fadeWidth = 32;
+  static const Color whiteTransparent = Color(0x00ffffff);
 
   @override
   Widget build(BuildContext context) {
@@ -59,18 +61,20 @@ class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
               children: [
                 Container(
                     decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                      colors: [Colors.white, Color(0x00ffffff)],
-                    )),
+                      gradient: LinearGradient(
+                        colors: [Colors.white, whiteTransparent],
+                      ),
+                    ),
                     height: identiconPlusTextHeight,
-                    width: 32),
+                    width: fadeWidth),
                 Container(
                     decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                      colors: [Color(0x00ffffff), Colors.white],
-                    )),
+                      gradient: LinearGradient(
+                        colors: [whiteTransparent, Colors.white],
+                      ),
+                    ),
                     height: identiconPlusTextHeight,
-                    width: 32),
+                    width: fadeWidth),
               ],
             ),
           ],
