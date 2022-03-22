@@ -38,18 +38,42 @@ class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
       SizedBox(
         height: identiconPlusTextHeight,
         // otherwise ListView would use infinite height
-        child: Center(
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            itemExtent: itemExtent,
-            itemCount: widget.data != null ? widget.data.length : 0,
-            itemBuilder: (context, index) => AccountOrCommunityItemHorizontal(
-              itemData: widget.data[index],
-              index: index,
-              onAvatarTapped: widget.onAvatarTapped,
+        child: Stack(
+          children: [
+            Center(
+              child: ListView.builder(
+                padding: EdgeInsets.symmetric(horizontal: 20),
+                scrollDirection: Axis.horizontal,
+                shrinkWrap: true,
+                itemExtent: itemExtent,
+                itemCount: widget.data != null ? widget.data.length : 0,
+                itemBuilder: (context, index) => AccountOrCommunityItemHorizontal(
+                  itemData: widget.data[index],
+                  index: index,
+                  onAvatarTapped: widget.onAvatarTapped,
+                ),
+              ),
             ),
-          ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                      colors: [Colors.white, Color(0x00ffffff)],
+                    )),
+                    height: identiconPlusTextHeight,
+                    width: 32),
+                Container(
+                    decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                      colors: [Color(0x00ffffff), Colors.white],
+                    )),
+                    height: identiconPlusTextHeight,
+                    width: 32),
+              ],
+            ),
+          ],
         ),
       ),
     ]);
