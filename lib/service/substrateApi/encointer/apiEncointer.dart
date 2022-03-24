@@ -243,8 +243,7 @@ class ApiEncointer {
     }
 
     int time = await apiRoot
-        .evalJavascript(
-            'encointer.getNextMeetupTime(${jsonEncode(mLocation)}, "${store.encointer.currentPhase.toValue()}", ${store.encointer.currentPhaseDuration})')
+        .evalJavascript('encointer.getNextMeetupTime(${jsonEncode(mLocation)})')
         .then((value) => int.parse(value));
 
     print("api: Next Meetup Time: $time");
