@@ -1,12 +1,13 @@
 import 'package:encointer_wallet/common/components/accountAdvanceOption.dart';
+import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/create/addAccountForm.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class AddAccountPage extends StatefulWidget {
   const AddAccountPage(this.store);
@@ -82,6 +83,39 @@ class _AddAccountPageState extends State<AddAccountPage> {
         );
       },
     );
+  }
+
+  Future<void> _showEnterPinDialog(BuildContext context) async {
+    await showCupertinoDialog(
+      context: context,
+      builder: (_) {
+        return Container(
+          child: showPasswordInputDialog(
+            context,
+            store.account.currentAccount,
+            Text(I18n.of(context).translationsForLocale().profile.unlock),
+            (password) {
+              setState(() {
+                store.settings.setPin(password);
+              });
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (store.settings.cachedPin.isEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {
+          _showEnterPinDialog(context);
+        });
+      });
+    }
   }
 
   @override
