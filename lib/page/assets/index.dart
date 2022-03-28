@@ -373,16 +373,16 @@ class _AssetsState extends State<Assets> {
     ));
     allAccounts.add(
       AccountOrCommunityData(
-          avatar: Container(
-            height: avatarSize,
-            width: avatarSize,
-            decoration: BoxDecoration(
-              color: ZurichLion.shade50,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(Icons.add, size: 36),
+        avatar: Container(
+          height: avatarSize,
+          width: avatarSize,
+          decoration: BoxDecoration(
+            color: ZurichLion.shade50,
+            shape: BoxShape.circle,
           ),
-          name: dic.profile.addAccount,
+          child: Icon(Icons.add, size: 36),
+        ),
+        name: dic.profile.addAccount,
       ),
     );
     return allAccounts;

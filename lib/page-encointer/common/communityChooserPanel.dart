@@ -78,9 +78,16 @@ class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
 
 /// the CombinedCommunityAndAccountAvatar should be wrapped in an InkWell to provide the callback on a click
 class CombinedCommunityAndAccountAvatar extends StatefulWidget {
-  const CombinedCommunityAndAccountAvatar(this.store, {Key key, this.showCommunityNameAndAccountName = true}) : super(key: key);
+  const CombinedCommunityAndAccountAvatar(this.store,
+      {Key key,
+      this.showCommunityNameAndAccountName = true,
+      this.communityAvatarSize = 96,
+      this.accountAvatarSize = 34})
+      : super(key: key);
 
   final AppStore store;
+  final double communityAvatarSize;
+  final double accountAvatarSize;
 
   final bool showCommunityNameAndAccountName;
 
@@ -90,8 +97,6 @@ class CombinedCommunityAndAccountAvatar extends StatefulWidget {
 
 class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAndAccountAvatar> {
   final AppStore store;
-  static const double communityAvatarSize = 96;
-  static const double accountAvatarSize = 34;
 
   _CombinedCommunityAndAccountAvatarState(this.store);
 
@@ -110,12 +115,12 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
                     child: Card(
                       elevation: 10,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(communityAvatarSize),
+                        borderRadius: BorderRadius.circular(widget.communityAvatarSize),
                       ),
                       child: CommunityAvatar(
                         store: store,
                         avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid),
-                        avatarSize: communityAvatarSize,
+                        avatarSize: widget.communityAvatarSize,
                       ),
                     ),
                   ),
@@ -124,7 +129,7 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
                     right: 0,
                     child: AddressIcon(
                       '',
-                      size: accountAvatarSize,
+                      size: widget.accountAvatarSize,
                       pubKey: store.account.currentAccount.pubKey,
                       tapToCopy: false,
                     ),
