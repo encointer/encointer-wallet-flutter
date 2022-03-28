@@ -93,7 +93,7 @@ class _TransferPageState extends State<TransferPage> {
                   Expanded(
                     child: ListView(
                       children: [
-                        CombinedCommunityAndAccountAvatar(store, isClickable: false),
+                        CombinedCommunityAndAccountAvatar(store, showCommunityNameAndAccountName: false),
                         SizedBox(height: 12),
                         store.encointer.communityBalance != null
                             ? AccountBalanceWithMoreDigits(store: store, available: available, decimals: decimals)

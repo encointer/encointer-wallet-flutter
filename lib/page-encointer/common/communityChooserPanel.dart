@@ -78,14 +78,11 @@ class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
 
 /// the CombinedCommunityAndAccountAvatar should be wrapped in an InkWell to provide the callback on a click
 class CombinedCommunityAndAccountAvatar extends StatefulWidget {
-  const CombinedCommunityAndAccountAvatar(this.store, {Key key, this.isClickable = true}) : super(key: key);
+  const CombinedCommunityAndAccountAvatar(this.store, {Key key, this.showCommunityNameAndAccountName = true}) : super(key: key);
 
   final AppStore store;
 
-  /// whether this UI element should be interactive (i.e. clickable) or readonly
-  /// the text beneath the icons will be hidden in case it is readonly
-  /// the CombinedCommunityAndAccountAvatar should be wrapped in an InkWell to provide the callback on a click
-  final bool isClickable;
+  final bool showCommunityNameAndAccountName;
 
   @override
   _CombinedCommunityAndAccountAvatarState createState() => _CombinedCommunityAndAccountAvatarState(store);
@@ -135,7 +132,7 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
                 ],
               ),
               SizedBox(height: 4),
-              if (widget.isClickable)
+              if (widget.showCommunityNameAndAccountName)
                 Text(
                   '${store.encointer.communityName}\n${Fmt.accountName(context, store.account.currentAccount)}',
                   style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
