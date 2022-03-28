@@ -354,7 +354,8 @@ class _AssetsState extends State<Assets> {
                           ),
                           child: Icon(Icons.add, size: 36),
                         ),
-                        name: 'Add Account'),
+                        name: dic.profile.addAccount,
+                    ),
                   );
 
                   return SwitchAccountOrCommunity(
@@ -362,7 +363,6 @@ class _AssetsState extends State<Assets> {
                     data: allAccounts,
                     onAvatarTapped: (int index) {
                       if (index == allAccounts.length - 1) {
-                        print('TODO open add Account');
                         Navigator.of(context).pushNamed(AddAccountPage.route);
                       } else {
                         setState(() {
