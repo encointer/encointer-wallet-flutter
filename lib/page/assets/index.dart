@@ -289,7 +289,7 @@ class _AssetsState extends State<Assets> {
                     return SwitchAccountOrCommunity(
                       rowTitle: 'Switch Community',
                       data: allCommunities,
-                      onAvatarTapped: (int index) {
+                      onTap: (int index) {
                         if (index == allCommunities.length - 1) {
                           Navigator.push(context, MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)));
                         } else {
@@ -306,7 +306,7 @@ class _AssetsState extends State<Assets> {
                   return SwitchAccountOrCommunity(
                     rowTitle: 'Switch Account',
                     data: allAccounts,
-                    onAvatarTapped: (int index) {
+                    onTap: (int index) {
                       if (index == allAccounts.length - 1) {
                         Navigator.of(context).pushNamed(AddAccountPage.route);
                       } else {
