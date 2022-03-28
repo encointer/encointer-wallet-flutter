@@ -291,7 +291,6 @@ class _AssetsState extends State<Assets> {
                       data: allCommunities,
                       onAvatarTapped: (int index) {
                         if (index == allCommunities.length - 1) {
-                          print('TODO open add community');
                           Navigator.push(context, MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)));
                         } else {
                           setState(() {
@@ -329,7 +328,7 @@ class _AssetsState extends State<Assets> {
 
   List<AccountOrCommunityData> initAllCommunities() {
     List<AccountOrCommunityData> allCommunities = [];
-    // TODO add back end code so we can initialize the list of communities similar to the commented out code
+    // TODO #507 add back end code so we can initialize the list of communities similar to the commented out code
     // allCommunities.addAll(store.communities.communitiesList.map((community) => AccountOrCommunityData(
     //     avatar: webApi.ipfs.getCommunityIcon(community),
     //     name: community.name)));
@@ -343,7 +342,7 @@ class _AssetsState extends State<Assets> {
           avatarSize: avatarSize,
         ),
         name: '${store.encointer.communityName ?? '...'}',
-        isSelected: true, // TODO this should later be a function applied on each community
+        isSelected: true, // TODO #507 this should later be a function applied on each community, cf. initAllAccounts
       ),
     );
     allCommunities.add(
