@@ -285,39 +285,7 @@ class _AssetsState extends State<Assets> {
               Column(children: [
                 Observer(
                   builder: (BuildContext context) {
-                    allCommunities = [];
-                    // TODO add back end code so we can initialize the list of communities similar to the commented out code
-                    // allCommunities.addAll(store.communities.communitiesList.map((community) => AccountOrCommunityData(
-                    //     avatar: webApi.ipfs.getCommunityIcon(community),
-                    //     name: community.name)));
-
-                    // For now show the selected community if available and let the user add a community from the world map community chooser
-                    allCommunities.add(
-                      AccountOrCommunityData(
-                        avatar: CommunityAvatar(
-                          store: store,
-                          avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid),
-                          avatarSize: avatarSize,
-                        ),
-                        name: '${store.encointer.communityName ?? '...'}',
-                        isSelected: true, // TODO this should later be a function applied on each community
-                      ),
-                    );
-                    allCommunities.add(
-                      AccountOrCommunityData(
-                        avatar: Container(
-                          height: avatarSize,
-                          width: avatarSize,
-                          decoration: BoxDecoration(
-                            color: ZurichLion.shade50,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(Icons.add, size: 36),
-                        ),
-                        name: 'Add Community',
-                      ),
-                    );
-
+                    allCommunities = initAllCommunities();
                     return SwitchAccountOrCommunity(
                       rowTitle: 'Switch Community',
                       data: allCommunities,
@@ -335,29 +303,7 @@ class _AssetsState extends State<Assets> {
                   },
                 ),
                 Observer(builder: (BuildContext context) {
-                  allAccounts = [];
-                  allAccounts.addAll(store.account.accountListAll.map(
-                    (account) => AccountOrCommunityData(
-                      avatar: AddressIcon('', pubKey: account.pubKey, size: avatarSize, tapToCopy: false),
-                      name: account.name,
-                      isSelected: account.pubKey == store.account.currentAccountPubKey,
-                    ),
-                  ));
-                  allAccounts.add(
-                    AccountOrCommunityData(
-                        avatar: Container(
-                          height: avatarSize,
-                          width: avatarSize,
-                          decoration: BoxDecoration(
-                            color: ZurichLion.shade50,
-                            shape: BoxShape.circle,
-                          ),
-                          child: Icon(Icons.add, size: 36),
-                        ),
-                        name: dic.profile.addAccount,
-                    ),
-                  );
-
+                  allAccounts = initAllAccounts(dic);
                   return SwitchAccountOrCommunity(
                     rowTitle: 'Switch Account',
                     data: allAccounts,
@@ -379,6 +325,68 @@ class _AssetsState extends State<Assets> {
         borderRadius: BorderRadius.only(topLeft: Radius.circular(40.0), topRight: Radius.circular(40.0)),
       ),
     );
+  }
+
+  List<AccountOrCommunityData> initAllCommunities() {
+    List<AccountOrCommunityData> allCommunities = [];
+    // TODO add back end code so we can initialize the list of communities similar to the commented out code
+    // allCommunities.addAll(store.communities.communitiesList.map((community) => AccountOrCommunityData(
+    //     avatar: webApi.ipfs.getCommunityIcon(community),
+    //     name: community.name)));
+
+    // For now show the selected community if available and let the user add a community from the world map community chooser
+    allCommunities.add(
+      AccountOrCommunityData(
+        avatar: CommunityAvatar(
+          store: store,
+          avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid),
+          avatarSize: avatarSize,
+        ),
+        name: '${store.encointer.communityName ?? '...'}',
+        isSelected: true, // TODO this should later be a function applied on each community
+      ),
+    );
+    allCommunities.add(
+      AccountOrCommunityData(
+        avatar: Container(
+          height: avatarSize,
+          width: avatarSize,
+          decoration: BoxDecoration(
+            color: ZurichLion.shade50,
+            shape: BoxShape.circle,
+          ),
+          child: Icon(Icons.add, size: 36),
+        ),
+        name: 'Add Community',
+      ),
+    );
+    return allCommunities;
+  }
+
+  List<AccountOrCommunityData> initAllAccounts(Translations dic) {
+    List<AccountOrCommunityData> allAccounts = [];
+    allAccounts.addAll(store.account.accountListAll.map(
+      (account) => AccountOrCommunityData(
+        avatar: AddressIcon('', pubKey: account.pubKey, size: avatarSize, tapToCopy: false),
+        name: account.name,
+        isSelected: account.pubKey == store.account.currentAccountPubKey,
+      ),
+    ));
+    allAccounts.add(
+      AccountOrCommunityData(
+          avatar: Container(
+            height: avatarSize,
+            width: avatarSize,
+            decoration: BoxDecoration(
+              color: ZurichLion.shade50,
+              shape: BoxShape.circle,
+            ),
+            child: Icon(Icons.add, size: 36),
+          ),
+          name: dic.profile.addAccount,
+      ),
+    );
+    return allAccounts;
   }
 
   Future<void> switchAccount(AccountData account) async {
