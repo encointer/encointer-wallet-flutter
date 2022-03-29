@@ -124,16 +124,11 @@ class _AddAccountPageState extends State<AddAccountPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          dic.profile.addAccount,
-        ),
+        title: Text(dic.profile.addAccount),
         leading: Container(),
         actions: <Widget>[
           IconButton(
-            icon: Icon(
-              Icons.close,
-              color: encointerGrey,
-            ),
+            icon: Icon(Icons.close, color: encointerGrey),
             onPressed: () {
               Navigator.popUntil(context, ModalRoute.withName('/'));
             },
