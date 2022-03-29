@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:ui';
 import 'dart:math';
 
-import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/dragHandle.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
@@ -11,7 +10,6 @@ import 'package:encointer_wallet/page-encointer/ceremony_box/ceremonyBox.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
-import 'package:encointer_wallet/page/profile/account/accountManagePage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -25,6 +23,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:encointer_wallet/page-encointer/common/communityChooserOnMap.dart';
+import 'package:encointer_wallet/page/account/create/addAccountPage.dart';
+import 'package:encointer_wallet/common/components/addressIcon.dart';
 
 import 'account_or_community/AccountOrCommunityData.dart';
 import 'account_or_community/switchAccountOrCommunity.dart';
@@ -44,6 +45,7 @@ class _AssetsState extends State<Assets> {
   final AppStore store;
   static const double panelHeight = 396;
   static const double fractionOfScreenHeight = .7;
+  static const double avatarSize = 70;
 
   bool _enteredPin = false;
 
@@ -66,8 +68,6 @@ class _AssetsState extends State<Assets> {
 
   double _panelHeightOpen;
   double _panelHeightClosed = 0;
-  int selectedAccountIndex = 0;
-  int selectedCommunityIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -75,28 +75,9 @@ class _AssetsState extends State<Assets> {
     _panelHeightOpen = min(MediaQuery.of(context).size.height * fractionOfScreenHeight,
         panelHeight); // should typically not be higher than panelHeight, but on really small devices it should not exceed fractionOfScreenHeight x the screen height.
 
-    var communityData = [
-      AccountOrCommunityData(
-        avatar: SizedBox(
-          child: Image.asset('assets/images/assets/ERT.png'),
-          height: 24,
-        ),
-        name: 'Default Community',
-      ),
-      AccountOrCommunityData(avatar: Icon(Icons.account_balance), name: 'Ba Community'),
-      AccountOrCommunityData(avatar: Icon(Icons.add_a_photo_sharp), name: 'Photo Phhhhh'),
-      AccountOrCommunityData(avatar: Icon(Icons.shop), name: 'Shop shop shop'),
-      AccountOrCommunityData(avatar: Icon(Icons.gamepad), name: 'Gamepad'),
-      AccountOrCommunityData(avatar: Icon(Icons.add), name: 'Add Community'),
-    ];
-    var accountData = [
-      AccountOrCommunityData(avatar: Icon(Icons.access_alarm), name: 'Alarm aaa bbbbbbb'),
-      AccountOrCommunityData(avatar: Icon(Icons.account_balance), name: 'Balance asfda df'),
-      AccountOrCommunityData(avatar: Icon(Icons.add_a_photo_sharp), name: 'Photo assfd asdf'),
-      AccountOrCommunityData(avatar: Icon(Icons.shop), name: 'Shop asfd'),
-      AccountOrCommunityData(avatar: Icon(Icons.gamepad), name: 'Gamepad'),
-      AccountOrCommunityData(avatar: Icon(Icons.add), name: 'Add Account'),
-    ];
+    List<AccountOrCommunityData> allCommunities = [];
+    List<AccountOrCommunityData> allAccounts = [];
+
     return Scaffold(
       appBar: AppBar(
         title: Text(dic.assets.home),
@@ -128,7 +109,7 @@ class _AssetsState extends State<Assets> {
 
                 if (ModalRoute.of(context).isCurrent &&
                     !_enteredPin & store.settings.cachedPin.isEmpty & !store.settings.endpointIsGesell) {
-                  // The pin is not immeditally propagated to the store, hence we track if the pin has been entered to prevent
+                  // The pin is not immediately propagated to the store, hence we track if the pin has been entered to prevent
                   // showing the dialog multiple times.
                   WidgetsBinding.instance.addPostFrameCallback(
                     (_) {
@@ -144,36 +125,13 @@ class _AssetsState extends State<Assets> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        CommunityWithCommunityChooser(store),
                         InkWell(
-                          child: Column(
-                            children: [
-                              AddressIcon(
-                                '',
-                                pubKey: store.account.currentAccount.pubKey,
-                                tapToCopy: false,
-                              ),
-                              SizedBox(height: 6),
-                              Text(
-                                Fmt.accountName(context, accountData),
-                                style: Theme.of(context).textTheme.headline4,
-                              ),
-                            ],
-                          ),
-                          onTap: () => Navigator.of(context).pushNamed(
-                            AccountManagePage.route,
-                          ),
-                        ),
-                        if (store.settings.developerMode)
-                          IconButton(
-                            icon: Icon(Icons.add),
-                            onPressed: () {
-                              // open sliding up panel
+                            child: CombinedCommunityAndAccountAvatar(store),
+                            onTap: () {
                               if (panelController != null && panelController.isAttached) {
                                 panelController.open();
                               }
-                            },
-                          ),
+                            }),
                       ],
                     ),
                     Observer(
@@ -325,32 +283,40 @@ class _AssetsState extends State<Assets> {
               ),
               DragHandle(),
               Column(children: [
-                SwitchAccountOrCommunity(
-                  rowTitle: 'Switch Community',
-                  data: communityData,
-                  selectedItem: selectedCommunityIndex,
-                  onAvatarTapped: (int index) {
-                    setState(() {
-                      selectedCommunityIndex = index;
-                    });
-                    if (index == communityData.length - 1) {
-                      print('TODO open add community');
-                    }
+                Observer(
+                  builder: (BuildContext context) {
+                    allCommunities = initAllCommunities();
+                    return SwitchAccountOrCommunity(
+                      rowTitle: 'Switch Community',
+                      data: allCommunities,
+                      onTap: (int index) {
+                        if (index == allCommunities.length - 1) {
+                          Navigator.push(context, MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)));
+                        } else {
+                          setState(() {
+                            // TODO
+                          });
+                        }
+                      },
+                    );
                   },
                 ),
-                SwitchAccountOrCommunity(
-                  rowTitle: 'Switch Account',
-                  data: accountData,
-                  selectedItem: selectedAccountIndex,
-                  onAvatarTapped: (int index) {
-                    setState(() {
-                      selectedAccountIndex = index;
-                    });
-                    if (index == accountData.length - 1) {
-                      print('TODO open add Account');
-                    }
-                  },
-                ),
+                Observer(builder: (BuildContext context) {
+                  allAccounts = initAllAccounts(dic);
+                  return SwitchAccountOrCommunity(
+                    rowTitle: 'Switch Account',
+                    data: allAccounts,
+                    onTap: (int index) {
+                      if (index == allAccounts.length - 1) {
+                        Navigator.of(context).pushNamed(AddAccountPage.route);
+                      } else {
+                        setState(() {
+                          switchAccount(store.account.accountListAll[index]);
+                        });
+                      }
+                    },
+                  );
+                }),
               ]),
             ],
           ),
@@ -358,6 +324,77 @@ class _AssetsState extends State<Assets> {
         borderRadius: BorderRadius.only(topLeft: Radius.circular(40.0), topRight: Radius.circular(40.0)),
       ),
     );
+  }
+
+  List<AccountOrCommunityData> initAllCommunities() {
+    List<AccountOrCommunityData> allCommunities = [];
+    // TODO #507 add back end code so we can initialize the list of communities similar to the commented out code
+    // allCommunities.addAll(store.communities.communitiesList.map((community) => AccountOrCommunityData(
+    //     avatar: webApi.ipfs.getCommunityIcon(community),
+    //     name: community.name)));
+
+    // For now show the selected community if available and let the user add a community from the world map community chooser
+    allCommunities.add(
+      AccountOrCommunityData(
+        avatar: CommunityAvatar(
+          store: store,
+          avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid),
+          avatarSize: avatarSize,
+        ),
+        name: '${store.encointer.communityName ?? '...'}',
+        isSelected: true, // TODO #507 this should later be a function applied on each community, cf. initAllAccounts
+      ),
+    );
+    allCommunities.add(
+      AccountOrCommunityData(
+        avatar: Container(
+          height: avatarSize,
+          width: avatarSize,
+          decoration: BoxDecoration(
+            color: ZurichLion.shade50,
+            shape: BoxShape.circle,
+          ),
+          child: Icon(Icons.add, size: 36),
+        ),
+        name: 'Add Community',
+      ),
+    );
+    return allCommunities;
+  }
+
+  List<AccountOrCommunityData> initAllAccounts(Translations dic) {
+    List<AccountOrCommunityData> allAccounts = [];
+    allAccounts.addAll(store.account.accountListAll.map(
+      (account) => AccountOrCommunityData(
+        avatar: AddressIcon('', pubKey: account.pubKey, size: avatarSize, tapToCopy: false),
+        name: account.name,
+        isSelected: account.pubKey == store.account.currentAccountPubKey,
+      ),
+    ));
+    allAccounts.add(
+      AccountOrCommunityData(
+        avatar: Container(
+          height: avatarSize,
+          width: avatarSize,
+          decoration: BoxDecoration(
+            color: ZurichLion.shade50,
+            shape: BoxShape.circle,
+          ),
+          child: Icon(Icons.add, size: 36),
+        ),
+        name: dic.profile.addAccount,
+      ),
+    );
+    return allAccounts;
+  }
+
+  Future<void> switchAccount(AccountData account) async {
+    if (account.pubKey != store.account.currentAccountPubKey) {
+      store.account.setCurrentAccount(account.pubKey);
+      await store.loadAccountCache();
+
+      webApi.fetchAccountData();
+    }
   }
 
   Future<void> _showPasswordDialog(BuildContext context) async {

@@ -6,15 +6,13 @@ import 'AccountOrCommunityData.dart';
 class AccountOrCommunityItemHorizontal extends StatefulWidget {
   final AccountOrCommunityData itemData;
   final int index;
-  final Function onAvatarTapped;
-  final bool isSelected;
+  final Function onTap;
 
   const AccountOrCommunityItemHorizontal({
     Key key,
     @required this.itemData,
     @required this.index,
-    @required this.onAvatarTapped,
-    @required this.isSelected,
+    @required this.onTap,
   }) : super(key: key);
 
   @override
@@ -26,25 +24,16 @@ class _AccountOrCommunityItemHorizontalState extends State<AccountOrCommunityIte
   Widget build(BuildContext context) {
     return Column(
       children: [
-        SizedBox(
-          height: 4,
-        ),
         InkWell(
-          onTap: () => widget.onAvatarTapped(widget.index),
+          onTap: () => widget.onTap(widget.index),
           child: Container(
             padding: EdgeInsets.all(4),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(100),
-              border: Border.all(width: 2, color: widget.isSelected ? ZurichLion.shade500 : Colors.transparent),
+              shape: BoxShape.circle,
+              border:
+                  Border.all(width: 2, color: widget.itemData.isSelected ? ZurichLion.shade500 : Colors.transparent),
             ),
-            child: Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: ZurichLion.shade50,
-                  boxShadow: [BoxShadow(blurRadius: 4, color: Color(0x11000000), spreadRadius: 4)]),
-              child: widget.itemData.avatar,
-            ),
+            child: widget.itemData.avatar,
           ),
         ),
         SizedBox(height: 16),
