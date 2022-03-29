@@ -1,5 +1,4 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
-import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/create/addAccountPage.dart';
 import 'package:encointer_wallet/page/profile/aboutPage.dart';
@@ -42,30 +41,6 @@ class _ProfileState extends State<Profile> {
 
       webApi.fetchAccountData();
     }
-  }
-
-  Future<void> _onAddAccount() async {
-    Navigator.of(context).pushNamed(AddAccountPage.route);
-  }
-
-  Future<void> _showPasswordDialog(BuildContext context) async {
-    await showCupertinoDialog(
-      context: context,
-      builder: (_) {
-        return Container(
-          child: showPasswordInputDialog(
-            context,
-            store.account.currentAccount,
-            Text(I18n.of(context).translationsForLocale().profile.unlock),
-            (password) {
-              setState(() {
-                store.settings.setPin(password);
-              });
-            },
-          ),
-        );
-      },
-    );
   }
 
   List<Widget> _buildAccountList() {
@@ -160,9 +135,7 @@ class _ProfileState extends State<Profile> {
                         IconButton(
                             icon: Icon(Iconsax.add_square),
                             color: ZurichLion.shade500,
-                            onPressed: () {
-                              store.settings.cachedPin.isEmpty ? _showPasswordDialog(context) : _onAddAccount();
-                            }),
+                            onPressed: () => Navigator.of(context).pushNamed(AddAccountPage.route)),
                       ],
                     ),
                   ),
