@@ -14,7 +14,7 @@ class AddAccountForm extends StatelessWidget {
   final bool submitting;
   final AppStore store;
 
-  final _formKey = GlobalKey<FormState>();
+  static final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _nameCtrl = new TextEditingController();
 
