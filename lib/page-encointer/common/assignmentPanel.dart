@@ -37,7 +37,7 @@ class AssignmentPanel extends StatelessWidget {
                                 children: <Widget>[
                                   Text(dic.encointer.youAreRegistered, style: TextStyle(color: Colors.green)),
                                   Text(dic.encointer.ceremonyWillTakePlaceOn),
-                                  MaybeMeetupTime(store.encointer.meetupTime, dateFormat: 'yyyy-MM-dd-hh:mm'),
+                                  MaybeMeetupTime(store.encointer.meetupTime, dateFormat: 'yyyy-MM-dd-HH:mm'),
                                   ElevatedButton(
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
