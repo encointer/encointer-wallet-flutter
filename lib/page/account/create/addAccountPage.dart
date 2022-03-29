@@ -91,7 +91,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          dic.profile.accountAdd,
+          dic.profile.addAccount,
         ),
         leading: Container(),
         actions: <Widget>[
