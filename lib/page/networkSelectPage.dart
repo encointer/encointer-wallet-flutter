@@ -34,6 +34,8 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   // Here we commented out the two not-active networks of Cantillon. When they will be relevant, they can be uncommented #232
   final List<EndpointData> networks = [
     networkEndpointEncointerGesell,
+    networkEndpointEncointerLietaer,
+    networkEndpointEncointerMainnet,
     networkEndpointEncointerGesellDev,
     // networkEndpointEncointerCantillon,
     // networkEndpointEncointerCantillonDev
