@@ -287,7 +287,7 @@ class _AssetsState extends State<Assets> {
                   builder: (BuildContext context) {
                     allCommunities = initAllCommunities();
                     return SwitchAccountOrCommunity(
-                      rowTitle: 'Switch Community',
+                      rowTitle: dic.home.switchCommunity,
                       data: allCommunities,
                       onTap: (int index) {
                         if (index == allCommunities.length - 1) {
@@ -304,7 +304,7 @@ class _AssetsState extends State<Assets> {
                 Observer(builder: (BuildContext context) {
                   allAccounts = initAllAccounts(dic);
                   return SwitchAccountOrCommunity(
-                    rowTitle: 'Switch Account',
+                    rowTitle: dic.home.switchAccount,
                     data: allAccounts,
                     onTap: (int index) {
                       if (index == allAccounts.length - 1) {
