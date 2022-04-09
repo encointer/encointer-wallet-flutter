@@ -26,6 +26,7 @@ abstract class TranslationsHome {
   String get submitTransaction;
   String get success;
   String get switchAccount;
+  String get switchCommunity;
   String get transactionQueued;
   String get transactionQueuedOffline;
   String get unlock;
@@ -65,6 +66,7 @@ class TranslationsEnHome implements TranslationsHome {
   get submitTransaction => 'Submit Transaction';
   get success => 'Success';
   get switchAccount => 'Switch Account';
+  get switchCommunity => 'Switch Community';
   get transactionQueued => 'Queued';
   get transactionQueuedOffline =>
       'App is not connected to the blockchain. Queued transaction (will be sent automatically upon reconnection).';
@@ -104,6 +106,7 @@ class TranslationsDeHome implements TranslationsHome {
   get submitTransaction => 'Transaktion senden';
   get success => 'Erfolgreich';
   get switchAccount => 'Konto wechseln';
+  get switchCommunity => 'Gemeinschaft wechseln';
   get transactionQueued => 'In der Warteschlange';
   get transactionQueuedOffline =>
       'Die App ist nicht mit der Blockchain verbunden. Die Transaktionen in der Warteschlange werden automatisch bei erfolgreicher Verbindung versendet.';
@@ -143,6 +146,7 @@ class TranslationsZhHome implements TranslationsHome {
   get submitTransaction => '发送交易';
   get success => '操作成功';
   get switchAccount => '切换帐号';
+  get switchCommunity => throw UnimplementedError();
   get transactionQueued => '已加入队列';
   get transactionQueuedOffline => '该应用程序未连接到区块链。 排队交易（将在重新连接时自动发送）';
   get unlock => '使用密码解锁账户';

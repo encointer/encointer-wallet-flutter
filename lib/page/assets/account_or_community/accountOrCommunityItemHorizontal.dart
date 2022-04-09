@@ -43,6 +43,8 @@ class _AccountOrCommunityItemHorizontalState extends State<AccountOrCommunityIte
             widget.itemData.name,
             style: Theme.of(context).textTheme.headline4,
             textAlign: TextAlign.center,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ],
