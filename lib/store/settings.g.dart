@@ -55,14 +55,14 @@ mixin _$SettingsStore on _SettingsStore, Store {
   Computed<bool> _$endpointIsGesellComputed;
 
   @override
-  bool get endpointIsGesell => (_$endpointIsGesellComputed ??=
-          Computed<bool>(() => super.endpointIsGesell, name: '_SettingsStore.endpointIsGesell'))
+  bool get endpointIsNoTee => (_$endpointIsGesellComputed ??=
+          Computed<bool>(() => super.endpointIsNoTee, name: '_SettingsStore.endpointIsNoTee'))
       .value;
   Computed<bool> _$endpointIsCantillonComputed;
 
   @override
-  bool get endpointIsCantillon => (_$endpointIsCantillonComputed ??=
-          Computed<bool>(() => super.endpointIsCantillon, name: '_SettingsStore.endpointIsCantillon'))
+  bool get endpointIsTeeProxy => (_$endpointIsCantillonComputed ??=
+          Computed<bool>(() => super.endpointIsTeeProxy, name: '_SettingsStore.endpointIsTeeProxy'))
       .value;
   Computed<String> _$ipfsGatewayComputed;
 
@@ -441,8 +441,8 @@ networkConst: ${networkConst},
 contactList: ${contactList},
 developerMode: ${developerMode},
 endpointIsEncointer: ${endpointIsEncointer},
-endpointIsGesell: ${endpointIsGesell},
-endpointIsCantillon: ${endpointIsCantillon},
+endpointIsNoTee: ${endpointIsNoTee},
+endpointIsTeeProxy: ${endpointIsTeeProxy},
 ipfsGateway: ${ipfsGateway},
 endpointList: ${endpointList},
 contactListAll: ${contactListAll},

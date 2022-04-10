@@ -197,7 +197,7 @@ class Api {
       return;
     }
 
-    if (store.settings.endpointIsCantillon) {
+    if (store.settings.endpointIsTeeProxy) {
       var worker = store.settings.endpoint.worker;
       var mrenclave = store.settings.endpoint.mrenclave;
       await evalJavascript('settings.setWorkerEndpoint("$worker", "$mrenclave")');
@@ -219,7 +219,7 @@ class Api {
     }
 
     // setWorker endpoint on js side
-    if (store.settings.endpointIsCantillon) {
+    if (store.settings.endpointIsTeeProxy) {
       var worker = store.settings.endpoint.worker;
       var mrenclave = store.settings.endpoint.mrenclave;
       await evalJavascript('settings.setWorkerEndpoint("$worker", "$mrenclave")');

@@ -1,13 +1,16 @@
 import 'dart:async';
-import 'dart:ui';
 import 'dart:math';
+import 'dart:ui';
 
+import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/dragHandle.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremonyBox.dart';
+import 'package:encointer_wallet/page-encointer/common/communityChooserOnMap.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
+import 'package:encointer_wallet/page/account/create/addAccountPage.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
 import 'package:encointer_wallet/service/substrateApi/api.dart';
@@ -23,9 +26,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-import 'package:encointer_wallet/page-encointer/common/communityChooserOnMap.dart';
-import 'package:encointer_wallet/page/account/create/addAccountPage.dart';
-import 'package:encointer_wallet/common/components/addressIcon.dart';
 
 import 'account_or_community/AccountOrCommunityData.dart';
 import 'account_or_community/switchAccountOrCommunity.dart';
@@ -108,7 +108,7 @@ class _AssetsState extends State<Assets> {
                 }
 
                 if (ModalRoute.of(context).isCurrent &&
-                    !_enteredPin & store.settings.cachedPin.isEmpty & !store.settings.endpointIsGesell) {
+                    !_enteredPin & store.settings.cachedPin.isEmpty & !store.settings.endpointIsNoTee) {
                   // The pin is not immediately propagated to the store, hence we track if the pin has been entered to prevent
                   // showing the dialog multiple times.
                   WidgetsBinding.instance.addPostFrameCallback(

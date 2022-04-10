@@ -73,14 +73,13 @@ abstract class _SettingsStore with Store {
   }
 
   @computed
-  bool get endpointIsGesell {
-    return endpoint.info == networkEndpointEncointerGesell.info ||
-        endpoint.info == networkEndpointEncointerGesellDev.info;
+  bool get endpointIsNoTee {
+    return !endpointIsTeeProxy;
   }
 
   @computed
-  bool get endpointIsCantillon {
-    return !endpointIsGesell;
+  bool get endpointIsTeeProxy {
+    return endpoint.worker != null;
   }
 
   @computed

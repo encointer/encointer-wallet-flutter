@@ -340,7 +340,7 @@ abstract class _EncointerStore with Store {
       resetState();
     }
 
-    if (rootStore.settings.endpointIsGesell) {
+    if (rootStore.settings.endpointIsNoTee) {
       webApi.encointer.subscribeBusinessRegistry();
     }
 
