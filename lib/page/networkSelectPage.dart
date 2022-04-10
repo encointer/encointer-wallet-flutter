@@ -71,6 +71,11 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
 
     webApi.launchWebview();
     changeTheme();
+    // FIXME: this should not be necessary after fixing #479
+    webApi.encointer.getCurrentCeremonyIndex();
+    webApi.encointer.getCurrentPhase();
+    // <<<< FIXME
+
     if (mounted) {
       Navigator.of(context).pop();
       setState(() {

@@ -46,7 +46,7 @@ class ApiEncointer {
     this.getPhaseDurations();
     this.subscribeCurrentPhase();
     this.subscribeCommunityIdentifiers();
-    if (store.settings.endpointIsGesell) {
+    if (store.settings.endpointIsNoTee) {
       this.subscribeEncointerBalance();
       this.subscribeBusinessRegistry();
     }
@@ -58,7 +58,7 @@ class ApiEncointer {
     apiRoot.unsubscribeMessage(_communityIdentifiersChannel);
     apiRoot.unsubscribeMessage(_businessRegistryChannel);
 
-    if (store.settings.endpointIsGesell) {
+    if (store.settings.endpointIsNoTee) {
       apiRoot.unsubscribeMessage(_encointerBalanceChannel);
       apiRoot.unsubscribeMessage(_businessRegistryChannel);
     }
@@ -125,7 +125,7 @@ class ApiEncointer {
       return 0;
     }
 
-    int mIndex = store.settings.endpointIsGesell
+    int mIndex = store.settings.endpointIsNoTee
         ? await _noTee.ceremonies.meetupIndex(cid, store.encointer.currentCeremonyIndex, pubKey)
         : await _teeProxy.ceremonies.meetupIndex(cid, pubKey, store.settings.cachedPin);
 
@@ -267,7 +267,7 @@ class ApiEncointer {
       return [];
     }
 
-    List<String> registry = store.settings.endpointIsGesell
+    List<String> registry = store.settings.endpointIsNoTee
         ? await _noTee.ceremonies.meetupRegistry(cid, cIndex, mIndex)
         : await _teeProxy.ceremonies.meetupRegistry(cid, pubKey, store.settings.cachedPin);
 
@@ -289,7 +289,7 @@ class ApiEncointer {
     }
 
     print("api: Getting participant index for " + pubKey);
-    int pIndex = store.settings.endpointIsGesell
+    int pIndex = store.settings.endpointIsNoTee
         ? await _noTee.ceremonies.participantIndex(cid, store.encointer.currentCeremonyIndex, pubKey)
         : await _teeProxy.ceremonies.participantIndex(cid, pubKey, store.settings.cachedPin);
 
@@ -333,7 +333,7 @@ class ApiEncointer {
 
     print("Getting encointer balance for ${cid.toFmtString()}");
 
-    BalanceEntry bEntry = store.settings.endpointIsGesell
+    BalanceEntry bEntry = store.settings.endpointIsNoTee
         ? await _noTee.balances.balance(cid, pubKey)
         : await _teeProxy.balances.balance(cid, pubKey, store.settings.cachedPin);
 
