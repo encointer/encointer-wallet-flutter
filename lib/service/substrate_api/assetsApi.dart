@@ -1,8 +1,8 @@
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 
-class ApiAssets {
-  ApiAssets(this.apiRoot);
+class AssetsApi {
+  AssetsApi(this.apiRoot);
 
   final Api apiRoot;
   final store = globalAppStore;
