@@ -6,7 +6,7 @@ import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
-import 'package:encointer_wallet/page/qr_scan/scanPage.dart';
+import 'package:encointer_wallet/page/qr_scan/qrScanPage.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/service/js_api_wrappers/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
