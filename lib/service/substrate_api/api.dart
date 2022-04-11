@@ -3,12 +3,12 @@ import 'dart:convert';
 
 import 'package:encointer_wallet/config/node.dart';
 import 'package:encointer_wallet/service/ipfsApi/httpApi.dart';
-import 'package:encointer_wallet/service/js_api_wrappers/apiAccount.dart';
-import 'package:encointer_wallet/service/js_api_wrappers/apiAssets.dart';
-import 'package:encointer_wallet/service/js_api_wrappers/chainApi.dart';
-import 'package:encointer_wallet/service/js_api_wrappers/codecApi.dart';
-import 'package:encointer_wallet/service/js_api_wrappers/encointer/apiEncointer.dart';
-import 'package:encointer_wallet/service/js_api_wrappers/types/genExternalLinksParams.dart';
+import 'package:encointer_wallet/service/substrate_api/apiAccount.dart';
+import 'package:encointer_wallet/service/substrate_api/apiAssets.dart';
+import 'package:encointer_wallet/service/substrate_api/chainApi.dart';
+import 'package:encointer_wallet/service/substrate_api/codecApi.dart';
+import 'package:encointer_wallet/service/substrate_api/encointer/apiEncointer.dart';
+import 'package:encointer_wallet/service/substrate_api/types/genExternalLinksParams.dart';
 import 'package:encointer_wallet/service/subscan.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/cupertino.dart';

@@ -6,7 +6,7 @@ import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page/account/uos/qrSenderPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactListPage.dart';
-import 'package:encointer_wallet/service/js_api_wrappers/api.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';

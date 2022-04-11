@@ -1,13 +1,12 @@
 import 'package:encointer_wallet/mocks/api/api.dart';
-import 'package:encointer_wallet/service/js_api_wrappers/api.dart';
+import 'package:encointer_wallet/mocks/data/mockAccountData.dart';
+import 'package:encointer_wallet/mocks/data/mockEncointerData.dart';
+import 'package:encointer_wallet/mocks/storage/localStorage.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/ceremonies.dart';
 import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:encointer_wallet/mocks/data/mockEncointerData.dart';
-import 'package:encointer_wallet/mocks/data/mockAccountData.dart';
-import 'package:encointer_wallet/mocks/storage/localStorage.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

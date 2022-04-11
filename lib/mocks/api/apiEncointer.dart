@@ -1,6 +1,6 @@
 import 'package:encointer_wallet/mocks/data/mockEncointerData.dart';
-import 'package:encointer_wallet/service/js_api_wrappers/api.dart';
-import 'package:encointer_wallet/service/js_api_wrappers/encointer/apiEncointer.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/substrate_api/encointer/apiEncointer.dart';
 import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
 import 'package:encointer_wallet/store/encointer/types/ceremonies.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';

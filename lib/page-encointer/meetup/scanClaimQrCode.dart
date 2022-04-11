@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:encointer_wallet/service/js_api_wrappers/api.dart';
-import 'package:encointer_wallet/service/js_api_wrappers/codecApi.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/substrate_api/codecApi.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
