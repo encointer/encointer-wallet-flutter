@@ -3,7 +3,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/apiAccount.dart';
 import 'package:encointer_wallet/service/substrate_api/codecApi.dart';
-import 'package:encointer_wallet/mocks/api/apiEncointer.dart';
+import 'package:encointer_wallet/mocks/api/encointerApi.dart';
 import 'package:encointer_wallet/mocks/api/chain.dart';
 import 'package:encointer_wallet/mocks/api/apiIpfs.dart';
 import 'package:flutter/material.dart';

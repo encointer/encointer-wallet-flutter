@@ -26,8 +26,8 @@ import 'apiTeeProxy.dart';
 ///
 /// NOTE: If the js-code was changed a rebuild of the application is needed to update the code.
 
-class ApiEncointer {
-  ApiEncointer(this.apiRoot)
+class EncointerApi {
+  EncointerApi(this.apiRoot)
       : _noTee = ApiNoTee(apiRoot),
         _teeProxy = ApiTeeProxy(apiRoot);
 

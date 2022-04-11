@@ -1,6 +1,6 @@
 import 'package:encointer_wallet/mocks/data/mockEncointerData.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/service/substrate_api/encointer/apiEncointer.dart';
+import 'package:encointer_wallet/service/substrate_api/encointer/encointerApi.dart';
 import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
 import 'package:encointer_wallet/store/encointer/types/ceremonies.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
@@ -10,7 +10,7 @@ import 'package:encointer_wallet/store/encointer/types/communities.dart';
 /// This allows to configure the app storage for specific tests via the `PrepareStorage` class.
 /// The getters then return the preconfigured value, which in turn leads to consistent
 /// responses in the test.
-class MockApiEncointer extends ApiEncointer {
+class MockApiEncointer extends EncointerApi {
   MockApiEncointer(Api api) : super(api);
 
   void _log(String msg) {
