@@ -47,6 +47,7 @@ class UI {
     }
   }
 
+  // Todo: Decide if we keep this https://github.com/encointer/encointer-wallet-flutter/issues/517
   static Future<void> checkUpdate(BuildContext context, Map versions, {bool autoCheck = false}) async {
     if (versions == null || !Platform.isAndroid && !Platform.isIOS) return;
     String platform = Platform.isAndroid ? 'android' : 'ios';

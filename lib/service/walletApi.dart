@@ -4,6 +4,12 @@ import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart';
 import 'package:encointer_wallet/config/consts.dart';
 
+/// Class to update the js-code from in app.
+///
+/// Useful to be able to track upstream polkadot updates without having to update the
+/// app in the respective app stores.
+///
+/// Todo: Decide if we keep this https://github.com/encointer/encointer-wallet-flutter/issues/517
 class WalletApi {
   static const String _endpoint = 'https://api.polkawallet.io';
 
