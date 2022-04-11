@@ -1,5 +1,4 @@
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/page-encointer/ceremony_box/ceremonyRegisterButton.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/ceremonies.dart';
 import 'package:flutter/material.dart';
@@ -7,12 +6,13 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import "package:latlong2/latlong.dart";
 
-import 'ceremonyInfoAndCalendar.dart';
-import 'ceremonyLocationButton.dart';
-import 'ceremonyNotification.dart';
-import 'ceremonyProgressBar.dart';
-import 'ceremonySchedule.dart';
-import 'ceremonyStartButton.dart';
+import 'components/ceremonyInfoAndCalendar.dart';
+import 'components/ceremonyLocationButton.dart';
+import 'components/ceremonyNotification.dart';
+import 'components/ceremonyProgressBar.dart';
+import 'components/ceremonyRegisterButton.dart';
+import 'components/ceremonySchedule.dart';
+import 'components/ceremonyStartButton.dart';
 
 class CeremonyBox extends StatelessWidget {
   final AppStore store;
