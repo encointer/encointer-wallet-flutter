@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/service/js-api-wrappers/api.dart';
 import 'package:encointer_wallet/service/notification.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';

@@ -3,7 +3,7 @@ import 'dart:io';
 
 import 'package:encointer_wallet/common/regInputFormatter.dart';
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/service/js-api-wrappers/api.dart';
 import 'package:encointer_wallet/service/walletApi.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';

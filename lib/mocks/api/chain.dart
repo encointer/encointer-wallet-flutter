@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/service/substrateApi/chainApi.dart';
+import 'package:encointer_wallet/service/js-api-wrappers/chainApi.dart';
 
 class MockChainApi extends ChainApi {
   MockChainApi(apiRoot) : super(apiRoot);
