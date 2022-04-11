@@ -14,7 +14,7 @@ import 'package:encointer_wallet/store/encointer/types/proofOfAttendance.dart';
 import 'package:encointer_wallet/utils/format.dart';
 
 import 'apiNoTee.dart';
-import 'apiTeeProxy.dart';
+import 'teeProxyApi.dart';
 
 /// Api to interface with the `js_encointer_service.js`
 ///
@@ -29,7 +29,7 @@ import 'apiTeeProxy.dart';
 class EncointerApi {
   EncointerApi(this.apiRoot)
       : _noTee = ApiNoTee(apiRoot),
-        _teeProxy = ApiTeeProxy(apiRoot);
+        _teeProxy = TeeProxyApi(apiRoot);
 
   final Api apiRoot;
   final store = globalAppStore;
@@ -39,7 +39,7 @@ class EncointerApi {
   final String _businessRegistryChannel = 'businessRegistry';
 
   final ApiNoTee _noTee;
-  final ApiTeeProxy _teeProxy;
+  final TeeProxyApi _teeProxy;
 
   Future<void> startSubscriptions() async {
     print("api: starting encointer subscriptions");

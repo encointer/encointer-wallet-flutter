@@ -5,8 +5,8 @@ import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:encointer_wallet/store/encointer/types/workerApi.dart';
 
-class ApiTeeProxy {
-  ApiTeeProxy(this.apiRoot)
+class TeeProxyApi {
+  TeeProxyApi(this.apiRoot)
       : ceremonies = Ceremonies(apiRoot),
         balances = Balances(apiRoot);
 
