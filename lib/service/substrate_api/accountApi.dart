@@ -8,8 +8,8 @@ import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 
-class ApiAccount {
-  ApiAccount(this.apiRoot);
+class AccountApi {
+  AccountApi(this.apiRoot);
 
   final Api apiRoot;
   final store = globalAppStore;

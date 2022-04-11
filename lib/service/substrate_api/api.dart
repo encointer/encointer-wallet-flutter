@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:encointer_wallet/config/node.dart';
 import 'package:encointer_wallet/service/ipfsApi/httpApi.dart';
-import 'package:encointer_wallet/service/substrate_api/apiAccount.dart';
+import 'package:encointer_wallet/service/substrate_api/accountApi.dart';
 import 'package:encointer_wallet/service/substrate_api/apiAssets.dart';
 import 'package:encointer_wallet/service/substrate_api/chainApi.dart';
 import 'package:encointer_wallet/service/substrate_api/codecApi.dart';
@@ -26,7 +26,7 @@ class Api {
   final AppStore store;
   var jsStorage;
 
-  ApiAccount account;
+  AccountApi account;
   ApiAssets assets;
   ChainApi chain;
   CodecApi codec;
@@ -47,7 +47,7 @@ class Api {
   Future<void> init() async {
     jsStorage = GetStorage();
 
-    account = ApiAccount(this);
+    account = AccountApi(this);
     assets = ApiAssets(this);
     chain = ChainApi(this);
     codec = CodecApi(this);
