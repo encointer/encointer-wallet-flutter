@@ -1,6 +1,6 @@
 import 'package:encointer_wallet/mocks/data/mockAccountData.dart';
-import 'package:encointer_wallet/service/js-api-wrappers/api.dart';
-import 'package:encointer_wallet/service/js-api-wrappers/apiAssets.dart';
+import 'package:encointer_wallet/service/js_api_wrappers/api.dart';
+import 'package:encointer_wallet/service/js_api_wrappers/apiAssets.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 class MockApiAssets extends ApiAssets {

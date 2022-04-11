@@ -1,8 +1,8 @@
-import 'package:encointer_wallet/service/js-api-wrappers/api.dart';
+import 'package:encointer_wallet/service/js_api_wrappers/api.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class AccountAdvanceOption extends StatefulWidget {
   AccountAdvanceOption({this.seed, this.onChange});

@@ -1,8 +1,8 @@
 import 'package:encointer_wallet/mocks/api/apiAssets.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/service/js-api-wrappers/api.dart';
-import 'package:encointer_wallet/service/js-api-wrappers/apiAccount.dart';
-import 'package:encointer_wallet/service/js-api-wrappers/codecApi.dart';
+import 'package:encointer_wallet/service/js_api_wrappers/api.dart';
+import 'package:encointer_wallet/service/js_api_wrappers/apiAccount.dart';
+import 'package:encointer_wallet/service/js_api_wrappers/codecApi.dart';
 import 'package:encointer_wallet/mocks/api/apiEncointer.dart';
 import 'package:encointer_wallet/mocks/api/chain.dart';
 import 'package:encointer_wallet/mocks/api/apiIpfs.dart';

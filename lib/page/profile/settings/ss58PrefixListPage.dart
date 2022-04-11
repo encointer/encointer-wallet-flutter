@@ -1,9 +1,9 @@
-import 'package:encointer_wallet/service/js-api-wrappers/api.dart';
+import 'package:encointer_wallet/service/js_api_wrappers/api.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 const default_ss58_prefix = {
   'info': 'default',

@@ -30,7 +30,7 @@ import 'package:encointer_wallet/page/profile/contacts/contactsPage.dart';
 import 'package:encointer_wallet/page/profile/settings/remoteNodeListPage.dart';
 import 'package:encointer_wallet/page/profile/settings/settingsPage.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58PrefixListPage.dart';
-import 'package:encointer_wallet/service/js-api-wrappers/api.dart';
+import 'package:encointer_wallet/service/js_api_wrappers/api.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/localStorage.dart';

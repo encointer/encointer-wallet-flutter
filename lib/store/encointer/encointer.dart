@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/service/js-api-wrappers/api.dart';
+import 'package:encointer_wallet/service/js_api_wrappers/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/assets/types/transferData.dart';
 import 'package:encointer_wallet/store/encointer/types/bazaar.dart';

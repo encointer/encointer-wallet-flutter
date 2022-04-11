@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:encointer_wallet/page/profile/account/exportResultPage.dart';
-import 'package:encointer_wallet/service/js-api-wrappers/api.dart';
+import 'package:encointer_wallet/service/js_api_wrappers/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/utils/format.dart';
