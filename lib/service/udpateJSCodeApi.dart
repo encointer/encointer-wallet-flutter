@@ -10,7 +10,7 @@ import 'package:encointer_wallet/config/consts.dart';
 /// app in the respective app stores.
 ///
 /// Todo: Decide if we keep this https://github.com/encointer/encointer-wallet-flutter/issues/517
-class WalletApi {
+class UpdateJSCodeApi {
   static const String _endpoint = 'https://api.polkawallet.io';
 
   static const String _jsCodeStorageKey = 'js_service_';
