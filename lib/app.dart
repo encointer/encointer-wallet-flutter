@@ -40,7 +40,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'common/theme.dart';
-import 'mocks/api/api.dart';
+import 'mocks/api/mockApi.dart';
 import 'mocks/storage/localStorage.dart';
 import 'utils/translations/index.dart';
 

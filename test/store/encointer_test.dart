@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/mocks/api/api.dart';
+import 'package:encointer_wallet/mocks/api/mockApi.dart';
 import 'package:encointer_wallet/mocks/data/mockAccountData.dart';
 import 'package:encointer_wallet/mocks/data/mockEncointerData.dart';
 import 'package:encointer_wallet/mocks/storage/localStorage.dart';
