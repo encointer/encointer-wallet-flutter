@@ -38,8 +38,9 @@ class Api {
 
   Future<void> init() async {
     jsStorage = GetStorage();
+    js = JSApi();
 
-    account = AccountApi(this);
+    account = AccountApi(js, fetchAccountData);
     assets = AssetsApi(this);
     chain = ChainApi(this);
     codec = CodecApi(this);
