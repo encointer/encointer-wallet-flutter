@@ -2,14 +2,14 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:encointer_wallet/config/node.dart';
-import 'package:encointer_wallet/service/ipfsApi/httpApi.dart';
+import 'package:encointer_wallet/service/ipfs/httpApi.dart';
+import 'package:encointer_wallet/service/substrate_api/accountApi.dart';
+import 'package:encointer_wallet/service/substrate_api/assetsApi.dart';
+import 'package:encointer_wallet/service/substrate_api/chainApi.dart';
+import 'package:encointer_wallet/service/substrate_api/codecApi.dart';
+import 'package:encointer_wallet/service/substrate_api/encointer/encointerApi.dart';
+import 'package:encointer_wallet/service/substrate_api/types/genExternalLinksParams.dart';
 import 'package:encointer_wallet/service/subscan.dart';
-import 'package:encointer_wallet/service/substrateApi/apiAccount.dart';
-import 'package:encointer_wallet/service/substrateApi/apiAssets.dart';
-import 'package:encointer_wallet/service/substrateApi/chainApi.dart';
-import 'package:encointer_wallet/service/substrateApi/codecApi.dart';
-import 'package:encointer_wallet/service/substrateApi/encointer/apiEncointer.dart';
-import 'package:encointer_wallet/service/substrateApi/types/genExternalLinksParams.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
@@ -26,11 +26,11 @@ class Api {
   final AppStore store;
   var jsStorage;
 
-  ApiAccount account;
-  ApiAssets assets;
+  AccountApi account;
+  AssetsApi assets;
   ChainApi chain;
   CodecApi codec;
-  ApiEncointer encointer;
+  EncointerApi encointer;
   Ipfs ipfs;
 
   SubScanApi subScanApi = SubScanApi();
@@ -47,11 +47,11 @@ class Api {
   Future<void> init() async {
     jsStorage = GetStorage();
 
-    account = ApiAccount(this);
-    assets = ApiAssets(this);
+    account = AccountApi(this);
+    assets = AssetsApi(this);
     chain = ChainApi(this);
     codec = CodecApi(this);
-    encointer = ApiEncointer(this);
+    encointer = EncointerApi(this);
     ipfs = Ipfs(gateway: store.settings.ipfsGateway);
 
     print("first launch of webview");

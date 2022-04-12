@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:aes_ecb_pkcs5_flutter/aes_ecb_pkcs5_flutter.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58PrefixListPage.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/notification.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountBondedInfo.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/account/types/accountRecoveryInfo.dart';

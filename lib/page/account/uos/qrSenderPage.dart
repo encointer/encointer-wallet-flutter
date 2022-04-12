@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:encointer_wallet/common/components/roundedButton.dart';
-import 'package:encointer_wallet/page/account/scanPage.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/page/qr_scan/qrScanPage.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

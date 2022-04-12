@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';

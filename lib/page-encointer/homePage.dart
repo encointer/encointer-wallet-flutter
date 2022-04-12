@@ -1,6 +1,6 @@
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/encointerEntry.dart';
-import 'package:encointer_wallet/page/account/scanPage.dart';
+import 'package:encointer_wallet/page/qr_scan/qrScanPage.dart';
 import 'package:encointer_wallet/page/assets/index.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactsPage.dart';
 import 'package:encointer_wallet/page/profile/index.dart';

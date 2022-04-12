@@ -3,7 +3,7 @@ import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page/account/createAccountEntryPage.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';

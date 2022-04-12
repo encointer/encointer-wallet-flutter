@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/mocks/data/mockBazaarData.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
 import 'package:encointer_wallet/store/encointer/types/ceremonies.dart';
@@ -13,8 +13,8 @@ import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:encointer_wallet/store/encointer/types/proofOfAttendance.dart';
 import 'package:encointer_wallet/utils/format.dart';
 
-import 'apiNoTee.dart';
-import 'apiTeeProxy.dart';
+import 'noTeeApi.dart';
+import 'teeProxyApi.dart';
 
 /// Api to interface with the `js_encointer_service.js`
 ///
@@ -26,10 +26,10 @@ import 'apiTeeProxy.dart';
 ///
 /// NOTE: If the js-code was changed a rebuild of the application is needed to update the code.
 
-class ApiEncointer {
-  ApiEncointer(this.apiRoot)
-      : _noTee = ApiNoTee(apiRoot),
-        _teeProxy = ApiTeeProxy(apiRoot);
+class EncointerApi {
+  EncointerApi(this.apiRoot)
+      : _noTee = NoTeeApi(apiRoot),
+        _teeProxy = TeeProxyApi(apiRoot);
 
   final Api apiRoot;
   final store = globalAppStore;
@@ -38,8 +38,8 @@ class ApiEncointer {
   final String _encointerBalanceChannel = 'encointerBalance';
   final String _businessRegistryChannel = 'businessRegistry';
 
-  final ApiNoTee _noTee;
-  final ApiTeeProxy _teeProxy;
+  final NoTeeApi _noTee;
+  final TeeProxyApi _teeProxy;
 
   Future<void> startSubscriptions() async {
     print("api: starting encointer subscriptions");

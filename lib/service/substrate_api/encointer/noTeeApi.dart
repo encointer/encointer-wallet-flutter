@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 
-class ApiNoTee {
-  ApiNoTee(this.apiRoot)
+class NoTeeApi {
+  NoTeeApi(this.apiRoot)
       : ceremonies = Ceremonies(apiRoot),
         balances = Balances(apiRoot);
 

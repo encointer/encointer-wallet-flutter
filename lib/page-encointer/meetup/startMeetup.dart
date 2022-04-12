@@ -1,15 +1,14 @@
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
-import 'package:encointer_wallet/service/substrateApi/codecApi.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/substrate_api/codecApi.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'claimQrCode.dart';
 import 'confirmAttendeesDialog.dart';
-
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 Future<void> startMeetup(BuildContext context, AppStore store) async {
   var amount = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConfirmAttendeesDialog()));

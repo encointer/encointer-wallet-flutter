@@ -13,7 +13,7 @@ import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dar
 import 'package:encointer_wallet/page/account/create/addAccountPage.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';

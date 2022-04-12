@@ -1,9 +1,9 @@
 import 'package:encointer_wallet/mocks/data/mockAccountData.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
-import 'package:encointer_wallet/service/substrateApi/apiAssets.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/substrate_api/assetsApi.dart';
 import 'package:encointer_wallet/store/app.dart';
 
-class MockApiAssets extends ApiAssets {
+class MockApiAssets extends AssetsApi {
   MockApiAssets(Api api) : super(api);
 
   final store = globalAppStore;

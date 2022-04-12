@@ -7,7 +7,8 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/page/qr_scan/qrScanPage.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
@@ -19,7 +20,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:encointer_wallet/page/account/scanPage.dart';
 
 class TransferPageParams {
   TransferPageParams({this.cid, this.communitySymbol, this.recipient, this.amount, this.redirect});
