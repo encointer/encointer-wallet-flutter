@@ -8,7 +8,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
-import 'accountApi.dart';
+import 'mockAccountApi.dart';
 import 'jsApi.dart';
 
 class MockApi extends Api {
