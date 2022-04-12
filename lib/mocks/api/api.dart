@@ -1,7 +1,7 @@
 import 'package:encointer_wallet/mocks/api/apiAssets.dart';
 import 'package:encointer_wallet/mocks/api/apiIpfs.dart';
-import 'package:encointer_wallet/mocks/api/encointerApi.dart';
 import 'package:encointer_wallet/mocks/api/mockChainApi.dart';
+import 'package:encointer_wallet/mocks/api/mockEncointerApi.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/codecApi.dart';
 import 'package:encointer_wallet/store/app.dart';
