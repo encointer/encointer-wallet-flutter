@@ -1,6 +1,6 @@
 import 'package:encointer_wallet/app.dart';
 import 'package:encointer_wallet/config.dart';
-import 'package:encointer_wallet/mocks/storage/prepareStorage.dart';
+import 'package:encointer_wallet/mocks/storage/prepareMockStorage.dart';
 import 'package:encointer_wallet/mocks/storage/storageSetup.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
@@ -16,22 +16,22 @@ void main() {
     switch (msg) {
       case StorageSetup.INIT:
         {
-          PrepareStorage.init(globalAppStore);
+          PrepareMockStorage.init(globalAppStore);
         }
         break;
       case StorageSetup.GET_METADATA:
         {
-          PrepareStorage.getMetadata(globalAppStore);
+          PrepareMockStorage.getMetadata(globalAppStore);
         }
         break;
       case StorageSetup.UNREGISTERED_PARTICIPANT:
         {
-          PrepareStorage.unregisteredParticipant(globalAppStore);
+          PrepareMockStorage.unregisteredParticipant(globalAppStore);
         }
         break;
       case StorageSetup.READY_FOR_MEETUP:
         {
-          PrepareStorage.readyForMeetup(globalAppStore);
+          PrepareMockStorage.readyForMeetup(globalAppStore);
         }
         break;
       default:
