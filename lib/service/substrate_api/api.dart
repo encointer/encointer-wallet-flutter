@@ -41,7 +41,7 @@ class Api {
     js = JSApi();
 
     account = AccountApi(js, fetchAccountData);
-    assets = AssetsApi(this);
+    assets = AssetsApi(js);
     chain = ChainApi(this);
     codec = CodecApi(this);
     encointer = EncointerApi(this);

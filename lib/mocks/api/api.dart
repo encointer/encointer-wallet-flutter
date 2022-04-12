@@ -23,7 +23,7 @@ class MockApi extends Api {
     js = MockJSApi();
 
     account = MockAccountApi(js, fetchAccountData);
-    assets = MockApiAssets(this);
+    assets = MockApiAssets(js);
     chain = MockChainApi(this);
     codec = CodecApi(this);
     encointer = MockApiEncointer(this);
