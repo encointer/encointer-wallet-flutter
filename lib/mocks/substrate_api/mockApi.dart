@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/mocks/api/apiIpfs.dart';
+import 'package:encointer_wallet/mocks/ipfs/apiIpfs.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/codecApi.dart';
 import 'package:encointer_wallet/store/app.dart';
