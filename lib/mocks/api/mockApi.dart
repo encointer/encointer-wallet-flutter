@@ -8,8 +8,8 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
-import 'jsApi.dart';
 import 'mockAccountApi.dart';
+import 'mockJSApi.dart';
 
 class MockApi extends Api {
   MockApi(BuildContext context, AppStore store, {this.withUi = true}) : super(context, store);
