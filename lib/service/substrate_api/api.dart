@@ -44,7 +44,7 @@ class Api {
     assets = AssetsApi(js);
     chain = ChainApi(js);
     codec = CodecApi(js);
-    encointer = EncointerApi(this);
+    encointer = EncointerApi(js);
     ipfs = Ipfs(gateway: store.settings.ipfsGateway);
 
     print("first launch of webview");

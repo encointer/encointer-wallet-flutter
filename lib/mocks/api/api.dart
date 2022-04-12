@@ -25,7 +25,7 @@ class MockApi extends Api {
     assets = MockApiAssets(js);
     chain = MockChainApi(js);
     codec = CodecApi(js);
-    encointer = MockApiEncointer(this);
+    encointer = MockApiEncointer(js);
     ipfs = MockIpfs();
 
     if (withUi) {
