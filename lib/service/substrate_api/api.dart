@@ -42,7 +42,7 @@ class Api {
 
     account = AccountApi(js, fetchAccountData);
     assets = AssetsApi(js);
-    chain = ChainApi(this);
+    chain = ChainApi(js);
     codec = CodecApi(this);
     encointer = EncointerApi(this);
     ipfs = Ipfs(gateway: store.settings.ipfsGateway);
