@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/service/ipfsApi/httpApi.dart';
+import 'package:encointer_wallet/service/ipfs/httpApi.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class MockIpfs extends Ipfs {

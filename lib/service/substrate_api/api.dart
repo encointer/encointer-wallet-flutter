@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:encointer_wallet/config/node.dart';
-import 'package:encointer_wallet/service/ipfsApi/httpApi.dart';
+import 'package:encointer_wallet/service/ipfs/httpApi.dart';
 import 'package:encointer_wallet/service/substrate_api/accountApi.dart';
 import 'package:encointer_wallet/service/substrate_api/assetsApi.dart';
 import 'package:encointer_wallet/service/substrate_api/chainApi.dart';
