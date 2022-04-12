@@ -1,5 +1,5 @@
 import 'package:encointer_wallet/mocks/data/mockAccountData.dart';
-import 'package:encointer_wallet/mocks/storage/storageSetup.dart';
+import 'package:encointer_wallet/mocks/storage/mockStorageSetup.dart';
 import 'package:encointer_wallet/utils/screenshot.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
@@ -14,7 +14,7 @@ void main() {
 
       // waits until the firs frame after ft startup stabilized
       await driver.waitUntilFirstFrameRasterized();
-      await driver.requestData(StorageSetup.INIT);
+      await driver.requestData(MockStorageSetup.INIT);
     });
 
     tearDownAll(() async {
@@ -50,7 +50,7 @@ void main() {
       await driver.tap(find.byValueKey('cid-0-marker-description'));
 
       // Here we get the metadata because it is reset to null in the setChosenCid() method which is called, when a community is chosen
-      await driver.requestData(StorageSetup.GET_METADATA);
+      await driver.requestData(MockStorageSetup.GET_METADATA);
       // take a screenshot of the EncointerHome Screen
       await screenshot(driver, config, 'encointer-home');
     }, timeout: Timeout(Duration(seconds: 120))); // needed for android CI with github actions
@@ -91,11 +91,11 @@ void main() {
       await driver.tap(find.byValueKey('TabKey.Ceremonies'));
 
       // communicate to the app isolate how to setup the store
-      await driver.requestData(StorageSetup.UNREGISTERED_PARTICIPANT);
+      await driver.requestData(MockStorageSetup.UNREGISTERED_PARTICIPANT);
       await screenshot(driver, config, 'register-participant-page');
 
       // attesting phase
-      await driver.requestData(StorageSetup.READY_FOR_MEETUP);
+      await driver.requestData(MockStorageSetup.READY_FOR_MEETUP);
       await screenshot(driver, config, 'attesting-page');
     });
 

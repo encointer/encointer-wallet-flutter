@@ -1,4 +1,4 @@
-abstract class StorageSetup {
+abstract class MockStorageSetup {
   static const INIT = "setupStorageInit";
   static const GET_METADATA = "setupStorageMetadata";
   static const UNREGISTERED_PARTICIPANT = "setupStorageUnregisteredParticipant";
