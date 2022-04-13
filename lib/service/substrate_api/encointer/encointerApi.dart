@@ -14,6 +14,7 @@ import 'package:encointer_wallet/utils/format.dart';
 
 import '../../../models/index.dart';
 import '../core/dartApi.dart';
+import 'encointerDartApi.dart';
 import 'noTeeApi.dart';
 import 'teeProxyApi.dart';
 
@@ -30,12 +31,13 @@ import 'teeProxyApi.dart';
 const aggregatedAccountDataRpc = "ceremonies_getAggregatedAccountData";
 
 class EncointerApi {
-  EncointerApi(this.jsApi, this.dartApi)
+  EncointerApi(this.jsApi, SubstrateDartApi dartApi)
       : _noTee = NoTeeApi(jsApi),
-        _teeProxy = TeeProxyApi(jsApi);
+        _teeProxy = TeeProxyApi(jsApi),
+        _dartApi = EncointerDartApi(dartApi);
 
   final JSApi jsApi;
-  final SubstrateDartApi dartApi;
+  final EncointerDartApi _dartApi;
 
   final store = globalAppStore;
   final String _currentPhaseSubscribeChannel = 'currentPhase';
@@ -105,6 +107,22 @@ class EncointerApi {
         .then((m) => Map.from(m).map((key, value) => MapEntry(ceremonyPhaseFromString(key), int.parse(value))));
     print("Phase durations: ${phaseDurations.toString()}");
     store.encointer.phaseDurations = phaseDurations;
+  }
+
+  /// Queries the rpc 'ceremonies_getAggregatedAccountData' with the dart api.
+  ///
+  Future<AggregatedAccountData> getAggregatedAccountData(String account) async {
+    try {
+      AggregatedAccountData accountData = await _dartApi.getAggregatedAccountData(account);
+
+      print("[EncointerApi]: AggregatedAccountData ${accountData.toString()}");
+
+      return accountData;
+    } catch (e) {
+      print("[EncointerApi]: Error getting aggregated account data ${e.toString()}");
+    }
+
+    return null;
   }
 
   /// Queries the Scheduler pallet: encointerScheduler.currentCeremonyIndex().
