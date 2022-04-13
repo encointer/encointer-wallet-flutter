@@ -1,10 +1,10 @@
-import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/substrate_api/jsApi.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 class AssetsApi {
-  AssetsApi(this.apiRoot);
+  AssetsApi(this.jsApi);
 
-  final Api apiRoot;
+  final JSApi jsApi;
   final store = globalAppStore;
 
   final String _balanceSubscribeChannel = 'gas token balance';
@@ -16,14 +16,14 @@ class AssetsApi {
 
   Future<void> stopSubscriptions() async {
     print("api: stopping assets subscriptions");
-    apiRoot.unsubscribeMessage(_balanceSubscribeChannel);
+    jsApi.unsubscribeMessage(_balanceSubscribeChannel);
   }
 
   Future<void> fetchBalance() async {
     String pubKey = store.account.currentAccountPubKey;
     if (pubKey != null && pubKey.isNotEmpty) {
       String address = store.account.currentAddress;
-      Map res = await apiRoot.evalJavascript(
+      Map res = await jsApi.evalJavascript(
         'account.getBalance("$address")',
         allowRepeat: true,
       );
@@ -33,13 +33,13 @@ class AssetsApi {
   }
 
   Future<void> subscribeBalance() async {
-    apiRoot.unsubscribeMessage(_balanceSubscribeChannel);
+    jsApi.unsubscribeMessage(_balanceSubscribeChannel);
 
     String pubKey = store.account.currentAccountPubKey;
     if (pubKey != null && pubKey.isNotEmpty) {
       String address = store.account.currentAddress;
 
-      apiRoot.subscribeMessage(
+      jsApi.subscribeMessage(
         'account.subscribeBalance("$_balanceSubscribeChannel","$address")',
         _balanceSubscribeChannel,
         (data) => {
@@ -47,26 +47,6 @@ class AssetsApi {
         },
       );
     }
-  }
-
-  Future<Map> updateTxs(int page) async {
-    store.assets.setTxsLoading(true);
-
-    String address = store.account.currentAddress;
-    Map res = await apiRoot.subScanApi.fetchTransfersAsync(
-      address,
-      page,
-      network: store.settings.endpoint.info,
-    );
-
-    if (page == 0) {
-      store.assets.clearTxs();
-    }
-    // cache first page of txs
-    await store.assets.addTxs(res, address, shouldCache: page == 0);
-
-    store.assets.setTxsLoading(false);
-    return res;
   }
 
   Future<void> _fetchMarketPrice() async {
