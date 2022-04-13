@@ -187,7 +187,7 @@ abstract class _EncointerStore with Store {
   @action
   void setCurrentCeremonyIndex(index) {
     print("store: set currentCeremonyIndex to $index");
-    if (currentCeremonyIndex != index && currentPhase == CeremonyPhase.Registering) {
+    if (currentCeremonyIndex != index && currentPhase == CeremonyPhase.REGISTERING) {
       resetState();
     }
 
@@ -200,14 +200,14 @@ abstract class _EncointerStore with Store {
   @action
   void updateState() {
     switch (currentPhase) {
-      case CeremonyPhase.Registering:
+      case CeremonyPhase.REGISTERING:
         webApi.encointer.getMeetupTime();
         webApi.encointer.getReputations();
         break;
-      case CeremonyPhase.Assigning:
+      case CeremonyPhase.ASSIGNING:
         webApi.encointer.getMeetupIndex();
         break;
-      case CeremonyPhase.Attesting:
+      case CeremonyPhase.ATTESTING:
         webApi.encointer.getMeetupIndex();
         break;
     }
@@ -553,12 +553,12 @@ abstract class _EncointerStore with Store {
 
   @computed
   bool get showRegisterButton {
-    return (currentPhase == CeremonyPhase.Registering && !isRegistered);
+    return (currentPhase == CeremonyPhase.REGISTERING && !isRegistered);
   }
 
   @computed
   bool get showStartCeremonyButton {
-    return (currentPhase == CeremonyPhase.Attesting && isRegistered);
+    return (currentPhase == CeremonyPhase.ATTESTING && isRegistered);
   }
 
   @computed

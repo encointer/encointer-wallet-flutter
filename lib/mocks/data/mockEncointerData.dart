@@ -42,6 +42,6 @@ const List<String> meetupRegistry = [
   "0x1cc4e46bbd2bb547d93d952c5de12ea7e3a3f3b638551a8eaf35ad086700c00c",
 ];
 
-const CeremonyPhase initialPhase = CeremonyPhase.Registering;
+const CeremonyPhase initialPhase = CeremonyPhase.REGISTERING;
 
 const Map<String, dynamic> balanceEntry = {'principal': 23.4, 'lastUpdate': 4};

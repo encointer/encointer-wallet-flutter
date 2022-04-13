@@ -54,6 +54,9 @@ class SubstrateDartApi {
   }
 
   /// Queries the rpc of the node.
+  ///
+  /// Hints:
+  /// * account ids must be passed as base58.
   Future rpc(String method, [params]) {
     if (_client == null || _client.isClosed) {
       throw ("Can't call an rpc method because we are not connected to a node");

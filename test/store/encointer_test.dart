@@ -25,9 +25,9 @@ void main() {
 
       final store = root.encointer;
 
-      var phase = CeremonyPhase.Registering;
+      var phase = CeremonyPhase.REGISTERING;
 
-      store.setCurrentPhase(CeremonyPhase.Assigning);
+      store.setCurrentPhase(CeremonyPhase.ASSIGNING);
       store.setCurrentPhase(phase);
       expect(store.currentPhase, phase);
 

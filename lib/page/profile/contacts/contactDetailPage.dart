@@ -190,7 +190,7 @@ class EndorseButton extends StatelessWidget {
       ),
       onPressed: store.encointer.bootstrappers.contains(contact.address)
           ? () => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
-          : store.encointer.currentPhase != CeremonyPhase.Registering
+          : store.encointer.currentPhase != CeremonyPhase.REGISTERING
               ? () => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)
               : () => submitEndorseNewcomer(context, store.encointer.chosenCid, contact.address),
     );

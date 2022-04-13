@@ -79,7 +79,7 @@ class CommunityReputation {
   Map<String, dynamic> toJson() => _$CommunityReputationToJson(this);
 }
 
-enum CeremonyPhase { Registering, Assigning, Attesting }
+enum CeremonyPhase { REGISTERING, ASSIGNING, ATTESTING }
 
 enum Reputation { Unverified, UnverifiedReputable, VerifiedUnlinked, VerifiedLinked }
 
