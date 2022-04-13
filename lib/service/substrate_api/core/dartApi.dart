@@ -30,7 +30,7 @@ class SubstrateDartApi {
     _connectAndListen(endpoint);
 
     try {
-      _rpc = await _client.sendRequest('rpc_methods').then((m) => RpcMethods.fromJson(m));
+      _rpc = await this.rpc('rpc_methods').then((m) => RpcMethods.fromJson(m));
 
       // print("Methods: ${methods.toString()}");
 
@@ -48,10 +48,18 @@ class SubstrateDartApi {
   Future<void> close() async {
     if (_client != null) {
       await _client.close();
-      _client = null;
     } else {
       _log("no connection to be closed.");
     }
+  }
+
+  /// Queries the rpc of the node.
+  Future rpc(String method, [params]) {
+    if (_client == null || _client.isClosed) {
+      throw ("Can't call an rpc method because we are not connected to a node");
+    }
+
+    return _client.sendRequest(method, [params]);
   }
 
   /// Reconnect to the same endpoint if the connection was closed.
