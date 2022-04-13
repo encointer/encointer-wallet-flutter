@@ -59,7 +59,7 @@ class SubstrateDartApi {
       throw ("Can't call an rpc method because we are not connected to a node");
     }
 
-    return _client.sendRequest(method, [params]);
+    return _client.sendRequest(method, params);
   }
 
   /// Reconnect to the same endpoint if the connection was closed.
