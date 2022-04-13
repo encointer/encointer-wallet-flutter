@@ -79,6 +79,25 @@ class CommunityReputation {
   Map<String, dynamic> toJson() => _$CommunityReputationToJson(this);
 }
 
+@JsonSerializable()
+class Meetup {
+  Meetup(this.participantType, this.meetupIndex, this.meetupLocationIndex, this.meetupTime, this.meetupRegistry);
+
+  ParticipantType participantType;
+  int meetupIndex;
+  int meetupLocationIndex;
+  int meetupTime;
+  List<String> meetupRegistry;
+
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
+
+  factory Meetup.fromJson(Map<String, dynamic> json) => _$MeetupFromJson(json);
+  Map<String, dynamic> toJson() => _$MeetupToJson(this);
+}
+
 enum CeremonyPhase { REGISTERING, ASSIGNING, ATTESTING }
 
 enum Reputation { Unverified, UnverifiedReputable, VerifiedUnlinked, VerifiedLinked }

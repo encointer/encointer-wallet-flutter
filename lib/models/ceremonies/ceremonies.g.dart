@@ -111,3 +111,21 @@ const _$ReputationEnumMap = {
   Reputation.VerifiedUnlinked: 'VerifiedUnlinked',
   Reputation.VerifiedLinked: 'VerifiedLinked',
 };
+
+Meetup _$MeetupFromJson(Map<String, dynamic> json) {
+  return Meetup(
+    _$enumDecodeNullable(_$ParticipantTypeEnumMap, json['participantType']),
+    json['meetupIndex'] as int,
+    json['meetupLocationIndex'] as int,
+    json['meetupTime'] as int,
+    (json['meetupRegistry'] as List)?.map((e) => e as String)?.toList(),
+  );
+}
+
+Map<String, dynamic> _$MeetupToJson(Meetup instance) => <String, dynamic>{
+      'participantType': _$ParticipantTypeEnumMap[instance.participantType],
+      'meetupIndex': instance.meetupIndex,
+      'meetupLocationIndex': instance.meetupLocationIndex,
+      'meetupTime': instance.meetupTime,
+      'meetupRegistry': instance.meetupRegistry,
+    };
