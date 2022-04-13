@@ -1,15 +1,15 @@
-import 'package:encointer_wallet/mocks/api/apiAssets.dart';
-import 'package:encointer_wallet/mocks/api/apiIpfs.dart';
-import 'package:encointer_wallet/mocks/api/chain.dart';
-import 'package:encointer_wallet/mocks/api/encointerApi.dart';
+import 'package:encointer_wallet/mocks/ipfs/mockIpfsApi.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/codecApi.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
-import 'accountApi.dart';
-import 'jsApi.dart';
+import 'mockAccountApi.dart';
+import 'mockAssetsApi.dart';
+import 'mockChainApi.dart';
+import 'mockEncointerApi.dart';
+import 'mockJSApi.dart';
 
 class MockApi extends Api {
   MockApi(BuildContext context, AppStore store, {this.withUi = true}) : super(context, store);

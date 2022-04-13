@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_scan/qrcode_reader_view.dart';
 
-class MockScanPage extends StatelessWidget {
-  MockScanPage(this.background);
+class MockQRScanPage extends StatelessWidget {
+  MockQRScanPage(this.background);
 
   // image that emulates camera
   final ImageProvider background;

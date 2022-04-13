@@ -7,7 +7,7 @@ import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:encointer_wallet/store/encointer/types/location.dart';
 
-abstract class PrepareStorage {
+abstract class PrepareMockStorage {
   static void init(AppStore store) {
     store.encointer.setCurrentPhase(initialPhase);
     store.encointer.setCommunityIdentifiers(communityIdentifiers);

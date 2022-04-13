@@ -4,7 +4,7 @@ import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
 import 'package:encointer_wallet/mocks/data/mockBazaarData.dart';
 import 'package:flutter/material.dart';
 
-class BazaarIpfsApiMock {
+class MockIpfsBazaarApi {
   /// get the business that lives at the specified [ipfsCid].
   /// In the real api this might be the full ipfs url.
   static Future<IpfsBusiness> getBusiness(String ipfsCid) {
