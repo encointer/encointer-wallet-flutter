@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'jsApi.dart';
+import 'core/jsApi.dart';
 
 const String ClaimOfAttendanceJSRegistryName = 'ClaimOfAttendance';
 

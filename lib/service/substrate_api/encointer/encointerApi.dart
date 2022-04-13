@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/mocks/data/mockBazaarData.dart';
-import 'package:encointer_wallet/service/substrate_api/jsApi.dart';
+import 'package:encointer_wallet/service/substrate_api/core/jsApi.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
 import 'package:encointer_wallet/store/encointer/types/ceremonies.dart';

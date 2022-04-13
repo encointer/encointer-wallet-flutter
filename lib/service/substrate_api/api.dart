@@ -14,7 +14,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get_storage/get_storage.dart';
 
-import 'jsApi.dart';
+import 'core/jsApi.dart';
 
 // global api instance
 Api webApi;

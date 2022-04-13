@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/service/substrate_api/jsApi.dart';
+import 'package:encointer_wallet/service/substrate_api/core/jsApi.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 class AssetsApi {

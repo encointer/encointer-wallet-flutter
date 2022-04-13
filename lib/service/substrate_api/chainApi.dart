@@ -1,7 +1,7 @@
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/chain/types/header.dart';
 
-import 'jsApi.dart';
+import 'core/jsApi.dart';
 
 class ChainApi {
   ChainApi(this.jsApi);
