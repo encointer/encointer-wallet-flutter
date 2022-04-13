@@ -111,9 +111,9 @@ class EncointerApi {
 
   /// Queries the rpc 'ceremonies_getAggregatedAccountData' with the dart api.
   ///
-  Future<AggregatedAccountData> getAggregatedAccountData(String account) async {
+  Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String account) async {
     try {
-      AggregatedAccountData accountData = await _dartApi.getAggregatedAccountData(account);
+      AggregatedAccountData accountData = await _dartApi.getAggregatedAccountData(cid, account);
 
       print("[EncointerApi]: AggregatedAccountData ${accountData.toString()}");
 
