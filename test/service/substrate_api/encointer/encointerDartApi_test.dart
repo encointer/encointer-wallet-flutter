@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/mocks/testTags.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dartApi.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointerDartApi.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
@@ -16,9 +17,9 @@ void main() {
       var cid = CommunityIdentifier.fromFmtString("sqm1v79dF6b");
 
       var data = await encointerDartApi.getAggregatedAccountData(cid, alice);
-
       print("data: ${data.toString()}");
+
       await substrateDartApi.close();
-    });
+    }, tags: encointerNodeE2E);
   });
 }

@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/mocks/testTags.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dartApi.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -11,6 +12,6 @@ void main() {
       expect(encointerApi.rpcMethods.contains("ceremonies_getAggregatedAccountData"), true);
 
       await encointerApi.close();
-    });
+    }, tags: encointerNodeE2E);
   });
 }
