@@ -7,6 +7,22 @@ import 'package:json_annotation/json_annotation.dart';
 // Run: `flutter pub run build_runner build` in order to create/update the *.g.dart
 part 'ceremonies.g.dart';
 
+@JsonSerializable(explicitToJson: true)
+class AggregatedAccountData {
+  AggregatedAccountData(this.global, this.personal);
+
+  AggregatedAccountDataGlobal global;
+  AggregatedAccountDataPersonal personal;
+
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
+
+  factory AggregatedAccountData.fromJson(Map<String, dynamic> json) => _$AggregatedAccountDataFromJson(json);
+  Map<String, dynamic> toJson() => _$AggregatedAccountDataToJson(this);
+}
+
 @JsonSerializable()
 class AggregatedAccountDataPersonal {
   AggregatedAccountDataPersonal(
@@ -30,7 +46,7 @@ class AggregatedAccountDataPersonal {
 
 @JsonSerializable()
 class AggregatedAccountDataGlobal {
-  AggregatedAccountDataGlobal();
+  AggregatedAccountDataGlobal(this.ceremonyPhase, this.ceremonyIndex);
 
   CeremonyPhase ceremonyPhase;
   int ceremonyIndex;

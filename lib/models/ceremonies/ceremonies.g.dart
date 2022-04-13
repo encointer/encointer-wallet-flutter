@@ -6,6 +6,18 @@ part of 'ceremonies.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+AggregatedAccountData _$AggregatedAccountDataFromJson(Map<String, dynamic> json) {
+  return AggregatedAccountData(
+    json['global'] == null ? null : AggregatedAccountDataGlobal.fromJson(json['global'] as Map<String, dynamic>),
+    json['personal'] == null ? null : AggregatedAccountDataPersonal.fromJson(json['personal'] as Map<String, dynamic>),
+  );
+}
+
+Map<String, dynamic> _$AggregatedAccountDataToJson(AggregatedAccountData instance) => <String, dynamic>{
+      'global': instance.global?.toJson(),
+      'personal': instance.personal?.toJson(),
+    };
+
 AggregatedAccountDataPersonal _$AggregatedAccountDataPersonalFromJson(Map<String, dynamic> json) {
   return AggregatedAccountDataPersonal(
     _$enumDecodeNullable(_$ParticipantTypeEnumMap, json['participantType']),
@@ -62,9 +74,10 @@ const _$ParticipantTypeEnumMap = {
 };
 
 AggregatedAccountDataGlobal _$AggregatedAccountDataGlobalFromJson(Map<String, dynamic> json) {
-  return AggregatedAccountDataGlobal()
-    ..ceremonyPhase = _$enumDecodeNullable(_$CeremonyPhaseEnumMap, json['ceremonyPhase'])
-    ..ceremonyIndex = json['ceremonyIndex'] as int;
+  return AggregatedAccountDataGlobal(
+    _$enumDecodeNullable(_$CeremonyPhaseEnumMap, json['ceremonyPhase']),
+    json['ceremonyIndex'] as int,
+  );
 }
 
 Map<String, dynamic> _$AggregatedAccountDataGlobalToJson(AggregatedAccountDataGlobal instance) => <String, dynamic>{
