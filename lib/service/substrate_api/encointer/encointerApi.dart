@@ -13,6 +13,7 @@ import 'package:encointer_wallet/store/encointer/types/proofOfAttendance.dart';
 import 'package:encointer_wallet/utils/format.dart';
 
 import '../../../models/index.dart';
+import '../core/dartApi.dart';
 import 'noTeeApi.dart';
 import 'teeProxyApi.dart';
 
@@ -29,11 +30,13 @@ import 'teeProxyApi.dart';
 const aggregatedAccountDataRpc = "ceremonies_getAggregatedAccountData";
 
 class EncointerApi {
-  EncointerApi(this.jsApi)
+  EncointerApi(this.jsApi, this.dartApi)
       : _noTee = NoTeeApi(jsApi),
         _teeProxy = TeeProxyApi(jsApi);
 
   final JSApi jsApi;
+  final SubstrateDartApi dartApi;
+
   final store = globalAppStore;
   final String _currentPhaseSubscribeChannel = 'currentPhase';
   final String _communityIdentifiersChannel = 'communityIdentifiers';

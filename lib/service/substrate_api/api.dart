@@ -8,6 +8,7 @@ import 'package:encointer_wallet/service/substrate_api/accountApi.dart';
 import 'package:encointer_wallet/service/substrate_api/assetsApi.dart';
 import 'package:encointer_wallet/service/substrate_api/chainApi.dart';
 import 'package:encointer_wallet/service/substrate_api/codecApi.dart';
+import 'package:encointer_wallet/service/substrate_api/core/dartApi.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointerApi.dart';
 import 'package:encointer_wallet/service/substrate_api/types/genExternalLinksParams.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -40,11 +41,15 @@ class Api {
     jsStorage = GetStorage();
     js = JSApi();
 
+    // no need to store this as an instance it is only used by the encointerApi
+    var dartApi = SubstrateDartApi();
+    dartApi.connect(store.settings.endpoint.value);
+
     account = AccountApi(js, fetchAccountData);
     assets = AssetsApi(js);
     chain = ChainApi(js);
     codec = CodecApi(js);
-    encointer = EncointerApi(js);
+    encointer = EncointerApi(js, dartApi);
     ipfs = Ipfs(gateway: store.settings.ipfsGateway);
 
     print("first launch of webview");
