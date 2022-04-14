@@ -13,9 +13,7 @@ part 'communityAccountStore.g.dart';
 ///
 @JsonSerializable(explicitToJson: true)
 class CommunityAccountStore extends _CommunityAccountStore with _$CommunityAccountStore {
-  CommunityAccountStore(
-      {String network, CommunityIdentifier cid, String account, Future<void> Function(String) cacheFn})
-      : super(network: network, cid: cid, account: account, cacheFn: cacheFn);
+  CommunityAccountStore(String network, CommunityIdentifier cid, String account) : super(network, cid, account);
 
   @override
   String toString() {
@@ -27,11 +25,11 @@ class CommunityAccountStore extends _CommunityAccountStore with _$CommunityAccou
 }
 
 abstract class _CommunityAccountStore with Store {
-  _CommunityAccountStore({this.network, this.cid, this.account, this.cacheFn});
+  _CommunityAccountStore(this.network, this.cid, this.account);
 
   /// Function that writes the store to local storage.
   @JsonKey(ignore: true)
-  final Future<void> Function(String) cacheFn;
+  Future<void> Function() cacheFn;
 
   /// The network this store belongs to.
   final String network;
@@ -42,8 +40,6 @@ abstract class _CommunityAccountStore with Store {
   /// The account (SS58) this store belongs to.
   final String account;
 
-  get _cacheKey => '$network${cid.toFmtString()}$account';
-
   /// Contains the meetup data if the account has been assigned to a meetup in this community.
   @observable
   Meetup meetup;
@@ -53,7 +49,7 @@ abstract class _CommunityAccountStore with Store {
     this.meetup = meetup;
 
     if (cacheFn != null && shouldCache) {
-      cacheFn(_cacheKey);
+      cacheFn();
     }
   }
 }

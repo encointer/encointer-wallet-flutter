@@ -6,15 +6,22 @@ part of 'communityAccountStore.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CommunityAccountStore _$CommunityAccountStoreFromJson(Map<String, dynamic> json) {
+CommunityAccountStore _$CommunityAccountStoreFromJson(
+    Map<String, dynamic> json) {
   return CommunityAccountStore(
-    network: json['network'] as String,
-    cid: json['cid'] == null ? null : CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
-    account: json['account'] as String,
-  )..meetup = json['meetup'] == null ? null : Meetup.fromJson(json['meetup'] as Map<String, dynamic>);
+    json['network'] as String,
+    json['cid'] == null
+        ? null
+        : CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
+    json['account'] as String,
+  )..meetup = json['meetup'] == null
+      ? null
+      : Meetup.fromJson(json['meetup'] as Map<String, dynamic>);
 }
 
-Map<String, dynamic> _$CommunityAccountStoreToJson(CommunityAccountStore instance) => <String, dynamic>{
+Map<String, dynamic> _$CommunityAccountStoreToJson(
+        CommunityAccountStore instance) =>
+    <String, dynamic>{
       'network': instance.network,
       'cid': instance.cid?.toJson(),
       'account': instance.account,
@@ -43,11 +50,13 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
     });
   }
 
-  final _$_CommunityAccountStoreActionController = ActionController(name: '_CommunityAccountStore');
+  final _$_CommunityAccountStoreActionController =
+      ActionController(name: '_CommunityAccountStore');
 
   @override
   void setMeetup(Meetup meetup, {dynamic shouldCache = true}) {
-    final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.setMeetup');
+    final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(
+        name: '_CommunityAccountStore.setMeetup');
     try {
       return super.setMeetup(meetup, shouldCache: shouldCache);
     } finally {

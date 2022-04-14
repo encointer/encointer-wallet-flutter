@@ -10,7 +10,8 @@ CommunityStore _$CommunityStoreFromJson(Map<String, dynamic> json) {
   return CommunityStore();
 }
 
-Map<String, dynamic> _$CommunityStoreToJson(CommunityStore instance) => <String, dynamic>{};
+Map<String, dynamic> _$CommunityStoreToJson(CommunityStore instance) =>
+    <String, dynamic>{};
 
 // **************************************************************************
 // StoreGenerator
@@ -19,7 +20,8 @@ Map<String, dynamic> _$CommunityStoreToJson(CommunityStore instance) => <String,
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$CommunityStore on _CommunityStore, Store {
-  final _$_communityAccountStoresAtom = Atom(name: '_CommunityStore._communityAccountStores');
+  final _$_communityAccountStoresAtom =
+      Atom(name: '_CommunityStore._communityAccountStores');
 
   @override
   ObservableMap<String, CommunityAccountStore> get _communityAccountStores {
@@ -28,8 +30,10 @@ mixin _$CommunityStore on _CommunityStore, Store {
   }
 
   @override
-  set _communityAccountStores(ObservableMap<String, CommunityAccountStore> value) {
-    _$_communityAccountStoresAtom.reportWrite(value, super._communityAccountStores, () {
+  set _communityAccountStores(
+      ObservableMap<String, CommunityAccountStore> value) {
+    _$_communityAccountStoresAtom
+        .reportWrite(value, super._communityAccountStores, () {
       super._communityAccountStores = value;
     });
   }
