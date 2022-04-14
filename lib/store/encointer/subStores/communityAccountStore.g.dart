@@ -12,15 +12,6 @@ CommunityAccountStore _$CommunityAccountStoreFromJson(Map<String, dynamic> json)
 }
 
 Map<String, dynamic> _$CommunityAccountStoreToJson(CommunityAccountStore instance) => <String, dynamic>{
-      'meetup': instance.meetup,
-    };
-
-_CommunityAccountStore _$_CommunityAccountStoreFromJson(Map<String, dynamic> json) {
-  return _CommunityAccountStore()
-    ..meetup = json['meetup'] == null ? null : Meetup.fromJson(json['meetup'] as Map<String, dynamic>);
-}
-
-Map<String, dynamic> _$_CommunityAccountStoreToJson(_CommunityAccountStore instance) => <String, dynamic>{
       'meetup': instance.meetup?.toJson(),
     };
 
