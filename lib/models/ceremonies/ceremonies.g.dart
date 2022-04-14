@@ -101,7 +101,7 @@ CommunityReputation _$CommunityReputationFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$CommunityReputationToJson(CommunityReputation instance) => <String, dynamic>{
-      'communityIdentifier': instance.communityIdentifier,
+      'communityIdentifier': instance.communityIdentifier?.toJson(),
       'reputation': _$ReputationEnumMap[instance.reputation],
     };
 

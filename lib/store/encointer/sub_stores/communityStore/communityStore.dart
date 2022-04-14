@@ -35,18 +35,17 @@ abstract class _CommunityStore with Store {
   final CommunityIdentifier cid;
 
   @observable
-  ObservableMap<String, CommunityAccountStore> _communityAccountStores;
+  ObservableMap<String, CommunityAccountStore> communityAccountStores;
 
   @action
   void initCommunityAccountStore(String account) {
-    if (!_communityAccountStores.containsKey(account)) {
+    if (!communityAccountStores.containsKey(account)) {
       _log("Adding new communityAccountStore for cid: ${cid.toFmtString()} and account: $account");
 
       var store = CommunityAccountStore(network, cid, account);
       store.cacheFn = cacheFn;
-      _communityAccountStores[account] = store;
-    }
-    else {
+      communityAccountStores[account] = store;
+    } else {
       _log("Don't add already existing communityAccountStore for cid: ${cid.toFmtString()} and account: $account");
     }
   }
