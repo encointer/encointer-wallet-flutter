@@ -7,11 +7,19 @@ part of 'communityStore.dart';
 // **************************************************************************
 
 CommunityStore _$CommunityStoreFromJson(Map<String, dynamic> json) {
-  return CommunityStore();
+  return CommunityStore(
+    json['network'] as String,
+    json['cid'] == null
+        ? null
+        : CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
+  );
 }
 
 Map<String, dynamic> _$CommunityStoreToJson(CommunityStore instance) =>
-    <String, dynamic>{};
+    <String, dynamic>{
+      'network': instance.network,
+      'cid': instance.cid?.toJson(),
+    };
 
 // **************************************************************************
 // StoreGenerator
@@ -36,6 +44,20 @@ mixin _$CommunityStore on _CommunityStore, Store {
         .reportWrite(value, super._communityAccountStores, () {
       super._communityAccountStores = value;
     });
+  }
+
+  final _$_CommunityStoreActionController =
+      ActionController(name: '_CommunityStore');
+
+  @override
+  void initCommunityAccountStore(String account) {
+    final _$actionInfo = _$_CommunityStoreActionController.startAction(
+        name: '_CommunityStore.initCommunityAccountStore');
+    try {
+      return super.initCommunityAccountStore(account);
+    } finally {
+      _$_CommunityStoreActionController.endAction(_$actionInfo);
+    }
   }
 
   @override
