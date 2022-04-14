@@ -6,11 +6,18 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('CommunityAccountStore', () {
     test('json serialization works', () {
-      var communityAccountStore = CommunityAccountStore();
+      var communityAccountStore = CommunityAccountStore(
+        network: "My Test Network",
+        cid: mediterraneanTestCommunity,
+        account: ALICE_ADDRESS,
+      );
       communityAccountStore
           .setMeetup(Meetup(ParticipantType.Bootstrapper, 2, 3, 10, [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]));
 
-      const Map<String, dynamic> targetJson = {
+      Map<String, dynamic> targetJson = {
+        "network": "My Test Network",
+        "cid": mediterraneanTestCommunity.toJson(),
+        "account": ALICE_ADDRESS,
         "meetup": {
           "participantType": 'Bootstrapper',
           "meetupIndex": 2,
@@ -24,7 +31,10 @@ void main() {
     });
 
     test('json deserialization works', () {
-      const Map<String, dynamic> sourceJson = {
+      Map<String, dynamic> sourceJson = {
+        "network": "My Test Network",
+        "cid": mediterraneanTestCommunity.toJson(),
+        "account": ALICE_ADDRESS,
         "meetup": {
           "participantType": 'Bootstrapper',
           "meetupIndex": 2,
@@ -36,6 +46,9 @@ void main() {
 
       var store = CommunityAccountStore.fromJson(sourceJson);
 
+      expect(store.network, "My Test Network");
+      expect(store.cid, mediterraneanTestCommunity);
+      expect(store.account, ALICE_ADDRESS);
       expect(store.meetup.participantType, ParticipantType.Bootstrapper);
       expect(store.meetup.meetupIndex, 2);
       expect(store.meetup.meetupLocationIndex, 3);
