@@ -12,36 +12,43 @@ import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../models/index.dart';
 
 part 'encointer.g.dart';
 
+final String cacheTxsTransferKey = 'transfer_txs';
+final String encointerCommunityKey = 'wallet_encointer_community';
+final String encointerCommunityMetadataKey = 'wallet_encointer_community_metadata';
+final String encointerCommunitiesKey = 'wallet_encointer_communities';
+final String encointerBootstrappersKey = 'wallet_encointer_bootstrappers';
+final String encointerCommunityLocationsKey = 'wallet_encointer_community_locations';
+final String encointerCommunityReputationsKey = 'wallet_encointer_community_reputations';
+
+// offline meetup cache.
+final String encointerCurrentCeremonyIndexKey = 'wallet_encointer_current_ceremony_index';
+final String encointerCurrentPhaseKey = 'wallet_encointer_current_phase';
+final String encointerMeetupIndexKey = 'wallet_encointer_meetup_index';
+final String encointerMeetupLocationKey = 'wallet_encointer_meetup_location';
+final String encointerMeetupRegistryKey = 'wallet_encointer_meetup_registry';
+final String encointerParticipantsClaimsKey = 'wallet_encointer_participants_claims';
+final String encointerMeetupTimeKey = 'wallet_encointer_meetup_time';
+
+@JsonSerializable(explicitToJson: true)
 class EncointerStore extends _EncointerStore with _$EncointerStore {
-  EncointerStore(AppStore store) : super(store);
+  EncointerStore({AppStore store}) : super(rootStore: store);
+
+  factory EncointerStore.fromJson(Map<String, dynamic> json) => _$EncointerStoreFromJson(json);
+  Map<String, dynamic> toJson() => _$EncointerStoreToJson(this);
 }
 
 abstract class _EncointerStore with Store {
-  _EncointerStore(this.rootStore);
+  _EncointerStore({this.rootStore});
 
+  @JsonKey(ignore: true)
   final AppStore rootStore;
-  final String cacheTxsTransferKey = 'transfer_txs';
-  final String encointerCommunityKey = 'wallet_encointer_community';
-  final String encointerCommunityMetadataKey = 'wallet_encointer_community_metadata';
-  final String encointerCommunitiesKey = 'wallet_encointer_communities';
-  final String encointerBootstrappersKey = 'wallet_encointer_bootstrappers';
-  final String encointerCommunityLocationsKey = 'wallet_encointer_community_locations';
-  final String encointerCommunityReputationsKey = 'wallet_encointer_community_reputations';
-
-  // offline meetup cache.
-  final String encointerCurrentCeremonyIndexKey = 'wallet_encointer_current_ceremony_index';
-  final String encointerCurrentPhaseKey = 'wallet_encointer_current_phase';
-  final String encointerMeetupIndexKey = 'wallet_encointer_meetup_index';
-  final String encointerMeetupLocationKey = 'wallet_encointer_meetup_location';
-  final String encointerMeetupRegistryKey = 'wallet_encointer_meetup_registry';
-  final String encointerParticipantsClaimsKey = 'wallet_encointer_participants_claims';
-  final String encointerMeetupTimeKey = 'wallet_encointer_meetup_time';
 
   // Note: In synchronous code, every modification of an @observable is tracked by mobx and
   // fires a reaction. However, modifications in asynchronous code must be wrapped in
@@ -78,8 +85,9 @@ abstract class _EncointerStore with Store {
   @observable
   int participantIndex;
 
+  /// balanceEntries for respective community: cid.toFmtString() -> BalanceEntry
   @observable
-  ObservableMap<CommunityIdentifier, BalanceEntry> balanceEntries = new ObservableMap();
+  ObservableMap<String, BalanceEntry> balanceEntries = new ObservableMap();
 
   @observable
   List<CommunityIdentifier> communityIdentifiers;
@@ -111,7 +119,7 @@ abstract class _EncointerStore with Store {
 
   // splay tree set does automatically order the keys.
   @observable
-  SplayTreeMap<int, CommunityReputation> reputations;
+  Map<int, CommunityReputation> reputations;
 
   @computed
   get ceremonyIndexForProofOfAttendance {
@@ -142,7 +150,7 @@ abstract class _EncointerStore with Store {
 
   @computed
   BalanceEntry get communityBalanceEntry {
-    return balanceEntries[chosenCid];
+    return balanceEntries[chosenCid.toFmtString()];
   }
 
   @computed
@@ -384,7 +392,7 @@ abstract class _EncointerStore with Store {
   @action
   void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
     print("balanceEntry $balanceEntry added to cid $cid added");
-    balanceEntries[cid] = balanceEntry;
+    balanceEntries[cid.toFmtString()] = balanceEntry;
   }
 
   @action

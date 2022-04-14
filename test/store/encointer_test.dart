@@ -5,6 +5,7 @@ import 'package:encointer_wallet/mocks/substrate_api/mockApi.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/store/encointer/encointer.dart';
 import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -36,20 +37,20 @@ void main() {
 
       store.setMeetupIndex(1);
       expect(1, store.meetupIndex);
-      expect(await store.loadObject(store.encointerMeetupIndexKey), 1);
+      expect(await store.loadObject(encointerMeetupIndexKey), 1);
 
       var loc = Location.fromJson(claim['location']);
       store.setMeetupLocation(loc);
       expect(store.meetupLocation, loc);
-      expect(await store.loadObject(store.encointerMeetupLocationKey), loc.toJson());
+      expect(await store.loadObject(encointerMeetupLocationKey), loc.toJson());
 
       store.setMeetupRegistry(meetupRegistry);
       expect(store.meetupRegistry, meetupRegistry);
-      expect(await store.loadObject(store.encointerMeetupRegistryKey), meetupRegistry);
+      expect(await store.loadObject(encointerMeetupRegistryKey), meetupRegistry);
 
       store.setMeetupTime(2);
       expect(store.meetupTime, 2);
-      expect(await store.loadObject(store.encointerMeetupTimeKey), 2);
+      expect(await store.loadObject(encointerMeetupTimeKey), 2);
     });
   });
 }

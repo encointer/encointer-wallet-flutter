@@ -52,7 +52,7 @@ abstract class _AppStore with Store {
     chain = ChainStore(this);
     chain.loadCache();
 
-    encointer = EncointerStore(this);
+    encointer = EncointerStore(store: this);
     encointer.loadCache();
 
     isReady = true;

@@ -3,6 +3,122 @@
 part of 'encointer.dart';
 
 // **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+EncointerStore _$EncointerStoreFromJson(Map<String, dynamic> json) {
+  return EncointerStore()
+    ..currentPhase = _$enumDecodeNullable(_$CeremonyPhaseEnumMap, json['currentPhase'])
+    ..phaseDurations = (json['phaseDurations'] as Map<String, dynamic>)?.map(
+      (k, e) => MapEntry(_$enumDecodeNullable(_$CeremonyPhaseEnumMap, k), e as int),
+    )
+    ..currentCeremonyIndex = json['currentCeremonyIndex'] as int
+    ..meetupIndex = json['meetupIndex'] as int
+    ..meetupLocation =
+        json['meetupLocation'] == null ? null : Location.fromJson(json['meetupLocation'] as Map<String, dynamic>)
+    ..meetupTime = json['meetupTime'] as int
+    ..meetupRegistry = (json['meetupRegistry'] as List)?.map((e) => e as String)?.toList()
+    ..participantIndex = json['participantIndex'] as int
+    ..balanceEntries = json['balanceEntries'] != null
+        ? ObservableMap<String, BalanceEntry>.of((json['balanceEntries'] as Map<String, dynamic>).map(
+            (k, e) => MapEntry(k, e == null ? null : BalanceEntry.fromJson(e as Map<String, dynamic>)),
+          ))
+        : null
+    ..communityIdentifiers = (json['communityIdentifiers'] as List)
+        ?.map((e) => e == null ? null : CommunityIdentifier.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..bootstrappers = (json['bootstrappers'] as List)?.map((e) => e as String)?.toList()
+    ..communities = (json['communities'] as List)
+        ?.map((e) => e == null ? null : CidName.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..chosenCid =
+        json['chosenCid'] == null ? null : CommunityIdentifier.fromJson(json['chosenCid'] as Map<String, dynamic>)
+    ..communityMetadata = json['communityMetadata'] == null
+        ? null
+        : CommunityMetadata.fromJson(json['communityMetadata'] as Map<String, dynamic>)
+    ..demurrage = (json['demurrage'] as num)?.toDouble()
+    ..participantsClaims = json['participantsClaims'] != null
+        ? ObservableMap<String, ClaimOfAttendance>.of((json['participantsClaims'] as Map<String, dynamic>).map(
+            (k, e) => MapEntry(k, e == null ? null : ClaimOfAttendance.fromJson(e as Map<String, dynamic>)),
+          ))
+        : null
+    ..txsTransfer = json['txsTransfer'] != null
+        ? ObservableList<TransferData>.of((json['txsTransfer'] as List)
+            .map((e) => e == null ? null : TransferData.fromJson(e as Map<String, dynamic>)))
+        : null
+    ..reputations = (json['reputations'] as Map<String, dynamic>)?.map(
+      (k, e) => MapEntry(int.parse(k), e == null ? null : CommunityReputation.fromJson(e as Map<String, dynamic>)),
+    )
+    ..businessRegistry = json['businessRegistry'] != null
+        ? ObservableList<AccountBusinessTuple>.of((json['businessRegistry'] as List)
+            .map((e) => e == null ? null : AccountBusinessTuple.fromJson(e as Map<String, dynamic>)))
+        : null
+    ..communityLocations = json['communityLocations'] != null
+        ? ObservableList<Location>.of((json['communityLocations'] as List)
+            .map((e) => e == null ? null : Location.fromJson(e as Map<String, dynamic>)))
+        : null;
+}
+
+Map<String, dynamic> _$EncointerStoreToJson(EncointerStore instance) => <String, dynamic>{
+      'currentPhase': _$CeremonyPhaseEnumMap[instance.currentPhase],
+      'phaseDurations': instance.phaseDurations?.map((k, e) => MapEntry(_$CeremonyPhaseEnumMap[k], e)),
+      'currentCeremonyIndex': instance.currentCeremonyIndex,
+      'meetupIndex': instance.meetupIndex,
+      'meetupLocation': instance.meetupLocation?.toJson(),
+      'meetupTime': instance.meetupTime,
+      'meetupRegistry': instance.meetupRegistry,
+      'participantIndex': instance.participantIndex,
+      'balanceEntries': instance.balanceEntries?.map((k, e) => MapEntry(k, e?.toJson())),
+      'communityIdentifiers': instance.communityIdentifiers?.map((e) => e?.toJson())?.toList(),
+      'bootstrappers': instance.bootstrappers,
+      'communities': instance.communities?.map((e) => e?.toJson())?.toList(),
+      'chosenCid': instance.chosenCid?.toJson(),
+      'communityMetadata': instance.communityMetadata?.toJson(),
+      'demurrage': instance.demurrage,
+      'participantsClaims': instance.participantsClaims?.map((k, e) => MapEntry(k, e?.toJson())),
+      'txsTransfer': instance.txsTransfer?.map((e) => e?.toJson())?.toList(),
+      'reputations': instance.reputations?.map((k, e) => MapEntry(k.toString(), e?.toJson())),
+      'businessRegistry': instance.businessRegistry?.map((e) => e?.toJson())?.toList(),
+      'communityLocations': instance.communityLocations?.map((e) => e?.toJson())?.toList(),
+    };
+
+T _$enumDecode<T>(
+  Map<T, dynamic> enumValues,
+  dynamic source, {
+  T unknownValue,
+}) {
+  if (source == null) {
+    throw ArgumentError('A value must be provided. Supported values: '
+        '${enumValues.values.join(', ')}');
+  }
+
+  final value = enumValues.entries.singleWhere((e) => e.value == source, orElse: () => null)?.key;
+
+  if (value == null && unknownValue == null) {
+    throw ArgumentError('`$source` is not one of the supported values: '
+        '${enumValues.values.join(', ')}');
+  }
+  return value ?? unknownValue;
+}
+
+T _$enumDecodeNullable<T>(
+  Map<T, dynamic> enumValues,
+  dynamic source, {
+  T unknownValue,
+}) {
+  if (source == null) {
+    return null;
+  }
+  return _$enumDecode<T>(enumValues, source, unknownValue: unknownValue);
+}
+
+const _$CeremonyPhaseEnumMap = {
+  CeremonyPhase.REGISTERING: 'REGISTERING',
+  CeremonyPhase.ASSIGNING: 'ASSIGNING',
+  CeremonyPhase.ATTESTING: 'ATTESTING',
+};
+
+// **************************************************************************
 // StoreGenerator
 // **************************************************************************
 
@@ -223,13 +339,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
   final _$balanceEntriesAtom = Atom(name: '_EncointerStore.balanceEntries');
 
   @override
-  ObservableMap<CommunityIdentifier, BalanceEntry> get balanceEntries {
+  ObservableMap<String, BalanceEntry> get balanceEntries {
     _$balanceEntriesAtom.reportRead();
     return super.balanceEntries;
   }
 
   @override
-  set balanceEntries(ObservableMap<CommunityIdentifier, BalanceEntry> value) {
+  set balanceEntries(ObservableMap<String, BalanceEntry> value) {
     _$balanceEntriesAtom.reportWrite(value, super.balanceEntries, () {
       super.balanceEntries = value;
     });
@@ -358,13 +474,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
   final _$reputationsAtom = Atom(name: '_EncointerStore.reputations');
 
   @override
-  SplayTreeMap<int, CommunityReputation> get reputations {
+  Map<int, CommunityReputation> get reputations {
     _$reputationsAtom.reportRead();
     return super.reputations;
   }
 
   @override
-  set reputations(SplayTreeMap<int, CommunityReputation> value) {
+  set reputations(Map<int, CommunityReputation> value) {
     _$reputationsAtom.reportWrite(value, super.reputations, () {
       super.reputations = value;
     });
