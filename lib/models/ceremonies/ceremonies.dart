@@ -34,6 +34,8 @@ class AggregatedAccountDataPersonal {
   int meetupTime;
   List<String> meetupRegistry;
 
+  get meetup => Meetup(participantType, meetupIndex, meetupLocationIndex, meetupTime, meetupRegistry);
+
   @override
   String toString() {
     return jsonEncode(this);

@@ -37,6 +37,18 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
     });
   }
 
+  final _$_CommunityAccountStoreActionController = ActionController(name: '_CommunityAccountStore');
+
+  @override
+  void setMeetup(Meetup meetup) {
+    final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.setMeetup');
+    try {
+      return super.setMeetup(meetup);
+    } finally {
+      _$_CommunityAccountStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''

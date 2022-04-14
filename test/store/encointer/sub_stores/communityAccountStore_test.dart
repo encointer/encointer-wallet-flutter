@@ -1,6 +1,6 @@
 import 'package:encointer_wallet/mocks/testUtils.dart';
 import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
-import 'package:encointer_wallet/store/encointer/sub_stores/communityAccountStore.dart';
+import 'package:encointer_wallet/store/encointer/sub_stores/communityStore/communityAccountStore/communityAccountStore.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

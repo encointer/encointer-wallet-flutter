@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../../models/index.dart';
+import '../../../../../models/index.dart';
 
 part 'communityAccountStore.g.dart';
 
@@ -24,6 +24,11 @@ class CommunityAccountStore extends _CommunityAccountStore with _$CommunityAccou
 }
 
 abstract class _CommunityAccountStore with Store {
+  _CommunityAccountStore();
+
+  @JsonKey(ignore: true)
+  Function cacheFn;
+
   /// Contains the meetup data if the account has been assigned to a meetup in this community.
   @observable
   Meetup meetup;
