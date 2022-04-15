@@ -59,11 +59,16 @@ abstract class _AppStore with Store {
     String encointerFinalCacheKey = "$encointerCachePrefix-$networkInfo";
     var cachedEncointerStore = await localStorage.getObject(encointerFinalCacheKey);
 
-    if (cachedEncointerStore == null) {
+    if (cachedEncointerStore != null) {
+      _log("Found cached encointer store");
+      encointer = EncointerStore.fromJson(cachedEncointerStore);
+    } else {
+      _log("Initializing new encointer store.");
       encointer = EncointerStore(networkInfo, store: this);
-      // Cache the entire encointer store at once: Check if this is too expensive ???
-      encointer.cacheFn = () => localStorage.setObject(encointerFinalCacheKey, encointer.toJson());
     }
+
+    // Cache the entire encointer store at once: Check if this is too expensive ???
+    encointer.cacheFn = () => localStorage.setObject(encointerFinalCacheKey, encointer.toJson());
 
     isReady = true;
   }
@@ -88,4 +93,8 @@ abstract class _AppStore with Store {
   Future<void> loadAccountCache() {
     return Future.wait([assets.clearTxs(), assets.loadAccountCache(), encointer.loadCache()]);
   }
+}
+
+void _log(String msg) {
+  print("[AppStore] $msg");
 }
