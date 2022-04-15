@@ -145,7 +145,7 @@ class _WalletAppState extends State<WalletApp> {
                           child: FutureBuilder<int>(
                             future: _initStore(context),
                             builder: (_, AsyncSnapshot<int> snapshot) {
-                              if (snapshot.hasData) {
+                              if (snapshot.hasData && _appStore.isReady) {
                                 return snapshot.data > 0 ? EncointerHomePage(_appStore) : CreateAccountEntryPage();
                               } else {
                                 return CupertinoActivityIndicator();
