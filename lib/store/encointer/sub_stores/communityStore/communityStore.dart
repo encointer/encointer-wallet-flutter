@@ -35,7 +35,7 @@ abstract class _CommunityStore with Store {
   final CommunityIdentifier cid;
 
   @observable
-  ObservableMap<String, CommunityAccountStore> communityAccountStores;
+  ObservableMap<String, CommunityAccountStore> communityAccountStores = new ObservableMap( );
 
   @action
   void initCommunityAccountStore(String address) {

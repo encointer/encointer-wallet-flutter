@@ -178,13 +178,13 @@ abstract class _EncointerStore with Store {
   }
 
   @observable
-  ObservableMap<String, CommunityStore> communityStores;
+  ObservableMap<String, CommunityStore> communityStores = new ObservableMap();
 
   @action
   void initCommunityStore(CommunityIdentifier cid, String address) {
     var cidFmt = cid.toFmtString();
     if (!communityStores.containsKey(cidFmt)) {
-      _log("Adding new communityAccountStore for cid: ${cid.toFmtString()}");
+      _log("Adding new communityStore for cid: ${cid.toFmtString()}");
 
       var communityStore = CommunityStore(network, cid);
       communityStore.cacheFn = cacheFn;
@@ -373,6 +373,10 @@ abstract class _EncointerStore with Store {
       cacheObject(encointerCommunityKey, cid);
       setCommunityMetadata();
       resetState();
+
+      if (cid != null) {
+        initCommunityStore(cid, rootStore.account.currentAddress);
+      }
     }
 
     if (rootStore.settings.endpointIsNoTee) {
