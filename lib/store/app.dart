@@ -62,6 +62,7 @@ abstract class _AppStore with Store {
     if (cachedEncointerStore != null) {
       _log("Found cached encointer store");
       encointer = EncointerStore.fromJson(cachedEncointerStore);
+      encointer.rootStore = this;
     } else {
       _log("Initializing new encointer store.");
       encointer = EncointerStore(networkInfo, store: this);
