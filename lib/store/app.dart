@@ -10,6 +10,8 @@ part 'app.g.dart';
 
 AppStore globalAppStore = AppStore(LocalStorage());
 
+const encointerCachePrefix = 'encointer-store';
+
 class AppStore extends _AppStore with _$AppStore {
   AppStore(LocalStorage localStorage) : super(localStorage);
 }
@@ -52,8 +54,16 @@ abstract class _AppStore with Store {
     chain = ChainStore(this);
     chain.loadCache();
 
-    encointer = EncointerStore(store: this);
-    encointer.loadCache();
+    // need to call this after settings was initialized
+    String networkInfo = settings.endpoint.info;
+    String encointerFinalCacheKey = "$encointerCachePrefix-$networkInfo";
+    var cachedEncointerStore = await localStorage.getObject(encointerFinalCacheKey);
+
+    if (cachedEncointerStore == null) {
+      encointer = EncointerStore(networkInfo, store: this);
+      // Cache the entire encointer store at once: Check if this is too expensive ???
+      encointer.cacheFn = () => localStorage.setObject(encointerFinalCacheKey, encointer.toJson());
+    }
 
     isReady = true;
   }

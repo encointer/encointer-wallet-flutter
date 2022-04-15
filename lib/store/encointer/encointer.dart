@@ -16,6 +16,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../models/index.dart';
+import 'sub_stores/communityStore/communityStore.dart';
 
 part 'encointer.g.dart';
 
@@ -38,14 +39,14 @@ final String encointerMeetupTimeKey = 'wallet_encointer_meetup_time';
 
 @JsonSerializable(explicitToJson: true)
 class EncointerStore extends _EncointerStore with _$EncointerStore {
-  EncointerStore({AppStore store}) : super(rootStore: store);
+  EncointerStore(String network, {AppStore store}) : super(network, rootStore: store);
 
   factory EncointerStore.fromJson(Map<String, dynamic> json) => _$EncointerStoreFromJson(json);
   Map<String, dynamic> toJson() => _$EncointerStoreToJson(this);
 }
 
 abstract class _EncointerStore with Store {
-  _EncointerStore({this.rootStore});
+  _EncointerStore(this.network, {this.rootStore});
 
   @JsonKey(ignore: true)
   final AppStore rootStore;
@@ -57,6 +58,12 @@ abstract class _EncointerStore with Store {
   // Note2: In case of Map/List: If the variable is declared as plain Map/List with `@observable` annotated, mobx
   // tracks variable assignment but not if individual items are changed. If this is wanted, the variable must be
   // declared as `ObservableList/-Map`.
+
+  @JsonKey(ignore: true)
+  Future<void> Function() cacheFn;
+
+  /// The encointer network this store belongs to
+  final String network;
 
   @observable
   CeremonyPhase currentPhase;
@@ -168,6 +175,23 @@ abstract class _EncointerStore with Store {
   @computed
   get communitiesContainsChosenCid {
     return chosenCid != null && communities.isNotEmpty && communities.where((cn) => cn.cid == chosenCid).isNotEmpty;
+  }
+
+  @observable
+  ObservableMap<String, CommunityStore> communityStores;
+
+  @action
+  void initCommunityStore(CommunityIdentifier cid) {
+    var cidFmt = cid.toFmtString();
+    if (!communityStores.containsKey(cidFmt)) {
+      _log("Adding new communityAccountStore for cid: ${cid.toFmtString()}");
+
+      var store = CommunityStore(network, cid);
+      store.cacheFn = cacheFn;
+      communityStores[cidFmt] = store;
+    } else {
+      _log("Don't add already existing communityAccountStore for cid: ${cid.toFmtString()}");
+    }
   }
 
   double applyDemurrage(BalanceEntry entry) {
@@ -578,4 +602,8 @@ abstract class _EncointerStore with Store {
   int get numberOfParticipantsAtUpcomingCeremony {
     return meetupRegistry.length;
   }
+}
+
+_log(String msg) {
+  print("[EncointerStore $msg");
 }

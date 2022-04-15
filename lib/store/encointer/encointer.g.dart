@@ -7,7 +7,9 @@ part of 'encointer.dart';
 // **************************************************************************
 
 EncointerStore _$EncointerStoreFromJson(Map<String, dynamic> json) {
-  return EncointerStore()
+  return EncointerStore(
+    json['network'] as String,
+  )
     ..currentPhase = _$enumDecodeNullable(_$CeremonyPhaseEnumMap, json['currentPhase'])
     ..phaseDurations = (json['phaseDurations'] as Map<String, dynamic>)?.map(
       (k, e) => MapEntry(_$enumDecodeNullable(_$CeremonyPhaseEnumMap, k), e as int),
@@ -56,10 +58,16 @@ EncointerStore _$EncointerStoreFromJson(Map<String, dynamic> json) {
     ..communityLocations = json['communityLocations'] != null
         ? ObservableList<Location>.of((json['communityLocations'] as List)
             .map((e) => e == null ? null : Location.fromJson(e as Map<String, dynamic>)))
+        : null
+    ..communityStores = json['communityStores'] != null
+        ? ObservableMap<String, CommunityStore>.of((json['communityStores'] as Map<String, dynamic>).map(
+            (k, e) => MapEntry(k, e == null ? null : CommunityStore.fromJson(e as Map<String, dynamic>)),
+          ))
         : null;
 }
 
 Map<String, dynamic> _$EncointerStoreToJson(EncointerStore instance) => <String, dynamic>{
+      'network': instance.network,
       'currentPhase': _$CeremonyPhaseEnumMap[instance.currentPhase],
       'phaseDurations': instance.phaseDurations?.map((k, e) => MapEntry(_$CeremonyPhaseEnumMap[k], e)),
       'currentCeremonyIndex': instance.currentCeremonyIndex,
@@ -80,6 +88,7 @@ Map<String, dynamic> _$EncointerStoreToJson(EncointerStore instance) => <String,
       'reputations': instance.reputations?.map((k, e) => MapEntry(k.toString(), e?.toJson())),
       'businessRegistry': instance.businessRegistry?.map((e) => e?.toJson())?.toList(),
       'communityLocations': instance.communityLocations?.map((e) => e?.toJson())?.toList(),
+      'communityStores': instance.communityStores?.map((k, e) => MapEntry(k, e?.toJson())),
     };
 
 T _$enumDecode<T>(
@@ -516,6 +525,21 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
+  final _$communityStoresAtom = Atom(name: '_EncointerStore.communityStores');
+
+  @override
+  ObservableMap<String, CommunityStore> get communityStores {
+    _$communityStoresAtom.reportRead();
+    return super.communityStores;
+  }
+
+  @override
+  set communityStores(ObservableMap<String, CommunityStore> value) {
+    _$communityStoresAtom.reportWrite(value, super.communityStores, () {
+      super.communityStores = value;
+    });
+  }
+
   final _$setTransferTxsAsyncAction = AsyncAction('_EncointerStore.setTransferTxs');
 
   @override
@@ -538,6 +562,16 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   final _$_EncointerStoreActionController = ActionController(name: '_EncointerStore');
+
+  @override
+  void initCommunityStore(CommunityIdentifier cid) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.initCommunityStore');
+    try {
+      return super.initCommunityStore(cid);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void setCurrentPhase(CeremonyPhase phase) {
@@ -782,6 +816,7 @@ txsTransfer: ${txsTransfer},
 reputations: ${reputations},
 businessRegistry: ${businessRegistry},
 communityLocations: ${communityLocations},
+communityStores: ${communityStores},
 currentPhaseDuration: ${currentPhaseDuration},
 scannedClaimsCount: ${scannedClaimsCount},
 ceremonyIndexForProofOfAttendance: ${ceremonyIndexForProofOfAttendance},
