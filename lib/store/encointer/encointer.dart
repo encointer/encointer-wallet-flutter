@@ -49,7 +49,7 @@ abstract class _EncointerStore with Store {
   _EncointerStore(this.network, {this.rootStore});
 
   @JsonKey(ignore: true)
-  final AppStore rootStore;
+  AppStore rootStore;
 
   // Note: In synchronous code, every modification of an @observable is tracked by mobx and
   // fires a reaction. However, modifications in asynchronous code must be wrapped in
