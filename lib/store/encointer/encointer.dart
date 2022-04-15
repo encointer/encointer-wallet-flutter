@@ -157,7 +157,7 @@ abstract class _EncointerStore with Store {
 
   @computed
   BalanceEntry get communityBalanceEntry {
-    return balanceEntries[chosenCid.toFmtString()];
+    return chosenCid != null ? balanceEntries[chosenCid.toFmtString()] : null;
   }
 
   @computed
