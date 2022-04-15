@@ -83,13 +83,13 @@ class CommunityReputation {
 
 @JsonSerializable()
 class Meetup {
-  Meetup(this.participantType, this.meetupIndex, this.meetupLocationIndex, this.meetupTime, this.meetupRegistry);
+  Meetup(this.participantType, this.index, this.locationIndex, this.time, this.registry);
 
   ParticipantType participantType;
-  int meetupIndex;
-  int meetupLocationIndex;
-  int meetupTime;
-  List<String> meetupRegistry;
+  int index;
+  int locationIndex;
+  int time;
+  List<String> registry;
 
   @override
   String toString() {
