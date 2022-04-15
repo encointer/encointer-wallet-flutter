@@ -75,11 +75,6 @@ class MockApiEncointer extends EncointerApi {
   }
 
   @override
-  Future<CommunityMetadata> getCommunityMetadata() async {
-    return store.encointer.communityMetadata;
-  }
-
-  @override
   Future<List<CidName>> communitiesGetAll() async {
     return store.encointer.communities;
   }

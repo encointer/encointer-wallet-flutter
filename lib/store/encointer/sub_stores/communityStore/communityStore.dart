@@ -35,7 +35,19 @@ abstract class _CommunityStore with Store {
   final CommunityIdentifier cid;
 
   @observable
-  ObservableMap<String, CommunityAccountStore> communityAccountStores = new ObservableMap( );
+  CommunityMetadata communityMetadata;
+
+  @computed
+  String get name => communityMetadata?.name;
+
+  @computed
+  String get symbol => communityMetadata?.symbol;
+
+  @computed
+  String get assetsCid => communityMetadata?.assets;
+
+  @observable
+  ObservableMap<String, CommunityAccountStore> communityAccountStores = new ObservableMap();
 
   @action
   void initCommunityAccountStore(String address) {
@@ -48,6 +60,12 @@ abstract class _CommunityStore with Store {
     } else {
       _log("Don't add already existing communityAccountStore for cid: ${cid.toFmtString()} and account: $address");
     }
+  }
+
+  @action
+  void setCommunityMetadata([CommunityMetadata meta]) {
+    _log("set communityMetadata to $meta");
+    communityMetadata = meta;
   }
 }
 

@@ -81,7 +81,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
   List<Widget> _getBalances() {
     final TextStyle h3 = Theme.of(context).textTheme.headline3;
-    CommunityMetadata cm = store.encointer.communityMetadata;
+    CommunityMetadata cm = store.encointer.community?.metadata;
     String name = cm != null ? cm.name : '';
     String symbol = cm != null ? cm.symbol : '';
     final String tokenView = Fmt.tokenView(symbol);
@@ -92,7 +92,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
           leading: CommunityIcon(
             store: store,
             icon: FutureBuilder<SvgPicture>(
-              future: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid),
+              future: webApi.ipfs.getCommunityIcon(store.encointer.community?.assetsCid),
               builder: (_, AsyncSnapshot<SvgPicture> snapshot) {
                 if (snapshot.hasData) {
                   return snapshot.data;

@@ -109,9 +109,6 @@ abstract class _EncointerStore with Store {
   CommunityIdentifier chosenCid;
 
   @observable
-  CommunityMetadata communityMetadata;
-
-  @observable
   double demurrage;
 
   // claimantPublic -> ClaimOfAttendance
@@ -147,15 +144,6 @@ abstract class _EncointerStore with Store {
   ObservableList<Location> communityLocations = new ObservableList();
 
   @computed
-  String get communityName => communityMetadata?.name;
-
-  @computed
-  String get communitySymbol => communityMetadata?.symbol;
-
-  @computed
-  String get communityIconsCid => communityMetadata?.assets;
-
-  @computed
   BalanceEntry get communityBalanceEntry {
     return chosenCid != null ? balanceEntries[chosenCid.toFmtString()] : null;
   }
@@ -179,6 +167,11 @@ abstract class _EncointerStore with Store {
 
   @observable
   ObservableMap<String, CommunityStore> communityStores = new ObservableMap();
+
+  @computed
+  get community {
+    return chosenCid != null ? communityStores[chosenCid.toFmtString()] : null;
+  }
 
   @action
   void initCommunityStore(CommunityIdentifier cid, String address) {
@@ -337,13 +330,6 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setCommunityMetadata([CommunityMetadata meta]) {
-    print("store: set communityMetadata to $meta");
-    communityMetadata = meta;
-    cacheObject(encointerCommunityMetadataKey, meta);
-  }
-
-  @action
   void setCommunities(List<CidName> c) {
     print("store: set communities to $c");
     communities = c;
@@ -371,7 +357,7 @@ abstract class _EncointerStore with Store {
     if (chosenCid != cid) {
       chosenCid = cid;
       cacheObject(encointerCommunityKey, cid);
-      setCommunityMetadata();
+      community?.setCommunityMetadata();
       resetState();
 
       if (cid != null) {
@@ -476,11 +462,7 @@ abstract class _EncointerStore with Store {
       chosenCid = CommunityIdentifier.fromJson(cachedCid);
       print("found cached choice of cid. will recover it: " + chosenCid.toFmtString());
     }
-    var cachedCommunityMetadata = await loadObject(encointerCommunityMetadataKey);
-    if (cachedCommunityMetadata != null) {
-      communityMetadata = CommunityMetadata.fromJson(cachedCommunityMetadata);
-      print("found cached community metadata. will recover it: " + cachedCommunityMetadata.toString());
-    }
+
     List<dynamic> cachedCommunitiesInternalList = await loadObject(encointerCommunitiesKey);
     if (cachedCommunitiesInternalList != null) {
       List<CidName> cachedCommunities = cachedCommunitiesInternalList.map((s) => CidName.fromJson(s)).toList();

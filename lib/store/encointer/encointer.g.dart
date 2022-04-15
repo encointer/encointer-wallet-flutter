@@ -35,9 +35,6 @@ EncointerStore _$EncointerStoreFromJson(Map<String, dynamic> json) {
         ?.toList()
     ..chosenCid =
         json['chosenCid'] == null ? null : CommunityIdentifier.fromJson(json['chosenCid'] as Map<String, dynamic>)
-    ..communityMetadata = json['communityMetadata'] == null
-        ? null
-        : CommunityMetadata.fromJson(json['communityMetadata'] as Map<String, dynamic>)
     ..demurrage = (json['demurrage'] as num)?.toDouble()
     ..participantsClaims = json['participantsClaims'] != null
         ? ObservableMap<String, ClaimOfAttendance>.of((json['participantsClaims'] as Map<String, dynamic>).map(
@@ -81,7 +78,6 @@ Map<String, dynamic> _$EncointerStoreToJson(EncointerStore instance) => <String,
       'bootstrappers': instance.bootstrappers,
       'communities': instance.communities?.map((e) => e?.toJson())?.toList(),
       'chosenCid': instance.chosenCid?.toJson(),
-      'communityMetadata': instance.communityMetadata?.toJson(),
       'demurrage': instance.demurrage,
       'participantsClaims': instance.participantsClaims?.map((k, e) => MapEntry(k, e?.toJson())),
       'txsTransfer': instance.txsTransfer?.map((e) => e?.toJson())?.toList(),
@@ -153,24 +149,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
       (_$ceremonyIndexForProofOfAttendanceComputed ??= Computed<dynamic>(() => super.ceremonyIndexForProofOfAttendance,
               name: '_EncointerStore.ceremonyIndexForProofOfAttendance'))
           .value;
-  Computed<String> _$communityNameComputed;
-
-  @override
-  String get communityName =>
-      (_$communityNameComputed ??= Computed<String>(() => super.communityName, name: '_EncointerStore.communityName'))
-          .value;
-  Computed<String> _$communitySymbolComputed;
-
-  @override
-  String get communitySymbol => (_$communitySymbolComputed ??=
-          Computed<String>(() => super.communitySymbol, name: '_EncointerStore.communitySymbol'))
-      .value;
-  Computed<String> _$communityIconsCidComputed;
-
-  @override
-  String get communityIconsCid => (_$communityIconsCidComputed ??=
-          Computed<String>(() => super.communityIconsCid, name: '_EncointerStore.communityIconsCid'))
-      .value;
   Computed<BalanceEntry> _$communityBalanceEntryComputed;
 
   @override
@@ -195,6 +173,11 @@ mixin _$EncointerStore on _EncointerStore, Store {
       (_$communitiesContainsChosenCidComputed ??= Computed<dynamic>(() => super.communitiesContainsChosenCid,
               name: '_EncointerStore.communitiesContainsChosenCid'))
           .value;
+  Computed<dynamic> _$communityComputed;
+
+  @override
+  dynamic get community =>
+      (_$communityComputed ??= Computed<dynamic>(() => super.community, name: '_EncointerStore.community')).value;
   Computed<bool> _$isRegisteredComputed;
 
   @override
@@ -417,21 +400,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   set chosenCid(CommunityIdentifier value) {
     _$chosenCidAtom.reportWrite(value, super.chosenCid, () {
       super.chosenCid = value;
-    });
-  }
-
-  final _$communityMetadataAtom = Atom(name: '_EncointerStore.communityMetadata');
-
-  @override
-  CommunityMetadata get communityMetadata {
-    _$communityMetadataAtom.reportRead();
-    return super.communityMetadata;
-  }
-
-  @override
-  set communityMetadata(CommunityMetadata value) {
-    _$communityMetadataAtom.reportWrite(value, super.communityMetadata, () {
-      super.communityMetadata = value;
     });
   }
 
@@ -674,16 +642,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setCommunityMetadata([CommunityMetadata meta]) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunityMetadata');
-    try {
-      return super.setCommunityMetadata(meta);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setCommunities(List<CidName> c) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunities');
     try {
@@ -809,7 +767,6 @@ communityIdentifiers: ${communityIdentifiers},
 bootstrappers: ${bootstrappers},
 communities: ${communities},
 chosenCid: ${chosenCid},
-communityMetadata: ${communityMetadata},
 demurrage: ${demurrage},
 participantsClaims: ${participantsClaims},
 txsTransfer: ${txsTransfer},
@@ -820,13 +777,11 @@ communityStores: ${communityStores},
 currentPhaseDuration: ${currentPhaseDuration},
 scannedClaimsCount: ${scannedClaimsCount},
 ceremonyIndexForProofOfAttendance: ${ceremonyIndexForProofOfAttendance},
-communityName: ${communityName},
-communitySymbol: ${communitySymbol},
-communityIconsCid: ${communityIconsCid},
 communityBalanceEntry: ${communityBalanceEntry},
 communityBalance: ${communityBalance},
 isAssigned: ${isAssigned},
 communitiesContainsChosenCid: ${communitiesContainsChosenCid},
+community: ${community},
 isRegistered: ${isRegistered},
 showRegisterButton: ${showRegisterButton},
 showStartCeremonyButton: ${showStartCeremonyButton},

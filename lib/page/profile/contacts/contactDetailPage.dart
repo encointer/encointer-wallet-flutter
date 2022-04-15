@@ -141,7 +141,7 @@ class ContactDetailPage extends StatelessWidget {
                     TransferPage.route,
                     arguments: TransferPageParams(
                       cid: store.encointer.chosenCid,
-                      communitySymbol: store.encointer.communitySymbol,
+                      communitySymbol: store.encointer.community?.symbol,
                       recipient: account.address,
                       amount: null,
                       redirect: '/',

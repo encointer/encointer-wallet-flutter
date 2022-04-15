@@ -215,7 +215,7 @@ class EncointerApi {
         .then((m) => CommunityMetadata.fromJson(m));
 
     print("api: community metadata: " + meta.toString());
-    store.encointer.setCommunityMetadata(meta);
+    store.encointer.community?.setCommunityMetadata(meta);
   }
 
   /// Queries the Communities and the Balances pallet:
