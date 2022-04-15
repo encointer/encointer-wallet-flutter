@@ -48,11 +48,11 @@ mixin _$CommunityStore on _CommunityStore, Store {
   final _$_CommunityStoreActionController = ActionController(name: '_CommunityStore');
 
   @override
-  void initCommunityAccountStore(String account) {
+  void initCommunityAccountStore(String address) {
     final _$actionInfo =
         _$_CommunityStoreActionController.startAction(name: '_CommunityStore.initCommunityAccountStore');
     try {
-      return super.initCommunityAccountStore(account);
+      return super.initCommunityAccountStore(address);
     } finally {
       _$_CommunityStoreActionController.endAction(_$actionInfo);
     }

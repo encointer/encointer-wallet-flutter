@@ -13,7 +13,7 @@ part 'communityAccountStore.g.dart';
 ///
 @JsonSerializable(explicitToJson: true)
 class CommunityAccountStore extends _CommunityAccountStore with _$CommunityAccountStore {
-  CommunityAccountStore(String network, CommunityIdentifier cid, String account) : super(network, cid, account);
+  CommunityAccountStore(String network, CommunityIdentifier cid, String address) : super(network, cid, address);
 
   @override
   String toString() {
@@ -25,7 +25,7 @@ class CommunityAccountStore extends _CommunityAccountStore with _$CommunityAccou
 }
 
 abstract class _CommunityAccountStore with Store {
-  _CommunityAccountStore(this.network, this.cid, this.account);
+  _CommunityAccountStore(this.network, this.cid, this.address);
 
   /// Function that writes the store to local storage.
   @JsonKey(ignore: true)
@@ -38,7 +38,7 @@ abstract class _CommunityAccountStore with Store {
   final CommunityIdentifier cid;
 
   /// The account (SS58) this store belongs to.
-  final String account;
+  final String address;
 
   /// Contains the meetup data if the account has been assigned to a meetup in this community.
   @observable

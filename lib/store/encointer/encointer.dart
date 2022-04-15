@@ -181,14 +181,16 @@ abstract class _EncointerStore with Store {
   ObservableMap<String, CommunityStore> communityStores;
 
   @action
-  void initCommunityStore(CommunityIdentifier cid) {
+  void initCommunityStore(CommunityIdentifier cid, String address) {
     var cidFmt = cid.toFmtString();
     if (!communityStores.containsKey(cidFmt)) {
       _log("Adding new communityAccountStore for cid: ${cid.toFmtString()}");
 
-      var store = CommunityStore(network, cid);
-      store.cacheFn = cacheFn;
-      communityStores[cidFmt] = store;
+      var communityStore = CommunityStore(network, cid);
+      communityStore.cacheFn = cacheFn;
+      communityStore.initCommunityAccountStore(address);
+
+      communityStores[cidFmt] = communityStore;
     } else {
       _log("Don't add already existing communityAccountStore for cid: ${cid.toFmtString()}");
     }

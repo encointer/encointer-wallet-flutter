@@ -564,10 +564,10 @@ mixin _$EncointerStore on _EncointerStore, Store {
   final _$_EncointerStoreActionController = ActionController(name: '_EncointerStore');
 
   @override
-  void initCommunityStore(CommunityIdentifier cid) {
+  void initCommunityStore(CommunityIdentifier cid, String address) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.initCommunityStore');
     try {
-      return super.initCommunityStore(cid);
+      return super.initCommunityStore(cid, address);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }

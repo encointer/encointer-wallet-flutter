@@ -49,7 +49,7 @@ void main() {
 
       expect(store.network, "My Test Network");
       expect(store.cid, mediterraneanTestCommunity);
-      expect(store.account, ALICE_ADDRESS);
+      expect(store.address, ALICE_ADDRESS);
       expect(store.meetup.participantType, ParticipantType.Bootstrapper);
       expect(store.meetup.meetupIndex, 2);
       expect(store.meetup.meetupLocationIndex, 3);
