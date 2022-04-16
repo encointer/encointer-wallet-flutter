@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dartApi.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
@@ -25,7 +23,6 @@ class EncointerDartApi {
   Future<Map<CommunityIdentifier, BalanceEntry>> getAllBalances(String account) {
     return _dartApi.rpc("encointer_getAllBalances", [account]).then((data) {
       print(data);
-      var cid = CommunityIdentifier.fromJson(json("{digest: 0xf08c911c, geohash: 0x73716d3176}"));
       return Map.fromIterable(data,
           key: (bal) => CommunityIdentifier.fromJson(bal[0]), value: (bal) => BalanceEntry.fromJson(bal[1]));
     });
