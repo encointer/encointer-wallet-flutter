@@ -34,7 +34,7 @@ class _ProfileState extends State<Profile> {
 
   Future<void> _onSelect(AccountData account, String address) async {
     if (address != store.account.currentAddress) {
-      print("changing from addres ${store.account.currentAddress} to $address");
+      print("changing from address ${store.account.currentAddress} to $address");
 
       store.account.setCurrentAccount(account.pubKey);
       await store.loadAccountCache();
