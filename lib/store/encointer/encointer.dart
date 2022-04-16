@@ -102,7 +102,6 @@ abstract class _EncointerStore with Store {
   @observable
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
 
-  // splay tree set does automatically order the keys.
   @observable
   Map<int, CommunityReputation> reputations;
 
@@ -187,6 +186,7 @@ abstract class _EncointerStore with Store {
     print("store: set currentPhase to $phase");
     if (currentPhase != phase) {
       currentPhase = phase;
+      cacheFn();
     }
     // update depending values without awaiting
     webApi.encointer.getCurrentCeremonyIndex();
@@ -259,12 +259,6 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setBootstrappers(List<String> bs) {
-    print("store: set communityIdentifiers to $bs");
-    bootstrappers = bs;
-  }
-
-  @action
   void setCommunities(List<CidName> c) {
     print("store: set communities to $c");
     communities = c;
@@ -309,6 +303,7 @@ abstract class _EncointerStore with Store {
   @action
   void purgeParticipantsClaims() {
     participantsClaims.clear();
+    cacheFn();
   }
 
   bool containsClaim(ClaimOfAttendance claim) {
@@ -318,17 +313,20 @@ abstract class _EncointerStore with Store {
   @action
   void addParticipantClaim(ClaimOfAttendance claim) {
     participantsClaims[claim.claimantPublic] = claim;
+    cacheFn();
   }
 
   @action
   void setReputations(Map<int, CommunityReputation> reps) {
-    reputations = SplayTreeMap.of(reps);
+    reputations = reps;
+    cacheFn();
   }
 
   @action
   void purgeReputations() {
     if (reputations != null) {
       reputations.clear();
+      cacheFn();
     }
   }
 
@@ -336,6 +334,7 @@ abstract class _EncointerStore with Store {
   void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
     print("balanceEntry $balanceEntry added to cid $cid added");
     balanceEntries[cid.toFmtString()] = balanceEntry;
+    cacheFn();
   }
 
   @action

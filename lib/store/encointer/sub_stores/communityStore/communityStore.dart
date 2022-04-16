@@ -79,7 +79,7 @@ abstract class _CommunityStore with Store {
   void setCommunityMetadata([CommunityMetadata meta]) {
     _log("set communityMetadata to $meta");
     communityMetadata = meta;
-    // cacheFn();
+    cacheFn();
   }
 
   @action
@@ -87,6 +87,7 @@ abstract class _CommunityStore with Store {
     print("store: set meetupTime to $time");
     if (meetupTime != time) {
       meetupTime = time;
+      cacheFn();
     }
   }
 

@@ -56,15 +56,15 @@ abstract class _CommunityAccountStore with Store {
   @action
   void setMeetup(Meetup meetup) {
     this.meetup = meetup;
-
-    if (cacheFn != null) {
-      cacheFn();
-    }
+    cacheFn();
   }
 
   @action
   void clearMeetup() {
-    meetup = null;
+    if (meetup != null) {;
+      meetup = null;
+      cacheFn();
+    }
   }
 
   void setCacheFn(Function cacheFn) {
