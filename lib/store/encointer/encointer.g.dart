@@ -27,9 +27,10 @@ EncointerStore _$EncointerStoreFromJson(Map<String, dynamic> json) {
         ? ObservableList<TransferData>.of((json['txsTransfer'] as List)
             .map((e) => e == null ? null : TransferData.fromJson(e as Map<String, dynamic>)))
         : null
-    ..businessRegistry = json['businessRegistry'] != null
-        ? ObservableList<AccountBusinessTuple>.of((json['businessRegistry'] as List)
-            .map((e) => e == null ? null : AccountBusinessTuple.fromJson(e as Map<String, dynamic>)))
+    ..bazaarStores = json['bazaarStores'] != null
+        ? ObservableMap<String, BazaarStore>.of((json['bazaarStores'] as Map<String, dynamic>).map(
+            (k, e) => MapEntry(k, e == null ? null : BazaarStore.fromJson(e as Map<String, dynamic>)),
+          ))
         : null
     ..communityStores = json['communityStores'] != null
         ? ObservableMap<String, CommunityStore>.of((json['communityStores'] as Map<String, dynamic>).map(
@@ -52,7 +53,7 @@ Map<String, dynamic> _$EncointerStoreToJson(EncointerStore instance) => <String,
       'communities': instance.communities?.map((e) => e?.toJson())?.toList(),
       'chosenCid': instance.chosenCid?.toJson(),
       'txsTransfer': instance.txsTransfer?.map((e) => e?.toJson())?.toList(),
-      'businessRegistry': instance.businessRegistry?.map((e) => e?.toJson())?.toList(),
+      'bazaarStores': instance.bazaarStores?.map((k, e) => MapEntry(k, e?.toJson())),
       'communityStores': instance.communityStores?.map((k, e) => MapEntry(k, e?.toJson())),
       'accountStores': instance.accountStores?.map((k, e) => MapEntry(k, e?.toJson())),
     };
@@ -125,6 +126,11 @@ mixin _$EncointerStore on _EncointerStore, Store {
       (_$communitiesContainsChosenCidComputed ??= Computed<dynamic>(() => super.communitiesContainsChosenCid,
               name: '_EncointerStore.communitiesContainsChosenCid'))
           .value;
+  Computed<dynamic> _$bazaarComputed;
+
+  @override
+  dynamic get bazaar =>
+      (_$bazaarComputed ??= Computed<dynamic>(() => super.bazaar, name: '_EncointerStore.bazaar')).value;
   Computed<dynamic> _$communityComputed;
 
   @override
@@ -258,18 +264,18 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
-  final _$businessRegistryAtom = Atom(name: '_EncointerStore.businessRegistry');
+  final _$bazaarStoresAtom = Atom(name: '_EncointerStore.bazaarStores');
 
   @override
-  ObservableList<AccountBusinessTuple> get businessRegistry {
-    _$businessRegistryAtom.reportRead();
-    return super.businessRegistry;
+  ObservableMap<String, BazaarStore> get bazaarStores {
+    _$bazaarStoresAtom.reportRead();
+    return super.bazaarStores;
   }
 
   @override
-  set businessRegistry(ObservableList<AccountBusinessTuple> value) {
-    _$businessRegistryAtom.reportWrite(value, super.businessRegistry, () {
-      super.businessRegistry = value;
+  set bazaarStores(ObservableMap<String, BazaarStore> value) {
+    _$bazaarStoresAtom.reportWrite(value, super.bazaarStores, () {
+      super.bazaarStores = value;
     });
   }
 
@@ -335,6 +341,16 @@ mixin _$EncointerStore on _EncointerStore, Store {
         _$_EncointerStoreActionController.startAction(name: '_EncointerStore.initEncointerAccountStore');
     try {
       return super.initEncointerAccountStore(address);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void initBazaarStore(CommunityIdentifier cid) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.initBazaarStore');
+    try {
+      return super.initBazaarStore(cid);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }
@@ -412,16 +428,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setbusinessRegistry(List<AccountBusinessTuple> accBusinesses) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setbusinessRegistry');
-    try {
-      return super.setbusinessRegistry(accBusinesses);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 currentPhase: ${currentPhase},
@@ -431,13 +437,14 @@ communityIdentifiers: ${communityIdentifiers},
 communities: ${communities},
 chosenCid: ${chosenCid},
 txsTransfer: ${txsTransfer},
-businessRegistry: ${businessRegistry},
+bazaarStores: ${bazaarStores},
 communityStores: ${communityStores},
 accountStores: ${accountStores},
 currentPhaseDuration: ${currentPhaseDuration},
 communityBalanceEntry: ${communityBalanceEntry},
 communityBalance: ${communityBalance},
 communitiesContainsChosenCid: ${communitiesContainsChosenCid},
+bazaar: ${bazaar},
 community: ${community},
 communityAccount: ${communityAccount},
 account: ${account},

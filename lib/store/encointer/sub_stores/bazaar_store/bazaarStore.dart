@@ -1,0 +1,49 @@
+import 'dart:convert';
+
+import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
+import 'package:encointer_wallet/store/encointer/types/communities.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:mobx/mobx.dart';
+
+part 'bazaarStore.g.dart';
+
+/// Stores data concerning the bazaar specific to a community
+///
+@JsonSerializable(explicitToJson: true)
+class BazaarStore extends _BazaarStore with _$BazaarStore {
+  BazaarStore(String network, CommunityIdentifier cid) : super(network, cid);
+
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
+
+  factory BazaarStore.fromJson(Map<String, dynamic> json) => _$BazaarStoreFromJson(json);
+  Map<String, dynamic> toJson() => _$BazaarStoreToJson(this);
+}
+
+abstract class _BazaarStore with Store {
+  _BazaarStore(this.network, this.cid);
+
+  /// Function that writes the store to local storage.
+  @JsonKey(ignore: true)
+  Future<void> Function() cacheFn;
+
+  /// The network this store belongs to.
+  final String network;
+
+  /// The community this store belongs to.
+  final CommunityIdentifier cid;
+
+  @observable
+  ObservableList<AccountBusinessTuple> businessRegistry;
+
+  @action
+  void setBusinessRegistry(List<AccountBusinessTuple> accBusinesses) {
+    businessRegistry = ObservableList.of(accBusinesses);
+  }
+
+  void setCacheFn(Function cacheFn) {
+    this.cacheFn = cacheFn;
+  }
+}

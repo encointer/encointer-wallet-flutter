@@ -4,15 +4,14 @@ import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/assets/types/transferData.dart';
-import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
-import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../models/index.dart';
+import 'sub_stores/bazaar_store/bazaarStore.dart';
 import 'sub_stores/community_store/communityStore.dart';
 import 'sub_stores/encointer_account_store/encointerAccountStore.dart';
 
@@ -87,9 +86,6 @@ abstract class _EncointerStore with Store {
   @observable
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
 
-  @observable
-  ObservableList<AccountBusinessTuple> businessRegistry;
-
   @computed
   BalanceEntry get communityBalanceEntry {
     return chosenCid != null ? account.balanceEntries[chosenCid.toFmtString()] : null;
@@ -110,10 +106,18 @@ abstract class _EncointerStore with Store {
   }
 
   @observable
+  ObservableMap<String, BazaarStore> bazaarStores = new ObservableMap();
+
+  @observable
   ObservableMap<String, CommunityStore> communityStores = new ObservableMap();
 
   @observable
   ObservableMap<String, EncointerAccountStore> accountStores = new ObservableMap();
+
+  @computed
+  get bazaar {
+    return chosenCid != null ? bazaarStores[chosenCid.toFmtString()] : null;
+  }
 
   @computed
   get community {
@@ -157,6 +161,21 @@ abstract class _EncointerStore with Store {
       accountStores[address] = encointerAccountStore;
     } else {
       _log("Don't add already existing encointerAccountStore for address: $address");
+    }
+  }
+
+  @action
+  void initBazaarStore(CommunityIdentifier cid) {
+    var cidFmt = cid.toFmtString();
+    if (!bazaarStores.containsKey(cidFmt)) {
+      _log("Adding new bazaarStore for cid: ${cid.toFmtString()}");
+
+      var bazaarStore = BazaarStore(network, cid);
+      bazaarStore.cacheFn = cacheFn;
+
+      bazaarStores[cidFmt] = bazaarStore;
+    } else {
+      _log("Don't add already existing bazaarStore for cid: ${cid.toFmtString()}");
     }
   }
 
@@ -260,6 +279,7 @@ abstract class _EncointerStore with Store {
 
       if (cid != null) {
         initCommunityStore(cid, rootStore.account.currentAddress);
+        initBazaarStore(cid);
       }
     }
 
@@ -310,11 +330,6 @@ abstract class _EncointerStore with Store {
       cached = list;
     }
     rootStore.localStorage.setAccountCache(pubKey, cacheKey, cached);
-  }
-
-  @action
-  void setbusinessRegistry(List<AccountBusinessTuple> accBusinesses) {
-    businessRegistry = ObservableList.of(accBusinesses);
   }
 
   void setCacheFn(Function cacheFn) {
