@@ -48,6 +48,12 @@ abstract class _AccountStore with Store {
   String currentAccountPubKey = '';
 
   @observable
+
+  /// The user can edit an account (editing does not imply setting it as the current account).
+  /// This observable points to the account that is being edited or shall be edited
+  String accountToBeEditedPubKey = '';
+
+  @observable
   ObservableList<AccountData> accountList = ObservableList<AccountData>();
 
   @observable
@@ -88,6 +94,19 @@ abstract class _AccountStore with Store {
   }
 
   @computed
+  AccountData get accountToBeEdited {
+    int i = accountListAll.indexWhere((i) => i.pubKey == accountToBeEditedPubKey);
+    if (i < 0) {
+      if (accountListAll.isNotEmpty) {
+        return accountListAll[0] ?? AccountData();
+      } else {
+        return AccountData();
+      }
+    }
+    return accountListAll[i];
+  }
+
+  @computed
   List<AccountData> get optionalAccounts {
     return accountListAll.where((i) => i.pubKey != currentAccountPubKey).toList();
   }
@@ -117,6 +136,19 @@ abstract class _AccountStore with Store {
     }
     return pubKeyAddressMap[ss58] != null
         ? pubKeyAddressMap[ss58][currentAccountPubKey] ?? currentAccount.address
+        : currentAccount.address;
+  }
+
+  @computed
+  String get addressOfAccountToBeEdited {
+//    int ss58 = rootStore.settings.endpoint.ss58;
+    int ss58 = rootStore.settings.customSS58Format['value'];
+    if (rootStore.settings.customSS58Format['info'] == default_ss58_prefix['info']) {
+      ss58 = rootStore.settings.endpoint.ss58;
+//      print(ss58);
+    }
+    return pubKeyAddressMap[ss58] != null
+        ? pubKeyAddressMap[ss58][accountToBeEditedPubKey] ?? currentAccount.address
         : currentAccount.address;
   }
 
@@ -189,6 +221,18 @@ abstract class _AccountStore with Store {
       currentAccountPubKey = pubKey;
       rootStore.localStorage.setCurrentAccount(pubKey);
       rootStore.encointer.updateState();
+    }
+    if (!rootStore.settings.loading) {
+      webApi.assets.subscribeBalance();
+    }
+  }
+
+  @action
+  void setAccountToBeEdited(String pubKey) {
+    if (accountToBeEditedPubKey != pubKey) {
+      accountToBeEditedPubKey = pubKey;
+      rootStore.localStorage.setCurrentAccount(pubKey);
+      rootStore.encointer.resetState();
     }
     if (!rootStore.settings.loading) {
       webApi.assets.subscribeBalance();
