@@ -362,7 +362,7 @@ class EncointerApi {
     Map<int, CommunityReputation> reputations =
         Map.fromIterable(reputationsList, key: (cr) => cr[0], value: (cr) => CommunityReputation.fromJson(cr[1]));
 
-    store.encointer.setReputations(reputations);
+    store.encointer.account.setReputations(reputations);
   }
 
   Future<dynamic> sendFaucetTx() async {
@@ -400,13 +400,13 @@ class EncointerApi {
   /// returns null, if none available.
   Future<ProofOfAttendance> getProofOfAttendance() async {
     var pubKey = store.account.currentAccountPubKey;
-    var cIndex = store.encointer.ceremonyIndexForProofOfAttendance;
+    var cIndex = store.encointer.account.ceremonyIndexForProofOfAttendance;
 
     if (cIndex == null || cIndex == 0) {
       return null;
     }
 
-    var cid = store.encointer.reputations[cIndex].communityIdentifier;
+    var cid = store.encointer.account.reputations[cIndex].communityIdentifier;
     var pin = store.settings.cachedPin;
 
     print("getProofOfAttendance: cachedPin: $pin");

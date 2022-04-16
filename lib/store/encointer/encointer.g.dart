@@ -27,9 +27,6 @@ EncointerStore _$EncointerStoreFromJson(Map<String, dynamic> json) {
         ? ObservableList<TransferData>.of((json['txsTransfer'] as List)
             .map((e) => e == null ? null : TransferData.fromJson(e as Map<String, dynamic>)))
         : null
-    ..reputations = (json['reputations'] as Map<String, dynamic>)?.map(
-      (k, e) => MapEntry(int.parse(k), e == null ? null : CommunityReputation.fromJson(e as Map<String, dynamic>)),
-    )
     ..businessRegistry = json['businessRegistry'] != null
         ? ObservableList<AccountBusinessTuple>.of((json['businessRegistry'] as List)
             .map((e) => e == null ? null : AccountBusinessTuple.fromJson(e as Map<String, dynamic>)))
@@ -59,7 +56,6 @@ Map<String, dynamic> _$EncointerStoreToJson(EncointerStore instance) => <String,
       'communities': instance.communities?.map((e) => e?.toJson())?.toList(),
       'chosenCid': instance.chosenCid?.toJson(),
       'txsTransfer': instance.txsTransfer?.map((e) => e?.toJson())?.toList(),
-      'reputations': instance.reputations?.map((k, e) => MapEntry(k.toString(), e?.toJson())),
       'businessRegistry': instance.businessRegistry?.map((e) => e?.toJson())?.toList(),
       'communityLocations': instance.communityLocations?.map((e) => e?.toJson())?.toList(),
       'communityStores': instance.communityStores?.map((k, e) => MapEntry(k, e?.toJson())),
@@ -115,13 +111,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   dynamic get currentPhaseDuration => (_$currentPhaseDurationComputed ??=
           Computed<dynamic>(() => super.currentPhaseDuration, name: '_EncointerStore.currentPhaseDuration'))
       .value;
-  Computed<dynamic> _$ceremonyIndexForProofOfAttendanceComputed;
-
-  @override
-  dynamic get ceremonyIndexForProofOfAttendance =>
-      (_$ceremonyIndexForProofOfAttendanceComputed ??= Computed<dynamic>(() => super.ceremonyIndexForProofOfAttendance,
-              name: '_EncointerStore.ceremonyIndexForProofOfAttendance'))
-          .value;
   Computed<BalanceEntry> _$communityBalanceEntryComputed;
 
   @override
@@ -274,21 +263,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
-  final _$reputationsAtom = Atom(name: '_EncointerStore.reputations');
-
-  @override
-  Map<int, CommunityReputation> get reputations {
-    _$reputationsAtom.reportRead();
-    return super.reputations;
-  }
-
-  @override
-  set reputations(Map<int, CommunityReputation> value) {
-    _$reputationsAtom.reportWrite(value, super.reputations, () {
-      super.reputations = value;
-    });
-  }
-
   final _$businessRegistryAtom = Atom(name: '_EncointerStore.businessRegistry');
 
   @override
@@ -417,16 +391,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  dynamic resetState() {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.resetState');
-    try {
-      return super.resetState();
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void purgeCeremonySpecificState() {
     final _$actionInfo =
         _$_EncointerStoreActionController.startAction(name: '_EncointerStore.purgeCeremonySpecificState');
@@ -478,26 +442,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setReputations(Map<int, CommunityReputation> reps) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setReputations');
-    try {
-      return super.setReputations(reps);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void purgeReputations() {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.purgeReputations');
-    try {
-      return super.purgeReputations();
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setbusinessRegistry(List<AccountBusinessTuple> accBusinesses) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setbusinessRegistry');
     try {
@@ -517,13 +461,11 @@ communityIdentifiers: ${communityIdentifiers},
 communities: ${communities},
 chosenCid: ${chosenCid},
 txsTransfer: ${txsTransfer},
-reputations: ${reputations},
 businessRegistry: ${businessRegistry},
 communityLocations: ${communityLocations},
 communityStores: ${communityStores},
 accountStores: ${accountStores},
 currentPhaseDuration: ${currentPhaseDuration},
-ceremonyIndexForProofOfAttendance: ${ceremonyIndexForProofOfAttendance},
 communityBalanceEntry: ${communityBalanceEntry},
 communityBalance: ${communityBalance},
 communitiesContainsChosenCid: ${communitiesContainsChosenCid},

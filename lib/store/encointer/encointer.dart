@@ -88,21 +88,6 @@ abstract class _EncointerStore with Store {
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
 
   @observable
-  Map<int, CommunityReputation> reputations;
-
-  @computed
-  get ceremonyIndexForProofOfAttendance {
-    if (reputations != null && reputations.isNotEmpty) {
-      try {
-        return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
-      } catch (_e) {
-        print("Has reputation, but none that has not been linked yet");
-        return 0;
-      }
-    }
-  }
-
-  @observable
   ObservableList<AccountBusinessTuple> businessRegistry;
 
   @observable
@@ -203,7 +188,7 @@ abstract class _EncointerStore with Store {
   void setCurrentCeremonyIndex(index) {
     print("store: set currentCeremonyIndex to $index");
     if (currentCeremonyIndex != index && currentPhase == CeremonyPhase.REGISTERING) {
-      resetState();
+      purgeCeremonySpecificState();
     }
 
     currentCeremonyIndex = index;
@@ -235,13 +220,9 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  resetState() {
-    purgeReputations();
-  }
-
-  @action
   void purgeCeremonySpecificState() {
     communityStores.forEach((cid, store) => store.purgeCeremonySpecificState());
+    accountStores.forEach((cid, store) => store.purgeCeremonySpecificState());
   }
 
   /// Calculates the remaining time until the next meetup starts. As Gesell and Cantillon currently implement timewarp
@@ -289,7 +270,6 @@ abstract class _EncointerStore with Store {
   void setChosenCid([CommunityIdentifier cid]) {
     if (chosenCid != cid) {
       chosenCid = cid;
-      resetState();
 
       if (cid != null) {
         initCommunityStore(cid, rootStore.account.currentAddress);
@@ -303,20 +283,6 @@ abstract class _EncointerStore with Store {
     // update depending values without awaiting
     if (!rootStore.settings.loading) {
       webApi.encointer.getCommunityData();
-    }
-  }
-
-  @action
-  void setReputations(Map<int, CommunityReputation> reps) {
-    reputations = reps;
-    cacheFn();
-  }
-
-  @action
-  void purgeReputations() {
-    if (reputations != null) {
-      reputations.clear();
-      cacheFn();
     }
   }
 

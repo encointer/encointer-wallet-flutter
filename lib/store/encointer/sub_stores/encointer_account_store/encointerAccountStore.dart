@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -41,11 +42,48 @@ abstract class _EncointerAccountStore with Store {
   @observable
   ObservableMap<String, BalanceEntry> balanceEntries = new ObservableMap();
 
+  /// `CommunityReputations` across all communities keyed by the respective ceremony index.
+  ///
+  /// Map: ceremony index -> CommunityReputation
+  @observable
+  Map<int, CommunityReputation> reputations;
+
+  @computed
+  get ceremonyIndexForProofOfAttendance {
+    if (reputations != null && reputations.isNotEmpty) {
+      try {
+        return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
+      } catch (_e) {
+        _log("$address has reputation, but none that has not been linked yet");
+        return 0;
+      }
+    }
+  }
+
   @action
   void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
     _log("balanceEntry $balanceEntry added to cid $cid added");
     balanceEntries[cid.toFmtString()] = balanceEntry;
     cacheFn();
+  }
+
+  @action
+  void setReputations(Map<int, CommunityReputation> reps) {
+    reputations = reps;
+    cacheFn();
+  }
+
+  @action
+  void purgeReputations() {
+    if (reputations != null) {
+      reputations.clear();
+      cacheFn();
+    }
+  }
+
+  @action
+  void purgeCeremonySpecificState() {
+    purgeReputations();
   }
 
   void setCacheFn(Function cacheFn) {
