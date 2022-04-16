@@ -47,6 +47,9 @@ abstract class _CommunityStore with Store {
   String get assetsCid => communityMetadata?.assets;
 
   @observable
+  int meetupTime;
+
+  @observable
   ObservableMap<String, CommunityAccountStore> communityAccountStores = new ObservableMap();
 
   @action
@@ -66,6 +69,24 @@ abstract class _CommunityStore with Store {
   void setCommunityMetadata([CommunityMetadata meta]) {
     _log("set communityMetadata to $meta");
     communityMetadata = meta;
+    // cacheFn();
+  }
+
+  @action
+  void setMeetupTime([int time]) {
+    print("store: set meetupTime to $time");
+    if (meetupTime != time) {
+      meetupTime = time;
+    }
+  }
+
+  void setCacheFn(Function cacheFn) {
+    this.cacheFn = cacheFn;
+
+    communityAccountStores.updateAll((_, store) {
+      store.setCacheFn(cacheFn);
+      return store;
+    });
   }
 }
 

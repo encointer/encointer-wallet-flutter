@@ -15,12 +15,6 @@ EncointerStore _$EncointerStoreFromJson(Map<String, dynamic> json) {
       (k, e) => MapEntry(_$enumDecodeNullable(_$CeremonyPhaseEnumMap, k), e as int),
     )
     ..currentCeremonyIndex = json['currentCeremonyIndex'] as int
-    ..meetupIndex = json['meetupIndex'] as int
-    ..meetupLocation =
-        json['meetupLocation'] == null ? null : Location.fromJson(json['meetupLocation'] as Map<String, dynamic>)
-    ..meetupTime = json['meetupTime'] as int
-    ..meetupRegistry = (json['meetupRegistry'] as List)?.map((e) => e as String)?.toList()
-    ..participantIndex = json['participantIndex'] as int
     ..balanceEntries = json['balanceEntries'] != null
         ? ObservableMap<String, BalanceEntry>.of((json['balanceEntries'] as Map<String, dynamic>).map(
             (k, e) => MapEntry(k, e == null ? null : BalanceEntry.fromJson(e as Map<String, dynamic>)),
@@ -68,11 +62,6 @@ Map<String, dynamic> _$EncointerStoreToJson(EncointerStore instance) => <String,
       'currentPhase': _$CeremonyPhaseEnumMap[instance.currentPhase],
       'phaseDurations': instance.phaseDurations?.map((k, e) => MapEntry(_$CeremonyPhaseEnumMap[k], e)),
       'currentCeremonyIndex': instance.currentCeremonyIndex,
-      'meetupIndex': instance.meetupIndex,
-      'meetupLocation': instance.meetupLocation?.toJson(),
-      'meetupTime': instance.meetupTime,
-      'meetupRegistry': instance.meetupRegistry,
-      'participantIndex': instance.participantIndex,
       'balanceEntries': instance.balanceEntries?.map((k, e) => MapEntry(k, e?.toJson())),
       'communityIdentifiers': instance.communityIdentifiers?.map((e) => e?.toJson())?.toList(),
       'bootstrappers': instance.bootstrappers,
@@ -161,11 +150,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   double get communityBalance => (_$communityBalanceComputed ??=
           Computed<double>(() => super.communityBalance, name: '_EncointerStore.communityBalance'))
       .value;
-  Computed<bool> _$isAssignedComputed;
-
-  @override
-  bool get isAssigned =>
-      (_$isAssignedComputed ??= Computed<bool>(() => super.isAssigned, name: '_EncointerStore.isAssigned')).value;
   Computed<dynamic> _$communitiesContainsChosenCidComputed;
 
   @override
@@ -178,11 +162,12 @@ mixin _$EncointerStore on _EncointerStore, Store {
   @override
   dynamic get community =>
       (_$communityComputed ??= Computed<dynamic>(() => super.community, name: '_EncointerStore.community')).value;
-  Computed<bool> _$isRegisteredComputed;
+  Computed<dynamic> _$communityAccountComputed;
 
   @override
-  bool get isRegistered =>
-      (_$isRegisteredComputed ??= Computed<bool>(() => super.isRegistered, name: '_EncointerStore.isRegistered')).value;
+  dynamic get communityAccount => (_$communityAccountComputed ??=
+          Computed<dynamic>(() => super.communityAccount, name: '_EncointerStore.communityAccount'))
+      .value;
   Computed<bool> _$showRegisterButtonComputed;
 
   @override
@@ -200,13 +185,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   @override
   bool get showTwoBoxes =>
       (_$showTwoBoxesComputed ??= Computed<bool>(() => super.showTwoBoxes, name: '_EncointerStore.showTwoBoxes')).value;
-  Computed<int> _$numberOfParticipantsAtUpcomingCeremonyComputed;
-
-  @override
-  int get numberOfParticipantsAtUpcomingCeremony => (_$numberOfParticipantsAtUpcomingCeremonyComputed ??= Computed<int>(
-          () => super.numberOfParticipantsAtUpcomingCeremony,
-          name: '_EncointerStore.numberOfParticipantsAtUpcomingCeremony'))
-      .value;
 
   final _$currentPhaseAtom = Atom(name: '_EncointerStore.currentPhase');
 
@@ -250,81 +228,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   set currentCeremonyIndex(int value) {
     _$currentCeremonyIndexAtom.reportWrite(value, super.currentCeremonyIndex, () {
       super.currentCeremonyIndex = value;
-    });
-  }
-
-  final _$meetupIndexAtom = Atom(name: '_EncointerStore.meetupIndex');
-
-  @override
-  int get meetupIndex {
-    _$meetupIndexAtom.reportRead();
-    return super.meetupIndex;
-  }
-
-  @override
-  set meetupIndex(int value) {
-    _$meetupIndexAtom.reportWrite(value, super.meetupIndex, () {
-      super.meetupIndex = value;
-    });
-  }
-
-  final _$meetupLocationAtom = Atom(name: '_EncointerStore.meetupLocation');
-
-  @override
-  Location get meetupLocation {
-    _$meetupLocationAtom.reportRead();
-    return super.meetupLocation;
-  }
-
-  @override
-  set meetupLocation(Location value) {
-    _$meetupLocationAtom.reportWrite(value, super.meetupLocation, () {
-      super.meetupLocation = value;
-    });
-  }
-
-  final _$meetupTimeAtom = Atom(name: '_EncointerStore.meetupTime');
-
-  @override
-  int get meetupTime {
-    _$meetupTimeAtom.reportRead();
-    return super.meetupTime;
-  }
-
-  @override
-  set meetupTime(int value) {
-    _$meetupTimeAtom.reportWrite(value, super.meetupTime, () {
-      super.meetupTime = value;
-    });
-  }
-
-  final _$meetupRegistryAtom = Atom(name: '_EncointerStore.meetupRegistry');
-
-  @override
-  List<String> get meetupRegistry {
-    _$meetupRegistryAtom.reportRead();
-    return super.meetupRegistry;
-  }
-
-  @override
-  set meetupRegistry(List<String> value) {
-    _$meetupRegistryAtom.reportWrite(value, super.meetupRegistry, () {
-      super.meetupRegistry = value;
-    });
-  }
-
-  final _$participantIndexAtom = Atom(name: '_EncointerStore.participantIndex');
-
-  @override
-  int get participantIndex {
-    _$participantIndexAtom.reportRead();
-    return super.participantIndex;
-  }
-
-  @override
-  set participantIndex(int value) {
-    _$participantIndexAtom.reportWrite(value, super.participantIndex, () {
-      super.participantIndex = value;
     });
   }
 
@@ -582,46 +485,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setMeetupIndex([int index]) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setMeetupIndex');
-    try {
-      return super.setMeetupIndex(index);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setMeetupLocation([Location location]) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setMeetupLocation');
-    try {
-      return super.setMeetupLocation(location);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setMeetupTime([int time]) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setMeetupTime');
-    try {
-      return super.setMeetupTime(time);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setMeetupRegistry([List<String> reg]) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setMeetupRegistry');
-    try {
-      return super.setMeetupRegistry(reg);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunityIdentifiers');
     try {
@@ -732,16 +595,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setParticipantIndex([int pIndex]) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setParticipantIndex');
-    try {
-      return super.setParticipantIndex(pIndex);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setbusinessRegistry(List<AccountBusinessTuple> accBusinesses) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setbusinessRegistry');
     try {
@@ -757,11 +610,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
 currentPhase: ${currentPhase},
 phaseDurations: ${phaseDurations},
 currentCeremonyIndex: ${currentCeremonyIndex},
-meetupIndex: ${meetupIndex},
-meetupLocation: ${meetupLocation},
-meetupTime: ${meetupTime},
-meetupRegistry: ${meetupRegistry},
-participantIndex: ${participantIndex},
 balanceEntries: ${balanceEntries},
 communityIdentifiers: ${communityIdentifiers},
 bootstrappers: ${bootstrappers},
@@ -779,14 +627,12 @@ scannedClaimsCount: ${scannedClaimsCount},
 ceremonyIndexForProofOfAttendance: ${ceremonyIndexForProofOfAttendance},
 communityBalanceEntry: ${communityBalanceEntry},
 communityBalance: ${communityBalance},
-isAssigned: ${isAssigned},
 communitiesContainsChosenCid: ${communitiesContainsChosenCid},
 community: ${community},
-isRegistered: ${isRegistered},
+communityAccount: ${communityAccount},
 showRegisterButton: ${showRegisterButton},
 showStartCeremonyButton: ${showStartCeremonyButton},
-showTwoBoxes: ${showTwoBoxes},
-numberOfParticipantsAtUpcomingCeremony: ${numberOfParticipantsAtUpcomingCeremony}
+showTwoBoxes: ${showTwoBoxes}
     ''';
   }
 }

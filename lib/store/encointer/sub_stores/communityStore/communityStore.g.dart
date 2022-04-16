@@ -14,6 +14,7 @@ CommunityStore _$CommunityStoreFromJson(Map<String, dynamic> json) {
     ..communityMetadata = json['communityMetadata'] == null
         ? null
         : CommunityMetadata.fromJson(json['communityMetadata'] as Map<String, dynamic>)
+    ..meetupTime = json['meetupTime'] as int
     ..communityAccountStores = json['communityAccountStores'] != null
         ? ObservableMap<String, CommunityAccountStore>.of((json['communityAccountStores'] as Map<String, dynamic>).map(
             (k, e) => MapEntry(k, e == null ? null : CommunityAccountStore.fromJson(e as Map<String, dynamic>)),
@@ -25,6 +26,7 @@ Map<String, dynamic> _$CommunityStoreToJson(CommunityStore instance) => <String,
       'network': instance.network,
       'cid': instance.cid?.toJson(),
       'communityMetadata': instance.communityMetadata?.toJson(),
+      'meetupTime': instance.meetupTime,
       'communityAccountStores': instance.communityAccountStores?.map((k, e) => MapEntry(k, e?.toJson())),
     };
 
@@ -62,6 +64,21 @@ mixin _$CommunityStore on _CommunityStore, Store {
   set communityMetadata(CommunityMetadata value) {
     _$communityMetadataAtom.reportWrite(value, super.communityMetadata, () {
       super.communityMetadata = value;
+    });
+  }
+
+  final _$meetupTimeAtom = Atom(name: '_CommunityStore.meetupTime');
+
+  @override
+  int get meetupTime {
+    _$meetupTimeAtom.reportRead();
+    return super.meetupTime;
+  }
+
+  @override
+  set meetupTime(int value) {
+    _$meetupTimeAtom.reportWrite(value, super.meetupTime, () {
+      super.meetupTime = value;
     });
   }
 
@@ -104,9 +121,20 @@ mixin _$CommunityStore on _CommunityStore, Store {
   }
 
   @override
+  void setMeetupTime([int time]) {
+    final _$actionInfo = _$_CommunityStoreActionController.startAction(name: '_CommunityStore.setMeetupTime');
+    try {
+      return super.setMeetupTime(time);
+    } finally {
+      _$_CommunityStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 communityMetadata: ${communityMetadata},
+meetupTime: ${meetupTime},
 communityAccountStores: ${communityAccountStores},
 name: ${name},
 symbol: ${symbol},

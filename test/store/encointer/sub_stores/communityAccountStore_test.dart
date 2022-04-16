@@ -12,15 +12,15 @@ void main() {
         mediterraneanTestCommunity,
         ALICE_ADDRESS,
       );
-      communityAccountStore
-          .setMeetup(Meetup(ParticipantType.Bootstrapper, 2, 3, 10, [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]));
+      communityAccountStore.participantType = ParticipantType.Bootstrapper;
+      communityAccountStore.setMeetup(Meetup(2, 3, 10, [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]));
 
       Map<String, dynamic> targetJson = {
         "network": "My Test Network",
         "cid": mediterraneanTestCommunity.toJson(),
         "account": ALICE_ADDRESS,
+        "participantType": 'Bootstrapper',
         "meetup": {
-          "participantType": 'Bootstrapper',
           "meetupIndex": 2,
           "meetupLocationIndex": 3,
           "meetupTime": 10,
@@ -36,8 +36,8 @@ void main() {
         "network": "My Test Network",
         "cid": mediterraneanTestCommunity.toJson(),
         "account": ALICE_ADDRESS,
+        "participantType": 'Bootstrapper',
         "meetup": {
-          "participantType": 'Bootstrapper',
           "meetupIndex": 2,
           "meetupLocationIndex": 3,
           "meetupTime": 10,
@@ -50,7 +50,7 @@ void main() {
       expect(store.network, "My Test Network");
       expect(store.cid, mediterraneanTestCommunity);
       expect(store.address, ALICE_ADDRESS);
-      expect(store.meetup.participantType, ParticipantType.Bootstrapper);
+      expect(store.participantType, ParticipantType.Bootstrapper);
       expect(store.meetup.index, 2);
       expect(store.meetup.locationIndex, 3);
       expect(store.meetup.time, 10);
@@ -65,18 +65,18 @@ void main() {
         mediterraneanTestCommunity,
         ALICE_ADDRESS,
       );
+      communityAccountStore.participantType = ParticipantType.Bootstrapper;
 
       communityAccountStore.cacheFn = () => localStorage.setObject("hello", communityAccountStore.toJson());
 
-      communityAccountStore
-          .setMeetup(Meetup(ParticipantType.Bootstrapper, 2, 3, 10, [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]));
+      communityAccountStore.setMeetup(Meetup(2, 3, 10, [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]));
 
       Map<String, dynamic> targetCachedJson = {
         "network": "My Test Network",
         "cid": mediterraneanTestCommunity.toJson(),
         "account": ALICE_ADDRESS,
+        "participantType": 'Bootstrapper',
         "meetup": {
-          "participantType": 'Bootstrapper',
           "meetupIndex": 2,
           "meetupLocationIndex": 3,
           "meetupTime": 10,

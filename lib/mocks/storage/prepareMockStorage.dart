@@ -16,24 +16,24 @@ abstract class PrepareMockStorage {
     store.encointer.setCommunities(communities);
     store.encointer.setDemurrage(demurrage);
     store.chain.setLatestHeader(Header.fromJson(header));
-    store.encointer.setCommunityMetadata(CommunityMetadata.fromJson(communityMetadata));
+    // store.encointer.setCommunityMetadata(CommunityMetadata.fromJson(communityMetadata));
   }
 
   static void getMetadata(AppStore store) {
-    store.encointer.setCommunityMetadata(CommunityMetadata.fromJson(communityMetadata));
+    // store.encointer.setCommunityMetadata(CommunityMetadata.fromJson(communityMetadata));
   }
 
   static void unregisteredParticipant(AppStore store) {
-    store.encointer.setParticipantIndex(0);
-    store.encointer.setMeetupTime(claim['timestamp']);
+    // store.encointer.setParticipantIndex(0);
+    // store.encointer.setMeetupTime(claim['timestamp']);
   }
 
   static void readyForMeetup(AppStore store) {
     store.encointer.setCurrentPhase(CeremonyPhase.ATTESTING);
-    store.encointer.setParticipantIndex(1);
-    store.encointer.setMeetupIndex(1);
-    store.encointer.setMeetupLocation(Location.fromJson(claim['location']));
-    store.encointer.setMeetupTime(claim['timestamp']);
-    store.encointer.setMeetupRegistry(meetupRegistry);
+    // store.encointer.setParticipantIndex(1);
+    // store.encointer.setMeetupIndex(1);
+    // store.encointer.setMeetupLocation(Location.fromJson(claim['location']));
+    // store.encointer.setMeetupTime(claim['timestamp']);
+    // store.encointer.setMeetupRegistry(meetupRegistry);
   }
 }

@@ -4,8 +4,8 @@ import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 
 import '../../models/index.dart';
-import 'mockJSApi.dart';
 import 'core/mockDartApi.dart';
+import 'mockJSApi.dart';
 
 /// The key rationale behind this mock is that all the getters do not alter the app state.
 ///
@@ -55,23 +55,8 @@ class MockApiEncointer extends EncointerApi {
   Future<void> getEncointerBalance() async {}
 
   @override
-  Future<int> getParticipantIndex() async {
-    return store.encointer.participantIndex;
-  }
-
-  @override
-  Future<int> getMeetupIndex() async {
-    return store.encointer.meetupIndex;
-  }
-
-  @override
   Future<List<CommunityIdentifier>> getCommunityIdentifiers() async {
     return communityIdentifiers;
-  }
-
-  @override
-  Future<List<String>> getMeetupRegistry() async {
-    return store.encointer.meetupRegistry;
   }
 
   @override
@@ -85,9 +70,6 @@ class MockApiEncointer extends EncointerApi {
 
   @override
   Future<void> getDemurrage() async {}
-
-  @override
-  Future<void> getMeetupLocation() async {}
 
   @override
   Future<List<AccountBusinessTuple>> getBusinesses() async {

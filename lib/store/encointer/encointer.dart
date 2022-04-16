@@ -77,21 +77,6 @@ abstract class _EncointerStore with Store {
   @observable
   int currentCeremonyIndex;
 
-  @observable
-  int meetupIndex;
-
-  @observable
-  Location meetupLocation;
-
-  @observable
-  int meetupTime;
-
-  @observable
-  List<String> meetupRegistry;
-
-  @observable
-  int participantIndex;
-
   /// balanceEntries for respective community: cid.toFmtString() -> BalanceEntry
   @observable
   ObservableMap<String, BalanceEntry> balanceEntries = new ObservableMap();
@@ -153,9 +138,6 @@ abstract class _EncointerStore with Store {
     return applyDemurrage(communityBalanceEntry);
   }
 
-  @computed
-  bool get isAssigned => meetupIndex != null && meetupIndex > 0;
-
   /// Checks if the chosenCid is contained in the communities.
   ///
   /// This is only relevant for edge-cases, where the chain does no longer contain a community. E.g. a dev-chain was
@@ -171,6 +153,11 @@ abstract class _EncointerStore with Store {
   @computed
   get community {
     return chosenCid != null ? communityStores[chosenCid.toFmtString()] : null;
+  }
+
+  @computed
+  get communityAccount {
+    return community != null ? community.communityAccountStores[rootStore.account.currentAddress] : null;
   }
 
   @action
@@ -229,65 +216,28 @@ abstract class _EncointerStore with Store {
     switch (currentPhase) {
       case CeremonyPhase.REGISTERING:
         webApi.encointer.getMeetupTime();
+        if (chosenCid != null) {
+          webApi.encointer.getAggregatedAccountData(chosenCid, rootStore.account.currentAddress);
+        }
         webApi.encointer.getReputations();
         break;
       case CeremonyPhase.ASSIGNING:
-        webApi.encointer.getMeetupIndex();
+        if (chosenCid != null) {
+          webApi.encointer.getAggregatedAccountData(chosenCid, rootStore.account.currentAddress);
+        }
         break;
       case CeremonyPhase.ATTESTING:
-        webApi.encointer.getMeetupIndex();
+        if (chosenCid != null) {
+          webApi.encointer.getAggregatedAccountData(chosenCid, rootStore.account.currentAddress);
+        }
         break;
     }
-    webApi.encointer.getParticipantIndex();
   }
 
   @action
   resetState() {
     purgeParticipantsClaims();
-    setParticipantIndex();
-    setMeetupIndex();
-    setMeetupLocation();
-    setMeetupTime();
-    setMeetupRegistry();
     purgeReputations();
-  }
-
-  @action
-  void setMeetupIndex([int index]) {
-    print("store: set meetupIndex to $index");
-    if (meetupIndex != index) {
-      cacheObject(encointerMeetupIndexKey, index);
-      meetupIndex = index;
-    }
-
-    if (index != null) {
-      // update depending values
-      webApi.encointer.getMeetupLocation().then((_) => webApi.encointer.getMeetupTime());
-      webApi.encointer.getMeetupRegistry();
-    }
-  }
-
-  @action
-  void setMeetupLocation([Location location]) {
-    print("store: set meetupLocation to $location");
-    if (meetupLocation != location) {
-      cacheObject(encointerMeetupLocationKey, location);
-      meetupLocation = location;
-    }
-
-    if (location != null) {
-      // update depending values
-      webApi.encointer.getMeetupTime();
-    }
-  }
-
-  @action
-  void setMeetupTime([int time]) {
-    print("store: set meetupTime to $time");
-    if (meetupTime != time) {
-      cacheObject(encointerMeetupTimeKey, time);
-      meetupTime = time;
-    }
   }
 
   /// Calculates the remaining time until the next meetup starts. As Gesell and Cantillon currently implement timewarp
@@ -302,13 +252,6 @@ abstract class _EncointerStore with Store {
       print("Warning: Invalid time to meetup");
       return 0;
     }
-  }
-
-  @action
-  void setMeetupRegistry([List<String> reg]) {
-    print("store: set meetupRegistry to $reg");
-    cacheObject(encointerMeetupRegistryKey, reg);
-    meetupRegistry = reg;
   }
 
   @action
@@ -412,11 +355,6 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setParticipantIndex([int pIndex]) {
-    participantIndex = pIndex;
-  }
-
-  @action
   Future<void> setTransferTxs(List list, {bool reset = false, needCache = true}) async {
     List transfers = list.map((i) {
       bool isCommunityCurrency = i['params'].length == 3;
@@ -501,19 +439,6 @@ abstract class _EncointerStore with Store {
     }
     currentPhase = await loadCurrentPhase();
     currentCeremonyIndex = await loadObject(encointerCurrentCeremonyIndexKey);
-    meetupIndex = await loadObject(encointerMeetupIndexKey);
-
-    var loc = await loadObject(encointerMeetupLocationKey);
-    if (loc != null) {
-      meetupLocation = Location.fromJson(loc);
-    }
-
-    var reg = await loadObject(encointerMeetupRegistryKey);
-    if (reg != null) {
-      meetupRegistry = List<String>.from(reg);
-    }
-
-    meetupTime = await loadObject(encointerMeetupTimeKey);
   }
 
   @action
@@ -566,29 +491,29 @@ abstract class _EncointerStore with Store {
     return ceremonyPhaseFromString(obj);
   }
 
-  @computed
-  bool get isRegistered {
-    return participantIndex != null && participantIndex != 0;
+  void setCacheFn(Function cacheFn) {
+    this.cacheFn = cacheFn;
+
+    communityStores.updateAll((_, store) {
+      store.setCacheFn(cacheFn);
+      return store;
+    });
   }
 
-  @computed
   bool get showRegisterButton {
-    return (currentPhase == CeremonyPhase.REGISTERING && !isRegistered);
+    bool registered = communityAccount?.isRegistered ?? false;
+    return (currentPhase == CeremonyPhase.REGISTERING && !registered);
   }
 
   @computed
   bool get showStartCeremonyButton {
-    return (currentPhase == CeremonyPhase.ATTESTING && isRegistered);
+    bool registered = communityAccount?.isRegistered ?? false;
+    return (currentPhase == CeremonyPhase.ATTESTING && registered);
   }
 
   @computed
   bool get showTwoBoxes {
     return !showRegisterButton && !showStartCeremonyButton;
-  }
-
-  @computed
-  int get numberOfParticipantsAtUpcomingCeremony {
-    return meetupRegistry.length;
   }
 }
 

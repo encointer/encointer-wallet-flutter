@@ -34,23 +34,6 @@ void main() {
 
       var phaseFetched = await store.loadCurrentPhase();
       expect(phaseFetched, phase);
-
-      store.setMeetupIndex(1);
-      expect(1, store.meetupIndex);
-      expect(await store.loadObject(encointerMeetupIndexKey), 1);
-
-      var loc = Location.fromJson(claim['location']);
-      store.setMeetupLocation(loc);
-      expect(store.meetupLocation, loc);
-      expect(await store.loadObject(encointerMeetupLocationKey), loc.toJson());
-
-      store.setMeetupRegistry(meetupRegistry);
-      expect(store.meetupRegistry, meetupRegistry);
-      expect(await store.loadObject(encointerMeetupRegistryKey), meetupRegistry);
-
-      store.setMeetupTime(2);
-      expect(store.meetupTime, 2);
-      expect(await store.loadObject(encointerMeetupTimeKey), 2);
     });
   });
 }

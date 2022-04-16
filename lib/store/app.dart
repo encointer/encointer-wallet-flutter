@@ -69,7 +69,7 @@ abstract class _AppStore with Store {
     }
 
     // Cache the entire encointer store at once: Check if this is too expensive ???
-    encointer.cacheFn = () => localStorage.setObject(encointerFinalCacheKey, encointer.toJson());
+    encointer.setCacheFn(() => localStorage.setObject(encointerFinalCacheKey, encointer.toJson()));
 
     isReady = true;
   }

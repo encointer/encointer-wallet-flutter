@@ -40,16 +40,34 @@ abstract class _CommunityAccountStore with Store {
   /// The account (SS58) this store belongs to.
   final String address;
 
+  /// Participant type if the account has registered for the next meetup.
+  ParticipantType participantType;
+
   /// Contains the meetup data if the account has been assigned to a meetup in this community.
   @observable
   Meetup meetup;
 
+  @computed
+  bool get isAssigned => meetup != null;
+
+  @computed
+  bool get isRegistered => participantType != null;
+
   @action
-  void setMeetup(Meetup meetup, {shouldCache = true}) {
+  void setMeetup(Meetup meetup) {
     this.meetup = meetup;
 
-    if (cacheFn != null && shouldCache) {
+    if (cacheFn != null) {
       cacheFn();
     }
+  }
+
+  @action
+  void clearMeetup() {
+    meetup = null;
+  }
+
+  void setCacheFn(Function cacheFn) {
+    this.cacheFn = cacheFn;
   }
 }
