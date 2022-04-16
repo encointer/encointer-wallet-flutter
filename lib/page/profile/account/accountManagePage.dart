@@ -275,51 +275,42 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       Spacer(),
                       Container(
                         child: PopupMenuButton<AccountAction>(
-                          offset: Offset(-10, -150),
-                          icon: Icon(Iconsax.more, color: Colors.white),
-                          color: ZurichLion.shade50,
-                          padding: EdgeInsets.all(20),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                          onSelected: (AccountAction accountAction) {
-                            switch (accountAction) {
-                              case AccountAction.delete:
-                                _onDeleteAccount(context);
-                                break;
-                              case AccountAction.export:
-                                _showPasswordDialog(context);
-                                break;
-                            }
-                          },
-                          itemBuilder: (BuildContext context) => <PopupMenuEntry<AccountAction>>[
-                            PopupMenuItem<AccountAction>(
-                              value: AccountAction.delete,
-                              child: ListTileTheme(
-                                textColor: ZurichLion.shade500,
-                                iconColor: ZurichLion.shade500,
-                                child: ListTile(
-                                  minLeadingWidth: 0,
-                                  title: Text(dic.profile.deleteAccount),
-                                  leading: Icon(Iconsax.trash),
-                                ),
-                              ),
+                            offset: Offset(-10, -150),
+                            icon: Icon(Iconsax.more, color: Colors.white),
+                            color: ZurichLion.shade50,
+                            padding: EdgeInsets.all(20),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
                             ),
-                            PopupMenuItem<AccountAction>(
-                              value: AccountAction.export,
-                              child: ListTileTheme(
-                                textColor: ZurichLion.shade500,
-                                iconColor: ZurichLion.shade500,
-                                child: ListTile(
-                                  minLeadingWidth: 0,
-                                  title: Text(dic.profile.exportAccount),
-                                  leading:
-                                      Icon(Iconsax.export_3, color: ZurichLion.shade500),
-                                ),
-                              ),
+                            onSelected: (AccountAction accountAction) {
+                              switch (accountAction) {
+                                case AccountAction.delete:
+                                  _onDeleteAccount(context);
+                                  break;
+                                case AccountAction.export:
+                                  _showPasswordDialog(context);
+                                  break;
+                              }
+                            },
+                            itemBuilder: (BuildContext context) => [
+                                  AccountActionItemData(dic.profile.deleteAccount, AccountAction.delete),
+                                  AccountActionItemData(dic.profile.exportAccount, AccountAction.export),
+                                ]
+                                    .map((AccountActionItemData data) => PopupMenuItem<AccountAction>(
+                                          value: data.accountAction,
+                                          // https://github.com/flutter/flutter/issues/31247 as soon as we use a newer flutter version we might be able to add this to our theme.dart
+                                          child: ListTileTheme(
+                                            textColor: ZurichLion.shade500,
+                                            iconColor: ZurichLion.shade500,
+                                            child: ListTile(
+                                              minLeadingWidth: 0,
+                                              title: Text(data.title),
+                                              leading: Icon(Iconsax.trash),
+                                            ),
+                                          ),
+                                        ))
+                                    .toList() //<PopupMenuEntry<AccountAction>>,
                             ),
-                          ],
-                        ),
                       ),
                     ],
                   ),
@@ -331,6 +322,14 @@ class _AccountManagePageState extends State<AccountManagePage> {
       ),
     );
   }
+}
+
+class AccountActionItemData {
+  // in newer flutter versions you can put that stuff into the AccountAction enum and do not need an extra class
+  final String title;
+  final AccountAction accountAction;
+
+  AccountActionItemData(this.title, this.accountAction);
 }
 
 class CommunityIcon extends StatelessWidget {
