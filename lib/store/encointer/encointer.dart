@@ -90,9 +90,6 @@ abstract class _EncointerStore with Store {
   @observable
   ObservableList<AccountBusinessTuple> businessRegistry;
 
-  @observable
-  ObservableList<Location> communityLocations = new ObservableList();
-
   @computed
   BalanceEntry get communityBalanceEntry {
     return chosenCid != null ? account.balanceEntries[chosenCid.toFmtString()] : null;
@@ -254,16 +251,6 @@ abstract class _EncointerStore with Store {
   void setCommunities(List<CidName> c) {
     print("store: set communities to $c");
     communities = c;
-  }
-
-  @action
-  void setCommunityLocations([List<Location> locations]) {
-    print("store: set communityLocations to ${locations.toString()}");
-    communityLocations = ObservableList.of(locations);
-
-    // There is no race-condition with the `getMeetupTime` call in `setMeetupLocation` because `getMeetupTime` uses
-    // internally the `meetupLocation`. Hence, the worst case scenario is a redundant rpc call.
-    webApi.encointer.getMeetupTime();
   }
 
   @action

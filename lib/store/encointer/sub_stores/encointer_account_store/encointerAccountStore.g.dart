@@ -109,6 +109,17 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
   }
 
   @override
+  void purgeCeremonySpecificState() {
+    final _$actionInfo =
+        _$_EncointerAccountStoreActionController.startAction(name: '_EncointerAccountStore.purgeCeremonySpecificState');
+    try {
+      return super.purgeCeremonySpecificState();
+    } finally {
+      _$_EncointerAccountStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 balanceEntries: ${balanceEntries},

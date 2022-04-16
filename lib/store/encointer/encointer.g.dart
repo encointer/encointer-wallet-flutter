@@ -31,10 +31,6 @@ EncointerStore _$EncointerStoreFromJson(Map<String, dynamic> json) {
         ? ObservableList<AccountBusinessTuple>.of((json['businessRegistry'] as List)
             .map((e) => e == null ? null : AccountBusinessTuple.fromJson(e as Map<String, dynamic>)))
         : null
-    ..communityLocations = json['communityLocations'] != null
-        ? ObservableList<Location>.of((json['communityLocations'] as List)
-            .map((e) => e == null ? null : Location.fromJson(e as Map<String, dynamic>)))
-        : null
     ..communityStores = json['communityStores'] != null
         ? ObservableMap<String, CommunityStore>.of((json['communityStores'] as Map<String, dynamic>).map(
             (k, e) => MapEntry(k, e == null ? null : CommunityStore.fromJson(e as Map<String, dynamic>)),
@@ -57,7 +53,6 @@ Map<String, dynamic> _$EncointerStoreToJson(EncointerStore instance) => <String,
       'chosenCid': instance.chosenCid?.toJson(),
       'txsTransfer': instance.txsTransfer?.map((e) => e?.toJson())?.toList(),
       'businessRegistry': instance.businessRegistry?.map((e) => e?.toJson())?.toList(),
-      'communityLocations': instance.communityLocations?.map((e) => e?.toJson())?.toList(),
       'communityStores': instance.communityStores?.map((k, e) => MapEntry(k, e?.toJson())),
       'accountStores': instance.accountStores?.map((k, e) => MapEntry(k, e?.toJson())),
     };
@@ -278,21 +273,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
-  final _$communityLocationsAtom = Atom(name: '_EncointerStore.communityLocations');
-
-  @override
-  ObservableList<Location> get communityLocations {
-    _$communityLocationsAtom.reportRead();
-    return super.communityLocations;
-  }
-
-  @override
-  set communityLocations(ObservableList<Location> value) {
-    _$communityLocationsAtom.reportWrite(value, super.communityLocations, () {
-      super.communityLocations = value;
-    });
-  }
-
   final _$communityStoresAtom = Atom(name: '_EncointerStore.communityStores');
 
   @override
@@ -422,16 +402,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setCommunityLocations([List<Location> locations]) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunityLocations');
-    try {
-      return super.setCommunityLocations(locations);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setChosenCid([CommunityIdentifier cid]) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setChosenCid');
     try {
@@ -462,7 +432,6 @@ communities: ${communities},
 chosenCid: ${chosenCid},
 txsTransfer: ${txsTransfer},
 businessRegistry: ${businessRegistry},
-communityLocations: ${communityLocations},
 communityStores: ${communityStores},
 accountStores: ${accountStores},
 currentPhaseDuration: ${currentPhaseDuration},

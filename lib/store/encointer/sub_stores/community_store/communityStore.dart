@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
+import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
@@ -56,6 +58,9 @@ abstract class _CommunityStore with Store {
   List<String> bootstrappers;
 
   @observable
+  ObservableList<Location> meetupLocations = new ObservableList();
+
+  @observable
   ObservableMap<String, CommunityAccountStore> communityAccountStores = new ObservableMap();
 
   @action
@@ -98,6 +103,16 @@ abstract class _CommunityStore with Store {
       meetupTime = time;
       cacheFn();
     }
+  }
+
+  @action
+  void setMeetupLocations([List<Location> locations]) {
+    _log("store: set meetupLocations to ${locations.toString()}");
+    meetupLocations = ObservableList.of(locations);
+
+    // There is no race-condition with the `getMeetupTime` call in `setMeetupLocation` because `getMeetupTime` uses
+    // internally the `meetupLocation`. Hence, the worst case scenario is a redundant rpc call.
+    webApi.encointer.getMeetupTime();
   }
 
   /// Purges state that is only relevant for one Ceremony.

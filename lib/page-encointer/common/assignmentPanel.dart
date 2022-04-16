@@ -32,8 +32,8 @@ class AssignmentPanel extends StatelessWidget {
               Meetup meetup = store.encointer.communityAccount.meetup;
 
               Location meetupLocation = meetup == null
-                  ? store.encointer.communityLocations?.first
-                  : store.encointer.communityLocations[meetup.locationIndex];
+                  ? store.encointer.community.meetupLocations?.first
+                  : store.encointer.community.meetupLocations[meetup.locationIndex];
 
               return store.encointer.communities == null
                   ? Text(dic.assets.communitiesNotFound)

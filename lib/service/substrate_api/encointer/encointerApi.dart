@@ -150,7 +150,7 @@ class EncointerApi {
         .then((list) => List.from(list).map((l) => Location.fromJson(l)).toList());
 
     print("api: getAllMeetupLocations: " + locs.toString());
-    store.encointer.setCommunityLocations(locs);
+    store.encointer.community.setMeetupLocations(locs);
   }
 
   /// Queries the Communities pallet: encointerCommunities.communityMetadata(cid)
@@ -213,8 +213,8 @@ class EncointerApi {
     int locationIndex = store.encointer.communityAccount?.meetup?.locationIndex;
 
     Location mLocation = locationIndex != null
-        ? store.encointer.communityLocations[locationIndex]
-        : (store.encointer.communityLocations.isNotEmpty ? store.encointer.communityLocations.first : null);
+        ? store.encointer.community.meetupLocations[locationIndex]
+        : (store.encointer.community.meetupLocations?.first);
 
     if (mLocation == null) {
       print("No meetup locations found, can't get meetup time.");
@@ -383,7 +383,7 @@ class EncointerApi {
       store.encointer.currentCeremonyIndex,
       store.encointer.chosenCid,
       meetup.index,
-      store.encointer.communityLocations[meetup.locationIndex],
+      store.encointer.community.meetupLocations[meetup.locationIndex],
       meetup.time,
       participants,
     );

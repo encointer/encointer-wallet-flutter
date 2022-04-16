@@ -17,6 +17,10 @@ CommunityStore _$CommunityStoreFromJson(Map<String, dynamic> json) {
     ..demurrage = (json['demurrage'] as num)?.toDouble()
     ..meetupTime = json['meetupTime'] as int
     ..bootstrappers = (json['bootstrappers'] as List)?.map((e) => e as String)?.toList()
+    ..meetupLocations = json['meetupLocations'] != null
+        ? ObservableList<Location>.of((json['meetupLocations'] as List)
+            .map((e) => e == null ? null : Location.fromJson(e as Map<String, dynamic>)))
+        : null
     ..communityAccountStores = json['communityAccountStores'] != null
         ? ObservableMap<String, CommunityAccountStore>.of((json['communityAccountStores'] as Map<String, dynamic>).map(
             (k, e) => MapEntry(k, e == null ? null : CommunityAccountStore.fromJson(e as Map<String, dynamic>)),
@@ -31,6 +35,7 @@ Map<String, dynamic> _$CommunityStoreToJson(CommunityStore instance) => <String,
       'demurrage': instance.demurrage,
       'meetupTime': instance.meetupTime,
       'bootstrappers': instance.bootstrappers,
+      'meetupLocations': instance.meetupLocations?.map((e) => e?.toJson())?.toList(),
       'communityAccountStores': instance.communityAccountStores?.map((k, e) => MapEntry(k, e?.toJson())),
     };
 
@@ -116,6 +121,21 @@ mixin _$CommunityStore on _CommunityStore, Store {
     });
   }
 
+  final _$meetupLocationsAtom = Atom(name: '_CommunityStore.meetupLocations');
+
+  @override
+  ObservableList<Location> get meetupLocations {
+    _$meetupLocationsAtom.reportRead();
+    return super.meetupLocations;
+  }
+
+  @override
+  set meetupLocations(ObservableList<Location> value) {
+    _$meetupLocationsAtom.reportWrite(value, super.meetupLocations, () {
+      super.meetupLocations = value;
+    });
+  }
+
   final _$communityAccountStoresAtom = Atom(name: '_CommunityStore.communityAccountStores');
 
   @override
@@ -185,6 +205,16 @@ mixin _$CommunityStore on _CommunityStore, Store {
   }
 
   @override
+  void setMeetupLocations([List<Location> locations]) {
+    final _$actionInfo = _$_CommunityStoreActionController.startAction(name: '_CommunityStore.setMeetupLocations');
+    try {
+      return super.setMeetupLocations(locations);
+    } finally {
+      _$_CommunityStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void purgeCeremonySpecificState() {
     final _$actionInfo =
         _$_CommunityStoreActionController.startAction(name: '_CommunityStore.purgeCeremonySpecificState');
@@ -202,6 +232,7 @@ communityMetadata: ${communityMetadata},
 demurrage: ${demurrage},
 meetupTime: ${meetupTime},
 bootstrappers: ${bootstrappers},
+meetupLocations: ${meetupLocations},
 communityAccountStores: ${communityAccountStores},
 name: ${name},
 symbol: ${symbol},
