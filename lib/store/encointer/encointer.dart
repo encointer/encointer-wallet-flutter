@@ -14,7 +14,7 @@ import 'package:mobx/mobx.dart';
 
 import '../../models/index.dart';
 import 'sub_stores/community_store/communityStore.dart';
-import 'sub_stores/encointerAccountStore/encointerAccountStore.dart';
+import 'sub_stores/encointer_account_store/encointerAccountStore.dart';
 
 part 'encointer.g.dart';
 
