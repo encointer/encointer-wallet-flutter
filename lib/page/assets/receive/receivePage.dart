@@ -26,13 +26,14 @@ class _ReceivePageState extends State<ReceivePage> {
   var invoice = [];
 
   var periodicTimer;
+  bool pendingObserved = false;
 
   static void _showSnackBar(BuildContext context, String msg) {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       backgroundColor: Colors.lightBlue,
       content: Text(msg, style: TextStyle(color: Colors.black)),
-      duration: Duration(milliseconds: 2000),
+      duration: Duration(milliseconds: 5000),
     ));
   }
 
@@ -67,12 +68,19 @@ class _ReceivePageState extends State<ReceivePage> {
   @override
   Widget build(BuildContext context) {
     periodicTimer = Timer.periodic(
-      const Duration(seconds: 2),
+      const Duration(seconds: 1),
       (timer) {
         print("timer callback executed: watching incoming pending extrinsics");
-        webApi.encointer.pendingExtrinsics().then((data) => {
-              if (data.length > 0) {_showSnackBar(context, "pending extrinsic observed")}
-            });
+        webApi.encointer.pendingExtrinsics().then((data) {
+          if (data.length > 0) {
+            if (!pendingObserved) {
+              _showSnackBar(context, "pending extrinsic observed. Please wait for confirmation!");
+              pendingObserved = true;
+            }
+          } else {
+            pendingObserved = false;
+          }
+        });
       },
     );
 
