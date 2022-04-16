@@ -125,6 +125,20 @@ class EncointerApi {
     return null;
   }
 
+  Future<List<dynamic>> pendingExtrinsics() async {
+    try {
+      var msg = await _dartApi.pendingExtrinsics();
+
+      print("[EncointerApi]: pendingExtrinsics ${msg.toString()}");
+
+      return List.from(msg);
+    } catch (e) {
+      print("[EncointerApi]: Error getting pending extrinsics: ${e.toString()}");
+    }
+
+    return null;
+  }
+
   /// Queries the Scheduler pallet: encointerScheduler.currentCeremonyIndex().
   ///
   /// This is on-chain in Cantillon.

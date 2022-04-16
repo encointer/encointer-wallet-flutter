@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -21,6 +24,17 @@ class _ReceivePageState extends State<ReceivePage> {
   final _formKey = GlobalKey<FormState>();
   bool generateQR = false;
   var invoice = [];
+
+  var periodicTimer;
+
+  static void _showSnackBar(BuildContext context, String msg) {
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      backgroundColor: Colors.lightBlue,
+      content: Text(msg, style: TextStyle(color: Colors.black)),
+      duration: Duration(milliseconds: 2000),
+    ));
+  }
 
   Widget generateQRWithInvoiceData() {
     invoice = [
@@ -46,11 +60,22 @@ class _ReceivePageState extends State<ReceivePage> {
     // Clean up the controller when the widget is removed from the
     // widget tree.
     _amountController.dispose();
+    periodicTimer.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+    periodicTimer = Timer.periodic(
+      const Duration(seconds: 2),
+      (timer) {
+        print("timer callback executed: watching incoming pending extrinsics");
+        webApi.encointer.pendingExtrinsics().then((data) => {
+              if (data.length > 0) {_showSnackBar(context, "pending extrinsic observed")}
+            });
+      },
+    );
+
     return Form(
       key: _formKey,
       child: Scaffold(

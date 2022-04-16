@@ -13,4 +13,9 @@ class EncointerDartApi {
     return _dartApi.rpc(ceremonies_getAggregatedAccountData, [cid.toJson(), account]).then(
         (data) => AggregatedAccountData.fromJson(data));
   }
+
+  ///
+  Future<List<dynamic>> pendingExtrinsics() {
+    return _dartApi.rpc("author_pendingExtrinsics", []).then((data) => List.from(data));
+  }
 }
