@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:encointer_wallet/service/substrate_api/jsApi.dart';
+import 'package:encointer_wallet/service/substrate_api/core/jsApi.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 

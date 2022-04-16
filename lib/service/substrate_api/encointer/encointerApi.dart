@@ -2,10 +2,9 @@ import 'dart:convert';
 
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/mocks/data/mockBazaarData.dart';
-import 'package:encointer_wallet/service/substrate_api/jsApi.dart';
+import 'package:encointer_wallet/service/substrate_api/core/jsApi.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
-import 'package:encointer_wallet/store/encointer/types/ceremonies.dart';
 import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
@@ -13,6 +12,9 @@ import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:encointer_wallet/store/encointer/types/proofOfAttendance.dart';
 import 'package:encointer_wallet/utils/format.dart';
 
+import '../../../models/index.dart';
+import '../core/dartApi.dart';
+import 'encointerDartApi.dart';
 import 'noTeeApi.dart';
 import 'teeProxyApi.dart';
 
@@ -26,12 +28,17 @@ import 'teeProxyApi.dart';
 ///
 /// NOTE: If the js-code was changed a rebuild of the application is needed to update the code.
 
+const aggregatedAccountDataRpc = "ceremonies_getAggregatedAccountData";
+
 class EncointerApi {
-  EncointerApi(this.jsApi)
+  EncointerApi(this.jsApi, SubstrateDartApi dartApi)
       : _noTee = NoTeeApi(jsApi),
-        _teeProxy = TeeProxyApi(jsApi);
+        _teeProxy = TeeProxyApi(jsApi),
+        _dartApi = EncointerDartApi(dartApi);
 
   final JSApi jsApi;
+  final EncointerDartApi _dartApi;
+
   final store = globalAppStore;
   final String _currentPhaseSubscribeChannel = 'currentPhase';
   final String _communityIdentifiersChannel = 'communityIdentifiers';
@@ -100,6 +107,22 @@ class EncointerApi {
         .then((m) => Map.from(m).map((key, value) => MapEntry(ceremonyPhaseFromString(key), int.parse(value))));
     print("Phase durations: ${phaseDurations.toString()}");
     store.encointer.phaseDurations = phaseDurations;
+  }
+
+  /// Queries the rpc 'ceremonies_getAggregatedAccountData' with the dart api.
+  ///
+  Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String account) async {
+    try {
+      AggregatedAccountData accountData = await _dartApi.getAggregatedAccountData(cid, account);
+
+      print("[EncointerApi]: AggregatedAccountData ${accountData.toString()}");
+
+      return accountData;
+    } catch (e) {
+      print("[EncointerApi]: Error getting aggregated account data ${e.toString()}");
+    }
+
+    return null;
   }
 
   /// Queries the Scheduler pallet: encointerScheduler.currentCeremonyIndex().

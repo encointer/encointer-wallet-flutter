@@ -4,12 +4,13 @@ import 'package:encointer_wallet/page-encointer/phases/attesting/attestingPage.d
 import 'package:encointer_wallet/page-encointer/phases/registering/registeringPage.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/encointer/types/ceremonies.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+
+import '../models/index.dart';
 
 /// ceremonies, ceremony
 class EncointerEntry extends StatelessWidget {
@@ -113,11 +114,11 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox> with SingleTickerProvider
     //return AssigningPage(store);
     //return AttestingPage(store);
     switch (phase) {
-      case CeremonyPhase.Registering:
+      case CeremonyPhase.REGISTERING:
         return RegisteringPage(store);
-      case CeremonyPhase.Assigning:
+      case CeremonyPhase.ASSIGNING:
         return AssigningPage(store);
-      case CeremonyPhase.Attesting:
+      case CeremonyPhase.ATTESTING:
         return AttestingPage(store);
       default:
         return RegisteringPage(store);

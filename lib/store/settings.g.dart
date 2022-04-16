@@ -52,16 +52,16 @@ mixin _$SettingsStore on _SettingsStore, Store {
   bool get endpointIsEncointer => (_$endpointIsEncointerComputed ??=
           Computed<bool>(() => super.endpointIsEncointer, name: '_SettingsStore.endpointIsEncointer'))
       .value;
-  Computed<bool> _$endpointIsGesellComputed;
+  Computed<bool> _$endpointIsNoTeeComputed;
 
   @override
-  bool get endpointIsNoTee => (_$endpointIsGesellComputed ??=
+  bool get endpointIsNoTee => (_$endpointIsNoTeeComputed ??=
           Computed<bool>(() => super.endpointIsNoTee, name: '_SettingsStore.endpointIsNoTee'))
       .value;
-  Computed<bool> _$endpointIsCantillonComputed;
+  Computed<bool> _$endpointIsTeeProxyComputed;
 
   @override
-  bool get endpointIsTeeProxy => (_$endpointIsCantillonComputed ??=
+  bool get endpointIsTeeProxy => (_$endpointIsTeeProxyComputed ??=
           Computed<bool>(() => super.endpointIsTeeProxy, name: '_SettingsStore.endpointIsTeeProxy'))
       .value;
   Computed<String> _$ipfsGatewayComputed;

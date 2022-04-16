@@ -4,7 +4,7 @@ import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:encointer_wallet/store/encointer/types/workerApi.dart';
 
-import '../jsApi.dart';
+import '../core/jsApi.dart';
 
 class TeeProxyApi {
   TeeProxyApi(this.jsApi)

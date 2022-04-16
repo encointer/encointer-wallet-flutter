@@ -5,6 +5,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 
+import 'core/mockDartApi.dart';
 import 'mockAccountApi.dart';
 import 'mockAssetsApi.dart';
 import 'mockChainApi.dart';
@@ -25,7 +26,7 @@ class MockApi extends Api {
     assets = MockApiAssets(js);
     chain = MockChainApi(js);
     codec = CodecApi(js);
-    encointer = MockApiEncointer(js);
+    encointer = MockApiEncointer(js, MockSubstrateDartApi());
     ipfs = MockIpfs();
 
     if (withUi) {

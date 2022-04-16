@@ -2,10 +2,11 @@ import 'package:encointer_wallet/mocks/data/mockChainData.dart';
 import 'package:encointer_wallet/mocks/data/mockEncointerData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/chain/types/header.dart';
-import 'package:encointer_wallet/store/encointer/types/ceremonies.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:encointer_wallet/store/encointer/types/location.dart';
+
+import '../../models/index.dart';
 
 abstract class PrepareMockStorage {
   static void init(AppStore store) {
@@ -28,7 +29,7 @@ abstract class PrepareMockStorage {
   }
 
   static void readyForMeetup(AppStore store) {
-    store.encointer.setCurrentPhase(CeremonyPhase.Attesting);
+    store.encointer.setCurrentPhase(CeremonyPhase.ATTESTING);
     store.encointer.setParticipantIndex(1);
     store.encointer.setMeetupIndex(1);
     store.encointer.setMeetupLocation(Location.fromJson(claim['location']));

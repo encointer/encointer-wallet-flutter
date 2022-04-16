@@ -1,11 +1,11 @@
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/encointer/types/ceremonies.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import "package:latlong2/latlong.dart";
 
+import '../../models/index.dart';
 import 'components/ceremonyInfoAndCalendar.dart';
 import 'components/ceremonyLocationButton.dart';
 import 'components/ceremonyNotification.dart';
