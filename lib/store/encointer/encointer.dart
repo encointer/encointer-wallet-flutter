@@ -240,7 +240,9 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void purgeCeremonySpecificState() {}
+  void purgeCeremonySpecificState() {
+    communityStores.forEach((cid, store) => store.purgeCeremonySpecificState());
+  }
 
   /// Calculates the remaining time until the next meetup starts. As Gesell and Cantillon currently implement timewarp
   /// we cannot use the time received by the blockchain. Hence, we need to calculate it differently.
