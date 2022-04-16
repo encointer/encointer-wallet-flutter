@@ -158,6 +158,17 @@ mixin _$CommunityStore on _CommunityStore, Store {
   }
 
   @override
+  void purgeCeremonySpecificState() {
+    final _$actionInfo =
+        _$_CommunityStoreActionController.startAction(name: '_CommunityStore.purgeCeremonySpecificState');
+    try {
+      return super.purgeCeremonySpecificState();
+    } finally {
+      _$_CommunityStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 communityMetadata: ${communityMetadata},

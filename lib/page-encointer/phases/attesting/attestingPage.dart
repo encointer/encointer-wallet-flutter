@@ -45,7 +45,7 @@ class _AttestingPageState extends State<AttestingPage> {
               SizedBox(height: 16),
               Text(
                 dic.encointer.claimsScanned
-                    .replaceAll('AMOUNT_PLACEHOLDER', store.encointer.scannedClaimsCount.toString()),
+                    .replaceAll('AMOUNT_PLACEHOLDER', store.encointer.communityAccount.scannedClaimsCount.toString()),
                 style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
                 textAlign: TextAlign.center,
               ),
@@ -56,7 +56,7 @@ class _AttestingPageState extends State<AttestingPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [Text(dic.encointer.claimsSubmit)],
                 ),
-                onPressed: () => store.encointer.scannedClaimsCount > 0 ? _submit(context) : null,
+                onPressed: () => store.encointer.communityAccount.scannedClaimsCount > 0 ? _submit(context) : null,
               ),
               SizedBox(height: 16),
               ElevatedButton(
@@ -65,8 +65,9 @@ class _AttestingPageState extends State<AttestingPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [Text(dic.encointer.claimsPurge)],
                 ),
-                onPressed: () =>
-                    store.encointer.scannedClaimsCount > 0 ? _confirmPurgeClaimsDialog(context, store) : null,
+                onPressed: () => store.encointer.communityAccount.scannedClaimsCount > 0
+                    ? _confirmPurgeClaimsDialog(context, store)
+                    : null,
               ),
             ],
           ),
@@ -84,8 +85,9 @@ class _AttestingPageState extends State<AttestingPage> {
         "call": 'attestClaims',
         "cid": store.encointer.chosenCid,
       },
-      "detail": dic.encointer.claimsSubmitDetail.replaceAll('AMOUNT', store.encointer.scannedClaimsCount.toString()),
-      "params": [store.encointer.participantsClaims.values.toList()],
+      "detail": dic.encointer.claimsSubmitDetail
+          .replaceAll('AMOUNT', store.encointer.communityAccount.scannedClaimsCount.toString()),
+      "params": [store.encointer.communityAccount.participantsClaims.values.toList()],
       'onFinish': (BuildContext txPageContext, Map res) {
         Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
       }
@@ -110,7 +112,7 @@ void _confirmPurgeClaimsDialog(BuildContext context, AppStore store) {
           CupertinoButton(
             child: Text(dic.home.ok),
             onPressed: () {
-              store.encointer.purgeParticipantsClaims();
+              store.encointer.communityAccount.purgeParticipantsClaims();
               Navigator.of(context).pop();
             },
           ),

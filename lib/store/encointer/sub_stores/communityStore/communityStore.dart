@@ -91,6 +91,15 @@ abstract class _CommunityStore with Store {
     }
   }
 
+  /// Purges state that is only relevant for one Ceremony.
+  ///
+  /// This should be called when a transition to the next ceremony happens.
+  @action
+  void purgeCeremonySpecificState() {
+    setMeetupTime();
+    communityAccountStores.forEach((key, value) => value.purgeCeremonySpecificState());
+  }
+
   void setCacheFn(Function cacheFn) {
     this.cacheFn = cacheFn;
 

@@ -29,11 +29,6 @@ EncointerStore _$EncointerStoreFromJson(Map<String, dynamic> json) {
     ..chosenCid =
         json['chosenCid'] == null ? null : CommunityIdentifier.fromJson(json['chosenCid'] as Map<String, dynamic>)
     ..demurrage = (json['demurrage'] as num)?.toDouble()
-    ..participantsClaims = json['participantsClaims'] != null
-        ? ObservableMap<String, ClaimOfAttendance>.of((json['participantsClaims'] as Map<String, dynamic>).map(
-            (k, e) => MapEntry(k, e == null ? null : ClaimOfAttendance.fromJson(e as Map<String, dynamic>)),
-          ))
-        : null
     ..txsTransfer = json['txsTransfer'] != null
         ? ObservableList<TransferData>.of((json['txsTransfer'] as List)
             .map((e) => e == null ? null : TransferData.fromJson(e as Map<String, dynamic>)))
@@ -66,7 +61,6 @@ Map<String, dynamic> _$EncointerStoreToJson(EncointerStore instance) => <String,
       'communities': instance.communities?.map((e) => e?.toJson())?.toList(),
       'chosenCid': instance.chosenCid?.toJson(),
       'demurrage': instance.demurrage,
-      'participantsClaims': instance.participantsClaims?.map((k, e) => MapEntry(k, e?.toJson())),
       'txsTransfer': instance.txsTransfer?.map((e) => e?.toJson())?.toList(),
       'reputations': instance.reputations?.map((k, e) => MapEntry(k.toString(), e?.toJson())),
       'businessRegistry': instance.businessRegistry?.map((e) => e?.toJson())?.toList(),
@@ -122,12 +116,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   @override
   dynamic get currentPhaseDuration => (_$currentPhaseDurationComputed ??=
           Computed<dynamic>(() => super.currentPhaseDuration, name: '_EncointerStore.currentPhaseDuration'))
-      .value;
-  Computed<dynamic> _$scannedClaimsCountComputed;
-
-  @override
-  dynamic get scannedClaimsCount => (_$scannedClaimsCountComputed ??=
-          Computed<dynamic>(() => super.scannedClaimsCount, name: '_EncointerStore.scannedClaimsCount'))
       .value;
   Computed<dynamic> _$ceremonyIndexForProofOfAttendanceComputed;
 
@@ -298,21 +286,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
-  final _$participantsClaimsAtom = Atom(name: '_EncointerStore.participantsClaims');
-
-  @override
-  ObservableMap<String, ClaimOfAttendance> get participantsClaims {
-    _$participantsClaimsAtom.reportRead();
-    return super.participantsClaims;
-  }
-
-  @override
-  set participantsClaims(ObservableMap<String, ClaimOfAttendance> value) {
-    _$participantsClaimsAtom.reportWrite(value, super.participantsClaims, () {
-      super.participantsClaims = value;
-    });
-  }
-
   final _$txsTransferAtom = Atom(name: '_EncointerStore.txsTransfer');
 
   @override
@@ -455,6 +428,17 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
+  void purgeCeremonySpecificState() {
+    final _$actionInfo =
+        _$_EncointerStoreActionController.startAction(name: '_EncointerStore.purgeCeremonySpecificState');
+    try {
+      return super.purgeCeremonySpecificState();
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunityIdentifiers');
     try {
@@ -499,26 +483,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setChosenCid');
     try {
       return super.setChosenCid(cid);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void purgeParticipantsClaims() {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.purgeParticipantsClaims');
-    try {
-      return super.purgeParticipantsClaims();
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void addParticipantClaim(ClaimOfAttendance claim) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.addParticipantClaim');
-    try {
-      return super.addParticipantClaim(claim);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }
@@ -575,14 +539,12 @@ communityIdentifiers: ${communityIdentifiers},
 communities: ${communities},
 chosenCid: ${chosenCid},
 demurrage: ${demurrage},
-participantsClaims: ${participantsClaims},
 txsTransfer: ${txsTransfer},
 reputations: ${reputations},
 businessRegistry: ${businessRegistry},
 communityLocations: ${communityLocations},
 communityStores: ${communityStores},
 currentPhaseDuration: ${currentPhaseDuration},
-scannedClaimsCount: ${scannedClaimsCount},
 ceremonyIndexForProofOfAttendance: ${ceremonyIndexForProofOfAttendance},
 communityBalanceEntry: ${communityBalanceEntry},
 communityBalance: ${communityBalance},

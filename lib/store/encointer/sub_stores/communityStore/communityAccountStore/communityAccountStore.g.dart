@@ -13,7 +13,12 @@ CommunityAccountStore _$CommunityAccountStoreFromJson(Map<String, dynamic> json)
     json['address'] as String,
   )
     ..participantType = _$enumDecodeNullable(_$ParticipantTypeEnumMap, json['participantType'])
-    ..meetup = json['meetup'] == null ? null : Meetup.fromJson(json['meetup'] as Map<String, dynamic>);
+    ..meetup = json['meetup'] == null ? null : Meetup.fromJson(json['meetup'] as Map<String, dynamic>)
+    ..participantsClaims = json['participantsClaims'] != null
+        ? ObservableMap<String, ClaimOfAttendance>.of((json['participantsClaims'] as Map<String, dynamic>).map(
+            (k, e) => MapEntry(k, e == null ? null : ClaimOfAttendance.fromJson(e as Map<String, dynamic>)),
+          ))
+        : null;
 }
 
 Map<String, dynamic> _$CommunityAccountStoreToJson(CommunityAccountStore instance) => <String, dynamic>{
@@ -22,6 +27,7 @@ Map<String, dynamic> _$CommunityAccountStoreToJson(CommunityAccountStore instanc
       'address': instance.address,
       'participantType': _$ParticipantTypeEnumMap[instance.participantType],
       'meetup': instance.meetup?.toJson(),
+      'participantsClaims': instance.participantsClaims?.map((k, e) => MapEntry(k, e?.toJson())),
     };
 
 T _$enumDecode<T>(
@@ -68,6 +74,12 @@ const _$ParticipantTypeEnumMap = {
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
+  Computed<dynamic> _$scannedClaimsCountComputed;
+
+  @override
+  dynamic get scannedClaimsCount => (_$scannedClaimsCountComputed ??=
+          Computed<dynamic>(() => super.scannedClaimsCount, name: '_CommunityAccountStore.scannedClaimsCount'))
+      .value;
   Computed<bool> _$isAssignedComputed;
 
   @override
@@ -96,6 +108,21 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
     });
   }
 
+  final _$participantsClaimsAtom = Atom(name: '_CommunityAccountStore.participantsClaims');
+
+  @override
+  ObservableMap<String, ClaimOfAttendance> get participantsClaims {
+    _$participantsClaimsAtom.reportRead();
+    return super.participantsClaims;
+  }
+
+  @override
+  set participantsClaims(ObservableMap<String, ClaimOfAttendance> value) {
+    _$participantsClaimsAtom.reportWrite(value, super.participantsClaims, () {
+      super.participantsClaims = value;
+    });
+  }
+
   final _$_CommunityAccountStoreActionController = ActionController(name: '_CommunityAccountStore');
 
   @override
@@ -109,11 +136,44 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
   }
 
   @override
-  void clearMeetup() {
+  void purgeMeetup() {
     final _$actionInfo =
-        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.clearMeetup');
+        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.purgeMeetup');
     try {
-      return super.clearMeetup();
+      return super.purgeMeetup();
+    } finally {
+      _$_CommunityAccountStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void purgeParticipantsClaims() {
+    final _$actionInfo =
+        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.purgeParticipantsClaims');
+    try {
+      return super.purgeParticipantsClaims();
+    } finally {
+      _$_CommunityAccountStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void addParticipantClaim(ClaimOfAttendance claim) {
+    final _$actionInfo =
+        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.addParticipantClaim');
+    try {
+      return super.addParticipantClaim(claim);
+    } finally {
+      _$_CommunityAccountStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void purgeCeremonySpecificState() {
+    final _$actionInfo =
+        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.purgeCeremonySpecificState');
+    try {
+      return super.purgeCeremonySpecificState();
     } finally {
       _$_CommunityAccountStoreActionController.endAction(_$actionInfo);
     }
@@ -123,6 +183,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
   String toString() {
     return '''
 meetup: ${meetup},
+participantsClaims: ${participantsClaims},
+scannedClaimsCount: ${scannedClaimsCount},
 isAssigned: ${isAssigned},
 isRegistered: ${isRegistered}
     ''';

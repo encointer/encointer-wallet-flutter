@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
@@ -47,6 +48,15 @@ abstract class _CommunityAccountStore with Store {
   @observable
   Meetup meetup;
 
+  /// `ClaimOfAttendances` that were scanned during a meetup.
+  ///
+  /// Map: claimantPublicKey -> ClaimOfAttendance
+  @observable
+  ObservableMap<String, ClaimOfAttendance> participantsClaims = new ObservableMap();
+
+  @computed
+  get scannedClaimsCount => participantsClaims.length;
+
   @computed
   bool get isAssigned => meetup != null;
 
@@ -60,11 +70,36 @@ abstract class _CommunityAccountStore with Store {
   }
 
   @action
-  void clearMeetup() {
-    if (meetup != null) {;
+  void purgeMeetup() {
+    if (meetup != null) {
       meetup = null;
       cacheFn();
     }
+  }
+
+  @action
+  void purgeParticipantsClaims() {
+    participantsClaims.clear();
+    cacheFn();
+  }
+
+  bool containsClaim(ClaimOfAttendance claim) {
+    return participantsClaims[claim.claimantPublic] != null;
+  }
+
+  @action
+  void addParticipantClaim(ClaimOfAttendance claim) {
+    participantsClaims[claim.claimantPublic] = claim;
+    cacheFn();
+  }
+
+  /// Purges state that is only relevant for one Ceremony.
+  ///
+  /// This should be called when a transition to the next ceremony happens.
+  @action
+  void purgeCeremonySpecificState() {
+    purgeParticipantsClaims();
+    purgeMeetup();
   }
 
   void setCacheFn(Function cacheFn) {

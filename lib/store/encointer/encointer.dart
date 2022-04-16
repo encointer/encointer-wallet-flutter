@@ -92,13 +92,6 @@ abstract class _EncointerStore with Store {
   @observable
   double demurrage;
 
-  // claimantPublic -> ClaimOfAttendance
-  @observable
-  ObservableMap<String, ClaimOfAttendance> participantsClaims = new ObservableMap();
-
-  @computed
-  get scannedClaimsCount => participantsClaims.length;
-
   @observable
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
 
@@ -229,9 +222,11 @@ abstract class _EncointerStore with Store {
 
   @action
   resetState() {
-    purgeParticipantsClaims();
     purgeReputations();
   }
+
+  @action
+  void purgeCeremonySpecificState() {}
 
   /// Calculates the remaining time until the next meetup starts. As Gesell and Cantillon currently implement timewarp
   /// we cannot use the time received by the blockchain. Hence, we need to calculate it differently.
@@ -298,22 +293,6 @@ abstract class _EncointerStore with Store {
     if (!rootStore.settings.loading) {
       webApi.encointer.getCommunityData();
     }
-  }
-
-  @action
-  void purgeParticipantsClaims() {
-    participantsClaims.clear();
-    cacheFn();
-  }
-
-  bool containsClaim(ClaimOfAttendance claim) {
-    return participantsClaims[claim.claimantPublic] != null;
-  }
-
-  @action
-  void addParticipantClaim(ClaimOfAttendance claim) {
-    participantsClaims[claim.claimantPublic] = claim;
-    cacheFn();
   }
 
   @action
