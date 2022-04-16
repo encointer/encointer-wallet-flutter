@@ -66,15 +66,11 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       store.loadAccountCache(),
       store.settings.loadNetworkStateCache(),
       store.assets.loadCache(),
-      store.encointer.loadCache()
+      store.loadEncointerCache(_selectedNetwork.info),
     ]);
 
     webApi.launchWebview();
     changeTheme();
-    // FIXME: this should not be necessary after fixing #479
-    webApi.encointer.getCurrentCeremonyIndex();
-    webApi.encointer.getCurrentPhase();
-    // <<<< FIXME
 
     if (mounted) {
       Navigator.of(context).pop();
@@ -96,9 +92,6 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         webApi.fetchAccountData();
       } else {
         /// set new network and reload web view
-        // todo  remove the two options here, and fix the caching issue, explained in #219
-        store.encointer.setChosenCid();
-        store.encointer.communities = null;
         await _reloadNetwork();
       }
     }

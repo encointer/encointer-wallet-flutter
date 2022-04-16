@@ -168,12 +168,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   dynamic get communityAccount => (_$communityAccountComputed ??=
           Computed<dynamic>(() => super.communityAccount, name: '_EncointerStore.communityAccount'))
       .value;
-  Computed<bool> _$showRegisterButtonComputed;
-
-  @override
-  bool get showRegisterButton => (_$showRegisterButtonComputed ??=
-          Computed<bool>(() => super.showRegisterButton, name: '_EncointerStore.showRegisterButton'))
-      .value;
   Computed<bool> _$showStartCeremonyButtonComputed;
 
   @override
@@ -425,13 +419,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
     return _$_cacheTxsAsyncAction.run(() => super._cacheTxs(list, cacheKey));
   }
 
-  final _$loadCacheAsyncAction = AsyncAction('_EncointerStore.loadCache');
-
-  @override
-  Future<void> loadCache() {
-    return _$loadCacheAsyncAction.run(() => super.loadCache());
-  }
-
   final _$_EncointerStoreActionController = ActionController(name: '_EncointerStore');
 
   @override
@@ -630,7 +617,6 @@ communityBalance: ${communityBalance},
 communitiesContainsChosenCid: ${communitiesContainsChosenCid},
 community: ${community},
 communityAccount: ${communityAccount},
-showRegisterButton: ${showRegisterButton},
 showStartCeremonyButton: ${showStartCeremonyButton},
 showTwoBoxes: ${showTwoBoxes}
     ''';

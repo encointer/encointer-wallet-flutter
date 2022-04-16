@@ -1,12 +1,9 @@
 import 'package:encointer_wallet/mocks/data/mockAccountData.dart';
-import 'package:encointer_wallet/mocks/data/mockEncointerData.dart';
 import 'package:encointer_wallet/mocks/storage/mockLocalStorage.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mockApi.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/encointer/encointer.dart';
-import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -31,9 +28,6 @@ void main() {
       store.setCurrentPhase(CeremonyPhase.ASSIGNING);
       store.setCurrentPhase(phase);
       expect(store.currentPhase, phase);
-
-      var phaseFetched = await store.loadCurrentPhase();
-      expect(phaseFetched, phase);
     });
   });
 }

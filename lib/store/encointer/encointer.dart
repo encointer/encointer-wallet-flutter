@@ -1,5 +1,4 @@
 import 'dart:collection';
-import 'dart:convert';
 import 'dart:math';
 
 import 'package:encointer_wallet/config/consts.dart';
@@ -190,8 +189,6 @@ abstract class _EncointerStore with Store {
   void setCurrentPhase(CeremonyPhase phase) {
     print("store: set currentPhase to $phase");
     if (currentPhase != phase) {
-      // jsonEncode fails if we don't call toString for an enum
-      cacheObject(encointerCurrentPhaseKey, phase.toString());
       currentPhase = phase;
     }
     // update depending values without awaiting
@@ -206,7 +203,6 @@ abstract class _EncointerStore with Store {
     }
 
     currentCeremonyIndex = index;
-    cacheObject(encointerCurrentCeremonyIndexKey, index);
     // update depending values without awaiting
     updateState();
   }
@@ -269,21 +265,18 @@ abstract class _EncointerStore with Store {
   void setBootstrappers(List<String> bs) {
     print("store: set communityIdentifiers to $bs");
     bootstrappers = bs;
-    cacheObject(encointerBootstrappersKey, bs);
   }
 
   @action
   void setCommunities(List<CidName> c) {
     print("store: set communities to $c");
     communities = c;
-    cacheObject(encointerCommunitiesKey, c);
   }
 
   @action
   void setCommunityLocations([List<Location> locations]) {
     print("store: set communityLocations to ${locations.toString()}");
     communityLocations = ObservableList.of(locations);
-    cacheObject(encointerCommunityLocationsKey, locations);
 
     // There is no race-condition with the `getMeetupTime` call in `setMeetupLocation` because `getMeetupTime` uses
     // internally the `meetupLocation`. Hence, the worst case scenario is a redundant rpc call.
@@ -299,8 +292,6 @@ abstract class _EncointerStore with Store {
   void setChosenCid([CommunityIdentifier cid]) {
     if (chosenCid != cid) {
       chosenCid = cid;
-      cacheObject(encointerCommunityKey, cid);
-      community?.setCommunityMetadata();
       resetState();
 
       if (cid != null) {
@@ -321,7 +312,6 @@ abstract class _EncointerStore with Store {
   @action
   void purgeParticipantsClaims() {
     participantsClaims.clear();
-    cacheParticipantsClaims(participantsClaims);
   }
 
   bool containsClaim(ClaimOfAttendance claim) {
@@ -331,20 +321,17 @@ abstract class _EncointerStore with Store {
   @action
   void addParticipantClaim(ClaimOfAttendance claim) {
     participantsClaims[claim.claimantPublic] = claim;
-    cacheParticipantsClaims(participantsClaims);
   }
 
   @action
   void setReputations(Map<int, CommunityReputation> reps) {
     reputations = SplayTreeMap.of(reps);
-    cacheMap<int, CommunityReputation>(encointerCommunityReputationsKey, reps);
   }
 
   @action
   void purgeReputations() {
     if (reputations != null) {
       reputations.clear();
-      cacheMap<int, CommunityReputation>(encointerCommunityReputationsKey, reputations);
     }
   }
 
@@ -394,101 +381,8 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  Future<void> loadCache() async {
-    var cachedCid = await loadObject(encointerCommunityKey);
-    if (cachedCid != null) {
-      chosenCid = CommunityIdentifier.fromJson(cachedCid);
-      print("found cached choice of cid. will recover it: " + chosenCid.toFmtString());
-    }
-
-    List<dynamic> cachedCommunitiesInternalList = await loadObject(encointerCommunitiesKey);
-    if (cachedCommunitiesInternalList != null) {
-      List<CidName> cachedCommunities = cachedCommunitiesInternalList.map((s) => CidName.fromJson(s)).toList();
-      print("found cached communities. will recover it: " + cachedCommunities.toString());
-      communities = cachedCommunities;
-    }
-
-    List<dynamic> _cachedBootstrapperList = await loadObject(encointerBootstrappersKey);
-    if (_cachedBootstrapperList != null) {
-      bootstrappers = List<String>.from(_cachedBootstrapperList);
-      print("found cached bootstrappers. will recover it: $bootstrappers");
-    }
-
-    List<dynamic> cachedLocations = await loadObject(encointerCommunityLocationsKey);
-    if (cachedLocations != null) {
-      List<Location> locations = cachedLocations.map((s) => Location.fromJson(s)).toList();
-      print("found cached locations. will recover it: " + locations.toString());
-      communityLocations = ObservableList.of(locations);
-    }
-
-    var cachedReputations = await loadMap(encointerCommunityReputationsKey);
-    if (cachedReputations != null) {
-      // for some weird reason `cachedReputation.cast<int, CommunityReputation> did not throw an exception, but it did not
-      // cast successfully.
-      Map<int, CommunityReputation> r =
-          Map.of(cachedReputations.map((k, v) => MapEntry(int.parse(k), CommunityReputation.fromJson(v))));
-      print("found cached reputations. will recover it: " + cachedReputations.toString());
-      reputations = SplayTreeMap.of(r);
-    }
-
-    // get meetup related data
-    var data = await loadMap(encointerParticipantsClaimsKey);
-    if (data != null) {
-      print("found cached participants' claims. will recover them: $data");
-      participantsClaims = ObservableMap.of(data.cast<String, ClaimOfAttendance>());
-    }
-    currentPhase = await loadCurrentPhase();
-    currentCeremonyIndex = await loadObject(encointerCurrentCeremonyIndexKey);
-  }
-
-  @action
   void setbusinessRegistry(List<AccountBusinessTuple> accBusinesses) {
     businessRegistry = ObservableList.of(accBusinesses);
-  }
-
-  Future<void> reloadbusinessRegistry() async {
-    await webApi.encointer.getBusinesses();
-  }
-
-  Future<void> cacheParticipantsClaims(Map<String, ClaimOfAttendance> claims) {
-    return cacheMap<String, ClaimOfAttendance>(encointerParticipantsClaimsKey, claims);
-  }
-
-  /// Cache a map in the local storage.
-  ///
-  /// We use this because `jsonEncode` fails for maps with key types other than String
-  ///
-  Future<void> cacheMap<Key, Value>(String cacheKey, Map<Key, Value> map) {
-    var encoded = jsonEncode(Map.of(map.map((k, v) => MapEntry(k.toString(), v))));
-    print("[store.encointer]: caching map. cacheKey: $cacheKey, map: $encoded");
-    return cacheObject(cacheKey, encoded);
-  }
-
-  /// Load a map in the local storage.
-  ///
-  Future<Map<dynamic, dynamic>> loadMap<Key, Value>(String cacheKey) async {
-    print("[store.encointer]: loading map. cacheKey: $cacheKey");
-
-    var data = await loadObject(cacheKey);
-
-    if (data != null) {
-      print("found cache: $cacheKey': data: $data");
-      return jsonDecode(data);
-    }
-    return null;
-  }
-
-  Future<void> cacheObject(String key, value) {
-    return rootStore.cacheObject(key, value);
-  }
-
-  Future<Object> loadObject(String key) {
-    return rootStore.loadObject(key);
-  }
-
-  Future<CeremonyPhase> loadCurrentPhase() async {
-    Object obj = await rootStore.loadObject(encointerCurrentPhaseKey);
-    return ceremonyPhaseFromString(obj);
   }
 
   void setCacheFn(Function cacheFn) {
