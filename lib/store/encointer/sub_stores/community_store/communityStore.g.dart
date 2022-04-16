@@ -14,6 +14,7 @@ CommunityStore _$CommunityStoreFromJson(Map<String, dynamic> json) {
     ..communityMetadata = json['communityMetadata'] == null
         ? null
         : CommunityMetadata.fromJson(json['communityMetadata'] as Map<String, dynamic>)
+    ..demurrage = (json['demurrage'] as num)?.toDouble()
     ..meetupTime = json['meetupTime'] as int
     ..bootstrappers = (json['bootstrappers'] as List)?.map((e) => e as String)?.toList()
     ..communityAccountStores = json['communityAccountStores'] != null
@@ -27,6 +28,7 @@ Map<String, dynamic> _$CommunityStoreToJson(CommunityStore instance) => <String,
       'network': instance.network,
       'cid': instance.cid?.toJson(),
       'communityMetadata': instance.communityMetadata?.toJson(),
+      'demurrage': instance.demurrage,
       'meetupTime': instance.meetupTime,
       'bootstrappers': instance.bootstrappers,
       'communityAccountStores': instance.communityAccountStores?.map((k, e) => MapEntry(k, e?.toJson())),
@@ -66,6 +68,21 @@ mixin _$CommunityStore on _CommunityStore, Store {
   set communityMetadata(CommunityMetadata value) {
     _$communityMetadataAtom.reportWrite(value, super.communityMetadata, () {
       super.communityMetadata = value;
+    });
+  }
+
+  final _$demurrageAtom = Atom(name: '_CommunityStore.demurrage');
+
+  @override
+  double get demurrage {
+    _$demurrageAtom.reportRead();
+    return super.demurrage;
+  }
+
+  @override
+  set demurrage(double value) {
+    _$demurrageAtom.reportWrite(value, super.demurrage, () {
+      super.demurrage = value;
     });
   }
 
@@ -128,6 +145,16 @@ mixin _$CommunityStore on _CommunityStore, Store {
   }
 
   @override
+  void setDemurrage(double d) {
+    final _$actionInfo = _$_CommunityStoreActionController.startAction(name: '_CommunityStore.setDemurrage');
+    try {
+      return super.setDemurrage(d);
+    } finally {
+      _$_CommunityStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setBootstrappers(List<String> bs) {
     final _$actionInfo = _$_CommunityStoreActionController.startAction(name: '_CommunityStore.setBootstrappers');
     try {
@@ -172,6 +199,7 @@ mixin _$CommunityStore on _CommunityStore, Store {
   String toString() {
     return '''
 communityMetadata: ${communityMetadata},
+demurrage: ${demurrage},
 meetupTime: ${meetupTime},
 bootstrappers: ${bootstrappers},
 communityAccountStores: ${communityAccountStores},

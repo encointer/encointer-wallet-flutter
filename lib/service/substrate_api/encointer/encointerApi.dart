@@ -188,7 +188,7 @@ class EncointerApi {
 
     double dem = await jsApi.evalJavascript('encointer.getDemurrage(${jsonEncode(cid)})');
     print("api: fetched demurrage: $dem");
-    store.encointer.setDemurrage(dem);
+    store.encointer.community.setDemurrage(dem);
   }
 
   /// Calls the custom rpc: api.rpc.communities.communitiesGetAll()

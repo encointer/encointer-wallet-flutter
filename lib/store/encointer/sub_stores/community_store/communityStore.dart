@@ -37,6 +37,9 @@ abstract class _CommunityStore with Store {
   @observable
   CommunityMetadata communityMetadata;
 
+  @observable
+  double demurrage;
+
   @computed
   String get name => communityMetadata?.name;
 
@@ -66,6 +69,12 @@ abstract class _CommunityStore with Store {
     } else {
       _log("Don't add already existing communityAccountStore for cid: ${cid.toFmtString()} and account: $address");
     }
+  }
+
+  @action
+  void setDemurrage(double d) {
+    demurrage = d;
+    cacheFn();
   }
 
   @action

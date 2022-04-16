@@ -23,7 +23,6 @@ EncointerStore _$EncointerStoreFromJson(Map<String, dynamic> json) {
         ?.toList()
     ..chosenCid =
         json['chosenCid'] == null ? null : CommunityIdentifier.fromJson(json['chosenCid'] as Map<String, dynamic>)
-    ..demurrage = (json['demurrage'] as num)?.toDouble()
     ..txsTransfer = json['txsTransfer'] != null
         ? ObservableList<TransferData>.of((json['txsTransfer'] as List)
             .map((e) => e == null ? null : TransferData.fromJson(e as Map<String, dynamic>)))
@@ -59,7 +58,6 @@ Map<String, dynamic> _$EncointerStoreToJson(EncointerStore instance) => <String,
       'communityIdentifiers': instance.communityIdentifiers?.map((e) => e?.toJson())?.toList(),
       'communities': instance.communities?.map((e) => e?.toJson())?.toList(),
       'chosenCid': instance.chosenCid?.toJson(),
-      'demurrage': instance.demurrage,
       'txsTransfer': instance.txsTransfer?.map((e) => e?.toJson())?.toList(),
       'reputations': instance.reputations?.map((k, e) => MapEntry(k.toString(), e?.toJson())),
       'businessRegistry': instance.businessRegistry?.map((e) => e?.toJson())?.toList(),
@@ -258,21 +256,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   set chosenCid(CommunityIdentifier value) {
     _$chosenCidAtom.reportWrite(value, super.chosenCid, () {
       super.chosenCid = value;
-    });
-  }
-
-  final _$demurrageAtom = Atom(name: '_EncointerStore.demurrage');
-
-  @override
-  double get demurrage {
-    _$demurrageAtom.reportRead();
-    return super.demurrage;
-  }
-
-  @override
-  set demurrage(double value) {
-    _$demurrageAtom.reportWrite(value, super.demurrage, () {
-      super.demurrage = value;
     });
   }
 
@@ -485,16 +468,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setDemurrage(double d) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setDemurrage');
-    try {
-      return super.setDemurrage(d);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setChosenCid([CommunityIdentifier cid]) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setChosenCid');
     try {
@@ -543,7 +516,6 @@ currentCeremonyIndex: ${currentCeremonyIndex},
 communityIdentifiers: ${communityIdentifiers},
 communities: ${communities},
 chosenCid: ${chosenCid},
-demurrage: ${demurrage},
 txsTransfer: ${txsTransfer},
 reputations: ${reputations},
 businessRegistry: ${businessRegistry},

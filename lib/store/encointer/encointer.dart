@@ -85,9 +85,6 @@ abstract class _EncointerStore with Store {
   CommunityIdentifier chosenCid;
 
   @observable
-  double demurrage;
-
-  @observable
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
 
   @observable
@@ -183,9 +180,9 @@ abstract class _EncointerStore with Store {
 
   double applyDemurrage(BalanceEntry entry) {
     double res;
-    if (rootStore.chain.latestHeaderNumber != null && entry != null && demurrage != null) {
+    if (rootStore.chain.latestHeaderNumber != null && entry != null && community.demurrage != null) {
       int elapsed = rootStore.chain.latestHeaderNumber - entry.lastUpdate;
-      double exponent = -demurrage * elapsed;
+      double exponent = -community.demurrage * elapsed;
       res = entry.principal * pow(e, exponent);
     }
     return res;
@@ -284,11 +281,6 @@ abstract class _EncointerStore with Store {
     // There is no race-condition with the `getMeetupTime` call in `setMeetupLocation` because `getMeetupTime` uses
     // internally the `meetupLocation`. Hence, the worst case scenario is a redundant rpc call.
     webApi.encointer.getMeetupTime();
-  }
-
-  @action
-  void setDemurrage(double d) {
-    demurrage = d;
   }
 
   @action
