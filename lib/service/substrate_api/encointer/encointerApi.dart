@@ -142,7 +142,17 @@ class EncointerApi {
     } catch (e) {
       print("[EncointerApi]: Error getting pending extrinsics: ${e.toString()}");
     }
+    return null;
+  }
 
+  Future<Map<CommunityIdentifier, BalanceEntry>> getAllBalances(String account) async {
+    try {
+      var balances = await _dartApi.getAllBalances(account);
+      print("[EncointerApi]: getAllBalances: ${balances.toString()}");
+      return balances;
+    } catch (e) {
+      print("[EncointerApi]: Error getting all balances: ${e.toString()}");
+    }
     return null;
   }
 
