@@ -84,7 +84,7 @@ abstract class _CommunityStore with Store {
 
   @action
   void setMeetupTime([int time]) {
-    print("store: set meetupTime to $time");
+    _log("set meetupTime to $time");
     if (meetupTime != time) {
       meetupTime = time;
       cacheFn();
