@@ -296,8 +296,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
                             PopupMenuItem<accountAction>(
                               value: accountAction.delete,
                               child: ListTileTheme(
-                                textColor: Color(0xFF3969AC), // ZurichLion.shade500 or 600
-                                iconColor: Color(0xFF3969AC), // ZurichLion.shade500 or 600
+                                textColor: ZurichLion.shade500,
+                                iconColor: ZurichLion.shade500,
                                 child: ListTile(
                                   minLeadingWidth: 0,
                                   title: Text(dic.profile.deleteAccount),
@@ -308,13 +308,13 @@ class _AccountManagePageState extends State<AccountManagePage> {
                             PopupMenuItem<accountAction>(
                               value: accountAction.export,
                               child: ListTileTheme(
-                                textColor: Color(0xFF3969AC), // ZurichLion.shade500 or 600
-                                iconColor: Color(0xFF3969AC), // ZurichLion.shade500 or 600
+                                textColor: ZurichLion.shade500,
+                                iconColor: ZurichLion.shade500,
                                 child: ListTile(
                                   minLeadingWidth: 0,
                                   title: Text(dic.profile.exportAccount),
                                   leading:
-                                      Icon(Iconsax.export_3, color: Color(0xFF3969AC)), // ZurichLion.shade500 or 600
+                                      Icon(Iconsax.export_3, color: ZurichLion.shade500),
                                 ),
                               ),
                             ),
