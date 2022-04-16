@@ -26,7 +26,7 @@ class _ReceivePageState extends State<ReceivePage> {
   var invoice = [];
 
   var periodicTimer;
-  bool pendingObserved = false;
+  bool observedPendingExtrinsic = false;
 
   static void _showSnackBar(BuildContext context, String msg) {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
@@ -70,15 +70,18 @@ class _ReceivePageState extends State<ReceivePage> {
     periodicTimer = Timer.periodic(
       const Duration(seconds: 1),
       (timer) {
-        print("timer callback executed: watching incoming pending extrinsics");
         webApi.encointer.pendingExtrinsics().then((data) {
           if (data.length > 0) {
-            if (!pendingObserved) {
-              _showSnackBar(context, "pending extrinsic observed. Please wait for confirmation!");
-              pendingObserved = true;
+            if (!observedPendingExtrinsic) {
+              data.forEach((xt) {
+                if (xt.contains(widget.store.account.currentAccountPubKey.substring(2))) {
+                  _showSnackBar(context, "pending extrinsic observed. Please wait for confirmation!");
+                  observedPendingExtrinsic = true;
+                }
+              });
             }
           } else {
-            pendingObserved = false;
+            observedPendingExtrinsic = false;
           }
         });
       },
