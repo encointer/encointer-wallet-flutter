@@ -357,8 +357,8 @@ class CommunityIcon extends StatelessWidget {
         ),
         Observer(
           builder: (_) {
-            if (store.encointer.bootstrappers != null &&
-                store.encointer.bootstrappers.contains(store.account.currentAddress)) {
+            if (store.encointer.community.bootstrappers != null &&
+                store.encointer.community.bootstrappers.contains(store.account.currentAddress)) {
               return Positioned(
                 bottom: 0, right: 0, //give the values according to your requirement
                 child: Icon(Iconsax.star, color: Colors.yellow),

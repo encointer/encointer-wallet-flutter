@@ -58,11 +58,6 @@ class ContactDetailPage extends StatelessWidget {
     AccountData account = ModalRoute.of(context).settings.arguments;
     var dic = I18n.of(context).translationsForLocale();
 
-    // Because of caching inconsistency with pre-v1.2.0. It would fetch
-    // the bootstrappers together from the cache, but it did not exist before.
-    // Todo: remove in the process of: #479
-    if (store.encointer.chosenCid != null) webApi.encointer.getBootstrappers();
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -118,8 +113,8 @@ class ContactDetailPage extends StatelessWidget {
                 ),
               ),
               Observer(builder: (_) {
-                if (store.encointer.bootstrappers != null) {
-                  return store.encointer.bootstrappers.contains(store.account.currentAddress)
+                if (store.encointer.community.bootstrappers != null) {
+                  return store.encointer.community.bootstrappers.contains(store.account.currentAddress)
                       ? EndorseButton(store, account)
                       : Container();
                 } else {
@@ -188,7 +183,7 @@ class EndorseButton extends StatelessWidget {
           Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
         ],
       ),
-      onPressed: store.encointer.bootstrappers.contains(contact.address)
+      onPressed: store.encointer.community.bootstrappers.contains(contact.address)
           ? () => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
           : store.encointer.currentPhase != CeremonyPhase.REGISTERING
               ? () => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)

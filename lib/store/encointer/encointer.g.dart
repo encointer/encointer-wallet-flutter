@@ -23,7 +23,6 @@ EncointerStore _$EncointerStoreFromJson(Map<String, dynamic> json) {
     ..communityIdentifiers = (json['communityIdentifiers'] as List)
         ?.map((e) => e == null ? null : CommunityIdentifier.fromJson(e as Map<String, dynamic>))
         ?.toList()
-    ..bootstrappers = (json['bootstrappers'] as List)?.map((e) => e as String)?.toList()
     ..communities = (json['communities'] as List)
         ?.map((e) => e == null ? null : CidName.fromJson(e as Map<String, dynamic>))
         ?.toList()
@@ -64,7 +63,6 @@ Map<String, dynamic> _$EncointerStoreToJson(EncointerStore instance) => <String,
       'currentCeremonyIndex': instance.currentCeremonyIndex,
       'balanceEntries': instance.balanceEntries?.map((k, e) => MapEntry(k, e?.toJson())),
       'communityIdentifiers': instance.communityIdentifiers?.map((e) => e?.toJson())?.toList(),
-      'bootstrappers': instance.bootstrappers,
       'communities': instance.communities?.map((e) => e?.toJson())?.toList(),
       'chosenCid': instance.chosenCid?.toJson(),
       'demurrage': instance.demurrage,
@@ -252,21 +250,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   set communityIdentifiers(List<CommunityIdentifier> value) {
     _$communityIdentifiersAtom.reportWrite(value, super.communityIdentifiers, () {
       super.communityIdentifiers = value;
-    });
-  }
-
-  final _$bootstrappersAtom = Atom(name: '_EncointerStore.bootstrappers');
-
-  @override
-  List<String> get bootstrappers {
-    _$bootstrappersAtom.reportRead();
-    return super.bootstrappers;
-  }
-
-  @override
-  set bootstrappers(List<String> value) {
-    _$bootstrappersAtom.reportWrite(value, super.bootstrappers, () {
-      super.bootstrappers = value;
     });
   }
 
@@ -482,16 +465,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setBootstrappers(List<String> bs) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setBootstrappers');
-    try {
-      return super.setBootstrappers(bs);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setCommunities(List<CidName> c) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunities');
     try {
@@ -599,7 +572,6 @@ phaseDurations: ${phaseDurations},
 currentCeremonyIndex: ${currentCeremonyIndex},
 balanceEntries: ${balanceEntries},
 communityIdentifiers: ${communityIdentifiers},
-bootstrappers: ${bootstrappers},
 communities: ${communities},
 chosenCid: ${chosenCid},
 demurrage: ${demurrage},

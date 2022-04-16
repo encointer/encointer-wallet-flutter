@@ -15,6 +15,7 @@ CommunityStore _$CommunityStoreFromJson(Map<String, dynamic> json) {
         ? null
         : CommunityMetadata.fromJson(json['communityMetadata'] as Map<String, dynamic>)
     ..meetupTime = json['meetupTime'] as int
+    ..bootstrappers = (json['bootstrappers'] as List)?.map((e) => e as String)?.toList()
     ..communityAccountStores = json['communityAccountStores'] != null
         ? ObservableMap<String, CommunityAccountStore>.of((json['communityAccountStores'] as Map<String, dynamic>).map(
             (k, e) => MapEntry(k, e == null ? null : CommunityAccountStore.fromJson(e as Map<String, dynamic>)),
@@ -27,6 +28,7 @@ Map<String, dynamic> _$CommunityStoreToJson(CommunityStore instance) => <String,
       'cid': instance.cid?.toJson(),
       'communityMetadata': instance.communityMetadata?.toJson(),
       'meetupTime': instance.meetupTime,
+      'bootstrappers': instance.bootstrappers,
       'communityAccountStores': instance.communityAccountStores?.map((k, e) => MapEntry(k, e?.toJson())),
     };
 
@@ -82,6 +84,21 @@ mixin _$CommunityStore on _CommunityStore, Store {
     });
   }
 
+  final _$bootstrappersAtom = Atom(name: '_CommunityStore.bootstrappers');
+
+  @override
+  List<String> get bootstrappers {
+    _$bootstrappersAtom.reportRead();
+    return super.bootstrappers;
+  }
+
+  @override
+  set bootstrappers(List<String> value) {
+    _$bootstrappersAtom.reportWrite(value, super.bootstrappers, () {
+      super.bootstrappers = value;
+    });
+  }
+
   final _$communityAccountStoresAtom = Atom(name: '_CommunityStore.communityAccountStores');
 
   @override
@@ -105,6 +122,16 @@ mixin _$CommunityStore on _CommunityStore, Store {
         _$_CommunityStoreActionController.startAction(name: '_CommunityStore.initCommunityAccountStore');
     try {
       return super.initCommunityAccountStore(address);
+    } finally {
+      _$_CommunityStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setBootstrappers(List<String> bs) {
+    final _$actionInfo = _$_CommunityStoreActionController.startAction(name: '_CommunityStore.setBootstrappers');
+    try {
+      return super.setBootstrappers(bs);
     } finally {
       _$_CommunityStoreActionController.endAction(_$actionInfo);
     }
@@ -135,6 +162,7 @@ mixin _$CommunityStore on _CommunityStore, Store {
     return '''
 communityMetadata: ${communityMetadata},
 meetupTime: ${meetupTime},
+bootstrappers: ${bootstrappers},
 communityAccountStores: ${communityAccountStores},
 name: ${name},
 symbol: ${symbol},

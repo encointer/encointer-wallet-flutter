@@ -50,6 +50,9 @@ abstract class _CommunityStore with Store {
   int meetupTime;
 
   @observable
+  List<String> bootstrappers;
+
+  @observable
   ObservableMap<String, CommunityAccountStore> communityAccountStores = new ObservableMap();
 
   @action
@@ -63,6 +66,13 @@ abstract class _CommunityStore with Store {
     } else {
       _log("Don't add already existing communityAccountStore for cid: ${cid.toFmtString()} and account: $address");
     }
+  }
+
+  @action
+  void setBootstrappers(List<String> bs) {
+    _log("set bootstrappers to $bs");
+    bootstrappers = bs;
+    cacheFn();
   }
 
   @action

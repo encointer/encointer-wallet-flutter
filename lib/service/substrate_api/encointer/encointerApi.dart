@@ -349,7 +349,7 @@ class EncointerApi {
 
     print("api: bootstrappers " + bootstrappers.toString());
 
-    store.encointer.setBootstrappers(bootstrappers);
+    store.encointer.community.setBootstrappers(bootstrappers);
   }
 
   Future<void> getReputations() async {
