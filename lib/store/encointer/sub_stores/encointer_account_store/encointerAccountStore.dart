@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/store/encointer/types/communities.dart';
+import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
@@ -32,6 +34,19 @@ abstract class _EncointerAccountStore with Store {
 
   /// The account (SS58) this store belongs to.
   final String address;
+
+  /// `BalanceEntries` for the respective community
+  ///
+  /// Map: cid.toFmtString() -> BalanceEntry
+  @observable
+  ObservableMap<String, BalanceEntry> balanceEntries = new ObservableMap();
+
+  @action
+  void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
+    _log("balanceEntry $balanceEntry added to cid $cid added");
+    balanceEntries[cid.toFmtString()] = balanceEntry;
+    cacheFn();
+  }
 
   void setCacheFn(Function cacheFn) {
     this.cacheFn = cacheFn;

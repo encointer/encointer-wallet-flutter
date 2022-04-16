@@ -85,7 +85,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
     String name = cm != null ? cm.name : '';
     String symbol = cm != null ? cm.symbol : '';
     final String tokenView = Fmt.tokenView(symbol);
-    return store.encointer.balanceEntries.entries.map((i) {
+    return store.encointer.account.balanceEntries.entries.map((i) {
       if (cm != null) {
         return ListTile(
           contentPadding: EdgeInsets.symmetric(horizontal: 0.0),

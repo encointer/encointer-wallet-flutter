@@ -15,11 +15,6 @@ EncointerStore _$EncointerStoreFromJson(Map<String, dynamic> json) {
       (k, e) => MapEntry(_$enumDecodeNullable(_$CeremonyPhaseEnumMap, k), e as int),
     )
     ..currentCeremonyIndex = json['currentCeremonyIndex'] as int
-    ..balanceEntries = json['balanceEntries'] != null
-        ? ObservableMap<String, BalanceEntry>.of((json['balanceEntries'] as Map<String, dynamic>).map(
-            (k, e) => MapEntry(k, e == null ? null : BalanceEntry.fromJson(e as Map<String, dynamic>)),
-          ))
-        : null
     ..communityIdentifiers = (json['communityIdentifiers'] as List)
         ?.map((e) => e == null ? null : CommunityIdentifier.fromJson(e as Map<String, dynamic>))
         ?.toList()
@@ -61,7 +56,6 @@ Map<String, dynamic> _$EncointerStoreToJson(EncointerStore instance) => <String,
       'currentPhase': _$CeremonyPhaseEnumMap[instance.currentPhase],
       'phaseDurations': instance.phaseDurations?.map((k, e) => MapEntry(_$CeremonyPhaseEnumMap[k], e)),
       'currentCeremonyIndex': instance.currentCeremonyIndex,
-      'balanceEntries': instance.balanceEntries?.map((k, e) => MapEntry(k, e?.toJson())),
       'communityIdentifiers': instance.communityIdentifiers?.map((e) => e?.toJson())?.toList(),
       'communities': instance.communities?.map((e) => e?.toJson())?.toList(),
       'chosenCid': instance.chosenCid?.toJson(),
@@ -160,6 +154,11 @@ mixin _$EncointerStore on _EncointerStore, Store {
   dynamic get communityAccount => (_$communityAccountComputed ??=
           Computed<dynamic>(() => super.communityAccount, name: '_EncointerStore.communityAccount'))
       .value;
+  Computed<dynamic> _$accountComputed;
+
+  @override
+  dynamic get account =>
+      (_$accountComputed ??= Computed<dynamic>(() => super.account, name: '_EncointerStore.account')).value;
   Computed<bool> _$showStartCeremonyButtonComputed;
 
   @override
@@ -214,21 +213,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   set currentCeremonyIndex(int value) {
     _$currentCeremonyIndexAtom.reportWrite(value, super.currentCeremonyIndex, () {
       super.currentCeremonyIndex = value;
-    });
-  }
-
-  final _$balanceEntriesAtom = Atom(name: '_EncointerStore.balanceEntries');
-
-  @override
-  ObservableMap<String, BalanceEntry> get balanceEntries {
-    _$balanceEntriesAtom.reportRead();
-    return super.balanceEntries;
-  }
-
-  @override
-  set balanceEntries(ObservableMap<String, BalanceEntry> value) {
-    _$balanceEntriesAtom.reportWrite(value, super.balanceEntries, () {
-      super.balanceEntries = value;
     });
   }
 
@@ -541,16 +525,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.addBalanceEntry');
-    try {
-      return super.addBalanceEntry(cid, balanceEntry);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setbusinessRegistry(List<AccountBusinessTuple> accBusinesses) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setbusinessRegistry');
     try {
@@ -566,7 +540,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
 currentPhase: ${currentPhase},
 phaseDurations: ${phaseDurations},
 currentCeremonyIndex: ${currentCeremonyIndex},
-balanceEntries: ${balanceEntries},
 communityIdentifiers: ${communityIdentifiers},
 communities: ${communities},
 chosenCid: ${chosenCid},
@@ -584,6 +557,7 @@ communityBalance: ${communityBalance},
 communitiesContainsChosenCid: ${communitiesContainsChosenCid},
 community: ${community},
 communityAccount: ${communityAccount},
+account: ${account},
 showStartCeremonyButton: ${showStartCeremonyButton},
 showTwoBoxes: ${showTwoBoxes}
     ''';

@@ -75,10 +75,6 @@ abstract class _EncointerStore with Store {
   @observable
   int currentCeremonyIndex;
 
-  /// balanceEntries for respective community: cid.toFmtString() -> BalanceEntry
-  @observable
-  ObservableMap<String, BalanceEntry> balanceEntries = new ObservableMap();
-
   @observable
   List<CommunityIdentifier> communityIdentifiers;
 
@@ -117,7 +113,7 @@ abstract class _EncointerStore with Store {
 
   @computed
   BalanceEntry get communityBalanceEntry {
-    return chosenCid != null ? balanceEntries[chosenCid.toFmtString()] : null;
+    return chosenCid != null ? account.balanceEntries[chosenCid.toFmtString()] : null;
   }
 
   @computed
@@ -148,6 +144,11 @@ abstract class _EncointerStore with Store {
   @computed
   get communityAccount {
     return community != null ? community.communityAccountStores[rootStore.account.currentAddress] : null;
+  }
+
+  @computed
+  get account {
+    return accountStores[rootStore.account.currentAddress];
   }
 
   @action
@@ -323,13 +324,6 @@ abstract class _EncointerStore with Store {
       reputations.clear();
       cacheFn();
     }
-  }
-
-  @action
-  void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
-    print("balanceEntry $balanceEntry added to cid $cid added");
-    balanceEntries[cid.toFmtString()] = balanceEntry;
-    cacheFn();
   }
 
   @action

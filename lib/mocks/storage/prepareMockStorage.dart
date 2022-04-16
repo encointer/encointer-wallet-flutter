@@ -12,7 +12,7 @@ abstract class PrepareMockStorage {
   static void init(AppStore store) {
     store.encointer.setCurrentPhase(initialPhase);
     store.encointer.setCommunityIdentifiers(communityIdentifiers);
-    store.encointer.addBalanceEntry(cid, BalanceEntry.fromJson(balanceEntry));
+    // store.encointer.addBalanceEntry(cid, BalanceEntry.fromJson(balanceEntry));
     store.encointer.setCommunities(communities);
     store.encointer.setDemurrage(demurrage);
     store.chain.setLatestHeader(Header.fromJson(header));
