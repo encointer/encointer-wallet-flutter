@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'dart:math';
 
 import 'package:encointer_wallet/config/consts.dart';
@@ -6,7 +5,6 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/assets/types/transferData.dart';
 import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
-import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:encointer_wallet/store/encointer/types/location.dart';
@@ -15,7 +13,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../models/index.dart';
-import 'sub_stores/communityStore/communityStore.dart';
+import 'sub_stores/community_store/communityStore.dart';
 import 'sub_stores/encointerAccountStore/encointerAccountStore.dart';
 
 part 'encointer.g.dart';
