@@ -282,8 +282,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          onSelected: (AccountAction result) {
-                            switch (result) {
+                          onSelected: (AccountAction accountAction) {
+                            switch (accountAction) {
                               case AccountAction.delete:
                                 _onDeleteAccount(context);
                                 break;
