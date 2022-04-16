@@ -114,7 +114,6 @@ const _$ReputationEnumMap = {
 
 Meetup _$MeetupFromJson(Map<String, dynamic> json) {
   return Meetup(
-    _$enumDecodeNullable(_$ParticipantTypeEnumMap, json['participantType']),
     json['index'] as int,
     json['locationIndex'] as int,
     json['time'] as int,
@@ -123,7 +122,6 @@ Meetup _$MeetupFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$MeetupToJson(Meetup instance) => <String, dynamic>{
-      'participantType': _$ParticipantTypeEnumMap[instance.participantType],
       'index': instance.index,
       'locationIndex': instance.locationIndex,
       'time': instance.time,

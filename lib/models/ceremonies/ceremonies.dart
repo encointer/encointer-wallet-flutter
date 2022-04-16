@@ -34,7 +34,7 @@ class AggregatedAccountDataPersonal {
   int meetupTime;
   List<String> meetupRegistry;
 
-  get meetup => Meetup(participantType, meetupIndex, meetupLocationIndex, meetupTime, meetupRegistry);
+  get meetup => Meetup(meetupIndex, meetupLocationIndex, meetupTime, meetupRegistry);
 
   @override
   String toString() {
@@ -83,9 +83,8 @@ class CommunityReputation {
 
 @JsonSerializable()
 class Meetup {
-  Meetup(this.participantType, this.index, this.locationIndex, this.time, this.registry);
+  Meetup(this.index, this.locationIndex, this.time, this.registry);
 
-  ParticipantType participantType;
   int index;
   int locationIndex;
   int time;
