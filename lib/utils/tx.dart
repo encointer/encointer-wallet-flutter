@@ -45,6 +45,7 @@ Future<void> submitRegisterParticipant(
   Api api,
   CommunityIdentifier chosenCid, {
   Future<ProofOfAttendance> proof,
+  Function(BuildContext txPageContext, Map res) onFinish,
 }) async {
   ProofOfAttendance p;
   if (proof != null) {
@@ -68,10 +69,7 @@ Future<void> submitRegisterParticipant(
       chosenCid,
       p,
     ],
-    'onFinish': (BuildContext txPageContext, Map res) {
-      api.encointer.getParticipantIndex();
-      Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
-    }
+    'onFinish': onFinish
   };
   Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
 }
