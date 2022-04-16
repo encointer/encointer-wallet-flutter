@@ -4,7 +4,7 @@ import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
-import 'communityAccountStore/communityAccountStore.dart';
+import 'community_account_store/communityAccountStore.dart';
 
 part 'communityStore.g.dart';
 
