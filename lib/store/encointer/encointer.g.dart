@@ -48,6 +48,11 @@ EncointerStore _$EncointerStoreFromJson(Map<String, dynamic> json) {
         ? ObservableMap<String, CommunityStore>.of((json['communityStores'] as Map<String, dynamic>).map(
             (k, e) => MapEntry(k, e == null ? null : CommunityStore.fromJson(e as Map<String, dynamic>)),
           ))
+        : null
+    ..accountStores = json['accountStores'] != null
+        ? ObservableMap<String, EncointerAccountStore>.of((json['accountStores'] as Map<String, dynamic>).map(
+            (k, e) => MapEntry(k, e == null ? null : EncointerAccountStore.fromJson(e as Map<String, dynamic>)),
+          ))
         : null;
 }
 
@@ -66,6 +71,7 @@ Map<String, dynamic> _$EncointerStoreToJson(EncointerStore instance) => <String,
       'businessRegistry': instance.businessRegistry?.map((e) => e?.toJson())?.toList(),
       'communityLocations': instance.communityLocations?.map((e) => e?.toJson())?.toList(),
       'communityStores': instance.communityStores?.map((k, e) => MapEntry(k, e?.toJson())),
+      'accountStores': instance.accountStores?.map((k, e) => MapEntry(k, e?.toJson())),
     };
 
 T _$enumDecode<T>(
@@ -361,6 +367,21 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
+  final _$accountStoresAtom = Atom(name: '_EncointerStore.accountStores');
+
+  @override
+  ObservableMap<String, EncointerAccountStore> get accountStores {
+    _$accountStoresAtom.reportRead();
+    return super.accountStores;
+  }
+
+  @override
+  set accountStores(ObservableMap<String, EncointerAccountStore> value) {
+    _$accountStoresAtom.reportWrite(value, super.accountStores, () {
+      super.accountStores = value;
+    });
+  }
+
   final _$setTransferTxsAsyncAction = AsyncAction('_EncointerStore.setTransferTxs');
 
   @override
@@ -382,6 +403,17 @@ mixin _$EncointerStore on _EncointerStore, Store {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.initCommunityStore');
     try {
       return super.initCommunityStore(cid, address);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void initEncointerAccountStore(String address) {
+    final _$actionInfo =
+        _$_EncointerStoreActionController.startAction(name: '_EncointerStore.initEncointerAccountStore');
+    try {
+      return super.initEncointerAccountStore(address);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }
@@ -544,6 +576,7 @@ reputations: ${reputations},
 businessRegistry: ${businessRegistry},
 communityLocations: ${communityLocations},
 communityStores: ${communityStores},
+accountStores: ${accountStores},
 currentPhaseDuration: ${currentPhaseDuration},
 ceremonyIndexForProofOfAttendance: ${ceremonyIndexForProofOfAttendance},
 communityBalanceEntry: ${communityBalanceEntry},

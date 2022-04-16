@@ -16,6 +16,7 @@ import 'package:mobx/mobx.dart';
 
 import '../../models/index.dart';
 import 'sub_stores/communityStore/communityStore.dart';
+import 'sub_stores/encointerAccountStore/encointerAccountStore.dart';
 
 part 'encointer.g.dart';
 
@@ -138,6 +139,9 @@ abstract class _EncointerStore with Store {
   @observable
   ObservableMap<String, CommunityStore> communityStores = new ObservableMap();
 
+  @observable
+  ObservableMap<String, EncointerAccountStore> accountStores = new ObservableMap();
+
   @computed
   get community {
     return chosenCid != null ? communityStores[chosenCid.toFmtString()] : null;
@@ -161,6 +165,20 @@ abstract class _EncointerStore with Store {
       communityStores[cidFmt] = communityStore;
     } else {
       _log("Don't add already existing communityAccountStore for cid: ${cid.toFmtString()}");
+    }
+  }
+
+  @action
+  void initEncointerAccountStore(String address) {
+    if (!accountStores.containsKey(address)) {
+      _log("Adding new encointerAccountStore for address: $address");
+
+      var encointerAccountStore = EncointerAccountStore(network, address);
+      encointerAccountStore.cacheFn = cacheFn;
+
+      accountStores[address] = encointerAccountStore;
+    } else {
+      _log("Don't add already existing encointerAccountStore for address: $address");
     }
   }
 
