@@ -3,7 +3,7 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../../../models/index.dart';
 
-const aggregatedAccountDataRpc = "ceremonies_getAggregatedAccountData";
+const ceremonies_getAggregatedAccountData = "ceremonies_getAggregatedAccountData";
 
 /// Api to talk to an substrate node via the websocket protocol.
 ///
@@ -35,7 +35,7 @@ class SubstrateDartApi {
       // print("Methods: ${methods.toString()}");
 
       // Sanity check that we are running against valid node
-      if (!_rpc.methods.contains(aggregatedAccountDataRpc)) {
+      if (!_rpc.methods.contains(ceremonies_getAggregatedAccountData)) {
         _log("rpc_methods does not contain 'getAggregatedAccountData'. Are the following flags passed"
             " to the node? \n '--enable-offchain-indexing true --rpc-methods unsafe'");
       }

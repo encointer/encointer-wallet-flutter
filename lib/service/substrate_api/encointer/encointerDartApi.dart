@@ -10,7 +10,7 @@ class EncointerDartApi {
   /// Queries the rpc 'ceremonies_getAggregatedAccountData'.
   ///
   Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String account) {
-    return _dartApi
-        .rpc(aggregatedAccountDataRpc, [cid.toJson(), account]).then((data) => AggregatedAccountData.fromJson(data));
+    return _dartApi.rpc(ceremonies_getAggregatedAccountData, [cid.toJson(), account]).then(
+        (data) => AggregatedAccountData.fromJson(data));
   }
 }
