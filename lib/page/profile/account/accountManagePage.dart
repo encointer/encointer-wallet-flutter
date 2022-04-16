@@ -28,7 +28,7 @@ class AccountManagePage extends StatefulWidget {
   _AccountManagePageState createState() => _AccountManagePageState(store);
 }
 
-enum accountAction { delete, export }
+enum AccountAction { delete, export }
 
 class _AccountManagePageState extends State<AccountManagePage> {
   _AccountManagePageState(this.store);
@@ -274,7 +274,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       ),
                       Spacer(),
                       Container(
-                        child: PopupMenuButton<accountAction>(
+                        child: PopupMenuButton<AccountAction>(
                           offset: Offset(-10, -150),
                           icon: Icon(Iconsax.more, color: Colors.white),
                           color: ZurichLion.shade50,
@@ -282,19 +282,19 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
-                          onSelected: (accountAction result) {
+                          onSelected: (AccountAction result) {
                             switch (result) {
-                              case accountAction.delete:
+                              case AccountAction.delete:
                                 _onDeleteAccount(context);
                                 break;
-                              case accountAction.export:
+                              case AccountAction.export:
                                 _showPasswordDialog(context);
                                 break;
                             }
                           },
-                          itemBuilder: (BuildContext context) => <PopupMenuEntry<accountAction>>[
-                            PopupMenuItem<accountAction>(
-                              value: accountAction.delete,
+                          itemBuilder: (BuildContext context) => <PopupMenuEntry<AccountAction>>[
+                            PopupMenuItem<AccountAction>(
+                              value: AccountAction.delete,
                               child: ListTileTheme(
                                 textColor: ZurichLion.shade500,
                                 iconColor: ZurichLion.shade500,
@@ -305,8 +305,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
                                 ),
                               ),
                             ),
-                            PopupMenuItem<accountAction>(
-                              value: accountAction.export,
+                            PopupMenuItem<AccountAction>(
+                              value: AccountAction.export,
                               child: ListTileTheme(
                                 textColor: ZurichLion.shade500,
                                 iconColor: ZurichLion.shade500,
