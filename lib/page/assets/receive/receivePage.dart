@@ -75,7 +75,7 @@ class _ReceivePageState extends State<ReceivePage> {
             if (!observedPendingExtrinsic) {
               data.forEach((xt) {
                 if (xt.contains(widget.store.account.currentAccountPubKey.substring(2))) {
-                  _showSnackBar(context, "pending extrinsic observed. Please wait for confirmation!");
+                  _showSnackBar(context, I18n.of(context).translationsForLocale().profile.observedPendingExtrinsic);
                   observedPendingExtrinsic = true;
                 }
               });
