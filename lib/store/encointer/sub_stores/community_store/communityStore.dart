@@ -79,21 +79,21 @@ abstract class _CommunityStore with Store {
   @action
   void setDemurrage(double d) {
     demurrage = d;
-    cacheFn();
+    writeToCache();
   }
 
   @action
   void setBootstrappers(List<String> bs) {
     _log("set bootstrappers to $bs");
     bootstrappers = bs;
-    cacheFn();
+    writeToCache();
   }
 
   @action
   void setCommunityMetadata([CommunityMetadata meta]) {
     _log("set communityMetadata to $meta");
     communityMetadata = meta;
-    cacheFn();
+    writeToCache();
   }
 
   @action
@@ -101,7 +101,7 @@ abstract class _CommunityStore with Store {
     _log("set meetupTime to $time");
     if (meetupTime != time) {
       meetupTime = time;
-      cacheFn();
+      writeToCache();
     }
   }
 
@@ -109,7 +109,7 @@ abstract class _CommunityStore with Store {
   void setMeetupLocations([List<Location> locations]) {
     _log("store: set meetupLocations to ${locations.toString()}");
     meetupLocations = ObservableList.of(locations);
-    cacheFn();
+    writeToCache();
 
     // There is no race-condition with the `getMeetupTime` call in `setMeetupLocation` because `getMeetupTime` uses
     // internally the `meetupLocation`. Hence, the worst case scenario is a redundant rpc call.
@@ -129,6 +129,14 @@ abstract class _CommunityStore with Store {
     this.cacheFn = cacheFn;
 
     communityAccountStores.forEach((_, store) => store.setCacheFn(cacheFn));
+  }
+
+  Future<void> writeToCache() {
+    if (cacheFn != null) {
+      return cacheFn();
+    } {
+      return null;
+    }
   }
 }
 
