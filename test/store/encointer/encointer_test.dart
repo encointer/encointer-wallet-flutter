@@ -71,6 +71,13 @@ void main() {
 
       var deserializedEncointerStore = EncointerStore.fromJson(targetJson);
       expect(deserializedEncointerStore.toJson(), targetJson);
+
+      // can't do this test separately because of global app store...
+      root.purgeEncointerCache(unitTestEndpoint.info);
+      expect(
+        await root.localStorage.getObject(root.encointerCacheKey(unitTestEndpoint.info)),
+        {},
+      );
     });
   });
 }
