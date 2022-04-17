@@ -1,15 +1,23 @@
 import 'package:encointer_wallet/mocks/data/mockEncointerData.dart';
+import 'package:encointer_wallet/mocks/storage/mockLocalStorage.dart';
 import 'package:encointer_wallet/mocks/testUtils.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/communityStore.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  group('CommunityAccountStore', () {
-    test('json serialization works', () {
+  group('communityStore', () {
+    test('json serialization and caching works', () async {
+      var localStorage = getMockLocalStorage();
+      var communityStoreCacheKey = "communityStore-test-cache";
+
       var communityStore = CommunityStore(
         "My Test Network",
         mediterraneanTestCommunity,
+      );
+
+      communityStore.setCacheFn(
+        () => localStorage.setObject(communityStoreCacheKey, communityStore.toJson()),
       );
 
       var testMetadata = CommunityMetadata(
@@ -19,6 +27,7 @@ void main() {
         "Community-Url",
         "Theme-String",
       );
+
       var bootstrappers = [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS];
       var testLocations = [testLocation1, testLocation2, testLocation3];
 
@@ -50,6 +59,9 @@ void main() {
 
       var communityStoreDeserialized = CommunityStore.fromJson(targetJson);
       expect(communityStoreDeserialized.toJson(), targetJson);
+
+      var cachedValue = await localStorage.getObject(communityStoreCacheKey);
+      expect(cachedValue, targetJson);
     });
   });
 }
