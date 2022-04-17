@@ -340,5 +340,5 @@ abstract class _EncointerStore with Store {
 }
 
 _log(String msg) {
-  print("[EncointerStore $msg");
+  print("[EncointerStore] $msg");
 }
