@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
+import 'package:encointer_wallet/store/encointer/types/location.dart';
 
 import '../../models/index.dart';
 
@@ -45,3 +46,7 @@ const List<String> meetupRegistry = [
 const CeremonyPhase initialPhase = CeremonyPhase.REGISTERING;
 
 const Map<String, dynamic> balanceEntry = {'principal': 23.4, 'lastUpdate': 4};
+
+Location testLocation1 = Location.fromJson({'lat': '18.2341235412345', 'lon': '35.18324513451'});
+Location testLocation2 = Location.fromJson({'lat': '18.3341235412345', 'lon': '35.28324513451'});
+Location testLocation3 = Location.fromJson({'lat': '18.4341235412345', 'lon': '35.38324513451'});
