@@ -63,6 +63,6 @@ EndpointData unitTestEndpoint = EndpointData.fromJson({
   'ss58': 42,
   'text': 'Unit-Test endpoint data',
   'value': "Unit-Test network must not connect to a node",
-  'overrideConfig': {},
+  'overrideConfig': Map<String, dynamic>.of({}),
   'ipfsGateway': 'Unit-Test network must no connect to ipfs'
 });
