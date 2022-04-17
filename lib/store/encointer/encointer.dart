@@ -14,23 +14,6 @@ import 'sub_stores/encointer_account_store/encointerAccountStore.dart';
 
 part 'encointer.g.dart';
 
-final String cacheTxsTransferKey = 'transfer_txs';
-final String encointerCommunityKey = 'wallet_encointer_community';
-final String encointerCommunityMetadataKey = 'wallet_encointer_community_metadata';
-final String encointerCommunitiesKey = 'wallet_encointer_communities';
-final String encointerBootstrappersKey = 'wallet_encointer_bootstrappers';
-final String encointerCommunityLocationsKey = 'wallet_encointer_community_locations';
-final String encointerCommunityReputationsKey = 'wallet_encointer_community_reputations';
-
-// offline meetup cache.
-final String encointerCurrentCeremonyIndexKey = 'wallet_encointer_current_ceremony_index';
-final String encointerCurrentPhaseKey = 'wallet_encointer_current_phase';
-final String encointerMeetupIndexKey = 'wallet_encointer_meetup_index';
-final String encointerMeetupLocationKey = 'wallet_encointer_meetup_location';
-final String encointerMeetupRegistryKey = 'wallet_encointer_meetup_registry';
-final String encointerParticipantsClaimsKey = 'wallet_encointer_participants_claims';
-final String encointerMeetupTimeKey = 'wallet_encointer_meetup_time';
-
 /// Mobx-Store containing all encointer specific data.
 ///
 /// Data specific to a community and/or account are kept in sub-stores.
