@@ -31,6 +31,9 @@ final String encointerMeetupRegistryKey = 'wallet_encointer_meetup_registry';
 final String encointerParticipantsClaimsKey = 'wallet_encointer_participants_claims';
 final String encointerMeetupTimeKey = 'wallet_encointer_meetup_time';
 
+/// Mobx-Store containing all encointer specific data.
+///
+/// Data specific to a community and/or account are kept in sub-stores.
 @JsonSerializable(explicitToJson: true)
 class EncointerStore extends _EncointerStore with _$EncointerStore {
   EncointerStore(String network, {AppStore store}) : super(network, rootStore: store);
@@ -80,6 +83,60 @@ abstract class _EncointerStore with Store {
   @observable
   CommunityIdentifier chosenCid;
 
+  /// Checks if the chosenCid is contained in the communities.
+  ///
+  /// This is only relevant for edge-cases, where the chain does no longer contain a community. E.g. a dev-chain was
+  /// purged or a community as been marked as inactive and was removed.
+  @computed
+  get communitiesContainsChosenCid {
+    return chosenCid != null && communities.isNotEmpty && communities.where((cn) => cn.cid == chosenCid).isNotEmpty;
+  }
+
+  // -- sub-stores
+
+  /// Bazaar sub-stores.
+  ///
+  /// Map: CommunityIdentifier.toFmtString() -> `BazaarStore`.
+  @observable
+  ObservableMap<String, BazaarStore> bazaarStores = new ObservableMap();
+
+  /// Community sub-stores.
+  ///
+  /// Map: CommunityIdentifier.toFmtString() -> `CommunityStore`.
+  ObservableMap<String, CommunityStore> communityStores = new ObservableMap();
+
+  /// EncointerAccount sub-stores.
+  ///
+  /// Map: Address SS58 -> `CommunityStore`.
+  @observable
+  ObservableMap<String, EncointerAccountStore> accountStores = new ObservableMap();
+
+  /// The `BazaarStore` for the currently chosen community.
+  @computed
+  get bazaar {
+    return chosenCid != null ? bazaarStores[chosenCid.toFmtString()] : null;
+  }
+
+  /// The `CommunityStore` for the currently chosen community.
+  @computed
+  get community {
+    return chosenCid != null ? communityStores[chosenCid.toFmtString()] : null;
+  }
+
+  /// The `CommunityAccountStore` for the currently chosen community and account.
+  @computed
+  get communityAccount {
+    return community != null ? community.communityAccountStores[rootStore.account.currentAddress] : null;
+  }
+
+  /// The `EncointerAccountStore` for the currently chosen account.
+  @computed
+  get account {
+    return accountStores[rootStore.account.currentAddress];
+  }
+
+  // -- computed values derived from sub-stores
+
   @computed
   BalanceEntry get communityBalanceEntry {
     return chosenCid != null ? account.balanceEntries[chosenCid.toFmtString()] : null;
@@ -90,43 +147,134 @@ abstract class _EncointerStore with Store {
     return applyDemurrage(communityBalanceEntry);
   }
 
-  /// Checks if the chosenCid is contained in the communities.
-  ///
-  /// This is only relevant for edge-cases, where the chain does no longer contain a community. E.g. a dev-chain was
-  /// purged or a community as been marked as inactive and was removed.
-  @computed
-  get communitiesContainsChosenCid {
-    return chosenCid != null && communities.isNotEmpty && communities.where((cn) => cn.cid == chosenCid).isNotEmpty;
+  double applyDemurrage(BalanceEntry entry) {
+    double res;
+    if (rootStore.chain.latestHeaderNumber != null && entry != null && community.demurrage != null) {
+      int elapsed = rootStore.chain.latestHeaderNumber - entry.lastUpdate;
+      double exponent = -community.demurrage * elapsed;
+      res = entry.principal * pow(e, exponent);
+    }
+    return res;
   }
 
-  @observable
-  ObservableMap<String, BazaarStore> bazaarStores = new ObservableMap();
+  // -- Setters for this store
 
-  @observable
-  ObservableMap<String, CommunityStore> communityStores = new ObservableMap();
+  @action
+  void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
+    print("store: set communityIdentifiers to $cids");
+    communityIdentifiers = cids;
 
-  @observable
-  ObservableMap<String, EncointerAccountStore> accountStores = new ObservableMap();
-
-  @computed
-  get bazaar {
-    return chosenCid != null ? bazaarStores[chosenCid.toFmtString()] : null;
+    if (!communitiesContainsChosenCid) {
+      // inconsistency found, reset state
+      setChosenCid();
+    }
   }
 
-  @computed
-  get community {
-    return chosenCid != null ? communityStores[chosenCid.toFmtString()] : null;
+  @action
+  void setCommunities(List<CidName> c) {
+    print("store: set communities to $c");
+    communities = c;
   }
 
-  @computed
-  get communityAccount {
-    return community != null ? community.communityAccountStores[rootStore.account.currentAddress] : null;
+  @action
+  void setChosenCid([CommunityIdentifier cid]) {
+    if (chosenCid != cid) {
+      chosenCid = cid;
+
+      if (cid != null) {
+        initCommunityStore(cid, rootStore.account.currentAddress);
+        initBazaarStore(cid);
+      }
+    }
+
+    if (rootStore.settings.endpointIsNoTee) {
+      webApi.encointer.subscribeBusinessRegistry();
+    }
+
+    // update depending values without awaiting
+    if (!rootStore.settings.loading) {
+      webApi.encointer.getCommunityData();
+    }
   }
 
-  @computed
-  get account {
-    return accountStores[rootStore.account.currentAddress];
+  @action
+  void setCurrentPhase(CeremonyPhase phase) {
+    print("store: set currentPhase to $phase");
+    if (currentPhase != phase) {
+      currentPhase = phase;
+      cacheFn();
+    }
+    // update depending values without awaiting
+    webApi.encointer.getCurrentCeremonyIndex();
   }
+
+  @action
+  void setCurrentCeremonyIndex(index) {
+    print("store: set currentCeremonyIndex to $index");
+    if (currentCeremonyIndex != index && currentPhase == CeremonyPhase.REGISTERING) {
+      purgeCeremonySpecificState();
+    }
+
+    currentCeremonyIndex = index;
+    // update depending values without awaiting
+    updateState();
+  }
+
+  // -- other helpers
+
+  @action
+  void updateState() {
+    switch (currentPhase) {
+      case CeremonyPhase.REGISTERING:
+        webApi.encointer.getMeetupTime();
+        if (chosenCid != null) {
+          webApi.encointer.getAggregatedAccountData(chosenCid, rootStore.account.currentAddress);
+        }
+        webApi.encointer.getReputations();
+        break;
+      case CeremonyPhase.ASSIGNING:
+        if (chosenCid != null) {
+          webApi.encointer.getAggregatedAccountData(chosenCid, rootStore.account.currentAddress);
+        }
+        break;
+      case CeremonyPhase.ATTESTING:
+        if (chosenCid != null) {
+          webApi.encointer.getAggregatedAccountData(chosenCid, rootStore.account.currentAddress);
+        }
+        break;
+    }
+  }
+
+  @action
+  void purgeCeremonySpecificState() {
+    communityStores.forEach((cid, store) => store.purgeCeremonySpecificState());
+    accountStores.forEach((cid, store) => store.purgeCeremonySpecificState());
+  }
+
+  /// Calculates the remaining time until the next meetup starts. As Gesell and Cantillon currently implement timewarp
+  /// we cannot use the time received by the blockchain. Hence, we need to calculate it differently.
+  int getTimeToMeetup() {
+    var now = DateTime.now();
+    if (10 <= now.minute && now.minute < 20) {
+      return ((19 - now.minute) * 60 + 60 - now.second);
+    } else if (40 <= now.minute && now.minute < 50) {
+      return ((49 - now.minute) * 60 + 60 - now.second);
+    } else {
+      print("Warning: Invalid time to meetup");
+      return 0;
+    }
+  }
+
+  void setCacheFn(Function cacheFn) {
+    this.cacheFn = cacheFn;
+
+    communityStores.updateAll((_, store) {
+      store.setCacheFn(cacheFn);
+      return store;
+    });
+  }
+
+  // -- init functions for sub-stores
 
   @action
   void initCommunityStore(CommunityIdentifier cid, String address) {
@@ -173,128 +321,7 @@ abstract class _EncointerStore with Store {
     }
   }
 
-  double applyDemurrage(BalanceEntry entry) {
-    double res;
-    if (rootStore.chain.latestHeaderNumber != null && entry != null && community.demurrage != null) {
-      int elapsed = rootStore.chain.latestHeaderNumber - entry.lastUpdate;
-      double exponent = -community.demurrage * elapsed;
-      res = entry.principal * pow(e, exponent);
-    }
-    return res;
-  }
-
-  @action
-  void setCurrentPhase(CeremonyPhase phase) {
-    print("store: set currentPhase to $phase");
-    if (currentPhase != phase) {
-      currentPhase = phase;
-      cacheFn();
-    }
-    // update depending values without awaiting
-    webApi.encointer.getCurrentCeremonyIndex();
-  }
-
-  @action
-  void setCurrentCeremonyIndex(index) {
-    print("store: set currentCeremonyIndex to $index");
-    if (currentCeremonyIndex != index && currentPhase == CeremonyPhase.REGISTERING) {
-      purgeCeremonySpecificState();
-    }
-
-    currentCeremonyIndex = index;
-    // update depending values without awaiting
-    updateState();
-  }
-
-  @action
-  void updateState() {
-    switch (currentPhase) {
-      case CeremonyPhase.REGISTERING:
-        webApi.encointer.getMeetupTime();
-        if (chosenCid != null) {
-          webApi.encointer.getAggregatedAccountData(chosenCid, rootStore.account.currentAddress);
-        }
-        webApi.encointer.getReputations();
-        break;
-      case CeremonyPhase.ASSIGNING:
-        if (chosenCid != null) {
-          webApi.encointer.getAggregatedAccountData(chosenCid, rootStore.account.currentAddress);
-        }
-        break;
-      case CeremonyPhase.ATTESTING:
-        if (chosenCid != null) {
-          webApi.encointer.getAggregatedAccountData(chosenCid, rootStore.account.currentAddress);
-        }
-        break;
-    }
-  }
-
-  @action
-  void purgeCeremonySpecificState() {
-    communityStores.forEach((cid, store) => store.purgeCeremonySpecificState());
-    accountStores.forEach((cid, store) => store.purgeCeremonySpecificState());
-  }
-
-  /// Calculates the remaining time until the next meetup starts. As Gesell and Cantillon currently implement timewarp
-  /// we cannot use the time received by the blockchain. Hence, we need to calculate it differently.
-  int getTimeToMeetup() {
-    var now = DateTime.now();
-    if (10 <= now.minute && now.minute < 20) {
-      return ((19 - now.minute) * 60 + 60 - now.second);
-    } else if (40 <= now.minute && now.minute < 50) {
-      return ((49 - now.minute) * 60 + 60 - now.second);
-    } else {
-      print("Warning: Invalid time to meetup");
-      return 0;
-    }
-  }
-
-  @action
-  void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
-    print("store: set communityIdentifiers to $cids");
-    communityIdentifiers = cids;
-
-    if (!communitiesContainsChosenCid) {
-      // inconsistency found, reset state
-      setChosenCid();
-    }
-  }
-
-  @action
-  void setCommunities(List<CidName> c) {
-    print("store: set communities to $c");
-    communities = c;
-  }
-
-  @action
-  void setChosenCid([CommunityIdentifier cid]) {
-    if (chosenCid != cid) {
-      chosenCid = cid;
-
-      if (cid != null) {
-        initCommunityStore(cid, rootStore.account.currentAddress);
-        initBazaarStore(cid);
-      }
-    }
-
-    if (rootStore.settings.endpointIsNoTee) {
-      webApi.encointer.subscribeBusinessRegistry();
-    }
-
-    // update depending values without awaiting
-    if (!rootStore.settings.loading) {
-      webApi.encointer.getCommunityData();
-    }
-  }
-
-  void setCacheFn(Function cacheFn) {
-    this.cacheFn = cacheFn;
-
-    communityStores.updateAll((_, store) {
-      store.setCacheFn(cacheFn);
-      return store;
-    });
-  }
+  // ----- Computed values for ceremony box
 
   bool get showRegisterButton {
     bool registered = communityAccount?.isRegistered ?? false;

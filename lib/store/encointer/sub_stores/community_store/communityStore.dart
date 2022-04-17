@@ -12,7 +12,7 @@ part 'communityStore.g.dart';
 
 /// Stores data specific to an encointer community.
 ///
-///
+/// It also contains sub-stores for account and community specific data.
 @JsonSerializable(explicitToJson: true)
 class CommunityStore extends _CommunityStore with _$CommunityStore {
   CommunityStore(String network, CommunityIdentifier cid) : super(network, cid);
