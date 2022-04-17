@@ -23,10 +23,6 @@ EncointerStore _$EncointerStoreFromJson(Map<String, dynamic> json) {
         ?.toList()
     ..chosenCid =
         json['chosenCid'] == null ? null : CommunityIdentifier.fromJson(json['chosenCid'] as Map<String, dynamic>)
-    ..txsTransfer = json['txsTransfer'] != null
-        ? ObservableList<TransferData>.of((json['txsTransfer'] as List)
-            .map((e) => e == null ? null : TransferData.fromJson(e as Map<String, dynamic>)))
-        : null
     ..bazaarStores = json['bazaarStores'] != null
         ? ObservableMap<String, BazaarStore>.of((json['bazaarStores'] as Map<String, dynamic>).map(
             (k, e) => MapEntry(k, e == null ? null : BazaarStore.fromJson(e as Map<String, dynamic>)),
@@ -52,7 +48,6 @@ Map<String, dynamic> _$EncointerStoreToJson(EncointerStore instance) => <String,
       'communityIdentifiers': instance.communityIdentifiers?.map((e) => e?.toJson())?.toList(),
       'communities': instance.communities?.map((e) => e?.toJson())?.toList(),
       'chosenCid': instance.chosenCid?.toJson(),
-      'txsTransfer': instance.txsTransfer?.map((e) => e?.toJson())?.toList(),
       'bazaarStores': instance.bazaarStores?.map((k, e) => MapEntry(k, e?.toJson())),
       'communityStores': instance.communityStores?.map((k, e) => MapEntry(k, e?.toJson())),
       'accountStores': instance.accountStores?.map((k, e) => MapEntry(k, e?.toJson())),
@@ -249,21 +244,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
-  final _$txsTransferAtom = Atom(name: '_EncointerStore.txsTransfer');
-
-  @override
-  ObservableList<TransferData> get txsTransfer {
-    _$txsTransferAtom.reportRead();
-    return super.txsTransfer;
-  }
-
-  @override
-  set txsTransfer(ObservableList<TransferData> value) {
-    _$txsTransferAtom.reportWrite(value, super.txsTransfer, () {
-      super.txsTransfer = value;
-    });
-  }
-
   final _$bazaarStoresAtom = Atom(name: '_EncointerStore.bazaarStores');
 
   @override
@@ -307,20 +287,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
     _$accountStoresAtom.reportWrite(value, super.accountStores, () {
       super.accountStores = value;
     });
-  }
-
-  final _$setTransferTxsAsyncAction = AsyncAction('_EncointerStore.setTransferTxs');
-
-  @override
-  Future<void> setTransferTxs(List<dynamic> list, {bool reset = false, dynamic needCache = true}) {
-    return _$setTransferTxsAsyncAction.run(() => super.setTransferTxs(list, reset: reset, needCache: needCache));
-  }
-
-  final _$_cacheTxsAsyncAction = AsyncAction('_EncointerStore._cacheTxs');
-
-  @override
-  Future<void> _cacheTxs(List<dynamic> list, String cacheKey) {
-    return _$_cacheTxsAsyncAction.run(() => super._cacheTxs(list, cacheKey));
   }
 
   final _$_EncointerStoreActionController = ActionController(name: '_EncointerStore');
@@ -436,7 +402,6 @@ currentCeremonyIndex: ${currentCeremonyIndex},
 communityIdentifiers: ${communityIdentifiers},
 communities: ${communities},
 chosenCid: ${chosenCid},
-txsTransfer: ${txsTransfer},
 bazaarStores: ${bazaarStores},
 communityStores: ${communityStores},
 accountStores: ${accountStores},

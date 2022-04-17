@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/store/assets/types/transferData.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
@@ -48,6 +50,9 @@ abstract class _EncointerAccountStore with Store {
   @observable
   Map<int, CommunityReputation> reputations;
 
+  @observable
+  ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
+
   @computed
   get ceremonyIndexForProofOfAttendance {
     if (reputations != null && reputations.isNotEmpty) {
@@ -84,6 +89,35 @@ abstract class _EncointerAccountStore with Store {
   @action
   void purgeCeremonySpecificState() {
     purgeReputations();
+  }
+
+  @action
+  Future<void> setTransferTxs(List list, String address, {bool reset = false, needCache = true}) async {
+    if (this.address != address) {
+      _log("Tried to cached transfer tx's for wrong account. This is a bug.");
+      return null;
+    }
+
+    List transfers = list.map((i) {
+      return {
+        "block_timestamp": i['time'],
+        "hash": i['hash'],
+        "success": true,
+        "from": address,
+        "to": i['params'][0],
+        "token": CommunityIdentifier.fromJson(i['params'][1]).toFmtString(),
+        "amount": Fmt.numberFormat(i['params'][2]),
+      };
+    }).toList();
+    if (reset) {
+      txsTransfer = ObservableList.of(transfers.map((i) => TransferData.fromJson(Map<String, dynamic>.from(i))));
+    } else {
+      txsTransfer.addAll(transfers.map((i) => TransferData.fromJson(Map<String, dynamic>.from(i))));
+    }
+
+    if (needCache && txsTransfer.length > 0) {
+      cacheFn();
+    }
   }
 
   void setCacheFn(Function cacheFn) {

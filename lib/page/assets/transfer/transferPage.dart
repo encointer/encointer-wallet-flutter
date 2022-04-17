@@ -209,7 +209,7 @@ class _TransferPageState extends State<TransferPage> {
       args['onFinish'] = (BuildContext txPageContext, Map res) {
         final TransferPageParams routeArgs = ModalRoute.of(context).settings.arguments;
         if (store.settings.endpointIsEncointer) {
-          store.encointer.setTransferTxs([res]);
+          store.encointer.account.setTransferTxs([res], store.account.currentAddress);
         }
         Navigator.popUntil(txPageContext, ModalRoute.withName(routeArgs.redirect));
         if (routeArgs.redirect == '/') {

@@ -169,7 +169,7 @@ abstract class _AccountStore with Store {
             );
           } else {
             if (rootStore.settings.endpointIsEncointer) {
-              rootStore.encointer.setTransferTxs([res]);
+              rootStore.encointer.account.setTransferTxs([res], rootStore.account.currentAddress);
             }
           }
         });

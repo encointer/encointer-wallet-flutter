@@ -1,12 +1,9 @@
 import 'dart:math';
 
-import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/assets/types/transferData.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
-import 'package:encointer_wallet/utils/format.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
@@ -82,9 +79,6 @@ abstract class _EncointerStore with Store {
 
   @observable
   CommunityIdentifier chosenCid;
-
-  @observable
-  ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
 
   @computed
   BalanceEntry get communityBalanceEntry {
@@ -291,45 +285,6 @@ abstract class _EncointerStore with Store {
     if (!rootStore.settings.loading) {
       webApi.encointer.getCommunityData();
     }
-  }
-
-  @action
-  Future<void> setTransferTxs(List list, {bool reset = false, needCache = true}) async {
-    List transfers = list.map((i) {
-      bool isCommunityCurrency = i['params'].length == 3;
-      return {
-        "block_timestamp": i['time'],
-        "hash": i['hash'],
-        "success": true,
-        "from": rootStore.account.currentAddress,
-        "to": i['params'][0],
-        "token": isCommunityCurrency
-            ? CommunityIdentifier.fromJson(i['params'][1]).toFmtString()
-            : rootStore.settings.networkState.tokenSymbol,
-        "amount": isCommunityCurrency ? Fmt.numberFormat(i['params'][2]) : Fmt.balance(i['params'][1], ert_decimals),
-      };
-    }).toList();
-    if (reset) {
-      txsTransfer = ObservableList.of(transfers.map((i) => TransferData.fromJson(Map<String, dynamic>.from(i))));
-    } else {
-      txsTransfer.addAll(transfers.map((i) => TransferData.fromJson(Map<String, dynamic>.from(i))));
-    }
-
-    if (needCache && txsTransfer.length > 0) {
-      _cacheTxs(transfers, cacheTxsTransferKey);
-    }
-  }
-
-  @action
-  Future<void> _cacheTxs(List list, String cacheKey) async {
-    String pubKey = rootStore.account.currentAccount.pubKey;
-    List cached = await rootStore.localStorage.getAccountCache(pubKey, cacheKey);
-    if (cached != null) {
-      cached.addAll(list);
-    } else {
-      cached = list;
-    }
-    rootStore.localStorage.setAccountCache(pubKey, cacheKey, cached);
   }
 
   void setCacheFn(Function cacheFn) {
