@@ -56,6 +56,11 @@ abstract class _EncointerStore with Store {
   // tracks variable assignment but not if individual items are changed. If this is wanted, the variable must be
   // declared as `ObservableList/-Map`.
 
+  /// Caches the store to local storage.
+  ///
+  /// The function itself is not serialized to json, and therefore not stored in the cache itself.
+  /// Hence, after loading the store from cache this needs to set with `setCache` to propagate the function
+  /// to the sub-stores.
   @JsonKey(ignore: true)
   Future<void> Function() cacheFn;
 
@@ -163,6 +168,7 @@ abstract class _EncointerStore with Store {
   void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
     print("store: set communityIdentifiers to $cids");
     communityIdentifiers = cids;
+    cacheFn();
 
     if (!communitiesContainsChosenCid) {
       // inconsistency found, reset state
@@ -172,14 +178,16 @@ abstract class _EncointerStore with Store {
 
   @action
   void setCommunities(List<CidName> c) {
-    print("store: set communities to $c");
+    _log("store: set communities to $c");
     communities = c;
+    cacheFn();
   }
 
   @action
   void setChosenCid([CommunityIdentifier cid]) {
     if (chosenCid != cid) {
       chosenCid = cid;
+      cacheFn();
 
       if (cid != null) {
         initCommunityStore(cid, rootStore.account.currentAddress);
@@ -216,6 +224,8 @@ abstract class _EncointerStore with Store {
     }
 
     currentCeremonyIndex = index;
+    cacheFn();
+
     // update depending values without awaiting
     updateState();
   }
@@ -265,13 +275,16 @@ abstract class _EncointerStore with Store {
     }
   }
 
+  /// Sets the cache function for the stores.
+  ///
+  /// Note: This should always be called after loading the cache because the `cacheFn` is
+  /// not serialized.
   void setCacheFn(Function cacheFn) {
     this.cacheFn = cacheFn;
 
-    communityStores.updateAll((_, store) {
-      store.setCacheFn(cacheFn);
-      return store;
-    });
+    accountStores.forEach((cid, store) => store.setCacheFn(cacheFn));
+    bazaarStores.forEach((cid, store) => store.setCacheFn(cacheFn));
+    communityStores.forEach((cid, store) => store.setCacheFn(cacheFn));
   }
 
   // -- init functions for sub-stores
@@ -287,6 +300,7 @@ abstract class _EncointerStore with Store {
       communityStore.initCommunityAccountStore(address);
 
       communityStores[cidFmt] = communityStore;
+      cacheFn();
     } else {
       _log("Don't add already existing communityAccountStore for cid: ${cid.toFmtString()}");
     }
@@ -301,6 +315,7 @@ abstract class _EncointerStore with Store {
       encointerAccountStore.cacheFn = cacheFn;
 
       accountStores[address] = encointerAccountStore;
+      cacheFn();
     } else {
       _log("Don't add already existing encointerAccountStore for address: $address");
     }
@@ -316,6 +331,7 @@ abstract class _EncointerStore with Store {
       bazaarStore.cacheFn = cacheFn;
 
       bazaarStores[cidFmt] = bazaarStore;
+      cacheFn();
     } else {
       _log("Don't add already existing bazaarStore for cid: ${cid.toFmtString()}");
     }
