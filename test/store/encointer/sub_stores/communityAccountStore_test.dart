@@ -18,14 +18,15 @@ void main() {
       Map<String, dynamic> targetJson = {
         "network": "My Test Network",
         "cid": mediterraneanTestCommunity.toJson(),
-        "account": ALICE_ADDRESS,
+        "address": ALICE_ADDRESS,
         "participantType": 'Bootstrapper',
         "meetup": {
-          "meetupIndex": 2,
-          "meetupLocationIndex": 3,
-          "meetupTime": 10,
-          "meetupRegistry": [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]
-        }
+          "index": 2,
+          "locationIndex": 3,
+          "time": 10,
+          "registry": [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]
+        },
+        "participantsClaims": {},
       };
 
       expect(communityAccountStore.toJson(), targetJson);
@@ -35,14 +36,15 @@ void main() {
       Map<String, dynamic> sourceJson = {
         "network": "My Test Network",
         "cid": mediterraneanTestCommunity.toJson(),
-        "account": ALICE_ADDRESS,
+        "address": ALICE_ADDRESS,
         "participantType": 'Bootstrapper',
         "meetup": {
-          "meetupIndex": 2,
-          "meetupLocationIndex": 3,
-          "meetupTime": 10,
-          "meetupRegistry": [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]
-        }
+          "index": 2,
+          "locationIndex": 3,
+          "time": 10,
+          "registry": [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]
+        },
+        "participantsClaims": Map<String, dynamic>.of({})
       };
 
       var store = CommunityAccountStore.fromJson(sourceJson);
@@ -74,14 +76,15 @@ void main() {
       Map<String, dynamic> targetCachedJson = {
         "network": "My Test Network",
         "cid": mediterraneanTestCommunity.toJson(),
-        "account": ALICE_ADDRESS,
+        "address": ALICE_ADDRESS,
         "participantType": 'Bootstrapper',
         "meetup": {
-          "meetupIndex": 2,
-          "meetupLocationIndex": 3,
-          "meetupTime": 10,
-          "meetupRegistry": [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]
-        }
+          "index": 2,
+          "locationIndex": 3,
+          "time": 10,
+          "registry": [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]
+        },
+        "participantsClaims": Map<String, dynamic>.of({})
       };
 
       var cachedValue = await localStorage.getObject("hello");

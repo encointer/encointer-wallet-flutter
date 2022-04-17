@@ -66,21 +66,21 @@ abstract class _CommunityAccountStore with Store {
   @action
   void setMeetup(Meetup meetup) {
     this.meetup = meetup;
-    cacheFn();
+    writeToCache();
   }
 
   @action
   void purgeMeetup() {
     if (meetup != null) {
       meetup = null;
-      cacheFn();
+      writeToCache();
     }
   }
 
   @action
   void purgeParticipantsClaims() {
     participantsClaims.clear();
-    cacheFn();
+    writeToCache();
   }
 
   bool containsClaim(ClaimOfAttendance claim) {
@@ -90,7 +90,7 @@ abstract class _CommunityAccountStore with Store {
   @action
   void addParticipantClaim(ClaimOfAttendance claim) {
     participantsClaims[claim.claimantPublic] = claim;
-    cacheFn();
+    writeToCache();
   }
 
   /// Purges state that is only relevant for one Ceremony.
@@ -104,5 +104,13 @@ abstract class _CommunityAccountStore with Store {
 
   void setCacheFn(Function cacheFn) {
     this.cacheFn = cacheFn;
+  }
+  
+  Future<void> writeToCache() {
+    if (cacheFn != null) {
+      return cacheFn();
+    } {
+      return null;
+    }
   }
 }
