@@ -1,5 +1,6 @@
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/location.dart';
+import 'package:encointer_wallet/store/settings.dart';
 
 import '../../models/index.dart';
 
@@ -9,7 +10,7 @@ CommunityIdentifier cid = CommunityIdentifier.fromFmtString('gbsuv7YXq9G');
 CommunityIdentifier cid2 = CommunityIdentifier.fromFmtString('hbsuv7YXq9G');
 CommunityIdentifier cid3 = CommunityIdentifier.fromFmtString('ibsuv7YXq9G');
 
-List<CommunityIdentifier> communityIdentifiers = [
+List<CommunityIdentifier> testCommunityIdentifiers = [
   cid,
   cid2,
   cid3,
@@ -50,3 +51,12 @@ const Map<String, dynamic> balanceEntry = {'principal': 23.4, 'lastUpdate': 4};
 Location testLocation1 = Location.fromJson({'lat': '18.2341235412345', 'lon': '35.18324513451'});
 Location testLocation2 = Location.fromJson({'lat': '18.3341235412345', 'lon': '35.28324513451'});
 Location testLocation3 = Location.fromJson({'lat': '18.4341235412345', 'lon': '35.38324513451'});
+
+EndpointData unitTestEndpoint = EndpointData.fromJson({
+  'info': 'unit-test-network',
+  'ss58': 42,
+  'text': 'Unit-Test endpoint data',
+  'value': "Unit-Test network must not connect to a node",
+  'overrideConfig': {},
+  'ipfsGateway': 'Unit-Test network must no connect to ipfs'
+});

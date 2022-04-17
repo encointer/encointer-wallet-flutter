@@ -56,7 +56,7 @@ class MockApiEncointer extends EncointerApi {
 
   @override
   Future<List<CommunityIdentifier>> getCommunityIdentifiers() async {
-    return communityIdentifiers;
+    return testCommunityIdentifiers;
   }
 
   @override
