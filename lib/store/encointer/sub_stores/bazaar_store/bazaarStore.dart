@@ -35,12 +35,14 @@ abstract class _BazaarStore with Store {
   /// The community this store belongs to.
   final CommunityIdentifier cid;
 
+  /// List of registered businesses in this community.
   @observable
   ObservableList<AccountBusinessTuple> businessRegistry;
 
   @action
   void setBusinessRegistry(List<AccountBusinessTuple> accBusinesses) {
     businessRegistry = ObservableList.of(accBusinesses);
+    cacheFn();
   }
 
   void setCacheFn(Function cacheFn) {

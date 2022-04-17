@@ -109,6 +109,7 @@ abstract class _CommunityStore with Store {
   void setMeetupLocations([List<Location> locations]) {
     _log("store: set meetupLocations to ${locations.toString()}");
     meetupLocations = ObservableList.of(locations);
+    cacheFn();
 
     // There is no race-condition with the `getMeetupTime` call in `setMeetupLocation` because `getMeetupTime` uses
     // internally the `meetupLocation`. Hence, the worst case scenario is a redundant rpc call.
@@ -127,10 +128,7 @@ abstract class _CommunityStore with Store {
   void setCacheFn(Function cacheFn) {
     this.cacheFn = cacheFn;
 
-    communityAccountStores.updateAll((_, store) {
-      store.setCacheFn(cacheFn);
-      return store;
-    });
+    communityAccountStores.forEach((_, store) => store.setCacheFn(cacheFn));
   }
 }
 
