@@ -65,6 +65,7 @@ abstract class _CommunityAccountStore with Store {
 
   @action
   void setMeetup(Meetup meetup) {
+    _log("Set meetup: ${meetup.toJson()}");
     this.meetup = meetup;
     writeToCache();
   }
@@ -72,6 +73,7 @@ abstract class _CommunityAccountStore with Store {
   @action
   void purgeMeetup() {
     if (meetup != null) {
+      _log("Purging meetup.");
       meetup = null;
       writeToCache();
     }
@@ -79,6 +81,7 @@ abstract class _CommunityAccountStore with Store {
 
   @action
   void purgeParticipantsClaims() {
+    _log("Purging participantsClaims.");
     participantsClaims.clear();
     writeToCache();
   }
@@ -89,6 +92,7 @@ abstract class _CommunityAccountStore with Store {
 
   @action
   void addParticipantClaim(ClaimOfAttendance claim) {
+    _log("adding participantsClaims.");
     participantsClaims[claim.claimantPublic] = claim;
     writeToCache();
   }
@@ -105,12 +109,17 @@ abstract class _CommunityAccountStore with Store {
   void setCacheFn(Function cacheFn) {
     this.cacheFn = cacheFn;
   }
-  
+
   Future<void> writeToCache() {
     if (cacheFn != null) {
       return cacheFn();
-    } {
+    }
+    {
       return null;
     }
   }
+}
+
+_log(String msg) {
+  print("[CommunityAccountStore] $msg");
 }
