@@ -5,6 +5,7 @@ import 'package:encointer_wallet/mocks/substrate_api/mockApi.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/store/encointer/encointer.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/bazaar_store/bazaarStore.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/communityStore.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -67,6 +68,9 @@ void main() {
       };
 
       expect(encointerStore.toJson(), targetJson);
+
+      var deserializedEncointerStore = EncointerStore.fromJson(targetJson);
+      expect(deserializedEncointerStore.toJson(), targetJson);
     });
   });
 }
