@@ -16,8 +16,15 @@ class AppStore extends _AppStore with _$AppStore {
   AppStore(LocalStorage localStorage) : super(localStorage);
 }
 
+enum StoreConfig {
+  Normal,
+  Test,
+}
+
 abstract class _AppStore with Store {
-  _AppStore(this.localStorage);
+  _AppStore(this.localStorage, {this.mode = StoreConfig.Normal});
+
+  final mode;
 
   @observable
   SettingsStore settings;
@@ -69,12 +76,30 @@ abstract class _AppStore with Store {
     return localStorage.getObject(getCacheKey(key));
   }
 
+  /// Returns the network dependant cache key.
+  ///
+  /// Prefixes the key with `test-` if we are in test-mode to prevent overwriting of
+  /// the real cache with (unit-)test runs.
   String getCacheKey(String key) {
-    return '${settings.endpoint.info}_$key';
+    var cacheKey = '${settings.endpoint.info}_$key';
+    return mode == StoreConfig.Test ? "test-$cacheKey": cacheKey;
+  }
+
+  /// Returns the cache key for the encointer-storage.
+  ///
+  /// Prefixes the key with `test-` if we are in test-mode to prevent overwriting of
+  /// the real cache with (unit-)test runs.
+  String encointerCacheKey(String networkInfo) {
+    var key = "$encointerCachePrefix-$networkInfo";
+    return mode == StoreConfig.Test ? "test-$key": key;
+  }
+
+  Future<void> purgeEncointerCache(String networkInfo) async {
+    return localStorage.setObject(encointerCacheKey(networkInfo), new Map<String, dynamic>());
   }
 
   Future<void> loadEncointerCache(String networkInfo) async {
-    String encointerFinalCacheKey = "$encointerCachePrefix-$networkInfo";
+    String encointerFinalCacheKey = encointerCacheKey(networkInfo);
     var cachedEncointerStore = await localStorage.getObject(encointerFinalCacheKey);
 
     if (cachedEncointerStore != null) {
