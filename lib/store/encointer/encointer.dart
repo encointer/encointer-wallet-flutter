@@ -149,7 +149,7 @@ abstract class _EncointerStore with Store {
 
   @action
   void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
-    print("store: set communityIdentifiers to $cids");
+    _log("set communityIdentifiers to $cids");
     communityIdentifiers = cids;
     cacheFn();
 
@@ -161,7 +161,7 @@ abstract class _EncointerStore with Store {
 
   @action
   void setCommunities(List<CidName> c) {
-    _log("store: set communities to $c");
+    _log("set communities to $c");
     communities = c;
     cacheFn();
   }
@@ -190,7 +190,7 @@ abstract class _EncointerStore with Store {
 
   @action
   void setCurrentPhase(CeremonyPhase phase) {
-    print("store: set currentPhase to $phase");
+    _log("set currentPhase to $phase");
     if (currentPhase != phase) {
       currentPhase = phase;
       cacheFn();
@@ -253,7 +253,7 @@ abstract class _EncointerStore with Store {
     } else if (40 <= now.minute && now.minute < 50) {
       return ((49 - now.minute) * 60 + 60 - now.second);
     } else {
-      print("Warning: Invalid time to meetup");
+      _log("Warning: Invalid time to meetup");
       return 0;
     }
   }
