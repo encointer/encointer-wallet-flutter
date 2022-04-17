@@ -5,6 +5,8 @@ import 'package:encointer_wallet/store/settings.dart';
 import '../../models/index.dart';
 
 const String zueriLoi = 'Züri Loi';
+const String bernBaer = 'Bern Bär';
+const String buendnerBock = 'Bündner Bock';
 const String zul = 'ZUL';
 CommunityIdentifier cid = CommunityIdentifier.fromFmtString('gbsuv7YXq9G');
 CommunityIdentifier cid2 = CommunityIdentifier.fromFmtString('hbsuv7YXq9G');
@@ -16,7 +18,11 @@ List<CommunityIdentifier> testCommunityIdentifiers = [
   cid3,
 ];
 
-List<CidName> communities = [new CidName(cid, zueriLoi)];
+List<CidName> testCommunities = [
+  new CidName(cid, zueriLoi),
+  new CidName(cid2, bernBaer),
+  new CidName(cid, buendnerBock),
+];
 
 const Map<String, dynamic> communityMetadata = {
   'name': 'Züri Loi',

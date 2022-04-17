@@ -10,7 +10,7 @@ abstract class PrepareMockStorage {
     store.encointer.setCurrentPhase(initialPhase);
     store.encointer.setCommunityIdentifiers(testCommunityIdentifiers);
     // store.encointer.addBalanceEntry(cid, BalanceEntry.fromJson(balanceEntry));
-    store.encointer.setCommunities(communities);
+    store.encointer.setCommunities(testCommunities);
     // store.encointer.setDemurrage(demurrage);
     store.chain.setLatestHeader(Header.fromJson(header));
     // store.encointer.setCommunityMetadata(CommunityMetadata.fromJson(communityMetadata));
