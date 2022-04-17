@@ -71,7 +71,7 @@ abstract class _CommunityStore with Store {
       var store = CommunityAccountStore(network, cid, address);
       store.cacheFn = cacheFn;
       communityAccountStores[address] = store;
-      cacheFn();
+      writeToCache();
     } else {
       _log("Don't add already existing communityAccountStore for cid: ${cid.toFmtString()} and account: $address");
     }
