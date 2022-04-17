@@ -113,8 +113,7 @@ abstract class _CommunityAccountStore with Store {
   Future<void> writeToCache() {
     if (cacheFn != null) {
       return cacheFn();
-    }
-    {
+    } else {
       return null;
     }
   }
