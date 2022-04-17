@@ -14,14 +14,14 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('EncointerStore test', () {
-    globalAppStore = AppStore(getMockLocalStorage());
-    final AppStore root = globalAppStore;
-    accList = [testAcc];
-    currentAccountPubKey = accList[0]['pubKey'];
-
-    webApi = MockApi(null, root, withUi: false);
-
     test('encointer store initialization, serialization and cache works', () async {
+      globalAppStore = AppStore(getMockLocalStorage());
+      final AppStore root = globalAppStore;
+      accList = [testAcc];
+      currentAccountPubKey = accList[0]['pubKey'];
+
+      webApi = MockApi(null, root, withUi: false);
+
       await root.init('_en');
 
       // re-initialize with cacheKey that does not mess with real cache
@@ -71,12 +71,31 @@ void main() {
 
       var deserializedEncointerStore = EncointerStore.fromJson(targetJson);
       expect(deserializedEncointerStore.toJson(), targetJson);
+    });
 
-      // can't do this test separately because of global app store...
+    test('purging encointer-store works and initializing new works', () async {
+      globalAppStore = AppStore(getMockLocalStorage());
+      final AppStore root = globalAppStore;
+      accList = [testAcc];
+      currentAccountPubKey = accList[0]['pubKey'];
+
+      webApi = MockApi(null, root, withUi: false);
+      await root.init('_en');
+
+      // re-initialize with cacheKey that does not mess with real cache
+      root.settings.setEndpoint(unitTestEndpoint);
+
       root.purgeEncointerCache(unitTestEndpoint.info);
       expect(
         await root.localStorage.getObject(root.encointerCacheKey(unitTestEndpoint.info)),
         {},
+      );
+
+      // should initialize a new encointer store
+      await root.init('_en');
+      expect(
+        await root.localStorage.getObject(root.encointerCacheKey(unitTestEndpoint.info)),
+        EncointerStore(unitTestEndpoint.info, store: root).toJson(),
       );
     });
   });
