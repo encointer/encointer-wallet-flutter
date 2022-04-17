@@ -151,7 +151,7 @@ abstract class _EncointerStore with Store {
   void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
     _log("set communityIdentifiers to $cids");
     communityIdentifiers = cids;
-    cacheFn();
+    writeToCache();
 
     if (!communitiesContainsChosenCid) {
       // inconsistency found, reset state
@@ -163,14 +163,14 @@ abstract class _EncointerStore with Store {
   void setCommunities(List<CidName> c) {
     _log("set communities to $c");
     communities = c;
-    cacheFn();
+    writeToCache();
   }
 
   @action
   void setChosenCid([CommunityIdentifier cid]) {
     if (chosenCid != cid) {
       chosenCid = cid;
-      cacheFn();
+      writeToCache();
 
       if (cid != null) {
         initCommunityStore(cid, rootStore.account.currentAddress);
@@ -193,7 +193,7 @@ abstract class _EncointerStore with Store {
     _log("set currentPhase to $phase");
     if (currentPhase != phase) {
       currentPhase = phase;
-      cacheFn();
+      writeToCache();
     }
     // update depending values without awaiting
     webApi.encointer.getCurrentCeremonyIndex();
@@ -207,7 +207,7 @@ abstract class _EncointerStore with Store {
     }
 
     currentCeremonyIndex = index;
-    cacheFn();
+    writeToCache();
 
     // update depending values without awaiting
     updateState();
@@ -270,6 +270,14 @@ abstract class _EncointerStore with Store {
     communityStores.forEach((cid, store) => store.setCacheFn(cacheFn));
   }
 
+  Future<void> writeToCache() {
+    if (cacheFn != null) {
+      return cacheFn();
+    } else {
+      return null;
+    }
+  }
+
   // -- init functions for sub-stores
 
   @action
@@ -283,7 +291,7 @@ abstract class _EncointerStore with Store {
       communityStore.initCommunityAccountStore(address);
 
       communityStores[cidFmt] = communityStore;
-      cacheFn();
+      writeToCache();
     } else {
       _log("Don't add already existing communityAccountStore for cid: ${cid.toFmtString()}");
     }
@@ -298,7 +306,7 @@ abstract class _EncointerStore with Store {
       encointerAccountStore.cacheFn = cacheFn;
 
       accountStores[address] = encointerAccountStore;
-      cacheFn();
+      writeToCache();
     } else {
       _log("Don't add already existing encointerAccountStore for address: $address");
     }
@@ -314,7 +322,7 @@ abstract class _EncointerStore with Store {
       bazaarStore.cacheFn = cacheFn;
 
       bazaarStores[cidFmt] = bazaarStore;
-      cacheFn();
+      writeToCache();
     } else {
       _log("Don't add already existing bazaarStore for cid: ${cid.toFmtString()}");
     }
