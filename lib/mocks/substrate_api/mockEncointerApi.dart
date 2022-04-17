@@ -52,6 +52,9 @@ class MockApiEncointer extends EncointerApi {
   }
 
   @override
+  Future<void> getReputations() async {}
+
+  @override
   Future<void> getEncointerBalance() async {}
 
   @override
