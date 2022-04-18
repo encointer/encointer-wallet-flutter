@@ -16,7 +16,8 @@ CommunityMetadata _$CommunityMetadataFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$CommunityMetadataToJson(CommunityMetadata instance) => <String, dynamic>{
+Map<String, dynamic> _$CommunityMetadataToJson(CommunityMetadata instance) =>
+    <String, dynamic>{
       'name': instance.name,
       'symbol': instance.symbol,
       'assets': instance.assets,
@@ -26,7 +27,9 @@ Map<String, dynamic> _$CommunityMetadataToJson(CommunityMetadata instance) => <S
 
 CidName _$CidNameFromJson(Map<String, dynamic> json) {
   return CidName(
-    json['cid'] == null ? null : CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
+    json['cid'] == null
+        ? null
+        : CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
     json['name'] as String,
   );
 }
