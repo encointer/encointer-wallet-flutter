@@ -1,6 +1,8 @@
+import 'package:encointer_wallet/common/components/accountAdvanceOption.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/create/createPinPage.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,6 +22,32 @@ class CreateAccountForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context).translationsForLocale();
+
+    Future<void> _createAndImportAccount() async {
+      await webApi.account.generateAccount();
+
+      var acc = await webApi.account.importAccount(
+        cryptoType: AccountAdvanceOptionParams.encryptTypeSR,
+        derivePath: '',
+      );
+
+      if (acc['error'] != null) {
+        _showErrorCreatingAccountDialog(context);
+        return;
+      }
+
+      await store.account.addAccount(acc, store.account.newAccount.password);
+      webApi.account.encodeAddress([acc['pubKey']]);
+
+      await store.loadAccountCache();
+
+      // fetch info for the imported account
+      String pubKey = acc['pubKey'];
+      webApi.fetchAccountData();
+      webApi.account.fetchAccountsBonded([pubKey]);
+      webApi.account.getPubKeyIcons([pubKey]);
+      store.account.setCurrentAccount(pubKey);
+    }
 
     return Form(
       key: _formKey,
@@ -90,7 +118,7 @@ class CreateAccountForm extends StatelessWidget {
               onPressed: () {
                 if (_formKey.currentState.validate()) {
                   store.account.setNewAccountName(_nameCtrl.text.trim());
-                  Navigator.pushNamed(context, CreatePinPage.route);
+                  Navigator.pushNamed(context, CreatePinPage.route, arguments: CreatePinPageParams(_createAndImportAccount));
                 }
               },
             ),
@@ -99,4 +127,24 @@ class CreateAccountForm extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
+  showCupertinoDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return CupertinoAlertDialog(
+        title: Container(),
+        content: Text(I18n.of(context).translationsForLocale().account.createError),
+        actions: <Widget>[
+          CupertinoButton(
+            child: Text(I18n.of(context).translationsForLocale().home.ok),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
