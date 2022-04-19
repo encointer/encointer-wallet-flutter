@@ -47,12 +47,17 @@ class AccountApi {
       allowRepeat: true,
     );
 
+    _log("ss58: $ss58");
+    _log("ss58: ${store.settings.endpoint.ss58}");
+    _log("Encoded Addresses result: ${res.toString()}");
+
     if (res != null) {
       store.account.setPubKeyAddressMap(Map<String, Map>.from(res));
-      var addresses;
+      var addresses = <String>[];
 
       for (var pubKey in pubKeys) {
-        addresses.add(res[ss58][pubKey]);
+        _log("Key: $pubKey, address: ${res[store.settings]}");
+        addresses.add(store.account.pubKeyAddressMap[store.settings.endpoint.ss58][pubKey]);
       }
 
       return addresses;
@@ -323,4 +328,8 @@ class AccountApi {
     }
     return res;
   }
+}
+
+_log(String msg) {
+  print("[accountApi] $msg");
 }
