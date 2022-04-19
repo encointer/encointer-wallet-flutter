@@ -63,7 +63,7 @@ abstract class _AppStore with Store {
 
     // need to call this after settings was initialized
     String networkInfo = settings.endpoint.info;
-    await loadEncointerCache(networkInfo);
+    await loadOrInitEncointerCache(networkInfo);
 
     isReady = true;
   }
@@ -82,7 +82,7 @@ abstract class _AppStore with Store {
   /// the real cache with (unit-)test runs.
   String getCacheKey(String key) {
     var cacheKey = '${settings.endpoint.info}_$key';
-    return mode == StoreConfig.Test ? "test-$cacheKey": cacheKey;
+    return mode == StoreConfig.Test ? "test-$cacheKey" : cacheKey;
   }
 
   /// Returns the cache key for the encointer-storage.
@@ -91,28 +91,45 @@ abstract class _AppStore with Store {
   /// the real cache with (unit-)test runs.
   String encointerCacheKey(String networkInfo) {
     var key = "$encointerCachePrefix-$networkInfo";
-    return mode == StoreConfig.Test ? "test-$key": key;
+    return mode == StoreConfig.Test ? "test-$key" : key;
   }
 
   Future<void> purgeEncointerCache(String networkInfo) async {
-    return localStorage.setObject(encointerCacheKey(networkInfo), new Map<String, dynamic>());
+    return localStorage.setObject(encointerCacheKey(networkInfo), null);
   }
 
-  Future<void> loadEncointerCache(String networkInfo) async {
+  Future<void> loadOrInitEncointerCache(String networkInfo) async {
     String encointerFinalCacheKey = encointerCacheKey(networkInfo);
-    var cachedEncointerStore = await localStorage.getObject(encointerFinalCacheKey);
+    var maybeStore = await loadEncointerCache(encointerFinalCacheKey);
 
-    if (cachedEncointerStore != null) {
-      _log("Found cached encointer store");
-      encointer = EncointerStore.fromJson(cachedEncointerStore);
-      encointer.rootStore = this;
+    if (maybeStore != null) {
+      encointer = maybeStore;
     } else {
       _log("Initializing new encointer store.");
       encointer = EncointerStore(networkInfo, store: this);
-    }
+      encointer.setCacheFn(() => localStorage.setObject(encointerFinalCacheKey, encointer.toJson()));
 
-    // Cache the entire encointer store at once: Check if this is too expensive ???
-    encointer.setCacheFn(() => localStorage.setObject(encointerFinalCacheKey, encointer.toJson()));
+      // write the new store to cache.
+      encointer.writeToCache();
+    }
+  }
+
+  Future<EncointerStore> loadEncointerCache(String encointerFinalCacheKey) async {
+    var cachedEncointerStore = await localStorage.getMap(encointerFinalCacheKey);
+
+    if (cachedEncointerStore != null) {
+      _log("Found cached encointer store $cachedEncointerStore");
+      var encointerStore = EncointerStore.fromJson(cachedEncointerStore);
+      encointerStore.rootStore = this;
+
+      // Cache the entire encointer store at once: Check if this is too expensive,
+      // when many accounts/cids exist in store. But as the caching future is in general not awaited,
+      // it should be fine.
+      encointerStore.setCacheFn(() => localStorage.setObject(encointerFinalCacheKey, encointer.toJson()));
+      return encointerStore;
+    } else {
+      return null;
+    }
   }
 
   /// Loads all account associated data.

@@ -66,7 +66,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       store.loadAccountCache(),
       store.settings.loadNetworkStateCache(),
       store.assets.loadCache(),
-      store.loadEncointerCache(_selectedNetwork.info),
+      store.loadOrInitEncointerCache(_selectedNetwork.info),
     ]);
 
     webApi.launchWebview();
