@@ -9,19 +9,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CreatePinPage extends StatefulWidget {
-  const CreatePinPage(this.store);
+  const CreatePinPage(this.store, {this.importAccount});
 
   static const String route = '/account/createPin';
   final AppStore store;
 
+  final Future<void> Function() importAccount;
+
   @override
-  _CreatePinPageState createState() => _CreatePinPageState(store);
+  _CreatePinPageState createState() => _CreatePinPageState(store, importAccount: importAccount);
 }
 
 class _CreatePinPageState extends State<CreatePinPage> {
-  _CreatePinPageState(this.store);
+  _CreatePinPageState(this.store, {this.importAccount});
 
   final AppStore store;
+
+  Future<void> Function() importAccount;
 
   bool _submitting = false;
 
@@ -76,6 +80,10 @@ class _CreatePinPageState extends State<CreatePinPage> {
 
   @override
   Widget build(BuildContext context) {
+    if (importAccount == null) {
+      importAccount = _createAndImportAccount;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -104,7 +112,7 @@ class _CreatePinPageState extends State<CreatePinPage> {
                     _submitting = true;
                   });
 
-                  await _createAndImportAccount();
+                  await importAccount();
 
                   if (store.encointer.communities != null) {
                     await Navigator.push(
