@@ -13,7 +13,7 @@ AppStore globalAppStore = AppStore(LocalStorage());
 const encointerCachePrefix = 'encointer-store';
 
 class AppStore extends _AppStore with _$AppStore {
-  AppStore(LocalStorage localStorage) : super(localStorage);
+  AppStore(LocalStorage localStorage, {StoreConfig config}) : super(localStorage, config: config);
 }
 
 enum StoreConfig {
@@ -22,9 +22,9 @@ enum StoreConfig {
 }
 
 abstract class _AppStore with Store {
-  _AppStore(this.localStorage, {this.mode = StoreConfig.Normal});
+  _AppStore(this.localStorage, {this.config = StoreConfig.Normal});
 
-  final mode;
+  final config;
 
   @observable
   SettingsStore settings;
@@ -82,7 +82,7 @@ abstract class _AppStore with Store {
   /// the real cache with (unit-)test runs.
   String getCacheKey(String key) {
     var cacheKey = '${settings.endpoint.info}_$key';
-    return mode == StoreConfig.Test ? "test-$cacheKey" : cacheKey;
+    return config == StoreConfig.Test ? "test-$cacheKey" : cacheKey;
   }
 
   /// Returns the cache key for the encointer-storage.
@@ -91,7 +91,7 @@ abstract class _AppStore with Store {
   /// the real cache with (unit-)test runs.
   String encointerCacheKey(String networkInfo) {
     var key = "$encointerCachePrefix-$networkInfo";
-    return mode == StoreConfig.Test ? "test-$key" : key;
+    return config == StoreConfig.Test ? "test-$key" : key;
   }
 
   Future<void> purgeEncointerCache(String networkInfo) async {
