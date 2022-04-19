@@ -67,14 +67,10 @@ class _CreatePinPageState extends State<CreatePinPage> {
 
                   await onCreatePin();
 
-                  if (store.encointer.communities != null) {
                     await Navigator.push(
                       context,
                       MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)),
                     );
-                  } else {
-                    await showNoCommunityDialog(context);
-                  }
 
                   setState(() {
                     _submitting = false;
@@ -89,26 +85,4 @@ class _CreatePinPageState extends State<CreatePinPage> {
       ),
     );
   }
-}
-
-Future<void> showNoCommunityDialog(BuildContext context) {
-  var translations = I18n.of(context).translationsForLocale();
-
-  return showCupertinoDialog(
-    context: context,
-    builder: (context) {
-      return CupertinoAlertDialog(
-        title: Container(),
-        content: Text(translations.encointer.noCommunitiesFoundChooseLater),
-        actions: <Widget>[
-          CupertinoButton(
-            child: Text(translations.home.ok),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
 }
