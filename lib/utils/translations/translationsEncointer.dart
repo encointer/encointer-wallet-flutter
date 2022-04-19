@@ -16,6 +16,7 @@ abstract class TranslationsEncointer {
   String get claimsScannedNOfM;
   String get claimsSubmitDetail;
   String get communities;
+  String get noCommunitiesFoundChooseLater;
   String get encointer;
   String get meetupAttended;
   String get meetupClaimantInvalid;
@@ -51,6 +52,7 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   get claimsScannedNOfM => "Scanned SCANNED_COUNT / TOTAL_COUNT Claims";
   get claimsSubmitDetail => 'Submitting AMOUNT claims for the recent ceremony';
   get communities => 'Communities';
+  get noCommunitiesFoundChooseLater => 'No communities were found. You can choose later.';
   get encointer => 'Encointer Ceremony';
   get meetupAttended => 'Attended last meetup';
   get meetupClaimantInvalid => 'This claimant is not part of the meetup. Claim is not stored.';
@@ -86,6 +88,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get claimsScannedNOfM => "SCANNED_COUNT / TOTAL_COUNT gescannte Behauptungen";
   get claimsSubmitDetail => 'Reiche AMOUNT Behauptungen für die letzte Zeremonie ein';
   get communities => 'Gemeinschaften';
+  get noCommunitiesFoundChooseLater => 'Keine Gemeinschaftern gefunden. Du kannst später eine auswählen.';
   get encointer => 'Encointer Zeremonie';
   get meetupAttended => 'Am letzen Treffen teilgenommen';
   get meetupClaimantInvalid => 'Dieser Antragssteller gehört nicht zum Treffen. Behauptung wurde nicht gespeichert.';
@@ -128,6 +131,7 @@ class TranslationsZhEncointer implements TranslationsEncointer {
   get startCeremony => throw UnimplementedError();
   get youAreRegistered => '已经注册';
   get communities => throw UnimplementedError();
+  get noCommunitiesFoundChooseLater => throw UnimplementedError();
   get registerUntil => throw UnimplementedError();
   get showCeremonyLocation => throw UnimplementedError();
   get ceremonyIsOver => throw UnimplementedError();

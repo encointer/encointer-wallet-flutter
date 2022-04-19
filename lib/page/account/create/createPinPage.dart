@@ -1,5 +1,6 @@
 import 'package:encointer_wallet/common/components/accountAdvanceOption.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/page-encointer/common/communityChooserOnMap.dart';
 import 'package:encointer_wallet/page/account/create/createPinForm.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -25,10 +26,6 @@ class _CreatePinPageState extends State<CreatePinPage> {
   bool _submitting = false;
 
   Future<void> _createAndImportAccount() async {
-    setState(() {
-      _submitting = true;
-    });
-
     await webApi.account.generateAccount();
 
     var acc = await webApi.account.importAccount(
@@ -55,10 +52,6 @@ class _CreatePinPageState extends State<CreatePinPage> {
     webApi.account.fetchAccountsBonded([pubKey]);
     webApi.account.getPubKeyIcons([pubKey]);
     store.account.setCurrentAccount(pubKey);
-
-    setState(() {
-      _submitting = false;
-    });
   }
 
   static Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
@@ -106,10 +99,28 @@ class _CreatePinPageState extends State<CreatePinPage> {
       body: SafeArea(
         child: !_submitting
             ? CreatePinForm(
-                onSubmit: () {
+                onSubmit: () async {
                   setState(() {
-                    _createAndImportAccount();
+                    _submitting = true;
                   });
+
+                  await _createAndImportAccount();
+
+                  if (store.encointer.communities != null) {
+                    await Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)),
+                    );
+                  } else {
+                    await showNoCommunityDialog(context);
+                  }
+
+                  setState(() {
+                    _submitting = false;
+                  });
+
+                  // Even if we do not choose a community, we go back to the home screen.
+                  Navigator.popUntil(context, ModalRoute.withName('/'));
                 },
                 store: store,
               )
@@ -117,4 +128,27 @@ class _CreatePinPageState extends State<CreatePinPage> {
       ),
     );
   }
+}
+
+Future<void> showNoCommunityDialog(BuildContext context) {
+  var translations = I18n.of(context).translationsForLocale();
+
+  return showCupertinoDialog(
+    context: context,
+    builder: (context) {
+      return CupertinoAlertDialog(
+        title: Container(),
+        content: Text(translations.encointer.noCommunitiesFoundChooseLater),
+        actions: <Widget>[
+          CupertinoButton(
+            child: Text(translations.home.ok),
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
