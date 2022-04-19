@@ -105,7 +105,6 @@ Future<void> showNoCommunityDialog(BuildContext context) {
             child: Text(translations.home.ok),
             onPressed: () {
               Navigator.of(context).pop();
-              Navigator.of(context).pop();
             },
           ),
         ],
