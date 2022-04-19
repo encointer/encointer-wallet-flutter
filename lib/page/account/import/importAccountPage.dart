@@ -185,19 +185,19 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   }
 
   Widget _getImportForm() {
-      return ImportAccountForm(store, (Map<String, dynamic> data) {
-        setState(() {
-          _keyType = data['keyType'];
-          _cryptoType = data['cryptoType'];
-          _derivePath = data['derivePath'];
-        });
-
-        if (store.account.isFirstAccount) {
-          Navigator.pushNamed(context, CreatePinPage.route, arguments: CreatePinPageParams(_importAccount));
-        } else {
-          store.account.setNewAccountPin(store.settings.cachedPin);
-          _importAccount();
-        }
+    return ImportAccountForm(store, (Map<String, dynamic> data) {
+      setState(() {
+        _keyType = data['keyType'];
+        _cryptoType = data['cryptoType'];
+        _derivePath = data['derivePath'];
       });
-    }
+
+      if (store.account.isFirstAccount) {
+        Navigator.pushNamed(context, CreatePinPage.route, arguments: CreatePinPageParams(_importAccount));
+      } else {
+        store.account.setNewAccountPin(store.settings.cachedPin);
+        _importAccount();
+      }
+    });
+  }
 }

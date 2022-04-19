@@ -5,10 +5,10 @@ import 'package:encointer_wallet/page/account/create/createPinPage.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class CreateAccountForm extends StatelessWidget {
   CreateAccountForm({this.store});
@@ -118,7 +118,11 @@ class CreateAccountForm extends StatelessWidget {
               onPressed: () {
                 if (_formKey.currentState.validate()) {
                   store.account.setNewAccountName(_nameCtrl.text.trim());
-                  Navigator.pushNamed(context, CreatePinPage.route, arguments: CreatePinPageParams(_createAndImportAccount));
+                  Navigator.pushNamed(
+                    context,
+                    CreatePinPage.route,
+                    arguments: CreatePinPageParams(_createAndImportAccount),
+                  );
                 }
               },
             ),
