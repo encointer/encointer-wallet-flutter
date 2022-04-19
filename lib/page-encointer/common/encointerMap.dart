@@ -61,11 +61,11 @@ class EncointerMap extends StatelessWidget {
                   ),
                 ),
               ],
-            ) :
-      Container(
-        color: Colors.white,
-        child: noCommunityDialog(context),
-      )
+            )
+          : Container(
+              color: Colors.white,
+              child: noCommunityDialog(context),
+            ),
     );
   }
 }
