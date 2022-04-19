@@ -1,6 +1,5 @@
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/page-encointer/common/communityChooserOnMap.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -148,14 +147,6 @@ class _CreatePinFormState extends State<CreatePinForm> {
                   store.settings.setPin(_passCtrl.text);
 
                   widget.onSubmit();
-
-                  // Even if we do not choose a community, we go back to the home screen.
-                  Navigator.popUntil(context, ModalRoute.withName('/'));
-
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)),
-                  );
                 }
               },
             ),
