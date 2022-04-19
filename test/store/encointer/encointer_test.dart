@@ -71,6 +71,9 @@ void main() {
 
       var deserializedEncointerStore = EncointerStore.fromJson(targetJson);
       expect(deserializedEncointerStore.toJson(), targetJson);
+
+      var cachedEncointerStore = await root.loadEncointerCache(root.encointerCacheKey(unitTestEndpoint.info));
+      expect(cachedEncointerStore.toJson(), targetJson);
     });
 
     test('purging encointer-store works and initializing new works', () async {
@@ -88,7 +91,7 @@ void main() {
       root.purgeEncointerCache(unitTestEndpoint.info);
       expect(
         await root.localStorage.getObject(root.encointerCacheKey(unitTestEndpoint.info)),
-        {},
+        null,
       );
 
       // should initialize a new encointer store
