@@ -27,7 +27,6 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   String _cryptoType = '';
   String _derivePath = '';
   bool _submitting = false;
-  Stage _stage = Stage.import;
 
   final TextEditingController _nameCtrl = new TextEditingController();
 
@@ -78,7 +77,6 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
                   child: Text(I18n.of(context).translationsForLocale().home.ok),
                   onPressed: () {
                     setState(() {
-                      _stage = Stage.import;
                       _submitting = false;
                     });
                     Navigator.of(context).pop();
@@ -179,27 +177,14 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text(I18n.of(context).translationsForLocale().home.accountImport),
-          leading: _stage == Stage.createPin
-              ? IconButton(
-                  icon: Icon(Icons.arrow_back_ios),
-                  onPressed: () {
-                    setState(() {
-                      _stage = Stage.import;
-                    });
-                  },
-                )
-              : null // null means the regular pack button is used leading back to the entry page
-          ),
+      appBar: AppBar(title: Text(I18n.of(context).translationsForLocale().home.accountImport)),
       body: SafeArea(
-        child: !_submitting ? _getImportOrPinForm() : Center(child: CupertinoActivityIndicator()),
+        child: !_submitting ? _getImportForm() : Center(child: CupertinoActivityIndicator()),
       ),
     );
   }
 
-  Widget _getImportOrPinForm() {
-    if (_stage == Stage.import) {
+  Widget _getImportForm() {
       return ImportAccountForm(store, (Map<String, dynamic> data) {
         setState(() {
           _keyType = data['keyType'];
@@ -208,18 +193,11 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         });
 
         if (store.account.isFirstAccount) {
-          setState(() {
-            _stage = Stage.createPin;
-          });
+          Navigator.pushNamed(context, CreatePinPage.route, arguments: CreatePinPageParams(_importAccount));
         } else {
           store.account.setNewAccountPin(store.settings.cachedPin);
           _importAccount();
         }
       });
-    } else {
-      return CreatePinPage(store, importAccount: _importAccount);
     }
-  }
 }
-
-enum Stage { import, createPin }
