@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/page/account/create/createPinForm.dart';
+import 'package:encointer_wallet/page/account/create/createPinPage.dart';
 import 'package:encointer_wallet/page/account/import/importAccountForm.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -217,7 +217,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         }
       });
     } else {
-      return CreatePinForm(onSubmit: _importAccount, store: store);
+      return CreatePinPage(store, importAccount: _importAccount);
     }
   }
 }
