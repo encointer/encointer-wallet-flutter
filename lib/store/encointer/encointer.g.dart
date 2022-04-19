@@ -102,18 +102,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   dynamic get currentPhaseDuration => (_$currentPhaseDurationComputed ??=
           Computed<dynamic>(() => super.currentPhaseDuration, name: '_EncointerStore.currentPhaseDuration'))
       .value;
-  Computed<BalanceEntry> _$communityBalanceEntryComputed;
-
-  @override
-  BalanceEntry get communityBalanceEntry => (_$communityBalanceEntryComputed ??=
-          Computed<BalanceEntry>(() => super.communityBalanceEntry, name: '_EncointerStore.communityBalanceEntry'))
-      .value;
-  Computed<double> _$communityBalanceComputed;
-
-  @override
-  double get communityBalance => (_$communityBalanceComputed ??=
-          Computed<double>(() => super.communityBalance, name: '_EncointerStore.communityBalance'))
-      .value;
   Computed<dynamic> _$communitiesContainsChosenCidComputed;
 
   @override
@@ -142,6 +130,18 @@ mixin _$EncointerStore on _EncointerStore, Store {
   @override
   dynamic get account =>
       (_$accountComputed ??= Computed<dynamic>(() => super.account, name: '_EncointerStore.account')).value;
+  Computed<BalanceEntry> _$communityBalanceEntryComputed;
+
+  @override
+  BalanceEntry get communityBalanceEntry => (_$communityBalanceEntryComputed ??=
+          Computed<BalanceEntry>(() => super.communityBalanceEntry, name: '_EncointerStore.communityBalanceEntry'))
+      .value;
+  Computed<double> _$communityBalanceComputed;
+
+  @override
+  double get communityBalance => (_$communityBalanceComputed ??=
+          Computed<double>(() => super.communityBalance, name: '_EncointerStore.communityBalance'))
+      .value;
   Computed<bool> _$showStartCeremonyButtonComputed;
 
   @override
@@ -259,21 +259,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
-  final _$communityStoresAtom = Atom(name: '_EncointerStore.communityStores');
-
-  @override
-  ObservableMap<String, CommunityStore> get communityStores {
-    _$communityStoresAtom.reportRead();
-    return super.communityStores;
-  }
-
-  @override
-  set communityStores(ObservableMap<String, CommunityStore> value) {
-    _$communityStoresAtom.reportWrite(value, super.communityStores, () {
-      super.communityStores = value;
-    });
-  }
-
   final _$accountStoresAtom = Atom(name: '_EncointerStore.accountStores');
 
   @override
@@ -289,34 +274,40 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
+  final _$initCommunityStoreAsyncAction = AsyncAction('_EncointerStore.initCommunityStore');
+
+  @override
+  Future<void> initCommunityStore(CommunityIdentifier cid, String address) {
+    return _$initCommunityStoreAsyncAction.run(() => super.initCommunityStore(cid, address));
+  }
+
   final _$_EncointerStoreActionController = ActionController(name: '_EncointerStore');
 
   @override
-  void initCommunityStore(CommunityIdentifier cid, String address) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.initCommunityStore');
+  void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunityIdentifiers');
     try {
-      return super.initCommunityStore(cid, address);
+      return super.setCommunityIdentifiers(cids);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void initEncointerAccountStore(String address) {
-    final _$actionInfo =
-        _$_EncointerStoreActionController.startAction(name: '_EncointerStore.initEncointerAccountStore');
+  void setCommunities(List<CidName> c) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunities');
     try {
-      return super.initEncointerAccountStore(address);
+      return super.setCommunities(c);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void initBazaarStore(CommunityIdentifier cid) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.initBazaarStore');
+  void setChosenCid([CommunityIdentifier cid]) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setChosenCid');
     try {
-      return super.initBazaarStore(cid);
+      return super.setChosenCid(cid);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }
@@ -364,30 +355,21 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunityIdentifiers');
+  Future<void> initEncointerAccountStore(String address) {
+    final _$actionInfo =
+        _$_EncointerStoreActionController.startAction(name: '_EncointerStore.initEncointerAccountStore');
     try {
-      return super.setCommunityIdentifiers(cids);
+      return super.initEncointerAccountStore(address);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void setCommunities(List<CidName> c) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunities');
+  Future<void> initBazaarStore(CommunityIdentifier cid) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.initBazaarStore');
     try {
-      return super.setCommunities(c);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setChosenCid([CommunityIdentifier cid]) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setChosenCid');
-    try {
-      return super.setChosenCid(cid);
+      return super.initBazaarStore(cid);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }
@@ -403,16 +385,15 @@ communityIdentifiers: ${communityIdentifiers},
 communities: ${communities},
 chosenCid: ${chosenCid},
 bazaarStores: ${bazaarStores},
-communityStores: ${communityStores},
 accountStores: ${accountStores},
 currentPhaseDuration: ${currentPhaseDuration},
-communityBalanceEntry: ${communityBalanceEntry},
-communityBalance: ${communityBalance},
 communitiesContainsChosenCid: ${communitiesContainsChosenCid},
 bazaar: ${bazaar},
 community: ${community},
 communityAccount: ${communityAccount},
 account: ${account},
+communityBalanceEntry: ${communityBalanceEntry},
+communityBalance: ${communityBalance},
 showStartCeremonyButton: ${showStartCeremonyButton},
 showTwoBoxes: ${showTwoBoxes}
     ''';

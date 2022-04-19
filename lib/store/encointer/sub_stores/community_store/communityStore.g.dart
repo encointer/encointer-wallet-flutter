@@ -154,7 +154,7 @@ mixin _$CommunityStore on _CommunityStore, Store {
   final _$_CommunityStoreActionController = ActionController(name: '_CommunityStore');
 
   @override
-  void initCommunityAccountStore(String address) {
+  Future<void> initCommunityAccountStore(String address) {
     final _$actionInfo =
         _$_CommunityStoreActionController.startAction(name: '_CommunityStore.initCommunityAccountStore');
     try {

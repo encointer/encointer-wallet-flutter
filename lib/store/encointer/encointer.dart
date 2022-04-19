@@ -281,24 +281,25 @@ abstract class _EncointerStore with Store {
   // -- init functions for sub-stores
 
   @action
-  void initCommunityStore(CommunityIdentifier cid, String address) {
+  Future<void> initCommunityStore(CommunityIdentifier cid, String address) async {
     var cidFmt = cid.toFmtString();
     if (!communityStores.containsKey(cidFmt)) {
       _log("Adding new communityStore for cid: ${cid.toFmtString()}");
 
       var communityStore = CommunityStore(network, cid);
       communityStore.cacheFn = cacheFn;
-      communityStore.initCommunityAccountStore(address);
+      await communityStore.initCommunityAccountStore(address);
 
       communityStores[cidFmt] = communityStore;
-      writeToCache();
+      return writeToCache();
     } else {
       _log("Don't add already existing communityAccountStore for cid: ${cid.toFmtString()}");
+      return null;
     }
   }
 
   @action
-  void initEncointerAccountStore(String address) {
+  Future<void> initEncointerAccountStore(String address) {
     if (!accountStores.containsKey(address)) {
       _log("Adding new encointerAccountStore for address: $address");
 
@@ -306,14 +307,15 @@ abstract class _EncointerStore with Store {
       encointerAccountStore.cacheFn = cacheFn;
 
       accountStores[address] = encointerAccountStore;
-      writeToCache();
+      return writeToCache();
     } else {
       _log("Don't add already existing encointerAccountStore for address: $address");
+      return null;
     }
   }
 
   @action
-  void initBazaarStore(CommunityIdentifier cid) {
+  Future<void> initBazaarStore(CommunityIdentifier cid) {
     var cidFmt = cid.toFmtString();
     if (!bazaarStores.containsKey(cidFmt)) {
       _log("Adding new bazaarStore for cid: ${cid.toFmtString()}");
@@ -322,9 +324,10 @@ abstract class _EncointerStore with Store {
       bazaarStore.cacheFn = cacheFn;
 
       bazaarStores[cidFmt] = bazaarStore;
-      writeToCache();
+      return writeToCache();
     } else {
       _log("Don't add already existing bazaarStore for cid: ${cid.toFmtString()}");
+      return null;
     }
   }
 
