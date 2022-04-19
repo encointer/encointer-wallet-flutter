@@ -132,6 +132,13 @@ abstract class _AppStore with Store {
     }
   }
 
+  Future<void> addAccount(Map<String, dynamic> acc, String password, String address) {
+    return Future.wait([
+      account.addAccount(acc, password),
+      encointer.initEncointerAccountStore(address),
+    ]);
+  }
+
   /// Loads all account associated data.
   ///
   /// Should be used whenever one switches to a new account. This function needs to be awaited most of the time.

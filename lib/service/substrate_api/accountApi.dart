@@ -324,7 +324,3 @@ class AccountApi {
     return res;
   }
 }
-
-_log(String msg) {
-  print("[AccountApi] $msg");
-}

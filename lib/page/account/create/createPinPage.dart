@@ -44,8 +44,8 @@ class _CreatePinPageState extends State<CreatePinPage> {
       return;
     }
 
-    await store.account.addAccount(acc, store.account.newAccount.password);
-    webApi.account.encodeAddress([acc['pubKey']]);
+    var newAccountAddresses = await webApi.account.encodeAddress([acc['pubKey']]);
+    await store.addAccount(acc, store.account.newAccount.password, newAccountAddresses[0]);
 
     await store.loadAccountCache();
 
