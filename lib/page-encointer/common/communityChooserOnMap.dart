@@ -1,14 +1,14 @@
 import 'dart:convert';
 
 import 'package:dart_geohash/dart_geohash.dart';
+import 'package:encointer_wallet/page-encointer/common/encointerMap.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import "package:latlong2/latlong.dart";
-import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:encointer_wallet/page-encointer/common/encointerMap.dart';
 
 class CommunityChooserOnMap extends StatelessWidget {
   final AppStore store;
@@ -41,6 +41,7 @@ class CommunityChooserOnMap extends StatelessWidget {
     if (store.encointer.communities != null) {
       for (num index = 0; index < store.encointer.communities.length; index++) {
         CidName community = store.encointer.communities[index];
+        _log("Preparing marker with index: $index");
         markers.add(
           Marker(
             // marker is not a widget, hence test_driver cannot find it (it can find it in the Icon inside, though).
@@ -130,4 +131,8 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
       ),
     );
   }
+}
+
+_log(String msg) {
+  print("[communityChooserOnMap] $msg");
 }

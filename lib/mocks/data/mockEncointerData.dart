@@ -10,7 +10,7 @@ const String buendnerBock = 'Bündner Bock';
 const String zul = 'ZUL';
 CommunityIdentifier cid = CommunityIdentifier.fromFmtString('gbsuv7YXq9G');
 CommunityIdentifier cid2 = CommunityIdentifier.fromFmtString('hbsuv7YXq9G');
-CommunityIdentifier cid3 = CommunityIdentifier.fromFmtString('ibsuv7YXq9G');
+CommunityIdentifier cid3 = CommunityIdentifier.fromFmtString('dbsuv7YXq9G');
 
 List<CommunityIdentifier> testCommunityIdentifiers = [
   cid,
@@ -21,7 +21,7 @@ List<CommunityIdentifier> testCommunityIdentifiers = [
 List<CidName> testCommunities = [
   new CidName(cid, zueriLoi),
   new CidName(cid2, bernBaer),
-  new CidName(cid, buendnerBock),
+  new CidName(cid3, buendnerBock),
 ];
 
 Map<int, CommunityReputation> testReputations = {
