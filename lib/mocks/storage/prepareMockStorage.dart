@@ -11,15 +11,14 @@ abstract class PrepareMockStorage {
   static void init(AppStore store) {
     store.encointer.setCurrentPhase(initialPhase);
     store.encointer.setCommunityIdentifiers(testCommunityIdentifiers);
-    store.encointer.communityAccount.addBalanceEntry(cid, BalanceEntry.fromJson(balanceEntry));
     store.encointer.setCommunities(testCommunities);
-    store.encointer.community.setDemurrage(demurrage);
     store.chain.setLatestHeader(Header.fromJson(header));
-    store.encointer.community.setCommunityMetadata(CommunityMetadata.fromJson(communityMetadata));
   }
 
   static void getMetadata(AppStore store) {
     store.encointer.community.setCommunityMetadata(CommunityMetadata.fromJson(communityMetadata));
+    store.encointer.community.setDemurrage(demurrage);
+    store.encointer.communityAccount.addBalanceEntry(cid, BalanceEntry.fromJson(balanceEntry));
   }
 
   static void unregisteredParticipant(AppStore store) {
