@@ -17,6 +17,27 @@ part 'encointer.g.dart';
 /// Mobx-Store containing all encointer specific data.
 ///
 /// Data specific to a community and/or account are kept in sub-stores.
+///
+/// ### Structure:
+///               EncointerStore
+///              /    |       \
+///   CommunitySt.  BazaarSt.  EncointerAccountSt.
+///        |
+///   CommunityAccountSt.
+///
+/// Where CommunityStores and BazaarStores exist per Community. The `EncointerAccountStore` contains data specific
+/// to an account, but across all communities. Finally, the `CommunityAccountStore` contains data specific to and
+/// account **and** community.
+///
+/// ### Caching and Serialization
+/// The stores have been designed such that all data fields are serializable. This facilitates caching the entire
+/// encointer store tree with one cache call.
+///
+/// ### Initialization
+/// The non-data fields, e.g., `_cacheFn` and `_rootStore` can't be serialized, and can therefore not be mandatory
+/// constructor parameters, implying they need to be initialized by other means. Such fields should be private fields
+/// and shall **only** be settable by the `initStore` method. This prevents forgetting to set fields, which are added
+/// later to the store.
 @JsonSerializable(explicitToJson: true)
 class EncointerStore extends _EncointerStore with _$EncointerStore {
   EncointerStore(String network) : super(network);
