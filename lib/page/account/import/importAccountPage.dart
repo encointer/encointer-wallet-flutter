@@ -89,7 +89,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         );
         return;
       }
-      _checkAccountDuplicate(acc);
+      await _checkAccountDuplicate(acc);
       return;
     }
 
@@ -153,7 +153,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         );
       }
     } else {
-      _saveAccount(acc);
+      return _saveAccount(acc);
     }
   }
 
