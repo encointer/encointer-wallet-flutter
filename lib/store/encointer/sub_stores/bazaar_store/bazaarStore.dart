@@ -27,7 +27,7 @@ abstract class _BazaarStore with Store {
 
   /// Function that writes the store to local storage.
   @JsonKey(ignore: true)
-  Future<void> Function() cacheFn;
+  Future<void> Function() _cacheFn;
 
   /// The network this store belongs to.
   final String network;
@@ -42,10 +42,10 @@ abstract class _BazaarStore with Store {
   @action
   void setBusinessRegistry(List<AccountBusinessTuple> accBusinesses) {
     businessRegistry = ObservableList.of(accBusinesses);
-    cacheFn();
+    _cacheFn();
   }
 
   void initStore(Function cacheFn) {
-    this.cacheFn = cacheFn;
+    this._cacheFn = cacheFn;
   }
 }

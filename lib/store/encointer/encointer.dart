@@ -29,7 +29,7 @@ abstract class _EncointerStore with Store {
   _EncointerStore(this.network);
 
   @JsonKey(ignore: true)
-  AppStore rootStore;
+  AppStore _rootStore;
 
   // Note: In synchronous code, every modification of an @observable is tracked by mobx and
   // fires a reaction. However, modifications in asynchronous code must be wrapped in
@@ -40,12 +40,8 @@ abstract class _EncointerStore with Store {
   // declared as `ObservableList/-Map`.
 
   /// Caches the store to local storage.
-  ///
-  /// The function itself is not serialized to json, and therefore not stored in the cache itself.
-  /// Hence, after loading the store from cache this needs to set with `setCache` to propagate the function
-  /// to the sub-stores.
   @JsonKey(ignore: true)
-  Future<void> Function() cacheFn;
+  Future<void> Function() _cacheFn;
 
   /// The encointer network this store belongs to
   final String network;
@@ -114,13 +110,13 @@ abstract class _EncointerStore with Store {
   /// The `CommunityAccountStore` for the currently chosen community and account.
   @computed
   get communityAccount {
-    return community != null ? community.communityAccountStores[rootStore.account.currentAddress] : null;
+    return community != null ? community.communityAccountStores[_rootStore.account.currentAddress] : null;
   }
 
   /// The `EncointerAccountStore` for the currently chosen account.
   @computed
   get account {
-    return accountStores[rootStore.account.currentAddress];
+    return accountStores[_rootStore.account.currentAddress];
   }
 
   // -- computed values derived from sub-stores
@@ -137,8 +133,8 @@ abstract class _EncointerStore with Store {
 
   double applyDemurrage(BalanceEntry entry) {
     double res;
-    if (rootStore.chain.latestHeaderNumber != null && entry != null && community.demurrage != null) {
-      int elapsed = rootStore.chain.latestHeaderNumber - entry.lastUpdate;
+    if (_rootStore.chain.latestHeaderNumber != null && entry != null && community.demurrage != null) {
+      int elapsed = _rootStore.chain.latestHeaderNumber - entry.lastUpdate;
       double exponent = -community.demurrage * elapsed;
       res = entry.principal * pow(e, exponent);
     }
@@ -173,17 +169,17 @@ abstract class _EncointerStore with Store {
       writeToCache();
 
       if (cid != null) {
-        initCommunityStore(cid, rootStore.account.currentAddress);
+        initCommunityStore(cid, _rootStore.account.currentAddress);
         initBazaarStore(cid);
       }
     }
 
-    if (rootStore.settings.endpointIsNoTee) {
+    if (_rootStore.settings.endpointIsNoTee) {
       webApi.encointer.subscribeBusinessRegistry();
     }
 
     // update depending values without awaiting
-    if (!rootStore.settings.loading) {
+    if (!_rootStore.settings.loading) {
       webApi.encointer.getCommunityData();
     }
   }
@@ -221,18 +217,18 @@ abstract class _EncointerStore with Store {
       case CeremonyPhase.REGISTERING:
         webApi.encointer.getMeetupTime();
         if (chosenCid != null) {
-          webApi.encointer.getAggregatedAccountData(chosenCid, rootStore.account.currentAddress);
+          webApi.encointer.getAggregatedAccountData(chosenCid, _rootStore.account.currentAddress);
         }
         webApi.encointer.getReputations();
         break;
       case CeremonyPhase.ASSIGNING:
         if (chosenCid != null) {
-          webApi.encointer.getAggregatedAccountData(chosenCid, rootStore.account.currentAddress);
+          webApi.encointer.getAggregatedAccountData(chosenCid, _rootStore.account.currentAddress);
         }
         break;
       case CeremonyPhase.ATTESTING:
         if (chosenCid != null) {
-          webApi.encointer.getAggregatedAccountData(chosenCid, rootStore.account.currentAddress);
+          webApi.encointer.getAggregatedAccountData(chosenCid, _rootStore.account.currentAddress);
         }
         break;
     }
@@ -258,12 +254,14 @@ abstract class _EncointerStore with Store {
     }
   }
 
-  /// Initialize the store.
+  /// Initialize the store and the sub-store.
   ///
-  /// This is necessary because the stores can't serialize certain fields.
+  /// Should always be called after creating a store to ensure full functionality.
+  ///
+  /// This is necessary because the stores can't serialize certain fields, and they
   void initStore(AppStore root, Function cacheFn) {
-    this.rootStore = root;
-    this.cacheFn = cacheFn;
+    this._rootStore = root;
+    this._cacheFn = cacheFn;
 
     accountStores.forEach((cid, store) => store.initStore(cacheFn));
     bazaarStores.forEach((cid, store) => store.initStore(cacheFn));
@@ -271,8 +269,8 @@ abstract class _EncointerStore with Store {
   }
 
   Future<void> writeToCache() {
-    if (cacheFn != null) {
-      return cacheFn();
+    if (_cacheFn != null) {
+      return _cacheFn();
     } else {
       return null;
     }
@@ -287,8 +285,7 @@ abstract class _EncointerStore with Store {
       _log("Adding new communityStore for cid: ${cid.toFmtString()}");
 
       var communityStore = CommunityStore(network, cid);
-      communityStore.applyDemurrage = applyDemurrage;
-      communityStore.cacheFn = cacheFn;
+      communityStore.initStore(_cacheFn, applyDemurrage);
       await communityStore.initCommunityAccountStore(address);
 
       communityStores[cidFmt] = communityStore;
@@ -305,7 +302,7 @@ abstract class _EncointerStore with Store {
       _log("Adding new encointerAccountStore for address: $address");
 
       var encointerAccountStore = EncointerAccountStore(network, address);
-      encointerAccountStore.cacheFn = cacheFn;
+      encointerAccountStore.initStore(_cacheFn);
 
       accountStores[address] = encointerAccountStore;
       return writeToCache();
@@ -322,7 +319,7 @@ abstract class _EncointerStore with Store {
       _log("Adding new bazaarStore for cid: ${cid.toFmtString()}");
 
       var bazaarStore = BazaarStore(network, cid);
-      bazaarStore.cacheFn = cacheFn;
+      bazaarStore.initStore(_cacheFn);
 
       bazaarStores[cidFmt] = bazaarStore;
       return writeToCache();

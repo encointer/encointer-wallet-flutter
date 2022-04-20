@@ -30,7 +30,7 @@ abstract class _EncointerAccountStore with Store {
   _EncointerAccountStore(this.network, this.address);
 
   @JsonKey(ignore: true)
-  Future<void> Function() cacheFn;
+  Future<void> Function() _cacheFn;
 
   /// The network this store belongs to.
   final String network;
@@ -69,20 +69,20 @@ abstract class _EncointerAccountStore with Store {
   void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
     _log("balanceEntry $balanceEntry added to cid $cid added");
     balanceEntries[cid.toFmtString()] = balanceEntry;
-    cacheFn();
+    writeToCache();
   }
 
   @action
   void setReputations(Map<int, CommunityReputation> reps) {
     reputations = reps;
-    cacheFn();
+    writeToCache();
   }
 
   @action
   void purgeReputations() {
     if (reputations != null) {
       reputations.clear();
-      cacheFn();
+      writeToCache();
     }
   }
 
@@ -116,12 +116,20 @@ abstract class _EncointerAccountStore with Store {
     }
 
     if (needCache && txsTransfer.length > 0) {
-      cacheFn();
+      writeToCache();
     }
   }
 
   void initStore(Function cacheFn) {
-    this.cacheFn = cacheFn;
+    this._cacheFn = cacheFn;
+  }
+
+  Future<void> writeToCache() {
+    if (_cacheFn != null) {
+      return _cacheFn();
+    } else {
+      return null;
+    }
   }
 }
 

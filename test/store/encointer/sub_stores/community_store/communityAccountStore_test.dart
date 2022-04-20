@@ -69,7 +69,7 @@ void main() {
       );
       communityAccountStore.participantType = ParticipantType.Bootstrapper;
 
-      communityAccountStore.cacheFn = () => localStorage.setObject("hello", communityAccountStore.toJson());
+      communityAccountStore.initStore(() => localStorage.setObject("hello", communityAccountStore.toJson()));
 
       communityAccountStore.setMeetup(Meetup(2, 3, 10, [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]));
 

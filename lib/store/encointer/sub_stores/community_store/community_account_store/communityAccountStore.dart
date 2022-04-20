@@ -30,7 +30,7 @@ abstract class _CommunityAccountStore with Store {
 
   /// Function that writes the store to local storage.
   @JsonKey(ignore: true)
-  Future<void> Function() cacheFn;
+  Future<void> Function() _cacheFn;
 
   /// The network this store belongs to.
   final String network;
@@ -107,12 +107,12 @@ abstract class _CommunityAccountStore with Store {
   }
 
   void initStore(Function cacheFn) {
-    this.cacheFn = cacheFn;
+    this._cacheFn = cacheFn;
   }
 
   Future<void> writeToCache() {
-    if (cacheFn != null) {
-      return cacheFn();
+    if (_cacheFn != null) {
+      return _cacheFn();
     } else {
       return null;
     }

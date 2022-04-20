@@ -31,13 +31,13 @@ abstract class _CommunityStore with Store {
   _CommunityStore(this.network, this.cid);
 
   @JsonKey(ignore: true)
-  Future<void> Function() cacheFn;
+  Future<void> Function() _cacheFn;
 
   /// Applies demurrage to the `BalanceEntry`
   ///
   /// It is initialized as a field to prevent a cyclic dependency with the rootStore.
   @JsonKey(ignore: true)
-  double Function(BalanceEntry) applyDemurrage;
+  double Function(BalanceEntry) _applyDemurrage;
 
   final String network;
 
@@ -70,13 +70,16 @@ abstract class _CommunityStore with Store {
   @observable
   ObservableMap<String, CommunityAccountStore> communityAccountStores = new ObservableMap();
 
+  get applyDemurrage => _applyDemurrage;
+
   @action
   Future<void> initCommunityAccountStore(String address) {
     if (!communityAccountStores.containsKey(address)) {
       _log("Adding new communityAccountStore for cid: ${cid.toFmtString()} and account: $address");
 
       var store = CommunityAccountStore(network, cid, address);
-      store.cacheFn = cacheFn;
+      store.initStore(_cacheFn);
+
       communityAccountStores[address] = store;
       return writeToCache();
     } else {
@@ -135,15 +138,15 @@ abstract class _CommunityStore with Store {
   }
 
   void initStore(Function cacheFn, double Function(BalanceEntry) applyDemurrage) {
-    this.cacheFn = cacheFn;
-    this.applyDemurrage = applyDemurrage;
+    this._cacheFn = cacheFn;
+    this._applyDemurrage = applyDemurrage;
 
     communityAccountStores.forEach((_, store) => store.initStore(cacheFn));
   }
 
   Future<void> writeToCache() {
-    if (cacheFn != null) {
-      return cacheFn();
+    if (_cacheFn != null) {
+      return _cacheFn();
     } else {
       return null;
     }
