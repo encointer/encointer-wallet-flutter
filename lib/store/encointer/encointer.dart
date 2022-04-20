@@ -284,7 +284,7 @@ abstract class _EncointerStore with Store {
   /// Initialize the store and the sub-stores.
   ///
   /// Should always be called after creating a store to ensure full functionality.
-  Future<void> initStore(AppStore root, Function cacheFn) {
+  void initStore(AppStore root, Function cacheFn) {
     this._rootStore = root;
     this._cacheFn = cacheFn;
 
@@ -306,18 +306,6 @@ abstract class _EncointerStore with Store {
     accountStores.forEach((cid, store) => store.initStore(cacheFn));
     bazaarStores.forEach((cid, store) => store.initStore(cacheFn));
     communityStores.forEach((cid, store) => store.initStore(cacheFn, applyDemurrage));
-
-    // The below code is only needed when migrating from older app versions.
-    var futures = [initEncointerAccountStore(_rootStore.account.currentAddress, shouldCache: false)];
-
-    if (chosenCid != null) {
-      futures.addAll([
-        initBazaarStore(chosenCid, shouldCache: false),
-        initCommunityStore(chosenCid, _rootStore.account.currentAddress, shouldCache: false)
-      ]);
-    }
-
-    return Future.wait(futures);
   }
 
   Future<void> writeToCache() {
@@ -379,6 +367,23 @@ abstract class _EncointerStore with Store {
       _log("Don't add already existing bazaarStore for cid: ${cid.toFmtString()}");
       return Future.value(null);
     }
+  }
+
+  /// The below code is only needed when migrating from older app versions.
+  ///
+  /// Because of the SS58-prefix this needs to be called after the `AccountApi.initAccounts() call.
+  /// If the stores exist already, this is a no-op.
+  Future<void> initStoresForLegacyCache() {
+    var futures = [initEncointerAccountStore(_rootStore.account.currentAddress, shouldCache: false)];
+
+    if (chosenCid != null) {
+      futures.addAll([
+        initBazaarStore(chosenCid, shouldCache: false),
+        initCommunityStore(chosenCid, _rootStore.account.currentAddress, shouldCache: false)
+      ]);
+    }
+
+    return Future.wait(futures);
   }
 
   // ----- Computed values for ceremony box
