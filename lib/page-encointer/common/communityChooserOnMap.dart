@@ -136,4 +136,3 @@ LatLng coordinatesOf(CidName community) {
   GeoHash coordinates = GeoHash(utf8.decode(community.cid.geohash));
   return LatLng(coordinates.latitude(), coordinates.longitude());
 }
-
