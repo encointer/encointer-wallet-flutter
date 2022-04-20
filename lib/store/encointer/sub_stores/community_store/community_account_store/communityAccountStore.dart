@@ -64,6 +64,13 @@ abstract class _CommunityAccountStore with Store {
   bool get isRegistered => participantType != null;
 
   @action
+  void setParticipantType([ParticipantType type]) {
+    _log("Set participant type: ${participantType.toString()}");
+    this.participantType = type;
+    writeToCache();
+  }
+
+  @action
   void setMeetup(Meetup meetup) {
     _log("Set meetup: ${meetup.toJson()}");
     this.meetup = meetup;
