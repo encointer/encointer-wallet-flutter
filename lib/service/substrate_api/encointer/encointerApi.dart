@@ -28,7 +28,7 @@ import 'teeProxyApi.dart';
 ///
 /// NOTE: If the js-code was changed a rebuild of the application is needed to update the code.
 
-const aggregatedAccountDataRpc = "ceremonies_getAggregatedAccountData";
+const aggregatedAccountDataRpc = "encointer_getAggregatedAccountData";
 
 class EncointerApi {
   EncointerApi(this.jsApi, SubstrateDartApi dartApi)
@@ -109,7 +109,7 @@ class EncointerApi {
     store.encointer.phaseDurations = phaseDurations;
   }
 
-  /// Queries the rpc 'ceremonies_getAggregatedAccountData' with the dart api.
+  /// Queries the rpc 'encointer_getAggregatedAccountData' with the dart api.
   ///
   Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String account) async {
     try {
