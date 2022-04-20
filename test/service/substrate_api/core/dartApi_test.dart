@@ -9,7 +9,7 @@ void main() {
 
       await encointerApi.connect('ws://localhost:9944');
 
-      expect(encointerApi.rpcMethods.contains("ceremonies_getAggregatedAccountData"), true);
+      expect(encointerApi.rpcMethods.contains("encointer_getAggregatedAccountData"), true);
 
       await encointerApi.close();
     }, tags: encointerNodeE2E);
