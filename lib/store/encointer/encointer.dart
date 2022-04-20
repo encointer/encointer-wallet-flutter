@@ -123,7 +123,12 @@ abstract class _EncointerStore with Store {
 
   @computed
   BalanceEntry get communityBalanceEntry {
-    return chosenCid != null ? account.balanceEntries[chosenCid.toFmtString()] : null;
+    if (chosenCid != null) {
+      bool containsBalance = account?.balanceEntries?.containsKey(chosenCid.toFmtString()) ?? false;
+      return containsBalance ? account.balanceEntries[chosenCid.toFmtString()] : null;
+    } else {
+      return null;
+    }
   }
 
   @computed
