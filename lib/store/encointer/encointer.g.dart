@@ -109,27 +109,29 @@ mixin _$EncointerStore on _EncointerStore, Store {
       (_$communitiesContainsChosenCidComputed ??= Computed<dynamic>(() => super.communitiesContainsChosenCid,
               name: '_EncointerStore.communitiesContainsChosenCid'))
           .value;
-  Computed<dynamic> _$bazaarComputed;
+  Computed<BazaarStore> _$bazaarComputed;
 
   @override
-  dynamic get bazaar =>
-      (_$bazaarComputed ??= Computed<dynamic>(() => super.bazaar, name: '_EncointerStore.bazaar')).value;
-  Computed<dynamic> _$communityComputed;
+  BazaarStore get bazaar =>
+      (_$bazaarComputed ??= Computed<BazaarStore>(() => super.bazaar, name: '_EncointerStore.bazaar')).value;
+  Computed<CommunityStore> _$communityComputed;
 
   @override
-  dynamic get community =>
-      (_$communityComputed ??= Computed<dynamic>(() => super.community, name: '_EncointerStore.community')).value;
-  Computed<dynamic> _$communityAccountComputed;
+  CommunityStore get community =>
+      (_$communityComputed ??= Computed<CommunityStore>(() => super.community, name: '_EncointerStore.community'))
+          .value;
+  Computed<CommunityAccountStore> _$communityAccountComputed;
 
   @override
-  dynamic get communityAccount => (_$communityAccountComputed ??=
-          Computed<dynamic>(() => super.communityAccount, name: '_EncointerStore.communityAccount'))
+  CommunityAccountStore get communityAccount => (_$communityAccountComputed ??=
+          Computed<CommunityAccountStore>(() => super.communityAccount, name: '_EncointerStore.communityAccount'))
       .value;
-  Computed<dynamic> _$accountComputed;
+  Computed<EncointerAccountStore> _$accountComputed;
 
   @override
-  dynamic get account =>
-      (_$accountComputed ??= Computed<dynamic>(() => super.account, name: '_EncointerStore.account')).value;
+  EncointerAccountStore get account =>
+      (_$accountComputed ??= Computed<EncointerAccountStore>(() => super.account, name: '_EncointerStore.account'))
+          .value;
   Computed<BalanceEntry> _$communityBalanceEntryComputed;
 
   @override

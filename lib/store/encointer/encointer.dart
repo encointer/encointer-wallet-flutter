@@ -10,6 +10,7 @@ import 'package:mobx/mobx.dart';
 import '../../models/index.dart';
 import 'sub_stores/bazaar_store/bazaarStore.dart';
 import 'sub_stores/community_store/communityStore.dart';
+import 'sub_stores/community_store/community_account_store/communityAccountStore.dart';
 import 'sub_stores/encointer_account_store/encointerAccountStore.dart';
 
 part 'encointer.g.dart';
@@ -118,25 +119,25 @@ abstract class _EncointerStore with Store {
 
   /// The `BazaarStore` for the currently chosen community.
   @computed
-  get bazaar {
+  BazaarStore get bazaar {
     return chosenCid != null ? bazaarStores[chosenCid.toFmtString()] : null;
   }
 
   /// The `CommunityStore` for the currently chosen community.
   @computed
-  get community {
+  CommunityStore get community {
     return chosenCid != null ? communityStores[chosenCid.toFmtString()] : null;
   }
 
   /// The `CommunityAccountStore` for the currently chosen community and account.
   @computed
-  get communityAccount {
+  CommunityAccountStore get communityAccount {
     return community != null ? community.communityAccountStores[_rootStore.account.currentAddress] : null;
   }
 
   /// The `EncointerAccountStore` for the currently chosen account.
   @computed
-  get account {
+  EncointerAccountStore get account {
     return accountStores[_rootStore.account.currentAddress];
   }
 
