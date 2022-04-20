@@ -271,7 +271,7 @@ class EncointerApi {
         : await _teeProxy.balances.balance(cid, pubKey, store.settings.cachedPin);
 
     print("bEntryJson: ${bEntry.toString()}");
-    store.encointer.account.addBalanceEntry(cid, bEntry);
+    store.encointer.account?.addBalanceEntry(cid, bEntry);
   }
 
   Future<void> subscribeCurrentPhase() async {
@@ -315,7 +315,7 @@ class EncointerApi {
       _encointerBalanceChannel,
       (data) {
         BalanceEntry balance = BalanceEntry.fromJson(data);
-        store.encointer.account.addBalanceEntry(cid, balance);
+        store.encointer.account?.addBalanceEntry(cid, balance);
       },
     );
   }
