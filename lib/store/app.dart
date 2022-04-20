@@ -153,8 +153,9 @@ abstract class _AppStore with Store {
   /// Should be used whenever one switches to a new account. This function needs to be awaited most of the time.
   /// Otherwise, calling webApi queries when the cache has not finished loading might result in outdated or wrong data.
   /// E.g. not awaiting this call was the cause of #357.
-  Future<void> loadAccountCache() {
-    return Future.wait([assets.clearTxs(), assets.loadAccountCache()]);
+  Future<void> loadAccountCache() async{
+    await Future.wait([assets.clearTxs(), assets.loadAccountCache()]);
+    return encointer.initStoresForLegacyCache();
   }
 }
 
