@@ -137,6 +137,3 @@ LatLng coordinatesOf(CidName community) {
   return LatLng(coordinates.latitude(), coordinates.longitude());
 }
 
-_log(String msg) {
-  print("[communityChooserOnMap] $msg");
-}
