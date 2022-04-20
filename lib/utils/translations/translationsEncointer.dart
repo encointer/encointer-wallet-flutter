@@ -86,7 +86,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get claimsScannedDecodeFailed => 'Gescannte Behauptung konnte nicht dekodiert werden.';
   get claimsScannedNew => 'Neue Behauptung gescannt';
   get claimsScannedNOfM => "SCANNED_COUNT / TOTAL_COUNT gescannte Behauptungen";
-  get claimsSubmitDetail => 'Reiche AMOUNT Behauptungen für die letzte Zeremonie ein';ge
+  get claimsSubmitDetail => 'Reiche AMOUNT Behauptungen für die letzte Zeremonie ein';
   get communities => 'Gemeinschaften';
   get noCommunitiesAreYouOffline => 'Keine Gemeinschaften gefunden, du kannst später eine auswählen. Bist du offline?';
   get encointer => 'Encointer Zeremonie';
