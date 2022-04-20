@@ -280,11 +280,9 @@ abstract class _EncointerStore with Store {
     }
   }
 
-  /// Initialize the store and the sub-store.
+  /// Initialize the store and the sub-stores.
   ///
   /// Should always be called after creating a store to ensure full functionality.
-  ///
-  /// This is necessary because the stores can't serialize certain fields, and they
   void initStore(AppStore root, Function cacheFn) {
     this._rootStore = root;
     this._cacheFn = cacheFn;
