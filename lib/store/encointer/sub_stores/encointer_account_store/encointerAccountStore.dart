@@ -95,7 +95,7 @@ abstract class _EncointerAccountStore with Store {
   Future<void> setTransferTxs(List list, String address, {bool reset = false, needCache = true}) async {
     if (this.address != address) {
       _log("Tried to cached transfer tx's for wrong account. This is a bug.");
-      return null;
+      return Future.value(null);
     }
 
     List transfers = list.map((i) {
@@ -128,7 +128,7 @@ abstract class _EncointerAccountStore with Store {
     if (_cacheFn != null) {
       return _cacheFn();
     } else {
-      return null;
+      return Future.value(null);
     }
   }
 }

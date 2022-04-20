@@ -84,7 +84,7 @@ abstract class _CommunityStore with Store {
       return writeToCache();
     } else {
       _log("Don't add already existing communityAccountStore for cid: ${cid.toFmtString()} and account: $address");
-      return null;
+      return Future.value(null);
     }
   }
 
@@ -148,7 +148,7 @@ abstract class _CommunityStore with Store {
     if (_cacheFn != null) {
       return _cacheFn();
     } else {
-      return null;
+      return Future.value(null);
     }
   }
 }

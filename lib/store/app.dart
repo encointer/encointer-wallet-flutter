@@ -137,7 +137,7 @@ abstract class _AppStore with Store {
 
       return encointerStore;
     } else {
-      return null;
+      return Future.value(null);
     }
   }
 

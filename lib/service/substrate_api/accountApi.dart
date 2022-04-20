@@ -59,7 +59,7 @@ class AccountApi {
       return addresses;
     }
 
-    return null;
+    return Future.value(null);
   }
 
   /// decode addresses to publicKeys

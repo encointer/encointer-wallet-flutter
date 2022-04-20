@@ -308,10 +308,13 @@ abstract class _EncointerStore with Store {
     communityStores.forEach((cid, store) => store.initStore(cacheFn, applyDemurrage));
 
     // The below code is only needed when migrating from older app versions.
-    var futures = [initEncointerAccountStore(_rootStore.account.currentAddress)];
+    var futures = [initEncointerAccountStore(_rootStore.account.currentAddress, shouldCache: false)];
 
     if (chosenCid != null) {
-      futures.addAll([initBazaarStore(chosenCid), initCommunityStore(chosenCid, _rootStore.account.currentAddress)]);
+      futures.addAll([
+        initBazaarStore(chosenCid, shouldCache: false),
+        initCommunityStore(chosenCid, _rootStore.account.currentAddress, shouldCache: false)
+      ]);
     }
 
     return Future.wait(futures);
@@ -321,14 +324,14 @@ abstract class _EncointerStore with Store {
     if (_cacheFn != null) {
       return _cacheFn();
     } else {
-      return null;
+      return Future.value(null);
     }
   }
 
   // -- init functions for sub-stores
 
   @action
-  Future<void> initCommunityStore(CommunityIdentifier cid, String address) async {
+  Future<void> initCommunityStore(CommunityIdentifier cid, String address, {shouldCache = true}) async {
     var cidFmt = cid.toFmtString();
     if (!communityStores.containsKey(cidFmt)) {
       _log("Adding new communityStore for cid: ${cid.toFmtString()}");
@@ -338,15 +341,15 @@ abstract class _EncointerStore with Store {
       await communityStore.initCommunityAccountStore(address);
 
       communityStores[cidFmt] = communityStore;
-      return writeToCache();
+      return shouldCache ? writeToCache() : Future.value(null);
     } else {
-      _log("Don't add already existing communityAccountStore for cid: ${cid.toFmtString()}");
-      return null;
+      _log("Don't add already existing communityStore for cid: ${cid.toFmtString()}");
+      return Future.value(null);
     }
   }
 
   @action
-  Future<void> initEncointerAccountStore(String address) {
+  Future<void> initEncointerAccountStore(String address, {shouldCache = true}) {
     if (!accountStores.containsKey(address)) {
       _log("Adding new encointerAccountStore for: $address");
 
@@ -354,15 +357,15 @@ abstract class _EncointerStore with Store {
       encointerAccountStore.initStore(_cacheFn);
 
       accountStores[address] = encointerAccountStore;
-      return writeToCache();
+      return shouldCache ? writeToCache() : Future.value(null);
     } else {
       _log("Don't add already existing encointerAccountStore for address: $address");
-      return null;
+      return Future.value(null);
     }
   }
 
   @action
-  Future<void> initBazaarStore(CommunityIdentifier cid) {
+  Future<void> initBazaarStore(CommunityIdentifier cid, {shouldCache = true}) {
     var cidFmt = cid.toFmtString();
     if (!bazaarStores.containsKey(cidFmt)) {
       _log("Adding new bazaarStore for cid: ${cid.toFmtString()}");
@@ -371,10 +374,10 @@ abstract class _EncointerStore with Store {
       bazaarStore.initStore(_cacheFn);
 
       bazaarStores[cidFmt] = bazaarStore;
-      return writeToCache();
+      return shouldCache ? writeToCache() : Future.value(null);
     } else {
       _log("Don't add already existing bazaarStore for cid: ${cid.toFmtString()}");
-      return null;
+      return Future.value(null);
     }
   }
 

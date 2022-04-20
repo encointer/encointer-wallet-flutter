@@ -279,8 +279,8 @@ mixin _$EncointerStore on _EncointerStore, Store {
   final _$initCommunityStoreAsyncAction = AsyncAction('_EncointerStore.initCommunityStore');
 
   @override
-  Future<void> initCommunityStore(CommunityIdentifier cid, String address) {
-    return _$initCommunityStoreAsyncAction.run(() => super.initCommunityStore(cid, address));
+  Future<void> initCommunityStore(CommunityIdentifier cid, String address, {dynamic shouldCache = true}) {
+    return _$initCommunityStoreAsyncAction.run(() => super.initCommunityStore(cid, address, shouldCache: shouldCache));
   }
 
   final _$_EncointerStoreActionController = ActionController(name: '_EncointerStore');
@@ -357,21 +357,21 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  Future<void> initEncointerAccountStore(String address) {
+  Future<void> initEncointerAccountStore(String address, {dynamic shouldCache = true}) {
     final _$actionInfo =
         _$_EncointerStoreActionController.startAction(name: '_EncointerStore.initEncointerAccountStore');
     try {
-      return super.initEncointerAccountStore(address);
+      return super.initEncointerAccountStore(address, shouldCache: shouldCache);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  Future<void> initBazaarStore(CommunityIdentifier cid) {
+  Future<void> initBazaarStore(CommunityIdentifier cid, {dynamic shouldCache = true}) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.initBazaarStore');
     try {
-      return super.initBazaarStore(cid);
+      return super.initBazaarStore(cid, shouldCache: shouldCache);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }

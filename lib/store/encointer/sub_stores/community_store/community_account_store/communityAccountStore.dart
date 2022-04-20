@@ -121,7 +121,7 @@ abstract class _CommunityAccountStore with Store {
     if (_cacheFn != null) {
       return _cacheFn();
     } else {
-      return null;
+      return Future.value(null);
     }
   }
 }

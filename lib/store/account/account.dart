@@ -296,7 +296,7 @@ abstract class _AccountStore with Store {
     Map stored = await rootStore.localStorage.getSeeds(seedType);
     String encrypted = stored[pubKey];
     if (encrypted == null) {
-      return null;
+      return Future.value(null);
     }
     return FlutterAesEcbPkcs5.decryptString(encrypted, Fmt.passwordToEncryptKey(password));
   }

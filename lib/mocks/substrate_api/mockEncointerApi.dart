@@ -53,7 +53,7 @@ class MockApiEncointer extends EncointerApi {
 
   @override
   Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String account) {
-    return null;
+    return Future.value(null);
   }
 
   @override
@@ -92,12 +92,12 @@ class MockApiEncointer extends EncointerApi {
 
   @override
   Future<void> getCommunityMetadata() {
-    return null;
+    return Future.value(null);
   }
 
   @override
   Future<void> getCommunityData() {
-    return null;
+    return Future.value(null);
   }
 
   @override
@@ -107,6 +107,6 @@ class MockApiEncointer extends EncointerApi {
 
   @override
   Future<void> getBootstrappers() {
-    return null;
+    return Future.value(null);
   }
 }

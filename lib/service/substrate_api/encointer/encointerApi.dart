@@ -125,7 +125,7 @@ class EncointerApi {
       print("[EncointerApi]: Error getting aggregated account data ${e.toString()}");
     }
 
-    return null;
+    return Future.value(null);
   }
 
   /// Queries the Scheduler pallet: encointerScheduler.currentCeremonyIndex().
@@ -223,7 +223,7 @@ class EncointerApi {
 
     if (mLocation == null) {
       print("No meetup locations found, can't get meetup time.");
-      return null;
+      return Future.value(null);
     }
 
     int time = await jsApi
@@ -367,7 +367,7 @@ class EncointerApi {
     Map<int, CommunityReputation> reputations =
         Map.fromIterable(reputationsList, key: (cr) => cr[0], value: (cr) => CommunityReputation.fromJson(cr[1]));
 
-    store.encointer.account?.setReputations(reputations);
+    store.encointer.account.setReputations(reputations);
   }
 
   Future<dynamic> sendFaucetTx() async {
@@ -408,7 +408,7 @@ class EncointerApi {
     var cIndex = store.encointer.account.ceremonyIndexForProofOfAttendance;
 
     if (cIndex == null || cIndex == 0) {
-      return null;
+      return Future.value(null);
     }
 
     var cid = store.encointer.account.reputations[cIndex].communityIdentifier;
