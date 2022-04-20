@@ -45,7 +45,7 @@ abstract class _BazaarStore with Store {
     cacheFn();
   }
 
-  void setCacheFn(Function cacheFn) {
+  void initStore(Function cacheFn) {
     this.cacheFn = cacheFn;
   }
 }

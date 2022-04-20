@@ -19,14 +19,14 @@ part 'encointer.g.dart';
 /// Data specific to a community and/or account are kept in sub-stores.
 @JsonSerializable(explicitToJson: true)
 class EncointerStore extends _EncointerStore with _$EncointerStore {
-  EncointerStore(String network, {AppStore store}) : super(network, rootStore: store);
+  EncointerStore(String network) : super(network);
 
   factory EncointerStore.fromJson(Map<String, dynamic> json) => _$EncointerStoreFromJson(json);
   Map<String, dynamic> toJson() => _$EncointerStoreToJson(this);
 }
 
 abstract class _EncointerStore with Store {
-  _EncointerStore(this.network, {this.rootStore});
+  _EncointerStore(this.network);
 
   @JsonKey(ignore: true)
   AppStore rootStore;
@@ -258,16 +258,16 @@ abstract class _EncointerStore with Store {
     }
   }
 
-  /// Sets the cache function for the stores.
+  /// Initialize the store.
   ///
-  /// Note: This should always be called after loading the cache because the `cacheFn` is
-  /// not serialized.
-  void setCacheFn(Function cacheFn) {
+  /// This is necessary because the stores can't serialize certain fields.
+  void initStore(AppStore root, Function cacheFn) {
+    this.rootStore = root;
     this.cacheFn = cacheFn;
 
-    accountStores.forEach((cid, store) => store.setCacheFn(cacheFn));
-    bazaarStores.forEach((cid, store) => store.setCacheFn(cacheFn));
-    communityStores.forEach((cid, store) => store.setCacheFn(cacheFn));
+    accountStores.forEach((cid, store) => store.initStore(cacheFn));
+    bazaarStores.forEach((cid, store) => store.initStore(cacheFn));
+    communityStores.forEach((cid, store) => store.initStore(cacheFn, applyDemurrage));
   }
 
   Future<void> writeToCache() {

@@ -106,7 +106,7 @@ abstract class _CommunityAccountStore with Store {
     purgeMeetup();
   }
 
-  void setCacheFn(Function cacheFn) {
+  void initStore(Function cacheFn) {
     this.cacheFn = cacheFn;
   }
 

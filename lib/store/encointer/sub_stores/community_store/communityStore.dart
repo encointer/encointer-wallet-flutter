@@ -134,10 +134,11 @@ abstract class _CommunityStore with Store {
     communityAccountStores.forEach((key, value) => value.purgeCeremonySpecificState());
   }
 
-  void setCacheFn(Function cacheFn) {
+  void initStore(Function cacheFn, double Function(BalanceEntry) applyDemurrage) {
     this.cacheFn = cacheFn;
+    this.applyDemurrage = applyDemurrage;
 
-    communityAccountStores.forEach((_, store) => store.setCacheFn(cacheFn));
+    communityAccountStores.forEach((_, store) => store.initStore(cacheFn));
   }
 
   Future<void> writeToCache() {

@@ -16,8 +16,9 @@ void main() {
         mediterraneanTestCommunity,
       );
 
-      communityStore.setCacheFn(
+      communityStore.initStore(
         () => localStorage.setObject(communityStoreCacheKey, communityStore.toJson()),
+        null,
       );
 
       var testMetadata = CommunityMetadata(

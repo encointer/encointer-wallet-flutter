@@ -98,7 +98,7 @@ void main() {
       await root.init('_en');
       expect(
         await root.localStorage.getObject(root.encointerCacheKey(unitTestEndpoint.info)),
-        EncointerStore(unitTestEndpoint.info, store: root).toJson(),
+        EncointerStore(unitTestEndpoint.info).toJson(),
       );
     });
   });

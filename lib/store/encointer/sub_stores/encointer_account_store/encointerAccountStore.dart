@@ -120,7 +120,7 @@ abstract class _EncointerAccountStore with Store {
     }
   }
 
-  void setCacheFn(Function cacheFn) {
+  void initStore(Function cacheFn) {
     this.cacheFn = cacheFn;
   }
 }
