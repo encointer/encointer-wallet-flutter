@@ -107,13 +107,18 @@ class EncointerApi {
     store.encointer.phaseDurations = phaseDurations;
   }
 
-  /// Queries the rpc 'ceremonies_getAggregatedAccountData' with the dart api.
+  /// Queries the rpc 'encointer_getAggregatedAccountData' with the dart api.
   ///
-  Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String account) async {
+  Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String address) async {
     try {
-      AggregatedAccountData accountData = await _dartApi.getAggregatedAccountData(cid, account);
+      AggregatedAccountData accountData = await _dartApi.getAggregatedAccountData(cid, address);
 
       print("[EncointerApi]: AggregatedAccountData ${accountData.toString()}");
+
+      var encointerAccountStore = store.encointer.communityStores[cid.toFmtString()].communityAccountStores[address];
+
+      encointerAccountStore.setMeetup(accountData.personal.meetup);
+      encointerAccountStore.setParticipantType(accountData.personal.participantType);
 
       return accountData;
     } catch (e) {
