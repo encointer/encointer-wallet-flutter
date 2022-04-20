@@ -48,7 +48,7 @@ void main() {
       encointerStore.setChosenCid(testCid);
 
       var testCommunityStore = new CommunityStore(testNetwork, testCid);
-      testCommunityStore.initCommunityAccountStore(root.account.currentAddress);
+      await testCommunityStore.initCommunityAccountStore(root.account.currentAddress);
 
       Map<String, dynamic> targetJson = {
         "network": testNetwork,
