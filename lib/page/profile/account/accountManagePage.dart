@@ -6,7 +6,7 @@ import 'package:encointer_wallet/page/profile/contacts/accountSharePage.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/encointer/types/communities.dart';
+import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -79,45 +79,33 @@ class _AccountManagePageState extends State<AccountManagePage> {
     );
   }
 
-  List<Widget> _getBalances() {
+  Widget _getBalanceEntryListTile(String cidFmt, BalanceEntry entry) {
     final TextStyle h3 = Theme.of(context).textTheme.headline3;
-    CommunityMetadata cm = store.encointer.community?.metadata;
-    String name = cm != null ? cm.name : '';
-    String symbol = cm != null ? cm.symbol : '';
-    final String tokenView = Fmt.tokenView(symbol);
-    return store.encointer.account.balanceEntries.entries.map((i) {
-      if (cm != null) {
-        return ListTile(
-          contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
-          leading: CommunityIcon(
-            store: store,
-            icon: FutureBuilder<SvgPicture>(
-              future: webApi.ipfs.getCommunityIcon(store.encointer.community?.assetsCid),
-              builder: (_, AsyncSnapshot<SvgPicture> snapshot) {
-                if (snapshot.hasData) {
-                  return snapshot.data;
-                } else {
-                  return CupertinoActivityIndicator();
-                }
-              },
-            ),
-          ),
-          title: Text(name, style: h3),
-          subtitle: Text(tokenView, style: h3),
-          trailing: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ',
-                style: h3.copyWith(color: encointerGrey),
-              ),
-            ],
-          ),
-        );
-      } else
-        return Container();
-    }).toList();
+
+    var community = store.encointer.communityStores[cidFmt];
+
+    return ListTile(
+      contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
+      leading: CommunityIcon(
+        store: store,
+        icon: FutureBuilder<SvgPicture>(
+          future: webApi.ipfs.getCommunityIcon(community.assetsCid),
+          builder: (_, AsyncSnapshot<SvgPicture> snapshot) {
+            if (snapshot.hasData) {
+              return snapshot.data;
+            } else {
+              return CupertinoActivityIndicator();
+            }
+          },
+        ),
+      ),
+      title: Text(community.name, style: h3),
+      subtitle: Text(community.symbol, style: h3),
+      trailing: Text(
+        '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ', // Todo, this only displays the chosen balance currently
+        style: h3.copyWith(color: encointerGrey),
+      ),
+    );
   }
 
   void _showPasswordDialog(BuildContext context) {
@@ -249,7 +237,14 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     ],
                   ),
                 ),
-                Expanded(child: ListView(children: _getBalances())),
+                Expanded(
+                  child: ListView.builder(
+                      itemCount: store.encointer.account.balanceEntries.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        String community = store.encointer.account.balanceEntries.keys.elementAt(index);
+                        return _getBalanceEntryListTile(community, store.encointer.account.balanceEntries[community]);
+                      }),
+                ),
                 Container(
                   // width: double.infinity,
                   decoration: BoxDecoration(
