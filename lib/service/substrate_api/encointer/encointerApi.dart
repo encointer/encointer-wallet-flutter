@@ -28,7 +28,7 @@ import 'teeProxyApi.dart';
 ///
 /// NOTE: If the js-code was changed a rebuild of the application is needed to update the code.
 
-const aggregatedAccountDataRpc = "ceremonies_getAggregatedAccountData";
+const aggregatedAccountDataRpc = "encointer_getAggregatedAccountData";
 
 class EncointerApi {
   EncointerApi(this.jsApi, SubstrateDartApi dartApi)
