@@ -42,10 +42,18 @@ abstract class _BazaarStore with Store {
   @action
   void setBusinessRegistry(List<AccountBusinessTuple> accBusinesses) {
     businessRegistry = ObservableList.of(accBusinesses);
-    _cacheFn();
+    writeToCache();
   }
 
   void initStore(Function cacheFn) {
     this._cacheFn = cacheFn;
+  }
+
+  Future<void> writeToCache() {
+    if (_cacheFn != null) {
+      return _cacheFn();
+    } else {
+      return null;
+    }
   }
 }
