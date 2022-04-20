@@ -287,6 +287,21 @@ abstract class _EncointerStore with Store {
     this._rootStore = root;
     this._cacheFn = cacheFn;
 
+    // These are merely safety guards, and should never be needed. A null reference error occurred here only because
+    // a store was added in the development process after it has been written to cache. Hence, deserialization
+    // initialized it with null.
+    if (accountStores == null) {
+      accountStores = new ObservableMap();
+    }
+
+    if (bazaarStores == null) {
+      bazaarStores = new ObservableMap();
+    }
+
+    if (communityStores == null) {
+      communityStores = new ObservableMap();
+    }
+
     accountStores.forEach((cid, store) => store.initStore(cacheFn));
     bazaarStores.forEach((cid, store) => store.initStore(cacheFn));
     communityStores.forEach((cid, store) => store.initStore(cacheFn, applyDemurrage));
