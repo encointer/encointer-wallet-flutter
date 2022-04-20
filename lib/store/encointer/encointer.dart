@@ -307,8 +307,14 @@ abstract class _EncointerStore with Store {
     bazaarStores.forEach((cid, store) => store.initStore(cacheFn));
     communityStores.forEach((cid, store) => store.initStore(cacheFn, applyDemurrage));
 
-    // Only needed when migrating from older app versions.
-    return initEncointerAccountStore(_rootStore.account.currentAddress);
+    // The below code is only needed when migrating from older app versions.
+    var futures = [initEncointerAccountStore(_rootStore.account.currentAddress)];
+
+    if (chosenCid != null) {
+      futures.addAll([initBazaarStore(chosenCid), initCommunityStore(chosenCid, _rootStore.account.currentAddress)]);
+    }
+
+    return Future.wait(futures);
   }
 
   Future<void> writeToCache() {
