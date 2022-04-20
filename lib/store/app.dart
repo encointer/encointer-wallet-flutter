@@ -107,13 +107,13 @@ abstract class _AppStore with Store {
     } else {
       _log("Initializing new encointer store.");
       encointer = EncointerStore(networkInfo);
-      encointer.initStore(
+      await encointer.initStore(
         this,
         () => localStorage.setObject(encointerFinalCacheKey, encointer.toJson()),
       );
 
       // write the new store to cache.
-      encointer.writeToCache();
+      return encointer.writeToCache();
     }
   }
 
@@ -127,7 +127,7 @@ abstract class _AppStore with Store {
       // Cache the entire encointer store at once: Check if this is too expensive,
       // when many accounts/cids exist in store. But as the caching future is in general not awaited,
       // it should be fine.
-      encointerStore.initStore(
+      await encointerStore.initStore(
         this,
         () => localStorage.setObject(
           encointerFinalCacheKey,

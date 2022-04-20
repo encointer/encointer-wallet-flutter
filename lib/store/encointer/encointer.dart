@@ -283,7 +283,7 @@ abstract class _EncointerStore with Store {
   /// Initialize the store and the sub-stores.
   ///
   /// Should always be called after creating a store to ensure full functionality.
-  void initStore(AppStore root, Function cacheFn) {
+  Future<void> initStore(AppStore root, Function cacheFn) {
     this._rootStore = root;
     this._cacheFn = cacheFn;
 
@@ -305,6 +305,9 @@ abstract class _EncointerStore with Store {
     accountStores.forEach((cid, store) => store.initStore(cacheFn));
     bazaarStores.forEach((cid, store) => store.initStore(cacheFn));
     communityStores.forEach((cid, store) => store.initStore(cacheFn, applyDemurrage));
+
+    // Only needed when migrating from older app versions.
+    return initEncointerAccountStore(_rootStore.account.currentAddress);
   }
 
   Future<void> writeToCache() {
@@ -338,7 +341,7 @@ abstract class _EncointerStore with Store {
   @action
   Future<void> initEncointerAccountStore(String address) {
     if (!accountStores.containsKey(address)) {
-      _log("Adding new encointerAccountStore for address: $address");
+      _log("Adding new encointerAccountStore for: $address");
 
       var encointerAccountStore = EncointerAccountStore(network, address);
       encointerAccountStore.initStore(_cacheFn);
