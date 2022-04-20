@@ -84,6 +84,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
     var community = store.encointer.communityStores[cidFmt];
 
+    _log("_getBalanceEntryListTile: ${community?.toJson()}");
+
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
       leading: CommunityIcon(
@@ -239,7 +241,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                 ),
                 Expanded(
                   child: ListView.builder(
-                      itemCount: store.encointer.account.balanceEntries.length,
+                      itemCount: store.encointer.account?.balanceEntries?.length ?? 0,
                       itemBuilder: (BuildContext context, int index) {
                         String community = store.encointer.account.balanceEntries.keys.elementAt(index);
                         return _getBalanceEntryListTile(community, store.encointer.account.balanceEntries[community]);
@@ -365,4 +367,8 @@ class CommunityIcon extends StatelessWidget {
       ],
     );
   }
+}
+
+_log(String msg) {
+  print("[accountManagePage] $msg");
 }
