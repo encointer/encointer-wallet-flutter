@@ -11,9 +11,7 @@ CommunityStore _$CommunityStoreFromJson(Map<String, dynamic> json) {
     json['network'] as String,
     json['cid'] == null ? null : CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
   )
-    ..communityMetadata = json['communityMetadata'] == null
-        ? null
-        : CommunityMetadata.fromJson(json['communityMetadata'] as Map<String, dynamic>)
+    ..metadata = json['metadata'] == null ? null : CommunityMetadata.fromJson(json['metadata'] as Map<String, dynamic>)
     ..demurrage = (json['demurrage'] as num)?.toDouble()
     ..meetupTime = json['meetupTime'] as int
     ..bootstrappers = (json['bootstrappers'] as List)?.map((e) => e as String)?.toList()
@@ -31,7 +29,7 @@ CommunityStore _$CommunityStoreFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$CommunityStoreToJson(CommunityStore instance) => <String, dynamic>{
       'network': instance.network,
       'cid': instance.cid?.toJson(),
-      'communityMetadata': instance.communityMetadata?.toJson(),
+      'metadata': instance.metadata?.toJson(),
       'demurrage': instance.demurrage,
       'meetupTime': instance.meetupTime,
       'bootstrappers': instance.bootstrappers,
@@ -61,18 +59,18 @@ mixin _$CommunityStore on _CommunityStore, Store {
   String get assetsCid =>
       (_$assetsCidComputed ??= Computed<String>(() => super.assetsCid, name: '_CommunityStore.assetsCid')).value;
 
-  final _$communityMetadataAtom = Atom(name: '_CommunityStore.communityMetadata');
+  final _$metadataAtom = Atom(name: '_CommunityStore.metadata');
 
   @override
-  CommunityMetadata get communityMetadata {
-    _$communityMetadataAtom.reportRead();
-    return super.communityMetadata;
+  CommunityMetadata get metadata {
+    _$metadataAtom.reportRead();
+    return super.metadata;
   }
 
   @override
-  set communityMetadata(CommunityMetadata value) {
-    _$communityMetadataAtom.reportWrite(value, super.communityMetadata, () {
-      super.communityMetadata = value;
+  set metadata(CommunityMetadata value) {
+    _$metadataAtom.reportWrite(value, super.metadata, () {
+      super.metadata = value;
     });
   }
 
@@ -228,7 +226,7 @@ mixin _$CommunityStore on _CommunityStore, Store {
   @override
   String toString() {
     return '''
-communityMetadata: ${communityMetadata},
+metadata: ${metadata},
 demurrage: ${demurrage},
 meetupTime: ${meetupTime},
 bootstrappers: ${bootstrappers},

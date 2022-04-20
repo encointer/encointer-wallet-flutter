@@ -37,19 +37,19 @@ abstract class _CommunityStore with Store {
   final CommunityIdentifier cid;
 
   @observable
-  CommunityMetadata communityMetadata;
+  CommunityMetadata metadata;
 
   @observable
   double demurrage;
 
   @computed
-  String get name => communityMetadata?.name;
+  String get name => metadata?.name;
 
   @computed
-  String get symbol => communityMetadata?.symbol;
+  String get symbol => metadata?.symbol;
 
   @computed
-  String get assetsCid => communityMetadata?.assets;
+  String get assetsCid => metadata?.assets;
 
   @observable
   int meetupTime;
@@ -93,8 +93,8 @@ abstract class _CommunityStore with Store {
 
   @action
   void setCommunityMetadata([CommunityMetadata meta]) {
-    _log("set communityMetadata to $meta");
-    communityMetadata = meta;
+    _log("set metadata to $meta");
+    metadata = meta;
     writeToCache();
   }
 

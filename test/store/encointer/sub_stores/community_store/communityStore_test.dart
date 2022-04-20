@@ -44,7 +44,7 @@ void main() {
       Map<String, dynamic> targetJson = {
         "network": "My Test Network",
         "cid": mediterraneanTestCommunity.toJson(),
-        "communityMetadata": testMetadata.toJson(),
+        "metadata": testMetadata.toJson(),
         "demurrage": 1.1,
         "meetupTime": 10,
         "bootstrappers": bootstrappers,
