@@ -52,10 +52,18 @@ class MockApiEncointer extends EncointerApi {
   }
 
   @override
+  Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String account) {
+    return null;
+  }
+
+  @override
   Future<void> getReputations() async {}
 
   @override
   Future<void> getEncointerBalance() async {}
+
+  @override
+  Future<void> getAllMeetupLocations() async {}
 
   @override
   Future<List<CommunityIdentifier>> getCommunityIdentifiers() async {
@@ -67,6 +75,7 @@ class MockApiEncointer extends EncointerApi {
     return store.encointer.communities;
   }
 
+  @override
   Future<bool> hasPendingIssuance() async {
     return true;
   }
@@ -76,7 +85,7 @@ class MockApiEncointer extends EncointerApi {
 
   @override
   Future<List<AccountBusinessTuple>> getBusinesses() async {
-    _log("warn: getbusinessRegistry mock is unimplemented");
+    _log("warn: getBusinessRegistry mock is unimplemented");
 
     return Future.value([]);
   }
@@ -87,7 +96,17 @@ class MockApiEncointer extends EncointerApi {
   }
 
   @override
+  Future<void> getCommunityData() {
+    return null;
+  }
+
+  @override
   Future<void> getMeetupTime() async {
     return DateTime.fromMillisecondsSinceEpoch(claim['timestamp']);
+  }
+
+  @override
+  Future<void> getBootstrappers() {
+    return null;
   }
 }
