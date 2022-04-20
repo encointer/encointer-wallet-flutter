@@ -82,6 +82,11 @@ class MockApiEncointer extends EncointerApi {
   }
 
   @override
+  Future<void> getCommunityMetadata() {
+    return null;
+  }
+
+  @override
   Future<void> getMeetupTime() async {
     return DateTime.fromMillisecondsSinceEpoch(claim['timestamp']);
   }
