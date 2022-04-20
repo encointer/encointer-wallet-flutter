@@ -55,7 +55,7 @@ abstract class _CommunityAccountStore with Store {
   ObservableMap<String, ClaimOfAttendance> participantsClaims = new ObservableMap();
 
   @computed
-  get scannedClaimsCount => participantsClaims.length;
+  get scannedClaimsCount => participantsClaims?.length ?? 0;
 
   @computed
   bool get isAssigned => meetup != null;
