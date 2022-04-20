@@ -287,6 +287,7 @@ abstract class _EncointerStore with Store {
       _log("Adding new communityStore for cid: ${cid.toFmtString()}");
 
       var communityStore = CommunityStore(network, cid);
+      communityStore.applyDemurrage = applyDemurrage;
       communityStore.cacheFn = cacheFn;
       await communityStore.initCommunityAccountStore(address);
 

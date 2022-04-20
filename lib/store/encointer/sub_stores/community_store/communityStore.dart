@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
+import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
@@ -31,6 +32,12 @@ abstract class _CommunityStore with Store {
 
   @JsonKey(ignore: true)
   Future<void> Function() cacheFn;
+
+  /// Applies demurrage to the `BalanceEntry`
+  ///
+  /// It is initialized as a field to prevent a cyclic dependency with the rootStore.
+  @JsonKey(ignore: true)
+  double Function(BalanceEntry) applyDemurrage;
 
   final String network;
 
