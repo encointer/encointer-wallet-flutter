@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/service/notification.dart';
@@ -10,6 +8,7 @@ import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pausable_timer/pausable_timer.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share/share.dart';
 
@@ -21,13 +20,13 @@ class ReceivePage extends StatefulWidget {
   _ReceivePageState createState() => _ReceivePageState();
 }
 
-class _ReceivePageState extends State<ReceivePage> {
+class _ReceivePageState extends State<ReceivePage> with WidgetsBindingObserver {
   final TextEditingController _amountController = new TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool generateQR = false;
   var invoice = [];
 
-  var periodicTimer;
+  var paymentWatchdog;
   bool observedPendingExtrinsic = false;
 
   static void _showSnackBar(BuildContext context, String msg) {
@@ -59,19 +58,51 @@ class _ReceivePageState extends State<ReceivePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    // Add the observer.
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
   void dispose() {
     // Clean up the controller when the widget is removed from the
     // widget tree.
     _amountController.dispose();
-    periodicTimer.cancel();
+    paymentWatchdog.cancel();
+    // Remove the observer
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+
+    // These are the callbacks
+    switch (state) {
+      case AppLifecycleState.resumed:
+        print("[receivePage] resumed. restarting timer");
+        paymentWatchdog.start();
+        break;
+      case AppLifecycleState.inactive:
+        print("[receivePage] inactive. pausing timer");
+        paymentWatchdog.pause();
+        break;
+      case AppLifecycleState.paused:
+        print("[receivePage] paused");
+        break;
+      case AppLifecycleState.detached:
+        print("[receivePage] detatched");
+        break;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
-    periodicTimer = Timer.periodic(
+    paymentWatchdog = PausableTimer(
       const Duration(seconds: 1),
-      (timer) {
+      () {
         webApi.encointer.pendingExtrinsics().then((data) {
           if (data.length > 0) {
             if (!observedPendingExtrinsic) {
@@ -96,7 +127,7 @@ class _ReceivePageState extends State<ReceivePage> {
             double oldBalance = widget.store.encointer.communityBalanceEntry.applyDemurrage(blockNumber, demurrageRate);
             if ((newBalance != null) && (oldBalance != null)) {
               double delta = newBalance - oldBalance;
-              print("balance changed by $delta");
+              print("balance changed from $oldBalance to $newBalance by $delta");
               if (delta > demurrageRate) {
                 var msg =
                     "incoming ${delta.toStringAsPrecision(5)} ${widget.store.encointer.community.metadata.symbol} for ${widget.store.account.currentAccount.name} confirmed";
@@ -110,8 +141,11 @@ class _ReceivePageState extends State<ReceivePage> {
             }
           }
         });
+        paymentWatchdog
+          ..reset()
+          ..start();
       },
-    );
+    )..start();
 
     return Form(
       key: _formKey,
