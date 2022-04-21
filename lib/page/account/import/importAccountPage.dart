@@ -56,6 +56,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       cryptoType: _cryptoType,
       derivePath: _derivePath,
     );
+    print("importAccountPage] accountimported");
 
     // check if account duplicate
     if (acc != null) {
@@ -89,7 +90,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         );
         return;
       }
-      _checkAccountDuplicate(acc);
+      await _checkAccountDuplicate(acc);
       return;
     }
 
@@ -153,13 +154,13 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         );
       }
     } else {
-      _saveAccount(acc);
+      return _saveAccount(acc);
     }
   }
 
   Future<void> _saveAccount(Map<String, dynamic> acc) async {
-    await store.account.addAccount(acc, store.account.newAccount.password);
-    webApi.account.encodeAddress([acc['pubKey']]);
+    var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
+    await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
 
     await store.loadAccountCache();
 
@@ -169,6 +170,13 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     webApi.account.fetchAccountsBonded([pubKey]);
     webApi.account.getPubKeyIcons([pubKey]);
     store.account.setCurrentAccount(pubKey);
+    print("importAccountPage] account saved");
+
+    setState(() {
+      _submitting = false;
+    });
+    // go to home page
+    Navigator.popUntil(context, ModalRoute.withName('/'));
   }
 
   @override

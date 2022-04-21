@@ -7,10 +7,10 @@ import 'package:encointer_wallet/page-encointer/meetup/startMeetup.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:quiver/async.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class AssigningPage extends StatefulWidget {
   AssigningPage(this.store);
@@ -73,7 +73,7 @@ class _AssigningPageState extends State<AssigningPage> {
       child: Column(children: <Widget>[
         AssignmentPanel(store),
         SizedBox(height: 16),
-        store.encointer.isAssigned
+        store.encointer.communityAccount.isAssigned
             ? Container(
                 key: Key('start-meetup'),
                 child: Column(

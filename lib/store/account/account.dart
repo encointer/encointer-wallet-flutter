@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:aes_ecb_pkcs5_flutter/aes_ecb_pkcs5_flutter.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58PrefixListPage.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/notification.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountBondedInfo.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/account/types/accountRecoveryInfo.dart';
@@ -169,7 +169,7 @@ abstract class _AccountStore with Store {
             );
           } else {
             if (rootStore.settings.endpointIsEncointer) {
-              rootStore.encointer.setTransferTxs([res]);
+              rootStore.encointer.account.setTransferTxs([res], rootStore.account.currentAddress);
             }
           }
         });
@@ -188,7 +188,7 @@ abstract class _AccountStore with Store {
     if (currentAccountPubKey != pubKey) {
       currentAccountPubKey = pubKey;
       rootStore.localStorage.setCurrentAccount(pubKey);
-      rootStore.encointer.resetState();
+      rootStore.encointer.updateState();
     }
     if (!rootStore.settings.loading) {
       webApi.assets.subscribeBalance();
@@ -296,7 +296,7 @@ abstract class _AccountStore with Store {
     Map stored = await rootStore.localStorage.getSeeds(seedType);
     String encrypted = stored[pubKey];
     if (encrypted == null) {
-      return null;
+      return Future.value(null);
     }
     return FlutterAesEcbPkcs5.decryptString(encrypted, Fmt.passwordToEncryptKey(password));
   }

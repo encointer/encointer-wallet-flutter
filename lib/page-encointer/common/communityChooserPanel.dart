@@ -119,7 +119,7 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
                       ),
                       child: CommunityAvatar(
                         store: store,
-                        avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid),
+                        avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.community?.assetsCid),
                         avatarSize: widget.communityAvatarSize,
                       ),
                     ),
@@ -139,7 +139,7 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
               SizedBox(height: 4),
               if (widget.showCommunityNameAndAccountName)
                 Text(
-                  '${store.encointer.communityName}\n${Fmt.accountName(context, store.account.currentAccount)}',
+                  '${store.encointer.community?.name ?? "..."}\n${Fmt.accountName(context, store.account.currentAccount)}',
                   style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
                   textAlign: TextAlign.center,
                 ),

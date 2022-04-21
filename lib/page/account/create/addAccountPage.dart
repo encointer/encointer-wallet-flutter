@@ -46,8 +46,8 @@ class _AddAccountPageState extends State<AddAccountPage> {
       return;
     }
 
-    await store.account.addAccount(acc, store.account.newAccount.password);
-    webApi.account.encodeAddress([acc['pubKey']]);
+    var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
+    await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
 
     await store.loadAccountCache();
 

@@ -4,8 +4,8 @@ import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 
 import '../../models/index.dart';
-import 'mockJSApi.dart';
 import 'core/mockDartApi.dart';
+import 'mockJSApi.dart';
 
 /// The key rationale behind this mock is that all the getters do not alter the app state.
 ///
@@ -52,31 +52,22 @@ class MockApiEncointer extends EncointerApi {
   }
 
   @override
+  Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String account) {
+    return Future.value(null);
+  }
+
+  @override
+  Future<void> getReputations() async {}
+
+  @override
   Future<void> getEncointerBalance() async {}
 
   @override
-  Future<int> getParticipantIndex() async {
-    return store.encointer.participantIndex;
-  }
-
-  @override
-  Future<int> getMeetupIndex() async {
-    return store.encointer.meetupIndex;
-  }
+  Future<void> getAllMeetupLocations() async {}
 
   @override
   Future<List<CommunityIdentifier>> getCommunityIdentifiers() async {
-    return communityIdentifiers;
-  }
-
-  @override
-  Future<List<String>> getMeetupRegistry() async {
-    return store.encointer.meetupRegistry;
-  }
-
-  @override
-  Future<CommunityMetadata> getCommunityMetadata() async {
-    return store.encointer.communityMetadata;
+    return testCommunityIdentifiers;
   }
 
   @override
@@ -84,6 +75,7 @@ class MockApiEncointer extends EncointerApi {
     return store.encointer.communities;
   }
 
+  @override
   Future<bool> hasPendingIssuance() async {
     return true;
   }
@@ -92,17 +84,29 @@ class MockApiEncointer extends EncointerApi {
   Future<void> getDemurrage() async {}
 
   @override
-  Future<void> getMeetupLocation() async {}
-
-  @override
   Future<List<AccountBusinessTuple>> getBusinesses() async {
-    _log("warn: getbusinessRegistry mock is unimplemented");
+    _log("warn: getBusinessRegistry mock is unimplemented");
 
     return Future.value([]);
   }
 
   @override
+  Future<void> getCommunityMetadata() {
+    return Future.value(null);
+  }
+
+  @override
+  Future<void> getCommunityData() {
+    return Future.value(null);
+  }
+
+  @override
   Future<void> getMeetupTime() async {
     return DateTime.fromMillisecondsSinceEpoch(claim['timestamp']);
+  }
+
+  @override
+  Future<void> getBootstrappers() {
+    return Future.value(null);
   }
 }

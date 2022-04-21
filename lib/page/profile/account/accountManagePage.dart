@@ -6,7 +6,7 @@ import 'package:encointer_wallet/page/profile/contacts/accountSharePage.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/encointer/types/communities.dart';
+import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -79,45 +79,35 @@ class _AccountManagePageState extends State<AccountManagePage> {
     );
   }
 
-  List<Widget> _getBalances() {
+  Widget _getBalanceEntryListTile(String cidFmt, BalanceEntry entry) {
     final TextStyle h3 = Theme.of(context).textTheme.headline3;
-    CommunityMetadata cm = store.encointer.communityMetadata;
-    String name = cm != null ? cm.name : '';
-    String symbol = cm != null ? cm.symbol : '';
-    final String tokenView = Fmt.tokenView(symbol);
-    return store.encointer.balanceEntries.entries.map((i) {
-      if (cm != null) {
-        return ListTile(
-          contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
-          leading: CommunityIcon(
-            store: store,
-            icon: FutureBuilder<SvgPicture>(
-              future: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid),
-              builder: (_, AsyncSnapshot<SvgPicture> snapshot) {
-                if (snapshot.hasData) {
-                  return snapshot.data;
-                } else {
-                  return CupertinoActivityIndicator();
-                }
-              },
-            ),
-          ),
-          title: Text(name, style: h3),
-          subtitle: Text(tokenView, style: h3),
-          trailing: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-              Text(
-                '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ',
-                style: h3.copyWith(color: encointerGrey),
-              ),
-            ],
-          ),
-        );
-      } else
-        return Container();
-    }).toList();
+
+    var community = store.encointer.communityStores[cidFmt];
+
+    _log("_getBalanceEntryListTile: ${community?.toJson()}");
+
+    return ListTile(
+      contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
+      leading: CommunityIcon(
+        store: store,
+        icon: FutureBuilder<SvgPicture>(
+          future: webApi.ipfs.getCommunityIcon(community.assetsCid),
+          builder: (_, AsyncSnapshot<SvgPicture> snapshot) {
+            if (snapshot.hasData) {
+              return snapshot.data;
+            } else {
+              return CupertinoActivityIndicator();
+            }
+          },
+        ),
+      ),
+      title: Text(community.name, style: h3),
+      subtitle: Text(community.symbol, style: h3),
+      trailing: Text(
+        '${Fmt.doubleFormat(community.applyDemurrage(entry))} ⵐ',
+        style: h3.copyWith(color: encointerGrey),
+      ),
+    );
   }
 
   void _showPasswordDialog(BuildContext context) {
@@ -249,7 +239,14 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     ],
                   ),
                 ),
-                Expanded(child: ListView(children: _getBalances())),
+                Expanded(
+                  child: ListView.builder(
+                      itemCount: store.encointer.account?.balanceEntries?.length ?? 0,
+                      itemBuilder: (BuildContext context, int index) {
+                        String community = store.encointer.account.balanceEntries.keys.elementAt(index);
+                        return _getBalanceEntryListTile(community, store.encointer.account.balanceEntries[community]);
+                      }),
+                ),
                 Container(
                   // width: double.infinity,
                   decoration: BoxDecoration(
@@ -357,8 +354,8 @@ class CommunityIcon extends StatelessWidget {
         ),
         Observer(
           builder: (_) {
-            if (store.encointer.bootstrappers != null &&
-                store.encointer.bootstrappers.contains(store.account.currentAddress)) {
+            if (store.encointer.community.bootstrappers != null &&
+                store.encointer.community.bootstrappers.contains(store.account.currentAddress)) {
               return Positioned(
                 bottom: 0, right: 0, //give the values according to your requirement
                 child: Icon(Iconsax.star, color: Colors.yellow),
@@ -370,4 +367,8 @@ class CommunityIcon extends StatelessWidget {
       ],
     );
   }
+}
+
+_log(String msg) {
+  print("[accountManagePage] $msg");
 }

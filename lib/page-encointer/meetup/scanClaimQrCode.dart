@@ -35,16 +35,17 @@ class ScanClaimQrCode extends StatelessWidget {
   }
 
   void validateAndStoreClaim(BuildContext context, ClaimOfAttendance claim, Translations dic) {
-    if (!store.encointer.meetupRegistry.contains(claim.claimantPublic)) {
+    List<String> registry = store.encointer.communityAccount.meetup.registry;
+    if (!registry.contains(claim.claimantPublic)) {
       // this is important because the runtime checks if there are too many claims trying to be registered.
       _showSnackBar(context, dic.encointer.meetupClaimantInvalid);
-      print(
-          "[scanClaimQrCode] Claimant: ${claim.claimantPublic} is not part of registry: ${store.encointer.meetupRegistry}");
+      print("[scanClaimQrCode] Claimant: ${claim.claimantPublic} is not part of registry: ${registry.toString()}");
     } else {
-      String msg =
-          store.encointer.containsClaim(claim) ? dic.encointer.claimsScannedAlready : dic.encointer.claimsScannedNew;
+      String msg = store.encointer.communityAccount.containsClaim(claim)
+          ? dic.encointer.claimsScannedAlready
+          : dic.encointer.claimsScannedNew;
 
-      store.encointer.addParticipantClaim(claim);
+      store.encointer.communityAccount.addParticipantClaim(claim);
       _showSnackBar(context, msg);
     }
   }
@@ -94,7 +95,7 @@ class ScanClaimQrCode extends StatelessWidget {
               key: _qrViewKey,
               helpWidget: Observer(
                   builder: (_) => Text(dic.encointer.claimsScannedNOfM
-                      .replaceAll('SCANNED_COUNT', store.encointer.scannedClaimsCount.toString())
+                      .replaceAll('SCANNED_COUNT', store.encointer.communityAccount.scannedClaimsCount.toString())
                       .replaceAll('TOTAL_COUNT', (confirmedParticipantsCount - 1).toString()))),
               headerWidget: SafeArea(
                   child: Align(

@@ -126,7 +126,7 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox> with SingleTickerProvider
   }
 
   Widget _getPhaseViewOffline() {
-    if (store.encointer.isRegistered) {
+    if (store.encointer.communityAccount.isRegistered) {
       return RegisteringPage(store);
     } else {
       int timeToMeetup = store.encointer.getTimeToMeetup();

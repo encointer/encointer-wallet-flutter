@@ -27,7 +27,6 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
 
   @override
   void initState() {
-    webApi.encointer.getParticipantIndex();
     super.initState();
   }
 
@@ -50,12 +49,11 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
       );
     }
 
-    submitRegisterParticipant(
-      context,
-      webApi,
-      store.encointer.chosenCid,
-      proof: webApi.encointer.getProofOfAttendance(),
-    );
+    submitRegisterParticipant(context, webApi, store.encointer.chosenCid,
+        proof: webApi.encointer.getProofOfAttendance(), onFinish: (BuildContext txPageContext, Map res) {
+      webApi.encointer.getAggregatedAccountData(store.encointer.chosenCid, store.account.currentAddress);
+      Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
+    });
   }
 
   @override
@@ -66,27 +64,25 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
     return Observer(
       builder: (_) => Column(
         children: <Widget>[
-          store.encointer.meetupTime == null
+          store.encointer.communityAccount?.meetup?.time == null
               ? Container()
               : Column(
                   children: <Widget>[
                     Text(dic.encointer.nextCeremonyDateLabel),
                     Text(DateFormat('yyyy-MM-dd')
-                        .format(new DateTime.fromMillisecondsSinceEpoch(store.encointer.meetupTime)))
+                        .format(new DateTime.fromMillisecondsSinceEpoch(store.encointer.communityAccount.meetup.time)))
                   ],
                 ),
-          store.encointer.participantIndex == null
-              ? CupertinoActivityIndicator()
-              : store.encointer.participantIndex == 0
-                  ? store.encointer.reputations != null
-                      ? RoundedButton(text: dic.encointer.registerParticipant, onPressed: () => _submit())
-                      : RoundedButton(
-                          text: dic.encointer.fetchingReputations,
-                          onPressed: null,
-                          color: Theme.of(context).disabledColor,
-                        )
+          store.encointer.communityAccount.isRegistered
+              ? RoundedButton(
+                  text: dic.encointer.youAreRegistered, onPressed: null, color: Theme.of(context).disabledColor)
+              : store.encointer.account.reputations != null
+                  ? RoundedButton(text: dic.encointer.registerParticipant, onPressed: () => _submit())
                   : RoundedButton(
-                      text: dic.encointer.youAreRegistered, onPressed: null, color: Theme.of(context).disabledColor),
+                      text: dic.encointer.fetchingReputations,
+                      onPressed: null,
+                      color: Theme.of(context).disabledColor,
+                    )
         ],
       ),
     );

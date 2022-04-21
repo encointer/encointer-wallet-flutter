@@ -1,7 +1,7 @@
 import 'package:encointer_wallet/mocks/testTags.dart';
+import 'package:encointer_wallet/mocks/testUtils.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dartApi.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointerDartApi.dart';
-import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -12,11 +12,7 @@ void main() {
 
       var encointerDartApi = EncointerDartApi(substrateDartApi);
 
-      var alice = "5GrwvaEF5zXb26Fz9rcQpDWS57CtERHpNehXCPcNoHGKutQY";
-      // community from `bootstrap_demo_community.py`
-      var cid = CommunityIdentifier.fromFmtString("sqm1v79dF6b");
-
-      var data = await encointerDartApi.getAggregatedAccountData(cid, alice);
+      var data = await encointerDartApi.getAggregatedAccountData(mediterraneanTestCommunity, ALICE_ADDRESS);
       print("data: ${data.toString()}");
 
       await substrateDartApi.close();

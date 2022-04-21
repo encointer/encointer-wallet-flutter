@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/components/roundedCard.dart';
+import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -27,22 +28,28 @@ class AssignmentPanel extends StatelessWidget {
         padding: EdgeInsets.all(8),
         child: Column(
           children: <Widget>[
-            Observer(
-              builder: (_) => store.encointer.communities == null
+            Observer(builder: (_) {
+              Meetup meetup = store.encointer.communityAccount.meetup;
+
+              Location meetupLocation = meetup == null
+                  ? store.encointer.community.meetupLocations?.first
+                  : store.encointer.community.meetupLocations[meetup.locationIndex];
+
+              return store.encointer.communities == null
                   ? Text(dic.assets.communitiesNotFound)
                   : Column(
                       children: <Widget>[
-                        store.encointer.isAssigned
+                        store.encointer.communityAccount.isAssigned
                             ? Column(
                                 children: <Widget>[
                                   Text(dic.encointer.youAreRegistered, style: TextStyle(color: Colors.green)),
                                   Text(dic.encointer.ceremonyWillTakePlaceOn),
-                                  MaybeMeetupTime(store.encointer.meetupTime, dateFormat: 'yyyy-MM-dd-HH:mm'),
+                                  MaybeMeetupTime(store.encointer.community.meetupTime, dateFormat: 'yyyy-MM-dd-HH:mm'),
                                   ElevatedButton(
                                     child: Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        store.encointer.meetupLocation != null
+                                        meetupLocation != null
                                             ? Icon(
                                                 Icons.location_on,
                                                 size: 25,
@@ -52,7 +59,7 @@ class AssignmentPanel extends StatelessWidget {
                                         Text(dic.encointer.meetupLocation),
                                       ],
                                     ),
-                                    onPressed: store.encointer.meetupLocation != null
+                                    onPressed: meetupLocation != null
                                         ? () => Navigator.push(
                                               context,
                                               MaterialPageRoute(
@@ -60,9 +67,9 @@ class AssignmentPanel extends StatelessWidget {
                                                   return EncointerMap(
                                                     store,
                                                     popupBuilder: (BuildContext context, Marker marker) => SizedBox(),
-                                                    markers: buildMarkers(store.encointer.meetupLocation),
+                                                    markers: buildMarkers(meetupLocation),
                                                     title: dic.encointer.meetupLocation,
-                                                    center: store.encointer.meetupLocation.toLatLng(),
+                                                    center: meetupLocation.toLatLng(),
                                                     initialZoom: initialZoom,
                                                   );
                                                 },
@@ -80,12 +87,12 @@ class AssignmentPanel extends StatelessWidget {
                                     textAlign: TextAlign.center,
                                   ),
                                   SizedBox(height: 4),
-                                  MaybeMeetupTime(store.encointer.meetupTime),
+                                  MaybeMeetupTime(store.encointer.community.meetupTime),
                                 ],
                               ),
                       ],
-                    ),
-            )
+                    );
+            })
           ],
         ),
       ),

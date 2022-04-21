@@ -4,8 +4,10 @@ part 'transferData.g.dart';
 
 @JsonSerializable()
 class TransferData extends _TransferData {
-  static TransferData fromJson(Map<String, dynamic> json) => _$TransferDataFromJson(json);
-  static Map<String, dynamic> toJson(TransferData data) => _$TransferDataToJson(data);
+  TransferData() : super();
+
+  factory TransferData.fromJson(Map<String, dynamic> json) => _$TransferDataFromJson(json);
+  Map<String, dynamic> toJson() => _$TransferDataToJson(this);
 
   bool concernsCurrentAccount(String currentAccount) {
     return (currentAccount == from || currentAccount == to);
