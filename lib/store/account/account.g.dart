@@ -13,31 +13,36 @@ mixin _$AccountStore on _AccountStore, Store {
 
   @override
   AccountData get currentAccount => (_$currentAccountComputed ??=
-          Computed<AccountData>(() => super.currentAccount, name: '_AccountStore.currentAccount'))
+          Computed<AccountData>(() => super.currentAccount,
+              name: '_AccountStore.currentAccount'))
       .value;
   Computed<List<AccountData>> _$optionalAccountsComputed;
 
   @override
   List<AccountData> get optionalAccounts => (_$optionalAccountsComputed ??=
-          Computed<List<AccountData>>(() => super.optionalAccounts, name: '_AccountStore.optionalAccounts'))
+          Computed<List<AccountData>>(() => super.optionalAccounts,
+              name: '_AccountStore.optionalAccounts'))
       .value;
   Computed<List<AccountData>> _$accountListAllComputed;
 
   @override
   List<AccountData> get accountListAll => (_$accountListAllComputed ??=
-          Computed<List<AccountData>>(() => super.accountListAll, name: '_AccountStore.accountListAll'))
+          Computed<List<AccountData>>(() => super.accountListAll,
+              name: '_AccountStore.accountListAll'))
       .value;
   Computed<bool> _$isFirstAccountComputed;
 
   @override
   bool get isFirstAccount =>
-      (_$isFirstAccountComputed ??= Computed<bool>(() => super.isFirstAccount, name: '_AccountStore.isFirstAccount'))
+      (_$isFirstAccountComputed ??= Computed<bool>(() => super.isFirstAccount,
+              name: '_AccountStore.isFirstAccount'))
           .value;
   Computed<String> _$currentAddressComputed;
 
   @override
   String get currentAddress =>
-      (_$currentAddressComputed ??= Computed<String>(() => super.currentAddress, name: '_AccountStore.currentAddress'))
+      (_$currentAddressComputed ??= Computed<String>(() => super.currentAddress,
+              name: '_AccountStore.currentAddress'))
           .value;
 
   final _$loadingAtom = Atom(name: '_AccountStore.loading');
@@ -85,7 +90,8 @@ mixin _$AccountStore on _AccountStore, Store {
     });
   }
 
-  final _$currentAccountPubKeyAtom = Atom(name: '_AccountStore.currentAccountPubKey');
+  final _$currentAccountPubKeyAtom =
+      Atom(name: '_AccountStore.currentAccountPubKey');
 
   @override
   String get currentAccountPubKey {
@@ -95,7 +101,8 @@ mixin _$AccountStore on _AccountStore, Store {
 
   @override
   set currentAccountPubKey(String value) {
-    _$currentAccountPubKeyAtom.reportWrite(value, super.currentAccountPubKey, () {
+    _$currentAccountPubKeyAtom.reportWrite(value, super.currentAccountPubKey,
+        () {
       super.currentAccountPubKey = value;
     });
   }
@@ -235,11 +242,13 @@ mixin _$AccountStore on _AccountStore, Store {
     });
   }
 
-  final _$updateAccountNameAsyncAction = AsyncAction('_AccountStore.updateAccountName');
+  final _$updateAccountNameAsyncAction =
+      AsyncAction('_AccountStore.updateAccountName');
 
   @override
   Future<void> updateAccountName(String name) {
-    return _$updateAccountNameAsyncAction.run(() => super.updateAccountName(name));
+    return _$updateAccountNameAsyncAction
+        .run(() => super.updateAccountName(name));
   }
 
   final _$updateAccountAsyncAction = AsyncAction('_AccountStore.updateAccount');
@@ -270,53 +279,65 @@ mixin _$AccountStore on _AccountStore, Store {
     return _$loadAccountAsyncAction.run(() => super.loadAccount());
   }
 
-  final _$setAccountsBondedAsyncAction = AsyncAction('_AccountStore.setAccountsBonded');
+  final _$setAccountsBondedAsyncAction =
+      AsyncAction('_AccountStore.setAccountsBonded');
 
   @override
   Future<void> setAccountsBonded(List<dynamic> ls) {
-    return _$setAccountsBondedAsyncAction.run(() => super.setAccountsBonded(ls));
+    return _$setAccountsBondedAsyncAction
+        .run(() => super.setAccountsBonded(ls));
   }
 
   final _$encryptSeedAsyncAction = AsyncAction('_AccountStore.encryptSeed');
 
   @override
-  Future<void> encryptSeed(String pubKey, String seed, String seedType, String password) {
-    return _$encryptSeedAsyncAction.run(() => super.encryptSeed(pubKey, seed, seedType, password));
+  Future<void> encryptSeed(
+      String pubKey, String seed, String seedType, String password) {
+    return _$encryptSeedAsyncAction
+        .run(() => super.encryptSeed(pubKey, seed, seedType, password));
   }
 
   final _$decryptSeedAsyncAction = AsyncAction('_AccountStore.decryptSeed');
 
   @override
   Future<String> decryptSeed(String pubKey, String seedType, String password) {
-    return _$decryptSeedAsyncAction.run(() => super.decryptSeed(pubKey, seedType, password));
+    return _$decryptSeedAsyncAction
+        .run(() => super.decryptSeed(pubKey, seedType, password));
   }
 
-  final _$checkSeedExistAsyncAction = AsyncAction('_AccountStore.checkSeedExist');
+  final _$checkSeedExistAsyncAction =
+      AsyncAction('_AccountStore.checkSeedExist');
 
   @override
   Future<bool> checkSeedExist(String seedType, String pubKey) {
-    return _$checkSeedExistAsyncAction.run(() => super.checkSeedExist(seedType, pubKey));
+    return _$checkSeedExistAsyncAction
+        .run(() => super.checkSeedExist(seedType, pubKey));
   }
 
   final _$updateSeedAsyncAction = AsyncAction('_AccountStore.updateSeed');
 
   @override
-  Future<void> updateSeed(String pubKey, String passwordOld, String passwordNew) {
-    return _$updateSeedAsyncAction.run(() => super.updateSeed(pubKey, passwordOld, passwordNew));
+  Future<void> updateSeed(
+      String pubKey, String passwordOld, String passwordNew) {
+    return _$updateSeedAsyncAction
+        .run(() => super.updateSeed(pubKey, passwordOld, passwordNew));
   }
 
   final _$deleteSeedAsyncAction = AsyncAction('_AccountStore.deleteSeed');
 
   @override
   Future<void> deleteSeed(String seedType, String pubKey) {
-    return _$deleteSeedAsyncAction.run(() => super.deleteSeed(seedType, pubKey));
+    return _$deleteSeedAsyncAction
+        .run(() => super.deleteSeed(seedType, pubKey));
   }
 
-  final _$_AccountStoreActionController = ActionController(name: '_AccountStore');
+  final _$_AccountStoreActionController =
+      ActionController(name: '_AccountStore');
 
   @override
   void setTxStatus(String status) {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setTxStatus');
+    final _$actionInfo = _$_AccountStoreActionController.startAction(
+        name: '_AccountStore.setTxStatus');
     try {
       return super.setTxStatus(status);
     } finally {
@@ -326,7 +347,8 @@ mixin _$AccountStore on _AccountStore, Store {
 
   @override
   void setNewAccountName(String name) {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setNewAccountName');
+    final _$actionInfo = _$_AccountStoreActionController.startAction(
+        name: '_AccountStore.setNewAccountName');
     try {
       return super.setNewAccountName(name);
     } finally {
@@ -336,7 +358,8 @@ mixin _$AccountStore on _AccountStore, Store {
 
   @override
   void setNewAccountPin(String pin) {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setNewAccountPin');
+    final _$actionInfo = _$_AccountStoreActionController.startAction(
+        name: '_AccountStore.setNewAccountPin');
     try {
       return super.setNewAccountPin(pin);
     } finally {
@@ -346,7 +369,8 @@ mixin _$AccountStore on _AccountStore, Store {
 
   @override
   void setNewAccountKey(String key) {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setNewAccountKey');
+    final _$actionInfo = _$_AccountStoreActionController.startAction(
+        name: '_AccountStore.setNewAccountKey');
     try {
       return super.setNewAccountKey(key);
     } finally {
@@ -356,7 +380,8 @@ mixin _$AccountStore on _AccountStore, Store {
 
   @override
   void resetNewAccount() {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.resetNewAccount');
+    final _$actionInfo = _$_AccountStoreActionController.startAction(
+        name: '_AccountStore.resetNewAccount');
     try {
       return super.resetNewAccount();
     } finally {
@@ -366,7 +391,8 @@ mixin _$AccountStore on _AccountStore, Store {
 
   @override
   void queueTx(Map<String, dynamic> tx) {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.queueTx');
+    final _$actionInfo = _$_AccountStoreActionController.startAction(
+        name: '_AccountStore.queueTx');
     try {
       return super.queueTx(tx);
     } finally {
@@ -376,7 +402,8 @@ mixin _$AccountStore on _AccountStore, Store {
 
   @override
   void setCurrentAccount(String pubKey) {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setCurrentAccount');
+    final _$actionInfo = _$_AccountStoreActionController.startAction(
+        name: '_AccountStore.setCurrentAccount');
     try {
       return super.setCurrentAccount(pubKey);
     } finally {
@@ -386,7 +413,8 @@ mixin _$AccountStore on _AccountStore, Store {
 
   @override
   void setPubKeyAddressMap(Map<String, Map<dynamic, dynamic>> data) {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setPubKeyAddressMap');
+    final _$actionInfo = _$_AccountStoreActionController.startAction(
+        name: '_AccountStore.setPubKeyAddressMap');
     try {
       return super.setPubKeyAddressMap(data);
     } finally {
@@ -396,7 +424,8 @@ mixin _$AccountStore on _AccountStore, Store {
 
   @override
   void setPubKeyIconsMap(List<dynamic> list) {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setPubKeyIconsMap');
+    final _$actionInfo = _$_AccountStoreActionController.startAction(
+        name: '_AccountStore.setPubKeyIconsMap');
     try {
       return super.setPubKeyIconsMap(list);
     } finally {
@@ -406,7 +435,8 @@ mixin _$AccountStore on _AccountStore, Store {
 
   @override
   void setAddressIconsMap(List<dynamic> list) {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setAddressIconsMap');
+    final _$actionInfo = _$_AccountStoreActionController.startAction(
+        name: '_AccountStore.setAddressIconsMap');
     try {
       return super.setAddressIconsMap(list);
     } finally {
@@ -416,7 +446,8 @@ mixin _$AccountStore on _AccountStore, Store {
 
   @override
   void setAccountsIndex(List<dynamic> list) {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setAccountsIndex');
+    final _$actionInfo = _$_AccountStoreActionController.startAction(
+        name: '_AccountStore.setAccountsIndex');
     try {
       return super.setAccountsIndex(list);
     } finally {
@@ -426,7 +457,8 @@ mixin _$AccountStore on _AccountStore, Store {
 
   @override
   void setAddressIndex(List<dynamic> list) {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setAddressIndex');
+    final _$actionInfo = _$_AccountStoreActionController.startAction(
+        name: '_AccountStore.setAddressIndex');
     try {
       return super.setAddressIndex(list);
     } finally {
@@ -436,7 +468,8 @@ mixin _$AccountStore on _AccountStore, Store {
 
   @override
   void setAccountRecoveryInfo(Map<dynamic, dynamic> json) {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setAccountRecoveryInfo');
+    final _$actionInfo = _$_AccountStoreActionController.startAction(
+        name: '_AccountStore.setAccountRecoveryInfo');
     try {
       return super.setAccountRecoveryInfo(json);
     } finally {

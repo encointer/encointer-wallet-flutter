@@ -22,10 +22,6 @@ class EncointerDartApi {
 
   Future<Map<CommunityIdentifier, BalanceEntry>> getAllBalances(String account) {
     return _dartApi.rpc("encointer_getAllBalances", [account]).then((data) {
-      print(data[0][0]);
-      print(CommunityIdentifier.fromJson(data[0][0]));
-      print(data[0][1]);
-      print(BalanceEntry.fromJson(data[0][1]));
       return Map.fromIterable(data,
           key: (bal) => CommunityIdentifier.fromJson(bal[0]), value: (bal) => BalanceEntry.fromJson(bal[1]));
     });

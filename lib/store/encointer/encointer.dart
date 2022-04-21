@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
@@ -159,13 +157,10 @@ abstract class _EncointerStore with Store {
   }
 
   double applyDemurrage(BalanceEntry entry) {
-    double res;
     if (_rootStore.chain.latestHeaderNumber != null && entry != null && community.demurrage != null) {
-      int elapsed = _rootStore.chain.latestHeaderNumber - entry.lastUpdate;
-      double exponent = -community.demurrage * elapsed;
-      res = entry.principal * pow(e, exponent);
+      return entry.applyDemurrage(_rootStore.chain.latestHeaderNumber, community.demurrage);
     }
-    return res;
+    return null;
   }
 
   // -- Setters for this store

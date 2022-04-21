@@ -9,32 +9,48 @@ part of 'communityStore.dart';
 CommunityStore _$CommunityStoreFromJson(Map<String, dynamic> json) {
   return CommunityStore(
     json['network'] as String,
-    json['cid'] == null ? null : CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
+    json['cid'] == null
+        ? null
+        : CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
   )
-    ..metadata = json['metadata'] == null ? null : CommunityMetadata.fromJson(json['metadata'] as Map<String, dynamic>)
+    ..metadata = json['metadata'] == null
+        ? null
+        : CommunityMetadata.fromJson(json['metadata'] as Map<String, dynamic>)
     ..demurrage = (json['demurrage'] as num)?.toDouble()
     ..meetupTime = json['meetupTime'] as int
-    ..bootstrappers = (json['bootstrappers'] as List)?.map((e) => e as String)?.toList()
+    ..bootstrappers =
+        (json['bootstrappers'] as List)?.map((e) => e as String)?.toList()
     ..meetupLocations = json['meetupLocations'] != null
-        ? ObservableList<Location>.of((json['meetupLocations'] as List)
-            .map((e) => e == null ? null : Location.fromJson(e as Map<String, dynamic>)))
+        ? ObservableList<Location>.of((json['meetupLocations'] as List).map(
+            (e) => e == null
+                ? null
+                : Location.fromJson(e as Map<String, dynamic>)))
         : null
     ..communityAccountStores = json['communityAccountStores'] != null
-        ? ObservableMap<String, CommunityAccountStore>.of((json['communityAccountStores'] as Map<String, dynamic>).map(
-            (k, e) => MapEntry(k, e == null ? null : CommunityAccountStore.fromJson(e as Map<String, dynamic>)),
+        ? ObservableMap<String, CommunityAccountStore>.of(
+            (json['communityAccountStores'] as Map<String, dynamic>).map(
+            (k, e) => MapEntry(
+                k,
+                e == null
+                    ? null
+                    : CommunityAccountStore.fromJson(
+                        e as Map<String, dynamic>)),
           ))
         : null;
 }
 
-Map<String, dynamic> _$CommunityStoreToJson(CommunityStore instance) => <String, dynamic>{
+Map<String, dynamic> _$CommunityStoreToJson(CommunityStore instance) =>
+    <String, dynamic>{
       'network': instance.network,
       'cid': instance.cid?.toJson(),
       'metadata': instance.metadata?.toJson(),
       'demurrage': instance.demurrage,
       'meetupTime': instance.meetupTime,
       'bootstrappers': instance.bootstrappers,
-      'meetupLocations': instance.meetupLocations?.map((e) => e?.toJson())?.toList(),
-      'communityAccountStores': instance.communityAccountStores?.map((k, e) => MapEntry(k, e?.toJson())),
+      'meetupLocations':
+          instance.meetupLocations?.map((e) => e?.toJson())?.toList(),
+      'communityAccountStores': instance.communityAccountStores
+          ?.map((k, e) => MapEntry(k, e?.toJson())),
     };
 
 // **************************************************************************
@@ -47,17 +63,22 @@ mixin _$CommunityStore on _CommunityStore, Store {
   Computed<String> _$nameComputed;
 
   @override
-  String get name => (_$nameComputed ??= Computed<String>(() => super.name, name: '_CommunityStore.name')).value;
+  String get name => (_$nameComputed ??=
+          Computed<String>(() => super.name, name: '_CommunityStore.name'))
+      .value;
   Computed<String> _$symbolComputed;
 
   @override
-  String get symbol =>
-      (_$symbolComputed ??= Computed<String>(() => super.symbol, name: '_CommunityStore.symbol')).value;
+  String get symbol => (_$symbolComputed ??=
+          Computed<String>(() => super.symbol, name: '_CommunityStore.symbol'))
+      .value;
   Computed<String> _$assetsCidComputed;
 
   @override
   String get assetsCid =>
-      (_$assetsCidComputed ??= Computed<String>(() => super.assetsCid, name: '_CommunityStore.assetsCid')).value;
+      (_$assetsCidComputed ??= Computed<String>(() => super.assetsCid,
+              name: '_CommunityStore.assetsCid'))
+          .value;
 
   final _$metadataAtom = Atom(name: '_CommunityStore.metadata');
 
@@ -134,7 +155,8 @@ mixin _$CommunityStore on _CommunityStore, Store {
     });
   }
 
-  final _$communityAccountStoresAtom = Atom(name: '_CommunityStore.communityAccountStores');
+  final _$communityAccountStoresAtom =
+      Atom(name: '_CommunityStore.communityAccountStores');
 
   @override
   ObservableMap<String, CommunityAccountStore> get communityAccountStores {
@@ -143,18 +165,21 @@ mixin _$CommunityStore on _CommunityStore, Store {
   }
 
   @override
-  set communityAccountStores(ObservableMap<String, CommunityAccountStore> value) {
-    _$communityAccountStoresAtom.reportWrite(value, super.communityAccountStores, () {
+  set communityAccountStores(
+      ObservableMap<String, CommunityAccountStore> value) {
+    _$communityAccountStoresAtom
+        .reportWrite(value, super.communityAccountStores, () {
       super.communityAccountStores = value;
     });
   }
 
-  final _$_CommunityStoreActionController = ActionController(name: '_CommunityStore');
+  final _$_CommunityStoreActionController =
+      ActionController(name: '_CommunityStore');
 
   @override
   Future<void> initCommunityAccountStore(String address) {
-    final _$actionInfo =
-        _$_CommunityStoreActionController.startAction(name: '_CommunityStore.initCommunityAccountStore');
+    final _$actionInfo = _$_CommunityStoreActionController.startAction(
+        name: '_CommunityStore.initCommunityAccountStore');
     try {
       return super.initCommunityAccountStore(address);
     } finally {
@@ -164,7 +189,8 @@ mixin _$CommunityStore on _CommunityStore, Store {
 
   @override
   void setDemurrage(double d) {
-    final _$actionInfo = _$_CommunityStoreActionController.startAction(name: '_CommunityStore.setDemurrage');
+    final _$actionInfo = _$_CommunityStoreActionController.startAction(
+        name: '_CommunityStore.setDemurrage');
     try {
       return super.setDemurrage(d);
     } finally {
@@ -174,7 +200,8 @@ mixin _$CommunityStore on _CommunityStore, Store {
 
   @override
   void setBootstrappers(List<String> bs) {
-    final _$actionInfo = _$_CommunityStoreActionController.startAction(name: '_CommunityStore.setBootstrappers');
+    final _$actionInfo = _$_CommunityStoreActionController.startAction(
+        name: '_CommunityStore.setBootstrappers');
     try {
       return super.setBootstrappers(bs);
     } finally {
@@ -184,7 +211,8 @@ mixin _$CommunityStore on _CommunityStore, Store {
 
   @override
   void setCommunityMetadata([CommunityMetadata meta]) {
-    final _$actionInfo = _$_CommunityStoreActionController.startAction(name: '_CommunityStore.setCommunityMetadata');
+    final _$actionInfo = _$_CommunityStoreActionController.startAction(
+        name: '_CommunityStore.setCommunityMetadata');
     try {
       return super.setCommunityMetadata(meta);
     } finally {
@@ -194,7 +222,8 @@ mixin _$CommunityStore on _CommunityStore, Store {
 
   @override
   void setMeetupTime([int time]) {
-    final _$actionInfo = _$_CommunityStoreActionController.startAction(name: '_CommunityStore.setMeetupTime');
+    final _$actionInfo = _$_CommunityStoreActionController.startAction(
+        name: '_CommunityStore.setMeetupTime');
     try {
       return super.setMeetupTime(time);
     } finally {
@@ -204,7 +233,8 @@ mixin _$CommunityStore on _CommunityStore, Store {
 
   @override
   void setMeetupLocations([List<Location> locations]) {
-    final _$actionInfo = _$_CommunityStoreActionController.startAction(name: '_CommunityStore.setMeetupLocations');
+    final _$actionInfo = _$_CommunityStoreActionController.startAction(
+        name: '_CommunityStore.setMeetupLocations');
     try {
       return super.setMeetupLocations(locations);
     } finally {
@@ -214,8 +244,8 @@ mixin _$CommunityStore on _CommunityStore, Store {
 
   @override
   void purgeCeremonySpecificState() {
-    final _$actionInfo =
-        _$_CommunityStoreActionController.startAction(name: '_CommunityStore.purgeCeremonySpecificState');
+    final _$actionInfo = _$_CommunityStoreActionController.startAction(
+        name: '_CommunityStore.purgeCeremonySpecificState');
     try {
       return super.purgeCeremonySpecificState();
     } finally {

@@ -6,30 +6,46 @@ part of 'encointerAccountStore.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-EncointerAccountStore _$EncointerAccountStoreFromJson(Map<String, dynamic> json) {
+EncointerAccountStore _$EncointerAccountStoreFromJson(
+    Map<String, dynamic> json) {
   return EncointerAccountStore(
     json['network'] as String,
     json['address'] as String,
   )
     ..balanceEntries = json['balanceEntries'] != null
-        ? ObservableMap<String, BalanceEntry>.of((json['balanceEntries'] as Map<String, dynamic>).map(
-            (k, e) => MapEntry(k, e == null ? null : BalanceEntry.fromJson(e as Map<String, dynamic>)),
+        ? ObservableMap<String, BalanceEntry>.of(
+            (json['balanceEntries'] as Map<String, dynamic>).map(
+            (k, e) => MapEntry(
+                k,
+                e == null
+                    ? null
+                    : BalanceEntry.fromJson(e as Map<String, dynamic>)),
           ))
         : null
     ..reputations = (json['reputations'] as Map<String, dynamic>)?.map(
-      (k, e) => MapEntry(int.parse(k), e == null ? null : CommunityReputation.fromJson(e as Map<String, dynamic>)),
+      (k, e) => MapEntry(
+          int.parse(k),
+          e == null
+              ? null
+              : CommunityReputation.fromJson(e as Map<String, dynamic>)),
     )
     ..txsTransfer = json['txsTransfer'] != null
-        ? ObservableList<TransferData>.of((json['txsTransfer'] as List)
-            .map((e) => e == null ? null : TransferData.fromJson(e as Map<String, dynamic>)))
+        ? ObservableList<TransferData>.of((json['txsTransfer'] as List).map(
+            (e) => e == null
+                ? null
+                : TransferData.fromJson(e as Map<String, dynamic>)))
         : null;
 }
 
-Map<String, dynamic> _$EncointerAccountStoreToJson(EncointerAccountStore instance) => <String, dynamic>{
+Map<String, dynamic> _$EncointerAccountStoreToJson(
+        EncointerAccountStore instance) =>
+    <String, dynamic>{
       'network': instance.network,
       'address': instance.address,
-      'balanceEntries': instance.balanceEntries?.map((k, e) => MapEntry(k, e?.toJson())),
-      'reputations': instance.reputations?.map((k, e) => MapEntry(k.toString(), e?.toJson())),
+      'balanceEntries':
+          instance.balanceEntries?.map((k, e) => MapEntry(k, e?.toJson())),
+      'reputations': instance.reputations
+          ?.map((k, e) => MapEntry(k.toString(), e?.toJson())),
       'txsTransfer': instance.txsTransfer?.map((e) => e?.toJson())?.toList(),
     };
 
@@ -44,11 +60,13 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
 
   @override
   dynamic get ceremonyIndexForProofOfAttendance =>
-      (_$ceremonyIndexForProofOfAttendanceComputed ??= Computed<dynamic>(() => super.ceremonyIndexForProofOfAttendance,
+      (_$ceremonyIndexForProofOfAttendanceComputed ??= Computed<dynamic>(
+              () => super.ceremonyIndexForProofOfAttendance,
               name: '_EncointerAccountStore.ceremonyIndexForProofOfAttendance'))
           .value;
 
-  final _$balanceEntriesAtom = Atom(name: '_EncointerAccountStore.balanceEntries');
+  final _$balanceEntriesAtom =
+      Atom(name: '_EncointerAccountStore.balanceEntries');
 
   @override
   ObservableMap<String, BalanceEntry> get balanceEntries {
@@ -93,20 +111,23 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
     });
   }
 
-  final _$setTransferTxsAsyncAction = AsyncAction('_EncointerAccountStore.setTransferTxs');
+  final _$setTransferTxsAsyncAction =
+      AsyncAction('_EncointerAccountStore.setTransferTxs');
 
   @override
-  Future<void> setTransferTxs(List<dynamic> list, String address, {bool reset = false, dynamic needCache = true}) {
-    return _$setTransferTxsAsyncAction
-        .run(() => super.setTransferTxs(list, address, reset: reset, needCache: needCache));
+  Future<void> setTransferTxs(List<dynamic> list, String address,
+      {bool reset = false, dynamic needCache = true}) {
+    return _$setTransferTxsAsyncAction.run(() => super
+        .setTransferTxs(list, address, reset: reset, needCache: needCache));
   }
 
-  final _$_EncointerAccountStoreActionController = ActionController(name: '_EncointerAccountStore');
+  final _$_EncointerAccountStoreActionController =
+      ActionController(name: '_EncointerAccountStore');
 
   @override
   void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
-    final _$actionInfo =
-        _$_EncointerAccountStoreActionController.startAction(name: '_EncointerAccountStore.addBalanceEntry');
+    final _$actionInfo = _$_EncointerAccountStoreActionController.startAction(
+        name: '_EncointerAccountStore.addBalanceEntry');
     try {
       return super.addBalanceEntry(cid, balanceEntry);
     } finally {
@@ -116,8 +137,8 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
 
   @override
   void setReputations(Map<int, CommunityReputation> reps) {
-    final _$actionInfo =
-        _$_EncointerAccountStoreActionController.startAction(name: '_EncointerAccountStore.setReputations');
+    final _$actionInfo = _$_EncointerAccountStoreActionController.startAction(
+        name: '_EncointerAccountStore.setReputations');
     try {
       return super.setReputations(reps);
     } finally {
@@ -127,8 +148,8 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
 
   @override
   void purgeReputations() {
-    final _$actionInfo =
-        _$_EncointerAccountStoreActionController.startAction(name: '_EncointerAccountStore.purgeReputations');
+    final _$actionInfo = _$_EncointerAccountStoreActionController.startAction(
+        name: '_EncointerAccountStore.purgeReputations');
     try {
       return super.purgeReputations();
     } finally {
@@ -138,8 +159,8 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
 
   @override
   void purgeCeremonySpecificState() {
-    final _$actionInfo =
-        _$_EncointerAccountStoreActionController.startAction(name: '_EncointerAccountStore.purgeCeremonySpecificState');
+    final _$actionInfo = _$_EncointerAccountStoreActionController.startAction(
+        name: '_EncointerAccountStore.purgeCeremonySpecificState');
     try {
       return super.purgeCeremonySpecificState();
     } finally {

@@ -11,7 +11,8 @@ Config _$ConfigFromJson(Map<String, dynamic> json) {
     initialRoute: json['initialRoute'] as String,
     mockLocalStorage: json['mockLocalStorage'] as bool,
     mockSubstrateApi: json['mockSubstrateApi'] as bool,
-    appStoreConfig: _$enumDecodeNullable(_$StoreConfigEnumMap, json['appStoreConfig']),
+    appStoreConfig:
+        _$enumDecodeNullable(_$StoreConfigEnumMap, json['appStoreConfig']),
   );
 }
 
@@ -32,7 +33,9 @@ T _$enumDecode<T>(
         '${enumValues.values.join(', ')}');
   }
 
-  final value = enumValues.entries.singleWhere((e) => e.value == source, orElse: () => null)?.key;
+  final value = enumValues.entries
+      .singleWhere((e) => e.value == source, orElse: () => null)
+      ?.key;
 
   if (value == null && unknownValue == null) {
     throw ArgumentError('`$source` is not one of the supported values: '

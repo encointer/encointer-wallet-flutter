@@ -4,6 +4,7 @@ import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
@@ -87,8 +88,20 @@ class _ReceivePageState extends State<ReceivePage> {
         webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
           print("getAllBalances: ");
           if (balances != null) {
-            print(balances[widget.store.encointer.chosenCid].lastUpdate);
-            print(balances[widget.store.encointer.chosenCid].principal);
+            CommunityIdentifier cid = widget.store.encointer.chosenCid;
+            int blockNumber = widget.store.chain.latestHeaderNumber;
+            double demurrageRate = widget.store.encointer.community.demurrage;
+            print(balances[cid].lastUpdate);
+            print(balances[cid].principal);
+            double newBalance = balances[cid].applyDemurrage(blockNumber, demurrageRate);
+            double oldBalance = widget.store.encointer.communityBalanceEntry.applyDemurrage(blockNumber, demurrageRate);
+            if ((newBalance != null) && (oldBalance != null)) {
+              double delta = newBalance - oldBalance;
+              print("balance changed by $delta");
+              if (delta > 0) {
+                print("balance increased by $delta");
+              }
+            }
           }
         });
       },
