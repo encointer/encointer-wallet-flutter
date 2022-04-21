@@ -121,11 +121,11 @@ class _ReceivePageState extends State<ReceivePage> with WidgetsBindingObserver {
           print("getAllBalances: ");
           if (balances != null) {
             CommunityIdentifier cid = widget.store.encointer.chosenCid;
-            int blockNumber = widget.store.chain.latestHeaderNumber;
             double demurrageRate = widget.store.encointer.community.demurrage;
-            double newBalance = balances[cid].applyDemurrage(blockNumber, demurrageRate);
-            double oldBalance = widget.store.encointer.communityBalanceEntry.applyDemurrage(blockNumber, demurrageRate);
-            if ((newBalance != null) && (oldBalance != null)) {
+            double newBalance = widget.store.encointer.applyDemurrage(balances[cid]);
+            double oldBalance = widget.store.encointer.applyDemurrage(widget.store.encointer.communityBalanceEntry);
+            oldBalance = oldBalance != null ? oldBalance : 0;
+            if (newBalance != null) {
               double delta = newBalance - oldBalance;
               print("balance changed from $oldBalance to $newBalance by $delta");
               if (delta > demurrageRate) {
