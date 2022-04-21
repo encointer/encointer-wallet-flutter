@@ -86,8 +86,10 @@ class _ReceivePageState extends State<ReceivePage> {
         });
         webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
           print("getAllBalances: ");
-          print(balances[widget.store.encointer.chosenCid].lastUpdate);
-          print(balances[widget.store.encointer.chosenCid].principal);
+          if (balances != null) {
+            print(balances[widget.store.encointer.chosenCid].lastUpdate);
+            print(balances[widget.store.encointer.chosenCid].principal);
+          }
         });
       },
     );
