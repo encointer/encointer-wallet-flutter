@@ -12,7 +12,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_qr_scan/qrcode_reader_view.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class ScanClaimQrCode extends StatefulWidget {
+class ScanClaimQrCode extends StatelessWidget {
   ScanClaimQrCode(this.store, this.confirmedParticipantsCount);
 
   final AppStore store;
@@ -20,25 +20,18 @@ class ScanClaimQrCode extends StatefulWidget {
 
   final GlobalKey<QrcodeReaderViewState> _qrViewKey = GlobalKey();
 
-  @override
-  _ScanClaimQrCodeState createState() => _ScanClaimQrCodeState();
-}
-
-class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
-  _ScanClaimQrCodeState();
-
   void validateAndStoreClaim(BuildContext context, ClaimOfAttendance claim, Translations dic) {
-    List<String> registry = widget.store.encointer.communityAccount.meetup.registry;
+    List<String> registry = store.encointer.communityAccount.meetup.registry;
     if (!registry.contains(claim.claimantPublic)) {
       // this is important because the runtime checks if there are too many claims trying to be registered.
       _showSnackBar(context, dic.encointer.meetupClaimantInvalid);
       print("[scanClaimQrCode] Claimant: ${claim.claimantPublic} is not part of registry: ${registry.toString()}");
     } else {
-      String msg = widget.store.encointer.communityAccount.containsClaim(claim)
+      String msg = store.encointer.communityAccount.containsClaim(claim)
           ? dic.encointer.claimsScannedAlready
           : dic.encointer.claimsScannedNew;
 
-      widget.store.encointer.communityAccount.addParticipantClaim(claim);
+      store.encointer.communityAccount.addParticipantClaim(claim);
       _showSnackBar(context, msg);
     }
   }
@@ -70,7 +63,7 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
         }
       }
 
-      widget._qrViewKey.currentState.startScan();
+      _qrViewKey.currentState.startScan();
 
       // just pops the cupertino activity indicator.
       Navigator.of(context).pop();
@@ -82,12 +75,11 @@ class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           if (snapshot.hasData && snapshot.data == true) {
             return QrcodeReaderView(
-              key: widget._qrViewKey,
+              key: _qrViewKey,
               helpWidget: Observer(
                   builder: (_) => Text(dic.encointer.claimsScannedNOfM
-                      .replaceAll(
-                          'SCANNED_COUNT', widget.store.encointer.communityAccount.scannedClaimsCount.toString())
-                      .replaceAll('TOTAL_COUNT', (widget.confirmedParticipantsCount - 1).toString()))),
+                      .replaceAll('SCANNED_COUNT', store.encointer.communityAccount.scannedClaimsCount.toString())
+                      .replaceAll('TOTAL_COUNT', (confirmedParticipantsCount - 1).toString()))),
               headerWidget: SafeArea(
                   child: Align(
                 alignment: Alignment.topRight,
