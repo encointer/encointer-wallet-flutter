@@ -12,7 +12,6 @@ RpcMethods _$RpcMethodsFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$RpcMethodsToJson(RpcMethods instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$RpcMethodsToJson(RpcMethods instance) => <String, dynamic>{
       'methods': instance.methods,
     };

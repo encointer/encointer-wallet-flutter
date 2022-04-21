@@ -39,8 +39,7 @@ mixin _$ImagePickerState on _ImagePickerState, Store {
     });
   }
 
-  final _$retrieveDataErrorAtom =
-      Atom(name: '_ImagePickerState.retrieveDataError');
+  final _$retrieveDataErrorAtom = Atom(name: '_ImagePickerState.retrieveDataError');
 
   @override
   String get retrieveDataError {
@@ -55,13 +54,11 @@ mixin _$ImagePickerState on _ImagePickerState, Store {
     });
   }
 
-  final _$_ImagePickerStateActionController =
-      ActionController(name: '_ImagePickerState');
+  final _$_ImagePickerStateActionController = ActionController(name: '_ImagePickerState');
 
   @override
   void addImage(PickedFile image) {
-    final _$actionInfo = _$_ImagePickerStateActionController.startAction(
-        name: '_ImagePickerState.addImage');
+    final _$actionInfo = _$_ImagePickerStateActionController.startAction(name: '_ImagePickerState.addImage');
     try {
       return super.addImage(image);
     } finally {
@@ -71,8 +68,7 @@ mixin _$ImagePickerState on _ImagePickerState, Store {
 
   @override
   void removeImage(PickedFile toDelete) {
-    final _$actionInfo = _$_ImagePickerStateActionController.startAction(
-        name: '_ImagePickerState.removeImage');
+    final _$actionInfo = _$_ImagePickerStateActionController.startAction(name: '_ImagePickerState.removeImage');
     try {
       return super.removeImage(toDelete);
     } finally {
