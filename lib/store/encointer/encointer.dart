@@ -332,6 +332,7 @@ abstract class _EncointerStore with Store {
       return shouldCache ? writeToCache() : Future.value(null);
     } else {
       _log("Don't add already existing communityStore for cid: ${cid.toFmtString()}");
+      await communityStores[cidFmt].initCommunityAccountStore(address);
       return Future.value(null);
     }
   }
