@@ -68,9 +68,11 @@ class Api {
   Future<void> launchWebview({bool customNode = false}) async {
     var connectFunc = customNode ? connectNode : connectNodeAll;
 
-    void postInitCallback() {
+    void postInitCallback() async {
       // load keyPairs from local data
-      account.initAccounts();
+      await account.initAccounts();
+      // needs to be called after init-accounts
+      store.encointer.initStoresForLegacyCache();
       connectFunc();
     }
 

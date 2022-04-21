@@ -73,7 +73,7 @@ AccountBusinessTuple _$AccountBusinessTupleFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$AccountBusinessTupleToJson(AccountBusinessTuple instance) => <String, dynamic>{
       'controller': instance.controller,
-      'businessData': instance.businessData,
+      'businessData': instance.businessData?.toJson(),
     };
 
 BusinessIdentifier _$BusinessIdentifierFromJson(Map<String, dynamic> json) {
@@ -84,6 +84,6 @@ BusinessIdentifier _$BusinessIdentifierFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$BusinessIdentifierToJson(BusinessIdentifier instance) => <String, dynamic>{
-      'cid': instance.cid,
+      'cid': instance.cid?.toJson(),
       'controller': instance.controller,
     };

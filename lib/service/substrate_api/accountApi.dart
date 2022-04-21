@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/service/substrate_api/core/jsApi.dart';
 import 'package:encointer_wallet/service/notification.dart';
+import 'package:encointer_wallet/service/substrate_api/core/jsApi.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -39,16 +39,27 @@ class AccountApi {
     }
   }
 
-  /// encode addresses to publicKeys
-  Future<void> encodeAddress(List<String> pubKeys) async {
+  /// Encodes publicKeys to SS58-addresses
+  Future<List<String>> encodeAddress(List<String> pubKeys) async {
     String ss58 = jsonEncode(network_ss58_map.values.toSet().toList());
     Map res = await jsApi.evalJavascript(
       'account.encodeAddress(${jsonEncode(pubKeys)}, $ss58)',
       allowRepeat: true,
     );
+
     if (res != null) {
       store.account.setPubKeyAddressMap(Map<String, Map>.from(res));
+      var addresses = <String>[];
+
+      for (var pubKey in pubKeys) {
+        _log("New entry for pubKeyAddressMap: Key: $pubKey, address: ${res[store.settings]}");
+        addresses.add(store.account.pubKeyAddressMap[store.settings.endpoint.ss58][pubKey]);
+      }
+
+      return addresses;
     }
+
+    return Future.value(null);
   }
 
   /// decode addresses to publicKeys
@@ -313,4 +324,8 @@ class AccountApi {
     }
     return res;
   }
+}
+
+_log(String msg) {
+  print("[accountApi] $msg");
 }

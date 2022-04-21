@@ -1,47 +1,57 @@
-import 'dart:collection';
-import 'dart:convert';
 import 'dart:math';
 
-import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/assets/types/transferData.dart';
-import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
-import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
-import 'package:encointer_wallet/store/encointer/types/location.dart';
-import 'package:encointer_wallet/utils/format.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
 import '../../models/index.dart';
+import 'sub_stores/bazaar_store/bazaarStore.dart';
+import 'sub_stores/community_store/communityStore.dart';
+import 'sub_stores/community_store/community_account_store/communityAccountStore.dart';
+import 'sub_stores/encointer_account_store/encointerAccountStore.dart';
 
 part 'encointer.g.dart';
 
+/// Mobx-Store containing all encointer specific data.
+///
+/// Data specific to a community and/or account are kept in sub-stores.
+///
+/// ### Structure:
+///               EncointerStore
+///              /    |       \
+///   CommunitySt.  BazaarSt.  EncointerAccountSt.
+///        |
+///   CommunityAccountSt.
+///
+/// Where CommunityStores and BazaarStores exist per Community. The `EncointerAccountStore` contains data specific
+/// to an account, but across all communities. Finally, the `CommunityAccountStore` contains data specific to and
+/// account **and** community.
+///
+/// ### Caching and Serialization
+/// The stores have been designed such that all data fields are serializable. This facilitates caching the entire
+/// encointer store tree with one cache call.
+///
+/// ### Initialization
+/// The non-data fields, e.g., `_cacheFn` and `_rootStore` can't be serialized, and can therefore not be mandatory
+/// constructor parameters, implying they need to be initialized by other means. Such fields should be private fields
+/// and shall **only** be settable by the `initStore` method. This prevents forgetting to set fields, which are added
+/// later to the store.
+@JsonSerializable(explicitToJson: true)
 class EncointerStore extends _EncointerStore with _$EncointerStore {
-  EncointerStore(AppStore store) : super(store);
+  EncointerStore(String network) : super(network);
+
+  factory EncointerStore.fromJson(Map<String, dynamic> json) => _$EncointerStoreFromJson(json);
+  Map<String, dynamic> toJson() => _$EncointerStoreToJson(this);
 }
 
 abstract class _EncointerStore with Store {
-  _EncointerStore(this.rootStore);
+  _EncointerStore(this.network);
 
-  final AppStore rootStore;
-  final String cacheTxsTransferKey = 'transfer_txs';
-  final String encointerCommunityKey = 'wallet_encointer_community';
-  final String encointerCommunityMetadataKey = 'wallet_encointer_community_metadata';
-  final String encointerCommunitiesKey = 'wallet_encointer_communities';
-  final String encointerBootstrappersKey = 'wallet_encointer_bootstrappers';
-  final String encointerCommunityLocationsKey = 'wallet_encointer_community_locations';
-  final String encointerCommunityReputationsKey = 'wallet_encointer_community_reputations';
-
-  // offline meetup cache.
-  final String encointerCurrentCeremonyIndexKey = 'wallet_encointer_current_ceremony_index';
-  final String encointerCurrentPhaseKey = 'wallet_encointer_current_phase';
-  final String encointerMeetupIndexKey = 'wallet_encointer_meetup_index';
-  final String encointerMeetupLocationKey = 'wallet_encointer_meetup_location';
-  final String encointerMeetupRegistryKey = 'wallet_encointer_meetup_registry';
-  final String encointerParticipantsClaimsKey = 'wallet_encointer_participants_claims';
-  final String encointerMeetupTimeKey = 'wallet_encointer_meetup_time';
+  @JsonKey(ignore: true)
+  AppStore _rootStore;
 
   // Note: In synchronous code, every modification of an @observable is tracked by mobx and
   // fires a reaction. However, modifications in asynchronous code must be wrapped in
@@ -50,6 +60,13 @@ abstract class _EncointerStore with Store {
   // Note2: In case of Map/List: If the variable is declared as plain Map/List with `@observable` annotated, mobx
   // tracks variable assignment but not if individual items are changed. If this is wanted, the variable must be
   // declared as `ObservableList/-Map`.
+
+  /// Caches the store to local storage.
+  @JsonKey(ignore: true)
+  Future<void> Function() _cacheFn;
+
+  /// The encointer network this store belongs to
+  final String network;
 
   @observable
   CeremonyPhase currentPhase;
@@ -64,94 +81,13 @@ abstract class _EncointerStore with Store {
   int currentCeremonyIndex;
 
   @observable
-  int meetupIndex;
-
-  @observable
-  Location meetupLocation;
-
-  @observable
-  int meetupTime;
-
-  @observable
-  List<String> meetupRegistry;
-
-  @observable
-  int participantIndex;
-
-  @observable
-  ObservableMap<CommunityIdentifier, BalanceEntry> balanceEntries = new ObservableMap();
-
-  @observable
   List<CommunityIdentifier> communityIdentifiers;
-
-  @observable
-  List<String> bootstrappers;
 
   @observable
   List<CidName> communities;
 
   @observable
   CommunityIdentifier chosenCid;
-
-  @observable
-  CommunityMetadata communityMetadata;
-
-  @observable
-  double demurrage;
-
-  // claimantPublic -> ClaimOfAttendance
-  @observable
-  ObservableMap<String, ClaimOfAttendance> participantsClaims = new ObservableMap();
-
-  @computed
-  get scannedClaimsCount => participantsClaims.length;
-
-  @observable
-  ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
-
-  // splay tree set does automatically order the keys.
-  @observable
-  SplayTreeMap<int, CommunityReputation> reputations;
-
-  @computed
-  get ceremonyIndexForProofOfAttendance {
-    if (reputations != null && reputations.isNotEmpty) {
-      try {
-        return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
-      } catch (_e) {
-        print("Has reputation, but none that has not been linked yet");
-        return 0;
-      }
-    }
-  }
-
-  @observable
-  ObservableList<AccountBusinessTuple> businessRegistry;
-
-  @observable
-  ObservableList<Location> communityLocations = new ObservableList();
-
-  @computed
-  String get communityName => communityMetadata?.name;
-
-  @computed
-  String get communitySymbol => communityMetadata?.symbol;
-
-  @computed
-  String get communityIconsCid => communityMetadata?.assets;
-
-  @computed
-  BalanceEntry get communityBalanceEntry {
-    return balanceEntries[chosenCid];
-  }
-
-  @computed
-  double get communityBalance {
-    return applyDemurrage(communityBalanceEntry);
-  }
-
-  @computed
-  bool get isAssigned => meetupIndex != null && meetupIndex > 0;
 
   /// Checks if the chosenCid is contained in the communities.
   ///
@@ -162,23 +98,125 @@ abstract class _EncointerStore with Store {
     return chosenCid != null && communities.isNotEmpty && communities.where((cn) => cn.cid == chosenCid).isNotEmpty;
   }
 
+  // -- sub-stores
+
+  /// Bazaar sub-stores.
+  ///
+  /// Map: CommunityIdentifier.toFmtString() -> `BazaarStore`.
+  @observable
+  ObservableMap<String, BazaarStore> bazaarStores = new ObservableMap();
+
+  /// Community sub-stores.
+  ///
+  /// Map: CommunityIdentifier.toFmtString() -> `CommunityStore`.
+  ObservableMap<String, CommunityStore> communityStores = new ObservableMap();
+
+  /// EncointerAccount sub-stores.
+  ///
+  /// Map: Address SS58 -> `CommunityStore`.
+  @observable
+  ObservableMap<String, EncointerAccountStore> accountStores = new ObservableMap();
+
+  /// The `BazaarStore` for the currently chosen community.
+  @computed
+  BazaarStore get bazaar {
+    return chosenCid != null ? bazaarStores[chosenCid.toFmtString()] : null;
+  }
+
+  /// The `CommunityStore` for the currently chosen community.
+  @computed
+  CommunityStore get community {
+    return chosenCid != null ? communityStores[chosenCid.toFmtString()] : null;
+  }
+
+  /// The `CommunityAccountStore` for the currently chosen community and account.
+  @computed
+  CommunityAccountStore get communityAccount {
+    return community != null ? community.communityAccountStores[_rootStore.account.currentAddress] : null;
+  }
+
+  /// The `EncointerAccountStore` for the currently chosen account.
+  @computed
+  EncointerAccountStore get account {
+    return accountStores[_rootStore.account.currentAddress];
+  }
+
+  // -- computed values derived from sub-stores
+
+  @computed
+  BalanceEntry get communityBalanceEntry {
+    if (chosenCid != null) {
+      bool containsBalance = account?.balanceEntries?.containsKey(chosenCid.toFmtString()) ?? false;
+      return containsBalance ? account.balanceEntries[chosenCid.toFmtString()] : null;
+    } else {
+      return null;
+    }
+  }
+
+  @computed
+  double get communityBalance {
+    return applyDemurrage(communityBalanceEntry);
+  }
+
   double applyDemurrage(BalanceEntry entry) {
     double res;
-    if (rootStore.chain.latestHeaderNumber != null && entry != null && demurrage != null) {
-      int elapsed = rootStore.chain.latestHeaderNumber - entry.lastUpdate;
-      double exponent = -demurrage * elapsed;
+    if (_rootStore.chain.latestHeaderNumber != null && entry != null && community.demurrage != null) {
+      int elapsed = _rootStore.chain.latestHeaderNumber - entry.lastUpdate;
+      double exponent = -community.demurrage * elapsed;
       res = entry.principal * pow(e, exponent);
     }
     return res;
   }
 
+  // -- Setters for this store
+
+  @action
+  void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
+    _log("set communityIdentifiers to $cids");
+    communityIdentifiers = cids;
+    writeToCache();
+
+    if (!communitiesContainsChosenCid) {
+      // inconsistency found, reset state
+      setChosenCid();
+    }
+  }
+
+  @action
+  void setCommunities(List<CidName> c) {
+    _log("set communities to $c");
+    communities = c;
+    writeToCache();
+  }
+
+  @action
+  void setChosenCid([CommunityIdentifier cid]) {
+    if (chosenCid != cid) {
+      chosenCid = cid;
+      writeToCache();
+
+      if (cid != null) {
+        initCommunityStore(cid, _rootStore.account.currentAddress);
+        initBazaarStore(cid);
+      }
+    }
+
+    if (_rootStore.settings.endpointIsNoTee) {
+      webApi.encointer.subscribeBusinessRegistry();
+    }
+
+    // update depending values without awaiting
+    if (!_rootStore.settings.loading) {
+      webApi.encointer.getCommunityData();
+    }
+  }
+
   @action
   void setCurrentPhase(CeremonyPhase phase) {
-    print("store: set currentPhase to $phase");
+    _log("set currentPhase to $phase");
     if (currentPhase != phase) {
-      // jsonEncode fails if we don't call toString for an enum
-      cacheObject(encointerCurrentPhaseKey, phase.toString());
       currentPhase = phase;
+      writeToCache();
     }
     // update depending values without awaiting
     webApi.encointer.getCurrentCeremonyIndex();
@@ -188,79 +226,45 @@ abstract class _EncointerStore with Store {
   void setCurrentCeremonyIndex(index) {
     print("store: set currentCeremonyIndex to $index");
     if (currentCeremonyIndex != index && currentPhase == CeremonyPhase.REGISTERING) {
-      resetState();
+      purgeCeremonySpecificState();
     }
 
     currentCeremonyIndex = index;
-    cacheObject(encointerCurrentCeremonyIndexKey, index);
+    writeToCache();
+
     // update depending values without awaiting
     updateState();
   }
+
+  // -- other helpers
 
   @action
   void updateState() {
     switch (currentPhase) {
       case CeremonyPhase.REGISTERING:
         webApi.encointer.getMeetupTime();
+        if (chosenCid != null) {
+          webApi.encointer.getAggregatedAccountData(chosenCid, _rootStore.account.currentAddress);
+        }
         webApi.encointer.getReputations();
         break;
       case CeremonyPhase.ASSIGNING:
-        webApi.encointer.getMeetupIndex();
+        if (chosenCid != null) {
+          webApi.encointer.getAggregatedAccountData(chosenCid, _rootStore.account.currentAddress);
+        }
         break;
       case CeremonyPhase.ATTESTING:
-        webApi.encointer.getMeetupIndex();
+        if (chosenCid != null) {
+          webApi.encointer.getAggregatedAccountData(chosenCid, _rootStore.account.currentAddress);
+        }
         break;
     }
-    webApi.encointer.getParticipantIndex();
   }
 
   @action
-  resetState() {
-    purgeParticipantsClaims();
-    setParticipantIndex();
-    setMeetupIndex();
-    setMeetupLocation();
-    setMeetupTime();
-    setMeetupRegistry();
-    purgeReputations();
-  }
-
-  @action
-  void setMeetupIndex([int index]) {
-    print("store: set meetupIndex to $index");
-    if (meetupIndex != index) {
-      cacheObject(encointerMeetupIndexKey, index);
-      meetupIndex = index;
-    }
-
-    if (index != null) {
-      // update depending values
-      webApi.encointer.getMeetupLocation().then((_) => webApi.encointer.getMeetupTime());
-      webApi.encointer.getMeetupRegistry();
-    }
-  }
-
-  @action
-  void setMeetupLocation([Location location]) {
-    print("store: set meetupLocation to $location");
-    if (meetupLocation != location) {
-      cacheObject(encointerMeetupLocationKey, location);
-      meetupLocation = location;
-    }
-
-    if (location != null) {
-      // update depending values
-      webApi.encointer.getMeetupTime();
-    }
-  }
-
-  @action
-  void setMeetupTime([int time]) {
-    print("store: set meetupTime to $time");
-    if (meetupTime != time) {
-      cacheObject(encointerMeetupTimeKey, time);
-      meetupTime = time;
-    }
+  void purgeCeremonySpecificState() {
+    communityStores.forEach((cid, store) => store.purgeCeremonySpecificState());
+    accountStores.forEach((cid, store) => store.purgeCeremonySpecificState());
   }
 
   /// Calculates the remaining time until the next meetup starts. As Gesell and Cantillon currently implement timewarp
@@ -272,302 +276,136 @@ abstract class _EncointerStore with Store {
     } else if (40 <= now.minute && now.minute < 50) {
       return ((49 - now.minute) * 60 + 60 - now.second);
     } else {
-      print("Warning: Invalid time to meetup");
+      _log("Warning: Invalid time to meetup");
       return 0;
     }
   }
 
-  @action
-  void setMeetupRegistry([List<String> reg]) {
-    print("store: set meetupRegistry to $reg");
-    cacheObject(encointerMeetupRegistryKey, reg);
-    meetupRegistry = reg;
-  }
+  /// Initialize the store and the sub-stores.
+  ///
+  /// Should always be called after creating a store to ensure full functionality.
+  void initStore(AppStore root, Function cacheFn) {
+    this._rootStore = root;
+    this._cacheFn = cacheFn;
 
-  @action
-  void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
-    print("store: set communityIdentifiers to $cids");
-    communityIdentifiers = cids;
-
-    if (!communitiesContainsChosenCid) {
-      // inconsistency found, reset state
-      setChosenCid();
-    }
-  }
-
-  @action
-  void setBootstrappers(List<String> bs) {
-    print("store: set communityIdentifiers to $bs");
-    bootstrappers = bs;
-    cacheObject(encointerBootstrappersKey, bs);
-  }
-
-  @action
-  void setCommunityMetadata([CommunityMetadata meta]) {
-    print("store: set communityMetadata to $meta");
-    communityMetadata = meta;
-    cacheObject(encointerCommunityMetadataKey, meta);
-  }
-
-  @action
-  void setCommunities(List<CidName> c) {
-    print("store: set communities to $c");
-    communities = c;
-    cacheObject(encointerCommunitiesKey, c);
-  }
-
-  @action
-  void setCommunityLocations([List<Location> locations]) {
-    print("store: set communityLocations to ${locations.toString()}");
-    communityLocations = ObservableList.of(locations);
-    cacheObject(encointerCommunityLocationsKey, locations);
-
-    // There is no race-condition with the `getMeetupTime` call in `setMeetupLocation` because `getMeetupTime` uses
-    // internally the `meetupLocation`. Hence, the worst case scenario is a redundant rpc call.
-    webApi.encointer.getMeetupTime();
-  }
-
-  @action
-  void setDemurrage(double d) {
-    demurrage = d;
-  }
-
-  @action
-  void setChosenCid([CommunityIdentifier cid]) {
-    if (chosenCid != cid) {
-      chosenCid = cid;
-      cacheObject(encointerCommunityKey, cid);
-      setCommunityMetadata();
-      resetState();
+    // These are merely safety guards, and should never be needed. A null reference error occurred here only because
+    // a store was added in the development process after it has been written to cache. Hence, deserialization
+    // initialized it with null.
+    if (accountStores == null) {
+      accountStores = new ObservableMap();
     }
 
-    if (rootStore.settings.endpointIsNoTee) {
-      webApi.encointer.subscribeBusinessRegistry();
+    if (bazaarStores == null) {
+      bazaarStores = new ObservableMap();
     }
 
-    // update depending values without awaiting
-    if (!rootStore.settings.loading) {
-      webApi.encointer.getCommunityData();
+    if (communityStores == null) {
+      communityStores = new ObservableMap();
     }
+
+    accountStores.forEach((cid, store) => store.initStore(cacheFn));
+    bazaarStores.forEach((cid, store) => store.initStore(cacheFn));
+    communityStores.forEach((cid, store) => store.initStore(cacheFn, applyDemurrage));
   }
 
-  @action
-  void purgeParticipantsClaims() {
-    participantsClaims.clear();
-    cacheParticipantsClaims(participantsClaims);
-  }
-
-  bool containsClaim(ClaimOfAttendance claim) {
-    return participantsClaims[claim.claimantPublic] != null;
-  }
-
-  @action
-  void addParticipantClaim(ClaimOfAttendance claim) {
-    participantsClaims[claim.claimantPublic] = claim;
-    cacheParticipantsClaims(participantsClaims);
-  }
-
-  @action
-  void setReputations(Map<int, CommunityReputation> reps) {
-    reputations = SplayTreeMap.of(reps);
-    cacheMap<int, CommunityReputation>(encointerCommunityReputationsKey, reps);
-  }
-
-  @action
-  void purgeReputations() {
-    if (reputations != null) {
-      reputations.clear();
-      cacheMap<int, CommunityReputation>(encointerCommunityReputationsKey, reputations);
-    }
-  }
-
-  @action
-  void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
-    print("balanceEntry $balanceEntry added to cid $cid added");
-    balanceEntries[cid] = balanceEntry;
-  }
-
-  @action
-  void setParticipantIndex([int pIndex]) {
-    participantIndex = pIndex;
-  }
-
-  @action
-  Future<void> setTransferTxs(List list, {bool reset = false, needCache = true}) async {
-    List transfers = list.map((i) {
-      bool isCommunityCurrency = i['params'].length == 3;
-      return {
-        "block_timestamp": i['time'],
-        "hash": i['hash'],
-        "success": true,
-        "from": rootStore.account.currentAddress,
-        "to": i['params'][0],
-        "token": isCommunityCurrency
-            ? CommunityIdentifier.fromJson(i['params'][1]).toFmtString()
-            : rootStore.settings.networkState.tokenSymbol,
-        "amount": isCommunityCurrency ? Fmt.numberFormat(i['params'][2]) : Fmt.balance(i['params'][1], ert_decimals),
-      };
-    }).toList();
-    if (reset) {
-      txsTransfer = ObservableList.of(transfers.map((i) => TransferData.fromJson(Map<String, dynamic>.from(i))));
+  Future<void> writeToCache() {
+    if (_cacheFn != null) {
+      return _cacheFn();
     } else {
-      txsTransfer.addAll(transfers.map((i) => TransferData.fromJson(Map<String, dynamic>.from(i))));
-    }
-
-    if (needCache && txsTransfer.length > 0) {
-      _cacheTxs(transfers, cacheTxsTransferKey);
+      return Future.value(null);
     }
   }
 
+  // -- init functions for sub-stores
+
   @action
-  Future<void> _cacheTxs(List list, String cacheKey) async {
-    String pubKey = rootStore.account.currentAccount.pubKey;
-    List cached = await rootStore.localStorage.getAccountCache(pubKey, cacheKey);
-    if (cached != null) {
-      cached.addAll(list);
+  Future<void> initCommunityStore(CommunityIdentifier cid, String address, {shouldCache = true}) async {
+    var cidFmt = cid.toFmtString();
+    if (!communityStores.containsKey(cidFmt)) {
+      _log("Adding new communityStore for cid: ${cid.toFmtString()}");
+
+      var communityStore = CommunityStore(network, cid);
+      communityStore.initStore(_cacheFn, applyDemurrage);
+      await communityStore.initCommunityAccountStore(address);
+
+      communityStores[cidFmt] = communityStore;
+      return shouldCache ? writeToCache() : Future.value(null);
     } else {
-      cached = list;
+      _log("Don't add already existing communityStore for cid: ${cid.toFmtString()}");
+      await communityStores[cidFmt].initCommunityAccountStore(address);
+      return Future.value(null);
     }
-    rootStore.localStorage.setAccountCache(pubKey, cacheKey, cached);
   }
 
   @action
-  Future<void> loadCache() async {
-    var cachedCid = await loadObject(encointerCommunityKey);
-    if (cachedCid != null) {
-      chosenCid = CommunityIdentifier.fromJson(cachedCid);
-      print("found cached choice of cid. will recover it: " + chosenCid.toFmtString());
-    }
-    var cachedCommunityMetadata = await loadObject(encointerCommunityMetadataKey);
-    if (cachedCommunityMetadata != null) {
-      communityMetadata = CommunityMetadata.fromJson(cachedCommunityMetadata);
-      print("found cached community metadata. will recover it: " + cachedCommunityMetadata.toString());
-    }
-    List<dynamic> cachedCommunitiesInternalList = await loadObject(encointerCommunitiesKey);
-    if (cachedCommunitiesInternalList != null) {
-      List<CidName> cachedCommunities = cachedCommunitiesInternalList.map((s) => CidName.fromJson(s)).toList();
-      print("found cached communities. will recover it: " + cachedCommunities.toString());
-      communities = cachedCommunities;
-    }
+  Future<void> initEncointerAccountStore(String address, {shouldCache = true}) {
+    if (!accountStores.containsKey(address)) {
+      _log("Adding new encointerAccountStore for: $address");
 
-    List<dynamic> _cachedBootstrapperList = await loadObject(encointerBootstrappersKey);
-    if (_cachedBootstrapperList != null) {
-      bootstrappers = List<String>.from(_cachedBootstrapperList);
-      print("found cached bootstrappers. will recover it: $bootstrappers");
-    }
+      var encointerAccountStore = EncointerAccountStore(network, address);
+      encointerAccountStore.initStore(_cacheFn);
 
-    List<dynamic> cachedLocations = await loadObject(encointerCommunityLocationsKey);
-    if (cachedLocations != null) {
-      List<Location> locations = cachedLocations.map((s) => Location.fromJson(s)).toList();
-      print("found cached locations. will recover it: " + locations.toString());
-      communityLocations = ObservableList.of(locations);
+      accountStores[address] = encointerAccountStore;
+      return shouldCache ? writeToCache() : Future.value(null);
+    } else {
+      _log("Don't add already existing encointerAccountStore for address: $address");
+      return Future.value(null);
     }
-
-    var cachedReputations = await loadMap(encointerCommunityReputationsKey);
-    if (cachedReputations != null) {
-      // for some weird reason `cachedReputation.cast<int, CommunityReputation> did not throw an exception, but it did not
-      // cast successfully.
-      Map<int, CommunityReputation> r =
-          Map.of(cachedReputations.map((k, v) => MapEntry(int.parse(k), CommunityReputation.fromJson(v))));
-      print("found cached reputations. will recover it: " + cachedReputations.toString());
-      reputations = SplayTreeMap.of(r);
-    }
-
-    // get meetup related data
-    var data = await loadMap(encointerParticipantsClaimsKey);
-    if (data != null) {
-      print("found cached participants' claims. will recover them: $data");
-      participantsClaims = ObservableMap.of(data.cast<String, ClaimOfAttendance>());
-    }
-    currentPhase = await loadCurrentPhase();
-    currentCeremonyIndex = await loadObject(encointerCurrentCeremonyIndexKey);
-    meetupIndex = await loadObject(encointerMeetupIndexKey);
-
-    var loc = await loadObject(encointerMeetupLocationKey);
-    if (loc != null) {
-      meetupLocation = Location.fromJson(loc);
-    }
-
-    var reg = await loadObject(encointerMeetupRegistryKey);
-    if (reg != null) {
-      meetupRegistry = List<String>.from(reg);
-    }
-
-    meetupTime = await loadObject(encointerMeetupTimeKey);
   }
 
   @action
-  void setbusinessRegistry(List<AccountBusinessTuple> accBusinesses) {
-    businessRegistry = ObservableList.of(accBusinesses);
-  }
+  Future<void> initBazaarStore(CommunityIdentifier cid, {shouldCache = true}) {
+    var cidFmt = cid.toFmtString();
+    if (!bazaarStores.containsKey(cidFmt)) {
+      _log("Adding new bazaarStore for cid: ${cid.toFmtString()}");
 
-  Future<void> reloadbusinessRegistry() async {
-    await webApi.encointer.getBusinesses();
-  }
+      var bazaarStore = BazaarStore(network, cid);
+      bazaarStore.initStore(_cacheFn);
 
-  Future<void> cacheParticipantsClaims(Map<String, ClaimOfAttendance> claims) {
-    return cacheMap<String, ClaimOfAttendance>(encointerParticipantsClaimsKey, claims);
-  }
-
-  /// Cache a map in the local storage.
-  ///
-  /// We use this because `jsonEncode` fails for maps with key types other than String
-  ///
-  Future<void> cacheMap<Key, Value>(String cacheKey, Map<Key, Value> map) {
-    var encoded = jsonEncode(Map.of(map.map((k, v) => MapEntry(k.toString(), v))));
-    print("[store.encointer]: caching map. cacheKey: $cacheKey, map: $encoded");
-    return cacheObject(cacheKey, encoded);
-  }
-
-  /// Load a map in the local storage.
-  ///
-  Future<Map<dynamic, dynamic>> loadMap<Key, Value>(String cacheKey) async {
-    print("[store.encointer]: loading map. cacheKey: $cacheKey");
-
-    var data = await loadObject(cacheKey);
-
-    if (data != null) {
-      print("found cache: $cacheKey': data: $data");
-      return jsonDecode(data);
+      bazaarStores[cidFmt] = bazaarStore;
+      return shouldCache ? writeToCache() : Future.value(null);
+    } else {
+      _log("Don't add already existing bazaarStore for cid: ${cid.toFmtString()}");
+      return Future.value(null);
     }
-    return null;
   }
 
-  Future<void> cacheObject(String key, value) {
-    return rootStore.cacheObject(key, value);
+  /// The below code is only needed when migrating from older app versions.
+  ///
+  /// Because of the SS58-prefix this needs to be called after the `AccountApi.initAccounts() call.
+  /// If the stores exist already, this is a no-op.
+  Future<void> initStoresForLegacyCache() {
+    var futures = [initEncointerAccountStore(_rootStore.account.currentAddress, shouldCache: false)];
+
+    if (chosenCid != null) {
+      futures.addAll([
+        initBazaarStore(chosenCid, shouldCache: false),
+        initCommunityStore(chosenCid, _rootStore.account.currentAddress, shouldCache: false)
+      ]);
+    }
+
+    return Future.wait(futures);
   }
 
-  Future<Object> loadObject(String key) {
-    return rootStore.loadObject(key);
-  }
+  // ----- Computed values for ceremony box
 
-  Future<CeremonyPhase> loadCurrentPhase() async {
-    Object obj = await rootStore.loadObject(encointerCurrentPhaseKey);
-    return ceremonyPhaseFromString(obj);
-  }
-
-  @computed
-  bool get isRegistered {
-    return participantIndex != null && participantIndex != 0;
-  }
-
-  @computed
   bool get showRegisterButton {
-    return (currentPhase == CeremonyPhase.REGISTERING && !isRegistered);
+    bool registered = communityAccount?.isRegistered ?? false;
+    return (currentPhase == CeremonyPhase.REGISTERING && !registered);
   }
 
   @computed
   bool get showStartCeremonyButton {
-    return (currentPhase == CeremonyPhase.ATTESTING && isRegistered);
+    bool registered = communityAccount?.isRegistered ?? false;
+    return (currentPhase == CeremonyPhase.ATTESTING && registered);
   }
 
   @computed
   bool get showTwoBoxes {
     return !showRegisterButton && !showStartCeremonyButton;
   }
+}
 
-  @computed
-  int get numberOfParticipantsAtUpcomingCeremony {
-    return meetupRegistry.length;
-  }
+_log(String msg) {
+  print("[EncointerStore] $msg");
 }

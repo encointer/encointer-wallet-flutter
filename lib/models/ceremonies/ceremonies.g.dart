@@ -101,7 +101,7 @@ CommunityReputation _$CommunityReputationFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$CommunityReputationToJson(CommunityReputation instance) => <String, dynamic>{
-      'communityIdentifier': instance.communityIdentifier,
+      'communityIdentifier': instance.communityIdentifier?.toJson(),
       'reputation': _$ReputationEnumMap[instance.reputation],
     };
 
@@ -111,3 +111,19 @@ const _$ReputationEnumMap = {
   Reputation.VerifiedUnlinked: 'VerifiedUnlinked',
   Reputation.VerifiedLinked: 'VerifiedLinked',
 };
+
+Meetup _$MeetupFromJson(Map<String, dynamic> json) {
+  return Meetup(
+    json['index'] as int,
+    json['locationIndex'] as int,
+    json['time'] as int,
+    (json['registry'] as List)?.map((e) => e as String)?.toList(),
+  );
+}
+
+Map<String, dynamic> _$MeetupToJson(Meetup instance) => <String, dynamic>{
+      'index': instance.index,
+      'locationIndex': instance.locationIndex,
+      'time': instance.time,
+      'registry': instance.registry,
+    };

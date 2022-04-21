@@ -136,12 +136,12 @@ class _AssetsState extends State<Assets> {
                     ),
                     Observer(
                       builder: (_) {
-                        return (store.encointer.communityName != null) & (store.encointer.chosenCid != null)
+                        return (store.encointer.community?.name != null) & (store.encointer.chosenCid != null)
                             ? Column(
                                 children: [
                                   TextGradient(text: '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ'),
                                   Text(
-                                    "${dic.assets.balance}, ${store.encointer.communitySymbol}",
+                                    "${dic.assets.balance}, ${store.encointer.community?.symbol}",
                                     style: Theme.of(context).textTheme.headline4.copyWith(
                                           color: encointerGrey,
                                         ),
@@ -224,7 +224,7 @@ class _AssetsState extends State<Assets> {
                                       arguments: TransferPageParams(
                                           redirect: '/',
                                           cid: store.encointer.chosenCid,
-                                          communitySymbol: store.encointer.communitySymbol),
+                                          communitySymbol: store.encointer.community?.symbol),
                                     );
                                   }
                                 : null,
@@ -338,10 +338,10 @@ class _AssetsState extends State<Assets> {
       AccountOrCommunityData(
         avatar: CommunityAvatar(
           store: store,
-          avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid),
+          avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.community?.assetsCid),
           avatarSize: avatarSize,
         ),
-        name: '${store.encointer.communityName ?? '...'}',
+        name: '${store.encointer.community?.name ?? '...'}',
         isSelected: true, // TODO #507 this should later be a function applied on each community, cf. initAllAccounts
       ),
     );

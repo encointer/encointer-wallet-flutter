@@ -34,6 +34,8 @@ class AggregatedAccountDataPersonal {
   int meetupTime;
   List<String> meetupRegistry;
 
+  get meetup => Meetup(meetupIndex, meetupLocationIndex, meetupTime, meetupRegistry);
+
   @override
   String toString() {
     return jsonEncode(this);
@@ -77,6 +79,24 @@ class CommunityReputation {
 
   factory CommunityReputation.fromJson(Map<String, dynamic> json) => _$CommunityReputationFromJson(json);
   Map<String, dynamic> toJson() => _$CommunityReputationToJson(this);
+}
+
+@JsonSerializable()
+class Meetup {
+  Meetup(this.index, this.locationIndex, this.time, this.registry);
+
+  int index;
+  int locationIndex;
+  int time;
+  List<String> registry;
+
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
+
+  factory Meetup.fromJson(Map<String, dynamic> json) => _$MeetupFromJson(json);
+  Map<String, dynamic> toJson() => _$MeetupToJson(this);
 }
 
 enum CeremonyPhase { REGISTERING, ASSIGNING, ATTESTING }

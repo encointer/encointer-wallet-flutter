@@ -51,7 +51,16 @@ MockLocalStorage getMockLocalStorage() {
       Object data = jsonDecode(value);
       return data;
     }
-    return null;
+    return Future.value(null);
+  });
+
+  when(localStorage.getMap(any)).thenAnswer((realInvocation) async {
+    String value = storage[realInvocation.positionalArguments.first];
+    if (value != null) {
+      Object data = jsonDecode(value);
+      return data;
+    }
+    return Future.value(null);
   });
 
   when(localStorage.setObject(any, any)).thenAnswer((realInvocation) async {

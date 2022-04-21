@@ -71,8 +71,6 @@ class EncointerApi {
 
   void getCommunityData() {
     getBusinesses();
-    getMeetupIndex();
-    getParticipantIndex();
     getEncointerBalance();
     getCommunityMetadata();
     getAllMeetupLocations();
@@ -109,18 +107,29 @@ class EncointerApi {
 
   /// Queries the rpc 'encointer_getAggregatedAccountData' with the dart api.
   ///
-  Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String account) async {
+  Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String address) async {
     try {
-      AggregatedAccountData accountData = await _dartApi.getAggregatedAccountData(cid, account);
+      AggregatedAccountData accountData = await _dartApi.getAggregatedAccountData(cid, address);
 
-      print("[EncointerApi]: AggregatedAccountData ${accountData.toString()}");
+      print(
+          "[EncointerApi]: AggregatedAccountData for ${cid.toFmtString()} and ${address.substring(0, 7)}...: ${accountData.toString()}");
 
+      var encointerAccountStore = store.encointer.communityStores[cid.toFmtString()].communityAccountStores[address];
+
+      if (accountData.personal != null) {
+        encointerAccountStore.setMeetup(accountData.personal.meetup);
+        encointerAccountStore.setParticipantType(accountData.personal.participantType);
+      } else {
+        encointerAccountStore.purgeMeetup();
+        encointerAccountStore.purgeParticipantType();
+      }
+      print("[EncointerApi]: " + encointerAccountStore.toString());
       return accountData;
     } catch (e) {
       print("[EncointerApi]: Error getting aggregated account data ${e.toString()}");
     }
 
-    return null;
+    return Future.value(null);
   }
 
   Future<List<dynamic>> pendingExtrinsics() async {
@@ -148,51 +157,6 @@ class EncointerApi {
     return cIndex;
   }
 
-  /// Queries the Ceremonies pallet: encointerCeremonies.meetupIndex([cid, cIndex], address).
-  ///
-  /// This is off-chain and trusted in Cantillon.
-  Future<int> getMeetupIndex() async {
-    print("api: getMeetupIndex");
-    CommunityIdentifier cid = store.encointer.chosenCid;
-    String pubKey = store.account.currentAccountPubKey;
-
-    if (pubKey == null || pubKey.isEmpty || (cid == null)) {
-      return 0;
-    }
-
-    int mIndex = store.settings.endpointIsNoTee
-        ? await _noTee.ceremonies.meetupIndex(cid, store.encointer.currentCeremonyIndex, pubKey)
-        : await _teeProxy.ceremonies.meetupIndex(cid, pubKey, store.settings.cachedPin);
-
-    print("api: Next Meetup Index: " + mIndex.toString());
-    store.encointer.setMeetupIndex(mIndex);
-    return mIndex;
-  }
-
-  /// Queries the Communities pallet: encointerCommunities.locations(cid)
-  ///
-  /// This is on-chain in Cantillon
-  Future<void> getMeetupLocation() async {
-    print("api: getMeetupLocation");
-    String address = store.account.currentAccountPubKey;
-    CommunityIdentifier cid = store.encointer.chosenCid;
-    int cIndex = store.encointer.currentCeremonyIndex;
-    int mIndex = store.encointer.meetupIndex;
-
-    if (cid == null || mIndex == null || mIndex == 0) {
-      return;
-    }
-
-    Map<String, dynamic> locj = await jsApi
-        .evalJavascript('encointer.getNextMeetupLocation(${jsonEncode(cid)}, "$cIndex", "$mIndex","$address")');
-    print("api: Next Meetup Location: " + locj.toString());
-
-    if (locj != null) {
-      Location loc = Location.fromJson(locj);
-      store.encointer.setMeetupLocation(loc);
-    }
-  }
-
   /// Queries the Communities pallet's RPC: api.rpc.communities.getLocations(cid)
   ///
   /// This is on-chain in Cantillon
@@ -209,7 +173,7 @@ class EncointerApi {
         .then((list) => List.from(list).map((l) => Location.fromJson(l)).toList());
 
     print("api: getAllMeetupLocations: " + locs.toString());
-    store.encointer.setCommunityLocations(locs);
+    store.encointer.community.setMeetupLocations(locs);
   }
 
   /// Queries the Communities pallet: encointerCommunities.communityMetadata(cid)
@@ -227,7 +191,7 @@ class EncointerApi {
         .then((m) => CommunityMetadata.fromJson(m));
 
     print("api: community metadata: " + meta.toString());
-    store.encointer.setCommunityMetadata(meta);
+    store.encointer.community?.setCommunityMetadata(meta);
   }
 
   /// Queries the Communities and the Balances pallet:
@@ -247,7 +211,7 @@ class EncointerApi {
 
     double dem = await jsApi.evalJavascript('encointer.getDemurrage(${jsonEncode(cid)})');
     print("api: fetched demurrage: $dem");
-    store.encointer.setDemurrage(dem);
+    store.encointer.community.setDemurrage(dem);
   }
 
   /// Calls the custom rpc: api.rpc.communities.communitiesGetAll()
@@ -269,12 +233,15 @@ class EncointerApi {
 
     // I we are not assigned to a meetup, we just get any location to get an estimate of the chosen community's meetup
     // times.
-    Location mLocation = store.encointer.meetupLocation ??
-        (store.encointer.communityLocations.isNotEmpty ? store.encointer.communityLocations.first : null);
+    int locationIndex = store.encointer.communityAccount?.meetup?.locationIndex;
+
+    Location mLocation = locationIndex != null
+        ? store.encointer.community.meetupLocations[locationIndex]
+        : (store.encointer.community.meetupLocations?.first);
 
     if (mLocation == null) {
       print("No meetup locations found, can't get meetup time.");
-      return null;
+      return Future.value(null);
     }
 
     int time = await jsApi
@@ -283,54 +250,8 @@ class EncointerApi {
 
     print("api: Next Meetup Time: $time");
 
-    store.encointer.setMeetupTime(time);
+    store.encointer.community.setMeetupTime(time);
     return DateTime.fromMillisecondsSinceEpoch(time);
-  }
-
-  /// Queries the Ceremonies pallet: encointerCeremonies.meetupRegistry([cid, cIndex], mIndex).
-  ///
-  /// This is off-chain and trusted in Cantillon.
-  Future<List<String>> getMeetupRegistry() async {
-    print("api: getMeetupRegistry");
-    int cIndex = store.encointer.currentCeremonyIndex;
-    CommunityIdentifier cid = store.encointer.chosenCid;
-    String pubKey = store.account.currentAccountPubKey;
-    int mIndex = store.encointer.meetupIndex;
-    print("api: get meetup registry for cIndex: $cIndex, mIndex: $mIndex, cid: $cid");
-
-    if (pubKey == null || pubKey.isEmpty || cid == null || cIndex == null || mIndex == null || mIndex == 0) {
-      return [];
-    }
-
-    List<String> registry = store.settings.endpointIsNoTee
-        ? await _noTee.ceremonies.meetupRegistry(cid, cIndex, mIndex)
-        : await _teeProxy.ceremonies.meetupRegistry(cid, pubKey, store.settings.cachedPin);
-
-    print("api: Participants: " + registry.toString());
-    store.encointer.setMeetupRegistry(registry);
-    return registry;
-  }
-
-  /// Queries the Ceremonies pallet: encointerCeremonies.participantIndex([cid, cIndex], address).
-  ///
-  /// This is off-chain and trusted in Cantillon.
-  Future<int> getParticipantIndex() async {
-    CommunityIdentifier cid = store.encointer.chosenCid;
-
-    String pubKey = store.account.currentAccountPubKey;
-
-    if (cid == null || pubKey == null || pubKey.isEmpty) {
-      return 0; // zero means: not registered
-    }
-
-    print("api: Getting participant index for " + pubKey);
-    int pIndex = store.settings.endpointIsNoTee
-        ? await _noTee.ceremonies.participantIndex(cid, store.encointer.currentCeremonyIndex, pubKey)
-        : await _teeProxy.ceremonies.participantIndex(cid, pubKey, store.settings.cachedPin);
-
-    print("api: Participant Index: " + pIndex.toString());
-    store.encointer.setParticipantIndex(pIndex);
-    return pIndex;
   }
 
   Future<bool> hasPendingIssuance() async {
@@ -373,7 +294,7 @@ class EncointerApi {
         : await _teeProxy.balances.balance(cid, pubKey, store.settings.cachedPin);
 
     print("bEntryJson: ${bEntry.toString()}");
-    store.encointer.addBalanceEntry(cid, bEntry);
+    store.encointer.account?.addBalanceEntry(cid, bEntry);
   }
 
   Future<void> subscribeCurrentPhase() async {
@@ -417,7 +338,7 @@ class EncointerApi {
       _encointerBalanceChannel,
       (data) {
         BalanceEntry balance = BalanceEntry.fromJson(data);
-        store.encointer.addBalanceEntry(cid, balance);
+        store.encointer.account?.addBalanceEntry(cid, balance);
       },
     );
   }
@@ -451,7 +372,7 @@ class EncointerApi {
 
     print("api: bootstrappers " + bootstrappers.toString());
 
-    store.encointer.setBootstrappers(bootstrappers);
+    store.encointer.community.setBootstrappers(bootstrappers);
   }
 
   Future<void> getReputations() async {
@@ -464,7 +385,7 @@ class EncointerApi {
     Map<int, CommunityReputation> reputations =
         Map.fromIterable(reputationsList, key: (cr) => cr[0], value: (cr) => CommunityReputation.fromJson(cr[1]));
 
-    store.encointer.setReputations(reputations);
+    store.encointer.account.setReputations(reputations);
   }
 
   Future<dynamic> sendFaucetTx() async {
@@ -478,14 +399,17 @@ class EncointerApi {
   // Below are functions that simply use the Scale-codec already implemented in polkadot-js/api such that we do not
   // have to implement the codec ourselves.
   Future<ClaimOfAttendance> signClaimOfAttendance(int participants, String password) async {
+    Meetup meetup = store.encointer.communityAccount.meetup;
+
     var claim = ClaimOfAttendance(
-        store.account.currentAccountPubKey,
-        store.encointer.currentCeremonyIndex,
-        store.encointer.chosenCid,
-        store.encointer.meetupIndex,
-        store.encointer.meetupLocation,
-        store.encointer.meetupTime,
-        participants);
+      store.account.currentAccountPubKey,
+      store.encointer.currentCeremonyIndex,
+      store.encointer.chosenCid,
+      meetup.index,
+      store.encointer.community.meetupLocations[meetup.locationIndex],
+      meetup.time,
+      participants,
+    );
 
     var claimSigned = await jsApi
         .evalJavascript('encointer.signClaimOfAttendance(${jsonEncode(claim)}, "$password")')
@@ -499,13 +423,13 @@ class EncointerApi {
   /// returns null, if none available.
   Future<ProofOfAttendance> getProofOfAttendance() async {
     var pubKey = store.account.currentAccountPubKey;
-    var cIndex = store.encointer.ceremonyIndexForProofOfAttendance;
+    var cIndex = store.encointer.account.ceremonyIndexForProofOfAttendance;
 
     if (cIndex == null || cIndex == 0) {
-      return null;
+      return Future.value(null);
     }
 
-    var cid = store.encointer.reputations[cIndex].communityIdentifier;
+    var cid = store.encointer.account.reputations[cIndex].communityIdentifier;
     var pin = store.settings.cachedPin;
 
     print("getProofOfAttendance: cachedPin: $pin");
@@ -520,7 +444,7 @@ class EncointerApi {
   /// Get all the registered businesses for the current `chosenCid`
   Future<List<AccountBusinessTuple>> getBusinesses() async {
     // set the store because the current bazaar data model reads the values from the store.
-    store.encointer.setbusinessRegistry(allMockBusinesses);
+    store.encointer.bazaar?.setBusinessRegistry(allMockBusinesses);
     return allMockBusinesses;
   }
 

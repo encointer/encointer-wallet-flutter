@@ -20,13 +20,13 @@ class UpdateJSCodeApi {
     try {
       Response res = await get(Uri.parse('$_endpoint/versions.json'));
       if (res == null) {
-        return null;
+        return Future.value(null);
       } else {
         return jsonDecode(utf8.decode(res.bodyBytes)) as Map;
       }
     } catch (err) {
       print(err);
-      return null;
+      return Future.value(null);
     }
   }
 
@@ -34,13 +34,13 @@ class UpdateJSCodeApi {
     try {
       Response res = await get(Uri.parse('$_endpoint/recommended.json'));
       if (res == null) {
-        return null;
+        return Future.value(null);
       } else {
         return jsonDecode(res.body) as Map;
       }
     } catch (err) {
       print(err);
-      return null;
+      return Future.value(null);
     }
   }
 
@@ -48,13 +48,13 @@ class UpdateJSCodeApi {
     try {
       Response res = await get(Uri.parse('$_endpoint/jsCodeVersions.json'));
       if (res == null) {
-        return null;
+        return Future.value(null);
       } else {
         return Map.of(jsonDecode(res.body))[networkName];
       }
     } catch (err) {
       print(err);
-      return null;
+      return Future.value(null);
     }
   }
 
@@ -62,13 +62,13 @@ class UpdateJSCodeApi {
     try {
       Response res = await get(Uri.parse('$_endpoint/js_service/$networkName.js'));
       if (res == null) {
-        return null;
+        return Future.value(null);
       } else {
         return utf8.decode(res.bodyBytes);
       }
     } catch (err) {
       print(err);
-      return null;
+      return Future.value(null);
     }
   }
 
@@ -106,13 +106,13 @@ class UpdateJSCodeApi {
     try {
       Response res = await get(Uri.parse('$_endpoint/announce.json'));
       if (res == null) {
-        return null;
+        return Future.value(null);
       } else {
         return jsonDecode(utf8.decode(res.bodyBytes));
       }
     } catch (err) {
       print(err);
-      return null;
+      return Future.value(null);
     }
   }
 }

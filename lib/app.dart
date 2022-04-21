@@ -84,7 +84,10 @@ class _WalletAppState extends State<WalletApp> {
   Future<int> _initStore(BuildContext context) async {
     if (_appStore == null) {
       // Todo: Use provider pattern instead of globals, see: https://github.com/encointer/encointer-wallet-flutter/issues/132
-      globalAppStore = widget.config.mockLocalStorage ? AppStore(getMockLocalStorage()) : AppStore(LocalStorage());
+      globalAppStore = widget.config.mockLocalStorage
+          ? AppStore(getMockLocalStorage(), config: widget.config.appStoreConfig)
+          : AppStore(LocalStorage(), config: widget.config.appStoreConfig);
+
       _appStore = globalAppStore;
       print('initializing app state');
       print('sys locale: ${Localizations.localeOf(context)}');
@@ -145,7 +148,7 @@ class _WalletAppState extends State<WalletApp> {
                           child: FutureBuilder<int>(
                             future: _initStore(context),
                             builder: (_, AsyncSnapshot<int> snapshot) {
-                              if (snapshot.hasData) {
+                              if (snapshot.hasData && _appStore.isReady) {
                                 return snapshot.data > 0 ? EncointerHomePage(_appStore) : CreateAccountEntryPage();
                               } else {
                                 return CupertinoActivityIndicator();
