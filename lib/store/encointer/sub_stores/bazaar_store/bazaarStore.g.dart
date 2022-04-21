@@ -9,23 +9,17 @@ part of 'bazaarStore.dart';
 BazaarStore _$BazaarStoreFromJson(Map<String, dynamic> json) {
   return BazaarStore(
     json['network'] as String,
-    json['cid'] == null
-        ? null
-        : CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
+    json['cid'] == null ? null : CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
   )..businessRegistry = json['businessRegistry'] != null
-      ? ObservableList<AccountBusinessTuple>.of(
-          (json['businessRegistry'] as List).map((e) => e == null
-              ? null
-              : AccountBusinessTuple.fromJson(e as Map<String, dynamic>)))
+      ? ObservableList<AccountBusinessTuple>.of((json['businessRegistry'] as List)
+          .map((e) => e == null ? null : AccountBusinessTuple.fromJson(e as Map<String, dynamic>)))
       : null;
 }
 
-Map<String, dynamic> _$BazaarStoreToJson(BazaarStore instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$BazaarStoreToJson(BazaarStore instance) => <String, dynamic>{
       'network': instance.network,
       'cid': instance.cid?.toJson(),
-      'businessRegistry':
-          instance.businessRegistry?.map((e) => e?.toJson())?.toList(),
+      'businessRegistry': instance.businessRegistry?.map((e) => e?.toJson())?.toList(),
     };
 
 // **************************************************************************
@@ -54,8 +48,7 @@ mixin _$BazaarStore on _BazaarStore, Store {
 
   @override
   void setBusinessRegistry(List<AccountBusinessTuple> accBusinesses) {
-    final _$actionInfo = _$_BazaarStoreActionController.startAction(
-        name: '_BazaarStore.setBusinessRegistry');
+    final _$actionInfo = _$_BazaarStoreActionController.startAction(name: '_BazaarStore.setBusinessRegistry');
     try {
       return super.setBusinessRegistry(accBusinesses);
     } finally {
