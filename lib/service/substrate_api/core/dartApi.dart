@@ -32,13 +32,9 @@ class SubstrateDartApi {
 
       // print("Methods: ${methods.toString()}");
 
-      // Sanity check that we are running against valid node
-<<<<<<< HEAD
-      if (!_rpc.methods.contains("encointer_getAggregatedAccountData")) {
-=======
-      if (!_rpc.methods.contains(encointer_getAggregatedAccountData)) {
->>>>>>> origin/master
-        _log("rpc_methods does not contain 'getAggregatedAccountData'. Are the following flags passed"
+      // Sanity check that we are running against valid node with offchain indexing enabled
+      if (!_rpc.methods.contains("encointer_getReputations")) {
+        _log("rpc_methods does not contain 'getReputations'. Are the following flags passed"
             " to the node? \n '--enable-offchain-indexing true --rpc-methods unsafe'");
       }
     } on RpcException catch (error) {
