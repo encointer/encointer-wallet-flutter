@@ -28,8 +28,6 @@ import 'teeProxyApi.dart';
 ///
 /// NOTE: If the js-code was changed a rebuild of the application is needed to update the code.
 
-const aggregatedAccountDataRpc = "encointer_getAggregatedAccountData";
-
 class EncointerApi {
   EncointerApi(this.jsApi, SubstrateDartApi dartApi)
       : _noTee = NoTeeApi(jsApi),
@@ -132,6 +130,20 @@ class EncointerApi {
     }
 
     return Future.value(null);
+  }
+
+  Future<List<String>> pendingExtrinsics() async {
+    try {
+      var extrinsics = await _dartApi.pendingExtrinsics();
+
+      print("[EncointerApi]: pendingExtrinsics ${extrinsics.toString()}");
+
+      return List.from(extrinsics);
+    } catch (e) {
+      print("[EncointerApi]: Error getting pending extrinsics: ${e.toString()}");
+    }
+
+    return null;
   }
 
   /// Queries the Scheduler pallet: encointerScheduler.currentCeremonyIndex().

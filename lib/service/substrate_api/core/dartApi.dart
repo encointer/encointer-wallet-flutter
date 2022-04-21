@@ -3,8 +3,6 @@ import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../../../models/index.dart';
 
-const encointer_getAggregatedAccountData = "encointer_getAggregatedAccountData";
-
 /// Api to talk to an substrate node via the websocket protocol.
 ///
 /// Once connected, a websocket channel is maintained until closed by either side.
@@ -34,9 +32,9 @@ class SubstrateDartApi {
 
       // print("Methods: ${methods.toString()}");
 
-      // Sanity check that we are running against valid node
-      if (!_rpc.methods.contains(encointer_getAggregatedAccountData)) {
-        _log("rpc_methods does not contain 'getAggregatedAccountData'. Are the following flags passed"
+      // Sanity check that we are running against valid node with offchain indexing enabled
+      if (!_rpc.methods.contains("encointer_getReputations")) {
+        _log("rpc_methods does not contain 'getReputations'. Are the following flags passed"
             " to the node? \n '--enable-offchain-indexing true --rpc-methods unsafe'");
       }
     } on RpcException catch (error) {

@@ -79,6 +79,7 @@ abstract class TranslationsProfile {
   String get deleteAccount;
   String get exportAccount;
   String get errorUserNameIsRequired;
+  String get observedPendingExtrinsic;
 }
 
 class TranslationsEnProfile implements TranslationsProfile {
@@ -164,6 +165,7 @@ class TranslationsEnProfile implements TranslationsProfile {
   get deleteAccount => 'delete';
   get exportAccount => 'export';
   get errorUserNameIsRequired => 'User name cannot be blank';
+  get observedPendingExtrinsic => 'Pending extrinsic observed. Please wait for confirmation!';
 }
 
 class TranslationsDeProfile implements TranslationsProfile {
@@ -247,6 +249,7 @@ class TranslationsDeProfile implements TranslationsProfile {
   get deleteAccount => 'löschen';
   get exportAccount => 'exportieren';
   get errorUserNameIsRequired => 'Benutzername darf nicht leer sein';
+  get observedPendingExtrinsic => 'Es wurde eine unbestätigte Transaktion beobachtet. Bitte warte auf Bestätigung!';
 }
 
 class TranslationsZhProfile implements TranslationsProfile {
@@ -328,4 +331,5 @@ class TranslationsZhProfile implements TranslationsProfile {
   get deleteAccount => throw UnimplementedError();
   get exportAccount => throw UnimplementedError();
   get errorUserNameIsRequired => throw UnimplementedError();
+  get observedPendingExtrinsic => throw UnimplementedError();
 }
