@@ -74,15 +74,15 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
                   ],
                 ),
           store.encointer.communityAccount.isRegistered
-              ? store.encointer.account.reputations != null
+              ? RoundedButton(
+                  text: dic.encointer.youAreRegistered, onPressed: null, color: Theme.of(context).disabledColor)
+              : store.encointer.account.reputations != null
                   ? RoundedButton(text: dic.encointer.registerParticipant, onPressed: () => _submit())
                   : RoundedButton(
                       text: dic.encointer.fetchingReputations,
                       onPressed: null,
                       color: Theme.of(context).disabledColor,
                     )
-              : RoundedButton(
-                  text: dic.encointer.youAreRegistered, onPressed: null, color: Theme.of(context).disabledColor),
         ],
       ),
     );

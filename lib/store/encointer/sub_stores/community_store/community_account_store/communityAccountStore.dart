@@ -71,6 +71,15 @@ abstract class _CommunityAccountStore with Store {
   }
 
   @action
+  void purgeParticipantType() {
+    if (participantType != null) {
+      _log("Purging participantType.");
+      this.participantType = null;
+      writeToCache();
+    }
+  }
+
+  @action
   void setMeetup(Meetup meetup) {
     _log("Set meetup: ${meetup.toJson()}");
     this.meetup = meetup;
@@ -110,6 +119,7 @@ abstract class _CommunityAccountStore with Store {
   @action
   void purgeCeremonySpecificState() {
     purgeParticipantsClaims();
+    purgeParticipantType();
     purgeMeetup();
   }
 

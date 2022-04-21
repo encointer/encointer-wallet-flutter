@@ -113,13 +113,19 @@ class EncointerApi {
     try {
       AggregatedAccountData accountData = await _dartApi.getAggregatedAccountData(cid, address);
 
-      print("[EncointerApi]: AggregatedAccountData ${accountData.toString()}");
+      print(
+          "[EncointerApi]: AggregatedAccountData for ${cid.toFmtString()} and ${address.substring(0, 7)}...: ${accountData.toString()}");
 
       var encointerAccountStore = store.encointer.communityStores[cid.toFmtString()].communityAccountStores[address];
 
-      encointerAccountStore.setMeetup(accountData.personal.meetup);
-      encointerAccountStore.setParticipantType(accountData.personal.participantType);
-
+      if (accountData.personal != null) {
+        encointerAccountStore.setMeetup(accountData.personal.meetup);
+        encointerAccountStore.setParticipantType(accountData.personal.participantType);
+      } else {
+        encointerAccountStore.purgeMeetup();
+        encointerAccountStore.purgeParticipantType();
+      }
+      print("[EncointerApi]: " + encointerAccountStore.toString());
       return accountData;
     } catch (e) {
       print("[EncointerApi]: Error getting aggregated account data ${e.toString()}");

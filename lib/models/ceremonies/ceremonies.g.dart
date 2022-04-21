@@ -6,19 +6,29 @@ part of 'ceremonies.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-AggregatedAccountData _$AggregatedAccountDataFromJson(Map<String, dynamic> json) {
+AggregatedAccountData _$AggregatedAccountDataFromJson(
+    Map<String, dynamic> json) {
   return AggregatedAccountData(
-    json['global'] == null ? null : AggregatedAccountDataGlobal.fromJson(json['global'] as Map<String, dynamic>),
-    json['personal'] == null ? null : AggregatedAccountDataPersonal.fromJson(json['personal'] as Map<String, dynamic>),
+    json['global'] == null
+        ? null
+        : AggregatedAccountDataGlobal.fromJson(
+            json['global'] as Map<String, dynamic>),
+    json['personal'] == null
+        ? null
+        : AggregatedAccountDataPersonal.fromJson(
+            json['personal'] as Map<String, dynamic>),
   );
 }
 
-Map<String, dynamic> _$AggregatedAccountDataToJson(AggregatedAccountData instance) => <String, dynamic>{
+Map<String, dynamic> _$AggregatedAccountDataToJson(
+        AggregatedAccountData instance) =>
+    <String, dynamic>{
       'global': instance.global?.toJson(),
       'personal': instance.personal?.toJson(),
     };
 
-AggregatedAccountDataPersonal _$AggregatedAccountDataPersonalFromJson(Map<String, dynamic> json) {
+AggregatedAccountDataPersonal _$AggregatedAccountDataPersonalFromJson(
+    Map<String, dynamic> json) {
   return AggregatedAccountDataPersonal(
     _$enumDecodeNullable(_$ParticipantTypeEnumMap, json['participantType']),
     json['meetupIndex'] as int,
@@ -28,7 +38,9 @@ AggregatedAccountDataPersonal _$AggregatedAccountDataPersonalFromJson(Map<String
   );
 }
 
-Map<String, dynamic> _$AggregatedAccountDataPersonalToJson(AggregatedAccountDataPersonal instance) => <String, dynamic>{
+Map<String, dynamic> _$AggregatedAccountDataPersonalToJson(
+        AggregatedAccountDataPersonal instance) =>
+    <String, dynamic>{
       'participantType': _$ParticipantTypeEnumMap[instance.participantType],
       'meetupIndex': instance.meetupIndex,
       'meetupLocationIndex': instance.meetupLocationIndex,
@@ -46,7 +58,9 @@ T _$enumDecode<T>(
         '${enumValues.values.join(', ')}');
   }
 
-  final value = enumValues.entries.singleWhere((e) => e.value == source, orElse: () => null)?.key;
+  final value = enumValues.entries
+      .singleWhere((e) => e.value == source, orElse: () => null)
+      ?.key;
 
   if (value == null && unknownValue == null) {
     throw ArgumentError('`$source` is not one of the supported values: '
@@ -73,14 +87,17 @@ const _$ParticipantTypeEnumMap = {
   ParticipantType.Newbie: 'Newbie',
 };
 
-AggregatedAccountDataGlobal _$AggregatedAccountDataGlobalFromJson(Map<String, dynamic> json) {
+AggregatedAccountDataGlobal _$AggregatedAccountDataGlobalFromJson(
+    Map<String, dynamic> json) {
   return AggregatedAccountDataGlobal(
     _$enumDecodeNullable(_$CeremonyPhaseEnumMap, json['ceremonyPhase']),
     json['ceremonyIndex'] as int,
   );
 }
 
-Map<String, dynamic> _$AggregatedAccountDataGlobalToJson(AggregatedAccountDataGlobal instance) => <String, dynamic>{
+Map<String, dynamic> _$AggregatedAccountDataGlobalToJson(
+        AggregatedAccountDataGlobal instance) =>
+    <String, dynamic>{
       'ceremonyPhase': _$CeremonyPhaseEnumMap[instance.ceremonyPhase],
       'ceremonyIndex': instance.ceremonyIndex,
     };
@@ -95,12 +112,15 @@ CommunityReputation _$CommunityReputationFromJson(Map<String, dynamic> json) {
   return CommunityReputation(
     json['communityIdentifier'] == null
         ? null
-        : CommunityIdentifier.fromJson(json['communityIdentifier'] as Map<String, dynamic>),
+        : CommunityIdentifier.fromJson(
+            json['communityIdentifier'] as Map<String, dynamic>),
     _$enumDecodeNullable(_$ReputationEnumMap, json['reputation']),
   );
 }
 
-Map<String, dynamic> _$CommunityReputationToJson(CommunityReputation instance) => <String, dynamic>{
+Map<String, dynamic> _$CommunityReputationToJson(
+        CommunityReputation instance) =>
+    <String, dynamic>{
       'communityIdentifier': instance.communityIdentifier?.toJson(),
       'reputation': _$ReputationEnumMap[instance.reputation],
     };

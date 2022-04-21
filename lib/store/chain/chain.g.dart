@@ -13,7 +13,8 @@ mixin _$ChainStore on _ChainStore, Store {
 
   @override
   dynamic get latestHeaderNumber => (_$latestHeaderNumberComputed ??=
-          Computed<dynamic>(() => super.latestHeaderNumber, name: '_ChainStore.latestHeaderNumber'))
+          Computed<dynamic>(() => super.latestHeaderNumber,
+              name: '_ChainStore.latestHeaderNumber'))
       .value;
 
   final _$latestHeaderAtom = Atom(name: '_ChainStore.latestHeader');
@@ -35,7 +36,8 @@ mixin _$ChainStore on _ChainStore, Store {
 
   @override
   void setLatestHeader(Header latest) {
-    final _$actionInfo = _$_ChainStoreActionController.startAction(name: '_ChainStore.setLatestHeader');
+    final _$actionInfo = _$_ChainStoreActionController.startAction(
+        name: '_ChainStore.setLatestHeader');
     try {
       return super.setLatestHeader(latest);
     } finally {
