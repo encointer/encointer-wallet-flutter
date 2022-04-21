@@ -132,13 +132,13 @@ class EncointerApi {
     return Future.value(null);
   }
 
-  Future<List<dynamic>> pendingExtrinsics() async {
+  Future<List<String>> pendingExtrinsics() async {
     try {
-      var msg = await _dartApi.pendingExtrinsics();
+      var extrinsics = await _dartApi.pendingExtrinsics();
 
-      print("[EncointerApi]: pendingExtrinsics ${msg.toString()}");
+      print("[EncointerApi]: pendingExtrinsics ${extrinsics.toString()}");
 
-      return List.from(msg);
+      return List.from(extrinsics);
     } catch (e) {
       print("[EncointerApi]: Error getting pending extrinsics: ${e.toString()}");
     }

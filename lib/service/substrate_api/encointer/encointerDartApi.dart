@@ -15,7 +15,7 @@ class EncointerDartApi {
   }
 
   ///
-  Future<List<dynamic>> pendingExtrinsics() {
+  Future<List<String>> pendingExtrinsics() {
     return _dartApi.rpc("author_pendingExtrinsics", []).then((data) => List.from(data));
   }
 }
