@@ -31,6 +31,8 @@ class AssignmentPanel extends StatelessWidget {
             Observer(builder: (_) {
               Meetup meetup = store.encointer.communityAccount.meetup;
 
+              _log("communityAccount: ${store.encointer.communityAccount.toJson()}");
+
               Location meetupLocation = meetup == null
                   ? store.encointer.community.meetupLocations?.first
                   : store.encointer.community.meetupLocations[meetup.locationIndex];
@@ -140,4 +142,8 @@ class MaybeMeetupTime extends StatelessWidget {
 
     return meetupTime != null ? Text(date, style: this.style) : CupertinoActivityIndicator();
   }
+}
+
+_log(String msg) {
+  print("[AssignmentPanel] $msg");
 }

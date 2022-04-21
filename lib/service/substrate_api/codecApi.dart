@@ -20,8 +20,14 @@ class CodecApi {
   /// scale-decodes [bytes] with the codec of [type].
   ///
   /// [type] must exist in the polkadot-js/api's type registry.
-  Future<dynamic> decodeBytes(String type, Uint8List bytes) {
-    return jsApi.evalJavascript('codec.decode("$type", $bytes)', allowRepeat: true);
+  Future<dynamic> decodeBytes(String type, Uint8List bytes) async {
+    var res = await jsApi.evalJavascript('codec.decode("$type", $bytes)', allowRepeat: true);
+
+    if (res["error"] != null) {
+      throw Exception("Could not decode bytes into $type. Error: ${res["error"]}");
+    }
+
+    return res;
   }
 
   /// scale-encodes [obj] with the codec of [type].

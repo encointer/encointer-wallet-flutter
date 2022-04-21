@@ -12,7 +12,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_qr_scan/qrcode_reader_view.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-class ScanClaimQrCode extends StatelessWidget {
+class ScanClaimQrCode extends StatefulWidget {
   ScanClaimQrCode(this.store, this.confirmedParticipantsCount);
 
   final AppStore store;
@@ -20,32 +20,25 @@ class ScanClaimQrCode extends StatelessWidget {
 
   final GlobalKey<QrcodeReaderViewState> _qrViewKey = GlobalKey();
 
-  Future<bool> canOpenCamera() async {
-    // will do nothing if already granted
-    return Permission.camera.request().isGranted;
-  }
+  @override
+  _ScanClaimQrCodeState createState() => _ScanClaimQrCodeState();
+}
 
-  void _showSnackBar(BuildContext context, String msg) {
-    ScaffoldMessenger.of(context).removeCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: Colors.white,
-      content: Text(msg, style: TextStyle(color: Colors.black54)),
-      duration: Duration(milliseconds: 1500),
-    ));
-  }
+class _ScanClaimQrCodeState extends State<ScanClaimQrCode> {
+  _ScanClaimQrCodeState();
 
   void validateAndStoreClaim(BuildContext context, ClaimOfAttendance claim, Translations dic) {
-    List<String> registry = store.encointer.communityAccount.meetup.registry;
+    List<String> registry = widget.store.encointer.communityAccount.meetup.registry;
     if (!registry.contains(claim.claimantPublic)) {
       // this is important because the runtime checks if there are too many claims trying to be registered.
       _showSnackBar(context, dic.encointer.meetupClaimantInvalid);
       print("[scanClaimQrCode] Claimant: ${claim.claimantPublic} is not part of registry: ${registry.toString()}");
     } else {
-      String msg = store.encointer.communityAccount.containsClaim(claim)
+      String msg = widget.store.encointer.communityAccount.containsClaim(claim)
           ? dic.encointer.claimsScannedAlready
           : dic.encointer.claimsScannedNew;
 
-      store.encointer.communityAccount.addParticipantClaim(claim);
+      widget.store.encointer.communityAccount.addParticipantClaim(claim);
       _showSnackBar(context, msg);
     }
   }
@@ -55,35 +48,32 @@ class ScanClaimQrCode extends StatelessWidget {
     final Translations dic = I18n.of(context).translationsForLocale();
 
     Future _onScan(String base64Data, String _rawData) async {
+      // Show a cupertino activity indicator as long as we are decoding
+      _showActivityIndicatorOverlay(context);
+
       if (base64Data != null) {
         var data = base64.decode(base64Data);
 
-        // Todo: Not good to use the global webApi here, but I wanted to prevent big changes into the code for now.
-        // Fix this when #132 is tackled.
-        var claim = await webApi.codec
-            .decodeBytes(ClaimOfAttendanceJSRegistryName, data)
-            .then((c) => ClaimOfAttendance.fromJson(c))
-            .timeout(
-          const Duration(seconds: 3),
-          onTimeout: () {
-            _showSnackBar(context, dic.encointer.claimsScannedDecodeFailed);
-            return null;
-          },
-        );
+        try {
+          // Todo: Not good to use the global webApi here, but I wanted to prevent big changes into the code for now.
+          // Fix this when #132 is tackled.
+          var claim = await webApi.codec
+              .decodeBytes(ClaimOfAttendanceJSRegistryName, data)
+              .then((c) => ClaimOfAttendance.fromJson(c));
 
-        if (claim != null) {
-          validateAndStoreClaim(context, claim, dic);
+          if (claim != null) {
+            validateAndStoreClaim(context, claim, dic);
+          }
+        } catch (e) {
+          _log("Error decoding claim: ${e.toString()}");
+          _showSnackBar(context, dic.encointer.claimsScannedDecodeFailed);
         }
-
-        // If we don't wait, scans  of the same qr code are spammed.
-        // My fairly recent cellphone gets too much load for duration < 500 ms. We might need to increase
-        // this for older phones.
-        Future.delayed(const Duration(milliseconds: 1500), () {
-          _qrViewKey.currentState.startScan();
-        });
-      } else {
-        _qrViewKey.currentState.startScan();
       }
+
+      widget._qrViewKey.currentState.startScan();
+
+      // just pops the cupertino activity indicator.
+      Navigator.of(context).pop();
     }
 
     return Scaffold(
@@ -92,11 +82,12 @@ class ScanClaimQrCode extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           if (snapshot.hasData && snapshot.data == true) {
             return QrcodeReaderView(
-              key: _qrViewKey,
+              key: widget._qrViewKey,
               helpWidget: Observer(
                   builder: (_) => Text(dic.encointer.claimsScannedNOfM
-                      .replaceAll('SCANNED_COUNT', store.encointer.communityAccount.scannedClaimsCount.toString())
-                      .replaceAll('TOTAL_COUNT', (confirmedParticipantsCount - 1).toString()))),
+                      .replaceAll(
+                          'SCANNED_COUNT', widget.store.encointer.communityAccount.scannedClaimsCount.toString())
+                      .replaceAll('TOTAL_COUNT', (widget.confirmedParticipantsCount - 1).toString()))),
               headerWidget: SafeArea(
                   child: Align(
                 alignment: Alignment.topRight,
@@ -117,4 +108,33 @@ class ScanClaimQrCode extends StatelessWidget {
       ),
     );
   }
+}
+
+void _showActivityIndicatorOverlay(BuildContext context) {
+  showCupertinoDialog(
+    context: context,
+    builder: (_) => Container(
+        height: Size.infinite.height,
+        width: Size.infinite.width,
+        color: Colors.grey.withOpacity(0.5),
+        child: CupertinoActivityIndicator()),
+  );
+}
+
+Future<bool> canOpenCamera() async {
+  // will do nothing if already granted
+  return Permission.camera.request().isGranted;
+}
+
+void _showSnackBar(BuildContext context, String msg) {
+  ScaffoldMessenger.of(context).removeCurrentSnackBar();
+  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+    backgroundColor: Colors.white,
+    content: Text(msg, style: TextStyle(color: Colors.black54)),
+    duration: Duration(milliseconds: 1500),
+  ));
+}
+
+_log(String msg) {
+  print("[ScanClaimQrCode] $msg");
 }
