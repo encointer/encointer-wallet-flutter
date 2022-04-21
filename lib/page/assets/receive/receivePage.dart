@@ -132,6 +132,7 @@ class _ReceivePageState extends State<ReceivePage> with WidgetsBindingObserver {
                 var msg =
                     "incoming ${delta.toStringAsPrecision(5)} ${widget.store.encointer.community.metadata.symbol} for ${widget.store.account.currentAccount.name} confirmed";
                 print(msg);
+                widget.store.encointer.account?.addBalanceEntry(cid, balances[cid]);
                 NotificationPlugin.showNotification(
                   44,
                   "funds received",
