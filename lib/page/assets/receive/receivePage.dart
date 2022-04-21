@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
@@ -91,15 +92,20 @@ class _ReceivePageState extends State<ReceivePage> {
             CommunityIdentifier cid = widget.store.encointer.chosenCid;
             int blockNumber = widget.store.chain.latestHeaderNumber;
             double demurrageRate = widget.store.encointer.community.demurrage;
-            print(balances[cid].lastUpdate);
-            print(balances[cid].principal);
             double newBalance = balances[cid].applyDemurrage(blockNumber, demurrageRate);
             double oldBalance = widget.store.encointer.communityBalanceEntry.applyDemurrage(blockNumber, demurrageRate);
             if ((newBalance != null) && (oldBalance != null)) {
               double delta = newBalance - oldBalance;
               print("balance changed by $delta");
-              if (delta > 0) {
-                print("balance increased by $delta");
+              if (delta > demurrageRate) {
+                var msg =
+                    "incoming ${delta.toStringAsPrecision(5)} ${widget.store.encointer.community.metadata.symbol} for ${widget.store.account.currentAccount.name} confirmed";
+                print(msg);
+                NotificationPlugin.showNotification(
+                  44,
+                  "funds received",
+                  msg,
+                );
               }
             }
           }
