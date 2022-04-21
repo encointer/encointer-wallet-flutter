@@ -56,6 +56,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       cryptoType: _cryptoType,
       derivePath: _derivePath,
     );
+    print("importAccountPage] accountimported");
 
     // check if account duplicate
     if (acc != null) {
@@ -169,6 +170,13 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     webApi.account.fetchAccountsBonded([pubKey]);
     webApi.account.getPubKeyIcons([pubKey]);
     store.account.setCurrentAccount(pubKey);
+    print("importAccountPage] account saved");
+
+    setState(() {
+      _submitting = false;
+    });
+    // go to home page
+    Navigator.popUntil(context, ModalRoute.withName('/'));
   }
 
   @override
