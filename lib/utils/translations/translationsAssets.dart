@@ -33,6 +33,8 @@ abstract class TranslationsAssets {
   String get yourBalanceFor;
   String get balance;
   String get invoice;
+  String get incomingConfirmed;
+  String get fundsReceived;
 }
 
 class TranslationsEnAssets implements TranslationsAssets {
@@ -68,6 +70,8 @@ class TranslationsEnAssets implements TranslationsAssets {
   get yourBalanceFor => 'Your balance for';
   get balance => 'Balance';
   get invoice => 'Invoice';
+  get incomingConfirmed => 'incoming AMOUNT CID_SYMBOL for ACCOUNT_NAME confirmed';
+  get fundsReceived => 'funds received';
 }
 
 class TranslationsDeAssets implements TranslationsAssets {
@@ -103,6 +107,8 @@ class TranslationsDeAssets implements TranslationsAssets {
   get yourBalanceFor => 'Ihr Kontostand auf';
   get balance => 'Kontostand';
   get invoice => 'Rechnungsbetrag';
+  get incomingConfirmed => 'Empfang von AMOUNT CID_SYMBOL für ACCOUNT_NAME bestätigt';
+  get fundsReceived => 'Zahlungseingang';
 }
 
 class TranslationsZhAssets implements TranslationsAssets {
@@ -138,4 +144,6 @@ class TranslationsZhAssets implements TranslationsAssets {
   get yourBalanceFor => '你的余额';
   get balance => throw UnimplementedError();
   get invoice => throw UnimplementedError();
+  get incomingConfirmed => throw UnimplementedError();
+  get fundsReceived => throw UnimplementedError();
 }

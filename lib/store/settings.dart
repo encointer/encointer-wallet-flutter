@@ -1,7 +1,6 @@
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/config/node.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58PrefixListPage.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -169,7 +168,6 @@ abstract class _SettingsStore with Store {
     cachedPin = pin;
     if (pin.isNotEmpty) {
       rootStore.encointer.updateState();
-      webApi.encointer.getEncointerBalance();
     }
   }
 

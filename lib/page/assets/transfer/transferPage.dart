@@ -64,7 +64,7 @@ class _TransferPageState extends State<TransferPage> {
 
     int decimals = encointer_currencies_decimals;
 
-    double available = store.encointer.applyDemurrage(store.encointer.account.balanceEntries[_cid]);
+    double available = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry);
 
     print("[transferPage]: available: $available");
 

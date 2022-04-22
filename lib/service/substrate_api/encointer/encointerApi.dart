@@ -52,7 +52,6 @@ class EncointerApi {
     this.subscribeCurrentPhase();
     this.subscribeCommunityIdentifiers();
     if (store.settings.endpointIsNoTee) {
-      this.subscribeEncointerBalance();
       this.subscribeBusinessRegistry();
     }
   }
@@ -64,7 +63,6 @@ class EncointerApi {
     jsApi.unsubscribeMessage(_businessRegistryChannel);
 
     if (store.settings.endpointIsNoTee) {
-      jsApi.unsubscribeMessage(_encointerBalanceChannel);
       jsApi.unsubscribeMessage(_businessRegistryChannel);
     }
   }
@@ -76,7 +74,6 @@ class EncointerApi {
 
   void getCommunityData() {
     getBusinesses();
-    getEncointerBalance();
     getCommunityMetadata();
     getAllMeetupLocations();
     getDemurrage();
@@ -140,14 +137,20 @@ class EncointerApi {
   Future<List<String>> pendingExtrinsics() async {
     try {
       var extrinsics = await _dartApi.pendingExtrinsics();
-
-      print("[EncointerApi]: pendingExtrinsics ${extrinsics.toString()}");
-
       return List.from(extrinsics);
     } catch (e) {
       print("[EncointerApi]: Error getting pending extrinsics: ${e.toString()}");
     }
+    return null;
+  }
 
+  Future<Map<CommunityIdentifier, BalanceEntry>> getAllBalances(String account) async {
+    try {
+      var balances = await _dartApi.getAllBalances(account);
+      return balances;
+    } catch (e) {
+      print("[EncointerApi]: Error getting all balances: ${e.toString()}");
+    }
     return null;
   }
 

@@ -1,6 +1,7 @@
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dartApi.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
+import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 
 class EncointerDartApi {
   EncointerDartApi(this._dartApi);
@@ -22,5 +23,12 @@ class EncointerDartApi {
   ///
   Future<List<String>> pendingExtrinsics() {
     return _dartApi.rpc("author_pendingExtrinsics", []).then((data) => List.from(data));
+  }
+
+  Future<Map<CommunityIdentifier, BalanceEntry>> getAllBalances(String account) {
+    return _dartApi.rpc("encointer_getAllBalances", [account]).then((data) {
+      return Map.fromIterable(data,
+          key: (bal) => CommunityIdentifier.fromJson(bal[0]), value: (bal) => BalanceEntry.fromJson(bal[1]));
+    });
   }
 }
