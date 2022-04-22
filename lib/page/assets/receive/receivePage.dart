@@ -60,17 +60,13 @@ class _ReceivePageState extends State<ReceivePage> with WidgetsBindingObserver {
   @override
   void initState() {
     super.initState();
-    // Add the observer.
     WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
-    // Clean up the controller when the widget is removed from the
-    // widget tree.
     _amountController.dispose();
     paymentWatchdog.cancel();
-    // Remove the observer
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -78,15 +74,13 @@ class _ReceivePageState extends State<ReceivePage> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     super.didChangeAppLifecycleState(state);
-
-    // These are the callbacks
     switch (state) {
       case AppLifecycleState.resumed:
-        print("[receivePage] resumed. restarting timer");
+        print("[receivePage] resumed. restarting payment watchdog");
         paymentWatchdog.start();
         break;
       case AppLifecycleState.inactive:
-        print("[receivePage] inactive. pausing timer");
+        print("[receivePage] inactive. pausing payment watchdog");
         paymentWatchdog.pause();
         break;
       case AppLifecycleState.paused:
@@ -103,35 +97,33 @@ class _ReceivePageState extends State<ReceivePage> with WidgetsBindingObserver {
     paymentWatchdog = PausableTimer(
       const Duration(seconds: 1),
       () {
-        webApi.encointer.pendingExtrinsics().then((data) {
-          if (data.length > 0) {
-            if (!observedPendingExtrinsic) {
-              data.forEach((xt) {
-                if (xt.contains(widget.store.account.currentAccountPubKey.substring(2))) {
-                  _showSnackBar(context, I18n.of(context).translationsForLocale().profile.observedPendingExtrinsic);
-                  observedPendingExtrinsic = true;
-                }
-              });
-            }
+        webApi.encointer.pendingExtrinsics().then((extrinsics) {
+          print("[receivePage] pendingExtrinsics ${extrinsics.toString()}");
+          if ((extrinsics.length > 0) && (!observedPendingExtrinsic)) {
+            extrinsics.forEach((xt) {
+              if (xt.contains(widget.store.account.currentAccountPubKey.substring(2))) {
+                _showSnackBar(context, I18n.of(context).translationsForLocale().profile.observedPendingExtrinsic);
+                observedPendingExtrinsic = true;
+              }
+            });
           } else {
             observedPendingExtrinsic = false;
           }
         });
         webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
-          print("getAllBalances: ");
           if (balances != null) {
             CommunityIdentifier cid = widget.store.encointer.chosenCid;
             double demurrageRate = widget.store.encointer.community.demurrage;
             double newBalance = widget.store.encointer.applyDemurrage(balances[cid]);
-            double oldBalance = widget.store.encointer.applyDemurrage(widget.store.encointer.communityBalanceEntry);
-            oldBalance = oldBalance != null ? oldBalance : 0;
+            double oldBalance =
+                widget.store.encointer.applyDemurrage(widget.store.encointer.communityBalanceEntry) ?? 0;
             if (newBalance != null) {
               double delta = newBalance - oldBalance;
-              print("balance changed from $oldBalance to $newBalance by $delta");
+              print("[receivePage] balance changed from $oldBalance by $delta");
               if (delta > demurrageRate) {
                 var msg =
                     "incoming ${delta.toStringAsPrecision(5)} ${widget.store.encointer.community.metadata.symbol} for ${widget.store.account.currentAccount.name} confirmed";
-                print(msg);
+                print("[receivePage] $msg");
                 widget.store.encointer.account?.addBalanceEntry(cid, balances[cid]);
                 NotificationPlugin.showNotification(
                   44,
