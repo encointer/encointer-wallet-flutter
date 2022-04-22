@@ -69,7 +69,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       store.loadOrInitEncointerCache(_selectedNetwork.info),
     ]);
 
-    webApi.closeWebView();
+    await webApi.close();
     webApi.init();
 
     changeTheme();
