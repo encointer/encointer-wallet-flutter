@@ -52,7 +52,6 @@ class EncointerApi {
     this.subscribeCurrentPhase();
     this.subscribeCommunityIdentifiers();
     if (store.settings.endpointIsNoTee) {
-      //this.subscribeEncointerBalance();
       this.subscribeBusinessRegistry();
     }
   }
@@ -64,14 +63,12 @@ class EncointerApi {
     jsApi.unsubscribeMessage(_businessRegistryChannel);
 
     if (store.settings.endpointIsNoTee) {
-      //jsApi.unsubscribeMessage(_encointerBalanceChannel);
       jsApi.unsubscribeMessage(_businessRegistryChannel);
     }
   }
 
   void getCommunityData() {
     getBusinesses();
-    //getEncointerBalance();
     getCommunityMetadata();
     getAllMeetupLocations();
     getDemurrage();
