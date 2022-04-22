@@ -13,6 +13,7 @@ import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dar
 import 'package:encointer_wallet/page/account/create/addAccountPage.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
+import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -25,6 +26,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:pausable_timer/pausable_timer.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import 'account_or_community/AccountOrCommunityData.dart';
@@ -39,7 +41,7 @@ class Assets extends StatefulWidget {
   _AssetsState createState() => _AssetsState(store);
 }
 
-class _AssetsState extends State<Assets> {
+class _AssetsState extends State<Assets> with WidgetsBindingObserver {
   _AssetsState(this.store);
 
   final AppStore store;
@@ -50,6 +52,8 @@ class _AssetsState extends State<Assets> {
   bool _enteredPin = false;
 
   PanelController panelController;
+
+  PausableTimer balanceWatchdog;
 
   @override
   void initState() {
@@ -64,6 +68,35 @@ class _AssetsState extends State<Assets> {
     }
 
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    balanceWatchdog.cancel();
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.resumed:
+        print("[home] resumed. restarting balance watchdog");
+        balanceWatchdog.start();
+        break;
+      case AppLifecycleState.inactive:
+        print("[home] inactive. pausing balance watchdog");
+        balanceWatchdog.pause();
+        break;
+      case AppLifecycleState.paused:
+        print("[home] paused");
+        break;
+      case AppLifecycleState.detached:
+        print("[home] detatched");
+        break;
+    }
   }
 
   double _panelHeightOpen;
@@ -77,6 +110,42 @@ class _AssetsState extends State<Assets> {
 
     List<AccountOrCommunityData> allCommunities = [];
     List<AccountOrCommunityData> allAccounts = [];
+
+    balanceWatchdog = PausableTimer(
+      const Duration(seconds: 12),
+      () {
+        webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
+          print("[home:balanceWatchdog] get all balances");
+          balances.forEach((cid, balanceEntry) {
+            String cidStr = cid.toFmtString();
+            double demurrageRate = widget.store.encointer.communityStores[cidStr]?.demurrage;
+            double newBalance = widget.store.encointer.communityStores[cidStr]?.applyDemurrage(balanceEntry);
+            double oldBalance = widget.store.encointer.communityStores[cidStr]?.applyDemurrage(
+                    widget.store.encointer.accountStores[widget.store.account.currentAddress].balanceEntries[cidStr]) ??
+                0;
+            double delta = newBalance - oldBalance;
+            print("[home:balanceWatchdog] balance for $cidStr was $oldBalance, changed by $delta");
+            if (delta > demurrageRate) {
+              var msg = dic.assets.incomingConfirmed
+                  .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
+                  .replaceAll('CID_SYMBOL', widget.store.encointer.communityStores[cidStr].metadata.symbol)
+                  .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
+              print("[home:balanceWatchdog] $msg");
+              widget.store.encointer.accountStores[widget.store.account.currentAddress]
+                  ?.addBalanceEntry(cid, balances[cid]);
+              NotificationPlugin.showNotification(
+                45,
+                dic.assets.fundsReceived,
+                msg,
+              );
+            }
+          });
+        });
+        balanceWatchdog
+          ..reset()
+          ..start();
+      },
+    )..start();
 
     return Scaffold(
       appBar: AppBar(
