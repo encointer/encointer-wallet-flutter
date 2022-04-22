@@ -129,11 +129,7 @@ class _ReceivePageState extends State<ReceivePage> with WidgetsBindingObserver {
                     .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
                 print("[receivePage] $msg");
                 widget.store.encointer.account?.addBalanceEntry(cid, balances[cid]);
-                NotificationPlugin.showNotification(
-                  44,
-                  dic.assets.fundsReceived,
-                  msg,
-                );
+                NotificationPlugin.showNotification(44, dic.assets.fundsReceived, msg, cid: cid.toFmtString());
               }
             }
           }

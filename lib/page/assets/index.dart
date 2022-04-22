@@ -133,11 +133,7 @@ class _AssetsState extends State<Assets> with WidgetsBindingObserver {
               print("[home:balanceWatchdog] $msg");
               widget.store.encointer.accountStores[widget.store.account.currentAddress]
                   ?.addBalanceEntry(cid, balances[cid]);
-              NotificationPlugin.showNotification(
-                45,
-                dic.assets.fundsReceived,
-                msg,
-              );
+              NotificationPlugin.showNotification(45, dic.assets.fundsReceived, msg, cid: cidStr);
             }
           });
         });
