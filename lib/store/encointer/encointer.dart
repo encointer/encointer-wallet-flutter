@@ -220,7 +220,7 @@ abstract class _EncointerStore with Store {
   @action
   void setCurrentCeremonyIndex(index) {
     print("store: set currentCeremonyIndex to $index");
-    if (currentCeremonyIndex != index && currentPhase == CeremonyPhase.REGISTERING) {
+    if (currentCeremonyIndex != index && currentPhase == CeremonyPhase.Registering) {
       purgeCeremonySpecificState();
     }
 
@@ -236,19 +236,19 @@ abstract class _EncointerStore with Store {
   @action
   void updateState() {
     switch (currentPhase) {
-      case CeremonyPhase.REGISTERING:
+      case CeremonyPhase.Registering:
         webApi.encointer.getMeetupTime();
         if (chosenCid != null) {
           webApi.encointer.getAggregatedAccountData(chosenCid, _rootStore.account.currentAddress);
         }
         webApi.encointer.getReputations();
         break;
-      case CeremonyPhase.ASSIGNING:
+      case CeremonyPhase.Assigning:
         if (chosenCid != null) {
           webApi.encointer.getAggregatedAccountData(chosenCid, _rootStore.account.currentAddress);
         }
         break;
-      case CeremonyPhase.ATTESTING:
+      case CeremonyPhase.Attesting:
         if (chosenCid != null) {
           webApi.encointer.getAggregatedAccountData(chosenCid, _rootStore.account.currentAddress);
         }
@@ -386,13 +386,13 @@ abstract class _EncointerStore with Store {
 
   bool get showRegisterButton {
     bool registered = communityAccount?.isRegistered ?? false;
-    return (currentPhase == CeremonyPhase.REGISTERING && !registered);
+    return (currentPhase == CeremonyPhase.Registering && !registered);
   }
 
   @computed
   bool get showStartCeremonyButton {
     bool registered = communityAccount?.isRegistered ?? false;
-    return (currentPhase == CeremonyPhase.ATTESTING && registered);
+    return (currentPhase == CeremonyPhase.Attesting && registered);
   }
 
   @computed

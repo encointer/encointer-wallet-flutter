@@ -84,9 +84,9 @@ T _$enumDecodeNullable<T>(
 }
 
 const _$CeremonyPhaseEnumMap = {
-  CeremonyPhase.REGISTERING: 'REGISTERING',
-  CeremonyPhase.ASSIGNING: 'ASSIGNING',
-  CeremonyPhase.ATTESTING: 'ATTESTING',
+  CeremonyPhase.Registering: 'Registering',
+  CeremonyPhase.Assigning: 'Assigning',
+  CeremonyPhase.Attesting: 'Attesting',
 };
 
 // **************************************************************************
