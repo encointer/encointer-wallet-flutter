@@ -191,7 +191,6 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     ),
                     onPressed: () {
                       setState(() {
-                        print('current: [${store.account.currentAccount.name}] edited: [${store.account.accountToBeEdited.name}] ');
                         _isEditingText = true;
                       });
                     },
