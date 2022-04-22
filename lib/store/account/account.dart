@@ -232,7 +232,7 @@ abstract class _AccountStore with Store {
     if (accountToBeEditedPubKey != pubKey) {
       accountToBeEditedPubKey = pubKey;
       rootStore.localStorage.setCurrentAccount(pubKey);
-      rootStore.encointer.resetState();
+      rootStore.encointer.updateState();
     }
     if (!rootStore.settings.loading) {
       webApi.assets.subscribeBalance();
