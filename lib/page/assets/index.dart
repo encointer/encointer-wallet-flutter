@@ -112,7 +112,7 @@ class _AssetsState extends State<Assets> with WidgetsBindingObserver {
     List<AccountOrCommunityData> allAccounts = [];
 
     balanceWatchdog = PausableTimer(
-      const Duration(seconds: 12),
+      const Duration(seconds: 2),
       () {
         webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
           print("[home:balanceWatchdog] get all balances");
@@ -259,7 +259,8 @@ class _AssetsState extends State<Assets> with WidgetsBindingObserver {
                             key: Key('qr-receive'),
                             onPressed: () {
                               if (accountData.address != '') {
-                                Navigator.pushNamed(context, ReceivePage.route);
+                                balanceWatchdog.pause();
+                                Navigator.pushNamed(context, ReceivePage.route).then((_) => balanceWatchdog.start());
                               }
                             },
                           ),
@@ -287,6 +288,7 @@ class _AssetsState extends State<Assets> with WidgetsBindingObserver {
                             key: Key('transfer'),
                             onPressed: store.encointer.communityBalance != null
                                 ? () {
+                                    balanceWatchdog.pause();
                                     Navigator.pushNamed(
                                       context,
                                       TransferPage.route,
@@ -294,7 +296,7 @@ class _AssetsState extends State<Assets> with WidgetsBindingObserver {
                                           redirect: '/',
                                           cid: store.encointer.chosenCid,
                                           communitySymbol: store.encointer.community?.symbol),
-                                    );
+                                    ).then((_) => balanceWatchdog.start());
                                   }
                                 : null,
                           ),
