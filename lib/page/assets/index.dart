@@ -112,7 +112,7 @@ class _AssetsState extends State<Assets> with WidgetsBindingObserver {
     List<AccountOrCommunityData> allAccounts = [];
 
     balanceWatchdog = PausableTimer(
-      const Duration(seconds: 2),
+      const Duration(seconds: 12),
       () {
         webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
           print("[home:balanceWatchdog] get all balances");
