@@ -65,6 +65,12 @@ class Api {
     await launchWebview();
   }
 
+  Future<void> close() async {
+    await stopSubscriptions();
+    await closeWebView();
+    await encointer.close();
+  }
+
   Future<void> launchWebview({bool customNode = false}) async {
     var connectFunc = customNode ? connectNode : connectNodeAll;
 
@@ -166,10 +172,10 @@ class Api {
     this.assets.startSubscriptions();
   }
 
-  void stopSubscriptions() {
-    this.encointer.stopSubscriptions();
-    this.chain.stopSubscriptions();
-    this.assets.stopSubscriptions();
+  Future<void> stopSubscriptions() async {
+    await this.encointer.stopSubscriptions();
+    await this.chain.stopSubscriptions();
+    await this.assets.stopSubscriptions();
   }
 
   Future<void> updateBlocks(List txs) async {
@@ -205,7 +211,7 @@ class Api {
   }
 
   Future<void> closeWebView() async {
-    stopSubscriptions();
+    await stopSubscriptions();
     js.closeWebView();
   }
 
