@@ -114,7 +114,7 @@ class _WalletAppState extends State<WalletApp> {
   void dispose() {
     didReceiveLocalNotificationSubject.close();
     selectNotificationSubject.close();
-    webApi.closeWebView();
+    webApi.close();
     super.dispose();
   }
 
