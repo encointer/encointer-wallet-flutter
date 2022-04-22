@@ -63,7 +63,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
             CupertinoButton(
               child: Text(I18n.of(context).translationsForLocale().home.ok),
               onPressed: () => {
-                store.account.removeAccount(store.account.currentAccount).then(
+                store.account.removeAccount(store.account.accountToBeEdited).then(
                   (_) async {
                     // refresh balance
                     await store.loadAccountCache();
@@ -115,7 +115,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
     showCupertinoDialog(
       context: context,
       builder: (BuildContext context) {
-        return showPasswordInputDialog(context, store.account.currentAccount, Text(dic.profile.deleteConfirm),
+        return showPasswordInputDialog(context, store.account.accountToBeEdited, Text(dic.profile.deleteConfirm),
             (password) async {
           print('password is: $password');
           setState(() {
@@ -123,11 +123,11 @@ class _AccountManagePageState extends State<AccountManagePage> {
           });
 
           bool isMnemonic =
-              await store.account.checkSeedExist(AccountStore.seedTypeMnemonic, store.account.currentAccount.pubKey);
+              await store.account.checkSeedExist(AccountStore.seedTypeMnemonic, store.account.accountToBeEdited.pubKey);
 
           if (isMnemonic) {
             String seed = await store.account
-                .decryptSeed(store.account.currentAccount.pubKey, AccountStore.seedTypeMnemonic, password);
+                .decryptSeed(store.account.accountToBeEdited.pubKey, AccountStore.seedTypeMnemonic, password);
 
             Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
               'key': seed,
@@ -160,7 +160,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   Widget build(BuildContext context) {
     final TextStyle h3 = Theme.of(context).textTheme.headline3;
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
-    _nameCtrl = TextEditingController(text: store.account.currentAccount.name);
+    _nameCtrl = TextEditingController(text: store.account.accountToBeEdited.name);
     _nameCtrl.selection = TextSelection.fromPosition(TextPosition(offset: _nameCtrl.text.length));
 
     final Translations dic = I18n.of(context).translationsForLocale();
@@ -191,6 +191,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     ),
                     onPressed: () {
                       setState(() {
+                        // store.account.setAccountToBeEdited(pubKey);
                         _isEditingText = true;
                       });
                     },
@@ -221,16 +222,16 @@ class _AccountManagePageState extends State<AccountManagePage> {
                         AddressIcon(
                           '',
                           size: 130,
-                          pubKey: store.account.currentAccount.pubKey,
+                          pubKey: store.account.accountToBeEdited.pubKey,
                         ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(Fmt.address(store.account.currentAddress), style: TextStyle(fontSize: 20)),
+                          Text(Fmt.address(store.account.addressOfAccountToBeEdited), style: TextStyle(fontSize: 20)),
                           IconButton(
                             icon: Icon(Iconsax.copy),
                             color: ZurichLion.shade500,
-                            onPressed: () => UI.copyAndNotify(context, store.account.currentAddress),
+                            onPressed: () => UI.copyAndNotify(context, store.account.addressOfAccountToBeEdited),
                           ),
                         ],
                       ),
@@ -354,7 +355,7 @@ class CommunityIcon extends StatelessWidget {
         Observer(
           builder: (_) {
             if (store.encointer.community.bootstrappers != null &&
-                store.encointer.community.bootstrappers.contains(store.account.currentAddress)) {
+                store.encointer.community.bootstrappers.contains(store.account.addressOfAccountToBeEdited)) {
               return Positioned(
                 bottom: 0, right: 0, //give the values according to your requirement
                 child: Icon(Iconsax.star, color: Colors.yellow),

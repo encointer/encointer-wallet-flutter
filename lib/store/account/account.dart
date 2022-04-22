@@ -148,8 +148,8 @@ abstract class _AccountStore with Store {
 //      print(ss58);
     }
     return pubKeyAddressMap[ss58] != null
-        ? pubKeyAddressMap[ss58][accountToBeEditedPubKey] ?? currentAccount.address
-        : currentAccount.address;
+        ? pubKeyAddressMap[ss58][accountToBeEditedPubKey] ?? accountToBeEdited.address
+        : accountToBeEdited.address;
   }
 
   @action
@@ -241,7 +241,7 @@ abstract class _AccountStore with Store {
 
   @action
   Future<void> updateAccountName(String name) async {
-    Map<String, dynamic> acc = AccountData.toJson(currentAccount);
+    Map<String, dynamic> acc = AccountData.toJson(accountToBeEdited);
     acc['meta']['name'] = name;
 
     await updateAccount(acc);

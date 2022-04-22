@@ -32,11 +32,9 @@ class _ProfileState extends State<Profile> {
   final Api api = webApi;
   EndpointData _selectedNetwork;
 
-  Future<void> _onSelect(AccountData account, String address) async {
-    if (address != store.account.currentAddress) {
-      print("changing from address ${store.account.currentAddress} to $address");
-
-      store.account.setCurrentAccount(account.pubKey);
+  Future<void> _onEditAccount(AccountData account, String address) async {
+    if (address != store.account.addressOfAccountToBeEdited) {
+      store.account.setAccountToBeEdited(account.pubKey);
       await store.loadAccountCache();
 
       webApi.fetchAccountData();
@@ -81,7 +79,7 @@ class _ProfileState extends State<Profile> {
           ],
         ),
         onTap: () => {
-          _onSelect(account, address),
+          _onEditAccount(account, address),
           Navigator.pushNamed(context, AccountManagePage.route),
         },
       );
