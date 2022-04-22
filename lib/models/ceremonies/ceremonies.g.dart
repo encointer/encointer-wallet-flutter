@@ -86,9 +86,9 @@ Map<String, dynamic> _$AggregatedAccountDataGlobalToJson(AggregatedAccountDataGl
     };
 
 const _$CeremonyPhaseEnumMap = {
-  CeremonyPhase.REGISTERING: 'REGISTERING',
-  CeremonyPhase.ASSIGNING: 'ASSIGNING',
-  CeremonyPhase.ATTESTING: 'ATTESTING',
+  CeremonyPhase.Registering: 'Registering',
+  CeremonyPhase.Assigning: 'Assigning',
+  CeremonyPhase.Attesting: 'Attesting',
 };
 
 CommunityReputation _$CommunityReputationFromJson(Map<String, dynamic> json) {

@@ -26,7 +26,7 @@ abstract class PrepareMockStorage {
   }
 
   static void readyForMeetup(AppStore store) {
-    store.encointer.setCurrentPhase(CeremonyPhase.ATTESTING);
+    store.encointer.setCurrentPhase(CeremonyPhase.Attesting);
     store.encointer.community.setMeetupLocations([testLocation1, testLocation2, testLocation3]);
     store.encointer.communityAccount.setMeetup(Meetup(1, 1, claim['timestamp'], testMeetupRegistry));
   }
