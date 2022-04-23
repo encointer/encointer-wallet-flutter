@@ -3,8 +3,8 @@ import 'dart:io';
 
 import 'package:encointer_wallet/common/regInputFormatter.dart';
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
-import 'package:encointer_wallet/service/walletApi.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/udpateJSCodeApi.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
@@ -47,6 +47,7 @@ class UI {
     }
   }
 
+  // Todo: Decide if we keep this https://github.com/encointer/encointer-wallet-flutter/issues/517
   static Future<void> checkUpdate(BuildContext context, Map versions, {bool autoCheck = false}) async {
     if (versions == null || !Platform.isAndroid && !Platform.isIOS) return;
     String platform = Platform.isAndroid ? 'android' : 'ios';
@@ -137,7 +138,7 @@ class UI {
     String network,
   ) async {
     if (jsVersion != null) {
-      final currentVersion = WalletApi.getPolkadotJSVersion(
+      final currentVersion = UpdateJSCodeApi.getPolkadotJSVersion(
         webApi.jsStorage,
         network,
       );
@@ -189,7 +190,7 @@ class UI {
         );
       },
     );
-    final String code = await WalletApi.fetchPolkadotJSCode(network);
+    final String code = await UpdateJSCodeApi.fetchPolkadotJSCode(network);
     Navigator.of(context).pop();
     showCupertinoDialog(
       context: context,
@@ -201,7 +202,7 @@ class UI {
             CupertinoButton(
               child: Text(dic.home.ok),
               onPressed: () {
-                WalletApi.setPolkadotJSCode(jsStorage, network, code, version);
+                UpdateJSCodeApi.setPolkadotJSCode(jsStorage, network, code, version);
                 Navigator.of(context).pop();
                 if (code == null) {
                   exit(0);

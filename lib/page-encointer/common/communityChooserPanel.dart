@@ -1,7 +1,9 @@
+import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
-import 'package:encointer_wallet/page-encointer/common/communityChooserOnMap.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
@@ -74,19 +76,29 @@ class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
   }
 }
 
-class CommunityWithCommunityChooser extends StatefulWidget {
-  const CommunityWithCommunityChooser(this.store, {Key key}) : super(key: key);
+/// the CombinedCommunityAndAccountAvatar should be wrapped in an InkWell to provide the callback on a click
+class CombinedCommunityAndAccountAvatar extends StatefulWidget {
+  const CombinedCommunityAndAccountAvatar(this.store,
+      {Key key,
+      this.showCommunityNameAndAccountName = true,
+      this.communityAvatarSize = 96,
+      this.accountAvatarSize = 34})
+      : super(key: key);
 
   final AppStore store;
+  final double communityAvatarSize;
+  final double accountAvatarSize;
+
+  final bool showCommunityNameAndAccountName;
 
   @override
-  _CommunityWithCommunityChooserState createState() => _CommunityWithCommunityChooserState(store);
+  _CombinedCommunityAndAccountAvatarState createState() => _CombinedCommunityAndAccountAvatarState(store);
 }
 
-class _CommunityWithCommunityChooserState extends State<CommunityWithCommunityChooser> {
+class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAndAccountAvatar> {
   final AppStore store;
 
-  _CommunityWithCommunityChooserState(this.store);
+  _CombinedCommunityAndAccountAvatarState(this.store);
 
   @override
   Widget build(BuildContext context) {
@@ -94,48 +106,78 @@ class _CommunityWithCommunityChooserState extends State<CommunityWithCommunityCh
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Observer(
-          builder: (_) => InkWell(
-            key: Key('cid-avatar'),
-            child: Column(
-              children: [
-                Card(
-                  elevation: 10,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(96),
-                  ),
-                  child: SizedBox(
-                    width: 96,
-                    height: 96,
-                    child: FutureBuilder<SvgPicture>(
-                      future: webApi.ipfs.getCommunityIcon(store.encointer.communityIconsCid),
-                      builder: (_, AsyncSnapshot<SvgPicture> snapshot) {
-                        if (snapshot.hasData) {
-                          return snapshot.data;
-                        } else {
-                          return CupertinoActivityIndicator();
-                        }
-                      },
+          builder: (_) => Column(
+            children: [
+              Stack(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.fromLTRB(0, 0, 2, 2),
+                    child: Card(
+                      elevation: 10,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(widget.communityAvatarSize),
+                      ),
+                      child: CommunityAvatar(
+                        store: store,
+                        avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.community?.assetsCid),
+                        avatarSize: widget.communityAvatarSize,
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(height: 6),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: AddressIcon(
+                      '',
+                      size: widget.accountAvatarSize,
+                      pubKey: store.account.currentAccount.pubKey,
+                      tapToCopy: false,
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(height: 4),
+              if (widget.showCommunityNameAndAccountName)
                 Text(
-                  store.encointer.communityName ?? '...',
-                  style: Theme.of(context).textTheme.headline4,
+                  '${store.encointer.community?.name ?? "..."}\n${Fmt.accountName(context, store.account.currentAccount)}',
+                  style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
+                  textAlign: TextAlign.center,
                 ),
-              ],
-            ),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => CommunityChooserOnMap(store),
-                ),
-              );
-            },
+            ],
           ),
         ),
       ],
+    );
+  }
+}
+
+class CommunityAvatar extends StatelessWidget {
+  const CommunityAvatar({
+    Key key,
+    @required this.store,
+    @required this.avatarIcon,
+    this.avatarSize = 120,
+  }) : super(key: key);
+
+  final AppStore store;
+  final double avatarSize;
+  final Future<SvgPicture> avatarIcon;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: avatarSize,
+      height: avatarSize,
+      child: FutureBuilder<SvgPicture>(
+        future: avatarIcon,
+        builder: (_, AsyncSnapshot<SvgPicture> snapshot) {
+          if (snapshot.hasData) {
+            return snapshot.data;
+          } else {
+            return CupertinoActivityIndicator();
+          }
+        },
+      ),
     );
   }
 }

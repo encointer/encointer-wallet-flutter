@@ -76,7 +76,8 @@ Currently supports flutter: 2.02
 ### Run tests
 
 * run all tests from the command line:`flutter test`
-* run tests in specific directory: `flutter test test/page-encointer`
+* exclude e2e-tests that need a running encointer node:`flutter test --exclude-tags encointer-node-e2e`
+* run e2e-tests that need a running encointer node:`flutter test --tags encointer-node-e2e`
 
 ### Integration tests
 * run all integration tests in `test_driver` directory: `flutter drive --target=test_driver/app.dart --flavor dev`

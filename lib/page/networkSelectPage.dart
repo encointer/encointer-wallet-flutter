@@ -3,7 +3,7 @@ import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page/account/createAccountEntryPage.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
@@ -34,6 +34,8 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   // Here we commented out the two not-active networks of Cantillon. When they will be relevant, they can be uncommented #232
   final List<EndpointData> networks = [
     networkEndpointEncointerGesell,
+    networkEndpointEncointerLietaer,
+    networkEndpointEncointerMainnet,
     networkEndpointEncointerGesellDev,
     // networkEndpointEncointerCantillon,
     // networkEndpointEncointerCantillonDev
@@ -64,11 +66,14 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       store.loadAccountCache(),
       store.settings.loadNetworkStateCache(),
       store.assets.loadCache(),
-      store.encointer.loadCache()
+      store.loadOrInitEncointerCache(_selectedNetwork.info),
     ]);
 
-    webApi.launchWebview();
+    await webApi.close();
+    webApi.init();
+
     changeTheme();
+
     if (mounted) {
       Navigator.of(context).pop();
       setState(() {
@@ -89,9 +94,6 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         webApi.fetchAccountData();
       } else {
         /// set new network and reload web view
-        // todo  remove the two options here, and fix the caching issue, explained in #219
-        store.encointer.setChosenCid();
-        store.encointer.communities = null;
         await _reloadNetwork();
       }
     }

@@ -1,8 +1,7 @@
-import 'package:flutter_test/flutter_test.dart';
-import 'package:encointer_wallet/store/app.dart';
-
-import 'package:encointer_wallet/mocks/storage/localStorage.dart';
 import 'package:encointer_wallet/mocks/data/mockAccountData.dart';
+import 'package:encointer_wallet/mocks/storage/mockLocalStorage.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

@@ -37,7 +37,7 @@ jobs:
         run: flutter pub get && flutter analyze  --fatal-warnings
 
       - name: "Run unit tests"
-        run: flutter pub get && flutter test
+        run: flutter test --exclude-tags encointer-node-e2e
 
 #  test-js:
     # Todo: Currently e2e tests are mixed with unit tests (although the amount of unit tests is really small)

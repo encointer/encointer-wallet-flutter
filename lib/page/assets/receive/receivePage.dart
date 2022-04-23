@@ -1,10 +1,15 @@
 import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/service/notification.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:pausable_timer/pausable_timer.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share/share.dart';
 
@@ -16,11 +21,23 @@ class ReceivePage extends StatefulWidget {
   _ReceivePageState createState() => _ReceivePageState();
 }
 
-class _ReceivePageState extends State<ReceivePage> {
+class _ReceivePageState extends State<ReceivePage> with WidgetsBindingObserver {
   final TextEditingController _amountController = new TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool generateQR = false;
   var invoice = [];
+
+  PausableTimer paymentWatchdog;
+  bool observedPendingExtrinsic = false;
+
+  static void _showSnackBar(BuildContext context, String msg) {
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      backgroundColor: Colors.lightBlue,
+      content: Text(msg, style: TextStyle(color: Colors.black)),
+      duration: Duration(milliseconds: 5000),
+    ));
+  }
 
   Widget generateQRWithInvoiceData() {
     invoice = [
@@ -42,21 +59,93 @@ class _ReceivePageState extends State<ReceivePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
   void dispose() {
-    // Clean up the controller when the widget is removed from the
-    // widget tree.
     _amountController.dispose();
+    paymentWatchdog.cancel();
+    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
   @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.resumed:
+        print("[receivePage] resumed. restarting payment watchdog");
+        paymentWatchdog.start();
+        break;
+      case AppLifecycleState.inactive:
+        print("[receivePage] inactive. pausing payment watchdog");
+        paymentWatchdog.pause();
+        break;
+      case AppLifecycleState.paused:
+        print("[receivePage] paused");
+        break;
+      case AppLifecycleState.detached:
+        print("[receivePage] detatched");
+        break;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final Translations dic = I18n.of(context).translationsForLocale();
+    paymentWatchdog = PausableTimer(
+      const Duration(seconds: 1),
+      () {
+        webApi.encointer.pendingExtrinsics().then((extrinsics) {
+          print("[receivePage] pendingExtrinsics ${extrinsics.toString()}");
+          if ((extrinsics.length > 0) && (!observedPendingExtrinsic)) {
+            extrinsics.forEach((xt) {
+              if (xt.contains(widget.store.account.currentAccountPubKey.substring(2))) {
+                _showSnackBar(context, dic.profile.observedPendingExtrinsic);
+                observedPendingExtrinsic = true;
+              }
+            });
+          } else {
+            observedPendingExtrinsic = false;
+          }
+        });
+        webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
+          if (balances != null) {
+            CommunityIdentifier cid = widget.store.encointer.chosenCid;
+            double demurrageRate = widget.store.encointer.community.demurrage;
+            double newBalance = widget.store.encointer.applyDemurrage(balances[cid]);
+            double oldBalance =
+                widget.store.encointer.applyDemurrage(widget.store.encointer.communityBalanceEntry) ?? 0;
+            if (newBalance != null) {
+              double delta = newBalance - oldBalance;
+              print("[receivePage] balance was $oldBalance, changed by $delta");
+              if (delta > demurrageRate) {
+                var msg = dic.assets.incomingConfirmed
+                    .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
+                    .replaceAll('CID_SYMBOL', widget.store.encointer.community.metadata.symbol)
+                    .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
+                print("[receivePage] $msg");
+                widget.store.encointer.account?.addBalanceEntry(cid, balances[cid]);
+                NotificationPlugin.showNotification(44, dic.assets.fundsReceived, msg, cid: cid.toFmtString());
+              }
+            }
+          }
+        });
+        paymentWatchdog
+          ..reset()
+          ..start();
+      },
+    )..start();
+
     return Form(
       key: _formKey,
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          title: Text(I18n.of(context).translationsForLocale().assets.receive),
+          title: Text(dic.assets.receive),
           leading: Container(),
           actions: [
             IconButton(
@@ -76,7 +165,7 @@ class _ReceivePageState extends State<ReceivePage> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 48),
                     child: Text(
-                      I18n.of(context).translationsForLocale().profile.qrScanHint,
+                      dic.profile.qrScanHint,
                       style: Theme.of(context).textTheme.headline3.copyWith(color: encointerBlack),
                       textAlign: TextAlign.center,
                     ),
@@ -85,14 +174,14 @@ class _ReceivePageState extends State<ReceivePage> {
                   Padding(
                     padding: const EdgeInsets.all(30),
                     child: EncointerTextFormField(
-                      labelText: I18n.of(context).translationsForLocale().assets.invoiceAmount,
+                      labelText: dic.assets.invoiceAmount,
                       textStyle: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
                       inputFormatters: [UI.decimalInputFormatter()],
                       controller: _amountController,
                       textFormFieldKey: Key('invoice-amount-input'),
                       validator: (String value) {
                         if (value == null || value.isEmpty || double.parse(value) == 0.0) {
-                          return I18n.of(context).translationsForLocale().assets.amountError;
+                          return dic.assets.amountError;
                         }
                         return null;
                       },
@@ -121,8 +210,7 @@ class _ReceivePageState extends State<ReceivePage> {
                   ),
                 ],
               ),
-              Text(
-                  '${I18n.of(context).translationsForLocale().profile.receiverAccount} ${widget.store.account.currentAccount.name}',
+              Text('${dic.profile.receiverAccount} ${widget.store.account.currentAccount.name}',
                   style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
                   textAlign: TextAlign.center),
               SizedBox(height: 8),
@@ -138,7 +226,7 @@ class _ReceivePageState extends State<ReceivePage> {
                           Icon(Icons.share, color: ZurichLion.shade500),
                           SizedBox(width: 8),
                           Text(
-                            I18n.of(context).translationsForLocale().assets.shareInvoice,
+                            dic.assets.shareInvoice,
                             style: Theme.of(context).textTheme.headline3,
                           ),
                         ]),

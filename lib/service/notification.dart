@@ -78,14 +78,19 @@ class NotificationPlugin {
     });
   }
 
-  static Future<void> showNotification(int id, String title, String body, {String payload}) async {
+  static Future<void> showNotification(int id, String title, String body, {String payload, String cid}) async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'transaction_submitted', 'Transaction Submitted', 'transaction submitted to blockchain network',
-        importance: Importance.max, priority: Priority.high, ticker: 'ticker');
-    var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+        'EncointerNotification$cid', // This channel name must be unique for each community if we want community-specific sounds
+        'Encointer Notification',
+        'a transactions has been submitted or a payment has arrived',
+        importance: Importance.max,
+        priority: Priority.high,
+        ticker: 'ticker',
+        sound: RawResourceAndroidNotificationSound('lions_growl'));
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails(sound: 'lions_growl.wav');
     var platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(0, title, body, platformChannelSpecifics,
-        payload: payload ?? 'undefind');
+        payload: payload ?? 'undefined');
   }
 }

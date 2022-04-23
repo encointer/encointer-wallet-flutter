@@ -81,7 +81,21 @@ class LocalStorage {
       Object data = await compute(jsonDecode, value);
       return data;
     }
-    return null;
+    return Future.value(null);
+  }
+
+  /// Gets the more specific return type that `GetObject. This should always be preferred.
+  ///
+  /// Should be used instead of `getObject`, see #533.
+  Future<Map<String, dynamic>> getMap(String key) async {
+    String value = await storage.getKV('${customKVKey}_$key');
+
+    if (value != null) {
+      // String to `Map<String, dynamic>` conversion
+      var data = await compute(jsonDecode, value);
+      return data;
+    }
+    return Future.value(null);
   }
 
   Future<void> setAccountCache(String accPubKey, String key, Object value) async {
@@ -96,7 +110,7 @@ class LocalStorage {
   Future<Object> getAccountCache(String accPubKey, String key) async {
     Map data = await getObject(key);
     if (data == null) {
-      return null;
+      return Future.value(null);
     }
     return data[accPubKey];
   }

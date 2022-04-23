@@ -1,11 +1,10 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
-import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/create/addAccountPage.dart';
 import 'package:encointer_wallet/page/profile/aboutPage.dart';
 import 'package:encointer_wallet/page/profile/account/accountManagePage.dart';
 import 'package:encointer_wallet/page/profile/account/changePasswordPage.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
@@ -33,50 +32,26 @@ class _ProfileState extends State<Profile> {
   final Api api = webApi;
   EndpointData _selectedNetwork;
 
-  Future<void> _onSelect(AccountData i, String address) async {
+  Future<void> _onSelect(AccountData account, String address) async {
     if (address != store.account.currentAddress) {
       print("changing from addres ${store.account.currentAddress} to $address");
 
-      store.account.setCurrentAccount(i.pubKey);
+      store.account.setCurrentAccount(account.pubKey);
       await store.loadAccountCache();
 
       webApi.fetchAccountData();
     }
   }
 
-  Future<void> _onAddAccount() async {
-    Navigator.of(context).pushNamed(AddAccountPage.route);
-  }
-
-  Future<void> _showPasswordDialog(BuildContext context) async {
-    await showCupertinoDialog(
-      context: context,
-      builder: (_) {
-        return Container(
-          child: showPasswordInputDialog(
-            context,
-            store.account.currentAccount,
-            Text(I18n.of(context).translationsForLocale().profile.unlock),
-            (password) {
-              setState(() {
-                store.settings.setPin(password);
-              });
-            },
-          ),
-        );
-      },
-    );
-  }
-
   List<Widget> _buildAccountList() {
-    List<Widget> res = [];
+    List<Widget> allAccountsAsWidgets = [];
 
     List<AccountData> accounts = store.account.accountListAll;
 
-    res.addAll(accounts.map((i) {
-      String address = i.address;
+    allAccountsAsWidgets.addAll(accounts.map((account) {
+      String address = account.address;
       if (store.account.pubKeyAddressMap[_selectedNetwork.ss58] != null) {
-        address = store.account.pubKeyAddressMap[_selectedNetwork.ss58][i.pubKey];
+        address = store.account.pubKeyAddressMap[_selectedNetwork.ss58][account.pubKey];
       }
       return InkWell(
         child: Column(
@@ -86,7 +61,7 @@ class _ProfileState extends State<Profile> {
                 AddressIcon(
                   '',
                   size: 70,
-                  pubKey: i.pubKey,
+                  pubKey: account.pubKey,
                   // addressToCopy: address,
                   tapToCopy: false,
                 ),
@@ -98,7 +73,7 @@ class _ProfileState extends State<Profile> {
             ),
             SizedBox(height: 6),
             Text(
-              Fmt.accountName(context, i),
+              Fmt.accountName(context, account),
               style: Theme.of(context).textTheme.headline4,
             ),
             // This sizedBox is here to define a distance between the accounts
@@ -106,12 +81,12 @@ class _ProfileState extends State<Profile> {
           ],
         ),
         onTap: () => {
-          _onSelect(i, address),
+          _onSelect(account, address),
           Navigator.pushNamed(context, AccountManagePage.route),
         },
       );
     }).toList());
-    return res;
+    return allAccountsAsWidgets;
   }
 
   @override
@@ -160,9 +135,7 @@ class _ProfileState extends State<Profile> {
                         IconButton(
                             icon: Icon(Iconsax.add_square),
                             color: ZurichLion.shade500,
-                            onPressed: () {
-                              store.settings.cachedPin.isEmpty ? _showPasswordDialog(context) : _onAddAccount();
-                            }),
+                            onPressed: () => Navigator.of(context).pushNamed(AddAccountPage.route)),
                       ],
                     ),
                   ),

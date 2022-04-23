@@ -11,7 +11,6 @@ import 'package:encointer_wallet/page/account/create/createAccountPage.dart';
 import 'package:encointer_wallet/page/account/create/createPinPage.dart';
 import 'package:encointer_wallet/page/account/createAccountEntryPage.dart';
 import 'package:encointer_wallet/page/account/import/importAccountPage.dart';
-import 'package:encointer_wallet/page/account/scanPage.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
 import 'package:encointer_wallet/page/assets/transfer/detailPage.dart';
@@ -30,8 +29,9 @@ import 'package:encointer_wallet/page/profile/contacts/contactsPage.dart';
 import 'package:encointer_wallet/page/profile/settings/remoteNodeListPage.dart';
 import 'package:encointer_wallet/page/profile/settings/settingsPage.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58PrefixListPage.dart';
+import 'package:encointer_wallet/page/qr_scan/qrScanPage.dart';
 import 'package:encointer_wallet/service/notification.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/localStorage.dart';
 import 'package:flutter/cupertino.dart';
@@ -40,8 +40,8 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'common/theme.dart';
-import 'mocks/api/api.dart';
-import 'mocks/storage/localStorage.dart';
+import 'mocks/storage/mockLocalStorage.dart';
+import 'mocks/substrate_api/mockApi.dart';
 import 'utils/translations/index.dart';
 
 class WalletApp extends StatefulWidget {
@@ -84,7 +84,10 @@ class _WalletAppState extends State<WalletApp> {
   Future<int> _initStore(BuildContext context) async {
     if (_appStore == null) {
       // Todo: Use provider pattern instead of globals, see: https://github.com/encointer/encointer-wallet-flutter/issues/132
-      globalAppStore = widget.config.mockLocalStorage ? AppStore(getMockLocalStorage()) : AppStore(LocalStorage());
+      globalAppStore = widget.config.mockLocalStorage
+          ? AppStore(getMockLocalStorage(), config: widget.config.appStoreConfig)
+          : AppStore(LocalStorage(), config: widget.config.appStoreConfig);
+
       _appStore = globalAppStore;
       print('initializing app state');
       print('sys locale: ${Localizations.localeOf(context)}');
@@ -111,7 +114,7 @@ class _WalletAppState extends State<WalletApp> {
   void dispose() {
     didReceiveLocalNotificationSubject.close();
     selectNotificationSubject.close();
-    webApi.closeWebView();
+    webApi.close();
     super.dispose();
   }
 
@@ -145,7 +148,7 @@ class _WalletAppState extends State<WalletApp> {
                           child: FutureBuilder<int>(
                             future: _initStore(context),
                             builder: (_, AsyncSnapshot<int> snapshot) {
-                              if (snapshot.hasData) {
+                              if (snapshot.hasData && _appStore.isReady) {
                                 return snapshot.data > 0 ? EncointerHomePage(_appStore) : CreateAccountEntryPage();
                               } else {
                                 return CupertinoActivityIndicator();

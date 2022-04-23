@@ -1,11 +1,16 @@
-import 'package:encointer_wallet/common/components/accountAdvanceOption.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/page-encointer/common/communityChooserOnMap.dart';
 import 'package:encointer_wallet/page/account/create/createPinForm.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+class CreatePinPageParams {
+  CreatePinPageParams(this.onCreatePin);
+
+  final Future<void> Function() onCreatePin;
+}
 
 class CreatePinPage extends StatefulWidget {
   const CreatePinPage(this.store);
@@ -22,67 +27,16 @@ class _CreatePinPageState extends State<CreatePinPage> {
 
   final AppStore store;
 
+  Future<void> Function() onCreatePin;
+
   bool _submitting = false;
-
-  Future<void> _createAndImportAccount() async {
-    setState(() {
-      _submitting = true;
-    });
-
-    await webApi.account.generateAccount();
-
-    var acc = await webApi.account.importAccount(
-      cryptoType: AccountAdvanceOptionParams.encryptTypeSR,
-      derivePath: '',
-    );
-
-    if (acc['error'] != null) {
-      setState(() {
-        _submitting = false;
-      });
-      _showErrorCreatingAccountDialog(context);
-      return;
-    }
-
-    await store.account.addAccount(acc, store.account.newAccount.password);
-    webApi.account.encodeAddress([acc['pubKey']]);
-
-    await store.loadAccountCache();
-
-    // fetch info for the imported account
-    String pubKey = acc['pubKey'];
-    webApi.fetchAccountData();
-    webApi.account.fetchAccountsBonded([pubKey]);
-    webApi.account.getPubKeyIcons([pubKey]);
-    store.account.setCurrentAccount(pubKey);
-
-    setState(() {
-      _submitting = false;
-    });
-  }
-
-  static Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
-    showCupertinoDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return CupertinoAlertDialog(
-          title: Container(),
-          content: Text(I18n.of(context).translationsForLocale().account.createError),
-          actions: <Widget>[
-            CupertinoButton(
-              child: Text(I18n.of(context).translationsForLocale().home.ok),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
+    CreatePinPageParams params = ModalRoute.of(context).settings.arguments;
+
+    onCreatePin = params.onCreatePin;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -106,10 +60,24 @@ class _CreatePinPageState extends State<CreatePinPage> {
       body: SafeArea(
         child: !_submitting
             ? CreatePinForm(
-                onSubmit: () {
+                onSubmit: () async {
                   setState(() {
-                    _createAndImportAccount();
+                    _submitting = true;
                   });
+
+                  await onCreatePin();
+
+                  await Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)),
+                  );
+
+                  setState(() {
+                    _submitting = false;
+                  });
+
+                  // Even if we do not choose a community, we go back to the home screen.
+                  Navigator.popUntil(context, ModalRoute.withName('/'));
                 },
                 store: store,
               )

@@ -2,10 +2,9 @@ import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/secondaryButtonWide.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/encointer/types/ceremonies.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -14,6 +13,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
+
+import '../../../models/index.dart';
 
 class ContactDetailPage extends StatelessWidget {
   ContactDetailPage(this.store);
@@ -56,11 +57,6 @@ class ContactDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     AccountData account = ModalRoute.of(context).settings.arguments;
     var dic = I18n.of(context).translationsForLocale();
-
-    // Because of caching inconsistency with pre-v1.2.0. It would fetch
-    // the bootstrappers together from the cache, but it did not exist before.
-    // Todo: remove in the process of: #479
-    if (store.encointer.chosenCid != null) webApi.encointer.getBootstrappers();
 
     return Scaffold(
       appBar: AppBar(
@@ -117,8 +113,8 @@ class ContactDetailPage extends StatelessWidget {
                 ),
               ),
               Observer(builder: (_) {
-                if (store.encointer.bootstrappers != null) {
-                  return store.encointer.bootstrappers.contains(store.account.currentAddress)
+                if (store.encointer.community.bootstrappers != null) {
+                  return store.encointer.community.bootstrappers.contains(store.account.currentAddress)
                       ? EndorseButton(store, account)
                       : Container();
                 } else {
@@ -140,7 +136,7 @@ class ContactDetailPage extends StatelessWidget {
                     TransferPage.route,
                     arguments: TransferPageParams(
                       cid: store.encointer.chosenCid,
-                      communitySymbol: store.encointer.communitySymbol,
+                      communitySymbol: store.encointer.community?.symbol,
                       recipient: account.address,
                       amount: null,
                       redirect: '/',
@@ -187,7 +183,7 @@ class EndorseButton extends StatelessWidget {
           Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
         ],
       ),
-      onPressed: store.encointer.bootstrappers.contains(contact.address)
+      onPressed: store.encointer.community.bootstrappers.contains(contact.address)
           ? () => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
           : store.encointer.currentPhase != CeremonyPhase.Registering
               ? () => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)

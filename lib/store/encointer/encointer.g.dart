@@ -3,6 +3,93 @@
 part of 'encointer.dart';
 
 // **************************************************************************
+// JsonSerializableGenerator
+// **************************************************************************
+
+EncointerStore _$EncointerStoreFromJson(Map<String, dynamic> json) {
+  return EncointerStore(
+    json['network'] as String,
+  )
+    ..currentPhase = _$enumDecodeNullable(_$CeremonyPhaseEnumMap, json['currentPhase'])
+    ..phaseDurations = (json['phaseDurations'] as Map<String, dynamic>)?.map(
+      (k, e) => MapEntry(_$enumDecodeNullable(_$CeremonyPhaseEnumMap, k), e as int),
+    )
+    ..currentCeremonyIndex = json['currentCeremonyIndex'] as int
+    ..communityIdentifiers = (json['communityIdentifiers'] as List)
+        ?.map((e) => e == null ? null : CommunityIdentifier.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..communities = (json['communities'] as List)
+        ?.map((e) => e == null ? null : CidName.fromJson(e as Map<String, dynamic>))
+        ?.toList()
+    ..chosenCid =
+        json['chosenCid'] == null ? null : CommunityIdentifier.fromJson(json['chosenCid'] as Map<String, dynamic>)
+    ..bazaarStores = json['bazaarStores'] != null
+        ? ObservableMap<String, BazaarStore>.of((json['bazaarStores'] as Map<String, dynamic>).map(
+            (k, e) => MapEntry(k, e == null ? null : BazaarStore.fromJson(e as Map<String, dynamic>)),
+          ))
+        : null
+    ..communityStores = json['communityStores'] != null
+        ? ObservableMap<String, CommunityStore>.of((json['communityStores'] as Map<String, dynamic>).map(
+            (k, e) => MapEntry(k, e == null ? null : CommunityStore.fromJson(e as Map<String, dynamic>)),
+          ))
+        : null
+    ..accountStores = json['accountStores'] != null
+        ? ObservableMap<String, EncointerAccountStore>.of((json['accountStores'] as Map<String, dynamic>).map(
+            (k, e) => MapEntry(k, e == null ? null : EncointerAccountStore.fromJson(e as Map<String, dynamic>)),
+          ))
+        : null;
+}
+
+Map<String, dynamic> _$EncointerStoreToJson(EncointerStore instance) => <String, dynamic>{
+      'network': instance.network,
+      'currentPhase': _$CeremonyPhaseEnumMap[instance.currentPhase],
+      'phaseDurations': instance.phaseDurations?.map((k, e) => MapEntry(_$CeremonyPhaseEnumMap[k], e)),
+      'currentCeremonyIndex': instance.currentCeremonyIndex,
+      'communityIdentifiers': instance.communityIdentifiers?.map((e) => e?.toJson())?.toList(),
+      'communities': instance.communities?.map((e) => e?.toJson())?.toList(),
+      'chosenCid': instance.chosenCid?.toJson(),
+      'bazaarStores': instance.bazaarStores?.map((k, e) => MapEntry(k, e?.toJson())),
+      'communityStores': instance.communityStores?.map((k, e) => MapEntry(k, e?.toJson())),
+      'accountStores': instance.accountStores?.map((k, e) => MapEntry(k, e?.toJson())),
+    };
+
+T _$enumDecode<T>(
+  Map<T, dynamic> enumValues,
+  dynamic source, {
+  T unknownValue,
+}) {
+  if (source == null) {
+    throw ArgumentError('A value must be provided. Supported values: '
+        '${enumValues.values.join(', ')}');
+  }
+
+  final value = enumValues.entries.singleWhere((e) => e.value == source, orElse: () => null)?.key;
+
+  if (value == null && unknownValue == null) {
+    throw ArgumentError('`$source` is not one of the supported values: '
+        '${enumValues.values.join(', ')}');
+  }
+  return value ?? unknownValue;
+}
+
+T _$enumDecodeNullable<T>(
+  Map<T, dynamic> enumValues,
+  dynamic source, {
+  T unknownValue,
+}) {
+  if (source == null) {
+    return null;
+  }
+  return _$enumDecode<T>(enumValues, source, unknownValue: unknownValue);
+}
+
+const _$CeremonyPhaseEnumMap = {
+  CeremonyPhase.Registering: 'Registering',
+  CeremonyPhase.Assigning: 'Assigning',
+  CeremonyPhase.Attesting: 'Attesting',
+};
+
+// **************************************************************************
 // StoreGenerator
 // **************************************************************************
 
@@ -15,37 +102,36 @@ mixin _$EncointerStore on _EncointerStore, Store {
   dynamic get currentPhaseDuration => (_$currentPhaseDurationComputed ??=
           Computed<dynamic>(() => super.currentPhaseDuration, name: '_EncointerStore.currentPhaseDuration'))
       .value;
-  Computed<dynamic> _$scannedClaimsCountComputed;
+  Computed<dynamic> _$communitiesContainsChosenCidComputed;
 
   @override
-  dynamic get scannedClaimsCount => (_$scannedClaimsCountComputed ??=
-          Computed<dynamic>(() => super.scannedClaimsCount, name: '_EncointerStore.scannedClaimsCount'))
-      .value;
-  Computed<dynamic> _$ceremonyIndexForProofOfAttendanceComputed;
-
-  @override
-  dynamic get ceremonyIndexForProofOfAttendance =>
-      (_$ceremonyIndexForProofOfAttendanceComputed ??= Computed<dynamic>(() => super.ceremonyIndexForProofOfAttendance,
-              name: '_EncointerStore.ceremonyIndexForProofOfAttendance'))
+  dynamic get communitiesContainsChosenCid =>
+      (_$communitiesContainsChosenCidComputed ??= Computed<dynamic>(() => super.communitiesContainsChosenCid,
+              name: '_EncointerStore.communitiesContainsChosenCid'))
           .value;
-  Computed<String> _$communityNameComputed;
+  Computed<BazaarStore> _$bazaarComputed;
 
   @override
-  String get communityName =>
-      (_$communityNameComputed ??= Computed<String>(() => super.communityName, name: '_EncointerStore.communityName'))
+  BazaarStore get bazaar =>
+      (_$bazaarComputed ??= Computed<BazaarStore>(() => super.bazaar, name: '_EncointerStore.bazaar')).value;
+  Computed<CommunityStore> _$communityComputed;
+
+  @override
+  CommunityStore get community =>
+      (_$communityComputed ??= Computed<CommunityStore>(() => super.community, name: '_EncointerStore.community'))
           .value;
-  Computed<String> _$communitySymbolComputed;
+  Computed<CommunityAccountStore> _$communityAccountComputed;
 
   @override
-  String get communitySymbol => (_$communitySymbolComputed ??=
-          Computed<String>(() => super.communitySymbol, name: '_EncointerStore.communitySymbol'))
+  CommunityAccountStore get communityAccount => (_$communityAccountComputed ??=
+          Computed<CommunityAccountStore>(() => super.communityAccount, name: '_EncointerStore.communityAccount'))
       .value;
-  Computed<String> _$communityIconsCidComputed;
+  Computed<EncointerAccountStore> _$accountComputed;
 
   @override
-  String get communityIconsCid => (_$communityIconsCidComputed ??=
-          Computed<String>(() => super.communityIconsCid, name: '_EncointerStore.communityIconsCid'))
-      .value;
+  EncointerAccountStore get account =>
+      (_$accountComputed ??= Computed<EncointerAccountStore>(() => super.account, name: '_EncointerStore.account'))
+          .value;
   Computed<BalanceEntry> _$communityBalanceEntryComputed;
 
   @override
@@ -58,29 +144,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   double get communityBalance => (_$communityBalanceComputed ??=
           Computed<double>(() => super.communityBalance, name: '_EncointerStore.communityBalance'))
       .value;
-  Computed<bool> _$isAssignedComputed;
-
-  @override
-  bool get isAssigned =>
-      (_$isAssignedComputed ??= Computed<bool>(() => super.isAssigned, name: '_EncointerStore.isAssigned')).value;
-  Computed<dynamic> _$communitiesContainsChosenCidComputed;
-
-  @override
-  dynamic get communitiesContainsChosenCid =>
-      (_$communitiesContainsChosenCidComputed ??= Computed<dynamic>(() => super.communitiesContainsChosenCid,
-              name: '_EncointerStore.communitiesContainsChosenCid'))
-          .value;
-  Computed<bool> _$isRegisteredComputed;
-
-  @override
-  bool get isRegistered =>
-      (_$isRegisteredComputed ??= Computed<bool>(() => super.isRegistered, name: '_EncointerStore.isRegistered')).value;
-  Computed<bool> _$showRegisterButtonComputed;
-
-  @override
-  bool get showRegisterButton => (_$showRegisterButtonComputed ??=
-          Computed<bool>(() => super.showRegisterButton, name: '_EncointerStore.showRegisterButton'))
-      .value;
   Computed<bool> _$showStartCeremonyButtonComputed;
 
   @override
@@ -92,13 +155,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   @override
   bool get showTwoBoxes =>
       (_$showTwoBoxesComputed ??= Computed<bool>(() => super.showTwoBoxes, name: '_EncointerStore.showTwoBoxes')).value;
-  Computed<int> _$numberOfParticipantsAtUpcomingCeremonyComputed;
-
-  @override
-  int get numberOfParticipantsAtUpcomingCeremony => (_$numberOfParticipantsAtUpcomingCeremonyComputed ??= Computed<int>(
-          () => super.numberOfParticipantsAtUpcomingCeremony,
-          name: '_EncointerStore.numberOfParticipantsAtUpcomingCeremony'))
-      .value;
 
   final _$currentPhaseAtom = Atom(name: '_EncointerStore.currentPhase');
 
@@ -145,96 +201,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
-  final _$meetupIndexAtom = Atom(name: '_EncointerStore.meetupIndex');
-
-  @override
-  int get meetupIndex {
-    _$meetupIndexAtom.reportRead();
-    return super.meetupIndex;
-  }
-
-  @override
-  set meetupIndex(int value) {
-    _$meetupIndexAtom.reportWrite(value, super.meetupIndex, () {
-      super.meetupIndex = value;
-    });
-  }
-
-  final _$meetupLocationAtom = Atom(name: '_EncointerStore.meetupLocation');
-
-  @override
-  Location get meetupLocation {
-    _$meetupLocationAtom.reportRead();
-    return super.meetupLocation;
-  }
-
-  @override
-  set meetupLocation(Location value) {
-    _$meetupLocationAtom.reportWrite(value, super.meetupLocation, () {
-      super.meetupLocation = value;
-    });
-  }
-
-  final _$meetupTimeAtom = Atom(name: '_EncointerStore.meetupTime');
-
-  @override
-  int get meetupTime {
-    _$meetupTimeAtom.reportRead();
-    return super.meetupTime;
-  }
-
-  @override
-  set meetupTime(int value) {
-    _$meetupTimeAtom.reportWrite(value, super.meetupTime, () {
-      super.meetupTime = value;
-    });
-  }
-
-  final _$meetupRegistryAtom = Atom(name: '_EncointerStore.meetupRegistry');
-
-  @override
-  List<String> get meetupRegistry {
-    _$meetupRegistryAtom.reportRead();
-    return super.meetupRegistry;
-  }
-
-  @override
-  set meetupRegistry(List<String> value) {
-    _$meetupRegistryAtom.reportWrite(value, super.meetupRegistry, () {
-      super.meetupRegistry = value;
-    });
-  }
-
-  final _$participantIndexAtom = Atom(name: '_EncointerStore.participantIndex');
-
-  @override
-  int get participantIndex {
-    _$participantIndexAtom.reportRead();
-    return super.participantIndex;
-  }
-
-  @override
-  set participantIndex(int value) {
-    _$participantIndexAtom.reportWrite(value, super.participantIndex, () {
-      super.participantIndex = value;
-    });
-  }
-
-  final _$balanceEntriesAtom = Atom(name: '_EncointerStore.balanceEntries');
-
-  @override
-  ObservableMap<CommunityIdentifier, BalanceEntry> get balanceEntries {
-    _$balanceEntriesAtom.reportRead();
-    return super.balanceEntries;
-  }
-
-  @override
-  set balanceEntries(ObservableMap<CommunityIdentifier, BalanceEntry> value) {
-    _$balanceEntriesAtom.reportWrite(value, super.balanceEntries, () {
-      super.balanceEntries = value;
-    });
-  }
-
   final _$communityIdentifiersAtom = Atom(name: '_EncointerStore.communityIdentifiers');
 
   @override
@@ -247,21 +213,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   set communityIdentifiers(List<CommunityIdentifier> value) {
     _$communityIdentifiersAtom.reportWrite(value, super.communityIdentifiers, () {
       super.communityIdentifiers = value;
-    });
-  }
-
-  final _$bootstrappersAtom = Atom(name: '_EncointerStore.bootstrappers');
-
-  @override
-  List<String> get bootstrappers {
-    _$bootstrappersAtom.reportRead();
-    return super.bootstrappers;
-  }
-
-  @override
-  set bootstrappers(List<String> value) {
-    _$bootstrappersAtom.reportWrite(value, super.bootstrappers, () {
-      super.bootstrappers = value;
     });
   }
 
@@ -295,133 +246,74 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
-  final _$communityMetadataAtom = Atom(name: '_EncointerStore.communityMetadata');
+  final _$bazaarStoresAtom = Atom(name: '_EncointerStore.bazaarStores');
 
   @override
-  CommunityMetadata get communityMetadata {
-    _$communityMetadataAtom.reportRead();
-    return super.communityMetadata;
+  ObservableMap<String, BazaarStore> get bazaarStores {
+    _$bazaarStoresAtom.reportRead();
+    return super.bazaarStores;
   }
 
   @override
-  set communityMetadata(CommunityMetadata value) {
-    _$communityMetadataAtom.reportWrite(value, super.communityMetadata, () {
-      super.communityMetadata = value;
+  set bazaarStores(ObservableMap<String, BazaarStore> value) {
+    _$bazaarStoresAtom.reportWrite(value, super.bazaarStores, () {
+      super.bazaarStores = value;
     });
   }
 
-  final _$demurrageAtom = Atom(name: '_EncointerStore.demurrage');
+  final _$accountStoresAtom = Atom(name: '_EncointerStore.accountStores');
 
   @override
-  double get demurrage {
-    _$demurrageAtom.reportRead();
-    return super.demurrage;
+  ObservableMap<String, EncointerAccountStore> get accountStores {
+    _$accountStoresAtom.reportRead();
+    return super.accountStores;
   }
 
   @override
-  set demurrage(double value) {
-    _$demurrageAtom.reportWrite(value, super.demurrage, () {
-      super.demurrage = value;
+  set accountStores(ObservableMap<String, EncointerAccountStore> value) {
+    _$accountStoresAtom.reportWrite(value, super.accountStores, () {
+      super.accountStores = value;
     });
   }
 
-  final _$participantsClaimsAtom = Atom(name: '_EncointerStore.participantsClaims');
+  final _$initCommunityStoreAsyncAction = AsyncAction('_EncointerStore.initCommunityStore');
 
   @override
-  ObservableMap<String, ClaimOfAttendance> get participantsClaims {
-    _$participantsClaimsAtom.reportRead();
-    return super.participantsClaims;
-  }
-
-  @override
-  set participantsClaims(ObservableMap<String, ClaimOfAttendance> value) {
-    _$participantsClaimsAtom.reportWrite(value, super.participantsClaims, () {
-      super.participantsClaims = value;
-    });
-  }
-
-  final _$txsTransferAtom = Atom(name: '_EncointerStore.txsTransfer');
-
-  @override
-  ObservableList<TransferData> get txsTransfer {
-    _$txsTransferAtom.reportRead();
-    return super.txsTransfer;
-  }
-
-  @override
-  set txsTransfer(ObservableList<TransferData> value) {
-    _$txsTransferAtom.reportWrite(value, super.txsTransfer, () {
-      super.txsTransfer = value;
-    });
-  }
-
-  final _$reputationsAtom = Atom(name: '_EncointerStore.reputations');
-
-  @override
-  SplayTreeMap<int, CommunityReputation> get reputations {
-    _$reputationsAtom.reportRead();
-    return super.reputations;
-  }
-
-  @override
-  set reputations(SplayTreeMap<int, CommunityReputation> value) {
-    _$reputationsAtom.reportWrite(value, super.reputations, () {
-      super.reputations = value;
-    });
-  }
-
-  final _$businessRegistryAtom = Atom(name: '_EncointerStore.businessRegistry');
-
-  @override
-  ObservableList<AccountBusinessTuple> get businessRegistry {
-    _$businessRegistryAtom.reportRead();
-    return super.businessRegistry;
-  }
-
-  @override
-  set businessRegistry(ObservableList<AccountBusinessTuple> value) {
-    _$businessRegistryAtom.reportWrite(value, super.businessRegistry, () {
-      super.businessRegistry = value;
-    });
-  }
-
-  final _$communityLocationsAtom = Atom(name: '_EncointerStore.communityLocations');
-
-  @override
-  ObservableList<Location> get communityLocations {
-    _$communityLocationsAtom.reportRead();
-    return super.communityLocations;
-  }
-
-  @override
-  set communityLocations(ObservableList<Location> value) {
-    _$communityLocationsAtom.reportWrite(value, super.communityLocations, () {
-      super.communityLocations = value;
-    });
-  }
-
-  final _$setTransferTxsAsyncAction = AsyncAction('_EncointerStore.setTransferTxs');
-
-  @override
-  Future<void> setTransferTxs(List<dynamic> list, {bool reset = false, dynamic needCache = true}) {
-    return _$setTransferTxsAsyncAction.run(() => super.setTransferTxs(list, reset: reset, needCache: needCache));
-  }
-
-  final _$_cacheTxsAsyncAction = AsyncAction('_EncointerStore._cacheTxs');
-
-  @override
-  Future<void> _cacheTxs(List<dynamic> list, String cacheKey) {
-    return _$_cacheTxsAsyncAction.run(() => super._cacheTxs(list, cacheKey));
-  }
-
-  final _$loadCacheAsyncAction = AsyncAction('_EncointerStore.loadCache');
-
-  @override
-  Future<void> loadCache() {
-    return _$loadCacheAsyncAction.run(() => super.loadCache());
+  Future<void> initCommunityStore(CommunityIdentifier cid, String address, {dynamic shouldCache = true}) {
+    return _$initCommunityStoreAsyncAction.run(() => super.initCommunityStore(cid, address, shouldCache: shouldCache));
   }
 
   final _$_EncointerStoreActionController = ActionController(name: '_EncointerStore');
+
+  @override
+  void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunityIdentifiers');
+    try {
+      return super.setCommunityIdentifiers(cids);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setCommunities(List<CidName> c) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunities');
+    try {
+      return super.setCommunities(c);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setChosenCid([CommunityIdentifier cid]) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setChosenCid');
+    try {
+      return super.setChosenCid(cid);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   void setCurrentPhase(CeremonyPhase phase) {
@@ -454,190 +346,32 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  dynamic resetState() {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.resetState');
+  void purgeCeremonySpecificState() {
+    final _$actionInfo =
+        _$_EncointerStoreActionController.startAction(name: '_EncointerStore.purgeCeremonySpecificState');
     try {
-      return super.resetState();
+      return super.purgeCeremonySpecificState();
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void setMeetupIndex([int index]) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setMeetupIndex');
+  Future<void> initEncointerAccountStore(String address, {dynamic shouldCache = true}) {
+    final _$actionInfo =
+        _$_EncointerStoreActionController.startAction(name: '_EncointerStore.initEncointerAccountStore');
     try {
-      return super.setMeetupIndex(index);
+      return super.initEncointerAccountStore(address, shouldCache: shouldCache);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }
   }
 
   @override
-  void setMeetupLocation([Location location]) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setMeetupLocation');
+  Future<void> initBazaarStore(CommunityIdentifier cid, {dynamic shouldCache = true}) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.initBazaarStore');
     try {
-      return super.setMeetupLocation(location);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setMeetupTime([int time]) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setMeetupTime');
-    try {
-      return super.setMeetupTime(time);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setMeetupRegistry([List<String> reg]) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setMeetupRegistry');
-    try {
-      return super.setMeetupRegistry(reg);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunityIdentifiers');
-    try {
-      return super.setCommunityIdentifiers(cids);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setBootstrappers(List<String> bs) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setBootstrappers');
-    try {
-      return super.setBootstrappers(bs);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setCommunityMetadata([CommunityMetadata meta]) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunityMetadata');
-    try {
-      return super.setCommunityMetadata(meta);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setCommunities(List<CidName> c) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunities');
-    try {
-      return super.setCommunities(c);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setCommunityLocations([List<Location> locations]) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunityLocations');
-    try {
-      return super.setCommunityLocations(locations);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setDemurrage(double d) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setDemurrage');
-    try {
-      return super.setDemurrage(d);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setChosenCid([CommunityIdentifier cid]) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setChosenCid');
-    try {
-      return super.setChosenCid(cid);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void purgeParticipantsClaims() {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.purgeParticipantsClaims');
-    try {
-      return super.purgeParticipantsClaims();
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void addParticipantClaim(ClaimOfAttendance claim) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.addParticipantClaim');
-    try {
-      return super.addParticipantClaim(claim);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setReputations(Map<int, CommunityReputation> reps) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setReputations');
-    try {
-      return super.setReputations(reps);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void purgeReputations() {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.purgeReputations');
-    try {
-      return super.purgeReputations();
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.addBalanceEntry');
-    try {
-      return super.addBalanceEntry(cid, balanceEntry);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setParticipantIndex([int pIndex]) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setParticipantIndex');
-    try {
-      return super.setParticipantIndex(pIndex);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setbusinessRegistry(List<AccountBusinessTuple> accBusinesses) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setbusinessRegistry');
-    try {
-      return super.setbusinessRegistry(accBusinesses);
+      return super.initBazaarStore(cid, shouldCache: shouldCache);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }
@@ -649,38 +383,21 @@ mixin _$EncointerStore on _EncointerStore, Store {
 currentPhase: ${currentPhase},
 phaseDurations: ${phaseDurations},
 currentCeremonyIndex: ${currentCeremonyIndex},
-meetupIndex: ${meetupIndex},
-meetupLocation: ${meetupLocation},
-meetupTime: ${meetupTime},
-meetupRegistry: ${meetupRegistry},
-participantIndex: ${participantIndex},
-balanceEntries: ${balanceEntries},
 communityIdentifiers: ${communityIdentifiers},
-bootstrappers: ${bootstrappers},
 communities: ${communities},
 chosenCid: ${chosenCid},
-communityMetadata: ${communityMetadata},
-demurrage: ${demurrage},
-participantsClaims: ${participantsClaims},
-txsTransfer: ${txsTransfer},
-reputations: ${reputations},
-businessRegistry: ${businessRegistry},
-communityLocations: ${communityLocations},
+bazaarStores: ${bazaarStores},
+accountStores: ${accountStores},
 currentPhaseDuration: ${currentPhaseDuration},
-scannedClaimsCount: ${scannedClaimsCount},
-ceremonyIndexForProofOfAttendance: ${ceremonyIndexForProofOfAttendance},
-communityName: ${communityName},
-communitySymbol: ${communitySymbol},
-communityIconsCid: ${communityIconsCid},
+communitiesContainsChosenCid: ${communitiesContainsChosenCid},
+bazaar: ${bazaar},
+community: ${community},
+communityAccount: ${communityAccount},
+account: ${account},
 communityBalanceEntry: ${communityBalanceEntry},
 communityBalance: ${communityBalance},
-isAssigned: ${isAssigned},
-communitiesContainsChosenCid: ${communitiesContainsChosenCid},
-isRegistered: ${isRegistered},
-showRegisterButton: ${showRegisterButton},
 showStartCeremonyButton: ${showStartCeremonyButton},
-showTwoBoxes: ${showTwoBoxes},
-numberOfParticipantsAtUpcomingCeremony: ${numberOfParticipantsAtUpcomingCeremony}
+showTwoBoxes: ${showTwoBoxes}
     ''';
   }
 }

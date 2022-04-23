@@ -1,0 +1,14 @@
+targets:
+  $default:
+    builders:
+      json_serializable_mobx:
+        # configure your options here, same as json_serializable
+        options:
+          explicit_to_json: true
+      json_serializable:json_serializable:
+        generate_for:
+          # exclude everything to avoid conflicts, this library uses a custom builder
+          include:
+          exclude:
+            - test/**
+            - lib/**

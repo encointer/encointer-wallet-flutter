@@ -2,6 +2,8 @@ import 'package:encointer_wallet/config/node.dart';
 import 'package:encointer_wallet/store/settings.dart';
 
 const String network_name_encointer_gesell = 'nctr-gsl';
+const String network_name_encointer_lietaer = 'nctr-r';
+const String network_name_encointer_mainnet = 'nctr-k';
 const String network_name_encointer_cantillon = 'nctr-ctln';
 
 EndpointData networkEndpointEncointerGesell = EndpointData.fromJson({
@@ -9,6 +11,24 @@ EndpointData networkEndpointEncointerGesell = EndpointData.fromJson({
   'ss58': 42,
   'text': 'Encointer Gesell (Hosted by Encointer Association)',
   'value': 'wss://gesell.encointer.org',
+  'overrideConfig': GesellConfig.toJson(),
+  'ipfsGateway': ipfs_gateway_encointer
+});
+
+EndpointData networkEndpointEncointerLietaer = EndpointData.fromJson({
+  'info': 'nctr-r',
+  'ss58': 42,
+  'text': 'Encointer Lietaer on Rococo (Hosted by Encointer Association)',
+  'value': 'wss://rococo.api.encointer.org',
+  'overrideConfig': GesellConfig.toJson(),
+  'ipfsGateway': ipfs_gateway_encointer
+});
+
+EndpointData networkEndpointEncointerMainnet = EndpointData.fromJson({
+  'info': 'nctr-k',
+  'ss58': 2,
+  'text': 'Encointer Network on Kusama (Hosted by Encointer Association)',
+  'value': 'wss://kusama.api.encointer.org',
   'overrideConfig': GesellConfig.toJson(),
   'ipfsGateway': ipfs_gateway_encointer
 });
@@ -46,6 +66,8 @@ EndpointData networkEndpointEncointerCantillonDev = EndpointData.fromJson({
 
 List<EndpointData> networkEndpoints = [
   networkEndpointEncointerGesell,
+  networkEndpointEncointerLietaer,
+  networkEndpointEncointerMainnet,
   networkEndpointEncointerGesellDev,
   networkEndpointEncointerCantillon,
   networkEndpointEncointerCantillonDev,
@@ -54,6 +76,8 @@ List<EndpointData> networkEndpoints = [
 const network_ss58_map = {
   'encointer': 42,
   'nctr-gsl': 42,
+  'nctr-r': 42,
+  'nctr-k': 2,
   'nctr-cln': 42,
   'nctr-gsl-dev': 42,
   'nctr-cln-dev': 42,

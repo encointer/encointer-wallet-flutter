@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/proofOfAttendance.dart';
 import 'package:flutter/material.dart';
@@ -45,6 +45,7 @@ Future<void> submitRegisterParticipant(
   Api api,
   CommunityIdentifier chosenCid, {
   Future<ProofOfAttendance> proof,
+  Function(BuildContext txPageContext, Map res) onFinish,
 }) async {
   ProofOfAttendance p;
   if (proof != null) {
@@ -68,10 +69,7 @@ Future<void> submitRegisterParticipant(
       chosenCid,
       p,
     ],
-    'onFinish': (BuildContext txPageContext, Map res) {
-      api.encointer.getParticipantIndex();
-      Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
-    }
+    'onFinish': onFinish
   };
   Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
 }

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -29,6 +30,7 @@ class BalanceEntry {
   BalanceEntry(this.principal, this.lastUpdate);
 
   @observable
+  @JsonKey(name: 'principal', fromJson: _principalFromMaybeString, toJson: _principalToString)
   final double principal;
   @observable
   final int lastUpdate;
@@ -38,6 +40,22 @@ class BalanceEntry {
     return jsonEncode(this);
   }
 
+  static double _principalFromMaybeString(dynamic principalField) {
+    if (principalField is String) {
+      return double.parse(principalField);
+    } else {
+      return principalField;
+    }
+  }
+
+  static String _principalToString(double principal) => principal.toString();
+
   factory BalanceEntry.fromJson(Map<String, dynamic> json) => _$BalanceEntryFromJson(json);
   Map<String, dynamic> toJson() => _$BalanceEntryToJson(this);
+
+  double applyDemurrage(int latestBlockNumber, double demurrageRate) {
+    int elapsed = latestBlockNumber - this.lastUpdate;
+    double exponent = -demurrageRate * elapsed;
+    return this.principal * pow(e, exponent);
+  }
 }

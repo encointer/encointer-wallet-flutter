@@ -20,12 +20,12 @@ Map<String, dynamic> _$EncointerBalanceDataToJson(EncointerBalanceData instance)
 
 BalanceEntry _$BalanceEntryFromJson(Map<String, dynamic> json) {
   return BalanceEntry(
-    (json['principal'] as num)?.toDouble(),
+    BalanceEntry._principalFromMaybeString(json['principal']),
     json['lastUpdate'] as int,
   );
 }
 
 Map<String, dynamic> _$BalanceEntryToJson(BalanceEntry instance) => <String, dynamic>{
-      'principal': instance.principal,
+      'principal': BalanceEntry._principalToString(instance.principal),
       'lastUpdate': instance.lastUpdate,
     };

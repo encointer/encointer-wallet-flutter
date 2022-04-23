@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:encointer_wallet/mocks/restartWidget.dart';
-import 'package:encointer_wallet/mocks/scanPage.dart';
+import 'package:encointer_wallet/mocks/mockQRScanPage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:rxdart/rxdart.dart';
@@ -28,12 +28,12 @@ void main() async {
   runApp(
     MaterialApp(
       title: 'EncointerWallet',
-      initialRoute: MockScanPage.route,
+      initialRoute: MockQRScanPage.route,
       routes: {
-        MockScanPage.route: (_) => RestartWidget(
+        MockQRScanPage.route: (_) => RestartWidget(
               initialData: MemoryImage(base64Decode("hell")),
               stream: stream,
-              builder: (_, img) => MockScanPage(img),
+              builder: (_, img) => MockQRScanPage(img),
             )
       },
     ),

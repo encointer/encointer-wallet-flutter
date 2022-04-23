@@ -59,7 +59,7 @@ abstract class TranslationsProfile {
   String get shareLinkHint;
   String get title;
   String get unlock;
-  String get accountAdd;
+  String get addAccount;
   String get accountCreate;
   String get doYouAlreadyHaveAnAccount;
   String get accountNameChooseHint;
@@ -79,6 +79,7 @@ abstract class TranslationsProfile {
   String get deleteAccount;
   String get exportAccount;
   String get errorUserNameIsRequired;
+  String get observedPendingExtrinsic;
 }
 
 class TranslationsEnProfile implements TranslationsProfile {
@@ -144,7 +145,7 @@ class TranslationsEnProfile implements TranslationsProfile {
   get share => 'Share';
   get title => 'Profile';
   get unlock => 'You need to enter your PIN to add a new account';
-  get accountAdd => 'Add account';
+  get addAccount => 'Add account';
   get accountCreate => 'Create account';
   get doYouAlreadyHaveAnAccount => 'Do you already have an account?';
   get accountNameChooseHint => 'You can change it later in your profile settings.';
@@ -164,6 +165,7 @@ class TranslationsEnProfile implements TranslationsProfile {
   get deleteAccount => 'delete';
   get exportAccount => 'export';
   get errorUserNameIsRequired => 'User name cannot be blank';
+  get observedPendingExtrinsic => 'Pending extrinsic observed. Please wait for confirmation!';
 }
 
 class TranslationsDeProfile implements TranslationsProfile {
@@ -228,7 +230,7 @@ class TranslationsDeProfile implements TranslationsProfile {
   get shareLinkHint => 'Oder über Link teilen:';
   get title => 'Profil';
   get unlock => 'Du musst deinen PIN eingeben um einen neuen Account hinzuzufügen';
-  get accountAdd => 'Konto hinzufügen';
+  get addAccount => 'Konto hinzufügen';
   get accountCreate => 'Konto kreieren';
   get doYouAlreadyHaveAnAccount => 'Hast du bereits ein Konto?';
   get accountNameChooseHint => 'Du kannst den Namen später ändern in den Profileinstellungen.';
@@ -247,6 +249,7 @@ class TranslationsDeProfile implements TranslationsProfile {
   get deleteAccount => 'löschen';
   get exportAccount => 'exportieren';
   get errorUserNameIsRequired => 'Benutzername darf nicht leer sein';
+  get observedPendingExtrinsic => 'Es wurde eine unbestätigte Transaktion beobachtet. Bitte warte auf Bestätigung!';
 }
 
 class TranslationsZhProfile implements TranslationsProfile {
@@ -303,7 +306,7 @@ class TranslationsZhProfile implements TranslationsProfile {
   get pinHint => '您将需要此 PIN 进行交易和添加新帐户。';
   get pinInfo => 'PIN 应至少包含 4 位数字。 如果 PIN 码丢失，则无法恢复帐户，除非您通过个人资料页面进行了备份。';
   get pinSecure => '使用 PIN 保护您的帐户。';
-  get accountAdd => '添加帐户';
+  get addAccount => '添加帐户';
   get recoveryProxy => 'recovery proxy';
   get ceremonies => throw UnimplementedError();
   get reputation => throw UnimplementedError();
@@ -328,4 +331,5 @@ class TranslationsZhProfile implements TranslationsProfile {
   get deleteAccount => throw UnimplementedError();
   get exportAccount => throw UnimplementedError();
   get errorUserNameIsRequired => throw UnimplementedError();
+  get observedPendingExtrinsic => throw UnimplementedError();
 }
