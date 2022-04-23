@@ -125,15 +125,17 @@ class _AssetsState extends State<Assets> with WidgetsBindingObserver {
                 0;
             double delta = newBalance - oldBalance;
             print("[home:balanceWatchdog] balance for $cidStr was $oldBalance, changed by $delta");
-            if (delta > demurrageRate) {
-              var msg = dic.assets.incomingConfirmed
-                  .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
-                  .replaceAll('CID_SYMBOL', widget.store.encointer.communityStores[cidStr].metadata.symbol)
-                  .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
-              print("[home:balanceWatchdog] $msg");
+            if (delta.abs() > demurrageRate) {
               widget.store.encointer.accountStores[widget.store.account.currentAddress]
                   ?.addBalanceEntry(cid, balances[cid]);
-              NotificationPlugin.showNotification(45, dic.assets.fundsReceived, msg, cid: cidStr);
+              if (delta > demurrageRate) {
+                var msg = dic.assets.incomingConfirmed
+                    .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
+                    .replaceAll('CID_SYMBOL', widget.store.encointer.communityStores[cidStr].metadata.symbol)
+                    .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
+                print("[home:balanceWatchdog] $msg");
+                NotificationPlugin.showNotification(45, dic.assets.fundsReceived, msg, cid: cidStr);
+              }
             }
           });
         });
