@@ -17,6 +17,7 @@ import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
@@ -116,7 +117,8 @@ class _AssetsState extends State<Assets> with WidgetsBindingObserver {
       () {
         webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
           print("[home:balanceWatchdog] get all balances");
-          balances.forEach((cid, balanceEntry) {
+          bool activeAccountHasBalance = false;
+          balances?.forEach((cid, balanceEntry) {
             String cidStr = cid.toFmtString();
             double demurrageRate = widget.store.encointer.communityStores[cidStr]?.demurrage;
             double newBalance = widget.store.encointer.communityStores[cidStr]?.applyDemurrage(balanceEntry);
@@ -125,17 +127,27 @@ class _AssetsState extends State<Assets> with WidgetsBindingObserver {
                 0;
             double delta = newBalance - oldBalance;
             print("[home:balanceWatchdog] balance for $cidStr was $oldBalance, changed by $delta");
-            if (delta > demurrageRate) {
-              var msg = dic.assets.incomingConfirmed
-                  .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
-                  .replaceAll('CID_SYMBOL', widget.store.encointer.communityStores[cidStr].metadata.symbol)
-                  .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
-              print("[home:balanceWatchdog] $msg");
+            if (delta.abs() > demurrageRate) {
               widget.store.encointer.accountStores[widget.store.account.currentAddress]
                   ?.addBalanceEntry(cid, balances[cid]);
-              NotificationPlugin.showNotification(45, dic.assets.fundsReceived, msg, cid: cidStr);
+              if (delta > demurrageRate) {
+                var msg = dic.assets.incomingConfirmed
+                    .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
+                    .replaceAll('CID_SYMBOL', widget.store.encointer.communityStores[cidStr].metadata.symbol)
+                    .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
+                print("[home:balanceWatchdog] $msg");
+                NotificationPlugin.showNotification(45, dic.assets.fundsReceived, msg, cid: cidStr);
+              }
+            }
+            if (cid == widget.store.encointer.chosenCid) {
+              activeAccountHasBalance = true;
             }
           });
+          if (!activeAccountHasBalance) {
+            print("didn't get any balance for active account. initialize store balance to zero");
+            widget.store.encointer.accountStores[widget.store.account.currentAddress]
+                ?.addBalanceEntry(widget.store.encointer.chosenCid, BalanceEntry(0, 0));
+          }
         });
         balanceWatchdog
           ..reset()
