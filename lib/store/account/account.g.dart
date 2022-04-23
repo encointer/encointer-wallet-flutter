@@ -15,12 +15,6 @@ mixin _$AccountStore on _AccountStore, Store {
   AccountData get currentAccount => (_$currentAccountComputed ??=
           Computed<AccountData>(() => super.currentAccount, name: '_AccountStore.currentAccount'))
       .value;
-  Computed<AccountData> _$accountToBeEditedComputed;
-
-  @override
-  AccountData get accountToBeEdited => (_$accountToBeEditedComputed ??=
-          Computed<AccountData>(() => super.accountToBeEdited, name: '_AccountStore.accountToBeEdited'))
-      .value;
   Computed<List<AccountData>> _$optionalAccountsComputed;
 
   @override
@@ -45,12 +39,6 @@ mixin _$AccountStore on _AccountStore, Store {
   String get currentAddress =>
       (_$currentAddressComputed ??= Computed<String>(() => super.currentAddress, name: '_AccountStore.currentAddress'))
           .value;
-  Computed<String> _$addressOfAccountToBeEditedComputed;
-
-  @override
-  String get addressOfAccountToBeEdited => (_$addressOfAccountToBeEditedComputed ??=
-          Computed<String>(() => super.addressOfAccountToBeEdited, name: '_AccountStore.addressOfAccountToBeEdited'))
-      .value;
 
   final _$loadingAtom = Atom(name: '_AccountStore.loading');
 
@@ -109,21 +97,6 @@ mixin _$AccountStore on _AccountStore, Store {
   set currentAccountPubKey(String value) {
     _$currentAccountPubKeyAtom.reportWrite(value, super.currentAccountPubKey, () {
       super.currentAccountPubKey = value;
-    });
-  }
-
-  final _$accountToBeEditedPubKeyAtom = Atom(name: '_AccountStore.accountToBeEditedPubKey');
-
-  @override
-  String get accountToBeEditedPubKey {
-    _$accountToBeEditedPubKeyAtom.reportRead();
-    return super.accountToBeEditedPubKey;
-  }
-
-  @override
-  set accountToBeEditedPubKey(String value) {
-    _$accountToBeEditedPubKeyAtom.reportWrite(value, super.accountToBeEditedPubKey, () {
-      super.accountToBeEditedPubKey = value;
     });
   }
 
@@ -265,8 +238,8 @@ mixin _$AccountStore on _AccountStore, Store {
   final _$updateAccountNameAsyncAction = AsyncAction('_AccountStore.updateAccountName');
 
   @override
-  Future<void> updateAccountName(String name) {
-    return _$updateAccountNameAsyncAction.run(() => super.updateAccountName(name));
+  Future<void> updateAccountName(AccountData account, String newName) {
+    return _$updateAccountNameAsyncAction.run(() => super.updateAccountName(account, newName));
   }
 
   final _$updateAccountAsyncAction = AsyncAction('_AccountStore.updateAccount');
@@ -412,16 +385,6 @@ mixin _$AccountStore on _AccountStore, Store {
   }
 
   @override
-  void setAccountToBeEdited(String pubKey) {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setAccountToBeEdited');
-    try {
-      return super.setAccountToBeEdited(pubKey);
-    } finally {
-      _$_AccountStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setPubKeyAddressMap(Map<String, Map<dynamic, dynamic>> data) {
     final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setPubKeyAddressMap');
     try {
@@ -488,7 +451,6 @@ loading: ${loading},
 txStatus: ${txStatus},
 newAccount: ${newAccount},
 currentAccountPubKey: ${currentAccountPubKey},
-accountToBeEditedPubKey: ${accountToBeEditedPubKey},
 accountList: ${accountList},
 addressIndexMap: ${addressIndexMap},
 accountIndexMap: ${accountIndexMap},
@@ -499,12 +461,10 @@ addressIconsMap: ${addressIconsMap},
 recoveryInfo: ${recoveryInfo},
 queuedTxs: ${queuedTxs},
 currentAccount: ${currentAccount},
-accountToBeEdited: ${accountToBeEdited},
 optionalAccounts: ${optionalAccounts},
 accountListAll: ${accountListAll},
 isFirstAccount: ${isFirstAccount},
-currentAddress: ${currentAddress},
-addressOfAccountToBeEdited: ${addressOfAccountToBeEdited}
+currentAddress: ${currentAddress}
     ''';
   }
 }

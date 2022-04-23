@@ -32,25 +32,12 @@ class _ProfileState extends State<Profile> {
   final Api api = webApi;
   EndpointData _selectedNetwork;
 
-  Future<void> _setAccountToBeEdited(AccountData account, String address) async {
-    if (address != store.account.addressOfAccountToBeEdited) {
-      store.account.setAccountToBeEdited(account.pubKey);
-      await store.loadAccountCache();
-
-      webApi.fetchAccountData();
-    }
-  }
-
   List<Widget> _buildAccountList() {
     List<Widget> allAccountsAsWidgets = [];
 
     List<AccountData> accounts = store.account.accountListAll;
 
     allAccountsAsWidgets.addAll(accounts.map((account) {
-      String address = account.address;
-      if (store.account.pubKeyAddressMap[_selectedNetwork.ss58] != null) {
-        address = store.account.pubKeyAddressMap[_selectedNetwork.ss58][account.pubKey];
-      }
       return InkWell(
         child: Column(
           children: [
@@ -79,8 +66,7 @@ class _ProfileState extends State<Profile> {
           ],
         ),
         onTap: () => {
-          _setAccountToBeEdited(account, address),
-          Navigator.pushNamed(context, AccountManagePage.route),
+          Navigator.pushNamed(context, AccountManagePage.route, arguments: account.pubKey),
         },
       );
     }).toList());
