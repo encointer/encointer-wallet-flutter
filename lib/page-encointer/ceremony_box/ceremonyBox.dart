@@ -6,12 +6,10 @@ import 'package:iconsax/iconsax.dart';
 import "package:latlong2/latlong.dart";
 
 import '../../models/index.dart';
-import 'components/ceremonyInfoAndCalendar.dart';
+import 'ceremonyInfo.dart';
 import 'components/ceremonyLocationButton.dart';
 import 'components/ceremonyNotification.dart';
-import 'components/ceremonyProgressBar.dart';
 import 'components/ceremonyRegisterButton.dart';
-import 'components/ceremonySchedule.dart';
 import 'components/ceremonyStartButton.dart';
 
 class CeremonyBox extends StatelessWidget {
@@ -32,7 +30,13 @@ class CeremonyBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String languageCode = Localizations.localeOf(context).languageCode;
-    CeremonyPhase currentPhase = store.encointer.currentPhase;
+
+    final ceremonyPhaseDurations = Map<CeremonyPhase, int>.of({
+      CeremonyPhase.Registering: 30,
+      CeremonyPhase.Assigning: 5,
+      CeremonyPhase.Attesting: 2,
+    });
+
     return Observer(
       builder: (BuildContext context) => Column(
         children: [
@@ -50,23 +54,11 @@ class CeremonyBox extends StatelessWidget {
                   style: TextStyle(color: Colors.orange),
                 ),
                 SizedBox(height: 8),
-                CeremonyProgressBar(
-                  registerUntilDate: registerUntilDate,
-                  nextCeremonyDate: nextCeremonyDate,
-                  currentPhase: currentPhase,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    CeremonySchedule(
-                      nextCeremonyDate: nextCeremonyDate,
-                      languageCode: languageCode,
-                    ),
-                    CeremonyInfoAndCalendar(
-                      nextCeremonyDate: nextCeremonyDate,
-                      infoLink: infoLink,
-                    ),
-                  ],
+                CeremonyInfo(
+                  currentTime: 10,
+                  assigningPhaseStart: 15,
+                  meetupTime: 20,
+                  ceremonyPhaseDurations: ceremonyPhaseDurations,
                 ),
                 if (store.encointer.showRegisterButton)
                   CeremonyRegisterButton(

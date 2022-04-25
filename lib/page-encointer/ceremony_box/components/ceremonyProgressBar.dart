@@ -12,24 +12,36 @@ import '../../../models/index.dart';
 /// automatically adapting to screen width
 class CeremonyProgressBar extends StatelessWidget {
   const CeremonyProgressBar({
-    this.registerUntilDate,
-    this.nextCeremonyDate,
-    this.currentPhase,
+    @required this.currentTime,
+    @required this.assigningPhaseStart,
+    @required this.meetupTime,
+    @required this.ceremonyPhaseDurations,
+    @required this.width,
     Key key,
   }) : super(key: key);
 
-  final DateTime registerUntilDate;
-  final DateTime nextCeremonyDate;
-  final CeremonyPhase currentPhase;
-  final int phase1register = 6;
-  final int phase2assign = 1;
-  final int phase3attest = 1;
-  final int totalProgress = 128; // cf. getProgressElapsed
+  final int currentTime;
+  final int assigningPhaseStart;
+  final int meetupTime;
+  final Map<CeremonyPhase, int> ceremonyPhaseDurations;
+
+  final double width;
+
+  final int phase1register = 70;
+  final int phase2assign = 15;
+  final int phase3attest = 15;
 
   @override
   Widget build(BuildContext context) {
-    int progressElapsed = CeremonyBoxService.getProgressElapsed(
-        registerUntilDate, nextCeremonyDate, currentPhase, phase1register, phase2assign, phase3attest);
+    double progressElapsed = CeremonyBoxService.getProgressElapsed(
+      currentTime,
+      assigningPhaseStart,
+      ceremonyPhaseDurations,
+    );
+
+    _log("ceremony progress: $progressElapsed");
+    _log("progress width: ${width * progressElapsed}");
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -39,21 +51,14 @@ class CeremonyProgressBar extends StatelessWidget {
       height: 10,
       child: Stack(
         children: [
-          Row(
-            children: [
-              Expanded(
-                  flex: progressElapsed,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                      gradient: primaryGradient,
-                    ),
-                  )),
-              Expanded(
-                flex: totalProgress - progressElapsed,
-                child: SizedBox(),
-              )
-            ],
+          SizedBox(
+            width: width * progressElapsed,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+                gradient: primaryGradient,
+              ),
+            ),
           ),
           Row(
             children: [
@@ -83,4 +88,8 @@ class CeremonyProgressBar extends StatelessWidget {
       ),
     );
   }
+}
+
+_log(String msg) {
+  print("[CeremonyProgressBar] $msg");
 }
