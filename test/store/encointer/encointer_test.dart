@@ -35,7 +35,7 @@ void main() {
       var testCidFmt = testCid.toFmtString();
       var testNetwork = unitTestEndpoint.info;
 
-      encointerStore.setCurrentPhase(CeremonyPhase.REGISTERING);
+      encointerStore.setCurrentPhase(CeremonyPhase.Registering);
       encointerStore.setCurrentCeremonyIndex(2);
       encointerStore.setCommunityIdentifiers(testCommunityIdentifiers);
       encointerStore.setCommunities(testCommunities);
@@ -52,7 +52,7 @@ void main() {
 
       Map<String, dynamic> targetJson = {
         "network": testNetwork,
-        "currentPhase": "REGISTERING",
+        "currentPhase": "Registering",
         "phaseDurations": Map<String, dynamic>.of({}),
         "currentCeremonyIndex": 2,
         "communityIdentifiers": testCommunityIdentifiers.map((c) => c.toJson()).toList(),

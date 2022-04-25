@@ -114,11 +114,11 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox> with SingleTickerProvider
     //return AssigningPage(store);
     //return AttestingPage(store);
     switch (phase) {
-      case CeremonyPhase.REGISTERING:
+      case CeremonyPhase.Registering:
         return RegisteringPage(store);
-      case CeremonyPhase.ASSIGNING:
+      case CeremonyPhase.Assigning:
         return AssigningPage(store);
-      case CeremonyPhase.ATTESTING:
+      case CeremonyPhase.Attesting:
         return AttestingPage(store);
       default:
         return RegisteringPage(store);

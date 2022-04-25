@@ -99,7 +99,7 @@ class Meetup {
   Map<String, dynamic> toJson() => _$MeetupToJson(this);
 }
 
-enum CeremonyPhase { REGISTERING, ASSIGNING, ATTESTING }
+enum CeremonyPhase { Registering, Assigning, Attesting }
 
 enum Reputation { Unverified, UnverifiedReputable, VerifiedUnlinked, VerifiedLinked }
 
