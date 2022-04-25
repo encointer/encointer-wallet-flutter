@@ -76,7 +76,11 @@ abstract class _AccountStore with Store {
 
   @computed
   AccountData get currentAccount {
-    int i = accountListAll.indexWhere((i) => i.pubKey == currentAccountPubKey);
+    return getAccountData(currentAccountPubKey);
+  }
+
+  AccountData getAccountData(String requestedPubKey) {
+    int i = accountListAll.indexWhere((i) => i.pubKey == requestedPubKey);
     if (i < 0) {
       if (accountListAll.isNotEmpty) {
         return accountListAll[0] ?? AccountData();
@@ -196,9 +200,9 @@ abstract class _AccountStore with Store {
   }
 
   @action
-  Future<void> updateAccountName(String name) async {
-    Map<String, dynamic> acc = AccountData.toJson(currentAccount);
-    acc['meta']['name'] = name;
+  Future<void> updateAccountName(AccountData account, String newName) async {
+    Map<String, dynamic> acc = AccountData.toJson(account);
+    acc['meta']['name'] = newName;
 
     await updateAccount(acc);
   }
