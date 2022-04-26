@@ -73,7 +73,8 @@ class CeremonyDate extends StatelessWidget {
   final String languageCode;
 
   Widget build(BuildContext context) {
-    var dic = I18n.of(context).translationsForLocale();
+    final dic = I18n.of(context).translationsForLocale();
+    final h2BlackTheme = Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack);
     String nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate, dic, languageCode);
     String nextCeremonyHourMinute = '${DateFormat.Hm(languageCode).format(nextCeremonyDate)}';
 
@@ -86,10 +87,7 @@ class CeremonyDate extends StatelessWidget {
           size: 18,
         ),
         SizedBox(width: 6),
-        Text(
-          nextCeremonyYearMonthDay,
-          style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
-        ),
+        Text(nextCeremonyYearMonthDay, style: h2BlackTheme,),
         SizedBox(width: 24),
         Padding(
           padding: const EdgeInsets.only(bottom: 2),
@@ -102,7 +100,7 @@ class CeremonyDate extends StatelessWidget {
         SizedBox(width: 6),
         Text(
           nextCeremonyHourMinute,
-          style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
+          style: h2BlackTheme,
         ),
       ],
     );
