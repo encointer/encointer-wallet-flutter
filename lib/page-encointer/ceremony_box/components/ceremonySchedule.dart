@@ -39,7 +39,6 @@ class CeremonySchedule extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(height: 24),
         RichText(
           text: TextSpan(
             text: '${showCountDown ? dic.encointer.nextCeremonyDateLabel : dic.encointer.nextCeremonyTimeLeft} ',
@@ -55,45 +54,56 @@ class CeremonySchedule extends StatelessWidget {
           ),
         ),
         SizedBox(height: 8),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(bottom: 2),
-              child: Icon(
-                showCountDown ? Iconsax.timer_start : Iconsax.calendar_1,
-                color: encointerGrey,
-                size: 18,
-              ),
-            ),
-            SizedBox(width: 6),
-            showCountDown
-                ? CeremonyCountDown()
-                : Text(
-                    nextCeremonyYearMonthDay,
-                    style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
-                  ),
-            SizedBox(width: 24),
-            showCountDown
-                ? SizedBox()
-                : Padding(
-                    padding: const EdgeInsets.only(bottom: 2),
-                    child: Icon(
-                      Iconsax.clock,
-                      color: encointerGrey,
-                      size: 18,
-                    ),
-                  ),
-            SizedBox(width: 6),
-            showCountDown
-                ? SizedBox()
-                : Text(
-                    nextCeremonyHourMinute,
-                    style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
-                  ),
-          ],
+        showCountDown
+            ? CeremonyCountDown()
+            : CeremonyDate(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode)
+      ],
+    );
+  }
+}
+
+class CeremonyDate extends StatelessWidget {
+  const CeremonyDate({
+    this.nextCeremonyDate,
+    this.languageCode,
+    Key key,
+  }) : super(key: key);
+
+  final DateTime nextCeremonyDate;
+  final String languageCode;
+
+  Widget build(BuildContext context) {
+    var dic = I18n.of(context).translationsForLocale();
+    String nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate, dic, languageCode);
+    String nextCeremonyHourMinute = '${DateFormat.Hm(languageCode).format(nextCeremonyDate)}';
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Icon(
+          Iconsax.calendar_1,
+          color: encointerGrey,
+          size: 18,
         ),
-        SizedBox(height: 24),
+        SizedBox(width: 6),
+        Text(
+          nextCeremonyYearMonthDay,
+          style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
+        ),
+        SizedBox(width: 24),
+        Padding(
+          padding: const EdgeInsets.only(bottom: 2),
+          child: Icon(
+            Iconsax.clock,
+            color: encointerGrey,
+            size: 18,
+          ),
+        ),
+        SizedBox(width: 6),
+        Text(
+          nextCeremonyHourMinute,
+          style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
+        ),
       ],
     );
   }
