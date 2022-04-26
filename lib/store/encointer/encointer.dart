@@ -70,6 +70,9 @@ abstract class _EncointerStore with Store {
   CeremonyPhase currentPhase;
 
   @observable
+  int nextPhaseTimestamp;
+
+  @observable
   Map<CeremonyPhase, int> phaseDurations = new Map();
 
   @computed
@@ -235,6 +238,15 @@ abstract class _EncointerStore with Store {
     }
     // update depending values without awaiting
     webApi.encointer.getCurrentCeremonyIndex();
+  }
+
+  @action
+  void setNextPhaseTimestamp(int timestamp) {
+    _log("set currentPhase to $timestamp");
+    if (nextPhaseTimestamp != timestamp) {
+      nextPhaseTimestamp = timestamp;
+      writeToCache();
+    }
   }
 
   @action
@@ -441,6 +453,32 @@ abstract class _EncointerStore with Store {
   }
 
   // ----- Computed values for ceremony box
+
+  @computed
+  int get assigningPhaseStart {
+    if (currentPhase == null || nextPhaseTimestamp == null || phaseDurations == null) {
+      return null;
+    }
+    switch (currentPhase) {
+      case CeremonyPhase.Registering:
+        return nextPhaseTimestamp;
+        break;
+      case CeremonyPhase.Assigning:
+        return nextPhaseTimestamp - phaseDurations[CeremonyPhase.Assigning];
+        break;
+      case CeremonyPhase.Attesting:
+        return nextPhaseTimestamp - phaseDurations[CeremonyPhase.Attesting] - phaseDurations[CeremonyPhase.Assigning];
+        break;
+    }
+  }
+
+  @computed
+  int get attestingPhaseStart {
+    if (assigningPhaseStart == null) {
+      return null;
+    }
+    return assigningPhaseStart + phaseDurations[CeremonyPhase.Assigning];
+  }
 
   bool get showRegisterButton {
     bool registered = communityAccount?.isRegistered ?? false;

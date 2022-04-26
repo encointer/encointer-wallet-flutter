@@ -11,6 +11,7 @@ EncointerStore _$EncointerStoreFromJson(Map<String, dynamic> json) {
     json['network'] as String,
   )
     ..currentPhase = _$enumDecodeNullable(_$CeremonyPhaseEnumMap, json['currentPhase'])
+    ..nextPhaseTimestamp = json['nextPhaseTimestamp'] as int
     ..phaseDurations = (json['phaseDurations'] as Map<String, dynamic>)?.map(
       (k, e) => MapEntry(_$enumDecodeNullable(_$CeremonyPhaseEnumMap, k), e as int),
     )
@@ -43,6 +44,7 @@ EncointerStore _$EncointerStoreFromJson(Map<String, dynamic> json) {
 Map<String, dynamic> _$EncointerStoreToJson(EncointerStore instance) => <String, dynamic>{
       'network': instance.network,
       'currentPhase': _$CeremonyPhaseEnumMap[instance.currentPhase],
+      'nextPhaseTimestamp': instance.nextPhaseTimestamp,
       'phaseDurations': instance.phaseDurations?.map((k, e) => MapEntry(_$CeremonyPhaseEnumMap[k], e)),
       'currentCeremonyIndex': instance.currentCeremonyIndex,
       'communityIdentifiers': instance.communityIdentifiers?.map((e) => e?.toJson())?.toList(),
@@ -144,6 +146,18 @@ mixin _$EncointerStore on _EncointerStore, Store {
   double get communityBalance => (_$communityBalanceComputed ??=
           Computed<double>(() => super.communityBalance, name: '_EncointerStore.communityBalance'))
       .value;
+  Computed<int> _$assigningPhaseStartComputed;
+
+  @override
+  int get assigningPhaseStart => (_$assigningPhaseStartComputed ??=
+          Computed<int>(() => super.assigningPhaseStart, name: '_EncointerStore.assigningPhaseStart'))
+      .value;
+  Computed<int> _$attestingPhaseStartComputed;
+
+  @override
+  int get attestingPhaseStart => (_$attestingPhaseStartComputed ??=
+          Computed<int>(() => super.attestingPhaseStart, name: '_EncointerStore.attestingPhaseStart'))
+      .value;
   Computed<bool> _$showStartCeremonyButtonComputed;
 
   @override
@@ -168,6 +182,21 @@ mixin _$EncointerStore on _EncointerStore, Store {
   set currentPhase(CeremonyPhase value) {
     _$currentPhaseAtom.reportWrite(value, super.currentPhase, () {
       super.currentPhase = value;
+    });
+  }
+
+  final _$nextPhaseTimestampAtom = Atom(name: '_EncointerStore.nextPhaseTimestamp');
+
+  @override
+  int get nextPhaseTimestamp {
+    _$nextPhaseTimestampAtom.reportRead();
+    return super.nextPhaseTimestamp;
+  }
+
+  @override
+  set nextPhaseTimestamp(int value) {
+    _$nextPhaseTimestampAtom.reportWrite(value, super.nextPhaseTimestamp, () {
+      super.nextPhaseTimestamp = value;
     });
   }
 
@@ -326,6 +355,16 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
+  void setNextPhaseTimestamp(int timestamp) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setNextPhaseTimestamp');
+    try {
+      return super.setNextPhaseTimestamp(timestamp);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setCurrentCeremonyIndex(dynamic index) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCurrentCeremonyIndex');
     try {
@@ -381,6 +420,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   String toString() {
     return '''
 currentPhase: ${currentPhase},
+nextPhaseTimestamp: ${nextPhaseTimestamp},
 phaseDurations: ${phaseDurations},
 currentCeremonyIndex: ${currentCeremonyIndex},
 communityIdentifiers: ${communityIdentifiers},
@@ -396,6 +436,8 @@ communityAccount: ${communityAccount},
 account: ${account},
 communityBalanceEntry: ${communityBalanceEntry},
 communityBalance: ${communityBalance},
+assigningPhaseStart: ${assigningPhaseStart},
+attestingPhaseStart: ${attestingPhaseStart},
 showStartCeremonyButton: ${showStartCeremonyButton},
 showTwoBoxes: ${showTwoBoxes}
     ''';
