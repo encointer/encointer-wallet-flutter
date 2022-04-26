@@ -36,7 +36,11 @@ class CeremonyProgressBar extends StatelessWidget {
     double progressElapsed = CeremonyBoxService.getProgressElapsed(
       currentTime,
       assigningPhaseStart,
+      meetupTime,
       ceremonyPhaseDurations,
+      phase1register,
+      phase2assign,
+      phase3attest,
     );
 
     _log("ceremony progress: $progressElapsed");
@@ -62,12 +66,11 @@ class CeremonyProgressBar extends StatelessWidget {
           ),
           Row(
             children: [
-              Expanded(
-                flex: phase1register,
-                child: SizedBox(),
+              SizedBox(
+                width: width * phase1register / 100,
               ),
-              Expanded(
-                flex: phase2assign,
+              SizedBox(
+                width:  width * phase2assign / 100,
                 child: Container(
                   margin: EdgeInsets.symmetric(vertical: 1),
                   foregroundDecoration: BoxDecoration(
@@ -78,8 +81,8 @@ class CeremonyProgressBar extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(
-                flex: phase3attest,
+              SizedBox(
+                width:  width * phase3attest / 100,
                 child: SizedBox(),
               ),
             ],

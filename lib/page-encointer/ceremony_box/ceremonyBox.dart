@@ -34,7 +34,7 @@ class CeremonyBox extends StatelessWidget {
     final ceremonyPhaseDurations = Map<CeremonyPhase, int>.of({
       CeremonyPhase.Registering: 30,
       CeremonyPhase.Assigning: 5,
-      CeremonyPhase.Attesting: 2,
+      CeremonyPhase.Attesting: 10,
     });
 
     return Observer(
@@ -55,9 +55,9 @@ class CeremonyBox extends StatelessWidget {
                 ),
                 SizedBox(height: 8),
                 CeremonyInfo(
-                  currentTime: 10,
-                  assigningPhaseStart: 15,
-                  meetupTime: 20,
+                  currentTime: 34,
+                  assigningPhaseStart: 35,
+                  meetupTime: 40,
                   ceremonyPhaseDurations: ceremonyPhaseDurations,
                 ),
                 if (store.encointer.showRegisterButton)

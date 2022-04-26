@@ -36,7 +36,7 @@ class CeremonyInfo extends StatelessWidget {
               assigningPhaseStart: assigningPhaseStart,
               meetupTime: meetupTime,
               ceremonyPhaseDurations: ceremonyPhaseDurations,
-              width: 300,
+              width: 262,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

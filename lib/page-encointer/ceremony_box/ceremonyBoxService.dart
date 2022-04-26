@@ -60,11 +60,53 @@ class CeremonyBoxService {
   static double getProgressElapsed(
     int currentTime,
     int assigningStart,
+    int meetupTime,
     Map<CeremonyPhase, int> ceremonyPhaseDurations,
+    int registerFlex,
+    int assigningFlex,
+    int attestingFlex,
   ) {
     var totalCeremonyTime = ceremonyPhaseDurations.values.reduce((sum, duration) => sum + duration);
+    var totalFlex = registerFlex + assigningFlex + attestingFlex;
+    var flexNormalization = 100 / totalFlex;
+
+    _log("totalCeremonyTime: $totalCeremonyTime");
+    _log("totalFlex: $totalFlex");
+    _log("flexNormalization: $flexNormalization");
+
     var ceremonyStart = assigningStart - ceremonyPhaseDurations[CeremonyPhase.Registering];
 
-    return (currentTime - ceremonyStart) / totalCeremonyTime;
+    _log("currentTime: $currentTime");
+    _log("ceremonyStart: $ceremonyStart");
+    _log("assigningStart: $assigningStart");
+    _log("phaseDurations: ${ceremonyPhaseDurations.toString()}");
+
+    var progressUnormalized;
+
+    if (currentTime < assigningStart) {
+      _log("registering progress: $currentTime - $ceremonyStart * $registerFlex");
+      progressUnormalized =
+          (currentTime - ceremonyStart) / ceremonyPhaseDurations[CeremonyPhase.Registering] * registerFlex;
+    } else if (currentTime < meetupTime) {
+      _log("total registering: ${(ceremonyPhaseDurations[CeremonyPhase.Registering] * registerFlex)}");
+      _log("assigning progress: $currentTime - $assigningStart * $assigningFlex");
+      progressUnormalized = (ceremonyPhaseDurations[CeremonyPhase.Registering] * registerFlex) +
+          (currentTime - assigningStart) * assigningFlex;
+    } else {
+      _log("total registering: ${(ceremonyPhaseDurations[CeremonyPhase.Registering] * registerFlex)}");
+      _log("total assigning: ${(ceremonyPhaseDurations[CeremonyPhase.Assigning] * assigningFlex)}");
+      _log("attesting progress: $currentTime - $meetupTime * $attestingFlex");
+      progressUnormalized = (ceremonyPhaseDurations[CeremonyPhase.Registering] * registerFlex) +
+          (ceremonyPhaseDurations[CeremonyPhase.Assigning] * assigningFlex) +
+          (currentTime - meetupTime) * attestingFlex;
+    }
+
+    _log("progressUnormalized: $progressUnormalized");
+
+    return progressUnormalized / totalFlex;
   }
+}
+
+_log(String msg) {
+  print("[CeremonyBoxService] $msg");
 }
