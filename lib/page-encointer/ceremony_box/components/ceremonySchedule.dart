@@ -39,9 +39,7 @@ class CeremonySchedule extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: 24,
-        ),
+        SizedBox(height: 24),
         RichText(
           text: TextSpan(
             text: '${showCountDown ? dic.encointer.nextCeremonyDateLabel : dic.encointer.nextCeremonyTimeLeft} ',
@@ -56,9 +54,7 @@ class CeremonySchedule extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(
-          height: 8,
-        ),
+        SizedBox(height: 8),
         Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
@@ -70,18 +66,14 @@ class CeremonySchedule extends StatelessWidget {
                 size: 18,
               ),
             ),
-            SizedBox(
-              width: 6,
-            ),
+            SizedBox(width: 6),
             showCountDown
                 ? CeremonyCountDown()
                 : Text(
                     nextCeremonyYearMonthDay,
                     style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
                   ),
-            SizedBox(
-              width: 24,
-            ),
+            SizedBox(width: 24),
             showCountDown
                 ? SizedBox()
                 : Padding(
@@ -92,9 +84,7 @@ class CeremonySchedule extends StatelessWidget {
                       size: 18,
                     ),
                   ),
-            SizedBox(
-              width: 6,
-            ),
+            SizedBox(width: 6),
             showCountDown
                 ? SizedBox()
                 : Text(
@@ -103,9 +93,7 @@ class CeremonySchedule extends StatelessWidget {
                   ),
           ],
         ),
-        SizedBox(
-          height: 24,
-        ),
+        SizedBox(height: 24),
       ],
     );
   }
