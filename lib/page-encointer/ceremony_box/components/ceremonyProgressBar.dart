@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 
 import '../../../models/index.dart';
 
-/// This bar shows the progress in the meetup cycle, it visualizes the overall progress
-/// and indicates the three phases.
+/// Shows the progress of a ceremony cycle.
+///
+/// It indicates the individual `CeremonyPhase`s and allows disproportionate emphasis
+/// on certain phases.
 class CeremonyProgressBar extends StatelessWidget {
   const CeremonyProgressBar({
     @required this.currentTime,
@@ -21,11 +23,17 @@ class CeremonyProgressBar extends StatelessWidget {
   final int meetupTime;
   final Map<CeremonyPhase, int> ceremonyPhaseDurations;
 
+  /// Total width of the progress bar.
   final double width;
 
-  final int phase1register = 70;
-  final int phase2assign = 15;
-  final int phase3attest = 15;
+  /// Fractional width of the registering phase segment of the progress bar.
+  final double registeringPhaseFractionalWidth = 0.70;
+
+  /// Fractional width of the assigning segment of the progress bar.
+  final double assigningPhaseFractionalWidth = 0.15;
+
+  /// Fractional width of the attesting segment of the progress bar.
+  final double attestingPhaseFractionalWidth = 0.15;
 
   double _getCeremonyProgress() {
     try {
@@ -35,9 +43,9 @@ class CeremonyProgressBar extends StatelessWidget {
         assigningPhaseStart,
         meetupTime,
         ceremonyPhaseDurations,
-        phase1register,
-        phase2assign,
-        phase3attest,
+        registeringPhaseFractionalWidth,
+        assigningPhaseFractionalWidth,
+        attestingPhaseFractionalWidth,
       );
     } catch (e) {
       _log("Error getting ceremony progress ${e.toString()}");
@@ -70,9 +78,9 @@ class CeremonyProgressBar extends StatelessWidget {
           ),
           Row(
             children: [
-              SizedBox(width: width * phase1register / 100),
+              SizedBox(width: width * registeringPhaseFractionalWidth),
               SizedBox(
-                width:  width * phase2assign / 100,
+                width: width * assigningPhaseFractionalWidth,
                 child: Container(
                   margin: EdgeInsets.symmetric(vertical: 1),
                   foregroundDecoration: BoxDecoration(
@@ -83,7 +91,7 @@ class CeremonyProgressBar extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(width:  width * phase3attest / 100),
+              SizedBox(width: width * attestingPhaseFractionalWidth),
             ],
           ),
         ],

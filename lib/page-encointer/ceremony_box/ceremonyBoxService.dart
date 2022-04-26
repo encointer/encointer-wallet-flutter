@@ -62,9 +62,9 @@ class CeremonyBoxService {
     int assigningStart,
     int meetupTime,
     Map<CeremonyPhase, int> ceremonyPhaseDurations,
-    int registerFlex,
-    int assigningFlex,
-    int attestingFlex,
+    double registerFlex,
+    double assigningFlex,
+    double attestingFlex,
   ) {
     var totalCeremonyTime = ceremonyPhaseDurations.values.reduce((sum, duration) => sum + duration);
     var totalFlex = registerFlex + assigningFlex + attestingFlex;
@@ -92,7 +92,8 @@ class CeremonyBoxService {
       progressUnormalized = registerFlex +
           (currentTime - assigningStart) / ceremonyPhaseDurations[CeremonyPhase.Assigning] * assigningFlex;
     } else {
-      progressUnormalized = registerFlex + assigningFlex +
+      progressUnormalized = registerFlex +
+          assigningFlex +
           (currentTime - meetupTime) / ceremonyPhaseDurations[CeremonyPhase.Attesting] * attestingFlex;
     }
 
