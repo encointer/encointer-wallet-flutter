@@ -25,7 +25,6 @@ class CeremonyInfo extends StatelessWidget {
 
     String languageCode = Localizations.localeOf(context).languageCode;
     return Container(
-      padding: EdgeInsets.fromLTRB(24, 24, 24, 0),
       child: Column(
         children: [
           SizedBox(height: 8),
