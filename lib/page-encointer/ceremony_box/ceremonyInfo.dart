@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 
 import '../../models/index.dart';
 import 'components/ceremonyInfoAndCalendar.dart';
@@ -25,34 +24,32 @@ class CeremonyInfo extends StatelessWidget {
     final Uri infoLink = Uri.http("example.org", "/path", {"q": "dart"});
 
     String languageCode = Localizations.localeOf(context).languageCode;
-    return Observer(
-      builder: (BuildContext context) => Container(
-        padding: EdgeInsets.fromLTRB(24, 24, 24, 0),
-        child: Column(
-          children: [
-            SizedBox(height: 8),
-            CeremonyProgressBar(
-              currentTime: currentTime,
-              assigningPhaseStart: assigningPhaseStart,
-              meetupTime: meetupTime,
-              ceremonyPhaseDurations: ceremonyPhaseDurations,
-              width: 262,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CeremonySchedule(
-                  nextCeremonyDate: new DateTime(meetupTime),
-                  languageCode: languageCode,
-                ),
-                CeremonyInfoAndCalendar(
-                  nextCeremonyDate: new DateTime(meetupTime),
-                  infoLink: infoLink,
-                ),
-              ],
-            ),
-          ],
-        ),
+    return Container(
+      padding: EdgeInsets.fromLTRB(24, 24, 24, 0),
+      child: Column(
+        children: [
+          SizedBox(height: 8),
+          CeremonyProgressBar(
+            currentTime: currentTime,
+            assigningPhaseStart: assigningPhaseStart,
+            meetupTime: meetupTime,
+            ceremonyPhaseDurations: ceremonyPhaseDurations,
+            width: 262,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              CeremonySchedule(
+                nextCeremonyDate: new DateTime(meetupTime),
+                languageCode: languageCode,
+              ),
+              CeremonyInfoAndCalendar(
+                nextCeremonyDate: new DateTime(meetupTime),
+                infoLink: infoLink,
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
