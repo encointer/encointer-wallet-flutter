@@ -94,6 +94,18 @@ class EncointerApi {
     return phase;
   }
 
+  /// Queries the Scheduler pallet: encointerScheduler.nextPhaseTimestamp().
+  ///
+  /// This is on-chain in Cantillon.
+  Future<int> getNextPhaseTimestamp() async {
+    print("api: getCurrentPhase");
+    int timestamp = await jsApi.evalJavascript('encointer.getNextPhaseTimestamp()').then((time) => int.parse(time));
+
+    print("api: next phase timestamp: $timestamp");
+    store.encointer.setNextPhaseTimestamp(timestamp);
+    return timestamp;
+  }
+
   /// Queries the Scheduler pallet: encointerScheduler.currentPhase().
   ///
   /// This should be done only once at app-startup, as this is practically const.
@@ -310,6 +322,7 @@ class EncointerApi {
         'encointer.subscribeCurrentPhase("$_currentPhaseSubscribeChannel")', _currentPhaseSubscribeChannel, (data) {
       var phase = ceremonyPhaseFromString(data.toUpperCase());
       store.encointer.setCurrentPhase(phase);
+      getNextPhaseTimestamp();
     });
   }
 
