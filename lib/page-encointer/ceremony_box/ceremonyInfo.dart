@@ -39,11 +39,11 @@ class CeremonyInfo extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               CeremonySchedule(
-                nextCeremonyDate: new DateTime(meetupTime),
+                nextCeremonyDate: DateTime.fromMillisecondsSinceEpoch(meetupTime),
                 languageCode: languageCode,
               ),
               CeremonyInfoAndCalendar(
-                nextCeremonyDate: new DateTime(meetupTime),
+                nextCeremonyDate: DateTime.fromMillisecondsSinceEpoch(meetupTime),
                 infoLink: infoLink,
               ),
             ],

@@ -5,7 +5,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import "package:latlong2/latlong.dart";
 
-import '../../models/index.dart';
 import 'ceremonyInfo.dart';
 import 'components/ceremonyLocationButton.dart';
 import 'components/ceremonyNotification.dart';
@@ -31,12 +30,6 @@ class CeremonyBox extends StatelessWidget {
   Widget build(BuildContext context) {
     String languageCode = Localizations.localeOf(context).languageCode;
 
-    final ceremonyPhaseDurations = Map<CeremonyPhase, int>.of({
-      CeremonyPhase.Registering: 30,
-      CeremonyPhase.Assigning: 5,
-      CeremonyPhase.Attesting: 10,
-    });
-
     return Observer(
       builder: (BuildContext context) => Column(
         children: [
@@ -53,12 +46,11 @@ class CeremonyBox extends StatelessWidget {
                   "This box is only the skeleton. It has no features.", // this text will be removed
                   style: TextStyle(color: Colors.orange),
                 ),
-                SizedBox(height: 8),
                 CeremonyInfo(
-                  currentTime: 34,
-                  assigningPhaseStart: 35,
-                  meetupTime: 40,
-                  ceremonyPhaseDurations: ceremonyPhaseDurations,
+                  currentTime: DateTime.now().millisecondsSinceEpoch,
+                  assigningPhaseStart: store.encointer?.assigningPhaseStart,
+                  meetupTime: store.encointer?.community?.meetupTime ?? store.encointer.assigningPhaseStart,
+                  ceremonyPhaseDurations: store.encointer.phaseDurations,
                 ),
                 if (store.encointer.showRegisterButton)
                   CeremonyRegisterButton(
