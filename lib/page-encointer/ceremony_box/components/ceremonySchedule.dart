@@ -32,33 +32,80 @@ class CeremonySchedule extends StatelessWidget {
     }
 
     bool showCountDown = CeremonyBoxService.shouldShowCountdown(nextCeremonyDate);
-    String nextCeremonyHourMinute = '${DateFormat.Hm(languageCode).format(nextCeremonyDate)}';
-    String nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate, dic, languageCode);
-    String timeLeftUntilCeremonyStartsDaysHours =
-        CeremonyBoxService.getTimeLeftUntilCeremonyStartsDaysHours(nextCeremonyDate);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        RichText(
-          text: TextSpan(
-            text: '${showCountDown ? dic.encointer.nextCeremonyDateLabel : dic.encointer.nextCeremonyTimeLeft} ',
-            style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
-            children: [
-              TextSpan(
-                text: showCountDown
-                    ? '$nextCeremonyYearMonthDay $nextCeremonyHourMinute'
-                    : timeLeftUntilCeremonyStartsDaysHours,
-                style: Theme.of(context).textTheme.headline4.copyWith(color: encointerBlack),
-              ),
-            ],
-          ),
-        ),
+        showCountDown
+            ? CeremonyDateLabelAbsolute(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode)
+            : CeremonyDateLabelRelative(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode),
         SizedBox(height: 8),
         showCountDown
             ? CeremonyCountDown()
             : CeremonyDate(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode)
       ],
+    );
+  }
+}
+
+class CeremonyDateLabelAbsolute extends StatelessWidget {
+  const CeremonyDateLabelAbsolute({
+    this.nextCeremonyDate,
+    this.languageCode,
+    Key key,
+  }) : super(key: key);
+
+  final DateTime nextCeremonyDate;
+  final String languageCode;
+
+  Widget build(BuildContext context) {
+    final dic = I18n.of(context).translationsForLocale();
+
+    String nextCeremonyHourMinute = '${DateFormat.Hm(languageCode).format(nextCeremonyDate)}';
+    String nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate, dic, languageCode);
+
+    return RichText(
+      text: TextSpan(
+        text: '${dic.encointer.nextCeremonyDateLabel} ',
+        style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
+        children: [
+          TextSpan(
+            text: '$nextCeremonyYearMonthDay $nextCeremonyHourMinute',
+            style: Theme.of(context).textTheme.headline4.copyWith(color: encointerBlack),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CeremonyDateLabelRelative extends StatelessWidget {
+  const CeremonyDateLabelRelative({
+    this.nextCeremonyDate,
+    this.languageCode,
+    Key key,
+  }) : super(key: key);
+
+  final DateTime nextCeremonyDate;
+  final String languageCode;
+
+  Widget build(BuildContext context) {
+    final dic = I18n.of(context).translationsForLocale();
+
+    String timeLeftUntilCeremonyStartsDaysHours =
+        CeremonyBoxService.getTimeLeftUntilCeremonyStartsDaysHours(nextCeremonyDate);
+
+    return RichText(
+      text: TextSpan(
+        text: '${dic.encointer.nextCeremonyTimeLeft}',
+        style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
+        children: [
+          TextSpan(
+            text: timeLeftUntilCeremonyStartsDaysHours,
+            style: Theme.of(context).textTheme.headline4.copyWith(color: encointerBlack),
+          ),
+        ],
+      ),
     );
   }
 }
@@ -88,7 +135,10 @@ class CeremonyDate extends StatelessWidget {
           size: 18,
         ),
         SizedBox(width: 6),
-        Text(nextCeremonyYearMonthDay, style: h2BlackTheme,),
+        Text(
+          nextCeremonyYearMonthDay,
+          style: h2BlackTheme,
+        ),
         SizedBox(width: 12),
         Padding(
           padding: const EdgeInsets.only(bottom: 2),
