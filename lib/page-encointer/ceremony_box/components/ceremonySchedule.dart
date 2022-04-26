@@ -1,6 +1,7 @@
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremonyBoxService.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
@@ -88,7 +89,7 @@ class CeremonyDate extends StatelessWidget {
         ),
         SizedBox(width: 6),
         Text(nextCeremonyYearMonthDay, style: h2BlackTheme,),
-        SizedBox(width: 24),
+        SizedBox(width: 12),
         Padding(
           padding: const EdgeInsets.only(bottom: 2),
           child: Icon(
