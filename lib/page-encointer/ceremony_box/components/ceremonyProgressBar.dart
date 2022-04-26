@@ -6,10 +6,6 @@ import '../../../models/index.dart';
 
 /// This bar shows the progress in the meetup cycle, it visualizes the overall progress
 /// and indicates the three phases.
-///
-/// progressElapsed + progressAhead = widthOfTheWholeBar, these are flex
-/// factors (integers) to draw the progress in the right proportions,
-/// automatically adapting to screen width
 class CeremonyProgressBar extends StatelessWidget {
   const CeremonyProgressBar({
     @required this.currentTime,
@@ -31,20 +27,28 @@ class CeremonyProgressBar extends StatelessWidget {
   final int phase2assign = 15;
   final int phase3attest = 15;
 
+  double _getCeremonyProgress() {
+    try {
+      // todo inject this service for mocking
+      return CeremonyBoxService.getProgressElapsed(
+        currentTime,
+        assigningPhaseStart,
+        meetupTime,
+        ceremonyPhaseDurations,
+        phase1register,
+        phase2assign,
+        phase3attest,
+      );
+    } catch (e) {
+      _log("Error getting ceremony progress ${e.toString()}");
+      return 0;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    double progressElapsed = CeremonyBoxService.getProgressElapsed(
-      currentTime,
-      assigningPhaseStart,
-      meetupTime,
-      ceremonyPhaseDurations,
-      phase1register,
-      phase2assign,
-      phase3attest,
-    );
-
+    double progressElapsed = _getCeremonyProgress();
     _log("ceremony progress: $progressElapsed");
-    _log("progress width: ${width * progressElapsed}");
 
     return Container(
       decoration: BoxDecoration(
@@ -66,9 +70,7 @@ class CeremonyProgressBar extends StatelessWidget {
           ),
           Row(
             children: [
-              SizedBox(
-                width: width * phase1register / 100,
-              ),
+              SizedBox(width: width * phase1register / 100),
               SizedBox(
                 width:  width * phase2assign / 100,
                 child: Container(
@@ -81,10 +83,7 @@ class CeremonyProgressBar extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
-                width:  width * phase3attest / 100,
-                child: SizedBox(),
-              ),
+              SizedBox(width:  width * phase3attest / 100),
             ],
           ),
         ],
