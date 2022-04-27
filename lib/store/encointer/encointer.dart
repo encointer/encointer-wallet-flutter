@@ -469,6 +469,8 @@ abstract class _EncointerStore with Store {
       case CeremonyPhase.Attesting:
         return nextPhaseTimestamp - phaseDurations[CeremonyPhase.Attesting] - phaseDurations[CeremonyPhase.Assigning];
         break;
+      default:
+        return null;
     }
   }
 
