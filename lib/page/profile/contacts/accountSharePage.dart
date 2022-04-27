@@ -20,11 +20,12 @@ class _AccountSharePageState extends State<AccountSharePage> {
   Widget build(BuildContext context) {
     String accountToBeSharedPubKey = ModalRoute.of(context).settings.arguments;
     AccountData accountToBeShared = widget.store.account.getAccountData(accountToBeSharedPubKey);
+    final addressSS58 = widget.store.account.getNetworkAddress(accountToBeSharedPubKey);
 
     var contact = [
       'encointer-contact',
       'V1.0',
-      accountToBeShared.address,
+      addressSS58,
       widget.store.encointer.chosenCid?.toFmtString() ?? '',
       '', // empty amount field. Hotfix for # #399. To be properly solved in #354.
       accountToBeShared.name
