@@ -228,9 +228,7 @@ class _AssetsState extends State<Assets> {
                                 key: Key('qr-receive'),
                                 onPressed: () {
                                   if (accountData.address != '') {
-                                    balanceWatchdog.pause();
-                                    Navigator.pushNamed(context, ReceivePage.route)
-                                        .then((_) => balanceWatchdog.start());
+                                    Navigator.pushNamed(context, ReceivePage.route);
                                   }
                                 },
                               ),
@@ -259,7 +257,6 @@ class _AssetsState extends State<Assets> {
                                 key: Key('transfer'),
                                 onPressed: store.encointer.communityBalance != null
                                     ? () {
-                                        balanceWatchdog.pause();
                                         Navigator.pushNamed(
                                           context,
                                           TransferPage.route,
@@ -333,7 +330,10 @@ class _AssetsState extends State<Assets> {
                           data: allCommunities,
                           onTap: (int index) {
                             if (index == allCommunities.length - 1) {
-                              Navigator.push(context, MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)));
+                              Navigator.push(context, MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)))
+                                  .then((_) {
+                                _refreshBalanceAndNotify(dic);
+                              });
                             } else {
                               setState(() {
                                 // TODO
@@ -354,6 +354,7 @@ class _AssetsState extends State<Assets> {
                           } else {
                             setState(() {
                               switchAccount(store.account.accountListAll[index]);
+                              _refreshBalanceAndNotify(dic);
                             });
                           }
                         },
