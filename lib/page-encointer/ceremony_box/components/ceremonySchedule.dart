@@ -97,7 +97,7 @@ class CeremonyDateLabelRelative extends StatelessWidget {
 
     return RichText(
       text: TextSpan(
-        text: '${dic.encointer.nextCeremonyTimeLeft}',
+        text: '${dic.encointer.nextCeremonyTimeLeft} ',
         style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
         children: [
           TextSpan(
