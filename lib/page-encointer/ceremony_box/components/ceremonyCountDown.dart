@@ -6,10 +6,10 @@ import 'package:iconsax/iconsax.dart';
 import 'package:quiver/async.dart';
 
 class CeremonyCountDown extends StatefulWidget {
-  // CeremonyCountDown(this.store);
-
+  CeremonyCountDown(this.nextCeremonyDate);
   static const String route = '/encointer/assigning';
-  // final AppStore store;
+
+  final DateTime nextCeremonyDate;
 
   @override
   _CeremonyCountDownState createState() => _CeremonyCountDownState();
@@ -23,8 +23,9 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
 
   @override
   void initState() {
-    // TODO replace following line
-    this.timeToMeetup = 30; //widget.store.encointer.getTimeToMeetup();
+
+   this.timeToMeetup = widget.nextCeremonyDate != null ?
+   widget.nextCeremonyDate.difference(DateTime.now()).inSeconds : 0;
     super.initState();
   }
 

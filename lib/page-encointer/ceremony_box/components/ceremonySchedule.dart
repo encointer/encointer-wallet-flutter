@@ -41,7 +41,7 @@ class CeremonySchedule extends StatelessWidget {
             : CeremonyDateLabelRelative(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode),
         SizedBox(height: 8),
         showCountDown
-            ? CeremonyCountDown()
+            ? CeremonyCountDown(nextCeremonyDate)
             : CeremonyDate(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode)
       ],
     );
