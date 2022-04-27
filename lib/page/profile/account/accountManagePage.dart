@@ -158,16 +158,17 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
   @override
   Widget build(BuildContext context) {
+    final Translations dic = I18n.of(context).translationsForLocale();
     final TextStyle h3 = Theme.of(context).textTheme.headline3;
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
+
     String accountToBeEditedPubKey = ModalRoute.of(context).settings.arguments;
     AccountData accountToBeEdited = store.account.getAccountData(accountToBeEditedPubKey);
+    final addressSS58 = store.account.getNetworkAddress(accountToBeEditedPubKey);
+
     _nameCtrl = TextEditingController(text: accountToBeEdited.name);
     _nameCtrl.selection = TextSelection.fromPosition(TextPosition(offset: _nameCtrl.text.length));
 
-    final Translations dic = I18n.of(context).translationsForLocale();
-
-    final addressSS58 = store.account.getNetworkAddress(accountToBeEditedPubKey);
     return Observer(
       builder: (_) => Scaffold(
         appBar: AppBar(

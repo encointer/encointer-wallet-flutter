@@ -113,7 +113,7 @@ abstract class _AccountStore with Store {
 
   @computed
   String get currentAddress {
-      return getNetworkAddress(currentAccountPubKey);
+    return getNetworkAddress(currentAccountPubKey);
   }
 
   /// Gets the address (SS58) for the corresponding network.
