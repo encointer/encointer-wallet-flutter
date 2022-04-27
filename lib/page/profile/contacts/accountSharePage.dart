@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,13 +18,16 @@ class AccountSharePage extends StatefulWidget {
 class _AccountSharePageState extends State<AccountSharePage> {
   @override
   Widget build(BuildContext context) {
+    String accountToBeSharedPubKey = ModalRoute.of(context).settings.arguments;
+    AccountData accountToBeShared = widget.store.account.getAccountData(accountToBeSharedPubKey);
+
     var contact = [
       'encointer-contact',
       'V1.0',
-      widget.store.account.currentAddress,
-      widget.store.encointer.chosenCid != null ? (widget.store.encointer.chosenCid).toFmtString() : '',
+      accountToBeShared.address,
+      widget.store.encointer.chosenCid?.toFmtString() ?? '',
       '', // empty amount field. Hotfix for # #399. To be properly solved in #354.
-      widget.store.account.currentAccount.name
+      accountToBeShared.name
     ];
 
     return Scaffold(
@@ -66,7 +70,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, bottom: 30),
-                      child: Text('${widget.store.account.currentAccount.name}',
+                      child: Text('${accountToBeShared.name}',
                           style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
                           textAlign: TextAlign.center),
                     )

@@ -5,6 +5,7 @@ import 'package:encointer_wallet/page/profile/account/exportResultPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/accountSharePage.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
+import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:encointer_wallet/utils/UI.dart';
@@ -17,7 +18,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:encointer_wallet/store/account/types/accountData.dart';
 
 class AccountManagePage extends StatefulWidget {
   AccountManagePage(this.store);
@@ -273,7 +273,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
                             Text(dic.profile.accountShare, style: h3.copyWith(color: Colors.white)),
                           ],
                         ),
-                        onPressed: () => Navigator.pushNamed(context, AccountSharePage.route),
+                        onPressed: () =>
+                            Navigator.pushNamed(context, AccountSharePage.route, arguments: accountToBeEditedPubKey),
                       ),
                       Spacer(),
                       Container(
