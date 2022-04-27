@@ -90,4 +90,3 @@ class CeremonyBoxService {
     return progressUnormalized / totalFlex;
   }
 }
-
