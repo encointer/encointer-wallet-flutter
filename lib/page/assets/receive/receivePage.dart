@@ -9,6 +9,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:focus_detector/focus_detector.dart';
 import 'package:pausable_timer/pausable_timer.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:share/share.dart';
@@ -21,7 +22,7 @@ class ReceivePage extends StatefulWidget {
   _ReceivePageState createState() => _ReceivePageState();
 }
 
-class _ReceivePageState extends State<ReceivePage> with WidgetsBindingObserver {
+class _ReceivePageState extends State<ReceivePage> {
   final TextEditingController _amountController = new TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool generateQR = false;
@@ -59,38 +60,10 @@ class _ReceivePageState extends State<ReceivePage> with WidgetsBindingObserver {
   }
 
   @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-  }
-
-  @override
   void dispose() {
     _amountController.dispose();
     paymentWatchdog.cancel();
-    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
-    switch (state) {
-      case AppLifecycleState.resumed:
-        print("[receivePage] resumed. restarting payment watchdog");
-        paymentWatchdog.start();
-        break;
-      case AppLifecycleState.inactive:
-        print("[receivePage] inactive. pausing payment watchdog");
-        paymentWatchdog.pause();
-        break;
-      case AppLifecycleState.paused:
-        print("[receivePage] paused");
-        break;
-      case AppLifecycleState.detached:
-        print("[receivePage] detatched");
-        break;
-    }
   }
 
   @override
@@ -140,109 +113,119 @@ class _ReceivePageState extends State<ReceivePage> with WidgetsBindingObserver {
       },
     )..start();
 
-    return Form(
-      key: _formKey,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.transparent,
-          title: Text(dic.assets.receive),
-          leading: Container(),
-          actions: [
-            IconButton(
-              key: Key('close-receive-page'),
-              icon: Icon(Icons.close),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            )
-          ],
-        ),
-        body: SafeArea(
-          child: ListView(
-            children: <Widget>[
-              Column(
+    return FocusDetector(
+        onFocusLost: () {
+          print('[receivePage:FocusDetector] Focus Lost.');
+          paymentWatchdog.pause();
+        },
+        onFocusGained: () {
+          print('[receivePage:FocusDetector] Focus Gained.');
+          paymentWatchdog.reset();
+          paymentWatchdog.start();
+        },
+        child: Form(
+          key: _formKey,
+          child: Scaffold(
+            appBar: AppBar(
+              backgroundColor: Colors.transparent,
+              title: Text(dic.assets.receive),
+              leading: Container(),
+              actions: [
+                IconButton(
+                  key: Key('close-receive-page'),
+                  icon: Icon(Icons.close),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                )
+              ],
+            ),
+            body: SafeArea(
+              child: ListView(
                 children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 48),
-                    child: Text(
-                      dic.profile.qrScanHint,
-                      style: Theme.of(context).textTheme.headline3.copyWith(color: encointerBlack),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
-                  SizedBox(height: 8),
-                  Padding(
-                    padding: const EdgeInsets.all(30),
-                    child: EncointerTextFormField(
-                      labelText: dic.assets.invoiceAmount,
-                      textStyle: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
-                      inputFormatters: [UI.decimalInputFormatter()],
-                      controller: _amountController,
-                      textFormFieldKey: Key('invoice-amount-input'),
-                      validator: (String value) {
-                        if (value == null || value.isEmpty || double.parse(value) == 0.0) {
-                          return dic.assets.amountError;
-                        }
-                        return null;
-                      },
-                      onChanged: (value) {
-                        setState(() {
-                          invoice = [
-                            'encointer-invoice',
-                            'V1.0',
-                            widget.store.account.currentAddress,
-                            widget.store.encointer.chosenCid != null
-                                ? (widget.store.encointer.chosenCid).toFmtString()
-                                : '',
-                            _amountController.text,
-                            widget.store.account.currentAccount.name
-                          ];
-                        });
-                      },
-                      suffixIcon: Text(
-                        "ⵐ",
-                        style: TextStyle(
-                          color: encointerGrey,
-                          fontSize: 26,
+                  Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 48),
+                        child: Text(
+                          dic.profile.qrScanHint,
+                          style: Theme.of(context).textTheme.headline3.copyWith(color: encointerBlack),
+                          textAlign: TextAlign.center,
                         ),
                       ),
-                    ),
+                      SizedBox(height: 8),
+                      Padding(
+                        padding: const EdgeInsets.all(30),
+                        child: EncointerTextFormField(
+                          labelText: dic.assets.invoiceAmount,
+                          textStyle: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
+                          inputFormatters: [UI.decimalInputFormatter()],
+                          controller: _amountController,
+                          textFormFieldKey: Key('invoice-amount-input'),
+                          validator: (String value) {
+                            if (value == null || value.isEmpty || double.parse(value) == 0.0) {
+                              return dic.assets.amountError;
+                            }
+                            return null;
+                          },
+                          onChanged: (value) {
+                            setState(() {
+                              invoice = [
+                                'encointer-invoice',
+                                'V1.0',
+                                widget.store.account.currentAddress,
+                                widget.store.encointer.chosenCid != null
+                                    ? (widget.store.encointer.chosenCid).toFmtString()
+                                    : '',
+                                _amountController.text,
+                                widget.store.account.currentAccount.name
+                              ];
+                            });
+                          },
+                          suffixIcon: Text(
+                            "ⵐ",
+                            style: TextStyle(
+                              color: encointerGrey,
+                              fontSize: 26,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
+                  Text('${dic.profile.receiverAccount} ${widget.store.account.currentAccount.name}',
+                      style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
+                      textAlign: TextAlign.center),
+                  SizedBox(height: 8),
+                  Column(children: [
+                    generateQRWithInvoiceData(),
+                    InkWell(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 24),
+                        child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Icon(Icons.share, color: ZurichLion.shade500),
+                              SizedBox(width: 8),
+                              Text(
+                                dic.assets.shareInvoice,
+                                style: Theme.of(context).textTheme.headline3,
+                              ),
+                            ]),
+                      ),
+                      onTap: () => {
+                        if (_formKey.currentState.validate())
+                          {
+                            Share.share(invoice.join('\n')),
+                          }
+                      },
+                    ),
+                  ])
                 ],
               ),
-              Text('${dic.profile.receiverAccount} ${widget.store.account.currentAccount.name}',
-                  style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
-                  textAlign: TextAlign.center),
-              SizedBox(height: 8),
-              Column(children: [
-                generateQRWithInvoiceData(),
-                InkWell(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 24),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.share, color: ZurichLion.shade500),
-                          SizedBox(width: 8),
-                          Text(
-                            dic.assets.shareInvoice,
-                            style: Theme.of(context).textTheme.headline3,
-                          ),
-                        ]),
-                  ),
-                  onTap: () => {
-                    if (_formKey.currentState.validate())
-                      {
-                        Share.share(invoice.join('\n')),
-                      }
-                  },
-                ),
-              ])
-            ],
+            ),
           ),
-        ),
-      ),
-    );
+        ));
   }
 }

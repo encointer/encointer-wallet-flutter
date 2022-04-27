@@ -392,6 +392,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.4.0"
+  focus_detector:
+    dependency: "direct main"
+    description:
+      name: focus_detector
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.1"
   fuchsia_remote_debug_protocol:
     dependency: transitive
     description: flutter
@@ -1139,6 +1146,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  visibility_detector:
+    dependency: transitive
+    description:
+      name: visibility_detector
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.2"
   vm_service:
     dependency: transitive
     description:

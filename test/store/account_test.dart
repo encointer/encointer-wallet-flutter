@@ -46,7 +46,7 @@ void main() {
       expect(store.optionalAccounts[0].address, accList[0]['address']);
 
       /// update account
-      await store.updateAccountName('test-change');
+      await store.updateAccountName(store.currentAccount, 'test-change');
       expect(store.currentAccount.name, 'test-change');
       expect(store.currentAccount.pubKey, endoEncointer['pubKey']);
       expect(store.currentAccount.address, endoEncointer['address']);

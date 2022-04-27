@@ -238,8 +238,8 @@ mixin _$AccountStore on _AccountStore, Store {
   final _$updateAccountNameAsyncAction = AsyncAction('_AccountStore.updateAccountName');
 
   @override
-  Future<void> updateAccountName(String name) {
-    return _$updateAccountNameAsyncAction.run(() => super.updateAccountName(name));
+  Future<void> updateAccountName(AccountData account, String newName) {
+    return _$updateAccountNameAsyncAction.run(() => super.updateAccountName(account, newName));
   }
 
   final _$updateAccountAsyncAction = AsyncAction('_AccountStore.updateAccount');

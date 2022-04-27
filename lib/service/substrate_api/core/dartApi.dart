@@ -56,8 +56,13 @@ class SubstrateDartApi {
   /// Hints:
   /// * account ids must be passed as SS58.
   Future rpc(String method, [params]) {
-    if (_client == null || _client.isClosed) {
-      throw ("Can't call an rpc method because we are not connected to a node");
+    if (_client == null) {
+      throw ("[dartApi] Can't call an rpc method because we are not connected to an endpoint");
+    }
+    if (_client.isClosed) {
+      print("[dartApi] not connected. trying to reconnect to $endpoint");
+      this.reconnect();
+      print("[dartApi] connection status: isclosed? ${_client.isClosed}");
     }
 
     return _client.sendRequest(method, params);
