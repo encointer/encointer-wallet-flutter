@@ -23,9 +23,8 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
 
   @override
   void initState() {
-
-   this.timeToMeetup = widget.nextCeremonyDate != null ?
-   widget.nextCeremonyDate.difference(DateTime.now()).inSeconds : 0;
+    this.timeToMeetup =
+        widget.nextCeremonyDate != null ? widget.nextCeremonyDate.difference(DateTime.now()).inSeconds : 0;
     super.initState();
   }
 
