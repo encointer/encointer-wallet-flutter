@@ -66,24 +66,14 @@ class CeremonyBoxService {
     double assigningFlex,
     double attestingFlex,
   ) {
-    var totalCeremonyTime = ceremonyPhaseDurations.values.reduce((sum, duration) => sum + duration);
     var totalFlex = registerFlex + assigningFlex + attestingFlex;
-    var flexNormalization = 100 / totalFlex;
     var ceremonyStart = assigningStart - ceremonyPhaseDurations[CeremonyPhase.Registering];
-
-    _log("totalCeremonyTime: $totalCeremonyTime");
-    _log("totalFlex: $totalFlex");
-    _log("flexNormalization: $flexNormalization");
-    _log("currentTime: $currentTime");
-    _log("ceremonyStart: $ceremonyStart");
-    _log("assigningStart: $assigningStart");
-    _log("phaseDurations: ${ceremonyPhaseDurations.toString()}");
-
-    var progressUnormalized;
 
     if (currentTime < ceremonyStart) {
       throw Exception("[CeremonyProgressBar] Current time was smaller than ceremony start");
     }
+
+    var progressUnormalized;
 
     if (currentTime < assigningStart) {
       progressUnormalized =
@@ -101,6 +91,3 @@ class CeremonyBoxService {
   }
 }
 
-_log(String msg) {
-  print("[CeremonyBoxService] $msg");
-}
