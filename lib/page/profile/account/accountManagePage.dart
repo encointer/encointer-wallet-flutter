@@ -5,6 +5,7 @@ import 'package:encointer_wallet/page/profile/account/exportResultPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/accountSharePage.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
+import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:encointer_wallet/utils/UI.dart';
@@ -17,7 +18,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:encointer_wallet/store/account/types/accountData.dart';
 
 class AccountManagePage extends StatefulWidget {
   AccountManagePage(this.store);
@@ -158,14 +158,17 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
   @override
   Widget build(BuildContext context) {
+    final Translations dic = I18n.of(context).translationsForLocale();
     final TextStyle h3 = Theme.of(context).textTheme.headline3;
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
+
     String accountToBeEditedPubKey = ModalRoute.of(context).settings.arguments;
     AccountData accountToBeEdited = store.account.getAccountData(accountToBeEditedPubKey);
+    final addressSS58 = store.account.getNetworkAddress(accountToBeEditedPubKey);
+
     _nameCtrl = TextEditingController(text: accountToBeEdited.name);
     _nameCtrl.selection = TextSelection.fromPosition(TextPosition(offset: _nameCtrl.text.length));
 
-    final Translations dic = I18n.of(context).translationsForLocale();
     return Observer(
       builder: (_) => Scaffold(
         appBar: AppBar(
@@ -228,11 +231,11 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(Fmt.address(accountToBeEdited.address), style: TextStyle(fontSize: 20)),
+                          Text(Fmt.address(addressSS58), style: TextStyle(fontSize: 20)),
                           IconButton(
                             icon: Icon(Iconsax.copy),
                             color: ZurichLion.shade500,
-                            onPressed: () => UI.copyAndNotify(context, accountToBeEdited.address),
+                            onPressed: () => UI.copyAndNotify(context, addressSS58),
                           ),
                         ],
                       ),
@@ -247,7 +250,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       itemBuilder: (BuildContext context, int index) {
                         String community = store.encointer.account.balanceEntries.keys.elementAt(index);
                         return _getBalanceEntryListTile(
-                            community, store.encointer.account.balanceEntries[community], accountToBeEdited.address);
+                            community, store.encointer.account.balanceEntries[community], addressSS58);
                       }),
                 ),
                 Container(
@@ -273,7 +276,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
                             Text(dic.profile.accountShare, style: h3.copyWith(color: Colors.white)),
                           ],
                         ),
-                        onPressed: () => Navigator.pushNamed(context, AccountSharePage.route),
+                        onPressed: () =>
+                            Navigator.pushNamed(context, AccountSharePage.route, arguments: accountToBeEditedPubKey),
                       ),
                       Spacer(),
                       Container(
