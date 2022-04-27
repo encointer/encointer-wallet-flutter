@@ -157,7 +157,10 @@ abstract class _EncointerStore with Store {
   }
 
   double applyDemurrage(BalanceEntry entry) {
-    if (_rootStore.chain.latestHeaderNumber != null && entry != null && community.demurrage != null) {
+    if (_rootStore.chain.latestHeaderNumber != null &&
+        entry != null &&
+        community != null &&
+        community.demurrage != null) {
       return entry.applyDemurrage(_rootStore.chain.latestHeaderNumber, community.demurrage);
     }
     return null;
