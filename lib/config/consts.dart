@@ -26,7 +26,7 @@ EndpointData networkEndpointEncointerLietaer = EndpointData.fromJson({
 
 EndpointData networkEndpointEncointerMainnet = EndpointData.fromJson({
   'info': 'nctr-k',
-  'ss58': 2,
+  'ss58': 42, // Fixme: #567
   'text': 'Encointer Network on Kusama (Hosted by Encointer Association)',
   'value': 'wss://kusama.api.encointer.org',
   'overrideConfig': GesellConfig.toJson(),
@@ -77,7 +77,7 @@ const network_ss58_map = {
   'encointer': 42,
   'nctr-gsl': 42,
   'nctr-r': 42,
-  'nctr-k': 2,
+  'nctr-k': 42, // Fixme: #567
   'nctr-cln': 42,
   'nctr-gsl-dev': 42,
   'nctr-cln-dev': 42,
