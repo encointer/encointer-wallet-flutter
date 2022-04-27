@@ -166,6 +166,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
     _nameCtrl.selection = TextSelection.fromPosition(TextPosition(offset: _nameCtrl.text.length));
 
     final Translations dic = I18n.of(context).translationsForLocale();
+
+    final addressSS58 = store.account.getNetworkAddress(accountToBeEditedPubKey);
     return Observer(
       builder: (_) => Scaffold(
         appBar: AppBar(
@@ -228,11 +230,11 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(Fmt.address(accountToBeEdited.address), style: TextStyle(fontSize: 20)),
+                          Text(Fmt.address(addressSS58), style: TextStyle(fontSize: 20)),
                           IconButton(
                             icon: Icon(Iconsax.copy),
                             color: ZurichLion.shade500,
-                            onPressed: () => UI.copyAndNotify(context, accountToBeEdited.address),
+                            onPressed: () => UI.copyAndNotify(context, addressSS58),
                           ),
                         ],
                       ),
@@ -247,7 +249,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       itemBuilder: (BuildContext context, int index) {
                         String community = store.encointer.account.balanceEntries.keys.elementAt(index);
                         return _getBalanceEntryListTile(
-                            community, store.encointer.account.balanceEntries[community], accountToBeEdited.address);
+                            community, store.encointer.account.balanceEntries[community], addressSS58);
                       }),
                 ),
                 Container(
