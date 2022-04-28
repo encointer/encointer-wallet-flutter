@@ -368,18 +368,15 @@ abstract class _EncointerStore with Store {
     }
   }
 
-  /// The below code is only needed when migrating from older app versions.
+  /// Initializes stores that have not been initialized before.
   ///
-  /// Because of the SS58-prefix this needs to be called after the `AccountApi.initAccounts() call.
-  /// If the stores exist already, this is a no-op.
-  Future<void> initStoresForLegacyCache() {
-    var futures = [initEncointerAccountStore(_rootStore.account.currentAddress, shouldCache: false)];
+  /// This should be called upon changing the current account mainly.
+  Future<void> initializeUninitializedStores(String address) {
+    var futures = [initEncointerAccountStore(address, shouldCache: false)];
 
     if (chosenCid != null) {
-      futures.addAll([
-        initBazaarStore(chosenCid, shouldCache: false),
-        initCommunityStore(chosenCid, _rootStore.account.currentAddress, shouldCache: false)
-      ]);
+      futures.addAll(
+          [initBazaarStore(chosenCid, shouldCache: false), initCommunityStore(chosenCid, address, shouldCache: false)]);
     }
 
     return Future.wait(futures);

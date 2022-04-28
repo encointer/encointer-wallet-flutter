@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/assets/assets.dart';
 import 'package:encointer_wallet/store/chain/chain.dart';
@@ -148,14 +149,18 @@ abstract class _AppStore with Store {
     ]);
   }
 
+  Future<void> setCurrentAccount(String pubKey, String address) async {
+    account.setCurrentAccount(pubKey);
+    // encointer.initializeUnitilializedStores(address)
+  }
+
   /// Loads all account associated data.
   ///
   /// Should be used whenever one switches to a new account. This function needs to be awaited most of the time.
   /// Otherwise, calling webApi queries when the cache has not finished loading might result in outdated or wrong data.
   /// E.g. not awaiting this call was the cause of #357.
   Future<void> loadAccountCache() async {
-    await Future.wait([assets.clearTxs(), assets.loadAccountCache()]);
-    return encointer.initStoresForLegacyCache();
+    return Future.wait([assets.clearTxs(), assets.loadAccountCache()]);
   }
 }
 
