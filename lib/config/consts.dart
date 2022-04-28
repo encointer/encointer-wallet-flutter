@@ -77,6 +77,7 @@ const network_ss58_map = {
   'encointer': 42,
   'nctr-gsl': 42,
   'nctr-r': 42,
+  'nctr-k': 42, // Fixme: #567
   'ss58': 42, // Fixme: #567
   'nctr-cln': 42,
   'nctr-gsl-dev': 42,
