@@ -118,10 +118,9 @@ abstract class _AccountStore with Store {
 
   /// Gets the address (SS58) for the corresponding network.
   String getNetworkAddress(String pubKey) {
-    //    int ss58 = rootStore.settings.endpoint.ss58;
     // _log("currentAddress: endpoint.info: ${rootStore.settings.endpoint.info}");
     // _log("currentAddress: endpoint.ss58: ${rootStore.settings.endpoint.ss58}");
-    // _log("currentAddress: cusstomSS58: ${rootStore.settings.customSS58Format.toString()}");
+    // _log("currentAddress: customSS58: ${rootStore.settings.customSS58Format.toString()}");
     // _log("currentAddress: AddressMap 42: ${pubKeyAddressMap[42].toString()}");
     // _log("currentAddress: AddressMap 2: ${pubKeyAddressMap[2].toString()}");
 
@@ -129,9 +128,15 @@ abstract class _AccountStore with Store {
     if (rootStore.settings.customSS58Format['info'] == default_ss58_prefix['info']) {
       ss58 = rootStore.settings.endpoint.ss58;
     }
-    return pubKeyAddressMap[ss58] != null
-        ? pubKeyAddressMap[ss58][currentAccountPubKey] ?? currentAccount.address
-        : currentAccount.address;
+
+    final address = pubKeyAddressMap[ss58] != null ? pubKeyAddressMap[ss58][pubKey] : null;
+
+    if (address != null) {
+      return address;
+    } else {
+      _log("getNetworkAddress: could not get address (SS58)");
+      return pubKey;
+    }
   }
 
   @action
@@ -416,6 +421,6 @@ abstract class _AccountCreate with Store {
   String key = '';
 }
 
-// _log(String msg) {
-//   print("[AccountStore] $msg");
-// }
+_log(String msg) {
+  print("[AccountStore] $msg");
+}
