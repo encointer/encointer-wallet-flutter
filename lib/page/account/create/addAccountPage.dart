@@ -56,7 +56,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
     webApi.fetchAccountData();
     webApi.account.fetchAccountsBonded([pubKey]);
     webApi.account.getPubKeyIcons([pubKey]);
-    store.account.setCurrentAccount(pubKey);
+    store.setCurrentAccount(pubKey);
 
     setState(() {
       _submitting = false;

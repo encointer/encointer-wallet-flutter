@@ -169,7 +169,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     webApi.fetchAccountData();
     webApi.account.fetchAccountsBonded([pubKey]);
     webApi.account.getPubKeyIcons([pubKey]);
-    store.account.setCurrentAccount(pubKey);
+    store.setCurrentAccount(pubKey);
     print("importAccountPage] account saved");
 
     setState(() {

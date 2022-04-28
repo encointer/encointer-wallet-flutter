@@ -149,9 +149,20 @@ abstract class _AppStore with Store {
     ]);
   }
 
-  Future<void> setCurrentAccount(String pubKey, String address) async {
+  Future<void> setCurrentAccount(String pubKey) async {
+    if (account.currentAccountPubKey == pubKey) {
+      return Future.value(null);
+    }
+
     account.setCurrentAccount(pubKey);
-    // encointer.initializeUnitilializedStores(address)
+
+    final address = account.getNetworkAddress(pubKey);
+    encointer.initializeUninitializedStores(address);
+
+    if (!settings.loading) {
+      encointer.updateState();
+      webApi.assets.subscribeBalance();
+    }
   }
 
   /// Loads all account associated data.

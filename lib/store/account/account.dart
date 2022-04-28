@@ -207,10 +207,6 @@ abstract class _AccountStore with Store {
     if (currentAccountPubKey != pubKey) {
       currentAccountPubKey = pubKey;
       rootStore.localStorage.setCurrentAccount(pubKey);
-      rootStore.encointer.updateState();
-    }
-    if (!rootStore.settings.loading) {
-      webApi.assets.subscribeBalance();
     }
   }
 

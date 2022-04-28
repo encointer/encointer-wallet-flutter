@@ -98,7 +98,7 @@ class AccountApi {
         current = '';
       }
     }
-    store.account.setCurrentAccount(current);
+    store.setCurrentAccount(current);
 
     await store.loadAccountCache();
     if (fetchData) {
