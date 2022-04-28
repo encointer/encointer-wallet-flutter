@@ -11,7 +11,14 @@ part 'app.g.dart';
 
 AppStore globalAppStore = AppStore(LocalStorage());
 
+/// Encointer cache key prefix for the local storage.
+///
+/// Should be prepended with the network prefix.
 const encointerCachePrefix = 'encointer-store';
+
+/// Encointer cache version key prefix for the local storage.
+///
+/// Should be prepended with the network prefix.
 const encointerCacheVersionPrefix = 'encointer-cache-version-key';
 
 /// Should be increased if cache incompatibilities have been introduced.
