@@ -34,7 +34,7 @@ class LocalStorage {
     return storage.getKV(cacheKey);
   }
 
-  Future<String> setKV(String cacheKey, String value) {
+  Future<void> setKV(String cacheKey, String value) {
     return storage.setKV(cacheKey, value);
   }
 
