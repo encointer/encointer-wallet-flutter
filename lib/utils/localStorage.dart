@@ -30,6 +30,14 @@ class LocalStorage {
     return storage.setKV(currentAccountKey, pubKey);
   }
 
+  Future<String> getKV(String cacheKey) {
+    return storage.getKV(cacheKey);
+  }
+
+  Future<String> setKV(String cacheKey, String value) {
+    return storage.setKV(cacheKey, value);
+  }
+
   Future<String> getCurrentAccount() async {
     return storage.getKV(currentAccountKey);
   }

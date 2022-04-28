@@ -12,6 +12,10 @@ part 'app.g.dart';
 AppStore globalAppStore = AppStore(LocalStorage());
 
 const encointerCachePrefix = 'encointer-store';
+const encointerCacheVersionKey = 'encointer-cache-version-key';
+
+/// Should be increased if cache incompatibilities have been introduced.
+const encointerCacheVersion = 'v1.0';
 
 class AppStore extends _AppStore with _$AppStore {
   AppStore(LocalStorage localStorage, {StoreConfig config}) : super(localStorage, config: config);
@@ -100,8 +104,12 @@ abstract class _AppStore with Store {
   }
 
   Future<void> loadOrInitEncointerCache(String networkInfo) async {
+    var cacheVersion = await localStorage.getKV(encointerCacheVersionKey);
+
     String encointerFinalCacheKey = encointerCacheKey(networkInfo);
-    var maybeStore = await loadEncointerCache(encointerFinalCacheKey);
+
+    var maybeStore = cacheVersion == encointerCacheVersion ?
+        await loadEncointerCache(encointerFinalCacheKey) : null;
 
     if (maybeStore != null) {
       encointer = maybeStore;
@@ -112,6 +120,8 @@ abstract class _AppStore with Store {
         this,
         () => localStorage.setObject(encointerFinalCacheKey, encointer.toJson()),
       );
+
+      localStorage.setKV(encointerCacheVersionKey, encointerCacheVersionKey);
 
       // write the new store to cache.
       return encointer.writeToCache();
