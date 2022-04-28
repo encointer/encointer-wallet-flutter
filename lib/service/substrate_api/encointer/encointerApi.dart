@@ -245,7 +245,7 @@ class EncointerApi {
 
     Location mLocation = locationIndex != null
         ? store.encointer.community.meetupLocations[locationIndex]
-        : (store.encointer.community.meetupLocations?.first);
+        : (store.encointer.community?.meetupLocations?.first);
 
     if (mLocation == null) {
       print("No meetup locations found, can't get meetup time.");
