@@ -1,4 +1,3 @@
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/assets/assets.dart';
 import 'package:encointer_wallet/store/chain/chain.dart';
@@ -172,7 +171,7 @@ abstract class _AppStore with Store {
       return Future.value(null);
     }
 
-    account.setCurrentAccount(pubKey);
+    await account.setCurrentAccount(pubKey);
 
     final address = account.getNetworkAddress(pubKey);
     await encointer.initializeUninitializedStores(address);

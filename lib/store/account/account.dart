@@ -203,10 +203,13 @@ abstract class _AccountStore with Store {
   }
 
   @action
-  void setCurrentAccount(String pubKey) {
+  Future<void> setCurrentAccount(String pubKey) async {
     if (currentAccountPubKey != pubKey) {
       currentAccountPubKey = pubKey;
-      rootStore.localStorage.setCurrentAccount(pubKey);
+
+      await rootStore.localStorage.setCurrentAccount(pubKey);
+
+      return loadAccount();
     }
   }
 
@@ -278,6 +281,10 @@ abstract class _AccountStore with Store {
     await loadAccount();
   }
 
+  /// This needs to always be called after the current account has been updated.
+  ///
+  /// This is probably a mobx action thing and has been poorly implemented.
+  /// Investigate for better solutions in #574.
   @action
   Future<void> loadAccount() async {
     List<Map<String, dynamic>> accList = await rootStore.localStorage.getAccountList();
