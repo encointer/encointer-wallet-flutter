@@ -270,14 +270,17 @@ abstract class _AccountStore with Store {
     deleteSeed(AccountStore.seedTypeMnemonic, acc.pubKey);
     deleteSeed(AccountStore.seedTypeRawSeed, acc.pubKey);
 
-    // set new currentAccount after currentAccount was removed
-    List<Map<String, dynamic>> accounts = await rootStore.localStorage.getAccountList();
-    if (accounts.length > 0) {
-      currentAccountPubKey = accounts[0]['pubKey'];
+    if (acc.pubKey == currentAccountPubKey) {
+      // set new currentAccount after currentAccount was removed
+      List<Map<String, dynamic>> accounts = await rootStore.localStorage.getAccountList();
+      var newCurrentAccountPubKey = accounts.length > 0 ? accounts[0]['pubKey'] : '';
+      _log("removeAccount: newCurrentAccountPubKey $newCurrentAccountPubKey");
+
+      await rootStore.setCurrentAccount(newCurrentAccountPubKey);
     } else {
-      currentAccountPubKey = '';
+      // update account list
+      await loadAccount();
     }
-    await rootStore.setCurrentAccount(currentAccountPubKey);
   }
 
   /// This needs to always be called after the current account has been updated.
