@@ -167,6 +167,8 @@ abstract class _AppStore with Store {
   }
 
   Future<void> setCurrentAccount(String pubKey) async {
+    _log("setCurrentAccount: setting current account: $pubKey");
+
     if (account.currentAccountPubKey == pubKey) {
       _log("setCurrentAccount: currentAccount is already new account. returning");
       return Future.value(null);
@@ -180,6 +182,7 @@ abstract class _AppStore with Store {
     }
 
     final address = account.getNetworkAddress(pubKey);
+    _log("setCurrentAccount: new current account address: $address");
     await encointer.initializeUninitializedStores(address);
 
     if (!settings.loading) {

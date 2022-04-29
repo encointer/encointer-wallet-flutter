@@ -263,6 +263,7 @@ abstract class _AccountStore with Store {
 
   @action
   Future<void> removeAccount(AccountData acc) async {
+    _log("removeAccount: removing ${acc.pubKey}");
     await rootStore.localStorage.removeAccount(acc.pubKey);
 
     // remove encrypted seed after removing account
