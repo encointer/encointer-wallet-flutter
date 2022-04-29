@@ -163,19 +163,19 @@ abstract class _AppStore with Store {
   Future<void> addAccount(Map<String, dynamic> acc, String password, String address) {
     return Future.wait([
       account.addAccount(acc, password),
-      encointer.initEncointerAccountStore(address),
     ]);
   }
 
   Future<void> setCurrentAccount(String pubKey) async {
     if (account.currentAccountPubKey == pubKey) {
+      _log("setCurrentAccount: currentAccount is already new account. returning");
       return Future.value(null);
     }
 
     account.setCurrentAccount(pubKey);
 
     final address = account.getNetworkAddress(pubKey);
-    encointer.initializeUninitializedStores(address);
+    await encointer.initializeUninitializedStores(address);
 
     if (!settings.loading) {
       encointer.updateState();

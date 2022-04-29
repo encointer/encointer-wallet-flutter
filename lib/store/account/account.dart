@@ -253,9 +253,6 @@ abstract class _AccountStore with Store {
       print('removed acc: $pubKey');
     }
     await rootStore.localStorage.addAccount(acc);
-    await rootStore.localStorage.setCurrentAccount(pubKey);
-
-    await loadAccount();
 
     // clear the temp account after addAccount finished
     newAccount = AccountCreate();
