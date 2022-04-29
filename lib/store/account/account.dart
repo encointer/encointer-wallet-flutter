@@ -257,6 +257,9 @@ abstract class _AccountStore with Store {
     }
     await rootStore.localStorage.addAccount(acc);
 
+    // update account list
+    await loadAccount();
+
     // clear the temp account after addAccount finished
     newAccount = AccountCreate();
   }
