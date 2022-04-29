@@ -276,9 +276,7 @@ abstract class _AccountStore with Store {
     } else {
       currentAccountPubKey = '';
     }
-    await rootStore.localStorage.setCurrentAccount(currentAccountPubKey);
-
-    await loadAccount();
+    await rootStore.setCurrentAccount(currentAccountPubKey);
   }
 
   /// This needs to always be called after the current account has been updated.
