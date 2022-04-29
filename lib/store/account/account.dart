@@ -286,10 +286,11 @@ abstract class _AccountStore with Store {
     }
   }
 
-  /// This needs to always be called after the current account has been updated.
+  /// This needs to always be called after the account list has been updated.
   ///
-  /// This is probably a mobx action thing and has been poorly implemented.
-  /// Investigate for better solutions in #574.
+  /// This is most likely only here due to poor understanding of mobx. Updating
+  /// the account list in an action itself should remove the need to call this.
+  /// Tackle this in #574.
   @action
   Future<void> loadAccount() async {
     List<Map<String, dynamic>> accList = await rootStore.localStorage.getAccountList();
