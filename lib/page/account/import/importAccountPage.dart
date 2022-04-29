@@ -56,7 +56,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       cryptoType: _cryptoType,
       derivePath: _derivePath,
     );
-    print("importAccountPage] accountimported");
+    _log("imported account to JS.");
 
     // check if account duplicate
     if (acc != null) {
@@ -164,7 +164,6 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
 
     String pubKey = acc['pubKey'];
     await store.setCurrentAccount(pubKey);
-    print("importAccountPage] account saved");
 
     await store.loadAccountCache();
 
@@ -206,4 +205,8 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       }
     });
   }
+}
+
+_log(String msg) {
+  print("[importAccountPage] $msg");
 }
