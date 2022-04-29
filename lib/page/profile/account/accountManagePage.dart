@@ -70,6 +70,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     await store.loadAccountCache();
                     webApi.fetchAccountData();
                     Navigator.of(context).pop();
+                    Navigator.of(context).pop();
                   },
                 ),
               },
