@@ -135,7 +135,7 @@ abstract class _AccountStore with Store {
       return address;
     } else {
       _log("getNetworkAddress: could not get address (SS58)");
-      return pubKey;
+      return currentAccount.address;
     }
   }
 
