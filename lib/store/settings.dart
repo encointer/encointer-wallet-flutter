@@ -259,7 +259,7 @@ abstract class _SettingsStore with Store {
   Future<void> loadEndpoint(String sysLocaleCode) async {
     Map<String, dynamic> value = await rootStore.localStorage.getObject(localStorageEndpointKey);
     if (value == null) {
-      endpoint = networkEndpointEncointerGesell;
+      endpoint = networkEndpointEncointerMainnet;
     } else {
       endpoint = EndpointData.fromJson(value);
     }
