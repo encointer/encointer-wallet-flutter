@@ -116,15 +116,15 @@ const locale_place_holder = 'LOCALE_PLACEHOLDER';
 const ceremony_info_link_base = 'https://leu.zuerich/$locale_place_holder/#zeremonien';
 
 String ceremonyInfoLink(String locale) {
-switch (locale) {
-  case 'en':
-    return ceremony_info_link_base.replaceAll(locale_place_holder, 'en');
-    break;
-  case 'de':
-    return ceremony_info_link_base.replaceAll(locale_place_holder, '');
-    break;
-  default:
-    print("[ceremonyInfoLink] unsupported locale, defaulting to english");
-    return ceremony_info_link_base.replaceAll(locale_place_holder, 'en');
-}
+  switch (locale) {
+    case 'en':
+      return ceremony_info_link_base.replaceAll(locale_place_holder, 'en');
+      break;
+    case 'de':
+      return ceremony_info_link_base.replaceAll(locale_place_holder, '');
+      break;
+    default:
+      print("[ceremonyInfoLink] unsupported locale, defaulting to english");
+      return ceremony_info_link_base.replaceAll(locale_place_holder, 'en');
+  }
 }
