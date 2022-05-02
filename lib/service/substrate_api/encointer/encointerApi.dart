@@ -115,8 +115,8 @@ class EncointerApi {
     Map<CeremonyPhase, int> phaseDurations = await jsApi
         .evalJavascript('encointer.getPhaseDurations()')
         .then((m) => Map.from(m).map((key, value) => MapEntry(ceremonyPhaseFromString(key), int.parse(value))));
-    print("Phase durations: ${phaseDurations.toString()}");
-    store.encointer.phaseDurations = phaseDurations;
+
+    store.encointer.setPhaseDurations(phaseDurations);
   }
 
   /// Queries the rpc 'encointer_getAggregatedAccountData' with the dart api.

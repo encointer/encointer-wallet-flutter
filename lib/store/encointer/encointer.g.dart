@@ -315,6 +315,16 @@ mixin _$EncointerStore on _EncointerStore, Store {
   final _$_EncointerStoreActionController = ActionController(name: '_EncointerStore');
 
   @override
+  void setPhaseDurations(Map<CeremonyPhase, int> phaseDurations) {
+    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setPhaseDurations');
+    try {
+      return super.setPhaseDurations(phaseDurations);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunityIdentifiers');
     try {

@@ -187,6 +187,13 @@ abstract class _EncointerStore with Store {
   // -- Setters for this store
 
   @action
+  void setPhaseDurations(Map<CeremonyPhase, int> phaseDurations) {
+    _log("set phase duration to ${phaseDurations.toString()}");
+    phaseDurations = phaseDurations;
+    writeToCache();
+  }
+
+  @action
   void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
     _log("set communityIdentifiers to $cids");
     communityIdentifiers = cids;
