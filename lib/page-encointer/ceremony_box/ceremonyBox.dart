@@ -3,7 +3,6 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
-import "package:latlong2/latlong.dart";
 
 import 'ceremonyInfo.dart';
 import 'components/ceremonyLocationButton.dart';
@@ -14,9 +13,7 @@ import 'components/ceremonyStartButton.dart';
 class CeremonyBox extends StatelessWidget {
   final AppStore store;
   final int groupSizeAssigned = 9;
-  final LatLng coordinatesOfCeremony = LatLng(47.389712, 8.517076);
   final DateTime registerUntilDate = DateTime.now().subtract(Duration(hours: 1));
-  final DateTime nextCeremonyDate = DateTime.now().subtract(Duration(minutes: 15));
   final String notification = 'you are assigned bla bla bla bla bla asdf asdf sadf ';
   final IconData notificationIconData = Iconsax.tick_square;
   final Function onPressedRegister = () => print('TODO register for ceremony');
