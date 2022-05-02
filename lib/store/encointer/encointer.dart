@@ -456,7 +456,7 @@ abstract class _EncointerStore with Store {
 
   @computed
   int get assigningPhaseStart {
-    if (currentPhase == null || nextPhaseTimestamp == null || phaseDurations == null) {
+    if (currentPhase == null || nextPhaseTimestamp == null || phaseDurations.isEmpty) {
       return null;
     }
     switch (currentPhase) {
