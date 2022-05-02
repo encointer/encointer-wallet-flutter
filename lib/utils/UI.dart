@@ -36,14 +36,10 @@ class UI {
   }
 
   static Future<void> launchURL(String url) async {
-    if (await canLaunch(url)) {
-      try {
-        await launch(url);
-      } catch (err) {
-        print(err);
-      }
-    } else {
-      print('Could not launch $url');
+    try {
+      await launch(url);
+    } catch (err) {
+      print("Could not launch URL: ${err.toString()}");
     }
   }
 

@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/config/consts.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/index.dart';
@@ -21,9 +22,10 @@ class CeremonyInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Uri infoLink = Uri.http("example.org", "/path", {"q": "dart"});
-
     String languageCode = Localizations.localeOf(context).languageCode;
+
+    final String infoLink = ceremonyInfoLink(languageCode);
+
     return Container(
       child: Column(
         children: [

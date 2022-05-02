@@ -19,7 +19,6 @@ class CeremonyBox extends StatelessWidget {
   final DateTime nextCeremonyDate = DateTime.now().subtract(Duration(minutes: 15));
   final String notification = 'you are assigned bla bla bla bla bla asdf asdf sadf ';
   final IconData notificationIconData = Iconsax.tick_square;
-  final Uri infoLink = Uri.http("example.org", "/path", {"q": "dart"});
   final Function onPressedRegister = () => print('TODO register for ceremony');
   final Function onPressedLocation = () => print('TODO show map');
   final Function onPressedStartCeremony = () => print('TODO start ceremony');
