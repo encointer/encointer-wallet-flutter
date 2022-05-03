@@ -189,7 +189,7 @@ abstract class _EncointerStore with Store {
   @action
   void setPhaseDurations(Map<CeremonyPhase, int> phaseDurations) {
     _log("set phase duration to ${phaseDurations.toString()}");
-    phaseDurations = phaseDurations;
+    this.phaseDurations = phaseDurations;
     writeToCache();
   }
 
