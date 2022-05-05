@@ -38,30 +38,26 @@ class CeremonyBox extends StatelessWidget {
             ),
             child: Column(
               children: [
-                Text(
-                  "This box is only the skeleton. It has no features.", // this text will be removed
-                  style: TextStyle(color: Colors.orange),
-                ),
                 CeremonyInfo(
                   currentTime: DateTime.now().millisecondsSinceEpoch,
                   assigningPhaseStart: store.encointer?.assigningPhaseStart,
                   meetupTime: store.encointer?.community?.meetupTime ?? store.encointer.assigningPhaseStart ?? 0,
                   ceremonyPhaseDurations: store.encointer.phaseDurations,
                 ),
-                if (store.encointer.showRegisterButton)
+                if (store.settings.developerMode && store.encointer.showRegisterButton)
                   CeremonyRegisterButton(
                     languageCode: languageCode,
                     registerUntilDate: registerUntilDate,
                     onPressed: onPressedRegister,
                   ),
-                if (store.encointer.showStartCeremonyButton)
+                if (store.settings.developerMode && store.encointer.showStartCeremonyButton)
                   CeremonyStartButton(
                     onPressed: onPressedStartCeremony,
                   )
               ],
             ),
           ),
-          if (store.encointer.showTwoBoxes) // dart "collection if"
+          if (store.settings.developerMode && store.encointer.showTwoBoxes) // dart "collection if"
             Container(
               margin: EdgeInsets.only(top: 2),
               padding: EdgeInsets.all(24),
