@@ -247,11 +247,14 @@ class _AccountManagePageState extends State<AccountManagePage> {
                 ),
                 Expanded(
                   child: ListView.builder(
-                      itemCount: store.encointer.account?.balanceEntries?.length ?? 0,
+                      // Fixme: https://github.com/encointer/encointer-wallet-flutter/issues/586
+                      itemCount: store.encointer.accountStores.containsKey(addressSS58)
+                          ? store.encointer.accountStores[addressSS58]?.balanceEntries?.length ?? 0
+                          : 0,
                       itemBuilder: (BuildContext context, int index) {
                         String community = store.encointer.account.balanceEntries.keys.elementAt(index);
-                        return _getBalanceEntryListTile(
-                            community, store.encointer.account.balanceEntries[community], addressSS58);
+                        return _getBalanceEntryListTile(community,
+                            store.encointer.accountStores[addressSS58].balanceEntries[community], addressSS58);
                       }),
                 ),
                 Container(
