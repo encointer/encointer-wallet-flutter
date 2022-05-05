@@ -190,7 +190,7 @@ class _TransferPageState extends State<TransferPage> {
           "module": 'encointerBalances',
           "call": 'transfer',
           "cid": cid,
-          "txPaymentAsset": _cid,
+          "txPaymentAsset": store.encointer.getTxPaymentAsset(_cid),
         },
         "detail": jsonEncode({
           "destination": address,

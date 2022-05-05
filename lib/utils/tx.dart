@@ -6,14 +6,18 @@ import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/proofOfAttendance.dart';
 import 'package:flutter/material.dart';
 
-Future<void> submitClaimRewards(BuildContext context, CommunityIdentifier chosenCid) async {
+Future<void> submitClaimRewards(
+  BuildContext context,
+  CommunityIdentifier chosenCid, {
+  CommunityIdentifier txPaymentAsset,
+}) async {
   var args = {
     "title": 'claim_rewards',
     "txInfo": {
       "module": 'encointerCeremonies',
       "call": 'claimRewards',
       "cid": chosenCid,
-      "txPaymentAsset": chosenCid,
+      "txPaymentAsset": txPaymentAsset,
     },
     "detail": "cid: ${chosenCid.toFmtString()}",
     "params": [chosenCid],
@@ -24,14 +28,19 @@ Future<void> submitClaimRewards(BuildContext context, CommunityIdentifier chosen
   Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
 }
 
-Future<void> submitEndorseNewcomer(BuildContext context, CommunityIdentifier chosenCid, String newbie) async {
+Future<void> submitEndorseNewcomer(
+  BuildContext context,
+  CommunityIdentifier chosenCid,
+  String newbie, {
+  CommunityIdentifier txPaymentAsset,
+}) async {
   var args = {
     "title": 'endorse_newcomer',
     "txInfo": {
       "module": 'encointerCeremonies',
       "call": 'endorseNewcomer',
       "cid": chosenCid,
-      "txPaymentAsset": chosenCid,
+      "txPaymentAsset": txPaymentAsset,
     },
     "detail": "cid: ${chosenCid.toFmtString()}, newbie: $newbie",
     "params": [chosenCid, newbie],
@@ -46,6 +55,7 @@ Future<void> submitRegisterParticipant(
   BuildContext context,
   Api api,
   CommunityIdentifier chosenCid, {
+  CommunityIdentifier txPaymentAsset,
   Future<ProofOfAttendance> proof,
   Function(BuildContext txPageContext, Map res) onFinish,
 }) async {
@@ -60,7 +70,7 @@ Future<void> submitRegisterParticipant(
       "module": 'encointerCeremonies',
       "call": 'registerParticipant',
       "cid": chosenCid,
-      "txPaymentAsset": chosenCid,
+      "txPaymentAsset": txPaymentAsset,
     },
     "detail": jsonEncode({
       "cid": chosenCid.toFmtString(),
