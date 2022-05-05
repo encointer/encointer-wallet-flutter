@@ -66,6 +66,10 @@ class LocalStorage {
     return storage.getList(contactsKey);
   }
 
+  Future<List<Map<String, dynamic>>> getList(String cacheKey) async {
+    return storage.getList(cacheKey);
+  }
+
   Future<void> setSeeds(String seedType, Map value) async {
     return storage.setKV('${seedKey}_$seedType', jsonEncode(value));
   }
