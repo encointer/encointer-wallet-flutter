@@ -43,7 +43,7 @@ class CeremonyBox extends StatelessWidget {
                   assigningPhaseStart: store.encointer?.assigningPhaseStart,
                   meetupTime: store.encointer?.community?.meetupTime ?? store.encointer.assigningPhaseStart ?? 0,
                   ceremonyPhaseDurations: store.encointer.phaseDurations,
-                  devMode: store.settings.developerMode
+                  devMode: store.settings.developerMode,
                 ),
                 if (store.settings.developerMode && store.encointer.showRegisterButton)
                   CeremonyRegisterButton(

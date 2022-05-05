@@ -253,8 +253,11 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           : 0,
                       itemBuilder: (BuildContext context, int index) {
                         String community = store.encointer.account.balanceEntries.keys.elementAt(index);
-                        return _getBalanceEntryListTile(community,
-                            store.encointer.accountStores[addressSS58].balanceEntries[community], addressSS58);
+                        return _getBalanceEntryListTile(
+                          community,
+                          store.encointer.accountStores[addressSS58].balanceEntries[community],
+                          addressSS58,
+                        );
                       }),
                 ),
                 Container(
