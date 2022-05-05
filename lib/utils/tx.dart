@@ -13,6 +13,7 @@ Future<void> submitClaimRewards(BuildContext context, CommunityIdentifier chosen
       "module": 'encointerCeremonies',
       "call": 'claimRewards',
       "cid": chosenCid,
+      "txPaymentAsset": chosenCid,
     },
     "detail": "cid: ${chosenCid.toFmtString()}",
     "params": [chosenCid],
@@ -30,6 +31,7 @@ Future<void> submitEndorseNewcomer(BuildContext context, CommunityIdentifier cho
       "module": 'encointerCeremonies',
       "call": 'endorseNewcomer',
       "cid": chosenCid,
+      "txPaymentAsset": chosenCid,
     },
     "detail": "cid: ${chosenCid.toFmtString()}, newbie: $newbie",
     "params": [chosenCid, newbie],
@@ -58,6 +60,7 @@ Future<void> submitRegisterParticipant(
       "module": 'encointerCeremonies',
       "call": 'registerParticipant',
       "cid": chosenCid,
+      "txPaymentAsset": chosenCid,
     },
     "detail": jsonEncode({
       "cid": chosenCid.toFmtString(),
