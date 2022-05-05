@@ -290,7 +290,15 @@ class _AssetsState extends State<Assets> {
                                 if (hasPendingIssuance) {
                                   return ElevatedButton(
                                     child: Text(dic.assets.issuancePending),
-                                    onPressed: () => submitClaimRewards(context, store.encointer.chosenCid),
+                                    onPressed: () {
+                                      final txPaymentAsset =
+                                          store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
+                                      submitClaimRewards(
+                                        context,
+                                        store.encointer.chosenCid,
+                                        txPaymentAsset: txPaymentAsset,
+                                      );
+                                    },
                                   );
                                 } else {
                                   return ElevatedButton(
