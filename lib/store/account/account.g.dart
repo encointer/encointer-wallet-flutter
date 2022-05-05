@@ -235,6 +235,13 @@ mixin _$AccountStore on _AccountStore, Store {
     });
   }
 
+  final _$setCurrentAccountAsyncAction = AsyncAction('_AccountStore.setCurrentAccount');
+
+  @override
+  Future<void> setCurrentAccount(String pubKey) {
+    return _$setCurrentAccountAsyncAction.run(() => super.setCurrentAccount(pubKey));
+  }
+
   final _$updateAccountNameAsyncAction = AsyncAction('_AccountStore.updateAccountName');
 
   @override
@@ -369,16 +376,6 @@ mixin _$AccountStore on _AccountStore, Store {
     final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.queueTx');
     try {
       return super.queueTx(tx);
-    } finally {
-      _$_AccountStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setCurrentAccount(String pubKey) {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setCurrentAccount');
-    try {
-      return super.setCurrentAccount(pubKey);
     } finally {
       _$_AccountStoreActionController.endAction(_$actionInfo);
     }

@@ -203,14 +203,13 @@ abstract class _AccountStore with Store {
   }
 
   @action
-  void setCurrentAccount(String pubKey) {
+  Future<void> setCurrentAccount(String pubKey) async {
     if (currentAccountPubKey != pubKey) {
       currentAccountPubKey = pubKey;
-      rootStore.localStorage.setCurrentAccount(pubKey);
-      rootStore.encointer.updateState();
-    }
-    if (!rootStore.settings.loading) {
-      webApi.assets.subscribeBalance();
+
+      await rootStore.localStorage.setCurrentAccount(pubKey);
+
+      return loadAccount();
     }
   }
 
@@ -257,8 +256,8 @@ abstract class _AccountStore with Store {
       print('removed acc: $pubKey');
     }
     await rootStore.localStorage.addAccount(acc);
-    await rootStore.localStorage.setCurrentAccount(pubKey);
 
+    // update account list
     await loadAccount();
 
     // clear the temp account after addAccount finished
@@ -267,24 +266,31 @@ abstract class _AccountStore with Store {
 
   @action
   Future<void> removeAccount(AccountData acc) async {
+    _log("removeAccount: removing ${acc.pubKey}");
     await rootStore.localStorage.removeAccount(acc.pubKey);
 
     // remove encrypted seed after removing account
     deleteSeed(AccountStore.seedTypeMnemonic, acc.pubKey);
     deleteSeed(AccountStore.seedTypeRawSeed, acc.pubKey);
 
-    // set new currentAccount after currentAccount was removed
-    List<Map<String, dynamic>> accounts = await rootStore.localStorage.getAccountList();
-    if (accounts.length > 0) {
-      currentAccountPubKey = accounts[0]['pubKey'];
-    } else {
-      currentAccountPubKey = '';
-    }
-    await rootStore.localStorage.setCurrentAccount(currentAccountPubKey);
+    if (acc.pubKey == currentAccountPubKey) {
+      // set new currentAccount after currentAccount was removed
+      List<Map<String, dynamic>> accounts = await rootStore.localStorage.getAccountList();
+      var newCurrentAccountPubKey = accounts.length > 0 ? accounts[0]['pubKey'] : '';
+      _log("removeAccount: newCurrentAccountPubKey $newCurrentAccountPubKey");
 
-    await loadAccount();
+      await rootStore.setCurrentAccount(newCurrentAccountPubKey);
+    } else {
+      // update account list
+      await loadAccount();
+    }
   }
 
+  /// This needs to always be called after the account list has been updated.
+  ///
+  /// This is most likely only here due to poor understanding of mobx. Updating
+  /// the account list in an action itself should remove the need to call this.
+  /// Tackle this in #574.
   @action
   Future<void> loadAccount() async {
     List<Map<String, dynamic>> accList = await rootStore.localStorage.getAccountList();

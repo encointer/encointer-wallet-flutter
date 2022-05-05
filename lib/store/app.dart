@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/assets/assets.dart';
 import 'package:encointer_wallet/store/chain/chain.dart';
@@ -10,7 +11,18 @@ part 'app.g.dart';
 
 AppStore globalAppStore = AppStore(LocalStorage());
 
+/// Encointer cache key prefix for the local storage.
+///
+/// Should be prepended with the network prefix.
 const encointerCachePrefix = 'encointer-store';
+
+/// Encointer cache version key prefix for the local storage.
+///
+/// Should be prepended with the network prefix.
+const encointerCacheVersionPrefix = 'encointer-cache-version-key';
+
+/// Should be increased if cache incompatibilities have been introduced.
+const encointerCacheVersion = 'v1.0';
 
 class AppStore extends _AppStore with _$AppStore {
   AppStore(LocalStorage localStorage, {StoreConfig config}) : super(localStorage, config: config);
@@ -99,8 +111,12 @@ abstract class _AppStore with Store {
   }
 
   Future<void> loadOrInitEncointerCache(String networkInfo) async {
+    final cacheVersionFinalKey = getCacheKey(encointerCacheVersionPrefix);
+    var cacheVersion = await localStorage.getKV(cacheVersionFinalKey);
+
     String encointerFinalCacheKey = encointerCacheKey(networkInfo);
-    var maybeStore = await loadEncointerCache(encointerFinalCacheKey);
+
+    var maybeStore = cacheVersion == encointerCacheVersion ? await loadEncointerCache(encointerFinalCacheKey) : null;
 
     if (maybeStore != null) {
       encointer = maybeStore;
@@ -112,7 +128,10 @@ abstract class _AppStore with Store {
         () => localStorage.setObject(encointerFinalCacheKey, encointer.toJson()),
       );
 
-      // write the new store to cache.
+      _log("Persisting cacheVersion: $encointerCacheVersion");
+      await localStorage.setKV(cacheVersionFinalKey, encointerCacheVersion);
+
+      _log("Writing the new store to cache");
       return encointer.writeToCache();
     }
   }
@@ -144,8 +163,32 @@ abstract class _AppStore with Store {
   Future<void> addAccount(Map<String, dynamic> acc, String password, String address) {
     return Future.wait([
       account.addAccount(acc, password),
-      encointer.initEncointerAccountStore(address),
     ]);
+  }
+
+  Future<void> setCurrentAccount(String pubKey) async {
+    _log("setCurrentAccount: setting current account: $pubKey");
+
+    if (account.currentAccountPubKey == pubKey) {
+      _log("setCurrentAccount: currentAccount is already new account. returning");
+      return Future.value(null);
+    }
+
+    await account.setCurrentAccount(pubKey);
+
+    if (pubKey == "") {
+      // happens only if the last account in the storage has been deleted
+      return Future.value(null);
+    }
+
+    final address = account.getNetworkAddress(pubKey);
+    _log("setCurrentAccount: new current account address: $address");
+    await encointer.initializeUninitializedStores(address);
+
+    if (!settings.loading) {
+      encointer.updateState();
+      webApi.assets.subscribeBalance();
+    }
   }
 
   /// Loads all account associated data.
@@ -154,8 +197,7 @@ abstract class _AppStore with Store {
   /// Otherwise, calling webApi queries when the cache has not finished loading might result in outdated or wrong data.
   /// E.g. not awaiting this call was the cause of #357.
   Future<void> loadAccountCache() async {
-    await Future.wait([assets.clearTxs(), assets.loadAccountCache()]);
-    return encointer.initStoresForLegacyCache();
+    return Future.wait([assets.clearTxs(), assets.loadAccountCache()]);
   }
 }
 

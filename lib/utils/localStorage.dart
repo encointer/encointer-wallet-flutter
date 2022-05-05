@@ -30,6 +30,14 @@ class LocalStorage {
     return storage.setKV(currentAccountKey, pubKey);
   }
 
+  Future<String> getKV(String cacheKey) {
+    return storage.getKV(cacheKey);
+  }
+
+  Future<void> setKV(String cacheKey, String value) {
+    return storage.setKV(cacheKey, value);
+  }
+
   Future<String> getCurrentAccount() async {
     return storage.getKV(currentAccountKey);
   }
@@ -56,6 +64,10 @@ class LocalStorage {
 
   Future<List<Map<String, dynamic>>> getContactList() async {
     return storage.getList(contactsKey);
+  }
+
+  Future<List<Map<String, dynamic>>> getList(String cacheKey) async {
+    return storage.getList(cacheKey);
   }
 
   Future<void> setSeeds(String seedType, Map value) async {

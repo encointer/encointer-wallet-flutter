@@ -86,7 +86,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     bool isCurrentNetwork = _selectedNetwork.info == store.settings.endpoint.info;
     if (address != store.account.currentAddress || !isCurrentNetwork) {
       /// set current account
-      store.account.setCurrentAccount(i.pubKey);
+      store.setCurrentAccount(i.pubKey);
 
       if (isCurrentNetwork) {
         await store.loadAccountCache();

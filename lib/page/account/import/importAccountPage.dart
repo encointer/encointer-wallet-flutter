@@ -56,7 +56,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       cryptoType: _cryptoType,
       derivePath: _derivePath,
     );
-    print("importAccountPage] accountimported");
+    _log("imported account to JS.");
 
     // check if account duplicate
     if (acc != null) {
@@ -162,15 +162,15 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
     await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
 
+    String pubKey = acc['pubKey'];
+    await store.setCurrentAccount(pubKey);
+
     await store.loadAccountCache();
 
     // fetch info for the imported account
-    String pubKey = acc['pubKey'];
     webApi.fetchAccountData();
     webApi.account.fetchAccountsBonded([pubKey]);
     webApi.account.getPubKeyIcons([pubKey]);
-    store.account.setCurrentAccount(pubKey);
-    print("importAccountPage] account saved");
 
     setState(() {
       _submitting = false;
@@ -205,4 +205,8 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       }
     });
   }
+}
+
+_log(String msg) {
+  print("[importAccountPage] $msg");
 }
