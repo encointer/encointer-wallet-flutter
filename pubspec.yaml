@@ -14,7 +14,7 @@ description: EncointerWallet made with Flutter.
 
 # bump version already while working on new release, bumping build number at the same time
 # bump build number even more, if needed to clarify what's deployed
-version: 1.4.5+830
+version: 1.5.0+831
 
 publish_to: none
 
