@@ -207,6 +207,8 @@ abstract class _EncointerStore with Store {
     if (chosenCid != cid) {
       chosenCid = cid;
       writeToCache();
+      // Fixme: Properly solve this with: https://github.com/encointer/encointer-wallet-flutter/issues/582
+      this._rootStore.localStorage.setObject(chosenCidCacheKey(network), cid.toJson());
 
       if (cid != null) {
         initCommunityStore(cid, _rootStore.account.currentAddress);
@@ -319,6 +321,8 @@ abstract class _EncointerStore with Store {
     accountStores.forEach((cid, store) => store.initStore(cacheFn));
     bazaarStores.forEach((cid, store) => store.initStore(cacheFn));
     communityStores.forEach((cid, store) => store.initStore(cacheFn, applyDemurrage));
+
+    loadChosenCid(network);
   }
 
   Future<void> writeToCache() {
@@ -426,6 +430,16 @@ abstract class _EncointerStore with Store {
     }
   }
 
+  Future<void> loadChosenCid(String network) async {
+    Map<String, dynamic> maybeChosenCid = await _rootStore.localStorage.getMap(chosenCidCacheKey(network));
+    _log("Setting previously tracked chosenCid: ${maybeChosenCid.toString()}");
+
+    if (maybeChosenCid.isNotEmpty) {
+      // Do not use the setter here. We don't want to trigger reactions here.
+      chosenCid = CommunityIdentifier.fromJson(maybeChosenCid);
+    }
+  }
+
   // ----- Computed values for ceremony box
 
   bool get showRegisterButton {
@@ -443,6 +457,10 @@ abstract class _EncointerStore with Store {
   bool get showTwoBoxes {
     return !showRegisterButton && !showStartCeremonyButton;
   }
+}
+
+String chosenCidCacheKey(String network) {
+  return "$network-chosen-cid";
 }
 
 String trackedCidsCacheKey(String network) {
