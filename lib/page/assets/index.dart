@@ -301,10 +301,12 @@ class _AssetsState extends State<Assets> {
                                     },
                                   );
                                 } else {
-                                  return ElevatedButton(
-                                    child: Text(dic.assets.issuanceClaimed),
-                                    onPressed: null,
-                                  );
+                                  return store.settings.developerMode
+                                      ? ElevatedButton(
+                                          child: Text(dic.assets.issuanceClaimed),
+                                          onPressed: null,
+                                        )
+                                      : Container();
                                 }
                               } else {
                                 return CupertinoActivityIndicator();
