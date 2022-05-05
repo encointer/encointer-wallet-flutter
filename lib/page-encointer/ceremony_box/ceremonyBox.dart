@@ -30,7 +30,7 @@ class CeremonyBox extends StatelessWidget {
       builder: (BuildContext context) => Column(
         children: [
           Container(
-            padding: EdgeInsets.fromLTRB(24, 24, 24, 0),
+            padding: EdgeInsets.fromLTRB(24, 24, 24, 24),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.vertical(
                   top: Radius.circular(15), bottom: Radius.circular(store.encointer.showTwoBoxes ? 0 : 15)),
@@ -43,6 +43,7 @@ class CeremonyBox extends StatelessWidget {
                   assigningPhaseStart: store.encointer?.assigningPhaseStart,
                   meetupTime: store.encointer?.community?.meetupTime ?? store.encointer.assigningPhaseStart ?? 0,
                   ceremonyPhaseDurations: store.encointer.phaseDurations,
+                  devMode: store.settings.developerMode
                 ),
                 if (store.settings.developerMode && store.encointer.showRegisterButton)
                   CeremonyRegisterButton(

@@ -13,12 +13,14 @@ class CeremonyInfo extends StatelessWidget {
     this.assigningPhaseStart,
     this.meetupTime,
     this.ceremonyPhaseDurations,
+    this.devMode = false,
   }) : super(key: key);
 
   final int currentTime;
   final int assigningPhaseStart;
   final int meetupTime;
   final Map<CeremonyPhase, int> ceremonyPhaseDurations;
+  final bool devMode;
 
   @override
   Widget build(BuildContext context) {
@@ -47,6 +49,7 @@ class CeremonyInfo extends StatelessWidget {
               CeremonyInfoAndCalendar(
                 nextCeremonyDate: DateTime.fromMillisecondsSinceEpoch(meetupTime),
                 infoLink: infoLink,
+                devMode: devMode,
               ),
             ],
           ),

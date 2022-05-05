@@ -9,8 +9,11 @@ class CeremonyInfoAndCalendar extends StatelessWidget {
   const CeremonyInfoAndCalendar({
     this.nextCeremonyDate,
     this.infoLink,
+    this.devMode = false,
     Key key,
   }) : super(key: key);
+
+  final devMode;
 
   /// date for the next ceremony
   final DateTime nextCeremonyDate;
@@ -32,7 +35,7 @@ class CeremonyInfoAndCalendar extends StatelessWidget {
           ),
           onPressed: () => UI.launchURL(infoLink),
         ),
-        if (showAddToCalendarIconButton)
+        if (devMode && showAddToCalendarIconButton)
           IconButton(
             icon: Icon(Iconsax.calendar_1),
             onPressed: () => Add2Calendar.addEvent2Cal(calendarEventToAdd),
