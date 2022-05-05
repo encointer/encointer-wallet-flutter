@@ -199,7 +199,7 @@ abstract class _EncointerStore with Store {
     communityIdentifiers = cids;
     writeToCache();
 
-    if (!communitiesContainsChosenCid) {
+    if (communities != null && !communitiesContainsChosenCid) {
       // inconsistency found, reset state
       setChosenCid();
     }
@@ -421,7 +421,7 @@ abstract class _EncointerStore with Store {
 
   /// Initializes stores that have not been initialized before.
   ///
-  /// This should be called upon changing the current account mainly.
+  /// This should be called upon changing the current account mainly, or after loading the store from cache.
   Future<void> initializeUninitializedStores(String address) {
     var futures = [initEncointerAccountStore(address, shouldCache: false)];
 
