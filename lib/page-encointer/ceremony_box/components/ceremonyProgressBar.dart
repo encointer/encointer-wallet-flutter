@@ -4,32 +4,60 @@ import 'package:flutter/material.dart';
 
 import '../../../models/index.dart';
 
-/// This bar shows the progress in the meetup cycle, it visualizes the overall progress
-/// and indicates the three phases.
+/// Shows the progress of a ceremony cycle.
 ///
-/// progressElapsed + progressAhead = widthOfTheWholeBar, these are flex
-/// factors (integers) to draw the progress in the right proportions,
-/// automatically adapting to screen width
+/// It indicates the individual `CeremonyPhase`s and allows disproportionate emphasis
+/// on certain phases.
 class CeremonyProgressBar extends StatelessWidget {
   const CeremonyProgressBar({
-    this.registerUntilDate,
-    this.nextCeremonyDate,
-    this.currentPhase,
+    @required this.currentTime,
+    @required this.assigningPhaseStart,
+    @required this.meetupTime,
+    @required this.ceremonyPhaseDurations,
+    @required this.width,
     Key key,
   }) : super(key: key);
 
-  final DateTime registerUntilDate;
-  final DateTime nextCeremonyDate;
-  final CeremonyPhase currentPhase;
-  final int phase1register = 6;
-  final int phase2assign = 1;
-  final int phase3attest = 1;
-  final int totalProgress = 128; // cf. getProgressElapsed
+  final int currentTime;
+  final int assigningPhaseStart;
+  final int meetupTime;
+  final Map<CeremonyPhase, int> ceremonyPhaseDurations;
+
+  /// Total width of the progress bar.
+  final double width;
+
+  /// Fractional width of the registering phase segment of the progress bar.
+  final double registeringPhaseFractionalWidth = 0.70;
+
+  /// Fractional width of the assigning segment of the progress bar.
+  final double assigningPhaseFractionalWidth = 0.15;
+
+  /// Fractional width of the attesting segment of the progress bar.
+  final double attestingPhaseFractionalWidth = 0.15;
+
+  double _getCeremonyProgress() {
+    try {
+      // todo inject this service for mocking
+      return CeremonyBoxService.getProgressElapsed(
+        currentTime,
+        assigningPhaseStart,
+        meetupTime,
+        ceremonyPhaseDurations,
+        registeringPhaseFractionalWidth,
+        assigningPhaseFractionalWidth,
+        attestingPhaseFractionalWidth,
+      );
+    } catch (e) {
+      _log("Error getting ceremony progress ${e.toString()}");
+      return 0;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    int progressElapsed = CeremonyBoxService.getProgressElapsed(
-        registerUntilDate, nextCeremonyDate, currentPhase, phase1register, phase2assign, phase3attest);
+    double progressElapsed = _getCeremonyProgress();
+    _log("ceremony progress: $progressElapsed");
+
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(5)),
@@ -39,30 +67,20 @@ class CeremonyProgressBar extends StatelessWidget {
       height: 10,
       child: Stack(
         children: [
-          Row(
-            children: [
-              Expanded(
-                  flex: progressElapsed,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.all(Radius.circular(5)),
-                      gradient: primaryGradient,
-                    ),
-                  )),
-              Expanded(
-                flex: totalProgress - progressElapsed,
-                child: SizedBox(),
-              )
-            ],
+          SizedBox(
+            width: width * progressElapsed,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(5)),
+                gradient: primaryGradient,
+              ),
+            ),
           ),
           Row(
             children: [
-              Expanded(
-                flex: phase1register,
-                child: SizedBox(),
-              ),
-              Expanded(
-                flex: phase2assign,
+              SizedBox(width: width * registeringPhaseFractionalWidth),
+              SizedBox(
+                width: width * assigningPhaseFractionalWidth,
                 child: Container(
                   margin: EdgeInsets.symmetric(vertical: 1),
                   foregroundDecoration: BoxDecoration(
@@ -73,14 +91,15 @@ class CeremonyProgressBar extends StatelessWidget {
                   ),
                 ),
               ),
-              Expanded(
-                flex: phase3attest,
-                child: SizedBox(),
-              ),
+              SizedBox(width: width * attestingPhaseFractionalWidth),
             ],
           ),
         ],
       ),
     );
   }
+}
+
+_log(String msg) {
+  print("[CeremonyProgressBar] $msg");
 }

@@ -70,6 +70,9 @@ abstract class _EncointerStore with Store {
   CeremonyPhase currentPhase;
 
   @observable
+  int nextPhaseTimestamp;
+
+  @observable
   Map<CeremonyPhase, int> phaseDurations = new Map();
 
   @computed
@@ -184,12 +187,19 @@ abstract class _EncointerStore with Store {
   // -- Setters for this store
 
   @action
+  void setPhaseDurations(Map<CeremonyPhase, int> phaseDurations) {
+    _log("set phase duration to ${phaseDurations.toString()}");
+    this.phaseDurations = phaseDurations;
+    writeToCache();
+  }
+
+  @action
   void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
     _log("set communityIdentifiers to $cids");
     communityIdentifiers = cids;
     writeToCache();
 
-    if (!communitiesContainsChosenCid) {
+    if (communities != null && !communitiesContainsChosenCid) {
       // inconsistency found, reset state
       setChosenCid();
     }
@@ -235,6 +245,15 @@ abstract class _EncointerStore with Store {
     }
     // update depending values without awaiting
     webApi.encointer.getCurrentCeremonyIndex();
+  }
+
+  @action
+  void setNextPhaseTimestamp(int timestamp) {
+    _log("set currentPhase to $timestamp");
+    if (nextPhaseTimestamp != timestamp) {
+      nextPhaseTimestamp = timestamp;
+      writeToCache();
+    }
   }
 
   @action
@@ -402,7 +421,7 @@ abstract class _EncointerStore with Store {
 
   /// Initializes stores that have not been initialized before.
   ///
-  /// This should be called upon changing the current account mainly.
+  /// This should be called upon changing the current account mainly, or after loading the store from cache.
   Future<void> initializeUninitializedStores(String address) {
     var futures = [initEncointerAccountStore(address, shouldCache: false)];
 
@@ -441,6 +460,34 @@ abstract class _EncointerStore with Store {
   }
 
   // ----- Computed values for ceremony box
+
+  @computed
+  int get assigningPhaseStart {
+    if (currentPhase == null || nextPhaseTimestamp == null || phaseDurations.isEmpty) {
+      return null;
+    }
+    switch (currentPhase) {
+      case CeremonyPhase.Registering:
+        return nextPhaseTimestamp;
+        break;
+      case CeremonyPhase.Assigning:
+        return nextPhaseTimestamp - phaseDurations[CeremonyPhase.Assigning];
+        break;
+      case CeremonyPhase.Attesting:
+        return nextPhaseTimestamp - phaseDurations[CeremonyPhase.Attesting] - phaseDurations[CeremonyPhase.Assigning];
+        break;
+      default:
+        return null;
+    }
+  }
+
+  @computed
+  int get attestingPhaseStart {
+    if (assigningPhaseStart == null) {
+      return null;
+    }
+    return assigningPhaseStart + phaseDurations[CeremonyPhase.Assigning];
+  }
 
   bool get showRegisterButton {
     bool registered = communityAccount?.isRegistered ?? false;
