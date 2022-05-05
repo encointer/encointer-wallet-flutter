@@ -23,8 +23,6 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
 
   @override
   void initState() {
-    this.timeToMeetup =
-        widget.nextCeremonyDate != null ? widget.nextCeremonyDate.difference(DateTime.now()).inSeconds : 0;
     super.initState();
   }
 
@@ -34,7 +32,12 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
     super.dispose();
   }
 
-  void startTimer() {
+  void resetTimer() {
+    if (sub != null) {
+      sub.cancel();
+      sub = null;
+    }
+
     CountdownTimer countDownTimer = new CountdownTimer(
       new Duration(seconds: timeToMeetup),
       new Duration(seconds: 1),
@@ -55,8 +58,12 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
 
   @override
   Widget build(BuildContext context) {
-    if (sub == null) {
-      startTimer();
+    var timeToMeetup =
+        widget.nextCeremonyDate != null ? widget.nextCeremonyDate.difference(DateTime.now()).inSeconds : 0;
+
+    if (this.timeToMeetup != timeToMeetup) {
+      this.timeToMeetup = timeToMeetup;
+      resetTimer();
     }
 
     Duration timeLeftUntilCeremonyStarts = Duration(seconds: timeToMeetup);
