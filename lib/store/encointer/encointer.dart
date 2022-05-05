@@ -166,6 +166,21 @@ abstract class _EncointerStore with Store {
     return null;
   }
 
+  CommunityIdentifier getTxPaymentAsset(CommunityIdentifier preferredCid) {
+    if (preferredCid != null && communityBalance != null && communityBalance > 0.013) {
+      return preferredCid;
+    }
+
+    try {
+      final fallbackCidFmt = account.balanceEntries.entries.firstWhere((e) => applyDemurrage(e.value) > 0.013).key;
+      return CommunityIdentifier.fromFmtString(fallbackCidFmt);
+    } catch (_e) {
+      _log("${account.address} does not have sufficient funds in any community."
+          "Returning null to pay tx in native token");
+      return null;
+    }
+  }
+
   // -- Setters for this store
 
   @action

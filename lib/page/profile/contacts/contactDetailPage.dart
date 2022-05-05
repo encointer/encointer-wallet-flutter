@@ -187,7 +187,15 @@ class EndorseButton extends StatelessWidget {
           ? () => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
           : store.encointer.currentPhase != CeremonyPhase.Registering
               ? () => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)
-              : () => submitEndorseNewcomer(context, store.encointer.chosenCid, contact.address),
+              : () {
+                  final txPaymentAsset = store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
+                  submitEndorseNewcomer(
+                    context,
+                    store.encointer.chosenCid,
+                    contact.address,
+                    txPaymentAsset: txPaymentAsset,
+                  );
+                },
     );
   }
 }
