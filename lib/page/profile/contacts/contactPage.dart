@@ -1,7 +1,7 @@
 import 'package:encointer_wallet/common/components/TapTooltip.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/page/qr_scan/qrScanService.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -158,43 +158,47 @@ class _Contact extends State<ContactPage> {
                         },
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 16, right: 16),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          hintText: dic.profile.contactMemo,
-                          labelText: dic.profile.contactMemo,
-                        ),
-                        controller: _memoCtrl,
-                      ),
-                    ),
-                    Row(
-                      children: <Widget>[
-                        Checkbox(
-                          value: _isObservation,
-                          onChanged: (v) {
-                            setState(() {
-                              _isObservation = v;
-                            });
-                          },
-                        ),
-                        GestureDetector(
-                          child: Text(I18n.of(context).translationsForLocale().account.observe),
-                          onTap: () {
-                            setState(() {
-                              _isObservation = !_isObservation;
-                            });
-                          },
-                        ),
-                        TapTooltip(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 8),
-                            child: Icon(Icons.info_outline, size: 16),
-                          ),
-                          message: I18n.of(context).translationsForLocale().account.observeBrief,
-                        ),
-                      ],
-                    )
+                    store.settings.developerMode
+                        ? Padding(
+                            padding: EdgeInsets.only(left: 16, right: 16),
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                hintText: dic.profile.contactMemo,
+                                labelText: dic.profile.contactMemo,
+                              ),
+                              controller: _memoCtrl,
+                            ),
+                          )
+                        : Container(),
+                    store.settings.developerMode
+                        ? Row(
+                            children: <Widget>[
+                              Checkbox(
+                                value: _isObservation,
+                                onChanged: (v) {
+                                  setState(() {
+                                    _isObservation = v;
+                                  });
+                                },
+                              ),
+                              GestureDetector(
+                                child: Text(I18n.of(context).translationsForLocale().account.observe),
+                                onTap: () {
+                                  setState(() {
+                                    _isObservation = !_isObservation;
+                                  });
+                                },
+                              ),
+                              TapTooltip(
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 8),
+                                  child: Icon(Icons.info_outline, size: 16),
+                                ),
+                                message: I18n.of(context).translationsForLocale().account.observeBrief,
+                              ),
+                            ],
+                          )
+                        : Container()
                   ],
                 ),
               ),
