@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
+import 'package:encointer_wallet/page-encointer/meetup/ceremonyStep1Count.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/codecApi.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -11,7 +12,7 @@ import 'claimQrCode.dart';
 import 'confirmAttendeesDialog.dart';
 
 Future<void> startMeetup(BuildContext context, AppStore store) async {
-  var count = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConfirmAttendeesDialog()));
+  var count = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => CeremonyStep1Count()));
   // count is `null` if back button pressed in `ConfirmAttendeesDialog`
 
   if (store.settings.cachedPin.isEmpty) {

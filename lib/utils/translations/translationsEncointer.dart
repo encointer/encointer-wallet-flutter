@@ -6,6 +6,7 @@ abstract class TranslationsEncointer {
   String get claimsPurge;
   String get claimsPurgeConfirm;
   String get encointerCeremony;
+  String get countParticipants;
   String get nextCeremonyTimeLeft;
   String get nextCeremonyDateLabel;
   String get claimQr;
@@ -34,6 +35,10 @@ abstract class TranslationsEncointer {
   String get howManyParticipantsShowedUp;
   String get ceremonyWillTakePlaceOn;
   String get fetchingReputations;
+  String get numberOfAttendies;
+  String get next;
+  String get closeMeetup;
+  String get scanOthers;
 }
 
 class TranslationsEnEncointer implements TranslationsEncointer {
@@ -70,6 +75,11 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   get howManyParticipantsShowedUp => 'How many attendees are present?';
   get ceremonyWillTakePlaceOn => 'The ceremony will take place on';
   get fetchingReputations => 'Checking if you have reputation';
+  get countParticipants => 'Count';
+  get numberOfAttendies => 'Number of attendies';
+  get next => 'Next';
+  get closeMeetup => 'Close meetup';
+  get scanOthers => 'Scan others';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
@@ -106,6 +116,11 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get howManyParticipantsShowedUp => 'Wieviele Teilnehmende sind da?';
   get ceremonyWillTakePlaceOn => 'Die Zeremonie wird stattfinden am';
   get fetchingReputations => 'Es wird überprüft, ob du bereits Reputation hast';
+  get countParticipants => 'Zähle';
+  get numberOfAttendies => 'Anzahl Teilnehmende';
+  get next => 'Weiter';
+  get closeMeetup => 'Treffen schliessen';
+  get scanOthers => 'Andere scannen';
 }
 
 class TranslationsZhEncointer implements TranslationsEncointer {
@@ -142,4 +157,9 @@ class TranslationsZhEncointer implements TranslationsEncointer {
   get howManyParticipantsShowedUp => throw UnimplementedError();
   get ceremonyWillTakePlaceOn => throw UnimplementedError();
   get fetchingReputations => throw UnimplementedError();
+  get countParticipants => throw UnimplementedError();
+  get numberOfAttendies => throw UnimplementedError();
+  get next => throw UnimplementedError();
+  get closeMeetup => throw UnimplementedError();
+  get scanOthers => throw UnimplementedError();
 }
