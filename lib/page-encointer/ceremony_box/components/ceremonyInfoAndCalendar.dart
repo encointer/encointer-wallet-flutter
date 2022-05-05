@@ -1,23 +1,25 @@
 import 'package:add_2_calendar/add_2_calendar.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/ceremonyBoxService.dart';
+import 'package:encointer_wallet/utils/UI.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:encointer_wallet/page-encointer/ceremony_box/ceremonyBoxService.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CeremonyInfoAndCalendar extends StatelessWidget {
   const CeremonyInfoAndCalendar({
     this.nextCeremonyDate,
     this.infoLink,
+    this.devMode = false,
     Key key,
   }) : super(key: key);
+
+  final devMode;
 
   /// date for the next ceremony
   final DateTime nextCeremonyDate;
 
   /// open this Uri in a browser to give the user background information
-  final Uri infoLink;
-
-  // final
+  final String infoLink;
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +33,9 @@ class CeremonyInfoAndCalendar extends StatelessWidget {
             quarterTurns: 2,
             child: Icon(Iconsax.info_circle),
           ),
-          onPressed: () {
-            print('TODO open some webpage... $infoLink');
-          },
+          onPressed: () => UI.launchURL(infoLink),
         ),
-        if (showAddToCalendarIconButton)
+        if (devMode && showAddToCalendarIconButton)
           IconButton(
             icon: Icon(Iconsax.calendar_1),
             onPressed: () => Add2Calendar.addEvent2Cal(calendarEventToAdd),

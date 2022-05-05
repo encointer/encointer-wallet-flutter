@@ -37,7 +37,7 @@ void main() {
 
     test('network endpoint test', () async {
       await store.init('_en');
-      expect(store.endpoint.info, networkEndpointEncointerGesell.info);
+      expect(store.endpoint.info, networkEndpointEncointerMainnet.info);
       expect(store.endpointList.length, 1);
     });
 

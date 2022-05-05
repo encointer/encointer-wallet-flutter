@@ -94,6 +94,18 @@ class EncointerApi {
     return phase;
   }
 
+  /// Queries the Scheduler pallet: encointerScheduler.nextPhaseTimestamp().
+  ///
+  /// This is on-chain in Cantillon.
+  Future<int> getNextPhaseTimestamp() async {
+    print("api: getCurrentPhase");
+    int timestamp = await jsApi.evalJavascript('encointer.getNextPhaseTimestamp()').then((time) => int.parse(time));
+
+    print("api: next phase timestamp: $timestamp");
+    store.encointer.setNextPhaseTimestamp(timestamp);
+    return timestamp;
+  }
+
   /// Queries the Scheduler pallet: encointerScheduler.currentPhase().
   ///
   /// This should be done only once at app-startup, as this is practically const.
@@ -103,8 +115,8 @@ class EncointerApi {
     Map<CeremonyPhase, int> phaseDurations = await jsApi
         .evalJavascript('encointer.getPhaseDurations()')
         .then((m) => Map.from(m).map((key, value) => MapEntry(ceremonyPhaseFromString(key), int.parse(value))));
-    print("Phase durations: ${phaseDurations.toString()}");
-    store.encointer.phaseDurations = phaseDurations;
+
+    store.encointer.setPhaseDurations(phaseDurations);
   }
 
   /// Queries the rpc 'encointer_getAggregatedAccountData' with the dart api.
@@ -245,7 +257,7 @@ class EncointerApi {
 
     Location mLocation = locationIndex != null
         ? store.encointer.community.meetupLocations[locationIndex]
-        : (store.encointer.community.meetupLocations?.first);
+        : (store.encointer.community?.meetupLocations?.first);
 
     if (mLocation == null) {
       print("No meetup locations found, can't get meetup time.");
@@ -310,6 +322,7 @@ class EncointerApi {
         'encointer.subscribeCurrentPhase("$_currentPhaseSubscribeChannel")', _currentPhaseSubscribeChannel, (data) {
       var phase = ceremonyPhaseFromString(data.toUpperCase());
       store.encointer.setCurrentPhase(phase);
+      getNextPhaseTimestamp();
     });
   }
 

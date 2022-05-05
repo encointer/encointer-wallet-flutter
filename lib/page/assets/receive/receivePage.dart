@@ -162,12 +162,6 @@ class _ReceivePageState extends State<ReceivePage> {
                           inputFormatters: [UI.decimalInputFormatter()],
                           controller: _amountController,
                           textFormFieldKey: Key('invoice-amount-input'),
-                          validator: (String value) {
-                            if (value == null || value.isEmpty || double.parse(value) == 0.0) {
-                              return dic.assets.amountError;
-                            }
-                            return null;
-                          },
                           onChanged: (value) {
                             setState(() {
                               invoice = [

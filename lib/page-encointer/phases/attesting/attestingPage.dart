@@ -84,6 +84,7 @@ class _AttestingPageState extends State<AttestingPage> {
         "module": 'encointerCeremonies',
         "call": 'attestClaims',
         "cid": store.encointer.chosenCid,
+        "txPaymentAsset": store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
       },
       "detail": dic.encointer.claimsSubmitDetail
           .replaceAll('AMOUNT', store.encointer.communityAccount.scannedClaimsCount.toString()),

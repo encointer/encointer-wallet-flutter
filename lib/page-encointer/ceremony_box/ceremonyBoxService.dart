@@ -56,42 +56,37 @@ class CeremonyBoxService {
     return true;
   }
 
-  /// for rendering the progress consider the following assumptions:
-  /// reg phase: nextCeremonyDate.subtract(Duration(days: 41)) until registerUntilDate
-  /// assign phase: registerUntilDate until nextCeremonyDate
-  /// ceremony phase: nextCeremonyDate until 30min later
-  /// arbitrarily use a 128 division, as I have to use integers
-  static int getProgressElapsed(DateTime registerUntilDate, DateTime nextCeremonyDate, CeremonyPhase currentPhase,
-      int phase1register, int phase2assign, int phase3attest) {
-    DateTime now = DateTime.now();
-    DateTime lastCeremonyDate = nextCeremonyDate.subtract(Duration(days: 41));
-    Duration entirePhase = Duration(minutes: 10); // TODO get these from the back end
-    Duration elapsedPart = Duration.zero; // TODO get these from the back end
-    int phaseLengthCoarse = 1; // init so it does not go red screen
-    int subdivisions = 16;
-    int pastPhasesOffset = 0;
-    int totalSubdivisions = subdivisions * (phase1register + phase2assign + phase3attest);
-    switch (currentPhase) {
-      case (CeremonyPhase.Registering):
-        entirePhase = registerUntilDate.difference(lastCeremonyDate);
-        elapsedPart = now.difference(lastCeremonyDate);
-        phaseLengthCoarse = phase1register;
-        break;
-      case (CeremonyPhase.Assigning):
-        entirePhase = nextCeremonyDate.difference(registerUntilDate);
-        elapsedPart = now.difference(registerUntilDate);
-        phaseLengthCoarse = phase2assign;
-        pastPhasesOffset = phase1register;
-        break;
-      case (CeremonyPhase.Attesting):
-        entirePhase = Duration(minutes: 60); // arbitrarily defined
-        elapsedPart = now.difference(nextCeremonyDate);
-        phaseLengthCoarse = phase3attest;
-        pastPhasesOffset = phase1register + phase2assign;
-        break;
+  /// Gets the ceremony progress as a fraction
+  static double getProgressElapsed(
+    int currentTime,
+    int assigningStart,
+    int meetupTime,
+    Map<CeremonyPhase, int> ceremonyPhaseDurations,
+    double registerFlex,
+    double assigningFlex,
+    double attestingFlex,
+  ) {
+    var totalFlex = registerFlex + assigningFlex + attestingFlex;
+    var ceremonyStart = assigningStart - ceremonyPhaseDurations[CeremonyPhase.Registering];
+
+    if (currentTime < ceremonyStart) {
+      throw Exception("[CeremonyProgressBar] Current time was smaller than ceremony start");
     }
-    int timeElapsed = pastPhasesOffset * subdivisions +
-        (phaseLengthCoarse * subdivisions * elapsedPart.inSeconds / entirePhase.inSeconds).round();
-    return timeElapsed < totalSubdivisions ? timeElapsed : totalSubdivisions;
+
+    var progressUnormalized;
+
+    if (currentTime < assigningStart) {
+      progressUnormalized =
+          (currentTime - ceremonyStart) / ceremonyPhaseDurations[CeremonyPhase.Registering] * registerFlex;
+    } else if (currentTime < meetupTime) {
+      progressUnormalized = registerFlex +
+          (currentTime - assigningStart) / ceremonyPhaseDurations[CeremonyPhase.Assigning] * assigningFlex;
+    } else {
+      progressUnormalized = registerFlex +
+          assigningFlex +
+          (currentTime - meetupTime) / ceremonyPhaseDurations[CeremonyPhase.Attesting] * attestingFlex;
+    }
+
+    return progressUnormalized / totalFlex;
   }
 }

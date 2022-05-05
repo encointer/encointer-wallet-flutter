@@ -70,6 +70,9 @@ abstract class _EncointerStore with Store {
   CeremonyPhase currentPhase;
 
   @observable
+  int nextPhaseTimestamp;
+
+  @observable
   Map<CeremonyPhase, int> phaseDurations = new Map();
 
   @computed
@@ -166,7 +169,29 @@ abstract class _EncointerStore with Store {
     return null;
   }
 
+  CommunityIdentifier getTxPaymentAsset(CommunityIdentifier preferredCid) {
+    if (preferredCid != null && communityBalance != null && communityBalance > 0.013) {
+      return preferredCid;
+    }
+
+    try {
+      final fallbackCidFmt = account.balanceEntries.entries.firstWhere((e) => applyDemurrage(e.value) > 0.013).key;
+      return CommunityIdentifier.fromFmtString(fallbackCidFmt);
+    } catch (_e) {
+      _log("${account.address} does not have sufficient funds in any community."
+          "Returning null to pay tx in native token");
+      return null;
+    }
+  }
+
   // -- Setters for this store
+
+  @action
+  void setPhaseDurations(Map<CeremonyPhase, int> phaseDurations) {
+    _log("set phase duration to ${phaseDurations.toString()}");
+    this.phaseDurations = phaseDurations;
+    writeToCache();
+  }
 
   @action
   void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
@@ -174,7 +199,7 @@ abstract class _EncointerStore with Store {
     communityIdentifiers = cids;
     writeToCache();
 
-    if (!communitiesContainsChosenCid) {
+    if (communities != null && !communitiesContainsChosenCid) {
       // inconsistency found, reset state
       setChosenCid();
     }
@@ -192,6 +217,8 @@ abstract class _EncointerStore with Store {
     if (chosenCid != cid) {
       chosenCid = cid;
       writeToCache();
+      // Fixme: Properly solve this with: https://github.com/encointer/encointer-wallet-flutter/issues/582
+      this._rootStore.localStorage.setObject(chosenCidCacheKey(network), cid?.toJson());
 
       if (cid != null) {
         initCommunityStore(cid, _rootStore.account.currentAddress);
@@ -218,6 +245,15 @@ abstract class _EncointerStore with Store {
     }
     // update depending values without awaiting
     webApi.encointer.getCurrentCeremonyIndex();
+  }
+
+  @action
+  void setNextPhaseTimestamp(int timestamp) {
+    _log("set currentPhase to $timestamp");
+    if (nextPhaseTimestamp != timestamp) {
+      nextPhaseTimestamp = timestamp;
+      writeToCache();
+    }
   }
 
   @action
@@ -304,6 +340,8 @@ abstract class _EncointerStore with Store {
     accountStores.forEach((cid, store) => store.initStore(cacheFn));
     bazaarStores.forEach((cid, store) => store.initStore(cacheFn));
     communityStores.forEach((cid, store) => store.initStore(cacheFn, applyDemurrage));
+
+    loadChosenCid(network);
   }
 
   Future<void> writeToCache() {
@@ -315,6 +353,19 @@ abstract class _EncointerStore with Store {
   }
 
   // -- init functions for sub-stores
+
+  /// Init community sub-stores for all cids and the given address.
+  ///
+  /// Todo: Integrate used when #582 is tackled.
+  Future<void> initCommunityStores(List<CommunityIdentifier> cids, String address, {shouldCache = true}) {
+    List<Future<void>> futures = [];
+
+    cids.forEach((cid) {
+      futures.add(initCommunityStore(cid, address, shouldCache: shouldCache));
+    });
+
+    return Future.wait(futures);
+  }
 
   @action
   Future<void> initCommunityStore(CommunityIdentifier cid, String address, {shouldCache = true}) async {
@@ -368,24 +419,75 @@ abstract class _EncointerStore with Store {
     }
   }
 
-  /// The below code is only needed when migrating from older app versions.
+  /// Initializes stores that have not been initialized before.
   ///
-  /// Because of the SS58-prefix this needs to be called after the `AccountApi.initAccounts() call.
-  /// If the stores exist already, this is a no-op.
-  Future<void> initStoresForLegacyCache() {
-    var futures = [initEncointerAccountStore(_rootStore.account.currentAddress, shouldCache: false)];
+  /// This should be called upon changing the current account mainly, or after loading the store from cache.
+  Future<void> initializeUninitializedStores(String address) {
+    var futures = [initEncointerAccountStore(address, shouldCache: false)];
 
     if (chosenCid != null) {
-      futures.addAll([
-        initBazaarStore(chosenCid, shouldCache: false),
-        initCommunityStore(chosenCid, _rootStore.account.currentAddress, shouldCache: false)
-      ]);
+      futures.addAll(
+          [initBazaarStore(chosenCid, shouldCache: false), initCommunityStore(chosenCid, address, shouldCache: false)]);
     }
 
     return Future.wait(futures);
   }
 
+  /// Load tracked communities from cache
+  ///
+  /// This is done separately to initialize a new encointer-store with all tracked communities
+  /// if it recreated due to incompatibility with an old cache version.
+  ///
+  /// Todo: not yet integrated, need to cache this first, and properly think through. Solve in #582.
+  Future<void> loadPreviouslyTrackedCommunitiesFromCache(String network) async {
+    List<Map<String, dynamic>> maybeCids = await _rootStore.localStorage.getList(trackedCidsCacheKey(network));
+    _log("Initializing previously tracked communities: ${maybeCids.toString()}");
+
+    if (maybeCids.isNotEmpty) {
+      List<CommunityIdentifier> cids = maybeCids.map((cid) => CommunityIdentifier.fromJson(cid)).toList();
+      communityIdentifiers = cids;
+    }
+  }
+
+  Future<void> loadChosenCid(String network) async {
+    Map<String, dynamic> maybeChosenCid = await _rootStore.localStorage.getMap(chosenCidCacheKey(network));
+    _log("Setting previously tracked chosenCid: ${maybeChosenCid.toString()}");
+
+    if (maybeChosenCid != null && maybeChosenCid.isNotEmpty) {
+      // Do not use the setter here. We don't want to trigger reactions here.
+      chosenCid = CommunityIdentifier.fromJson(maybeChosenCid);
+    }
+  }
+
   // ----- Computed values for ceremony box
+
+  @computed
+  int get assigningPhaseStart {
+    if (currentPhase == null || nextPhaseTimestamp == null || phaseDurations.isEmpty) {
+      return null;
+    }
+    switch (currentPhase) {
+      case CeremonyPhase.Registering:
+        return nextPhaseTimestamp;
+        break;
+      case CeremonyPhase.Assigning:
+        return nextPhaseTimestamp - phaseDurations[CeremonyPhase.Assigning];
+        break;
+      case CeremonyPhase.Attesting:
+        return nextPhaseTimestamp - phaseDurations[CeremonyPhase.Attesting] - phaseDurations[CeremonyPhase.Assigning];
+        break;
+      default:
+        return null;
+    }
+  }
+
+  @computed
+  int get attestingPhaseStart {
+    if (assigningPhaseStart == null) {
+      return null;
+    }
+    return assigningPhaseStart + phaseDurations[CeremonyPhase.Assigning];
+  }
 
   bool get showRegisterButton {
     bool registered = communityAccount?.isRegistered ?? false;
@@ -402,6 +504,14 @@ abstract class _EncointerStore with Store {
   bool get showTwoBoxes {
     return !showRegisterButton && !showStartCeremonyButton;
   }
+}
+
+String chosenCidCacheKey(String network) {
+  return "$network-chosen-cid";
+}
+
+String trackedCidsCacheKey(String network) {
+  return "$network-tracked-cids";
 }
 
 _log(String msg) {

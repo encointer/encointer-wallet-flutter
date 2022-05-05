@@ -1,14 +1,15 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
-import 'package:quiver/async.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:quiver/async.dart';
 
 class CeremonyCountDown extends StatefulWidget {
-  // CeremonyCountDown(this.store);
-
+  CeremonyCountDown(this.nextCeremonyDate);
   static const String route = '/encointer/assigning';
-  // final AppStore store;
+
+  final DateTime nextCeremonyDate;
 
   @override
   _CeremonyCountDownState createState() => _CeremonyCountDownState();
@@ -22,8 +23,6 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
 
   @override
   void initState() {
-    // TODO replace following line
-    this.timeToMeetup = 30; //widget.store.encointer.getTimeToMeetup();
     super.initState();
   }
 
@@ -33,7 +32,12 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
     super.dispose();
   }
 
-  void startTimer() {
+  void resetTimer() {
+    if (sub != null) {
+      sub.cancel();
+      sub = null;
+    }
+
     CountdownTimer countDownTimer = new CountdownTimer(
       new Duration(seconds: timeToMeetup),
       new Duration(seconds: 1),
@@ -54,18 +58,30 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
 
   @override
   Widget build(BuildContext context) {
-    if (sub == null) {
-      startTimer();
+    var timeToMeetup =
+        widget.nextCeremonyDate != null ? widget.nextCeremonyDate.difference(DateTime.now()).inSeconds : 0;
+
+    if (this.timeToMeetup != timeToMeetup) {
+      this.timeToMeetup = timeToMeetup;
+      resetTimer();
     }
 
     Duration timeLeftUntilCeremonyStarts = Duration(seconds: timeToMeetup);
 
-    return Text(
-      '${timeLeftUntilCeremonyStarts.inDays}d ${timeLeftUntilCeremonyStarts.inHours.remainder(24)}h ${timeLeftUntilCeremonyStarts.inMinutes.remainder(60)}min ${timeLeftUntilCeremonyStarts.inSeconds.remainder(60)}s',
-      style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Icon(
+          Iconsax.timer_start,
+          color: encointerGrey,
+          size: 18,
+        ),
+        SizedBox(width: 8),
+        Text(
+          '${timeLeftUntilCeremonyStarts.inDays}d ${timeLeftUntilCeremonyStarts.inHours.remainder(24)}h ${timeLeftUntilCeremonyStarts.inMinutes.remainder(60)}min ${timeLeftUntilCeremonyStarts.inSeconds.remainder(60)}s',
+          style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
+        ),
+      ],
     );
   }
 }
-
-/// TODO remove this mockup
-class AppStore {}

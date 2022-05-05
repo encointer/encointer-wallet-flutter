@@ -35,6 +35,7 @@ void main() {
       String testPass = 'a111111';
       await store.addAccount(endoEncointer, testPass);
       expect(store.accountList.length, 2);
+      store.setCurrentAccount(endoEncointer['pubKey']);
       expect(store.currentAccountPubKey, endoEncointer['pubKey']);
       expect(store.currentAccount.name, 'test');
       expect(store.currentAccount.pubKey, endoEncointer['pubKey']);

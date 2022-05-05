@@ -37,6 +37,7 @@ void main() {
 
       encointerStore.setCurrentPhase(CeremonyPhase.Registering);
       encointerStore.setCurrentCeremonyIndex(2);
+      encointerStore.setNextPhaseTimestamp(3);
       encointerStore.setCommunityIdentifiers(testCommunityIdentifiers);
       encointerStore.setCommunities(testCommunities);
 
@@ -53,6 +54,7 @@ void main() {
       Map<String, dynamic> targetJson = {
         "network": testNetwork,
         "currentPhase": "Registering",
+        "nextPhaseTimestamp": 3,
         "phaseDurations": Map<String, dynamic>.of({}),
         "currentCeremonyIndex": 2,
         "communityIdentifiers": testCommunityIdentifiers.map((c) => c.toJson()).toList(),
@@ -96,9 +98,15 @@ void main() {
 
       // should initialize a new encointer store
       await root.init('_en');
+
+      var expectedStore = EncointerStore(unitTestEndpoint.info);
+
+      // This is due to side-effects of parallel executed tests and the global appStore...
+      expectedStore.chosenCid = testCommunityIdentifiers[0];
+
       expect(
         await root.localStorage.getObject(root.encointerCacheKey(unitTestEndpoint.info)),
-        EncointerStore(unitTestEndpoint.info).toJson(),
+        expectedStore.toJson(),
       );
     });
   });

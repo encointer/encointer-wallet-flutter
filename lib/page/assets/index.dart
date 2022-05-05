@@ -290,13 +290,23 @@ class _AssetsState extends State<Assets> {
                                 if (hasPendingIssuance) {
                                   return ElevatedButton(
                                     child: Text(dic.assets.issuancePending),
-                                    onPressed: () => submitClaimRewards(context, store.encointer.chosenCid),
+                                    onPressed: () {
+                                      final txPaymentAsset =
+                                          store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
+                                      submitClaimRewards(
+                                        context,
+                                        store.encointer.chosenCid,
+                                        txPaymentAsset: txPaymentAsset,
+                                      );
+                                    },
                                   );
                                 } else {
-                                  return ElevatedButton(
-                                    child: Text(dic.assets.issuanceClaimed),
-                                    onPressed: null,
-                                  );
+                                  return store.settings.developerMode
+                                      ? ElevatedButton(
+                                          child: Text(dic.assets.issuanceClaimed),
+                                          onPressed: null,
+                                        )
+                                      : Container();
                                 }
                               } else {
                                 return CupertinoActivityIndicator();
@@ -433,7 +443,7 @@ class _AssetsState extends State<Assets> {
 
   Future<void> switchAccount(AccountData account) async {
     if (account.pubKey != store.account.currentAccountPubKey) {
-      store.account.setCurrentAccount(account.pubKey);
+      store.setCurrentAccount(account.pubKey);
       await store.loadAccountCache();
 
       webApi.fetchAccountData();
