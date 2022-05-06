@@ -150,12 +150,14 @@ class _TransferPageState extends State<TransferPage> {
                     ),
                   ),
                   SizedBox(height: 48),
-                  Center(
-                    child: Text(
-                      "${dic.assets.fee}: TODO compute Fee", // compute fee #147
-                      style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
-                    ),
-                  ),
+                  store.settings.developerMode
+                      ? Center(
+                          child: Text(
+                            "${dic.assets.fee}: TODO compute Fee", // TODO compute fee #589
+                            style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
+                          ),
+                        )
+                      : Container(),
                   SizedBox(height: 8),
                   PrimaryButton(
                     key: Key('make-transfer'),
