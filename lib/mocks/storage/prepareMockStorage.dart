@@ -23,7 +23,7 @@ abstract class PrepareMockStorage {
   }
 
   static void unregisteredParticipant(AppStore store) {
-    store.encointer.community.setMeetupTime(claim['timestamp']);
+    // store.encointer.community.setMeetupTime(claim['timestamp']);
   }
 
   static void readyForMeetup(AppStore store) {
