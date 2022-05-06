@@ -16,16 +16,31 @@ abstract class PrepareMockStorage {
   }
 
   static void getMetadata(AppStore store) {
+    final now = DateTime.now().millisecondsSinceEpoch;
+    final meetupTime = now + testPhaseDurations[CeremonyPhase.Assigning];
+
+    store.encointer.setCurrentPhase(CeremonyPhase.Assigning);
+    store.encointer.setPhaseDurations(testPhaseDurations);
+    store.encointer.setNextPhaseTimestamp(meetupTime - 1000000);
     store.encointer.community.setCommunityMetadata(CommunityMetadata.fromJson(communityMetadata));
     store.encointer.community.setDemurrage(demurrage);
     store.encointer.account.addBalanceEntry(cid, BalanceEntry.fromJson(testBalanceEntry));
-    store.encointer.community.setMeetupTime(DateTime.now().millisecondsSinceEpoch + Duration(hours: 9).inMilliseconds);
+    store.encointer.community.setMeetupTime(meetupTime);
   }
 
   static void readyForMeetup(AppStore store) {
+    final now = DateTime.now().millisecondsSinceEpoch;
+    final meetupTime = now + testPhaseDurations[CeremonyPhase.Assigning];
+
     store.encointer.setCurrentPhase(CeremonyPhase.Attesting);
-    store.encointer.community.setMeetupTime(claim['timestamp']);
     store.encointer.community.setMeetupLocations([testLocation1, testLocation2, testLocation3]);
-    store.encointer.communityAccount.setMeetup(Meetup(1, 1, claim['timestamp'], testMeetupRegistry));
+    store.encointer.communityAccount.setMeetup(
+      Meetup(
+        1,
+        1,
+        meetupTime,
+        testMeetupRegistry,
+      ),
+    );
   }
 }

@@ -54,6 +54,12 @@ const List<String> testMeetupRegistry = [
   "0x1cc4e46bbd2bb547d93d952c5de12ea7e3a3f3b638551a8eaf35ad086700c00c",
 ];
 
+const Map<CeremonyPhase, int> testPhaseDurations = {
+  CeremonyPhase.Registering: 57600000,
+  CeremonyPhase.Attesting: 172800000,
+  CeremonyPhase.Assigning: 28800000,
+};
+
 const CeremonyPhase initialPhase = CeremonyPhase.Registering;
 
 const Map<String, dynamic> testBalanceEntry = {'principal': 23.4, 'lastUpdate': 4};

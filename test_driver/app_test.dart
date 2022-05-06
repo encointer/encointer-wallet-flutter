@@ -6,7 +6,7 @@ import 'package:test/test.dart';
 
 void main() {
   FlutterDriver driver;
-  final config = Config();
+  final config = Config(stagingDir: "./screenshots");
 
   group('EncointerWallet App', () {
     setUpAll(() async {
