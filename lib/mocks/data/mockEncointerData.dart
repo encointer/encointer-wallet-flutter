@@ -56,7 +56,7 @@ const List<String> testMeetupRegistry = [
 
 const CeremonyPhase initialPhase = CeremonyPhase.Registering;
 
-const Map<String, dynamic> balanceEntry = {'principal': 23.4, 'lastUpdate': 4};
+const Map<String, dynamic> testBalanceEntry = {'principal': 23.4, 'lastUpdate': 4};
 
 Location testLocation1 = Location.fromJson({'lat': '18.2341235412345', 'lon': '35.18324513451'});
 Location testLocation2 = Location.fromJson({'lat': '18.3341235412345', 'lon': '35.28324513451'});

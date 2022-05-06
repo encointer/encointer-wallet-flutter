@@ -2,6 +2,7 @@ import 'package:encointer_wallet/mocks/data/mockEncointerData.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointerApi.dart';
 import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
+import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 
 import '../../models/index.dart';
 import 'core/mockDartApi.dart';
@@ -103,6 +104,13 @@ class MockApiEncointer extends EncointerApi {
   @override
   Future<void> getMeetupTime() async {
     return DateTime.fromMillisecondsSinceEpoch(claim['timestamp']);
+  }
+
+  @override
+  Future<Map<CommunityIdentifier, BalanceEntry>> getAllBalances(String account) async {
+    return Future.value(Map<CommunityIdentifier, BalanceEntry>.of({
+      store.encointer.chosenCid: BalanceEntry.fromJson(testBalanceEntry),
+    }));
   }
 
   @override

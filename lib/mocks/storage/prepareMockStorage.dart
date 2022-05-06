@@ -18,7 +18,7 @@ abstract class PrepareMockStorage {
   static void getMetadata(AppStore store) {
     store.encointer.community.setCommunityMetadata(CommunityMetadata.fromJson(communityMetadata));
     store.encointer.community.setDemurrage(demurrage);
-    store.encointer.account.addBalanceEntry(cid, BalanceEntry.fromJson(balanceEntry));
+    store.encointer.account.addBalanceEntry(cid, BalanceEntry.fromJson(testBalanceEntry));
   }
 
   static void unregisteredParticipant(AppStore store) {
