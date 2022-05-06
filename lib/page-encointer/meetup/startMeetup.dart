@@ -8,6 +8,7 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'ceremonyStep2Scan2.dart';
 import 'claimQrCode.dart';
 import 'confirmAttendeesDialog.dart';
 
@@ -34,9 +35,8 @@ Future<void> startMeetup(BuildContext context, AppStore store) async {
   if (count != null && store.settings.cachedPin.isNotEmpty) {
     await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (BuildContext context) => ClaimQrCode(
+        builder: (BuildContext context) => CeremonyStep2Scan(
           store,
-          title: I18n.of(context).translationsForLocale().encointer.claimQr,
           claim: webApi.encointer
               .signClaimOfAttendance(count, store.settings.cachedPin)
               .then((claim) => webApi.codec.encodeToBytes(ClaimOfAttendanceJSRegistryName, claim)),
