@@ -17,20 +17,17 @@ abstract class PrepareMockStorage {
 
   static void getMetadata(AppStore store) {
     final now = DateTime.now().millisecondsSinceEpoch;
-    final meetupTime = now + testPhaseDurations[CeremonyPhase.Assigning];
-
     store.encointer.setCurrentPhase(CeremonyPhase.Assigning);
     store.encointer.setPhaseDurations(testPhaseDurations);
-    store.encointer.setNextPhaseTimestamp(meetupTime - 1000000);
+    store.encointer.setNextPhaseTimestamp(now + Duration(hours: 8).inMilliseconds);
     store.encointer.community.setCommunityMetadata(CommunityMetadata.fromJson(communityMetadata));
     store.encointer.community.setDemurrage(demurrage);
     store.encointer.account.addBalanceEntry(cid, BalanceEntry.fromJson(testBalanceEntry));
-    store.encointer.community.setMeetupTime(meetupTime);
+    store.encointer.community.setMeetupTime(now + Duration(hours: 8).inMilliseconds);
   }
 
   static void readyForMeetup(AppStore store) {
     final now = DateTime.now().millisecondsSinceEpoch;
-    final meetupTime = now + testPhaseDurations[CeremonyPhase.Assigning];
 
     store.encointer.setCurrentPhase(CeremonyPhase.Attesting);
     store.encointer.community.setMeetupLocations([testLocation1, testLocation2, testLocation3]);
@@ -38,7 +35,7 @@ abstract class PrepareMockStorage {
       Meetup(
         1,
         1,
-        meetupTime,
+        now + Duration(hours: 8).inMilliseconds,
         testMeetupRegistry,
       ),
     );
