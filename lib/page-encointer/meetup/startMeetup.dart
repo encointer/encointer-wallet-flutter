@@ -9,8 +9,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'ceremonyStep2Scan2.dart';
-import 'claimQrCode.dart';
-import 'confirmAttendeesDialog.dart';
 
 Future<void> startMeetup(BuildContext context, AppStore store) async {
   var count = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => CeremonyStep1Count()));
