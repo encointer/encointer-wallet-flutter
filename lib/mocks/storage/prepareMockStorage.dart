@@ -35,6 +35,7 @@ abstract class PrepareMockStorage {
       Meetup(
         1,
         1,
+        // needs to be the same as above, otherwise the `StartMeetup` button is missing
         now + Duration(hours: 8).inMilliseconds,
         testMeetupRegistry,
       ),
