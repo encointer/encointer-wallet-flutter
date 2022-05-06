@@ -15,7 +15,7 @@ abstract class PrepareMockStorage {
     store.chain.setLatestHeader(Header.fromJson(header));
   }
 
-  static void getMetadata(AppStore store) {
+  static void homePage(AppStore store) {
     final now = DateTime.now().millisecondsSinceEpoch;
     store.encointer.setCurrentPhase(CeremonyPhase.Assigning);
     store.encointer.setPhaseDurations(testPhaseDurations);
