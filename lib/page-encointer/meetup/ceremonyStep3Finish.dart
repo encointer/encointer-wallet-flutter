@@ -1,4 +1,3 @@
-
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
@@ -12,7 +11,8 @@ import 'package:iconsax/iconsax.dart';
 import 'ceremonyProgressBar.dart';
 
 class CeremonyStep3Finish extends StatelessWidget {
-  const CeremonyStep3Finish(this.store, {
+  const CeremonyStep3Finish(
+    this.store, {
     Key key,
   }) : super(key: key);
 
@@ -58,15 +58,14 @@ class CeremonyStep3Finish extends StatelessWidget {
                       child: Text(
                         'Thank you',
                         style: Theme.of(context).textTheme.headline2.copyWith(
-                          color: ZurichLion.shade600,
-                        ),
-                      ),),
+                              color: ZurichLion.shade600,
+                            ),
+                      ),
+                    ),
                     Center(
-                      child: Text(
-                          'The next meetup will take place on:',
+                      child: Text('The next meetup will take place on:',
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headline2.copyWith(
-                              color: Colors.black, height: 1.5)),
+                          style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black, height: 1.5)),
                     ),
                   ],
                 ),
@@ -80,8 +79,8 @@ class CeremonyStep3Finish extends StatelessWidget {
                     Text(
                       dic.encointer.finish,
                       style: Theme.of(context).textTheme.headline3.copyWith(
-                        color: ZurichLion.shade50,
-                      ),
+                            color: ZurichLion.shade50,
+                          ),
                     ),
                   ],
                 ),

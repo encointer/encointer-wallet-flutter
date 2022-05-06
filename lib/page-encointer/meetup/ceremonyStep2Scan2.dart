@@ -14,8 +14,10 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 import 'ceremonyProgressBar.dart';
 import 'ceremonyStep3Finish.dart';
+
 class CeremonyStep2Scan extends StatelessWidget {
-  const CeremonyStep2Scan(this.store,{
+  const CeremonyStep2Scan(
+    this.store, {
     @required this.claim,
     @required this.confirmedParticipantsCount,
     Key key,
@@ -57,18 +59,19 @@ class CeremonyStep2Scan extends StatelessWidget {
                       height: 48,
                     ),
                     Center(
-                        child: Text(
-                          'Scan',
-                          style: Theme.of(context).textTheme.headline2.copyWith(
-                            color: ZurichLion.shade600,
-                          ),
-                        ),),
+                      child: Text(
+                        'Scan',
+                        style: Theme.of(context).textTheme.headline2.copyWith(
+                              color: ZurichLion.shade600,
+                            ),
+                      ),
+                    ),
                     Center(
                       child: Text(
-                          'Every attendee must scan everyone else and be scanned by everyone else.',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headline2.copyWith(
-                              color: Colors.black, height: 1.25),),
+                        'Every attendee must scan everyone else and be scanned by everyone else.',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black, height: 1.25),
+                      ),
                     ),
                     SizedBox(
                       height: 24,
@@ -100,10 +103,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                   children: [
                     Icon(Iconsax.arrow_right_2),
                     SizedBox(width: 12, height: 60),
-                    Text(
-                      dic.encointer.closeMeetup,
-                      style: Theme.of(context).textTheme.headline3
-                    ),
+                    Text(dic.encointer.closeMeetup, style: Theme.of(context).textTheme.headline3),
                   ],
                 ),
                 onPressed: () {
@@ -120,8 +120,8 @@ class CeremonyStep2Scan extends StatelessWidget {
                     Text(
                       dic.encointer.scanOthers,
                       style: Theme.of(context).textTheme.headline3.copyWith(
-                        color: ZurichLion.shade50,
-                      ),
+                            color: ZurichLion.shade50,
+                          ),
                     ),
                   ],
                 ),

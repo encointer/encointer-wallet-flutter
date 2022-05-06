@@ -11,7 +11,7 @@ import 'ceremonyProgressBar.dart';
 class CeremonyStep1Count extends StatelessWidget {
   CeremonyStep1Count({
     Key key,
-  }):        super(key: key);
+  }) : super(key: key);
 
   final TextEditingController _attendeesCountController = TextEditingController();
 
@@ -49,23 +49,20 @@ class CeremonyStep1Count extends StatelessWidget {
                       child: Text(
                         'Count',
                         style: Theme.of(context).textTheme.headline2.copyWith(
-                          color: ZurichLion.shade600,
-                        ),
-                      ),),
+                              color: ZurichLion.shade600,
+                            ),
+                      ),
+                    ),
                     Center(
                         child: Text('How many people are attending?',
                             textAlign: TextAlign.center,
-                            style: Theme.of(context).textTheme.headline2.copyWith(
-                                color: Colors.black, height: 2))),
+                            style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black, height: 2))),
                     SizedBox(
                       height: 48,
                     ),
                     EncointerTextFormField(
                       labelText: dic.encointer.numberOfAttendies,
-                      textStyle: Theme.of(context)
-                          .textTheme
-                          .headline1
-                          .copyWith(color: encointerBlack),
+                      textStyle: Theme.of(context).textTheme.headline1.copyWith(color: encointerBlack),
                       controller: _attendeesCountController,
                       textFormFieldKey: Key('attendies-count'),
                     ),
@@ -81,8 +78,8 @@ class CeremonyStep1Count extends StatelessWidget {
                     Text(
                       dic.encointer.next,
                       style: Theme.of(context).textTheme.headline3.copyWith(
-                        color: ZurichLion.shade50,
-                      ),
+                            color: ZurichLion.shade50,
+                          ),
                     ),
                   ],
                 ),

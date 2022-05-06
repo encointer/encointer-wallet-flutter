@@ -41,9 +41,7 @@ class LightShadedBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-          color: ZurichLion.shade50,
-          borderRadius: BorderRadius.all(Radius.circular(10.0))),
+      decoration: BoxDecoration(color: ZurichLion.shade50, borderRadius: BorderRadius.all(Radius.circular(10.0))),
       child: SizedBox(
         height: 5,
       ),
