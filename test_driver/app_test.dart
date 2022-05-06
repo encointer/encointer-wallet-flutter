@@ -86,12 +86,13 @@ void main() {
     });
 
     test('encointerEntryPage', () async {
+      // attesting phase
+      await driver.requestData(MockStorageSetup.READY_FOR_MEETUP);
+
       log("tapping encointerEntry tap");
       // key is directly derived by `TabKey` enum to string
       await driver.tap(find.byValueKey('TabKey.Ceremonies'));
 
-      // attesting phase
-      await driver.requestData(MockStorageSetup.READY_FOR_MEETUP);
       await screenshot(driver, config, 'attesting-page');
     });
 
