@@ -129,7 +129,7 @@ class MockApiEncointer extends EncointerApi {
     );
 
     // skip signing for mocks.
-    return claim;
+    return Future.value(claim);
   }
 
   @override
