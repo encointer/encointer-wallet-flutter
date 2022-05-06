@@ -1,6 +1,7 @@
 import 'package:encointer_wallet/mocks/data/mockEncointerData.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointerApi.dart';
 import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
+import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 
@@ -111,6 +112,24 @@ class MockApiEncointer extends EncointerApi {
     return Future.value(Map<CommunityIdentifier, BalanceEntry>.of({
       store.encointer.chosenCid: BalanceEntry.fromJson(testBalanceEntry),
     }));
+  }
+
+  @override
+  Future<ClaimOfAttendance> signClaimOfAttendance(int participants, String password) async {
+    Meetup meetup = store.encointer.communityAccount.meetup;
+
+    var claim = ClaimOfAttendance(
+      store.account.currentAccountPubKey,
+      store.encointer.currentCeremonyIndex,
+      store.encointer.chosenCid,
+      meetup.index,
+      store.encointer.community.meetupLocations[meetup.locationIndex],
+      meetup.time,
+      participants,
+    );
+
+    // skip signing for mocks.
+    return claim;
   }
 
   @override
