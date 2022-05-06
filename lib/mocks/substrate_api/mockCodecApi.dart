@@ -8,7 +8,6 @@ import 'mockJSApi.dart';
 class MockCodecApi extends CodecApi {
   MockCodecApi(MockJSApi js) : super(js);
 
-
   @override
   Future<Uint8List> encodeToBytes(String type, dynamic obj) {
     _log(":encodeToBytes: Warn: returning mock data");
