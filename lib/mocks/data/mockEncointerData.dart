@@ -4,7 +4,7 @@ import 'package:encointer_wallet/store/settings.dart';
 
 import '../../models/index.dart';
 
-const String zueriLoi = 'Züri Loi';
+const String LeuZurich = 'Leu Zurich';
 const String bernBaer = 'Bern Bär';
 const String buendnerBock = 'Bündner Bock';
 const String zul = 'ZUL';
@@ -19,7 +19,7 @@ List<CommunityIdentifier> testCommunityIdentifiers = [
 ];
 
 List<CidName> testCommunities = [
-  new CidName(cid, zueriLoi),
+  new CidName(cid, LeuZurich),
   new CidName(cid2, bernBaer),
   new CidName(cid3, buendnerBock),
 ];
