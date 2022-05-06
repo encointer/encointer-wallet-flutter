@@ -24,11 +24,6 @@ void main() {
           PrepareMockStorage.getMetadata(globalAppStore);
         }
         break;
-      case MockStorageSetup.UNREGISTERED_PARTICIPANT:
-        {
-          PrepareMockStorage.unregisteredParticipant(globalAppStore);
-        }
-        break;
       case MockStorageSetup.READY_FOR_MEETUP:
         {
           PrepareMockStorage.readyForMeetup(globalAppStore);

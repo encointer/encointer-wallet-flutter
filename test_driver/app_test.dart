@@ -90,10 +90,6 @@ void main() {
       // key is directly derived by `TabKey` enum to string
       await driver.tap(find.byValueKey('TabKey.Ceremonies'));
 
-      // communicate to the app isolate how to setup the store
-      await driver.requestData(MockStorageSetup.UNREGISTERED_PARTICIPANT);
-      await screenshot(driver, config, 'register-participant-page');
-
       // attesting phase
       await driver.requestData(MockStorageSetup.READY_FOR_MEETUP);
       await screenshot(driver, config, 'attesting-page');

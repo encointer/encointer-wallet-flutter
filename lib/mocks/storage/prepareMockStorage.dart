@@ -22,12 +22,9 @@ abstract class PrepareMockStorage {
     store.encointer.community.setMeetupTime(DateTime.now().millisecondsSinceEpoch + Duration(hours: 9).inMilliseconds);
   }
 
-  static void unregisteredParticipant(AppStore store) {
-    // store.encointer.community.setMeetupTime(claim['timestamp']);
-  }
-
   static void readyForMeetup(AppStore store) {
     store.encointer.setCurrentPhase(CeremonyPhase.Attesting);
+    store.encointer.community.setMeetupTime(claim['timestamp']);
     store.encointer.community.setMeetupLocations([testLocation1, testLocation2, testLocation3]);
     store.encointer.communityAccount.setMeetup(Meetup(1, 1, claim['timestamp'], testMeetupRegistry));
   }
