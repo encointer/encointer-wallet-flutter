@@ -102,7 +102,8 @@ void main() {
     test('meetupPage', () async {
       log("tapping startMeetup");
       await driver.tap(find.byValueKey('start-meetup'));
-      await driver.tap(find.byValueKey('confirmed-participants-3'));
+      await driver.tap(find.byValueKey('attendies-count'));
+      await driver.enterText('3');
       await screenshot(driver, config, 'claim-qr');
     });
   });
