@@ -39,6 +39,7 @@ class CeremonyInfo extends StatelessWidget {
             ceremonyPhaseDurations: ceremonyPhaseDurations,
             width: 262,
           ),
+          SizedBox(height: 8),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

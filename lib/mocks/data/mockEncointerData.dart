@@ -4,7 +4,7 @@ import 'package:encointer_wallet/store/settings.dart';
 
 import '../../models/index.dart';
 
-const String zueriLoi = 'Züri Loi';
+const String LeuZurich = 'Leu Zurich';
 const String bernBaer = 'Bern Bär';
 const String buendnerBock = 'Bündner Bock';
 const String zul = 'ZUL';
@@ -19,7 +19,7 @@ List<CommunityIdentifier> testCommunityIdentifiers = [
 ];
 
 List<CidName> testCommunities = [
-  new CidName(cid, zueriLoi),
+  new CidName(cid, LeuZurich),
   new CidName(cid2, bernBaer),
   new CidName(cid3, buendnerBock),
 ];
@@ -54,9 +54,15 @@ const List<String> testMeetupRegistry = [
   "0x1cc4e46bbd2bb547d93d952c5de12ea7e3a3f3b638551a8eaf35ad086700c00c",
 ];
 
+const Map<CeremonyPhase, int> testPhaseDurations = {
+  CeremonyPhase.Registering: 57600000,
+  CeremonyPhase.Attesting: 172800000,
+  CeremonyPhase.Assigning: 28800000,
+};
+
 const CeremonyPhase initialPhase = CeremonyPhase.Registering;
 
-const Map<String, dynamic> balanceEntry = {'principal': 23.4, 'lastUpdate': 4};
+const Map<String, dynamic> testBalanceEntry = {'principal': 23.4, 'lastUpdate': 4};
 
 Location testLocation1 = Location.fromJson({'lat': '18.2341235412345', 'lon': '35.18324513451'});
 Location testLocation2 = Location.fromJson({'lat': '18.3341235412345', 'lon': '35.28324513451'});
