@@ -126,6 +126,8 @@ flutter:
     - assets/nctr_logo.svg
     - assets/nctr_mosaic_background.svg
     - assets/nctr_logo_faces_only_thick.svg
+    # Leu icon for mocks
+    - assets/images/assets/icon_leu.svg
     # images
     ## images - settings
     - assets/images/public/nctr-cln.png

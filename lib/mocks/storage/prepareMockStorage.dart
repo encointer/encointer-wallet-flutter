@@ -15,19 +15,30 @@ abstract class PrepareMockStorage {
     store.chain.setLatestHeader(Header.fromJson(header));
   }
 
-  static void getMetadata(AppStore store) {
+  static void homePage(AppStore store) {
+    final now = DateTime.now().millisecondsSinceEpoch;
+    store.encointer.setCurrentPhase(CeremonyPhase.Assigning);
+    store.encointer.setPhaseDurations(testPhaseDurations);
+    store.encointer.setNextPhaseTimestamp(now + Duration(hours: 8).inMilliseconds);
     store.encointer.community.setCommunityMetadata(CommunityMetadata.fromJson(communityMetadata));
     store.encointer.community.setDemurrage(demurrage);
-    store.encointer.account.addBalanceEntry(cid, BalanceEntry.fromJson(balanceEntry));
-  }
-
-  static void unregisteredParticipant(AppStore store) {
-    store.encointer.community.setMeetupTime(claim['timestamp']);
+    store.encointer.account.addBalanceEntry(cid, BalanceEntry.fromJson(testBalanceEntry));
+    store.encointer.community.setMeetupTime(now + Duration(hours: 8).inMilliseconds);
   }
 
   static void readyForMeetup(AppStore store) {
+    final now = DateTime.now().millisecondsSinceEpoch;
+
     store.encointer.setCurrentPhase(CeremonyPhase.Attesting);
     store.encointer.community.setMeetupLocations([testLocation1, testLocation2, testLocation3]);
-    store.encointer.communityAccount.setMeetup(Meetup(1, 1, claim['timestamp'], testMeetupRegistry));
+    store.encointer.communityAccount.setMeetup(
+      Meetup(
+        1,
+        1,
+        // needs to be the same as above, otherwise the `StartMeetup` button is missing
+        now + Duration(hours: 8).inMilliseconds,
+        testMeetupRegistry,
+      ),
+    );
   }
 }
