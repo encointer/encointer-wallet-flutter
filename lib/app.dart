@@ -120,7 +120,18 @@ class _WalletAppState extends State<WalletApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+
+        if (!currentFocus.hasPrimaryFocus &&
+            currentFocus.focusedChild != null) {
+          FocusManager.instance.primaryFocus.unfocus();
+        }
+      },
+      child: MaterialApp(
       title: 'EncointerWallet',
       localizationsDelegates: [
         AppLocalizationsDelegate(_locale),
@@ -232,6 +243,7 @@ class _WalletAppState extends State<WalletApp> {
             throw Exception('no builder specified for route named: [${settings.name}]');
         }
       },
+    )
     );
   }
 }
