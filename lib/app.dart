@@ -43,6 +43,7 @@ import 'common/theme.dart';
 import 'mocks/storage/mockLocalStorage.dart';
 import 'mocks/substrate_api/mockApi.dart';
 import 'utils/translations/index.dart';
+
 // some comment
 class WalletApp extends StatefulWidget {
   const WalletApp(this.config);
