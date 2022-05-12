@@ -132,18 +132,6 @@ class _AssetsState extends State<Assets> {
                 padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
                 children: [
                   Observer(builder: (_) {
-                    String symbol = store.settings.networkState.tokenSymbol ?? '';
-
-                    String networkName = store.settings.networkName ?? '';
-
-                    List<String> communityIds = [];
-                    if (store.settings.endpointIsEncointer && networkName != null) {
-                      if (store.settings.networkConst['communityIds'] != null) {
-                        communityIds.addAll(List<String>.from(store.settings.networkConst['communityIds']));
-                      }
-                      communityIds.retainWhere((i) => i != symbol);
-                    }
-
                     if (ModalRoute.of(context).isCurrent &&
                         !_enteredPin & store.settings.cachedPin.isEmpty & !store.settings.endpointIsNoTee) {
                       // The pin is not immediately propagated to the store, hence we track if the pin has been entered to prevent
