@@ -82,6 +82,7 @@ class ContactDetailPage extends StatelessWidget {
                     SizedBox(height: 30),
                     AddressIcon(
                       account.address,
+                      account.pubKey,
                       size: 130,
                       tapToCopy: true,
                     ),

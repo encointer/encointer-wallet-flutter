@@ -1,6 +1,6 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
-import 'package:encointer_wallet/page/profile/contacts/contactPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactDetailPage.dart';
+import 'package:encointer_wallet/page/profile/contacts/contactPage.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -43,7 +43,7 @@ class ContactsPage extends StatelessWidget {
               child: ListView(
                 children: store.settings.contactList.map((i) {
                   return ListTile(
-                    leading: AddressIcon(i.address),
+                    leading: AddressIcon(i.address, i.pubKey),
                     title: Text(Fmt.accountName(context, i)),
                     subtitle: Text(Fmt.address(i.address)),
                     trailing: Container(

@@ -45,8 +45,8 @@ class _ProfileState extends State<Profile> {
               children: [
                 AddressIcon(
                   '',
+                  account.pubKey,
                   size: 70,
-                  pubKey: account.pubKey,
                   // addressToCopy: address,
                   tapToCopy: false,
                 ),
