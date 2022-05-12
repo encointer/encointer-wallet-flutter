@@ -120,118 +120,128 @@ class _WalletAppState extends State<WalletApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'EncointerWallet',
-      localizationsDelegates: [
-        AppLocalizationsDelegate(_locale),
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: [
-        const Locale('en', ''),
-        const Locale('de', ''),
-      ],
-      initialRoute: widget.config.initialRoute,
-      theme: _theme,
+    return GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScopeNode currentFocus = FocusScope.of(context);
 
-      // we use onGenerateRoute with CupertinoPageRoute objects to get specific page transition animations (sliding in from the right if there's a back button, sliding from the bottom up if there's a close button)
-      // it is preferable to use Navigator.pushNamed (rather than Navigator.push) for large projects
-      // cf. CupertinoPageRoute documentation -> fullscreenDialog: true, (in this case the page slides in from the bottom)
-      onGenerateRoute: (RouteSettings settings) {
-        switch (settings.name) {
-          case EncointerHomePage.route:
-            return CupertinoPageRoute(
-                builder: (context) => Observer(
-                      builder: (_) {
-                        return WillPopScopeWrapper(
-                          child: FutureBuilder<int>(
-                            future: _initStore(context),
-                            builder: (_, AsyncSnapshot<int> snapshot) {
-                              if (snapshot.hasData && _appStore.isReady) {
-                                return snapshot.data > 0 ? EncointerHomePage(_appStore) : CreateAccountEntryPage();
-                              } else {
-                                return CupertinoActivityIndicator();
-                              }
-                            },
-                          ),
-                        );
-                      },
-                    ),
-                settings: settings);
-          case NetworkSelectPage.route:
-            return CupertinoPageRoute(builder: (_) => NetworkSelectPage(_appStore, _changeTheme), settings: settings);
-          case CreateAccountEntryPage.route:
-            return CupertinoPageRoute(
-                builder: (_) => CreateAccountEntryPage(), settings: settings, fullscreenDialog: true);
-          case CreateAccountPage.route:
-            return CupertinoPageRoute(
-                builder: (_) => CreateAccountPage(_appStore), settings: settings, fullscreenDialog: true);
-          case AddAccountPage.route:
-            return CupertinoPageRoute(
-                builder: (_) => AddAccountPage(_appStore), settings: settings, fullscreenDialog: true);
-          case AccountSharePage.route:
-            return CupertinoPageRoute(
-                builder: (_) => AccountSharePage(_appStore), settings: settings, fullscreenDialog: true);
-          case CreatePinPage.route:
-            return CupertinoPageRoute(builder: (_) => CreatePinPage(_appStore), settings: settings);
-          case ImportAccountPage.route:
-            return CupertinoPageRoute(builder: (_) => ImportAccountPage(_appStore), settings: settings);
-          case ScanPage.route:
-            return CupertinoPageRoute(builder: (_) => ScanPage(_appStore), settings: settings);
-          case TxConfirmPage.route:
-            return CupertinoPageRoute(
-                builder: (_) => TxConfirmPage(_appStore), settings: settings, fullscreenDialog: true);
-          case TransferPage.route:
-            return CupertinoPageRoute(
-                builder: (_) => TransferPage(_appStore), settings: settings, fullscreenDialog: true);
-          case ReceivePage.route:
-            return CupertinoPageRoute(
-                builder: (_) => ReceivePage(_appStore), settings: settings, fullscreenDialog: true);
-          case TransferDetailPage.route:
-            return CupertinoPageRoute(
-                builder: (_) => TransferDetailPage(_appStore), settings: settings, fullscreenDialog: true);
-          case AccountManagePage.route:
-            return CupertinoPageRoute(
-                builder: (_) => AccountManagePage(_appStore), settings: settings, fullscreenDialog: true);
-          case ContactsPage.route:
-            return CupertinoPageRoute(builder: (_) => ContactsPage(_appStore), settings: settings);
-          case ContactListPage.route:
-            return CupertinoPageRoute(builder: (_) => ContactListPage(_appStore), settings: settings);
-          case ContactPage.route:
-            return CupertinoPageRoute(builder: (_) => ContactPage(_appStore), settings: settings);
-          case ChangePasswordPage.route:
-            return CupertinoPageRoute(
-                builder: (_) => ChangePasswordPage(_appStore.account, _appStore.settings), settings: settings);
-          case ContactDetailPage.route:
-            return CupertinoPageRoute(builder: (_) => ContactDetailPage(_appStore), settings: settings);
-          case SettingsPage.route:
-            return CupertinoPageRoute(
-                builder: (_) => SettingsPage(_appStore.settings, _changeLang), settings: settings);
-          case ExportAccountPage.route:
-            return CupertinoPageRoute(builder: (_) => ExportAccountPage(_appStore.account), settings: settings);
-          case ExportResultPage.route:
-            return CupertinoPageRoute(builder: (_) => ExportResultPage(), settings: settings);
-          case RemoteNodeListPage.route:
-            return CupertinoPageRoute(builder: (_) => RemoteNodeListPage(_appStore.settings), settings: settings);
-          case SS58PrefixListPage.route:
-            return CupertinoPageRoute(builder: (_) => SS58PrefixListPage(_appStore.settings), settings: settings);
-          case AboutPage.route:
-            return CupertinoPageRoute(builder: (_) => AboutPage(), settings: settings);
-          case RegisteringPage.route:
-            return CupertinoPageRoute(builder: (_) => RegisteringPage(_appStore), settings: settings);
-          case RegisterParticipantPanel.route:
-            return CupertinoPageRoute(builder: (_) => RegisterParticipantPanel(_appStore), settings: settings);
-          case AssigningPage.route:
-            return CupertinoPageRoute(builder: (_) => AssigningPage(_appStore), settings: settings);
-          case AttestingPage.route:
-            return CupertinoPageRoute(builder: (_) => AttestingPage(_appStore), settings: settings);
-          case BazaarMain.route:
-            return CupertinoPageRoute(builder: (_) => BazaarMain(_appStore), settings: settings);
-          default:
-            throw Exception('no builder specified for route named: [${settings.name}]');
-        }
-      },
-    );
+          if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
+            FocusManager.instance.primaryFocus.unfocus();
+          }
+        },
+        child: MaterialApp(
+          title: 'EncointerWallet',
+          localizationsDelegates: [
+            AppLocalizationsDelegate(_locale),
+            GlobalMaterialLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
+          supportedLocales: [
+            const Locale('en', ''),
+            const Locale('de', ''),
+          ],
+          initialRoute: widget.config.initialRoute,
+          theme: _theme,
+
+          // we use onGenerateRoute with CupertinoPageRoute objects to get specific page transition animations (sliding in from the right if there's a back button, sliding from the bottom up if there's a close button)
+          // it is preferable to use Navigator.pushNamed (rather than Navigator.push) for large projects
+          // cf. CupertinoPageRoute documentation -> fullscreenDialog: true, (in this case the page slides in from the bottom)
+          onGenerateRoute: (RouteSettings settings) {
+            switch (settings.name) {
+              case EncointerHomePage.route:
+                return CupertinoPageRoute(
+                    builder: (context) => Observer(
+                          builder: (_) {
+                            return WillPopScopeWrapper(
+                              child: FutureBuilder<int>(
+                                future: _initStore(context),
+                                builder: (_, AsyncSnapshot<int> snapshot) {
+                                  if (snapshot.hasData && _appStore.isReady) {
+                                    return snapshot.data > 0 ? EncointerHomePage(_appStore) : CreateAccountEntryPage();
+                                  } else {
+                                    return CupertinoActivityIndicator();
+                                  }
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                    settings: settings);
+              case NetworkSelectPage.route:
+                return CupertinoPageRoute(
+                    builder: (_) => NetworkSelectPage(_appStore, _changeTheme), settings: settings);
+              case CreateAccountEntryPage.route:
+                return CupertinoPageRoute(
+                    builder: (_) => CreateAccountEntryPage(), settings: settings, fullscreenDialog: true);
+              case CreateAccountPage.route:
+                return CupertinoPageRoute(
+                    builder: (_) => CreateAccountPage(_appStore), settings: settings, fullscreenDialog: true);
+              case AddAccountPage.route:
+                return CupertinoPageRoute(
+                    builder: (_) => AddAccountPage(_appStore), settings: settings, fullscreenDialog: true);
+              case AccountSharePage.route:
+                return CupertinoPageRoute(
+                    builder: (_) => AccountSharePage(_appStore), settings: settings, fullscreenDialog: true);
+              case CreatePinPage.route:
+                return CupertinoPageRoute(builder: (_) => CreatePinPage(_appStore), settings: settings);
+              case ImportAccountPage.route:
+                return CupertinoPageRoute(builder: (_) => ImportAccountPage(_appStore), settings: settings);
+              case ScanPage.route:
+                return CupertinoPageRoute(builder: (_) => ScanPage(_appStore), settings: settings);
+              case TxConfirmPage.route:
+                return CupertinoPageRoute(
+                    builder: (_) => TxConfirmPage(_appStore), settings: settings, fullscreenDialog: true);
+              case TransferPage.route:
+                return CupertinoPageRoute(
+                    builder: (_) => TransferPage(_appStore), settings: settings, fullscreenDialog: true);
+              case ReceivePage.route:
+                return CupertinoPageRoute(
+                    builder: (_) => ReceivePage(_appStore), settings: settings, fullscreenDialog: true);
+              case TransferDetailPage.route:
+                return CupertinoPageRoute(
+                    builder: (_) => TransferDetailPage(_appStore), settings: settings, fullscreenDialog: true);
+              case AccountManagePage.route:
+                return CupertinoPageRoute(
+                    builder: (_) => AccountManagePage(_appStore), settings: settings, fullscreenDialog: true);
+              case ContactsPage.route:
+                return CupertinoPageRoute(builder: (_) => ContactsPage(_appStore), settings: settings);
+              case ContactListPage.route:
+                return CupertinoPageRoute(builder: (_) => ContactListPage(_appStore), settings: settings);
+              case ContactPage.route:
+                return CupertinoPageRoute(builder: (_) => ContactPage(_appStore), settings: settings);
+              case ChangePasswordPage.route:
+                return CupertinoPageRoute(
+                    builder: (_) => ChangePasswordPage(_appStore.account, _appStore.settings), settings: settings);
+              case ContactDetailPage.route:
+                return CupertinoPageRoute(builder: (_) => ContactDetailPage(_appStore), settings: settings);
+              case SettingsPage.route:
+                return CupertinoPageRoute(
+                    builder: (_) => SettingsPage(_appStore.settings, _changeLang), settings: settings);
+              case ExportAccountPage.route:
+                return CupertinoPageRoute(builder: (_) => ExportAccountPage(_appStore.account), settings: settings);
+              case ExportResultPage.route:
+                return CupertinoPageRoute(builder: (_) => ExportResultPage(), settings: settings);
+              case RemoteNodeListPage.route:
+                return CupertinoPageRoute(builder: (_) => RemoteNodeListPage(_appStore.settings), settings: settings);
+              case SS58PrefixListPage.route:
+                return CupertinoPageRoute(builder: (_) => SS58PrefixListPage(_appStore.settings), settings: settings);
+              case AboutPage.route:
+                return CupertinoPageRoute(builder: (_) => AboutPage(), settings: settings);
+              case RegisteringPage.route:
+                return CupertinoPageRoute(builder: (_) => RegisteringPage(_appStore), settings: settings);
+              case RegisterParticipantPanel.route:
+                return CupertinoPageRoute(builder: (_) => RegisterParticipantPanel(_appStore), settings: settings);
+              case AssigningPage.route:
+                return CupertinoPageRoute(builder: (_) => AssigningPage(_appStore), settings: settings);
+              case AttestingPage.route:
+                return CupertinoPageRoute(builder: (_) => AttestingPage(_appStore), settings: settings);
+              case BazaarMain.route:
+                return CupertinoPageRoute(builder: (_) => BazaarMain(_appStore), settings: settings);
+              default:
+                throw Exception('no builder specified for route named: [${settings.name}]');
+            }
+          },
+        ));
   }
 }
