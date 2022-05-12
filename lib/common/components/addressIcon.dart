@@ -8,13 +8,11 @@ import 'package:jdenticon_dart/jdenticon_dart.dart';
 class AddressIcon extends StatelessWidget {
   AddressIcon(
     this.address,
-    this.pubKey,
-      {
+    this.pubKey, {
     this.size,
     this.tapToCopy = true,
     this.addressToCopy,
-  }
-      );
+  });
   final String address;
   final String pubKey;
   final double size;
@@ -41,16 +39,16 @@ class AddressIcon extends StatelessWidget {
             width: size ?? 96,
             height: size ?? 96,
             child: ClipOval(
-                    child: SizedBox.fromSize(
-                      size: Size.fromRadius(48), // Image radius
-                      child: SvgPicture.string(
-                        rawSvg,
-                        fit: BoxFit.fill,
-                        height: size ?? 96,
-                        width: size ?? 96,
-                      ),
-                    ),
-                  ),
+              child: SizedBox.fromSize(
+                size: Size.fromRadius(48), // Image radius
+                child: SvgPicture.string(
+                  rawSvg,
+                  fit: BoxFit.fill,
+                  height: size ?? 96,
+                  width: size ?? 96,
+                ),
+              ),
+            ),
           ),
           onTap: tapToCopy ? () => UI.copyAndNotify(context, addressToCopy ?? address) : null,
         );
