@@ -43,7 +43,7 @@ class ContactsPage extends StatelessWidget {
               child: ListView(
                 children: store.settings.contactList.map((i) {
                   return ListTile(
-                    leading: AddressIcon(i.address, i.pubKey),
+                    leading: AddressIcon(i.address, i.pubKey, size: 45),
                     title: Text(Fmt.accountName(context, i)),
                     subtitle: Text(Fmt.address(i.address)),
                     trailing: Container(
