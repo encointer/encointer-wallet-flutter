@@ -102,6 +102,8 @@ class _AssetsState extends State<Assets> {
       },
     )..start();
 
+    final appBar = AppBar(title: Text(dic.assets.home));
+
     return FocusDetector(
         onFocusLost: () {
           print('[home:FocusDetector] Focus Lost.');
@@ -116,9 +118,7 @@ class _AssetsState extends State<Assets> {
           balanceWatchdog.start();
         },
         child: Scaffold(
-          appBar: AppBar(
-            title: Text(dic.assets.home),
-          ),
+          appBar: appBar,
           body: SlidingUpPanel(
             maxHeight: _panelHeightOpen,
             minHeight: _panelHeightClosed,
@@ -126,8 +126,12 @@ class _AssetsState extends State<Assets> {
             parallaxOffset: .5,
             backdropEnabled: true,
             controller: panelController,
-            // body: MyLeafletMap(panelController),
-            body: SafeArea(
+            // The padding is a hack for #559, which needs https://github.com/akshathjain/sliding_up_panel/pull/303
+            body: Padding(
+              padding:
+                  // Fixme: 60 is hardcoded because we don't know the tabBar size here.
+                  // Should be tackled in #607
+                  EdgeInsets.only(bottom: 60 + appBar.preferredSize.height + MediaQuery.of(context).viewPadding.top),
               child: ListView(
                 padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
                 children: [
