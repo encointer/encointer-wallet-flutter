@@ -226,8 +226,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       if (!isKeyboard)
                         AddressIcon(
                           '',
+                          accountToBeEditedPubKey,
                           size: 130,
-                          pubKey: accountToBeEditedPubKey,
                         ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,

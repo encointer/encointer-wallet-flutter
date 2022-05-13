@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class AddressFormItem extends StatelessWidget {
   AddressFormItem(this.account, {this.label, this.onTap});
@@ -42,7 +42,7 @@ class AddressFormItem extends StatelessWidget {
                 margin: EdgeInsets.only(right: 8),
                 child: AddressIcon(
                   address,
-                  pubKey: account.pubKey,
+                  account.pubKey,
                   size: 32,
                   tapToCopy: false,
                 ),

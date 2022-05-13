@@ -129,8 +129,8 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
                     right: 0,
                     child: AddressIcon(
                       '',
+                      store.account.currentAccount.pubKey,
                       size: widget.accountAvatarSize,
-                      pubKey: store.account.currentAccount.pubKey,
                       tapToCopy: false,
                     ),
                   )
