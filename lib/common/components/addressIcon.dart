@@ -23,17 +23,15 @@ class AddressIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Observer(
       builder: (_) {
-        String rawSvg = Jdenticon.toSvg(
-          pubKey,
-          colorSaturation: 0.48,
-          grayscaleSaturation: 0.48,
-          colorLightnessMinValue: 0.44,
-          colorLightnessMaxValue: 0.44,
-          grayscaleLightnessMinValue: 0.44,
-          grayscaleLightnessMaxValue: 0.44,
-          backColor: '#e8eff9ee',
-          hues: [207],
-        );
+        String rawSvg = Jdenticon.toSvg(pubKey,
+            colorSaturation: 0.78,
+            grayscaleSaturation: 0.48,
+            colorLightnessMinValue: 0.33,
+            colorLightnessMaxValue: 0.66,
+            grayscaleLightnessMinValue: 0.44,
+            grayscaleLightnessMaxValue: 0.44,
+            backColor: '#d4edf8ff',
+            hues: [199]);
         return GestureDetector(
           child: Container(
             width: size ?? 96,

@@ -52,7 +52,7 @@ class _ProfileState extends State<Profile> {
                 ),
                 Positioned(
                   bottom: 0, right: 0, //give the values according to your requirement
-                  child: Icon(Iconsax.edit, color: ZurichLion.shade50),
+                  child: Icon(Iconsax.edit, color: ZurichLion.shade800),
                 ),
               ],
             ),
