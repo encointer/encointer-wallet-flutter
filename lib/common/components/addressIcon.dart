@@ -21,18 +21,16 @@ class AddressIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(
-      builder: (_) {
-        String rawSvg = Jdenticon.toSvg(pubKey,
-            colorSaturation: 0.78,
-            grayscaleSaturation: 0.48,
-            colorLightnessMinValue: 0.33,
-            colorLightnessMaxValue: 0.66,
-            grayscaleLightnessMinValue: 0.44,
-            grayscaleLightnessMaxValue: 0.44,
-            backColor: '#d4edf8ff',
-            hues: [199]);
-        return GestureDetector(
+    String rawSvg = Jdenticon.toSvg(pubKey,
+        colorSaturation: 0.78,
+        grayscaleSaturation: 0.48,
+        colorLightnessMinValue: 0.33,
+        colorLightnessMaxValue: 0.66,
+        grayscaleLightnessMinValue: 0.44,
+        grayscaleLightnessMaxValue: 0.44,
+        backColor: '#d4edf8ff',
+        hues: [199]);
+    return GestureDetector(
           child: Container(
             width: size ?? 96,
             height: size ?? 96,
@@ -50,7 +48,5 @@ class AddressIcon extends StatelessWidget {
           ),
           onTap: tapToCopy ? () => UI.copyAndNotify(context, addressToCopy ?? address) : null,
         );
-      },
-    );
   }
 }
