@@ -41,7 +41,7 @@ class CeremonyBox extends StatelessWidget {
                 CeremonyInfo(
                   currentTime: DateTime.now().millisecondsSinceEpoch,
                   assigningPhaseStart: store.encointer?.assigningPhaseStart,
-                  meetupTime: store.encointer?.community?.meetupTime ?? store.encointer.assigningPhaseStart ?? 0,
+                  meetupTime: store.encointer?.community?.meetupTime ?? store.encointer.attestingPhaseStart ?? 0,
                   ceremonyPhaseDurations: store.encointer.phaseDurations,
                   devMode: store.settings.developerMode,
                 ),

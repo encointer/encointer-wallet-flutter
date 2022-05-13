@@ -7,6 +7,8 @@ import 'package:test/test.dart';
 void main() {
   FlutterDriver driver;
   final config = Config();
+  // use this for local testing
+  // final config = Config(stagingDir: "./screenshots");
 
   group('EncointerWallet App', () {
     setUpAll(() async {
@@ -50,7 +52,7 @@ void main() {
       await driver.tap(find.byValueKey('cid-0-marker-description'));
 
       // Here we get the metadata because it is reset to null in the setChosenCid() method which is called, when a community is chosen
-      await driver.requestData(MockStorageSetup.GET_METADATA);
+      await driver.requestData(MockStorageSetup.HOME_PAGE);
       // take a screenshot of the EncointerHome Screen
       await screenshot(driver, config, 'encointer-home');
     }, timeout: Timeout(Duration(seconds: 120))); // needed for android CI with github actions
@@ -86,16 +88,13 @@ void main() {
     });
 
     test('encointerEntryPage', () async {
+      // attesting phase
+      await driver.requestData(MockStorageSetup.READY_FOR_MEETUP);
+
       log("tapping encointerEntry tap");
       // key is directly derived by `TabKey` enum to string
       await driver.tap(find.byValueKey('TabKey.Ceremonies'));
 
-      // communicate to the app isolate how to setup the store
-      await driver.requestData(MockStorageSetup.UNREGISTERED_PARTICIPANT);
-      await screenshot(driver, config, 'register-participant-page');
-
-      // attesting phase
-      await driver.requestData(MockStorageSetup.READY_FOR_MEETUP);
       await screenshot(driver, config, 'attesting-page');
     });
 

@@ -99,7 +99,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
               if (!widget.hideIdenticon)
                 Padding(
                   padding: const EdgeInsets.only(right: 8),
-                  child: AddressIcon(item.address, pubKey: item.pubKey, tapToCopy: false, size: 36),
+                  child: AddressIcon(item.address, item.pubKey, tapToCopy: false, size: 36),
                 ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -145,7 +145,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
               item.name.isNotEmpty ? item.name : Fmt.accountDisplayNameString(item.address, accInfo),
             ),
             leading: CircleAvatar(
-              child: AddressIcon(item.address, pubKey: item.pubKey),
+              child: AddressIcon(item.address, item.pubKey),
             ),
           ),
         );
