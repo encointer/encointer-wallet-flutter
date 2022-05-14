@@ -14,7 +14,7 @@ description: EncointerWallet made with Flutter.
 
 # bump version already while working on new release, bumping build number at the same time
 # bump build number even more, if needed to clarify what's deployed
-version: 1.5.2+833
+version: 1.5.3+834
 
 publish_to: none
 
@@ -84,6 +84,7 @@ dependencies:
   sliding_up_panel: ^2.0.0+1
   pausable_timer: ^1.0.0
   focus_detector: ^2.0.1
+  jdenticon_dart: ^1.2.1+1
 
 dev_dependencies:
   build_runner: ^1.11.0
@@ -126,6 +127,8 @@ flutter:
     - assets/nctr_logo.svg
     - assets/nctr_mosaic_background.svg
     - assets/nctr_logo_faces_only_thick.svg
+    # Leu icon for mocks
+    - assets/images/assets/icon_leu.svg
     # images
     ## images - settings
     - assets/images/public/nctr-cln.png

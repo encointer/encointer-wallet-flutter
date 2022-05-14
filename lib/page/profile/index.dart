@@ -45,14 +45,14 @@ class _ProfileState extends State<Profile> {
               children: [
                 AddressIcon(
                   '',
+                  account.pubKey,
                   size: 70,
-                  pubKey: account.pubKey,
                   // addressToCopy: address,
                   tapToCopy: false,
                 ),
                 Positioned(
                   bottom: 0, right: 0, //give the values according to your requirement
-                  child: Icon(Iconsax.edit, color: ZurichLion.shade50),
+                  child: Icon(Iconsax.edit, color: ZurichLion.shade800),
                 ),
               ],
             ),
@@ -181,12 +181,6 @@ class _ProfileState extends State<Profile> {
                                         }),
                               ]);
                         }),
-                  ),
-                  ListTile(
-                    title: Text(dic.profile.reputationOverall, style: h3Grey),
-                  ),
-                  ListTile(
-                    title: Text(dic.profile.reputationHistory, style: h3Grey),
                   ),
                   ListTile(
                     title: Text(dic.profile.about, style: Theme.of(context).textTheme.headline3),
