@@ -1,5 +1,6 @@
 import 'package:encointer_wallet/common/components/TapTooltip.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
+import 'package:encointer_wallet/page/qr_scan/qrScanPage.dart';
 import 'package:encointer_wallet/page/qr_scan/qrScanService.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -8,6 +9,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 
 class ContactPage extends StatefulWidget {
   ContactPage(this.store);
@@ -198,7 +200,15 @@ class _Contact extends State<ContactPage> {
                               ),
                             ],
                           )
-                        : Container()
+                        : Container(),
+                    SizedBox(height: 24),
+                    IconButton(
+                      iconSize: 48,
+                      icon: Icon(Iconsax.scan_barcode),
+                      onPressed: () => Navigator.of(context)
+                          .popAndPushNamed(ScanPage.route), // same as for clicking the scan button in the bottom bar
+                    ),
+                    SizedBox(height: 24),
                   ],
                 ),
               ),
