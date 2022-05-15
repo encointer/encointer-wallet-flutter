@@ -9,6 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_qr_scan/qrcode_reader_view.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+class ScanPageParams {
+  ScanPageParams({this.forceContext});
+  final QrScanContext forceContext;
+}
+
 class ScanPage extends StatelessWidget {
   ScanPage(this.store);
 
@@ -35,10 +40,11 @@ class ScanPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context).translationsForLocale();
+    ScanPageParams params = ModalRoute.of(context).settings.arguments;
     Future onScan(String data, String rawData) {
       try {
         QrScanData qrScanData = qrScanService.parse(data);
-        switch (qrScanData.context) {
+        switch (params?.forceContext ?? qrScanData.context) {
           case QrScanContext.contact:
             // show add contact and auto-fill data
             Navigator.of(context).popAndPushNamed(

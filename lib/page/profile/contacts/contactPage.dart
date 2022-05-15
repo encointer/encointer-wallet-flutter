@@ -205,8 +205,10 @@ class _Contact extends State<ContactPage> {
                     IconButton(
                       iconSize: 48,
                       icon: Icon(Iconsax.scan_barcode),
-                      onPressed: () => Navigator.of(context)
-                          .popAndPushNamed(ScanPage.route), // same as for clicking the scan button in the bottom bar
+                      onPressed: () => Navigator.of(context).popAndPushNamed(ScanPage.route,
+                          arguments: ScanPageParams(
+                              forceContext:
+                                  QrScanContext.contact)), // same as for clicking the scan button in the bottom bar
                     ),
                     SizedBox(height: 24),
                   ],
