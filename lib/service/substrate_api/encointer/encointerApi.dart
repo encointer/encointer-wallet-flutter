@@ -140,10 +140,8 @@ class EncointerApi {
       print("[EncointerApi]: " + encointerAccountStore.toString());
       return accountData;
     } catch (e) {
-      print("[EncointerApi]: Error getting aggregated account data ${e.toString()}");
+      throw Exception("[EncointerApi]: Error getting aggregated account data ${e.toString()}");
     }
-
-    return Future.value(null);
   }
 
   Future<List<String>> pendingExtrinsics() async {
@@ -151,19 +149,12 @@ class EncointerApi {
       var extrinsics = await _dartApi.pendingExtrinsics();
       return List.from(extrinsics);
     } catch (e) {
-      print("[EncointerApi]: Error getting pending extrinsics: ${e.toString()}");
+      throw Exception("[EncointerApi]: Error getting pending extrinsics: ${e.toString()}");
     }
-    return null;
   }
 
   Future<Map<CommunityIdentifier, BalanceEntry>> getAllBalances(String account) async {
-    try {
-      var balances = await _dartApi.getAllBalances(account);
-      return balances;
-    } catch (e) {
-      print("[EncointerApi]: Error getting all balances: ${e.toString()}");
-    }
-    return null;
+    return _dartApi.getAllBalances(account);
   }
 
   /// Queries the Scheduler pallet: encointerScheduler.currentCeremonyIndex().

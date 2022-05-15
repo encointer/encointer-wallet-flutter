@@ -532,6 +532,8 @@ class _AssetsState extends State<Assets> {
         widget.store.encointer.accountStores[widget.store.account.currentAddress]
             ?.addBalanceEntry(widget.store.encointer.chosenCid, BalanceEntry(0, 0));
       }
+    }).catchError((e) {
+      print('[home:refreshBalanceAndNotify] WARNING: could not update balance: $e');
     });
   }
 }
