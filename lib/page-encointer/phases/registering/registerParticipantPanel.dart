@@ -85,10 +85,19 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
                   ],
                 ),
           store.encointer.communityAccount.isRegistered
-              ? RoundedButton(
-                  text: dic.encointer.youAreRegistered, onPressed: null, color: Theme.of(context).disabledColor)
+              ? Column(children: <Widget>[
+                  RoundedButton(
+                      text: dic.encointer.youAreRegistered, onPressed: null, color: Theme.of(context).disabledColor),
+                  Text("as " + store.encointer.communityAccount.participantType.toString().split('.').last)
+                ])
               : store.encointer.account.reputations != null
-                  ? RoundedButton(text: dic.encointer.registerParticipant, onPressed: () => _submit())
+                  ? Column(children: <Widget>[
+                      RoundedButton(
+                          text: dic.encointer.registerParticipant + ": " + store.account.currentAccount.name.toString(),
+                          onPressed: () => _submit()),
+                      // skipping dic here because it's throwaway code anyway
+                      Text("reputation: " + store.encointer.account.reputations.length.toString())
+                    ])
                   : RoundedButton(
                       text: dic.encointer.fetchingReputations,
                       onPressed: null,

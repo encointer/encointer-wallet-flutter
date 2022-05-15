@@ -8,6 +8,7 @@ import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/page/qr_scan/qrScanPage.dart';
+import 'package:encointer_wallet/page/qr_scan/qrScanService.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -22,11 +23,12 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 
 class TransferPageParams {
-  TransferPageParams({this.cid, this.communitySymbol, this.recipient, this.amount, this.redirect});
+  TransferPageParams({this.cid, this.communitySymbol, this.recipient, this.label, this.amount, this.redirect});
 
   final CommunityIdentifier cid;
   final String communitySymbol;
   final String recipient;
+  final String label;
   final double amount;
   final String redirect;
 }
@@ -107,8 +109,10 @@ class _TransferPageState extends State<TransferPage> {
                         IconButton(
                           iconSize: 48,
                           icon: Icon(Iconsax.scan_barcode),
-                          onPressed: () => Navigator.of(context)
-                              .pushNamed(ScanPage.route), // same as for clicking the scan button in the bottom bar
+                          onPressed: () => Navigator.of(context).popAndPushNamed(ScanPage.route,
+                              arguments: ScanPageParams(
+                                  forceContext:
+                                      QrScanContext.invoice)), // same as for clicking the scan button in the bottom bar
                         ),
                         SizedBox(height: 24),
                         EncointerTextFormField(
@@ -236,6 +240,7 @@ class _TransferPageState extends State<TransferPage> {
       if (args.recipient != null) {
         final AccountData acc = AccountData();
         acc.address = args.recipient;
+        acc.name = args.label;
         setState(() {
           _accountTo = acc;
         });
