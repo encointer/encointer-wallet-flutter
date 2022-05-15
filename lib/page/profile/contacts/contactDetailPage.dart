@@ -80,12 +80,14 @@ class ContactDetailPage extends StatelessWidget {
                 child: ListView(
                   children: <Widget>[
                     SizedBox(height: 30),
-                    AddressIcon(
-                      account.address,
-                      account.pubKey,
-                      size: 130,
-                      tapToCopy: true,
-                    ),
+                    Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                      AddressIcon(
+                        account.address,
+                        account.pubKey,
+                        size: 130,
+                        tapToCopy: true,
+                      )
+                    ]),
                     SizedBox(height: 20),
                     // The below is duplicate code of `accountManagePage`, but according to figma the design will
                     // change here.
