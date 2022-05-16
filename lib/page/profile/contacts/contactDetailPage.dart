@@ -141,6 +141,7 @@ class ContactDetailPage extends StatelessWidget {
                       cid: store.encointer.chosenCid,
                       communitySymbol: store.encointer.community?.symbol,
                       recipient: account.address,
+                      label: account.name,
                       amount: null,
                       redirect: '/',
                     ),

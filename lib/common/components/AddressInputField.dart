@@ -105,7 +105,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    item.name.isNotEmpty ? item.name : Fmt.accountDisplayNameString(item.address, accInfo),
+                    item.name?.isNotEmpty ?? false ? item.name : Fmt.accountDisplayNameString(item.address, accInfo),
                   ),
                   Text(
                     Fmt.address(address),
