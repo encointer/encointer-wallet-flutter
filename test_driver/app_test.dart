@@ -103,6 +103,7 @@ void main() {
       await driver.tap(find.byValueKey('start-meetup'));
       await driver.tap(find.byValueKey('attendees-count'));
       await driver.enterText('3');
+      await driver.tap(find.byValueKey('ceremony-step-1-next'));
       await screenshot(driver, config, 'claim-qr');
     });
   });

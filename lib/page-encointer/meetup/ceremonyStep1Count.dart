@@ -64,6 +64,7 @@ class CeremonyStep1Count extends StatelessWidget {
                 ),
               ),
               PrimaryButton(
+                key: Key('ceremony-step-1-next'),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
