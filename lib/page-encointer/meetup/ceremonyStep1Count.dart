@@ -1,10 +1,10 @@
 import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
+import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:encointer_wallet/common/theme.dart';
 
 import 'ceremonyProgressBar.dart';
 
@@ -61,10 +61,10 @@ class CeremonyStep1Count extends StatelessWidget {
                       height: 48,
                     ),
                     EncointerTextFormField(
-                      labelText: dic.encointer.numberOfAttendies,
+                      labelText: dic.encointer.numberOfAttendees,
                       textStyle: Theme.of(context).textTheme.headline1.copyWith(color: encointerBlack),
                       controller: _attendeesCountController,
-                      textFormFieldKey: Key('attendies-count'),
+                      textFormFieldKey: Key('attendees-count'),
                     ),
                   ],
                 ),
