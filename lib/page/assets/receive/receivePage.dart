@@ -53,8 +53,6 @@ class _ReceivePageState extends State<ReceivePage> {
       child: QrImage(
         size: MediaQuery.of(context).copyWith().size.height / 2,
         data: invoice.join('\n'),
-        embeddedImage: AssetImage('assets/images/public/app.png'),
-        embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
       ),
     );
   }
@@ -74,7 +72,7 @@ class _ReceivePageState extends State<ReceivePage> {
       () {
         webApi.encointer.pendingExtrinsics().then((extrinsics) {
           print("[receivePage] pendingExtrinsics ${extrinsics.toString()}");
-          if ((extrinsics?.length ?? 0 > 0) && (!observedPendingExtrinsic)) {
+          if (((extrinsics?.length ?? 0) > 0) && (!observedPendingExtrinsic)) {
             extrinsics.forEach((xt) {
               if (xt.contains(widget.store.account.currentAccountPubKey.substring(2))) {
                 _showSnackBar(context, dic.profile.observedPendingExtrinsic);
