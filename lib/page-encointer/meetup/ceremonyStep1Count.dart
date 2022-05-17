@@ -42,24 +42,18 @@ class CeremonyStep1Count extends StatelessWidget {
                 child: ListView(
                   children: [
                     CeremonyProgressBar(progress: 1),
-                    SizedBox(
-                      height: 48,
-                    ),
+                    SizedBox(height: 48),
                     Center(
                       child: Text(
                         'Count',
-                        style: Theme.of(context).textTheme.headline2.copyWith(
-                              color: ZurichLion.shade600,
-                            ),
+                        style: Theme.of(context).textTheme.headline2.copyWith(color: ZurichLion.shade600),
                       ),
                     ),
                     Center(
                         child: Text('How many people are attending?',
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black, height: 2))),
-                    SizedBox(
-                      height: 48,
-                    ),
+                    SizedBox(height: 48),
                     EncointerTextFormField(
                       labelText: dic.encointer.numberOfAttendees,
                       textStyle: Theme.of(context).textTheme.headline1.copyWith(color: encointerBlack),
@@ -77,9 +71,7 @@ class CeremonyStep1Count extends StatelessWidget {
                     SizedBox(width: 12),
                     Text(
                       dic.encointer.next,
-                      style: Theme.of(context).textTheme.headline3.copyWith(
-                            color: ZurichLion.shade50,
-                          ),
+                      style: Theme.of(context).textTheme.headline3.copyWith(color: ZurichLion.shade50),
                     ),
                   ],
                 ),
