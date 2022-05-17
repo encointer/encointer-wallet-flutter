@@ -1,14 +1,14 @@
 import 'dart:convert';
 import 'dart:typed_data';
-import 'package:encointer_wallet/page-encointer/meetup/scanClaimQrCode.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/page-encointer/meetup/scanClaimQrCode.dart';
+import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -55,15 +55,11 @@ class CeremonyStep2Scan extends StatelessWidget {
                 child: ListView(
                   children: [
                     CeremonyProgressBar(progress: 2),
-                    SizedBox(
-                      height: 48,
-                    ),
+                    SizedBox(height: 48),
                     Center(
                       child: Text(
                         'Scan',
-                        style: Theme.of(context).textTheme.headline2.copyWith(
-                              color: ZurichLion.shade600,
-                            ),
+                        style: Theme.of(context).textTheme.headline2.copyWith(color: ZurichLion.shade600),
                       ),
                     ),
                     Center(
@@ -119,9 +115,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                     SizedBox(width: 12),
                     Text(
                       dic.encointer.scanOthers,
-                      style: Theme.of(context).textTheme.headline3.copyWith(
-                            color: ZurichLion.shade50,
-                          ),
+                      style: Theme.of(context).textTheme.headline3.copyWith(color: ZurichLion.shade50),
                     ),
                   ],
                 ),
