@@ -37,7 +37,7 @@ abstract class TranslationsEncointer {
 }
 
 class TranslationsEnEncointer implements TranslationsEncointer {
-  get registerParticipant => 'Register Participant';
+  get registerParticipant => 'Register';
   get claimsSubmit => 'Submit claims';
   get claimsPurge => 'Purge previously scanned claims';
   get claimsPurgeConfirm => 'Are you sure, you want to purge all scanned claims?';
@@ -73,36 +73,37 @@ class TranslationsEnEncointer implements TranslationsEncointer {
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
-  get registerParticipant => 'Registeriere Teilnehmer';
-  get claimsSubmit => 'Meetupbestätigungen einreichen';
-  get claimsPurge => 'Bereits gescannte Meetupbestätigungen löschen';
-  get claimsPurgeConfirm => 'Bist du sicher, dass du alles gescannte Meetupbestätigungen löschen möchtest?';
+  get registerParticipant => 'Registeriere';
+  get claimsSubmit => 'Anträge einreichen';
+  get claimsPurge => 'Bereits gescannte Anträge löschen';
+  get claimsPurgeConfirm => 'Bist du sicher, dass du alle gescannte Anträge löschen möchtest?';
   get encointerCeremony => 'Encointer Zeremonie';
   get nextCeremonyTimeLeft => 'Nächste Zeremonie ist in';
   get nextCeremonyDateLabel => 'Nächste Zeremonie:';
-  get claimQr => 'Meine Behauptung der Anwesenheit';
-  get claimsScanned => 'Du hast AMOUNT_PLACEHOLDER Behauptungen gescannt';
-  get claimsScannedAlready => 'Letzte gescannte Behauptung wurde aktualisiert';
-  get claimsScannedDecodeFailed => 'Gescannte Behauptung konnte nicht dekodiert werden.';
-  get claimsScannedNew => 'Neue Behauptung gescannt';
-  get claimsScannedNOfM => "SCANNED_COUNT / TOTAL_COUNT gescannte Behauptungen";
-  get claimsSubmitDetail => 'Reiche AMOUNT Behauptungen für die letzte Zeremonie ein';
+  get claimQr => 'Mein Antrag auf Anwesenheitsbestätigung';
+  get claimsScanned => 'Du hast AMOUNT_PLACEHOLDER Anträge gescannt';
+  get claimsScannedAlready => 'bereits gescannter Antrag wurde aktualisiert';
+  get claimsScannedDecodeFailed => 'Gescannter Antrag konnte nicht dekodiert werden.';
+  get claimsScannedNew => 'Neuer Antrag gescannt';
+  get claimsScannedNOfM => "SCANNED_COUNT / TOTAL_COUNT gescannte Anträge";
+  get claimsSubmitDetail => 'Reiche AMOUNT Anträge für die aktuelle Zeremonie ein';
   get communities => 'Gemeinschaften';
-  get noCommunitiesAreYouOffline => 'Keine Gemeinschaften gefunden, du kannst später eine auswählen. Bist du offline?';
+  get noCommunitiesAreYouOffline => 'Keine Gemeinschaften gefunden. Du kannst später eine auswählen. Bist du offline?';
   get encointer => 'Encointer Zeremonie';
-  get meetupAttended => 'Am letzen Treffen teilgenommen';
-  get meetupClaimantInvalid => 'Dieser Antragssteller gehört nicht zum Treffen. Behauptung wurde nicht gespeichert.';
-  get meetupLocation => 'Meetup Treffpunkt';
-  get timeUntilCeremonyStarts => 'Zeit bis zum Treffen:';
-  get startCeremony => 'Zeremonie starten';
+  get meetupAttended => 'An der letzen Versammlung teilgenommen';
+  get meetupClaimantInvalid =>
+      'Diese* Antragssteller*in gehört nicht zu deiner Versammlung. Antrag wurde nicht gespeichert.';
+  get meetupLocation => 'Treffpunkt der Versammlung';
+  get timeUntilCeremonyStarts => 'Zeit bis zur Versammlung:';
+  get startCeremony => 'Versammlung starten';
   get youAreRegistered => 'Bereits registriert';
   get registerUntil => 'Registriere dich bis am';
-  get showCeremonyLocation => 'Ort der Zeremonie';
+  get showCeremonyLocation => 'Ort der Versammlung';
   get ceremonyIsOver => 'Die Zeremonie ist vorbei';
   get today => 'Heute';
   get tomorrow => 'Morgen';
-  get calendarEntryDescription => 'Nimm am Treffen teil um dein Einkommen zu erhalten';
-  get youAreNotRegistered => 'Du hast dich für eine Zeremonie der gewählten Gemeinschaft registriert am:';
+  get calendarEntryDescription => 'Nimm an der Versammlung teil um dein Einkommen zu erhalten';
+  get youAreNotRegistered => 'Du bist leider keiner Versammlung zugewiesen worden am';
   get howManyParticipantsShowedUp => 'Wieviele Teilnehmende sind da?';
   get ceremonyWillTakePlaceOn => 'Die Zeremonie wird stattfinden am';
   get fetchingReputations => 'Es wird überprüft, ob du bereits Reputation hast';

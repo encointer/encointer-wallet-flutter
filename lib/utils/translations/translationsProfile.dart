@@ -24,7 +24,7 @@ abstract class TranslationsProfile {
   String get contactNameAlreadyExists;
   String get contactSave;
   String get detailsEnter;
-  String get deleteConfirm;
+  String get confirmPin;
   String get developer;
   String get enableBazaar;
   String get export;
@@ -60,6 +60,7 @@ abstract class TranslationsProfile {
   String get title;
   String get unlock;
   String get addAccount;
+  String get addCommunity;
   String get accountCreate;
   String get doYouAlreadyHaveAnAccount;
   String get accountNameChooseHint;
@@ -106,7 +107,7 @@ class TranslationsEnProfile implements TranslationsProfile {
   get contactNameError => 'Name can not be empty';
   get contactNameAlreadyExists => 'Name exists already';
   get contactSave => 'Save';
-  get deleteConfirm => 'Input your PIN to confirm';
+  get confirmPin => 'Input your PIN to confirm';
   get developer => 'Developer mode';
   get enableBazaar => 'Enable Bazaar';
   get export => 'Export Account';
@@ -146,6 +147,7 @@ class TranslationsEnProfile implements TranslationsProfile {
   get title => 'Profile';
   get unlock => 'You need to enter your PIN to add a new account';
   get addAccount => 'Add account';
+  get addCommunity => 'Add community';
   get accountCreate => 'Create account';
   get doYouAlreadyHaveAnAccount => 'Do you already have an account?';
   get accountNameChooseHint => 'You can change it later in your profile settings.';
@@ -160,7 +162,7 @@ class TranslationsEnProfile implements TranslationsProfile {
   get ceremonies => 'Ceremonies';
   get reputation => 'Reputation';
   get shareLinkHint => 'Or you can share a link:';
-  get tokenSend => 'Send Tokens';
+  get tokenSend => 'Send SYMBOL';
   get addContact => 'Add contact';
   get deleteAccount => 'delete';
   get exportAccount => 'export';
@@ -182,7 +184,7 @@ class TranslationsDeProfile implements TranslationsProfile {
   get canEndorseInRegisteringPhaseOnly => 'Du kannst nur in der Registrierungsphase jemanden als zuverlässig markieren';
   get contactAddress => 'Addresse';
   get contactAddressError => 'Ungültige Adresse';
-  get contactDelete => 'Lösche';
+  get contactDelete => 'Löschen';
   get contactDeleteWarn => 'Bist du sicher, dass du diese Adresse löschen möchtest?';
   get contactEndorse => 'Als vertrauenswürdig bestätigen';
   get contactAlreadyExists => 'Adresse existiert bereits';
@@ -191,7 +193,7 @@ class TranslationsDeProfile implements TranslationsProfile {
   get contactNameError => 'Name muss ausgefüllt werden';
   get contactNameAlreadyExists => 'Name existiert bereits';
   get contactSave => 'Speichere';
-  get deleteConfirm => 'Gebe die PIN ein um zu bestätigen';
+  get confirmPin => 'Bitte PIN bestätigen';
   get developer => 'Entwickler-Modus';
   get enableBazaar => 'Bazaar aktivieren';
   get export => 'Konto exportieren';
@@ -231,6 +233,7 @@ class TranslationsDeProfile implements TranslationsProfile {
   get title => 'Profil';
   get unlock => 'Du musst deinen PIN eingeben um einen neuen Account hinzuzufügen';
   get addAccount => 'Konto hinzufügen';
+  get addCommunity => 'Gem. hinzufügen';
   get accountCreate => 'Konto kreieren';
   get doYouAlreadyHaveAnAccount => 'Hast du bereits ein Konto?';
   get accountNameChooseHint => 'Du kannst den Namen später ändern in den Profileinstellungen.';
@@ -244,7 +247,7 @@ class TranslationsDeProfile implements TranslationsProfile {
   get recoveryProxy => 'Wiederherstellungsproxy';
   get ceremonies => 'Zeremonien';
   get reputation => 'Reputation';
-  get tokenSend => 'Sende Tokens';
+  get tokenSend => 'SYMBOL senden';
   get addContact => 'Kontakt hinzufügen';
   get deleteAccount => 'löschen';
   get exportAccount => 'exportieren';
@@ -273,7 +276,7 @@ class TranslationsZhProfile implements TranslationsProfile {
   get contactNameError => '名称不能为空';
   get contactNameAlreadyExists => '名称已存在';
   get contactSave => '保存';
-  get deleteConfirm => '输入密码确认操作';
+  get confirmPin => '输入密码确认操作';
   get developer => '开发者模式';
   get export => '导出账户';
   get exportMnemonicOk => 'Mnemonic 已经复制到剪切板';
@@ -307,6 +310,7 @@ class TranslationsZhProfile implements TranslationsProfile {
   get pinInfo => 'PIN 应至少包含 4 位数字。 如果 PIN 码丢失，则无法恢复帐户，除非您通过个人资料页面进行了备份。';
   get pinSecure => '使用 PIN 保护您的帐户。';
   get addAccount => '添加帐户';
+  get addCommunity => throw UnimplementedError();
   get recoveryProxy => 'recovery proxy';
   get ceremonies => throw UnimplementedError();
   get reputation => throw UnimplementedError();
