@@ -102,16 +102,6 @@ class ContactDetailPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    SizedBox(height: 32),
-                    Row(children: [
-                      Text(dic.profile.reputation,
-                          style: Theme.of(context).textTheme.headline3.copyWith(color: Color(0xff353535)))
-                    ]),
-                    SizedBox(height: 32),
-                    Row(children: [
-                      Text(dic.profile.ceremonies,
-                          style: Theme.of(context).textTheme.headline3.copyWith(color: Color(0xff353535)))
-                    ]),
                   ],
                 ),
               ),
@@ -131,7 +121,8 @@ class ContactDetailPage extends StatelessWidget {
                   children: [
                     Icon(Iconsax.send_sqaure_2),
                     SizedBox(width: 12),
-                    Text("${dic.profile.tokenSend}", style: Theme.of(context).textTheme.headline3),
+                    Text(dic.profile.tokenSend.replaceAll('SYMBOL', store.encointer.community?.symbol),
+                        style: Theme.of(context).textTheme.headline3),
                   ],
                 ),
                 onPressed: () {
@@ -182,7 +173,7 @@ class EndorseButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Iconsax.send_sqaure_2),
+          Icon(Iconsax.verify),
           SizedBox(width: 12),
           Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
         ],
