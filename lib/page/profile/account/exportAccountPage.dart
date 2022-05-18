@@ -53,7 +53,7 @@ class ExportAccountPage extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: Text(dic.profile.deleteConfirm),
+          title: Text(dic.profile.confirmPin),
           content: Padding(
             padding: EdgeInsets.only(top: 16),
             child: CupertinoTextField(

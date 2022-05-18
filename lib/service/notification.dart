@@ -87,7 +87,7 @@ class NotificationPlugin {
         priority: Priority.high,
         ticker: 'ticker',
         sound: RawResourceAndroidNotificationSound('lions_growl'));
-    var iOSPlatformChannelSpecifics = IOSNotificationDetails(sound: 'lions_growl.wav');
+    var iOSPlatformChannelSpecifics = IOSNotificationDetails(sound: 'lions_growl.wav', presentSound: true);
     var platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(0, title, body, platformChannelSpecifics,

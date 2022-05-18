@@ -101,7 +101,11 @@ class _TransferPageState extends State<TransferPage> {
                             ? AccountBalanceWithMoreDigits(store: store, available: available, decimals: decimals)
                             : CupertinoActivityIndicator(),
                         Text(
-                          "${I18n.of(context).translationsForLocale().assets.yourBalanceFor} ${Fmt.accountName(context, store.account.currentAccount)}",
+                          I18n.of(context)
+                              .translationsForLocale()
+                              .assets
+                              .yourBalanceFor
+                              .replaceAll("ACCOUNT_NAME", Fmt.accountName(context, store.account.currentAccount)),
                           style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
                           textAlign: TextAlign.center,
                         ),
@@ -170,7 +174,7 @@ class _TransferPageState extends State<TransferPage> {
                       children: [
                         Icon(Iconsax.send_sqaure_2),
                         SizedBox(width: 12),
-                        Text(dic.assets.amountToBeTransferred),
+                        Text(dic.assets.transfer),
                       ],
                     ),
                     onPressed: _handleSubmit,

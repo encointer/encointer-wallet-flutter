@@ -401,7 +401,7 @@ class _AssetsState extends State<Assets> {
           ),
           child: Icon(Icons.add, size: 36),
         ),
-        name: 'Add Community',
+        name: dic.profile.addCommunity,
       ),
     );
     return allCommunities;
