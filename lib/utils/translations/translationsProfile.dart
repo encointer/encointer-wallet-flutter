@@ -167,7 +167,7 @@ class TranslationsEnProfile implements TranslationsProfile {
   get deleteAccount => 'delete';
   get exportAccount => 'export';
   get errorUserNameIsRequired => 'User name cannot be blank';
-  get observedPendingExtrinsic => 'Pending extrinsic observed. Please wait for confirmation!';
+  get observedPendingExtrinsic => 'Pending transaction observed. Please wait for confirmation!';
 }
 
 class TranslationsDeProfile implements TranslationsProfile {
