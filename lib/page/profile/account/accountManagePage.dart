@@ -118,7 +118,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
     showCupertinoDialog(
       context: context,
       builder: (BuildContext context) {
-        return showPasswordInputDialog(context, accountToBeEdited, Text(dic.profile.deleteConfirm), (password) async {
+        return showPasswordInputDialog(context, accountToBeEdited, Text(dic.profile.confirmPin), (password) async {
           print('password is: $password');
           setState(() {
             store.settings.setPin(password);

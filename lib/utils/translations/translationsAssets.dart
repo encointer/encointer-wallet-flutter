@@ -67,7 +67,7 @@ class TranslationsEnAssets implements TranslationsAssets {
   get amountToBeTransferred => 'Send amount';
   get invoiceAmount => 'Invoice amount';
   get shareInvoice => 'Share Invoice';
-  get yourBalanceFor => 'Your balance for';
+  get yourBalanceFor => 'Your balance, ACCOUNT_NAME';
   get balance => 'Balance';
   get invoice => 'Invoice';
   get incomingConfirmed => 'incoming AMOUNT CID_SYMBOL for ACCOUNT_NAME confirmed';
@@ -75,7 +75,7 @@ class TranslationsEnAssets implements TranslationsAssets {
 }
 
 class TranslationsDeAssets implements TranslationsAssets {
-  get address => 'Sende zu Adresse';
+  get address => 'Sende an Adresse';
   get amountError => 'Ungültiger Betrag';
   get insufficientBalance => 'Ungenügender Saldo';
   get block => 'Block';
@@ -93,18 +93,18 @@ class TranslationsDeAssets implements TranslationsAssets {
   get home => 'Startbildschirm';
   get issuanceClaimed => 'Kein ausstehendes Gemeinschaftseinkommen';
   get issuancePending => 'Ausstehendes Gemeinschaftseinkommen einfordern';
-  get receive => 'Erhalte';
+  get receive => 'Fordern';
   get scan => 'Scannen';
   get success => 'Erfolgreich';
   get tip => 'Trinkgeld';
   get tipHint => 'Trinkgeld für diese Transaktion hinzufügen, bezahle dem Block Author für höhere Priorität.';
   get to => 'Nach';
-  get transfer => 'Transfer';
+  get transfer => 'Senden';
   get value => 'Wert';
-  get amountToBeTransferred => 'Rechnungsbetrag';
+  get amountToBeTransferred => 'Betrag';
   get invoiceAmount => 'Rechnungsbetrag';
   get shareInvoice => 'Teile als Rechnung';
-  get yourBalanceFor => 'Ihr Kontostand auf';
+  get yourBalanceFor => 'Dein Kontostand, ACCOUNT_NAME';
   get balance => 'Kontostand';
   get invoice => 'Rechnungsbetrag';
   get incomingConfirmed => 'Empfang von AMOUNT CID_SYMBOL für ACCOUNT_NAME bestätigt';
