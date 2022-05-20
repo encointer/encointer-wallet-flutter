@@ -47,7 +47,7 @@ class CeremonyStep2Scan extends StatelessWidget {
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(30, 24, 30, 4),
+          padding: EdgeInsets.fromLTRB(30, 24, 30, 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -69,9 +69,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                         style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black, height: 1.25),
                       ),
                     ),
-                    SizedBox(
-                      height: 24,
-                    ),
+                    SizedBox(height: 12),
                     Container(
                       width: 395,
                       height: 395,
@@ -93,6 +91,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                   ],
                 ),
               ),
+              SizedBox(height: 12),
               ElevatedButton(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -106,7 +105,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                   Navigator.push(context, MaterialPageRoute(builder: (_) => CeremonyStep3Finish(store)));
                 },
               ),
-              SizedBox(height: 2),
+              SizedBox(height: 12),
               PrimaryButton(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
