@@ -27,9 +27,7 @@ class CeremonyStep1Count extends StatelessWidget {
           IconButton(
             key: Key('close-encointer-ceremony-step1'),
             icon: Icon(Icons.close),
-            onPressed: () {
-              Navigator.pop(context);
-            },
+            onPressed: () => Navigator.of(context).pop(),
           )
         ],
       ),
