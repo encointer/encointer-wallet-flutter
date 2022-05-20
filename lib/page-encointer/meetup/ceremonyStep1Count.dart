@@ -44,8 +44,9 @@ class CeremonyStep1Count extends StatelessWidget {
                     CeremonyProgressBar(progress: 1),
                     SizedBox(height: 48),
                     Center(
-                        child: Text('Count',
-                            style: Theme.of(context).textTheme.headline2.copyWith(color: ZurichLion.shade600))),
+                      child: Text(dic.encointer.count,
+                          style: Theme.of(context).textTheme.headline2.copyWith(color: ZurichLion.shade600)),
+                    ),
                     Center(
                       child: Text(dic.encointer.howManyParticipantsShowedUp,
                           textAlign: TextAlign.center,
