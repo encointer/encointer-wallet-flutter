@@ -87,7 +87,6 @@ class CeremonyStep2Scan extends StatelessWidget {
                         },
                       ),
                     ),
-                    // TODO show the QR Code to be scanned
                   ],
                 ),
               ),
