@@ -127,7 +127,8 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get next => 'Weiter';
   get closeMeetup => 'Treffen schliessen';
   get scan => 'Scannen';
-  get scanDescriptionForMeetup => 'Jeder Anwesende muss alle anderen einmal scannen, und von allen einmal gescannt werden.';
+  get scanDescriptionForMeetup =>
+      'Jeder Anwesende muss alle anderen einmal scannen, und von allen einmal gescannt werden.';
   get scanOthers => 'Andere scannen';
   get finish => 'Beenden';
 }
@@ -171,7 +172,7 @@ class TranslationsZhEncointer implements TranslationsEncointer {
   get next => throw UnimplementedError();
   get closeMeetup => throw UnimplementedError();
   get scan => throw UnimplementedError();
-  get scanDescriptionForMeetup =>  throw UnimplementedError();
+  get scanDescriptionForMeetup => throw UnimplementedError();
   get scanOthers => throw UnimplementedError();
   get finish => throw UnimplementedError();
 }
