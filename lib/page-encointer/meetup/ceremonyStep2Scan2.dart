@@ -58,13 +58,13 @@ class CeremonyStep2Scan extends StatelessWidget {
                     SizedBox(height: 48),
                     Center(
                       child: Text(
-                        'Scan',
+                        dic.encointer.scan,
                         style: Theme.of(context).textTheme.headline2.copyWith(color: ZurichLion.shade600),
                       ),
                     ),
                     Center(
                       child: Text(
-                        'Every attendee must scan everyone else and be scanned by everyone else.',
+                        dic.encointer.scanDescriptionForMeetup,
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black, height: 1.25),
                       ),

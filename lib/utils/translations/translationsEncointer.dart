@@ -38,6 +38,8 @@ abstract class TranslationsEncointer {
   String get numberOfAttendees;
   String get next;
   String get closeMeetup;
+  String get scan;
+  String get scanDescriptionForMeetup;
   String get scanOthers;
   String get finish;
 }
@@ -80,6 +82,8 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   get numberOfAttendees => 'Number of attendees';
   get next => 'Next';
   get closeMeetup => 'Close meetup';
+  get scan => 'Scan';
+  get scanDescriptionForMeetup => 'Every attendee must scan everyone else and be scanned by everyone else.';
   get scanOthers => 'Scan others';
   get finish => 'Finish';
 }
@@ -122,6 +126,8 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get numberOfAttendees => 'Anzahl Teilnehmende';
   get next => 'Weiter';
   get closeMeetup => 'Treffen schliessen';
+  get scan => 'Scannen';
+  get scanDescriptionForMeetup => 'Jeder Anwesende muss alle anderen einmal scannen, und von allen einmal gescannt werden.';
   get scanOthers => 'Andere scannen';
   get finish => 'Beenden';
 }
@@ -164,6 +170,8 @@ class TranslationsZhEncointer implements TranslationsEncointer {
   get numberOfAttendees => throw UnimplementedError();
   get next => throw UnimplementedError();
   get closeMeetup => throw UnimplementedError();
+  get scan => throw UnimplementedError();
+  get scanDescriptionForMeetup =>  throw UnimplementedError();
   get scanOthers => throw UnimplementedError();
   get finish => throw UnimplementedError();
 }
