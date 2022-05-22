@@ -18,6 +18,7 @@ class EncointerEntry extends StatelessWidget {
   EncointerEntry(this.store);
 
   final AppStore store;
+  bool refreshing = false;
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +29,17 @@ class EncointerEntry extends StatelessWidget {
         },
         onFocusGained: () {
           print('[encointerCeremonyPage:FocusDetector] Focus Gained.');
-          store.encointer.updateState();
-          webApi.encointer.getCommunityData();
+          refreshing = true;
+          webApi.encointer.getCommunityMetadata().then((v) => webApi.encointer.getAllMeetupLocations().then((v) =>
+              webApi.encointer.getDemurrage().then((v) => webApi.encointer.getBootstrappers().then((v) => webApi
+                  .encointer
+                  .getReputations()
+                  .then((v) => webApi.encointer.getMeetupTime().then((v) => webApi.encointer
+                          .getAggregatedAccountData(store.encointer.chosenCid, store.account.currentAddress)
+                          .then((v) {
+                        print("[encointerCeremonyPage] state is current");
+                        refreshing = false;
+                      })))))));
         },
         child: Scaffold(
           backgroundColor: Colors.transparent,
@@ -52,7 +62,8 @@ class EncointerEntry extends StatelessWidget {
                     ],
                   ),
                 ),
-                PhaseAwareBox(store)
+                PhaseAwareBox(store),
+                // TODO with observer: refreshing ? Text("refreshing") : Text("refreshed")
               ],
             ),
           ),
