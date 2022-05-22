@@ -274,6 +274,7 @@ abstract class _EncointerStore with Store {
 
   @action
   void updateState() {
+    print("[encointer store] updating state during $currentPhase");
     switch (currentPhase) {
       case CeremonyPhase.Registering:
         webApi.encointer.getMeetupTime();

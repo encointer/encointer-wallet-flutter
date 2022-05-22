@@ -8,6 +8,7 @@ import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:focus_detector/focus_detector.dart';
 import 'package:iconsax/iconsax.dart';
 
 import 'bazaar/0_main/bazaarMain.dart';

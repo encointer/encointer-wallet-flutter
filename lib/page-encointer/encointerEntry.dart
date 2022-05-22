@@ -9,6 +9,7 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:focus_detector/focus_detector.dart';
 
 import '../models/index.dart';
 
@@ -21,32 +22,41 @@ class EncointerEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context).translationsForLocale();
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    dic.encointer.encointer,
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Theme.of(context).cardColor,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  )
-                ],
-              ),
+    return FocusDetector(
+        onFocusLost: () {
+          print('[encointerCeremonyPage:FocusDetector] Focus Lost.');
+        },
+        onFocusGained: () {
+          print('[encointerCeremonyPage:FocusDetector] Focus Gained.');
+          store.encointer.updateState();
+          webApi.encointer.getCommunityData();
+        },
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SafeArea(
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        dic.encointer.encointer,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Theme.of(context).cardColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                PhaseAwareBox(store)
+              ],
             ),
-            PhaseAwareBox(store)
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }
 
