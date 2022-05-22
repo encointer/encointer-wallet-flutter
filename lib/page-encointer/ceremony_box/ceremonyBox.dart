@@ -1,5 +1,7 @@
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/tx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
@@ -11,15 +13,20 @@ import 'components/ceremonyRegisterButton.dart';
 import 'components/ceremonyStartButton.dart';
 
 class CeremonyBox extends StatelessWidget {
+  CeremonyBox(
+    this.store,
+    this.api, {
+    Key key,
+  }) : super(key: key);
+
   final AppStore store;
+  final Api api;
   final int groupSizeAssigned = 9;
   final String notification = 'you are assigned bla bla bla bla bla asdf asdf sadf ';
   final IconData notificationIconData = Iconsax.tick_square;
   final Function onPressedRegister = () => print('TODO register for ceremony');
   final Function onPressedLocation = () => print('TODO show map');
   final Function onPressedStartCeremony = () => print('TODO start ceremony');
-
-  CeremonyBox({Key key, this.store}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,11 +51,11 @@ class CeremonyBox extends StatelessWidget {
                   ceremonyPhaseDurations: store.encointer.phaseDurations,
                   devMode: store.settings.developerMode,
                 ),
-                if (store.settings.developerMode && store.encointer.showRegisterButton)
+                if (store.encointer.showRegisterButton)
                   CeremonyRegisterButton(
                     languageCode: languageCode,
                     registerUntil: store.encointer?.assigningPhaseStart,
-                    onPressed: onPressedRegister,
+                    onPressed: (context) => submitRegisterParticipant(context, store, api),
                   ),
                 if (store.settings.developerMode && store.encointer.showStartCeremonyButton)
                   CeremonyStartButton(

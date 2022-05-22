@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
-class CeremonyRegisterButton extends StatelessWidget {
+class CeremonyRegisterButton extends StatefulWidget {
   const CeremonyRegisterButton({
     Key key,
     this.languageCode,
@@ -16,22 +16,42 @@ class CeremonyRegisterButton extends StatelessWidget {
 
   final String languageCode;
   final int registerUntil;
-  final Function onPressed;
+  final Future<void> Function(BuildContext) onPressed;
+
+  @override
+  _CeremonyRegisterButtonState createState() => _CeremonyRegisterButtonState();
+}
+
+class _CeremonyRegisterButtonState extends State<CeremonyRegisterButton> {
+  bool _submitting = false;
+
+  Future<void> _onPressed() async {
+    setState(() {
+      _submitting = true;
+    });
+    await widget.onPressed(context);
+    setState(() {
+      _submitting = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     var dic = I18n.of(context).translationsForLocale();
+
     return PrimaryButton(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Iconsax.login_1),
-          SizedBox(width: 6),
-          Text('${dic.encointer.registerUntil} '),
-          MaybeDateTime(registerUntil, dateFormat: DateFormat.yMd(languageCode))
-        ],
-      ),
-      onPressed: onPressed,
+      child: !_submitting
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Iconsax.login_1),
+                SizedBox(width: 6),
+                Text('${dic.encointer.registerUntil} '),
+                MaybeDateTime(widget.registerUntil, dateFormat: DateFormat.yMd(widget.languageCode))
+              ],
+            )
+          : CupertinoActivityIndicator(),
+      onPressed: !_submitting && widget.registerUntil != null ? () => _onPressed() : null,
     );
   }
 }
