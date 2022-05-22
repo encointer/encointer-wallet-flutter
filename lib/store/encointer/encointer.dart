@@ -302,17 +302,14 @@ abstract class _EncointerStore with Store {
     accountStores.forEach((cid, store) => store.purgeCeremonySpecificState());
   }
 
-  /// Calculates the remaining time until the next meetup starts. As Gesell and Cantillon currently implement timewarp
-  /// we cannot use the time received by the blockchain. Hence, we need to calculate it differently.
-  int getTimeToMeetup() {
-    var now = DateTime.now();
-    if (10 <= now.minute && now.minute < 20) {
-      return ((19 - now.minute) * 60 + 60 - now.second);
-    } else if (40 <= now.minute && now.minute < 50) {
-      return ((49 - now.minute) * 60 + 60 - now.second);
+  /// Calculates the remaining time until the next meetup starts.
+  Duration getTimeToMeetup() {
+    var start = communityAccount?.meetup?.time;
+    if (start == null) {
+      return null;
     } else {
-      _log("Warning: Invalid time to meetup");
-      return 0;
+      var now = DateTime.now();
+      return DateTime.fromMillisecondsSinceEpoch(start).difference(now);
     }
   }
 

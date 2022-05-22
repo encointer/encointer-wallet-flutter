@@ -18,7 +18,6 @@ class EncointerEntry extends StatelessWidget {
   EncointerEntry(this.store);
 
   final AppStore store;
-  bool refreshing = false;
 
   @override
   Widget build(BuildContext context) {
@@ -29,16 +28,12 @@ class EncointerEntry extends StatelessWidget {
         },
         onFocusGained: () {
           print('[encointerCeremonyPage:FocusDetector] Focus Gained.');
-          refreshing = true;
-          webApi.encointer.getCommunityMetadata().then((v) => webApi.encointer.getAllMeetupLocations().then((v) =>
-              webApi.encointer.getDemurrage().then((v) => webApi.encointer.getBootstrappers().then((v) => webApi
-                  .encointer
-                  .getReputations()
-                  .then((v) => webApi.encointer.getMeetupTime().then((v) => webApi.encointer
+          webApi.encointer.getCommunityMetadata().then((v) => webApi.encointer.getAllMeetupLocations().then(
+              (v) => webApi.encointer.getDemurrage().then((v) => webApi.encointer.getBootstrappers().then((v) => webApi
+                  .encointer.getReputations().then((v) => webApi.encointer.getMeetupTime().then((v) => webApi.encointer
                           .getAggregatedAccountData(store.encointer.chosenCid, store.account.currentAddress)
                           .then((v) {
                         print("[encointerCeremonyPage] state is current");
-                        refreshing = false;
                       })))))));
         },
         child: Scaffold(
@@ -63,7 +58,7 @@ class EncointerEntry extends StatelessWidget {
                   ),
                 ),
                 PhaseAwareBox(store),
-                // TODO with observer: refreshing ? Text("refreshing") : Text("refreshed")
+                // TODO with observer: indicate when refreshing state
               ],
             ),
           ),
@@ -142,16 +137,17 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox> with SingleTickerProvider
       case CeremonyPhase.Attesting:
         return AttestingPage(store);
       default:
-        return RegisteringPage(store);
+        return Container();
     }
   }
 
   Widget _getPhaseViewOffline() {
-    if (store.encointer.communityAccount.isRegistered) {
-      return RegisteringPage(store);
+    if (!store.encointer.communityAccount.isRegistered) {
+      // no point in showing something here while loading or offline
+      return Container();
     } else {
-      int timeToMeetup = store.encointer.getTimeToMeetup();
-      if (0 < timeToMeetup && timeToMeetup < 10 * 60) {
+      Duration timeToMeetup = store.encointer.getTimeToMeetup() ?? Duration(hours: 1);
+      if (!timeToMeetup.isNegative && timeToMeetup.inMinutes < 10) {
         return AssigningPage(store);
       } else {
         return AttestingPage(store);
