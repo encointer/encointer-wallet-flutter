@@ -13,7 +13,6 @@ import 'components/ceremonyStartButton.dart';
 class CeremonyBox extends StatelessWidget {
   final AppStore store;
   final int groupSizeAssigned = 9;
-  final DateTime registerUntilDate = DateTime.now().subtract(Duration(hours: 1));
   final String notification = 'you are assigned bla bla bla bla bla asdf asdf sadf ';
   final IconData notificationIconData = Iconsax.tick_square;
   final Function onPressedRegister = () => print('TODO register for ceremony');
@@ -48,7 +47,7 @@ class CeremonyBox extends StatelessWidget {
                 if (store.settings.developerMode && store.encointer.showRegisterButton)
                   CeremonyRegisterButton(
                     languageCode: languageCode,
-                    registerUntilDate: registerUntilDate,
+                    registerUntil: store.encointer?.assigningPhaseStart,
                     onPressed: onPressedRegister,
                   ),
                 if (store.settings.developerMode && store.encointer.showStartCeremonyButton)
