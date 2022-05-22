@@ -24,7 +24,6 @@ class CeremonyBox extends StatelessWidget {
   final int groupSizeAssigned = 9;
   final String notification = 'you are assigned bla bla bla bla bla asdf asdf sadf ';
   final IconData notificationIconData = Iconsax.tick_square;
-  final Function onPressedRegister = () => print('TODO register for ceremony');
   final Function onPressedLocation = () => print('TODO show map');
   final Function onPressedStartCeremony = () => print('TODO start ceremony');
 
