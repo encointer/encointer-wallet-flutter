@@ -115,3 +115,35 @@ Map<String, dynamic> registerParticipantParams(
     ],
   };
 }
+
+Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api api) async {
+  // this is called inside submitTx too, but we need to unlock the key for the proof of attendance.
+  if (store.settings.cachedPin.isEmpty) {
+    var unlockText = I18n.of(context).translationsForLocale().home.unlockAccount;
+    await showCupertinoDialog(
+      context: context,
+      builder: (context) {
+        return showPasswordInputDialog(
+          context,
+          store.account.currentAccount,
+          Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
+          (password) => store.settings.setPin(password),
+        );
+      },
+    );
+  }
+
+  return submitTx(
+    context,
+    store,
+    api,
+    registerParticipantParams(store.encointer.chosenCid, proof: await api.encointer.getProofOfAttendance()),
+    onFinish: (BuildContext txPageContext, Map res) {
+      api.encointer.getAggregatedAccountData(store.encointer.chosenCid, store.account.currentAddress);
+      Navigator.popUntil(
+        txPageContext,
+        ModalRoute.withName('/'),
+      );
+    },
+  );
+}
