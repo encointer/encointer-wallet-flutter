@@ -14,28 +14,37 @@ import 'package:flutter/material.dart';
 ///
 /// Refactor when the issue 'remove tx confirm page' is tackled.
 
-Future<void> submitTx(BuildContext context, AppStore store, Api api, Function(CommunityIdentifier) submitFn) async {
+Future<void> submitTx(
+  BuildContext context,
+  AppStore store,
+  Api api,
+  Map txParams, {
+  Function(BuildContext txPageContext, Map res) onFinish,
+}) async {
   if (store.settings.cachedPin.isEmpty) {
+    var unlockText = I18n.of(context).translationsForLocale().home.unlockAccount;
     await showCupertinoDialog(
       context: context,
       builder: (context) {
         return showPasswordInputDialog(
-            context,
-            store.account.currentAccount,
-            Text(I18n.of(context)
-                .translationsForLocale()
-                .home
-                .unlockAccount
-                .replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name.toString())), (password) {
-          store.settings.setPin(password);
-        });
+          context,
+          store.account.currentAccount,
+          Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
+          (password) => store.settings.setPin(password),
+        );
       },
     );
   }
 
   final txPaymentAsset = store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
 
-  return submitFn(txPaymentAsset);
+  txParams["txInfo"]["txPaymentAsset"] = txPaymentAsset;
+  txParams["onFinish"] = onFinish ??
+      (BuildContext txPageContext, Map res) {
+        Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
+      };
+
+  return Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: txParams);
 }
 
 Future<void> submitClaimRewards(
@@ -83,38 +92,26 @@ Future<void> submitEndorseNewcomer(
   Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
 }
 
-Future<void> submitRegisterParticipant(
-  BuildContext context,
-  Api api,
+Map<String, dynamic> registerParticipantParams(
   CommunityIdentifier chosenCid, {
-  CommunityIdentifier txPaymentAsset,
-  Future<ProofOfAttendance> proof,
-  Function(BuildContext txPageContext, Map res) onFinish,
-}) async {
-  ProofOfAttendance p;
-  if (proof != null) {
-    p = await proof;
-  }
-
-  var args = {
+  ProofOfAttendance proof,
+}) {
+  return {
     "title": 'register_participant',
     "txInfo": {
       "module": 'encointerCeremonies',
       "call": 'registerParticipant',
       "cid": chosenCid,
-      "txPaymentAsset": txPaymentAsset,
     },
     "detail": jsonEncode({
       "cid": chosenCid.toFmtString(),
-      "proof": p == null
+      "proof": proof == null
           ? "No proof of past attendance found" // Note: hardcoded strings are ok here, the page  will be removed.
-          : "Sending proof for cIndex: ${p.ceremonyIndex}, community: ${p.communityIdentifier.toFmtString()}",
+          : "Sending proof for cIndex: ${proof.ceremonyIndex}, community: ${proof.communityIdentifier.toFmtString()}",
     }),
     "params": [
       chosenCid,
-      p,
+      proof,
     ],
-    'onFinish': onFinish
   };
-  Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
 }

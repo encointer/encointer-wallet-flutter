@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -30,23 +31,35 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
   }
 
   Future<void> _submit() async {
-    submitTx(
-      context, store, webApi, (txPaymentAsset) {
-      submitRegisterParticipant(
-        context,
-        webApi,
-        store.encointer.chosenCid,
-        txPaymentAsset: txPaymentAsset,
-        proof: webApi.encointer.getProofOfAttendance(),
-        onFinish: (BuildContext txPageContext, Map res) {
-          webApi.encointer.getAggregatedAccountData(store.encointer.chosenCid, store.account.currentAddress);
-          Navigator.popUntil(
-            txPageContext,
-            ModalRoute.withName('/'),
+    // this is called inside submitTx too, but we need to unlock the key for the proof of attendance.
+    if (store.settings.cachedPin.isEmpty) {
+      var unlockText = I18n.of(context).translationsForLocale().home.unlockAccount;
+      await showCupertinoDialog(
+        context: context,
+        builder: (context) {
+          return showPasswordInputDialog(
+            context,
+            store.account.currentAccount,
+            Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
+            (password) => store.settings.setPin(password),
           );
         },
       );
-    });
+    }
+
+    submitTx(
+      context,
+      store,
+      webApi,
+      registerParticipantParams(store.encointer.chosenCid, proof: await webApi.encointer.getProofOfAttendance()),
+      onFinish: (BuildContext txPageContext, Map res) {
+        webApi.encointer.getAggregatedAccountData(store.encointer.chosenCid, store.account.currentAddress);
+        Navigator.popUntil(
+          txPageContext,
+          ModalRoute.withName('/'),
+        );
+      },
+    );
   }
 
   @override
