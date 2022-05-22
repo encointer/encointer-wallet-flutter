@@ -1,4 +1,3 @@
-import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -31,40 +30,23 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
   }
 
   Future<void> _submit() async {
-    if (store.settings.cachedPin.isEmpty) {
-      await showCupertinoDialog(
-        context: context,
-        builder: (context) {
-          return showPasswordInputDialog(
-              context,
-              store.account.currentAccount,
-              Text(I18n.of(context)
-                  .translationsForLocale()
-                  .home
-                  .unlockAccount
-                  .replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name.toString())), (password) {
-            store.settings.setPin(password);
-          });
+    submitTx(
+      context, store, webApi, (txPaymentAsset) {
+      submitRegisterParticipant(
+        context,
+        webApi,
+        store.encointer.chosenCid,
+        txPaymentAsset: txPaymentAsset,
+        proof: webApi.encointer.getProofOfAttendance(),
+        onFinish: (BuildContext txPageContext, Map res) {
+          webApi.encointer.getAggregatedAccountData(store.encointer.chosenCid, store.account.currentAddress);
+          Navigator.popUntil(
+            txPageContext,
+            ModalRoute.withName('/'),
+          );
         },
       );
-    }
-
-    final txPaymentAsset = store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
-
-    submitRegisterParticipant(
-      context,
-      webApi,
-      store.encointer.chosenCid,
-      txPaymentAsset: txPaymentAsset,
-      proof: webApi.encointer.getProofOfAttendance(),
-      onFinish: (BuildContext txPageContext, Map res) {
-        webApi.encointer.getAggregatedAccountData(store.encointer.chosenCid, store.account.currentAddress);
-        Navigator.popUntil(
-          txPageContext,
-          ModalRoute.withName('/'),
-        );
-      },
-    );
+    });
   }
 
   @override
