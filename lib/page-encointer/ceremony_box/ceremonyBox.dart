@@ -72,9 +72,7 @@ class CeremonyBox extends StatelessWidget {
                     notificationIconData: notificationIconData,
                     notification: notification,
                   ),
-                  SizedBox(
-                    height: 16,
-                  ),
+                  SizedBox(height: 16),
                   if (onPressedLocation != null)
                     CeremonyLocationButton(
                       onPressedLocation: onPressedLocation,
