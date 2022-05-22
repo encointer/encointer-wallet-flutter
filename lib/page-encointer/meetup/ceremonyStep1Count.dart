@@ -42,13 +42,17 @@ class CeremonyStep1Count extends StatelessWidget {
                     CeremonyProgressBar(progress: 1),
                     SizedBox(height: 48),
                     Center(
-                      child: Text(dic.encointer.count,
-                          style: Theme.of(context).textTheme.headline2.copyWith(color: ZurichLion.shade600)),
+                      child: Text(
+                        dic.encointer.count,
+                        style: Theme.of(context).textTheme.headline2.copyWith(color: ZurichLion.shade600),
+                      ),
                     ),
                     Center(
-                      child: Text(dic.encointer.howManyParticipantsShowedUp,
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black, height: 2)),
+                      child: Text(
+                        dic.encointer.howManyParticipantsShowedUp,
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black, height: 2),
+                      ),
                     ),
                     SizedBox(height: 48),
                     EncointerTextFormField(

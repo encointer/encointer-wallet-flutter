@@ -38,7 +38,7 @@ class CeremonyStep3Finish extends StatelessWidget {
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(30, 24, 30, 4),
+          padding: EdgeInsets.fromLTRB(30, 24, 30, 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
@@ -46,9 +46,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                 child: ListView(
                   children: [
                     CeremonyProgressBar(progress: 3),
-                    SizedBox(
-                      height: 48,
-                    ),
+                    SizedBox(height: 48),
                     CommunityAvatar(
                       store: store,
                       avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.community?.assetsCid),
@@ -57,15 +55,15 @@ class CeremonyStep3Finish extends StatelessWidget {
                     Center(
                       child: Text(
                         'Thank you',
-                        style: Theme.of(context).textTheme.headline2.copyWith(
-                              color: ZurichLion.shade600,
-                            ),
+                        style: Theme.of(context).textTheme.headline2.copyWith(color: ZurichLion.shade600),
                       ),
                     ),
                     Center(
-                      child: Text('The next meetup will take place on:',
-                          textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black, height: 1.5)),
+                      child: Text(
+                        'The next meetup will take place on:',
+                        textAlign: TextAlign.center,
+                        style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black, height: 1.5),
+                      ),
                     ),
                   ],
                 ),
@@ -78,9 +76,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                     SizedBox(width: 12),
                     Text(
                       dic.encointer.finish,
-                      style: Theme.of(context).textTheme.headline3.copyWith(
-                            color: ZurichLion.shade50,
-                          ),
+                      style: Theme.of(context).textTheme.headline3.copyWith(color: ZurichLion.shade50),
                     ),
                   ],
                 ),
