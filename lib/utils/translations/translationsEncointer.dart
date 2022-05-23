@@ -38,6 +38,7 @@ abstract class TranslationsEncointer {
   String get youAreRegistered;
   String get youAreNotRegisteredPleaseRegisterNextTime;
   String get youAreAssignedToAMeetupWithNParticipants;
+  String get successfullySentNAttestations;
 }
 
 class TranslationsEnEncointer implements TranslationsEncointer {
@@ -79,6 +80,7 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   get youAreNotRegisteredPleaseRegisterNextTime =>
       'You are not assigned for this ceremony. Please join our next ceremony to receive your community income.';
   get youAreAssignedToAMeetupWithNParticipants => 'You are assigned to a meetup with P_COUNT people.';
+  get successfullySentNAttestations => 'You have successfully submitted attestations for P_COUNT other people.';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
@@ -121,6 +123,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get youAreNotRegisteredPleaseRegisterNextTime =>
       'Du bist nicht für diese Zeremonie zugewiesen. Bitte registriere dich für die nächste Zeremonie um dein Community Income zu erhalten.';
   get youAreAssignedToAMeetupWithNParticipants => 'Du bist einem meetup mit P_COUNT leuten zugewiesen.';
+  get successfullySentNAttestations => 'Du hast erfolgreich Attestierungen für P_COUNT andere Leute eingereicht.';
 }
 
 class TranslationsZhEncointer implements TranslationsEncointer {
@@ -161,4 +164,5 @@ class TranslationsZhEncointer implements TranslationsEncointer {
   get youAreRegistered => throw UnimplementedError();
   get youAreNotRegisteredPleaseRegisterNextTime => throw UnimplementedError();
   get youAreAssignedToAMeetupWithNParticipants => throw UnimplementedError();
+  get successfullySentNAttestations => throw UnimplementedError();
 }

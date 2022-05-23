@@ -112,10 +112,18 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
         _log("'getMeetupInfoWidget' trapped in invalid if statement");
         return Container();
       } else {
-        return CeremonyNotification(
-          notificationIconData: Iconsax.close_square,
-          notification: dic.encointer.youAreNotRegisteredPleaseRegisterNextTime,
-        );
+        if (store.encointer.communityAccount?.meetupCompleted ?? false) {
+          return CeremonyNotification(
+            notificationIconData: Iconsax.tick_square,
+            notification: dic.encointer.successfullySentNAttestations
+                .replaceAll('P_COUNT', store.encointer.communityAccount?.scannedClaimsCount.toString()),
+          );
+        } else {
+          return CeremonyNotification(
+            notificationIconData: Iconsax.close_square,
+            notification: dic.encointer.youAreNotRegisteredPleaseRegisterNextTime,
+          );
+        }
       }
       break;
     default:
