@@ -500,7 +500,7 @@ abstract class _EncointerStore with Store {
 
   @computed
   bool get showTwoBoxes {
-    return (currentPhase != CeremonyPhase.Registering);
+    return !showRegisterButton && !showStartCeremonyButton;
   }
 }
 
