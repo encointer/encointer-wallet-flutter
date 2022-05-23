@@ -6,7 +6,6 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:intl/intl.dart';
 
@@ -60,21 +59,7 @@ class AssignmentPanel extends StatelessWidget {
                                       ],
                                     ),
                                     onPressed: meetupLocation != null
-                                        ? () => Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) {
-                                                  return EncointerMap(
-                                                    store,
-                                                    popupBuilder: (BuildContext context, Marker marker) => SizedBox(),
-                                                    markers: buildMarkers(meetupLocation),
-                                                    title: dic.encointer.meetupLocation,
-                                                    center: meetupLocation.toLatLng(),
-                                                    initialZoom: initialZoom,
-                                                  );
-                                                },
-                                              ),
-                                            )
+                                        ? () => showOnEncointerMap(context, store, meetupLocation)
                                         : null,
                                   )
                                 ],
@@ -97,28 +82,6 @@ class AssignmentPanel extends StatelessWidget {
         ),
       ),
     );
-  }
-
-  List<Marker> buildMarkers(Location meetupLocation) {
-    List<Marker> markers = <Marker>[];
-    markers.add(
-      Marker(
-        // marker is not a widget, hence test_driver cannot find it (it can find it in the Icon inside, though).
-        // But we need the key to derive the popup key
-        key: Key('meetup-location'),
-        point: meetupLocation.toLatLng(),
-        width: 40,
-        height: 40,
-        builder: (_) => Icon(
-          Icons.location_on,
-          size: 40,
-          color: Colors.blueAccent,
-          key: Key('meetup-location-icon'), // used for test_driver
-        ),
-        anchorPos: AnchorPos.align(AnchorAlign.top),
-      ),
-    );
-    return markers;
   }
 }
 
