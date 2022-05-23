@@ -100,7 +100,10 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
           onLocationPressed: () => showOnEncointerMap(context, store, location),
         );
       } else {
-        return Text("Replace me with meetupInfo unassigned");
+        return CeremonyNotification(
+          notificationIconData: Iconsax.close_square,
+          notification: dic.encointer.youAreNotRegisteredPleaseRegisterNextTime,
+        );
       }
       break;
     case CeremonyPhase.Attesting:
