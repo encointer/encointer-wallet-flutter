@@ -55,6 +55,10 @@ abstract class _CommunityAccountStore with Store {
   @observable
   ObservableMap<String, ClaimOfAttendance> participantsClaims = new ObservableMap();
 
+  /// This should be set to true once the attestations have been sent to chain.
+  @observable
+  bool meetupCompleted = false;
+
   @computed
   get scannedClaimsCount => participantsClaims?.length ?? 0;
 
@@ -84,6 +88,20 @@ abstract class _CommunityAccountStore with Store {
   void setMeetup(Meetup meetup) {
     _log("Set meetup: ${meetup.toJson()}");
     this.meetup = meetup;
+    writeToCache();
+  }
+
+  @action
+  void setMeetupCompleted() {
+    _log("settingMeetupCompleted");
+    meetupCompleted = true;
+    writeToCache();
+  }
+
+  @action
+  void clearMeetupCompleted() {
+    _log("clearing meetupCompleted");
+    meetupCompleted = false;
     writeToCache();
   }
 
@@ -122,6 +140,7 @@ abstract class _CommunityAccountStore with Store {
     purgeParticipantsClaims();
     purgeParticipantType();
     purgeMeetup();
+    clearMeetupCompleted();
   }
 
   void initStore(Function cacheFn) {

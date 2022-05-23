@@ -18,7 +18,8 @@ CommunityAccountStore _$CommunityAccountStoreFromJson(Map<String, dynamic> json)
         ? ObservableMap<String, ClaimOfAttendance>.of((json['participantsClaims'] as Map<String, dynamic>).map(
             (k, e) => MapEntry(k, e == null ? null : ClaimOfAttendance.fromJson(e as Map<String, dynamic>)),
           ))
-        : null;
+        : null
+    ..meetupCompleted = json['meetupCompleted'] as bool;
 }
 
 Map<String, dynamic> _$CommunityAccountStoreToJson(CommunityAccountStore instance) => <String, dynamic>{
@@ -28,6 +29,7 @@ Map<String, dynamic> _$CommunityAccountStoreToJson(CommunityAccountStore instanc
       'participantType': _$ParticipantTypeEnumMap[instance.participantType],
       'meetup': instance.meetup?.toJson(),
       'participantsClaims': instance.participantsClaims?.map((k, e) => MapEntry(k, e?.toJson())),
+      'meetupCompleted': instance.meetupCompleted,
     };
 
 T _$enumDecode<T>(
@@ -138,6 +140,21 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
     });
   }
 
+  final _$meetupCompletedAtom = Atom(name: '_CommunityAccountStore.meetupCompleted');
+
+  @override
+  bool get meetupCompleted {
+    _$meetupCompletedAtom.reportRead();
+    return super.meetupCompleted;
+  }
+
+  @override
+  set meetupCompleted(bool value) {
+    _$meetupCompletedAtom.reportWrite(value, super.meetupCompleted, () {
+      super.meetupCompleted = value;
+    });
+  }
+
   final _$_CommunityAccountStoreActionController = ActionController(name: '_CommunityAccountStore');
 
   @override
@@ -167,6 +184,28 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
     final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.setMeetup');
     try {
       return super.setMeetup(meetup);
+    } finally {
+      _$_CommunityAccountStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setMeetupCompleted() {
+    final _$actionInfo =
+        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.setMeetupCompleted');
+    try {
+      return super.setMeetupCompleted();
+    } finally {
+      _$_CommunityAccountStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void clearMeetupCompleted() {
+    final _$actionInfo =
+        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.clearMeetupCompleted');
+    try {
+      return super.clearMeetupCompleted();
     } finally {
       _$_CommunityAccountStoreActionController.endAction(_$actionInfo);
     }
@@ -222,6 +261,7 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 participantType: ${participantType},
 meetup: ${meetup},
 participantsClaims: ${participantsClaims},
+meetupCompleted: ${meetupCompleted},
 scannedClaimsCount: ${scannedClaimsCount},
 isAssigned: ${isAssigned},
 isRegistered: ${isRegistered}

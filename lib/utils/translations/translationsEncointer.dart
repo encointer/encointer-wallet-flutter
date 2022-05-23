@@ -33,6 +33,7 @@ abstract class TranslationsEncointer {
   String get youAreNotRegistered;
   String get howManyParticipantsShowedUp;
   String get ceremonyWillTakePlaceOn;
+  String get ceremonySuccessfullyCompleted;
   String get fetchingReputations;
   String get youAreRegistered;
   String get youAreNotRegisteredPleaseRegisterNextTime;
@@ -72,6 +73,7 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   get youAreNotRegistered => 'You are not registered for a ceremony for the selected community on:';
   get howManyParticipantsShowedUp => 'How many attendees are present?';
   get ceremonyWillTakePlaceOn => 'The ceremony will take place on';
+  get ceremonySuccessfullyCompleted => 'Ceremony successfully completed';
   get fetchingReputations => 'Checking if you have reputation';
   get youAreRegistered => 'You are registered for the next meetup.';
   get youAreNotRegisteredPleaseRegisterNextTime =>
@@ -113,6 +115,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get youAreNotRegistered => 'Du bist leider keiner Versammlung zugewiesen worden am';
   get howManyParticipantsShowedUp => 'Wieviele Teilnehmende sind da?';
   get ceremonyWillTakePlaceOn => 'Die Zeremonie wird stattfinden am';
+  get ceremonySuccessfullyCompleted => 'Zeremonie erfolgreich durchgeführt';
   get fetchingReputations => 'Es wird überprüft, ob du bereits Reputation hast';
   get youAreRegistered => 'Du bist für das nächste Meetup registriert.';
   get youAreNotRegisteredPleaseRegisterNextTime =>
@@ -153,6 +156,7 @@ class TranslationsZhEncointer implements TranslationsEncointer {
   get youAreNotRegistered => throw UnimplementedError();
   get howManyParticipantsShowedUp => throw UnimplementedError();
   get ceremonyWillTakePlaceOn => throw UnimplementedError();
+  get ceremonySuccessfullyCompleted => throw UnimplementedError();
   get fetchingReputations => throw UnimplementedError();
   get youAreRegistered => throw UnimplementedError();
   get youAreNotRegisteredPleaseRegisterNextTime => throw UnimplementedError();

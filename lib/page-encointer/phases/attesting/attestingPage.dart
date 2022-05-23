@@ -90,6 +90,7 @@ class _AttestingPageState extends State<AttestingPage> {
           .replaceAll('AMOUNT', store.encointer.communityAccount.scannedClaimsCount.toString()),
       "params": [store.encointer.communityAccount.participantsClaims.values.toList()],
       'onFinish': (BuildContext txPageContext, Map res) {
+        store.encointer.communityAccount.setMeetupCompleted();
         Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
       }
     };

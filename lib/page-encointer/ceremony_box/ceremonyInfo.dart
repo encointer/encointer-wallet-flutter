@@ -1,4 +1,6 @@
+import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -14,6 +16,7 @@ class CeremonyInfo extends StatelessWidget {
     this.assigningPhaseStart,
     this.meetupTime,
     this.ceremonyPhaseDurations,
+    this.meetupCompleted,
     this.devMode = false,
   }) : super(key: key);
 
@@ -21,11 +24,13 @@ class CeremonyInfo extends StatelessWidget {
   final int assigningPhaseStart;
   final int meetupTime;
   final Map<CeremonyPhase, int> ceremonyPhaseDurations;
+  final bool meetupCompleted;
   final bool devMode;
 
   @override
   Widget build(BuildContext context) {
     String languageCode = Localizations.localeOf(context).languageCode;
+    var dic = I18n.of(context).translationsForLocale();
 
     final String infoLink = ceremonyInfoLink(languageCode);
 
@@ -45,10 +50,15 @@ class CeremonyInfo extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    CeremonySchedule(
-                      nextCeremonyDate: DateTime.fromMillisecondsSinceEpoch(meetupTime),
-                      languageCode: languageCode,
-                    ),
+                    !(meetupCompleted ?? false)
+                        ? CeremonySchedule(
+                            nextCeremonyDate: DateTime.fromMillisecondsSinceEpoch(meetupTime),
+                            languageCode: languageCode,
+                          )
+                        : Text(
+                            dic.encointer.ceremonySuccessfullyCompleted,
+                            style: Theme.of(context).textTheme.headline4.copyWith(color: encointerBlack),
+                          ),
                     CeremonyInfoAndCalendar(
                       nextCeremonyDate: DateTime.fromMillisecondsSinceEpoch(meetupTime),
                       infoLink: infoLink,
