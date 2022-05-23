@@ -118,6 +118,9 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
         );
       }
       break;
+    default:
+      _log("'getMeetupInfoWidget' trapped in invalid default case");
+      return Container();
   }
 }
 
