@@ -109,7 +109,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get startCeremony => 'Versammlung starten';
   get alreadyRegistered => 'Bereits registriert';
   get registerUntil => 'Registriere dich bis am';
-  get showCeremonyLocation => 'Ort der Versammlung';
+  get showCeremonyLocation => 'Ort des Meetups';
   get ceremonyIsOver => 'Die Zeremonie ist vorbei';
   get today => 'Heute';
   get tomorrow => 'Morgen';
