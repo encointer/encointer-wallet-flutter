@@ -23,8 +23,6 @@ class CeremonySchedule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var dic = I18n.of(context).translationsForLocale();
-
     bool showCountDown = CeremonyBoxService.shouldShowCountdown(nextCeremonyDate);
 
     return Column(

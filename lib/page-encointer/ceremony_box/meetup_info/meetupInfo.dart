@@ -3,6 +3,7 @@ import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 
 import 'components/ceremonyLocationButton.dart';
 import 'components/ceremonyNotification.dart';
@@ -37,7 +38,7 @@ class MeetupInfo extends StatelessWidget {
       ),
       child: Column(
         children: [
-          CeremonyNotification(notification: info),
+          CeremonyNotification(notificationIconData: Iconsax.tick_square, notification: info),
           SizedBox(height: 16),
           CeremonyLocationButton(onPressed: onLocationPressed)
         ],
