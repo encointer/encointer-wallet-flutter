@@ -26,7 +26,6 @@ class CeremonyBox extends StatelessWidget {
 
   final AppStore store;
   final Api api;
-  final Function onPressedStartCeremony = () => print('TODO start ceremony');
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +59,7 @@ class CeremonyBox extends StatelessWidget {
                 if (store.encointer.showStartCeremonyButton)
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
-                    child: CeremonyStartButton(
-                      onPressed: () => startMeetup(context, store)
-                    ),
+                    child: CeremonyStartButton(onPressed: () => startMeetup(context, store)),
                   )
               ],
             ),
