@@ -66,7 +66,7 @@ class CeremonyBox extends StatelessWidget {
           ),
           if (store.encointer.showTwoBoxes)
             LowerCeremonyBoxContainer(
-              child: getMeetupInfoWidget(context, store)
+              child: getMeetupInfoWidget(context, store),
             )
         ],
       ),
@@ -82,7 +82,12 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
     case CeremonyPhase.Registering:
       if (communityAccount?.isRegistered ?? false) {
         return CeremonyNotification(
-            notificationIconData: Iconsax.tick_square, notification: dic.encointer.youAreRegistered);
+          notificationIconData: Iconsax.tick_square,
+          notification: dic.encointer.youAreRegistered,
+        );
+      } else {
+        _log("'getMeetupInfoWidget' trapped in invalid if statement");
+        return Container();
       }
       break;
     case CeremonyPhase.Assigning:
@@ -102,4 +107,8 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
       // TODO: Handle this case.
       break;
   }
+}
+
+void _log(String msg) {
+  print("[CeremonyBox] $msg");
 }

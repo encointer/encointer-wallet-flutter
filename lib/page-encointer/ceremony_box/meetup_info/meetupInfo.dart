@@ -30,11 +30,11 @@ class MeetupInfo extends StatelessWidget {
         dic.encointer.youAreAssignedToAMeetupWithNParticipants.replaceAll('P_COUNT', meetup.registry.length.toString());
 
     return Column(
-        children: [
-          CeremonyNotification(notificationIconData: Iconsax.tick_square, notification: info),
-          SizedBox(height: 16),
-          CeremonyLocationButton(onPressed: onLocationPressed)
-        ],
-      );
+      children: [
+        CeremonyNotification(notificationIconData: Iconsax.tick_square, notification: info),
+        SizedBox(height: 16),
+        CeremonyLocationButton(onPressed: onLocationPressed)
+      ],
+    );
   }
 }
