@@ -495,7 +495,8 @@ abstract class _EncointerStore with Store {
   @computed
   bool get showStartCeremonyButton {
     bool registered = communityAccount?.isRegistered ?? false;
-    return (currentPhase == CeremonyPhase.Attesting && registered);
+    bool meetupCompleted = communityAccount?.meetupCompleted ?? false;
+    return (currentPhase == CeremonyPhase.Attesting && registered && !meetupCompleted);
   }
 
   @computed
