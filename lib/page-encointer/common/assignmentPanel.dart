@@ -41,7 +41,7 @@ class AssignmentPanel extends StatelessWidget {
                         store.encointer.communityAccount.isAssigned
                             ? Column(
                                 children: <Widget>[
-                                  Text(dic.encointer.youAreRegistered, style: TextStyle(color: Colors.green)),
+                                  Text(dic.encointer.alreadyRegistered, style: TextStyle(color: Colors.green)),
                                   Text(dic.encointer.ceremonyWillTakePlaceOn),
                                   MaybeMeetupTime(store.encointer.community.meetupTime, dateFormat: 'yyyy-MM-dd-HH:mm'),
                                   ElevatedButton(

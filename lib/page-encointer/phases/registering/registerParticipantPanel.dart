@@ -53,7 +53,7 @@ class _RegisterParticipantPanel extends State<RegisterParticipantPanel> {
           store.encointer.communityAccount.isRegistered
               ? Column(children: <Widget>[
                   RoundedButton(
-                      text: dic.encointer.youAreRegistered, onPressed: null, color: Theme.of(context).disabledColor),
+                      text: dic.encointer.alreadyRegistered, onPressed: null, color: Theme.of(context).disabledColor),
                   Text("as " + store.encointer.communityAccount.participantType.toString().split('.').last)
                 ])
               : store.encointer.account.reputations != null
