@@ -108,7 +108,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
         );
       } else {
         // showMeetupInfo == false in this case. So we don't show this widget at all.
-        _log("'getMeetupInfoWidget' trapped in invalid if statement: Registering phase + Unregistered");
+        _log("'getMeetupInfoWidget' trapped in an unexpected if statement: Registering phase + Unregistered");
         return Container();
       }
       break;
@@ -131,7 +131,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
     case CeremonyPhase.Attesting:
       if (store.encointer.communityAccount?.isAssigned ?? false) {
         // showMeetupInfo == false in this case. So we don't show this widget at all.
-        _log("'getMeetupInfoWidget' trapped in invalid if statement: AttestingPhase + Unassigned");
+        _log("'getMeetupInfoWidget' trapped in an unexpected if statement: AttestingPhase + Unassigned");
         return Container();
       } else {
         if (store.encointer.communityAccount?.meetupCompleted ?? false) {
@@ -149,7 +149,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
       }
       break;
     default:
-      _log("'getMeetupInfoWidget' trapped in invalid default case");
+      _log("'getMeetupInfoWidget' trapped in an unexpected default case");
       return Container();
   }
 }
