@@ -8,9 +8,9 @@ import 'package:intl/intl.dart';
 
 import 'ceremonyCountDown.dart';
 
-/// shows primarily the date of the next ceremony
-/// but if it is close to the start show a count down
-/// if nextCeremonyDate is null show 'Ceremony is over'
+/// Shows primarily the date of the next ceremony.
+///
+/// If the current time is close to the meetup time, a countdown is shown.
 class CeremonySchedule extends StatelessWidget {
   const CeremonySchedule({
     this.nextCeremonyDate,
@@ -24,12 +24,6 @@ class CeremonySchedule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var dic = I18n.of(context).translationsForLocale();
-    if (nextCeremonyDate == null) {
-      return Text(
-        '${dic.encointer.ceremonyIsOver}',
-        style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
-      );
-    }
 
     bool showCountDown = CeremonyBoxService.shouldShowCountdown(nextCeremonyDate);
 
