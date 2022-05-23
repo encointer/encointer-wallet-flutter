@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../models/index.dart';
@@ -29,33 +30,40 @@ class CeremonyInfo extends StatelessWidget {
     final String infoLink = ceremonyInfoLink(languageCode);
 
     return Container(
-      child: Column(
-        children: [
-          SizedBox(height: 8),
-          CeremonyProgressBar(
-            currentTime: currentTime,
-            assigningPhaseStart: assigningPhaseStart,
-            meetupTime: meetupTime,
-            ceremonyPhaseDurations: ceremonyPhaseDurations,
-            width: 262,
-          ),
-          SizedBox(height: 8),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              CeremonySchedule(
-                nextCeremonyDate: DateTime.fromMillisecondsSinceEpoch(meetupTime),
-                languageCode: languageCode,
-              ),
-              CeremonyInfoAndCalendar(
-                nextCeremonyDate: DateTime.fromMillisecondsSinceEpoch(meetupTime),
-                infoLink: infoLink,
-                devMode: devMode,
-              ),
-            ],
-          ),
-        ],
-      ),
+      child: meetupTime == null
+          ? Column(
+              children: [
+                SizedBox(height: 8),
+                CeremonyProgressBar(
+                  currentTime: currentTime,
+                  assigningPhaseStart: assigningPhaseStart,
+                  meetupTime: meetupTime,
+                  ceremonyPhaseDurations: ceremonyPhaseDurations,
+                  width: 262,
+                ),
+                SizedBox(height: 8),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    CeremonySchedule(
+                      nextCeremonyDate: DateTime.fromMillisecondsSinceEpoch(meetupTime),
+                      languageCode: languageCode,
+                    ),
+                    CeremonyInfoAndCalendar(
+                      nextCeremonyDate: DateTime.fromMillisecondsSinceEpoch(meetupTime),
+                      infoLink: infoLink,
+                      devMode: devMode,
+                    ),
+                  ],
+                ),
+              ],
+            )
+          : Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CupertinoActivityIndicator(),
+              ],
+            ),
     );
   }
 }
