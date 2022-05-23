@@ -107,7 +107,8 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
           notification: dic.encointer.youAreRegistered,
         );
       } else {
-        _log("'getMeetupInfoWidget' trapped in invalid if statement");
+        // showMeetupInfo == false in this case. So we don't show this widget at all.
+        _log("'getMeetupInfoWidget' trapped in invalid if statement: Registering phase + Unregistered");
         return Container();
       }
       break;
@@ -129,7 +130,8 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
       break;
     case CeremonyPhase.Attesting:
       if (store.encointer.communityAccount?.isAssigned ?? false) {
-        _log("'getMeetupInfoWidget' trapped in invalid if statement");
+        // showMeetupInfo == false in this case. So we don't show this widget at all.
+        _log("'getMeetupInfoWidget' trapped in invalid if statement: AttestingPhase + Unassigned");
         return Container();
       } else {
         if (store.encointer.communityAccount?.meetupCompleted ?? false) {
