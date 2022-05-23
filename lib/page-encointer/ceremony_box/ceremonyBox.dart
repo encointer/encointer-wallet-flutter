@@ -107,7 +107,15 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
       }
       break;
     case CeremonyPhase.Attesting:
-      // TODO: Handle this case.
+      if (store.encointer.communityAccount?.isAssigned ?? false) {
+        _log("'getMeetupInfoWidget' trapped in invalid if statement");
+        return Container();
+      } else {
+        return CeremonyNotification(
+          notificationIconData: Iconsax.close_square,
+          notification: dic.encointer.youAreNotRegisteredPleaseRegisterNextTime,
+        );
+      }
       break;
   }
 }
