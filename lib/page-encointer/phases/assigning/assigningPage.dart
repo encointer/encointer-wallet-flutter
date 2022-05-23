@@ -22,7 +22,6 @@ class _AssigningPageState extends State<AssigningPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
     return SafeArea(
       child: Column(children: <Widget>[
         AssignmentPanel(store),
