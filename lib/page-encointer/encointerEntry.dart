@@ -9,6 +9,7 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:focus_detector/focus_detector.dart';
 
 import '../models/index.dart';
 
@@ -21,32 +22,49 @@ class EncointerEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context).translationsForLocale();
-    return Scaffold(
-      backgroundColor: Colors.transparent,
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Text(
-                    dic.encointer.encointer,
-                    style: TextStyle(
-                      fontSize: 20,
-                      color: Theme.of(context).cardColor,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  )
-                ],
-              ),
+    return FocusDetector(
+        onFocusLost: () {
+          print('[encointerCeremonyPage:FocusDetector] Focus Lost.');
+        },
+        onFocusGained: () {
+          print('[encointerCeremonyPage:FocusDetector] Focus Gained.');
+          webApi.encointer.getCommunityMetadata().then((v) => webApi.encointer.getAllMeetupLocations().then((v) =>
+              webApi.encointer.getDemurrage().then((v) => webApi.encointer.getBootstrappers().then((v) => webApi
+                  .encointer
+                  .getReputations()
+                  .then((v) => webApi.encointer.getMeetupTime().then((v) => webApi.encointer
+                          .getAggregatedAccountData(store.encointer.chosenCid, store.account.currentAddress)
+                          .then((v) {
+                        print("[encointerCeremonyPage] state is current");
+                      })))))));
+        },
+        child: Scaffold(
+          backgroundColor: Colors.transparent,
+          body: SafeArea(
+            child: Column(
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.all(16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text(
+                        dic.encointer.encointer,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Theme.of(context).cardColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                PhaseAwareBox(store),
+                // TODO with observer: indicate when refreshing state
+              ],
             ),
-            PhaseAwareBox(store)
-          ],
-        ),
-      ),
-    );
+          ),
+        ));
   }
 }
 
@@ -121,16 +139,18 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox> with SingleTickerProvider
       case CeremonyPhase.Attesting:
         return AttestingPage(store);
       default:
-        return RegisteringPage(store);
+        return Container();
     }
   }
 
   Widget _getPhaseViewOffline() {
-    if (store.encointer.communityAccount.isRegistered) {
-      return RegisteringPage(store);
+    if (!store.encointer.communityAccount.isRegistered) {
+      // no point in showing something here while loading or offline
+      return Container();
     } else {
-      int timeToMeetup = store.encointer.getTimeToMeetup();
-      if (0 < timeToMeetup && timeToMeetup < 10 * 60) {
+      Duration timeToMeetup = store.encointer.getTimeToMeetup() ?? Duration(hours: 1);
+      print("[phaseViewOffline] time to meetup: $timeToMeetup");
+      if (timeToMeetup.inMinutes > 20) {
         return AssigningPage(store);
       } else {
         return AttestingPage(store);
