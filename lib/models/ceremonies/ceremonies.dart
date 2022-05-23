@@ -34,7 +34,7 @@ class AggregatedAccountDataPersonal {
   int meetupTime;
   List<String> meetupRegistry;
 
-  get meetup => Meetup(meetupIndex, meetupLocationIndex, meetupTime, meetupRegistry);
+  get meetup => meetupIndex != null ? Meetup(meetupIndex, meetupLocationIndex, meetupTime, meetupRegistry) : null;
 
   @override
   String toString() {
