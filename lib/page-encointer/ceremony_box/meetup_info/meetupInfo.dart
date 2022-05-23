@@ -1,4 +1,3 @@
-import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
