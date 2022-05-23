@@ -499,7 +499,7 @@ abstract class _EncointerStore with Store {
   }
 
   @computed
-  bool get showTwoBoxes {
+  bool get showMeetupInfo {
     return !showRegisterButton && !showStartCeremonyButton;
   }
 }

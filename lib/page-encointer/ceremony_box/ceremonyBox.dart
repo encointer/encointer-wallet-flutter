@@ -39,7 +39,7 @@ class CeremonyBox extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(24, 24, 24, 24),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(15), bottom: Radius.circular(store.encointer.showTwoBoxes ? 0 : 15)),
+                  top: Radius.circular(15), bottom: Radius.circular(store.encointer.showMeetupInfo ? 0 : 15)),
               color: ZurichLion.shade50,
             ),
             child: Column(
@@ -65,7 +65,7 @@ class CeremonyBox extends StatelessWidget {
               ],
             ),
           ),
-          if (store.encointer.showTwoBoxes)
+          if (store.encointer.showMeetupInfo)
             LowerCeremonyBoxContainer(
               child: getMeetupInfoWidget(context, store),
             )
