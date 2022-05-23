@@ -7,12 +7,11 @@ import 'package:flutter/material.dart';
 import 'components/ceremonyLocationButton.dart';
 import 'components/ceremonyNotification.dart';
 
-
 class MeetupInfo extends StatelessWidget {
   MeetupInfo(
-      this.meetup,
-      this.meetupLocation,
-      {
+    this.meetup,
+    this.meetupLocation, {
+    this.onLocationPressed,
     Key key,
   }) : super(key: key);
 
@@ -21,11 +20,13 @@ class MeetupInfo extends StatelessWidget {
 
   final Location meetupLocation;
 
+  final Future<void> Function() onLocationPressed;
+
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context).translationsForLocale();
-    var info = dic.encointer.youAreAssignedToAMeetupWithNParticipants
-        .replaceAll('P_COUNT', meetup.registry.length.toString());
+    var info =
+        dic.encointer.youAreAssignedToAMeetupWithNParticipants.replaceAll('P_COUNT', meetup.registry.length.toString());
 
     return Container(
       margin: EdgeInsets.only(top: 2),
@@ -38,9 +39,7 @@ class MeetupInfo extends StatelessWidget {
         children: [
           CeremonyNotification(notification: info),
           SizedBox(height: 16),
-            CeremonyLocationButton(
-              onPressedLocation: null,
-            )
+          CeremonyLocationButton(onPressed: onLocationPressed)
         ],
       ),
     );

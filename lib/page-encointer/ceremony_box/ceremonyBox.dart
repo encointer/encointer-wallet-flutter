@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/page-encointer/common/encointerMap.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/tx.dart';
@@ -6,9 +7,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'ceremonyInfo.dart';
-import 'meetup_info/meetupInfo.dart';
 import 'components/ceremonyRegisterButton.dart';
 import 'components/ceremonyStartButton.dart';
+import 'meetup_info/meetupInfo.dart';
 
 class CeremonyBox extends StatelessWidget {
   CeremonyBox(
@@ -58,18 +59,22 @@ class CeremonyBox extends StatelessWidget {
               ],
             ),
           ),
-          if (store.encointer.showTwoBoxes)
-            getMeetupInfoWidget(store)
+          if (store.encointer.showTwoBoxes) getMeetupInfoWidget(context, store)
         ],
       ),
     );
   }
 }
 
-Widget getMeetupInfoWidget(AppStore store) {
+Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
   if (store.encointer.communityAccount?.isAssigned ?? false) {
     var meetup = store.encointer.communityAccount.meetup;
-    return MeetupInfo(meetup, store.encointer.community.meetupLocations[meetup.locationIndex]);
+    var location = store.encointer.community.meetupLocations[meetup.locationIndex];
+    return MeetupInfo(
+      meetup,
+      location,
+      onLocationPressed: () => showOnEncointerMap(context, store, location),
+    );
   } else {
     return Text("Replace me with meetupInfo unassigned");
   }
