@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:iconsax/iconsax.dart';
 
 class CeremonyNotification extends StatelessWidget {
   const CeremonyNotification({
     Key key,
-    @required this.notificationIconData,
     @required this.notification,
   }) : super(key: key);
 
-  final IconData notificationIconData;
   final String notification;
 
   @override
@@ -16,7 +15,7 @@ class CeremonyNotification extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Icon(notificationIconData, color: encointerGrey, size: 18),
+        Icon(Iconsax.tick_square, color: encointerGrey, size: 18),
         SizedBox(width: 12),
         Flexible(
           child: Text(

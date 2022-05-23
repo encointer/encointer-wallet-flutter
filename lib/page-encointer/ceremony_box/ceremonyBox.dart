@@ -4,11 +4,9 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/tx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:iconsax/iconsax.dart';
 
 import 'ceremonyInfo.dart';
-import 'components/ceremonyLocationButton.dart';
-import 'components/ceremonyNotification.dart';
+import 'meetup_info/meetupInfo.dart';
 import 'components/ceremonyRegisterButton.dart';
 import 'components/ceremonyStartButton.dart';
 
@@ -21,10 +19,6 @@ class CeremonyBox extends StatelessWidget {
 
   final AppStore store;
   final Api api;
-  final int groupSizeAssigned = 9;
-  final String notification = 'you are assigned bla bla bla bla bla asdf asdf sadf ';
-  final IconData notificationIconData = Iconsax.tick_square;
-  final Function onPressedLocation = () => print('TODO show map');
   final Function onPressedStartCeremony = () => print('TODO start ceremony');
 
   @override
@@ -64,30 +58,19 @@ class CeremonyBox extends StatelessWidget {
               ],
             ),
           ),
-          if (store.settings.developerMode && store.encointer.showTwoBoxes) // dart "collection if"
-            Container(
-              margin: EdgeInsets.only(top: 2),
-              padding: EdgeInsets.all(24),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.vertical(top: Radius.circular(0), bottom: Radius.circular(15)),
-                color: ZurichLion.shade50,
-              ),
-              child: Column(
-                children: [
-                  CeremonyNotification(
-                    notificationIconData: notificationIconData,
-                    notification: notification,
-                  ),
-                  SizedBox(height: 16),
-                  if (onPressedLocation != null)
-                    CeremonyLocationButton(
-                      onPressedLocation: onPressedLocation,
-                    )
-                ],
-              ),
-            ),
+          if (store.encointer.showTwoBoxes)
+            getMeetupInfoWidget(store)
         ],
       ),
     );
+  }
+}
+
+Widget getMeetupInfoWidget(AppStore store) {
+  if (store.encointer.communityAccount?.isAssigned ?? false) {
+    var meetup = store.encointer.communityAccount.meetup;
+    return MeetupInfo(meetup, store.encointer.community.meetupLocations[meetup.locationIndex]);
+  } else {
+    return Text("Replace me with meetupInfo unassigned");
   }
 }

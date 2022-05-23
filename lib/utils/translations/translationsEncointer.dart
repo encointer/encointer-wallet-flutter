@@ -34,6 +34,7 @@ abstract class TranslationsEncointer {
   String get howManyParticipantsShowedUp;
   String get ceremonyWillTakePlaceOn;
   String get fetchingReputations;
+  String get youAreAssignedToAMeetupWithNParticipants;
 }
 
 class TranslationsEnEncointer implements TranslationsEncointer {
@@ -70,10 +71,11 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   get howManyParticipantsShowedUp => 'How many attendees are present?';
   get ceremonyWillTakePlaceOn => 'The ceremony will take place on';
   get fetchingReputations => 'Checking if you have reputation';
+  get youAreAssignedToAMeetupWithNParticipants => 'You are assigned to a meetup with P_COUNT people.';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
-  get registerParticipant => 'Registeriere';
+  get registerParticipant => 'Registrieren';
   get claimsSubmit => 'Anträge einreichen';
   get claimsPurge => 'Bereits gescannte Anträge löschen';
   get claimsPurgeConfirm => 'Bist du sicher, dass du alle gescannte Anträge löschen möchtest?';
@@ -107,6 +109,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get howManyParticipantsShowedUp => 'Wieviele Teilnehmende sind da?';
   get ceremonyWillTakePlaceOn => 'Die Zeremonie wird stattfinden am';
   get fetchingReputations => 'Es wird überprüft, ob du bereits Reputation hast';
+  get youAreAssignedToAMeetupWithNParticipants => 'Du bist einem meetup mit P_COUNT leuten zugewiesen.';
 }
 
 class TranslationsZhEncointer implements TranslationsEncointer {
@@ -143,4 +146,5 @@ class TranslationsZhEncointer implements TranslationsEncointer {
   get howManyParticipantsShowedUp => throw UnimplementedError();
   get ceremonyWillTakePlaceOn => throw UnimplementedError();
   get fetchingReputations => throw UnimplementedError();
+  get youAreAssignedToAMeetupWithNParticipants => throw UnimplementedError();
 }
