@@ -149,7 +149,8 @@ class _PhaseAwareBoxState extends State<PhaseAwareBox> with SingleTickerProvider
       return Container();
     } else {
       Duration timeToMeetup = store.encointer.getTimeToMeetup() ?? Duration(hours: 1);
-      if (!timeToMeetup.isNegative && timeToMeetup.inMinutes < 10) {
+      print("[phaseViewOffline] time to meetup: $timeToMeetup");
+      if (timeToMeetup.inMinutes > 20) {
         return AssigningPage(store);
       } else {
         return AttestingPage(store);
