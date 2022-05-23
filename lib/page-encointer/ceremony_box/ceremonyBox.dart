@@ -49,15 +49,20 @@ class CeremonyBox extends StatelessWidget {
                   ceremonyPhaseDurations: store.encointer.phaseDurations,
                   devMode: store.settings.developerMode,
                 ),
-                SizedBox(height: 12),
                 if (store.encointer.showRegisterButton)
-                  CeremonyRegisterButton(
-                    registerUntil: store.encointer?.assigningPhaseStart,
-                    onPressed: (context) => submitRegisterParticipant(context, store, api),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: CeremonyRegisterButton(
+                      registerUntil: store.encointer?.assigningPhaseStart,
+                      onPressed: (context) => submitRegisterParticipant(context, store, api),
+                    ),
                   ),
                 if (store.encointer.showStartCeremonyButton)
-                  CeremonyStartButton(
-                    onPressed: () => startMeetup(context, store),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: CeremonyStartButton(
+                      onPressed: () => startMeetup(context, store)
+                    ),
                   )
               ],
             ),
