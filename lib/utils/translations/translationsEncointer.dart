@@ -104,12 +104,12 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get meetupAttended => 'An der letzen Versammlung teilgenommen';
   get meetupClaimantInvalid =>
       'Diese* Antragssteller*in gehört nicht zu deiner Versammlung. Antrag wurde nicht gespeichert.';
-  get meetupLocation => 'Treffpunkt der Versammlung';
+  get meetupLocation => 'Treffpunkt';
   get timeUntilCeremonyStarts => 'Zeit bis zur Versammlung:';
   get startCeremony => 'Versammlung starten';
   get alreadyRegistered => 'Bereits registriert';
   get registerUntil => 'Registriere dich bis am';
-  get showCeremonyLocation => 'Ort des Meetups';
+  get showCeremonyLocation => 'Treffpunkt';
   get ceremonyIsOver => 'Die Zeremonie ist vorbei';
   get today => 'Heute';
   get tomorrow => 'Morgen';
