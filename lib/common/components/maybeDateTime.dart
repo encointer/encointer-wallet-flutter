@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-/// Either returns the Text widget with the date or an [CupertinoActivityIndicator].
+/// Either returns the Text widget with the date or a [CupertinoActivityIndicator].
 ///
 /// Useful because we have many cases where the time is first 'null' because it is still being fetched.
 class MaybeDateTime extends StatelessWidget {

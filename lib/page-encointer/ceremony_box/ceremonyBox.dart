@@ -68,14 +68,15 @@ class CeremonyBox extends StatelessWidget {
                 if (store.encointer.showSubmitClaimsButton)
                   Padding(
                     padding: const EdgeInsets.only(top: 6),
-                    child: PrimaryButton( // todo: this will be removed because we do it automatically
+                    child: PrimaryButton(
+                      // todo: this will be removed because we do it automatically
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Icon(Iconsax.login_1),
                           SizedBox(width: 6),
                           Text(
-                              '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store.encointer.communityAccount.scannedClaimsCount.toString())}'), // TODO count down
+                              '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store.encointer.communityAccount.scannedClaimsCount.toString())}'),
                         ],
                       ),
                       onPressed: () => submitAttestClaims(context, store),
