@@ -50,6 +50,7 @@ class CeremonyBox extends StatelessWidget {
                   ceremonyPhaseDurations: store.encointer.phaseDurations,
                   devMode: store.settings.developerMode,
                 ),
+                SizedBox(height: 12),
                 if (store.encointer.showRegisterButton)
                   CeremonyRegisterButton(
                     languageCode: languageCode,
