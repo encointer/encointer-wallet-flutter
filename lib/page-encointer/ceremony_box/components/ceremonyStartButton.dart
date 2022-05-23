@@ -20,7 +20,7 @@ class CeremonyStartButton extends StatelessWidget {
         children: [
           Icon(Iconsax.login_1),
           SizedBox(width: 6),
-          Text('${dic.encointer.startCeremony}'), // TODO count down
+          Text('${dic.encointer.startCeremony}'),
         ],
       ),
       onPressed: onPressed,

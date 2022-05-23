@@ -13,7 +13,9 @@ import 'package:flutter/material.dart';
 
 /// Helpers to send transactions.
 ///
-/// Refactor when the issue 'remove tx confirm page' is tackled.
+/// Refactor when we tackle: https://github.com/encointer/encointer-wallet-flutter/issues/335
+///
+/// A builder pattern would probably be nice here.
 
 Future<void> submitTx(
   BuildContext context,

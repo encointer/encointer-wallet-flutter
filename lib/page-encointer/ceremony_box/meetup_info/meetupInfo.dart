@@ -15,7 +15,6 @@ class MeetupInfo extends StatelessWidget {
     Key key,
   }) : super(key: key);
 
-  /// Addresses of the all meetup participants.
   final Meetup meetup;
 
   final Location meetupLocation;
