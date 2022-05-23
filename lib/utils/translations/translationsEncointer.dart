@@ -122,7 +122,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get youAreRegistered => 'Du bist für das nächste Meetup registriert.';
   get youAreNotRegisteredPleaseRegisterNextTime =>
       'Du bist nicht für diese Zeremonie zugewiesen. Bitte registriere dich für die nächste Zeremonie um dein Community Income zu erhalten.';
-  get youAreAssignedToAMeetupWithNParticipants => 'Du bist einem meetup mit P_COUNT leuten zugewiesen.';
+  get youAreAssignedToAMeetupWithNParticipants => 'Du bist einem Meetup mit P_COUNT Leuten zugewiesen.';
   get successfullySentNAttestations => 'Du hast erfolgreich Attestierungen für P_COUNT andere Leute eingereicht.';
 }
 
