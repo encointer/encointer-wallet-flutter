@@ -2,10 +2,10 @@ import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/common/assignmentPanel.dart';
 import 'package:encointer_wallet/page-encointer/meetup/startMeetup.dart';
-import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:encointer_wallet/utils/tx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -56,7 +56,8 @@ class _AttestingPageState extends State<AttestingPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [Text(dic.encointer.claimsSubmit)],
                 ),
-                onPressed: () => store.encointer.communityAccount.scannedClaimsCount > 0 ? _submit(context) : null,
+                onPressed: () => store.encointer.communityAccount.scannedClaimsCount > 0 ?
+                 submitAttestClaims(context, store) : null,
               ),
               SizedBox(height: 16),
               ElevatedButton(
@@ -75,28 +76,7 @@ class _AttestingPageState extends State<AttestingPage> {
       ]),
     );
   }
-
-  Future<void> _submit(BuildContext context) async {
-    final Translations dic = I18n.of(context).translationsForLocale();
-    var args = {
-      "title": 'attest_claims',
-      "txInfo": {
-        "module": 'encointerCeremonies',
-        "call": 'attestClaims',
-        "cid": store.encointer.chosenCid,
-        "txPaymentAsset": store.encointer.getTxPaymentAsset(store.encointer.chosenCid),
-      },
-      "detail": dic.encointer.claimsSubmitDetail
-          .replaceAll('AMOUNT', store.encointer.communityAccount.scannedClaimsCount.toString()),
-      "params": [store.encointer.communityAccount.participantsClaims.values.toList()],
-      'onFinish': (BuildContext txPageContext, Map res) {
-        store.encointer.communityAccount.setMeetupCompleted();
-        Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
-      }
-    };
-    Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
   }
-}
 
 void _confirmPurgeClaimsDialog(BuildContext context, AppStore store) {
   final dic = I18n.of(context).translationsForLocale();
