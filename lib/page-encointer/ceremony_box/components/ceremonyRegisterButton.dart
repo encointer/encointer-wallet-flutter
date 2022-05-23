@@ -9,12 +9,10 @@ import 'package:intl/intl.dart';
 class CeremonyRegisterButton extends StatefulWidget {
   const CeremonyRegisterButton({
     Key key,
-    this.languageCode,
     this.registerUntil,
     this.onPressed,
   }) : super(key: key);
 
-  final String languageCode;
   final int registerUntil;
   final Future<void> Function(BuildContext) onPressed;
 
@@ -37,6 +35,7 @@ class _CeremonyRegisterButtonState extends State<CeremonyRegisterButton> {
 
   @override
   Widget build(BuildContext context) {
+    String languageCode = Localizations.localeOf(context).languageCode;
     var dic = I18n.of(context).translationsForLocale();
 
     return PrimaryButton(
@@ -47,7 +46,7 @@ class _CeremonyRegisterButtonState extends State<CeremonyRegisterButton> {
                 Icon(Iconsax.login_1),
                 SizedBox(width: 6),
                 Text('${dic.encointer.registerUntil} '),
-                MaybeDateTime(widget.registerUntil, dateFormat: DateFormat.yMd(widget.languageCode))
+                MaybeDateTime(widget.registerUntil, dateFormat: DateFormat.yMd(languageCode))
               ],
             )
           : CupertinoActivityIndicator(),

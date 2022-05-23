@@ -30,8 +30,6 @@ class CeremonyBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String languageCode = Localizations.localeOf(context).languageCode;
-
     return Observer(
       builder: (BuildContext context) => Column(
         children: [
@@ -54,7 +52,6 @@ class CeremonyBox extends StatelessWidget {
                 SizedBox(height: 12),
                 if (store.encointer.showRegisterButton)
                   CeremonyRegisterButton(
-                    languageCode: languageCode,
                     registerUntil: store.encointer?.assigningPhaseStart,
                     onPressed: (context) => submitRegisterParticipant(context, store, api),
                   ),
