@@ -164,6 +164,12 @@ mixin _$EncointerStore on _EncointerStore, Store {
   bool get showStartCeremonyButton => (_$showStartCeremonyButtonComputed ??=
           Computed<bool>(() => super.showStartCeremonyButton, name: '_EncointerStore.showStartCeremonyButton'))
       .value;
+  Computed<bool> _$showSubmitClaimsButtonComputed;
+
+  @override
+  bool get showSubmitClaimsButton => (_$showSubmitClaimsButtonComputed ??=
+          Computed<bool>(() => super.showSubmitClaimsButton, name: '_EncointerStore.showSubmitClaimsButton'))
+      .value;
   Computed<bool> _$showMeetupInfoComputed;
 
   @override
@@ -450,6 +456,7 @@ communityBalance: ${communityBalance},
 assigningPhaseStart: ${assigningPhaseStart},
 attestingPhaseStart: ${attestingPhaseStart},
 showStartCeremonyButton: ${showStartCeremonyButton},
+showSubmitClaimsButton: ${showSubmitClaimsButton},
 showMeetupInfo: ${showMeetupInfo}
     ''';
   }

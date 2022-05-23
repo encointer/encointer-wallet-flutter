@@ -56,8 +56,8 @@ class _AttestingPageState extends State<AttestingPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [Text(dic.encointer.claimsSubmit)],
                 ),
-                onPressed: () => store.encointer.communityAccount.scannedClaimsCount > 0 ?
-                 submitAttestClaims(context, store) : null,
+                onPressed: () =>
+                    store.encointer.communityAccount.scannedClaimsCount > 0 ? submitAttestClaims(context, store) : null,
               ),
               SizedBox(height: 16),
               ElevatedButton(
@@ -76,7 +76,7 @@ class _AttestingPageState extends State<AttestingPage> {
       ]),
     );
   }
-  }
+}
 
 void _confirmPurgeClaimsDialog(BuildContext context, AppStore store) {
   final dic = I18n.of(context).translationsForLocale();

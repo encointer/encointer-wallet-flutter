@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/page-encointer/common/encointerMap.dart';
@@ -29,6 +30,8 @@ class CeremonyBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var dic = I18n.of(context).translationsForLocale();
+
     return Observer(
       builder: (BuildContext context) => Column(
         children: [
@@ -61,6 +64,22 @@ class CeremonyBox extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
                     child: CeremonyStartButton(onPressed: () => startMeetup(context, store)),
+                  ),
+                if (store.encointer.showSubmitClaimsButton)
+                  Padding(
+                    padding: const EdgeInsets.only(top: 6),
+                    child: PrimaryButton( // todo: this will be removed because we do it automatically
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Iconsax.login_1),
+                          SizedBox(width: 6),
+                          Text(
+                              '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store.encointer.communityAccount.scannedClaimsCount.toString())}'), // TODO count down
+                        ],
+                      ),
+                      onPressed: () => submitAttestClaims(context, store),
+                    ),
                   )
               ],
             ),

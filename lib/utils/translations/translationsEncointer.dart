@@ -3,6 +3,7 @@
 abstract class TranslationsEncointer {
   String get registerParticipant;
   String get claimsSubmit;
+  String get claimsSubmitN;
   String get claimsPurge;
   String get claimsPurgeConfirm;
   String get encointerCeremony;
@@ -44,6 +45,7 @@ abstract class TranslationsEncointer {
 class TranslationsEnEncointer implements TranslationsEncointer {
   get registerParticipant => 'Register';
   get claimsSubmit => 'Submit claims';
+  get claimsSubmitN => 'Submit N_COUNT claims';
   get claimsPurge => 'Purge previously scanned claims';
   get claimsPurgeConfirm => 'Are you sure, you want to purge all scanned claims?';
   get encointerCeremony => 'Encointer Ceremony';
@@ -86,6 +88,7 @@ class TranslationsEnEncointer implements TranslationsEncointer {
 class TranslationsDeEncointer implements TranslationsEncointer {
   get registerParticipant => 'Registrieren';
   get claimsSubmit => 'Anträge einreichen';
+  get claimsSubmitN => 'N_COUNT Anträge einreichen';
   get claimsPurge => 'Bereits gescannte Anträge löschen';
   get claimsPurgeConfirm => 'Bist du sicher, dass du alle gescannte Anträge löschen möchtest?';
   get encointerCeremony => 'Encointer Zeremonie';
@@ -129,6 +132,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
 class TranslationsZhEncointer implements TranslationsEncointer {
   get registerParticipant => '注册参与者';
   get claimsSubmit => '提交证明';
+  get claimsSubmitN => throw UnimplementedError();
   get claimsPurge => throw UnimplementedError();
   get claimsPurgeConfirm => throw UnimplementedError();
   get encointerCeremony => 'Encointer 仪式';
