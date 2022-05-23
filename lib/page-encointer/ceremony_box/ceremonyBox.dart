@@ -1,6 +1,7 @@
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/page-encointer/common/encointerMap.dart';
+import 'package:encointer_wallet/page-encointer/meetup/startMeetup.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -57,9 +58,9 @@ class CeremonyBox extends StatelessWidget {
                     registerUntil: store.encointer?.assigningPhaseStart,
                     onPressed: (context) => submitRegisterParticipant(context, store, api),
                   ),
-                if (store.settings.developerMode && store.encointer.showStartCeremonyButton)
+                if (store.encointer.showStartCeremonyButton)
                   CeremonyStartButton(
-                    onPressed: onPressedStartCeremony,
+                    onPressed: () => startMeetup(context, store),
                   )
               ],
             ),
