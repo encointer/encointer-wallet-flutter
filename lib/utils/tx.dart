@@ -119,7 +119,11 @@ Map<String, dynamic> registerParticipantParams(
 }
 
 Map<String, dynamic> attestClaimsParams(
-    BuildContext context, CommunityIdentifier chosenCid, int scannedClaimsCount, List<ClaimOfAttendance> claims) {
+  BuildContext context,
+  CommunityIdentifier chosenCid,
+  int scannedClaimsCount,
+  List<ClaimOfAttendance> claims,
+) {
   final dic = I18n.of(context).translationsForLocale();
   return {
     "title": 'attest_claims',
