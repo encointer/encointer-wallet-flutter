@@ -93,6 +93,21 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
       (_$isRegisteredComputed ??= Computed<bool>(() => super.isRegistered, name: '_CommunityAccountStore.isRegistered'))
           .value;
 
+  final _$participantTypeAtom = Atom(name: '_CommunityAccountStore.participantType');
+
+  @override
+  ParticipantType get participantType {
+    _$participantTypeAtom.reportRead();
+    return super.participantType;
+  }
+
+  @override
+  set participantType(ParticipantType value) {
+    _$participantTypeAtom.reportWrite(value, super.participantType, () {
+      super.participantType = value;
+    });
+  }
+
   final _$meetupAtom = Atom(name: '_CommunityAccountStore.meetup');
 
   @override
@@ -204,6 +219,7 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
   @override
   String toString() {
     return '''
+participantType: ${participantType},
 meetup: ${meetup},
 participantsClaims: ${participantsClaims},
 scannedClaimsCount: ${scannedClaimsCount},

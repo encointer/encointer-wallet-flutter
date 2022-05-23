@@ -42,6 +42,7 @@ abstract class _CommunityAccountStore with Store {
   final String address;
 
   /// Participant type if the account has registered for the next meetup.
+  @observable
   ParticipantType participantType;
 
   /// Contains the meetup data if the account has been assigned to a meetup in this community.
