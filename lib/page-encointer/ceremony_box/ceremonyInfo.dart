@@ -30,7 +30,7 @@ class CeremonyInfo extends StatelessWidget {
     final String infoLink = ceremonyInfoLink(languageCode);
 
     return Container(
-      child: meetupTime == null
+      child: meetupTime != null
           ? Column(
               children: [
                 SizedBox(height: 8),
