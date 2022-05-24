@@ -7,6 +7,7 @@ import 'package:quiver/async.dart';
 
 class CeremonyCountDown extends StatefulWidget {
   CeremonyCountDown(this.nextCeremonyDate);
+
   static const String route = '/encointer/assigning';
 
   final DateTime nextCeremonyDate;
@@ -33,10 +34,7 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
   }
 
   void resetTimer() {
-    if (sub != null) {
-      sub.cancel();
-      sub = null;
-    }
+    _cancelTimer();
 
     CountdownTimer countDownTimer = new CountdownTimer(
       new Duration(seconds: timeToMeetup),
@@ -56,12 +54,22 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
     });
   }
 
+  void _cancelTimer() {
+    if (sub != null) {
+      sub.cancel();
+      sub = null;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var timeToMeetup =
         widget.nextCeremonyDate != null ? widget.nextCeremonyDate.difference(DateTime.now()).inSeconds : 0;
 
-    if (this.timeToMeetup != timeToMeetup) {
+    if (timeToMeetup <= 0) {
+      timeToMeetup = 0;
+      _cancelTimer();
+    } else {
       this.timeToMeetup = timeToMeetup;
       resetTimer();
     }

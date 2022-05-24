@@ -130,13 +130,14 @@ class EncointerApi {
 
       var encointerAccountStore = store.encointer.communityStores[cid.toFmtString()].communityAccountStores[address];
 
-      if (accountData.personal != null) {
-        encointerAccountStore.setMeetup(accountData.personal.meetup);
-        encointerAccountStore.setParticipantType(accountData.personal.participantType);
-      } else {
-        encointerAccountStore.purgeMeetup();
-        encointerAccountStore.purgeParticipantType();
-      }
+      accountData.personal?.meetup != null
+          ? encointerAccountStore.setMeetup(accountData.personal.meetup)
+          : encointerAccountStore.purgeMeetup();
+
+      accountData.personal?.participantType != null
+          ? encointerAccountStore.setParticipantType(accountData.personal.participantType)
+          : encointerAccountStore.purgeParticipantType();
+
       print("[EncointerApi]: " + encointerAccountStore.toString());
       return accountData;
     } catch (e) {

@@ -164,11 +164,18 @@ mixin _$EncointerStore on _EncointerStore, Store {
   bool get showStartCeremonyButton => (_$showStartCeremonyButtonComputed ??=
           Computed<bool>(() => super.showStartCeremonyButton, name: '_EncointerStore.showStartCeremonyButton'))
       .value;
-  Computed<bool> _$showTwoBoxesComputed;
+  Computed<bool> _$showSubmitClaimsButtonComputed;
 
   @override
-  bool get showTwoBoxes =>
-      (_$showTwoBoxesComputed ??= Computed<bool>(() => super.showTwoBoxes, name: '_EncointerStore.showTwoBoxes')).value;
+  bool get showSubmitClaimsButton => (_$showSubmitClaimsButtonComputed ??=
+          Computed<bool>(() => super.showSubmitClaimsButton, name: '_EncointerStore.showSubmitClaimsButton'))
+      .value;
+  Computed<bool> _$showMeetupInfoComputed;
+
+  @override
+  bool get showMeetupInfo =>
+      (_$showMeetupInfoComputed ??= Computed<bool>(() => super.showMeetupInfo, name: '_EncointerStore.showMeetupInfo'))
+          .value;
 
   final _$currentPhaseAtom = Atom(name: '_EncointerStore.currentPhase');
 
@@ -449,7 +456,8 @@ communityBalance: ${communityBalance},
 assigningPhaseStart: ${assigningPhaseStart},
 attestingPhaseStart: ${attestingPhaseStart},
 showStartCeremonyButton: ${showStartCeremonyButton},
-showTwoBoxes: ${showTwoBoxes}
+showSubmitClaimsButton: ${showSubmitClaimsButton},
+showMeetupInfo: ${showMeetupInfo}
     ''';
   }
 }

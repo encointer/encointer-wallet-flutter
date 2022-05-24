@@ -3,6 +3,7 @@
 abstract class TranslationsEncointer {
   String get registerParticipant;
   String get claimsSubmit;
+  String get claimsSubmitN;
   String get claimsPurge;
   String get claimsPurgeConfirm;
   String get encointerCeremony;
@@ -24,7 +25,7 @@ abstract class TranslationsEncointer {
   String get meetupLocation;
   String get timeUntilCeremonyStarts;
   String get startCeremony;
-  String get youAreRegistered;
+  String get alreadyRegistered;
   String get registerUntil;
   String get showCeremonyLocation;
   String get ceremonyIsOver;
@@ -34,7 +35,12 @@ abstract class TranslationsEncointer {
   String get youAreNotRegistered;
   String get howManyParticipantsShowedUp;
   String get ceremonyWillTakePlaceOn;
+  String get ceremonySuccessfullyCompleted;
   String get fetchingReputations;
+  String get youAreRegistered;
+  String get youAreNotRegisteredPleaseRegisterNextTime;
+  String get youAreAssignedToAMeetupWithNParticipants;
+  String get successfullySentNAttestations;
   String get numberOfAttendees;
   String get next;
   String get closeMeetup;
@@ -50,6 +56,7 @@ abstract class TranslationsEncointer {
 class TranslationsEnEncointer implements TranslationsEncointer {
   get registerParticipant => 'Register';
   get claimsSubmit => 'Submit claims';
+  get claimsSubmitN => 'Submit N_COUNT claims';
   get claimsPurge => 'Purge previously scanned claims';
   get claimsPurgeConfirm => 'Are you sure, you want to purge all scanned claims?';
   get encointerCeremony => 'Encointer Ceremony';
@@ -70,7 +77,7 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   get meetupLocation => 'Meetup Location';
   get timeUntilCeremonyStarts => 'Time to meetup:';
   get startCeremony => 'Start ceremony';
-  get youAreRegistered => 'Already Registered';
+  get alreadyRegistered => 'Already Registered';
   get registerUntil => 'Register until';
   get showCeremonyLocation => 'Ceremony location';
   get ceremonyIsOver => 'The ceremony is over';
@@ -80,7 +87,13 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   get youAreNotRegistered => 'You are not registered for a ceremony for the selected community on:';
   get howManyParticipantsShowedUp => 'How many attendees are present?';
   get ceremonyWillTakePlaceOn => 'The ceremony will take place on';
+  get ceremonySuccessfullyCompleted => 'Ceremony successfully completed';
   get fetchingReputations => 'Checking if you have reputation';
+  get youAreRegistered => 'You are registered for the next meetup.';
+  get youAreNotRegisteredPleaseRegisterNextTime =>
+      'You are not assigned for this ceremony. Please join our next ceremony to receive your community income.';
+  get youAreAssignedToAMeetupWithNParticipants => 'You are assigned to a meetup with P_COUNT people.';
+  get successfullySentNAttestations => 'You have successfully submitted attestations for P_COUNT other people.';
   get countParticipants => 'Count';
   get numberOfAttendees => 'Number of attendees';
   get next => 'Next';
@@ -95,8 +108,9 @@ class TranslationsEnEncointer implements TranslationsEncointer {
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
-  get registerParticipant => 'Registeriere';
+  get registerParticipant => 'Registrieren';
   get claimsSubmit => 'Anträge einreichen';
+  get claimsSubmitN => 'N_COUNT Anträge einreichen';
   get claimsPurge => 'Bereits gescannte Anträge löschen';
   get claimsPurgeConfirm => 'Bist du sicher, dass du alle gescannte Anträge löschen möchtest?';
   get encointerCeremony => 'Encointer Zeremonie';
@@ -115,12 +129,12 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get meetupAttended => 'An der letzen Versammlung teilgenommen';
   get meetupClaimantInvalid =>
       'Diese* Antragssteller*in gehört nicht zu deiner Versammlung. Antrag wurde nicht gespeichert.';
-  get meetupLocation => 'Treffpunkt der Versammlung';
+  get meetupLocation => 'Treffpunkt';
   get timeUntilCeremonyStarts => 'Zeit bis zur Versammlung:';
   get startCeremony => 'Versammlung starten';
-  get youAreRegistered => 'Bereits registriert';
+  get alreadyRegistered => 'Bereits registriert';
   get registerUntil => 'Registriere dich bis am';
-  get showCeremonyLocation => 'Ort der Versammlung';
+  get showCeremonyLocation => 'Treffpunkt';
   get ceremonyIsOver => 'Die Zeremonie ist vorbei';
   get today => 'Heute';
   get tomorrow => 'Morgen';
@@ -128,7 +142,13 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get youAreNotRegistered => 'Du bist leider keiner Versammlung zugewiesen worden am';
   get howManyParticipantsShowedUp => 'Wieviele Teilnehmende sind da?';
   get ceremonyWillTakePlaceOn => 'Die Zeremonie wird stattfinden am';
+  get ceremonySuccessfullyCompleted => 'Zeremonie erfolgreich durchgeführt';
   get fetchingReputations => 'Es wird überprüft, ob du bereits Reputation hast';
+  get youAreRegistered => 'Du bist für das nächste Meetup registriert.';
+  get youAreNotRegisteredPleaseRegisterNextTime =>
+      'Du bist nicht für diese Zeremonie zugewiesen. Bitte registriere dich für die nächste Zeremonie um dein Gemeinschaftseinkommen zu erhalten.';
+  get youAreAssignedToAMeetupWithNParticipants => 'Du bist einem Meetup mit P_COUNT Leuten zugewiesen.';
+  get successfullySentNAttestations => 'Du hast erfolgreich Attestierungen für P_COUNT andere Leute eingereicht.';
   get countParticipants => 'Zähle';
   get numberOfAttendees => 'Anzahl Teilnehmende';
   get next => 'Weiter';
@@ -146,6 +166,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
 class TranslationsZhEncointer implements TranslationsEncointer {
   get registerParticipant => '注册参与者';
   get claimsSubmit => '提交证明';
+  get claimsSubmitN => throw UnimplementedError();
   get claimsPurge => throw UnimplementedError();
   get claimsPurgeConfirm => throw UnimplementedError();
   get encointerCeremony => 'Encointer 仪式';
@@ -164,7 +185,7 @@ class TranslationsZhEncointer implements TranslationsEncointer {
   get meetupLocation => throw UnimplementedError();
   get timeUntilCeremonyStarts => '聚会时间：';
   get startCeremony => throw UnimplementedError();
-  get youAreRegistered => '已经注册';
+  get alreadyRegistered => '已经注册';
   get communities => throw UnimplementedError();
   get noCommunitiesAreYouOffline => throw UnimplementedError();
   get registerUntil => throw UnimplementedError();
@@ -176,7 +197,12 @@ class TranslationsZhEncointer implements TranslationsEncointer {
   get youAreNotRegistered => throw UnimplementedError();
   get howManyParticipantsShowedUp => throw UnimplementedError();
   get ceremonyWillTakePlaceOn => throw UnimplementedError();
+  get ceremonySuccessfullyCompleted => throw UnimplementedError();
   get fetchingReputations => throw UnimplementedError();
+  get youAreRegistered => throw UnimplementedError();
+  get youAreNotRegisteredPleaseRegisterNextTime => throw UnimplementedError();
+  get youAreAssignedToAMeetupWithNParticipants => throw UnimplementedError();
+  get successfullySentNAttestations => throw UnimplementedError();
   get countParticipants => throw UnimplementedError();
   get numberOfAttendees => throw UnimplementedError();
   get next => throw UnimplementedError();
