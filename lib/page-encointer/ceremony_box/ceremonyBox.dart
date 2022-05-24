@@ -105,7 +105,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
         return CeremonyNotification(
           notificationIconData: Iconsax.tick_square,
           notification: dic.encointer.youAreRegisteredAs.replaceAll(
-            'P_TYPE',
+            'PARTICIPANT_TYPE',
             store.encointer?.communityAccount?.participantType?.toValue(),
           ),
         );

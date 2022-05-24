@@ -78,7 +78,7 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   get ceremonyWillTakePlaceOn => 'The ceremony will take place on';
   get ceremonySuccessfullyCompleted => 'Ceremony successfully completed';
   get fetchingReputations => 'Checking if you have reputation';
-  get youAreRegisteredAs => 'You are registered for the next meetup as P_TYPE.';
+  get youAreRegisteredAs => 'You are registered for the next meetup as PARTICIPANT_TYPE.';
   get youAreNotRegisteredPleaseRegisterNextTime =>
       'You are not assigned for this ceremony. Please join our next ceremony to receive your community income.';
   get youAreAssignedToAMeetupWithNParticipants => 'You are assigned to a meetup with P_COUNT people.';
@@ -122,7 +122,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get ceremonyWillTakePlaceOn => 'Die Zeremonie wird stattfinden am';
   get ceremonySuccessfullyCompleted => 'Zeremonie erfolgreich durchgeführt';
   get fetchingReputations => 'Es wird überprüft, ob du bereits Reputation hast';
-  get youAreRegisteredAs => 'Du bist für das nächste Meetup as P_TYPE registriert.';
+  get youAreRegisteredAs => 'Du bist für das nächste Meetup als PARTICIPANT_TYPE registriert.';
   get youAreNotRegisteredPleaseRegisterNextTime =>
       'Du bist nicht für diese Zeremonie zugewiesen. Bitte registriere dich für die nächste Zeremonie um dein Gemeinschaftseinkommen zu erhalten.';
   get youAreAssignedToAMeetupWithNParticipants => 'Du bist einem Meetup mit P_COUNT Leuten zugewiesen.';
