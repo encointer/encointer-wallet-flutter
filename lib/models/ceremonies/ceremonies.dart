@@ -119,6 +119,12 @@ extension reputationExtension on Reputation {
   }
 }
 
+extension participantTypeExtension on ParticipantType {
+  String toValue() {
+    return toEnumValue(this);
+  }
+}
+
 extension ceremonyPhaseExtension on CeremonyPhase {
   String toValue() {
     return toEnumValue(this);
