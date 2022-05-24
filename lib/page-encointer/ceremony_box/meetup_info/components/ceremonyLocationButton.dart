@@ -5,11 +5,11 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CeremonyLocationButton extends StatelessWidget {
   const CeremonyLocationButton({
-    this.onPressedLocation,
+    this.onPressed,
     Key key,
   }) : super(key: key);
 
-  final Function onPressedLocation;
+  final Future<void> Function() onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +30,11 @@ class CeremonyLocationButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Icon(Iconsax.location),
-          SizedBox(
-            width: 6,
-          ),
+          SizedBox(width: 6),
           Text('${dic.encointer.showCeremonyLocation}'),
         ],
       ),
-      onPressed: onPressedLocation, // TODO show map
+      onPressed: onPressed,
     );
   }
 }

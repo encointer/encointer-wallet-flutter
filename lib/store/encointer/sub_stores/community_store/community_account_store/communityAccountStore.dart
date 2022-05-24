@@ -42,6 +42,7 @@ abstract class _CommunityAccountStore with Store {
   final String address;
 
   /// Participant type if the account has registered for the next meetup.
+  @observable
   ParticipantType participantType;
 
   /// Contains the meetup data if the account has been assigned to a meetup in this community.
@@ -53,6 +54,10 @@ abstract class _CommunityAccountStore with Store {
   /// Map: claimantPublicKey -> ClaimOfAttendance
   @observable
   ObservableMap<String, ClaimOfAttendance> participantsClaims = new ObservableMap();
+
+  /// This should be set to true once the attestations have been sent to chain.
+  @observable
+  bool meetupCompleted = false;
 
   @computed
   get scannedClaimsCount => participantsClaims?.length ?? 0;
@@ -83,6 +88,20 @@ abstract class _CommunityAccountStore with Store {
   void setMeetup(Meetup meetup) {
     _log("Set meetup: ${meetup.toJson()}");
     this.meetup = meetup;
+    writeToCache();
+  }
+
+  @action
+  void setMeetupCompleted() {
+    _log("settingMeetupCompleted");
+    meetupCompleted = true;
+    writeToCache();
+  }
+
+  @action
+  void clearMeetupCompleted() {
+    _log("clearing meetupCompleted");
+    meetupCompleted = false;
     writeToCache();
   }
 
@@ -121,6 +140,7 @@ abstract class _CommunityAccountStore with Store {
     purgeParticipantsClaims();
     purgeParticipantType();
     purgeMeetup();
+    clearMeetupCompleted();
   }
 
   void initStore(Function cacheFn) {
