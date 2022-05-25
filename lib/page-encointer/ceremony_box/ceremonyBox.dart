@@ -130,9 +130,10 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
       break;
     case CeremonyPhase.Attesting:
       if (!(store.encointer.communityAccount?.isAssigned ?? false)) {
-        // showMeetupInfo == false in this case. So we don't show this widget at all.
-        _log("'getMeetupInfoWidget' trapped in an unexpected if statement: AttestingPhase + Unassigned");
-        return Container();
+        return CeremonyNotification(
+          notificationIconData: Iconsax.close_square,
+          notification: dic.encointer.youAreNotRegisteredPleaseRegisterNextTime,
+        );
       } else {
         if (store.encointer.communityAccount?.meetupCompleted ?? false) {
           return CeremonyNotification(
@@ -141,10 +142,9 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
                 .replaceAll('P_COUNT', store.encointer.communityAccount?.scannedClaimsCount.toString()),
           );
         } else {
-          return CeremonyNotification(
-            notificationIconData: Iconsax.close_square,
-            notification: dic.encointer.youAreNotRegisteredPleaseRegisterNextTime,
-          );
+          // showMeetupInfo == false in this case. So we don't show this widget at all.
+          _log("'getMeetupInfoWidget' trapped in an unexpected if statement: AttestingPhase + Assigned + MeetupNotCompleted");
+          return Container();
         }
       }
       break;
