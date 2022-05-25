@@ -100,9 +100,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                           '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store.encointer.communityAccount.scannedClaimsCount.toString())}'),
                     ],
                   ),
-                  onPressed: !store.encointer.communityAccount.meetupCompleted
-                      ? () => submitAttestClaims(context, store)
-                      : null,
+                  onPressed: () => submitAttestClaims(context, store),
                 ),
               ),
             ],
