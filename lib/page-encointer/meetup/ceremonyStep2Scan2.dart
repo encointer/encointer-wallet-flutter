@@ -34,15 +34,6 @@ class CeremonyStep2Scan extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         title: Text(dic.encointer.encointerCeremony),
-        actions: [
-          IconButton(
-            key: Key('close-encointer-ceremony-step2'),
-            icon: Icon(Icons.close),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          )
-        ],
       ),
       body: SafeArea(
         child: Padding(

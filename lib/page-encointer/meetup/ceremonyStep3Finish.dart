@@ -26,16 +26,6 @@ class CeremonyStep3Finish extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         title: Text(dic.encointer.encointerCeremony),
-        leading: Container(),
-        actions: [
-          IconButton(
-            key: Key('close-encointer-ceremony-step3'),
-            icon: Icon(Icons.close),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          )
-        ],
       ),
       body: SafeArea(
         child: Padding(
