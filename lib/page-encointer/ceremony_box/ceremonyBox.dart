@@ -63,9 +63,7 @@ class CeremonyBox extends StatelessWidget {
                 if (store.encointer.showStartCeremonyButton)
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
-                    child: CeremonyStartButton(
-                        key: Key('start-meetup'),
-                        onPressed: () => startMeetup(context, store)),
+                    child: CeremonyStartButton(key: Key('start-meetup'), onPressed: () => startMeetup(context, store)),
                   ),
                 if (store.encointer.showSubmitClaimsButton)
                   Padding(
@@ -131,7 +129,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
       }
       break;
     case CeremonyPhase.Attesting:
-      if (store.encointer.communityAccount?.isAssigned ?? false) {
+      if (!store.encointer.communityAccount?.isAssigned ?? false) {
         // showMeetupInfo == false in this case. So we don't show this widget at all.
         _log("'getMeetupInfoWidget' trapped in an unexpected if statement: AttestingPhase + Unassigned");
         return Container();
