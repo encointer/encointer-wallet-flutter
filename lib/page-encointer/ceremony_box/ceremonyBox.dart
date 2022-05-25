@@ -143,7 +143,8 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
           );
         } else {
           // showMeetupInfo == false in this case. So we don't show this widget at all.
-          _log("'getMeetupInfoWidget' trapped in an unexpected if statement: AttestingPhase + Assigned + MeetupNotCompleted");
+          _log(
+              "'getMeetupInfoWidget' trapped in an unexpected if statement: AttestingPhase + Assigned + MeetupNotCompleted");
           return Container();
         }
       }
