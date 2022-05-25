@@ -2,12 +2,12 @@ import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/page-encointer/common/encointerMap.dart';
-import 'package:encointer_wallet/page-encointer/meetup/startMeetup.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/tx.dart';
 import 'package:flutter/material.dart';
+import 'package:encointer_wallet/page-encointer/meetup/ceremonyStep1Count.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -63,7 +63,14 @@ class CeremonyBox extends StatelessWidget {
                 if (store.encointer.showStartCeremonyButton)
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
-                    child: CeremonyStartButton(key: Key('start-meetup'), onPressed: () => startMeetup(context, store)),
+                    child: CeremonyStartButton(
+                      key: Key('start-meetup'),
+                      onPressed: () => Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => CeremonyStep1Count(store, api),
+                        ),
+                      ),
+                    ),
                   ),
                 if (store.encointer.showSubmitClaimsButton)
                   Padding(
