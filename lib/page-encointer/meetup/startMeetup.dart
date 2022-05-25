@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
+import 'package:encointer_wallet/page-encointer/meetup/ceremonyStep1Count.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/codecApi.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -7,12 +8,11 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'claimQrCode.dart';
-import 'confirmAttendeesDialog.dart';
+import 'ceremonyStep2Scan2.dart';
 
 Future<void> startMeetup(BuildContext context, AppStore store) async {
-  var amount = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => ConfirmAttendeesDialog()));
-  // amount is `null` if back button pressed in `ConfirmAttendeesDialog`
+  var count = await Navigator.of(context).push(MaterialPageRoute(builder: (context) => CeremonyStep1Count()));
+  // count is `null` if back button pressed in `ConfirmAttendeesDialog`
 
   if (store.settings.cachedPin.isEmpty) {
     await showCupertinoDialog(
@@ -30,16 +30,15 @@ Future<void> startMeetup(BuildContext context, AppStore store) async {
     );
   }
 
-  if (amount != null && store.settings.cachedPin.isNotEmpty) {
+  if (count != null && store.settings.cachedPin.isNotEmpty) {
     await Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (BuildContext context) => ClaimQrCode(
+        builder: (BuildContext context) => CeremonyStep2Scan(
           store,
-          title: I18n.of(context).translationsForLocale().encointer.claimQr,
           claim: webApi.encointer
-              .signClaimOfAttendance(amount, store.settings.cachedPin)
+              .signClaimOfAttendance(count, store.settings.cachedPin)
               .then((claim) => webApi.codec.encodeToBytes(ClaimOfAttendanceJSRegistryName, claim)),
-          confirmedParticipantsCount: amount,
+          confirmedParticipantsCount: count,
         ),
       ),
     );

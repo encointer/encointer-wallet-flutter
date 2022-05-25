@@ -7,6 +7,7 @@ abstract class TranslationsEncointer {
   String get claimsPurge;
   String get claimsPurgeConfirm;
   String get encointerCeremony;
+  String get countParticipants;
   String get nextCeremonyTimeLeft;
   String get nextCeremonyDateLabel;
   String get claimQr;
@@ -40,6 +41,16 @@ abstract class TranslationsEncointer {
   String get youAreNotRegisteredPleaseRegisterNextTime;
   String get youAreAssignedToAMeetupWithNParticipants;
   String get successfullySentNAttestations;
+  String get numberOfAttendees;
+  String get next;
+  String get closeMeetup;
+  String get count;
+  String get scan;
+  String get scanDescriptionForMeetup;
+  String get scanOthers;
+  String get finish;
+  String get thankYou;
+  String get weHopeToSeeYouAtTheNextMeetup;
 }
 
 class TranslationsEnEncointer implements TranslationsEncointer {
@@ -83,6 +94,17 @@ class TranslationsEnEncointer implements TranslationsEncointer {
       'You are not assigned for this ceremony. Please join our next ceremony to receive your community income.';
   get youAreAssignedToAMeetupWithNParticipants => 'You are assigned to a meetup with P_COUNT people.';
   get successfullySentNAttestations => 'You have successfully submitted attestations for P_COUNT other people.';
+  get countParticipants => 'Count';
+  get numberOfAttendees => 'Number of attendees';
+  get next => 'Next';
+  get closeMeetup => 'Close meetup';
+  get count => 'Count';
+  get scan => 'Scan';
+  get scanDescriptionForMeetup => 'Every attendee must scan everyone else and be scanned by everyone else.';
+  get scanOthers => 'Scan others';
+  get finish => 'Finish';
+  get thankYou => 'Thank you';
+  get weHopeToSeeYouAtTheNextMeetup => 'We hope to see you at the next meetup.';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
@@ -127,6 +149,18 @@ class TranslationsDeEncointer implements TranslationsEncointer {
       'Du bist nicht für diese Zeremonie zugewiesen. Bitte registriere dich für die nächste Zeremonie um dein Gemeinschaftseinkommen zu erhalten.';
   get youAreAssignedToAMeetupWithNParticipants => 'Du bist einem Meetup mit P_COUNT Leuten zugewiesen.';
   get successfullySentNAttestations => 'Du hast erfolgreich Attestierungen für P_COUNT andere Leute eingereicht.';
+  get countParticipants => 'Zähle';
+  get numberOfAttendees => 'Anzahl Teilnehmende';
+  get next => 'Weiter';
+  get closeMeetup => 'Treffen schliessen';
+  get count => 'Zähle';
+  get scan => 'Scannen';
+  get scanDescriptionForMeetup =>
+      'Jeder Anwesende muss alle anderen einmal scannen, und von allen einmal gescannt werden.';
+  get scanOthers => 'Andere scannen';
+  get finish => 'Beenden';
+  get thankYou => 'Danke';
+  get weHopeToSeeYouAtTheNextMeetup => 'Wir hoffen, dass wir dich am nächsten Treffen wieder sehen.';
 }
 
 class TranslationsZhEncointer implements TranslationsEncointer {
@@ -169,4 +203,15 @@ class TranslationsZhEncointer implements TranslationsEncointer {
   get youAreNotRegisteredPleaseRegisterNextTime => throw UnimplementedError();
   get youAreAssignedToAMeetupWithNParticipants => throw UnimplementedError();
   get successfullySentNAttestations => throw UnimplementedError();
+  get countParticipants => throw UnimplementedError();
+  get numberOfAttendees => throw UnimplementedError();
+  get next => throw UnimplementedError();
+  get closeMeetup => throw UnimplementedError();
+  get count => throw UnimplementedError();
+  get scan => throw UnimplementedError();
+  get scanDescriptionForMeetup => throw UnimplementedError();
+  get scanOthers => throw UnimplementedError();
+  get finish => throw UnimplementedError();
+  get thankYou => throw UnimplementedError();
+  get weHopeToSeeYouAtTheNextMeetup => throw UnimplementedError();
 }
