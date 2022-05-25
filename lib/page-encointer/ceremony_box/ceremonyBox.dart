@@ -104,7 +104,10 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
       if (communityAccount?.isRegistered ?? false) {
         return CeremonyNotification(
           notificationIconData: Iconsax.tick_square,
-          notification: dic.encointer.youAreRegistered,
+          notification: dic.encointer.youAreRegisteredAs.replaceAll(
+            'PARTICIPANT_TYPE',
+            store.encointer?.communityAccount?.participantType?.toValue(),
+          ),
         );
       } else {
         // showMeetupInfo == false in this case. So we don't show this widget at all.
