@@ -91,7 +91,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                   ],
                 ),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => CeremonyStep3Finish(store)));
+                  Navigator.push(context, CupertinoPageRoute(builder: (_) => CeremonyStep3Finish(store)));
                 },
               ),
               SizedBox(height: 12),

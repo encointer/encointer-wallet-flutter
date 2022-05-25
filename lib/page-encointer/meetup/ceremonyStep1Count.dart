@@ -45,7 +45,7 @@ class CeremonyStep1Count extends StatelessWidget {
 
     if (count != null && store.settings.cachedPin.isNotEmpty) {
       Navigator.of(context).push(
-        MaterialPageRoute(
+        CupertinoPageRoute(
           builder: (BuildContext context) => CeremonyStep2Scan(
             store,
             claim: webApi.encointer
