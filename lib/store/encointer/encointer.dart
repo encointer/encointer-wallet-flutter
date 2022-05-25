@@ -494,17 +494,17 @@ abstract class _EncointerStore with Store {
 
   @computed
   bool get showStartCeremonyButton {
-    bool registered = communityAccount?.isRegistered ?? false;
+    bool assigned = communityAccount?.isAssigned ?? false;
     bool meetupCompleted = communityAccount?.meetupCompleted ?? false;
-    return (currentPhase == CeremonyPhase.Attesting && registered && !meetupCompleted);
+    return (currentPhase == CeremonyPhase.Attesting && assigned && !meetupCompleted);
   }
 
   @computed
   bool get showSubmitClaimsButton {
-    bool registered = communityAccount?.isRegistered ?? false;
+    bool assigned = communityAccount?.isAssigned ?? false;
     bool meetupCompleted = communityAccount?.meetupCompleted ?? false;
     bool hasClaims = (communityAccount?.scannedClaimsCount ?? 0) > 0;
-    return (currentPhase == CeremonyPhase.Attesting && registered && hasClaims && !meetupCompleted);
+    return (currentPhase == CeremonyPhase.Attesting && assigned && hasClaims && !meetupCompleted);
   }
 
   @computed

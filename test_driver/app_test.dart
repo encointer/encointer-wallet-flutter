@@ -88,6 +88,9 @@ void main() {
     });
 
     test('meetupPage', () async {
+      // attesting phase
+      await driver.requestData(MockStorageSetup.READY_FOR_MEETUP);
+
       log("tapping startMeetup");
       await driver.tap(find.byValueKey('start-meetup'));
       await driver.tap(find.byValueKey('attendees-count'));
