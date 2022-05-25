@@ -312,6 +312,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
+  final _$updateStateAsyncAction = AsyncAction('_EncointerStore.updateState');
+
+  @override
+  Future<void> updateState() {
+    return _$updateStateAsyncAction.run(() => super.updateState());
+  }
+
   final _$initCommunityStoreAsyncAction = AsyncAction('_EncointerStore.initCommunityStore');
 
   @override
@@ -386,16 +393,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCurrentCeremonyIndex');
     try {
       return super.setCurrentCeremonyIndex(index);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void updateState() {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.updateState');
-    try {
-      return super.updateState();
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }

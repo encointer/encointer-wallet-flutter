@@ -28,15 +28,7 @@ class EncointerEntry extends StatelessWidget {
         },
         onFocusGained: () {
           print('[encointerCeremonyPage:FocusDetector] Focus Gained.');
-          webApi.encointer.getCommunityMetadata().then((v) => webApi.encointer.getAllMeetupLocations().then((v) =>
-              webApi.encointer.getDemurrage().then((v) => webApi.encointer.getBootstrappers().then((v) => webApi
-                  .encointer
-                  .getReputations()
-                  .then((v) => webApi.encointer.getMeetupTime().then((v) => webApi.encointer
-                          .getAggregatedAccountData(store.encointer.chosenCid, store.account.currentAddress)
-                          .then((v) {
-                        print("[encointerCeremonyPage] state is current");
-                      })))))));
+          store.encointer.updateState();
         },
         child: Scaffold(
           backgroundColor: Colors.transparent,
