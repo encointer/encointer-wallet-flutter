@@ -5,6 +5,7 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:encointer_wallet/utils/tx.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -68,15 +69,15 @@ class CeremonyStep3Finish extends StatelessWidget {
                   ],
                 ),
               ),
-              PrimaryButton(
+              ElevatedButton(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Iconsax.arrow_right_2),
-                    SizedBox(width: 12),
+                    SizedBox(width: 12, height: 60),
                     Text(
                       dic.encointer.finish,
-                      style: Theme.of(context).textTheme.headline3.copyWith(color: ZurichLion.shade50),
+                      style: Theme.of(context).textTheme.headline3,
                     ),
                   ],
                 ),
@@ -84,6 +85,24 @@ class CeremonyStep3Finish extends StatelessWidget {
                   Navigator.of(context).pop();
                   Navigator.of(context).pop();
                 },
+              ),
+              SizedBox(height: 12),
+              Padding(
+                padding: const EdgeInsets.only(top: 6),
+                child: PrimaryButton(
+                  // todo: this will be removed because we do it automatically
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Iconsax.login_1),
+                      SizedBox(width: 6),
+                      Text(
+                          '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store.encointer.communityAccount.scannedClaimsCount.toString())}'),
+                    ],
+                  ),
+                  onPressed: !store.encointer.communityAccount.meetupCompleted ?
+                      () => submitAttestClaims(context, store) : null,
+                ),
               ),
             ],
           ),
