@@ -273,27 +273,25 @@ abstract class _EncointerStore with Store {
   // -- other helpers
 
   @action
-  void updateState() {
-    print("[encointer store] updating state during $currentPhase");
-    switch (currentPhase) {
-      case CeremonyPhase.Registering:
-        webApi.encointer.getMeetupTime();
-        if (chosenCid != null) {
-          webApi.encointer.getAggregatedAccountData(chosenCid, _rootStore.account.currentAddress);
-        }
-        webApi.encointer.getReputations();
-        break;
-      case CeremonyPhase.Assigning:
-        if (chosenCid != null) {
-          webApi.encointer.getAggregatedAccountData(chosenCid, _rootStore.account.currentAddress);
-        }
-        break;
-      case CeremonyPhase.Attesting:
-        if (chosenCid != null) {
-          webApi.encointer.getAggregatedAccountData(chosenCid, _rootStore.account.currentAddress);
-        }
-        break;
-    }
+  Future<void> updateState() async {
+    _log("[updateState] updating state...");
+    webApi.encointer.getCommunityMetadata().then(
+          (v) => webApi.encointer.getAllMeetupLocations().then(
+                (v) => webApi.encointer.getDemurrage().then(
+                      (v) => webApi.encointer.getBootstrappers().then(
+                            (v) => webApi.encointer.getReputations().then(
+                                  (v) => webApi.encointer.getMeetupTime().then(
+                                        (v) => webApi.encointer
+                                            .getAggregatedAccountData(chosenCid, _rootStore.account.currentAddress)
+                                            .then((v) {
+                                          _log("[updateState] finished");
+                                        }),
+                                      ),
+                                ),
+                          ),
+                    ),
+              ),
+        );
   }
 
   @action
