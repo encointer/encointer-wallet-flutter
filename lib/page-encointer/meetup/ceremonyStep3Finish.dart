@@ -60,7 +60,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                     ),
                     Center(
                       child: Text(
-                        'The next meetup will take place on:',
+                        dic.encointer.weHopeToSeeYouAtTheNextMeetup,
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black, height: 1.5),
                       ),

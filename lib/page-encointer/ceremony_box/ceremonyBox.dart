@@ -63,7 +63,9 @@ class CeremonyBox extends StatelessWidget {
                 if (store.encointer.showStartCeremonyButton)
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
-                    child: CeremonyStartButton(onPressed: () => startMeetup(context, store)),
+                    child: CeremonyStartButton(
+                        key: Key('start-meetup'),
+                        onPressed: () => startMeetup(context, store)),
                   ),
                 if (store.encointer.showSubmitClaimsButton)
                   Padding(

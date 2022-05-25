@@ -50,7 +50,7 @@ abstract class TranslationsEncointer {
   String get scanOthers;
   String get finish;
   String get thankYou;
-  String get nextMeetupWillTakePlaceOn;
+  String get weHopeToSeeYouAtTheNextMeetup;
 }
 
 class TranslationsEnEncointer implements TranslationsEncointer {
@@ -104,7 +104,7 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   get scanOthers => 'Scan others';
   get finish => 'Finish';
   get thankYou => 'Thank you';
-  get nextMeetupWillTakePlaceOn => 'The next meetup will take place on:';
+  get weHopeToSeeYouAtTheNextMeetup => 'We hope to see you at the next meetup.';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
@@ -160,7 +160,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get scanOthers => 'Andere scannen';
   get finish => 'Beenden';
   get thankYou => 'Danke';
-  get nextMeetupWillTakePlaceOn => 'Das nächste meetup findet statt am:';
+  get weHopeToSeeYouAtTheNextMeetup => 'Wir hoffen, dass wir dich am nächsten Treffen wieder sehen.';
 }
 
 class TranslationsZhEncointer implements TranslationsEncointer {
@@ -213,5 +213,5 @@ class TranslationsZhEncointer implements TranslationsEncointer {
   get scanOthers => throw UnimplementedError();
   get finish => throw UnimplementedError();
   get thankYou => throw UnimplementedError();
-  get nextMeetupWillTakePlaceOn => throw UnimplementedError();
+  get weHopeToSeeYouAtTheNextMeetup => throw UnimplementedError();
 }
