@@ -132,184 +132,187 @@ class _AssetsState extends State<Assets> {
                   // Fixme: 60 is hardcoded because we don't know the tabBar size here.
                   // Should be tackled in #607
                   EdgeInsets.only(bottom: 60 + appBar.preferredSize.height + MediaQuery.of(context).viewPadding.top),
-              child: ListView(
-                padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
-                children: [
-                  Observer(builder: (_) {
-                    if (ModalRoute.of(context).isCurrent &&
-                        !_enteredPin & store.settings.cachedPin.isEmpty & !store.settings.endpointIsNoTee) {
-                      // The pin is not immediately propagated to the store, hence we track if the pin has been entered to prevent
-                      // showing the dialog multiple times.
-                      WidgetsBinding.instance.addPostFrameCallback(
-                        (_) {
-                          _showPasswordDialog(context);
-                        },
-                      );
-                    }
-
-                    AccountData accountData = store.account.currentAccount;
-
-                    return Column(
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            InkWell(
-                                child: CombinedCommunityAndAccountAvatar(store),
-                                onTap: () {
-                                  if (panelController != null && panelController.isAttached) {
-                                    panelController.open();
-                                  }
-                                }),
-                          ],
-                        ),
-                        Observer(
-                          builder: (_) {
-                            return (store.encointer.community?.name != null) & (store.encointer.chosenCid != null)
-                                ? Column(
-                                    children: [
-                                      TextGradient(text: '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ'),
-                                      Text(
-                                        "${dic.assets.balance}, ${store.encointer.community?.symbol}",
-                                        style: Theme.of(context).textTheme.headline4.copyWith(
-                                              color: encointerGrey,
-                                            ),
-                                      ),
-                                    ],
-                                  )
-                                : Container(
-                                    margin: EdgeInsets.only(top: 16),
-                                    padding: EdgeInsets.symmetric(vertical: 8),
-                                    child: (store.encointer.chosenCid == null)
-                                        ? Container(
-                                            width: double.infinity,
-                                            child: Text(dic.assets.communityNotSelected, textAlign: TextAlign.center))
-                                        : Container(
-                                            width: double.infinity,
-                                            child: CupertinoActivityIndicator(),
-                                          ),
-                                  );
+              child: RefreshIndicator(
+                onRefresh: store.encointer.updateState,
+                child: ListView(
+                  padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
+                  children: [
+                    Observer(builder: (_) {
+                      if (ModalRoute.of(context).isCurrent &&
+                          !_enteredPin & store.settings.cachedPin.isEmpty & !store.settings.endpointIsNoTee) {
+                        // The pin is not immediately propagated to the store, hence we track if the pin has been entered to prevent
+                        // showing the dialog multiple times.
+                        WidgetsBinding.instance.addPostFrameCallback(
+                          (_) {
+                            _showPasswordDialog(context);
                           },
-                        ),
-                        SizedBox(
-                          height: 42,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Expanded(
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    // don't redefine the entire style just the border radii
-                                    borderRadius:
-                                        BorderRadius.horizontal(left: Radius.circular(15), right: Radius.zero),
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Icon(Iconsax.receive_square_2),
-                                      SizedBox(width: 12),
-                                      Text(dic.assets.receive),
-                                    ],
-                                  ),
-                                ),
-                                key: Key('qr-receive'),
-                                onPressed: () {
-                                  if (accountData.address != '') {
-                                    Navigator.pushNamed(context, ReceivePage.route);
-                                  }
-                                },
-                              ),
-                            ),
-                            SizedBox(width: 2),
-                            Expanded(
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    // don't redefine the entire style just the border radii
-                                    borderRadius:
-                                        BorderRadius.horizontal(left: Radius.zero, right: Radius.circular(15)),
-                                  ),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(dic.assets.transfer),
-                                      SizedBox(width: 12),
-                                      Icon(Iconsax.send_sqaure_2),
-                                    ],
-                                  ),
-                                ),
-                                key: Key('transfer'),
-                                onPressed: store.encointer.communityBalance != null
-                                    ? () {
-                                        Navigator.pushNamed(
-                                          context,
-                                          TransferPage.route,
-                                          arguments: TransferPageParams(
-                                              redirect: '/',
-                                              cid: store.encointer.chosenCid,
-                                              communitySymbol: store.encointer.community?.symbol),
-                                        );
-                                      }
-                                    : null,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    );
-                  }),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: 6, horizontal: 0),
-                  ),
-                  Observer(builder: (_) {
-                    final Translations dic = I18n.of(context).translationsForLocale();
+                        );
+                      }
 
-                    return store.settings.isConnected
-                        ? FutureBuilder<bool>(
-                            future: webApi.encointer.hasPendingIssuance(),
-                            builder: (_, AsyncSnapshot<bool> snapshot) {
-                              if (snapshot.hasData) {
-                                var hasPendingIssuance = snapshot.data;
+                      AccountData accountData = store.account.currentAccount;
 
-                                if (hasPendingIssuance) {
-                                  return ElevatedButton(
-                                    child: Text(dic.assets.issuancePending),
-                                    onPressed: () {
-                                      final txPaymentAsset =
-                                          store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
-                                      submitClaimRewards(
-                                        context,
-                                        store.encointer.chosenCid,
-                                        txPaymentAsset: txPaymentAsset,
-                                      );
-                                    },
-                                  );
-                                } else {
-                                  return store.settings.developerMode
-                                      ? ElevatedButton(
-                                          child: Text(dic.assets.issuanceClaimed),
-                                          onPressed: null,
-                                        )
-                                      : Container();
-                                }
-                              } else {
-                                return CupertinoActivityIndicator();
-                              }
+                      return Column(
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              InkWell(
+                                  child: CombinedCommunityAndAccountAvatar(store),
+                                  onTap: () {
+                                    if (panelController != null && panelController.isAttached) {
+                                      panelController.open();
+                                    }
+                                  }),
+                            ],
+                          ),
+                          Observer(
+                            builder: (_) {
+                              return (store.encointer.community?.name != null) & (store.encointer.chosenCid != null)
+                                  ? Column(
+                                      children: [
+                                        TextGradient(text: '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ'),
+                                        Text(
+                                          "${dic.assets.balance}, ${store.encointer.community?.symbol}",
+                                          style: Theme.of(context).textTheme.headline4.copyWith(
+                                                color: encointerGrey,
+                                              ),
+                                        ),
+                                      ],
+                                    )
+                                  : Container(
+                                      margin: EdgeInsets.only(top: 16),
+                                      padding: EdgeInsets.symmetric(vertical: 8),
+                                      child: (store.encointer.chosenCid == null)
+                                          ? Container(
+                                              width: double.infinity,
+                                              child: Text(dic.assets.communityNotSelected, textAlign: TextAlign.center))
+                                          : Container(
+                                              width: double.infinity,
+                                              child: CupertinoActivityIndicator(),
+                                            ),
+                                    );
                             },
-                          )
-                        : Container();
-                  }),
-                  SizedBox(height: 24),
-                  CeremonyBox(store, webApi),
-                ],
+                          ),
+                          SizedBox(
+                            height: 42,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Expanded(
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      // don't redefine the entire style just the border radii
+                                      borderRadius:
+                                          BorderRadius.horizontal(left: Radius.circular(15), right: Radius.zero),
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Icon(Iconsax.receive_square_2),
+                                        SizedBox(width: 12),
+                                        Text(dic.assets.receive),
+                                      ],
+                                    ),
+                                  ),
+                                  key: Key('qr-receive'),
+                                  onPressed: () {
+                                    if (accountData.address != '') {
+                                      Navigator.pushNamed(context, ReceivePage.route);
+                                    }
+                                  },
+                                ),
+                              ),
+                              SizedBox(width: 2),
+                              Expanded(
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                    shape: RoundedRectangleBorder(
+                                      // don't redefine the entire style just the border radii
+                                      borderRadius:
+                                          BorderRadius.horizontal(left: Radius.zero, right: Radius.circular(15)),
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(dic.assets.transfer),
+                                        SizedBox(width: 12),
+                                        Icon(Iconsax.send_sqaure_2),
+                                      ],
+                                    ),
+                                  ),
+                                  key: Key('transfer'),
+                                  onPressed: store.encointer.communityBalance != null
+                                      ? () {
+                                          Navigator.pushNamed(
+                                            context,
+                                            TransferPage.route,
+                                            arguments: TransferPageParams(
+                                                redirect: '/',
+                                                cid: store.encointer.chosenCid,
+                                                communitySymbol: store.encointer.community?.symbol),
+                                          );
+                                        }
+                                      : null,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    }),
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: 6, horizontal: 0),
+                    ),
+                    Observer(builder: (_) {
+                      final Translations dic = I18n.of(context).translationsForLocale();
+
+                      return store.settings.isConnected
+                          ? FutureBuilder<bool>(
+                              future: webApi.encointer.hasPendingIssuance(),
+                              builder: (_, AsyncSnapshot<bool> snapshot) {
+                                if (snapshot.hasData) {
+                                  var hasPendingIssuance = snapshot.data;
+
+                                  if (hasPendingIssuance) {
+                                    return ElevatedButton(
+                                      child: Text(dic.assets.issuancePending),
+                                      onPressed: () {
+                                        final txPaymentAsset =
+                                            store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
+                                        submitClaimRewards(
+                                          context,
+                                          store.encointer.chosenCid,
+                                          txPaymentAsset: txPaymentAsset,
+                                        );
+                                      },
+                                    );
+                                  } else {
+                                    return store.settings.developerMode
+                                        ? ElevatedButton(
+                                            child: Text(dic.assets.issuanceClaimed),
+                                            onPressed: null,
+                                          )
+                                        : Container();
+                                  }
+                                } else {
+                                  return CupertinoActivityIndicator();
+                                }
+                              },
+                            )
+                          : Container();
+                    }),
+                    SizedBox(height: 24),
+                    CeremonyBox(store, webApi),
+                  ],
+                ),
               ),
             ),
             // panel entering from below
