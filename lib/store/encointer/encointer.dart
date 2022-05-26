@@ -249,7 +249,7 @@ abstract class _EncointerStore with Store {
 
   @action
   void setNextPhaseTimestamp(int timestamp) {
-    _log("set currentPhase to $timestamp");
+    _log("set nextPhaseTimestamp to $timestamp");
     if (nextPhaseTimestamp != timestamp) {
       nextPhaseTimestamp = timestamp;
       writeToCache();
