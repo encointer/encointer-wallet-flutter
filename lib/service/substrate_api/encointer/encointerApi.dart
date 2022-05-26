@@ -39,6 +39,7 @@ class EncointerApi {
 
   final store = globalAppStore;
   final String _currentPhaseSubscribeChannel = 'currentPhase';
+  final String _ceremonyIndexSubscribeChannel = 'currentCeremonyIndex';
   final String _communityIdentifiersChannel = 'communityIdentifiers';
   final String _encointerBalanceChannel = 'encointerBalance';
   final String _businessRegistryChannel = 'businessRegistry';
@@ -50,6 +51,7 @@ class EncointerApi {
     print("api: starting encointer subscriptions");
     this.getPhaseDurations();
     this.subscribeCurrentPhase();
+    this.subscribeCurrentCeremonyIndex();
     this.subscribeCommunityIdentifiers();
     if (store.settings.endpointIsNoTee) {
       this.subscribeBusinessRegistry();
@@ -59,6 +61,7 @@ class EncointerApi {
   Future<void> stopSubscriptions() async {
     print("api: stopping encointer subscriptions");
     jsApi.unsubscribeMessage(_currentPhaseSubscribeChannel);
+    jsApi.unsubscribeMessage(_ceremonyIndexSubscribeChannel);
     jsApi.unsubscribeMessage(_communityIdentifiersChannel);
     jsApi.unsubscribeMessage(_businessRegistryChannel);
 
@@ -86,9 +89,9 @@ class EncointerApi {
   /// This is on-chain in Cantillon.
   Future<CeremonyPhase> getCurrentPhase() async {
     print("api: getCurrentPhase");
-    Map res = await jsApi.evalJavascript('encointer.getCurrentPhase()');
+    var res = await jsApi.evalJavascript('encointer.getCurrentPhase()');
 
-    var phase = ceremonyPhaseFromString(res.values.toList()[0].toString().toUpperCase());
+    var phase = ceremonyPhaseFromString(res);
     print("api: Phase enum: " + phase.toString());
     store.encointer.setCurrentPhase(phase);
     return phase;
@@ -311,10 +314,25 @@ class EncointerApi {
 
   Future<void> subscribeCurrentPhase() async {
     jsApi.subscribeMessage(
-        'encointer.subscribeCurrentPhase("$_currentPhaseSubscribeChannel")', _currentPhaseSubscribeChannel, (data) {
+        'encointer.subscribeCurrentPhase("$_currentPhaseSubscribeChannel")', _currentPhaseSubscribeChannel, (data) async {
       var phase = ceremonyPhaseFromString(data.toUpperCase());
+
+      await Future.delayed(Duration(seconds: 5));
+
       store.encointer.setCurrentPhase(phase);
       getNextPhaseTimestamp();
+    });
+  }
+
+  Future<void> subscribeCurrentCeremonyIndex() async {
+    jsApi.subscribeMessage(
+        'encointer.subscribeCurrentCeremonyIndex("$_ceremonyIndexSubscribeChannel")', _ceremonyIndexSubscribeChannel,
+        (data) async {
+      var index = int.parse(data);
+
+      await Future.delayed(Duration(seconds: 5));
+
+      store.encointer.setCurrentCeremonyIndex(index);
     });
   }
 
@@ -472,4 +490,8 @@ class EncointerApi {
     // Todo: @armin you'd probably extend the encointer store and also set the store here.
     return business1MockOfferings;
   }
+}
+
+void _log(String msg) {
+  print("[EncointerApi]: $msg");
 }

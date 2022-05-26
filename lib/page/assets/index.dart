@@ -82,6 +82,12 @@ class _AssetsState extends State<Assets> {
   double _panelHeightClosed = 0;
   Translations dic;
 
+  Future<void> _refreshEncointerState() async {
+    await webApi.encointer.getCurrentPhase();
+    await webApi.encointer.getCurrentCeremonyIndex();
+    await store.encointer.updateState();
+  }
+
   @override
   Widget build(BuildContext context) {
     dic = I18n.of(context).translationsForLocale();
@@ -133,7 +139,7 @@ class _AssetsState extends State<Assets> {
                   // Should be tackled in #607
                   EdgeInsets.only(bottom: 60 + appBar.preferredSize.height + MediaQuery.of(context).viewPadding.top),
               child: RefreshIndicator(
-                onRefresh: store.encointer.updateState,
+                onRefresh: _refreshEncointerState,
                 child: ListView(
                   padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
                   children: [
