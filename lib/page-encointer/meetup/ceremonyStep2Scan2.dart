@@ -34,16 +34,6 @@ class CeremonyStep2Scan extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         title: Text(dic.encointer.encointerCeremony),
-        leading: Container(),
-        actions: [
-          IconButton(
-            key: Key('close-encointer-ceremony-step2'),
-            icon: Icon(Icons.close),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          )
-        ],
       ),
       body: SafeArea(
         child: Padding(
@@ -101,7 +91,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                   ],
                 ),
                 onPressed: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => CeremonyStep3Finish(store)));
+                  Navigator.push(context, CupertinoPageRoute(builder: (_) => CeremonyStep3Finish(store)));
                 },
               ),
               SizedBox(height: 12),

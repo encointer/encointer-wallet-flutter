@@ -1,8 +1,9 @@
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/common/assignmentPanel.dart';
-import 'package:encointer_wallet/page-encointer/meetup/startMeetup.dart';
+import 'package:encointer_wallet/page-encointer/meetup/ceremonyStep1Count.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/tx.dart';
@@ -40,7 +41,11 @@ class _AttestingPageState extends State<AttestingPage> {
                 PrimaryButton(
                   key: Key('start-meetup'),
                   child: Text(dic.encointer.startCeremony),
-                  onPressed: () => startMeetup(context, store),
+                  onPressed: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => CeremonyStep1Count(store, webApi),
+                    ),
+                  ),
                 ),
               SizedBox(height: 16),
               Text(
