@@ -243,12 +243,8 @@ abstract class _EncointerStore with Store {
       currentPhase = phase;
       writeToCache();
     }
-    if (phase == CeremonyPhase.Registering) {
-      // This is a hack due to: https://github.com/encointer/encointer-wallet-flutter/issues/632
-      _log("setCurrentPhase: Skip updating state, will be done in setCurrentCeremonyIndex");
-    } else {
-      updateState();
-    }
+    // update depending values without awaiting
+    webApi.encointer.getCurrentCeremonyIndex();
   }
 
   @action
