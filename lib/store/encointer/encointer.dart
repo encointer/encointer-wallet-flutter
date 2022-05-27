@@ -275,23 +275,16 @@ abstract class _EncointerStore with Store {
   @action
   Future<void> updateState() async {
     _log("[updateState] updating state...");
-    webApi.encointer.getCommunityMetadata().then(
-          (v) => webApi.encointer.getAllMeetupLocations().then(
-                (v) => webApi.encointer.getDemurrage().then(
-                      (v) => webApi.encointer.getBootstrappers().then(
-                            (v) => webApi.encointer.getReputations().then(
-                                  (v) => webApi.encointer.getMeetupTime().then(
-                                        (v) => webApi.encointer
-                                            .getAggregatedAccountData(chosenCid, _rootStore.account.currentAddress)
-                                            .then((v) {
-                                          _log("[updateState] finished");
-                                        }),
-                                      ),
-                                ),
-                          ),
-                    ),
-              ),
-        );
+
+    return Future.wait([
+      webApi.encointer.getCommunityMetadata(),
+      webApi.encointer.getAllMeetupLocations(),
+      webApi.encointer.getDemurrage(),
+      webApi.encointer.getBootstrappers(),
+      webApi.encointer.getReputations(),
+      webApi.encointer.getMeetupTime(),
+      webApi.encointer.getAggregatedAccountData(chosenCid, _rootStore.account.currentAddress),
+    ]).then((_) => _log("[updateState] finished"));
   }
 
   @action
