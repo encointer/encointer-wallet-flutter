@@ -98,7 +98,7 @@ class EncointerApi {
   ///
   /// This is on-chain in Cantillon.
   Future<int> getNextPhaseTimestamp() async {
-    print("api: getCurrentPhase");
+    print("api: getNextPhaseTimestamp");
     int timestamp = await jsApi.evalJavascript('encointer.getNextPhaseTimestamp()').then((time) => int.parse(time));
 
     print("api: next phase timestamp: $timestamp");
