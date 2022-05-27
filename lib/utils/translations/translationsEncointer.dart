@@ -3,9 +3,11 @@
 abstract class TranslationsEncointer {
   String get registerParticipant;
   String get claimsSubmit;
+  String get claimsSubmitN;
   String get claimsPurge;
   String get claimsPurgeConfirm;
   String get encointerCeremony;
+  String get countParticipants;
   String get nextCeremonyTimeLeft;
   String get nextCeremonyDateLabel;
   String get claimQr;
@@ -23,7 +25,7 @@ abstract class TranslationsEncointer {
   String get meetupLocation;
   String get timeUntilCeremonyStarts;
   String get startCeremony;
-  String get youAreRegistered;
+  String get alreadyRegistered;
   String get registerUntil;
   String get showCeremonyLocation;
   String get ceremonyIsOver;
@@ -33,12 +35,28 @@ abstract class TranslationsEncointer {
   String get youAreNotRegistered;
   String get howManyParticipantsShowedUp;
   String get ceremonyWillTakePlaceOn;
+  String get ceremonySuccessfullyCompleted;
   String get fetchingReputations;
+  String get youAreRegisteredAs;
+  String get youAreNotRegisteredPleaseRegisterNextTime;
+  String get youAreAssignedToAMeetupWithNParticipants;
+  String get successfullySentNAttestations;
+  String get numberOfAttendees;
+  String get next;
+  String get closeMeetup;
+  String get count;
+  String get scan;
+  String get scanDescriptionForMeetup;
+  String get scanOthers;
+  String get finish;
+  String get thankYou;
+  String get weHopeToSeeYouAtTheNextMeetup;
 }
 
 class TranslationsEnEncointer implements TranslationsEncointer {
   get registerParticipant => 'Register';
   get claimsSubmit => 'Submit claims';
+  get claimsSubmitN => 'Submit N_COUNT claims';
   get claimsPurge => 'Purge previously scanned claims';
   get claimsPurgeConfirm => 'Are you sure, you want to purge all scanned claims?';
   get encointerCeremony => 'Encointer Ceremony';
@@ -59,22 +77,40 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   get meetupLocation => 'Meetup Location';
   get timeUntilCeremonyStarts => 'Time to meetup:';
   get startCeremony => 'Start ceremony';
-  get youAreRegistered => 'Already Registered';
-  get registerUntil => 'Register until';
+  get alreadyRegistered => 'Already Registered';
+  get registerUntil => 'Register before';
   get showCeremonyLocation => 'Ceremony location';
   get ceremonyIsOver => 'The ceremony is over';
   get today => 'Today';
   get tomorrow => 'Tomorrow';
   get calendarEntryDescription => 'Meetup to get your community income';
   get youAreNotRegistered => 'You are not registered for a ceremony for the selected community on:';
-  get howManyParticipantsShowedUp => 'How many attendees are present?';
+  get howManyParticipantsShowedUp => 'How many attendees are present including yourself?';
   get ceremonyWillTakePlaceOn => 'The ceremony will take place on';
+  get ceremonySuccessfullyCompleted => 'Ceremony successfully completed';
   get fetchingReputations => 'Checking if you have reputation';
+  get youAreRegisteredAs => 'You have registered for the next ceremony as PARTICIPANT_TYPE.';
+  get youAreNotRegisteredPleaseRegisterNextTime =>
+      'You haven\'t been assigned for this ceremony. Please join a later ceremony to receive your community income.';
+  get youAreAssignedToAMeetupWithNParticipants => 'You are assigned to a meetup with P_COUNT people.';
+  get successfullySentNAttestations => 'You have successfully submitted attestations for P_COUNT other people.';
+  get countParticipants => 'Count';
+  get numberOfAttendees => 'Number of attendees';
+  get next => 'Next';
+  get closeMeetup => 'Close meetup';
+  get count => 'Count';
+  get scan => 'Scan';
+  get scanDescriptionForMeetup => 'Every attendee must scan and be scanned by everyone else.';
+  get scanOthers => 'Scan others';
+  get finish => 'Finish';
+  get thankYou => 'Thank you';
+  get weHopeToSeeYouAtTheNextMeetup => 'We hope to see you at the next meetup.';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
-  get registerParticipant => 'Registeriere';
+  get registerParticipant => 'Registrieren';
   get claimsSubmit => 'Anträge einreichen';
+  get claimsSubmitN => 'N_COUNT Anträge einreichen';
   get claimsPurge => 'Bereits gescannte Anträge löschen';
   get claimsPurgeConfirm => 'Bist du sicher, dass du alle gescannte Anträge löschen möchtest?';
   get encointerCeremony => 'Encointer Zeremonie';
@@ -86,32 +122,50 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get claimsScannedDecodeFailed => 'Gescannter Antrag konnte nicht dekodiert werden.';
   get claimsScannedNew => 'Neuer Antrag gescannt';
   get claimsScannedNOfM => "SCANNED_COUNT / TOTAL_COUNT gescannte Anträge";
-  get claimsSubmitDetail => 'Reiche AMOUNT Anträge für die aktuelle Zeremonie ein';
+  get claimsSubmitDetail => 'Reiche AMOUNT Bezeugungen für die aktuelle Zeremonie ein';
   get communities => 'Gemeinschaften';
   get noCommunitiesAreYouOffline => 'Keine Gemeinschaften gefunden. Du kannst später eine auswählen. Bist du offline?';
   get encointer => 'Encointer Zeremonie';
   get meetupAttended => 'An der letzen Versammlung teilgenommen';
   get meetupClaimantInvalid =>
       'Diese* Antragssteller*in gehört nicht zu deiner Versammlung. Antrag wurde nicht gespeichert.';
-  get meetupLocation => 'Treffpunkt der Versammlung';
+  get meetupLocation => 'Treffpunkt';
   get timeUntilCeremonyStarts => 'Zeit bis zur Versammlung:';
   get startCeremony => 'Versammlung starten';
-  get youAreRegistered => 'Bereits registriert';
-  get registerUntil => 'Registriere dich bis am';
-  get showCeremonyLocation => 'Ort der Versammlung';
+  get alreadyRegistered => 'Bereits registriert';
+  get registerUntil => 'Registriere dich vor dem';
+  get showCeremonyLocation => 'Treffpunkt';
   get ceremonyIsOver => 'Die Zeremonie ist vorbei';
   get today => 'Heute';
   get tomorrow => 'Morgen';
   get calendarEntryDescription => 'Nimm an der Versammlung teil um dein Einkommen zu erhalten';
   get youAreNotRegistered => 'Du bist leider keiner Versammlung zugewiesen worden am';
-  get howManyParticipantsShowedUp => 'Wieviele Teilnehmende sind da?';
+  get howManyParticipantsShowedUp => 'Wieviele Teilnehmende sind da inklusive dir?';
   get ceremonyWillTakePlaceOn => 'Die Zeremonie wird stattfinden am';
+  get ceremonySuccessfullyCompleted => 'Zeremonie erfolgreich durchgeführt';
   get fetchingReputations => 'Es wird überprüft, ob du bereits Reputation hast';
+  get youAreRegisteredAs => 'Du hast dich für die nächste Zeremonie als PARTICIPANT_TYPE registriert.';
+  get youAreNotRegisteredPleaseRegisterNextTime =>
+      'Du wurdest nicht für diese Zeremonie zugewiesen. Bitte registriere dich für eine kommende Zeremonie um dein Gemeinschaftseinkommen zu erhalten.';
+  get youAreAssignedToAMeetupWithNParticipants => 'Du bist einer Versammlung mit P_COUNT Leuten zugewiesen.';
+  get successfullySentNAttestations => 'Du hast erfolgreich Bezeugungen für P_COUNT andere Leute eingereicht.';
+  get countParticipants => 'Zähle';
+  get numberOfAttendees => 'Anzahl Teilnehmende';
+  get next => 'Weiter';
+  get closeMeetup => 'Treffen schliessen';
+  get count => 'Zähle';
+  get scan => 'Scannen';
+  get scanDescriptionForMeetup => 'Jede* Anwesende muss alle anderen scannen, und von allen gescannt werden.';
+  get scanOthers => 'Andere scannen';
+  get finish => 'Beenden';
+  get thankYou => 'Danke';
+  get weHopeToSeeYouAtTheNextMeetup => 'Wir hoffen, dass wir dich am nächsten Treffen wieder sehen.';
 }
 
 class TranslationsZhEncointer implements TranslationsEncointer {
   get registerParticipant => '注册参与者';
   get claimsSubmit => '提交证明';
+  get claimsSubmitN => throw UnimplementedError();
   get claimsPurge => throw UnimplementedError();
   get claimsPurgeConfirm => throw UnimplementedError();
   get encointerCeremony => 'Encointer 仪式';
@@ -130,7 +184,7 @@ class TranslationsZhEncointer implements TranslationsEncointer {
   get meetupLocation => throw UnimplementedError();
   get timeUntilCeremonyStarts => '聚会时间：';
   get startCeremony => throw UnimplementedError();
-  get youAreRegistered => '已经注册';
+  get alreadyRegistered => '已经注册';
   get communities => throw UnimplementedError();
   get noCommunitiesAreYouOffline => throw UnimplementedError();
   get registerUntil => throw UnimplementedError();
@@ -142,5 +196,21 @@ class TranslationsZhEncointer implements TranslationsEncointer {
   get youAreNotRegistered => throw UnimplementedError();
   get howManyParticipantsShowedUp => throw UnimplementedError();
   get ceremonyWillTakePlaceOn => throw UnimplementedError();
+  get ceremonySuccessfullyCompleted => throw UnimplementedError();
   get fetchingReputations => throw UnimplementedError();
+  get youAreRegisteredAs => throw UnimplementedError();
+  get youAreNotRegisteredPleaseRegisterNextTime => throw UnimplementedError();
+  get youAreAssignedToAMeetupWithNParticipants => throw UnimplementedError();
+  get successfullySentNAttestations => throw UnimplementedError();
+  get countParticipants => throw UnimplementedError();
+  get numberOfAttendees => throw UnimplementedError();
+  get next => throw UnimplementedError();
+  get closeMeetup => throw UnimplementedError();
+  get count => throw UnimplementedError();
+  get scan => throw UnimplementedError();
+  get scanDescriptionForMeetup => throw UnimplementedError();
+  get scanOthers => throw UnimplementedError();
+  get finish => throw UnimplementedError();
+  get thankYou => throw UnimplementedError();
+  get weHopeToSeeYouAtTheNextMeetup => throw UnimplementedError();
 }

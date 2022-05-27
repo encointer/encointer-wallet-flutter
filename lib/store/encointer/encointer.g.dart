@@ -164,11 +164,18 @@ mixin _$EncointerStore on _EncointerStore, Store {
   bool get showStartCeremonyButton => (_$showStartCeremonyButtonComputed ??=
           Computed<bool>(() => super.showStartCeremonyButton, name: '_EncointerStore.showStartCeremonyButton'))
       .value;
-  Computed<bool> _$showTwoBoxesComputed;
+  Computed<bool> _$showSubmitClaimsButtonComputed;
 
   @override
-  bool get showTwoBoxes =>
-      (_$showTwoBoxesComputed ??= Computed<bool>(() => super.showTwoBoxes, name: '_EncointerStore.showTwoBoxes')).value;
+  bool get showSubmitClaimsButton => (_$showSubmitClaimsButtonComputed ??=
+          Computed<bool>(() => super.showSubmitClaimsButton, name: '_EncointerStore.showSubmitClaimsButton'))
+      .value;
+  Computed<bool> _$showMeetupInfoComputed;
+
+  @override
+  bool get showMeetupInfo =>
+      (_$showMeetupInfoComputed ??= Computed<bool>(() => super.showMeetupInfo, name: '_EncointerStore.showMeetupInfo'))
+          .value;
 
   final _$currentPhaseAtom = Atom(name: '_EncointerStore.currentPhase');
 
@@ -305,6 +312,13 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
+  final _$updateStateAsyncAction = AsyncAction('_EncointerStore.updateState');
+
+  @override
+  Future<void> updateState() {
+    return _$updateStateAsyncAction.run(() => super.updateState());
+  }
+
   final _$initCommunityStoreAsyncAction = AsyncAction('_EncointerStore.initCommunityStore');
 
   @override
@@ -385,16 +399,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void updateState() {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.updateState');
-    try {
-      return super.updateState();
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void purgeCeremonySpecificState() {
     final _$actionInfo =
         _$_EncointerStoreActionController.startAction(name: '_EncointerStore.purgeCeremonySpecificState');
@@ -449,7 +453,8 @@ communityBalance: ${communityBalance},
 assigningPhaseStart: ${assigningPhaseStart},
 attestingPhaseStart: ${attestingPhaseStart},
 showStartCeremonyButton: ${showStartCeremonyButton},
-showTwoBoxes: ${showTwoBoxes}
+showSubmitClaimsButton: ${showSubmitClaimsButton},
+showMeetupInfo: ${showMeetupInfo}
     ''';
   }
 }

@@ -249,7 +249,7 @@ abstract class _EncointerStore with Store {
 
   @action
   void setNextPhaseTimestamp(int timestamp) {
-    _log("set currentPhase to $timestamp");
+    _log("set nextPhaseTimestamp to $timestamp");
     if (nextPhaseTimestamp != timestamp) {
       nextPhaseTimestamp = timestamp;
       writeToCache();
@@ -259,7 +259,7 @@ abstract class _EncointerStore with Store {
   @action
   void setCurrentCeremonyIndex(index) {
     print("store: set currentCeremonyIndex to $index");
-    if (currentCeremonyIndex != index && currentPhase == CeremonyPhase.Registering) {
+    if (currentCeremonyIndex != index) {
       purgeCeremonySpecificState();
     }
 
@@ -270,28 +270,44 @@ abstract class _EncointerStore with Store {
     updateState();
   }
 
+  @action
+  void setAggregatedAccountData(CommunityIdentifier cid, String address, AggregatedAccountData accountData) {
+    var encointerAccountStore = communityStores[cid.toFmtString()].communityAccountStores[address];
+
+    accountData.personal?.meetup != null
+        ? encointerAccountStore.setMeetup(accountData.personal.meetup)
+        : encointerAccountStore.purgeMeetup();
+
+    accountData.personal?.participantType != null
+        ? encointerAccountStore.setParticipantType(accountData.personal.participantType)
+        : encointerAccountStore.purgeParticipantType();
+
+    print("[EncointerStore]: " + encointerAccountStore.toString());
+  }
+
   // -- other helpers
 
   @action
-  void updateState() {
-    switch (currentPhase) {
-      case CeremonyPhase.Registering:
-        webApi.encointer.getMeetupTime();
-        if (chosenCid != null) {
-          webApi.encointer.getAggregatedAccountData(chosenCid, _rootStore.account.currentAddress);
-        }
-        webApi.encointer.getReputations();
-        break;
-      case CeremonyPhase.Assigning:
-        if (chosenCid != null) {
-          webApi.encointer.getAggregatedAccountData(chosenCid, _rootStore.account.currentAddress);
-        }
-        break;
-      case CeremonyPhase.Attesting:
-        if (chosenCid != null) {
-          webApi.encointer.getAggregatedAccountData(chosenCid, _rootStore.account.currentAddress);
-        }
-        break;
+  Future<void> updateState() async {
+    _log("[updateState] updating state...");
+
+    return Future.wait([
+      webApi.encointer.getCommunityMetadata(),
+      webApi.encointer.getAllMeetupLocations(),
+      webApi.encointer.getDemurrage(),
+      webApi.encointer.getBootstrappers(),
+      webApi.encointer.getReputations(),
+      webApi.encointer.getMeetupTime(),
+      updateAggregatedAccountData(),
+    ]).then((_) => _log("[updateState] finished"));
+  }
+
+  Future<void> updateAggregatedAccountData() async {
+    try {
+      var data = await webApi.encointer.getAggregatedAccountData(chosenCid, _rootStore.account.currentAddress);
+      setAggregatedAccountData(chosenCid, _rootStore.account.currentAddress, data);
+    } catch (e) {
+      print(e.toString());
     }
   }
 
@@ -301,17 +317,14 @@ abstract class _EncointerStore with Store {
     accountStores.forEach((cid, store) => store.purgeCeremonySpecificState());
   }
 
-  /// Calculates the remaining time until the next meetup starts. As Gesell and Cantillon currently implement timewarp
-  /// we cannot use the time received by the blockchain. Hence, we need to calculate it differently.
-  int getTimeToMeetup() {
-    var now = DateTime.now();
-    if (10 <= now.minute && now.minute < 20) {
-      return ((19 - now.minute) * 60 + 60 - now.second);
-    } else if (40 <= now.minute && now.minute < 50) {
-      return ((49 - now.minute) * 60 + 60 - now.second);
+  /// Calculates the remaining time until the next meetup starts.
+  Duration getTimeToMeetup() {
+    var start = communityAccount?.meetup?.time;
+    if (start == null) {
+      return null;
     } else {
-      _log("Warning: Invalid time to meetup");
-      return 0;
+      var now = DateTime.now();
+      return DateTime.fromMillisecondsSinceEpoch(start).difference(now);
     }
   }
 
@@ -496,12 +509,19 @@ abstract class _EncointerStore with Store {
 
   @computed
   bool get showStartCeremonyButton {
-    bool registered = communityAccount?.isRegistered ?? false;
-    return (currentPhase == CeremonyPhase.Attesting && registered);
+    bool assigned = communityAccount?.isAssigned ?? false;
+    return (currentPhase == CeremonyPhase.Attesting && assigned);
   }
 
   @computed
-  bool get showTwoBoxes {
+  bool get showSubmitClaimsButton {
+    bool assigned = communityAccount?.isAssigned ?? false;
+    bool hasClaims = (communityAccount?.scannedClaimsCount ?? 0) > 0;
+    return (currentPhase == CeremonyPhase.Attesting && assigned && hasClaims);
+  }
+
+  @computed
+  bool get showMeetupInfo {
     return !showRegisterButton && !showStartCeremonyButton;
   }
 }

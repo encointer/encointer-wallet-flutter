@@ -34,7 +34,7 @@ class AggregatedAccountDataPersonal {
   int meetupTime;
   List<String> meetupRegistry;
 
-  get meetup => Meetup(meetupIndex, meetupLocationIndex, meetupTime, meetupRegistry);
+  get meetup => meetupIndex != null ? Meetup(meetupIndex, meetupLocationIndex, meetupTime, meetupRegistry) : null;
 
   @override
   String toString() {
@@ -114,6 +114,12 @@ Reputation reputationFromString(String value) {
 }
 
 extension reputationExtension on Reputation {
+  String toValue() {
+    return toEnumValue(this);
+  }
+}
+
+extension participantTypeExtension on ParticipantType {
   String toValue() {
     return toEnumValue(this);
   }

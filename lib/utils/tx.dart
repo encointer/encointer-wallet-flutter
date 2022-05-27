@@ -1,10 +1,53 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/proofOfAttendance.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+/// Helpers to send transactions.
+///
+/// Refactor when we tackle: https://github.com/encointer/encointer-wallet-flutter/issues/335
+///
+/// A builder pattern would probably be nice here.
+
+Future<void> submitTx(
+  BuildContext context,
+  AppStore store,
+  Map txParams, {
+  Function(BuildContext txPageContext, Map res) onFinish,
+}) async {
+  if (store.settings.cachedPin.isEmpty) {
+    var unlockText = I18n.of(context).translationsForLocale().home.unlockAccount;
+    await showCupertinoDialog(
+      context: context,
+      builder: (context) {
+        return showPasswordInputDialog(
+          context,
+          store.account.currentAccount,
+          Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
+          (password) => store.settings.setPin(password),
+        );
+      },
+    );
+  }
+
+  final txPaymentAsset = store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
+
+  txParams["txInfo"]["txPaymentAsset"] = txPaymentAsset;
+  txParams["onFinish"] = onFinish ??
+      (BuildContext txPageContext, Map res) {
+        Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
+      };
+
+  return Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: txParams);
+}
 
 Future<void> submitClaimRewards(
   BuildContext context,
@@ -51,38 +94,95 @@ Future<void> submitEndorseNewcomer(
   Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
 }
 
-Future<void> submitRegisterParticipant(
-  BuildContext context,
-  Api api,
+Map<String, dynamic> registerParticipantParams(
   CommunityIdentifier chosenCid, {
-  CommunityIdentifier txPaymentAsset,
-  Future<ProofOfAttendance> proof,
-  Function(BuildContext txPageContext, Map res) onFinish,
-}) async {
-  ProofOfAttendance p;
-  if (proof != null) {
-    p = await proof;
-  }
-
-  var args = {
+  ProofOfAttendance proof,
+}) {
+  return {
     "title": 'register_participant',
     "txInfo": {
       "module": 'encointerCeremonies',
       "call": 'registerParticipant',
       "cid": chosenCid,
-      "txPaymentAsset": txPaymentAsset,
     },
     "detail": jsonEncode({
       "cid": chosenCid.toFmtString(),
-      "proof": p == null
+      "proof": proof == null
           ? "No proof of past attendance found" // Note: hardcoded strings are ok here, the page  will be removed.
-          : "Sending proof for cIndex: ${p.ceremonyIndex}, community: ${p.communityIdentifier.toFmtString()}",
+          : "Sending proof for cIndex: ${proof.ceremonyIndex}, community: ${proof.communityIdentifier.toFmtString()}",
     }),
     "params": [
       chosenCid,
-      p,
+      proof,
     ],
-    'onFinish': onFinish
   };
-  Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
+}
+
+Map<String, dynamic> attestClaimsParams(
+  BuildContext context,
+  CommunityIdentifier chosenCid,
+  int scannedClaimsCount,
+  List<ClaimOfAttendance> claims,
+) {
+  final dic = I18n.of(context).translationsForLocale();
+  return {
+    "title": 'attest_claims',
+    "txInfo": {
+      "module": 'encointerCeremonies',
+      "call": 'attestClaims',
+      "cid": chosenCid,
+    },
+    "detail": dic.encointer.claimsSubmitDetail.replaceAll('AMOUNT', scannedClaimsCount.toString()),
+    "params": [claims],
+  };
+}
+
+Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api api) async {
+  // this is called inside submitTx too, but we need to unlock the key for the proof of attendance.
+  if (store.settings.cachedPin.isEmpty) {
+    var unlockText = I18n.of(context).translationsForLocale().home.unlockAccount;
+    await showCupertinoDialog(
+      context: context,
+      builder: (context) {
+        return showPasswordInputDialog(
+          context,
+          store.account.currentAccount,
+          Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
+          (password) => store.settings.setPin(password),
+        );
+      },
+    );
+  }
+
+  return submitTx(
+    context,
+    store,
+    registerParticipantParams(store.encointer.chosenCid, proof: await api.encointer.getProofOfAttendance()),
+    onFinish: (BuildContext txPageContext, Map res) {
+      store.encointer.updateAggregatedAccountData();
+      Navigator.popUntil(
+        txPageContext,
+        ModalRoute.withName('/'),
+      );
+    },
+  );
+}
+
+Future<void> submitAttestClaims(BuildContext context, AppStore store) async {
+  final params = attestClaimsParams(
+    context,
+    store.encointer.chosenCid,
+    store.encointer.communityAccount.scannedClaimsCount,
+    store.encointer.communityAccount.participantsClaims.values.toList(),
+  );
+
+  return submitTx(
+    context,
+    store,
+    params,
+    onFinish: (BuildContext txPageContext, Map res) {
+      store.encointer.communityAccount.setMeetupCompleted();
+      Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
+    },
+  );
 }

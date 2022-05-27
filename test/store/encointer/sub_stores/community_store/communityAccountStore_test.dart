@@ -27,6 +27,7 @@ void main() {
           "registry": [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]
         },
         "participantsClaims": {},
+        'meetupCompleted': false
       };
 
       expect(communityAccountStore.toJson(), targetJson);
@@ -84,7 +85,8 @@ void main() {
           "time": 10,
           "registry": [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]
         },
-        "participantsClaims": Map<String, dynamic>.of({})
+        "participantsClaims": Map<String, dynamic>.of({}),
+        "meetupCompleted": false
       };
 
       var cachedValue = await localStorage.getObject("hello");

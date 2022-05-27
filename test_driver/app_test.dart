@@ -87,21 +87,15 @@ void main() {
       await driver.tap(find.byValueKey('close-transfer-page'));
     });
 
-    test('encointerEntryPage', () async {
+    test('meetupPage', () async {
       // attesting phase
       await driver.requestData(MockStorageSetup.READY_FOR_MEETUP);
 
-      log("tapping encointerEntry tap");
-      // key is directly derived by `TabKey` enum to string
-      await driver.tap(find.byValueKey('TabKey.Ceremonies'));
-
-      await screenshot(driver, config, 'attesting-page');
-    });
-
-    test('meetupPage', () async {
       log("tapping startMeetup");
       await driver.tap(find.byValueKey('start-meetup'));
-      await driver.tap(find.byValueKey('confirmed-participants-3'));
+      await driver.tap(find.byValueKey('attendees-count'));
+      await driver.enterText('3');
+      await driver.tap(find.byValueKey('ceremony-step-1-next'));
       await screenshot(driver, config, 'claim-qr');
     });
   });
