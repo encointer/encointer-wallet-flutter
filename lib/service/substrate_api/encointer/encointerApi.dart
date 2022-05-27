@@ -128,17 +128,6 @@ class EncointerApi {
       print(
           "[EncointerApi]: AggregatedAccountData for ${cid.toFmtString()} and ${address.substring(0, 7)}...: ${accountData.toString()}");
 
-      var encointerAccountStore = store.encointer.communityStores[cid.toFmtString()].communityAccountStores[address];
-
-      accountData.personal?.meetup != null
-          ? encointerAccountStore.setMeetup(accountData.personal.meetup)
-          : encointerAccountStore.purgeMeetup();
-
-      accountData.personal?.participantType != null
-          ? encointerAccountStore.setParticipantType(accountData.personal.participantType)
-          : encointerAccountStore.purgeParticipantType();
-
-      print("[EncointerApi]: " + encointerAccountStore.toString());
       return accountData;
     } catch (e) {
       throw Exception("[EncointerApi]: Error getting aggregated account data ${e.toString()}");

@@ -270,6 +270,21 @@ abstract class _EncointerStore with Store {
     updateState();
   }
 
+  @action
+  void setAggregatedAccountData(CommunityIdentifier cid, String address, AggregatedAccountData accountData) {
+    var encointerAccountStore = communityStores[cid.toFmtString()].communityAccountStores[address];
+
+    accountData.personal?.meetup != null
+        ? encointerAccountStore.setMeetup(accountData.personal.meetup)
+        : encointerAccountStore.purgeMeetup();
+
+    accountData.personal?.participantType != null
+        ? encointerAccountStore.setParticipantType(accountData.personal.participantType)
+        : encointerAccountStore.purgeParticipantType();
+
+    print("[EncointerStore]: " + encointerAccountStore.toString());
+  }
+
   // -- other helpers
 
   @action
@@ -283,8 +298,17 @@ abstract class _EncointerStore with Store {
       webApi.encointer.getBootstrappers(),
       webApi.encointer.getReputations(),
       webApi.encointer.getMeetupTime(),
-      webApi.encointer.getAggregatedAccountData(chosenCid, _rootStore.account.currentAddress),
+      updateAggregatedAccountData(),
     ]).then((_) => _log("[updateState] finished"));
+  }
+
+  Future<void> updateAggregatedAccountData() async {
+    try {
+      var data = await webApi.encointer.getAggregatedAccountData(chosenCid, _rootStore.account.currentAddress);
+      setAggregatedAccountData(chosenCid, _rootStore.account.currentAddress, data);
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   @action

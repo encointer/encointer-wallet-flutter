@@ -159,7 +159,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
     store,
     registerParticipantParams(store.encointer.chosenCid, proof: await api.encointer.getProofOfAttendance()),
     onFinish: (BuildContext txPageContext, Map res) {
-      api.encointer.getAggregatedAccountData(store.encointer.chosenCid, store.account.currentAddress);
+      store.encointer.updateAggregatedAccountData();
       Navigator.popUntil(
         txPageContext,
         ModalRoute.withName('/'),
