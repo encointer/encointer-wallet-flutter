@@ -2,10 +2,6 @@ import 'package:encointer_wallet/common/components/willPopScopeWrapper.dart';
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaarMain.dart';
 import 'package:encointer_wallet/page-encointer/homePage.dart';
-import 'package:encointer_wallet/page-encointer/phases/assigning/assigningPage.dart';
-import 'package:encointer_wallet/page-encointer/phases/attesting/attestingPage.dart';
-import 'package:encointer_wallet/page-encointer/phases/registering/registerParticipantPanel.dart';
-import 'package:encointer_wallet/page-encointer/phases/registering/registeringPage.dart';
 import 'package:encointer_wallet/page/account/create/addAccountPage.dart';
 import 'package:encointer_wallet/page/account/create/createAccountPage.dart';
 import 'package:encointer_wallet/page/account/create/createPinPage.dart';
@@ -228,14 +224,6 @@ class _WalletAppState extends State<WalletApp> {
                 return CupertinoPageRoute(builder: (_) => SS58PrefixListPage(_appStore.settings), settings: settings);
               case AboutPage.route:
                 return CupertinoPageRoute(builder: (_) => AboutPage(), settings: settings);
-              case RegisteringPage.route:
-                return CupertinoPageRoute(builder: (_) => RegisteringPage(_appStore), settings: settings);
-              case RegisterParticipantPanel.route:
-                return CupertinoPageRoute(builder: (_) => RegisterParticipantPanel(_appStore), settings: settings);
-              case AssigningPage.route:
-                return CupertinoPageRoute(builder: (_) => AssigningPage(_appStore), settings: settings);
-              case AttestingPage.route:
-                return CupertinoPageRoute(builder: (_) => AttestingPage(_appStore), settings: settings);
               case BazaarMain.route:
                 return CupertinoPageRoute(builder: (_) => BazaarMain(_appStore), settings: settings);
               default:
