@@ -83,9 +83,8 @@ class _AssetsState extends State<Assets> {
   Translations dic;
 
   Future<void> _refreshEncointerState() async {
+    // getCurrentPhase is the root of all state updates.
     await webApi.encointer.getCurrentPhase();
-    await webApi.encointer.getCurrentCeremonyIndex();
-    await store.encointer.updateState();
   }
 
   @override
