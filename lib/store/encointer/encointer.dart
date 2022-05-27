@@ -249,7 +249,7 @@ abstract class _EncointerStore with Store {
 
   @action
   void setNextPhaseTimestamp(int timestamp) {
-    _log("set currentPhase to $timestamp");
+    _log("set nextPhaseTimestamp to $timestamp");
     if (nextPhaseTimestamp != timestamp) {
       nextPhaseTimestamp = timestamp;
       writeToCache();
@@ -259,7 +259,7 @@ abstract class _EncointerStore with Store {
   @action
   void setCurrentCeremonyIndex(index) {
     print("store: set currentCeremonyIndex to $index");
-    if (currentCeremonyIndex != index && currentPhase == CeremonyPhase.Registering) {
+    if (currentCeremonyIndex != index) {
       purgeCeremonySpecificState();
     }
 
@@ -270,28 +270,45 @@ abstract class _EncointerStore with Store {
     updateState();
   }
 
+  @action
+  void setAggregatedAccountData(CommunityIdentifier cid, String address, AggregatedAccountData accountData) {
+    var encointerAccountStore = communityStores[cid.toFmtString()].communityAccountStores[address];
+
+    accountData.personal?.meetup != null
+        ? encointerAccountStore.setMeetup(accountData.personal.meetup)
+        : encointerAccountStore.purgeMeetup();
+
+    accountData.personal?.participantType != null
+        ? encointerAccountStore.setParticipantType(accountData.personal.participantType)
+        : encointerAccountStore.purgeParticipantType();
+
+    print("[EncointerStore]: " + encointerAccountStore.toString());
+  }
+
   // -- other helpers
 
   @action
   Future<void> updateState() async {
     _log("[updateState] updating state...");
-    webApi.encointer.getCommunityMetadata().then(
-          (v) => webApi.encointer.getAllMeetupLocations().then(
-                (v) => webApi.encointer.getDemurrage().then(
-                      (v) => webApi.encointer.getBootstrappers().then(
-                            (v) => webApi.encointer.getReputations().then(
-                                  (v) => webApi.encointer.getMeetupTime().then(
-                                        (v) => webApi.encointer
-                                            .getAggregatedAccountData(chosenCid, _rootStore.account.currentAddress)
-                                            .then((v) {
-                                          _log("[updateState] finished");
-                                        }),
-                                      ),
-                                ),
-                          ),
-                    ),
-              ),
-        );
+
+    return Future.wait([
+      webApi.encointer.getCommunityMetadata(),
+      webApi.encointer.getAllMeetupLocations(),
+      webApi.encointer.getDemurrage(),
+      webApi.encointer.getBootstrappers(),
+      webApi.encointer.getReputations(),
+      webApi.encointer.getMeetupTime(),
+      updateAggregatedAccountData(),
+    ]).then((_) => _log("[updateState] finished"));
+  }
+
+  Future<void> updateAggregatedAccountData() async {
+    try {
+      var data = await webApi.encointer.getAggregatedAccountData(chosenCid, _rootStore.account.currentAddress);
+      setAggregatedAccountData(chosenCid, _rootStore.account.currentAddress, data);
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   @action

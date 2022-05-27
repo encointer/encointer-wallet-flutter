@@ -86,9 +86,9 @@ class EncointerApi {
   /// This is on-chain in Cantillon.
   Future<CeremonyPhase> getCurrentPhase() async {
     print("api: getCurrentPhase");
-    Map res = await jsApi.evalJavascript('encointer.getCurrentPhase()');
+    var res = await jsApi.evalJavascript('encointer.getCurrentPhase()');
 
-    var phase = ceremonyPhaseFromString(res.values.toList()[0].toString().toUpperCase());
+    var phase = ceremonyPhaseFromString(res);
     print("api: Phase enum: " + phase.toString());
     store.encointer.setCurrentPhase(phase);
     return phase;
@@ -98,7 +98,7 @@ class EncointerApi {
   ///
   /// This is on-chain in Cantillon.
   Future<int> getNextPhaseTimestamp() async {
-    print("api: getCurrentPhase");
+    print("api: getNextPhaseTimestamp");
     int timestamp = await jsApi.evalJavascript('encointer.getNextPhaseTimestamp()').then((time) => int.parse(time));
 
     print("api: next phase timestamp: $timestamp");
@@ -128,17 +128,6 @@ class EncointerApi {
       print(
           "[EncointerApi]: AggregatedAccountData for ${cid.toFmtString()} and ${address.substring(0, 7)}...: ${accountData.toString()}");
 
-      var encointerAccountStore = store.encointer.communityStores[cid.toFmtString()].communityAccountStores[address];
-
-      accountData.personal?.meetup != null
-          ? encointerAccountStore.setMeetup(accountData.personal.meetup)
-          : encointerAccountStore.purgeMeetup();
-
-      accountData.personal?.participantType != null
-          ? encointerAccountStore.setParticipantType(accountData.personal.participantType)
-          : encointerAccountStore.purgeParticipantType();
-
-      print("[EncointerApi]: " + encointerAccountStore.toString());
       return accountData;
     } catch (e) {
       throw Exception("[EncointerApi]: Error getting aggregated account data ${e.toString()}");
@@ -311,11 +300,41 @@ class EncointerApi {
 
   Future<void> subscribeCurrentPhase() async {
     jsApi.subscribeMessage(
-        'encointer.subscribeCurrentPhase("$_currentPhaseSubscribeChannel")', _currentPhaseSubscribeChannel, (data) {
+        'encointer.subscribeCurrentPhase("$_currentPhaseSubscribeChannel")', _currentPhaseSubscribeChannel,
+        (data) async {
       var phase = ceremonyPhaseFromString(data.toUpperCase());
+
+      var cid = store.encointer.chosenCid;
+      var address = store.account.currentAddress;
+
+      if (cid != null && address.isNotEmpty) {
+        var data = await pollAggregatedAccountDataUntilNextPhase(phase, cid, address);
+        store.encointer.setAggregatedAccountData(cid, address, data);
+      }
+
       store.encointer.setCurrentPhase(phase);
       getNextPhaseTimestamp();
     });
+  }
+
+  /// Polls the aggregated account data until its ceremony phase field equals [nextPhase].
+  ///
+  /// This is needed because the aggregated account data lags behind, when then the ceremony phase is updated:
+  /// See: https://github.com/encointer/encointer-wallet-flutter/issues/632
+  Future<AggregatedAccountData> pollAggregatedAccountDataUntilNextPhase(
+      CeremonyPhase nextPhase, CommunityIdentifier cid, String address) async {
+    while (true) {
+      final data = await getAggregatedAccountData(cid, address);
+      final phase = data.global.ceremonyPhase;
+
+      if (nextPhase == phase) {
+        print("[EncointerApi] received account data valid for the new ceremony phase");
+        return data;
+      } else {
+        await Future.delayed(
+            Duration(seconds: 3), () => print("[EncointerApi] polling account data until next phase is reached..."));
+      }
+    }
   }
 
   /// Subscribes to storage changes in the Scheduler pallet: encointerScheduler.currentPhase().
