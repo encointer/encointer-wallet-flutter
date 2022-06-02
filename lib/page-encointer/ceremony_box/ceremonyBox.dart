@@ -145,25 +145,21 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
           notification: dic.encointer.youAreNotRegisteredPleaseRegisterNextTime,
         );
       } else {
-        // assigned
-        var meetup = store.encointer.communityAccount.meetup;
-        var location = store.encointer.community.meetupLocations[meetup.locationIndex];
-        return Column(
-          children: [
-            MeetupInfo(
-              meetup,
-              location,
-              onLocationPressed: () => showOnEncointerMap(context, store, location),
-            ),
-            // meetup completed
-            if (store.encointer.communityAccount?.meetupCompleted ?? false)
-              CeremonyNotification(
-                notificationIconData: Iconsax.tick_square,
-                notification: dic.encointer.successfullySentNAttestations
-                    .replaceAll('P_COUNT', store.encointer.communityAccount?.scannedClaimsCount.toString()),
-              )
-          ],
-        );
+        if (store.encointer.communityAccount?.meetupCompleted ?? false) {
+          return CeremonyNotification(
+            notificationIconData: Iconsax.tick_square,
+            notification: dic.encointer.successfullySentNAttestations
+                .replaceAll('P_COUNT', store.encointer.communityAccount?.scannedClaimsCount.toString()),
+          );
+        } else {
+          var meetup = store.encointer.communityAccount.meetup;
+          var location = store.encointer.community.meetupLocations[meetup.locationIndex];
+          return MeetupInfo(
+            meetup,
+            location,
+            onLocationPressed: () => showOnEncointerMap(context, store, location),
+          );
+        }
       }
       break;
     default:
