@@ -2,12 +2,12 @@ import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/page-encointer/common/encointerMap.dart';
+import 'package:encointer_wallet/page-encointer/meetup/ceremonyStep1Count.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/tx.dart';
 import 'package:flutter/material.dart';
-import 'package:encointer_wallet/page-encointer/meetup/ceremonyStep1Count.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -145,18 +145,25 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
           notification: dic.encointer.youAreNotRegisteredPleaseRegisterNextTime,
         );
       } else {
-        if (store.encointer.communityAccount?.meetupCompleted ?? false) {
-          return CeremonyNotification(
-            notificationIconData: Iconsax.tick_square,
-            notification: dic.encointer.successfullySentNAttestations
-                .replaceAll('P_COUNT', store.encointer.communityAccount?.scannedClaimsCount.toString()),
-          );
-        } else {
-          // showMeetupInfo == false in this case. So we don't show this widget at all.
-          _log(
-              "'getMeetupInfoWidget' trapped in an unexpected if statement: AttestingPhase + Assigned + MeetupNotCompleted");
-          return Container();
-        }
+        // assigned
+        var meetup = store.encointer.communityAccount.meetup;
+        var location = store.encointer.community.meetupLocations[meetup.locationIndex];
+        return Column(
+          children: [
+            MeetupInfo(
+              meetup,
+              location,
+              onLocationPressed: () => showOnEncointerMap(context, store, location),
+            ),
+            // meetup completed
+            if (store.encointer.communityAccount?.meetupCompleted ?? false)
+              CeremonyNotification(
+                notificationIconData: Iconsax.tick_square,
+                notification: dic.encointer.successfullySentNAttestations
+                    .replaceAll('P_COUNT', store.encointer.communityAccount?.scannedClaimsCount.toString()),
+              )
+          ],
+        );
       }
       break;
     default:
