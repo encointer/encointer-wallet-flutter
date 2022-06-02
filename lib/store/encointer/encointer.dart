@@ -522,7 +522,7 @@ abstract class _EncointerStore with Store {
 
   @computed
   bool get showMeetupInfo {
-    return !showRegisterButton && !showStartCeremonyButton;
+    return !showRegisterButton && !showStartCeremonyButton || (currentPhase == CeremonyPhase.Attesting);
   }
 }
 
