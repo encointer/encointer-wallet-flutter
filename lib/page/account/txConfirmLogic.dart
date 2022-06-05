@@ -10,8 +10,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-Future<void> onSubmit(BuildContext context, AppStore store, Api api, bool mounted,
-    {String password, bool viaQr = false, BigInt tip}) async {
+Future<void> onSubmit(
+  BuildContext context,
+  AppStore store,
+  Api api,
+  bool mounted, {
+  String password,
+  bool viaQr = false,
+  BigInt tip,
+}) async {
   final Translations dic = I18n.of(context).translationsForLocale();
   final Map args = ModalRoute.of(context).settings.arguments;
 
@@ -95,7 +102,7 @@ void _onTxError(BuildContext context, AppStore store, String errorMsg, bool moun
 }
 
 Future<Map> _sendTx(BuildContext context, Api api, Map args) async {
-  return api.account.sendTx(
+  return api.account.sendTxAndShowNotification(
     args['txInfo'],
     args['params'],
     args['title'],

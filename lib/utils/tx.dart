@@ -137,6 +137,26 @@ Map<String, dynamic> attestClaimsParams(
   };
 }
 
+Map<String, dynamic> encointerBalanceTransferParams(
+  CommunityIdentifier cid,
+  String recipientAddress,
+  double amount,
+) {
+  // this does not go via txConfirm page, so we skip the title
+  return {
+    "txInfo": {
+      "module": 'encointerBalances',
+      "call": 'transfer',
+      "cid": cid,
+    },
+    "params": [
+      recipientAddress,
+      cid,
+      amount,
+    ],
+  };
+}
+
 Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api api) async {
   // this is called inside submitTx too, but we need to unlock the key for the proof of attendance.
   if (store.settings.cachedPin.isEmpty) {

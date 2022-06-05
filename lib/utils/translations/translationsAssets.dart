@@ -26,6 +26,7 @@ abstract class TranslationsAssets {
   String get tipHint;
   String get to;
   String get transfer;
+  String get payment;
   String get value;
   String get amountToBeTransferred;
   String get invoiceAmount;
@@ -62,7 +63,8 @@ class TranslationsEnAssets implements TranslationsAssets {
   get tip => 'Tip';
   get tipHint => 'Adding a tip to this transfer, paying the block author for greater priority.';
   get to => 'To';
-  get transfer => 'Send'; // as Alain requested 2022-01-2
+  get transfer => 'Send';
+  get payment => 'Payment';
   get value => 'Value';
   get amountToBeTransferred => 'Send amount';
   get invoiceAmount => 'Invoice amount';
@@ -100,6 +102,7 @@ class TranslationsDeAssets implements TranslationsAssets {
   get tipHint => 'Trinkgeld für diese Transaktion hinzufügen, bezahle dem Block Author für höhere Priorität.';
   get to => 'Nach';
   get transfer => 'Senden';
+  get payment => 'Zahlung';
   get value => 'Wert';
   get amountToBeTransferred => 'Betrag';
   get invoiceAmount => 'Rechnungsbetrag';
@@ -137,6 +140,7 @@ class TranslationsZhAssets implements TranslationsAssets {
   get tipHint => '为出块人支付额外的费用，可以提高交易打包优先级。';
   get to => '收款地址';
   get transfer => '转账';
+  get payment => throw UnimplementedError();
   get value => '金额';
   get amountToBeTransferred => '发票金额';
   get invoiceAmount => '发票金额';
