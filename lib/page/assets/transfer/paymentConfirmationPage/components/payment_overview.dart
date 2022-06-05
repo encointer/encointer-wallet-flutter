@@ -35,10 +35,10 @@ class PaymentOverview extends StatelessWidget {
               ),
             ],
           ),
-          Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Icon(Icons.arrow_forward_ios_outlined),
-            SizedBox(height: 20)
-          ]),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [Icon(Icons.arrow_forward_ios_outlined), SizedBox(height: 20)],
+          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
