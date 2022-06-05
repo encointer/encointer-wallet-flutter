@@ -1,5 +1,6 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
+import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
@@ -13,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
+
 
 class PaymentConfirmationParams {
   PaymentConfirmationParams({
@@ -68,30 +70,52 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
               children: [
                 Expanded(
                   child: ListView(children: [
-                    Row(
-                      children: [
-                        Column(
-                          children: [
-                            CombinedCommunityAndAccountAvatar(widget.store, showCommunityNameAndAccountName: false),
-                            SizedBox(height: 8),
-                            Text(
-                              Fmt.accountName(context, widget.store.account.currentAccount),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: 12),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            AddressIcon(
-                              '',
-                              recipientAccount.pubKey,
-                              size: 96,
-                            ),
-                            Text(Fmt.address(recipientAddress)),
-                          ],
-                        ),
-                      ],
+                    IntrinsicHeight(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Column(
+                            children: [
+                              CombinedCommunityAndAccountAvatar(widget.store, showCommunityNameAndAccountName: false),
+                              Text(
+                                Fmt.accountName(context, widget.store.account.currentAccount),
+                                style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                          Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "${amount} $communitySymbol",
+                                  style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
+                                  textAlign: TextAlign.center,
+                                ),
+                              Icon(
+                                Icons.arrow_forward_ios_outlined,
+                              ),
+                                SizedBox(height: 45)
+                            ]
+                          ),
+                          Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              AddressIcon(
+                                '',
+                                recipientAccount.pubKey,
+                                size: 96,
+                              ),
+                              Text(
+                                Fmt.address(recipientAddress),
+                                style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
                   ]),
                 ),
