@@ -1,7 +1,7 @@
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/page/assets/transfer/paymentConfirmationPage/components/payment_overview.dart';
-import 'package:encointer_wallet/page/assets/transfer/paymentConfirmationPage/components/transfer_state.dart';
+import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/paymentOverview.dart';
+import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/transferState.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';

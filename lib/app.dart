@@ -10,7 +10,7 @@ import 'package:encointer_wallet/page/account/import/importAccountPage.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
 import 'package:encointer_wallet/page/assets/transfer/detailPage.dart';
-import 'package:encointer_wallet/page/assets/transfer/paymentConfirmationPage/index.dart';
+import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/index.dart';
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
 import 'package:encointer_wallet/page/networkSelectPage.dart';
 import 'package:encointer_wallet/page/profile/aboutPage.dart';
