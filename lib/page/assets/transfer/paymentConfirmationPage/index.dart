@@ -47,7 +47,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
   /// Transaction result, will only be used in the error case.
   Map _transactionResult;
 
-  int _blockTimestamp;
+  DateTime _blockTimestamp;
 
   @override
   Widget build(BuildContext context) {
@@ -132,25 +132,26 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
       _transferState = TransferState.submitting;
     });
 
-    // var onFinish = (BuildContext txPageContext, Map res) {
-    //   _log("Transfer result ${res.toString()}");
-    //
-    //   if (res['hash'] == null) {
-    //     _log('Error sending transfer ${res['error']}');
-    //     _transferState = TransferState.failed;
-    //   } else {
-    //     _transferState = TransferState.finished;
-    //     _blockTimestamp = res['time'];
-    //   }
-    // };
-    //
-    // await submitTx(context, widget.store, widget.api, params, onFinish: onFinish);
+    var onFinish = (BuildContext txPageContext, Map res) {
+      _log("Transfer result ${res.toString()}");
 
-    Future.delayed(const Duration(milliseconds: 1500), () {
-      setState(() {
+      if (res['hash'] == null) {
+        _log('Error sending transfer ${res['error']}');
+        _transferState = TransferState.failed;
+      } else {
         _transferState = TransferState.finished;
-      });
-    });
+        _blockTimestamp = new DateTime.fromMillisecondsSinceEpoch(res['time']);
+      }
+    };
+
+    await submitTx(context, widget.store, widget.api, params, onFinish: onFinish);
+
+    // for debugging
+    // Future.delayed(const Duration(milliseconds: 1500), () {
+    //   setState(() {
+    //     _transferState = TransferState.finished;
+    //   });
+    // });
 
     _log("TransferState after callback: ${_transferState.toString()}");
 
@@ -226,8 +227,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
         break;
       case TransferState.finished:
         {
-          var date = DateFormat.yMd().format(DateTime.now());
-          var time = DateFormat.Hms().format(DateTime.now());
+          var date = DateFormat.yMd().format(_blockTimestamp);
+          var time = DateFormat.Hms().format(_blockTimestamp);
 
           return RichText(
             textAlign: TextAlign.center,
