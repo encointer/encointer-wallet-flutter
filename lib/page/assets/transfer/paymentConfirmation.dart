@@ -15,7 +15,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 
-
 class PaymentConfirmationParams {
   PaymentConfirmationParams({
     this.cid,
@@ -42,9 +41,7 @@ class PaymentConfirmationPage extends StatefulWidget {
 }
 
 class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
-  bool _submitting = false;
-
-  bool _transferSuccess;
+  TransferState _transferState = TransferState.notStarted;
 
   int _blockTimestamp;
 
@@ -68,23 +65,29 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
               children: [
                 Expanded(
                   child: ListView(children: [
-                      PaymentOverview(widget.store, params.communitySymbol, params.recipientAccount, params.amount),
+                    PaymentOverview(widget.store, params.communitySymbol, params.recipientAccount, params.amount),
                   ]),
                 ),
-                PrimaryButton(
-                  key: Key('make-transfer'),
-                  child: !_submitting
-                      ? Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Iconsax.send_sqaure_2),
-                            SizedBox(width: 12),
-                            Text(dic.assets.transfer),
-                          ],
-                        )
-                      : CupertinoActivityIndicator(),
-                  onPressed: () => _submit(context, cid, recipientAddress, amount),
-                ),
+                !_transferState.isFinishedOrFailed()
+                    ? PrimaryButton(
+                        key: Key('make-transfer'),
+                        child: !_transferState.isSubmitting()
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Iconsax.send_sqaure_2),
+                                  SizedBox(width: 12),
+                                  Text(dic.assets.transfer),
+                                ],
+                              )
+                            : CupertinoActivityIndicator(),
+                        onPressed: () => _submit(context, cid, recipientAddress, amount),
+                      )
+                    : PrimaryButton(
+                        key: Key('transfer-done'),
+                        child: Text(dic.assets.done),
+                        onPressed: () => Navigator.of(context).pop(),
+                      )
               ],
             ),
           ),
@@ -97,7 +100,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
     var params = encointerBalanceTransferParams(cid, recipientAddress, amount);
 
     setState(() {
-      _submitting = true;
+      _transferState = TransferState.submitting;
     });
 
     var onFinish = (BuildContext txPageContext, Map res) {
@@ -105,16 +108,19 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
 
       if (res['hash'] == null) {
         _log('Error sending transfer ${res['error']}');
+        _transferState = TransferState.failed;
       } else {
+        _transferState = TransferState.finished;
         _blockTimestamp = res['time'];
       }
     };
 
     await submitTx(context, widget.store, widget.api, params, onFinish: onFinish);
 
-    setState(() {
-      _submitting = false;
-    });
+    _log("TransferState after callback: ${_transferState.toString()}");
+
+    // trigger rebuild after state update in callback
+    setState(() {});
   }
 
   @override
@@ -139,7 +145,6 @@ class PaymentOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     final recipientAddress = Fmt.addressOfAccount(recipientAccount, store);
 
     return IntrinsicHeight(
@@ -157,20 +162,15 @@ class PaymentOverview extends StatelessWidget {
               ),
             ],
           ),
-          Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "$amount $communitySymbol",
-                  style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
-                  textAlign: TextAlign.center,
-                ),
-                Icon(
-                  Icons.arrow_forward_ios_outlined
-                ),
-                SizedBox(height: 45)
-              ]
-          ),
+          Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Text(
+              "$amount $communitySymbol",
+              style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
+              textAlign: TextAlign.center,
+            ),
+            Icon(Icons.arrow_forward_ios_outlined),
+            SizedBox(height: 45)
+          ]),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -194,4 +194,33 @@ class PaymentOverview extends StatelessWidget {
 
 void _log(String msg) {
   print("[TxPaymentConfirmation] $msg");
+}
+
+enum TransferState {
+  notStarted,
+  submitting,
+  finished,
+  failed,
+}
+
+extension transferStateExtension on TransferState {
+  bool isFinishedOrFailed() {
+    return this == TransferState.finished || this == TransferState.failed;
+  }
+
+  bool notStarted() {
+    return this == TransferState.notStarted;
+  }
+
+  bool isSubmitting() {
+    return this == TransferState.submitting;
+  }
+
+  bool isFailed() {
+    return this == TransferState.failed;
+  }
+
+  bool isFinished() {
+    return this == TransferState.finished;
+  }
 }
