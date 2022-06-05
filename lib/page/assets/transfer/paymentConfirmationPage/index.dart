@@ -52,6 +52,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context).translationsForLocale();
+    final h2Grey = Theme.of(context).textTheme.headline2.copyWith(color: encointerGrey);
     PaymentConfirmationParams params = ModalRoute.of(context).settings.arguments;
 
     var cid = params.cid;
@@ -68,6 +69,14 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
             child: Column(
               children: [
                 PaymentOverview(widget.store, params.communitySymbol, params.recipientAccount, params.amount),
+                SizedBox(height: 10),
+                Flexible(
+                  fit: FlexFit.tight,
+                  child: Text(
+                    "$amount ${params.communitySymbol}",
+                    style: h2Grey,
+                  ),
+                ),
                 Expanded(
                   child: AnimatedSwitcher(
                     duration: const Duration(milliseconds: 500),

@@ -36,13 +36,8 @@ class PaymentOverview extends StatelessWidget {
             ],
           ),
           Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text(
-              "$amount $communitySymbol",
-              style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
-              textAlign: TextAlign.center,
-            ),
             Icon(Icons.arrow_forward_ios_outlined),
-            SizedBox(height: 45)
+            SizedBox(height: 20)
           ]),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
