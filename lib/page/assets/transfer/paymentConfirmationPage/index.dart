@@ -66,7 +66,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
                   child: ListView(children: [
                     PaymentOverview(widget.store, params.communitySymbol, params.recipientAccount, params.amount),
                     AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 1000),
+                      duration: const Duration(milliseconds: 500),
                       transitionBuilder: (Widget child, Animation<double> animation) {
                         return RotationTransition(child: child, turns: animation);
                         // return ScaleTransition(child: child, scale: animation);
@@ -126,9 +126,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
 
     Future.delayed(const Duration(milliseconds: 1500), () {
       setState(() {
-        _transferState = TransferState.finished;
+        _transferState = TransferState.failed;
       });
-
     });
 
     _log("TransferState after callback: ${_transferState.toString()}");
@@ -146,28 +145,50 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
         break;
       case TransferState.submitting:
         {
-          return CupertinoActivityIndicator();
+          return SizedBox(
+            height: 30,
+            width: 30,
+            child: CircularProgressIndicator(),
+          );
         }
         break;
       case TransferState.finished:
         {
-          return Text("finished");
+          return Container(
+            decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.green),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Icon(
+                Icons.check,
+                size: 30.0,
+                color: Colors.white,
+              ),
+            ),
+          );
         }
         break;
       case TransferState.failed:
         {
-          return Text("Failed");
+          return Container(
+            decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.red),
+            child: Padding(
+              padding: const EdgeInsets.all(10.0),
+              child: Icon(
+                Icons.highlight_remove,
+                size: 30.0,
+                color: Colors.white,
+              ),
+            ),
+          );
         }
         break;
       default:
         return Text("Unknown transfer state");
         break;
     }
-
   }
 }
 
 void _log(String msg) {
   print("[TxPaymentConfirmation] $msg");
 }
-
