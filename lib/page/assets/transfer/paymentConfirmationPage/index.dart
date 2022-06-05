@@ -65,6 +65,14 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
                 Expanded(
                   child: ListView(children: [
                     PaymentOverview(widget.store, params.communitySymbol, params.recipientAccount, params.amount),
+                    AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 1000),
+                      transitionBuilder: (Widget child, Animation<double> animation) {
+                        return RotationTransition(child: child, turns: animation);
+                        // return ScaleTransition(child: child, scale: animation);
+                      },
+                      child: _getTransferStateWidget(_transferState),
+                    ),
                   ]),
                 ),
                 !_transferState.isFinishedOrFailed()
@@ -102,19 +110,26 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
       _transferState = TransferState.submitting;
     });
 
-    var onFinish = (BuildContext txPageContext, Map res) {
-      _log("Transfer result ${res.toString()}");
+    // var onFinish = (BuildContext txPageContext, Map res) {
+    //   _log("Transfer result ${res.toString()}");
+    //
+    //   if (res['hash'] == null) {
+    //     _log('Error sending transfer ${res['error']}');
+    //     _transferState = TransferState.failed;
+    //   } else {
+    //     _transferState = TransferState.finished;
+    //     _blockTimestamp = res['time'];
+    //   }
+    // };
+    //
+    // await submitTx(context, widget.store, widget.api, params, onFinish: onFinish);
 
-      if (res['hash'] == null) {
-        _log('Error sending transfer ${res['error']}');
-        _transferState = TransferState.failed;
-      } else {
+    Future.delayed(const Duration(milliseconds: 1500), () {
+      setState(() {
         _transferState = TransferState.finished;
-        _blockTimestamp = res['time'];
-      }
-    };
+      });
 
-    await submitTx(context, widget.store, widget.api, params, onFinish: onFinish);
+    });
 
     _log("TransferState after callback: ${_transferState.toString()}");
 
@@ -122,14 +137,33 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
     setState(() {});
   }
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  _getTransferStateWidget(TransferState state) {
+    switch (state) {
+      case TransferState.notStarted:
+        {
+          return Container();
+        }
+        break;
+      case TransferState.submitting:
+        {
+          return CupertinoActivityIndicator();
+        }
+        break;
+      case TransferState.finished:
+        {
+          return Text("finished");
+        }
+        break;
+      case TransferState.failed:
+        {
+          return Text("Failed");
+        }
+        break;
+      default:
+        return Text("Unknown transfer state");
+        break;
+    }
 
-  @override
-  void dispose() {
-    super.dispose();
   }
 }
 
