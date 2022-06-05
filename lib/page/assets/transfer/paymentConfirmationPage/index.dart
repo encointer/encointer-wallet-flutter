@@ -1,7 +1,6 @@
-import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
-import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
+import 'package:encointer_wallet/page/assets/transfer/paymentConfirmationPage/components/payment_overview.dart';
+import 'package:encointer_wallet/page/assets/transfer/paymentConfirmationPage/components/transfer_state.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -134,93 +133,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
   }
 }
 
-class PaymentOverview extends StatelessWidget {
-  PaymentOverview(this.store, this.communitySymbol, this.recipientAccount, this.amount);
-
-  final AppStore store;
-
-  final String communitySymbol;
-  final AccountData recipientAccount;
-  final double amount;
-
-  @override
-  Widget build(BuildContext context) {
-    final recipientAddress = Fmt.addressOfAccount(recipientAccount, store);
-
-    return IntrinsicHeight(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Column(
-            children: [
-              CombinedCommunityAndAccountAvatar(store, showCommunityNameAndAccountName: false),
-              Text(
-                Fmt.accountName(context, store.account.currentAccount),
-                style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
-          Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Text(
-              "$amount $communitySymbol",
-              style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
-              textAlign: TextAlign.center,
-            ),
-            Icon(Icons.arrow_forward_ios_outlined),
-            SizedBox(height: 45)
-          ]),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              AddressIcon(
-                '',
-                recipientAccount.pubKey,
-                size: 96,
-              ),
-              Text(
-                Fmt.address(recipientAddress),
-                style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-}
-
 void _log(String msg) {
   print("[TxPaymentConfirmation] $msg");
 }
 
-enum TransferState {
-  notStarted,
-  submitting,
-  finished,
-  failed,
-}
-
-extension transferStateExtension on TransferState {
-  bool isFinishedOrFailed() {
-    return this == TransferState.finished || this == TransferState.failed;
-  }
-
-  bool notStarted() {
-    return this == TransferState.notStarted;
-  }
-
-  bool isSubmitting() {
-    return this == TransferState.submitting;
-  }
-
-  bool isFailed() {
-    return this == TransferState.failed;
-  }
-
-  bool isFinished() {
-    return this == TransferState.finished;
-  }
-}

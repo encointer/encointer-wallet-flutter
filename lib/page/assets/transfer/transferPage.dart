@@ -18,7 +18,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:encointer_wallet/page/assets/transfer/paymentConfirmation.dart';
+import 'package:encointer_wallet/page/assets/transfer/paymentConfirmationPage/index.dart';
 
 class TransferPageParams {
   TransferPageParams({this.cid, this.communitySymbol, this.recipient, this.label, this.amount, this.redirect});
