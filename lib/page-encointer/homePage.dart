@@ -1,9 +1,8 @@
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/page-encointer/encointerEntry.dart';
-import 'package:encointer_wallet/page/account/scanPage.dart';
 import 'package:encointer_wallet/page/assets/index.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactsPage.dart';
 import 'package:encointer_wallet/page/profile/index.dart';
+import 'package:encointer_wallet/page/qr_scan/qrScanPage.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/cupertino.dart';
@@ -95,10 +94,6 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
           Iconsax.shop,
         ), // dart collection if
       TabData(
-        TabKey.Ceremonies,
-        Iconsax.calendar,
-      ),
-      TabData(
         TabKey.Scan,
         Iconsax.scan_barcode,
       ),
@@ -116,11 +111,11 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       key: EncointerHomePage.encointerHomePageKey,
       backgroundColor: Colors.white,
       body: PageView(
+        physics: NeverScrollableScrollPhysics(),
         controller: _pageController,
         children: [
           Assets(store),
           if (store.settings.enableBazaar) BazaarMain(store), // dart collection if
-          EncointerEntry(store), // #272 we leave it in for now until we have a replacement
           ScanPage(store),
           ContactsPage(store),
           Profile(store),
@@ -162,7 +157,6 @@ class TabData {
 enum TabKey {
   Wallet,
   Bazaar,
-  Ceremonies,
   Scan,
   Contacts,
   Profile,

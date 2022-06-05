@@ -7,7 +7,9 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/page/qr_scan/qrScanPage.dart';
+import 'package:encointer_wallet/page/qr_scan/qrScanService.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
@@ -21,11 +23,12 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 
 class TransferPageParams {
-  TransferPageParams({this.cid, this.communitySymbol, this.recipient, this.amount, this.redirect});
+  TransferPageParams({this.cid, this.communitySymbol, this.recipient, this.label, this.amount, this.redirect});
 
   final CommunityIdentifier cid;
   final String communitySymbol;
   final String recipient;
+  final String label;
   final double amount;
   final String redirect;
 }
@@ -33,7 +36,7 @@ class TransferPageParams {
 class TransferPage extends StatefulWidget {
   const TransferPage(this.store);
 
-  static final String route = '/assets/transfer';
+  static const String route = '/assets/transfer';
   final AppStore store;
 
   @override
@@ -63,7 +66,7 @@ class _TransferPageState extends State<TransferPage> {
 
     int decimals = encointer_currencies_decimals;
 
-    double available = store.encointer.applyDemurrage(store.encointer.balanceEntries[_cid]);
+    double available = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry);
 
     print("[transferPage]: available: $available");
 
@@ -92,16 +95,30 @@ class _TransferPageState extends State<TransferPage> {
                   Expanded(
                     child: ListView(
                       children: [
-                        CommunityWithCommunityChooser(store),
+                        CombinedCommunityAndAccountAvatar(store, showCommunityNameAndAccountName: false),
+                        SizedBox(height: 12),
                         store.encointer.communityBalance != null
                             ? AccountBalanceWithMoreDigits(store: store, available: available, decimals: decimals)
                             : CupertinoActivityIndicator(),
                         Text(
-                          "${I18n.of(context).translationsForLocale().assets.yourBalanceFor} ${Fmt.accountName(context, store.account.currentAccount)}",
+                          I18n.of(context)
+                              .translationsForLocale()
+                              .assets
+                              .yourBalanceFor
+                              .replaceAll("ACCOUNT_NAME", Fmt.accountName(context, store.account.currentAccount)),
                           style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
                           textAlign: TextAlign.center,
                         ),
-                        SizedBox(height: 48),
+                        SizedBox(height: 24),
+                        IconButton(
+                          iconSize: 48,
+                          icon: Icon(Iconsax.scan_barcode),
+                          onPressed: () => Navigator.of(context).popAndPushNamed(ScanPage.route,
+                              arguments: ScanPageParams(
+                                  forceContext:
+                                      QrScanContext.invoice)), // same as for clicking the scan button in the bottom bar
+                        ),
+                        SizedBox(height: 24),
                         EncointerTextFormField(
                           labelText: dic.assets.amountToBeTransferred,
                           textStyle: Theme.of(context).textTheme.headline1.copyWith(color: encointerBlack),
@@ -113,7 +130,7 @@ class _TransferPageState extends State<TransferPage> {
                               return dic.assets.amountError;
                             }
                             if (balanceTooLow(value, available, decimals)) {
-                              return dic.assets.amountLow;
+                              return dic.assets.insufficientBalance;
                             }
                             return null;
                           },
@@ -141,12 +158,14 @@ class _TransferPageState extends State<TransferPage> {
                     ),
                   ),
                   SizedBox(height: 48),
-                  Center(
-                    child: Text(
-                      "Fee: TODO compute Fee",
-                      style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
-                    ),
-                  ),
+                  store.settings.developerMode
+                      ? Center(
+                          child: Text(
+                            "${dic.assets.fee}: TODO compute Fee", // TODO compute fee #589
+                            style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
+                          ),
+                        )
+                      : Container(),
                   SizedBox(height: 8),
                   PrimaryButton(
                     key: Key('make-transfer'),
@@ -155,7 +174,7 @@ class _TransferPageState extends State<TransferPage> {
                       children: [
                         Icon(Iconsax.send_sqaure_2),
                         SizedBox(width: 12),
-                        Text(dic.assets.amountToBeTransferred),
+                        Text(dic.assets.transfer),
                       ],
                     ),
                     onPressed: _handleSubmit,
@@ -181,6 +200,7 @@ class _TransferPageState extends State<TransferPage> {
           "module": 'encointerBalances',
           "call": 'transfer',
           "cid": cid,
+          "txPaymentAsset": store.encointer.getTxPaymentAsset(_cid),
         },
         "detail": jsonEncode({
           "destination": address,
@@ -200,7 +220,7 @@ class _TransferPageState extends State<TransferPage> {
       args['onFinish'] = (BuildContext txPageContext, Map res) {
         final TransferPageParams routeArgs = ModalRoute.of(context).settings.arguments;
         if (store.settings.endpointIsEncointer) {
-          store.encointer.setTransferTxs([res]);
+          store.encointer.account.setTransferTxs([res], store.account.currentAddress);
         }
         Navigator.popUntil(txPageContext, ModalRoute.withName(routeArgs.redirect));
         if (routeArgs.redirect == '/') {
@@ -224,6 +244,7 @@ class _TransferPageState extends State<TransferPage> {
       if (args.recipient != null) {
         final AccountData acc = AccountData();
         acc.address = args.recipient;
+        acc.name = args.label;
         setState(() {
           _accountTo = acc;
         });

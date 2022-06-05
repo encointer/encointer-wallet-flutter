@@ -12,7 +12,7 @@ import 'bazaarMenu.dart';
 import 'bazaarTabBar.dart';
 
 class BazaarMain extends StatelessWidget {
-  static final String route = '/bazaar';
+  static const String route = '/bazaar';
 
   final AppStore store;
 

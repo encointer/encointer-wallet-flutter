@@ -2,6 +2,8 @@ import 'package:encointer_wallet/config/node.dart';
 import 'package:encointer_wallet/store/settings.dart';
 
 const String network_name_encointer_gesell = 'nctr-gsl';
+const String network_name_encointer_lietaer = 'nctr-r';
+const String network_name_encointer_mainnet = 'nctr-k';
 const String network_name_encointer_cantillon = 'nctr-ctln';
 
 EndpointData networkEndpointEncointerGesell = EndpointData.fromJson({
@@ -9,6 +11,24 @@ EndpointData networkEndpointEncointerGesell = EndpointData.fromJson({
   'ss58': 42,
   'text': 'Encointer Gesell (Hosted by Encointer Association)',
   'value': 'wss://gesell.encointer.org',
+  'overrideConfig': GesellConfig.toJson(),
+  'ipfsGateway': ipfs_gateway_encointer
+});
+
+EndpointData networkEndpointEncointerLietaer = EndpointData.fromJson({
+  'info': 'nctr-r',
+  'ss58': 42,
+  'text': 'Encointer Lietaer on Rococo (Hosted by Encointer Association)',
+  'value': 'wss://rococo.api.encointer.org',
+  'overrideConfig': GesellConfig.toJson(),
+  'ipfsGateway': ipfs_gateway_encointer
+});
+
+EndpointData networkEndpointEncointerMainnet = EndpointData.fromJson({
+  'info': 'nctr-k',
+  'ss58': 42, // Fixme: #567
+  'text': 'Encointer Network on Kusama (Hosted by Encointer Association)',
+  'value': 'wss://kusama.api.encointer.org',
   'overrideConfig': GesellConfig.toJson(),
   'ipfsGateway': ipfs_gateway_encointer
 });
@@ -46,6 +66,8 @@ EndpointData networkEndpointEncointerCantillonDev = EndpointData.fromJson({
 
 List<EndpointData> networkEndpoints = [
   networkEndpointEncointerGesell,
+  networkEndpointEncointerLietaer,
+  networkEndpointEncointerMainnet,
   networkEndpointEncointerGesellDev,
   networkEndpointEncointerCantillon,
   networkEndpointEncointerCantillonDev,
@@ -54,11 +76,17 @@ List<EndpointData> networkEndpoints = [
 const network_ss58_map = {
   'encointer': 42,
   'nctr-gsl': 42,
+  'nctr-r': 42,
+  'nctr-k': 42, // Fixme: #567
+  'ss58': 42, // Fixme: #567
   'nctr-cln': 42,
   'nctr-gsl-dev': 42,
   'nctr-cln-dev': 42,
   'substrate': 42,
 };
+
+const fall_back_community_icon = "assets/nctr_logo_faces_only_thick.svg";
+const community_icon_name = "community_icon.svg";
 
 const String ipfs_gateway_encointer = "http://ipfs.encointer.org:8080"; // AVD: 10.0.2.2 = 127.0.0.1
 const String ipfs_gateway_local = 'http://10.0.2.2:8080';
@@ -82,3 +110,21 @@ const Map<String, int> js_code_version_map = {
   network_name_encointer_gesell: 10010,
   network_name_encointer_cantillon: 10010,
 };
+
+// links
+const locale_place_holder = 'LOCALE_PLACEHOLDER';
+const ceremony_info_link_base = 'https://leu.zuerich/$locale_place_holder/#zeremonien';
+
+String ceremonyInfoLink(String locale) {
+  switch (locale) {
+    case 'en':
+      return ceremony_info_link_base.replaceAll(locale_place_holder, 'en');
+      break;
+    case 'de':
+      return ceremony_info_link_base.replaceAll(locale_place_holder, '');
+      break;
+    default:
+      print("[ceremonyInfoLink] unsupported locale, defaulting to english");
+      return ceremony_info_link_base.replaceAll(locale_place_holder, 'en');
+  }
+}

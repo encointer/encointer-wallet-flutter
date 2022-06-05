@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'searchResultsOfferingFiltered.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class SearchResultsOffering extends StatelessWidget {
   final results;
@@ -12,6 +13,7 @@ class SearchResultsOffering extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Translations dic = I18n.of(context).translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         title: Text("${results.length} ${I18n.of(context).translationsForLocale().bazaar.offeringsFound}"),
@@ -22,7 +24,7 @@ class SearchResultsOffering extends StatelessWidget {
             aspectRatio: 6,
             child: ListTile(
               leading: Icon(Icons.filter_alt),
-              title: Text("Filter"),
+              title: Text(dic.bazaar.filter),
               onTap: () {
                 Navigator.push(
                   context,

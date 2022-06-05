@@ -1,5 +1,5 @@
 import 'package:encointer_wallet/mocks/data/mockAccountData.dart';
-import 'package:encointer_wallet/mocks/storage/localStorage.dart';
+import 'package:encointer_wallet/mocks/storage/mockLocalStorage.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -35,6 +35,7 @@ void main() {
       String testPass = 'a111111';
       await store.addAccount(endoEncointer, testPass);
       expect(store.accountList.length, 2);
+      store.setCurrentAccount(endoEncointer['pubKey']);
       expect(store.currentAccountPubKey, endoEncointer['pubKey']);
       expect(store.currentAccount.name, 'test');
       expect(store.currentAccount.pubKey, endoEncointer['pubKey']);
@@ -46,7 +47,7 @@ void main() {
       expect(store.optionalAccounts[0].address, accList[0]['address']);
 
       /// update account
-      await store.updateAccountName('test-change');
+      await store.updateAccountName(store.currentAccount, 'test-change');
       expect(store.currentAccount.name, 'test-change');
       expect(store.currentAccount.pubKey, endoEncointer['pubKey']);
       expect(store.currentAccount.address, endoEncointer['address']);

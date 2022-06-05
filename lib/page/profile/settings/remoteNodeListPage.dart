@@ -1,15 +1,15 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class RemoteNodeListPage extends StatelessWidget {
   RemoteNodeListPage(this.store);
 
-  static final String route = '/profile/endpoint';
+  static const String route = '/profile/endpoint';
   final Api api = webApi;
   final SettingsStore store;
 

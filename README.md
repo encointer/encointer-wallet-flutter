@@ -10,7 +10,7 @@ Encointer wallet and client for mobile phones
      alt="Get it on Google Play"
      height="55">](https://play.google.com/store/apps/details?id=org.encointer.wallet)
      
-<a href="https://apps.apple.com/us/app/encointer-wallet/id1535471655?itsct=apps_box_badge&amp;itscg=30200" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 250px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1619049600&h=f616bcfbdbf4c04f0ca6524a2a683d4b" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;"></a>
+<a href="https://apps.apple.com/us/app/encointer-wallet/id1535471655?itsct=apps_box_badge&amp;itscg=30200" style="display: inline-block; overflow: hidden; border-radius: 13px; width: 150px; height: 83px;"><img src="https://tools.applemediaservices.com/api/badges/download-on-the-app-store/black/en-us?size=250x83&amp;releaseDate=1619049600&h=f616bcfbdbf4c04f0ca6524a2a683d4b" alt="Download on the App Store" style="border-radius: 13px; width: 250px; height: 83px;"></a>
 
 [![Build](https://github.com/encointer/encointer-wallet-flutter/actions/workflows/android_build.yml/badge.svg)](https://github.com/encointer/encointer-wallet-flutter/actions/workflows/android_build.yml)
 [![Android](https://github.com/encointer/encointer-wallet-flutter/actions/workflows/android_integration_test.yml/badge.svg)](https://github.com/encointer/encointer-wallet-flutter/actions/workflows/android_integration_test.yml)
@@ -19,10 +19,11 @@ Encointer wallet and client for mobile phones
 
 ## Overview
 
-<img src="./encointer-gesell-assets.png" width=300>
-<img src="./encointer-attesting.png" width=300>
-<img src="./encointer-meetup-onegreen.png" width=300>
-<img src="./encointer-meetup-scan.png" width=300>
+<img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/1.png" width=300>
+<img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/2.png" width=300>
+<img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/3.png" width=300>
+<img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/4.png" width=300>
+<img src="./fastlane/metadata/android/en-US/images/phoneScreenshots/5.png" width=300>
 
 ## Build Instructions
 
@@ -76,7 +77,8 @@ Currently supports flutter: 2.02
 ### Run tests
 
 * run all tests from the command line:`flutter test`
-* run tests in specific directory: `flutter test test/page-encointer`
+* exclude e2e-tests that need a running encointer node:`flutter test --exclude-tags encointer-node-e2e`
+* run e2e-tests that need a running encointer node:`flutter test --tags encointer-node-e2e`
 
 ### Integration tests
 * run all integration tests in `test_driver` directory: `flutter drive --target=test_driver/app.dart --flavor dev`
@@ -159,6 +161,7 @@ VersionCode should monotonically increase by 1 for every tagged build
 
 ```shell 
   git checkout master
+  git pull
   git tag v0.9.0
   git push origin v0.9.0
   git checkout beta

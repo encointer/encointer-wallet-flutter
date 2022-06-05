@@ -1,6 +1,6 @@
-import 'package:encointer_wallet/page/account/create/createPinForm.dart';
+import 'package:encointer_wallet/page/account/create/createPinPage.dart';
 import 'package:encointer_wallet/page/account/import/importAccountForm.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 class ImportAccountPage extends StatefulWidget {
   const ImportAccountPage(this.store);
 
-  static final String route = '/account/import';
+  static const String route = '/account/import';
   final AppStore store;
 
   @override
@@ -27,7 +27,6 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   String _cryptoType = '';
   String _derivePath = '';
   bool _submitting = false;
-  Stage _stage = Stage.import;
 
   final TextEditingController _nameCtrl = new TextEditingController();
 
@@ -57,6 +56,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       cryptoType: _cryptoType,
       derivePath: _derivePath,
     );
+    _log("imported account to JS.");
 
     // check if account duplicate
     if (acc != null) {
@@ -78,7 +78,6 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
                   child: Text(I18n.of(context).translationsForLocale().home.ok),
                   onPressed: () {
                     setState(() {
-                      _stage = Stage.import;
                       _submitting = false;
                     });
                     Navigator.of(context).pop();
@@ -91,7 +90,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         );
         return;
       }
-      _checkAccountDuplicate(acc);
+      await _checkAccountDuplicate(acc);
       return;
     }
 
@@ -155,23 +154,27 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         );
       }
     } else {
-      _saveAccount(acc);
+      return _saveAccount(acc);
     }
   }
 
   Future<void> _saveAccount(Map<String, dynamic> acc) async {
-    await store.account.addAccount(acc, store.account.newAccount.password);
-    webApi.account.encodeAddress([acc['pubKey']]);
+    var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
+    await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
+
+    String pubKey = acc['pubKey'];
+    await store.setCurrentAccount(pubKey);
 
     await store.loadAccountCache();
 
     // fetch info for the imported account
-    String pubKey = acc['pubKey'];
     webApi.fetchAccountData();
     webApi.account.fetchAccountsBonded([pubKey]);
     webApi.account.getPubKeyIcons([pubKey]);
-    store.account.setCurrentAccount(pubKey);
 
+    setState(() {
+      _submitting = false;
+    });
     // go to home page
     Navigator.popUntil(context, ModalRoute.withName('/'));
   }
@@ -179,47 +182,31 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          title: Text(I18n.of(context).translationsForLocale().home.accountImport),
-          leading: _stage == Stage.createPin
-              ? IconButton(
-                  icon: Icon(Icons.arrow_back_ios),
-                  onPressed: () {
-                    setState(() {
-                      _stage = Stage.import;
-                    });
-                  },
-                )
-              : null // null means the regular pack button is used leading back to the entry page
-          ),
+      appBar: AppBar(title: Text(I18n.of(context).translationsForLocale().home.accountImport)),
       body: SafeArea(
-        child: !_submitting ? _getImportOrPinForm() : Center(child: CupertinoActivityIndicator()),
+        child: !_submitting ? _getImportForm() : Center(child: CupertinoActivityIndicator()),
       ),
     );
   }
 
-  Widget _getImportOrPinForm() {
-    if (_stage == Stage.import) {
-      return ImportAccountForm(store, (Map<String, dynamic> data) {
-        setState(() {
-          _keyType = data['keyType'];
-          _cryptoType = data['cryptoType'];
-          _derivePath = data['derivePath'];
-        });
-
-        if (store.account.isFirstAccount) {
-          setState(() {
-            _stage = Stage.createPin;
-          });
-        } else {
-          store.account.setNewAccountPin(store.settings.cachedPin);
-          _importAccount();
-        }
+  Widget _getImportForm() {
+    return ImportAccountForm(store, (Map<String, dynamic> data) {
+      setState(() {
+        _keyType = data['keyType'];
+        _cryptoType = data['cryptoType'];
+        _derivePath = data['derivePath'];
       });
-    } else {
-      return CreatePinForm(onSubmit: _importAccount, store: store);
-    }
+
+      if (store.account.isFirstAccount) {
+        Navigator.pushNamed(context, CreatePinPage.route, arguments: CreatePinPageParams(_importAccount));
+      } else {
+        store.account.setNewAccountPin(store.settings.cachedPin);
+        _importAccount();
+      }
+    });
   }
 }
 
-enum Stage { import, createPin }
+_log(String msg) {
+  print("[importAccountPage] $msg");
+}

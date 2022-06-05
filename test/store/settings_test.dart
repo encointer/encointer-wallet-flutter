@@ -1,9 +1,8 @@
-import 'package:flutter_test/flutter_test.dart';
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/mocks/storage/mockLocalStorage.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
-
-import 'package:encointer_wallet/mocks/storage/localStorage.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -38,7 +37,7 @@ void main() {
 
     test('network endpoint test', () async {
       await store.init('_en');
-      expect(store.endpoint.info, networkEndpointEncointerGesell.info);
+      expect(store.endpoint.info, networkEndpointEncointerMainnet.info);
       expect(store.endpointList.length, 1);
     });
 

@@ -6,7 +6,7 @@ import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page/account/txConfirmLogic.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactListPage.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -20,7 +20,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 class TxConfirmPage extends StatefulWidget {
   const TxConfirmPage(this.store);
 
-  static final String route = '/tx/confirm';
+  static const String route = '/tx/confirm';
   final AppStore store;
 
   @override
@@ -194,7 +194,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
                     Padding(
                       padding: EdgeInsets.all(16),
                       child: Text(
-                        dic.home.submitTx,
+                        dic.home.submitTransaction,
                         style: Theme.of(context).textTheme.headline4,
                       ),
                     ),
@@ -319,7 +319,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
                           ),
                           Text('${Fmt.token(_tipValue, decimals)} $tokenView'),
                           TapTooltip(
-                            message: dic.assets.tipTip,
+                            message: dic.assets.tipHint,
                             child: Icon(
                               Icons.info,
                               color: Theme.of(context).unselectedWidgetColor,
@@ -374,7 +374,6 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
                               ? dic.home.submitNoSign
                               : (isObservation && _proxyAccount == null) || isProxyObservation
                                   ? dic.home.submitQr
-                                  // dic.account.observeInvalid
                                   : dic.home.submit,
                           style: TextStyle(color: Colors.white),
                         ),

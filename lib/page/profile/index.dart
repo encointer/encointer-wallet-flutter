@@ -1,11 +1,10 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
-import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/create/addAccountPage.dart';
 import 'package:encointer_wallet/page/profile/aboutPage.dart';
 import 'package:encointer_wallet/page/profile/account/accountManagePage.dart';
 import 'package:encointer_wallet/page/profile/account/changePasswordPage.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
@@ -33,56 +32,12 @@ class _ProfileState extends State<Profile> {
   final Api api = webApi;
   EndpointData _selectedNetwork;
 
-  Future<void> _onSelect(AccountData i, String address) async {
-    if (address != store.account.currentAddress) {
-      print("changing from addres ${store.account.currentAddress} to $address");
-
-      store.account.setCurrentAccount(i.pubKey);
-      await store.loadAccountCache();
-
-      webApi.fetchAccountData();
-    }
-  }
-
-  Future<void> _onAddAccount() async {
-    Navigator.of(context).pushNamed(AddAccountPage.route);
-  }
-
-  // What type is a reputations? is it a string?
-  // Future<void> _getReputations() async {
-  //   await webApi.encointer.getReputations();
-  // }
-
-  Future<void> _showPasswordDialog(BuildContext context) async {
-    await showCupertinoDialog(
-      context: context,
-      builder: (_) {
-        return Container(
-          child: showPasswordInputDialog(
-            context,
-            store.account.currentAccount,
-            Text(I18n.of(context).translationsForLocale().profile.unlock),
-            (password) {
-              setState(() {
-                store.settings.setPin(password);
-              });
-            },
-          ),
-        );
-      },
-    );
-  }
-
   List<Widget> _buildAccountList() {
-    List<Widget> res = [];
+    List<Widget> allAccountsAsWidgets = [];
 
     List<AccountData> accounts = store.account.accountListAll;
 
-    res.addAll(accounts.map((i) {
-      String address = i.address;
-      if (store.account.pubKeyAddressMap[_selectedNetwork.ss58] != null) {
-        address = store.account.pubKeyAddressMap[_selectedNetwork.ss58][i.pubKey];
-      }
+    allAccountsAsWidgets.addAll(accounts.map((account) {
       return InkWell(
         child: Column(
           children: [
@@ -90,20 +45,20 @@ class _ProfileState extends State<Profile> {
               children: [
                 AddressIcon(
                   '',
+                  account.pubKey,
                   size: 70,
-                  pubKey: i.pubKey,
                   // addressToCopy: address,
                   tapToCopy: false,
                 ),
                 Positioned(
                   bottom: 0, right: 0, //give the values according to your requirement
-                  child: Icon(Iconsax.edit, color: ZurichLion.shade50),
+                  child: Icon(Iconsax.edit, color: ZurichLion.shade800),
                 ),
               ],
             ),
             SizedBox(height: 6),
             Text(
-              Fmt.accountName(context, i),
+              Fmt.accountName(context, account),
               style: Theme.of(context).textTheme.headline4,
             ),
             // This sizedBox is here to define a distance between the accounts
@@ -111,12 +66,11 @@ class _ProfileState extends State<Profile> {
           ],
         ),
         onTap: () => {
-          _onSelect(i, address),
-          Navigator.pushNamed(context, AccountManagePage.route),
+          Navigator.pushNamed(context, AccountManagePage.route, arguments: account.pubKey),
         },
       );
     }).toList());
-    return res;
+    return allAccountsAsWidgets;
   }
 
   @override
@@ -165,9 +119,7 @@ class _ProfileState extends State<Profile> {
                         IconButton(
                             icon: Icon(Iconsax.add_square),
                             color: ZurichLion.shade500,
-                            onPressed: () {
-                              store.settings.cachedPin.isEmpty ? _showPasswordDialog(context) : _onAddAccount();
-                            }),
+                            onPressed: () => Navigator.of(context).pushNamed(AddAccountPage.route)),
                       ],
                     ),
                   ),
@@ -196,7 +148,7 @@ class _ProfileState extends State<Profile> {
                   ),
                   ListTile(
                     title: Text(
-                      dic.profile.passChange,
+                      dic.profile.changeYourPin,
                       style: Theme.of(context).textTheme.headline3,
                     ),
                     trailing: Icon(Icons.arrow_forward_ios, size: 18),
@@ -209,7 +161,7 @@ class _ProfileState extends State<Profile> {
                         context: context,
                         builder: (BuildContext context) {
                           return CupertinoAlertDialog(title: Text(dic.profile.accountsDelete),
-                              // content: Text(dic.profile.passErrorTxt),
+                              // content: Text(dic.profile.wrongPinHint),
                               actions: <Widget>[
                                 CupertinoButton(
                                   // key: Key('error-dialog-ok'),
@@ -231,11 +183,10 @@ class _ProfileState extends State<Profile> {
                         }),
                   ),
                   ListTile(
-                    title: Text(dic.profile.reputationOverall, style: h3Grey),
-                  ),
-                  ListTile(
-                    title: Text(dic.profile.reputationHistory, style: h3Grey),
-                  ),
+                      title: Text(dic.profile.reputationOverall, style: h3Grey),
+                      trailing: store.encointer.account?.reputations != null
+                          ? Text(store.encointer.account.reputations.length.toString())
+                          : Text(dic.encointer.fetchingReputations)),
                   ListTile(
                     title: Text(dic.profile.about, style: Theme.of(context).textTheme.headline3),
                     trailing: Icon(Icons.arrow_forward_ios, size: 18),
@@ -257,7 +208,7 @@ class _ProfileState extends State<Profile> {
                             key: Key('choose-network'),
                             child: Observer(
                               builder: (_) => Text(
-                                "Change network (current: ${store.settings.endpoint.info})",
+                                "Change network (current: ${store.settings.endpoint.info})", // for devs only
                                 style: Theme.of(context).textTheme.headline4,
                               ),
                             ),

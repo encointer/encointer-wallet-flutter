@@ -1,17 +1,18 @@
 import 'package:encointer_wallet/common/components/accountAdvanceOption.dart';
+import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/create/addAccountForm.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class AddAccountPage extends StatefulWidget {
   const AddAccountPage(this.store);
 
-  static final String route = '/account/addAccount';
+  static const String route = '/account/addAccount';
   final AppStore store;
 
   @override
@@ -45,17 +46,20 @@ class _AddAccountPageState extends State<AddAccountPage> {
       return;
     }
 
-    await store.account.addAccount(acc, store.account.newAccount.password);
-    webApi.account.encodeAddress([acc['pubKey']]);
+    var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
+    _log("Created new account with address: ${addresses[0]}");
+    await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
+    _log("added new account with address: ${addresses[0]}");
+
+    String pubKey = acc['pubKey'];
+    await store.setCurrentAccount(pubKey);
 
     await store.loadAccountCache();
 
     // fetch info for the imported account
-    String pubKey = acc['pubKey'];
     webApi.fetchAccountData();
     webApi.account.fetchAccountsBonded([pubKey]);
     webApi.account.getPubKeyIcons([pubKey]);
-    store.account.setCurrentAccount(pubKey);
 
     setState(() {
       _submitting = false;
@@ -84,22 +88,50 @@ class _AddAccountPageState extends State<AddAccountPage> {
     );
   }
 
+  Future<void> _showEnterPinDialog(BuildContext context) async {
+    await showCupertinoDialog(
+      context: context,
+      builder: (_) {
+        return Container(
+          child: showPasswordInputDialog(
+            context,
+            store.account.currentAccount,
+            Text(I18n.of(context).translationsForLocale().profile.unlock),
+            (password) {
+              setState(() {
+                store.settings.setPin(password);
+              });
+            },
+          ),
+        );
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (store.settings.cachedPin.isEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {
+          _showEnterPinDialog(context);
+        });
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context).translationsForLocale();
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          dic.profile.accountAdd,
-        ),
+        title: Text(dic.profile.addAccount),
         leading: Container(),
         actions: <Widget>[
           IconButton(
-            icon: Icon(
-              Icons.close,
-              color: encointerGrey,
-            ),
+            icon: Icon(Icons.close, color: encointerGrey),
             onPressed: () {
               Navigator.popUntil(context, ModalRoute.withName('/'));
             },
@@ -121,4 +153,8 @@ class _AddAccountPageState extends State<AddAccountPage> {
       ),
     );
   }
+}
+
+_log(String msg) {
+  print("[AddAccountPage] $msg");
 }

@@ -1,9 +1,9 @@
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 const default_ss58_prefix = {
   'info': 'default',
@@ -20,7 +20,7 @@ const prefixList = [
 class SS58PrefixListPage extends StatelessWidget {
   SS58PrefixListPage(this.store);
 
-  static final String route = '/profile/ss58';
+  static const String route = '/profile/ss58';
   final Api api = webApi;
   final SettingsStore store;
 

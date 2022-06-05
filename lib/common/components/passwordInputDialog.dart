@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -48,8 +48,8 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
         builder: (BuildContext context) {
           final Translations dic = I18n.of(context).translationsForLocale();
           return CupertinoAlertDialog(
-            title: Text(dic.profile.passError),
-            content: Text(dic.profile.passErrorTxt),
+            title: Text(dic.profile.wrongPin),
+            content: Text(dic.profile.wrongPinHint),
             actions: <Widget>[
               CupertinoButton(
                 key: Key('error-dialog-ok'),

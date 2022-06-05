@@ -1,14 +1,9 @@
 PODS:
-  - connectivity (0.0.1):
+  - add_2_calendar (0.0.1):
     - Flutter
-    - Reachability
-  - device_info (0.0.1):
+  - aes_ecb_pkcs5_flutter (0.0.1):
     - Flutter
   - Flutter (1.0.0)
-  - flutter_aes_ecb_pkcs5 (0.0.1):
-    - Flutter
-  - flutter_downloader (0.0.1):
-    - Flutter
   - flutter_local_notifications (0.0.1):
     - Flutter
   - flutter_qr_scan (0.0.1):
@@ -21,24 +16,21 @@ PODS:
     - Flutter
   - path_provider (0.0.1):
     - Flutter
-  - "permission_handler (4.4.0+hotfix.4)":
+  - "permission_handler (5.1.0+2)":
     - Flutter
-  - Reachability (3.2)
+  - share (0.0.1):
+    - Flutter
   - shared_preferences (0.0.1):
     - Flutter
   - update_app (0.0.1):
     - Flutter
   - url_launcher (0.0.1):
     - Flutter
-  - webview_flutter (0.0.1):
-    - Flutter
 
 DEPENDENCIES:
-  - connectivity (from `.symlinks/plugins/connectivity/ios`)
-  - device_info (from `.symlinks/plugins/device_info/ios`)
+  - add_2_calendar (from `.symlinks/plugins/add_2_calendar/ios`)
+  - aes_ecb_pkcs5_flutter (from `.symlinks/plugins/aes_ecb_pkcs5_flutter/ios`)
   - Flutter (from `Flutter`)
-  - flutter_aes_ecb_pkcs5 (from `.symlinks/plugins/flutter_aes_ecb_pkcs5/ios`)
-  - flutter_downloader (from `.symlinks/plugins/flutter_downloader/ios`)
   - flutter_local_notifications (from `.symlinks/plugins/flutter_local_notifications/ios`)
   - flutter_qr_scan (from `.symlinks/plugins/flutter_qr_scan/ios`)
   - flutter_webview_plugin (from `.symlinks/plugins/flutter_webview_plugin/ios`)
@@ -46,26 +38,18 @@ DEPENDENCIES:
   - package_info (from `.symlinks/plugins/package_info/ios`)
   - path_provider (from `.symlinks/plugins/path_provider/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
+  - share (from `.symlinks/plugins/share/ios`)
   - shared_preferences (from `.symlinks/plugins/shared_preferences/ios`)
   - update_app (from `.symlinks/plugins/update_app/ios`)
   - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
-  - webview_flutter (from `.symlinks/plugins/webview_flutter/ios`)
-
-SPEC REPOS:
-  trunk:
-    - Reachability
 
 EXTERNAL SOURCES:
-  connectivity:
-    :path: ".symlinks/plugins/connectivity/ios"
-  device_info:
-    :path: ".symlinks/plugins/device_info/ios"
+  add_2_calendar:
+    :path: ".symlinks/plugins/add_2_calendar/ios"
+  aes_ecb_pkcs5_flutter:
+    :path: ".symlinks/plugins/aes_ecb_pkcs5_flutter/ios"
   Flutter:
     :path: Flutter
-  flutter_aes_ecb_pkcs5:
-    :path: ".symlinks/plugins/flutter_aes_ecb_pkcs5/ios"
-  flutter_downloader:
-    :path: ".symlinks/plugins/flutter_downloader/ios"
   flutter_local_notifications:
     :path: ".symlinks/plugins/flutter_local_notifications/ios"
   flutter_qr_scan:
@@ -80,34 +64,31 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider/ios"
   permission_handler:
     :path: ".symlinks/plugins/permission_handler/ios"
+  share:
+    :path: ".symlinks/plugins/share/ios"
   shared_preferences:
     :path: ".symlinks/plugins/shared_preferences/ios"
   update_app:
     :path: ".symlinks/plugins/update_app/ios"
   url_launcher:
     :path: ".symlinks/plugins/url_launcher/ios"
-  webview_flutter:
-    :path: ".symlinks/plugins/webview_flutter/ios"
 
 SPEC CHECKSUMS:
-  connectivity: c4130b2985d4ef6fd26f9702e886bd5260681467
-  device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
-  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  flutter_aes_ecb_pkcs5: fb682a7bb13f29cfbb33f88f7e1ed2211eacf5db
-  flutter_downloader: 058b9c41564a90500f67f3e432e3524613a7fd83
-  flutter_local_notifications: 9e4738ce2471c5af910d961a6b7eadcf57c50186
+  add_2_calendar: e9d68636aed37fb18e12f5a3d74c2e0589487af0
+  aes_ecb_pkcs5_flutter: a82e6ecc47654000805ad9d094a8cd29e4bf9667
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_qr_scan: f7c8c497584bbf395efd56ffcc3a60d27ec9de82
   flutter_webview_plugin: ed9e8a6a96baf0c867e90e1bce2673913eeac694
-  image_picker: 66aa71bc96850a90590a35d4c4a2907b0d823109
+  image_picker: 50e7c7ff960e5f58faa4d1f4af84a771c671bc4a
   package_info: 873975fc26034f0b863a300ad47e7f1ac6c7ec62
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
-  permission_handler: 8278954f2382902f63f00dd8828769c0bd6d511b
-  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+  permission_handler: ccb20a9fad0ee9b1314a52b70b76b473c5f8dab0
+  share: 0b2c3e82132f5888bccca3351c504d0003b3b410
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
   update_app: 03c24a56ba197e2a036d5230b02e85825b76e045
   url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
-  webview_flutter: d2b4d6c66968ad042ad94cbb791f5b72b4678a96
 
-PODFILE CHECKSUM: ed60d167b06d24f89aa556409ae856e63c9c4416
+PODFILE CHECKSUM: c6c989c12351331b9349d588f5a58782ced01366
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.11.3

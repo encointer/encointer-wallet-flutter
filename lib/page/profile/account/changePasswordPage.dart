@@ -1,7 +1,7 @@
 import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/settings.dart';
@@ -15,7 +15,7 @@ import 'package:flutter/services.dart';
 class ChangePasswordPage extends StatefulWidget {
   ChangePasswordPage(this.store, this.settingsStore);
 
-  static final String route = '/profile/password';
+  static const String route = '/profile/password';
   final AccountStore store;
   final SettingsStore settingsStore;
 
@@ -52,8 +52,8 @@ class _ChangePassword extends State<ChangePasswordPage> {
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
-              title: Text(dic.profile.passError),
-              content: Text(dic.profile.passErrorTxt),
+              title: Text(dic.profile.wrongPin),
+              content: Text(dic.profile.wrongPinHint),
               actions: <Widget>[
                 CupertinoButton(
                   child: Text(I18n.of(context).translationsForLocale().home.ok),
@@ -112,7 +112,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
     final Translations dic = I18n.of(context).translationsForLocale();
     return Scaffold(
       appBar: AppBar(
-        title: Text(dic.profile.passChange),
+        title: Text(dic.profile.changeYourPin),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -128,13 +128,13 @@ class _ChangePassword extends State<ChangePasswordPage> {
                       shrinkWrap: true,
                       children: <Widget>[
                         Text(
-                          dic.profile.passHint1,
+                          dic.profile.hintEnterCurrentPin,
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.headline2,
                         ),
                         SizedBox(height: 16),
                         Text(
-                          dic.profile.passHint2,
+                          dic.profile.hintThenEnterANewPin,
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black),
                         ),
@@ -150,7 +150,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                         ),
                         SizedBox(height: 20),
                         EncointerTextFormField(
-                          labelText: dic.profile.passNew,
+                          labelText: dic.profile.yourNewPin,
                           controller: _passCtrl,
                           validator: (v) {
                             return Fmt.checkPassword(v.trim()) ? null : dic.account.createPasswordError;
@@ -160,7 +160,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                         ),
                         SizedBox(height: 20),
                         EncointerTextFormField(
-                          labelText: dic.profile.passNew2,
+                          labelText: dic.profile.pleaseConfirmYourNewPin,
                           controller: _pass2Ctrl,
                           validator: (v) {
                             return v.trim() != _passCtrl.text ? dic.account.createPassword2Error : null;

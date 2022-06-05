@@ -1,18 +1,20 @@
 import 'package:encointer_wallet/common/components/TapTooltip.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
-import 'package:encointer_wallet/service/qrScanService.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/page/qr_scan/qrScanPage.dart';
+import 'package:encointer_wallet/page/qr_scan/qrScanService.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 
 class ContactPage extends StatefulWidget {
   ContactPage(this.store);
 
-  static final String route = '/profile/contact';
+  static const String route = '/profile/contact';
   final AppStore store;
 
   @override
@@ -158,43 +160,57 @@ class _Contact extends State<ContactPage> {
                         },
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(left: 16, right: 16),
-                      child: TextFormField(
-                        decoration: InputDecoration(
-                          hintText: dic.profile.contactMemo,
-                          labelText: dic.profile.contactMemo,
-                        ),
-                        controller: _memoCtrl,
-                      ),
+                    store.settings.developerMode
+                        ? Padding(
+                            padding: EdgeInsets.only(left: 16, right: 16),
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                hintText: dic.profile.contactMemo,
+                                labelText: dic.profile.contactMemo,
+                              ),
+                              controller: _memoCtrl,
+                            ),
+                          )
+                        : Container(),
+                    store.settings.developerMode
+                        ? Row(
+                            children: <Widget>[
+                              Checkbox(
+                                value: _isObservation,
+                                onChanged: (v) {
+                                  setState(() {
+                                    _isObservation = v;
+                                  });
+                                },
+                              ),
+                              GestureDetector(
+                                child: Text(I18n.of(context).translationsForLocale().account.observe),
+                                onTap: () {
+                                  setState(() {
+                                    _isObservation = !_isObservation;
+                                  });
+                                },
+                              ),
+                              TapTooltip(
+                                child: Padding(
+                                  padding: EdgeInsets.only(left: 8),
+                                  child: Icon(Icons.info_outline, size: 16),
+                                ),
+                                message: I18n.of(context).translationsForLocale().account.observeBrief,
+                              ),
+                            ],
+                          )
+                        : Container(),
+                    SizedBox(height: 24),
+                    IconButton(
+                      iconSize: 48,
+                      icon: Icon(Iconsax.scan_barcode),
+                      onPressed: () => Navigator.of(context).popAndPushNamed(ScanPage.route,
+                          arguments: ScanPageParams(
+                              forceContext:
+                                  QrScanContext.contact)), // same as for clicking the scan button in the bottom bar
                     ),
-                    Row(
-                      children: <Widget>[
-                        Checkbox(
-                          value: _isObservation,
-                          onChanged: (v) {
-                            setState(() {
-                              _isObservation = v;
-                            });
-                          },
-                        ),
-                        GestureDetector(
-                          child: Text(I18n.of(context).translationsForLocale().account.observe),
-                          onTap: () {
-                            setState(() {
-                              _isObservation = !_isObservation;
-                            });
-                          },
-                        ),
-                        TapTooltip(
-                          child: Padding(
-                            padding: EdgeInsets.only(left: 8),
-                            child: Icon(Icons.info_outline, size: 16),
-                          ),
-                          message: I18n.of(context).translationsForLocale().account.observeBrief,
-                        ),
-                      ],
-                    )
+                    SizedBox(height: 24),
                   ],
                 ),
               ),

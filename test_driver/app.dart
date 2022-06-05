@@ -1,7 +1,7 @@
 import 'package:encointer_wallet/app.dart';
 import 'package:encointer_wallet/config.dart';
-import 'package:encointer_wallet/mocks/storage/prepareStorage.dart';
-import 'package:encointer_wallet/mocks/storage/storageSetup.dart';
+import 'package:encointer_wallet/mocks/storage/mockStorageSetup.dart';
+import 'package:encointer_wallet/mocks/storage/prepareMockStorage.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
@@ -14,24 +14,19 @@ void main() {
   // ignore: missing_return
   Future<String> dataHandler(String msg) async {
     switch (msg) {
-      case StorageSetup.INIT:
+      case MockStorageSetup.INIT:
         {
-          PrepareStorage.init(globalAppStore);
+          PrepareMockStorage.init(globalAppStore);
         }
         break;
-      case StorageSetup.GET_METADATA:
+      case MockStorageSetup.HOME_PAGE:
         {
-          PrepareStorage.getMetadata(globalAppStore);
+          PrepareMockStorage.homePage(globalAppStore);
         }
         break;
-      case StorageSetup.UNREGISTERED_PARTICIPANT:
+      case MockStorageSetup.READY_FOR_MEETUP:
         {
-          PrepareStorage.unregisteredParticipant(globalAppStore);
-        }
-        break;
-      case StorageSetup.READY_FOR_MEETUP:
-        {
-          PrepareStorage.readyForMeetup(globalAppStore);
+          PrepareMockStorage.readyForMeetup(globalAppStore);
         }
         break;
       default:
@@ -45,6 +40,6 @@ void main() {
   // Call the `main()` function of the app, or call `runApp` with
   // any widget you are interested in testing.
   runApp(
-    WalletApp(Config(mockLocalStorage: true, mockSubstrateApi: true)),
+    WalletApp(Config(mockLocalStorage: true, mockSubstrateApi: true, appStoreConfig: StoreConfig.Test)),
   );
 }

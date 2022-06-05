@@ -3,7 +3,7 @@ import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/components/roundedCard.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page/account/createAccountEntryPage.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
@@ -17,7 +17,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 class NetworkSelectPage extends StatefulWidget {
   NetworkSelectPage(this.store, this.changeTheme);
 
-  static final String route = '/network';
+  static const String route = '/network';
   final AppStore store;
   final Function changeTheme;
 
@@ -34,6 +34,8 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   // Here we commented out the two not-active networks of Cantillon. When they will be relevant, they can be uncommented #232
   final List<EndpointData> networks = [
     networkEndpointEncointerGesell,
+    networkEndpointEncointerLietaer,
+    networkEndpointEncointerMainnet,
     networkEndpointEncointerGesellDev,
     // networkEndpointEncointerCantillon,
     // networkEndpointEncointerCantillonDev
@@ -64,11 +66,14 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       store.loadAccountCache(),
       store.settings.loadNetworkStateCache(),
       store.assets.loadCache(),
-      store.encointer.loadCache()
+      store.loadOrInitEncointerCache(_selectedNetwork.info),
     ]);
 
-    webApi.launchWebview();
+    await webApi.close();
+    webApi.init();
+
     changeTheme();
+
     if (mounted) {
       Navigator.of(context).pop();
       setState(() {
@@ -81,7 +86,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     bool isCurrentNetwork = _selectedNetwork.info == store.settings.endpoint.info;
     if (address != store.account.currentAddress || !isCurrentNetwork) {
       /// set current account
-      store.account.setCurrentAccount(i.pubKey);
+      store.setCurrentAccount(i.pubKey);
 
       if (isCurrentNetwork) {
         await store.loadAccountCache();
@@ -89,9 +94,6 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         webApi.fetchAccountData();
       } else {
         /// set new network and reload web view
-        // todo  remove the two options here, and fix the caching issue, explained in #219
-        store.encointer.setChosenCid();
-        store.encointer.communities = null;
         await _reloadNetwork();
       }
     }
@@ -176,7 +178,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         margin: EdgeInsets.only(bottom: 16),
         padding: EdgeInsets.only(top: padding, bottom: padding),
         child: ListTile(
-          leading: AddressIcon('', pubKey: i.pubKey, addressToCopy: address),
+          leading: AddressIcon('', i.pubKey, addressToCopy: address),
           title: Text(Fmt.accountName(context, i)),
           subtitle: Text('$accIndex${Fmt.address(address)}', maxLines: 2),
           onTap: _networkChanging ? null : () => _onSelect(i, address),

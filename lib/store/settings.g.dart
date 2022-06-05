@@ -52,17 +52,17 @@ mixin _$SettingsStore on _SettingsStore, Store {
   bool get endpointIsEncointer => (_$endpointIsEncointerComputed ??=
           Computed<bool>(() => super.endpointIsEncointer, name: '_SettingsStore.endpointIsEncointer'))
       .value;
-  Computed<bool> _$endpointIsGesellComputed;
+  Computed<bool> _$endpointIsNoTeeComputed;
 
   @override
-  bool get endpointIsGesell => (_$endpointIsGesellComputed ??=
-          Computed<bool>(() => super.endpointIsGesell, name: '_SettingsStore.endpointIsGesell'))
+  bool get endpointIsNoTee => (_$endpointIsNoTeeComputed ??=
+          Computed<bool>(() => super.endpointIsNoTee, name: '_SettingsStore.endpointIsNoTee'))
       .value;
-  Computed<bool> _$endpointIsCantillonComputed;
+  Computed<bool> _$endpointIsTeeProxyComputed;
 
   @override
-  bool get endpointIsCantillon => (_$endpointIsCantillonComputed ??=
-          Computed<bool>(() => super.endpointIsCantillon, name: '_SettingsStore.endpointIsCantillon'))
+  bool get endpointIsTeeProxy => (_$endpointIsTeeProxyComputed ??=
+          Computed<bool>(() => super.endpointIsTeeProxy, name: '_SettingsStore.endpointIsTeeProxy'))
       .value;
   Computed<String> _$ipfsGatewayComputed;
 
@@ -441,8 +441,8 @@ networkConst: ${networkConst},
 contactList: ${contactList},
 developerMode: ${developerMode},
 endpointIsEncointer: ${endpointIsEncointer},
-endpointIsGesell: ${endpointIsGesell},
-endpointIsCantillon: ${endpointIsCantillon},
+endpointIsNoTee: ${endpointIsNoTee},
+endpointIsTeeProxy: ${endpointIsTeeProxy},
 ipfsGateway: ${ipfsGateway},
 endpointList: ${endpointList},
 contactListAll: ${contactListAll},

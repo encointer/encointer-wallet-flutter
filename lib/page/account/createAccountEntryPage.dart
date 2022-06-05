@@ -9,7 +9,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class CreateAccountEntryPage extends StatelessWidget {
-  static final String route = '/account/entry';
+  static const String route = '/account/entry';
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class CreateAccountEntryPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        '${dic.profile.accountHave} ',
+                        '${dic.profile.doYouAlreadyHaveAnAccount} ',
                         style: TextStyle(
                           color: ZurichLion.shade50,
                         ),

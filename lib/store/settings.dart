@@ -1,7 +1,6 @@
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/config/node.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58PrefixListPage.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -73,14 +72,13 @@ abstract class _SettingsStore with Store {
   }
 
   @computed
-  bool get endpointIsGesell {
-    return endpoint.info == networkEndpointEncointerGesell.info ||
-        endpoint.info == networkEndpointEncointerGesellDev.info;
+  bool get endpointIsNoTee {
+    return !endpointIsTeeProxy;
   }
 
   @computed
-  bool get endpointIsCantillon {
-    return !endpointIsGesell;
+  bool get endpointIsTeeProxy {
+    return endpoint.worker != null;
   }
 
   @computed
@@ -170,7 +168,6 @@ abstract class _SettingsStore with Store {
     cachedPin = pin;
     if (pin.isNotEmpty) {
       rootStore.encointer.updateState();
-      webApi.encointer.getEncointerBalance();
     }
   }
 
@@ -262,7 +259,7 @@ abstract class _SettingsStore with Store {
   Future<void> loadEndpoint(String sysLocaleCode) async {
     Map<String, dynamic> value = await rootStore.localStorage.getObject(localStorageEndpointKey);
     if (value == null) {
-      endpoint = networkEndpointEncointerGesell;
+      endpoint = networkEndpointEncointerMainnet;
     } else {
       endpoint = EndpointData.fromJson(value);
     }

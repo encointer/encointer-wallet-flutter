@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:aes_ecb_pkcs5_flutter/aes_ecb_pkcs5_flutter.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58PrefixListPage.dart';
 import 'package:encointer_wallet/service/notification.dart';
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountBondedInfo.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/account/types/accountRecoveryInfo.dart';
@@ -77,7 +77,11 @@ abstract class _AccountStore with Store {
 
   @computed
   AccountData get currentAccount {
-    int i = accountListAll.indexWhere((i) => i.pubKey == currentAccountPubKey);
+    return getAccountData(currentAccountPubKey);
+  }
+
+  AccountData getAccountData(String requestedPubKey) {
+    int i = accountListAll.indexWhere((i) => i.pubKey == requestedPubKey);
     if (i < 0) {
       if (accountListAll.isNotEmpty) {
         return accountListAll[0] ?? AccountData();
@@ -110,15 +114,30 @@ abstract class _AccountStore with Store {
 
   @computed
   String get currentAddress {
-//    int ss58 = rootStore.settings.endpoint.ss58;
+    return getNetworkAddress(currentAccountPubKey);
+  }
+
+  /// Gets the address (SS58) for the corresponding network.
+  String getNetworkAddress(String pubKey) {
+    // _log("currentAddress: endpoint.info: ${rootStore.settings.endpoint.info}");
+    // _log("currentAddress: endpoint.ss58: ${rootStore.settings.endpoint.ss58}");
+    // _log("currentAddress: customSS58: ${rootStore.settings.customSS58Format.toString()}");
+    // _log("currentAddress: AddressMap 42: ${pubKeyAddressMap[42].toString()}");
+    // _log("currentAddress: AddressMap 2: ${pubKeyAddressMap[2].toString()}");
+
     int ss58 = rootStore.settings.customSS58Format['value'];
     if (rootStore.settings.customSS58Format['info'] == default_ss58_prefix['info']) {
       ss58 = rootStore.settings.endpoint.ss58;
-//      print(ss58);
     }
-    return pubKeyAddressMap[ss58] != null
-        ? pubKeyAddressMap[ss58][currentAccountPubKey] ?? currentAccount.address
-        : currentAccount.address;
+
+    final address = pubKeyAddressMap[ss58] != null ? pubKeyAddressMap[ss58][pubKey] : null;
+
+    if (address != null) {
+      return address;
+    } else {
+      _log("getNetworkAddress: could not get address (SS58)");
+      return currentAccount.address;
+    }
   }
 
   @action
@@ -175,7 +194,7 @@ abstract class _AccountStore with Store {
             );
           } else {
             if (rootStore.settings.endpointIsEncointer) {
-              rootStore.encointer.setTransferTxs([res]);
+              rootStore.encointer.account.setTransferTxs([res], rootStore.account.currentAddress);
             }
           }
         });
@@ -190,21 +209,20 @@ abstract class _AccountStore with Store {
   }
 
   @action
-  void setCurrentAccount(String pubKey) {
+  Future<void> setCurrentAccount(String pubKey) async {
     if (currentAccountPubKey != pubKey) {
       currentAccountPubKey = pubKey;
-      rootStore.localStorage.setCurrentAccount(pubKey);
-      rootStore.encointer.resetState();
-    }
-    if (!rootStore.settings.loading) {
-      webApi.assets.subscribeBalance();
+
+      await rootStore.localStorage.setCurrentAccount(pubKey);
+
+      return loadAccount();
     }
   }
 
   @action
-  Future<void> updateAccountName(String name) async {
-    Map<String, dynamic> acc = AccountData.toJson(currentAccount);
-    acc['meta']['name'] = name;
+  Future<void> updateAccountName(AccountData account, String newName) async {
+    Map<String, dynamic> acc = AccountData.toJson(account);
+    acc['meta']['name'] = newName;
 
     await updateAccount(acc);
   }
@@ -244,8 +262,8 @@ abstract class _AccountStore with Store {
       print('removed acc: $pubKey');
     }
     await rootStore.localStorage.addAccount(acc);
-    await rootStore.localStorage.setCurrentAccount(pubKey);
 
+    // update account list
     await loadAccount();
 
     // clear the temp account after addAccount finished
@@ -254,24 +272,31 @@ abstract class _AccountStore with Store {
 
   @action
   Future<void> removeAccount(AccountData acc) async {
+    _log("removeAccount: removing ${acc.pubKey}");
     await rootStore.localStorage.removeAccount(acc.pubKey);
 
     // remove encrypted seed after removing account
     deleteSeed(AccountStore.seedTypeMnemonic, acc.pubKey);
     deleteSeed(AccountStore.seedTypeRawSeed, acc.pubKey);
 
-    // set new currentAccount after currentAccount was removed
-    List<Map<String, dynamic>> accounts = await rootStore.localStorage.getAccountList();
-    if (accounts.length > 0) {
-      currentAccountPubKey = accounts[0]['pubKey'];
-    } else {
-      currentAccountPubKey = '';
-    }
-    await rootStore.localStorage.setCurrentAccount(currentAccountPubKey);
+    if (acc.pubKey == currentAccountPubKey) {
+      // set new currentAccount after currentAccount was removed
+      List<Map<String, dynamic>> accounts = await rootStore.localStorage.getAccountList();
+      var newCurrentAccountPubKey = accounts.length > 0 ? accounts[0]['pubKey'] : '';
+      _log("removeAccount: newCurrentAccountPubKey $newCurrentAccountPubKey");
 
-    await loadAccount();
+      await rootStore.setCurrentAccount(newCurrentAccountPubKey);
+    } else {
+      // update account list
+      await loadAccount();
+    }
   }
 
+  /// This needs to always be called after the account list has been updated.
+  ///
+  /// This is most likely only here due to poor understanding of mobx. Updating
+  /// the account list in an action itself should remove the need to call this.
+  /// Tackle this in #574.
   @action
   Future<void> loadAccount() async {
     List<Map<String, dynamic>> accList = await rootStore.localStorage.getAccountList();
@@ -302,7 +327,7 @@ abstract class _AccountStore with Store {
     Map stored = await rootStore.localStorage.getSeeds(seedType);
     String encrypted = stored[pubKey];
     if (encrypted == null) {
-      return null;
+      return Future.value(null);
     }
     return FlutterAesEcbPkcs5.decryptString(encrypted, Fmt.passwordToEncryptKey(password));
   }
@@ -406,4 +431,8 @@ abstract class _AccountCreate with Store {
 
   @observable
   String key = '';
+}
+
+_log(String msg) {
+  print("[AccountStore] $msg");
 }

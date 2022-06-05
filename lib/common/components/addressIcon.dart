@@ -1,14 +1,14 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/UI.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:jdenticon_dart/jdenticon_dart.dart';
 
 class AddressIcon extends StatelessWidget {
   AddressIcon(
-    this.address, {
+    this.address,
+    this.pubKey, {
     this.size,
-    this.pubKey,
     this.tapToCopy = true,
     this.addressToCopy,
   });
@@ -20,26 +20,32 @@ class AddressIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Observer(
-      builder: (_) {
-        String rawSvg;
-        String addressView = address;
-        rawSvg = globalAppStore.account.addressIconsMap[address];
-        if (pubKey != null) {
-          rawSvg = globalAppStore.account.pubKeyIconsMap[pubKey] ?? rawSvg;
-          if (globalAppStore.account.pubKeyAddressMap[globalAppStore.settings.endpoint.ss58] != null) {
-            addressView = globalAppStore.account.pubKeyAddressMap[globalAppStore.settings.endpoint.ss58][pubKey];
-          }
-        }
-        return GestureDetector(
-          child: Container(
-            width: size ?? 96,
-            height: size ?? 96,
-            child: rawSvg == null ? Image.asset('assets/images/assets/Assets_nav_0.png') : SvgPicture.string(rawSvg),
+    String rawSvg = Jdenticon.toSvg(pubKey,
+        colorSaturation: 0.78,
+        grayscaleSaturation: 0.48,
+        colorLightnessMinValue: 0.33,
+        colorLightnessMaxValue: 0.66,
+        grayscaleLightnessMinValue: 0.44,
+        grayscaleLightnessMaxValue: 0.44,
+        backColor: '#d4edf8ff',
+        hues: [199]);
+    return GestureDetector(
+      child: Container(
+        width: size ?? 96,
+        height: size ?? 96,
+        child: ClipOval(
+          child: SizedBox.fromSize(
+            size: Size.fromRadius(48), // Image radius
+            child: SvgPicture.string(
+              rawSvg,
+              fit: BoxFit.fill,
+              height: size ?? 96,
+              width: size ?? 96,
+            ),
           ),
-          onTap: tapToCopy ? () => UI.copyAndNotify(context, addressToCopy ?? addressView) : null,
-        );
-      },
+        ),
+      ),
+      onTap: tapToCopy ? () => UI.copyAndNotify(context, addressToCopy ?? address) : null,
     );
   }
 }

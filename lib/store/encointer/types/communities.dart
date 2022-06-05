@@ -14,11 +14,11 @@ part 'communities.g.dart';
 // field rename such that the fields match the ones defined in the runtime
 @JsonSerializable(explicitToJson: true)
 class CommunityMetadata {
-  CommunityMetadata(this.name, this.symbol, this.icons, this.url, this.theme);
+  CommunityMetadata(this.name, this.symbol, this.assets, this.url, this.theme);
 
   String name;
   String symbol;
-  String icons;
+  String assets;
   String url;
   String theme;
 
