@@ -36,6 +36,10 @@ abstract class TranslationsAssets {
   String get invoice;
   String get incomingConfirmed;
   String get fundsReceived;
+  String get paymentDoYouWantToProceed;
+  String get paymentSubmitting;
+  String get paymentFinished;
+  String get paymentError;
 }
 
 class TranslationsEnAssets implements TranslationsAssets {
@@ -74,6 +78,10 @@ class TranslationsEnAssets implements TranslationsAssets {
   get invoice => 'Invoice';
   get incomingConfirmed => 'incoming AMOUNT CID_SYMBOL for ACCOUNT_NAME confirmed';
   get fundsReceived => 'funds received';
+  get paymentDoYouWantToProceed => "Proceed with payment?";
+  get paymentSubmitting => "Payment is being submitted...";
+  get paymentFinished => "Payment complete";
+  get paymentError => "Payment error";
 }
 
 class TranslationsDeAssets implements TranslationsAssets {
@@ -112,6 +120,10 @@ class TranslationsDeAssets implements TranslationsAssets {
   get invoice => 'Rechnungsbetrag';
   get incomingConfirmed => 'Empfang von AMOUNT CID_SYMBOL für ACCOUNT_NAME bestätigt';
   get fundsReceived => 'Zahlungseingang';
+  get paymentDoYouWantToProceed => "Mit Zahlung fortfahren?";
+  get paymentSubmitting => "Zahlung wird eingereicht...";
+  get paymentFinished => "Zahlung erfolgt";
+  get paymentError => "Zahlungsfehler";
 }
 
 class TranslationsZhAssets implements TranslationsAssets {
@@ -150,4 +162,8 @@ class TranslationsZhAssets implements TranslationsAssets {
   get invoice => throw UnimplementedError();
   get incomingConfirmed => throw UnimplementedError();
   get fundsReceived => throw UnimplementedError();
+  get paymentDoYouWantToProceed => throw UnimplementedError();
+  get paymentSubmitting => throw UnimplementedError();
+  get paymentFinished => throw UnimplementedError();
+  get paymentError => throw UnimplementedError();
 }

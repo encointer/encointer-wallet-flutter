@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/components/gradientElements.dart';
+import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/assets/transfer/paymentConfirmationPage/components/payment_overview.dart';
 import 'package:encointer_wallet/page/assets/transfer/paymentConfirmationPage/components/transfer_state.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -65,9 +66,9 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
             child: Column(
               children: [
-                  PaymentOverview(widget.store, params.communitySymbol, params.recipientAccount, params.amount),
-                  Expanded(child:
-                  AnimatedSwitcher(
+                PaymentOverview(widget.store, params.communitySymbol, params.recipientAccount, params.amount),
+                Expanded(
+                  child: AnimatedSwitcher(
                     duration: const Duration(milliseconds: 500),
                     transitionBuilder: (Widget child, Animation<double> animation) {
                       return RotationTransition(child: child, turns: animation);
@@ -75,7 +76,11 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
                     },
                     child: _getTransferStateWidget(_transferState),
                   ),
-                  ),
+                ),
+                Flexible(
+                  fit: FlexFit.tight,
+                  child: _txStateTextInfo(_transferState),
+                ),
                 !_transferState.isFinishedOrFailed()
                     ? PrimaryButton(
                         key: Key('make-transfer'),
@@ -127,7 +132,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
 
     Future.delayed(const Duration(milliseconds: 1500), () {
       setState(() {
-        _transferState = TransferState.finished;
+        _transferState = TransferState.failed;
       });
     });
 
@@ -137,7 +142,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
     setState(() {});
   }
 
-  _getTransferStateWidget(TransferState state) {
+  Widget _getTransferStateWidget(TransferState state) {
     switch (state) {
       case TransferState.notStarted:
         {
@@ -180,6 +185,39 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
                 color: Colors.white,
               ),
             ),
+          );
+        }
+        break;
+      default:
+        return Text("Unknown transfer state");
+        break;
+    }
+  }
+
+  Widget _txStateTextInfo(TransferState state) {
+    final h2Grey = Theme.of(context).textTheme.headline2.copyWith(color: encointerGrey);
+    final Translations dic = I18n.of(context).translationsForLocale();
+    switch (state) {
+      case TransferState.notStarted:
+        {
+          return Text(dic.assets.paymentDoYouWantToProceed, style: h2Grey);
+        }
+        break;
+      case TransferState.submitting:
+        {
+          return Text(dic.assets.paymentSubmitting, style: h2Grey);
+        }
+        break;
+      case TransferState.finished:
+        {
+          return Text(dic.assets.paymentFinished, style: h2Grey);
+        }
+        break;
+      case TransferState.failed:
+        {
+          return Text(
+            "${dic.assets.paymentError}: ${_transactionResult['error']?.toString() ?? "Unknown Error"}",
+            style: h2Grey,
           );
         }
         break;
