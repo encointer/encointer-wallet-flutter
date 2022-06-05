@@ -63,39 +63,54 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
         return Scaffold(
           appBar: AppBar(title: Text(dic.assets.payment)),
           body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: Column(children: [
-              Expanded(
-                child: ListView(
-                  children: [
-                    Row(children: [
-                      CombinedCommunityAndAccountAvatar(widget.store, showCommunityNameAndAccountName: false),
-                      SizedBox(height: 12),
-                      AddressIcon(
-                        '',
-                        recipientAccount.pubKey,
-                        size: 130,
-                      ),
-                    ]),
-                    SizedBox(height: 8),
-                    PrimaryButton(
-                      key: Key('make-transfer'),
-                      child: !_submitting
-                          ? Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Icon(Iconsax.send_sqaure_2),
-                                SizedBox(width: 12),
-                                Text(dic.assets.transfer),
-                              ],
-                            )
-                          : CupertinoActivityIndicator(),
-                      onPressed: () => _submit(context, cid, recipientAddress, amount),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            child: Column(
+              children: [
+                Expanded(
+                  child: ListView(children: [
+                    Row(
+                      children: [
+                        Column(
+                          children: [
+                            CombinedCommunityAndAccountAvatar(widget.store, showCommunityNameAndAccountName: false),
+                            SizedBox(height: 8),
+                            Text(
+                              Fmt.accountName(context, widget.store.account.currentAccount),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 12),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            AddressIcon(
+                              '',
+                              recipientAccount.pubKey,
+                              size: 96,
+                            ),
+                            Text(Fmt.address(recipientAddress)),
+                          ],
+                        ),
+                      ],
                     ),
-                  ],
+                  ]),
                 ),
-              ),
-            ]),
+                PrimaryButton(
+                  key: Key('make-transfer'),
+                  child: !_submitting
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Iconsax.send_sqaure_2),
+                            SizedBox(width: 12),
+                            Text(dic.assets.transfer),
+                          ],
+                        )
+                      : CupertinoActivityIndicator(),
+                  onPressed: () => _submit(context, cid, recipientAddress, amount),
+                ),
+              ],
+            ),
           ),
         );
       },
