@@ -10,6 +10,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
+/// Contains most of the logic from the `txConfirmPage.dart`
+///
+/// This is a preparatory task the remove the `txConfirmPage` as seamless as possible.
+
 Future<void> onSubmit(
   BuildContext context,
   AppStore store,
@@ -25,7 +29,7 @@ Future<void> onSubmit(
   Map args;
 
   if (txParams == null) {
-    // backwards compatibility
+    // backwards compatibility if navigated here from the txConfirmPage.
     args = ModalRoute.of(context).settings.arguments;
   } else {
     args = txParams;
