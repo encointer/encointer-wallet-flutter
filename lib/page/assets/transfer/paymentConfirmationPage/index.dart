@@ -42,6 +42,9 @@ class PaymentConfirmationPage extends StatefulWidget {
 class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
   TransferState _transferState = TransferState.notStarted;
 
+  /// Transaction result, will only be used in the error case.
+  Map _transactionResult;
+
   int _blockTimestamp;
 
   @override
@@ -59,22 +62,20 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
         return Scaffold(
           appBar: AppBar(title: Text(dic.assets.payment)),
           body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
             child: Column(
               children: [
-                Expanded(
-                  child: ListView(children: [
-                    PaymentOverview(widget.store, params.communitySymbol, params.recipientAccount, params.amount),
-                    AnimatedSwitcher(
-                      duration: const Duration(milliseconds: 500),
-                      transitionBuilder: (Widget child, Animation<double> animation) {
-                        return RotationTransition(child: child, turns: animation);
-                        // return ScaleTransition(child: child, scale: animation);
-                      },
-                      child: _getTransferStateWidget(_transferState),
-                    ),
-                  ]),
-                ),
+                  PaymentOverview(widget.store, params.communitySymbol, params.recipientAccount, params.amount),
+                  Expanded(child:
+                  AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 500),
+                    transitionBuilder: (Widget child, Animation<double> animation) {
+                      return RotationTransition(child: child, turns: animation);
+                      // return ScaleTransition(child: child, scale: animation);
+                    },
+                    child: _getTransferStateWidget(_transferState),
+                  ),
+                  ),
                 !_transferState.isFinishedOrFailed()
                     ? PrimaryButton(
                         key: Key('make-transfer'),
@@ -126,7 +127,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
 
     Future.delayed(const Duration(milliseconds: 1500), () {
       setState(() {
-        _transferState = TransferState.failed;
+        _transferState = TransferState.finished;
       });
     });
 
@@ -146,8 +147,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
       case TransferState.submitting:
         {
           return SizedBox(
-            height: 30,
-            width: 30,
+            height: 80,
+            width: 80,
             child: CircularProgressIndicator(),
           );
         }
@@ -160,7 +161,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
               padding: const EdgeInsets.all(10.0),
               child: Icon(
                 Icons.check,
-                size: 30.0,
+                size: 80.0,
                 color: Colors.white,
               ),
             ),
@@ -175,7 +176,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
               padding: const EdgeInsets.all(10.0),
               child: Icon(
                 Icons.highlight_remove,
-                size: 30.0,
+                size: 80.0,
                 color: Colors.white,
               ),
             ),
