@@ -14,6 +14,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 
 class PaymentConfirmationParams {
   PaymentConfirmationParams({
@@ -84,21 +85,27 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
                 !_transferState.isFinishedOrFailed()
                     ? PrimaryButton(
                         key: Key('make-transfer'),
-                        child: !_transferState.isSubmitting()
-                            ? Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Icon(Iconsax.send_sqaure_2),
-                                  SizedBox(width: 12),
-                                  Text(dic.assets.transfer),
-                                ],
-                              )
-                            : CupertinoActivityIndicator(),
+                        child: Container(
+                          height: 20,
+                          child: !_transferState.isSubmitting()
+                              ? Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Iconsax.send_sqaure_2),
+                                    SizedBox(width: 12),
+                                    Text(dic.assets.transfer),
+                                  ],
+                                )
+                              : CupertinoActivityIndicator(),
+                        ),
                         onPressed: () => _submit(context, cid, recipientAddress, amount),
                       )
                     : PrimaryButton(
                         key: Key('transfer-done'),
-                        child: Text(dic.assets.done),
+                        child: Container(
+                          height: 20,
+                          child: Text(dic.assets.done),
+                        ),
                         onPressed: () => Navigator.of(context).pop(),
                       )
               ],
@@ -132,7 +139,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
 
     Future.delayed(const Duration(milliseconds: 1500), () {
       setState(() {
-        _transferState = TransferState.failed;
+        _transferState = TransferState.finished;
       });
     });
 
@@ -210,7 +217,22 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
         break;
       case TransferState.finished:
         {
-          return Text(dic.assets.paymentFinished, style: h2Grey);
+          var date = DateFormat.yMd().format(DateTime.now());
+          var time = DateFormat.Hms().format(DateTime.now());
+
+          return RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              text: "${dic.assets.paymentFinished}: $date\n\n",
+              style: h2Grey,
+              children: [
+                TextSpan(
+                  text: time,
+                  style: h2Grey,
+                ),
+              ],
+            ),
+          );
         }
         break;
       case TransferState.failed:
