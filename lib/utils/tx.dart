@@ -44,9 +44,7 @@ Future<void> submitTx(
 
   txParams["txInfo"]["txPaymentAsset"] = txPaymentAsset;
   txParams["onFinish"] = onFinish ??
-      (BuildContext txPageContext, Map res) {
-        Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
-      };
+      (BuildContext txPageContext, Map res) => res;
 
   return onSubmit(
     context,

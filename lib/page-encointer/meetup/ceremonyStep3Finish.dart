@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/common/components/gradientElements.dart';
+import 'package:encointer_wallet/common/components/submitButton.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -80,7 +80,7 @@ class CeremonyStep3Finish extends StatelessWidget {
               SizedBox(height: 12),
               Padding(
                 padding: const EdgeInsets.only(top: 6),
-                child: PrimaryButton(
+                child: SubmitButton(
                   // todo: this will be removed because we do it automatically
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -91,7 +91,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                           '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store.encointer.communityAccount.scannedClaimsCount.toString())}'),
                     ],
                   ),
-                  onPressed: () => submitAttestClaims(context, store, api),
+                  onPressed: (context) => submitAttestClaims(context, store, api),
                 ),
               ),
             ],
