@@ -89,7 +89,7 @@ class TranslationsEnHome implements TranslationsHome {
   get txReady => 'Transaction is ready.';
   get txBroadcast => 'Transaction has been broadcast.';
   get txInBlock => 'Transaction is in a block.';
-  get txError=> 'Transaction error';
+  get txError => 'Transaction error';
 }
 
 class TranslationsDeHome implements TranslationsHome {
@@ -135,7 +135,7 @@ class TranslationsDeHome implements TranslationsHome {
   get txReady => 'Transaktion bereit.';
   get txBroadcast => 'Transaktion wurde im Netzwerk';
   get txInBlock => 'Transaction ist in einem Block';
-  get txError=> 'Transaktionsfehler';
+  get txError => 'Transaktionsfehler';
 }
 
 class TranslationsZhHome implements TranslationsHome {
@@ -180,5 +180,5 @@ class TranslationsZhHome implements TranslationsHome {
   get txReady => throw UnimplementedError();
   get txBroadcast => throw UnimplementedError();
   get txInBlock => throw UnimplementedError();
-  get txError=> throw UnimplementedError();
+  get txError => throw UnimplementedError();
 }

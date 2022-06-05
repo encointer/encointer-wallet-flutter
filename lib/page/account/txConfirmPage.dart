@@ -82,7 +82,6 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
     _getTxFee(reload: true);
   }
 
-
   Future<bool> _validateProxy() async {
     List proxies = await webApi.account.queryRecoveryProxies([_proxyAccount.address]);
     print(proxies);
@@ -380,8 +379,8 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
                         onPressed: isUnsigned
                             ? () => onSubmit(context, store, api, mounted)
                             : store.assets.submitting
-                                    ? null
-                                    : () => _showPasswordDialog(context),
+                                ? null
+                                : () => _showPasswordDialog(context),
                       ),
                     ),
                   ),
