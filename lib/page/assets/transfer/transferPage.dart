@@ -170,9 +170,9 @@ class _TransferPageState extends State<TransferPage> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Icon(Iconsax.send_sqaure_2),
+                        Icon(Iconsax.login_1),
                         SizedBox(width: 12),
-                        Text(dic.assets.transfer),
+                        Text(dic.account.next),
                       ],
                     ),
                     onPressed: _pushPaymentConfirmationPage,
