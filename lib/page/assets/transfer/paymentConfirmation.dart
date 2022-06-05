@@ -89,7 +89,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "${amount} $communitySymbol",
+                                  "$amount $communitySymbol",
                                   style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
                                   textAlign: TextAlign.center,
                                 ),
