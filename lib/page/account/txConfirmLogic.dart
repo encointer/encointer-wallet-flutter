@@ -15,12 +15,21 @@ Future<void> onSubmit(
   AppStore store,
   Api api,
   bool mounted, {
+  Map txParams,
   String password,
   bool viaQr = false,
   BigInt tip,
 }) async {
   final Translations dic = I18n.of(context).translationsForLocale();
-  final Map args = ModalRoute.of(context).settings.arguments;
+
+  Map args;
+
+  if (txParams == null) {
+    // backwards compatibility
+    args = ModalRoute.of(context).settings.arguments;
+  } else {
+    args = txParams;
+  }
 
   store.assets.setSubmitting(true);
   store.account.setTxStatus(TxStatus.Queued);
@@ -40,11 +49,11 @@ Future<void> onSubmit(
   var onTxFinishFn = (args['onFinish'] as Function(BuildContext, Map));
 
   if (await api.isConnected()) {
-    _showTxStatusSnackBar(
-      context,
-      getTxStatusTranslation(dic.home, store.account.txStatus),
-      CupertinoActivityIndicator(),
-    ); // TODO armin, fix transfer status logic
+    // _showTxStatusSnackBar(
+    //   context,
+    //   getTxStatusTranslation(dic.home, store.account.txStatus),
+    //   CupertinoActivityIndicator(),
+    // ); // TODO armin, fix transfer status logic
 
     final Map res = await _sendTx(context, api, args);
 
@@ -101,7 +110,7 @@ void _onTxError(BuildContext context, AppStore store, String errorMsg, bool moun
   );
 }
 
-Future<Map> _sendTx(BuildContext context, Api api, Map args) async {
+Future<dynamic> _sendTx(BuildContext context, Api api, Map args) async {
   return api.account.sendTxAndShowNotification(
     args['txInfo'],
     args['params'],

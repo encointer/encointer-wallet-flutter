@@ -1,12 +1,9 @@
-import 'dart:convert';
-
 import 'package:encointer_wallet/common/components/AddressInputField.dart';
 import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
-import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/page/qr_scan/qrScanPage.dart';
 import 'package:encointer_wallet/page/qr_scan/qrScanService.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -199,8 +196,7 @@ class _TransferPageState extends State<TransferPage> {
             cid: _cid,
             communitySymbol: _communitySymbol,
             recipientAccount: _accountTo,
-            amount: double.parse(_amountCtrl.text.trim())
-        ),
+            amount: double.parse(_amountCtrl.text.trim())),
       );
     }
   }

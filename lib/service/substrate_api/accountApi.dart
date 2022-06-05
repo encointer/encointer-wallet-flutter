@@ -120,8 +120,13 @@ class AccountApi {
     return res;
   }
 
-  Future<dynamic> sendTxAndShowNotification(Map txInfo, List params, String pageTile, String notificationTitle,
-      {String rawParam}) async {
+  Future<dynamic> sendTxAndShowNotification(
+    Map txInfo,
+    List params,
+    String pageTile,
+    String notificationTitle, {
+    String rawParam,
+  }) async {
     Map res = await sendTx(txInfo, params, rawParam: rawParam);
 
     if (res['hash'] != null) {
@@ -138,7 +143,7 @@ class AccountApi {
   Future<dynamic> sendTx(Map txInfo, List params, {String rawParam}) async {
     String param = rawParam != null ? rawParam : jsonEncode(params);
     String call = 'account.sendTx(${jsonEncode(txInfo)}, $param)';
-//    print(call);
+    _log("sendTx call: $call");
     return jsApi.evalJavascript(call, allowRepeat: true);
   }
 

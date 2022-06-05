@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/meetup/scanClaimQrCode.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
@@ -17,13 +18,16 @@ import 'ceremonyStep3Finish.dart';
 
 class CeremonyStep2Scan extends StatelessWidget {
   const CeremonyStep2Scan(
-    this.store, {
+    this.store,
+    this.api, {
     @required this.claim,
     @required this.confirmedParticipantsCount,
     Key key,
   }) : super(key: key);
 
   final AppStore store;
+  final Api api;
+
   final Future<Uint8List> claim;
   final int confirmedParticipantsCount;
 
@@ -91,7 +95,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                   ],
                 ),
                 onPressed: () {
-                  Navigator.push(context, CupertinoPageRoute(builder: (_) => CeremonyStep3Finish(store)));
+                  Navigator.push(context, CupertinoPageRoute(builder: (_) => CeremonyStep3Finish(store, api)));
                 },
               ),
               SizedBox(height: 12),

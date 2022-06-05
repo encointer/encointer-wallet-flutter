@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
+import 'package:encointer_wallet/page/account/txConfirmLogic.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -20,6 +21,7 @@ import 'package:flutter/material.dart';
 Future<void> submitTx(
   BuildContext context,
   AppStore store,
+  Api api,
   Map txParams, {
   Function(BuildContext txPageContext, Map res) onFinish,
 }) async {
@@ -46,7 +48,14 @@ Future<void> submitTx(
         Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
       };
 
-  return Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: txParams);
+  return onSubmit(
+    context,
+    store,
+    api,
+    false,
+    txParams: txParams,
+    password: store.settings.cachedPin,
+  );
 }
 
 Future<void> submitClaimRewards(
@@ -145,6 +154,7 @@ Map<String, dynamic> encointerBalanceTransferParams(
   // this does not go via txConfirm page, so we skip the title
   return {
     "txInfo": {
+      "title": 'encointerBalancesTransfer',
       "module": 'encointerBalances',
       "call": 'transfer',
       "cid": cid,
@@ -152,7 +162,7 @@ Map<String, dynamic> encointerBalanceTransferParams(
     "params": [
       recipientAddress,
       cid,
-      amount,
+      amount.toString(),
     ],
   };
 }
@@ -177,6 +187,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
   return submitTx(
     context,
     store,
+    api,
     registerParticipantParams(store.encointer.chosenCid, proof: await api.encointer.getProofOfAttendance()),
     onFinish: (BuildContext txPageContext, Map res) {
       store.encointer.updateAggregatedAccountData();
@@ -188,7 +199,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
   );
 }
 
-Future<void> submitAttestClaims(BuildContext context, AppStore store) async {
+Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) async {
   final params = attestClaimsParams(
     context,
     store.encointer.chosenCid,
@@ -199,6 +210,7 @@ Future<void> submitAttestClaims(BuildContext context, AppStore store) async {
   return submitTx(
     context,
     store,
+    api,
     params,
     onFinish: (BuildContext txPageContext, Map res) {
       store.encointer.communityAccount.setMeetupCompleted();

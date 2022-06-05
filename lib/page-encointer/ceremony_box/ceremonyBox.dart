@@ -86,7 +86,7 @@ class CeremonyBox extends StatelessWidget {
                               '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store.encointer.communityAccount.scannedClaimsCount.toString())}'),
                         ],
                       ),
-                      onPressed: () => submitAttestClaims(context, store),
+                      onPressed: () => submitAttestClaims(context, store, api),
                     ),
                   )
               ],

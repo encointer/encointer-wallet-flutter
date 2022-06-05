@@ -13,11 +13,13 @@ import 'ceremonyProgressBar.dart';
 
 class CeremonyStep3Finish extends StatelessWidget {
   const CeremonyStep3Finish(
-    this.store, {
+    this.store,
+    this.api, {
     Key key,
   }) : super(key: key);
 
   final AppStore store;
+  final Api api;
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +91,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                           '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store.encointer.communityAccount.scannedClaimsCount.toString())}'),
                     ],
                   ),
-                  onPressed: () => submitAttestClaims(context, store),
+                  onPressed: () => submitAttestClaims(context, store, api),
                 ),
               ),
             ],
