@@ -32,8 +32,7 @@ class _SubmitButtonState extends State<SubmitButton> {
   @override
   Widget build(BuildContext context) {
     return PrimaryButton(
-      child: !_submitting
-          ? widget.child : CupertinoActivityIndicator(),
+      child: !_submitting ? widget.child : CupertinoActivityIndicator(),
       onPressed: !_submitting ? () => _onPressed() : null,
     );
   }

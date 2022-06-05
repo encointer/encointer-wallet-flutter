@@ -43,8 +43,7 @@ Future<void> submitTx(
   final txPaymentAsset = store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
 
   txParams["txInfo"]["txPaymentAsset"] = txPaymentAsset;
-  txParams["onFinish"] = onFinish ??
-      (BuildContext txPageContext, Map res) => res;
+  txParams["onFinish"] = onFinish ?? (BuildContext txPageContext, Map res) => res;
 
   return onSubmit(
     context,
@@ -58,24 +57,28 @@ Future<void> submitTx(
 
 Future<void> submitClaimRewards(
   BuildContext context,
-  CommunityIdentifier chosenCid, {
-  CommunityIdentifier txPaymentAsset,
-}) async {
-  var args = {
+  AppStore store,
+  Api api,
+  CommunityIdentifier chosenCid,
+) async {
+  var txParams = {
     "title": 'claim_rewards',
     "txInfo": {
       "module": 'encointerCeremonies',
       "call": 'claimRewards',
       "cid": chosenCid,
-      "txPaymentAsset": txPaymentAsset,
     },
     "detail": "cid: ${chosenCid.toFmtString()}",
     "params": [chosenCid],
-    'onFinish': (BuildContext txPageContext, Map res) {
-      Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
-    }
   };
-  Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
+
+  return submitTx(
+    context,
+    store,
+    api,
+    txParams,
+    onFinish: (BuildContext txPageContext, Map res) => (res),
+  );
 }
 
 Future<void> submitEndorseNewcomer(
