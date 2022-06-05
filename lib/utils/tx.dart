@@ -153,8 +153,8 @@ Map<String, dynamic> encointerBalanceTransferParams(
 ) {
   // this does not go via txConfirm page, so we skip the title
   return {
+    "title": 'encointerBalancesTransfer',
     "txInfo": {
-      "title": 'encointerBalancesTransfer',
       "module": 'encointerBalances',
       "call": 'transfer',
       "cid": cid,
