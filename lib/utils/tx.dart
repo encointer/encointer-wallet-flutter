@@ -161,7 +161,7 @@ Map<String, dynamic> encointerBalanceTransferParams(
     },
     "params": [
       recipientAddress,
-      cid,
+      cid.toFmtString(),
       amount.toString(),
     ],
   };
