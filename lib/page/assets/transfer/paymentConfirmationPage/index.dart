@@ -95,7 +95,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
                     ? PrimaryButton(
                         key: Key('make-transfer'),
                         child: Container(
-                          height: 20,
+                          height: 24,
                           child: !_transferState.isSubmitting()
                               ? Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -112,7 +112,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
                     : PrimaryButton(
                         key: Key('transfer-done'),
                         child: Container(
-                          height: 20,
+                          height: 24,
                           child: Text(dic.assets.done),
                         ),
                         onPressed: () => Navigator.of(context).pop(),

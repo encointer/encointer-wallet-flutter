@@ -87,7 +87,7 @@ class _TransferPageState extends State<TransferPage> {
               ],
             ),
             body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
               child: Column(
                 children: [
                   Expanded(
@@ -167,17 +167,19 @@ class _TransferPageState extends State<TransferPage> {
                   SizedBox(height: 8),
                   PrimaryButton(
                     key: Key('make-transfer'),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Iconsax.login_1),
-                        SizedBox(width: 12),
-                        Text(dic.account.next),
-                      ],
+                    child: Container(
+                      height: 24,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Iconsax.login_1),
+                          SizedBox(width: 12),
+                          Text(dic.account.next),
+                        ],
+                      ),
                     ),
                     onPressed: _pushPaymentConfirmationPage,
                   ),
-                  SizedBox(height: 8),
                 ],
               ),
             ),
