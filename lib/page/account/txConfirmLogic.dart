@@ -1,6 +1,6 @@
 import 'dart:core';
 
-import 'package:encointer_wallet/service/substrateApi/api.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/txStatus.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -136,7 +136,7 @@ String getTxStatusTranslation(TranslationsHome dic, TxStatus status) {
     case TxStatus.Broadcast:
       return dic.txBroadcast;
     case TxStatus.InBlock:
-      return dic.txInblock;
+      return dic.txInBlock;
     case TxStatus.Error:
       return dic.txError;
     default:
