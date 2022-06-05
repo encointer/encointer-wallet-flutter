@@ -46,20 +46,18 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
     }
 
     if (store.account.currentAccount.observation ?? false) {
+      // Todo: This is from upstream. What does this do?
       webApi.account.queryRecoverable(store.account.currentAddress);
     }
 
     final Map args = ModalRoute.of(context).settings.arguments;
-    Map txInfo = args['txInfo'];
-    txInfo['pubKey'] = store.account.currentAccount.pubKey;
-    txInfo['address'] = store.account.currentAddress;
-    if (_proxyAccount != null) {
-      txInfo['proxy'] = _proxyAccount.pubKey;
-    }
-    Map fee = await webApi.account.estimateTxFees(txInfo, args['params'], rawParam: args['rawParam']);
+
+    Map fee = await getTxFee(store, webApi, args, proxyAccount: _proxyAccount, reload: reload);
+
     setState(() {
       _fee = fee;
     });
+
     return fee['partialFee'].toString();
   }
 

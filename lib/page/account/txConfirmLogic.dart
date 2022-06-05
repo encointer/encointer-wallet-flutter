@@ -53,6 +53,24 @@ Future<void> onSubmit(BuildContext context, AppStore store, Api api, bool mounte
   }
 }
 
+Future<Map> getTxFee(
+  AppStore store,
+  Api api,
+  Map args, {
+  proxyAccount,
+  bool reload = false,
+}) async {
+  Map txInfo = args['txInfo'];
+  txInfo['pubKey'] = store.account.currentAccount.pubKey;
+  txInfo['address'] = store.account.currentAddress;
+
+  if (proxyAccount != null) {
+    txInfo = proxyAccount.pubKey;
+  }
+
+  return webApi.account.estimateTxFees(txInfo, args['params'], rawParam: args['rawParam']);
+}
+
 void _onTxError(BuildContext context, AppStore store, String errorMsg, bool mounted) {
   final Translations dic = I18n.of(context).translationsForLocale();
   store.assets.setSubmitting(false);
