@@ -53,11 +53,9 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
     final Translations dic = I18n.of(context).translationsForLocale();
     PaymentConfirmationParams params = ModalRoute.of(context).settings.arguments;
 
-    var communitySymbol = params.communitySymbol;
     var cid = params.cid;
     var recipientAccount = params.recipientAccount;
     final recipientAddress = Fmt.addressOfAccount(recipientAccount, widget.store);
-
     var amount = params.amount;
 
     return Observer(
@@ -70,53 +68,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
               children: [
                 Expanded(
                   child: ListView(children: [
-                    IntrinsicHeight(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Column(
-                            children: [
-                              CombinedCommunityAndAccountAvatar(widget.store, showCommunityNameAndAccountName: false),
-                              Text(
-                                Fmt.accountName(context, widget.store.account.currentAccount),
-                                style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          ),
-                          Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "$amount $communitySymbol",
-                                  style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
-                                  textAlign: TextAlign.center,
-                                ),
-                              Icon(
-                                Icons.arrow_forward_ios_outlined,
-                              ),
-                                SizedBox(height: 45)
-                            ]
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              AddressIcon(
-                                '',
-                                recipientAccount.pubKey,
-                                size: 96,
-                              ),
-                              Text(
-                                Fmt.address(recipientAddress),
-                                style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
-                                textAlign: TextAlign.center,
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
+                      PaymentOverview(widget.store, params.communitySymbol, params.recipientAccount, params.amount),
                   ]),
                 ),
                 PrimaryButton(
@@ -173,6 +125,70 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
   @override
   void dispose() {
     super.dispose();
+  }
+}
+
+class PaymentOverview extends StatelessWidget {
+  PaymentOverview(this.store, this.communitySymbol, this.recipientAccount, this.amount);
+
+  final AppStore store;
+
+  final String communitySymbol;
+  final AccountData recipientAccount;
+  final double amount;
+
+  @override
+  Widget build(BuildContext context) {
+
+    final recipientAddress = Fmt.addressOfAccount(recipientAccount, store);
+
+    return IntrinsicHeight(
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Column(
+            children: [
+              CombinedCommunityAndAccountAvatar(store, showCommunityNameAndAccountName: false),
+              Text(
+                Fmt.accountName(context, store.account.currentAccount),
+                style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+          Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "$amount $communitySymbol",
+                  style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
+                  textAlign: TextAlign.center,
+                ),
+                Icon(
+                  Icons.arrow_forward_ios_outlined
+                ),
+                SizedBox(height: 45)
+              ]
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              AddressIcon(
+                '',
+                recipientAccount.pubKey,
+                size: 96,
+              ),
+              Text(
+                Fmt.address(recipientAddress),
+                style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          )
+        ],
+      ),
+    );
   }
 }
 
