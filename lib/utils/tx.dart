@@ -151,7 +151,6 @@ Map<String, dynamic> encointerBalanceTransferParams(
   String recipientAddress,
   double amount,
 ) {
-  // this does not go via txConfirm page, so we skip the title
   return {
     "title": 'encointerBalancesTransfer',
     "txInfo": {
