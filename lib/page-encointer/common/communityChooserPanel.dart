@@ -110,18 +110,15 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
             children: [
               Stack(
                 children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(0, 0, 2, 2),
-                    child: Card(
-                      elevation: 10,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(widget.communityAvatarSize),
-                      ),
-                      child: CommunityAvatar(
-                        store: store,
-                        avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.community?.assetsCid),
-                        avatarSize: widget.communityAvatarSize,
-                      ),
+                  Card(
+                    elevation: 10,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(widget.communityAvatarSize),
+                    ),
+                    child: CommunityAvatar(
+                      store: store,
+                      avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.community?.assetsCid),
+                      avatarSize: widget.communityAvatarSize,
                     ),
                   ),
                   Positioned(
