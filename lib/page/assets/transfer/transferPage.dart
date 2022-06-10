@@ -5,7 +5,6 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
 import 'package:encointer_wallet/page/qr_scan/qrScanPage.dart';
-import 'package:encointer_wallet/page/qr_scan/qrScanService.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -114,7 +113,7 @@ class _TransferPageState extends State<TransferPage> {
                           onPressed: () => Navigator.of(context).popAndPushNamed(ScanPage.route,
                               arguments: ScanPageParams(
                                   forceContext:
-                                      QrScanContext.invoice)), // same as for clicking the scan button in the bottom bar
+                                      QrCodeContext.invoice),), // same as for clicking the scan button in the bottom bar
                         ),
                         SizedBox(height: 24),
                         EncointerTextFormField(

@@ -1,6 +1,5 @@
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactPage.dart';
-import 'package:encointer_wallet/page/qr_scan/qrScanService.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
@@ -9,9 +8,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_qr_scan/qrcode_reader_view.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import 'qrCodeBase.dart';
+import 'qrScanService.dart';
+
+export 'qrCodeBase.dart';
+export 'qrScanService.dart';
+
 class ScanPageParams {
   ScanPageParams({this.forceContext});
-  final QrScanContext forceContext;
+  final QrCodeContext forceContext;
 }
 
 class ScanPage extends StatelessWidget {
@@ -45,14 +50,14 @@ class ScanPage extends StatelessWidget {
       try {
         QrScanData qrScanData = qrScanService.parse(data);
         switch (params?.forceContext ?? qrScanData.context) {
-          case QrScanContext.contact:
+          case QrCodeContext.contact:
             // show add contact and auto-fill data
             Navigator.of(context).popAndPushNamed(
               ContactPage.route,
               arguments: qrScanData,
             );
             break;
-          case QrScanContext.invoice:
+          case QrCodeContext.invoice:
             // go to transfer page and auto-fill data
             Navigator.of(context).popAndPushNamed(
               TransferPage.route,
