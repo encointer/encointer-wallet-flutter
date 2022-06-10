@@ -34,14 +34,11 @@ class QrScanData {
 }
 
 abstract class QrCode<QrCodeData> {
+  static QrCodeContext context;
 
-  QrCodeContext context;
-
-  QrCodeVersion version;
+  static QrCodeVersion version;
 
   QrCodeData data;
-
-  QrCode<QrCodeData> fromQrCodeString(String data);
 }
 
 /// context identifier e.g. encointer-contact
@@ -52,6 +49,14 @@ enum QrCodeContext {
   // claim, currently unsupported and might not be merged into this. Let's see.
 }
 
-enum QrCodeVersion {
-  v1
+enum QrCodeVersion { v1 }
+
+extension QrCodeContextExt on QrCodeContext {
+  /// Parses `encointer-<context>` into a `QrCodeContext`.
+  QrCodeContext fromString(String value) {
+    return QrCodeContext.values.firstWhere(
+      (type) => type.toString().split(".").last.toUpperCase() == value.toString().split("-").last.toUpperCase(),
+      orElse: () => null,
+    );
+  }
 }
