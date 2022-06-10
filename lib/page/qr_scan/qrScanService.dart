@@ -104,10 +104,11 @@ void handleInvoiceQrCodeScan(BuildContext context, QrScannerContext scanContext,
       popAndPushTransferPageWithInvoice(context, qrCode.data);
       break;
     case QrScannerContext.contactsPage:
-      Navigator.of(context).popAndPushNamed(
-        ContactPage.route,
-        arguments: qrCode.data,
-      );
+      Navigator.of(context).popAndPushNamed(ContactPage.route,
+          arguments: ContactData(
+            account: qrCode.data.account,
+            label: qrCode.data.label,
+          ));
       break;
   }
 }
