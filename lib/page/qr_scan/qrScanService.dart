@@ -97,29 +97,11 @@ void handleInvoiceQrCodeScan(BuildContext context, QrScannerContext scanContext,
   switch (scanContext) {
     case QrScannerContext.mainPage:
       // go to transfer page and auto-fill data
-      Navigator.of(context).popAndPushNamed(
-        TransferPage.route,
-        arguments: TransferPageParams(
-          cid: qrCode.data.cid,
-          recipient: qrCode.data.account,
-          label: qrCode.data.label,
-          amount: qrCode.data.amount,
-          redirect: '/',
-        ),
-      );
+      popAndPushTransferPageWithInvoice(context, qrCode.data);
       break;
     case QrScannerContext.transferPage:
       // go to transfer page and auto-fill data
-      Navigator.of(context).popAndPushNamed(
-        TransferPage.route,
-        arguments: TransferPageParams(
-            cid: qrCode.data.cid,
-            recipient: qrCode.data.account,
-            label: qrCode.data.label,
-            amount: qrCode.data.amount,
-            redirect: '/',
-        ),
-      );
+      popAndPushTransferPageWithInvoice(context, qrCode.data);
       break;
     case QrScannerContext.contactsPage:
       Navigator.of(context).popAndPushNamed(
@@ -143,4 +125,17 @@ void handleVoucherQrCodeScan(BuildContext context, QrScannerContext scanContext,
       // Todo
       break;
   }
+}
+
+void popAndPushTransferPageWithInvoice(BuildContext context, InvoiceData data) {
+  Navigator.of(context).popAndPushNamed(
+    TransferPage.route,
+    arguments: TransferPageParams(
+      cid: data.cid,
+      recipient: data.account,
+      label: data.label,
+      amount: data.amount,
+      redirect: '/',
+    ),
+  );
 }
