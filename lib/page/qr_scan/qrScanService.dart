@@ -44,7 +44,7 @@ class QrScanService {
     }
   }
 
-  handleQrScan(BuildContext context, QrScannerContext scanContext, QrCode<dynamic> qrCode) {
+  void handleQrScan(BuildContext context, QrScannerContext scanContext, QrCode<dynamic> qrCode) {
     switch (qrCode.context) {
       case QrCodeContext.contact:
         return handleContactQrCodeScan(context, scanContext, qrCode);
@@ -62,7 +62,7 @@ class QrScanService {
 }
 
 /// Handles the `ContactQrCode` scan based on where it was scanned.
-handleContactQrCodeScan(BuildContext context, QrScannerContext scanContext, ContactQrCode qrCode) {
+void handleContactQrCodeScan(BuildContext context, QrScannerContext scanContext, ContactQrCode qrCode) {
   switch (scanContext) {
     case QrScannerContext.mainPage:
       // show add contact and auto-fill data
@@ -93,7 +93,7 @@ handleContactQrCodeScan(BuildContext context, QrScannerContext scanContext, Cont
 }
 
 /// Handles the `InvoiceQrCode` scan based on where it was scanned.
-handleInvoiceQrCodeScan(BuildContext context, QrScannerContext scanContext, InvoiceQrCode qrCode) {
+void handleInvoiceQrCodeScan(BuildContext context, QrScannerContext scanContext, InvoiceQrCode qrCode) {
   switch (scanContext) {
     case QrScannerContext.mainPage:
       // go to transfer page and auto-fill data
@@ -131,7 +131,7 @@ handleInvoiceQrCodeScan(BuildContext context, QrScannerContext scanContext, Invo
 }
 
 /// Handles the `VoucherQrCode` scan based on where it was scanned.
-handleVoucherQrCodeScan(BuildContext context, QrScannerContext scanContext, VoucherQrCode qrCode) {
+void handleVoucherQrCodeScan(BuildContext context, QrScannerContext scanContext, VoucherQrCode qrCode) {
   switch (scanContext) {
     case QrScannerContext.mainPage:
       // Todo
