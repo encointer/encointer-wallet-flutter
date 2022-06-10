@@ -54,7 +54,7 @@ class ScanPage extends StatelessWidget {
             // show add contact and auto-fill data
             Navigator.of(context).popAndPushNamed(
               ContactPage.route,
-              arguments: qrCode,
+              arguments: qrCode.data,
             );
             break;
           case QrCodeContext.invoice:

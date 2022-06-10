@@ -1,6 +1,7 @@
 import 'package:encointer_wallet/common/components/TapTooltip.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/page/qr_scan/qrScanPage.dart';
+import 'package:encointer_wallet/page/qr_scan/qrCodes.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -32,7 +33,7 @@ class _Contact extends State<ContactPage> {
 
   bool _isObservation = false;
 
-  QrScanData qrScanData;
+  ContactData qrScanData;
 
   bool _submitting = false;
 
@@ -109,7 +110,7 @@ class _Contact extends State<ContactPage> {
 
   @override
   Widget build(BuildContext context) {
-    QrScanData qrScanData = ModalRoute.of(context).settings.arguments;
+    ContactData qrScanData = ModalRoute.of(context).settings.arguments;
     final Translations dic = I18n.of(context).translationsForLocale();
     if (qrScanData != null) {
       _addressCtrl.text = qrScanData.account;
