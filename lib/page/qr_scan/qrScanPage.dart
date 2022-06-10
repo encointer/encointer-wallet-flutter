@@ -87,7 +87,7 @@ class ScanPage extends StatelessWidget {
                         ElevatedButton(
                           child: Text(dic.profile.addContact),
                           onPressed: () => onScan(
-                              "encointer-contact\nV1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nsqm1v79dF6b\n\nSara",
+                              "encointer-contact\nV1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nSara",
                               null),
                         ),
                         ElevatedButton(
