@@ -48,13 +48,13 @@ class ScanPage extends StatelessWidget {
     ScanPageParams params = ModalRoute.of(context).settings.arguments;
     Future onScan(String data, String rawData) {
       try {
-        QrScanData qrScanData = qrScanService.parse(data);
-        switch (params?.forceContext ?? qrScanData.context) {
+        QrCode<dynamic> qrCode = qrScanService.parse(data);
+        switch (params?.forceContext ?? qrCode.context) {
           case QrCodeContext.contact:
             // show add contact and auto-fill data
             Navigator.of(context).popAndPushNamed(
               ContactPage.route,
-              arguments: qrScanData,
+              arguments: qrCode,
             );
             break;
           case QrCodeContext.invoice:
@@ -62,16 +62,16 @@ class ScanPage extends StatelessWidget {
             Navigator.of(context).popAndPushNamed(
               TransferPage.route,
               arguments: TransferPageParams(
-                  cid: qrScanData.cid,
-                  recipient: qrScanData.account,
-                  label: qrScanData.label,
-                  amount: qrScanData.amount,
+                  cid: qrCode.data.cid,
+                  recipient: qrCode.data.account,
+                  label: qrCode.data.label,
+                  amount: qrCode.data.amount,
                   redirect: '/'),
             );
             break;
           default:
             throw UnimplementedError(
-                'Scan functionality for the case [${qrScanData.context}] has not yet been implemented!');
+                'Scan functionality for the case [${qrCode.context}] has not yet been implemented!');
         }
       } catch (e) {
         print("[ScanPage]: ${e.toString()}");

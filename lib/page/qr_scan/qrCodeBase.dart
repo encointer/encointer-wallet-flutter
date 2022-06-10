@@ -34,9 +34,9 @@ class QrScanData {
 }
 
 abstract class QrCode<QrCodeData> {
-  static QrCodeContext context;
+  QrCodeContext context;
 
-  static QrCodeVersion version;
+  QrCodeVersion version;
 
   QrCodeData data;
 }
@@ -53,7 +53,7 @@ enum QrCodeVersion { v1_0 }
 
 extension QrCodeContextExt on QrCodeContext {
   /// Parses `encointer-<context>` into a `QrCodeContext`.
-  QrCodeContext fromString(String value) {
+  static QrCodeContext fromString(String value) {
     var context = value.toString().split("-").last.toLowerCase();
     return QrCodeContext.values.firstWhere(
       (type) => type.toString().split(".").last.toLowerCase() == context,
@@ -67,15 +67,15 @@ extension QrCodeContextExt on QrCodeContext {
 
 extension QrCodeVersionExt on QrCodeVersion {
   /// Parses a version string from the format `v1.0`.
-  QrCodeVersion fromString(String value) {
+  static QrCodeVersion fromString(String value) {
     return QrCodeVersion.values.firstWhere(
       (type) => type.toVersionNumber().toLowerCase() == value.toLowerCase(),
-      orElse: () => throw FormatException('Invalid QrCode version [$value]'),
+      orElse: () => throw FormatException('Unsupported QrCode version [$value]'),
     );
   }
 
   /// Returns the version number in the format 'v1.0'
   String toVersionNumber() {
-    return this.toString().split(".").last.replaceAll("_",".");
+    return this.toString().split(".").last.replaceAll("_", ".");
   }
 }
