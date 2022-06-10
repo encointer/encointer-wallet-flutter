@@ -15,8 +15,8 @@ export 'qrCodeBase.dart';
 export 'qrScanService.dart';
 
 class ScanPageParams {
-  ScanPageParams({this.forceContext});
-  final QrCodeContext forceContext;
+  ScanPageParams({this.scannerContext});
+  final QrScannerContext scannerContext;
 }
 
 class ScanPage extends StatelessWidget {
@@ -49,30 +49,7 @@ class ScanPage extends StatelessWidget {
     Future onScan(String data, String rawData) {
       try {
         QrCode<dynamic> qrCode = qrScanService.parse(data);
-        switch (params?.forceContext ?? qrCode.context) {
-          case QrCodeContext.contact:
-            // show add contact and auto-fill data
-            Navigator.of(context).popAndPushNamed(
-              ContactPage.route,
-              arguments: qrCode.data,
-            );
-            break;
-          case QrCodeContext.invoice:
-            // go to transfer page and auto-fill data
-            Navigator.of(context).popAndPushNamed(
-              TransferPage.route,
-              arguments: TransferPageParams(
-                  cid: qrCode.data.cid,
-                  recipient: qrCode.data.account,
-                  label: qrCode.data.label,
-                  amount: qrCode.data.amount,
-                  redirect: '/'),
-            );
-            break;
-          default:
-            throw UnimplementedError(
-                'Scan functionality for the case [${qrCode.context}] has not yet been implemented!');
-        }
+        qrScanService.handleQrScan(context, params.scannerContext, qrCode);
       } catch (e) {
         print("[ScanPage]: ${e.toString()}");
         _showSnackBar(context, e.toString());
