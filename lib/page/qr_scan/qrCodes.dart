@@ -6,7 +6,7 @@ class ContactQrCode implements QrCode<ContactData> {
 
   static const context = QrCodeContext.contact;
 
-  static const version = QrCodeVersion.v1;
+  static const version = QrCodeVersion.v1_0;
 
   ContactData data;
 }
@@ -29,7 +29,7 @@ class PaymentQrCode implements QrCode<PaymentData> {
 
   static const context = QrCodeContext.invoice;
 
-  static const version = QrCodeVersion.v1;
+  static const version = QrCodeVersion.v1_0;
 
   PaymentData data;
 }
@@ -55,7 +55,7 @@ class VoucherQrCode implements QrCode<VoucherData> {
 
   static const context = QrCodeContext.invoice;
 
-  static const version = QrCodeVersion.v1;
+  static const version = QrCodeVersion.v1_0;
 
   VoucherData data;
 }

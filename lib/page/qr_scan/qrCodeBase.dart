@@ -49,14 +49,33 @@ enum QrCodeContext {
   // claim, currently unsupported and might not be merged into this. Let's see.
 }
 
-enum QrCodeVersion { v1 }
+enum QrCodeVersion { v1_0 }
 
 extension QrCodeContextExt on QrCodeContext {
   /// Parses `encointer-<context>` into a `QrCodeContext`.
   QrCodeContext fromString(String value) {
+    var context = value.toString().split("-").last.toLowerCase();
     return QrCodeContext.values.firstWhere(
-      (type) => type.toString().split(".").last.toUpperCase() == value.toString().split("-").last.toUpperCase(),
-      orElse: () => null,
+      (type) => type.toString().split(".").last.toLowerCase() == context,
+      orElse: () {
+        throw FormatException(
+            'QR scan context [$value] ->  is not supported; supported values are: ${QrCodeContext.values}');
+      },
     );
+  }
+}
+
+extension QrCodeVersionExt on QrCodeVersion {
+  /// Parses a version string from the format `v1.0`.
+  QrCodeVersion fromString(String value) {
+    return QrCodeVersion.values.firstWhere(
+      (type) => type.toVersionNumber().toLowerCase() == value.toLowerCase(),
+      orElse: () => throw FormatException('Invalid QrCode version [$value]'),
+    );
+  }
+
+  /// Returns the version number in the format 'v1.0'
+  String toVersionNumber() {
+    return this.toString().split(".").last.replaceAll("_",".");
   }
 }
