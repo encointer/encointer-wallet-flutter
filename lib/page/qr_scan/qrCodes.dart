@@ -80,7 +80,7 @@ class InvoiceData {
 class VoucherQrCode implements QrCode<VoucherData> {
   VoucherQrCode(this.data);
 
-  var context = QrCodeContext.invoice;
+  var context = QrCodeContext.voucher;
 
   var version = QrCodeVersion.v1_0;
 
