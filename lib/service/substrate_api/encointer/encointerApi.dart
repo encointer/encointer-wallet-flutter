@@ -281,21 +281,21 @@ class EncointerApi {
   /// Queries the EncointerBalances pallet: encointer.encointerBalances.balance(cid, address).
   ///
   /// This is off-chain and trusted in Cantillon, accessible with TrustedGetter::balance(cid, accountId).
-  Future<void> getEncointerBalance() async {
-    String pubKey = store.account.currentAccountPubKey;
-    CommunityIdentifier cid = store.encointer.chosenCid;
+  Future<BalanceEntry> getEncointerBalance(String pubKeyOrAddress, CommunityIdentifier cid) async {
+
     if (cid == null) {
-      return;
+      return Future.value(null);
     }
 
-    print("Getting encointer balance for ${cid.toFmtString()}");
+    print("Getting encointer balance for $pubKeyOrAddress and ${cid.toFmtString()}");
 
-    BalanceEntry bEntry = store.settings.endpointIsNoTee
-        ? await _noTee.balances.balance(cid, pubKey)
-        : await _teeProxy.balances.balance(cid, pubKey, store.settings.cachedPin);
+    BalanceEntry balanceEntry = store.settings.endpointIsNoTee
+        ? await _noTee.balances.balance(cid, pubKeyOrAddress)
+        : await _teeProxy.balances.balance(cid, pubKeyOrAddress, store.settings.cachedPin);
 
-    print("bEntryJson: ${bEntry.toString()}");
-    store.encointer.account?.addBalanceEntry(cid, bEntry);
+    print("balanceEntryJson: ${balanceEntry.toString()}");
+
+    return balanceEntry;
   }
 
   Future<void> subscribeCurrentPhase() async {

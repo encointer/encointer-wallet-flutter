@@ -40,6 +40,7 @@ abstract class TranslationsAssets {
   String get paymentSubmitting;
   String get paymentFinished;
   String get paymentError;
+  String get voucher;
 }
 
 class TranslationsEnAssets implements TranslationsAssets {
@@ -82,6 +83,7 @@ class TranslationsEnAssets implements TranslationsAssets {
   get paymentSubmitting => "Payment is being submitted...";
   get paymentFinished => "Payment complete";
   get paymentError => "Payment error";
+  get voucher => "Voucher";
 }
 
 class TranslationsDeAssets implements TranslationsAssets {
@@ -124,6 +126,7 @@ class TranslationsDeAssets implements TranslationsAssets {
   get paymentSubmitting => "Zahlung wird eingereicht...";
   get paymentFinished => "Zahlung erfolgt";
   get paymentError => "Zahlungsfehler";
+  get voucher => "Gutschein";
 }
 
 class TranslationsZhAssets implements TranslationsAssets {
@@ -166,4 +169,5 @@ class TranslationsZhAssets implements TranslationsAssets {
   get paymentSubmitting => throw UnimplementedError();
   get paymentFinished => throw UnimplementedError();
   get paymentError => throw UnimplementedError();
+  get voucher => throw UnimplementedError();
 }

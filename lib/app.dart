@@ -27,6 +27,7 @@ import 'package:encointer_wallet/page/profile/settings/remoteNodeListPage.dart';
 import 'package:encointer_wallet/page/profile/settings/settingsPage.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58PrefixListPage.dart';
 import 'package:encointer_wallet/page/qr_scan/qrScanPage.dart';
+import 'package:encointer_wallet/page/qr_scan/reapVoucherPage.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -195,6 +196,9 @@ class _WalletAppState extends State<WalletApp> {
               case PaymentConfirmationPage.route:
                 return CupertinoPageRoute(
                     builder: (_) => PaymentConfirmationPage(_appStore, webApi), settings: settings);
+              case ReapVoucherPage.route:
+                return CupertinoPageRoute(
+                    builder: (_) => ReapVoucherPage(_appStore, webApi), settings: settings);
               case ReceivePage.route:
                 return CupertinoPageRoute(
                     builder: (_) => ReceivePage(_appStore), settings: settings, fullscreenDialog: true);

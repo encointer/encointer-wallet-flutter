@@ -3,6 +3,9 @@ import 'package:encointer_wallet/page/profile/contacts/contactPage.dart';
 import 'package:encointer_wallet/page/qr_scan/qrCodeBase.dart';
 import 'package:encointer_wallet/page/qr_scan/qrCodes.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
+import 'reapVoucherPage.dart';
 
 enum QrScannerContext {
   /// QrScanner was opened from the main page
@@ -40,7 +43,7 @@ class QrScanService {
         return VoucherQrCode.fromStringList(data);
         break;
       default:
-        throw FormatException('Unhandled qr scan context');
+        throw FormatException('[parseQrScan] Unhandled qr scan context');
     }
   }
 
@@ -56,7 +59,7 @@ class QrScanService {
         return handleVoucherQrCodeScan(context, scanContext, qrCode);
         break;
       default:
-        throw FormatException('Unhandled qr scan context');
+        throw FormatException('[handleQrScan] Unhandled qr scan context');
     }
   }
 }
@@ -115,17 +118,20 @@ void handleInvoiceQrCodeScan(BuildContext context, QrScannerContext scanContext,
 
 /// Handles the `VoucherQrCode` scan based on where it was scanned.
 void handleVoucherQrCodeScan(BuildContext context, QrScannerContext scanContext, VoucherQrCode qrCode) {
-  switch (scanContext) {
-    case QrScannerContext.mainPage:
-      // Todo
-      break;
-    case QrScannerContext.transferPage:
-      // Todo
-      break;
-    case QrScannerContext.contactsPage:
-      // Todo
-      break;
-  }
+  Navigator.of(context).popAndPushNamed(ReapVoucherPage.route,
+      arguments: ReapVoucherParams(voucher: qrCode.data));
+
+  // switch (scanContext) {
+  //   case QrScannerContext.mainPage:
+  //     // Todo
+  //     break;
+  //   case QrScannerContext.transferPage:
+  //     // Todo
+  //     break;
+  //   case QrScannerContext.contactsPage:
+  //     // Todo
+  //     break;
+  // }
 }
 
 void popAndPushTransferPageWithInvoice(BuildContext context, InvoiceData data) {
