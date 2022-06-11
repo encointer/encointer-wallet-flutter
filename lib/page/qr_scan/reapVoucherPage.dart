@@ -73,6 +73,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
             TextGradient(
               text: '${Fmt.doubleFormat(_voucherBalance.applyDemurrage(
                 widget.store.chain.latestHeaderNumber,
+                // Todo: handle case when the scanned voucher is not of the current community
                 widget.store.encointer.community.demurrage,
               ))} ⵐ',
               style: TextStyle(fontSize: 30),
