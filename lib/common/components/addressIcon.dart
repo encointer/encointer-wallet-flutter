@@ -1,22 +1,22 @@
 import 'package:encointer_wallet/utils/UI.dart';
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jdenticon_dart/jdenticon_dart.dart';
+import 'package:encointer_wallet/common/theme.dart';
 
 class AddressIcon extends StatelessWidget {
   AddressIcon(
     this.address,
     this.pubKey, {
-    this.size,
+    this.size = 96,
     this.tapToCopy = true,
-    this.addressToCopy,
   });
   final String address;
   final String pubKey;
   final double size;
   final bool tapToCopy;
-  final String addressToCopy;
 
   @override
   Widget build(BuildContext context) {
@@ -31,21 +31,55 @@ class AddressIcon extends StatelessWidget {
         hues: [199]);
     return GestureDetector(
       child: Container(
-        width: size ?? 96,
-        height: size ?? 96,
+        width: size,
+        height: size,
         child: ClipOval(
           child: SizedBox.fromSize(
             size: Size.fromRadius(48), // Image radius
             child: SvgPicture.string(
               rawSvg,
               fit: BoxFit.fill,
-              height: size ?? 96,
-              width: size ?? 96,
+              height: size,
+              width: size,
             ),
           ),
         ),
       ),
-      onTap: tapToCopy ? () => UI.copyAndNotify(context, addressToCopy ?? address) : null,
+      onTap: tapToCopy ? () => UI.copyAndNotify(context, address) : null,
+    );
+  }
+}
+
+class AddressIconWithLabel extends StatelessWidget {
+  AddressIconWithLabel(
+      this.address,
+      this.pubKey, {
+        this.size = 96,
+        this.tapToCopy = true,
+      });
+
+  final String address;
+  final String pubKey;
+  final double size;
+  final bool tapToCopy;
+
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        AddressIcon(
+          address,
+          pubKey,
+          size: size,
+        ),
+        Text(
+          Fmt.address(address),
+          style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
+          textAlign: TextAlign.center,
+        ),
+      ],
     );
   }
 }
