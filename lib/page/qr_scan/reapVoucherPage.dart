@@ -18,7 +18,6 @@ import 'package:iconsax/iconsax.dart';
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
 import 'package:encointer_wallet/common/components/secondaryButtonWide.dart';
 
-
 import 'qrCodes.dart';
 
 class ReapVoucherParams {
@@ -48,6 +47,9 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
   bool _postFrameCallbackCalled = false;
 
+  /// Is true when all the data has been fetched.
+  bool _isReady = false;
+
   Future<void> fetchVoucherData(Api api, String voucherUri, CommunityIdentifier cid) async {
     _log("Fetching voucher data...");
     _voucherAddress = await api.account.addressFromUri(voucherUri);
@@ -59,6 +61,9 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
       widget.store.chain.latestHeaderNumber,
       widget.store.encointer.community.demurrage,
     );
+
+    _isReady = true;
+
     setState(() {});
   }
 
@@ -145,7 +150,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                       Text(dic.assets.fundVoucher),
                     ],
                   ),
-                  onPressed: () => _pushTransferPage(context, voucher, _voucherAddress),
+                  onPressed: _isReady ? () => _pushTransferPage(context, voucher, _voucherAddress) : null,
                 ),
               ),
             SubmitButton(
@@ -157,7 +162,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                   Text(dic.assets.redeemVoucher),
                 ],
               ),
-              onPressed: (context) => _submitReapVoucher(context, voucherUri, cid, recipient),
+              onPressed: _isReady ? (context) => _submitReapVoucher(context, voucherUri, cid, recipient) : null,
             ),
           ],
         ),
