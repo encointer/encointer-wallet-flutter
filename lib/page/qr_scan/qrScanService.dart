@@ -118,19 +118,16 @@ void handleInvoiceQrCodeScan(BuildContext context, QrScannerContext scanContext,
 
 /// Handles the `VoucherQrCode` scan based on where it was scanned.
 void handleVoucherQrCodeScan(BuildContext context, QrScannerContext scanContext, VoucherQrCode qrCode) {
-  Navigator.of(context).popAndPushNamed(ReapVoucherPage.route, arguments: ReapVoucherParams(voucher: qrCode.data));
+  var showFundVoucher = false;
+  if (scanContext == QrScannerContext.transferPage) {
+    showFundVoucher = true;
+  }
 
-  // switch (scanContext) {
-  //   case QrScannerContext.mainPage:
-  //     // Todo
-  //     break;
-  //   case QrScannerContext.transferPage:
-  //     // Todo
-  //     break;
-  //   case QrScannerContext.contactsPage:
-  //     // Todo
-  //     break;
-  // }
+  Navigator.of(context).popAndPushNamed(ReapVoucherPage.route,
+      arguments: ReapVoucherParams(
+        voucher: qrCode.data,
+        showFundVoucher: showFundVoucher,
+      ));
 }
 
 void popAndPushTransferPageWithInvoice(BuildContext context, InvoiceData data) {

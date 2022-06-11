@@ -15,13 +15,20 @@ import 'package:encointer_wallet/utils/tx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
+import 'package:encointer_wallet/common/components/secondaryButtonWide.dart';
+
 
 import 'qrCodes.dart';
 
 class ReapVoucherParams {
-  ReapVoucherParams({this.voucher});
+  ReapVoucherParams({
+    this.voucher,
+    this.showFundVoucher = false,
+  });
 
   final VoucherData voucher;
+  final bool showFundVoucher;
 }
 
 class ReapVoucherPage extends StatefulWidget {
@@ -62,11 +69,13 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     final h4Grey = Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey);
     ReapVoucherParams params = ModalRoute.of(context).settings.arguments;
 
-    final voucherUri = params.voucher.voucherUri;
-    final cid = params.voucher.cid;
-    final networkInfo = params.voucher.network;
-    final issuer = params.voucher.issuer;
+    final voucher = params.voucher;
+    final voucherUri = voucher.voucherUri;
+    final cid = voucher.cid;
+    final networkInfo = voucher.network;
+    final issuer = voucher.issuer;
     final recipient = widget.store.account.currentAddress;
+    final showFundVoucher = params.showFundVoucher;
 
     if (!_postFrameCallbackCalled) {
       _postFrameCallbackCalled = true;
@@ -124,6 +133,21 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                 ),
               ),
             ),
+            if (showFundVoucher)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 8),
+                child: SecondaryButtonWide(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(Iconsax.login_1),
+                      SizedBox(width: 6),
+                      Text(dic.assets.fundVoucher),
+                    ],
+                  ),
+                  onPressed: () => _pushTransferPage(context, voucher, _voucherAddress),
+                ),
+              ),
             SubmitButton(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -279,6 +303,18 @@ Widget changeNetworkDialog(BuildContext context, Future<void> Function() onChang
             Navigator.of(context).pop();
           }),
     ],
+  );
+}
+
+void _pushTransferPage(BuildContext context, VoucherData data, String voucherAddress) {
+  Navigator.of(context).popAndPushNamed(
+    TransferPage.route,
+    arguments: TransferPageParams(
+      cid: data.cid,
+      recipient: voucherAddress,
+      label: data.issuer,
+      redirect: ReapVoucherPage.route,
+    ),
   );
 }
 
