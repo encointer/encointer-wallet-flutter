@@ -56,15 +56,18 @@ class AddressIconWithLabel extends StatelessWidget {
     this.pubKey, {
     this.size = 96,
     this.tapToCopy = true,
+    this.labelStyle,
   });
 
   final String address;
   final String pubKey;
   final double size;
   final bool tapToCopy;
+  final TextStyle labelStyle;
 
   @override
   Widget build(BuildContext context) {
+    final style = labelStyle ?? Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5);
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -75,7 +78,7 @@ class AddressIconWithLabel extends StatelessWidget {
         ),
         Text(
           Fmt.address(address),
-          style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
+          style: style,
           textAlign: TextAlign.center,
         ),
       ],
