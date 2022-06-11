@@ -71,7 +71,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     if (!_postFrameCallbackCalled) {
       _postFrameCallbackCalled = true;
       WidgetsBinding.instance.addPostFrameCallback(
-            (_) async {
+        (_) async {
           if (widget.store.settings.endpoint.info != networkInfo) {
             await _changeNetworkAndCommunity(context, networkInfo, cid);
           }
@@ -179,6 +179,15 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     );
 
     await widget.store.settings.reloadNetwork(network);
+
+    while (!widget.store.settings.isConnected) {
+      // This is not very nice, but unfortunately we can't await the
+      // webView init until it is completely connected without some
+      // refactoring.
+      await Future.delayed(const Duration(milliseconds: 500), () {
+        _log("Waiting until we connected to new network...");
+      });
+    }
 
     widget.store.encointer.setChosenCid(cid);
 
