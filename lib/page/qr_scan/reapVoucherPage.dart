@@ -53,7 +53,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context).translationsForLocale();
     final h2Grey = Theme.of(context).textTheme.headline2.copyWith(color: encointerGrey);
-
+    final h4Grey = Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey);
     ReapVoucherParams params = ModalRoute.of(context).settings.arguments;
 
     final voucherUri = params.voucher.voucherUri;
@@ -77,19 +77,23 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                     height: 96,
                     child: CupertinoActivityIndicator(),
                   ),
+            Text(
+              "${dic.assets.voucher}-id: $voucherUri",
+              style: h4Grey,
+            ),
             _voucherBalance != null
                 ? TextGradient(
                     text: '${Fmt.doubleFormat(_voucherBalance)} ⵐ',
-                    style: TextStyle(fontSize: 30),
+                    style: TextStyle(fontSize: 60),
                   )
                 : CupertinoActivityIndicator(),
             Text(
               "${dic.assets.voucherBalance}, ${widget.store.encointer.community?.symbol}",
-              style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
+              style: h4Grey,
             ),
-            Flexible(
-              fit: FlexFit.tight,
-              child: Text(dic.assets.doYouWantToRedeemThisVoucher, style: h2Grey),
+            Expanded(
+              // fit: FlexFit.tight,
+              child: Center(child: Text(dic.assets.doYouWantToRedeemThisVoucher, style: h2Grey)),
             ),
             SubmitButton(
               child: Row(
