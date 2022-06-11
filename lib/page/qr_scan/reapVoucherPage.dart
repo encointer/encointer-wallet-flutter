@@ -3,7 +3,6 @@ import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
-import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/tx.dart';
@@ -11,6 +10,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/common/components/submitButton.dart';
+import 'package:iconsax/iconsax.dart';
 
 import 'qrCodes.dart';
 
@@ -33,15 +34,18 @@ class ReapVoucherPage extends StatefulWidget {
 
 class _ReapVoucherPageState extends State<ReapVoucherPage> {
   String _voucherAddress;
-  BalanceEntry _voucherBalance;
+  double _voucherBalance;
 
   Future<void> fetchVoucherData(Api api, String voucherUri, CommunityIdentifier cid) async {
     _voucherAddress = await api.account.addressFromUri(voucherUri);
 
     setState(() {});
 
-    _voucherBalance = await api.encointer.getEncointerBalance(_voucherAddress, cid);
-
+    var voucherBalanceEntry = await api.encointer.getEncointerBalance(_voucherAddress, cid);
+    _voucherBalance = voucherBalanceEntry.applyDemurrage(
+      widget.store.chain.latestHeaderNumber,
+      widget.store.encointer.community.demurrage,
+    );
     setState(() {});
   }
 
@@ -54,6 +58,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
     final voucherUri = params.voucher.voucherUri;
     final cid = params.voucher.cid;
+    final recipient = widget.store.account.currentAddress;
 
     if (_voucherAddress == null) {
       fetchVoucherData(widget.api, voucherUri, cid);
@@ -74,11 +79,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                   ),
             _voucherBalance != null
                 ? TextGradient(
-                    text: '${Fmt.doubleFormat(_voucherBalance.applyDemurrage(
-                      widget.store.chain.latestHeaderNumber,
-                      // Todo: handle case when the scanned voucher is not of the current community
-                      widget.store.encointer.community.demurrage,
-                    ))} ⵐ',
+                    text: '${Fmt.doubleFormat(_voucherBalance)} ⵐ',
                     style: TextStyle(fontSize: 30),
                   )
                 : CupertinoActivityIndicator(),
@@ -90,36 +91,30 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
               fit: FlexFit.tight,
               child: Text(dic.assets.doYouWantToRedeemThisVoucher, style: h2Grey),
             ),
-            PrimaryButton(
-              key: Key('transfer-done'),
-              child: Container(
-                height: 24,
-                child: Text(dic.assets.done),
+            SubmitButton(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Iconsax.login_1),
+                  SizedBox(width: 6),
+                  Text(dic.assets.redeemVoucher),
+                ],
               ),
-              onPressed: () => Navigator.of(context).pop(),
-            )
+              onPressed: (context) => _submitReapVoucher(context, voucherUri, cid, recipient),
+            ),
           ],
         ),
       ),
     );
   }
 
-  Future<void> _submit(BuildContext context, CommunityIdentifier cid, String recipientAddress, double amount) async {
-    var params = encointerBalanceTransferParams(cid, recipientAddress, amount);
-
-    // await submitTx(context, widget.store, widget.api, params, onFinish: onFinish);
-
-    // for debugging
-    // Future.delayed(const Duration(milliseconds: 1500), () {
-    //   setState(() {
-    //     _transferState = TransferState.finished;
-    //   });
-    // });
-
-    // _log("TransferState after callback: ${_transferState.toString()}");
-
-    // trigger rebuild after state update in callback
-    setState(() {});
+  Future<void> _submitReapVoucher(
+    BuildContext context,
+    String voucherUri,
+    CommunityIdentifier cid,
+    String recipientAddress,
+  ) async {
+    await submitReapVoucher(widget.api, voucherUri, recipientAddress, cid);
   }
 }
 

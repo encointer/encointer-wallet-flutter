@@ -218,3 +218,12 @@ Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) a
     },
   );
 }
+
+Future<void> submitReapVoucher(
+  Api api,
+  String voucherUri,
+  String recipientAddress,
+  CommunityIdentifier cid,
+) async {
+  await api.js.evalJavascript('encointer.reapVoucher("$voucherUri","$recipientAddress", ${jsonEncode(cid)})');
+}

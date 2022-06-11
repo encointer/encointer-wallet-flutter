@@ -99,7 +99,7 @@ class ScanPage extends StatelessWidget {
                         ElevatedButton(
                           child: Text("voucher"),
                           onPressed: () => onScan(
-                              "encointer-voucher\nV1.0\n\\VoucherUri\nsqm1v79dF6b"
+                              "encointer-voucher\nV1.0\n//VoucherUri\nsqm1v79dF6b"
                               "\nnctr-k\nAubrey",
                               null),
                         ),

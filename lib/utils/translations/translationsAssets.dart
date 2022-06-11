@@ -43,6 +43,7 @@ abstract class TranslationsAssets {
   String get voucher;
   String get voucherBalance;
   String get doYouWantToRedeemThisVoucher;
+  String get redeemVoucher;
 }
 
 class TranslationsEnAssets implements TranslationsAssets {
@@ -88,6 +89,7 @@ class TranslationsEnAssets implements TranslationsAssets {
   get voucher => "Voucher";
   get voucherBalance => "Voucher Balance";
   get doYouWantToRedeemThisVoucher => "Do you want to redeem this voucher?";
+  get redeemVoucher => "Redeem voucher";
 }
 
 class TranslationsDeAssets implements TranslationsAssets {
@@ -132,7 +134,8 @@ class TranslationsDeAssets implements TranslationsAssets {
   get paymentError => "Zahlungsfehler";
   get voucher => "Gutschein";
   get voucherBalance => "Gutscheinwert";
-  get doYouWantToRedeemThisVoucher => "Willst du diesen Gutschein aufladen?";
+  get doYouWantToRedeemThisVoucher => "Willst du diesen Gutschein einlösen?";
+  get redeemVoucher => "Gutschein einlösen";
 }
 
 class TranslationsZhAssets implements TranslationsAssets {
@@ -178,4 +181,5 @@ class TranslationsZhAssets implements TranslationsAssets {
   get voucher => throw UnimplementedError();
   get voucherBalance => throw UnimplementedError();
   get doYouWantToRedeemThisVoucher => throw UnimplementedError();
+  get redeemVoucher => throw UnimplementedError();
 }
