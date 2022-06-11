@@ -10,6 +10,7 @@ import 'package:encointer_wallet/utils/tx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:encointer_wallet/common/theme.dart';
 
 import 'qrCodes.dart';
 
@@ -47,6 +48,8 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context).translationsForLocale();
+    final h2Grey = Theme.of(context).textTheme.headline2.copyWith(color: encointerGrey);
+
     ReapVoucherParams params = ModalRoute.of(context).settings.arguments;
 
     final voucherUri = params.voucher.voucherUri;
@@ -78,7 +81,14 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
               ))} ⵐ',
               style: TextStyle(fontSize: 30),
             ) : CupertinoActivityIndicator(),
-            Expanded(child: Container()),
+            Text(
+              "${dic.assets.voucherBalance}, ${widget.store.encointer.community?.symbol}",
+              style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
+            ),
+            Flexible(
+              fit: FlexFit.tight,
+              child: Text(dic.assets.doYouWantToRedeemThisVoucher, style: h2Grey),
+            ),
             PrimaryButton(
               key: Key('transfer-done'),
               child: Container(
