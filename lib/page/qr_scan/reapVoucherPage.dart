@@ -9,6 +9,7 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/tx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:encointer_wallet/utils/format.dart';
 
 import 'qrCodes.dart';
 
@@ -39,6 +40,8 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     setState(() {});
 
     _voucherBalance = await api.encointer.getEncointerBalance(_voucherAddress, cid);
+
+    setState(() {});
   }
 
   @override
@@ -66,6 +69,14 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                     height: 96,
                     child: CupertinoActivityIndicator(),
                   ),
+            _voucherBalance != null ?
+            TextGradient(
+              text: '${Fmt.doubleFormat(_voucherBalance.applyDemurrage(
+                widget.store.chain.latestHeaderNumber,
+                widget.store.encointer.community.demurrage,
+              ))} ⵐ',
+              style: TextStyle(fontSize: 30),
+            ) : CupertinoActivityIndicator(),
             Expanded(child: Container()),
             PrimaryButton(
               key: Key('transfer-done'),
