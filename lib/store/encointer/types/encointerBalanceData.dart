@@ -43,6 +43,8 @@ class BalanceEntry {
   static double _principalFromMaybeString(dynamic principalField) {
     if (principalField is String) {
       return double.parse(principalField);
+    } else if (principalField is int){
+      return principalField.toDouble();
     } else {
       return principalField;
     }
