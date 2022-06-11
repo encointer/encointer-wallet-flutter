@@ -39,7 +39,10 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   String _voucherAddress;
   double _voucherBalance;
 
+  bool _postFrameCallbackCalled = false;
+
   Future<void> fetchVoucherData(Api api, String voucherUri, CommunityIdentifier cid) async {
+    _log("Fetching voucher data...");
     _voucherAddress = await api.account.addressFromUri(voucherUri);
 
     setState(() {});
@@ -65,10 +68,18 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     final issuer = params.voucher.issuer;
     final recipient = widget.store.account.currentAddress;
 
-    if (widget.store.settings.endpoint.info != networkInfo) {
-      _changeNetworkAndCommunity(context, networkInfo, cid);
-    } else if (_voucherAddress == null) {
-      fetchVoucherData(widget.api, voucherUri, cid);
+    if (!_postFrameCallbackCalled) {
+      _postFrameCallbackCalled = true;
+      WidgetsBinding.instance.addPostFrameCallback(
+            (_) async {
+          if (widget.store.settings.endpoint.info != networkInfo) {
+            await _changeNetworkAndCommunity(context, networkInfo, cid);
+          }
+          if (_voucherAddress == null) {
+            fetchVoucherData(widget.api, voucherUri, cid);
+          }
+        },
+      );
     }
 
     return Scaffold(
@@ -142,15 +153,15 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   }
 
   Future<void> _changeNetworkAndCommunity(BuildContext context, String networkInfo, CommunityIdentifier cid) async {
-
     var network;
+
     try {
       network = networkEndpoints.firstWhere(
         (network) {
           _log("Network info: ${network.info}");
           return network.info == networkInfo;
         },
-        orElse: throw FormatException('Invalid network in QrCode: $networkInfo'),
+        orElse: () => throw FormatException('Invalid network in QrCode: $networkInfo'),
       );
     } catch (e) {
       showRedeemFailedDialog(context, e.toString());
@@ -174,7 +185,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     // pop the loading dialog
     Navigator.of(context).pop();
 
-    setState((){});
+    setState(() {});
   }
 }
 
