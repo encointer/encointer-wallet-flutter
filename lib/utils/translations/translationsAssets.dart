@@ -90,7 +90,7 @@ class TranslationsEnAssets implements TranslationsAssets {
   get paymentError => "Payment error";
   get voucher => "Voucher";
   get voucherBalance => "Voucher Balance";
-  get doYouWantToRedeemThisVoucher => "Do you want to redeem this voucher?";
+  get doYouWantToRedeemThisVoucher => "Do you want to redeem this voucher to your current account?";
   get redeemVoucher => "Redeem voucher";
   get redeemSuccess => "Successfully redeemed voucher.";
   get redeemFailure => "There was an error while redeeming the voucher. Cause:";
@@ -138,7 +138,7 @@ class TranslationsDeAssets implements TranslationsAssets {
   get paymentError => "Zahlungsfehler";
   get voucher => "Gutschein";
   get voucherBalance => "Gutscheinwert";
-  get doYouWantToRedeemThisVoucher => "Willst du diesen Gutschein einlösen?";
+  get doYouWantToRedeemThisVoucher => "Willst du diesen Gutschein für dein aktuelles Konto einlösen?";
   get redeemVoucher => "Gutschein einlösen";
   get redeemSuccess => "Gutschein erfolgreich eingelöst.";
   get redeemFailure => "Es gab einen Fehler beim einlösen des Gutscheins. Ursache:";

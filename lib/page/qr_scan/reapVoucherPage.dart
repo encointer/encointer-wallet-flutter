@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -58,6 +60,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
     final voucherUri = params.voucher.voucherUri;
     final cid = params.voucher.cid;
+    final issuer = params.voucher.issuer;
     final recipient = widget.store.account.currentAddress;
 
     if (_voucherAddress == null) {
@@ -67,20 +70,17 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     return Scaffold(
       appBar: AppBar(title: Text(dic.assets.voucher)),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
         child: Column(
           children: [
-            _voucherAddress != null
-                ? AddressIconWithLabel(_voucherAddress, _voucherAddress, size: 96)
-                : SizedBox(
-                    width: 96,
-                    height: 96,
-                    child: CupertinoActivityIndicator(),
-                  ),
-            Text(
-              "${dic.assets.voucher}-id: $voucherUri",
-              style: h4Grey,
+            SizedBox(
+              height: 96,
+              child: _voucherAddress != null
+                  ? AddressIcon(_voucherAddress, _voucherAddress, size: 96)
+                  : CupertinoActivityIndicator(),
             ),
+            SizedBox(height: 8),
+            Text(issuer, style: h2Grey),
             _voucherBalance != null
                 ? TextGradient(
                     text: '${Fmt.doubleFormat(_voucherBalance)} ⵐ',
@@ -93,7 +93,13 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
             ),
             Expanded(
               // fit: FlexFit.tight,
-              child: Center(child: Text(dic.assets.doYouWantToRedeemThisVoucher, style: h2Grey)),
+              child: Center(
+                child: Text(
+                  dic.assets.doYouWantToRedeemThisVoucher,
+                  style: h2Grey,
+                  textAlign: TextAlign.center,
+                ),
+              ),
             ),
             SubmitButton(
               child: Row(
@@ -126,7 +132,6 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     } else {
       showRedeemSuccessDialog(context);
     }
-
   }
 }
 
@@ -181,7 +186,6 @@ Widget redeemFailedDialog(BuildContext context, String error) {
     ],
   );
 }
-
 
 void _log(String msg) {
   print("[VoucherPage] $msg");
