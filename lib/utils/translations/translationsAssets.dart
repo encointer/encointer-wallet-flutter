@@ -44,6 +44,8 @@ abstract class TranslationsAssets {
   String get voucherBalance;
   String get doYouWantToRedeemThisVoucher;
   String get redeemVoucher;
+  String get redeemSuccess;
+  String get redeemFailure;
 }
 
 class TranslationsEnAssets implements TranslationsAssets {
@@ -90,6 +92,8 @@ class TranslationsEnAssets implements TranslationsAssets {
   get voucherBalance => "Voucher Balance";
   get doYouWantToRedeemThisVoucher => "Do you want to redeem this voucher?";
   get redeemVoucher => "Redeem voucher";
+  get redeemSuccess => "Successfully redeemed voucher.";
+  get redeemFailure => "There was an error while redeeming the voucher. Cause:";
 }
 
 class TranslationsDeAssets implements TranslationsAssets {
@@ -136,6 +140,8 @@ class TranslationsDeAssets implements TranslationsAssets {
   get voucherBalance => "Gutscheinwert";
   get doYouWantToRedeemThisVoucher => "Willst du diesen Gutschein einlösen?";
   get redeemVoucher => "Gutschein einlösen";
+  get redeemSuccess => "Gutschein erfolgreich eingelöst.";
+  get redeemFailure => "Es gab einen Fehler beim einlösen des Gutscheins. Ursache:";
 }
 
 class TranslationsZhAssets implements TranslationsAssets {
@@ -182,4 +188,6 @@ class TranslationsZhAssets implements TranslationsAssets {
   get voucherBalance => throw UnimplementedError();
   get doYouWantToRedeemThisVoucher => throw UnimplementedError();
   get redeemVoucher => throw UnimplementedError();
+  get redeemSuccess => throw UnimplementedError();
+  get redeemFailure => throw UnimplementedError();
 }

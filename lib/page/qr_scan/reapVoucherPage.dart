@@ -118,9 +118,70 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     CommunityIdentifier cid,
     String recipientAddress,
   ) async {
-    await submitReapVoucher(widget.api, voucherUri, recipientAddress, cid);
+    var res = await submitReapVoucher(widget.api, voucherUri, recipientAddress, cid);
+
+    if (res['hash'] == null) {
+      _log('Error redeeming voucher: ${res['error']}');
+      showRedeemFailedDialog(context, res['error']);
+    } else {
+      showRedeemSuccessDialog(context);
+    }
+
   }
 }
+
+Future<void> showRedeemSuccessDialog(BuildContext context) {
+  return showCupertinoDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return redeemSuccessDialog(context);
+    },
+  );
+}
+
+Widget redeemSuccessDialog(BuildContext context) {
+  final dic = I18n.of(context).translationsForLocale();
+
+  return CupertinoAlertDialog(
+    title: Container(),
+    content: Text(dic.assets.redeemSuccess),
+    actions: <Widget>[
+      CupertinoButton(
+        child: Text(dic.home.ok),
+        onPressed: () {
+          Navigator.popUntil(context, ModalRoute.withName('/'));
+        },
+      ),
+    ],
+  );
+}
+
+Future<void> showRedeemFailedDialog(BuildContext context, String error) {
+  return showCupertinoDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return redeemFailedDialog(context, error);
+    },
+  );
+}
+
+Widget redeemFailedDialog(BuildContext context, String error) {
+  final dic = I18n.of(context).translationsForLocale();
+
+  return CupertinoAlertDialog(
+    title: Container(),
+    content: Text("${dic.assets.redeemFailure} $error"),
+    actions: <Widget>[
+      CupertinoButton(
+        child: Text(dic.home.ok),
+        onPressed: () {
+          Navigator.popUntil(context, ModalRoute.withName('/'));
+        },
+      ),
+    ],
+  );
+}
+
 
 void _log(String msg) {
   print("[VoucherPage] $msg");
