@@ -81,12 +81,15 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
             ),
             SizedBox(height: 8),
             Text(issuer, style: h2Grey),
-            _voucherBalance != null
-                ? TextGradient(
-                    text: '${Fmt.doubleFormat(_voucherBalance)} ⵐ',
-                    style: TextStyle(fontSize: 60),
-                  )
-                : CupertinoActivityIndicator(),
+            SizedBox(
+              height: 80,
+              child: _voucherBalance != null
+                  ? TextGradient(
+                      text: '${Fmt.doubleFormat(_voucherBalance)} ⵐ',
+                      style: TextStyle(fontSize: 60),
+                    )
+                  : CupertinoActivityIndicator(),
+            ),
             Text(
               "${dic.assets.voucherBalance}, ${widget.store.encointer.community?.symbol}",
               style: h4Grey,
