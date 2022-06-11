@@ -197,8 +197,7 @@ class _WalletAppState extends State<WalletApp> {
                 return CupertinoPageRoute(
                     builder: (_) => PaymentConfirmationPage(_appStore, webApi), settings: settings);
               case ReapVoucherPage.route:
-                return CupertinoPageRoute(
-                    builder: (_) => ReapVoucherPage(_appStore, webApi), settings: settings);
+                return CupertinoPageRoute(builder: (_) => ReapVoucherPage(_appStore, webApi), settings: settings);
               case ReceivePage.route:
                 return CupertinoPageRoute(
                     builder: (_) => ReceivePage(_appStore), settings: settings, fullscreenDialog: true);

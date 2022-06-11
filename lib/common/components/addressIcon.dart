@@ -52,17 +52,16 @@ class AddressIcon extends StatelessWidget {
 
 class AddressIconWithLabel extends StatelessWidget {
   AddressIconWithLabel(
-      this.address,
-      this.pubKey, {
-        this.size = 96,
-        this.tapToCopy = true,
-      });
+    this.address,
+    this.pubKey, {
+    this.size = 96,
+    this.tapToCopy = true,
+  });
 
   final String address;
   final String pubKey;
   final double size;
   final bool tapToCopy;
-
 
   @override
   Widget build(BuildContext context) {

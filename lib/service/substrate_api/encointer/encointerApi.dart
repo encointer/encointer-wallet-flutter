@@ -282,7 +282,6 @@ class EncointerApi {
   ///
   /// This is off-chain and trusted in Cantillon, accessible with TrustedGetter::balance(cid, accountId).
   Future<BalanceEntry> getEncointerBalance(String pubKeyOrAddress, CommunityIdentifier cid) async {
-
     if (cid == null) {
       return Future.value(null);
     }

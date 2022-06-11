@@ -72,15 +72,16 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                     height: 96,
                     child: CupertinoActivityIndicator(),
                   ),
-            _voucherBalance != null ?
-            TextGradient(
-              text: '${Fmt.doubleFormat(_voucherBalance.applyDemurrage(
-                widget.store.chain.latestHeaderNumber,
-                // Todo: handle case when the scanned voucher is not of the current community
-                widget.store.encointer.community.demurrage,
-              ))} ⵐ',
-              style: TextStyle(fontSize: 30),
-            ) : CupertinoActivityIndicator(),
+            _voucherBalance != null
+                ? TextGradient(
+                    text: '${Fmt.doubleFormat(_voucherBalance.applyDemurrage(
+                      widget.store.chain.latestHeaderNumber,
+                      // Todo: handle case when the scanned voucher is not of the current community
+                      widget.store.encointer.community.demurrage,
+                    ))} ⵐ',
+                    style: TextStyle(fontSize: 30),
+                  )
+                : CupertinoActivityIndicator(),
             Text(
               "${dic.assets.voucherBalance}, ${widget.store.encointer.community?.symbol}",
               style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),

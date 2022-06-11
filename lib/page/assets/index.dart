@@ -177,8 +177,8 @@ class _AssetsState extends State<Assets> {
                                   ? Column(
                                       children: [
                                         TextGradient(
-                                            text: '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ',
-                                            style: TextStyle(fontSize: 60),
+                                          text: '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ',
+                                          style: TextStyle(fontSize: 60),
                                         ),
                                         Text(
                                           "${dic.assets.balance}, ${store.encointer.community?.symbol}",
