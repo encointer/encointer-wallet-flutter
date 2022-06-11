@@ -58,19 +58,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       },
     );
 
-    store.settings.setNetworkLoading(true);
-    await store.settings.setNetworkConst({}, needCache: false);
-    store.settings.setEndpoint(_selectedNetwork);
-
-    await Future.wait([
-      store.loadAccountCache(),
-      store.settings.loadNetworkStateCache(),
-      store.assets.loadCache(),
-      store.loadOrInitEncointerCache(_selectedNetwork.info),
-    ]);
-
-    await webApi.close();
-    webApi.init();
+    await store.settings.reloadNetwork(_selectedNetwork);
 
     changeTheme();
 
