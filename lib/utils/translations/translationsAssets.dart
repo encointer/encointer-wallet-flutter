@@ -42,6 +42,7 @@ abstract class TranslationsAssets {
   String get paymentError;
   String get voucher;
   String get voucherBalance;
+  String get voucherDifferentNetworkOrCommunity;
   String get doYouWantToRedeemThisVoucher;
   String get redeemVoucher;
   String get redeemSuccess;
@@ -90,6 +91,9 @@ class TranslationsEnAssets implements TranslationsAssets {
   get paymentError => "Payment error";
   get voucher => "Voucher";
   get voucherBalance => "Voucher Balance";
+  get voucherDifferentNetworkOrCommunity =>
+      "The voucher is for a different network or community. Do you want to change "
+      "to the suitable network/community? You can change the network back under Profile > Developer mode";
   get doYouWantToRedeemThisVoucher => "Do you want to redeem this voucher to your current account?";
   get redeemVoucher => "Redeem voucher";
   get redeemSuccess => "Successfully redeemed voucher.";
@@ -138,6 +142,8 @@ class TranslationsDeAssets implements TranslationsAssets {
   get paymentError => "Zahlungsfehler";
   get voucher => "Gutschein";
   get voucherBalance => "Gutscheinwert";
+  get voucherDifferentNetworkOrCommunity => "Der Gutschein ist für ein anderes Netzwerk oder Community. Wills du zum "
+      "passenden Netzwerk/Community wechseln? Du kannst das Netzwerk zurückändern under Profil > Developer mode.";
   get doYouWantToRedeemThisVoucher => "Willst du diesen Gutschein für dein aktuelles Konto einlösen?";
   get redeemVoucher => "Gutschein einlösen";
   get redeemSuccess => "Gutschein erfolgreich eingelöst.";
@@ -186,6 +192,7 @@ class TranslationsZhAssets implements TranslationsAssets {
   get paymentError => throw UnimplementedError();
   get voucher => throw UnimplementedError();
   get voucherBalance => throw UnimplementedError();
+  get voucherDifferentNetworkOrCommunity => throw UnimplementedError();
   get doYouWantToRedeemThisVoucher => throw UnimplementedError();
   get redeemVoucher => throw UnimplementedError();
   get redeemSuccess => throw UnimplementedError();

@@ -73,7 +73,12 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
       WidgetsBinding.instance.addPostFrameCallback(
         (_) async {
           if (widget.store.settings.endpoint.info != networkInfo) {
-            await _changeNetworkAndCommunity(context, networkInfo, cid);
+            await showChangeNetworkDialog(
+              context,
+              () async {
+                await _changeNetworkAndCommunity(context, networkInfo, cid);
+              },
+            );
           }
           if (_voucherAddress == null) {
             fetchVoucherData(widget.api, voucherUri, cid);
@@ -157,10 +162,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
     try {
       network = networkEndpoints.firstWhere(
-        (network) {
-          _log("Network info: ${network.info}");
-          return network.info == networkInfo;
-        },
+        (network) => network.info == networkInfo,
         orElse: () => throw FormatException('Invalid network in QrCode: $networkInfo'),
       );
     } catch (e) {
@@ -227,7 +229,7 @@ Widget redeemSuccessDialog(BuildContext context) {
 Future<void> showRedeemFailedDialog(BuildContext context, String error) {
   return showCupertinoDialog(
     context: context,
-    builder: (_) {
+    builder: (BuildContext context) {
       return redeemFailedDialog(context, error);
     },
   );
@@ -250,21 +252,32 @@ Widget redeemFailedDialog(BuildContext context, String error) {
   );
 }
 
-Widget changeNetworkDialog(BuildContext context, Function onChangeConfirm) {
+Future<void> showChangeNetworkDialog(BuildContext context, Future<void> Function() onChangeConfirm) {
+  return showCupertinoDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return changeNetworkDialog(context, onChangeConfirm);
+    },
+  );
+}
+
+Widget changeNetworkDialog(BuildContext context, Future<void> Function() onChangeConfirm) {
   final dic = I18n.of(context).translationsForLocale();
 
   return CupertinoAlertDialog(
-    title: Text(I18n.of(context).translationsForLocale().home.exitConfirm),
-    content: Text("Different network. You can change the network again under Profile > Developper mode"),
+    title: Container(),
+    content: Text(dic.assets.voucherDifferentNetworkOrCommunity),
     actions: <Widget>[
       CupertinoButton(
         child: Text(dic.home.cancel),
         onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
       ),
       CupertinoButton(
-        child: Text(dic.home.ok),
-        onPressed: onChangeConfirm,
-      ),
+          child: Text(dic.home.ok),
+          onPressed: () async {
+            await onChangeConfirm();
+            Navigator.of(context).pop();
+          }),
     ],
   );
 }
