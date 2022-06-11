@@ -2,17 +2,18 @@ import 'dart:ui';
 
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
+import 'package:encointer_wallet/common/components/submitButton.dart';
+import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/tx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/common/components/submitButton.dart';
 import 'package:iconsax/iconsax.dart';
 
 import 'qrCodes.dart';
@@ -60,10 +61,13 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
     final voucherUri = params.voucher.voucherUri;
     final cid = params.voucher.cid;
+    final networkInfo = params.voucher.network;
     final issuer = params.voucher.issuer;
     final recipient = widget.store.account.currentAddress;
 
-    if (_voucherAddress == null) {
+    if (widget.store.settings.endpoint.info != networkInfo) {
+      _changeNetworkAndCommunity(context, networkInfo, cid);
+    } else if (_voucherAddress == null) {
       fetchVoucherData(widget.api, voucherUri, cid);
     }
 
@@ -136,6 +140,42 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
       showRedeemSuccessDialog(context);
     }
   }
+
+  Future<void> _changeNetworkAndCommunity(BuildContext context, String networkInfo, CommunityIdentifier cid) async {
+
+    var network;
+    try {
+      network = networkEndpoints.firstWhere(
+        (network) {
+          _log("Network info: ${network.info}");
+          return network.info == networkInfo;
+        },
+        orElse: throw FormatException('Invalid network in QrCode: $networkInfo'),
+      );
+    } catch (e) {
+      showRedeemFailedDialog(context, e.toString());
+      return Future.value(null);
+    }
+
+    showCupertinoDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: Text(I18n.of(context).translationsForLocale().home.loading),
+          content: Container(height: 64, child: CupertinoActivityIndicator()),
+        );
+      },
+    );
+
+    await widget.store.settings.reloadNetwork(network);
+
+    widget.store.encointer.setChosenCid(cid);
+
+    // pop the loading dialog
+    Navigator.of(context).pop();
+
+    setState((){});
+  }
 }
 
 Future<void> showRedeemSuccessDialog(BuildContext context) {
@@ -167,7 +207,7 @@ Widget redeemSuccessDialog(BuildContext context) {
 Future<void> showRedeemFailedDialog(BuildContext context, String error) {
   return showCupertinoDialog(
     context: context,
-    builder: (BuildContext context) {
+    builder: (_) {
       return redeemFailedDialog(context, error);
     },
   );
@@ -185,6 +225,25 @@ Widget redeemFailedDialog(BuildContext context, String error) {
         onPressed: () {
           Navigator.popUntil(context, ModalRoute.withName('/'));
         },
+      ),
+    ],
+  );
+}
+
+Widget changeNetworkDialog(BuildContext context, Function onChangeConfirm) {
+  final dic = I18n.of(context).translationsForLocale();
+
+  return CupertinoAlertDialog(
+    title: Text(I18n.of(context).translationsForLocale().home.exitConfirm),
+    content: Text("Different network. You can change the network again under Profile > Developper mode"),
+    actions: <Widget>[
+      CupertinoButton(
+        child: Text(dic.home.cancel),
+        onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
+      ),
+      CupertinoButton(
+        child: Text(dic.home.ok),
+        onPressed: onChangeConfirm,
       ),
     ],
   );

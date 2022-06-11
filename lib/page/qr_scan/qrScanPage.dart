@@ -100,7 +100,7 @@ class ScanPage extends StatelessWidget {
                           child: Text("voucher"),
                           onPressed: () => onScan(
                               "encointer-voucher\nV1.0\n//VoucherUri\nsqm1v79dF6b"
-                              "\nnctr-k\nAubrey",
+                              "\nnctr-gsl-dev\nAubrey",
                               null),
                         ),
                         Text(' <<< Devs only', style: TextStyle(color: Colors.orange)),
