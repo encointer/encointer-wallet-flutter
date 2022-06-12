@@ -1,5 +1,6 @@
 import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/page/qr_scan/qrCodes.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -26,7 +27,7 @@ class _ReceivePageState extends State<ReceivePage> {
   final TextEditingController _amountController = new TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool generateQR = false;
-  var invoice = [];
+  InvoiceQrCode invoice;
 
   PausableTimer paymentWatchdog;
   bool observedPendingExtrinsic = false;
@@ -40,20 +41,15 @@ class _ReceivePageState extends State<ReceivePage> {
     ));
   }
 
-  Widget generateQRWithInvoiceData() {
-    invoice = [
-      'encointer-invoice',
-      'v2.0',
-      widget.store.account.currentAddress,
-      widget.store.encointer.chosenCid != null ? (widget.store.encointer.chosenCid).toFmtString() : '',
-      _amountController.text,
-      widget.store.account.currentAccount.name
-    ];
-    return Container(
-      child: QrImage(
-        size: MediaQuery.of(context).copyWith().size.height / 2,
-        data: invoice.join('\n'),
-      ),
+  @override
+  void initState() {
+    super.initState();
+
+    invoice = InvoiceQrCode(
+      account: widget.store.account.currentAddress,
+      cid: widget.store.encointer.chosenCid,
+      amount: null,
+      label: widget.store.account.currentAccount.name,
     );
   }
 
@@ -162,16 +158,10 @@ class _ReceivePageState extends State<ReceivePage> {
                           textFormFieldKey: Key('invoice-amount-input'),
                           onChanged: (value) {
                             setState(() {
-                              invoice = [
-                                'encointer-invoice',
-                                'v2.0',
-                                widget.store.account.currentAddress,
-                                widget.store.encointer.chosenCid != null
-                                    ? (widget.store.encointer.chosenCid).toFmtString()
-                                    : '',
-                                _amountController.text,
-                                widget.store.account.currentAccount.name
-                              ];
+                              var trimmed = _amountController.text.trim();
+                              if (trimmed.isNotEmpty) {
+                                invoice.data.amount = double.parse(trimmed);
+                              }
                             });
                           },
                           suffixIcon: Text(
@@ -190,7 +180,10 @@ class _ReceivePageState extends State<ReceivePage> {
                       textAlign: TextAlign.center),
                   SizedBox(height: 8),
                   Column(children: [
-                    generateQRWithInvoiceData(),
+                    QrImage(
+                      size: MediaQuery.of(context).copyWith().size.height / 2,
+                      data: invoice.toQrPayload(),
+                    ),
                     InkWell(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 24),
@@ -209,7 +202,8 @@ class _ReceivePageState extends State<ReceivePage> {
                       onTap: () => {
                         if (_formKey.currentState.validate())
                           {
-                            Share.share(invoice.join('\n')),
+                            // Todo: implement invoice.toUrl()
+                            Share.share(invoice.toQrPayload()),
                           }
                       },
                     ),
