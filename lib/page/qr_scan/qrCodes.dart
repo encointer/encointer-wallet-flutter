@@ -48,6 +48,7 @@ class ContactData implements ToQrFields {
 
 class InvoiceQrCode extends QrCode<InvoiceData> {
   InvoiceQrCode.withData(InvoiceData data) : super(data);
+
   InvoiceQrCode({
     @required String account,
     CommunityIdentifier cid,
@@ -111,7 +112,7 @@ class InvoiceData implements ToQrFields {
 class VoucherQrCode extends QrCode<VoucherData> {
   VoucherQrCode.withData(VoucherData data) : super(data);
   VoucherQrCode(
-      {@required String voucherUri, @required CommunityIdentifier cid, String network, @required String issuer})
+      {@required String voucherUri, @required CommunityIdentifier cid, String network, @required String issuer,})
       : super(VoucherData(voucherUri: voucherUri, cid: cid, network: network, issuer: issuer));
 
   var context = QrCodeContext.voucher;
