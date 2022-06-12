@@ -192,13 +192,11 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
 
           return Container(
             decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.green),
-            child: Padding(
-                padding: const EdgeInsets.all(0),
-                child: AnimatedCheck(
-                  progress: _animation,
-                  size: 100,
-                  color: Colors.white,
-                )),
+            child: AnimatedCheck(
+              progress: _animation,
+              size: 100,
+              color: Colors.white,
+            ),
           );
         }
         break;
