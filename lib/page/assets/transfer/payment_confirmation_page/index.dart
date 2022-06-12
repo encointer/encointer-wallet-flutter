@@ -52,7 +52,6 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context).translationsForLocale();
-    final h2Grey = Theme.of(context).textTheme.headline2.copyWith(color: encointerGrey);
     PaymentConfirmationParams params = ModalRoute.of(context).settings.arguments;
 
     var cid = params.cid;
@@ -112,7 +111,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
                           height: 24,
                           child: Text(dic.assets.done),
                         ),
-                        onPressed: () => Navigator.of(context).pop(),
+                        onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
                       )
               ],
             ),
