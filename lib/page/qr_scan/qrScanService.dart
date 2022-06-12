@@ -25,8 +25,8 @@ class QrScanService {
   QrCode<dynamic> parse(String rawQrString) {
     List<String> data = rawQrString.split(separator);
 
-    var context = QrCodeContextExt.fromString(data[0]);
-    var version = QrCodeVersionExt.fromString(data[1]);
+    var context = QrCodeContextExt.fromQrField(data[0]);
+    var version = QrCodeVersionExt.fromQrField(data[1]);
 
     if (version != QrCodeVersion.v1_0) {
       throw FormatException('QR scan version [${data[1]}] is currently not supported');

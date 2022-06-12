@@ -1,37 +1,7 @@
-import 'package:encointer_wallet/store/encointer/types/communities.dart';
 
-/// Format of QR-code, (separator: newLine).
-/// Values in `[]` are optional and will be empty lines in the QR-code.
-///
-/// encointer-<context>
-/// <QR-version-for-context>
-/// <account ss58>
-/// [<cid>]
-/// [<amount>]
-/// [<label>]
-///
-class QrScanData {
-  final QrCodeContext context;
+//! Basic definitions for encointer-qr codes.
 
-  /// version of our format definition
-  final String version;
-
-  /// ss58 encoded public key of the account address.
-  /// Payment: account of the receiver of the payment;
-  /// contact: account to add to contacts;
-  final String account;
-
-  /// community identifier
-  final CommunityIdentifier cid;
-
-  /// Optional payment amount for the invoice. Will be emp
-  final num amount;
-
-  /// name or other identifier for `account`.
-  final String label;
-
-  QrScanData({this.context, this.version, this.account, this.cid, this.amount, this.label});
-}
+const ENCOINTER_PREFIX = 'encointer';
 
 abstract class QrCode<QrCodeData> {
   QrCodeContext context;
@@ -41,10 +11,13 @@ abstract class QrCode<QrCodeData> {
   QrCodeData data;
 }
 
-/// context identifier e.g. encointer-contact
+/// context identifier
 enum QrCodeContext {
+  /// `encointer-contact` context
   contact,
+  /// `encointer-invoice` context
   invoice,
+  /// `encointer-voucher` context
   voucher
   // claim, currently unsupported and might not be merged into this. Let's see.
 }
@@ -53,7 +26,7 @@ enum QrCodeVersion { v1_0 }
 
 extension QrCodeContextExt on QrCodeContext {
   /// Parses `encointer-<context>` into a `QrCodeContext`.
-  static QrCodeContext fromString(String value) {
+  static QrCodeContext fromQrField(String value) {
     var context = value.toString().split("-").last.toLowerCase();
     return QrCodeContext.values.firstWhere(
       (type) => type.toString().split(".").last.toLowerCase() == context,
@@ -63,11 +36,16 @@ extension QrCodeContextExt on QrCodeContext {
       },
     );
   }
+
+  String toQrField() {
+    var variant = this.toString().split(".").last.toLowerCase();
+    return "$ENCOINTER_PREFIX-$variant";
+  }
 }
 
 extension QrCodeVersionExt on QrCodeVersion {
   /// Parses a version string from the format `v1.0`.
-  static QrCodeVersion fromString(String value) {
+  static QrCodeVersion fromQrField(String value) {
     return QrCodeVersion.values.firstWhere(
       (type) => type.toVersionNumber().toLowerCase() == value.toLowerCase(),
       orElse: () => throw FormatException('Unsupported QrCode version [$value]'),
