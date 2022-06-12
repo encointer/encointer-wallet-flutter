@@ -122,7 +122,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                         key: Key('transfer-done'),
                         child: Container(
                           height: 24,
-                          child: Text(dic.assets.done),
+                          child: Center(child: Text(dic.assets.done)),
                         ),
                         onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
                       )
