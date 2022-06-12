@@ -8,7 +8,7 @@ class ContactQrCode extends QrCode<ContactData> {
 
   var context = QrCodeContext.contact;
 
-  var version = QrCodeVersion.v1_0;
+  var version = QrCodeVersion.v2_0;
 
   static ContactQrCode fromPayload(String payload) {
     return fromQrFields(payload.split("\n"));
@@ -46,7 +46,7 @@ class InvoiceQrCode extends QrCode<InvoiceData> {
 
   var context = QrCodeContext.invoice;
 
-  var version = QrCodeVersion.v1_0;
+  var version = QrCodeVersion.v2_0;
 
   static InvoiceQrCode fromPayload(String payload) {
     return fromQrFields(payload.split("\n"));
@@ -102,7 +102,7 @@ class VoucherQrCode extends QrCode<VoucherData> {
 
   var context = QrCodeContext.voucher;
 
-  var version = QrCodeVersion.v1_0;
+  var version = QrCodeVersion.v2_0;
 
   static VoucherQrCode fromPayload(String payload) {
     return fromQrFields(payload.split("\n"));

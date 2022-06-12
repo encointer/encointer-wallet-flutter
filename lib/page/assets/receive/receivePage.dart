@@ -43,7 +43,7 @@ class _ReceivePageState extends State<ReceivePage> {
   Widget generateQRWithInvoiceData() {
     invoice = [
       'encointer-invoice',
-      'V1.0',
+      'v2.0',
       widget.store.account.currentAddress,
       widget.store.encointer.chosenCid != null ? (widget.store.encointer.chosenCid).toFmtString() : '',
       _amountController.text,
@@ -164,7 +164,7 @@ class _ReceivePageState extends State<ReceivePage> {
                             setState(() {
                               invoice = [
                                 'encointer-invoice',
-                                'V1.0',
+                                'v2.0',
                                 widget.store.account.currentAddress,
                                 widget.store.encointer.chosenCid != null
                                     ? (widget.store.encointer.chosenCid).toFmtString()

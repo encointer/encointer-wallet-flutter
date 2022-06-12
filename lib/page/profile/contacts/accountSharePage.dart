@@ -24,7 +24,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
 
     var contact = [
       'encointer-contact',
-      'V1.0',
+      'v2.0',
       addressSS58,
       widget.store.encointer.chosenCid?.toFmtString() ?? '',
       '', // empty amount field. Hotfix for # #399. To be properly solved in #354.

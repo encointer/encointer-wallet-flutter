@@ -26,7 +26,7 @@ class QrScanService {
     var context = QrCodeContextExt.fromQrField(data[0]);
     var version = QrCodeVersionExt.fromQrField(data[1]);
 
-    if (version != QrCodeVersion.v1_0) {
+    if (version != QrCodeVersion.v2_0) {
       throw FormatException('QR scan version [${data[1]}] is currently not supported');
     }
 

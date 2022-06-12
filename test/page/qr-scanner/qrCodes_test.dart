@@ -14,7 +14,7 @@ void main() {
       expect(
         qrCode.toQrPayload(),
         "encointer-contact\n"
-        "v1.0\n"
+        "v2.0\n"
         "account\n"
         "label",
       );
@@ -22,14 +22,14 @@ void main() {
 
     test('fromQrPayload works', () async {
       final payload = "encointer-contact\n"
-          "v1.0\n"
+          "v2.0\n"
           "account\n"
           "label";
 
       final qrCode = ContactQrCode.fromPayload(payload);
 
       expect(qrCode.context, QrCodeContext.contact);
-      expect(qrCode.version, QrCodeVersion.v1_0);
+      expect(qrCode.version, QrCodeVersion.v2_0);
       expect(qrCode.data.account, "account");
       expect(qrCode.data.label, "label");
     });
@@ -47,7 +47,7 @@ void main() {
       expect(
         qrCode.toQrPayload(),
         "encointer-invoice\n"
-        "v1.0\n"
+        "v2.0\n"
         "account\n"
         "sqm1v79dF6b\n"
         "1.001\n"
@@ -57,7 +57,7 @@ void main() {
 
     test('fromQrPayload works', () async {
       final payload = "encointer-invoice\n"
-          "v1.0\n"
+          "v2.0\n"
           "account\n"
           "sqm1v79dF6b\n"
           "1.001\n"
@@ -66,7 +66,7 @@ void main() {
       final qrCode = InvoiceQrCode.fromPayload(payload);
 
       expect(qrCode.context, QrCodeContext.invoice);
-      expect(qrCode.version, QrCodeVersion.v1_0);
+      expect(qrCode.version, QrCodeVersion.v2_0);
       expect(qrCode.data.account, "account");
       expect(qrCode.data.cid.toFmtString(), "sqm1v79dF6b");
       expect(qrCode.data.amount, 1.001);
@@ -86,7 +86,7 @@ void main() {
       expect(
         qrCode.toQrPayload(),
         "encointer-voucher\n"
-        "v1.0\n"
+        "v2.0\n"
         "voucherUri\n"
         "sqm1v79dF6b\n"
         "nctr-k\n"
@@ -96,7 +96,7 @@ void main() {
 
     test('fromQrPayload works', () async {
       final payload = "encointer-voucher\n"
-          "v1.0\n"
+          "v2.0\n"
           "voucherUri\n"
           "sqm1v79dF6b\n"
           "nctr-k\n"
@@ -105,7 +105,7 @@ void main() {
       final qrCode = VoucherQrCode.fromPayload(payload);
 
       expect(qrCode.context, QrCodeContext.voucher);
-      expect(qrCode.version, QrCodeVersion.v1_0);
+      expect(qrCode.version, QrCodeVersion.v2_0);
       expect(qrCode.data.voucherUri, "voucherUri");
       expect(qrCode.data.cid.toFmtString(), "sqm1v79dF6b");
       expect(qrCode.data.network, "nctr-k");

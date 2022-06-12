@@ -35,7 +35,7 @@ enum QrCodeContext {
   // claim, currently unsupported and might not be merged into this. Let's see.
 }
 
-enum QrCodeVersion { v1_0 }
+enum QrCodeVersion { v2_0 }
 
 extension QrCodeContextExt on QrCodeContext {
   /// Parses `encointer-<context>` into a `QrCodeContext`.
@@ -57,7 +57,7 @@ extension QrCodeContextExt on QrCodeContext {
 }
 
 extension QrCodeVersionExt on QrCodeVersion {
-  /// Parses a version string from the format `v1.0`.
+  /// Parses a version string from the format `v2.0`.
   static QrCodeVersion fromQrField(String value) {
     return QrCodeVersion.values.firstWhere(
       (type) => type.toVersionNumber().toLowerCase() == value.toLowerCase(),
@@ -65,7 +65,7 @@ extension QrCodeVersionExt on QrCodeVersion {
     );
   }
 
-  /// Returns the version number in the format 'v1.0'
+  /// Returns the version number in the format 'v2.0'
   String toVersionNumber() {
     final variant = this.toString().split(".").last;
     return variant.replaceAll("_", ".");
