@@ -32,13 +32,13 @@ class QrScanService {
 
     switch (context) {
       case QrCodeContext.contact:
-        return ContactQrCode.fromStringList(data);
+        return ContactQrCode.fromQrFields(data);
         break;
       case QrCodeContext.invoice:
-        return InvoiceQrCode.fromStringList(data);
+        return InvoiceQrCode.fromQrFields(data);
         break;
       case QrCodeContext.voucher:
-        return VoucherQrCode.fromStringList(data);
+        return VoucherQrCode.fromQrFields(data);
         break;
       default:
         throw FormatException('[parseQrScan] Unhandled qr scan context');
