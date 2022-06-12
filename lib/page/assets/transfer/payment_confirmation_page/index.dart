@@ -71,9 +71,12 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
                 SizedBox(height: 10),
                 Flexible(
                   fit: FlexFit.tight,
+                  flex: 1,
                   child: TextGradient(text: '${Fmt.doubleFormat(amount)} ⵐ'),
                 ),
-                Expanded(
+                Flexible(
+                  fit: FlexFit.tight,
+                  flex: 2,
                   child: AnimatedSwitcher(
                     duration: const Duration(milliseconds: 500),
                     transitionBuilder: (Widget child, Animation<double> animation) {
@@ -85,6 +88,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
                 ),
                 Flexible(
                   fit: FlexFit.tight,
+                  flex: 2,
                   child: _txStateTextInfo(_transferState),
                 ),
                 !_transferState.isFinishedOrFailed()
@@ -208,7 +212,9 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
   }
 
   Widget _txStateTextInfo(TransferState state) {
+    final h1Grey = Theme.of(context).textTheme.headline1.copyWith(color: encointerGrey);
     final h2Grey = Theme.of(context).textTheme.headline2.copyWith(color: encointerGrey);
+
     final Translations dic = I18n.of(context).translationsForLocale();
     switch (state) {
       case TransferState.notStarted:
@@ -234,7 +240,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
               children: [
                 TextSpan(
                   text: time,
-                  style: h2Grey,
+                  style: h1Grey,
                 ),
               ],
             ),
