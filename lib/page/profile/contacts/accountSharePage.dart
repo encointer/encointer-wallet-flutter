@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/page/qr_scan/qrCodes.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -22,14 +23,10 @@ class _AccountSharePageState extends State<AccountSharePage> {
     AccountData accountToBeShared = widget.store.account.getAccountData(accountToBeSharedPubKey);
     final addressSS58 = widget.store.account.getNetworkAddress(accountToBeSharedPubKey);
 
-    var contact = [
-      'encointer-contact',
-      'v2.0',
-      addressSS58,
-      widget.store.encointer.chosenCid?.toFmtString() ?? '',
-      '', // empty amount field. Hotfix for # #399. To be properly solved in #354.
-      accountToBeShared.name
-    ];
+    var contactQrCode = ContactQrCode(
+      account: addressSS58,
+      label: accountToBeShared.name,
+    );
 
     return Scaffold(
       appBar: AppBar(
@@ -61,13 +58,11 @@ class _AccountSharePageState extends State<AccountSharePage> {
                 ),
                 Column(
                   children: [
-                    Container(
-                      child: QrImage(
-                        size: MediaQuery.of(context).copyWith().size.height / 2,
-                        data: contact.join('\n'),
-                        embeddedImage: AssetImage('assets/images/public/app.png'),
-                        embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
-                      ),
+                    QrImage(
+                      size: MediaQuery.of(context).copyWith().size.height / 2,
+                      data: contactQrCode.toQrPayload(),
+                      embeddedImage: AssetImage('assets/images/public/app.png'),
+                      embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, bottom: 30),
@@ -95,7 +90,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
                         style: Theme.of(context).textTheme.headline3),
                   ],
                 ),
-                onPressed: () => Share.share(contact.join('\n')),
+                onPressed: () => Share.share(contactQrCode.toQrPayload()),
               ),
             )
           ],
