@@ -30,7 +30,7 @@ class JSApi {
 
     if (_subscription != null) {
       //  (should only happen in hot-restart)
-      _subscription.cancel();
+      await _subscription.cancel();
     }
 
     _subscription = _web.onStateChanged.listen((viewState) async {
@@ -52,7 +52,7 @@ class JSApi {
       _web.reload();
       return;
     } else {
-      _web.launch(
+      return _web.launch(
         'about:blank',
         javascriptChannels: [
           JavascriptChannel(
@@ -151,7 +151,7 @@ class JSApi {
   Future<void> closeWebView() async {
     print("[JSApi]: closing webView");
     if (_web != null) {
-      _web.close();
+      await _web.close();
       _web = null;
     } else {
       print("[JSApi]: Did not close webView because it was closed already.");

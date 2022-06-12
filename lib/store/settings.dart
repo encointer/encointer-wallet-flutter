@@ -298,7 +298,7 @@ abstract class _SettingsStore with Store {
     // Todo: remove global reference when cyclic dependency
     // between the stores and the apis are resolved
     await webApi.close();
-    webApi.init();
+    return webApi.init();
   }
 }
 
