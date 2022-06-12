@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'qrCodeBase.dart';
 
-class ContactQrCode implements QrCode<ContactData> {
+class ContactQrCode extends QrCode<ContactData> {
   ContactQrCode(this.data);
 
   var context = QrCodeContext.contact;
@@ -21,7 +21,7 @@ class ContactQrCode implements QrCode<ContactData> {
   }
 }
 
-class ContactData {
+class ContactData implements ToQrFields {
   const ContactData({
     @required this.account,
     @required this.label,
@@ -32,9 +32,13 @@ class ContactData {
 
   /// Name or other identifier for `account`.
   final String label;
+
+  List<String> toQrFields() {
+    return [account, label];
+  }
 }
 
-class InvoiceQrCode implements QrCode<InvoiceData> {
+class InvoiceQrCode extends QrCode<InvoiceData> {
   InvoiceQrCode(this.data);
 
   var context = QrCodeContext.invoice;
@@ -56,7 +60,7 @@ class InvoiceQrCode implements QrCode<InvoiceData> {
   }
 }
 
-class InvoiceData {
+class InvoiceData implements ToQrFields{
   InvoiceData({
     @required this.account,
     this.cid,
@@ -75,9 +79,18 @@ class InvoiceData {
 
   /// Name or other identifier for `account`.
   final String label;
+
+  List<String> toQrFields() {
+    return [
+      account,
+      cid.toFmtString(),
+      amount.toString(),
+      label,
+    ];
+  }
 }
 
-class VoucherQrCode implements QrCode<VoucherData> {
+class VoucherQrCode extends QrCode<VoucherData> {
   VoucherQrCode(this.data);
 
   var context = QrCodeContext.voucher;
@@ -99,7 +112,7 @@ class VoucherQrCode implements QrCode<VoucherData> {
   }
 }
 
-class VoucherData {
+class VoucherData implements ToQrFields {
   VoucherData({
     @required this.voucherUri,
     @required this.cid,
@@ -118,4 +131,13 @@ class VoucherData {
 
   /// Name of issuer.
   final String issuer;
+
+  List<String> toQrFields() {
+    return [
+      voucherUri,
+      cid.toFmtString(),
+      network,
+      issuer,
+    ];
+  }
 }

@@ -2,13 +2,24 @@
 //! Basic definitions for encointer-qr codes.
 
 const ENCOINTER_PREFIX = 'encointer';
+const String QR_CODE_FIELD_SEPARATOR = '\n';
 
-abstract class QrCode<QrCodeData> {
+class QrCode<QrCodeData extends ToQrFields> {
   QrCodeContext context;
 
   QrCodeVersion version;
 
   QrCodeData data;
+
+  String toQrPayload() {
+    final qrFields = [context.toQrField(), version.toVersionNumber()];
+    qrFields.addAll(data.toQrFields());
+    return qrFields.join(QR_CODE_FIELD_SEPARATOR);
+  }
+}
+
+abstract class ToQrFields {
+  List<String> toQrFields();
 }
 
 /// context identifier
@@ -54,6 +65,7 @@ extension QrCodeVersionExt on QrCodeVersion {
 
   /// Returns the version number in the format 'v1.0'
   String toVersionNumber() {
-    return this.toString().split(".").last.replaceAll("_", ".");
+    final variant = this.toString().split(".").last;
+    return variant.replaceAll("_", ".");
   }
 }

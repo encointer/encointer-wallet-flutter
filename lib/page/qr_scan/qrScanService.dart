@@ -20,10 +20,8 @@ enum QrScannerContext {
 
 /// Handles QrCode scans.
 class QrScanService {
-  static final String separator = '\n';
-
   QrCode<dynamic> parse(String rawQrString) {
-    List<String> data = rawQrString.split(separator);
+    List<String> data = rawQrString.split(QR_CODE_FIELD_SEPARATOR);
 
     var context = QrCodeContextExt.fromQrField(data[0]);
     var version = QrCodeVersionExt.fromQrField(data[1]);
