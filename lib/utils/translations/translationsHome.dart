@@ -37,6 +37,12 @@ abstract class TranslationsHome {
   String get updateLatest;
   String get updateToNewerVersionQ;
   String get accountImport;
+  String get txQueued;
+  String get txQueuedOffline;
+  String get txReady;
+  String get txBroadcast;
+  String get txInBlock;
+  String get txError;
 }
 
 class TranslationsEnHome implements TranslationsHome {
@@ -78,6 +84,12 @@ class TranslationsEnHome implements TranslationsHome {
   get updateLatest => 'Your App is the newest version.';
   get updateToNewerVersionQ => 'New version found, update now?';
   get accountImport => 'Import account';
+  get txQueued => 'Queued Transaction';
+  get txQueuedOffline => 'You are offline. Transaction will be sent when you are back online.';
+  get txReady => 'Transaction is ready.';
+  get txBroadcast => 'Transaction has been broadcast.';
+  get txInBlock => 'Transaction is in a block.';
+  get txError => 'Transaction error';
 }
 
 class TranslationsDeHome implements TranslationsHome {
@@ -118,6 +130,12 @@ class TranslationsDeHome implements TranslationsHome {
   get updateLatest => 'Die App ist auf dem neusten Stand.';
   get updateToNewerVersionQ => 'Neue Version gefunden, jetzt aktualisieren?';
   get accountImport => 'Konto importieren';
+  get txQueued => 'Transaktion is in der Warteschlange';
+  get txQueuedOffline => 'Du bist offline. Die Transaktion wird geschickt, wenn du wieder online bist.';
+  get txReady => 'Transaktion bereit.';
+  get txBroadcast => 'Transaktion wurde im Netzwerk';
+  get txInBlock => 'Transaction ist in einem Block';
+  get txError => 'Transaktionsfehler';
 }
 
 class TranslationsZhHome implements TranslationsHome {
@@ -157,4 +175,10 @@ class TranslationsZhHome implements TranslationsHome {
   get updateLatest => '您的应用已是最新版本。';
   get updateToNewerVersionQ => '发现新版本，立即更新吗？';
   get accountImport => '导入账户';
+  get txQueued => throw UnimplementedError();
+  get txQueuedOffline => throw UnimplementedError();
+  get txReady => throw UnimplementedError();
+  get txBroadcast => throw UnimplementedError();
+  get txInBlock => throw UnimplementedError();
+  get txError => throw UnimplementedError();
 }

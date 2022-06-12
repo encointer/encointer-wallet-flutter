@@ -48,6 +48,7 @@ class CeremonyStep1Count extends StatelessWidget {
         CupertinoPageRoute(
           builder: (BuildContext context) => CeremonyStep2Scan(
             store,
+            api,
             claim: webApi.encointer
                 .signClaimOfAttendance(count, store.settings.cachedPin)
                 .then((claim) => webApi.codec.encodeToBytes(ClaimOfAttendanceJSRegistryName, claim)),

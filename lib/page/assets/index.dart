@@ -6,6 +6,7 @@ import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/dragHandle.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
+import 'package:encointer_wallet/common/components/submitButton.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremonyBox.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserOnMap.dart';
@@ -287,17 +288,14 @@ class _AssetsState extends State<Assets> {
                                   var hasPendingIssuance = snapshot.data;
 
                                   if (hasPendingIssuance) {
-                                    return ElevatedButton(
+                                    return SubmitButton(
                                       child: Text(dic.assets.issuancePending),
-                                      onPressed: () {
-                                        final txPaymentAsset =
-                                            store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
-                                        submitClaimRewards(
-                                          context,
-                                          store.encointer.chosenCid,
-                                          txPaymentAsset: txPaymentAsset,
-                                        );
-                                      },
+                                      onPressed: (context) => submitClaimRewards(
+                                        context,
+                                        store,
+                                        webApi,
+                                        store.encointer.chosenCid,
+                                      ),
                                     );
                                   } else {
                                     return store.settings.developerMode

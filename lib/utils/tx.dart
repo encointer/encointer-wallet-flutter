@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
+import 'package:encointer_wallet/page/account/txConfirmLogic.dart';
 import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -20,6 +21,7 @@ import 'package:flutter/material.dart';
 Future<void> submitTx(
   BuildContext context,
   AppStore store,
+  Api api,
   Map txParams, {
   Function(BuildContext txPageContext, Map res) onFinish,
 }) async {
@@ -41,34 +43,42 @@ Future<void> submitTx(
   final txPaymentAsset = store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
 
   txParams["txInfo"]["txPaymentAsset"] = txPaymentAsset;
-  txParams["onFinish"] = onFinish ??
-      (BuildContext txPageContext, Map res) {
-        Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
-      };
+  txParams["onFinish"] = onFinish ?? (BuildContext txPageContext, Map res) => res;
 
-  return Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: txParams);
+  return onSubmit(
+    context,
+    store,
+    api,
+    false,
+    txParams: txParams,
+    password: store.settings.cachedPin,
+  );
 }
 
 Future<void> submitClaimRewards(
   BuildContext context,
-  CommunityIdentifier chosenCid, {
-  CommunityIdentifier txPaymentAsset,
-}) async {
-  var args = {
+  AppStore store,
+  Api api,
+  CommunityIdentifier chosenCid,
+) async {
+  var txParams = {
     "title": 'claim_rewards',
     "txInfo": {
       "module": 'encointerCeremonies',
       "call": 'claimRewards',
       "cid": chosenCid,
-      "txPaymentAsset": txPaymentAsset,
     },
     "detail": "cid: ${chosenCid.toFmtString()}",
     "params": [chosenCid],
-    'onFinish': (BuildContext txPageContext, Map res) {
-      Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
-    }
   };
-  Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
+
+  return submitTx(
+    context,
+    store,
+    api,
+    txParams,
+    onFinish: (BuildContext txPageContext, Map res) => (res),
+  );
 }
 
 Future<void> submitEndorseNewcomer(
@@ -137,6 +147,26 @@ Map<String, dynamic> attestClaimsParams(
   };
 }
 
+Map<String, dynamic> encointerBalanceTransferParams(
+  CommunityIdentifier cid,
+  String recipientAddress,
+  double amount,
+) {
+  return {
+    "title": 'encointerBalancesTransfer',
+    "txInfo": {
+      "module": 'encointerBalances',
+      "call": 'transfer',
+      "cid": cid,
+    },
+    "params": [
+      recipientAddress,
+      cid.toFmtString(),
+      amount.toString(),
+    ],
+  };
+}
+
 Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api api) async {
   // this is called inside submitTx too, but we need to unlock the key for the proof of attendance.
   if (store.settings.cachedPin.isEmpty) {
@@ -157,6 +187,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
   return submitTx(
     context,
     store,
+    api,
     registerParticipantParams(store.encointer.chosenCid, proof: await api.encointer.getProofOfAttendance()),
     onFinish: (BuildContext txPageContext, Map res) {
       store.encointer.updateAggregatedAccountData();
@@ -168,7 +199,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
   );
 }
 
-Future<void> submitAttestClaims(BuildContext context, AppStore store) async {
+Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) async {
   final params = attestClaimsParams(
     context,
     store.encointer.chosenCid,
@@ -179,6 +210,7 @@ Future<void> submitAttestClaims(BuildContext context, AppStore store) async {
   return submitTx(
     context,
     store,
+    api,
     params,
     onFinish: (BuildContext txPageContext, Map res) {
       store.encointer.communityAccount.setMeetupCompleted();
