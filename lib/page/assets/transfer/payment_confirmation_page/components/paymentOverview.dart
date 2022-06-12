@@ -18,7 +18,8 @@ class PaymentOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final recipientAddress = Fmt.addressOfAccount(recipientAccount, store);
+    final recipientLabel =
+        recipientAccount.name.isNotEmpty ? recipientAccount.name : Fmt.addressOfAccount(recipientAccount, store);
 
     return IntrinsicHeight(
       child: Row(
@@ -48,7 +49,7 @@ class PaymentOverview extends StatelessWidget {
                 size: 96,
               ),
               Text(
-                Fmt.address(recipientAddress),
+                Fmt.address(recipientLabel),
                 style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
                 textAlign: TextAlign.center,
               ),
