@@ -47,17 +47,19 @@ class _AccountSharePageState extends State<AccountSharePage> {
         ],
       ),
       body: SafeArea(
-        child: ListView(
-          children: <Widget>[
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 16.0),
-              child: Column(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
+          child: Column(
+            children: [
+              ListView(
+                shrinkWrap: true,
                 children: <Widget>[
                   Text(
                     dic.profile.qrScanHintAccount,
                     style: textTheme.headline2.copyWith(color: encointerBlack),
                     textAlign: TextAlign.center,
                   ),
+                  SizedBox(height: 16),
                   QrImage(
                     data: contactQrCode.toQrPayload(),
                     embeddedImage: AssetImage('assets/images/public/app.png'),
@@ -68,29 +70,29 @@ class _AccountSharePageState extends State<AccountSharePage> {
                     style: textTheme.headline3.copyWith(color: encointerGrey),
                     textAlign: TextAlign.center,
                   ),
-                  Text(
-                    dic.profile.shareLinkHint,
-                    textAlign: TextAlign.center,
-                    style: textTheme.headline4.copyWith(color: encointerGrey),
-                  ),
-                  SizedBox(height: 8),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.share, color: ZurichLion.shade500),
-                        SizedBox(width: 12),
-                        Text(dic.profile.sendLink, style: textTheme.headline3),
-                      ],
-                    ),
-                    onPressed: () => Share.share(contactQrCode.toQrPayload()),
-                  )
                 ],
               ),
-            ),
-
-          ],
+              Spacer(),
+              Text(
+                dic.profile.shareLinkHint,
+                textAlign: TextAlign.center,
+                style: textTheme.headline4.copyWith(color: encointerGrey),
+              ),
+              SizedBox(height: 8),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(Icons.share, color: ZurichLion.shade500),
+                    SizedBox(width: 12),
+                    Text(dic.profile.sendLink, style: textTheme.headline3),
+                  ],
+                ),
+                onPressed: () => Share.share(contactQrCode.toQrPayload()),
+              ),
+            ],
+          ),
         ),
       ),
     );
