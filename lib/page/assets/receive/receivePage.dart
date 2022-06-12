@@ -181,8 +181,9 @@ class _ReceivePageState extends State<ReceivePage> {
                   SizedBox(height: 8),
                   Column(children: [
                     QrImage(
-                      size: MediaQuery.of(context).copyWith().size.height / 2,
                       data: invoice.toQrPayload(),
+                      embeddedImage: AssetImage('assets/images/public/app.png'),
+                      embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
                     ),
                     InkWell(
                       child: Padding(
