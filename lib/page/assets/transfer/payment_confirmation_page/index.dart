@@ -72,10 +72,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
                 SizedBox(height: 10),
                 Flexible(
                   fit: FlexFit.tight,
-                  child: Text(
-                    "$amount ${params.communitySymbol}",
-                    style: h2Grey,
-                  ),
+                  child: TextGradient(text: '${Fmt.doubleFormat(amount)} ⵐ'),
                 ),
                 Expanded(
                   child: AnimatedSwitcher(
