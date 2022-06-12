@@ -19,6 +19,9 @@ class AccountSharePage extends StatefulWidget {
 class _AccountSharePageState extends State<AccountSharePage> {
   @override
   Widget build(BuildContext context) {
+    var dic = I18n.of(context).translationsForLocale();
+    var textTheme = Theme.of(context).textTheme;
+
     String accountToBeSharedPubKey = ModalRoute.of(context).settings.arguments;
     AccountData accountToBeShared = widget.store.account.getAccountData(accountToBeSharedPubKey);
     final addressSS58 = widget.store.account.getNetworkAddress(accountToBeSharedPubKey);
@@ -31,7 +34,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: Text(I18n.of(context).translationsForLocale().profile.share),
+        title: Text(dic.profile.share),
         leading: Container(),
         actions: [
           IconButton(
@@ -51,8 +54,8 @@ class _AccountSharePageState extends State<AccountSharePage> {
                 Padding(
                   padding: const EdgeInsets.only(top: 20, left: 60, right: 60, bottom: 20),
                   child: Text(
-                    I18n.of(context).translationsForLocale().profile.qrScanHintAccount,
-                    style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
+                    dic.profile.qrScanHintAccount,
+                    style: textTheme.headline2.copyWith(color: encointerBlack),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -66,17 +69,21 @@ class _AccountSharePageState extends State<AccountSharePage> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(top: 10, bottom: 30),
-                      child: Text('${accountToBeShared.name}',
-                          style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
-                          textAlign: TextAlign.center),
+                      child: Text(
+                        '${accountToBeShared.name}',
+                        style: textTheme.headline3.copyWith(color: encointerGrey),
+                        textAlign: TextAlign.center,
+                      ),
                     )
                   ],
                 ),
               ],
             ),
-            Text(I18n.of(context).translationsForLocale().profile.shareLinkHint,
-                textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey)),
+            Text(
+              dic.profile.shareLinkHint,
+              textAlign: TextAlign.center,
+              style: textTheme.headline4.copyWith(color: encointerGrey),
+            ),
             Padding(
               padding: const EdgeInsets.fromLTRB(30, 10, 30, 0),
               child: ElevatedButton(
@@ -86,8 +93,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
                   children: [
                     Icon(Icons.share, color: ZurichLion.shade500),
                     SizedBox(width: 12),
-                    Text(I18n.of(context).translationsForLocale().profile.sendLink,
-                        style: Theme.of(context).textTheme.headline3),
+                    Text(dic.profile.sendLink, style: textTheme.headline3),
                   ],
                 ),
                 onPressed: () => Share.share(contactQrCode.toQrPayload()),
