@@ -49,56 +49,47 @@ class _AccountSharePageState extends State<AccountSharePage> {
       body: SafeArea(
         child: ListView(
           children: <Widget>[
-            Column(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(top: 20, left: 60, right: 60, bottom: 20),
-                  child: Text(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0,vertical: 16.0),
+              child: Column(
+                children: <Widget>[
+                  Text(
                     dic.profile.qrScanHintAccount,
                     style: textTheme.headline2.copyWith(color: encointerBlack),
                     textAlign: TextAlign.center,
                   ),
-                ),
-                Column(
-                  children: [
-                    QrImage(
-                      size: MediaQuery.of(context).copyWith().size.height / 2,
-                      data: contactQrCode.toQrPayload(),
-                      embeddedImage: AssetImage('assets/images/public/app.png'),
-                      embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
+                  QrImage(
+                    data: contactQrCode.toQrPayload(),
+                    embeddedImage: AssetImage('assets/images/public/app.png'),
+                    embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
+                  ),
+                  Text(
+                    '${accountToBeShared.name}',
+                    style: textTheme.headline3.copyWith(color: encointerGrey),
+                    textAlign: TextAlign.center,
+                  ),
+                  Text(
+                    dic.profile.shareLinkHint,
+                    textAlign: TextAlign.center,
+                    style: textTheme.headline4.copyWith(color: encointerGrey),
+                  ),
+                  SizedBox(height: 8),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.share, color: ZurichLion.shade500),
+                        SizedBox(width: 12),
+                        Text(dic.profile.sendLink, style: textTheme.headline3),
+                      ],
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 10, bottom: 30),
-                      child: Text(
-                        '${accountToBeShared.name}',
-                        style: textTheme.headline3.copyWith(color: encointerGrey),
-                        textAlign: TextAlign.center,
-                      ),
-                    )
-                  ],
-                ),
-              ],
-            ),
-            Text(
-              dic.profile.shareLinkHint,
-              textAlign: TextAlign.center,
-              style: textTheme.headline4.copyWith(color: encointerGrey),
-            ),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(30, 10, 30, 0),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.share, color: ZurichLion.shade500),
-                    SizedBox(width: 12),
-                    Text(dic.profile.sendLink, style: textTheme.headline3),
-                  ],
-                ),
-                onPressed: () => Share.share(contactQrCode.toQrPayload()),
+                    onPressed: () => Share.share(contactQrCode.toQrPayload()),
+                  )
+                ],
               ),
-            )
+            ),
+
           ],
         ),
       ),
