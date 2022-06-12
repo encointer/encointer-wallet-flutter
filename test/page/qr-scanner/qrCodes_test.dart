@@ -6,10 +6,10 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('Contact QrCode', () {
     test('toQrPayload works', () async {
-      final qrCode = ContactQrCode(ContactData(
+      final qrCode = ContactQrCode(
         account: "account",
         label: "label",
-      ));
+      );
 
       expect(
         qrCode.toQrPayload(),
@@ -37,12 +37,12 @@ void main() {
 
   group('Invoice QrCode', () {
     test('toQrPayload works', () async {
-      final qrCode = InvoiceQrCode(InvoiceData(
+      final qrCode = InvoiceQrCode(
         account: "account",
         cid: CommunityIdentifier.fromFmtString("sqm1v79dF6b"),
         amount: 1.001,
         label: "label",
-      ));
+      );
 
       expect(
         qrCode.toQrPayload(),
@@ -76,12 +76,12 @@ void main() {
 
   group('Voucher QrCode', () {
     test('toQrPayload works', () async {
-      final qrCode = VoucherQrCode(VoucherData(
+      final qrCode = VoucherQrCode(
         voucherUri: "voucherUri",
         cid: CommunityIdentifier.fromFmtString("sqm1v79dF6b"),
         network: "nctr-k",
         issuer: "issuer",
-      ));
+      );
 
       expect(
         qrCode.toQrPayload(),
