@@ -4,7 +4,7 @@ import 'package:encointer_wallet/common/components/TapTooltip.dart';
 import 'package:encointer_wallet/common/components/addressFormItem.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/page/account/uos/qrSenderPage.dart';
+import 'package:encointer_wallet/page/account/txConfirmLogic.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactListPage.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
@@ -31,6 +31,7 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
   _TxConfirmPageState(this.store);
 
   final AppStore store;
+  final api = webApi;
 
   bool appConnected = true;
 
@@ -45,20 +46,18 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
     }
 
     if (store.account.currentAccount.observation ?? false) {
+      // Todo: This is from upstream. What does this do?
       webApi.account.queryRecoverable(store.account.currentAddress);
     }
 
     final Map args = ModalRoute.of(context).settings.arguments;
-    Map txInfo = args['txInfo'];
-    txInfo['pubKey'] = store.account.currentAccount.pubKey;
-    txInfo['address'] = store.account.currentAddress;
-    if (_proxyAccount != null) {
-      txInfo['proxy'] = _proxyAccount.pubKey;
-    }
-    Map fee = await webApi.account.estimateTxFees(txInfo, args['params'], rawParam: args['rawParam']);
+
+    Map fee = await getTxFee(store, webApi, args, proxyAccount: _proxyAccount, reload: reload);
+
     setState(() {
       _fee = fee;
     });
+
     return fee['partialFee'].toString();
   }
 
@@ -79,54 +78,6 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
       });
     }
     _getTxFee(reload: true);
-  }
-
-  void _onTxFinish(BuildContext context, Map res, Function(BuildContext, Map) onTxFinish) {
-    print('callback triggered, blockHash: ${res['hash']}');
-    store.assets.setSubmitting(false);
-
-    onTxFinish(context, res);
-
-    if (mounted) {
-      ScaffoldMessenger.of(context).removeCurrentSnackBar();
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        backgroundColor: Colors.white,
-        content: ListTile(
-          leading: Container(
-            width: 24,
-            child: Image.asset('assets/images/assets/success.png'),
-          ),
-          title: Text(
-            I18n.of(context).translationsForLocale().assets.success,
-            style: TextStyle(color: Colors.black54),
-          ),
-        ),
-        duration: Duration(seconds: 2),
-      ));
-    }
-  }
-
-  void _onTxError(BuildContext context, String errorMsg) {
-    final Translations dic = I18n.of(context).translationsForLocale();
-    store.assets.setSubmitting(false);
-    if (mounted) {
-      ScaffoldMessenger.of(context).removeCurrentSnackBar();
-    }
-    showCupertinoDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return CupertinoAlertDialog(
-          title: Container(),
-          content: Text(errorMsg),
-          actions: <Widget>[
-            CupertinoButton(
-              child: Text(dic.home.ok),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
-        );
-      },
-    );
   }
 
   Future<bool> _validateProxy() async {
@@ -172,92 +123,8 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
               I18n.of(context).translationsForLocale().home.unlock,
               key: Key('password-input-field'),
             ),
-            (password) => _onSubmit(context, password: password));
+            (password) => onSubmit(context, store, api, mounted, password: password));
       },
-    );
-  }
-
-  Future<void> _onSubmit(
-    BuildContext context, {
-    String password,
-    bool viaQr = false,
-  }) async {
-    final Translations dic = I18n.of(context).translationsForLocale();
-    final Map args = ModalRoute.of(context).settings.arguments;
-
-    store.assets.setSubmitting(true);
-    store.account.setTxStatus('queued');
-
-    Map txInfo = args['txInfo'];
-    txInfo['pubKey'] = store.account.currentAccount.pubKey;
-    txInfo['address'] = store.account.currentAddress;
-    txInfo['password'] = password;
-    txInfo['tip'] = _tipValue.toString();
-    if (_proxyAccount != null) {
-      txInfo['proxy'] = _proxyAccount.pubKey;
-      txInfo['ss58'] = store.settings.endpoint.ss58.toString();
-    }
-    print(txInfo);
-    print(args['params']);
-
-    var onTxFinishFn = (args['onFinish'] as Function(BuildContext, Map));
-
-    if (await webApi.isConnected()) {
-      _showTxStatusSnackbar(
-        context,
-        "dic['tx.${store.account.txStatus}']" ?? dic.home.transactionQueued,
-        CupertinoActivityIndicator(),
-      ); // TODO armin, fix transfer status logic
-      final Map res = viaQr ? await _sendTxViaQr(context, args) : await _sendTx(context, args);
-      if (res['hash'] == null) {
-        _onTxError(context, res['error']);
-      } else {
-        _onTxFinish(context, res, onTxFinishFn);
-      }
-    } else {
-      _showTxStatusSnackbar(context, dic.home.transactionQueuedOffline, null);
-      args['notificationTitle'] = I18n.of(context).translationsForLocale().home.notifySubmittedQueued;
-      store.account.queueTx(args);
-    }
-  }
-
-  void _showTxStatusSnackbar(BuildContext context, String status, Widget leading) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: Theme.of(context).cardColor,
-      content: ListTile(
-        leading: leading,
-        title: Text(
-          status,
-          style: TextStyle(color: Colors.black54),
-        ),
-      ),
-      duration: Duration(seconds: 12),
-    ));
-  }
-
-  Future<Map> _sendTx(BuildContext context, Map args) async {
-    return await webApi.account.sendTx(
-      args['txInfo'],
-      args['params'],
-      args['title'],
-      I18n.of(context).translationsForLocale().home.notifySubmitted,
-      rawParam: args['rawParam'],
-    );
-  }
-
-  Future<Map> _sendTxViaQr(BuildContext context, Map args) async {
-    final Translations dic = I18n.of(context).translationsForLocale();
-    print('show qr');
-    final signed = await Navigator.of(context).pushNamed(QrSenderPage.route, arguments: args);
-    if (signed == null) {
-      store.assets.setSubmitting(false);
-      return {'error': dic.account.uosCanceled};
-    }
-    return await webApi.account.addSignatureAndSend(
-      signed.toString(),
-      args['txInfo'],
-      args['title'],
-      I18n.of(context).translationsForLocale().home.notifySubmitted,
     );
   }
 
@@ -508,12 +375,10 @@ class _TxConfirmPageState extends State<TxConfirmPage> {
                           style: TextStyle(color: Colors.white),
                         ),
                         onPressed: isUnsigned
-                            ? () => _onSubmit(context)
-                            : (isObservation && _proxyAccount == null) || isProxyObservation
-                                ? () => _onSubmit(context, viaQr: true)
-                                : store.assets.submitting
-                                    ? null
-                                    : () => _showPasswordDialog(context),
+                            ? () => onSubmit(context, store, api, mounted)
+                            : store.assets.submitting
+                                ? null
+                                : () => _showPasswordDialog(context),
                       ),
                     ),
                   ),

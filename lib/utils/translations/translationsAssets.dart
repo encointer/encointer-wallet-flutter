@@ -26,6 +26,7 @@ abstract class TranslationsAssets {
   String get tipHint;
   String get to;
   String get transfer;
+  String get payment;
   String get value;
   String get amountToBeTransferred;
   String get invoiceAmount;
@@ -35,6 +36,10 @@ abstract class TranslationsAssets {
   String get invoice;
   String get incomingConfirmed;
   String get fundsReceived;
+  String get paymentDoYouWantToProceed;
+  String get paymentSubmitting;
+  String get paymentFinished;
+  String get paymentError;
 }
 
 class TranslationsEnAssets implements TranslationsAssets {
@@ -62,7 +67,8 @@ class TranslationsEnAssets implements TranslationsAssets {
   get tip => 'Tip';
   get tipHint => 'Adding a tip to this transfer, paying the block author for greater priority.';
   get to => 'To';
-  get transfer => 'Send'; // as Alain requested 2022-01-2
+  get transfer => 'Send';
+  get payment => 'Payment';
   get value => 'Value';
   get amountToBeTransferred => 'Send amount';
   get invoiceAmount => 'Invoice amount';
@@ -72,6 +78,10 @@ class TranslationsEnAssets implements TranslationsAssets {
   get invoice => 'Invoice';
   get incomingConfirmed => 'incoming AMOUNT CID_SYMBOL for ACCOUNT_NAME confirmed';
   get fundsReceived => 'funds received';
+  get paymentDoYouWantToProceed => "Proceed with payment?";
+  get paymentSubmitting => "Payment is being submitted...";
+  get paymentFinished => "Payment complete";
+  get paymentError => "Payment error";
 }
 
 class TranslationsDeAssets implements TranslationsAssets {
@@ -100,6 +110,7 @@ class TranslationsDeAssets implements TranslationsAssets {
   get tipHint => 'Trinkgeld für diese Transaktion hinzufügen, bezahle dem Block Author für höhere Priorität.';
   get to => 'Nach';
   get transfer => 'Senden';
+  get payment => 'Zahlung';
   get value => 'Wert';
   get amountToBeTransferred => 'Betrag';
   get invoiceAmount => 'Rechnungsbetrag';
@@ -109,6 +120,10 @@ class TranslationsDeAssets implements TranslationsAssets {
   get invoice => 'Rechnungsbetrag';
   get incomingConfirmed => 'Empfang von AMOUNT CID_SYMBOL für ACCOUNT_NAME bestätigt';
   get fundsReceived => 'Zahlungseingang';
+  get paymentDoYouWantToProceed => "Mit Zahlung fortfahren?";
+  get paymentSubmitting => "Zahlung wird eingereicht...";
+  get paymentFinished => "Zahlung erfolgt";
+  get paymentError => "Zahlungsfehler";
 }
 
 class TranslationsZhAssets implements TranslationsAssets {
@@ -137,6 +152,7 @@ class TranslationsZhAssets implements TranslationsAssets {
   get tipHint => '为出块人支付额外的费用，可以提高交易打包优先级。';
   get to => '收款地址';
   get transfer => '转账';
+  get payment => throw UnimplementedError();
   get value => '金额';
   get amountToBeTransferred => '发票金额';
   get invoiceAmount => '发票金额';
@@ -146,4 +162,8 @@ class TranslationsZhAssets implements TranslationsAssets {
   get invoice => throw UnimplementedError();
   get incomingConfirmed => throw UnimplementedError();
   get fundsReceived => throw UnimplementedError();
+  get paymentDoYouWantToProceed => throw UnimplementedError();
+  get paymentSubmitting => throw UnimplementedError();
+  get paymentFinished => throw UnimplementedError();
+  get paymentError => throw UnimplementedError();
 }

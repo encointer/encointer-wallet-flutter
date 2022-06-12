@@ -7,6 +7,7 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountBondedInfo.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/account/types/accountRecoveryInfo.dart';
+import 'package:encointer_wallet/store/account/types/txStatus.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:mobx/mobx.dart';
@@ -39,7 +40,7 @@ abstract class _AccountStore with Store {
   bool loading = true;
 
   @observable
-  String txStatus = '';
+  TxStatus txStatus;
 
   @observable
   AccountCreate newAccount = AccountCreate();
@@ -140,8 +141,13 @@ abstract class _AccountStore with Store {
   }
 
   @action
-  void setTxStatus(String status) {
+  void setTxStatus([TxStatus status]) {
     txStatus = status;
+  }
+
+  @action
+  void clearTxStatus() {
+    txStatus = null;
   }
 
   @action
@@ -171,7 +177,7 @@ abstract class _AccountStore with Store {
     new Timer.periodic(Duration(seconds: 5), (Timer timer) async {
       if (await webApi.isConnected()) {
         queuedTxs.forEach((args) async {
-          Map res = await webApi.account.sendTx(
+          Map res = await webApi.account.sendTxAndShowNotification(
             args['txInfo'],
             args['params'],
             args['title'],
@@ -193,7 +199,7 @@ abstract class _AccountStore with Store {
           }
         });
         rootStore.assets.setSubmitting(false);
-        rootStore.account.setTxStatus('');
+        rootStore.account.clearTxStatus();
         timer.cancel();
         queuedTxs = [];
       } else {

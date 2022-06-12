@@ -50,6 +50,7 @@ dependencies:
   dio: ^4.0.0
 #  image_cropper: ^1.4.0
   image_picker: ^0.7.5+2
+  animated_check: ^1.0.0
 
   # encointer dart api
   json_rpc_2: ^3.0.1

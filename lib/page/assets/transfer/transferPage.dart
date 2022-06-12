@@ -1,12 +1,9 @@
-import 'dart:convert';
-
 import 'package:encointer_wallet/common/components/AddressInputField.dart';
 import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
-import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/page/qr_scan/qrScanPage.dart';
 import 'package:encointer_wallet/page/qr_scan/qrScanService.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -21,6 +18,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/index.dart';
 
 class TransferPageParams {
   TransferPageParams({this.cid, this.communitySymbol, this.recipient, this.label, this.amount, this.redirect});
@@ -89,7 +87,7 @@ class _TransferPageState extends State<TransferPage> {
               ],
             ),
             body: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
               child: Column(
                 children: [
                   Expanded(
@@ -169,17 +167,19 @@ class _TransferPageState extends State<TransferPage> {
                   SizedBox(height: 8),
                   PrimaryButton(
                     key: Key('make-transfer'),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Iconsax.send_sqaure_2),
-                        SizedBox(width: 12),
-                        Text(dic.assets.transfer),
-                      ],
+                    child: Container(
+                      height: 24,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Iconsax.login_1),
+                          SizedBox(width: 12),
+                          Text(dic.account.next),
+                        ],
+                      ),
                     ),
-                    onPressed: _handleSubmit,
+                    onPressed: _pushPaymentConfirmationPage,
                   ),
-                  SizedBox(height: 8),
                 ],
               ),
             ),
@@ -189,45 +189,17 @@ class _TransferPageState extends State<TransferPage> {
     );
   }
 
-  void _handleSubmit() {
+  void _pushPaymentConfirmationPage() {
     if (_formKey.currentState.validate()) {
-      String cid = _cid.toFmtString();
-      final address = Fmt.addressOfAccount(_accountTo, store);
-
-      var args = {
-        "title": I18n.of(context).translationsForLocale().assets.transfer, // Todo: Cleanup
-        "txInfo": {
-          "module": 'encointerBalances',
-          "call": 'transfer',
-          "cid": cid,
-          "txPaymentAsset": store.encointer.getTxPaymentAsset(_cid),
-        },
-        "detail": jsonEncode({
-          "destination": address,
-          "currency": _communitySymbol,
-          "amount": _amountCtrl.text.trim(),
-        }),
-        "params": [
-          // params.to
-          address,
-          // params.communityId
-          cid,
-          // params.amount
-          _amountCtrl.text.trim(),
-        ],
-      };
-
-      args['onFinish'] = (BuildContext txPageContext, Map res) {
-        final TransferPageParams routeArgs = ModalRoute.of(context).settings.arguments;
-        if (store.settings.endpointIsEncointer) {
-          store.encointer.account.setTransferTxs([res], store.account.currentAddress);
-        }
-        Navigator.popUntil(txPageContext, ModalRoute.withName(routeArgs.redirect));
-        if (routeArgs.redirect == '/') {
-          globalBalanceRefreshKey.currentState.show();
-        }
-      };
-      Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
+      Navigator.pushNamed(
+        context,
+        PaymentConfirmationPage.route,
+        arguments: PaymentConfirmationParams(
+            cid: _cid,
+            communitySymbol: _communitySymbol,
+            recipientAccount: _accountTo,
+            amount: double.parse(_amountCtrl.text.trim())),
+      );
     }
   }
 

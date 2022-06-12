@@ -29,6 +29,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.40.7"
+  animated_check:
+    dependency: "direct main"
+    description:
+      name: animated_check
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.5"
   animated_stack_widget:
     dependency: transitive
     description:
