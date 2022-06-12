@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:animated_check/animated_check.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/paymentOverview.dart';
@@ -41,13 +44,19 @@ class PaymentConfirmationPage extends StatefulWidget {
   _PaymentConfirmationPageState createState() => _PaymentConfirmationPageState();
 }
 
-class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
+class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with SingleTickerProviderStateMixin {
   TransferState _transferState = TransferState.notStarted;
 
   /// Transaction result, will only be used in the error case.
   Map _transactionResult;
 
   DateTime _blockTimestamp;
+
+  // for the animated tick.
+  AnimationController _animationController;
+  Animation<double> _animation;
+  Timer _timer;
+  bool _animationInitialized = false;
 
   @override
   Widget build(BuildContext context) {
@@ -177,16 +186,19 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
         break;
       case TransferState.finished:
         {
+          if (!_animationInitialized) {
+            _initializeAnimation();
+          }
+
           return Container(
             decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.green),
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Icon(
-                Icons.check,
-                size: 80.0,
-                color: Colors.white,
-              ),
-            ),
+                padding: const EdgeInsets.all(0),
+                child: AnimatedCheck(
+                  progress: _animation,
+                  size: 100,
+                  color: Colors.white,
+                )),
           );
         }
         break;
@@ -259,6 +271,37 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> {
         return Text("Unknown transfer state");
         break;
     }
+  }
+
+  void _animateTick() {
+    _animationController.forward();
+    Future.delayed(Duration(seconds: 1), () => _animationController.reset());
+  }
+
+  void _initializeAnimation() {
+    _animationController = AnimationController(vsync: this, duration: Duration(seconds: 1));
+
+    _animation = new Tween<double>(begin: 0, end: 1)
+        .animate(new CurvedAnimation(parent: _animationController, curve: Curves.easeInOutCirc));
+
+    _animationController.forward();
+
+    _timer = Timer.periodic(
+      Duration(seconds: 2),
+      (_timer) => _animateTick(),
+    );
+
+    _animationInitialized = true;
+  }
+
+  @override
+  void dispose() {
+    if (_animationController != null) {
+      _animationController.dispose();
+      _animation = null;
+      _timer.cancel();
+    }
+    super.dispose();
   }
 }
 
