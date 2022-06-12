@@ -1,10 +1,10 @@
-
 //! Basic definitions for encointer-qr codes.
 
 const ENCOINTER_PREFIX = 'encointer';
 const String QR_CODE_FIELD_SEPARATOR = '\n';
 
-class QrCode<QrCodeData extends ToQrFields> {
+abstract class QrCode<QrCodeData extends ToQrFields> {
+  QrCode(this.data);
   QrCodeContext context;
 
   QrCodeVersion version;
@@ -26,8 +26,10 @@ abstract class ToQrFields {
 enum QrCodeContext {
   /// `encointer-contact` context
   contact,
+
   /// `encointer-invoice` context
   invoice,
+
   /// `encointer-voucher` context
   voucher
   // claim, currently unsupported and might not be merged into this. Let's see.

@@ -4,20 +4,19 @@ import 'package:flutter/material.dart';
 import 'qrCodeBase.dart';
 
 class ContactQrCode extends QrCode<ContactData> {
-  ContactQrCode(this.data);
+  ContactQrCode(ContactData data): super(data);
 
   var context = QrCodeContext.contact;
 
   var version = QrCodeVersion.v1_0;
 
-  ContactData data;
+  static ContactQrCode fromPayload(String payload) {
+    return fromQrFields(payload.split("\n"));
+  }
 
-  static ContactQrCode fromStringList(List<String> values) {
+  static ContactQrCode fromQrFields(List<String> fields) {
     // todo verify context and version
-    return ContactQrCode(ContactData(
-      account: values[2],
-      label: values[3],
-    ));
+    return ContactQrCode(ContactData.fromQrFields(fields.sublist(2)));
   }
 }
 
@@ -36,31 +35,30 @@ class ContactData implements ToQrFields {
   List<String> toQrFields() {
     return [account, label];
   }
+
+  static ContactData fromQrFields(List<String> fields) {
+    return ContactData(account: fields[0], label: fields[1]);
+  }
 }
 
 class InvoiceQrCode extends QrCode<InvoiceData> {
-  InvoiceQrCode(this.data);
+  InvoiceQrCode(InvoiceData data): super(data);
 
   var context = QrCodeContext.invoice;
 
   var version = QrCodeVersion.v1_0;
 
-  InvoiceData data;
+  static InvoiceQrCode fromPayload(String payload) {
+    return fromQrFields(payload.split("\n"));
+  }
 
-  static InvoiceQrCode fromStringList(List<String> values) {
+  static InvoiceQrCode fromQrFields(List<String> fields) {
     // todo verify context and version
-    return InvoiceQrCode(
-      InvoiceData(
-        account: values[2],
-        cid: values[3].isNotEmpty ? CommunityIdentifier.fromFmtString(values[3]) : null,
-        amount: values[4].trim().isNotEmpty ? double.parse(values[4]) : null,
-        label: values[5],
-      ),
-    );
+    return InvoiceQrCode(InvoiceData.fromQrFields(fields.sublist(2)));
   }
 }
 
-class InvoiceData implements ToQrFields{
+class InvoiceData implements ToQrFields {
   InvoiceData({
     @required this.account,
     this.cid,
@@ -88,27 +86,31 @@ class InvoiceData implements ToQrFields{
       label,
     ];
   }
+
+  static InvoiceData fromQrFields(List<String> fields) {
+    return InvoiceData(
+      account: fields[0],
+      cid: fields[1].isNotEmpty ? CommunityIdentifier.fromFmtString(fields[1]) : null,
+      amount: fields[2].trim().isNotEmpty ? double.parse(fields[2]) : null,
+      label: fields[3],
+    );
+  }
 }
 
 class VoucherQrCode extends QrCode<VoucherData> {
-  VoucherQrCode(this.data);
+  VoucherQrCode(VoucherData data): super(data);
 
   var context = QrCodeContext.voucher;
 
   var version = QrCodeVersion.v1_0;
 
-  VoucherData data;
+  static VoucherQrCode fromPayload(String payload) {
+    return fromQrFields(payload.split("\n"));
+  }
 
-  static VoucherQrCode fromStringList(List<String> values) {
+  static VoucherQrCode fromQrFields(List<String> fields) {
     // todo verify context and version
-    return VoucherQrCode(
-      VoucherData(
-        voucherUri: values[2],
-        cid: CommunityIdentifier.fromFmtString(values[3]),
-        network: values[4],
-        issuer: values[5],
-      ),
-    );
+    return VoucherQrCode(VoucherData.fromQrFields(fields.sublist(2)));
   }
 }
 
@@ -139,5 +141,14 @@ class VoucherData implements ToQrFields {
       network,
       issuer,
     ];
+  }
+
+  static VoucherData fromQrFields(List<String> fields) {
+    return VoucherData(
+      voucherUri: fields[0],
+      cid: CommunityIdentifier.fromFmtString(fields[1]),
+      network: fields[2],
+      issuer: fields[3],
+    );
   }
 }
