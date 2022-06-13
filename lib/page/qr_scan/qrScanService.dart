@@ -1,6 +1,6 @@
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactPage.dart';
-import 'package:encointer_wallet/page/qr_scan/qrCodeBase.dart';
+import 'package:encointer_wallet/page/qr_scan/qr_codes/qrCodeBase.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

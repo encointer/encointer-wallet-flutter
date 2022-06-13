@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_qr_scan/qrcode_reader_view.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'qrCodeBase.dart';
+import 'qr_codes/qrCodeBase.dart';
 import 'qrScanService.dart';
 
-export 'qrCodeBase.dart';
+export 'qr_codes/qrCodeBase.dart';
 export 'qrScanService.dart';
 
 class ScanPageParams {

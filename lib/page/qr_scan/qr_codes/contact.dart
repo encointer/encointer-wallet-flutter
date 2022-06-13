@@ -1,7 +1,7 @@
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:flutter/material.dart';
 
-import '../qrCodeBase.dart';
+import 'qrCodeBase.dart';
 
 class ContactQrCode extends QrCode<ContactData> {
   ContactQrCode.withData(

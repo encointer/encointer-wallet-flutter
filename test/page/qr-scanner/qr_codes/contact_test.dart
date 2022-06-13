@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/page/qr_scan/qrCodeBase.dart';
+import 'package:encointer_wallet/page/qr_scan/qr_codes/qrCodeBase.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:flutter_test/flutter_test.dart';
