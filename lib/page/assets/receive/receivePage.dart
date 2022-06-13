@@ -180,11 +180,7 @@ class _ReceivePageState extends State<ReceivePage> {
                       textAlign: TextAlign.center),
                   SizedBox(height: 8),
                   Column(children: [
-                    QrImage(
-                      data: invoice.toQrPayload(),
-                      embeddedImage: AssetImage('assets/images/public/app.png'),
-                      embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
-                    ),
+                    QrImage(data: invoice.toQrPayload()),
                     InkWell(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 24),
