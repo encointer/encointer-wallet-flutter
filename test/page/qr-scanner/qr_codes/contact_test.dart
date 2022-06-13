@@ -55,6 +55,8 @@ void main() {
         "encointer-contact\n"
         "v1.0\n"
         "account\n"
+        "\n"
+        "\n"
         "label",
       );
     });
@@ -63,6 +65,8 @@ void main() {
       final payload = "encointer-contact\n"
           "v1.0\n"
           "account\n"
+          "\n"
+          "\n"
           "label";
 
       final qrCode = ContactQrCode.fromPayload(payload);

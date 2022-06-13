@@ -73,7 +73,7 @@ class ContactData implements ToQrFields {
 
   // implicitly is v1 to satisfy interface
   List<String> toQrFields() {
-    return [account, label];
+    return [account, "", "", label];
   }
 
   List<String> toQrFieldsV2() {
@@ -81,7 +81,7 @@ class ContactData implements ToQrFields {
   }
 
   static ContactData fromQrFieldsV1(List<String> fields) {
-    return ContactData(account: fields[0], label: fields[1]);
+    return ContactData(account: fields[0], label: fields[3]);
   }
 
   static ContactData fromQrFieldsV2(List<String> fields) {
