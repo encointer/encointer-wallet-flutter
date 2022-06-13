@@ -1,5 +1,5 @@
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/page/qr_scan/qrCodes.dart';
+import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';

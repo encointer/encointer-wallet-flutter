@@ -7,6 +7,7 @@ import 'package:encointer_wallet/common/components/submitButton.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
+import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
@@ -17,8 +18,6 @@ import 'package:encointer_wallet/utils/tx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-
-import 'qrCodes.dart';
 
 class ReapVoucherParams {
   ReapVoucherParams({

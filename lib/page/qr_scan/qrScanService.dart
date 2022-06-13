@@ -1,7 +1,7 @@
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactPage.dart';
 import 'package:encointer_wallet/page/qr_scan/qrCodeBase.dart';
-import 'package:encointer_wallet/page/qr_scan/qrCodes.dart';
+import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -24,11 +24,6 @@ class QrScanService {
     List<String> data = rawQrString.split(QR_CODE_FIELD_SEPARATOR);
 
     var context = QrCodeContextExt.fromQrField(data[0]);
-    var version = QrCodeVersionExt.fromQrField(data[1]);
-
-    if (version != QrCodeVersion.v2_0) {
-      throw FormatException('QR scan version [${data[1]}] is currently not supported');
-    }
 
     switch (context) {
       case QrCodeContext.contact:

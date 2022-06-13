@@ -1,7 +1,7 @@
 import 'package:encointer_wallet/common/components/TapTooltip.dart';
 import 'package:encointer_wallet/common/components/roundedButton.dart';
-import 'package:encointer_wallet/page/qr_scan/qrCodes.dart';
 import 'package:encointer_wallet/page/qr_scan/qrScanPage.dart';
+import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
