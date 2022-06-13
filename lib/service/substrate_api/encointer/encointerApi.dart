@@ -387,7 +387,6 @@ class EncointerApi {
         .then((res) => List.from(res['cids']).map((cn) => CommunityIdentifier.fromJson(cn)).toList());
 
     print("CID: " + cids.toString());
-    store.encointer.setCommunityIdentifiers(cids);
     return cids;
   }
 

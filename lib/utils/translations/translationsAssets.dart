@@ -42,7 +42,9 @@ abstract class TranslationsAssets {
   String get paymentError;
   String get voucher;
   String get voucherBalance;
-  String get voucherDifferentNetworkOrCommunity;
+  String get voucherDifferentNetworkAndCommunity;
+  String get voucherDifferentCommunity;
+  String get voucherContainsInexistentCommunity;
   String get doYouWantToRedeemThisVoucher;
   String get fundVoucher;
   String get redeemVoucher;
@@ -92,9 +94,12 @@ class TranslationsEnAssets implements TranslationsAssets {
   get paymentError => "Payment error";
   get voucher => "Voucher";
   get voucherBalance => "Voucher Balance";
-  get voucherDifferentNetworkOrCommunity =>
+  get voucherDifferentNetworkAndCommunity =>
       "The voucher is for a different network or community. Do you want to change "
-      "to the suitable network/community? You can change the network back under Profile > Developer mode";
+      "to NETWORK_PLACEHOLDER and COMMUNITY_PLACEHOLDER? You can change the network back under Profile > Developer mode";
+  get voucherDifferentCommunity =>
+      "The voucher is for a different community. Do you want to change to COMMUNITY_PLACEHOLDER?";
+  get voucherContainsInexistentCommunity => "The voucher contains an inexistent community:";
   get doYouWantToRedeemThisVoucher => "Do you want to redeem this voucher to your current account?";
   get fundVoucher => "Fund voucher";
   get redeemVoucher => "Redeem voucher";
@@ -144,8 +149,11 @@ class TranslationsDeAssets implements TranslationsAssets {
   get paymentError => "Zahlungsfehler";
   get voucher => "Gutschein";
   get voucherBalance => "Gutscheinwert";
-  get voucherDifferentNetworkOrCommunity => "Der Gutschein ist für ein anderes Netzwerk oder Community. Wills du zum "
-      "passenden Netzwerk/Community wechseln? Du kannst das Netzwerk zurückändern under Profil > Developer mode.";
+  get voucherDifferentNetworkAndCommunity => "Der Gutschein ist für ein anderes Netzwerk oder Community. Wills du zu "
+      "NETWORK_PLACEHOLDER und COMMUNITY_PLACEHOLDER wechseln? Du kannst das Netzwerk zurückändern under Profil > Developer mode.";
+  get voucherDifferentCommunity =>
+      "Der Gutschein ist für eine andere Community. Wills du zu COMMUNITY_PLACEHOLDER wechseln?";
+  get voucherContainsInexistentCommunity => "Der Gutschein enthält eine nicht-existente community:";
   get doYouWantToRedeemThisVoucher => "Willst du diesen Gutschein für dein aktuelles Konto einlösen?";
   get fundVoucher => "Gutschein aufladen";
   get redeemVoucher => "Gutschein einlösen";
@@ -195,7 +203,9 @@ class TranslationsZhAssets implements TranslationsAssets {
   get paymentError => throw UnimplementedError();
   get voucher => throw UnimplementedError();
   get voucherBalance => throw UnimplementedError();
-  get voucherDifferentNetworkOrCommunity => throw UnimplementedError();
+  get voucherDifferentNetworkAndCommunity => throw UnimplementedError();
+  get voucherDifferentCommunity => throw UnimplementedError();
+  get voucherContainsInexistentCommunity => throw UnimplementedError();
   get doYouWantToRedeemThisVoucher => throw UnimplementedError();
   get fundVoucher => throw UnimplementedError();
   get redeemVoucher => throw UnimplementedError();

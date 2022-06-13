@@ -40,6 +40,11 @@ class ReapVoucherPage extends StatefulWidget {
   _ReapVoucherPageState createState() => _ReapVoucherPageState();
 }
 
+enum Result {
+  ok,
+  error,
+}
+
 class _ReapVoucherPageState extends State<ReapVoucherPage> {
   String _voucherAddress;
   double _voucherBalance;
@@ -86,12 +91,16 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
       WidgetsBinding.instance.addPostFrameCallback(
         (_) async {
           if (widget.store.settings.endpoint.info != networkInfo) {
-            await showChangeNetworkDialog(
+            await showChangeNetworkAndCommunityDialog(
               context,
+              networkInfo,
+              cid,
               () async {
-                await _changeNetworkAndCommunity(context, networkInfo, cid);
+                return _changeNetworkAndCommunity(context, networkInfo, cid);
               },
             );
+          } else if (widget.store.encointer.chosenCid != cid) {
+            // await showChangeCommunityDialog()
           }
           if (_voucherAddress == null) {
             fetchVoucherData(widget.api, voucherUri, cid);
@@ -185,7 +194,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     }
   }
 
-  Future<void> _changeNetworkAndCommunity(BuildContext context, String networkInfo, CommunityIdentifier cid) async {
+  Future<Result> _changeNetworkAndCommunity(BuildContext context, String networkInfo, CommunityIdentifier cid) async {
     var network;
 
     try {
@@ -219,12 +228,27 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
       });
     }
 
-    widget.store.encointer.setChosenCid(cid);
+    var cids = await widget.api.encointer.getCommunityIdentifiers();
 
-    // pop the loading dialog
-    Navigator.of(context).pop();
+    _log("Got cids: ${cids[0].toFmtString()}, ${cids[1].toFmtString()}");
 
-    setState(() {});
+    if (cids.contains(cid)) {
+      _log("Voucher cid is valid");
+
+      widget.store.encointer.setChosenCid(cid);
+
+      // pop the loading dialog
+      Navigator.of(context).pop();
+
+      // pop the change confirm dialog
+      Navigator.of(context).pop();
+
+      setState(() {});
+    } else {
+      _log("Voucher cid is invalid");
+
+      await showInvalidCommunityDialog(context, cid);
+    }
   }
 }
 
@@ -280,32 +304,95 @@ Widget redeemFailedDialog(BuildContext context, String error) {
   );
 }
 
-Future<void> showChangeNetworkDialog(BuildContext context, Future<void> Function() onChangeConfirm) {
+Future<void> showChangeNetworkAndCommunityDialog(
+  BuildContext context,
+  String network,
+  CommunityIdentifier cid,
+  Future<void> Function() onChangeConfirm,
+) {
   return showCupertinoDialog(
     context: context,
     builder: (BuildContext context) {
-      return changeNetworkDialog(context, onChangeConfirm);
+      final dic = I18n.of(context).translationsForLocale();
+
+      final dialogContent = dic.assets.voucherDifferentNetworkAndCommunity
+          .replaceAll("NETWORK_PLACEHOLDER", network)
+          .replaceAll("COMMUNITY_PLACEHOLDER", cid.toFmtString());
+
+      return CupertinoAlertDialog(
+        title: Container(),
+        content: Text(dialogContent),
+        actions: <Widget>[
+          CupertinoButton(
+            child: Text(dic.home.cancel),
+            onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
+          ),
+          CupertinoButton(
+              child: Text(dic.home.ok),
+              onPressed: () async {
+                await onChangeConfirm();
+              }),
+        ],
+      );
     },
   );
 }
 
-Widget changeNetworkDialog(BuildContext context, Future<void> Function() onChangeConfirm) {
+Future<void> showChangeCommunityDialog(
+  BuildContext context,
+  String network,
+  CommunityIdentifier cid,
+  Future<void> Function() onChangeConfirm,
+) {
+  return showCupertinoDialog(
+    context: context,
+    builder: (BuildContext context) {
+      final dic = I18n.of(context).translationsForLocale();
+
+      final dialogContent = dic.assets.voucherDifferentCommunity.replaceAll("COMMUNITY_PLACEHOLDER", cid.toFmtString());
+
+      return CupertinoAlertDialog(
+        title: Container(),
+        content: Text(dialogContent),
+        actions: <Widget>[
+          CupertinoButton(
+            child: Text(dic.home.cancel),
+            onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
+          ),
+          CupertinoButton(
+              child: Text(dic.home.ok),
+              onPressed: () async {
+                await onChangeConfirm();
+                Navigator.of(context).pop();
+              }),
+        ],
+      );
+    },
+  );
+}
+
+Future<void> showInvalidCommunityDialog(BuildContext context, CommunityIdentifier cid) {
+  return showCupertinoDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return invalidCommunityDialog(context, cid);
+    },
+  );
+}
+
+Widget invalidCommunityDialog(BuildContext context, CommunityIdentifier cid) {
   final dic = I18n.of(context).translationsForLocale();
 
   return CupertinoAlertDialog(
     title: Container(),
-    content: Text(dic.assets.voucherDifferentNetworkOrCommunity),
+    content: Text("${dic.assets.voucherContainsInexistentCommunity} ${cid.toFmtString()}"),
     actions: <Widget>[
       CupertinoButton(
-        child: Text(dic.home.cancel),
-        onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
+        child: Text(dic.home.ok),
+        onPressed: () {
+          Navigator.popUntil(context, ModalRoute.withName('/'));
+        },
       ),
-      CupertinoButton(
-          child: Text(dic.home.ok),
-          onPressed: () async {
-            await onChangeConfirm();
-            Navigator.of(context).pop();
-          }),
     ],
   );
 }
