@@ -35,7 +35,7 @@ enum QrCodeContext {
   // claim, currently unsupported and might not be merged into this. Let's see.
 }
 
-enum QrCodeVersion { v2_0 }
+enum QrCodeVersion { v1_0, v2_0 }
 
 extension QrCodeContextExt on QrCodeContext {
   /// Parses `encointer-<context>` into a `QrCodeContext`.
