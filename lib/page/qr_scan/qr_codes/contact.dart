@@ -44,8 +44,8 @@ class ContactQrCode extends QrCode<ContactData> {
       );
     } else {
       return ContactQrCode.withData(
-          ContactData.fromQrFieldsV2(fields.sublist(2)),
-          version: QrCodeVersion.v2_0,
+        ContactData.fromQrFieldsV2(fields.sublist(2)),
+        version: QrCodeVersion.v2_0,
       );
     }
   }
@@ -71,7 +71,7 @@ class ContactData implements ToQrFields {
   /// Name or other identifier for `account`.
   final String label;
 
-  // implicitly is v1.
+  // implicitly is v1 to satisfy interface
   List<String> toQrFields() {
     return [account, label];
   }
