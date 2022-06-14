@@ -157,8 +157,7 @@ class TranslationsDeAssets implements TranslationsAssets {
   get voucherDifferentCommunity =>
       "Der Gutschein ist für eine andere Community. Wills du zu COMMUNITY_PLACEHOLDER wechseln?";
   get voucherContainsInexistentCommunity => "Der Gutschein enthält eine nicht-existente community:";
-  get doYouWantToRedeemThisVoucher =>
-      "Willst du diesen Gutschein für ACCOUNT_PLACEHOLDER einlösen?";
+  get doYouWantToRedeemThisVoucher => "Willst du diesen Gutschein für ACCOUNT_PLACEHOLDER einlösen?";
   get fundVoucher => "Gutschein aufladen";
   get redeemVoucher => "Gutschein einlösen";
   get redeemSuccess => "Gutschein erfolgreich eingelöst.";
