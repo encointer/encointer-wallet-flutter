@@ -202,6 +202,10 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
       );
     }
 
+    if (result != ChangeResult.ok) {
+      return result;
+    }
+
     if (widget.store.encointer.chosenCid != cid) {
       result = await showChangeCommunityDialog(
         context,
