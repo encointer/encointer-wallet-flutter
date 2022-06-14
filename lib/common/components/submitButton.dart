@@ -36,7 +36,7 @@ class _SubmitButtonState extends State<SubmitButton> {
   Widget build(BuildContext context) {
     return PrimaryButton(
       child: !_submitting ? widget.child : CupertinoActivityIndicator(),
-      onPressed: !_submitting ? () => _onPressed() : null,
+      onPressed: (!_submitting && widget.onPressed != null) ? _onPressed : null,
     );
   }
 }

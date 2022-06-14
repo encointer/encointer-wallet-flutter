@@ -69,8 +69,8 @@ List<EndpointData> networkEndpoints = [
   networkEndpointEncointerLietaer,
   networkEndpointEncointerMainnet,
   networkEndpointEncointerGesellDev,
-  networkEndpointEncointerCantillon,
-  networkEndpointEncointerCantillonDev,
+  // networkEndpointEncointerCantillon,
+  // networkEndpointEncointerCantillonDev,
 ];
 
 const network_ss58_map = {

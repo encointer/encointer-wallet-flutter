@@ -40,6 +40,18 @@ abstract class TranslationsAssets {
   String get paymentSubmitting;
   String get paymentFinished;
   String get paymentError;
+  String get voucher;
+  String get voucherBalance;
+  String get voucherDifferentNetworkAndCommunity;
+  String get voucherDifferentCommunity;
+  String get voucherContainsInexistentCommunity;
+  String get doYouWantToRedeemThisVoucher;
+  String get fundVoucher;
+  String get redeemVoucher;
+  String get redeemSuccess;
+  String get redeemFailure;
+  String get invalidNetwork;
+  String get invalidCommunity;
 }
 
 class TranslationsEnAssets implements TranslationsAssets {
@@ -82,6 +94,20 @@ class TranslationsEnAssets implements TranslationsAssets {
   get paymentSubmitting => "Payment is being submitted...";
   get paymentFinished => "Payment complete";
   get paymentError => "Payment error";
+  get voucher => "Voucher";
+  get voucherBalance => "Voucher Balance";
+  get voucherDifferentNetworkAndCommunity => "The voucher is for a different network. Do you want to change "
+      "to NETWORK_PLACEHOLDER and COMMUNITY_PLACEHOLDER? You can change the network back under Profile > Developer mode";
+  get voucherDifferentCommunity =>
+      "The voucher is for a different community. Do you want to change to COMMUNITY_PLACEHOLDER?";
+  get voucherContainsInexistentCommunity => "The voucher contains an inexistent community:";
+  get doYouWantToRedeemThisVoucher => "Do you want to redeem this voucher to ACCOUNT_PLACEHOLDER?";
+  get fundVoucher => "Fund voucher";
+  get redeemVoucher => "Redeem voucher";
+  get redeemSuccess => "Successfully redeemed voucher.";
+  get redeemFailure => "There was an error while redeeming the voucher. Cause:";
+  get invalidNetwork => "Invalid Network";
+  get invalidCommunity => "Invalid Community";
 }
 
 class TranslationsDeAssets implements TranslationsAssets {
@@ -124,6 +150,20 @@ class TranslationsDeAssets implements TranslationsAssets {
   get paymentSubmitting => "Zahlung wird eingereicht...";
   get paymentFinished => "Zahlung erfolgt";
   get paymentError => "Zahlungsfehler";
+  get voucher => "Gutschein";
+  get voucherBalance => "Gutscheinwert";
+  get voucherDifferentNetworkAndCommunity => "Der Gutschein ist für ein anderes Netzwerk. Wills du zu "
+      "NETWORK_PLACEHOLDER und COMMUNITY_PLACEHOLDER wechseln? Du kannst das Netzwerk zurückändern under Profil > Developer mode.";
+  get voucherDifferentCommunity =>
+      "Der Gutschein ist für eine andere Community. Wills du zu COMMUNITY_PLACEHOLDER wechseln?";
+  get voucherContainsInexistentCommunity => "Der Gutschein enthält eine nicht-existente community:";
+  get doYouWantToRedeemThisVoucher => "Willst du diesen Gutschein für ACCOUNT_PLACEHOLDER einlösen?";
+  get fundVoucher => "Gutschein aufladen";
+  get redeemVoucher => "Gutschein einlösen";
+  get redeemSuccess => "Gutschein erfolgreich eingelöst.";
+  get redeemFailure => "Es gab einen Fehler beim einlösen des Gutscheins. Ursache:";
+  get invalidNetwork => "Ungültiges Netzwerk";
+  get invalidCommunity => "Ungülige Gemeinschaft";
 }
 
 class TranslationsZhAssets implements TranslationsAssets {
@@ -166,4 +206,16 @@ class TranslationsZhAssets implements TranslationsAssets {
   get paymentSubmitting => throw UnimplementedError();
   get paymentFinished => throw UnimplementedError();
   get paymentError => throw UnimplementedError();
+  get voucher => throw UnimplementedError();
+  get voucherBalance => throw UnimplementedError();
+  get voucherDifferentNetworkAndCommunity => throw UnimplementedError();
+  get voucherDifferentCommunity => throw UnimplementedError();
+  get voucherContainsInexistentCommunity => throw UnimplementedError();
+  get doYouWantToRedeemThisVoucher => throw UnimplementedError();
+  get fundVoucher => throw UnimplementedError();
+  get redeemVoucher => throw UnimplementedError();
+  get redeemSuccess => throw UnimplementedError();
+  get redeemFailure => throw UnimplementedError();
+  get invalidNetwork => throw UnimplementedError();
+  get invalidCommunity => throw UnimplementedError();
 }

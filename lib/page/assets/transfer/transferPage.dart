@@ -4,8 +4,8 @@ import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
+import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qrScanPage.dart';
-import 'package:encointer_wallet/page/qr_scan/qrScanService.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -18,7 +18,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/index.dart';
 
 class TransferPageParams {
   TransferPageParams({this.cid, this.communitySymbol, this.recipient, this.label, this.amount, this.redirect});
@@ -111,10 +110,10 @@ class _TransferPageState extends State<TransferPage> {
                         IconButton(
                           iconSize: 48,
                           icon: Icon(Iconsax.scan_barcode),
-                          onPressed: () => Navigator.of(context).popAndPushNamed(ScanPage.route,
-                              arguments: ScanPageParams(
-                                  forceContext:
-                                      QrScanContext.invoice)), // same as for clicking the scan button in the bottom bar
+                          onPressed: () => Navigator.of(context).popAndPushNamed(
+                            ScanPage.route,
+                            arguments: ScanPageParams(scannerContext: QrScannerContext.transferPage),
+                          ), // same as for clicking the scan button in the bottom bar
                         ),
                         SizedBox(height: 24),
                         EncointerTextFormField(

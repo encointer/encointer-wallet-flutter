@@ -81,7 +81,10 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                 Flexible(
                   fit: FlexFit.tight,
                   flex: 1,
-                  child: TextGradient(text: '${Fmt.doubleFormat(amount)} ⵐ'),
+                  child: TextGradient(
+                    text: '${Fmt.doubleFormat(amount)} ⵐ',
+                    style: TextStyle(fontSize: 60),
+                  ),
                 ),
                 Flexible(
                   fit: FlexFit.tight,

@@ -86,7 +86,7 @@ class Api {
       connectFunc();
     }
 
-    js.launchWebView(context, postInitCallback);
+    return js.launchWebView(context, postInitCallback);
   }
 
   /// Evaluate javascript [code] in the webView.
@@ -216,7 +216,7 @@ class Api {
 
   Future<void> closeWebView() async {
     await stopSubscriptions();
-    js.closeWebView();
+    return js.closeWebView();
   }
 
   Future<List> getExternalLinks(GenExternalLinksParams params) async {

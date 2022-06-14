@@ -58,19 +58,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       },
     );
 
-    store.settings.setNetworkLoading(true);
-    await store.settings.setNetworkConst({}, needCache: false);
-    store.settings.setEndpoint(_selectedNetwork);
-
-    await Future.wait([
-      store.loadAccountCache(),
-      store.settings.loadNetworkStateCache(),
-      store.assets.loadCache(),
-      store.loadOrInitEncointerCache(_selectedNetwork.info),
-    ]);
-
-    await webApi.close();
-    webApi.init();
+    await store.settings.reloadNetwork(_selectedNetwork);
 
     changeTheme();
 
@@ -178,7 +166,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         margin: EdgeInsets.only(bottom: 16),
         padding: EdgeInsets.only(top: padding, bottom: padding),
         child: ListTile(
-          leading: AddressIcon('', i.pubKey, addressToCopy: address),
+          leading: AddressIcon(address, i.pubKey),
           title: Text(Fmt.accountName(context, i)),
           subtitle: Text('$accIndex${Fmt.address(address)}', maxLines: 2),
           onTap: _networkChanging ? null : () => _onSelect(i, address),

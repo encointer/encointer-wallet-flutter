@@ -47,7 +47,6 @@ class _ProfileState extends State<Profile> {
                   '',
                   account.pubKey,
                   size: 70,
-                  // addressToCopy: address,
                   tapToCopy: false,
                 ),
                 Positioned(

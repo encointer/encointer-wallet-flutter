@@ -176,12 +176,13 @@ class _AssetsState extends State<Assets> {
                               return (store.encointer.community?.name != null) & (store.encointer.chosenCid != null)
                                   ? Column(
                                       children: [
-                                        TextGradient(text: '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ'),
+                                        TextGradient(
+                                          text: '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ',
+                                          style: TextStyle(fontSize: 60),
+                                        ),
                                         Text(
                                           "${dic.assets.balance}, ${store.encointer.community?.symbol}",
-                                          style: Theme.of(context).textTheme.headline4.copyWith(
-                                                color: encointerGrey,
-                                              ),
+                                          style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
                                         ),
                                       ],
                                     )
