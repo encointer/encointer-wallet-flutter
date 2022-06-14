@@ -96,13 +96,12 @@ class TranslationsEnAssets implements TranslationsAssets {
   get paymentError => "Payment error";
   get voucher => "Voucher";
   get voucherBalance => "Voucher Balance";
-  get voucherDifferentNetworkAndCommunity =>
-      "The voucher is for a different network. Do you want to change "
+  get voucherDifferentNetworkAndCommunity => "The voucher is for a different network. Do you want to change "
       "to NETWORK_PLACEHOLDER and COMMUNITY_PLACEHOLDER? You can change the network back under Profile > Developer mode";
   get voucherDifferentCommunity =>
       "The voucher is for a different community. Do you want to change to COMMUNITY_PLACEHOLDER?";
   get voucherContainsInexistentCommunity => "The voucher contains an inexistent community:";
-  get doYouWantToRedeemThisVoucher => "Do you want to redeem this voucher to your current account?";
+  get doYouWantToRedeemThisVoucher => "Do you want to redeem this voucher to your current account ACCOUNT_PLACEHOLDER?";
   get fundVoucher => "Fund voucher";
   get redeemVoucher => "Redeem voucher";
   get redeemSuccess => "Successfully redeemed voucher.";
@@ -158,7 +157,8 @@ class TranslationsDeAssets implements TranslationsAssets {
   get voucherDifferentCommunity =>
       "Der Gutschein ist für eine andere Community. Wills du zu COMMUNITY_PLACEHOLDER wechseln?";
   get voucherContainsInexistentCommunity => "Der Gutschein enthält eine nicht-existente community:";
-  get doYouWantToRedeemThisVoucher => "Willst du diesen Gutschein für dein aktuelles Konto einlösen?";
+  get doYouWantToRedeemThisVoucher =>
+      "Willst du diesen Gutschein für dein aktuelles Konto ACCOUNT_PLACEHOLDER einlösen?";
   get fundVoucher => "Gutschein aufladen";
   get redeemVoucher => "Gutschein einlösen";
   get redeemSuccess => "Gutschein erfolgreich eingelöst.";
