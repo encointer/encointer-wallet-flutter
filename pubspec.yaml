@@ -52,6 +52,10 @@ dependencies:
   image_picker: ^0.7.5+2
   animated_check: ^1.0.0
 
+  # Adjust screen brightness and keep awake for qrcodes
+  wakelock: ^0.6.1+2
+  screen_brightness: ^0.2.1
+
   # encointer dart api
   json_rpc_2: ^3.0.1
   web_socket_channel: ^1.2.0

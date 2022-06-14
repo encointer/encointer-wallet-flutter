@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
+import 'package:encointer_wallet/common/components/wakeLockAndBrightnessEnhancer.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/service/notification.dart';
@@ -180,6 +181,8 @@ class _ReceivePageState extends State<ReceivePage> {
                       textAlign: TextAlign.center),
                   SizedBox(height: 8),
                   Column(children: [
+                    // Enhance brightness for the QR-code
+                    WakeLockAndBrightnessEnhancer(brightness: 1),
                     QrImage(data: invoice.toQrPayload()),
                     InkWell(
                       child: Padding(
