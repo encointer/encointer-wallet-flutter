@@ -20,7 +20,6 @@ class WakeLockAndBrightnessEnhancer extends StatefulWidget {
 }
 
 class _WakeLockAndBrightnessEnhancerState extends State<WakeLockAndBrightnessEnhancer> {
-
   Future<void> setBrightness(double brightness) async {
     try {
       await ScreenBrightness().setScreenBrightness(brightness);
