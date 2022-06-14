@@ -101,7 +101,7 @@ class TranslationsEnAssets implements TranslationsAssets {
   get voucherDifferentCommunity =>
       "The voucher is for a different community. Do you want to change to COMMUNITY_PLACEHOLDER?";
   get voucherContainsInexistentCommunity => "The voucher contains an inexistent community:";
-  get doYouWantToRedeemThisVoucher => "Do you want to redeem this voucher to your current account ACCOUNT_PLACEHOLDER?";
+  get doYouWantToRedeemThisVoucher => "Do you want to redeem this voucher to ACCOUNT_PLACEHOLDER?";
   get fundVoucher => "Fund voucher";
   get redeemVoucher => "Redeem voucher";
   get redeemSuccess => "Successfully redeemed voucher.";
@@ -158,7 +158,7 @@ class TranslationsDeAssets implements TranslationsAssets {
       "Der Gutschein ist für eine andere Community. Wills du zu COMMUNITY_PLACEHOLDER wechseln?";
   get voucherContainsInexistentCommunity => "Der Gutschein enthält eine nicht-existente community:";
   get doYouWantToRedeemThisVoucher =>
-      "Willst du diesen Gutschein für dein aktuelles Konto ACCOUNT_PLACEHOLDER einlösen?";
+      "Willst du diesen Gutschein für ACCOUNT_PLACEHOLDER einlösen?";
   get fundVoucher => "Gutschein aufladen";
   get redeemVoucher => "Gutschein einlösen";
   get redeemSuccess => "Gutschein erfolgreich eingelöst.";
