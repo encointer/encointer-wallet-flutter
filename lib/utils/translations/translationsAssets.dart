@@ -50,6 +50,8 @@ abstract class TranslationsAssets {
   String get redeemVoucher;
   String get redeemSuccess;
   String get redeemFailure;
+  String get invalidNetwork;
+  String get invalidCommunity;
 }
 
 class TranslationsEnAssets implements TranslationsAssets {
@@ -105,6 +107,8 @@ class TranslationsEnAssets implements TranslationsAssets {
   get redeemVoucher => "Redeem voucher";
   get redeemSuccess => "Successfully redeemed voucher.";
   get redeemFailure => "There was an error while redeeming the voucher. Cause:";
+  get invalidNetwork => "Invalid Network";
+  get invalidCommunity => "Invalid Community";
 }
 
 class TranslationsDeAssets implements TranslationsAssets {
@@ -159,6 +163,8 @@ class TranslationsDeAssets implements TranslationsAssets {
   get redeemVoucher => "Gutschein einlösen";
   get redeemSuccess => "Gutschein erfolgreich eingelöst.";
   get redeemFailure => "Es gab einen Fehler beim einlösen des Gutscheins. Ursache:";
+  get invalidNetwork => "Ungültiges Netzwerk";
+  get invalidCommunity => "Ungülige Gemeinschaft";
 }
 
 class TranslationsZhAssets implements TranslationsAssets {
@@ -211,4 +217,6 @@ class TranslationsZhAssets implements TranslationsAssets {
   get redeemVoucher => throw UnimplementedError();
   get redeemSuccess => throw UnimplementedError();
   get redeemFailure => throw UnimplementedError();
+  get invalidNetwork => throw UnimplementedError();
+  get invalidCommunity => throw UnimplementedError();
 }

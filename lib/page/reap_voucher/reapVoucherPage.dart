@@ -5,7 +5,6 @@ import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/components/secondaryButtonWide.dart';
 import 'package:encointer_wallet/common/components/submitButton.dart';
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -20,6 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 import 'dialogs.dart';
+import 'utils.dart';
 
 class ReapVoucherParams {
   ReapVoucherParams({
@@ -40,11 +40,6 @@ class ReapVoucherPage extends StatefulWidget {
 
   @override
   _ReapVoucherPageState createState() => _ReapVoucherPageState();
-}
-
-enum Result {
-  ok,
-  error,
 }
 
 class _ReapVoucherPageState extends State<ReapVoucherPage> {
@@ -92,20 +87,14 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
       _postFrameCallbackCalled = true;
       WidgetsBinding.instance.addPostFrameCallback(
         (_) async {
-          if (widget.store.settings.endpoint.info != networkInfo) {
-            await showChangeNetworkAndCommunityDialog(
-              context,
-              networkInfo,
-              cid,
-              () async {
-                return _changeNetworkAndCommunity(context, networkInfo, cid);
-              },
-            );
-          } else if (widget.store.encointer.chosenCid != cid) {
-            // await showChangeCommunityDialog()
-          }
-          if (_voucherAddress == null) {
+          var result = await _changeNetworkAndCommunityIfNeeded(context, networkInfo, cid);
+
+          if (result == ChangeResult.ok) {
             fetchVoucherData(widget.api, voucherUri, cid);
+          } else if (result == ChangeResult.invalidNetwork) {
+            await showErrorDialog(context, dic.assets.invalidNetwork);
+          } else if (result == ChangeResult.invalidCommunity) {
+            await showErrorDialog(context, dic.assets.invalidCommunity);
           }
         },
       );
@@ -196,65 +185,36 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     }
   }
 
-  Future<Result> _changeNetworkAndCommunity(BuildContext context, String networkInfo, CommunityIdentifier cid) async {
-    var network;
+  Future<ChangeResult> _changeNetworkAndCommunityIfNeeded(
+    BuildContext context,
+    String networkInfo,
+    CommunityIdentifier cid,
+  ) async {
+    var result = ChangeResult.ok;
 
-    try {
-      network = networkEndpoints.firstWhere(
-        (network) => network.info == networkInfo,
-        orElse: () => throw FormatException('Invalid network in QrCode: $networkInfo'),
+    if (widget.store.settings.endpoint.info != networkInfo) {
+      result = await showChangeNetworkAndCommunityDialog(
+        context,
+        widget.store,
+        widget.api,
+        networkInfo,
+        cid,
       );
-    } catch (e) {
-      showRedeemFailedDialog(context, e.toString());
-      return Future.value(null);
     }
 
-    showCupertinoDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return CupertinoAlertDialog(
-          title: Text(I18n.of(context).translationsForLocale().home.loading),
-          content: Container(height: 64, child: CupertinoActivityIndicator()),
-        );
-      },
-    );
-
-    await widget.store.settings.reloadNetwork(network);
-
-    while (!widget.store.settings.isConnected) {
-      // This is not very nice, but unfortunately we can't await the
-      // webView init until it is completely connected without some
-      // refactoring.
-      await Future.delayed(const Duration(milliseconds: 500), () {
-        _log("Waiting until we connected to new network...");
-      });
+    if (widget.store.encointer.chosenCid != cid) {
+      result = await showChangeCommunityDialog(
+        context,
+        widget.store,
+        widget.api,
+        networkInfo,
+        cid,
+      );
     }
 
-    var cids = await widget.api.encointer.getCommunityIdentifiers();
-
-    _log("Got cids: ${cids[0].toFmtString()}, ${cids[1].toFmtString()}");
-
-    if (cids.contains(cid)) {
-      _log("Voucher cid is valid");
-
-      widget.store.encointer.setChosenCid(cid);
-
-      // pop the loading dialog
-      Navigator.of(context).pop();
-
-      // pop the change confirm dialog
-      Navigator.of(context).pop();
-
-      setState(() {});
-    } else {
-      _log("Voucher cid is invalid");
-
-      await showInvalidCommunityDialog(context, cid);
-    }
+    return result;
   }
 }
-
-
 
 void _pushTransferPage(BuildContext context, VoucherData data, String voucherAddress) {
   Navigator.of(context).popAndPushNamed(
@@ -269,5 +229,5 @@ void _pushTransferPage(BuildContext context, VoucherData data, String voucherAdd
 }
 
 void _log(String msg) {
-  print("[VoucherPage] $msg");
+  print("[ReapVoucherPage] $msg");
 }
