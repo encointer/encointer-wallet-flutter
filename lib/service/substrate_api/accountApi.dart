@@ -77,6 +77,17 @@ class AccountApi {
     return res;
   }
 
+  Future<String> addressFromUri(String uri) async {
+    dynamic address = await jsApi.evalJavascript(
+      'account.addressFromUri("$uri")',
+      allowRepeat: true,
+    );
+
+    _log("addressFromUri: address");
+
+    return address;
+  }
+
   /// query address with account index
   Future<List> queryAddressWithAccountIndex(String index) async {
     final res = await jsApi.evalJavascript(

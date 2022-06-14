@@ -1,75 +1,137 @@
-import 'package:encointer_wallet/store/encointer/types/communities.dart';
+import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
+import 'package:encointer_wallet/page/profile/contacts/contactPage.dart';
+import 'package:encointer_wallet/page/qr_scan/qr_codes/qrCodeBase.dart';
+import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
-/// provides functionality and business logic for scanning QR codes in the encointer app
+import '../reap_voucher/reapVoucherPage.dart';
+
+enum QrScannerContext {
+  /// QrScanner was opened from the main page
+  mainPage,
+
+  /// QrScanner was opened form the transfer page
+  transferPage,
+
+  /// QrScanner was opened from the contacts page
+  contactsPage,
+}
+
+/// Handles QrCode scans.
 class QrScanService {
-  static final String separator = '\n';
-  static final int numberOfRowsV1 = 6;
+  QrCode<dynamic> parse(String rawQrString) {
+    List<String> data = rawQrString.split(QR_CODE_FIELD_SEPARATOR);
 
-  QrScanData parse(String rawQrString) {
-    List<String> data = rawQrString.split(separator);
-    String rawContext = 'QrScanContext.${data[0].substring(10)}';
-    if (data[1].toLowerCase() == 'v1.0') {
-      if (data.length != numberOfRowsV1) {
-        throw FormatException('QR scan data illegal number of rows [${data.length}] expected: $numberOfRowsV1');
-      }
-      return QrScanData(
-        context: QrScanContext.values.firstWhere(
-          (qrContext) => qrContext.toString() == rawContext,
-          orElse: () {
-            throw FormatException(
-                'QR scan context [${data[0]}] -> [$rawContext] is not supported; supported values are: ${QrScanContext.values}');
-          },
-        ),
-        version: data[1].toLowerCase(),
-        account: data[2],
-        cid: data[3].isNotEmpty ? CommunityIdentifier.fromFmtString(data[3]) : null,
-        amount: data[4].trim().isNotEmpty ? double.parse(data[4]) : null,
-        label: data[5],
-      );
-    } else {
-      throw FormatException('QR scan data format [${data[1]}] is currently not supported');
+    var context = QrCodeContextExt.fromQrField(data[0]);
+
+    switch (context) {
+      case QrCodeContext.contact:
+        return ContactQrCode.fromQrFields(data);
+        break;
+      case QrCodeContext.invoice:
+        return InvoiceQrCode.fromQrFields(data);
+        break;
+      case QrCodeContext.voucher:
+        return VoucherQrCode.fromQrFields(data);
+        break;
+      default:
+        throw FormatException('[parseQrScan] Unhandled qr scan context');
+    }
+  }
+
+  void handleQrScan(BuildContext context, QrScannerContext scanContext, QrCode<dynamic> qrCode) {
+    switch (qrCode.context) {
+      case QrCodeContext.contact:
+        return handleContactQrCodeScan(context, scanContext, qrCode);
+        break;
+      case QrCodeContext.invoice:
+        return handleInvoiceQrCodeScan(context, scanContext, qrCode);
+        break;
+      case QrCodeContext.voucher:
+        return handleVoucherQrCodeScan(context, scanContext, qrCode);
+        break;
+      default:
+        throw FormatException('[handleQrScan] Unhandled qr scan context');
     }
   }
 }
 
-/// Format of QR-code, (separator: newLine).
-/// Values in `[]` are optional and will be empty lines in the QR-code.
-///
-/// encointer-<context>
-/// <QR-version-for-context>
-/// <account ss58>
-/// [<cid>]
-/// [<amount>]
-/// [<label>]
-///
-class QrScanData {
-  final QrScanContext context;
-
-  /// version of our format definition
-  final String version;
-
-  /// ss58 encoded public key of the account address.
-  /// Payment: account of the receiver of the payment;
-  /// contact: account to add to contacts;
-  final String account;
-
-  /// community identifier
-  final CommunityIdentifier cid;
-
-  /// Optional payment amount for the invoice. Will be emp
-  final num amount;
-
-  /// name or other identifier for `account`.
-  final String label;
-
-  QrScanData({this.context, this.version, this.account, this.cid, this.amount, this.label});
+/// Handles the `ContactQrCode` scan based on where it was scanned.
+void handleContactQrCodeScan(BuildContext context, QrScannerContext scanContext, ContactQrCode qrCode) {
+  switch (scanContext) {
+    case QrScannerContext.mainPage:
+      // show add contact and auto-fill data
+      Navigator.of(context).popAndPushNamed(
+        ContactPage.route,
+        arguments: qrCode.data,
+      );
+      break;
+    case QrScannerContext.transferPage:
+      // go to transfer page and auto-fill data, but skip
+      // the fields for cid or amount
+      Navigator.of(context).popAndPushNamed(
+        TransferPage.route,
+        arguments: TransferPageParams(
+          recipient: qrCode.data.account,
+          label: qrCode.data.label,
+          redirect: '/',
+        ),
+      );
+      break;
+    case QrScannerContext.contactsPage:
+      Navigator.of(context).popAndPushNamed(
+        ContactPage.route,
+        arguments: qrCode.data,
+      );
+      break;
+  }
 }
 
-/// context identifier e.g. encointer-contact
-/// encointer-invoice
-/// encointer-claim
-enum QrScanContext {
-  contact,
-  invoice,
-  // claim, currently unsupported and might not be merged into this. Let's see.
+/// Handles the `InvoiceQrCode` scan based on where it was scanned.
+void handleInvoiceQrCodeScan(BuildContext context, QrScannerContext scanContext, InvoiceQrCode qrCode) {
+  switch (scanContext) {
+    case QrScannerContext.mainPage:
+      // go to transfer page and auto-fill data
+      popAndPushTransferPageWithInvoice(context, qrCode.data);
+      break;
+    case QrScannerContext.transferPage:
+      // go to transfer page and auto-fill data
+      popAndPushTransferPageWithInvoice(context, qrCode.data);
+      break;
+    case QrScannerContext.contactsPage:
+      Navigator.of(context).popAndPushNamed(ContactPage.route,
+          arguments: ContactData(
+            account: qrCode.data.account,
+            label: qrCode.data.label,
+          ));
+      break;
+  }
+}
+
+/// Handles the `VoucherQrCode` scan based on where it was scanned.
+void handleVoucherQrCodeScan(BuildContext context, QrScannerContext scanContext, VoucherQrCode qrCode) {
+  var showFundVoucher = false;
+  if (scanContext == QrScannerContext.transferPage) {
+    showFundVoucher = true;
+  }
+
+  Navigator.of(context).popAndPushNamed(ReapVoucherPage.route,
+      arguments: ReapVoucherParams(
+        voucher: qrCode.data,
+        showFundVoucher: showFundVoucher,
+      ));
+}
+
+void popAndPushTransferPageWithInvoice(BuildContext context, InvoiceData data) {
+  Navigator.of(context).popAndPushNamed(
+    TransferPage.route,
+    arguments: TransferPageParams(
+      cid: data.cid,
+      recipient: data.account,
+      label: data.label,
+      amount: data.amount,
+      redirect: '/',
+    ),
+  );
 }

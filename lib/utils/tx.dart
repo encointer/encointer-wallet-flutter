@@ -161,7 +161,7 @@ Map<String, dynamic> encointerBalanceTransferParams(
     },
     "params": [
       recipientAddress,
-      cid.toFmtString(),
+      cid,
       amount.toString(),
     ],
   };
@@ -217,4 +217,13 @@ Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) a
       Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
     },
   );
+}
+
+Future<dynamic> submitReapVoucher(
+  Api api,
+  String voucherUri,
+  String recipientAddress,
+  CommunityIdentifier cid,
+) async {
+  return api.js.evalJavascript('encointer.reapVoucher("$voucherUri","$recipientAddress", ${jsonEncode(cid)})');
 }

@@ -9,6 +9,7 @@ abstract class TranslationsHome {
   String get create;
   String get detail;
   String get exitConfirm;
+  String get errorOccurred;
   String get loading;
   String get next;
   String get notifySubmitted;
@@ -54,6 +55,7 @@ class TranslationsEnHome implements TranslationsHome {
   get create => 'Create Account';
   get detail => 'Detail';
   get exitConfirm => 'Do you want to exit the App?';
+  get errorOccurred => 'An error occurred:';
   get inputInvalid => 'Invalid input';
   get loading => 'Loading...';
   get next => 'Next Step';
@@ -100,6 +102,7 @@ class TranslationsDeHome implements TranslationsHome {
   get create => 'Konto erstellen';
   get detail => 'Detail';
   get exitConfirm => 'Möchtest du die App verlassen?';
+  get errorOccurred => 'Es is ein Fehler aufgetaucht:';
   get loading => 'Lädt...';
   get next => 'Nächster Schritt';
   get notifySubmitted => 'Transaktion eingereicht';
@@ -147,6 +150,7 @@ class TranslationsZhHome implements TranslationsHome {
   get create => '新建账户';
   get detail => '详情';
   get exitConfirm => '确定要退出 App 吗？';
+  get errorOccurred => throw UnimplementedError();
   get loading => '载入中。。。';
   get next => '下一步';
   get notifySubmitted => '交易已打包完成';

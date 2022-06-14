@@ -1,6 +1,3 @@
-import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
-import 'package:encointer_wallet/page/profile/contacts/contactPage.dart';
-import 'package:encointer_wallet/page/qr_scan/qrScanService.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
@@ -9,9 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_qr_scan/qrcode_reader_view.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import 'qr_codes/qrCodeBase.dart';
+import 'qrScanService.dart';
+
+export 'qr_codes/qrCodeBase.dart';
+export 'qrScanService.dart';
+
 class ScanPageParams {
-  ScanPageParams({this.forceContext});
-  final QrScanContext forceContext;
+  ScanPageParams({this.scannerContext});
+  final QrScannerContext scannerContext;
 }
 
 class ScanPage extends StatelessWidget {
@@ -43,31 +46,8 @@ class ScanPage extends StatelessWidget {
     ScanPageParams params = ModalRoute.of(context).settings.arguments;
     Future onScan(String data, String rawData) {
       try {
-        QrScanData qrScanData = qrScanService.parse(data);
-        switch (params?.forceContext ?? qrScanData.context) {
-          case QrScanContext.contact:
-            // show add contact and auto-fill data
-            Navigator.of(context).popAndPushNamed(
-              ContactPage.route,
-              arguments: qrScanData,
-            );
-            break;
-          case QrScanContext.invoice:
-            // go to transfer page and auto-fill data
-            Navigator.of(context).popAndPushNamed(
-              TransferPage.route,
-              arguments: TransferPageParams(
-                  cid: qrScanData.cid,
-                  recipient: qrScanData.account,
-                  label: qrScanData.label,
-                  amount: qrScanData.amount,
-                  redirect: '/'),
-            );
-            break;
-          default:
-            throw UnimplementedError(
-                'Scan functionality for the case [${qrScanData.context}] has not yet been implemented!');
-        }
+        QrCode<dynamic> qrCode = qrScanService.parse(data);
+        qrScanService.handleQrScan(context, params.scannerContext, qrCode);
       } catch (e) {
         print("[ScanPage]: ${e.toString()}");
         _showSnackBar(context, e.toString());
@@ -107,14 +87,20 @@ class ScanPage extends StatelessWidget {
                         ElevatedButton(
                           child: Text(dic.profile.addContact),
                           onPressed: () => onScan(
-                              "encointer-contact\nV1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nsqm1v79dF6b\n\nSara",
-                              null),
+                              "encointer-contact\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nSara", null),
                         ),
                         ElevatedButton(
                           child: Text(dic.assets.invoice),
                           onPressed: () => onScan(
-                              "encointer-invoice\nV1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX"
+                              "encointer-invoice\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX"
                               "\nsqm1v79dF6b\n0.2343\nAubrey",
+                              null),
+                        ),
+                        ElevatedButton(
+                          child: Text("voucher"),
+                          onPressed: () => onScan(
+                              "encointer-voucher\nv2.0\n//VoucherUri\nsqm1v79dF6b"
+                              "\nnctr-gsl-dev\nAubrey",
                               null),
                         ),
                         Text(' <<< Devs only', style: TextStyle(color: Colors.orange)),
