@@ -97,7 +97,7 @@ class TranslationsEnAssets implements TranslationsAssets {
   get voucher => "Voucher";
   get voucherBalance => "Voucher Balance";
   get voucherDifferentNetworkAndCommunity =>
-      "The voucher is for a different network or community. Do you want to change "
+      "The voucher is for a different network. Do you want to change "
       "to NETWORK_PLACEHOLDER and COMMUNITY_PLACEHOLDER? You can change the network back under Profile > Developer mode";
   get voucherDifferentCommunity =>
       "The voucher is for a different community. Do you want to change to COMMUNITY_PLACEHOLDER?";
@@ -153,7 +153,7 @@ class TranslationsDeAssets implements TranslationsAssets {
   get paymentError => "Zahlungsfehler";
   get voucher => "Gutschein";
   get voucherBalance => "Gutscheinwert";
-  get voucherDifferentNetworkAndCommunity => "Der Gutschein ist für ein anderes Netzwerk oder Community. Wills du zu "
+  get voucherDifferentNetworkAndCommunity => "Der Gutschein ist für ein anderes Netzwerk. Wills du zu "
       "NETWORK_PLACEHOLDER und COMMUNITY_PLACEHOLDER wechseln? Du kannst das Netzwerk zurückändern under Profil > Developer mode.";
   get voucherDifferentCommunity =>
       "Der Gutschein ist für eine andere Community. Wills du zu COMMUNITY_PLACEHOLDER wechseln?";
