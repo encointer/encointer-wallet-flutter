@@ -5,7 +5,7 @@ import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'reapVoucherPage.dart';
+import '../reap_voucher/reapVoucherPage.dart';
 
 enum QrScannerContext {
   /// QrScanner was opened from the main page

@@ -27,7 +27,7 @@ import 'package:encointer_wallet/page/profile/settings/remoteNodeListPage.dart';
 import 'package:encointer_wallet/page/profile/settings/settingsPage.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58PrefixListPage.dart';
 import 'package:encointer_wallet/page/qr_scan/qrScanPage.dart';
-import 'package:encointer_wallet/page/qr_scan/reapVoucherPage.dart';
+import 'package:encointer_wallet/page/reap_voucher/reapVoucherPage.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
