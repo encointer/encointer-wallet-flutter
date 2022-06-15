@@ -52,6 +52,8 @@ abstract class TranslationsAssets {
   String get redeemFailure;
   String get invalidNetwork;
   String get invalidCommunity;
+  String get transactionError;
+  String get insufficientFundsExplanation;
 }
 
 class TranslationsEnAssets implements TranslationsAssets {
@@ -108,6 +110,9 @@ class TranslationsEnAssets implements TranslationsAssets {
   get redeemFailure => "There was an error while redeeming the voucher. Cause:";
   get invalidNetwork => "Invalid Network";
   get invalidCommunity => "Invalid Community";
+  get transactionError => "Transaction error";
+  get insufficientFundsExplanation => "You do not have sufficient funds on this account. See on the website for your"
+      "local community how to get some.";
 }
 
 class TranslationsDeAssets implements TranslationsAssets {
@@ -164,6 +169,9 @@ class TranslationsDeAssets implements TranslationsAssets {
   get redeemFailure => "Es gab einen Fehler beim einlösen des Gutscheins. Ursache:";
   get invalidNetwork => "Ungültiges Netzwerk";
   get invalidCommunity => "Ungülige Gemeinschaft";
+  get transactionError => "Transaktionsfehler";
+  get insufficientFundsExplanation => "Du hast nicht genügend Geld auf diesem Konto. Schaue auf der Webseite von"
+      "deiner lokalen gemeinschaft, wie du welches bekommen kannst.";
 }
 
 class TranslationsZhAssets implements TranslationsAssets {
@@ -218,4 +226,6 @@ class TranslationsZhAssets implements TranslationsAssets {
   get redeemFailure => throw UnimplementedError();
   get invalidNetwork => throw UnimplementedError();
   get invalidCommunity => throw UnimplementedError();
+  get transactionError => throw UnimplementedError();
+  get insufficientFundsExplanation => throw UnimplementedError();
 }
