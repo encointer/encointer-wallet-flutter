@@ -156,6 +156,7 @@ class _ReceivePageState extends State<ReceivePage> {
                           textStyle: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
                           inputFormatters: [UI.decimalInputFormatter()],
                           controller: _amountController,
+                          keyboardType: TextInputType.numberWithOptions(decimal: true),
                           textFormFieldKey: Key('invoice-amount-input'),
                           onChanged: (value) {
                             setState(() {

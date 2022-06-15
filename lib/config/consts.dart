@@ -114,17 +114,26 @@ const Map<String, int> js_code_version_map = {
 // links
 const locale_place_holder = 'LOCALE_PLACEHOLDER';
 const ceremony_info_link_base = 'https://leu.zuerich/$locale_place_holder/#zeremonien';
+const leu_zurich_link = 'https://leu.zuerich/$locale_place_holder';
 
 String ceremonyInfoLink(String locale) {
+  return replaceLocalePlaceholder(ceremony_info_link_base, locale);
+}
+
+String leuZurichLink(String locale) {
+  return replaceLocalePlaceholder(leu_zurich_link, locale);
+}
+
+String replaceLocalePlaceholder(String link, String locale) {
   switch (locale) {
     case 'en':
-      return ceremony_info_link_base.replaceAll(locale_place_holder, 'en');
+      return link.replaceAll(locale_place_holder, 'en');
       break;
     case 'de':
-      return ceremony_info_link_base.replaceAll(locale_place_holder, '');
+      return link.replaceAll(locale_place_holder, '');
       break;
     default:
-      print("[ceremonyInfoLink] unsupported locale, defaulting to english");
-      return ceremony_info_link_base.replaceAll(locale_place_holder, 'en');
+      print("[replaceLocale] unsupported locale, defaulting to english");
+      return link.replaceAll(locale_place_holder, 'en');
   }
 }

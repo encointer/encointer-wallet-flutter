@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/components/accountAdvanceOption.dart';
+import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/create/createPinPage.dart';
@@ -9,6 +10,7 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:encointer_wallet/utils/inputValidation.dart';
 
 class CreateAccountForm extends StatelessWidget {
   CreateAccountForm({this.store});
@@ -77,24 +79,12 @@ class CreateAccountForm extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 50),
-                Column(
-                  children: <Widget>[
-                    TextFormField(
-                      key: Key('create-account-name'),
-                      decoration: InputDecoration(
-                        enabledBorder: const OutlineInputBorder(
-                          // width: 0.0 produces a thin "hairline" border
-                          borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
-                          borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
-                        ),
-                        filled: true,
-                        fillColor: ZurichLion.shade50,
-                        hintText: dic.account.createHint,
-                        labelText: I18n.of(context).translationsForLocale().profile.accountName,
-                      ),
-                      controller: _nameCtrl,
-                    ),
-                  ],
+                EncointerTextFormField(
+                  key: Key('create-account-name'),
+                  hintText: dic.account.createHint,
+                  labelText: I18n.of(context).translationsForLocale().profile.accountName,
+                  controller: _nameCtrl,
+                  validator: (v) => InputValidation.validateAccountName(context, v, store.account.optionalAccounts),
                 ),
               ],
             ),

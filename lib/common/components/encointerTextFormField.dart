@@ -6,10 +6,12 @@ import '../theme.dart';
 /// TextFormField styled for the encointer app
 class EncointerTextFormField extends StatelessWidget {
   final String labelText;
+  final String hintText;
   final TextStyle textStyle;
   final List<TextInputFormatter> inputFormatters;
   final TextEditingController controller;
   final Key textFormFieldKey;
+  final TextInputType keyboardType;
   final String Function(String) validator;
   final Widget suffixIcon;
   final ValueChanged<String> onChanged;
@@ -18,6 +20,7 @@ class EncointerTextFormField extends StatelessWidget {
   const EncointerTextFormField({
     Key key,
     this.labelText,
+    this.hintText,
     this.textStyle,
     this.inputFormatters,
     this.controller,
@@ -25,6 +28,7 @@ class EncointerTextFormField extends StatelessWidget {
     this.validator,
     this.suffixIcon,
     this.onChanged,
+    this.keyboardType,
     this.obscureText = false,
   }) : super(key: key);
 
@@ -40,8 +44,9 @@ class EncointerTextFormField extends StatelessWidget {
         style: textStyle,
         decoration: InputDecoration(
           labelText: labelText,
+          hintText: hintText,
           labelStyle: Theme.of(context).textTheme.headline4,
-          contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 25),
+          contentPadding: EdgeInsets.only(top: 16, bottom: 16, left: 25),
           border: UnderlineInputBorder(
             borderSide: BorderSide(
               width: 0,
@@ -52,7 +57,7 @@ class EncointerTextFormField extends StatelessWidget {
         ),
         inputFormatters: inputFormatters,
         controller: controller,
-        keyboardType: TextInputType.numberWithOptions(decimal: true),
+        keyboardType: keyboardType,
         validator: validator,
         onChanged: onChanged,
         obscureText: obscureText,

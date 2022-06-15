@@ -10,6 +10,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:encointer_wallet/utils/inputValidation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
@@ -176,17 +177,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
           title: _isEditingText
               ? TextFormField(
                   controller: _nameCtrl,
-                  validator: (v) {
-                    String name = v.trim();
-                    if (name.length == 0) {
-                      return dic.profile.contactNameError;
-                    }
-                    int exist = store.account.optionalAccounts.indexWhere((i) => i.name == name);
-                    if (exist > -1) {
-                      return dic.profile.contactNameAlreadyExists;
-                    }
-                    return null;
-                  },
+                  validator: (v) => InputValidation.validateAccountName(context, v, store.account.optionalAccounts),
                 )
               : Text(_nameCtrl.text),
           actions: <Widget>[
