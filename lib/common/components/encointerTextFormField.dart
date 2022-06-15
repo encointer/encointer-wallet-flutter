@@ -11,6 +11,7 @@ class EncointerTextFormField extends StatelessWidget {
   final List<TextInputFormatter> inputFormatters;
   final TextEditingController controller;
   final Key textFormFieldKey;
+  final TextInputType keyboardType;
   final String Function(String) validator;
   final Widget suffixIcon;
   final ValueChanged<String> onChanged;
@@ -27,6 +28,7 @@ class EncointerTextFormField extends StatelessWidget {
     this.validator,
     this.suffixIcon,
     this.onChanged,
+    this.keyboardType,
     this.obscureText = false,
   }) : super(key: key);
 
@@ -37,28 +39,32 @@ class EncointerTextFormField extends StatelessWidget {
         color: ZurichLion.shade50,
         borderRadius: BorderRadius.circular(15),
       ),
-      child: TextFormField(
-        key: textFormFieldKey,
-        style: textStyle,
-        decoration: InputDecoration(
-          labelText: labelText,
-          hintText: hintText,
-          labelStyle: Theme.of(context).textTheme.headline4,
-          contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 25),
-          border: UnderlineInputBorder(
-            borderSide: BorderSide(
-              width: 0,
-              style: BorderStyle.none,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8.0),
+        child: TextFormField(
+          key: textFormFieldKey,
+          style: textStyle,
+          decoration: InputDecoration(
+            labelText: labelText,
+            hintText: hintText,
+            labelStyle: Theme.of(context).textTheme.headline4,
+            // errorStyle: TextStyle(height: 0.3),
+            contentPadding: EdgeInsets.only(left: 25),
+            border: UnderlineInputBorder(
+              borderSide: BorderSide(
+                width: 0,
+                style: BorderStyle.none,
+              ),
             ),
+            suffixIcon: suffixIcon,
           ),
-          suffixIcon: suffixIcon,
+          inputFormatters: inputFormatters,
+          controller: controller,
+          keyboardType: keyboardType,
+          validator: validator,
+          onChanged: onChanged,
+          obscureText: obscureText,
         ),
-        inputFormatters: inputFormatters,
-        controller: controller,
-        keyboardType: TextInputType.numberWithOptions(decimal: true),
-        validator: validator,
-        onChanged: onChanged,
-        obscureText: obscureText,
       ),
     );
   }
