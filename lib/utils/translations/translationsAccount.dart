@@ -42,7 +42,7 @@ class TranslationsEnAccount implements TranslationsAccount {
   get create => 'Create Account';
   get createDefault => 'My Account';
   get createError => 'There was an error creating your account';
-  get createHint => '(Default: My Account)';
+  get createHint => '(Example: Alice)';
   get createPassword => 'PIN';
   get createPassword2 => 'Confirm PIN';
   get createPassword2Error => 'Inconsistent PINs';
@@ -79,7 +79,7 @@ class TranslationsDeAccount implements TranslationsAccount {
   get create => 'Konto registrieren';
   get createDefault => 'Mein Konto';
   get createError => 'Beim Erstellen deines Kontos ist ein Fehler aufgetreten';
-  get createHint => '(Standard: Mein Konto)';
+  get createHint => '(Beispiel: Alice)';
   get createPassword => 'PIN';
   get createPassword2 => 'PIN Bestätigen';
   get createPassword2Error => 'Die PINs stimmen nicht überein';
