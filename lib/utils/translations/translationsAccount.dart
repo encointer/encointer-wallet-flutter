@@ -4,7 +4,6 @@ abstract class TranslationsAccount {
   String get advanced;
   String get backupError;
   String get create;
-  String get createDefault;
   String get createError;
   String get createHint;
   String get createPassword;
@@ -40,7 +39,6 @@ class TranslationsEnAccount implements TranslationsAccount {
   get backupError =>
       'This device does not support key type sr25519, you can select [Advanced Options -> Encrypt Type -> ed25519] to continue.';
   get create => 'Create Account';
-  get createDefault => 'My Account';
   get createError => 'There was an error creating your account';
   get createHint => '(Example: Alice)';
   get createPassword => 'PIN';
@@ -77,7 +75,6 @@ class TranslationsDeAccount implements TranslationsAccount {
   get backupError =>
       'Dieses Gerät unterstützt den key Typ sr25519 nicht, wähle [Erweiterte Optionen -> Verschlüsselungstyp -> ed225519] für den nächsten Schritt.';
   get create => 'Konto registrieren';
-  get createDefault => 'Mein Konto';
   get createError => 'Beim Erstellen deines Kontos ist ein Fehler aufgetreten';
   get createHint => '(Beispiel: Alice)';
   get createPassword => 'PIN';
@@ -113,7 +110,6 @@ class TranslationsZhAccount implements TranslationsAccount {
   get advanced => '高级选项';
   get backupError => '此设备不支持密钥类型 sr25519，您可以选择 [高级选项 -> 加密类型 -> ed25519] 继续。';
   get create => '创建帐户';
-  get createDefault => '我的帐户';
   get createError => '创建帐户时出错';
   get createHint => '（默认值：我的帐户）';
   get createPassword => 'PIN';
