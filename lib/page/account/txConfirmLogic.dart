@@ -96,7 +96,6 @@ Future<Map> getTxFee(
 }
 
 void _onTxError(BuildContext context, AppStore store, String errorMsg, bool mounted) {
-  final Translations dic = I18n.of(context).translationsForLocale();
   store.assets.setSubmitting(false);
   if (mounted) {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
@@ -224,6 +223,6 @@ Future<void> showInsufficientFundsDialog(BuildContext context) {
   );
 }
 
-void _log(String msg) {
-  print("[txConfirmLogic] $msg");
-}
+// void _log(String msg) {
+//   print("[txConfirmLogic] $msg");
+// }
