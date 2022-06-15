@@ -111,7 +111,7 @@ class TranslationsEnAssets implements TranslationsAssets {
   get invalidNetwork => "Invalid Network";
   get invalidCommunity => "Invalid Community";
   get transactionError => "Transaction error";
-  get insufficientFundsExplanation => "You do not have sufficient funds on this account. See on the website for your"
+  get insufficientFundsExplanation => "You do not have sufficient funds on this account. See on the website of your"
       " local community how to get some.";
 }
 
