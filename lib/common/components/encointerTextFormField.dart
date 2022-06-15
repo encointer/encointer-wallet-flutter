@@ -39,32 +39,28 @@ class EncointerTextFormField extends StatelessWidget {
         color: ZurichLion.shade50,
         borderRadius: BorderRadius.circular(15),
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 8.0),
-        child: TextFormField(
-          key: textFormFieldKey,
-          style: textStyle,
-          decoration: InputDecoration(
-            labelText: labelText,
-            hintText: hintText,
-            labelStyle: Theme.of(context).textTheme.headline4,
-            // errorStyle: TextStyle(height: 0.3),
-            contentPadding: EdgeInsets.only(left: 25),
-            border: UnderlineInputBorder(
-              borderSide: BorderSide(
-                width: 0,
-                style: BorderStyle.none,
-              ),
+      child: TextFormField(
+        key: textFormFieldKey,
+        style: textStyle,
+        decoration: InputDecoration(
+          labelText: labelText,
+          hintText: hintText,
+          labelStyle: Theme.of(context).textTheme.headline4,
+          contentPadding: EdgeInsets.only(top: 16, bottom: 16, left: 25),
+          border: UnderlineInputBorder(
+            borderSide: BorderSide(
+              width: 0,
+              style: BorderStyle.none,
             ),
-            suffixIcon: suffixIcon,
           ),
-          inputFormatters: inputFormatters,
-          controller: controller,
-          keyboardType: keyboardType,
-          validator: validator,
-          onChanged: onChanged,
-          obscureText: obscureText,
+          suffixIcon: suffixIcon,
         ),
+        inputFormatters: inputFormatters,
+        controller: controller,
+        keyboardType: keyboardType,
+        validator: validator,
+        onChanged: onChanged,
+        obscureText: obscureText,
       ),
     );
   }
