@@ -1,6 +1,7 @@
 import 'package:encointer_wallet/common/components/accountAdvanceOption.dart';
+import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
-import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/utils/inputValidation.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -98,20 +99,12 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                     ),
                   ),
                   SizedBox(height: 30),
-                  TextFormField(
+                  EncointerTextFormField(
                     key: Key('create-account-name'),
-                    decoration: InputDecoration(
-                      enabledBorder: const OutlineInputBorder(
-                        // width: 0.0 produces a thin "hairline" border
-                        borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
-                        borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
-                      ),
-                      filled: true,
-                      fillColor: ZurichLion.shade50,
-                      hintText: dic.account.createHint,
-                      labelText: I18n.of(context).translationsForLocale().profile.accountName,
-                    ),
+                    hintText: dic.account.createHint,
+                    labelText: I18n.of(context).translationsForLocale().profile.accountName,
                     controller: _nameCtrl,
+                    validator: (v) => InputValidation.validateAccountName(context, v, store.account.optionalAccounts),
                   ),
                   TextFormField(
                     key: Key('account-source'),
