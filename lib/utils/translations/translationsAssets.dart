@@ -112,7 +112,7 @@ class TranslationsEnAssets implements TranslationsAssets {
   get invalidCommunity => "Invalid Community";
   get transactionError => "Transaction error";
   get insufficientFundsExplanation => "You do not have sufficient funds on this account. See on the website for your"
-      "local community how to get some.";
+      " local community how to get some.";
 }
 
 class TranslationsDeAssets implements TranslationsAssets {
@@ -170,8 +170,8 @@ class TranslationsDeAssets implements TranslationsAssets {
   get invalidNetwork => "Ungültiges Netzwerk";
   get invalidCommunity => "Ungülige Gemeinschaft";
   get transactionError => "Transaktionsfehler";
-  get insufficientFundsExplanation => "Du hast nicht genügend Geld auf diesem Konto. Schaue auf der Webseite von"
-      "deiner lokalen gemeinschaft, wie du welches bekommen kannst.";
+  get insufficientFundsExplanation => "Du hast nicht genügend Geld auf diesem Konto. Schaue auf der Webseite"
+      " deiner lokalen gemeinschaft, wie du welches bekommen kannst.";
 }
 
 class TranslationsZhAssets implements TranslationsAssets {
