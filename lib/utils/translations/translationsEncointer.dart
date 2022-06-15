@@ -51,6 +51,7 @@ abstract class TranslationsEncointer {
   String get finish;
   String get thankYou;
   String get weHopeToSeeYouAtTheNextMeetup;
+  String get goToLeuZurich;
 }
 
 class TranslationsEnEncointer implements TranslationsEncointer {
@@ -105,6 +106,7 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   get finish => 'Finish';
   get thankYou => 'Thank you';
   get weHopeToSeeYouAtTheNextMeetup => 'We hope to see you at the next meetup.';
+  get goToLeuZurich => 'Open leu.zuerich';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
@@ -160,6 +162,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get finish => 'Beenden';
   get thankYou => 'Danke';
   get weHopeToSeeYouAtTheNextMeetup => 'Wir hoffen, dass wir dich am nächsten Treffen wieder sehen.';
+  get goToLeuZurich => 'leu.zuerich öffnen';
 }
 
 class TranslationsZhEncointer implements TranslationsEncointer {
@@ -213,4 +216,5 @@ class TranslationsZhEncointer implements TranslationsEncointer {
   get finish => throw UnimplementedError();
   get thankYou => throw UnimplementedError();
   get weHopeToSeeYouAtTheNextMeetup => throw UnimplementedError();
+  get goToLeuZurich => throw UnimplementedError();
 }
