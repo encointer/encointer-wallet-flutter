@@ -1,8 +1,10 @@
 import 'dart:core';
 
+import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/txStatus.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/translations/translationsHome.dart';
@@ -13,6 +15,8 @@ import 'package:flutter/widgets.dart';
 /// Contains most of the logic from the `txConfirmPage.dart`
 ///
 /// This is a preparatory task the remove the `txConfirmPage` as seamless as possible.
+
+const INSUFFICIENT_FUNDS_ERROR = "1010";
 
 Future<void> onSubmit(
   BuildContext context,
@@ -92,26 +96,16 @@ Future<Map> getTxFee(
 }
 
 void _onTxError(BuildContext context, AppStore store, String errorMsg, bool mounted) {
-  final Translations dic = I18n.of(context).translationsForLocale();
   store.assets.setSubmitting(false);
   if (mounted) {
     ScaffoldMessenger.of(context).removeCurrentSnackBar();
   }
-  showCupertinoDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return CupertinoAlertDialog(
-        title: Container(),
-        content: Text(errorMsg),
-        actions: <Widget>[
-          CupertinoButton(
-            child: Text(dic.home.ok),
-            onPressed: () => Navigator.of(context).pop(),
-          ),
-        ],
-      );
-    },
-  );
+
+  if (errorMsg.startsWith(INSUFFICIENT_FUNDS_ERROR)) {
+    showInsufficientFundsDialog(context);
+  } else {
+    showErrorDialog(context, errorMsg);
+  }
 }
 
 Future<dynamic> _sendTx(BuildContext context, Api api, Map args) async {
@@ -182,3 +176,53 @@ String getTxStatusTranslation(TranslationsHome dic, TxStatus status) {
       return "";
   }
 }
+
+Future<void> showErrorDialog(BuildContext context, String errorMsg) {
+  final Translations dic = I18n.of(context).translationsForLocale();
+
+  return showCupertinoDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return CupertinoAlertDialog(
+        title: Text(dic.assets.transactionError),
+        content: Text(errorMsg),
+        actions: <Widget>[
+          CupertinoButton(
+            child: Text(dic.home.ok),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+Future<void> showInsufficientFundsDialog(BuildContext context) {
+  final Translations dic = I18n.of(context).translationsForLocale();
+  String languageCode = Localizations.localeOf(context).languageCode;
+
+  return showCupertinoDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return CupertinoAlertDialog(
+        title: Text(dic.assets.transactionError),
+        content: Text(dic.assets.insufficientFundsExplanation),
+        actions: <Widget>[
+          Container(),
+          CupertinoButton(
+            child: Text(dic.encointer.goToLeuZurich),
+            onPressed: () => UI.launchURL(leuZurichLink(languageCode)),
+          ),
+          CupertinoButton(
+            child: Text(dic.home.ok),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      );
+    },
+  );
+}
+
+// void _log(String msg) {
+//   print("[txConfirmLogic] $msg");
+// }
