@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/common/components/wakeLockAndBrightnessEnhancer.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
@@ -60,6 +61,8 @@ class _AccountSharePageState extends State<AccountSharePage> {
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 16),
+                  // Enhance brightness for the QR-code
+                  WakeLockAndBrightnessEnhancer(brightness: 1),
                   QrImage(
                     data: contactQrCode.toQrPayload(),
                     embeddedImage: AssetImage('assets/images/public/app.png'),
