@@ -103,6 +103,7 @@ class CeremonyStep1Count extends StatelessWidget {
                       labelText: dic.encointer.numberOfAttendees,
                       textStyle: Theme.of(context).textTheme.headline1.copyWith(color: encointerBlack),
                       controller: _attendeesCountController,
+                      keyboardType: TextInputType.numberWithOptions(decimal: true),
                       textFormFieldKey: Key('attendees-count'),
                     ),
                   ],

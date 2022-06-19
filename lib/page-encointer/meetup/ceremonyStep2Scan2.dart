@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:encointer_wallet/common/components/gradientElements.dart';
+import 'package:encointer_wallet/common/components/wakeLockAndBrightnessEnhancer.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/meetup/scanClaimQrCode.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -64,6 +65,8 @@ class CeremonyStep2Scan extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 12),
+                    // Enhance brightness for the QR-code
+                    WakeLockAndBrightnessEnhancer(brightness: 1),
                     Container(
                       width: 395,
                       height: 395,

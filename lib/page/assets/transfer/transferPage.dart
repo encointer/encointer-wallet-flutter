@@ -120,6 +120,7 @@ class _TransferPageState extends State<TransferPage> {
                           labelText: dic.assets.amountToBeTransferred,
                           textStyle: Theme.of(context).textTheme.headline1.copyWith(color: encointerBlack),
                           inputFormatters: [UI.decimalInputFormatter(decimals: decimals)],
+                          keyboardType: TextInputType.numberWithOptions(decimal: true),
                           controller: _amountCtrl,
                           textFormFieldKey: Key('transfer-amount-input'),
                           validator: (String value) {

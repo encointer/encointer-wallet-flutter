@@ -1,7 +1,9 @@
+import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/import/importAccountPage.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/inputValidation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
@@ -47,25 +49,12 @@ class AddAccountForm extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 30),
-                  Column(
-                    children: <Widget>[
-                      TextFormField(
-                        key: Key('create-account-name'),
-                        decoration: InputDecoration(
-                          enabledBorder: const OutlineInputBorder(
-                            // width: 0.0 produces a thin "hairline" border
-                            borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
-                            borderRadius:
-                                BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
-                          ),
-                          filled: true,
-                          fillColor: ZurichLion.shade50,
-                          hintText: dic.account.createHint,
-                          labelText: I18n.of(context).translationsForLocale().profile.accountName,
-                        ),
-                        controller: _nameCtrl,
-                      ),
-                    ],
+                  EncointerTextFormField(
+                    key: Key('create-account-name'),
+                    hintText: dic.account.createHint,
+                    labelText: I18n.of(context).translationsForLocale().profile.accountName,
+                    controller: _nameCtrl,
+                    validator: (v) => InputValidation.validateAccountName(context, v, store.account.optionalAccounts),
                   ),
                 ],
               ),
@@ -101,7 +90,7 @@ class AddAccountForm extends StatelessWidget {
                 if (_formKey.currentState.validate()) {
                   var name = _nameCtrl.text.trim();
 
-                  store.account.setNewAccountName(name.isNotEmpty ? name : dic.account.createDefault);
+                  store.account.setNewAccountName(name);
                   store.account.setNewAccountPin(store.settings.cachedPin);
 
                   onSubmit();

@@ -147,6 +147,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                           },
                           obscureText: true,
                           inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                          keyboardType: TextInputType.numberWithOptions(decimal: true),
                         ),
                         SizedBox(height: 20),
                         EncointerTextFormField(
@@ -157,6 +158,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                           },
                           obscureText: true,
                           inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                          keyboardType: TextInputType.numberWithOptions(decimal: true),
                         ),
                         SizedBox(height: 20),
                         EncointerTextFormField(
@@ -167,6 +169,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                           },
                           obscureText: true,
                           inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                          keyboardType: TextInputType.numberWithOptions(decimal: true),
                         ),
                       ],
                     ),
