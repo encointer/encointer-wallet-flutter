@@ -18,7 +18,7 @@ import 'components/lowerCeremonyBoxContainer.dart';
 import 'meetup_info/components/ceremonyNotification.dart';
 import 'meetup_info/meetupInfo.dart';
 
-class CeremonyBox extends StatefulWidget {
+class CeremonyBox extends StatelessWidget {
   CeremonyBox(
     this.store,
     this.api, {
@@ -27,21 +27,6 @@ class CeremonyBox extends StatefulWidget {
 
   final AppStore store;
   final Api api;
-
-  @override
-  _CeremonyBoxState createState() => _CeremonyBoxState(store, api);
-}
-
-class _CeremonyBoxState extends State<CeremonyBox> {
-  _CeremonyBoxState(this.store, this.api);
-
-  final AppStore store;
-  final Api api;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
