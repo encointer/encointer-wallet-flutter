@@ -298,7 +298,7 @@ abstract class _EncointerStore with Store {
       webApi.encointer.getBootstrappers(),
       webApi.encointer.getReputations(),
       webApi.encointer.getMeetupTime(),
-      webApi.encointer.getMeetupOverride(),
+      webApi.encointer.getMeetupTimeOverride(),
       updateAggregatedAccountData(),
     ]).then((_) => _log("[updateState] finished"));
   }

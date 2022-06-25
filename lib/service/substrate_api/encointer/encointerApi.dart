@@ -80,7 +80,7 @@ class EncointerApi {
     getDemurrage();
     getBootstrappers();
     getReputations();
-    getMeetupOverride();
+    getMeetupTimeOverride();
   }
 
   /// Queries the Scheduler pallet: encointerScheduler.currentPhase().
@@ -257,7 +257,8 @@ class EncointerApi {
     return DateTime.fromMillisecondsSinceEpoch(time);
   }
 
-  Future<void> getMeetupOverride() async {
+  Future<void> getMeetupTimeOverride() async {
+    print("api: Check if there are meetup time overrides");
     CommunityIdentifier cid = store.encointer.chosenCid;
     if (cid == null) {
       return;
