@@ -20,7 +20,7 @@ Future<DateTime> getMeetupTimeOverride(String network, CommunityIdentifier cid, 
   final overrides = await getMeetupOverrides();
 
   final networkOverride = overrides.firstWhere(
-        (o) => o.network == network,
+    (o) => o.network == network,
     orElse: () => null,
   );
 

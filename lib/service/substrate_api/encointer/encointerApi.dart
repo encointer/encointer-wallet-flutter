@@ -264,7 +264,8 @@ class EncointerApi {
       return;
     }
 
-    final meetupTimeOverride = await feed.getMeetupTimeOverride(store.encointer.network, cid, store.encointer.currentPhase);
+    final meetupTimeOverride =
+        await feed.getMeetupTimeOverride(store.encointer.network, cid, store.encointer.currentPhase);
 
     if (meetupTimeOverride != null) {
       store.encointer.community.setMeetupTimeOverride(meetupTimeOverride.millisecondsSinceEpoch);
