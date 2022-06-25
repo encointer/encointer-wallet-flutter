@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 // Run: `flutter pub run build_runner build` in order to create/update the *.g.dart
@@ -24,8 +25,17 @@ class MeetupOverrides {
     return jsonEncode(this);
   }
 
-  DateTime getNextMeetupTime(DateTime time) {
-    return meetupTimes.firstWhere((mt) => time.isBefore(mt), orElse: () => null);
+  /// Returns the next meetup time.
+  ///
+  /// If it is in the `Attesting` phase it returns the meetup time of the currently ongoing meetup.
+  DateTime getNextMeetupTime(DateTime time, CeremonyPhase phase) {
+    meetupTimes.sort();
+
+    if (phase != CeremonyPhase.Attesting) {
+      return meetupTimes.firstWhere((mt) => time.isBefore(mt), orElse: () => null);
+    } else {
+      return meetupTimes.reversed.firstWhere((mt) => time.isAfter(mt), orElse: () => null);
+    }
   }
 
   factory MeetupOverrides.fromJson(Map<String, dynamic> json) => _$MeetupOverridesFromJson(json);
