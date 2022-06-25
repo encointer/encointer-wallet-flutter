@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/mocks/data/mockBazaarData.dart';
+import 'package:encointer_wallet/service/encointer_feed/feed.dart' as feed;
 import 'package:encointer_wallet/service/substrate_api/core/jsApi.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
@@ -11,7 +12,6 @@ import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart
 import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:encointer_wallet/store/encointer/types/proofOfAttendance.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/service/encointer_feed/feed.dart' as feed;
 
 import '../../../models/index.dart';
 import '../core/dartApi.dart';
@@ -264,11 +264,15 @@ class EncointerApi {
       return;
     }
 
-    final meetupTimeOverride =
-        await feed.getMeetupTimeOverride(store.encointer.network, cid, store.encointer.currentPhase);
+    try {
+      final meetupTimeOverride =
+          await feed.getMeetupTimeOverride(store.encointer.network, cid, store.encointer.currentPhase);
 
-    if (meetupTimeOverride != null) {
-      store.encointer.community.setMeetupTimeOverride(meetupTimeOverride.millisecondsSinceEpoch);
+      if (meetupTimeOverride != null) {
+        store.encointer.community.setMeetupTimeOverride(meetupTimeOverride.millisecondsSinceEpoch);
+      }
+    } catch (e) {
+      print("api: exception: ${e.toString()}");
     }
   }
 
