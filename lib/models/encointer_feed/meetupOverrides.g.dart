@@ -11,7 +11,7 @@ MeetupOverrides _$MeetupOverridesFromJson(Map<String, dynamic> json) {
     json['override-name'] as String,
     json['network'] as String,
     (json['communities'] as List)?.map((e) => e as String)?.toList(),
-    (json['meetup-times'] as List)?.map((e) => e as String)?.toList(),
+    (json['meetup-times'] as List)?.map((e) => e == null ? null : DateTime.parse(e as String))?.toList(),
   );
 }
 
@@ -19,5 +19,5 @@ Map<String, dynamic> _$MeetupOverridesToJson(MeetupOverrides instance) => <Strin
       'override-name': instance.overrideName,
       'network': instance.network,
       'communities': instance.communities,
-      'meetup-times': instance.meetupTimes,
+      'meetup-times': instance.meetupTimes?.map((e) => e?.toIso8601String())?.toList(),
     };

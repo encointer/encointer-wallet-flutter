@@ -17,7 +17,7 @@ class MeetupOverrides {
   String overrideName;
   String network;
   List<String> communities;
-  List<String> meetupTimes;
+  List<DateTime> meetupTimes;
 
   @override
   String toString() {
