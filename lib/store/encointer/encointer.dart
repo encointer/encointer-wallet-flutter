@@ -317,17 +317,6 @@ abstract class _EncointerStore with Store {
     accountStores.forEach((cid, store) => store.purgeCeremonySpecificState());
   }
 
-  /// Calculates the remaining time until the next meetup starts.
-  Duration getTimeToMeetup() {
-    var start = communityAccount?.meetup?.time;
-    if (start == null) {
-      return null;
-    } else {
-      var now = DateTime.now();
-      return DateTime.fromMillisecondsSinceEpoch(start).difference(now);
-    }
-  }
-
   /// Initialize the store and the sub-stores.
   ///
   /// Should always be called after creating a store to ensure full functionality.
