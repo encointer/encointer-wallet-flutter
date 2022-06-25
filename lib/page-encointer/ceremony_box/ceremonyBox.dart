@@ -50,8 +50,17 @@ class _CeremonyBoxState extends State<CeremonyBox> {
   Future<void> getMeetupOverride() async {
     final overrides = await feed.getMeetupOverrides();
 
-    if (overrides.communities.contains(store.encointer.chosenCid.toFmtString())) {
-      meetupTimeOverride = overrides.getNextMeetupTime(DateTime.now());
+    final networkOverride = overrides.firstWhere(
+      (o) => o.network == store.encointer.network,
+      orElse: () => null,
+    );
+
+    if (networkOverride == null) {
+      return Future.value(null);
+    }
+
+    if (networkOverride.communities.contains(store.encointer.chosenCid.toFmtString())) {
+      meetupTimeOverride = networkOverride.getNextMeetupTime(DateTime.now(), store.encointer.currentPhase);
     }
   }
 
