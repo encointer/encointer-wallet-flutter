@@ -5,3 +5,4 @@ library models;
 
 export 'ceremonies/ceremonies.dart';
 export 'commons/commons.dart';
+export 'encointer_feed/meetupOverrides.dart';

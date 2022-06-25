@@ -11,6 +11,7 @@ import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart
 import 'package:encointer_wallet/store/encointer/types/location.dart';
 import 'package:encointer_wallet/store/encointer/types/proofOfAttendance.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:encointer_wallet/service/encointer_feed/feed.dart' as feed;
 
 import '../../../models/index.dart';
 import '../core/dartApi.dart';
@@ -79,6 +80,7 @@ class EncointerApi {
     getDemurrage();
     getBootstrappers();
     getReputations();
+    getMeetupOverride();
   }
 
   /// Queries the Scheduler pallet: encointerScheduler.currentPhase().
@@ -253,6 +255,19 @@ class EncointerApi {
 
     store.encointer.community.setMeetupTime(time);
     return DateTime.fromMillisecondsSinceEpoch(time);
+  }
+
+  Future<void> getMeetupOverride() async {
+    CommunityIdentifier cid = store.encointer.chosenCid;
+    if (cid == null) {
+      return;
+    }
+
+    final meetupTimeOverride = await feed.getMeetupTimeOverride(store.encointer.network, cid, store.encointer.currentPhase);
+
+    if (meetupTimeOverride != null) {
+      store.encointer.community.setMeetupTimeOverride(meetupTimeOverride.millisecondsSinceEpoch);
+    }
   }
 
   Future<bool> hasPendingIssuance() async {

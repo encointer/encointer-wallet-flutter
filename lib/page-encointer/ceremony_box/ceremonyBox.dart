@@ -3,7 +3,6 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/page-encointer/common/encointerMap.dart';
 import 'package:encointer_wallet/page-encointer/meetup/ceremonyStep1Count.dart';
-import 'package:encointer_wallet/service/encointer_feed/feed.dart' as feed;
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -39,29 +38,9 @@ class _CeremonyBoxState extends State<CeremonyBox> {
   final AppStore store;
   final Api api;
 
-  DateTime meetupTimeOverride;
-
   @override
   void initState() {
     super.initState();
-    getMeetupOverride();
-  }
-
-  Future<void> getMeetupOverride() async {
-    final overrides = await feed.getMeetupOverrides();
-
-    final networkOverride = overrides.firstWhere(
-      (o) => o.network == store.encointer.network,
-      orElse: () => null,
-    );
-
-    if (networkOverride == null) {
-      return Future.value(null);
-    }
-
-    if (networkOverride.communities.contains(store.encointer.chosenCid.toFmtString())) {
-      meetupTimeOverride = networkOverride.getNextMeetupTime(DateTime.now(), store.encointer.currentPhase);
-    }
   }
 
   @override
@@ -69,7 +48,7 @@ class _CeremonyBoxState extends State<CeremonyBox> {
     var dic = I18n.of(context).translationsForLocale();
 
     return Observer(builder: (BuildContext context) {
-      int meetupTime = meetupTimeOverride?.millisecondsSinceEpoch ??
+      int meetupTime = store.encointer.community?.meetupTimeOverride ??
           store.encointer?.community?.meetupTime ??
           store.encointer.attestingPhaseStart;
 
