@@ -65,7 +65,8 @@ class _CeremonyBoxState extends State<CeremonyBox> {
               children: [
                 CeremonyInfo(
                   currentTime: DateTime.now().millisecondsSinceEpoch,
-                  assigningPhaseStart: store.encointer?.assigningPhaseStart,
+                  assigningPhaseStart:
+                      store.encointer.community?.meetupTimeOverride ?? store.encointer?.assigningPhaseStart,
                   meetupTime: meetupTime,
                   ceremonyPhaseDurations: store.encointer.phaseDurations,
                   meetupCompleted: store.encointer?.communityAccount?.meetupCompleted,
