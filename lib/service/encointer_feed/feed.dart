@@ -39,6 +39,6 @@ Future<DateTime> getMeetupTimeOverride(String network, CommunityIdentifier cid, 
   }
 }
 
-void _log(String feed) {
-  print("[EncointerFeed] ");
+void _log(String msg) {
+  print("[EncointerFeed] $msg");
 }
