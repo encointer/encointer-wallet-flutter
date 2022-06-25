@@ -3,6 +3,7 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/page-encointer/common/encointerMap.dart';
 import 'package:encointer_wallet/page-encointer/meetup/ceremonyStep1Count.dart';
+import 'package:encointer_wallet/service/encointer_feed/feed.dart' as feed;
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -18,7 +19,7 @@ import 'components/lowerCeremonyBoxContainer.dart';
 import 'meetup_info/components/ceremonyNotification.dart';
 import 'meetup_info/meetupInfo.dart';
 
-class CeremonyBox extends StatelessWidget {
+class CeremonyBox extends StatefulWidget {
   CeremonyBox(
     this.store,
     this.api, {
@@ -29,11 +30,41 @@ class CeremonyBox extends StatelessWidget {
   final Api api;
 
   @override
+  _CeremonyBoxState createState() => _CeremonyBoxState(store, api);
+}
+
+class _CeremonyBoxState extends State<CeremonyBox> {
+  _CeremonyBoxState(this.store, this.api);
+
+  final AppStore store;
+  final Api api;
+
+  DateTime meetupTimeOverride;
+
+  @override
+  void initState() {
+    super.initState();
+    getMeetupOverride();
+  }
+
+  Future<void> getMeetupOverride() async {
+    final overrides = await feed.getMeetupOverrides();
+
+    if (overrides.communities.contains(store.encointer.chosenCid.toFmtString())) {
+      meetupTimeOverride = overrides.getNextMeetupTime(DateTime.now());
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     var dic = I18n.of(context).translationsForLocale();
 
-    return Observer(
-      builder: (BuildContext context) => Column(
+    return Observer(builder: (BuildContext context) {
+      int meetupTime = meetupTimeOverride?.millisecondsSinceEpoch ??
+          store.encointer?.community?.meetupTime ??
+          store.encointer.attestingPhaseStart;
+
+      return Column(
         children: [
           Container(
             padding: EdgeInsets.fromLTRB(24, 24, 24, 24),
@@ -47,7 +78,7 @@ class CeremonyBox extends StatelessWidget {
                 CeremonyInfo(
                   currentTime: DateTime.now().millisecondsSinceEpoch,
                   assigningPhaseStart: store.encointer?.assigningPhaseStart,
-                  meetupTime: store.encointer?.community?.meetupTime ?? store.encointer.attestingPhaseStart,
+                  meetupTime: meetupTime,
                   ceremonyPhaseDurations: store.encointer.phaseDurations,
                   meetupCompleted: store.encointer?.communityAccount?.meetupCompleted,
                   devMode: store.settings.developerMode,
@@ -97,8 +128,8 @@ class CeremonyBox extends StatelessWidget {
               child: getMeetupInfoWidget(context, store),
             )
         ],
-      ),
-    );
+      );
+    });
   }
 }
 

@@ -24,6 +24,10 @@ class MeetupOverrides {
     return jsonEncode(this);
   }
 
+  DateTime getNextMeetupTime(DateTime time) {
+    return meetupTimes.firstWhere((mt) => time.isBefore(mt), orElse: () => null);
+  }
+
   factory MeetupOverrides.fromJson(Map<String, dynamic> json) => _$MeetupOverridesFromJson(json);
   Map<String, dynamic> toJson() => _$MeetupOverridesToJson(this);
 }
