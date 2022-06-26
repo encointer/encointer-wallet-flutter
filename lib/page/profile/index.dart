@@ -154,8 +154,8 @@ class _ProfileState extends State<Profile> {
                     onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
                   ),
                   ListTile(
-                      title: Text(dic.profile.accountsDeleteAll, style: h3Grey),
-                      onTap: () => showRemoveAccountsDialog(context, store),
+                    title: Text(dic.profile.accountsDeleteAll, style: h3Grey),
+                    onTap: () => showRemoveAccountsDialog(context, store),
                   ),
                   ListTile(
                       title: Text(dic.profile.reputationOverall, style: h3Grey),
