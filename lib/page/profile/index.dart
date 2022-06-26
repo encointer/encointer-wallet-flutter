@@ -154,30 +154,29 @@ class _ProfileState extends State<Profile> {
                     onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
                   ),
                   ListTile(
-                    // Todo: Remove all accounts is buggy: #318
                     title: Text(dic.profile.accountsDeleteAll, style: h3Grey),
                     onTap: () => showCupertinoDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return CupertinoAlertDialog(title: Text(dic.profile.accountsDelete),
-                              // content: Text(dic.profile.wrongPinHint),
                               actions: <Widget>[
                                 CupertinoButton(
-                                  // key: Key('error-dialog-ok'),
                                   child: Text(I18n.of(context).translationsForLocale().home.cancel),
                                   onPressed: () => Navigator.of(context).pop(),
                                 ),
                                 CupertinoButton(
-                                    // key: Key('error-dialog-ok'),
                                     child: Text(I18n.of(context).translationsForLocale().home.ok),
-                                    onPressed: () => {
-                                          print("remove ${store.account.accountListAll}"),
-                                          store.account.accountListAll.forEach((acc) {
-                                            print("removing the account: $acc");
-                                            store.account.removeAccount(acc);
-                                          }),
-                                          Navigator.popUntil(context, ModalRoute.withName('/')),
-                                        }),
+                                    onPressed: () async {
+                                      final accounts = store.account.accountListAll;
+
+                                      for (var acc in accounts) {
+                                        await store.account.removeAccount(acc);
+                                      }
+
+                                      Navigator.of(context).pop();
+
+                                      setState(() {});
+                                    }),
                               ]);
                         }),
                   ),
