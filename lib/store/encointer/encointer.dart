@@ -231,7 +231,9 @@ abstract class _EncointerStore with Store {
     }
 
     // update depending values without awaiting
-    updateState();
+    if (!_rootStore.settings.loading) {
+      webApi.encointer.getCommunityData();
+    }
   }
 
   @action
