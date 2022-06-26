@@ -68,7 +68,7 @@ class CeremonyBox extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
                     child: CeremonyRegisterButton(
-                      registerUntil: store.encointer?.assigningPhaseStart,
+                      registerUntil: assigningPhaseStart,
                       onPressed: (context) => submitRegisterParticipant(context, store, api),
                     ),
                   ),
