@@ -154,31 +154,8 @@ class _ProfileState extends State<Profile> {
                     onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
                   ),
                   ListTile(
-                    title: Text(dic.profile.accountsDeleteAll, style: h3Grey),
-                    onTap: () => showCupertinoDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return CupertinoAlertDialog(title: Text(dic.profile.accountsDelete),
-                              actions: <Widget>[
-                                CupertinoButton(
-                                  child: Text(I18n.of(context).translationsForLocale().home.cancel),
-                                  onPressed: () => Navigator.of(context).pop(),
-                                ),
-                                CupertinoButton(
-                                    child: Text(I18n.of(context).translationsForLocale().home.ok),
-                                    onPressed: () async {
-                                      final accounts = store.account.accountListAll;
-
-                                      for (var acc in accounts) {
-                                        await store.account.removeAccount(acc);
-                                      }
-
-                                      Navigator.of(context).pop();
-
-                                      setState(() {});
-                                    }),
-                              ]);
-                        }),
+                      title: Text(dic.profile.accountsDeleteAll, style: h3Grey),
+                      onTap: () => showRemoveAccountsDialog(context, store),
                   ),
                   ListTile(
                       title: Text(dic.profile.reputationOverall, style: h3Grey),
@@ -239,4 +216,30 @@ class _ProfileState extends State<Profile> {
       },
     );
   }
+}
+
+Future<void> showRemoveAccountsDialog(BuildContext context, AppStore store) {
+  final dic = I18n.of(context).translationsForLocale();
+
+  return showCupertinoDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(title: Text(dic.profile.accountsDelete), actions: <Widget>[
+          CupertinoButton(
+            child: Text(dic.home.cancel),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          CupertinoButton(
+              child: Text(dic.home.ok),
+              onPressed: () async {
+                final accounts = store.account.accountListAll;
+
+                for (var acc in accounts) {
+                  await store.account.removeAccount(acc);
+                }
+
+                Navigator.of(context).pop();
+              }),
+        ]);
+      });
 }
