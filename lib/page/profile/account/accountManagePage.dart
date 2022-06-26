@@ -236,21 +236,33 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     ],
                   ),
                 ),
-                Expanded(
-                  child: ListView.builder(
-                      // Fixme: https://github.com/encointer/encointer-wallet-flutter/issues/586
-                      itemCount: store.encointer.accountStores.containsKey(addressSS58)
-                          ? store.encointer.accountStores[addressSS58]?.balanceEntries?.length ?? 0
-                          : 0,
-                      itemBuilder: (BuildContext context, int index) {
-                        String community = store.encointer.account.balanceEntries.keys.elementAt(index);
-                        return _getBalanceEntryListTile(
-                          community,
-                          store.encointer.accountStores[addressSS58].balanceEntries[community],
-                          addressSS58,
-                        );
-                      }),
-                ),
+                store.settings.developerMode
+                    ? Expanded(
+                        child: ListView.builder(
+                            // Fixme: https://github.com/encointer/encointer-wallet-flutter/issues/586
+                            itemCount: store.encointer.accountStores.containsKey(addressSS58)
+                                ? store.encointer.accountStores[addressSS58]?.balanceEntries?.length ?? 0
+                                : 0,
+                            itemBuilder: (BuildContext context, int index) {
+                              String community = store.encointer.account.balanceEntries.keys.elementAt(index);
+                              return _getBalanceEntryListTile(
+                                community,
+                                store.encointer.accountStores[addressSS58].balanceEntries[community],
+                                addressSS58,
+                              );
+                            }),
+                      )
+                    : Expanded(
+                        child: ListView.builder(
+                            itemCount: store.encointer.chosenCid != null ? 1 : 0,
+                            itemBuilder: (BuildContext context, int index) {
+                              return _getBalanceEntryListTile(
+                                store.encointer.chosenCid.toFmtString(),
+                                store.encointer.communityBalanceEntry,
+                                addressSS58,
+                              );
+                            }),
+                      ),
                 Container(
                   // width: double.infinity,
                   decoration: BoxDecoration(
