@@ -32,8 +32,20 @@ class CeremonyBox extends StatelessWidget {
   Widget build(BuildContext context) {
     var dic = I18n.of(context).translationsForLocale();
 
-    return Observer(
-      builder: (BuildContext context) => Column(
+    return Observer(builder: (BuildContext context) {
+      int meetupTime = store.encointer.community?.meetupTimeOverride ??
+          store.encointer?.community?.meetupTime ??
+          store.encointer.attestingPhaseStart;
+
+      // I decided to not introduce anymore degrees of freedom for the demo overrides, otherwise
+      // we want to do too much again. So I hardcode the assigning phase duration to 30 minutes
+      // if we have meetup time overrides. Before we do something more complex here, I want to
+      // think some more, of what we want to do with the feed in the future.
+      int assigningPhaseStart = store.encointer.community?.meetupTimeOverride != null
+          ? store.encointer.community.meetupTimeOverride - Duration(minutes: 30).inMilliseconds
+          : store.encointer?.assigningPhaseStart;
+
+      return Column(
         children: [
           Container(
             padding: EdgeInsets.fromLTRB(24, 24, 24, 24),
@@ -46,8 +58,8 @@ class CeremonyBox extends StatelessWidget {
               children: [
                 CeremonyInfo(
                   currentTime: DateTime.now().millisecondsSinceEpoch,
-                  assigningPhaseStart: store.encointer?.assigningPhaseStart,
-                  meetupTime: store.encointer?.community?.meetupTime ?? store.encointer.attestingPhaseStart,
+                  assigningPhaseStart: assigningPhaseStart,
+                  meetupTime: meetupTime,
                   ceremonyPhaseDurations: store.encointer.phaseDurations,
                   meetupCompleted: store.encointer?.communityAccount?.meetupCompleted,
                   devMode: store.settings.developerMode,
@@ -56,7 +68,7 @@ class CeremonyBox extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
                     child: CeremonyRegisterButton(
-                      registerUntil: store.encointer?.assigningPhaseStart,
+                      registerUntil: assigningPhaseStart,
                       onPressed: (context) => submitRegisterParticipant(context, store, api),
                     ),
                   ),
@@ -97,8 +109,8 @@ class CeremonyBox extends StatelessWidget {
               child: getMeetupInfoWidget(context, store),
             )
         ],
-      ),
-    );
+      );
+    });
   }
 }
 

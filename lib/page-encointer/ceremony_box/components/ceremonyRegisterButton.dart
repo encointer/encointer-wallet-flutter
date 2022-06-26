@@ -46,7 +46,7 @@ class _CeremonyRegisterButtonState extends State<CeremonyRegisterButton> {
                 Icon(Iconsax.login_1),
                 SizedBox(width: 6),
                 Text('${dic.encointer.registerUntil} '),
-                MaybeDateTime(widget.registerUntil, dateFormat: DateFormat.yMd(languageCode))
+                MaybeDateTime(widget.registerUntil, dateFormat: DateFormat.yMd(languageCode).add_Hm())
               ],
             )
           : CupertinoActivityIndicator(),

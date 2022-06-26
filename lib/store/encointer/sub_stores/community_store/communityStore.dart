@@ -61,6 +61,10 @@ abstract class _CommunityStore with Store {
   @observable
   int meetupTime;
 
+  /// Override set by the encointer feed.
+  @observable
+  int meetupTimeOverride;
+
   @observable
   List<String> bootstrappers;
 
@@ -113,6 +117,15 @@ abstract class _CommunityStore with Store {
     _log("set meetupTime to $time");
     if (meetupTime != time) {
       meetupTime = time;
+      writeToCache();
+    }
+  }
+
+  @action
+  void setMeetupTimeOverride([int time]) {
+    _log("set meetupTimeOverride to $time");
+    if (meetupTimeOverride != time) {
+      meetupTimeOverride = time;
       writeToCache();
     }
   }
