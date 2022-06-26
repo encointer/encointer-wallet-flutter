@@ -48,6 +48,7 @@ void main() {
         "metadata": testMetadata.toJson(),
         "demurrage": 1.1,
         "meetupTime": 10,
+        "meetupTimeOverride": null,
         "bootstrappers": bootstrappers,
         "meetupLocations": testLocations.map((l) => l.toJson()).toList(),
         'communityAccountStores': Map<String, dynamic>.of({

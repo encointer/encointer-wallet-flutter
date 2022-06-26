@@ -14,6 +14,7 @@ CommunityStore _$CommunityStoreFromJson(Map<String, dynamic> json) {
     ..metadata = json['metadata'] == null ? null : CommunityMetadata.fromJson(json['metadata'] as Map<String, dynamic>)
     ..demurrage = (json['demurrage'] as num)?.toDouble()
     ..meetupTime = json['meetupTime'] as int
+    ..meetupTimeOverride = json['meetupTimeOverride'] as int
     ..bootstrappers = (json['bootstrappers'] as List)?.map((e) => e as String)?.toList()
     ..meetupLocations = json['meetupLocations'] != null
         ? ObservableList<Location>.of((json['meetupLocations'] as List)
@@ -32,6 +33,7 @@ Map<String, dynamic> _$CommunityStoreToJson(CommunityStore instance) => <String,
       'metadata': instance.metadata?.toJson(),
       'demurrage': instance.demurrage,
       'meetupTime': instance.meetupTime,
+      'meetupTimeOverride': instance.meetupTimeOverride,
       'bootstrappers': instance.bootstrappers,
       'meetupLocations': instance.meetupLocations?.map((e) => e?.toJson())?.toList(),
       'communityAccountStores': instance.communityAccountStores?.map((k, e) => MapEntry(k, e?.toJson())),
@@ -101,6 +103,21 @@ mixin _$CommunityStore on _CommunityStore, Store {
   set meetupTime(int value) {
     _$meetupTimeAtom.reportWrite(value, super.meetupTime, () {
       super.meetupTime = value;
+    });
+  }
+
+  final _$meetupTimeOverrideAtom = Atom(name: '_CommunityStore.meetupTimeOverride');
+
+  @override
+  int get meetupTimeOverride {
+    _$meetupTimeOverrideAtom.reportRead();
+    return super.meetupTimeOverride;
+  }
+
+  @override
+  set meetupTimeOverride(int value) {
+    _$meetupTimeOverrideAtom.reportWrite(value, super.meetupTimeOverride, () {
+      super.meetupTimeOverride = value;
     });
   }
 
@@ -203,6 +220,16 @@ mixin _$CommunityStore on _CommunityStore, Store {
   }
 
   @override
+  void setMeetupTimeOverride([int time]) {
+    final _$actionInfo = _$_CommunityStoreActionController.startAction(name: '_CommunityStore.setMeetupTimeOverride');
+    try {
+      return super.setMeetupTimeOverride(time);
+    } finally {
+      _$_CommunityStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void setMeetupLocations([List<Location> locations]) {
     final _$actionInfo = _$_CommunityStoreActionController.startAction(name: '_CommunityStore.setMeetupLocations');
     try {
@@ -229,6 +256,7 @@ mixin _$CommunityStore on _CommunityStore, Store {
 metadata: ${metadata},
 demurrage: ${demurrage},
 meetupTime: ${meetupTime},
+meetupTimeOverride: ${meetupTimeOverride},
 bootstrappers: ${bootstrappers},
 meetupLocations: ${meetupLocations},
 communityAccountStores: ${communityAccountStores},

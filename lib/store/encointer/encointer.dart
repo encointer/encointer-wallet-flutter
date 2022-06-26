@@ -298,6 +298,7 @@ abstract class _EncointerStore with Store {
       webApi.encointer.getBootstrappers(),
       webApi.encointer.getReputations(),
       webApi.encointer.getMeetupTime(),
+      webApi.encointer.getMeetupTimeOverride(),
       updateAggregatedAccountData(),
     ]).then((_) => _log("[updateState] finished"));
   }
@@ -315,17 +316,6 @@ abstract class _EncointerStore with Store {
   void purgeCeremonySpecificState() {
     communityStores.forEach((cid, store) => store.purgeCeremonySpecificState());
     accountStores.forEach((cid, store) => store.purgeCeremonySpecificState());
-  }
-
-  /// Calculates the remaining time until the next meetup starts.
-  Duration getTimeToMeetup() {
-    var start = communityAccount?.meetup?.time;
-    if (start == null) {
-      return null;
-    } else {
-      var now = DateTime.now();
-      return DateTime.fromMillisecondsSinceEpoch(start).difference(now);
-    }
   }
 
   /// Initialize the store and the sub-stores.

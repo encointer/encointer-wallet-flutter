@@ -399,6 +399,17 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
+  void setAggregatedAccountData(CommunityIdentifier cid, String address, AggregatedAccountData accountData) {
+    final _$actionInfo =
+        _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setAggregatedAccountData');
+    try {
+      return super.setAggregatedAccountData(cid, address, accountData);
+    } finally {
+      _$_EncointerStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void purgeCeremonySpecificState() {
     final _$actionInfo =
         _$_EncointerStoreActionController.startAction(name: '_EncointerStore.purgeCeremonySpecificState');
