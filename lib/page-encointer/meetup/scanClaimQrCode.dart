@@ -55,6 +55,7 @@ class ScanClaimQrCode extends StatelessWidget {
               .then((c) => ClaimOfAttendance.fromJson(c));
 
           // pops the cupertino activity indicator.
+          // Should be called before showing the `SnackBar` otherwise it has an invalid `BuildContext`
           Navigator.of(context).pop();
 
           if (claim != null) {
