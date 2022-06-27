@@ -70,7 +70,6 @@ class ScanClaimQrCode extends StatelessWidget {
       }
 
       _qrViewKey.currentState.startScan();
-
     }
 
     return Scaffold(
