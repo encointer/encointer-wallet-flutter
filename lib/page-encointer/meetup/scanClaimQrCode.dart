@@ -45,28 +45,31 @@ class ScanClaimQrCode extends StatelessWidget {
       _showActivityIndicatorOverlay(context);
 
       if (base64Data != null) {
-        var data = base64.decode(base64Data);
-
         try {
+          var data = base64.decode(base64Data);
+
           // Todo: Not good to use the global webApi here, but I wanted to prevent big changes into the code for now.
           // Fix this when #132 is tackled.
           var claim = await webApi.codec
               .decodeBytes(ClaimOfAttendanceJSRegistryName, data)
               .then((c) => ClaimOfAttendance.fromJson(c));
 
+          // pops the cupertino activity indicator.
+          Navigator.of(context).pop();
+
           if (claim != null) {
             validateAndStoreClaim(context, claim, dic);
           }
         } catch (e) {
           _log("Error decoding claim: ${e.toString()}");
+          // pops the cupertino activity indicator.
+          Navigator.of(context).pop();
           _showSnackBar(context, dic.encointer.claimsScannedDecodeFailed);
         }
       }
 
       _qrViewKey.currentState.startScan();
 
-      // just pops the cupertino activity indicator.
-      Navigator.of(context).pop();
     }
 
     return Scaffold(
