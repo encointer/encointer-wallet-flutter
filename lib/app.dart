@@ -32,6 +32,7 @@ import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/localStorage.dart';
+import 'package:encointer_wallet/utils/snackBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -141,6 +142,7 @@ class _WalletAppState extends State<WalletApp> {
           ],
           initialRoute: widget.config.initialRoute,
           theme: _theme,
+          scaffoldMessengerKey: rootScaffoldMessengerKey,
 
           // we use onGenerateRoute with CupertinoPageRoute objects to get specific page transition animations (sliding in from the right if there's a back button, sliding from the bottom up if there's a close button)
           // it is preferable to use Navigator.pushNamed (rather than Navigator.push) for large projects

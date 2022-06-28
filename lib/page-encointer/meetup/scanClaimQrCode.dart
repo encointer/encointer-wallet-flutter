@@ -4,6 +4,7 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/codecApi.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
+import 'package:encointer_wallet/utils/snackBar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,7 +25,7 @@ class ScanClaimQrCode extends StatelessWidget {
     List<String> registry = store.encointer.communityAccount.meetup.registry;
     if (!registry.contains(claim.claimantPublic)) {
       // this is important because the runtime checks if there are too many claims trying to be registered.
-      _showSnackBar(context, dic.encointer.meetupClaimantInvalid);
+      GlobalSnackBar.show(dic.encointer.meetupClaimantInvalid);
       print("[scanClaimQrCode] Claimant: ${claim.claimantPublic} is not part of registry: ${registry.toString()}");
     } else {
       String msg = store.encointer.communityAccount.containsClaim(claim)
@@ -32,7 +33,7 @@ class ScanClaimQrCode extends StatelessWidget {
           : dic.encointer.claimsScannedNew;
 
       store.encointer.communityAccount.addParticipantClaim(claim);
-      _showSnackBar(context, msg);
+      GlobalSnackBar.show(msg);
     }
   }
 
@@ -54,20 +55,17 @@ class ScanClaimQrCode extends StatelessWidget {
               .decodeBytes(ClaimOfAttendanceJSRegistryName, data)
               .then((c) => ClaimOfAttendance.fromJson(c));
 
-          // pops the cupertino activity indicator.
-          // Should be called before showing the `SnackBar` otherwise it has an invalid `BuildContext`
-          Navigator.of(context).pop();
-
           if (claim != null) {
             validateAndStoreClaim(context, claim, dic);
           }
         } catch (e) {
           _log("Error decoding claim: ${e.toString()}");
-          // pops the cupertino activity indicator.
-          Navigator.of(context).pop();
-          _showSnackBar(context, dic.encointer.claimsScannedDecodeFailed);
+          GlobalSnackBar.show(dic.encointer.claimsScannedDecodeFailed);
         }
       }
+
+      // pops the cupertino activity indicator.
+      Navigator.of(context).pop();
 
       _qrViewKey.currentState.startScan();
     }
@@ -119,15 +117,6 @@ void _showActivityIndicatorOverlay(BuildContext context) {
 Future<bool> canOpenCamera() async {
   // will do nothing if already granted
   return Permission.camera.request().isGranted;
-}
-
-void _showSnackBar(BuildContext context, String msg) {
-  ScaffoldMessenger.of(context).removeCurrentSnackBar();
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    backgroundColor: Colors.white,
-    content: Text(msg, style: TextStyle(color: Colors.black54)),
-    duration: Duration(milliseconds: 1500),
-  ));
 }
 
 _log(String msg) {
