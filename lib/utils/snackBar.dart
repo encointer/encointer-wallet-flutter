@@ -11,12 +11,12 @@ class RootSnackBar {
     rootScaffoldMessengerKey.currentState.removeCurrentSnackBar();
   }
 
-  static void show(String msg) {
-    showSnackBar(msg);
+  static void show(String msg, {int durationMillis: 1500}) {
+    showSnackBar(msg, durationMillis: durationMillis);
   }
 }
 
-void showSnackBar(String msg) {
+void showSnackBar(String msg, {int durationMillis: 1500}) {
   rootScaffoldMessengerKey.currentState.hideCurrentSnackBar();
   rootScaffoldMessengerKey.currentState.removeCurrentSnackBar();
   rootScaffoldMessengerKey.currentState
