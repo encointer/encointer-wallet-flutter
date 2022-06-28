@@ -7,6 +7,7 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/utils/UI.dart';
+import 'package:encointer_wallet/utils/snackBar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
@@ -32,15 +33,6 @@ class _ReceivePageState extends State<ReceivePage> {
 
   PausableTimer paymentWatchdog;
   bool observedPendingExtrinsic = false;
-
-  static void _showSnackBar(BuildContext context, String msg) {
-    ScaffoldMessenger.of(context).removeCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: Colors.lightBlue,
-      content: Text(msg, style: TextStyle(color: Colors.black)),
-      duration: Duration(milliseconds: 5000),
-    ));
-  }
 
   @override
   void initState() {
@@ -72,7 +64,7 @@ class _ReceivePageState extends State<ReceivePage> {
           if (((extrinsics?.length ?? 0) > 0) && (!observedPendingExtrinsic)) {
             extrinsics.forEach((xt) {
               if (xt.contains(widget.store.account.currentAccountPubKey.substring(2))) {
-                _showSnackBar(context, dic.profile.observedPendingExtrinsic);
+                RootSnackBar.show(dic.profile.observedPendingExtrinsic);
                 observedPendingExtrinsic = true;
               }
             });
