@@ -4,6 +4,7 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/codecApi.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
+import 'package:encointer_wallet/utils/snackBar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
@@ -24,7 +25,7 @@ class ScanClaimQrCode extends StatelessWidget {
     List<String> registry = store.encointer.communityAccount.meetup.registry;
     if (!registry.contains(claim.claimantPublic)) {
       // this is important because the runtime checks if there are too many claims trying to be registered.
-      _showSnackBar(context, dic.encointer.meetupClaimantInvalid);
+      RootSnackBar.show(dic.encointer.meetupClaimantInvalid);
       print("[scanClaimQrCode] Claimant: ${claim.claimantPublic} is not part of registry: ${registry.toString()}");
     } else {
       String msg = store.encointer.communityAccount.containsClaim(claim)
@@ -32,7 +33,7 @@ class ScanClaimQrCode extends StatelessWidget {
           : dic.encointer.claimsScannedNew;
 
       store.encointer.communityAccount.addParticipantClaim(claim);
-      _showSnackBar(context, msg);
+      RootSnackBar.show(msg);
     }
   }
 
@@ -45,9 +46,9 @@ class ScanClaimQrCode extends StatelessWidget {
       _showActivityIndicatorOverlay(context);
 
       if (base64Data != null) {
-        var data = base64.decode(base64Data);
-
         try {
+          var data = base64.decode(base64Data);
+
           // Todo: Not good to use the global webApi here, but I wanted to prevent big changes into the code for now.
           // Fix this when #132 is tackled.
           var claim = await webApi.codec
@@ -59,14 +60,14 @@ class ScanClaimQrCode extends StatelessWidget {
           }
         } catch (e) {
           _log("Error decoding claim: ${e.toString()}");
-          _showSnackBar(context, dic.encointer.claimsScannedDecodeFailed);
+          RootSnackBar.show(dic.encointer.claimsScannedDecodeFailed);
         }
       }
 
-      _qrViewKey.currentState.startScan();
-
-      // just pops the cupertino activity indicator.
+      // pops the cupertino activity indicator.
       Navigator.of(context).pop();
+
+      _qrViewKey.currentState.startScan();
     }
 
     return Scaffold(
@@ -116,15 +117,6 @@ void _showActivityIndicatorOverlay(BuildContext context) {
 Future<bool> canOpenCamera() async {
   // will do nothing if already granted
   return Permission.camera.request().isGranted;
-}
-
-void _showSnackBar(BuildContext context, String msg) {
-  ScaffoldMessenger.of(context).removeCurrentSnackBar();
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    backgroundColor: Colors.white,
-    content: Text(msg, style: TextStyle(color: Colors.black54)),
-    duration: Duration(milliseconds: 1500),
-  ));
 }
 
 _log(String msg) {

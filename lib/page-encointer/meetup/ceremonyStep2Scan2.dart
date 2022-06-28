@@ -117,7 +117,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (BuildContext context) => ScanClaimQrCode(store, confirmedParticipantsCount),
+                      builder: (_) => ScanClaimQrCode(store, confirmedParticipantsCount),
                     ),
                   );
                 },
