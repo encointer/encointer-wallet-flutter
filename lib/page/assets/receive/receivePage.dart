@@ -68,7 +68,7 @@ class _ReceivePageState extends State<ReceivePage> {
                   dic.profile.observedPendingExtrinsic,
                   durationMillis: 5000,
                   textColor: Colors.black,
-                  backgroundColor: Colors.blue,
+                  backgroundColor: Colors.lightBlue,
                 );
                 observedPendingExtrinsic = true;
               }
