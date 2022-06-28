@@ -260,38 +260,3 @@ class UI {
     return RegExInputFormatter.withRegex('^[0-9]{0,$decimals}(\\.[0-9]{0,$decimals})?\$');
   }
 }
-
-// access the refreshIndicator globally
-// assets index page:
-final GlobalKey<RefreshIndicatorState> globalBalanceRefreshKey = new GlobalKey<RefreshIndicatorState>();
-// asset page:
-final GlobalKey<RefreshIndicatorState> globalAssetRefreshKey = new GlobalKey<RefreshIndicatorState>();
-// staking bond page:
-final GlobalKey<RefreshIndicatorState> globalBondingRefreshKey = new GlobalKey<RefreshIndicatorState>();
-// staking nominate page:
-final GlobalKey<RefreshIndicatorState> globalNominatingRefreshKey = new GlobalKey<RefreshIndicatorState>();
-// council & motions page:
-final GlobalKey<RefreshIndicatorState> globalCouncilRefreshKey = new GlobalKey<RefreshIndicatorState>();
-final GlobalKey<RefreshIndicatorState> globalMotionsRefreshKey = new GlobalKey<RefreshIndicatorState>();
-// democracy page:
-final GlobalKey<RefreshIndicatorState> globalDemocracyRefreshKey = new GlobalKey<RefreshIndicatorState>();
-// treasury proposals&tips page:
-final GlobalKey<RefreshIndicatorState> globalProposalsRefreshKey = new GlobalKey<RefreshIndicatorState>();
-final GlobalKey<RefreshIndicatorState> globalTipsRefreshKey = new GlobalKey<RefreshIndicatorState>();
-// recovery settings page:
-final GlobalKey<RefreshIndicatorState> globalRecoverySettingsRefreshKey = new GlobalKey<RefreshIndicatorState>();
-// recovery state page:
-final GlobalKey<RefreshIndicatorState> globalRecoveryStateRefreshKey = new GlobalKey<RefreshIndicatorState>();
-// recovery vouch page:
-final GlobalKey<RefreshIndicatorState> globalRecoveryProofRefreshKey = new GlobalKey<RefreshIndicatorState>();
-
-// acala loan page:
-final GlobalKey<RefreshIndicatorState> globalLoanRefreshKey = new GlobalKey<RefreshIndicatorState>();
-// acala dexLiquidity page:
-final GlobalKey<RefreshIndicatorState> globalDexLiquidityRefreshKey = new GlobalKey<RefreshIndicatorState>();
-// acala homa page:
-final GlobalKey<RefreshIndicatorState> globalHomaRefreshKey = new GlobalKey<RefreshIndicatorState>();
-
-// encointerCeremoniesPage
-final GlobalKey<RefreshIndicatorState> globalCeremonyPhaseChangeKey = new GlobalKey<RefreshIndicatorState>();
-final GlobalKey<RefreshIndicatorState> globalCeremonyRegistrationRefreshKey = new GlobalKey<RefreshIndicatorState>();
