@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/snackBar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,11 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_qr_scan/qrcode_reader_view.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'qr_codes/qrCodeBase.dart';
 import 'qrScanService.dart';
+import 'qr_codes/qrCodeBase.dart';
 
-export 'qr_codes/qrCodeBase.dart';
 export 'qrScanService.dart';
+export 'qr_codes/qrCodeBase.dart';
 
 class ScanPageParams {
   ScanPageParams({this.scannerContext});
@@ -31,15 +32,6 @@ class ScanPage extends StatelessWidget {
     return Permission.camera.request().isGranted;
   }
 
-  void _showSnackBar(BuildContext context, String msg) {
-    ScaffoldMessenger.of(context).removeCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: Colors.white,
-      content: Text(msg, style: TextStyle(color: Colors.black54)),
-      duration: Duration(milliseconds: 2000),
-    ));
-  }
-
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context).translationsForLocale();
@@ -50,7 +42,7 @@ class ScanPage extends StatelessWidget {
         qrScanService.handleQrScan(context, params.scannerContext, qrCode);
       } catch (e) {
         print("[ScanPage]: ${e.toString()}");
-        _showSnackBar(context, e.toString());
+        RootSnackBar.show(e.toString());
 
         // If we don't wait, scans  of the same qr code are spammed.
         // My fairly recent cellphone gets too much load for duration < 500 ms. We might need to increase
