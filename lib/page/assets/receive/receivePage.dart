@@ -64,7 +64,12 @@ class _ReceivePageState extends State<ReceivePage> {
           if (((extrinsics?.length ?? 0) > 0) && (!observedPendingExtrinsic)) {
             extrinsics.forEach((xt) {
               if (xt.contains(widget.store.account.currentAccountPubKey.substring(2))) {
-                RootSnackBar.show(dic.profile.observedPendingExtrinsic, durationMillis: 5000);
+                RootSnackBar.show(
+                  dic.profile.observedPendingExtrinsic,
+                  durationMillis: 5000,
+                  textColor: Colors.black,
+                  backgroundColor: Colors.blue,
+                );
                 observedPendingExtrinsic = true;
               }
             });
