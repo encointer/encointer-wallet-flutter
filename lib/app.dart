@@ -7,7 +7,6 @@ import 'package:encointer_wallet/page/account/create/createAccountPage.dart';
 import 'package:encointer_wallet/page/account/create/createPinPage.dart';
 import 'package:encointer_wallet/page/account/createAccountEntryPage.dart';
 import 'package:encointer_wallet/page/account/import/importAccountPage.dart';
-import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
 import 'package:encointer_wallet/page/assets/transfer/detailPage.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/index.dart';
@@ -189,9 +188,6 @@ class _WalletAppState extends State<WalletApp> {
                 return CupertinoPageRoute(builder: (_) => ImportAccountPage(_appStore), settings: settings);
               case ScanPage.route:
                 return CupertinoPageRoute(builder: (_) => ScanPage(_appStore), settings: settings);
-              case TxConfirmPage.route:
-                return CupertinoPageRoute(
-                    builder: (_) => TxConfirmPage(_appStore), settings: settings, fullscreenDialog: true);
               case TransferPage.route:
                 return CupertinoPageRoute(
                     builder: (_) => TransferPage(_appStore), settings: settings, fullscreenDialog: true);

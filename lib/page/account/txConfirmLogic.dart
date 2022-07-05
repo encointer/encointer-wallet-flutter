@@ -12,9 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-/// Contains most of the logic from the `txConfirmPage.dart`
-///
-/// This is a preparatory task the remove the `txConfirmPage` as seamless as possible.
+/// Contains most of the logic from the `txConfirmPage.dart`, which was removed.
 
 const INSUFFICIENT_FUNDS_ERROR = "1010";
 
@@ -30,14 +28,7 @@ Future<void> onSubmit(
 }) async {
   final Translations dic = I18n.of(context).translationsForLocale();
 
-  Map args;
-
-  if (txParams == null) {
-    // backwards compatibility if navigated here from the txConfirmPage.
-    args = ModalRoute.of(context).settings.arguments;
-  } else {
-    args = txParams;
-  }
+  Map args = txParams;
 
   store.assets.setSubmitting(true);
   store.account.setTxStatus(TxStatus.Queued);
