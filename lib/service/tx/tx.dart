@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
-import 'package:encointer_wallet/page/account/txConfirmLogic.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/tx/txConfirmLogic.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
