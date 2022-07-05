@@ -1,5 +1,6 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/secondaryButtonWide.dart';
+import 'package:encointer_wallet/common/components/submitButtonSecondary.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -171,7 +172,7 @@ class EndorseButton extends StatelessWidget {
   Widget build(BuildContext context) {
     var dic = I18n.of(context).translationsForLocale();
 
-    return SecondaryButtonWide(
+    return SubmitButtonSecondary(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -181,10 +182,10 @@ class EndorseButton extends StatelessWidget {
         ],
       ),
       onPressed: store.encointer.community.bootstrappers.contains(contact.address)
-          ? () => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
+          ? (BuildContext context) => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
           : store.encointer.currentPhase != CeremonyPhase.Registering
-              ? () => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)
-              : () => submitEndorseNewcomer(
+              ? (BuildContext context) => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)
+              : (BuildContext context) => submitEndorseNewcomer(
                     context,
                     store,
                     api,
