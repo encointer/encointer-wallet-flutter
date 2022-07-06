@@ -25,7 +25,7 @@ Future<void> submitToJS(
   BuildContext context,
   AppStore store,
   Api api,
-  bool mounted, {
+  bool showStatusSnackBar, {
   Map txParams,
   String password,
   BigInt tip,
@@ -60,9 +60,9 @@ Future<void> submitToJS(
     final Map res = await _sendTx(context, api, args);
 
     if (res['hash'] == null) {
-      _onTxError(context, store, res['error'], mounted);
+      _onTxError(context, store, res['error'], showStatusSnackBar);
     } else {
-      _onTxFinish(context, store, res, onTxFinishFn, mounted);
+      _onTxFinish(context, store, res, onTxFinishFn, showStatusSnackBar);
     }
   } else {
     _showTxStatusSnackBar(dic.home.txQueuedOffline, null);
