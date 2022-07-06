@@ -86,7 +86,7 @@ Future<Map> getTxFee(
     txInfo = proxyAccount.pubKey;
   }
 
-  return webApi.account.estimateTxFees(txInfo, args['params'], rawParam: args['rawParam']);
+  return api.account.estimateTxFees(txInfo, args['params'], rawParam: args['rawParam']);
 }
 
 void _onTxError(BuildContext context, AppStore store, String errorMsg, bool mounted) {
