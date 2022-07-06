@@ -6,7 +6,7 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/paymentOverview.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/transferState.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/service/tx/tx.dart';
+import 'package:encointer_wallet/service/tx/index.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
