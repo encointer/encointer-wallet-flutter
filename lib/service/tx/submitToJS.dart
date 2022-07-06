@@ -5,6 +5,7 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/txStatus.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/UI.dart';
+import 'package:encointer_wallet/utils/snackBar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/translations/translationsHome.dart';
@@ -53,7 +54,6 @@ Future<void> submitToJS(
 
   if (await api.isConnected()) {
     // _showTxStatusSnackBar(
-    //   context,
     //   getTxStatusTranslation(dic.home, store.account.txStatus),
     //   CupertinoActivityIndicator(),
     // ); // TODO armin, fix transfer status logic
@@ -66,7 +66,7 @@ Future<void> submitToJS(
       _onTxFinish(context, store, res, onTxFinishFn, mounted);
     }
   } else {
-    _showTxStatusSnackBar(context, dic.home.txQueuedOffline, null);
+    _showTxStatusSnackBar(dic.home.txQueuedOffline, null);
     args['notificationTitle'] = I18n.of(context).translationsForLocale().home.notifySubmittedQueued;
     store.account.queueTx(args);
   }
@@ -93,7 +93,7 @@ Future<Map> getTxFee(
 void _onTxError(BuildContext context, AppStore store, String errorMsg, bool mounted) {
   store.assets.setSubmitting(false);
   if (mounted) {
-    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    RootSnackBar.removeCurrent();
   }
 
   if (errorMsg.startsWith(INSUFFICIENT_FUNDS_ERROR)) {
@@ -113,18 +113,17 @@ Future<dynamic> _sendTx(BuildContext context, Api api, Map args) async {
   );
 }
 
-void _showTxStatusSnackBar(BuildContext context, String status, Widget leading) {
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    backgroundColor: Theme.of(context).cardColor,
-    content: ListTile(
+void _showTxStatusSnackBar(String status, Widget leading) {
+  RootSnackBar.show(
+    ListTile(
       leading: leading,
       title: Text(
         status,
         style: TextStyle(color: Colors.black54),
       ),
     ),
-    duration: Duration(seconds: 12),
-  ));
+    durationMillis: Duration(seconds: 12).inMilliseconds,
+  );
 }
 
 void _onTxFinish(BuildContext context, AppStore store, Map res, Function(BuildContext, Map) onTxFinish, bool mounted) {
@@ -134,21 +133,16 @@ void _onTxFinish(BuildContext context, AppStore store, Map res, Function(BuildCo
   onTxFinish(context, res);
 
   if (mounted) {
-    ScaffoldMessenger.of(context).removeCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: Colors.white,
-      content: ListTile(
-        leading: Container(
-          width: 24,
-          child: Image.asset('assets/images/assets/success.png'),
-        ),
+    RootSnackBar.show(
+      ListTile(
+        leading: Container(width: 24, child: Image.asset('assets/images/assets/success.png')),
         title: Text(
           I18n.of(context).translationsForLocale().assets.success,
           style: TextStyle(color: Colors.black54),
         ),
       ),
-      duration: Duration(seconds: 2),
-    ));
+      durationMillis: 2000,
+    );
   }
 }
 
