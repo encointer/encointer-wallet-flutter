@@ -60,15 +60,7 @@ Future<void> submitClaimRewards(
   Api api,
   CommunityIdentifier chosenCid,
 ) async {
-  var txParams = {
-    "title": 'claim_rewards',
-    "txInfo": {
-      "module": 'encointerCeremonies',
-      "call": 'claimRewards',
-      "cid": chosenCid,
-    },
-    "params": [chosenCid],
-  };
+  var txParams = claimRewardsParams(chosenCid);
 
   return submitTx(
     context,
@@ -148,6 +140,7 @@ Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) a
   );
 }
 
+// todo: replace this with `encointerBalances.transfer_all`, when we have it in the runtime.
 Future<dynamic> submitReapVoucher(
   Api api,
   String voucherUri,

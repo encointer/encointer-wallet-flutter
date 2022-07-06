@@ -53,6 +53,18 @@ Map<String, dynamic> attestClaimsParams(
   };
 }
 
+Map<String, dynamic> claimRewardsParams(CommunityIdentifier chosenCid) {
+  return {
+    "title": 'claim_rewards',
+    "txInfo": {
+      "module": 'encointerCeremonies',
+      "call": 'claimRewards',
+      "cid": chosenCid,
+    },
+    "params": [chosenCid],
+  };
+}
+
 Map<String, dynamic> encointerBalanceTransferParams(
   CommunityIdentifier cid,
   String recipientAddress,
