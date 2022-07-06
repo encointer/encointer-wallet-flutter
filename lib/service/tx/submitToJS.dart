@@ -67,7 +67,7 @@ Future<void> submitToJS(
     }
   } else {
     _showTxStatusSnackBar(dic.home.txQueuedOffline, null);
-    args['notificationTitle'] = I18n.of(context).translationsForLocale().home.notifySubmittedQueued;
+    args['notificationTitle'] = dic.home.notifySubmittedQueued;
     store.account.queueTx(args);
   }
 }
