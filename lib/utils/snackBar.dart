@@ -11,7 +11,7 @@ class RootSnackBar {
     rootScaffoldMessengerKey.currentState.removeCurrentSnackBar();
   }
 
-  static void show(
+  static void showMsg(
     String msg, {
     int durationMillis: 1500,
     textColor: Colors.black54,
