@@ -1,5 +1,6 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/secondaryButtonWide.dart';
+import 'package:encointer_wallet/common/components/submitButtonSecondary.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -17,11 +18,12 @@ import 'package:iconsax/iconsax.dart';
 import '../../../models/index.dart';
 
 class ContactDetailPage extends StatelessWidget {
-  ContactDetailPage(this.store);
+  ContactDetailPage(this.store, this.api);
 
   static const String route = '/profile/contactDetail';
 
   final AppStore store;
+  final Api api;
 
   void _removeItem(BuildContext context, AccountData account) {
     var dic = I18n.of(context).translationsForLocale();
@@ -108,7 +110,7 @@ class ContactDetailPage extends StatelessWidget {
               Observer(builder: (_) {
                 if (store.encointer.community.bootstrappers != null) {
                   return store.encointer.community.bootstrappers.contains(store.account.currentAddress)
-                      ? EndorseButton(store, account)
+                      ? EndorseButton(store, api, account)
                       : Container();
                 } else {
                   return CupertinoActivityIndicator();
@@ -160,16 +162,17 @@ class ContactDetailPage extends StatelessWidget {
 }
 
 class EndorseButton extends StatelessWidget {
-  EndorseButton(this.store, this.contact);
+  EndorseButton(this.store, this.api, this.contact);
 
   final AppStore store;
+  final Api api;
   final AccountData contact;
 
   @override
   Widget build(BuildContext context) {
     var dic = I18n.of(context).translationsForLocale();
 
-    return SecondaryButtonWide(
+    return SubmitButtonSecondary(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -179,18 +182,16 @@ class EndorseButton extends StatelessWidget {
         ],
       ),
       onPressed: store.encointer.community.bootstrappers.contains(contact.address)
-          ? () => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
+          ? (BuildContext context) => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
           : store.encointer.currentPhase != CeremonyPhase.Registering
-              ? () => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)
-              : () {
-                  final txPaymentAsset = store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
-                  submitEndorseNewcomer(
+              ? (BuildContext context) => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)
+              : (BuildContext context) => submitEndorseNewcomer(
                     context,
+                    store,
+                    api,
                     store.encointer.chosenCid,
                     contact.address,
-                    txPaymentAsset: txPaymentAsset,
-                  );
-                },
+                  ),
     );
   }
 }

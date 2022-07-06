@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/page/account/txConfirmLogic.dart';
-import 'package:encointer_wallet/page/account/txConfirmPage.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
@@ -81,27 +80,20 @@ Future<void> submitClaimRewards(
   );
 }
 
-Future<void> submitEndorseNewcomer(
-  BuildContext context,
+Map<String, dynamic> endorseNewcomerParams(
   CommunityIdentifier chosenCid,
-  String newbie, {
-  CommunityIdentifier txPaymentAsset,
-}) async {
-  var args = {
+  String newbie,
+) {
+  return {
     "title": 'endorse_newcomer',
     "txInfo": {
       "module": 'encointerCeremonies',
       "call": 'endorseNewcomer',
       "cid": chosenCid,
-      "txPaymentAsset": txPaymentAsset,
     },
     "detail": "cid: ${chosenCid.toFmtString()}, newbie: $newbie",
     "params": [chosenCid, newbie],
-    'onFinish': (BuildContext txPageContext, Map res) {
-      Navigator.pop(txPageContext);
-    }
   };
-  Navigator.of(context).pushNamed(TxConfirmPage.route, arguments: args);
 }
 
 Map<String, dynamic> registerParticipantParams(
@@ -165,6 +157,24 @@ Map<String, dynamic> encointerBalanceTransferParams(
       amount.toString(),
     ],
   };
+}
+
+Future<void> submitEndorseNewcomer(
+  BuildContext context,
+  AppStore store,
+  Api api,
+  CommunityIdentifier chosenCid,
+  String newbie,
+) async {
+  var txParams = endorseNewcomerParams(chosenCid, newbie);
+
+  return submitTx(
+    context,
+    store,
+    api,
+    txParams,
+    onFinish: (BuildContext txPageContext, Map res) => (res),
+  );
 }
 
 Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api api) async {
