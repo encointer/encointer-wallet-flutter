@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/service/tx/submitToJS.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -10,13 +9,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'params.dart';
+import 'submitToJS.dart';
 
-/// Helpers to send transactions.
-///
-/// Refactor when we tackle: https://github.com/encointer/encointer-wallet-flutter/issues/335
-///
-/// A builder pattern would probably be nice here.
+/// Helpers to submit transactions.
 
+/// Submit tx to the chain.
+///
+/// Asks for the pin input if it's not cached and submits the tx via the JS interface.
+///
+/// This function is intended to be the universal interface for sending transactions.
 Future<void> submitTx(
   BuildContext context,
   AppStore store,

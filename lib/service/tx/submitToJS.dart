@@ -16,6 +16,10 @@ import 'package:flutter/widgets.dart';
 
 const INSUFFICIENT_FUNDS_ERROR = "1010";
 
+/// Inner function to submit a tx via the JS interface.
+///
+/// Should be private but dart lacks intelligent support to manage privacy. `submitTxWrappers/submitTx` should be
+/// called from the outside instead of this one.
 Future<void> submitToJS(
   BuildContext context,
   AppStore store,
