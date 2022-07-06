@@ -16,7 +16,7 @@ import 'package:flutter/widgets.dart';
 
 const INSUFFICIENT_FUNDS_ERROR = "1010";
 
-Future<void> onSubmit(
+Future<void> submitToJS(
   BuildContext context,
   AppStore store,
   Api api,

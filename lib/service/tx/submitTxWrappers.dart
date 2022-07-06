@@ -44,7 +44,7 @@ Future<void> submitTx(
   txParams["txInfo"]["txPaymentAsset"] = txPaymentAsset;
   txParams["onFinish"] = onFinish ?? (BuildContext txPageContext, Map res) => res;
 
-  return onSubmit(
+  return submitToJS(
     context,
     store,
     api,
