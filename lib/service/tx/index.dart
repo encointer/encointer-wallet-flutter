@@ -4,5 +4,5 @@
 library tx;
 
 export 'params.dart';
-export 'tx.dart';
+export 'submitTxWrappers.dart';
 export 'txConfirmLogic.dart';
