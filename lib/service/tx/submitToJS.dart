@@ -28,7 +28,6 @@ Future<void> submitToJS(
   bool mounted, {
   Map txParams,
   String password,
-  bool viaQr = false,
   BigInt tip,
 }) async {
   final Translations dic = I18n.of(context).translationsForLocale();
