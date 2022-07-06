@@ -52,10 +52,12 @@ Future<void> submitToJS(
   var onTxFinishFn = (args['onFinish'] as Function(BuildContext, Map));
 
   if (await api.isConnected()) {
-    // _showTxStatusSnackBar(
-    //   getTxStatusTranslation(dic.home, store.account.txStatus),
-    //   CupertinoActivityIndicator(),
-    // ); // TODO armin, fix transfer status logic
+    if (showStatusSnackBar) {
+      _showTxStatusSnackBar(
+        getTxStatusTranslation(dic.home, store.account.txStatus),
+        CupertinoActivityIndicator(),
+      );
+    }
 
     final Map res = await _sendTx(context, api, args);
 
