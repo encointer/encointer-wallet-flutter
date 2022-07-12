@@ -1,22 +1,23 @@
 import 'dart:convert';
 
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
-import 'package:encointer_wallet/page/account/txConfirmLogic.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
-import 'package:encointer_wallet/store/encointer/types/proofOfAttendance.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-/// Helpers to send transactions.
-///
-/// Refactor when we tackle: https://github.com/encointer/encointer-wallet-flutter/issues/335
-///
-/// A builder pattern would probably be nice here.
+import 'params.dart';
+import 'submitToJS.dart';
 
+/// Helpers to submit transactions.
+
+/// Submit tx to the chain.
+///
+/// Asks for the pin input if it's not cached and submits the tx via the JS interface.
+///
+/// This function is intended to be the universal interface for sending transactions.
 Future<void> submitTx(
   BuildContext context,
   AppStore store,
@@ -44,7 +45,7 @@ Future<void> submitTx(
   txParams["txInfo"]["txPaymentAsset"] = txPaymentAsset;
   txParams["onFinish"] = onFinish ?? (BuildContext txPageContext, Map res) => res;
 
-  return onSubmit(
+  return submitToJS(
     context,
     store,
     api,
@@ -60,16 +61,7 @@ Future<void> submitClaimRewards(
   Api api,
   CommunityIdentifier chosenCid,
 ) async {
-  var txParams = {
-    "title": 'claim_rewards',
-    "txInfo": {
-      "module": 'encointerCeremonies',
-      "call": 'claimRewards',
-      "cid": chosenCid,
-    },
-    "detail": "cid: ${chosenCid.toFmtString()}",
-    "params": [chosenCid],
-  };
+  var txParams = claimRewardsParams(chosenCid);
 
   return submitTx(
     context,
@@ -78,85 +70,6 @@ Future<void> submitClaimRewards(
     txParams,
     onFinish: (BuildContext txPageContext, Map res) => (res),
   );
-}
-
-Map<String, dynamic> endorseNewcomerParams(
-  CommunityIdentifier chosenCid,
-  String newbie,
-) {
-  return {
-    "title": 'endorse_newcomer',
-    "txInfo": {
-      "module": 'encointerCeremonies',
-      "call": 'endorseNewcomer',
-      "cid": chosenCid,
-    },
-    "detail": "cid: ${chosenCid.toFmtString()}, newbie: $newbie",
-    "params": [chosenCid, newbie],
-  };
-}
-
-Map<String, dynamic> registerParticipantParams(
-  CommunityIdentifier chosenCid, {
-  ProofOfAttendance proof,
-}) {
-  return {
-    "title": 'register_participant',
-    "txInfo": {
-      "module": 'encointerCeremonies',
-      "call": 'registerParticipant',
-      "cid": chosenCid,
-    },
-    "detail": jsonEncode({
-      "cid": chosenCid.toFmtString(),
-      "proof": proof == null
-          ? "No proof of past attendance found" // Note: hardcoded strings are ok here, the page  will be removed.
-          : "Sending proof for cIndex: ${proof.ceremonyIndex}, community: ${proof.communityIdentifier.toFmtString()}",
-    }),
-    "params": [
-      chosenCid,
-      proof,
-    ],
-  };
-}
-
-Map<String, dynamic> attestClaimsParams(
-  BuildContext context,
-  CommunityIdentifier chosenCid,
-  int scannedClaimsCount,
-  List<ClaimOfAttendance> claims,
-) {
-  final dic = I18n.of(context).translationsForLocale();
-  return {
-    "title": 'attest_claims',
-    "txInfo": {
-      "module": 'encointerCeremonies',
-      "call": 'attestClaims',
-      "cid": chosenCid,
-    },
-    "detail": dic.encointer.claimsSubmitDetail.replaceAll('AMOUNT', scannedClaimsCount.toString()),
-    "params": [claims],
-  };
-}
-
-Map<String, dynamic> encointerBalanceTransferParams(
-  CommunityIdentifier cid,
-  String recipientAddress,
-  double amount,
-) {
-  return {
-    "title": 'encointerBalancesTransfer',
-    "txInfo": {
-      "module": 'encointerBalances',
-      "call": 'transfer',
-      "cid": cid,
-    },
-    "params": [
-      recipientAddress,
-      cid,
-      amount.toString(),
-    ],
-  };
 }
 
 Future<void> submitEndorseNewcomer(
@@ -211,7 +124,6 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
 
 Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) async {
   final params = attestClaimsParams(
-    context,
     store.encointer.chosenCid,
     store.encointer.communityAccount.scannedClaimsCount,
     store.encointer.communityAccount.participantsClaims.values.toList(),
@@ -229,6 +141,7 @@ Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) a
   );
 }
 
+// todo: replace this with `encointerBalances.transfer_all`, when we have it in the runtime.
 Future<dynamic> submitReapVoucher(
   Api api,
   String voucherUri,

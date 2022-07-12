@@ -25,7 +25,7 @@ class ScanClaimQrCode extends StatelessWidget {
     List<String> registry = store.encointer.communityAccount.meetup.registry;
     if (!registry.contains(claim.claimantPublic)) {
       // this is important because the runtime checks if there are too many claims trying to be registered.
-      RootSnackBar.show(dic.encointer.meetupClaimantInvalid);
+      RootSnackBar.showMsg(dic.encointer.meetupClaimantInvalid);
       print("[scanClaimQrCode] Claimant: ${claim.claimantPublic} is not part of registry: ${registry.toString()}");
     } else {
       String msg = store.encointer.communityAccount.containsClaim(claim)
@@ -33,7 +33,7 @@ class ScanClaimQrCode extends StatelessWidget {
           : dic.encointer.claimsScannedNew;
 
       store.encointer.communityAccount.addParticipantClaim(claim);
-      RootSnackBar.show(msg);
+      RootSnackBar.showMsg(msg);
     }
   }
 
@@ -60,7 +60,7 @@ class ScanClaimQrCode extends StatelessWidget {
           }
         } catch (e) {
           _log("Error decoding claim: ${e.toString()}");
-          RootSnackBar.show(dic.encointer.claimsScannedDecodeFailed);
+          RootSnackBar.showMsg(dic.encointer.claimsScannedDecodeFailed);
         }
       }
 

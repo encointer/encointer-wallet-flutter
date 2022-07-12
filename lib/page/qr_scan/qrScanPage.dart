@@ -42,7 +42,7 @@ class ScanPage extends StatelessWidget {
         qrScanService.handleQrScan(context, params.scannerContext, qrCode);
       } catch (e) {
         print("[ScanPage]: ${e.toString()}");
-        RootSnackBar.show(e.toString());
+        RootSnackBar.showMsg(e.toString());
 
         // If we don't wait, scans  of the same qr code are spammed.
         // My fairly recent cellphone gets too much load for duration < 500 ms. We might need to increase
