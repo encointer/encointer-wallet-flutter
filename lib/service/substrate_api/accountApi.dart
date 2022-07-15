@@ -237,17 +237,26 @@ class AccountApi {
     return res;
   }
 
+  /// Parse scanned Qr-code into a transaction.
+  ///
+  /// See: https://github.com/encointer/encointer-wallet-flutter/issues/676
   Future<Map> parseQrCode(String data) async {
     final res = await jsApi.evalJavascript('account.parseQrCode("$data")');
     print('rawData: $data');
     return res;
   }
 
+  /// Sign async with the signer defined by `parseQrCode`.
+  ///
+  /// See: https://github.com/encointer/encointer-wallet-flutter/issues/676
   Future<Map> signAsync(String password) async {
     final res = await jsApi.evalJavascript('account.signAsync("$password")');
     return res;
   }
 
+  /// Create the a QR-code of `txInfo` to be scanned on another device and create a (multiparty-)signature.
+  ///
+  /// See: https://github.com/encointer/encointer-wallet-flutter/issues/676
   Future<Map> makeQrCode(Map txInfo, List params, {String rawParam}) async {
     String param = rawParam != null ? rawParam : jsonEncode(params);
     final Map res = await jsApi.evalJavascript(
@@ -257,15 +266,18 @@ class AccountApi {
     return res;
   }
 
+  /// Add a `signature` to a `txInfo` and send the extrinsics.
+  ///
+  /// See: https://github.com/encointer/encointer-wallet-flutter/issues/676
   Future<Map> addSignatureAndSend(
-    String signed,
+    String signature,
     Map txInfo,
     String pageTile,
     String notificationTitle,
   ) async {
     final String address = store.account.currentAddress;
     final Map res = await jsApi.evalJavascript(
-      'account.addSignatureAndSend("$address", "$signed")',
+      'account.addSignatureAndSend("$address", "$signature")',
       allowRepeat: true,
     );
 
