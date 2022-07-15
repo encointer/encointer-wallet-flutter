@@ -190,21 +190,6 @@ mixin _$AccountStore on _AccountStore, Store {
     });
   }
 
-  final _$recoveryInfoAtom = Atom(name: '_AccountStore.recoveryInfo');
-
-  @override
-  AccountRecoveryInfo get recoveryInfo {
-    _$recoveryInfoAtom.reportRead();
-    return super.recoveryInfo;
-  }
-
-  @override
-  set recoveryInfo(AccountRecoveryInfo value) {
-    _$recoveryInfoAtom.reportWrite(value, super.recoveryInfo, () {
-      super.recoveryInfo = value;
-    });
-  }
-
   final _$queuedTxsAtom = Atom(name: '_AccountStore.queuedTxs');
 
   @override
@@ -420,16 +405,6 @@ mixin _$AccountStore on _AccountStore, Store {
   }
 
   @override
-  void setAccountRecoveryInfo(Map<dynamic, dynamic> json) {
-    final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setAccountRecoveryInfo');
-    try {
-      return super.setAccountRecoveryInfo(json);
-    } finally {
-      _$_AccountStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   String toString() {
     return '''
 loading: ${loading},
@@ -442,7 +417,6 @@ accountIndexMap: ${accountIndexMap},
 pubKeyAddressMap: ${pubKeyAddressMap},
 pubKeyIconsMap: ${pubKeyIconsMap},
 addressIconsMap: ${addressIconsMap},
-recoveryInfo: ${recoveryInfo},
 queuedTxs: ${queuedTxs},
 currentAccount: ${currentAccount},
 optionalAccounts: ${optionalAccounts},

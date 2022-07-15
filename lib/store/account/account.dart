@@ -5,7 +5,6 @@ import 'package:encointer_wallet/page/profile/settings/ss58PrefixListPage.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
-import 'package:encointer_wallet/store/account/types/accountRecoveryInfo.dart';
 import 'package:encointer_wallet/store/account/types/txStatus.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -64,9 +63,6 @@ abstract class _AccountStore with Store {
 
   @observable
   ObservableMap<String, String> addressIconsMap = ObservableMap<String, String>();
-
-  @observable
-  AccountRecoveryInfo recoveryInfo = AccountRecoveryInfo();
 
   @observable
   List<Map<String, dynamic>> queuedTxs = ObservableList<Map<String, dynamic>>();
@@ -401,11 +397,6 @@ abstract class _AccountStore with Store {
     list.forEach((i) {
       addressIndexMap[i['accountId']] = i;
     });
-  }
-
-  @action
-  void setAccountRecoveryInfo(Map json) {
-    recoveryInfo = json != null ? AccountRecoveryInfo.fromJson(json) : AccountRecoveryInfo();
   }
 }
 
