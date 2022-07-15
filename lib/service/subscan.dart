@@ -42,7 +42,6 @@ class SubScanApi {
   final String moduleBalances = 'Balances';
   final String moduleStaking = 'Staking';
   final String moduleDemocracy = 'Democracy';
-  final String moduleRecovery = 'Recovery';
 
   static String getSnEndpoint(String network) {
     if (network.contains('polkadot')) {
