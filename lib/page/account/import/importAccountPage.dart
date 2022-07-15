@@ -169,7 +169,6 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
 
     // fetch info for the imported account
     webApi.fetchAccountData();
-    webApi.account.fetchAccountsBonded([pubKey]);
     webApi.account.getPubKeyIcons([pubKey]);
 
     setState(() {

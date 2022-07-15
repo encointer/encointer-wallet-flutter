@@ -117,13 +117,6 @@ class AccountApi {
     }
   }
 
-  Future<void> fetchAccountsBonded(List<String> pubKeys) async {
-    if (pubKeys.length > 0) {
-      List res = await jsApi.evalJavascript('account.queryAccountsBonded(${jsonEncode(pubKeys)})');
-      store.account.setAccountsBonded(res);
-    }
-  }
-
   Future<Map> estimateTxFees(Map txInfo, List params, {String rawParam}) async {
     String param = rawParam != null ? rawParam : jsonEncode(params);
     print(txInfo);

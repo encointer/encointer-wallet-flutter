@@ -4,7 +4,6 @@ import 'package:aes_ecb_pkcs5_flutter/aes_ecb_pkcs5_flutter.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58PrefixListPage.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/account/types/accountBondedInfo.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/account/types/accountRecoveryInfo.dart';
 import 'package:encointer_wallet/store/account/types/txStatus.dart';
@@ -56,9 +55,6 @@ abstract class _AccountStore with Store {
 
   @observable
   Map<String, Map> accountIndexMap = Map<String, Map>();
-
-  @observable
-  ObservableMap<String, AccountBondedInfo> pubKeyBondedMap = ObservableMap<String, AccountBondedInfo>();
 
   @observable
   ObservableMap<int, Map<String, String>> pubKeyAddressMap = ObservableMap<int, Map<String, String>>();
@@ -304,13 +300,6 @@ abstract class _AccountStore with Store {
 
     currentAccountPubKey = await rootStore.localStorage.getCurrentAccount();
     loading = false;
-  }
-
-  @action
-  Future<void> setAccountsBonded(List ls) async {
-    ls.forEach((i) {
-      pubKeyBondedMap[i[0]] = AccountBondedInfo(i[0], i[1], i[2]);
-    });
   }
 
   @action

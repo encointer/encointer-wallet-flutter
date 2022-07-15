@@ -145,21 +145,6 @@ mixin _$AccountStore on _AccountStore, Store {
     });
   }
 
-  final _$pubKeyBondedMapAtom = Atom(name: '_AccountStore.pubKeyBondedMap');
-
-  @override
-  ObservableMap<String, AccountBondedInfo> get pubKeyBondedMap {
-    _$pubKeyBondedMapAtom.reportRead();
-    return super.pubKeyBondedMap;
-  }
-
-  @override
-  set pubKeyBondedMap(ObservableMap<String, AccountBondedInfo> value) {
-    _$pubKeyBondedMapAtom.reportWrite(value, super.pubKeyBondedMap, () {
-      super.pubKeyBondedMap = value;
-    });
-  }
-
   final _$pubKeyAddressMapAtom = Atom(name: '_AccountStore.pubKeyAddressMap');
 
   @override
@@ -275,13 +260,6 @@ mixin _$AccountStore on _AccountStore, Store {
   @override
   Future<void> loadAccount() {
     return _$loadAccountAsyncAction.run(() => super.loadAccount());
-  }
-
-  final _$setAccountsBondedAsyncAction = AsyncAction('_AccountStore.setAccountsBonded');
-
-  @override
-  Future<void> setAccountsBonded(List<dynamic> ls) {
-    return _$setAccountsBondedAsyncAction.run(() => super.setAccountsBonded(ls));
   }
 
   final _$encryptSeedAsyncAction = AsyncAction('_AccountStore.encryptSeed');
@@ -461,7 +439,6 @@ currentAccountPubKey: ${currentAccountPubKey},
 accountList: ${accountList},
 addressIndexMap: ${addressIndexMap},
 accountIndexMap: ${accountIndexMap},
-pubKeyBondedMap: ${pubKeyBondedMap},
 pubKeyAddressMap: ${pubKeyAddressMap},
 pubKeyIconsMap: ${pubKeyIconsMap},
 addressIconsMap: ${addressIconsMap},
