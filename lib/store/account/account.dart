@@ -12,6 +12,12 @@ import 'package:mobx/mobx.dart';
 
 part 'account.g.dart';
 
+/// Mobx-store containing account related data.
+///
+/// Todo: This store has been inherited from upstream, and I think it would need a refactoring:
+/// * https://github.com/encointer/encointer-wallet-flutter/issues/574
+/// * https://github.com/encointer/encointer-wallet-flutter/issues/487
+
 class AccountStore extends _AccountStore with _$AccountStore {
   AccountStore(AppStore appStore) : super(appStore);
 
