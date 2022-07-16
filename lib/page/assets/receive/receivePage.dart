@@ -13,7 +13,7 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:pausable_timer/pausable_timer.dart';
-import 'package:qr_flutter/qr_flutter.dart';
+import 'package:qr_flutter_fork/qr_flutter.dart';
 import 'package:share/share.dart';
 
 class ReceivePage extends StatefulWidget {
