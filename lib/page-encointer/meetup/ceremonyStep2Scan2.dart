@@ -12,7 +12,7 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-import 'package:qr_flutter_fork/qr_flutter.dart';
+import 'package:qr_flutter_fork/qr_flutter_fork.dart';
 
 import 'ceremonyProgressBar.dart';
 import 'ceremonyStep3Finish.dart';
