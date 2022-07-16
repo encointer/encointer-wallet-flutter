@@ -83,7 +83,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
     return '${Fmt.accountDisplayNameString(address, accInfo)} $idx $address ${item.address}';
   }
 
-  Widget _selectedItemBuilder(BuildContext context, AccountData item, String itemDesignation) {
+  Widget _selectedItemBuilder(BuildContext context, AccountData item) {
     if (item == null) {
       return Container();
     }
@@ -161,27 +161,29 @@ class _AddressInputFieldState extends State<AddressInputField> {
         borderRadius: BorderRadius.circular(15),
       ),
       child: DropdownSearch<AccountData>(
-        mode: Mode.BOTTOM_SHEET,
-        isFilteredOnline: true,
-        showSearchBox: true,
-        showSelectedItem: true,
-        autoFocusSearchBox: true,
-        dropdownSearchDecoration: InputDecoration(
-          labelText: widget.label,
-          labelStyle: Theme.of(context).textTheme.headline4,
-          contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 25),
-          border: UnderlineInputBorder(
-            borderSide: BorderSide(
-              width: 0,
-              style: BorderStyle.none,
+        popupProps: PopupProps.modalBottomSheet(
+          isFilterOnline: true,
+          showSearchBox: true,
+          showSelectedItems: true,
+          itemBuilder: _listItemBuilder,
+        ),
+        dropdownDecoratorProps: DropDownDecoratorProps(
+          dropdownSearchDecoration: InputDecoration(
+            labelText: widget.label,
+            labelStyle: Theme.of(context).textTheme.headline4,
+            contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 25),
+            border: UnderlineInputBorder(
+              borderSide: BorderSide(
+                width: 0,
+                style: BorderStyle.none,
+              ),
             ),
           ),
         ),
-        label: widget.label,
         selectedItem: widget.initialValue,
         compareFn: (AccountData i, s) => i.pubKey == s?.pubKey,
         validator: (AccountData u) => u == null ? dic.profile.errorUserNameIsRequired : null,
-        onFind: (String filter) => _getAccountsFromInput(filter),
+        asyncItems: (String filter) => _getAccountsFromInput(filter),
         itemAsString: _itemAsString,
         onChanged: (AccountData data) {
           if (widget.onChanged != null) {
@@ -189,7 +191,6 @@ class _AddressInputFieldState extends State<AddressInputField> {
           }
         },
         dropdownBuilder: _selectedItemBuilder,
-        popupItemBuilder: _listItemBuilder,
       ),
     );
   }
