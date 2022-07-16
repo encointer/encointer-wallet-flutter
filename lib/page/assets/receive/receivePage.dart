@@ -199,7 +199,8 @@ class _ReceivePageState extends State<ReceivePage> {
                         if (_formKey.currentState.validate())
                           {
                             // Todo: implement invoice.toUrl()
-                            Share.share(invoice.toQrPayload()),
+                            // Todo: use `share_plus` instead of discontinued `share`
+                            // Share.share(invoice.toQrPayload()),
                           }
                       },
                     ),

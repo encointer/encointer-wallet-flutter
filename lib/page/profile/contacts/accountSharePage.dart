@@ -90,7 +90,8 @@ class _AccountSharePageState extends State<AccountSharePage> {
                     Text(dic.profile.sendLink, style: textTheme.headline3),
                   ],
                 ),
-                onPressed: () => Share.share(contactQrCode.toQrPayload()),
+                onPressed: () => null, // Todo: use `share_plus` instead of discontinued `share`
+                // onPressed: () => Share.share(contactQrCode.toQrPayload()),
               ),
             ],
           ),
