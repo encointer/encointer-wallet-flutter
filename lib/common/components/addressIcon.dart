@@ -1,10 +1,9 @@
+import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jdenticon_dart/jdenticon_dart.dart';
-import 'package:encointer_wallet/common/theme.dart';
 
 class AddressIcon extends StatelessWidget {
   AddressIcon(

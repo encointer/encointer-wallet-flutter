@@ -1,4 +1,3 @@
-import 'dart:ui';
 
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';

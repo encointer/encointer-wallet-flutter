@@ -1,6 +1,5 @@
 import 'package:encointer_wallet/common/components/secondaryButtonWide.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 /// Button that shows a `CupertinoActivityIndicator` within while `onPressed` is executed.
 ///

@@ -40,14 +40,19 @@ final appThemeEncointer = ThemeData(
       color: ZurichLion.shade500,
     ),
     shadowColor: Colors.transparent,
-    textTheme: TextTheme(
+    centerTitle: true, toolbarTextStyle: TextTheme(
       headline6: TextStyle(
         // it's not obvious but appBar uses headline6
         fontSize: 19,
         color: ZurichLion.shade500,
       ),
-    ),
-    centerTitle: true,
+    ).bodyText2, titleTextStyle: TextTheme(
+      headline6: TextStyle(
+        // it's not obvious but appBar uses headline6
+        fontSize: 19,
+        color: ZurichLion.shade500,
+      ),
+    ).headline6,
   ),
   scaffoldBackgroundColor: Colors.white,
 );

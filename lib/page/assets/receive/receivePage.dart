@@ -10,7 +10,6 @@ import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/snackBar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:pausable_timer/pausable_timer.dart';

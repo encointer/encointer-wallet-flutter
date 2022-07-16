@@ -2,7 +2,6 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/create/createAccountForm.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CreateAccountPage extends StatefulWidget {
