@@ -14,7 +14,6 @@ import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:pausable_timer/pausable_timer.dart';
 import 'package:qr_flutter_fork/qr_flutter_fork.dart';
-import 'package:share/share.dart';
 
 class ReceivePage extends StatefulWidget {
   ReceivePage(this.store);
