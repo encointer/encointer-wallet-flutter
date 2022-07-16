@@ -40,13 +40,15 @@ final appThemeEncointer = ThemeData(
       color: ZurichLion.shade500,
     ),
     shadowColor: Colors.transparent,
-    centerTitle: true, toolbarTextStyle: TextTheme(
+    centerTitle: true,
+    toolbarTextStyle: TextTheme(
       headline6: TextStyle(
         // it's not obvious but appBar uses headline6
         fontSize: 19,
         color: ZurichLion.shade500,
       ),
-    ).bodyText2, titleTextStyle: TextTheme(
+    ).bodyText2,
+    titleTextStyle: TextTheme(
       headline6: TextStyle(
         // it's not obvious but appBar uses headline6
         fontSize: 19,
