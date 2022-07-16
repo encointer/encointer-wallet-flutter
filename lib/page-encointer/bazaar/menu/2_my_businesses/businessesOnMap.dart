@@ -42,7 +42,7 @@ class BMap extends StatelessWidget {
         center: LatLng(47.389712, 8.517076),
         zoom: 15.0,
         maxZoom: 18.4,
-        onTap: (_) => _popupLayerController.hideAllPopups(), // Hide popup when the map is tapped.
+        onTap: (_, __) => _popupLayerController.hideAllPopups(), // Hide popup when the map is tapped.
       ),
       children: [
         TileLayerWidget(
