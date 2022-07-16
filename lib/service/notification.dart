@@ -80,13 +80,15 @@ class NotificationPlugin {
 
   static Future<void> showNotification(int id, String title, String body, {String payload, String cid}) async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
-        'EncointerNotification$cid', // This channel name must be unique for each community if we want community-specific sounds
-        'Encointer Notification',
-        'a transactions has been submitted or a payment has arrived',
-        importance: Importance.max,
-        priority: Priority.high,
-        ticker: 'ticker',
-        sound: RawResourceAndroidNotificationSound('lions_growl'));
+      'transaction_submitted',
+      'Tx Submitted',
+      channelDescription: 'transaction submitted to blockchain network',
+      importance: Importance.max,
+      priority: Priority.high,
+      ticker: 'ticker',
+      sound: RawResourceAndroidNotificationSound('lions_growl'),
+    );
+
     var iOSPlatformChannelSpecifics = IOSNotificationDetails(sound: 'lions_growl.wav', presentSound: true);
     var platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
