@@ -34,6 +34,7 @@ final appThemeEncointer = ThemeData(
     color: ZurichLion.shade500,
   ),
   appBarTheme: AppBarTheme(
+    elevation: 0,
     // foregroundColor: Colors.orange, // this gets for some reason ignored and we have to define iconTheme and textTheme
     backgroundColor: Colors.white,
     iconTheme: IconThemeData(
