@@ -22,6 +22,7 @@ final appThemeEncointer = ThemeData(
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
+      elevation: 0,
       primary: ZurichLion.shade50,
       onPrimary: ZurichLion.shade500,
       shadowColor: Colors.transparent,
