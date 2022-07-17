@@ -59,6 +59,8 @@ class JSApi {
 
       await _webViewPostInitCallback();
     });
+
+    return _web.run();
   }
 
   /// Evaluate javascript [code] in the webView.

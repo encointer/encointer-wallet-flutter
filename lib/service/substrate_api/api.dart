@@ -52,16 +52,7 @@ class Api {
     encointer = EncointerApi(js, dartApi);
     ipfs = Ipfs(gateway: store.settings.ipfsGateway);
 
-    print("first launch of webview");
-    await launchWebview();
-
-    //TODO: fix this properly!
-    // hack to allow hot-restart with re-loaded webview
-    // the problem is that hot-restart doesn't call dispose(),
-    // so the webview will not be closed properly. Therefore,
-    // the first call to launchWebView will crash. The second
-    // one seems to succeed
-    print("second launch of webview");
+    print("launch the webview");
     await launchWebview();
   }
 
