@@ -19,7 +19,7 @@ jobs:
         with:
           config_files: ./.github/action-config.json
 
-      - uses: subosito/flutter-action@v1
+      - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ steps.config.outputs.flutter-version }}
 
