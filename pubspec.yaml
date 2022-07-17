@@ -41,8 +41,6 @@ dependencies:
     sdk: flutter
   flutter_localizations:
     sdk: flutter
-  ota_update: ^4.0.1
-  update_app: ^0.1.7
   base58check: ^2.0.0
   package_info: ^2.0.2
   quiver: ^3.1.0
