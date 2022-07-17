@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -15,9 +14,21 @@ class JSApi {
 
   Function _webViewPostInitCallback;
 
-  String get initialUrl => "data:text/html;base64,${base64Encode(const Utf8Encoder().convert(sSScriptContainer))}";
+  Future<void> launchWebView(BuildContext context, Future<void> Function() webViewPostInitCallback) async {
+    _msgHandlers = {};
+    _msgCompleters = {};
+    _evalJavascriptUID = 0;
 
-  static const String sSScriptContainer = """s
+    _webViewPostInitCallback = webViewPostInitCallback;
+
+    if (_web != null) {
+      // we need to call this because `dispose` is not called in a hot-reload
+      closeWebView();
+    }
+
+    String source = await DefaultAssetBundle.of(context).loadString('lib/js_service_encointer/dist/main.js');
+
+    String jSScriptContainer = """
   <!DOCTYPE html>
   <html lang="en">
   <head>
@@ -36,70 +47,55 @@ class JSApi {
 
     window.flutter_inappwebview
         .callHandler('handlerFooWithArgs', 1, true, ['bar', 5], {foo: 'baz'}, result);
+    });
   });
-  });
+  
+  $source
+ 
   </script>
   </body>
   </html>
   """;
 
-  Future<void> launchWebView(BuildContext context, Future<void> Function() webViewPostInitCallback) async {
-    _msgHandlers = {};
-    _msgCompleters = {};
-    _evalJavascriptUID = 0;
-
-    _webViewPostInitCallback = webViewPostInitCallback;
-
-    if (_web != null) {
-      // we need to call this because `dispose` is not called in a hot-reload
-      closeWebView();
-    }
-
     _web = HeadlessInAppWebView(
-        initialData: InAppWebViewInitialData(data: sSScriptContainer),
-        onWebViewCreated: (controller) {
-          print("Adding the PolkaWallet javascript handler");
+      initialData: InAppWebViewInitialData(data: jSScriptContainer),
+      onConsoleMessage: (controller, message) => print("JS-Console: ${message.message}"),
+      onWebViewCreated: (controller) async {
+        print("Adding the PolkaWallet javascript handler");
 
-          controller.addJavaScriptHandler(
-              handlerName: 'handlerFooWithArgs',
-              callback: (args) {
-                print(args);
-                // it will print: [1, true, [bar, 5], {foo: baz}, {bar: bar_value, baz: baz_value}]
-              });
+        controller.addJavaScriptHandler(
+            handlerName: 'handlerFooWithArgs',
+            callback: (args) {
+              print(args);
+              // it will print: [1, true, [bar, 5], {foo: baz}, {bar: bar_value, baz: baz_value}]
+            });
 
-          controller.addJavaScriptHandler(
-              handlerName: 'PolkaWallet',
-              callback: (args) {
-                // print arguments coming from the JavaScript side!
-                print('received msg: ${args.toString()}');
+        controller.addJavaScriptHandler(
+            handlerName: 'PolkaWallet',
+            callback: (args) {
+              // print arguments coming from the JavaScript side!
+              print('received msg: ${args.toString()}');
 
-                var res = args[0];
+              var res = args[0];
 
-                final String path = res['path'];
-                if (_msgCompleters[path] != null) {
-                  Completer handler = _msgCompleters[path];
-                  handler.complete(res['data']);
-                  if (path.contains('uid=')) {
-                    _msgCompleters.remove(path);
-                  }
+              final String path = res['path'];
+              if (_msgCompleters[path] != null) {
+                Completer handler = _msgCompleters[path];
+                handler.complete(res['data']);
+                if (path.contains('uid=')) {
+                  _msgCompleters.remove(path);
                 }
-                if (_msgHandlers[path] != null) {
-                  Function handler = _msgHandlers[path];
-                  handler(res['data']);
-                }
-              });
-        });
+              }
+              if (_msgHandlers[path] != null) {
+                Function handler = _msgHandlers[path];
+                handler(res['data']);
+              }
+            });
+      },
+      onLoadStop: (controller, _) => _webViewPostInitCallback(),
+    );
+
     await _web.run();
-
-    print("Running the webView");
-    dynamic res = await _web.webViewController
-        .injectJavascriptFileFromAsset(assetFilePath: "lib/js_service_encointer/dist/main.js");
-
-    print("Injected the js: res: ${res.toString()}");
-
-    await _web.webViewController.evaluateJavascript(source: "console.log('Here is the message!');");
-
-    return _webViewPostInitCallback();
   }
 
   /// Evaluate javascript [code] in the webView.
