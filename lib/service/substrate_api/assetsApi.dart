@@ -4,7 +4,7 @@ import 'package:encointer_wallet/store/app.dart';
 class AssetsApi {
   AssetsApi(this.jsApi);
 
-  final JSApi jsApi;
+  final JSApi? jsApi;
   final store = globalAppStore;
 
   final String _balanceSubscribeChannel = 'gas token balance';
@@ -16,34 +16,34 @@ class AssetsApi {
 
   Future<void> stopSubscriptions() async {
     print("api: stopping assets subscriptions");
-    jsApi.unsubscribeMessage(_balanceSubscribeChannel);
+    jsApi!.unsubscribeMessage(_balanceSubscribeChannel);
   }
 
   Future<void> fetchBalance() async {
-    String pubKey = store.account.currentAccountPubKey;
+    String? pubKey = store.account!.currentAccountPubKey;
     if (pubKey != null && pubKey.isNotEmpty) {
-      String address = store.account.currentAddress;
-      Map res = await jsApi.evalJavascript(
+      String address = store.account!.currentAddress;
+      Map? res = await (jsApi!.evalJavascript(
         'account.getBalance("$address")',
         allowRepeat: true,
-      );
-      store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState.tokenSymbol: res}));
+      ) as FutureOr<Map<dynamic, dynamic>?>);
+      store.assets!.setAccountBalances(pubKey, Map.of({store.settings!.networkState!.tokenSymbol: res}));
     }
     _fetchMarketPrice();
   }
 
   Future<void> subscribeBalance() async {
-    jsApi.unsubscribeMessage(_balanceSubscribeChannel);
+    jsApi!.unsubscribeMessage(_balanceSubscribeChannel);
 
-    String pubKey = store.account.currentAccountPubKey;
+    String? pubKey = store.account!.currentAccountPubKey;
     if (pubKey != null && pubKey.isNotEmpty) {
-      String address = store.account.currentAddress;
+      String address = store.account!.currentAddress;
 
-      jsApi.subscribeMessage(
+      jsApi!.subscribeMessage(
         'account.subscribeBalance("$_balanceSubscribeChannel","$address")',
         _balanceSubscribeChannel,
         (data) => {
-          store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState.tokenSymbol: data})),
+          store.assets!.setAccountBalances(pubKey, Map.of({store.settings!.networkState!.tokenSymbol: data})),
         },
       );
     }

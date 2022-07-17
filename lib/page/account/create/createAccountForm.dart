@@ -15,7 +15,7 @@ import 'package:encointer_wallet/utils/inputValidation.dart';
 class CreateAccountForm extends StatelessWidget {
   CreateAccountForm({this.store});
 
-  final AppStore store;
+  final AppStore? store;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -23,32 +23,32 @@ class CreateAccountForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
 
     Future<void> _createAndImportAccount() async {
-      await webApi.account.generateAccount();
+      await webApi!.account.generateAccount();
 
-      var acc = await webApi.account.importAccount(
+      var acc = await (webApi!.account.importAccount(
         cryptoType: AccountAdvanceOptionParams.encryptTypeSR,
         derivePath: '',
-      );
+      ) as FutureOr<Map<String, dynamic>>);
 
       if (acc['error'] != null) {
         _showErrorCreatingAccountDialog(context);
         return;
       }
 
-      var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
-      await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
+      var addresses = await webApi!.account.encodeAddress([acc['pubKey']]);
+      await store!.addAccount(acc, store!.account!.newAccount.password, addresses[0]);
 
-      String pubKey = acc['pubKey'];
-      store.setCurrentAccount(pubKey);
+      String? pubKey = acc['pubKey'];
+      store!.setCurrentAccount(pubKey);
 
-      await store.loadAccountCache();
+      await store!.loadAccountCache();
 
       // fetch info for the imported account
-      webApi.fetchAccountData();
-      webApi.account.getPubKeyIcons([pubKey]);
+      webApi!.fetchAccountData();
+      webApi!.account.getPubKeyIcons([pubKey]);
     }
 
     return Form(
@@ -61,7 +61,7 @@ class CreateAccountForm extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
               children: <Widget>[
                 Center(
-                  child: Text(I18n.of(context).translationsForLocale().profile.accountNameChoose,
+                  child: Text(I18n.of(context)!.translationsForLocale().profile.accountNameChoose,
                       style: Theme.of(context).textTheme.headline2),
                 ),
                 SizedBox(height: 10),
@@ -69,9 +69,9 @@ class CreateAccountForm extends StatelessWidget {
                   child: Container(
                     width: 300,
                     child: Text(
-                      I18n.of(context).translationsForLocale().profile.accountNameChooseHint,
+                      I18n.of(context)!.translationsForLocale().profile.accountNameChooseHint,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline2.copyWith(
+                      style: Theme.of(context).textTheme.headline2!.copyWith(
                             color: encointerBlack,
                           ),
                     ),
@@ -81,9 +81,9 @@ class CreateAccountForm extends StatelessWidget {
                 EncointerTextFormField(
                   key: Key('create-account-name'),
                   hintText: dic.account.createHint,
-                  labelText: I18n.of(context).translationsForLocale().profile.accountName,
+                  labelText: I18n.of(context)!.translationsForLocale().profile.accountName,
                   controller: _nameCtrl,
-                  validator: (v) => InputValidation.validateAccountName(context, v, store.account.optionalAccounts),
+                  validator: (v) => InputValidation.validateAccountName(context, v, store!.account!.optionalAccounts),
                 ),
               ],
             ),
@@ -99,15 +99,15 @@ class CreateAccountForm extends StatelessWidget {
                   SizedBox(width: 12),
                   Text(
                     dic.account.next,
-                    style: Theme.of(context).textTheme.headline3.copyWith(
+                    style: Theme.of(context).textTheme.headline3!.copyWith(
                           color: ZurichLion.shade50,
                         ),
                   ),
                 ],
               ),
               onPressed: () {
-                if (_formKey.currentState.validate()) {
-                  store.account.setNewAccountName(_nameCtrl.text.trim());
+                if (_formKey.currentState!.validate()) {
+                  store!.account!.setNewAccountName(_nameCtrl.text.trim());
                   Navigator.pushNamed(
                     context,
                     CreatePinPage.route,
@@ -129,10 +129,10 @@ Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
     builder: (BuildContext context) {
       return CupertinoAlertDialog(
         title: Container(),
-        content: Text(I18n.of(context).translationsForLocale().account.createError),
+        content: Text(I18n.of(context)!.translationsForLocale().account.createError),
         actions: <Widget>[
           CupertinoButton(
-            child: Text(I18n.of(context).translationsForLocale().home.ok),
+            child: Text(I18n.of(context)!.translationsForLocale().home.ok),
             onPressed: () {
               Navigator.of(context).pop();
             },

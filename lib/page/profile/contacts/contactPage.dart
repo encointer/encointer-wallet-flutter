@@ -15,7 +15,7 @@ class ContactPage extends StatefulWidget {
   ContactPage(this.store);
 
   static const String route = '/profile/contact';
-  final AppStore store;
+  final AppStore? store;
 
   @override
   _Contact createState() => _Contact(store);
@@ -23,7 +23,7 @@ class ContactPage extends StatefulWidget {
 
 class _Contact extends State<ContactPage> {
   _Contact(this.store);
-  final AppStore store;
+  final AppStore? store;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -31,20 +31,20 @@ class _Contact extends State<ContactPage> {
   final TextEditingController _nameCtrl = new TextEditingController();
   final TextEditingController _memoCtrl = new TextEditingController();
 
-  bool _isObservation = false;
+  bool? _isObservation = false;
 
-  ContactData qrScanData;
+  ContactData? qrScanData;
 
   bool _submitting = false;
 
   Future<void> _onSave() async {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState!.validate()) {
       setState(() {
         _submitting = true;
       });
-      final Translations dic = I18n.of(context).translationsForLocale();
+      final Translations dic = I18n.of(context)!.translationsForLocale();
       String addr = _addressCtrl.text.trim();
-      Map pubKeyAddress = await webApi.account.decodeAddress([addr]);
+      Map pubKeyAddress = await (webApi!.account.decodeAddress([addr]) as FutureOr<Map<dynamic, dynamic>>);
       String pubKey = pubKeyAddress.keys.toList()[0];
       Map<String, dynamic> con = {
         'address': addr,
@@ -58,7 +58,7 @@ class _Contact extends State<ContactPage> {
       });
       if (qrScanData == null) {
         // create new contact
-        int exist = store.settings.contactList.indexWhere((i) => i.address == addr);
+        int exist = store!.settings!.contactList.indexWhere((i) => i.address == addr);
         if (exist > -1) {
           showCupertinoDialog(
             context: context,
@@ -68,7 +68,7 @@ class _Contact extends State<ContactPage> {
                 content: Text(dic.profile.contactAlreadyExists),
                 actions: <Widget>[
                   CupertinoButton(
-                    child: Text(I18n.of(context).translationsForLocale().home.ok),
+                    child: Text(I18n.of(context)!.translationsForLocale().home.ok),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                 ],
@@ -77,25 +77,25 @@ class _Contact extends State<ContactPage> {
           );
           return;
         } else {
-          store.settings.addContact(con);
+          store!.settings!.addContact(con);
         }
       } else {
         // edit contact
-        store.settings.updateContact(con);
+        store!.settings!.updateContact(con);
       }
 
       // get contact info
-      if (_isObservation) {
-        webApi.account.encodeAddress([pubKey]);
-        webApi.account.getPubKeyIcons([pubKey]);
+      if (_isObservation!) {
+        webApi!.account.encodeAddress([pubKey]);
+        webApi!.account.getPubKeyIcons([pubKey]);
       } else {
         // if this address was used as observation and current account,
         // we need to change current account
-        if (pubKey == store.account.currentAccountPubKey) {
-          webApi.account.changeCurrentAccount(fetchData: true);
+        if (pubKey == store!.account!.currentAccountPubKey) {
+          webApi!.account.changeCurrentAccount(fetchData: true);
         }
       }
-      webApi.account.getAddressIcons([addr]);
+      webApi!.account.getAddressIcons([addr]);
       Navigator.of(context).pop();
     }
   }
@@ -110,11 +110,11 @@ class _Contact extends State<ContactPage> {
 
   @override
   Widget build(BuildContext context) {
-    ContactData qrScanData = ModalRoute.of(context).settings.arguments;
-    final Translations dic = I18n.of(context).translationsForLocale();
+    ContactData? qrScanData = ModalRoute.of(context)!.settings.arguments as ContactData?;
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     if (qrScanData != null) {
-      _addressCtrl.text = qrScanData.account;
-      _nameCtrl.text = qrScanData.label;
+      _addressCtrl.text = qrScanData.account!;
+      _nameCtrl.text = qrScanData.label!;
     }
 
     return Scaffold(
@@ -139,7 +139,7 @@ class _Contact extends State<ContactPage> {
                         ),
                         controller: _addressCtrl,
                         validator: (v) {
-                          if (!Fmt.isAddress(v.trim())) {
+                          if (!Fmt.isAddress(v!.trim())) {
                             return dic.profile.contactAddressError;
                           }
                           return null;
@@ -156,11 +156,11 @@ class _Contact extends State<ContactPage> {
                         ),
                         controller: _nameCtrl,
                         validator: (v) {
-                          return v.trim().length > 0 ? null : dic.profile.contactNameError;
+                          return v!.trim().length > 0 ? null : dic.profile.contactNameError;
                         },
                       ),
                     ),
-                    store.settings.developerMode
+                    store!.settings!.developerMode
                         ? Padding(
                             padding: EdgeInsets.only(left: 16, right: 16),
                             child: TextFormField(
@@ -172,7 +172,7 @@ class _Contact extends State<ContactPage> {
                             ),
                           )
                         : Container(),
-                    store.settings.developerMode
+                    store!.settings!.developerMode
                         ? Row(
                             children: <Widget>[
                               Checkbox(
@@ -184,10 +184,10 @@ class _Contact extends State<ContactPage> {
                                 },
                               ),
                               GestureDetector(
-                                child: Text(I18n.of(context).translationsForLocale().account.observe),
+                                child: Text(I18n.of(context)!.translationsForLocale().account.observe),
                                 onTap: () {
                                   setState(() {
-                                    _isObservation = !_isObservation;
+                                    _isObservation = !_isObservation!;
                                   });
                                 },
                               ),
@@ -196,7 +196,7 @@ class _Contact extends State<ContactPage> {
                                   padding: EdgeInsets.only(left: 8),
                                   child: Icon(Icons.info_outline, size: 16),
                                 ),
-                                message: I18n.of(context).translationsForLocale().account.observeBrief,
+                                message: I18n.of(context)!.translationsForLocale().account.observeBrief,
                               ),
                             ],
                           )

@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 
 class ActivityIndicator extends StatefulWidget {
-  ActivityIndicator({Key key, this.title, this.future}) : super(key: key);
+  ActivityIndicator({Key? key, this.title, this.future}) : super(key: key);
 
-  final String title;
-  final Future<dynamic> future;
+  final String? title;
+  final Future<dynamic>? future;
 
   @override
   _ActivityIndicatorState createState() {
@@ -38,7 +38,7 @@ class _ActivityIndicatorState extends State<ActivityIndicator> {
   @override
   Widget build(BuildContext context) {
     return new CupertinoAlertDialog(
-      title: Text(widget.title),
+      title: Text(widget.title!),
       content: _isAwaitingFuture ? CupertinoActivityIndicator() : Container(),
     );
   }

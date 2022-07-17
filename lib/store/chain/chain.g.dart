@@ -19,13 +19,13 @@ mixin _$ChainStore on _ChainStore, Store {
   final _$latestHeaderAtom = Atom(name: '_ChainStore.latestHeader');
 
   @override
-  Header get latestHeader {
+  Header? get latestHeader {
     _$latestHeaderAtom.reportRead();
     return super.latestHeader;
   }
 
   @override
-  set latestHeader(Header value) {
+  set latestHeader(Header? value) {
     _$latestHeaderAtom.reportWrite(value, super.latestHeader, () {
       super.latestHeader = value;
     });

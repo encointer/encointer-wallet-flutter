@@ -18,11 +18,11 @@ showPasswordInputDialog(context, account, title, onOk) {
 class PasswordInputDialog extends StatefulWidget {
   PasswordInputDialog({this.account, this.title, this.onOk, this.onCancel, this.onAccountSwitch});
 
-  final AccountData account;
-  final Widget title;
-  final Function onOk;
-  final Function onCancel;
-  final Function onAccountSwitch;
+  final AccountData? account;
+  final Widget? title;
+  final Function? onOk;
+  final Function? onCancel;
+  final Function? onAccountSwitch;
 
   @override
   _PasswordInputDialogState createState() => _PasswordInputDialogState();
@@ -36,7 +36,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
     setState(() {
       _submitting = true;
     });
-    var res = await webApi.account.checkAccountPassword(widget.account, password);
+    var res = await webApi!.account.checkAccountPassword(widget.account!, password);
     if (mounted) {
       setState(() {
         _submitting = false;
@@ -46,14 +46,14 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
       showCupertinoDialog(
         context: context,
         builder: (BuildContext context) {
-          final Translations dic = I18n.of(context).translationsForLocale();
+          final Translations dic = I18n.of(context)!.translationsForLocale();
           return CupertinoAlertDialog(
             title: Text(dic.profile.wrongPin),
             content: Text(dic.profile.wrongPinHint),
             actions: <Widget>[
               CupertinoButton(
                 key: Key('error-dialog-ok'),
-                child: Text(I18n.of(context).translationsForLocale().home.ok),
+                child: Text(I18n.of(context)!.translationsForLocale().home.ok),
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ],
@@ -61,7 +61,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
         },
       );
     } else {
-      widget.onOk(password);
+      widget.onOk!(password);
       Navigator.of(context).pop();
     }
   }
@@ -74,7 +74,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
 
     return CupertinoAlertDialog(
       title: widget.title ?? Container(),
@@ -83,12 +83,12 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
         child: CupertinoTextField(
           autofocus: true,
           keyboardType: TextInputType.number,
-          placeholder: I18n.of(context).translationsForLocale().profile.passOld,
+          placeholder: I18n.of(context)!.translationsForLocale().profile.passOld,
           controller: _passCtrl,
           onChanged: (v) {
             return Fmt.checkPassword(v.trim())
                 ? null
-                : I18n.of(context).translationsForLocale().account.createPasswordError;
+                : I18n.of(context)!.translationsForLocale().account.createPasswordError;
           },
           obscureText: true,
           clearButtonMode: OverlayVisibilityMode.editing,
@@ -100,7 +100,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
             ? CupertinoButton(
                 child: Text(dic.home.switchAccount),
                 onPressed: () {
-                  widget.onAccountSwitch();
+                  widget.onAccountSwitch!();
                 },
               )
             : Container(),
@@ -108,7 +108,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
             ? CupertinoButton(
                 child: Text(dic.home.cancel),
                 onPressed: () {
-                  widget.onCancel();
+                  widget.onCancel!();
                 },
               )
             : Container(),

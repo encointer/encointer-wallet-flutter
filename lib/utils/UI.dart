@@ -14,13 +14,13 @@ import 'package:get_storage/get_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UI {
-  static void copyAndNotify(BuildContext context, String text) {
+  static void copyAndNotify(BuildContext context, String? text) {
     Clipboard.setData(ClipboardData(text: text ?? ''));
 
     showCupertinoDialog(
       context: context,
       builder: (BuildContext context) {
-        final Translations dic = I18n.of(context).translationsForLocale();
+        final Translations dic = I18n.of(context)!.translationsForLocale();
         return CupertinoAlertDialog(
           title: Container(),
           content: Text('${dic.assets.copy} ${dic.assets.success}'),
@@ -41,19 +41,19 @@ class UI {
     }
   }
 
-  static Future<bool> checkJSCodeUpdate(
+  static Future<bool?> checkJSCodeUpdate(
     BuildContext context,
     int jsVersion,
     String network,
   ) async {
     if (jsVersion != null) {
       final currentVersion = UpdateJSCodeApi.getPolkadotJSVersion(
-        webApi.jsStorage,
+        webApi!.jsStorage,
         network,
-      );
+      )!;
       if (jsVersion > currentVersion) {
-        final Translations dic = I18n.of(context).translationsForLocale();
-        final bool isOk = await showCupertinoDialog(
+        final Translations dic = I18n.of(context)!.translationsForLocale();
+        final bool? isOk = await showCupertinoDialog(
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
@@ -89,7 +89,7 @@ class UI {
     String network,
     int version,
   ) async {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     showCupertinoDialog(
       context: context,
       builder: (BuildContext context) {
@@ -130,10 +130,10 @@ class UI {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Container(),
-          content: Text(I18n.of(context).translationsForLocale().account.backupError),
+          content: Text(I18n.of(context)!.translationsForLocale().account.backupError),
           actions: <Widget>[
             CupertinoButton(
-              child: Text(I18n.of(context).translationsForLocale().home.ok),
+              child: Text(I18n.of(context)!.translationsForLocale().home.ok),
               onPressed: () {
                 Navigator.of(context).pop();
                 onCancel();
@@ -146,17 +146,17 @@ class UI {
   }
 
   static bool checkBalanceAndAlert(BuildContext context, AppStore store, BigInt amountNeeded) {
-    String symbol = store.settings.networkState.tokenSymbol;
-    if (store.assets.balances[symbol].transferable <= amountNeeded) {
+    String? symbol = store.settings!.networkState!.tokenSymbol;
+    if (store.assets!.balances[symbol]!.transferable <= amountNeeded) {
       showCupertinoDialog(
         context: context,
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
-            title: Text(I18n.of(context).translationsForLocale().assets.insufficientBalance),
+            title: Text(I18n.of(context)!.translationsForLocale().assets.insufficientBalance),
             content: Container(),
             actions: <Widget>[
               CupertinoButton(
-                child: Text(I18n.of(context).translationsForLocale().home.ok),
+                child: Text(I18n.of(context)!.translationsForLocale().home.ok),
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ],

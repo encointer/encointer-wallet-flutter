@@ -21,8 +21,8 @@ class Ipfs {
       // TODO: Better solution available to remove preceding and trailing characters of json?
       // loop through data string until actual json file begins
       int indexJsonBegin = 0;
-      for (int i = 0; i < object.data.length; i++) {
-        String currentCharacter = object.data[i];
+      for (int i = 0; i < object.data!.length; i++) {
+        String currentCharacter = object.data![i];
         if (currentCharacter.compareTo('{') == 0) {
           indexJsonBegin = i;
           break;
@@ -30,14 +30,14 @@ class Ipfs {
       }
       // loop through data string until actual json file ends, beginning at end of string
       int indexJsonEnd = 0;
-      for (int i = object.data.length - 1; i >= indexJsonBegin; i--) {
-        String currentCharacter = object.data[i];
+      for (int i = object.data!.length - 1; i >= indexJsonBegin; i--) {
+        String currentCharacter = object.data![i];
         if (currentCharacter.compareTo('}') == 0) {
           indexJsonEnd = i;
           break;
         }
       }
-      var objectData = object.data.substring(indexJsonBegin, indexJsonEnd + 1);
+      var objectData = object.data!.substring(indexJsonBegin, indexJsonEnd + 1);
       return objectData;
     } catch (e) {
       print(e);
@@ -52,7 +52,7 @@ class Ipfs {
     }
 
     try {
-      var data = await getData(getIconsPath(cid));
+      var data = await (getData(getIconsPath(cid)) as FutureOr<String>);
       return SvgPicture.string(data);
     } catch (e) {
       print("[Ipfs] error getting communityIcon: $e");
@@ -60,7 +60,7 @@ class Ipfs {
     }
   }
 
-  Future<String> getData(String src) async {
+  Future<String?> getData(String src) async {
     final dio = IpfsDio(BaseOptions(baseUrl: gateway, connectTimeout: 5000, receiveTimeout: 3000));
 
     try {
@@ -132,11 +132,11 @@ class Ipfs {
 const String getRequest = '/api/v0/object/get?arg=';
 
 class IpfsDio {
-  IpfsDio([BaseOptions options]) {
+  IpfsDio([BaseOptions? options]) {
     this.dio = Dio(options);
   }
 
-  Dio dio;
+  late Dio dio;
 
   Future<Response<T>> get<T>(String cid) async {
     print("[IPFS] fetching data from: ${dio.options.baseUrl}$getRequest$cid}");
@@ -145,8 +145,8 @@ class IpfsDio {
 }
 
 class Object {
-  List links;
-  String data;
+  List? links;
+  String? data;
 
   Object({
     this.links,

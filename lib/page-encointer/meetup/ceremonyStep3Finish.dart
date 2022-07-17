@@ -15,15 +15,15 @@ class CeremonyStep3Finish extends StatelessWidget {
   const CeremonyStep3Finish(
     this.store,
     this.api, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
-  final AppStore store;
-  final Api api;
+  final AppStore? store;
+  final Api? api;
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -42,20 +42,20 @@ class CeremonyStep3Finish extends StatelessWidget {
                     SizedBox(height: 48),
                     CommunityAvatar(
                       store: store,
-                      avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.community?.assetsCid),
+                      avatarIcon: webApi!.ipfs.getCommunityIcon(store!.encointer!.community?.assetsCid),
                       avatarSize: 96,
                     ),
                     Center(
                       child: Text(
                         dic.encointer.thankYou,
-                        style: Theme.of(context).textTheme.headline2.copyWith(color: ZurichLion.shade600),
+                        style: Theme.of(context).textTheme.headline2!.copyWith(color: ZurichLion.shade600),
                       ),
                     ),
                     Center(
                       child: Text(
                         dic.encointer.weHopeToSeeYouAtTheNextMeetup,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black, height: 1.5),
+                        style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black, height: 1.5),
                       ),
                     ),
                   ],
@@ -88,10 +88,10 @@ class CeremonyStep3Finish extends StatelessWidget {
                       Icon(Iconsax.login_1),
                       SizedBox(width: 6),
                       Text(
-                          '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store.encointer.communityAccount.scannedClaimsCount.toString())}'),
+                          '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store!.encointer!.communityAccount.scannedClaimsCount.toString())}'),
                     ],
                   ),
-                  onPressed: (context) => submitAttestClaims(context, store, api),
+                  onPressed: (context) => submitAttestClaims(context, store!, api!),
                 ),
               ),
             ],

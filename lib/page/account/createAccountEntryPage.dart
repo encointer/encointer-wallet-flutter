@@ -14,7 +14,7 @@ class CreateAccountEntryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final String nctrLogo = 'assets/nctr_logo.svg';
     final String mosaicBackground = 'assets/nctr_mosaic_background.svg';
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
 
     return Scaffold(
       body: SafeArea(
@@ -43,7 +43,7 @@ class CreateAccountEntryPage extends StatelessWidget {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
                       key: Key('create-account'),
-                      child: Text(I18n.of(context).translationsForLocale().home.create,
+                      child: Text(I18n.of(context)!.translationsForLocale().home.create,
                           style: Theme.of(context).textTheme.headline3),
                       onPressed: () {
                         Navigator.pushNamed(context, CreateAccountPage.route);
@@ -63,7 +63,7 @@ class CreateAccountEntryPage extends StatelessWidget {
                       GestureDetector(
                           key: Key('import-account'),
                           child: Text(
-                            I18n.of(context).translationsForLocale().profile.import,
+                            I18n.of(context)!.translationsForLocale().profile.import,
                             style: TextStyle(
                               color: ZurichLion.shade50,
                               decoration: TextDecoration.underline,

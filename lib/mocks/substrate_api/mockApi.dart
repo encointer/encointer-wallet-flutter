@@ -13,7 +13,7 @@ import 'mockEncointerApi.dart';
 import 'mockJSApi.dart';
 
 class MockApi extends Api {
-  MockApi(BuildContext context, AppStore store, {this.withUi = true}) : super(context, store);
+  MockApi(BuildContext? context, AppStore? store, {this.withUi = true}) : super(context, store);
 
   final bool withUi;
 
@@ -22,11 +22,11 @@ class MockApi extends Api {
     jsStorage = GetStorage();
     js = MockJSApi();
 
-    account = MockAccountApi(js, fetchAccountData);
-    assets = MockApiAssets(js);
-    chain = MockChainApi(js);
-    codec = MockCodecApi(js);
-    encointer = MockApiEncointer(js, MockSubstrateDartApi());
+    account = MockAccountApi(js as MockJSApi?, fetchAccountData);
+    assets = MockApiAssets(js as MockJSApi?);
+    chain = MockChainApi(js as MockJSApi?);
+    codec = MockCodecApi(js as MockJSApi?);
+    encointer = MockApiEncointer(js as MockJSApi?, MockSubstrateDartApi());
     ipfs = MockIpfs();
 
     if (withUi) {

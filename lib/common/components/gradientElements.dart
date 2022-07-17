@@ -6,15 +6,15 @@ import 'package:flutter/material.dart';
 /// offers further options.
 ///
 class PrimaryButton extends StatelessWidget {
-  final Function onPressed;
-  final Widget child;
+  final Function? onPressed;
+  final Widget? child;
   final BorderRadiusGeometry borderRadius;
 
   const PrimaryButton({
     this.child,
     this.onPressed,
     this.borderRadius = const BorderRadius.all(Radius.circular(20)),
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -26,7 +26,7 @@ class PrimaryButton extends StatelessWidget {
         borderRadius: borderRadius,
       ),
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: onPressed as void Function()?,
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(vertical: 16), // make splash animation as high as the container
           primary: Colors.transparent,
@@ -46,11 +46,11 @@ class TextGradient extends StatelessWidget {
   const TextGradient({
     this.text,
     this.style,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
-  final String text;
-  final TextStyle style;
+  final String? text;
+  final TextStyle? style;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +59,7 @@ class TextGradient extends StatelessWidget {
       shaderCallback: (bounds) => primaryGradient.createShader(
         Rect.fromLTWH(0, 0, bounds.width, bounds.height),
       ),
-      child: Text(text, style: style),
+      child: Text(text!, style: style),
     );
   }
 }

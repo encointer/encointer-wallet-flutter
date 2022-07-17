@@ -10,11 +10,11 @@ class JSApi {
   Map<String, Function> _msgHandlers = {};
   Map<String, Completer> _msgCompleters = {};
 
-  HeadlessInAppWebView _web;
+  HeadlessInAppWebView? _web;
 
   int _evalJavascriptUID = 0;
 
-  Function _webViewPostInitCallback;
+  late Function _webViewPostInitCallback;
 
   Future<void> launchWebView(BuildContext context, Future<void> Function() webViewPostInitCallback) async {
     _msgHandlers = {};
@@ -43,16 +43,16 @@ class JSApi {
 
               var res = args[0];
 
-              final String path = res['path'];
-              if (_msgCompleters[path] != null) {
-                Completer handler = _msgCompleters[path];
+              final String? path = res['path'];
+              if (_msgCompleters[path!] != null) {
+                Completer handler = _msgCompleters[path]!;
                 handler.complete(res['data']);
                 if (path.contains('uid=')) {
                   _msgCompleters.remove(path);
                 }
               }
               if (_msgHandlers[path] != null) {
-                Function handler = _msgHandlers[path];
+                Function handler = _msgHandlers[path]!;
                 handler(res['data']);
               }
             });
@@ -62,7 +62,7 @@ class JSApi {
       },
     );
 
-    await _web.run();
+    await _web!.run();
   }
 
   /// Evaluate javascript [code] in the webView.
@@ -84,13 +84,13 @@ class JSApi {
         String call = code.split('(')[0];
         if (i.compareTo(call) == 0) {
           print('request $call loading');
-          return _msgCompleters[i].future;
+          return _msgCompleters[i]!.future;
         }
       }
     }
 
     if (!wrapPromise) {
-      String res = await _web.webViewController.evaluateJavascript(source: code);
+      String? res = await (_web!.webViewController.evaluateJavascript(source: code) as FutureOr<String?>);
       return res;
     }
 
@@ -109,7 +109,7 @@ class JSApi {
             .callHandler("$EncointerJsService", { path: "$method:error", data: err.message  });
         })""";
 
-    _web.webViewController.evaluateJavascript(source: script);
+    _web!.webViewController.evaluateJavascript(source: script);
 
     return c.future;
   }
@@ -129,14 +129,14 @@ class JSApi {
 
   Future<void> unsubscribeMessage(String channel) async {
     if (_msgHandlers[channel] != null) {
-      _web.webViewController.evaluateJavascript(source: 'unsub$channel()');
+      _web!.webViewController.evaluateJavascript(source: 'unsub$channel()');
     }
   }
 
   Future<void> closeWebView() async {
     print("[JSApi]: closing webView");
     if (_web != null) {
-      await _web.dispose();
+      await _web!.dispose();
       _web = null;
     } else {
       print("[JSApi]: Did not close webView because it was closed already.");

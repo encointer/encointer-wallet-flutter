@@ -7,17 +7,17 @@ import 'package:intl/intl.dart';
 class MaybeDateTime extends StatelessWidget {
   MaybeDateTime(this.meetupTime, {this.dateFormat, this.style});
 
-  final int meetupTime;
+  final int? meetupTime;
 
-  final DateFormat dateFormat;
-  final TextStyle style;
+  final DateFormat? dateFormat;
+  final TextStyle? style;
 
   @override
   Widget build(BuildContext context) {
-    String date;
+    late String date;
 
     if (meetupTime != null) {
-      date = dateFormat.format(new DateTime.fromMillisecondsSinceEpoch(meetupTime));
+      date = dateFormat!.format(new DateTime.fromMillisecondsSinceEpoch(meetupTime!));
     }
 
     return meetupTime != null ? Text(date, style: this.style) : CupertinoActivityIndicator();

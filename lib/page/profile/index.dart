@@ -19,7 +19,7 @@ import 'package:iconsax/iconsax.dart';
 class Profile extends StatefulWidget {
   Profile(this.store);
 
-  final AppStore store;
+  final AppStore? store;
 
   @override
   _ProfileState createState() => _ProfileState(store);
@@ -28,14 +28,14 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   _ProfileState(this.store);
 
-  final AppStore store;
-  final Api api = webApi;
-  EndpointData _selectedNetwork;
+  final AppStore? store;
+  final Api? api = webApi;
+  EndpointData? _selectedNetwork;
 
   List<Widget> _buildAccountList() {
     List<Widget> allAccountsAsWidgets = [];
 
-    List<AccountData> accounts = store.account.accountListAll;
+    List<AccountData> accounts = store!.account!.accountListAll;
 
     allAccountsAsWidgets.addAll(accounts.map((account) {
       return InkWell(
@@ -79,17 +79,17 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    var h3Grey = Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey);
-    _selectedNetwork = store.settings.endpoint;
+    var h3Grey = Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey);
+    _selectedNetwork = store!.settings!.endpoint;
 
     // if all accounts are deleted, go to createAccountPage
-    if (store.account.accountListAll.isEmpty) {
-      store.settings.setPin('');
+    if (store!.account!.accountListAll.isEmpty) {
+      store!.settings!.setPin('');
       Future.delayed(Duration.zero, () {
         Navigator.popUntil(context, ModalRoute.withName('/'));
       });
     }
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
 
     return Observer(
       builder: (_) {
@@ -113,7 +113,7 @@ class _ProfileState extends State<Profile> {
                       children: <Widget>[
                         Text(
                           '${dic.profile.accounts}',
-                          style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
+                          style: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
                         ),
                         IconButton(
                             icon: Icon(Iconsax.add_square),
@@ -159,8 +159,8 @@ class _ProfileState extends State<Profile> {
                   ),
                   ListTile(
                       title: Text(dic.profile.reputationOverall, style: h3Grey),
-                      trailing: store.encointer.account?.reputations != null
-                          ? Text(store.encointer.account.reputations.length.toString())
+                      trailing: store!.encointer!.account?.reputations != null
+                          ? Text(store!.encointer!.account.reputations!.length.toString())
                           : Text(dic.encointer.fetchingReputations)),
                   ListTile(
                     title: Text(dic.profile.about, style: Theme.of(context).textTheme.headline3),
@@ -170,11 +170,11 @@ class _ProfileState extends State<Profile> {
                   ListTile(
                     title: Text(dic.profile.developer, style: h3Grey),
                     trailing: Checkbox(
-                      value: store.settings.developerMode,
-                      onChanged: (_) => store.settings.toggleDeveloperMode(),
+                      value: store!.settings!.developerMode,
+                      onChanged: (_) => store!.settings!.toggleDeveloperMode(),
                     ),
                   ),
-                  if (store.settings.developerMode)
+                  if (store!.settings!.developerMode)
                     // Column in case we add more developer options
                     Column(
                       children: <Widget>[
@@ -183,7 +183,7 @@ class _ProfileState extends State<Profile> {
                             key: Key('choose-network'),
                             child: Observer(
                               builder: (_) => Text(
-                                "Change network (current: ${store.settings.endpoint.info})", // for devs only
+                                "Change network (current: ${store!.settings!.endpoint.info})", // for devs only
                                 style: Theme.of(context).textTheme.headline4,
                               ),
                             ),
@@ -191,7 +191,7 @@ class _ProfileState extends State<Profile> {
                           ),
                           trailing: Padding(
                             padding: EdgeInsets.only(right: 13), // align with developer checkbox above
-                            child: store.settings.isConnected
+                            child: store!.settings!.isConnected
                                 ? Icon(Icons.check, color: Colors.green)
                                 : CupertinoActivityIndicator(),
                           ),
@@ -199,11 +199,11 @@ class _ProfileState extends State<Profile> {
                         ListTile(
                           title: Text(dic.profile.enableBazaar, style: h3Grey),
                           trailing: Checkbox(
-                            value: store.settings.enableBazaar,
+                            value: store!.settings!.enableBazaar,
                             // Fixme: Need to change the tab to update the tabList. But, do we care? This is only
                             // temporary, and a developer option. It is unnecessary to include the complexity to update
                             // the parent widget from here.
-                            onChanged: (_) => store.settings.toggleEnableBazaar(),
+                            onChanged: (_) => store!.settings!.toggleEnableBazaar(),
                           ),
                         ),
                       ],
@@ -218,8 +218,8 @@ class _ProfileState extends State<Profile> {
   }
 }
 
-Future<void> showRemoveAccountsDialog(BuildContext context, AppStore store) {
-  final dic = I18n.of(context).translationsForLocale();
+Future<void> showRemoveAccountsDialog(BuildContext context, AppStore? store) {
+  final dic = I18n.of(context)!.translationsForLocale();
 
   return showCupertinoDialog(
       context: context,
@@ -232,10 +232,10 @@ Future<void> showRemoveAccountsDialog(BuildContext context, AppStore store) {
           CupertinoButton(
               child: Text(dic.home.ok),
               onPressed: () async {
-                final accounts = store.account.accountListAll;
+                final accounts = store!.account!.accountListAll;
 
                 for (var acc in accounts) {
-                  await store.account.removeAccount(acc);
+                  await store.account!.removeAccount(acc);
                 }
 
                 Navigator.of(context).pop();

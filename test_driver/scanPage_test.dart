@@ -6,7 +6,7 @@ import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
 void main() {
-  FlutterDriver driver;
+  FlutterDriver? driver;
   final config = Config();
 
   group('scan-page', () {
@@ -14,12 +14,12 @@ void main() {
       driver = await FlutterDriver.connect();
 
       // waits until the firs frame after ft startup stabilized
-      await driver.waitUntilFirstFrameRasterized();
+      await driver!.waitUntilFirstFrameRasterized();
     });
 
     tearDownAll(() async {
       if (driver != null) {
-        driver.close();
+        driver!.close();
       }
     });
     test('scan-page-screenshot', () async {
@@ -28,9 +28,9 @@ void main() {
       String base64 = base64Encode(bytes);
 
       // set the background in the MockScanPage
-      await driver.requestData(base64);
+      await driver!.requestData(base64);
 
-      await screenshot(driver, config, 'scan-receive');
+      await screenshot(driver!, config, 'scan-receive');
     });
   });
 }

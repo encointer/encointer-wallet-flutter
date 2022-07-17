@@ -6,20 +6,20 @@ import 'package:flutter/widgets.dart';
 /// the driver to restart the widget with new data.
 class RestartWidget<T> extends StatelessWidget {
   const RestartWidget({
-    Key key,
-    @required this.stream,
-    @required this.builder,
-    @required this.initialData,
+    Key? key,
+    required this.stream,
+    required this.builder,
+    required this.initialData,
   }) : super(key: key);
 
   final T initialData;
   final Stream<T> stream;
-  final Widget Function(BuildContext, T) builder;
+  final Widget Function(BuildContext, T?) builder;
 
-  Stream<T> _invalidate(T config) async* {
+  Stream<T> _invalidate(T? config) async* {
     yield null;
     await Future<dynamic>.delayed(const Duration(milliseconds: 16));
-    yield config;
+    yield config!;
   }
 
   @override

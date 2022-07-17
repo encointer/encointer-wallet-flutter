@@ -37,7 +37,7 @@ mixin _$AccountStore on _AccountStore, Store {
 
   @override
   String get currentAddress =>
-      (_$currentAddressComputed ??= Computed<String>(() => super.currentAddress, name: '_AccountStore.currentAddress'))
+      (_$currentAddressComputed ??= Computed<String>(() => super.currentAddress!, name: '_AccountStore.currentAddress'))
           .value;
 
   final _$loadingAtom = Atom(name: '_AccountStore.loading');
@@ -58,13 +58,13 @@ mixin _$AccountStore on _AccountStore, Store {
   final _$txStatusAtom = Atom(name: '_AccountStore.txStatus');
 
   @override
-  TxStatus get txStatus {
+  TxStatus? get txStatus {
     _$txStatusAtom.reportRead();
     return super.txStatus;
   }
 
   @override
-  set txStatus(TxStatus value) {
+  set txStatus(TxStatus? value) {
     _$txStatusAtom.reportWrite(value, super.txStatus, () {
       super.txStatus = value;
     });
@@ -88,13 +88,13 @@ mixin _$AccountStore on _AccountStore, Store {
   final _$currentAccountPubKeyAtom = Atom(name: '_AccountStore.currentAccountPubKey');
 
   @override
-  String get currentAccountPubKey {
+  String? get currentAccountPubKey {
     _$currentAccountPubKeyAtom.reportRead();
     return super.currentAccountPubKey;
   }
 
   @override
-  set currentAccountPubKey(String value) {
+  set currentAccountPubKey(String? value) {
     _$currentAccountPubKeyAtom.reportWrite(value, super.currentAccountPubKey, () {
       super.currentAccountPubKey = value;
     });
@@ -118,13 +118,13 @@ mixin _$AccountStore on _AccountStore, Store {
   final _$addressIndexMapAtom = Atom(name: '_AccountStore.addressIndexMap');
 
   @override
-  ObservableMap<String, Map<dynamic, dynamic>> get addressIndexMap {
+  ObservableMap<String?, Map<dynamic, dynamic>> get addressIndexMap {
     _$addressIndexMapAtom.reportRead();
     return super.addressIndexMap;
   }
 
   @override
-  set addressIndexMap(ObservableMap<String, Map<dynamic, dynamic>> value) {
+  set addressIndexMap(ObservableMap<String?, Map<dynamic, dynamic>> value) {
     _$addressIndexMapAtom.reportWrite(value, super.addressIndexMap, () {
       super.addressIndexMap = value;
     });
@@ -133,13 +133,13 @@ mixin _$AccountStore on _AccountStore, Store {
   final _$accountIndexMapAtom = Atom(name: '_AccountStore.accountIndexMap');
 
   @override
-  Map<String, Map<dynamic, dynamic>> get accountIndexMap {
+  Map<String?, Map<dynamic, dynamic>> get accountIndexMap {
     _$accountIndexMapAtom.reportRead();
     return super.accountIndexMap;
   }
 
   @override
-  set accountIndexMap(Map<String, Map<dynamic, dynamic>> value) {
+  set accountIndexMap(Map<String?, Map<dynamic, dynamic>> value) {
     _$accountIndexMapAtom.reportWrite(value, super.accountIndexMap, () {
       super.accountIndexMap = value;
     });
@@ -163,13 +163,13 @@ mixin _$AccountStore on _AccountStore, Store {
   final _$pubKeyIconsMapAtom = Atom(name: '_AccountStore.pubKeyIconsMap');
 
   @override
-  ObservableMap<String, String> get pubKeyIconsMap {
+  ObservableMap<String?, String?> get pubKeyIconsMap {
     _$pubKeyIconsMapAtom.reportRead();
     return super.pubKeyIconsMap;
   }
 
   @override
-  set pubKeyIconsMap(ObservableMap<String, String> value) {
+  set pubKeyIconsMap(ObservableMap<String?, String?> value) {
     _$pubKeyIconsMapAtom.reportWrite(value, super.pubKeyIconsMap, () {
       super.pubKeyIconsMap = value;
     });
@@ -178,13 +178,13 @@ mixin _$AccountStore on _AccountStore, Store {
   final _$addressIconsMapAtom = Atom(name: '_AccountStore.addressIconsMap');
 
   @override
-  ObservableMap<String, String> get addressIconsMap {
+  ObservableMap<String?, String?> get addressIconsMap {
     _$addressIconsMapAtom.reportRead();
     return super.addressIconsMap;
   }
 
   @override
-  set addressIconsMap(ObservableMap<String, String> value) {
+  set addressIconsMap(ObservableMap<String?, String?> value) {
     _$addressIconsMapAtom.reportWrite(value, super.addressIconsMap, () {
       super.addressIconsMap = value;
     });
@@ -208,7 +208,7 @@ mixin _$AccountStore on _AccountStore, Store {
   final _$setCurrentAccountAsyncAction = AsyncAction('_AccountStore.setCurrentAccount');
 
   @override
-  Future<void> setCurrentAccount(String pubKey) {
+  Future<void> setCurrentAccount(String? pubKey) {
     return _$setCurrentAccountAsyncAction.run(() => super.setCurrentAccount(pubKey));
   }
 
@@ -222,8 +222,8 @@ mixin _$AccountStore on _AccountStore, Store {
   final _$updateAccountAsyncAction = AsyncAction('_AccountStore.updateAccount');
 
   @override
-  Future<void> updateAccount(Map<String, dynamic> acc) {
-    return _$updateAccountAsyncAction.run(() => super.updateAccount(acc));
+  Future<void> updateAccount(Map<String, dynamic>? acc) {
+    return _$updateAccountAsyncAction.run(() => super.updateAccount(acc!));
   }
 
   final _$addAccountAsyncAction = AsyncAction('_AccountStore.addAccount');
@@ -250,42 +250,42 @@ mixin _$AccountStore on _AccountStore, Store {
   final _$encryptSeedAsyncAction = AsyncAction('_AccountStore.encryptSeed');
 
   @override
-  Future<void> encryptSeed(String pubKey, String seed, String seedType, String password) {
+  Future<void> encryptSeed(String? pubKey, String seed, String seedType, String password) {
     return _$encryptSeedAsyncAction.run(() => super.encryptSeed(pubKey, seed, seedType, password));
   }
 
   final _$decryptSeedAsyncAction = AsyncAction('_AccountStore.decryptSeed');
 
   @override
-  Future<String> decryptSeed(String pubKey, String seedType, String password) {
+  Future<String> decryptSeed(String? pubKey, String seedType, String password) {
     return _$decryptSeedAsyncAction.run(() => super.decryptSeed(pubKey, seedType, password));
   }
 
   final _$checkSeedExistAsyncAction = AsyncAction('_AccountStore.checkSeedExist');
 
   @override
-  Future<bool> checkSeedExist(String seedType, String pubKey) {
+  Future<bool> checkSeedExist(String seedType, String? pubKey) {
     return _$checkSeedExistAsyncAction.run(() => super.checkSeedExist(seedType, pubKey));
   }
 
   final _$updateSeedAsyncAction = AsyncAction('_AccountStore.updateSeed');
 
   @override
-  Future<void> updateSeed(String pubKey, String passwordOld, String passwordNew) {
+  Future<void> updateSeed(String? pubKey, String passwordOld, String passwordNew) {
     return _$updateSeedAsyncAction.run(() => super.updateSeed(pubKey, passwordOld, passwordNew));
   }
 
   final _$deleteSeedAsyncAction = AsyncAction('_AccountStore.deleteSeed');
 
   @override
-  Future<void> deleteSeed(String seedType, String pubKey) {
+  Future<void> deleteSeed(String seedType, String? pubKey) {
     return _$deleteSeedAsyncAction.run(() => super.deleteSeed(seedType, pubKey));
   }
 
   final _$_AccountStoreActionController = ActionController(name: '_AccountStore');
 
   @override
-  void setTxStatus([TxStatus status]) {
+  void setTxStatus([TxStatus? status]) {
     final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setTxStatus');
     try {
       return super.setTxStatus(status);
@@ -325,7 +325,7 @@ mixin _$AccountStore on _AccountStore, Store {
   }
 
   @override
-  void setNewAccountKey(String key) {
+  void setNewAccountKey(String? key) {
     final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setNewAccountKey');
     try {
       return super.setNewAccountKey(key);
@@ -461,13 +461,13 @@ mixin _$AccountCreate on _AccountCreate, Store {
   final _$keyAtom = Atom(name: '_AccountCreate.key');
 
   @override
-  String get key {
+  String? get key {
     _$keyAtom.reportRead();
     return super.key;
   }
 
   @override
-  set key(String value) {
+  set key(String? value) {
     _$keyAtom.reportWrite(value, super.key, () {
       super.key = value;
     });

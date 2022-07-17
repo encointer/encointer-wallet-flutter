@@ -7,12 +7,12 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class BazaarMenu extends StatelessWidget {
   const BazaarMenu({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,

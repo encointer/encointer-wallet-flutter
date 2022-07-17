@@ -10,9 +10,9 @@ enum ChangeResult {
 }
 
 Future<ChangeResult> changeNetworkAndCommunity(
-  AppStore store,
-  Api api,
-  String networkInfo,
+  AppStore? store,
+  Api? api,
+  String? networkInfo,
   CommunityIdentifier cid,
 ) async {
   var result = await changeNetwork(store, api, networkInfo, cid);
@@ -21,13 +21,13 @@ Future<ChangeResult> changeNetworkAndCommunity(
     return result;
   }
 
-  return changeCommunity(store, api, networkInfo, cid);
+  return changeCommunity(store, api!, networkInfo, cid);
 }
 
 Future<ChangeResult> changeNetwork(
-  AppStore store,
-  Api api,
-  String networkInfo,
+  AppStore? store,
+  Api? api,
+  String? networkInfo,
   CommunityIdentifier cid,
 ) async {
   var network;
@@ -35,15 +35,15 @@ Future<ChangeResult> changeNetwork(
   try {
     network = networkEndpoints.firstWhere(
       (network) => network.info == networkInfo,
-      orElse: () => throw FormatException('Invalid network in QrCode: $networkInfo'),
+      orElse: (() => throw FormatException('Invalid network in QrCode: $networkInfo')) as EndpointData Function()?,
     );
   } catch (e) {
     return ChangeResult.invalidNetwork;
   }
 
-  await store.settings.reloadNetwork(network);
+  await store!.settings!.reloadNetwork(network);
 
-  while (!store.settings.isConnected) {
+  while (!store.settings!.isConnected) {
     // This is not very nice, but unfortunately we can't await the
     // webView init until it is completely connected without some
     // refactoring.
@@ -56,15 +56,15 @@ Future<ChangeResult> changeNetwork(
 }
 
 Future<ChangeResult> changeCommunity(
-  AppStore store,
+  AppStore? store,
   Api api,
-  String networkInfo,
+  String? networkInfo,
   CommunityIdentifier cid,
 ) async {
-  var cids = await api.encointer.getCommunityIdentifiers();
+  var cids = await api.encointer!.getCommunityIdentifiers();
 
   if (cids.contains(cid)) {
-    store.encointer.setChosenCid(cid);
+    store!.encointer!.setChosenCid(cid);
     return ChangeResult.ok;
   } else {
     return ChangeResult.invalidCommunity;

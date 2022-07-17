@@ -16,8 +16,8 @@ class ChangePasswordPage extends StatefulWidget {
   ChangePasswordPage(this.store, this.settingsStore);
 
   static const String route = '/profile/password';
-  final AccountStore store;
-  final SettingsStore settingsStore;
+  final AccountStore? store;
+  final SettingsStore? settingsStore;
 
   @override
   _ChangePassword createState() => _ChangePassword(store, settingsStore);
@@ -26,9 +26,9 @@ class ChangePasswordPage extends StatefulWidget {
 class _ChangePassword extends State<ChangePasswordPage> {
   _ChangePassword(this.store, this.settingsStore);
 
-  final Api api = webApi;
-  final AccountStore store;
-  final SettingsStore settingsStore;
+  final Api? api = webApi;
+  final AccountStore? store;
+  final SettingsStore? settingsStore;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _passOldCtrl = new TextEditingController();
   final TextEditingController _passCtrl = new TextEditingController();
@@ -37,16 +37,16 @@ class _ChangePassword extends State<ChangePasswordPage> {
   bool _submitting = false;
 
   Future<void> _onSave() async {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState!.validate()) {
       setState(() {
         _submitting = true;
       });
 
-      final Translations dic = I18n.of(context).translationsForLocale();
+      final Translations dic = I18n.of(context)!.translationsForLocale();
       final String passOld = _passOldCtrl.text.trim();
       final String passNew = _passCtrl.text.trim();
       // check password
-      final passChecked = await webApi.account.checkAccountPassword(store.currentAccount, passOld);
+      final passChecked = await webApi!.account.checkAccountPassword(store!.currentAccount, passOld);
       if (passChecked == null) {
         showCupertinoDialog(
           context: context,
@@ -56,7 +56,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
               content: Text(dic.profile.wrongPinHint),
               actions: <Widget>[
                 CupertinoButton(
-                  child: Text(I18n.of(context).translationsForLocale().home.ok),
+                  child: Text(I18n.of(context)!.translationsForLocale().home.ok),
                   onPressed: () {
                     _passOldCtrl.clear();
                     setState(() {
@@ -71,19 +71,19 @@ class _ChangePassword extends State<ChangePasswordPage> {
         );
       } else {
         // we need to iterate over all active accounts and update there password
-        settingsStore.setPin(passNew);
-        store.accountListAll.forEach((account) async {
-          final Map acc =
-              await api.evalJavascript('account.changePassword("${account.pubKey}", "$passOld", "$passNew")');
+        settingsStore!.setPin(passNew);
+        store!.accountListAll.forEach((account) async {
+          final Map? acc =
+              await (api!.evalJavascript('account.changePassword("${account.pubKey}", "$passOld", "$passNew")') as FutureOr<Map<dynamic, dynamic>?>);
 
           // update encrypted seed after password updated
-          store.accountListAll.map((accountData) {
+          store!.accountListAll.map((accountData) {
             // use local name, not webApi returned name
             Map<String, dynamic> localAcc = AccountData.toJson(accountData);
             // make metadata the same as the polkadot-js/api's
-            acc['meta']['name'] = localAcc['name'];
-            store.updateAccount(acc);
-            store.updateSeed(accountData.pubKey, _passOldCtrl.text, _passCtrl.text);
+            acc!['meta']['name'] = localAcc['name'];
+            store!.updateAccount(acc as Map<String, dynamic>?);
+            store!.updateSeed(accountData.pubKey, _passOldCtrl.text, _passCtrl.text);
           });
         });
         showCupertinoDialog(
@@ -94,7 +94,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
               content: Text(dic.profile.passSuccessTxt),
               actions: <Widget>[
                 CupertinoButton(
-                    child: Text(I18n.of(context).translationsForLocale().home.ok),
+                    child: Text(I18n.of(context)!.translationsForLocale().home.ok),
                     onPressed: () => {
                           // moving back to profile page after changing password
                           Navigator.popUntil(context, ModalRoute.withName('/')),
@@ -109,7 +109,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         title: Text(dic.profile.changeYourPin),
@@ -136,7 +136,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                         Text(
                           dic.profile.hintThenEnterANewPin,
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black),
+                          style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black),
                         ),
                         SizedBox(height: 30),
                         EncointerTextFormField(
@@ -183,7 +183,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                     _submitting ? CupertinoActivityIndicator() : Container(),
                     Text(
                       dic.profile.contactSave,
-                      style: Theme.of(context).textTheme.headline3.copyWith(color: ZurichLion.shade50),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(color: ZurichLion.shade50),
                     ),
                   ],
                 ),

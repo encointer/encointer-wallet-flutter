@@ -10,19 +10,19 @@ final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterL
 final BehaviorSubject<ReceivedNotification> didReceiveLocalNotificationSubject =
     BehaviorSubject<ReceivedNotification>();
 
-final BehaviorSubject<String> selectNotificationSubject = BehaviorSubject<String>();
+final BehaviorSubject<String?> selectNotificationSubject = BehaviorSubject<String?>();
 
 class ReceivedNotification {
   final int id;
-  final String title;
-  final String body;
-  final String payload;
+  final String? title;
+  final String? body;
+  final String? payload;
 
   ReceivedNotification({
-    @required this.id,
-    @required this.title,
-    @required this.body,
-    @required this.payload,
+    required this.id,
+    required this.title,
+    required this.body,
+    required this.payload,
   });
 }
 
@@ -50,12 +50,12 @@ class NotificationPlugin {
       await showDialog(
         context: context,
         builder: (BuildContext context) => CupertinoAlertDialog(
-          title: receivedNotification.title != null ? Text(receivedNotification.title) : null,
-          content: receivedNotification.body != null ? Text(receivedNotification.body) : null,
+          title: receivedNotification.title != null ? Text(receivedNotification.title!) : null,
+          content: receivedNotification.body != null ? Text(receivedNotification.body!) : null,
           actions: [
             CupertinoDialogAction(
               isDefaultAction: true,
-              child: Text(I18n.of(context).translationsForLocale().home.ok),
+              child: Text(I18n.of(context)!.translationsForLocale().home.ok),
               onPressed: () async {
                 Navigator.of(context, rootNavigator: true).pop();
               },
@@ -67,7 +67,7 @@ class NotificationPlugin {
   }
 
   void _configureSelectNotificationSubject(BuildContext context) {
-    selectNotificationSubject.stream.listen((String payload) async {
+    selectNotificationSubject.stream.listen((String? payload) async {
       // do nothing for now
 //      print(payload);
 //      await Navigator.pushNamed(
@@ -78,7 +78,7 @@ class NotificationPlugin {
     });
   }
 
-  static Future<void> showNotification(int id, String title, String body, {String payload, String cid}) async {
+  static Future<void> showNotification(int id, String? title, String body, {String? payload, String? cid}) async {
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'transaction_submitted',
       'Tx Submitted',

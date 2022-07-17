@@ -18,8 +18,8 @@ class QrSignerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
-    final String text = ModalRoute.of(context).settings.arguments;
+    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final String text = ModalRoute.of(context)!.settings.arguments as String;
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(title: Text(dic.account.uosTitle), centerTitle: true),
@@ -31,7 +31,7 @@ class QrSignerPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 AddressFormItem(
-                  store.account.currentAccount,
+                  store.account!.currentAccount,
                   label: dic.account.uosSigner,
                 ),
                 Padding(

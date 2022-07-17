@@ -14,10 +14,10 @@ class Config {
     this.appStoreConfig = StoreConfig.Normal,
   });
 
-  final String initialRoute;
-  final bool mockLocalStorage;
-  final bool mockSubstrateApi;
-  final StoreConfig appStoreConfig;
+  final String? initialRoute;
+  final bool? mockLocalStorage;
+  final bool? mockSubstrateApi;
+  final StoreConfig? appStoreConfig;
 
   factory Config.fromJson(Map<String, dynamic> json) => _$ConfigFromJson(json);
   Map<String, dynamic> toJson() => _$ConfigToJson(this);

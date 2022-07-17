@@ -13,10 +13,10 @@ import '../theme.dart';
 
 class AddressInputField extends StatefulWidget {
   AddressInputField(this.store, {this.label, this.initialValue, this.onChanged, this.hideIdenticon = false});
-  final AppStore store;
-  final String label;
-  final AccountData initialValue;
-  final Function(AccountData) onChanged;
+  final AppStore? store;
+  final String? label;
+  final AccountData? initialValue;
+  final Function(AccountData?)? onChanged;
   final bool hideIdenticon;
   @override
   _AddressInputFieldState createState() => _AddressInputFieldState();
@@ -24,15 +24,15 @@ class AddressInputField extends StatefulWidget {
 
 class _AddressInputFieldState extends State<AddressInputField> {
   Future<List<AccountData>> _getAccountsFromInput(String input) async {
-    final listLocal = widget.store.account.accountList.toList();
-    listLocal.addAll(widget.store.settings.contactList);
+    final listLocal = widget.store!.account!.accountList.toList();
+    listLocal.addAll(widget.store!.settings!.contactList);
     // return local account list if input empty
     if (input.isEmpty || input.trim().length < 3) {
       return listLocal;
     }
 
     // check if user input is valid address or indices
-    final checkAddress = await webApi.account.decodeAddress([input]);
+    final checkAddress = await webApi!.account.decodeAddress([input]);
     if (checkAddress == null) {
       return listLocal;
     }
@@ -42,14 +42,14 @@ class _AddressInputFieldState extends State<AddressInputField> {
     if (input.length < 47) {
       // check if input indices in local account list
       final int indicesIndex = listLocal.indexWhere((e) {
-        final Map accInfo = widget.store.account.addressIndexMap[e.address];
+        final Map? accInfo = widget.store!.account!.addressIndexMap[e.address];
         return accInfo != null && accInfo['accountIndex'] == input;
       });
       if (indicesIndex >= 0) {
         return [listLocal[indicesIndex]];
       }
       // query account address with account indices
-      final queryRes = await webApi.account.queryAddressWithAccountIndex(input);
+      final queryRes = await webApi!.account.queryAddressWithAccountIndex(input);
       if (queryRes != null) {
         accountData.address = queryRes[0];
         accountData.name = input;
@@ -63,17 +63,17 @@ class _AddressInputFieldState extends State<AddressInputField> {
     }
 
     // fetch address info if it's a new address
-    final res = await webApi.account.getAddressIcons([accountData.address]);
+    final res = await webApi!.account.getAddressIcons([accountData.address]);
     if (res != null) {
-      await webApi.account.fetchAddressIndex([accountData.address]);
+      await webApi!.account.fetchAddressIndex([accountData.address]);
     }
     return [accountData];
   }
 
   String _itemAsString(AccountData item) {
-    final String address = Fmt.addressOfAccount(item, widget.store);
-    final Map accInfo = widget.store.account.addressIndexMap[item.address];
-    String idx = '';
+    final String address = Fmt.addressOfAccount(item, widget.store!);
+    final Map? accInfo = widget.store!.account!.addressIndexMap[item.address];
+    String? idx = '';
     if (accInfo != null && accInfo['accountIndex'] != null) {
       idx = accInfo['accountIndex'];
     }
@@ -83,14 +83,14 @@ class _AddressInputFieldState extends State<AddressInputField> {
     return '${Fmt.accountDisplayNameString(address, accInfo)} $idx $address ${item.address}';
   }
 
-  Widget _selectedItemBuilder(BuildContext context, AccountData item) {
+  Widget _selectedItemBuilder(BuildContext context, AccountData? item) {
     if (item == null) {
       return Container();
     }
     return Observer(
       builder: (_) {
-        final Map accInfo = widget.store.account.addressIndexMap[item.pubKey];
-        final String address = Fmt.addressOfAccount(item, widget.store);
+        final Map? accInfo = widget.store!.account!.addressIndexMap[item.pubKey];
+        final String address = Fmt.addressOfAccount(item, widget.store!);
         return Container(
           padding: EdgeInsets.only(top: 8),
           child: Row(
@@ -104,10 +104,10 @@ class _AddressInputFieldState extends State<AddressInputField> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    item.name?.isNotEmpty ?? false ? item.name : Fmt.accountDisplayNameString(item.address, accInfo),
+                    item.name?.isNotEmpty ?? false ? item.name! : Fmt.accountDisplayNameString(item.address, accInfo)!,
                   ),
                   Text(
-                    Fmt.address(address),
+                    Fmt.address(address)!,
                     style: TextStyle(
                       fontSize: 12,
                       color: Theme.of(context).unselectedWidgetColor,
@@ -125,8 +125,8 @@ class _AddressInputFieldState extends State<AddressInputField> {
   Widget _listItemBuilder(BuildContext context, AccountData item, bool isSelected) {
     return Observer(
       builder: (_) {
-        final Map accInfo = widget.store.account.addressIndexMap[item.pubKey];
-        final String address = Fmt.addressOfAccount(item, widget.store);
+        final Map? accInfo = widget.store!.account!.addressIndexMap[item.pubKey];
+        final String address = Fmt.addressOfAccount(item, widget.store!);
         return Container(
           margin: EdgeInsets.symmetric(horizontal: 8),
           decoration: !isSelected
@@ -139,9 +139,9 @@ class _AddressInputFieldState extends State<AddressInputField> {
           child: ListTile(
             selected: isSelected,
             dense: true,
-            title: Text(Fmt.address(address)),
+            title: Text(Fmt.address(address)!),
             subtitle: Text(
-              item.name.isNotEmpty ? item.name : Fmt.accountDisplayNameString(item.address, accInfo),
+              item.name!.isNotEmpty ? item.name! : Fmt.accountDisplayNameString(item.address, accInfo)!,
             ),
             leading: CircleAvatar(
               child: AddressIcon(item.address, item.pubKey),
@@ -154,7 +154,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     return Container(
       decoration: BoxDecoration(
         color: ZurichLion.shade50,
@@ -182,12 +182,12 @@ class _AddressInputFieldState extends State<AddressInputField> {
         ),
         selectedItem: widget.initialValue,
         compareFn: (AccountData i, s) => i.pubKey == s?.pubKey,
-        validator: (AccountData u) => u == null ? dic.profile.errorUserNameIsRequired : null,
+        validator: (AccountData? u) => u == null ? dic.profile.errorUserNameIsRequired : null,
         asyncItems: (String filter) => _getAccountsFromInput(filter),
         itemAsString: _itemAsString,
-        onChanged: (AccountData data) {
+        onChanged: (AccountData? data) {
           if (widget.onChanged != null) {
-            widget.onChanged(data);
+            widget.onChanged!(data);
           }
         },
         dropdownBuilder: _selectedItemBuilder,

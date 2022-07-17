@@ -6,13 +6,13 @@ import 'package:flutter/cupertino.dart';
 /// Useful for sending transactions because it takes a while until we know the result.
 class SubmitButton extends StatefulWidget {
   const SubmitButton({
-    Key key,
+    Key? key,
     this.child,
     this.onPressed,
   }) : super(key: key);
 
-  final Widget child;
-  final Future<void> Function(BuildContext) onPressed;
+  final Widget? child;
+  final Future<void> Function(BuildContext)? onPressed;
 
   @override
   _SubmitButtonState createState() => _SubmitButtonState();
@@ -25,7 +25,7 @@ class _SubmitButtonState extends State<SubmitButton> {
     setState(() {
       _submitting = true;
     });
-    await widget.onPressed(context);
+    await widget.onPressed!(context);
     setState(() {
       _submitting = false;
     });

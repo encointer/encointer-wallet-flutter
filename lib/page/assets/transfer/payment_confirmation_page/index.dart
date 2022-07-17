@@ -27,18 +27,18 @@ class PaymentConfirmationParams {
     this.amount,
   });
 
-  final CommunityIdentifier cid;
-  final String communitySymbol;
-  final AccountData recipientAccount;
-  final double amount;
+  final CommunityIdentifier? cid;
+  final String? communitySymbol;
+  final AccountData? recipientAccount;
+  final double? amount;
 }
 
 class PaymentConfirmationPage extends StatefulWidget {
   const PaymentConfirmationPage(this.store, this.api);
 
   static const String route = '/assets/paymentConfirmation';
-  final AppStore store;
-  final Api api;
+  final AppStore? store;
+  final Api? api;
 
   @override
   _PaymentConfirmationPageState createState() => _PaymentConfirmationPageState();
@@ -48,24 +48,24 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   TransferState _transferState = TransferState.notStarted;
 
   /// Transaction result, will only be used in the error case.
-  Map _transactionResult;
+  late Map _transactionResult;
 
-  DateTime _blockTimestamp;
+  late DateTime _blockTimestamp;
 
   // for the animated tick.
-  AnimationController _animationController;
-  Animation<double> _animation;
-  Timer _timer;
+  AnimationController? _animationController;
+  Animation<double>? _animation;
+  late Timer _timer;
   bool _animationInitialized = false;
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
-    PaymentConfirmationParams params = ModalRoute.of(context).settings.arguments;
+    final Translations dic = I18n.of(context)!.translationsForLocale();
+    PaymentConfirmationParams params = ModalRoute.of(context)!.settings.arguments as PaymentConfirmationParams;
 
     var cid = params.cid;
-    var recipientAccount = params.recipientAccount;
-    final recipientAddress = Fmt.addressOfAccount(recipientAccount, widget.store);
+    var recipientAccount = params.recipientAccount!;
+    final recipientAddress = Fmt.addressOfAccount(recipientAccount, widget.store!);
     var amount = params.amount;
 
     return Observer(
@@ -137,7 +137,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     );
   }
 
-  Future<void> _submit(BuildContext context, CommunityIdentifier cid, String recipientAddress, double amount) async {
+  Future<void> _submit(BuildContext context, CommunityIdentifier? cid, String recipientAddress, double? amount) async {
     var params = encointerBalanceTransferParams(cid, recipientAddress, amount);
 
     setState(() {
@@ -156,7 +156,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
       }
     };
 
-    await submitTx(context, widget.store, widget.api, params, onFinish: onFinish);
+    await submitTx(context, widget.store!, widget.api!, params, onFinish: onFinish);
 
     // for debugging
     // Future.delayed(const Duration(milliseconds: 1500), () {
@@ -196,7 +196,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
           return Container(
             decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.green),
             child: AnimatedCheck(
-              progress: _animation,
+              progress: _animation!,
               size: 100,
               color: Colors.white,
             ),
@@ -225,10 +225,10 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   }
 
   Widget _txStateTextInfo(TransferState state) {
-    final h1Grey = Theme.of(context).textTheme.headline1.copyWith(color: encointerGrey);
-    final h2Grey = Theme.of(context).textTheme.headline2.copyWith(color: encointerGrey);
+    final h1Grey = Theme.of(context).textTheme.headline1!.copyWith(color: encointerGrey);
+    final h2Grey = Theme.of(context).textTheme.headline2!.copyWith(color: encointerGrey);
 
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     switch (state) {
       case TransferState.notStarted:
         {
@@ -275,17 +275,17 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   }
 
   void _animateTick() {
-    _animationController.forward();
-    Future.delayed(Duration(seconds: 1), () => _animationController.reset());
+    _animationController!.forward();
+    Future.delayed(Duration(seconds: 1), () => _animationController!.reset());
   }
 
   void _initializeAnimation() {
     _animationController = AnimationController(vsync: this, duration: Duration(seconds: 1));
 
     _animation = new Tween<double>(begin: 0, end: 1)
-        .animate(new CurvedAnimation(parent: _animationController, curve: Curves.easeInOutCirc));
+        .animate(new CurvedAnimation(parent: _animationController!, curve: Curves.easeInOutCirc));
 
-    _animationController.forward();
+    _animationController!.forward();
 
     _timer = Timer.periodic(
       Duration(seconds: 2),
@@ -298,7 +298,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   @override
   void dispose() {
     if (_animationController != null) {
-      _animationController.dispose();
+      _animationController!.dispose();
       _animation = null;
       _timer.cancel();
     }

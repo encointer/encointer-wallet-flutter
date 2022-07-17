@@ -15,14 +15,14 @@ class ClaimOfAttendance {
   ClaimOfAttendance(this.claimantPublic, this.ceremonyIndex, this.communityIdentifier, this.meetupIndex, this.location,
       this.timestamp, this.numberOfParticipantsConfirmed);
 
-  String claimantPublic;
-  int ceremonyIndex;
-  CommunityIdentifier communityIdentifier;
-  int meetupIndex;
-  Location location;
-  int timestamp;
-  int numberOfParticipantsConfirmed;
-  Map<String, String> claimantSignature;
+  String? claimantPublic;
+  int? ceremonyIndex;
+  CommunityIdentifier? communityIdentifier;
+  int? meetupIndex;
+  Location? location;
+  int? timestamp;
+  int? numberOfParticipantsConfirmed;
+  Map<String, String>? claimantSignature;
 
   @override
   String toString() {

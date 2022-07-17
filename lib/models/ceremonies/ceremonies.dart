@@ -11,8 +11,8 @@ part 'ceremonies.g.dart';
 class AggregatedAccountData {
   AggregatedAccountData(this.global, this.personal);
 
-  AggregatedAccountDataGlobal global;
-  AggregatedAccountDataPersonal personal;
+  AggregatedAccountDataGlobal? global;
+  AggregatedAccountDataPersonal? personal;
 
   @override
   String toString() {
@@ -28,11 +28,11 @@ class AggregatedAccountDataPersonal {
   AggregatedAccountDataPersonal(
       this.participantType, this.meetupIndex, this.meetupLocationIndex, this.meetupTime, this.meetupRegistry);
 
-  ParticipantType participantType;
-  int meetupIndex;
-  int meetupLocationIndex;
-  int meetupTime;
-  List<String> meetupRegistry;
+  ParticipantType? participantType;
+  int? meetupIndex;
+  int? meetupLocationIndex;
+  int? meetupTime;
+  List<String>? meetupRegistry;
 
   get meetup => meetupIndex != null ? Meetup(meetupIndex, meetupLocationIndex, meetupTime, meetupRegistry) : null;
 
@@ -50,8 +50,8 @@ class AggregatedAccountDataPersonal {
 class AggregatedAccountDataGlobal {
   AggregatedAccountDataGlobal(this.ceremonyPhase, this.ceremonyIndex);
 
-  CeremonyPhase ceremonyPhase;
-  int ceremonyIndex;
+  CeremonyPhase? ceremonyPhase;
+  int? ceremonyIndex;
 
   @override
   String toString() {
@@ -69,8 +69,8 @@ enum ParticipantType { Bootstrapper, Reputable, Endorsee, Newbie }
 class CommunityReputation {
   CommunityReputation(this.communityIdentifier, this.reputation);
 
-  CommunityIdentifier communityIdentifier;
-  Reputation reputation;
+  CommunityIdentifier? communityIdentifier;
+  Reputation? reputation;
 
   @override
   String toString() {
@@ -85,10 +85,10 @@ class CommunityReputation {
 class Meetup {
   Meetup(this.index, this.locationIndex, this.time, this.registry);
 
-  int index;
-  int locationIndex;
-  int time;
-  List<String> registry;
+  int? index;
+  int? locationIndex;
+  int? time;
+  List<String>? registry;
 
   @override
   String toString() {
@@ -105,11 +105,11 @@ enum Reputation { Unverified, UnverifiedReputable, VerifiedUnlinked, VerifiedLin
 
 // -- Helper functions for above types
 
-CeremonyPhase ceremonyPhaseFromString(String value) {
+CeremonyPhase? ceremonyPhaseFromString(String? value) {
   return getEnumFromString(CeremonyPhase.values, value);
 }
 
-Reputation reputationFromString(String value) {
+Reputation? reputationFromString(String value) {
   return getEnumFromString(Reputation.values, value);
 }
 
@@ -119,7 +119,7 @@ extension reputationExtension on Reputation {
   }
 }
 
-extension participantTypeExtension on ParticipantType {
+extension participantTypeExtension on ParticipantType? {
   String toValue() {
     return toEnumValue(this);
   }

@@ -40,7 +40,7 @@ void main() {
       expect(qrCode.context, QrCodeContext.invoice);
       expect(qrCode.version, QrCodeVersion.v2_0);
       expect(qrCode.data.account, "account");
-      expect(qrCode.data.cid.toFmtString(), "sqm1v79dF6b");
+      expect(qrCode.data.cid!.toFmtString(), "sqm1v79dF6b");
       expect(qrCode.data.network, "nctr-k");
       expect(qrCode.data.amount, 1.001);
       expect(qrCode.data.label, "label");
@@ -80,7 +80,7 @@ void main() {
     expect(qrCode.context, QrCodeContext.invoice);
     expect(qrCode.version, QrCodeVersion.v1_0);
     expect(qrCode.data.account, "account");
-    expect(qrCode.data.cid.toFmtString(), "sqm1v79dF6b");
+    expect(qrCode.data.cid!.toFmtString(), "sqm1v79dF6b");
     expect(qrCode.data.amount, 1.001);
     expect(qrCode.data.label, "label");
   });

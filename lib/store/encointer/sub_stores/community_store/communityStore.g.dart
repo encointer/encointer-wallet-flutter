@@ -8,20 +8,20 @@ part of 'communityStore.dart';
 
 CommunityStore _$CommunityStoreFromJson(Map<String, dynamic> json) {
   return CommunityStore(
-    json['network'] as String,
+    json['network'] as String?,
     json['cid'] == null ? null : CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
   )
     ..metadata = json['metadata'] == null ? null : CommunityMetadata.fromJson(json['metadata'] as Map<String, dynamic>)
-    ..demurrage = (json['demurrage'] as num)?.toDouble()
-    ..meetupTime = json['meetupTime'] as int
-    ..meetupTimeOverride = json['meetupTimeOverride'] as int
-    ..bootstrappers = (json['bootstrappers'] as List)?.map((e) => e as String)?.toList()
+    ..demurrage = (json['demurrage'] as num?)?.toDouble()
+    ..meetupTime = json['meetupTime'] as int?
+    ..meetupTimeOverride = json['meetupTimeOverride'] as int?
+    ..bootstrappers = (json['bootstrappers'] as List?)?.map((e) => e as String)?.toList()
     ..meetupLocations = json['meetupLocations'] != null
         ? ObservableList<Location>.of((json['meetupLocations'] as List)
             .map((e) => e == null ? null : Location.fromJson(e as Map<String, dynamic>)))
         : null
     ..communityAccountStores = json['communityAccountStores'] != null
-        ? ObservableMap<String, CommunityAccountStore>.of((json['communityAccountStores'] as Map<String, dynamic>).map(
+        ? ObservableMap<String?, CommunityAccountStore>.of((json['communityAccountStores'] as Map<String, dynamic>).map(
             (k, e) => MapEntry(k, e == null ? null : CommunityAccountStore.fromJson(e as Map<String, dynamic>)),
           ))
         : null;
@@ -49,28 +49,28 @@ mixin _$CommunityStore on _CommunityStore, Store {
   Computed<String> _$nameComputed;
 
   @override
-  String get name => (_$nameComputed ??= Computed<String>(() => super.name, name: '_CommunityStore.name')).value;
+  String get name => (_$nameComputed ??= Computed<String>(() => super.name!, name: '_CommunityStore.name')).value;
   Computed<String> _$symbolComputed;
 
   @override
   String get symbol =>
-      (_$symbolComputed ??= Computed<String>(() => super.symbol, name: '_CommunityStore.symbol')).value;
+      (_$symbolComputed ??= Computed<String>(() => super.symbol!, name: '_CommunityStore.symbol')).value;
   Computed<String> _$assetsCidComputed;
 
   @override
   String get assetsCid =>
-      (_$assetsCidComputed ??= Computed<String>(() => super.assetsCid, name: '_CommunityStore.assetsCid')).value;
+      (_$assetsCidComputed ??= Computed<String>(() => super.assetsCid!, name: '_CommunityStore.assetsCid')).value;
 
   final _$metadataAtom = Atom(name: '_CommunityStore.metadata');
 
   @override
-  CommunityMetadata get metadata {
+  CommunityMetadata? get metadata {
     _$metadataAtom.reportRead();
     return super.metadata;
   }
 
   @override
-  set metadata(CommunityMetadata value) {
+  set metadata(CommunityMetadata? value) {
     _$metadataAtom.reportWrite(value, super.metadata, () {
       super.metadata = value;
     });
@@ -79,13 +79,13 @@ mixin _$CommunityStore on _CommunityStore, Store {
   final _$demurrageAtom = Atom(name: '_CommunityStore.demurrage');
 
   @override
-  double get demurrage {
+  double? get demurrage {
     _$demurrageAtom.reportRead();
     return super.demurrage;
   }
 
   @override
-  set demurrage(double value) {
+  set demurrage(double? value) {
     _$demurrageAtom.reportWrite(value, super.demurrage, () {
       super.demurrage = value;
     });
@@ -94,13 +94,13 @@ mixin _$CommunityStore on _CommunityStore, Store {
   final _$meetupTimeAtom = Atom(name: '_CommunityStore.meetupTime');
 
   @override
-  int get meetupTime {
+  int? get meetupTime {
     _$meetupTimeAtom.reportRead();
     return super.meetupTime;
   }
 
   @override
-  set meetupTime(int value) {
+  set meetupTime(int? value) {
     _$meetupTimeAtom.reportWrite(value, super.meetupTime, () {
       super.meetupTime = value;
     });
@@ -109,13 +109,13 @@ mixin _$CommunityStore on _CommunityStore, Store {
   final _$meetupTimeOverrideAtom = Atom(name: '_CommunityStore.meetupTimeOverride');
 
   @override
-  int get meetupTimeOverride {
+  int? get meetupTimeOverride {
     _$meetupTimeOverrideAtom.reportRead();
     return super.meetupTimeOverride;
   }
 
   @override
-  set meetupTimeOverride(int value) {
+  set meetupTimeOverride(int? value) {
     _$meetupTimeOverrideAtom.reportWrite(value, super.meetupTimeOverride, () {
       super.meetupTimeOverride = value;
     });
@@ -124,13 +124,13 @@ mixin _$CommunityStore on _CommunityStore, Store {
   final _$bootstrappersAtom = Atom(name: '_CommunityStore.bootstrappers');
 
   @override
-  List<String> get bootstrappers {
+  List<String>? get bootstrappers {
     _$bootstrappersAtom.reportRead();
     return super.bootstrappers;
   }
 
   @override
-  set bootstrappers(List<String> value) {
+  set bootstrappers(List<String>? value) {
     _$bootstrappersAtom.reportWrite(value, super.bootstrappers, () {
       super.bootstrappers = value;
     });
@@ -139,13 +139,13 @@ mixin _$CommunityStore on _CommunityStore, Store {
   final _$meetupLocationsAtom = Atom(name: '_CommunityStore.meetupLocations');
 
   @override
-  ObservableList<Location> get meetupLocations {
+  ObservableList<Location>? get meetupLocations {
     _$meetupLocationsAtom.reportRead();
     return super.meetupLocations;
   }
 
   @override
-  set meetupLocations(ObservableList<Location> value) {
+  set meetupLocations(ObservableList<Location>? value) {
     _$meetupLocationsAtom.reportWrite(value, super.meetupLocations, () {
       super.meetupLocations = value;
     });
@@ -154,13 +154,13 @@ mixin _$CommunityStore on _CommunityStore, Store {
   final _$communityAccountStoresAtom = Atom(name: '_CommunityStore.communityAccountStores');
 
   @override
-  ObservableMap<String, CommunityAccountStore> get communityAccountStores {
+  ObservableMap<String?, CommunityAccountStore>? get communityAccountStores {
     _$communityAccountStoresAtom.reportRead();
     return super.communityAccountStores;
   }
 
   @override
-  set communityAccountStores(ObservableMap<String, CommunityAccountStore> value) {
+  set communityAccountStores(ObservableMap<String?, CommunityAccountStore>? value) {
     _$communityAccountStoresAtom.reportWrite(value, super.communityAccountStores, () {
       super.communityAccountStores = value;
     });
@@ -169,7 +169,7 @@ mixin _$CommunityStore on _CommunityStore, Store {
   final _$_CommunityStoreActionController = ActionController(name: '_CommunityStore');
 
   @override
-  Future<void> initCommunityAccountStore(String address) {
+  Future<void> initCommunityAccountStore(String? address) {
     final _$actionInfo =
         _$_CommunityStoreActionController.startAction(name: '_CommunityStore.initCommunityAccountStore');
     try {
@@ -180,7 +180,7 @@ mixin _$CommunityStore on _CommunityStore, Store {
   }
 
   @override
-  void setDemurrage(double d) {
+  void setDemurrage(double? d) {
     final _$actionInfo = _$_CommunityStoreActionController.startAction(name: '_CommunityStore.setDemurrage');
     try {
       return super.setDemurrage(d);
@@ -200,7 +200,7 @@ mixin _$CommunityStore on _CommunityStore, Store {
   }
 
   @override
-  void setCommunityMetadata([CommunityMetadata meta]) {
+  void setCommunityMetadata([CommunityMetadata? meta]) {
     final _$actionInfo = _$_CommunityStoreActionController.startAction(name: '_CommunityStore.setCommunityMetadata');
     try {
       return super.setCommunityMetadata(meta);
@@ -210,7 +210,7 @@ mixin _$CommunityStore on _CommunityStore, Store {
   }
 
   @override
-  void setMeetupTime([int time]) {
+  void setMeetupTime([int? time]) {
     final _$actionInfo = _$_CommunityStoreActionController.startAction(name: '_CommunityStore.setMeetupTime');
     try {
       return super.setMeetupTime(time);
@@ -220,7 +220,7 @@ mixin _$CommunityStore on _CommunityStore, Store {
   }
 
   @override
-  void setMeetupTimeOverride([int time]) {
+  void setMeetupTimeOverride([int? time]) {
     final _$actionInfo = _$_CommunityStoreActionController.startAction(name: '_CommunityStore.setMeetupTimeOverride');
     try {
       return super.setMeetupTimeOverride(time);

@@ -8,8 +8,8 @@ part of 'workerApi.dart';
 
 PubKeyPinPair _$PubKeyPinPairFromJson(Map<String, dynamic> json) {
   return PubKeyPinPair(
-    json['pubKey'] as String,
-    json['pin'] as String,
+    json['pubKey'] as String?,
+    json['pin'] as String?,
   );
 }
 

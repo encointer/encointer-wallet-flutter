@@ -9,28 +9,28 @@ class RemoteNodeListPage extends StatelessWidget {
   RemoteNodeListPage(this.store);
 
   static const String route = '/profile/endpoint';
-  final Api api = webApi;
-  final SettingsStore store;
+  final Api? api = webApi;
+  final SettingsStore? store;
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     List<EndpointData> endpoints = List<EndpointData>.of(networkEndpoints);
-    endpoints.retainWhere((i) => i.info == store.endpoint.info);
+    endpoints.retainWhere((i) => i.info == store!.endpoint.info);
     List<Widget> list = endpoints
         .map((i) => ListTile(
               leading: Container(
                 width: 36,
                 child: Image.asset('assets/images/public/${i.info}.png'),
               ),
-              title: Text(i.info),
-              subtitle: Text(i.text),
+              title: Text(i.info!),
+              subtitle: Text(i.text!),
               trailing: Container(
                 width: 40,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    store.endpoint.value == i.value
+                    store!.endpoint.value == i.value
                         ? Image.asset(
                             'assets/images/assets/success.png',
                             width: 16,
@@ -41,13 +41,13 @@ class RemoteNodeListPage extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                if (store.endpoint.value == i.value) {
+                if (store!.endpoint.value == i.value) {
                   Navigator.of(context).pop();
                   return;
                 }
-                store.setEndpoint(i);
-                store.setNetworkLoading(true);
-                webApi.launchWebview(customNode: true);
+                store!.setEndpoint(i);
+                store!.setNetworkLoading(true);
+                webApi!.launchWebview(customNode: true);
                 Navigator.of(context).pop();
               },
             ))

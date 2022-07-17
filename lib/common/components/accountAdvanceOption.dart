@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 class AccountAdvanceOption extends StatefulWidget {
   AccountAdvanceOption({this.seed, this.onChange});
 
-  final Function(AccountAdvanceOptionParams) onChange;
-  final String seed;
+  final Function(AccountAdvanceOptionParams)? onChange;
+  final String? seed;
 
   @override
   _AccountAdvanceOption createState() => _AccountAdvanceOption();
@@ -26,17 +26,17 @@ class _AccountAdvanceOption extends State<AccountAdvanceOption> {
   int _typeSelection = 0;
 
   bool _expanded = false;
-  String _derivePath = '';
-  String _pathError;
+  String? _derivePath = '';
+  String? _pathError;
 
-  String _checkDerivePath(String path) {
+  String? _checkDerivePath(String? path) {
     if (widget.seed != "" && path != _derivePath) {
-      webApi.account.checkDerivePath(widget.seed, path, _typeOptions[_typeSelection]).then((res) {
+      webApi!.account.checkDerivePath(widget.seed, path, _typeOptions[_typeSelection]).then((res) {
         setState(() {
           _derivePath = path;
           _pathError = res != null ? 'Invalid derive path' : null;
         });
-        widget.onChange(AccountAdvanceOptionParams(
+        widget.onChange!(AccountAdvanceOptionParams(
           type: _typeOptions[_typeSelection],
           path: path,
           error: res != null,
@@ -54,7 +54,7 @@ class _AccountAdvanceOption extends State<AccountAdvanceOption> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     return Column(
       children: <Widget>[
         Padding(
@@ -80,7 +80,7 @@ class _AccountAdvanceOption extends State<AccountAdvanceOption> {
                   _typeSelection = 0;
                   _pathCtrl.text = '';
                 });
-                widget.onChange(AccountAdvanceOptionParams(
+                widget.onChange!(AccountAdvanceOptionParams(
                   type: _typeOptions[0],
                   path: '',
                 ));
@@ -93,7 +93,7 @@ class _AccountAdvanceOption extends State<AccountAdvanceOption> {
         ),
         _expanded
             ? ListTile(
-                title: Text(I18n.of(context).translationsForLocale().account.importEncrypt),
+                title: Text(I18n.of(context)!.translationsForLocale().account.importEncrypt),
                 subtitle: Text(_typeOptions[_typeSelection]),
                 trailing: Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () {
@@ -111,7 +111,7 @@ class _AccountAdvanceOption extends State<AccountAdvanceOption> {
                           setState(() {
                             _typeSelection = v;
                           });
-                          widget.onChange(AccountAdvanceOptionParams(
+                          widget.onChange!(AccountAdvanceOptionParams(
                             type: _typeOptions[v],
                             path: _derivePath,
                           ));
@@ -148,7 +148,7 @@ class AccountAdvanceOptionParams {
   AccountAdvanceOptionParams({this.type, this.path, this.error});
   static const String encryptTypeSR = 'sr25519';
   static const String encryptTypeED = 'ed25519';
-  String type = encryptTypeSR;
-  String path = '';
-  bool error = false;
+  String? type = encryptTypeSR;
+  String? path = '';
+  bool? error = false;
 }

@@ -20,20 +20,20 @@ class IpfsBusiness {
   IpfsBusiness(this.name, this.description, this.contactInfo, this.imagesCid, this.openingHours);
 
   /// name of the business
-  final String name;
+  final String? name;
 
   /// brief description of the business
-  final String description;
+  final String? description;
 
   /// contact info of the business
-  final String contactInfo;
+  final String? contactInfo;
 
   /// ipfs-cid where the images live
-  final String imagesCid;
+  final String? imagesCid;
 
   /// opening hours of the business
   /// Todo: change to an actual date format instead of string
-  final String openingHours;
+  final String? openingHours;
 
   @override
   String toString() {
@@ -50,19 +50,19 @@ class IpfsOffering {
   IpfsOffering(this.name, this.price, this.description, this.contactInfo, this.imagesCid);
 
   /// name of the offering
-  final String name;
+  final String? name;
 
   /// price in community currency
-  final int price;
+  final int? price;
 
   /// description of the offering
-  final String description;
+  final String? description;
 
   /// contact info of the business
-  final String contactInfo;
+  final String? contactInfo;
 
   /// ipfs-cid where the offering's images live
-  final String imagesCid;
+  final String? imagesCid;
 
   @override
   String toString() {
@@ -79,10 +79,10 @@ class BusinessData {
   BusinessData(this.url, this.lastOid);
 
   /// ipfs-cid of the corresponding [IpfsBusiness]
-  final String url;
+  final String? url;
 
   /// monotonic counter of registered offerings
-  final int lastOid;
+  final int? lastOid;
 
   @override
   String toString() {
@@ -99,7 +99,7 @@ class OfferingData {
   OfferingData(this.url);
 
   /// ipfs-cid of the corresponding [IpfsOffering]
-  final String url;
+  final String? url;
 
   @override
   String toString() {
@@ -118,10 +118,10 @@ class AccountBusinessTuple {
   AccountBusinessTuple(this.controller, this.businessData);
 
   /// accountId of the business's controller
-  final String controller;
+  final String? controller;
 
   /// the business data belonging to [controller]
-  final BusinessData businessData;
+  final BusinessData? businessData;
 
   @override
   String toString() {
@@ -138,10 +138,10 @@ class BusinessIdentifier {
   BusinessIdentifier(this.cid, this.controller);
 
   /// community identifier of the community the business belongs to
-  final CommunityIdentifier cid;
+  final CommunityIdentifier? cid;
 
   /// controller account of the business
-  final String controller;
+  final String? controller;
 
   @override
   String toString() {

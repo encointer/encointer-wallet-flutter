@@ -11,27 +11,27 @@ class TransferDetailPage extends StatelessWidget {
   TransferDetailPage(this.store);
 
   static const String route = '/assets/tx';
-  final AppStore store;
+  final AppStore? store;
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
-    final String symbol = store.settings.networkState.tokenSymbol;
-    final int decimals = store.settings.networkState.tokenDecimals;
+    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final String? symbol = store!.settings!.networkState!.tokenSymbol;
+    final int? decimals = store!.settings!.networkState!.tokenDecimals;
     final String tokenView = Fmt.tokenView(symbol);
 
-    final TransferData tx = ModalRoute.of(context).settings.arguments;
+    final TransferData tx = ModalRoute.of(context)!.settings.arguments as TransferData;
 
-    final String txType = tx.from == store.account.currentAddress ? dic.assets.transfer : dic.assets.receive;
+    final String txType = tx.from == store!.account!.currentAddress ? dic.assets.transfer : dic.assets.receive;
 
     return TxDetail(
       success: true,
       action: txType,
       eventId: tx.extrinsicIndex,
       hash: tx.hash,
-      blockTime: Fmt.dateTime(DateTime.fromMillisecondsSinceEpoch(tx.blockTimestamp * 1000)),
+      blockTime: Fmt.dateTime(DateTime.fromMillisecondsSinceEpoch(tx.blockTimestamp! * 1000)),
       blockNum: tx.blockNum,
-      networkName: store.settings.endpoint.info,
+      networkName: store!.settings!.endpoint.info,
       info: <DetailInfoItem>[
         DetailInfoItem(
           label: dic.assets.value,

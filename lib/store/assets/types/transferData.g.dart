@@ -8,17 +8,17 @@ part of 'transferData.dart';
 
 TransferData _$TransferDataFromJson(Map<String, dynamic> json) {
   return TransferData()
-    ..blockNum = json['block_num'] as int
-    ..blockTimestamp = json['block_timestamp'] as int
-    ..extrinsicIndex = json['extrinsic_index'] as String
-    ..fee = json['fee'] as String
-    ..from = json['from'] as String
-    ..to = json['to'] as String
-    ..amount = json['amount'] as String
-    ..token = json['token'] as String
-    ..hash = json['hash'] as String
-    ..module = json['module'] as String
-    ..success = json['success'] as bool;
+    ..blockNum = json['block_num'] as int?
+    ..blockTimestamp = json['block_timestamp'] as int?
+    ..extrinsicIndex = json['extrinsic_index'] as String?
+    ..fee = json['fee'] as String?
+    ..from = json['from'] as String?
+    ..to = json['to'] as String?
+    ..amount = json['amount'] as String?
+    ..token = json['token'] as String?
+    ..hash = json['hash'] as String?
+    ..module = json['module'] as String?
+    ..success = json['success'] as bool?;
 }
 
 Map<String, dynamic> _$TransferDataToJson(TransferData instance) => <String, dynamic>{

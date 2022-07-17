@@ -6,15 +6,15 @@ import 'qrCodeBase.dart';
 class VoucherQrCode extends QrCode<VoucherData> {
   VoucherQrCode.withData(VoucherData data) : super(data);
   VoucherQrCode({
-    @required String voucherUri,
-    @required CommunityIdentifier cid,
-    String network,
-    @required String issuer,
+    required String voucherUri,
+    required CommunityIdentifier cid,
+    String? network,
+    required String issuer,
   }) : super(VoucherData(voucherUri: voucherUri, cid: cid, network: network, issuer: issuer));
 
-  var context = QrCodeContext.voucher;
+  QrCodeContext? context = QrCodeContext.voucher;
 
-  var version = QrCodeVersion.v2_0;
+  QrCodeVersion? version = QrCodeVersion.v2_0;
 
   static VoucherQrCode fromPayload(String payload) {
     return fromQrFields(payload.split("\n"));
@@ -28,10 +28,10 @@ class VoucherQrCode extends QrCode<VoucherData> {
 
 class VoucherData implements ToQrFields {
   VoucherData({
-    @required this.voucherUri,
-    @required this.cid,
+    required this.voucherUri,
+    required this.cid,
     this.network,
-    @required this.issuer,
+    required this.issuer,
   });
 
   /// Uri seed of the voucher account, e.g. //adf456.
@@ -41,12 +41,12 @@ class VoucherData implements ToQrFields {
   final CommunityIdentifier cid;
 
   /// Network, e.g: nctr-k, nctr-r.
-  final String network;
+  final String? network;
 
   /// Name of issuer.
   final String issuer;
 
-  List<String> toQrFields() {
+  List<String?> toQrFields() {
     return [
       voucherUri,
       cid?.toFmtString() ?? "",

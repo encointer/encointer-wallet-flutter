@@ -1,5 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
+import 'package:collection/collection.dart' show IterableExtension;
 part of 'ceremonies.dart';
 
 // **************************************************************************
@@ -21,32 +22,32 @@ Map<String, dynamic> _$AggregatedAccountDataToJson(AggregatedAccountData instanc
 AggregatedAccountDataPersonal _$AggregatedAccountDataPersonalFromJson(Map<String, dynamic> json) {
   return AggregatedAccountDataPersonal(
     _$enumDecodeNullable(_$ParticipantTypeEnumMap, json['participantType']),
-    json['meetupIndex'] as int,
-    json['meetupLocationIndex'] as int,
-    json['meetupTime'] as int,
-    (json['meetupRegistry'] as List)?.map((e) => e as String)?.toList(),
+    json['meetupIndex'] as int?,
+    json['meetupLocationIndex'] as int?,
+    json['meetupTime'] as int?,
+    (json['meetupRegistry'] as List?)?.map((e) => e as String)?.toList(),
   );
 }
 
 Map<String, dynamic> _$AggregatedAccountDataPersonalToJson(AggregatedAccountDataPersonal instance) => <String, dynamic>{
-      'participantType': _$ParticipantTypeEnumMap[instance.participantType],
+      'participantType': _$ParticipantTypeEnumMap[instance.participantType!],
       'meetupIndex': instance.meetupIndex,
       'meetupLocationIndex': instance.meetupLocationIndex,
       'meetupTime': instance.meetupTime,
       'meetupRegistry': instance.meetupRegistry,
     };
 
-T _$enumDecode<T>(
+T? _$enumDecode<T>(
   Map<T, dynamic> enumValues,
   dynamic source, {
-  T unknownValue,
+  T? unknownValue,
 }) {
   if (source == null) {
     throw ArgumentError('A value must be provided. Supported values: '
         '${enumValues.values.join(', ')}');
   }
 
-  final value = enumValues.entries.singleWhere((e) => e.value == source, orElse: () => null)?.key;
+  final value = enumValues.entries.singleWhereOrNull((e) => e.value == source)?.key;
 
   if (value == null && unknownValue == null) {
     throw ArgumentError('`$source` is not one of the supported values: '
@@ -55,10 +56,10 @@ T _$enumDecode<T>(
   return value ?? unknownValue;
 }
 
-T _$enumDecodeNullable<T>(
+T? _$enumDecodeNullable<T>(
   Map<T, dynamic> enumValues,
   dynamic source, {
-  T unknownValue,
+  T? unknownValue,
 }) {
   if (source == null) {
     return null;
@@ -76,12 +77,12 @@ const _$ParticipantTypeEnumMap = {
 AggregatedAccountDataGlobal _$AggregatedAccountDataGlobalFromJson(Map<String, dynamic> json) {
   return AggregatedAccountDataGlobal(
     _$enumDecodeNullable(_$CeremonyPhaseEnumMap, json['ceremonyPhase']),
-    json['ceremonyIndex'] as int,
+    json['ceremonyIndex'] as int?,
   );
 }
 
 Map<String, dynamic> _$AggregatedAccountDataGlobalToJson(AggregatedAccountDataGlobal instance) => <String, dynamic>{
-      'ceremonyPhase': _$CeremonyPhaseEnumMap[instance.ceremonyPhase],
+      'ceremonyPhase': _$CeremonyPhaseEnumMap[instance.ceremonyPhase!],
       'ceremonyIndex': instance.ceremonyIndex,
     };
 
@@ -102,7 +103,7 @@ CommunityReputation _$CommunityReputationFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$CommunityReputationToJson(CommunityReputation instance) => <String, dynamic>{
       'communityIdentifier': instance.communityIdentifier?.toJson(),
-      'reputation': _$ReputationEnumMap[instance.reputation],
+      'reputation': _$ReputationEnumMap[instance.reputation!],
     };
 
 const _$ReputationEnumMap = {
@@ -114,10 +115,10 @@ const _$ReputationEnumMap = {
 
 Meetup _$MeetupFromJson(Map<String, dynamic> json) {
   return Meetup(
-    json['index'] as int,
-    json['locationIndex'] as int,
-    json['time'] as int,
-    (json['registry'] as List)?.map((e) => e as String)?.toList(),
+    json['index'] as int?,
+    json['locationIndex'] as int?,
+    json['time'] as int?,
+    (json['registry'] as List?)?.map((e) => e as String)?.toList(),
   );
 }
 

@@ -13,7 +13,7 @@ class AddAccountPage extends StatefulWidget {
   const AddAccountPage(this.store);
 
   static const String route = '/account/addAccount';
-  final AppStore store;
+  final AppStore? store;
 
   @override
   _AddAccountPageState createState() => _AddAccountPageState(store);
@@ -22,7 +22,7 @@ class AddAccountPage extends StatefulWidget {
 class _AddAccountPageState extends State<AddAccountPage> {
   _AddAccountPageState(this.store);
 
-  final AppStore store;
+  final AppStore? store;
 
   bool _submitting = false;
 
@@ -31,12 +31,12 @@ class _AddAccountPageState extends State<AddAccountPage> {
       _submitting = true;
     });
 
-    await webApi.account.generateAccount();
+    await webApi!.account.generateAccount();
 
-    var acc = await webApi.account.importAccount(
+    var acc = await (webApi!.account.importAccount(
       cryptoType: AccountAdvanceOptionParams.encryptTypeSR,
       derivePath: '',
-    );
+    ) as FutureOr<Map<String, dynamic>>);
 
     if (acc['error'] != null) {
       setState(() {
@@ -46,19 +46,19 @@ class _AddAccountPageState extends State<AddAccountPage> {
       return;
     }
 
-    var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
+    var addresses = await webApi!.account.encodeAddress([acc['pubKey']]);
     _log("Created new account with address: ${addresses[0]}");
-    await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
+    await store!.addAccount(acc, store!.account!.newAccount.password, addresses[0]);
     _log("added new account with address: ${addresses[0]}");
 
-    String pubKey = acc['pubKey'];
-    await store.setCurrentAccount(pubKey);
+    String? pubKey = acc['pubKey'];
+    await store!.setCurrentAccount(pubKey);
 
-    await store.loadAccountCache();
+    await store!.loadAccountCache();
 
     // fetch info for the imported account
-    webApi.fetchAccountData();
-    webApi.account.getPubKeyIcons([pubKey]);
+    webApi!.fetchAccountData();
+    webApi!.account.getPubKeyIcons([pubKey]);
 
     setState(() {
       _submitting = false;
@@ -73,10 +73,10 @@ class _AddAccountPageState extends State<AddAccountPage> {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Container(),
-          content: Text(I18n.of(context).translationsForLocale().account.createError),
+          content: Text(I18n.of(context)!.translationsForLocale().account.createError),
           actions: <Widget>[
             CupertinoButton(
-              child: Text(I18n.of(context).translationsForLocale().home.ok),
+              child: Text(I18n.of(context)!.translationsForLocale().home.ok),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -94,11 +94,11 @@ class _AddAccountPageState extends State<AddAccountPage> {
         return Container(
           child: showPasswordInputDialog(
             context,
-            store.account.currentAccount,
-            Text(I18n.of(context).translationsForLocale().profile.unlock),
+            store!.account!.currentAccount,
+            Text(I18n.of(context)!.translationsForLocale().profile.unlock),
             (password) {
               setState(() {
-                store.settings.setPin(password);
+                store!.settings!.setPin(password);
               });
             },
           ),
@@ -111,7 +111,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
   void initState() {
     super.initState();
 
-    if (store.settings.cachedPin.isEmpty) {
+    if (store!.settings!.cachedPin.isEmpty) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         setState(() {
           _showEnterPinDialog(context);
@@ -122,7 +122,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
 
     return Scaffold(
       appBar: AppBar(

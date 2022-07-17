@@ -1,5 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
+import 'package:collection/collection.dart' show IterableExtension;
 part of 'config.dart';
 
 // **************************************************************************
@@ -8,9 +9,9 @@ part of 'config.dart';
 
 Config _$ConfigFromJson(Map<String, dynamic> json) {
   return Config(
-    initialRoute: json['initialRoute'] as String,
-    mockLocalStorage: json['mockLocalStorage'] as bool,
-    mockSubstrateApi: json['mockSubstrateApi'] as bool,
+    initialRoute: json['initialRoute'] as String?,
+    mockLocalStorage: json['mockLocalStorage'] as bool?,
+    mockSubstrateApi: json['mockSubstrateApi'] as bool?,
     appStoreConfig: _$enumDecodeNullable(_$StoreConfigEnumMap, json['appStoreConfig']),
   );
 }
@@ -19,20 +20,20 @@ Map<String, dynamic> _$ConfigToJson(Config instance) => <String, dynamic>{
       'initialRoute': instance.initialRoute,
       'mockLocalStorage': instance.mockLocalStorage,
       'mockSubstrateApi': instance.mockSubstrateApi,
-      'appStoreConfig': _$StoreConfigEnumMap[instance.appStoreConfig],
+      'appStoreConfig': _$StoreConfigEnumMap[instance.appStoreConfig!],
     };
 
-T _$enumDecode<T>(
+T? _$enumDecode<T>(
   Map<T, dynamic> enumValues,
   dynamic source, {
-  T unknownValue,
+  T? unknownValue,
 }) {
   if (source == null) {
     throw ArgumentError('A value must be provided. Supported values: '
         '${enumValues.values.join(', ')}');
   }
 
-  final value = enumValues.entries.singleWhere((e) => e.value == source, orElse: () => null)?.key;
+  final value = enumValues.entries.singleWhereOrNull((e) => e.value == source)?.key;
 
   if (value == null && unknownValue == null) {
     throw ArgumentError('`$source` is not one of the supported values: '
@@ -41,10 +42,10 @@ T _$enumDecode<T>(
   return value ?? unknownValue;
 }
 
-T _$enumDecodeNullable<T>(
+T? _$enumDecodeNullable<T>(
   Map<T, dynamic> enumValues,
   dynamic source, {
-  T unknownValue,
+  T? unknownValue,
 }) {
   if (source == null) {
     return null;

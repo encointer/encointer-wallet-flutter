@@ -14,15 +14,15 @@ import 'package:flutter/services.dart';
 class ExportAccountPage extends StatelessWidget {
   ExportAccountPage(this.store);
   static const String route = '/profile/export';
-  final AccountStore store;
+  final AccountStore? store;
 
   final TextEditingController _passCtrl = new TextEditingController();
 
   void _showPasswordDialog(BuildContext context, String seedType) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
 
     Future<void> onOk() async {
-      var res = await webApi.account.checkAccountPassword(store.currentAccount, _passCtrl.text);
+      var res = await webApi!.account.checkAccountPassword(store!.currentAccount, _passCtrl.text);
       if (res == null) {
         showCupertinoDialog(
           context: context,
@@ -32,7 +32,7 @@ class ExportAccountPage extends StatelessWidget {
               content: Text(dic.profile.wrongPinHint),
               actions: <Widget>[
                 CupertinoButton(
-                  child: Text(I18n.of(context).translationsForLocale().home.ok),
+                  child: Text(I18n.of(context)!.translationsForLocale().home.ok),
                   onPressed: () => Navigator.of(context).pop(),
                 ),
               ],
@@ -41,7 +41,7 @@ class ExportAccountPage extends StatelessWidget {
         );
       } else {
         Navigator.of(context).pop();
-        String seed = await store.decryptSeed(store.currentAccount.pubKey, seedType, _passCtrl.text.trim());
+        String seed = await store!.decryptSeed(store!.currentAccount.pubKey, seedType, _passCtrl.text.trim());
         Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
           'key': seed,
           'type': seedType,
@@ -70,14 +70,14 @@ class ExportAccountPage extends StatelessWidget {
           ),
           actions: <Widget>[
             CupertinoButton(
-              child: Text(I18n.of(context).translationsForLocale().home.cancel),
+              child: Text(I18n.of(context)!.translationsForLocale().home.cancel),
               onPressed: () {
                 Navigator.of(context).pop();
                 _passCtrl.clear();
               },
             ),
             CupertinoButton(
-              child: Text(I18n.of(context).translationsForLocale().home.ok),
+              child: Text(I18n.of(context)!.translationsForLocale().home.ok),
               onPressed: onOk,
             ),
           ],
@@ -88,7 +88,7 @@ class ExportAccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         title: Text(dic.profile.export),
@@ -99,9 +99,9 @@ class ExportAccountPage extends StatelessWidget {
             title: Text(dic.account.keystore),
             trailing: Icon(Icons.arrow_forward_ios, size: 18),
             onTap: () {
-              Map json = AccountData.toJson(store.currentAccount);
+              Map json = AccountData.toJson(store!.currentAccount);
               json.remove('name');
-              json['meta']['name'] = store.currentAccount.name;
+              json['meta']['name'] = store!.currentAccount.name;
               Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
                 'key': jsonEncode(json),
                 'type': AccountStore.seedTypeKeystore,
@@ -109,7 +109,7 @@ class ExportAccountPage extends StatelessWidget {
             },
           ),
           FutureBuilder(
-            future: store.checkSeedExist(AccountStore.seedTypeMnemonic, store.currentAccount.pubKey),
+            future: store!.checkSeedExist(AccountStore.seedTypeMnemonic, store!.currentAccount.pubKey),
             builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
               if (snapshot.hasData && snapshot.data == true) {
                 return ListTile(
@@ -123,7 +123,7 @@ class ExportAccountPage extends StatelessWidget {
             },
           ),
           FutureBuilder(
-            future: store.checkSeedExist(AccountStore.seedTypeRawSeed, store.currentAccount.pubKey),
+            future: store!.checkSeedExist(AccountStore.seedTypeRawSeed, store!.currentAccount.pubKey),
             builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
               if (snapshot.hasData && snapshot.data == true) {
                 return ListTile(

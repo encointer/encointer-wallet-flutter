@@ -19,13 +19,13 @@ mixin _$AssetsStore on _AssetsStore, Store {
   final _$cacheTxsTimestampAtom = Atom(name: '_AssetsStore.cacheTxsTimestamp');
 
   @override
-  int get cacheTxsTimestamp {
+  int? get cacheTxsTimestamp {
     _$cacheTxsTimestampAtom.reportRead();
     return super.cacheTxsTimestamp;
   }
 
   @override
-  set cacheTxsTimestamp(int value) {
+  set cacheTxsTimestamp(int? value) {
     _$cacheTxsTimestampAtom.reportWrite(value, super.cacheTxsTimestamp, () {
       super.cacheTxsTimestamp = value;
     });
@@ -64,13 +64,13 @@ mixin _$AssetsStore on _AssetsStore, Store {
   final _$balancesAtom = Atom(name: '_AssetsStore.balances');
 
   @override
-  ObservableMap<String, BalancesInfo> get balances {
+  ObservableMap<String?, BalancesInfo> get balances {
     _$balancesAtom.reportRead();
     return super.balances;
   }
 
   @override
-  set balances(ObservableMap<String, BalancesInfo> value) {
+  set balances(ObservableMap<String?, BalancesInfo> value) {
     _$balancesAtom.reportWrite(value, super.balances, () {
       super.balances = value;
     });
@@ -94,13 +94,13 @@ mixin _$AssetsStore on _AssetsStore, Store {
   final _$txsCountAtom = Atom(name: '_AssetsStore.txsCount');
 
   @override
-  int get txsCount {
+  int? get txsCount {
     _$txsCountAtom.reportRead();
     return super.txsCount;
   }
 
   @override
-  set txsCount(int value) {
+  set txsCount(int? value) {
     _$txsCountAtom.reportWrite(value, super.txsCount, () {
       super.txsCount = value;
     });
@@ -139,13 +139,13 @@ mixin _$AssetsStore on _AssetsStore, Store {
   final _$blockMapAtom = Atom(name: '_AssetsStore.blockMap');
 
   @override
-  ObservableMap<int, BlockData> get blockMap {
+  ObservableMap<int?, BlockData> get blockMap {
     _$blockMapAtom.reportRead();
     return super.blockMap;
   }
 
   @override
-  set blockMap(ObservableMap<int, BlockData> value) {
+  set blockMap(ObservableMap<int?, BlockData> value) {
     _$blockMapAtom.reportWrite(value, super.blockMap, () {
       super.blockMap = value;
     });
@@ -154,13 +154,13 @@ mixin _$AssetsStore on _AssetsStore, Store {
   final _$announcementsAtom = Atom(name: '_AssetsStore.announcements');
 
   @override
-  List<dynamic> get announcements {
+  List<dynamic>? get announcements {
     _$announcementsAtom.reportRead();
     return super.announcements;
   }
 
   @override
-  set announcements(List<dynamic> value) {
+  set announcements(List<dynamic>? value) {
     _$announcementsAtom.reportWrite(value, super.announcements, () {
       super.announcements = value;
     });
@@ -184,14 +184,14 @@ mixin _$AssetsStore on _AssetsStore, Store {
   final _$setAccountBalancesAsyncAction = AsyncAction('_AssetsStore.setAccountBalances');
 
   @override
-  Future<void> setAccountBalances(String pubKey, Map<dynamic, dynamic> amt, {bool needCache = true}) {
+  Future<void> setAccountBalances(String? pubKey, Map<dynamic, dynamic>? amt, {bool needCache = true}) {
     return _$setAccountBalancesAsyncAction.run(() => super.setAccountBalances(pubKey, amt, needCache: needCache));
   }
 
   final _$setAccountTokenBalancesAsyncAction = AsyncAction('_AssetsStore.setAccountTokenBalances');
 
   @override
-  Future<void> setAccountTokenBalances(String pubKey, Map<dynamic, dynamic> amt, {bool needCache = true}) {
+  Future<void> setAccountTokenBalances(String pubKey, Map<dynamic, dynamic>? amt, {bool needCache = true}) {
     return _$setAccountTokenBalancesAsyncAction
         .run(() => super.setAccountTokenBalances(pubKey, amt, needCache: needCache));
   }
@@ -213,7 +213,7 @@ mixin _$AssetsStore on _AssetsStore, Store {
   final _$setBlockMapAsyncAction = AsyncAction('_AssetsStore.setBlockMap');
 
   @override
-  Future<void> setBlockMap(String data) {
+  Future<void> setBlockMap(String? data) {
     return _$setBlockMapAsyncAction.run(() => super.setBlockMap(data));
   }
 

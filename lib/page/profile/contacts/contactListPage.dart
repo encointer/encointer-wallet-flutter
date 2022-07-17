@@ -10,16 +10,16 @@ class ContactListPage extends StatelessWidget {
   ContactListPage(this.store);
 
   static const String route = '/profile/contacts/list';
-  final AppStore store;
+  final AppStore? store;
 
   @override
   Widget build(BuildContext context) {
-    final List<AccountData> args = ModalRoute.of(context).settings.arguments;
+    final List<AccountData>? args = ModalRoute.of(context)!.settings.arguments as List<AccountData>?;
     return Scaffold(
       appBar: AppBar(
         title: Text(args == null
-            ? I18n.of(context).translationsForLocale().profile.addressBook
-            : I18n.of(context).translationsForLocale().account.list),
+            ? I18n.of(context)!.translationsForLocale().profile.addressBook
+            : I18n.of(context)!.translationsForLocale().account.list),
         centerTitle: true,
         actions: <Widget>[
           args == null
@@ -38,7 +38,7 @@ class ContactListPage extends StatelessWidget {
           builder: (_) {
             return AccountSelectList(
               store,
-              args ?? store.settings.contactListAll.toList(),
+              args ?? store!.settings!.contactListAll.toList(),
             );
           },
         ),

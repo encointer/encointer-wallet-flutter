@@ -18,8 +18,8 @@ class CommunityChooserOnMap extends StatelessWidget {
   List<Marker> get _markers => getMarkers(store);
 
   CommunityChooserOnMap(this.store) {
-    if (store.encointer.communities != null) {
-      for (var community in store.encointer.communities) {
+    if (store.encointer!.communities != null) {
+      for (var community in store.encointer!.communities!) {
         communityDataAt[coordinatesOf(community)] = community;
       }
     }
@@ -27,7 +27,7 @@ class CommunityChooserOnMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
 
     return EncointerMap(
       store,
@@ -44,7 +44,7 @@ class CommunityChooserOnMap extends StatelessWidget {
 class CommunityDetailsPopup extends StatefulWidget {
   final AppStore store;
   final Marker marker;
-  final CidName dataForThisMarker;
+  final CidName? dataForThisMarker;
 
   CommunityDetailsPopup(this.store, this.marker, this.dataForThisMarker);
 
@@ -64,7 +64,7 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
         key: Key('${widget.marker.key.toString().substring(3, widget.marker.key.toString().length - 3)}-description'),
         onTap: () {
           setState(() {
-            store.encointer.setChosenCid(widget.dataForThisMarker.cid);
+            store.encointer!.setChosenCid(widget.dataForThisMarker!.cid);
           });
           Navigator.pop(context);
         },
@@ -76,7 +76,7 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                widget.dataForThisMarker.name,
+                widget.dataForThisMarker!.name!,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -87,7 +87,7 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
                 padding: EdgeInsets.only(bottom: 2.0),
               ),
               Text(
-                widget.dataForThisMarker.cid.toFmtString(),
+                widget.dataForThisMarker!.cid!.toFmtString(),
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -105,9 +105,9 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
 
 List<Marker> getMarkers(AppStore store) {
   List<Marker> markers = [];
-  if (store.encointer.communities != null) {
-    for (num index = 0; index < store.encointer.communities.length; index++) {
-      CidName community = store.encointer.communities[index];
+  if (store.encointer!.communities != null) {
+    for (num index = 0; index < store.encointer!.communities!.length; index++) {
+      CidName community = store.encointer!.communities![index as int];
       markers.add(
         Marker(
           // marker is not a widget, hence test_driver cannot find it (it can find it in the Icon inside, though).
@@ -132,6 +132,6 @@ List<Marker> getMarkers(AppStore store) {
 }
 
 LatLng coordinatesOf(CidName community) {
-  GeoHash coordinates = GeoHash(utf8.decode(community.cid.geohash));
+  GeoHash coordinates = GeoHash(utf8.decode(community.cid!.geohash));
   return LatLng(coordinates.latitude(), coordinates.longitude());
 }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ToggleButtonsWithTitle extends StatelessWidget {
   final List<String> items;
   final List<bool> isSelected;
-  final Function(int) onPressed;
+  final Function(int)? onPressed;
   final String title;
   final allSelected = false;
 
@@ -11,7 +11,7 @@ class ToggleButtonsWithTitle extends StatelessWidget {
     this.title,
     this.items,
     this.onPressed, {
-    Key key,
+    Key? key,
   })  : isSelected = List.filled(items.length, false),
         super(key: key);
 
@@ -39,7 +39,7 @@ class ToggleButtonsWithTitle extends StatelessWidget {
                   )
                   .toList(),
               // TODO add proper state management, add logic for "all" and other categories
-              onPressed: (int index) => onPressed(index),
+              onPressed: (int index) => onPressed!(index),
               isSelected: isSelected,
             ),
           ]),

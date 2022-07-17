@@ -8,7 +8,7 @@ part of 'bazaarStore.dart';
 
 BazaarStore _$BazaarStoreFromJson(Map<String, dynamic> json) {
   return BazaarStore(
-    json['network'] as String,
+    json['network'] as String?,
     json['cid'] == null ? null : CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
   )..businessRegistry = json['businessRegistry'] != null
       ? ObservableList<AccountBusinessTuple>.of((json['businessRegistry'] as List)
@@ -32,13 +32,13 @@ mixin _$BazaarStore on _BazaarStore, Store {
   final _$businessRegistryAtom = Atom(name: '_BazaarStore.businessRegistry');
 
   @override
-  ObservableList<AccountBusinessTuple> get businessRegistry {
+  ObservableList<AccountBusinessTuple>? get businessRegistry {
     _$businessRegistryAtom.reportRead();
     return super.businessRegistry;
   }
 
   @override
-  set businessRegistry(ObservableList<AccountBusinessTuple> value) {
+  set businessRegistry(ObservableList<AccountBusinessTuple>? value) {
     _$businessRegistryAtom.reportWrite(value, super.businessRegistry, () {
       super.businessRegistry = value;
     });

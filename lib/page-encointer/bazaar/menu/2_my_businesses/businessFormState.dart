@@ -14,25 +14,25 @@ abstract class _BusinessFormState with Store {
 
   // ************** OBSERVABLES ************************************************
   @observable
-  String name;
+  String? name;
 
   @observable
-  String description;
+  String? description;
 
   // // TODO how to model categories?
 
   @observable
-  String street;
+  String? street;
 
   /// could be e.g. 7a not just a number hence use String
   @observable
-  String streetAddendum;
+  String? streetAddendum;
 
   @observable
-  String zipCode;
+  String? zipCode;
 
   @observable
-  String city;
+  String? city;
 
   final openingHours = OpeningHoursState(
     OpeningHoursForDayState(ObservableList<OpeningIntervalState>()),
@@ -48,7 +48,7 @@ abstract class _BusinessFormState with Store {
   final imagePickerState = ImagePickerState();
 
   // ************** REACTIONS **************************************************
-  List<ReactionDisposer> _disposers;
+  late List<ReactionDisposer> _disposers;
 
   void setupValidators() {
     _disposers = [
@@ -93,8 +93,8 @@ abstract class _BusinessFormState with Store {
   }
 
   // ************** OTHER METHODS **********************************************
-  validateIsNotBlank(String value, Function(String) errorTarget) {
-    String errorText = value == null || value.trim().isEmpty ? 'Cannot be blank' : null;
+  validateIsNotBlank(String? value, Function(String?) errorTarget) {
+    String? errorText = value == null || value.trim().isEmpty ? 'Cannot be blank' : null;
     errorTarget(errorText);
   }
 
@@ -122,22 +122,22 @@ class BusinessFormErrorState = _BusinessFormErrorState with _$BusinessFormErrorS
 
 abstract class _BusinessFormErrorState with Store {
   @observable
-  String name;
+  String? name;
 
   @observable
-  String description;
+  String? description;
 
   @observable
-  String street;
+  String? street;
 
   @observable
-  String streetAddendum;
+  String? streetAddendum;
 
   @observable
-  String zipCode;
+  String? zipCode;
 
   @observable
-  String city;
+  String? city;
 
   // // TODO how to model categories?
 

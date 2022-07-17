@@ -10,7 +10,7 @@ import 'package:qr_flutter_fork/qr_flutter_fork.dart';
 class AccountSharePage extends StatefulWidget {
   AccountSharePage(this.store);
   static const String route = '/profile/share';
-  final AppStore store;
+  final AppStore? store;
   @override
   _AccountSharePageState createState() => _AccountSharePageState();
 }
@@ -18,12 +18,12 @@ class AccountSharePage extends StatefulWidget {
 class _AccountSharePageState extends State<AccountSharePage> {
   @override
   Widget build(BuildContext context) {
-    var dic = I18n.of(context).translationsForLocale();
+    var dic = I18n.of(context)!.translationsForLocale();
     var textTheme = Theme.of(context).textTheme;
 
-    String accountToBeSharedPubKey = ModalRoute.of(context).settings.arguments;
-    AccountData accountToBeShared = widget.store.account.getAccountData(accountToBeSharedPubKey);
-    final addressSS58 = widget.store.account.getNetworkAddress(accountToBeSharedPubKey);
+    String? accountToBeSharedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
+    AccountData accountToBeShared = widget.store!.account!.getAccountData(accountToBeSharedPubKey);
+    final addressSS58 = widget.store!.account!.getNetworkAddress(accountToBeSharedPubKey);
 
     var contactQrCode = ContactQrCode(
       account: addressSS58,
@@ -55,7 +55,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
                 children: <Widget>[
                   Text(
                     dic.profile.qrScanHintAccount,
-                    style: textTheme.headline2.copyWith(color: encointerBlack),
+                    style: textTheme.headline2!.copyWith(color: encointerBlack),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(height: 16),
@@ -68,7 +68,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
                   ),
                   Text(
                     '${accountToBeShared.name}',
-                    style: textTheme.headline3.copyWith(color: encointerGrey),
+                    style: textTheme.headline3!.copyWith(color: encointerGrey),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -77,7 +77,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
               Text(
                 dic.profile.shareLinkHint,
                 textAlign: TextAlign.center,
-                style: textTheme.headline4.copyWith(color: encointerGrey),
+                style: textTheme.headline4!.copyWith(color: encointerGrey),
               ),
               SizedBox(height: 8),
               ElevatedButton(

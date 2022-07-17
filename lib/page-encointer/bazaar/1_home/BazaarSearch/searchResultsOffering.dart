@@ -8,14 +8,14 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 class SearchResultsOffering extends StatelessWidget {
   final results;
 
-  const SearchResultsOffering(this.results, {Key key}) : super(key: key);
+  const SearchResultsOffering(this.results, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Translations dic = I18n.of(context).translationsForLocale();
+    Translations dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
-        title: Text("${results.length} ${I18n.of(context).translationsForLocale().bazaar.offeringsFound}"),
+        title: Text("${results.length} ${I18n.of(context)!.translationsForLocale().bazaar.offeringsFound}"),
       ),
       body: Column(
         children: [

@@ -12,7 +12,7 @@ void main() {
   // More info in: https://medium.com/stuart-engineering/mocking-integration-tests-with-flutter-af3b6ba846c7
   //
   // ignore: missing_return
-  Future<String> dataHandler(String msg) async {
+  Future<String> dataHandler(String? msg) async {
     switch (msg) {
       case MockStorageSetup.INIT:
         {

@@ -20,27 +20,27 @@ class SS58PrefixListPage extends StatelessWidget {
   SS58PrefixListPage(this.store);
 
   static const String route = '/profile/ss58';
-  final Api api = webApi;
-  final SettingsStore store;
+  final Api? api = webApi;
+  final SettingsStore? store;
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     List<Widget> list = prefixList
         .map((i) => ListTile(
               leading: Container(
                 width: 36,
                 child: Image.asset('assets/images/public/${i['info']}.png'),
               ),
-              title: Text(i['info']),
-              subtitle: Text(i['text']),
+              title: Text(i['info'] as String),
+              subtitle: Text(i['text'] as String),
               trailing: Icon(Icons.arrow_forward_ios, size: 18),
               onTap: () {
-                if (store.customSS58Format['info'] == i['info']) {
+                if (store!.customSS58Format['info'] == i['info']) {
                   Navigator.of(context).pop();
                   return;
                 }
-                store.setCustomSS58Format(i);
+                store!.setCustomSS58Format(i);
 //                if (i['info'] == 'default') {
 //                  api.account
 //                      .setSS58Format(default_ss58_map[store.endpoint.info]);

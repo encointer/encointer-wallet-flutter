@@ -8,8 +8,8 @@ part of 'node.dart';
 
 NodeConfig _$NodeConfigFromJson(Map<String, dynamic> json) {
   return NodeConfig(
-    json['types'] as Map<String, dynamic>,
-    (json['pallets'] as Map<String, dynamic>)?.map(
+    json['types'] as Map<String, dynamic>?,
+    (json['pallets'] as Map<String, dynamic>?)?.map(
       (k, e) => MapEntry(k, e == null ? null : Pallet.fromJson(e as Map<String, dynamic>)),
     ),
   );
@@ -22,8 +22,8 @@ Map<String, dynamic> _$NodeConfigToJson(NodeConfig instance) => <String, dynamic
 
 Pallet _$PalletFromJson(Map<String, dynamic> json) {
   return Pallet(
-    json['name'] as String,
-    (json['calls'] as Map<String, dynamic>)?.map(
+    json['name'] as String?,
+    (json['calls'] as Map<String, dynamic>?)?.map(
       (k, e) => MapEntry(k, e as String),
     ),
   );

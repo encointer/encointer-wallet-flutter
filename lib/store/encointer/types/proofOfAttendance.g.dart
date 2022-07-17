@@ -8,13 +8,13 @@ part of 'proofOfAttendance.dart';
 
 ProofOfAttendance _$ProofOfAttendanceFromJson(Map<String, dynamic> json) {
   return ProofOfAttendance(
-    json['proverPublic'] as String,
-    json['ceremonyIndex'] as int,
+    json['proverPublic'] as String?,
+    json['ceremonyIndex'] as int?,
     json['communityIdentifier'] == null
         ? null
         : CommunityIdentifier.fromJson(json['communityIdentifier'] as Map<String, dynamic>),
-    json['attendeePublic'] as String,
-    (json['attendeeSignature'] as Map<String, dynamic>)?.map(
+    json['attendeePublic'] as String?,
+    (json['attendeeSignature'] as Map<String, dynamic>?)?.map(
       (k, e) => MapEntry(k, e as String),
     ),
   );

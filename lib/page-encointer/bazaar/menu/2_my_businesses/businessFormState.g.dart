@@ -12,13 +12,13 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
   final _$nameAtom = Atom(name: '_BusinessFormState.name');
 
   @override
-  String get name {
+  String? get name {
     _$nameAtom.reportRead();
     return super.name;
   }
 
   @override
-  set name(String value) {
+  set name(String? value) {
     _$nameAtom.reportWrite(value, super.name, () {
       super.name = value;
     });
@@ -27,13 +27,13 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
   final _$descriptionAtom = Atom(name: '_BusinessFormState.description');
 
   @override
-  String get description {
+  String? get description {
     _$descriptionAtom.reportRead();
     return super.description;
   }
 
   @override
-  set description(String value) {
+  set description(String? value) {
     _$descriptionAtom.reportWrite(value, super.description, () {
       super.description = value;
     });
@@ -42,13 +42,13 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
   final _$streetAtom = Atom(name: '_BusinessFormState.street');
 
   @override
-  String get street {
+  String? get street {
     _$streetAtom.reportRead();
     return super.street;
   }
 
   @override
-  set street(String value) {
+  set street(String? value) {
     _$streetAtom.reportWrite(value, super.street, () {
       super.street = value;
     });
@@ -57,13 +57,13 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
   final _$streetAddendumAtom = Atom(name: '_BusinessFormState.streetAddendum');
 
   @override
-  String get streetAddendum {
+  String? get streetAddendum {
     _$streetAddendumAtom.reportRead();
     return super.streetAddendum;
   }
 
   @override
-  set streetAddendum(String value) {
+  set streetAddendum(String? value) {
     _$streetAddendumAtom.reportWrite(value, super.streetAddendum, () {
       super.streetAddendum = value;
     });
@@ -72,13 +72,13 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
   final _$zipCodeAtom = Atom(name: '_BusinessFormState.zipCode');
 
   @override
-  String get zipCode {
+  String? get zipCode {
     _$zipCodeAtom.reportRead();
     return super.zipCode;
   }
 
   @override
-  set zipCode(String value) {
+  set zipCode(String? value) {
     _$zipCodeAtom.reportWrite(value, super.zipCode, () {
       super.zipCode = value;
     });
@@ -87,13 +87,13 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
   final _$cityAtom = Atom(name: '_BusinessFormState.city');
 
   @override
-  String get city {
+  String? get city {
     _$cityAtom.reportRead();
     return super.city;
   }
 
   @override
-  set city(String value) {
+  set city(String? value) {
     _$cityAtom.reportWrite(value, super.city, () {
       super.city = value;
     });
@@ -186,13 +186,13 @@ mixin _$BusinessFormErrorState on _BusinessFormErrorState, Store {
   final _$nameAtom = Atom(name: '_BusinessFormErrorState.name');
 
   @override
-  String get name {
+  String? get name {
     _$nameAtom.reportRead();
     return super.name;
   }
 
   @override
-  set name(String value) {
+  set name(String? value) {
     _$nameAtom.reportWrite(value, super.name, () {
       super.name = value;
     });
@@ -201,13 +201,13 @@ mixin _$BusinessFormErrorState on _BusinessFormErrorState, Store {
   final _$descriptionAtom = Atom(name: '_BusinessFormErrorState.description');
 
   @override
-  String get description {
+  String? get description {
     _$descriptionAtom.reportRead();
     return super.description;
   }
 
   @override
-  set description(String value) {
+  set description(String? value) {
     _$descriptionAtom.reportWrite(value, super.description, () {
       super.description = value;
     });
@@ -216,13 +216,13 @@ mixin _$BusinessFormErrorState on _BusinessFormErrorState, Store {
   final _$streetAtom = Atom(name: '_BusinessFormErrorState.street');
 
   @override
-  String get street {
+  String? get street {
     _$streetAtom.reportRead();
     return super.street;
   }
 
   @override
-  set street(String value) {
+  set street(String? value) {
     _$streetAtom.reportWrite(value, super.street, () {
       super.street = value;
     });
@@ -231,13 +231,13 @@ mixin _$BusinessFormErrorState on _BusinessFormErrorState, Store {
   final _$streetAddendumAtom = Atom(name: '_BusinessFormErrorState.streetAddendum');
 
   @override
-  String get streetAddendum {
+  String? get streetAddendum {
     _$streetAddendumAtom.reportRead();
     return super.streetAddendum;
   }
 
   @override
-  set streetAddendum(String value) {
+  set streetAddendum(String? value) {
     _$streetAddendumAtom.reportWrite(value, super.streetAddendum, () {
       super.streetAddendum = value;
     });
@@ -246,13 +246,13 @@ mixin _$BusinessFormErrorState on _BusinessFormErrorState, Store {
   final _$zipCodeAtom = Atom(name: '_BusinessFormErrorState.zipCode');
 
   @override
-  String get zipCode {
+  String? get zipCode {
     _$zipCodeAtom.reportRead();
     return super.zipCode;
   }
 
   @override
-  set zipCode(String value) {
+  set zipCode(String? value) {
     _$zipCodeAtom.reportWrite(value, super.zipCode, () {
       super.zipCode = value;
     });
@@ -261,13 +261,13 @@ mixin _$BusinessFormErrorState on _BusinessFormErrorState, Store {
   final _$cityAtom = Atom(name: '_BusinessFormErrorState.city');
 
   @override
-  String get city {
+  String? get city {
     _$cityAtom.reportRead();
     return super.city;
   }
 
   @override
-  set city(String value) {
+  set city(String? value) {
     _$cityAtom.reportWrite(value, super.city, () {
       super.city = value;
     });

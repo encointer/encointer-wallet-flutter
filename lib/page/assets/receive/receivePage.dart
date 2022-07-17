@@ -18,7 +18,7 @@ import 'package:qr_flutter_fork/qr_flutter_fork.dart';
 class ReceivePage extends StatefulWidget {
   ReceivePage(this.store);
   static const String route = '/assets/receive';
-  final AppStore store;
+  final AppStore? store;
   @override
   _ReceivePageState createState() => _ReceivePageState();
 }
@@ -27,9 +27,9 @@ class _ReceivePageState extends State<ReceivePage> {
   final TextEditingController _amountController = new TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool generateQR = false;
-  InvoiceQrCode invoice;
+  late InvoiceQrCode invoice;
 
-  PausableTimer paymentWatchdog;
+  PausableTimer? paymentWatchdog;
   bool observedPendingExtrinsic = false;
 
   @override
@@ -37,31 +37,31 @@ class _ReceivePageState extends State<ReceivePage> {
     super.initState();
 
     invoice = InvoiceQrCode(
-      account: widget.store.account.currentAddress,
-      cid: widget.store.encointer.chosenCid,
+      account: widget.store!.account!.currentAddress,
+      cid: widget.store!.encointer!.chosenCid,
       amount: null,
-      label: widget.store.account.currentAccount.name,
+      label: widget.store!.account!.currentAccount.name,
     );
   }
 
   @override
   void dispose() {
     _amountController.dispose();
-    paymentWatchdog.cancel();
+    paymentWatchdog!.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     paymentWatchdog = PausableTimer(
       const Duration(seconds: 1),
       () {
-        webApi.encointer.pendingExtrinsics().then((extrinsics) {
+        webApi!.encointer!.pendingExtrinsics().then((extrinsics) {
           print("[receivePage] pendingExtrinsics ${extrinsics.toString()}");
           if (((extrinsics?.length ?? 0) > 0) && (!observedPendingExtrinsic)) {
             extrinsics.forEach((xt) {
-              if (xt.contains(widget.store.account.currentAccountPubKey.substring(2))) {
+              if (xt.contains(widget.store!.account!.currentAccountPubKey!.substring(2))) {
                 RootSnackBar.showMsg(
                   dic.profile.observedPendingExtrinsic,
                   durationMillis: 5000,
@@ -75,23 +75,23 @@ class _ReceivePageState extends State<ReceivePage> {
             observedPendingExtrinsic = false;
           }
         });
-        webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
+        webApi!.encointer!.getAllBalances(widget.store!.account!.currentAddress).then((balances) {
           if (balances != null) {
-            CommunityIdentifier cid = widget.store.encointer.chosenCid;
-            double demurrageRate = widget.store.encointer.community.demurrage;
-            double newBalance = widget.store.encointer.applyDemurrage(balances[cid]);
+            CommunityIdentifier? cid = widget.store!.encointer!.chosenCid;
+            double? demurrageRate = widget.store!.encointer!.community.demurrage;
+            double? newBalance = widget.store!.encointer!.applyDemurrage(balances[cid]);
             double oldBalance =
-                widget.store.encointer.applyDemurrage(widget.store.encointer.communityBalanceEntry) ?? 0;
+                widget.store!.encointer!.applyDemurrage(widget.store!.encointer!.communityBalanceEntry) ?? 0;
             if (newBalance != null) {
               double delta = newBalance - oldBalance;
               print("[receivePage] balance was $oldBalance, changed by $delta");
-              if (delta > demurrageRate) {
+              if (delta > demurrageRate!) {
                 var msg = dic.assets.incomingConfirmed
                     .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
-                    .replaceAll('CID_SYMBOL', widget.store.encointer.community.metadata.symbol)
-                    .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
+                    .replaceAll('CID_SYMBOL', widget.store!.encointer!.community.metadata!.symbol!)
+                    .replaceAll('ACCOUNT_NAME', widget.store!.account!.currentAccount.name!);
                 print("[receivePage] $msg");
-                widget.store.encointer.account?.addBalanceEntry(cid, balances[cid]);
+                widget.store!.encointer!.account?.addBalanceEntry(cid!, balances[cid]);
                 NotificationPlugin.showNotification(44, dic.assets.fundsReceived, msg, cid: cid.toFmtString());
               }
             }
@@ -106,12 +106,12 @@ class _ReceivePageState extends State<ReceivePage> {
     return FocusDetector(
         onFocusLost: () {
           print('[receivePage:FocusDetector] Focus Lost.');
-          paymentWatchdog.pause();
+          paymentWatchdog!.pause();
         },
         onFocusGained: () {
           print('[receivePage:FocusDetector] Focus Gained.');
-          paymentWatchdog.reset();
-          paymentWatchdog.start();
+          paymentWatchdog!.reset();
+          paymentWatchdog!.start();
         },
         child: Form(
           key: _formKey,
@@ -139,7 +139,7 @@ class _ReceivePageState extends State<ReceivePage> {
                         padding: const EdgeInsets.symmetric(horizontal: 48),
                         child: Text(
                           dic.profile.qrScanHint,
-                          style: Theme.of(context).textTheme.headline3.copyWith(color: encointerBlack),
+                          style: Theme.of(context).textTheme.headline3!.copyWith(color: encointerBlack),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -148,7 +148,7 @@ class _ReceivePageState extends State<ReceivePage> {
                         padding: const EdgeInsets.all(30),
                         child: EncointerTextFormField(
                           labelText: dic.assets.invoiceAmount,
-                          textStyle: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
+                          textStyle: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
                           inputFormatters: [UI.decimalInputFormatter()],
                           controller: _amountController,
                           keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -172,8 +172,8 @@ class _ReceivePageState extends State<ReceivePage> {
                       ),
                     ],
                   ),
-                  Text('${dic.profile.receiverAccount} ${widget.store.account.currentAccount.name}',
-                      style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
+                  Text('${dic.profile.receiverAccount} ${widget.store!.account!.currentAccount.name}',
+                      style: Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey),
                       textAlign: TextAlign.center),
                   SizedBox(height: 8),
                   Column(children: [
@@ -196,7 +196,7 @@ class _ReceivePageState extends State<ReceivePage> {
                             ]),
                       ),
                       onTap: () => {
-                        if (_formKey.currentState.validate())
+                        if (_formKey.currentState!.validate())
                           {
                             // Todo: implement invoice.toUrl()
                             // Todo: use `share_plus` instead of discontinued `share`

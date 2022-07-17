@@ -16,7 +16,7 @@ class CreatePinPage extends StatefulWidget {
   const CreatePinPage(this.store);
 
   static const String route = '/account/createPin';
-  final AppStore store;
+  final AppStore? store;
 
   @override
   _CreatePinPageState createState() => _CreatePinPageState(store);
@@ -25,22 +25,22 @@ class CreatePinPage extends StatefulWidget {
 class _CreatePinPageState extends State<CreatePinPage> {
   _CreatePinPageState(this.store);
 
-  final AppStore store;
+  final AppStore? store;
 
-  Future<void> Function() onCreatePin;
+  late Future<void> Function() onCreatePin;
 
   bool _submitting = false;
 
   @override
   Widget build(BuildContext context) {
-    CreatePinPageParams params = ModalRoute.of(context).settings.arguments;
+    CreatePinPageParams params = ModalRoute.of(context)!.settings.arguments as CreatePinPageParams;
 
     onCreatePin = params.onCreatePin;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          I18n.of(context).translationsForLocale().home.create,
+          I18n.of(context)!.translationsForLocale().home.create,
         ),
         iconTheme: IconThemeData(
           color: encointerGrey, //change your color here
@@ -67,12 +67,12 @@ class _CreatePinPageState extends State<CreatePinPage> {
 
                   await onCreatePin();
 
-                  if (store.encointer.communityIdentifiers?.length ?? 0 == 1) {
-                    store.encointer.setChosenCid(store.encointer.communityIdentifiers[0]);
+                  if (store!.encointer!.communityIdentifiers?.length as bool? ?? 0 == 1) {
+                    store!.encointer!.setChosenCid(store!.encointer!.communityIdentifiers![0]);
                   } else {
                     await Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)),
+                      MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store!)),
                     );
                   }
 

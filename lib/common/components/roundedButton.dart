@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class RoundedButton extends StatelessWidget {
   RoundedButton({
-    this.text,
+    required this.text,
     this.onPressed,
     this.icon,
     this.color,
@@ -12,10 +12,10 @@ class RoundedButton extends StatelessWidget {
   }) : assert(text != null);
 
   final String text;
-  final Function onPressed;
-  final Widget icon;
-  final Color color;
-  final bool expand;
+  final Function? onPressed;
+  final Widget? icon;
+  final Color? color;
+  final bool? expand;
   final bool submitting;
 
   @override
@@ -44,7 +44,7 @@ class RoundedButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: row,
       ),
-      onPressed: submitting ? null : onPressed,
+      onPressed: submitting ? null : onPressed as void Function()?,
     );
   }
 }

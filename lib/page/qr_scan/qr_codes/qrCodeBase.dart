@@ -5,9 +5,9 @@ const String QR_CODE_FIELD_SEPARATOR = '\n';
 
 abstract class QrCode<QrCodeData extends ToQrFields> {
   QrCode(this.data);
-  QrCodeContext context;
+  QrCodeContext? context;
 
-  QrCodeVersion version;
+  QrCodeVersion? version;
 
   QrCodeData data;
 
@@ -19,7 +19,7 @@ abstract class QrCode<QrCodeData extends ToQrFields> {
 }
 
 abstract class ToQrFields {
-  List<String> toQrFields();
+  List<String?> toQrFields();
 }
 
 /// context identifier
@@ -37,7 +37,7 @@ enum QrCodeContext {
 
 enum QrCodeVersion { v1_0, v2_0 }
 
-extension QrCodeContextExt on QrCodeContext {
+extension QrCodeContextExt on QrCodeContext? {
   /// Parses `encointer-<context>` into a `QrCodeContext`.
   static QrCodeContext fromQrField(String value) {
     var context = value.toString().split("-").last.toLowerCase();
@@ -46,7 +46,7 @@ extension QrCodeContextExt on QrCodeContext {
       orElse: () {
         throw FormatException(
             'QR scan context [$value] ->  is not supported; supported values are: ${QrCodeContext.values}');
-      },
+      } as QrCodeContext Function()?,
     );
   }
 
@@ -56,12 +56,12 @@ extension QrCodeContextExt on QrCodeContext {
   }
 }
 
-extension QrCodeVersionExt on QrCodeVersion {
+extension QrCodeVersionExt on QrCodeVersion? {
   /// Parses a version string from the format `v2.0`.
   static QrCodeVersion fromQrField(String value) {
     return QrCodeVersion.values.firstWhere(
       (type) => type.toVersionNumber().toLowerCase() == value.toLowerCase(),
-      orElse: () => throw FormatException('Unsupported QrCode version [$value]'),
+      orElse: (() => throw FormatException('Unsupported QrCode version [$value]')) as QrCodeVersion Function()?,
     );
   }
 

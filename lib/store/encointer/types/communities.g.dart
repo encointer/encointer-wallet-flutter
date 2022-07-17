@@ -8,11 +8,11 @@ part of 'communities.dart';
 
 CommunityMetadata _$CommunityMetadataFromJson(Map<String, dynamic> json) {
   return CommunityMetadata(
-    json['name'] as String,
-    json['symbol'] as String,
-    json['assets'] as String,
-    json['url'] as String,
-    json['theme'] as String,
+    json['name'] as String?,
+    json['symbol'] as String?,
+    json['assets'] as String?,
+    json['url'] as String?,
+    json['theme'] as String?,
   );
 }
 
@@ -27,7 +27,7 @@ Map<String, dynamic> _$CommunityMetadataToJson(CommunityMetadata instance) => <S
 CidName _$CidNameFromJson(Map<String, dynamic> json) {
   return CidName(
     json['cid'] == null ? null : CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
-    json['name'] as String,
+    json['name'] as String?,
   );
 }
 

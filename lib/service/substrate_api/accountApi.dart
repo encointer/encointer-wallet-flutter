@@ -11,28 +11,28 @@ import 'package:encointer_wallet/store/app.dart';
 class AccountApi {
   AccountApi(this.jsApi, this.fetchAccountData);
 
-  final JSApi jsApi;
+  final JSApi? jsApi;
   final store = globalAppStore;
   final Function fetchAccountData;
 
   Future<void> initAccounts() async {
-    if (store.account.accountList.length > 0) {
-      String accounts = jsonEncode(store.account.accountList.map((i) => AccountData.toJson(i)).toList());
+    if (store.account!.accountList.length > 0) {
+      String accounts = jsonEncode(store.account!.accountList.map((i) => AccountData.toJson(i)).toList());
 
       String ss58 = jsonEncode(network_ss58_map.values.toSet().toList());
-      Map keys = await jsApi.evalJavascript('account.initKeys($accounts, $ss58)');
-      store.account.setPubKeyAddressMap(Map<String, Map>.from(keys));
+      Map keys = await (jsApi!.evalJavascript('account.initKeys($accounts, $ss58)') as FutureOr<Map<dynamic, dynamic>>);
+      store.account!.setPubKeyAddressMap(Map<String, Map>.from(keys));
 
       // get accounts icons
-      getPubKeyIcons(store.account.accountList.map((i) => i.pubKey).toList());
+      getPubKeyIcons(store.account!.accountList.map((i) => i.pubKey).toList());
     }
 
     // and contacts icons
-    List<AccountData> contacts = List<AccountData>.of(store.settings.contactList);
+    List<AccountData> contacts = List<AccountData>.of(store.settings!.contactList);
     getAddressIcons(contacts.map((i) => i.address).toList());
     // set pubKeyAddressMap for observation accounts
-    contacts.retainWhere((i) => i.observation);
-    List<String> observations = contacts.map((i) => i.pubKey).toList();
+    contacts.retainWhere((i) => i.observation!);
+    List<String?> observations = contacts.map((i) => i.pubKey).toList();
     if (observations.length > 0) {
       encodeAddress(observations);
       getPubKeyIcons(observations);
@@ -40,20 +40,20 @@ class AccountApi {
   }
 
   /// Encodes publicKeys to SS58-addresses
-  Future<List<String>> encodeAddress(List<String> pubKeys) async {
+  Future<List<String?>> encodeAddress(List<String?> pubKeys) async {
     String ss58 = jsonEncode(network_ss58_map.values.toSet().toList());
-    Map res = await jsApi.evalJavascript(
+    Map? res = await (jsApi!.evalJavascript(
       'account.encodeAddress(${jsonEncode(pubKeys)}, $ss58)',
       allowRepeat: true,
-    );
+    ) as FutureOr<Map<dynamic, dynamic>?>);
 
     if (res != null) {
-      store.account.setPubKeyAddressMap(Map<String, Map>.from(res));
-      var addresses = <String>[];
+      store.account!.setPubKeyAddressMap(Map<String, Map>.from(res));
+      var addresses = <String?>[];
 
       for (var pubKey in pubKeys) {
         _log("New entry for pubKeyAddressMap: Key: $pubKey, address: ${res[store.settings]}");
-        addresses.add(store.account.pubKeyAddressMap[store.settings.endpoint.ss58][pubKey]);
+        addresses.add(store.account!.pubKeyAddressMap[store.settings!.endpoint.ss58!]![pubKey!]);
       }
 
       return addresses;
@@ -63,22 +63,22 @@ class AccountApi {
   }
 
   /// decode addresses to publicKeys
-  Future<Map> decodeAddress(List<String> addresses) async {
+  Future<Map?> decodeAddress(List<String> addresses) async {
     if (addresses.length == 0) {
       return {};
     }
-    Map res = await jsApi.evalJavascript(
+    Map? res = await (jsApi!.evalJavascript(
       'account.decodeAddress(${jsonEncode(addresses)})',
       allowRepeat: true,
-    );
+    ) as FutureOr<Map<dynamic, dynamic>?>);
     if (res != null) {
-      store.account.setPubKeyAddressMap(Map<String, Map>.from({store.settings.endpoint.ss58.toString(): res}));
+      store.account!.setPubKeyAddressMap(Map<String, Map>.from({store.settings!.endpoint.ss58.toString(): res}));
     }
     return res;
   }
 
-  Future<String> addressFromUri(String uri) async {
-    dynamic address = await jsApi.evalJavascript(
+  Future<String?> addressFromUri(String uri) async {
+    dynamic address = await jsApi!.evalJavascript(
       'account.addressFromUri("$uri")',
       allowRepeat: true,
     );
@@ -89,22 +89,22 @@ class AccountApi {
   }
 
   /// query address with account index
-  Future<List> queryAddressWithAccountIndex(String index) async {
-    final res = await jsApi.evalJavascript(
-      'account.queryAddressWithAccountIndex("$index", ${store.settings.endpoint.ss58})',
+  Future<List?> queryAddressWithAccountIndex(String index) async {
+    final res = await jsApi!.evalJavascript(
+      'account.queryAddressWithAccountIndex("$index", ${store.settings!.endpoint.ss58})',
       allowRepeat: true,
     );
     return res;
   }
 
   Future<void> changeCurrentAccount({
-    String pubKey,
+    String? pubKey,
     bool fetchData = false,
   }) async {
-    String current = pubKey;
+    String? current = pubKey;
     if (pubKey == null) {
-      if (store.account.accountListAll.length > 0) {
-        current = store.account.accountListAll[0].pubKey;
+      if (store.account!.accountListAll.length > 0) {
+        current = store.account!.accountListAll[0].pubKey;
       } else {
         current = '';
       }
@@ -117,62 +117,62 @@ class AccountApi {
     }
   }
 
-  Future<Map> estimateTxFees(Map txInfo, List params, {String rawParam}) async {
+  Future<Map?> estimateTxFees(Map txInfo, List? params, {String? rawParam}) async {
     String param = rawParam != null ? rawParam : jsonEncode(params);
     print(txInfo);
-    Map res = await jsApi.evalJavascript('account.txFeeEstimate(${jsonEncode(txInfo)}, $param)', allowRepeat: true);
+    Map? res = await (jsApi!.evalJavascript('account.txFeeEstimate(${jsonEncode(txInfo)}, $param)', allowRepeat: true) as FutureOr<Map<dynamic, dynamic>?>);
     return res;
   }
 
   Future<dynamic> sendTxAndShowNotification(
-    Map txInfo,
-    List params,
-    String pageTile,
-    String notificationTitle, {
-    String rawParam,
+    Map? txInfo,
+    List? params,
+    String? pageTile,
+    String? notificationTitle, {
+    String? rawParam,
   }) async {
-    Map res = await sendTx(txInfo, params, rawParam: rawParam);
+    Map res = await (sendTx(txInfo, params, rawParam: rawParam) as FutureOr<Map<dynamic, dynamic>>);
 
     if (res['hash'] != null) {
       String hash = res['hash'];
       NotificationPlugin.showNotification(
         int.parse(hash.substring(0, 6)),
         notificationTitle,
-        '$pageTile - ${txInfo['module']}.${txInfo['call']}',
+        '$pageTile - ${txInfo!['module']}.${txInfo['call']}',
       );
     }
     return res;
   }
 
-  Future<dynamic> sendTx(Map txInfo, List params, {String rawParam}) async {
+  Future<dynamic> sendTx(Map? txInfo, List? params, {String? rawParam}) async {
     String param = rawParam != null ? rawParam : jsonEncode(params);
     String call = 'account.sendTx(${jsonEncode(txInfo)}, $param)';
     _log("sendTx call: $call");
-    return jsApi.evalJavascript(call, allowRepeat: true);
+    return jsApi!.evalJavascript(call, allowRepeat: true);
   }
 
   Future<void> generateAccount() async {
-    Map<String, dynamic> acc = await jsApi.evalJavascript('account.gen()');
-    store.account.setNewAccountKey(acc['mnemonic']);
+    Map<String, dynamic> acc = await (jsApi!.evalJavascript('account.gen()') as FutureOr<Map<String, dynamic>>);
+    store.account!.setNewAccountKey(acc['mnemonic']);
   }
 
-  Future<Map<String, dynamic>> importAccount({
-    String keyType = AccountStore.seedTypeMnemonic,
-    String cryptoType = 'sr25519',
-    String derivePath = '',
+  Future<Map<String, dynamic>?> importAccount({
+    String? keyType = AccountStore.seedTypeMnemonic,
+    String? cryptoType = 'sr25519',
+    String? derivePath = '',
   }) async {
-    String key = store.account.newAccount.key;
-    String pass = store.account.newAccount.password;
+    String? key = store.account!.newAccount.key;
+    String pass = store.account!.newAccount.password;
     String code = 'account.recover("$keyType", "$cryptoType", \'$key$derivePath\', "$pass")';
     code = code.replaceAll(RegExp(r'\t|\n|\r'), '');
-    Map<String, dynamic> acc = await jsApi.evalJavascript(code, allowRepeat: true);
+    Map<String, dynamic>? acc = await (jsApi!.evalJavascript(code, allowRepeat: true) as FutureOr<Map<String, dynamic>?>);
     return acc;
   }
 
   Future<dynamic> checkAccountPassword(AccountData account, String pass) async {
-    String pubKey = account.pubKey;
+    String? pubKey = account.pubKey;
     print('checkpass: $pubKey, $pass');
-    return jsApi.evalJavascript(
+    return jsApi!.evalJavascript(
       'account.checkPassword("$pubKey", "$pass")',
       allowRepeat: true,
     );
@@ -182,66 +182,66 @@ class AccountApi {
     if (addresses == null || addresses.length == 0) {
       return [];
     }
-    addresses.retainWhere((i) => !store.account.addressIndexMap.keys.contains(i));
+    addresses.retainWhere((i) => !store.account!.addressIndexMap.keys.contains(i));
     if (addresses.length == 0) {
       return [];
     }
 
-    var res = await jsApi.evalJavascript(
+    var res = await jsApi!.evalJavascript(
       'account.getAccountIndex(${jsonEncode(addresses)})',
       allowRepeat: true,
     );
-    store.account.setAddressIndex(res);
+    store.account!.setAddressIndex(res);
     return res;
   }
 
   Future<List> fetchAccountsIndex() async {
-    final addresses = store.account.accountListAll.map((e) => e.address).toList();
+    final addresses = store.account!.accountListAll.map((e) => e.address).toList();
     if (addresses == null || addresses.length == 0) {
       return [];
     }
 
-    var res = await jsApi.evalJavascript(
+    var res = await jsApi!.evalJavascript(
       'account.getAccountIndex(${jsonEncode(addresses)})',
       allowRepeat: true,
     );
-    store.account.setAccountsIndex(res);
+    store.account!.setAccountsIndex(res);
     return res;
   }
 
   Future<List> getPubKeyIcons(List keys) async {
-    keys.retainWhere((i) => !store.account.pubKeyIconsMap.keys.contains(i));
+    keys.retainWhere((i) => !store.account!.pubKeyIconsMap.keys.contains(i));
     if (keys.length == 0) {
       return [];
     }
-    List res = await jsApi.evalJavascript('account.genPubKeyIcons(${jsonEncode(keys)})', allowRepeat: true);
-    store.account.setPubKeyIconsMap(res);
+    List res = await (jsApi!.evalJavascript('account.genPubKeyIcons(${jsonEncode(keys)})', allowRepeat: true) as FutureOr<List<dynamic>>);
+    store.account!.setPubKeyIconsMap(res);
     return res;
   }
 
   Future<List> getAddressIcons(List addresses) async {
-    addresses.retainWhere((i) => !store.account.addressIconsMap.keys.contains(i));
+    addresses.retainWhere((i) => !store.account!.addressIconsMap.keys.contains(i));
     if (addresses.length == 0) {
       return [];
     }
-    List res = await jsApi.evalJavascript('account.genIcons(${jsonEncode(addresses)})', allowRepeat: true);
-    store.account.setAddressIconsMap(res);
+    List res = await (jsApi!.evalJavascript('account.genIcons(${jsonEncode(addresses)})', allowRepeat: true) as FutureOr<List<dynamic>>);
+    store.account!.setAddressIconsMap(res);
     return res;
   }
 
-  Future<String> checkDerivePath(String seed, String path, String pairType) async {
-    String res = await jsApi.evalJavascript(
+  Future<String?> checkDerivePath(String? seed, String? path, String pairType) async {
+    String? res = await (jsApi!.evalJavascript(
       'account.checkDerivePath("$seed", "$path", "$pairType")',
       allowRepeat: true,
-    );
+    ) as FutureOr<String?>);
     return res;
   }
 
   /// Parse scanned Qr-code into a transaction.
   ///
   /// See: https://github.com/encointer/encointer-wallet-flutter/issues/676
-  Future<Map> parseQrCode(String data) async {
-    final res = await jsApi.evalJavascript('account.parseQrCode("$data")');
+  Future<Map?> parseQrCode(String data) async {
+    final res = await jsApi!.evalJavascript('account.parseQrCode("$data")');
     print('rawData: $data');
     return res;
   }
@@ -249,20 +249,20 @@ class AccountApi {
   /// Sign async with the signer defined by `parseQrCode`.
   ///
   /// See: https://github.com/encointer/encointer-wallet-flutter/issues/676
-  Future<Map> signAsync(String password) async {
-    final res = await jsApi.evalJavascript('account.signAsync("$password")');
+  Future<Map?> signAsync(String password) async {
+    final res = await jsApi!.evalJavascript('account.signAsync("$password")');
     return res;
   }
 
   /// Create the a QR-code of `txInfo` to be scanned on another device and create a (multiparty-)signature.
   ///
   /// See: https://github.com/encointer/encointer-wallet-flutter/issues/676
-  Future<Map> makeQrCode(Map txInfo, List params, {String rawParam}) async {
+  Future<Map?> makeQrCode(Map? txInfo, List? params, {String? rawParam}) async {
     String param = rawParam != null ? rawParam : jsonEncode(params);
-    final Map res = await jsApi.evalJavascript(
+    final Map? res = await (jsApi!.evalJavascript(
       'account.makeTx(${jsonEncode(txInfo)}, $param)',
       allowRepeat: true,
-    );
+    ) as FutureOr<Map<dynamic, dynamic>?>);
     return res;
   }
 
@@ -275,11 +275,11 @@ class AccountApi {
     String pageTile,
     String notificationTitle,
   ) async {
-    final String address = store.account.currentAddress;
-    final Map res = await jsApi.evalJavascript(
+    final String address = store.account!.currentAddress;
+    final Map res = await (jsApi!.evalJavascript(
       'account.addSignatureAndSend("$address", "$signature")',
       allowRepeat: true,
-    );
+    ) as FutureOr<Map<dynamic, dynamic>>);
 
     if (res['hash'] != null) {
       String hash = res['hash'];

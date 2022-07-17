@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 class LowerCeremonyBoxContainer extends StatelessWidget {
   LowerCeremonyBoxContainer({
     this.child,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
-  final Widget child;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {

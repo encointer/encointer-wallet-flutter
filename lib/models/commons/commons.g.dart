@@ -8,7 +8,7 @@ part of 'commons.dart';
 
 RpcMethods _$RpcMethodsFromJson(Map<String, dynamic> json) {
   return RpcMethods(
-    (json['methods'] as List)?.map((e) => e as String)?.toList(),
+    (json['methods'] as List?)?.map((e) => e as String)?.toList(),
   );
 }
 

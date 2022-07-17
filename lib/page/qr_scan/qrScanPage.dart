@@ -14,7 +14,7 @@ export 'qr_codes/qrCodeBase.dart';
 
 class ScanPageParams {
   ScanPageParams({this.scannerContext});
-  final QrScannerContext scannerContext;
+  final QrScannerContext? scannerContext;
 }
 
 class ScanPage extends StatelessWidget {
@@ -24,7 +24,7 @@ class ScanPage extends StatelessWidget {
   final GlobalKey<QrcodeReaderViewState> _qrViewKey = GlobalKey();
 
   final QrScanService qrScanService = QrScanService();
-  final AppStore store;
+  final AppStore? store;
 
   Future<bool> canOpenCamera() async {
     // will do nothing if already granted
@@ -33,12 +33,12 @@ class ScanPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
-    ScanPageParams params = ModalRoute.of(context).settings.arguments;
-    Future onScan(String data, String rawData) {
+    final Translations dic = I18n.of(context)!.translationsForLocale();
+    ScanPageParams? params = ModalRoute.of(context)!.settings.arguments as ScanPageParams?;
+    Future? onScan(String? data, String? rawData) {
       try {
-        QrCode<dynamic> qrCode = qrScanService.parse(data);
-        qrScanService.handleQrScan(context, params.scannerContext, qrCode);
+        QrCode<dynamic> qrCode = qrScanService.parse(data!);
+        qrScanService.handleQrScan(context, params!.scannerContext, qrCode);
       } catch (e) {
         print("[ScanPage]: ${e.toString()}");
         RootSnackBar.showMsg(e.toString());
@@ -47,7 +47,7 @@ class ScanPage extends StatelessWidget {
         // My fairly recent cellphone gets too much load for duration < 500 ms. We might need to increase
         // this for older phones.
         Future.delayed(const Duration(milliseconds: 1500), () {
-          _qrViewKey.currentState.startScan();
+          _qrViewKey.currentState!.startScan();
         });
       }
 
@@ -73,7 +73,7 @@ class ScanPage extends StatelessWidget {
           builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
             if (snapshot.hasData && snapshot.data == true) {
               return QrcodeReaderView(
-                headerWidget: store.settings.developerMode
+                headerWidget: store!.settings!.developerMode
                     ? Row(children: [
                         ElevatedButton(
                           child: Text(dic.profile.addContact),
@@ -98,8 +98,8 @@ class ScanPage extends StatelessWidget {
                       ])
                     : Container(),
                 key: _qrViewKey,
-                helpWidget: Text(I18n.of(context).translationsForLocale().account.qrScan),
-                onScan: onScan,
+                helpWidget: Text(I18n.of(context)!.translationsForLocale().account.qrScan),
+                onScan: onScan as Future<dynamic> Function(String?, String?),
               );
             } else {
               return Container();

@@ -8,16 +8,16 @@ part of 'claimOfAttendance.dart';
 
 ClaimOfAttendance _$ClaimOfAttendanceFromJson(Map<String, dynamic> json) {
   return ClaimOfAttendance(
-    json['claimantPublic'] as String,
-    json['ceremonyIndex'] as int,
+    json['claimantPublic'] as String?,
+    json['ceremonyIndex'] as int?,
     json['communityIdentifier'] == null
         ? null
         : CommunityIdentifier.fromJson(json['communityIdentifier'] as Map<String, dynamic>),
-    json['meetupIndex'] as int,
+    json['meetupIndex'] as int?,
     json['location'] == null ? null : Location.fromJson(json['location'] as Map<String, dynamic>),
-    json['timestamp'] as int,
-    json['numberOfParticipantsConfirmed'] as int,
-  )..claimantSignature = (json['claimantSignature'] as Map<String, dynamic>)?.map(
+    json['timestamp'] as int?,
+    json['numberOfParticipantsConfirmed'] as int?,
+  )..claimantSignature = (json['claimantSignature'] as Map<String, dynamic>?)?.map(
       (k, e) => MapEntry(k, e as String),
     );
 }

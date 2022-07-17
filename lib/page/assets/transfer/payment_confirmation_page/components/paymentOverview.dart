@@ -9,16 +9,16 @@ import 'package:flutter/material.dart';
 class PaymentOverview extends StatelessWidget {
   PaymentOverview(this.store, this.communitySymbol, this.recipientAccount, this.amount);
 
-  final AppStore store;
+  final AppStore? store;
 
-  final String communitySymbol;
-  final AccountData recipientAccount;
-  final double amount;
+  final String? communitySymbol;
+  final AccountData? recipientAccount;
+  final double? amount;
 
   @override
   Widget build(BuildContext context) {
     final recipientLabel =
-        recipientAccount.name.isNotEmpty ? recipientAccount.name : Fmt.addressOfAccount(recipientAccount, store);
+        recipientAccount!.name!.isNotEmpty ? recipientAccount!.name : Fmt.addressOfAccount(recipientAccount!, store!);
 
     return IntrinsicHeight(
       child: Row(
@@ -29,8 +29,8 @@ class PaymentOverview extends StatelessWidget {
             children: [
               CombinedCommunityAndAccountAvatar(store, showCommunityNameAndAccountName: false),
               Text(
-                Fmt.accountName(context, store.account.currentAccount),
-                style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
+                Fmt.accountName(context, store!.account!.currentAccount),
+                style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey, height: 1.5),
                 textAlign: TextAlign.center,
               ),
             ],
@@ -44,12 +44,12 @@ class PaymentOverview extends StatelessWidget {
             children: [
               AddressIcon(
                 '',
-                recipientAccount.pubKey,
+                recipientAccount!.pubKey,
                 size: 96,
               ),
               Text(
-                Fmt.address(recipientLabel),
-                style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
+                Fmt.address(recipientLabel)!,
+                style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey, height: 1.5),
                 textAlign: TextAlign.center,
               ),
             ],

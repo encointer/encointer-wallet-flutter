@@ -9,7 +9,7 @@ class NoTeeApi {
       : ceremonies = Ceremonies(jsApi),
         balances = Balances(jsApi);
 
-  final JSApi jsApi;
+  final JSApi? jsApi;
   final Ceremonies ceremonies;
   final Balances balances;
 }
@@ -17,22 +17,22 @@ class NoTeeApi {
 class Ceremonies {
   Ceremonies(this.jsApi);
 
-  final JSApi jsApi;
+  final JSApi? jsApi;
 
   Future<int> participantIndex(CommunityIdentifier cid, int cIndex, String pubKey) async {
-    return jsApi
+    return jsApi!
         .evalJavascript('encointer.getParticipantIndex(${jsonEncode(cid)}, "$cIndex" ,"$pubKey")')
         .then((value) => int.parse(value));
   }
 
   Future<int> meetupIndex(CommunityIdentifier cid, int cIndex, String pubKey) async {
-    return jsApi
+    return jsApi!
         .evalJavascript('encointer.getMeetupIndex(${jsonEncode(cid)}, "$cIndex","$pubKey")')
         .then((value) => int.parse(value));
   }
 
   Future<List<String>> meetupRegistry(CommunityIdentifier cid, int cIndex, int mIndex) async {
-    return jsApi
+    return jsApi!
         .evalJavascript('encointer.getMeetupRegistry(${jsonEncode(cid)}, "$cIndex", "$mIndex")')
         .then((value) => List<String>.from(value));
   }
@@ -41,10 +41,10 @@ class Ceremonies {
 class Balances {
   Balances(this.jsApi);
 
-  final JSApi jsApi;
+  final JSApi? jsApi;
 
-  Future<BalanceEntry> balance(CommunityIdentifier cid, String pubKey) async {
-    Map<String, dynamic> balance = await jsApi.evalJavascript('encointer.getBalance(${jsonEncode(cid)}, "$pubKey")');
+  Future<BalanceEntry> balance(CommunityIdentifier cid, String? pubKey) async {
+    Map<String, dynamic> balance = await (jsApi!.evalJavascript('encointer.getBalance(${jsonEncode(cid)}, "$pubKey")') as FutureOr<Map<String, dynamic>>);
     return BalanceEntry.fromJson(balance);
   }
 }

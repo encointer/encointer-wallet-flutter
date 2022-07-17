@@ -14,7 +14,7 @@ import 'bazaarTabBar.dart';
 class BazaarMain extends StatelessWidget {
   static const String route = '/bazaar';
 
-  final AppStore store;
+  final AppStore? store;
 
   BazaarMain(this.store);
 
@@ -25,18 +25,18 @@ class BazaarMain extends StatelessWidget {
           length: bazaarTabBar.length,
           child: Scaffold(
             appBar: AppBar(
-              title: Text(I18n.of(context).translationsForLocale().bazaar.bazaarTitle),
+              title: Text(I18n.of(context)!.translationsForLocale().bazaar.bazaarTitle),
               centerTitle: true,
               // leading: IconButton(icon: Image.asset('assets/images/assets/ERT.png'), onPressed: () => _chooseCommunity()), // TODO
               leading: IconButton(icon: Image.asset('assets/images/assets/ERT.png'), onPressed: () => null),
               bottom: TabBar(
                 tabs: <Widget>[
                   Tab(icon: Icon(Icons.home), text: "Home"),
-                  Tab(icon: Icon(Icons.local_offer), text: I18n.of(context).translationsForLocale().bazaar.offerings),
-                  Tab(icon: Icon(Icons.business), text: I18n.of(context).translationsForLocale().bazaar.businesses),
+                  Tab(icon: Icon(Icons.local_offer), text: I18n.of(context)!.translationsForLocale().bazaar.offerings),
+                  Tab(icon: Icon(Icons.business), text: I18n.of(context)!.translationsForLocale().bazaar.businesses),
                   Tab(
                       icon: Icon(Icons.favorite, color: Colors.pink),
-                      text: I18n.of(context).translationsForLocale().bazaar.favorites),
+                      text: I18n.of(context)!.translationsForLocale().bazaar.favorites),
                 ],
               ),
             ),

@@ -5,8 +5,8 @@ class CeremonyProgressBar extends StatelessWidget {
   final int progress;
 
   const CeremonyProgressBar({
-    @required this.progress,
-    Key key,
+    required this.progress,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -35,7 +35,7 @@ class CeremonyProgressBar extends StatelessWidget {
 
 class LightShadedBar extends StatelessWidget {
   const LightShadedBar({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -51,7 +51,7 @@ class LightShadedBar extends StatelessWidget {
 
 class GradientBar extends StatelessWidget {
   const GradientBar({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

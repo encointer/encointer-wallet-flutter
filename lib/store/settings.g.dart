@@ -15,16 +15,16 @@ Map<String, dynamic> _$NetworkStateToJson(NetworkState instance) => <String, dyn
 
 EndpointData _$EndpointDataFromJson(Map<String, dynamic> json) {
   return EndpointData()
-    ..color = json['color'] as String
-    ..info = json['info'] as String
-    ..ss58 = json['ss58'] as int
-    ..text = json['text'] as String
-    ..value = json['value'] as String
-    ..worker = json['worker'] as String
-    ..mrenclave = json['mrenclave'] as String
+    ..color = json['color'] as String?
+    ..info = json['info'] as String?
+    ..ss58 = json['ss58'] as int?
+    ..text = json['text'] as String?
+    ..value = json['value'] as String?
+    ..worker = json['worker'] as String?
+    ..mrenclave = json['mrenclave'] as String?
     ..overrideConfig =
         json['overrideConfig'] == null ? null : NodeConfig.fromJson(json['overrideConfig'] as Map<String, dynamic>)
-    ..ipfsGateway = json['ipfsGateway'] as String;
+    ..ipfsGateway = json['ipfsGateway'] as String?;
 }
 
 Map<String, dynamic> _$EndpointDataToJson(EndpointData instance) => <String, dynamic>{
@@ -68,7 +68,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
 
   @override
   String get ipfsGateway =>
-      (_$ipfsGatewayComputed ??= Computed<String>(() => super.ipfsGateway, name: '_SettingsStore.ipfsGateway')).value;
+      (_$ipfsGatewayComputed ??= Computed<String>(() => super.ipfsGateway!, name: '_SettingsStore.ipfsGateway')).value;
   Computed<List<EndpointData>> _$endpointListComputed;
 
   @override
@@ -153,13 +153,13 @@ mixin _$SettingsStore on _SettingsStore, Store {
   final _$localeCodeAtom = Atom(name: '_SettingsStore.localeCode');
 
   @override
-  String get localeCode {
+  String? get localeCode {
     _$localeCodeAtom.reportRead();
     return super.localeCode;
   }
 
   @override
-  set localeCode(String value) {
+  set localeCode(String? value) {
     _$localeCodeAtom.reportWrite(value, super.localeCode, () {
       super.localeCode = value;
     });
@@ -198,13 +198,13 @@ mixin _$SettingsStore on _SettingsStore, Store {
   final _$networkNameAtom = Atom(name: '_SettingsStore.networkName');
 
   @override
-  String get networkName {
+  String? get networkName {
     _$networkNameAtom.reportRead();
     return super.networkName;
   }
 
   @override
-  set networkName(String value) {
+  set networkName(String? value) {
     _$networkNameAtom.reportWrite(value, super.networkName, () {
       super.networkName = value;
     });
@@ -213,13 +213,13 @@ mixin _$SettingsStore on _SettingsStore, Store {
   final _$networkStateAtom = Atom(name: '_SettingsStore.networkState');
 
   @override
-  NetworkState get networkState {
+  NetworkState? get networkState {
     _$networkStateAtom.reportRead();
     return super.networkState;
   }
 
   @override
-  set networkState(NetworkState value) {
+  set networkState(NetworkState? value) {
     _$networkStateAtom.reportWrite(value, super.networkState, () {
       super.networkState = value;
     });
@@ -228,13 +228,13 @@ mixin _$SettingsStore on _SettingsStore, Store {
   final _$networkConstAtom = Atom(name: '_SettingsStore.networkConst');
 
   @override
-  Map<dynamic, dynamic> get networkConst {
+  Map<dynamic, dynamic>? get networkConst {
     _$networkConstAtom.reportRead();
     return super.networkConst;
   }
 
   @override
-  set networkConst(Map<dynamic, dynamic> value) {
+  set networkConst(Map<dynamic, dynamic>? value) {
     _$networkConstAtom.reportWrite(value, super.networkConst, () {
       super.networkConst = value;
     });
@@ -280,7 +280,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
   final _$setLocalCodeAsyncAction = AsyncAction('_SettingsStore.setLocalCode');
 
   @override
-  Future<void> setLocalCode(String code) {
+  Future<void> setLocalCode(String? code) {
     return _$setLocalCodeAsyncAction.run(() => super.setLocalCode(code));
   }
 
@@ -294,8 +294,8 @@ mixin _$SettingsStore on _SettingsStore, Store {
   final _$setNetworkStateAsyncAction = AsyncAction('_SettingsStore.setNetworkState');
 
   @override
-  Future<void> setNetworkState(Map<String, dynamic> data, {bool needCache = true}) {
-    return _$setNetworkStateAsyncAction.run(() => super.setNetworkState(data, needCache: needCache));
+  Future<void> setNetworkState(Map<String, dynamic>? data, {bool needCache = true}) {
+    return _$setNetworkStateAsyncAction.run(() => super.setNetworkState(data!, needCache: needCache));
   }
 
   final _$loadNetworkStateCacheAsyncAction = AsyncAction('_SettingsStore.loadNetworkStateCache');
@@ -308,7 +308,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
   final _$setNetworkConstAsyncAction = AsyncAction('_SettingsStore.setNetworkConst');
 
   @override
-  Future<void> setNetworkConst(Map<String, dynamic> data, {bool needCache = true}) {
+  Future<void> setNetworkConst(Map<String, dynamic>? data, {bool needCache = true}) {
     return _$setNetworkConstAsyncAction.run(() => super.setNetworkConst(data, needCache: needCache));
   }
 
@@ -387,7 +387,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
   }
 
   @override
-  void setNetworkName(String name) {
+  void setNetworkName(String? name) {
     final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.setNetworkName');
     try {
       return super.setNetworkName(name);

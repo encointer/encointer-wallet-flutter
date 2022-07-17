@@ -11,24 +11,24 @@ class TxDetail extends StatelessWidget {
     this.success,
     this.networkName,
     this.action,
-    @required this.eventId,
+    required this.eventId,
     this.hash,
     this.blockTime,
     this.blockNum,
     this.info,
   });
 
-  final bool success;
-  final String networkName;
-  final String action;
-  final String eventId;
-  final String hash;
-  final String blockTime;
-  final int blockNum;
-  final List<DetailInfoItem> info;
+  final bool? success;
+  final String? networkName;
+  final String? action;
+  final String? eventId;
+  final String? hash;
+  final String? blockTime;
+  final int? blockNum;
+  final List<DetailInfoItem>? info;
 
   List<Widget> _buildListView(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     Widget buildLabel(String name) {
       return Container(
           padding: EdgeInsets.only(left: 8),
@@ -46,27 +46,27 @@ class TxDetail extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.all(24),
-            child: success
+            child: success!
                 ? Image.asset('assets/images/assets/success.png')
                 : Image.asset('assets/images/staking/error.png'),
           ),
           Text(
-            '$action ${success ? dic.assets.success : dic.assets.fail}',
+            '$action ${success! ? dic.assets.success : dic.assets.fail}',
             style: Theme.of(context).textTheme.headline4,
           ),
           Padding(
             padding: EdgeInsets.only(top: 8, bottom: 32),
-            child: Text(blockTime),
+            child: Text(blockTime!),
           ),
         ],
       ),
       Divider(),
     ];
-    info.forEach((i) {
+    info!.forEach((i) {
       list.add(ListTile(
-        leading: buildLabel(i.label),
-        title: Text(i.title),
-        subtitle: i.subtitle != null ? Text(i.subtitle) : null,
+        leading: buildLabel(i.label!),
+        title: Text(i.title!),
+        subtitle: i.subtitle != null ? Text(i.subtitle!) : null,
         trailing: i.address != null
             ? IconButton(
                 icon: Image.asset('assets/images/public/copy.png'),
@@ -76,8 +76,8 @@ class TxDetail extends StatelessWidget {
       ));
     });
 
-    String pnLink = 'https://polkascan.io/pre/${networkName.toLowerCase()}/transaction/$hash';
-    String snLink = 'https://${networkName.toLowerCase()}.subscan.io/extrinsic/$hash';
+    String? pnLink = 'https://polkascan.io/pre/${networkName!.toLowerCase()}/transaction/$hash';
+    String? snLink = 'https://${networkName!.toLowerCase()}.subscan.io/extrinsic/$hash';
     if (networkName == networkEndpointEncointerGesell.info ||
         networkName == networkEndpointEncointerGesellDev.info ||
         networkName == networkEndpointEncointerCantillon.info) {
@@ -87,7 +87,7 @@ class TxDetail extends StatelessWidget {
     list.addAll(<Widget>[
       ListTile(
         leading: buildLabel(dic.assets.event),
-        title: Text(eventId),
+        title: Text(eventId!),
       ),
       ListTile(
         leading: buildLabel(dic.assets.block),
@@ -95,7 +95,7 @@ class TxDetail extends StatelessWidget {
       ),
       ListTile(
         leading: buildLabel(dic.assets.hash),
-        title: Text(Fmt.address(hash)),
+        title: Text(Fmt.address(hash)!),
         trailing: Container(
           width: 140,
           child: Column(
@@ -123,7 +123,7 @@ class TxDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${I18n.of(context).translationsForLocale().assets.detail}'),
+        title: Text('${I18n.of(context)!.translationsForLocale().assets.detail}'),
         centerTitle: true,
       ),
       body: SafeArea(
@@ -138,8 +138,8 @@ class TxDetail extends StatelessWidget {
 
 class DetailInfoItem {
   DetailInfoItem({this.label, this.title, this.subtitle, this.address});
-  final String label;
-  final String title;
-  final String subtitle;
-  final String address;
+  final String? label;
+  final String? title;
+  final String? subtitle;
+  final String? address;
 }

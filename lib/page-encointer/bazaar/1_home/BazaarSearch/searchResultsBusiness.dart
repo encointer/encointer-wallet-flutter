@@ -8,14 +8,14 @@ import 'searchResultsBusinessFiltered.dart';
 class SearchResultsBusiness extends StatelessWidget {
   final results;
 
-  const SearchResultsBusiness(this.results, {Key key}) : super(key: key);
+  const SearchResultsBusiness(this.results, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Translations dic = I18n.of(context).translationsForLocale();
+    Translations dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
-        title: Text('${results.length} ${I18n.of(context).translationsForLocale().bazaar.businessesFound}'),
+        title: Text('${results.length} ${I18n.of(context)!.translationsForLocale().bazaar.businessesFound}'),
       ),
       body: Column(
         children: [

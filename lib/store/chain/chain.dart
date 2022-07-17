@@ -16,7 +16,7 @@ abstract class _ChainStore with Store {
   final String latestHeaderKey = 'chain_latest_header';
 
   @observable
-  Header latestHeader;
+  Header? latestHeader;
 
   @action
   void setLatestHeader(Header latest) {
@@ -28,9 +28,9 @@ abstract class _ChainStore with Store {
   get latestHeaderNumber => latestHeader?.number;
 
   Future<void> loadCache() async {
-    Map h = await rootStore.loadObject(latestHeaderKey);
+    Map h = await (rootStore.loadObject(latestHeaderKey) as FutureOr<Map<dynamic, dynamic>>);
     if (h != null) {
-      latestHeader = Header.fromJson(h);
+      latestHeader = Header.fromJson(h as Map<String, dynamic>);
     }
   }
 }

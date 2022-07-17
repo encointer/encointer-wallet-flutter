@@ -11,7 +11,7 @@ class MockQRScanPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future onScan(String txt, String rawData) async {}
+    Future onScan(String? txt, String? rawData) async {}
 
     return Scaffold(
       body: QrcodeReaderView(

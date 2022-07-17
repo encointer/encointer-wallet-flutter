@@ -9,8 +9,8 @@ class GenExternalLinksParams extends _GenExternalLinksParams {
 }
 
 class _GenExternalLinksParams {
-  String data;
-  String hash;
-  String type;
-  bool withShort;
+  String? data;
+  String? hash;
+  String? type;
+  bool? withShort;
 }

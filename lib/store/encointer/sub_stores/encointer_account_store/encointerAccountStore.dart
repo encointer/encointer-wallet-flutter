@@ -15,7 +15,7 @@ part 'encointerAccountStore.g.dart';
 ///
 @JsonSerializable(explicitToJson: true)
 class EncointerAccountStore extends _EncointerAccountStore with _$EncointerAccountStore {
-  EncointerAccountStore(String network, String address) : super(network, address);
+  EncointerAccountStore(String? network, String? address) : super(network, address);
 
   @override
   String toString() {
@@ -30,34 +30,34 @@ abstract class _EncointerAccountStore with Store {
   _EncointerAccountStore(this.network, this.address);
 
   @JsonKey(ignore: true)
-  Future<void> Function() _cacheFn;
+  Future<void> Function()? _cacheFn;
 
   /// The network this store belongs to.
-  final String network;
+  final String? network;
 
   /// The account (SS58) this store belongs to.
-  final String address;
+  final String? address;
 
   /// `BalanceEntries` for the respective community
   ///
   /// Map: cid.toFmtString() -> BalanceEntry
   @observable
-  ObservableMap<String, BalanceEntry> balanceEntries = new ObservableMap();
+  ObservableMap<String, BalanceEntry?>? balanceEntries = new ObservableMap();
 
   /// `CommunityReputations` across all communities keyed by the respective ceremony index.
   ///
   /// Map: ceremony index -> CommunityReputation
   @observable
-  Map<int, CommunityReputation> reputations;
+  Map<int?, CommunityReputation>? reputations;
 
   @observable
-  ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
+  ObservableList<TransferData>? txsTransfer = ObservableList<TransferData>();
 
   @computed
   get ceremonyIndexForProofOfAttendance {
-    if (reputations != null && reputations.isNotEmpty) {
+    if (reputations != null && reputations!.isNotEmpty) {
       try {
-        return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
+        return reputations!.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
       } catch (_e) {
         _log("$address has reputation, but none that has not been linked yet");
         return 0;
@@ -66,14 +66,14 @@ abstract class _EncointerAccountStore with Store {
   }
 
   @action
-  void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
+  void addBalanceEntry(CommunityIdentifier cid, BalanceEntry? balanceEntry) {
     _log("balanceEntry $balanceEntry added to cid $cid added");
-    balanceEntries[cid.toFmtString()] = balanceEntry;
+    balanceEntries![cid.toFmtString()] = balanceEntry;
     writeToCache();
   }
 
   @action
-  void setReputations(Map<int, CommunityReputation> reps) {
+  void setReputations(Map<int?, CommunityReputation> reps) {
     reputations = reps;
     writeToCache();
   }
@@ -81,7 +81,7 @@ abstract class _EncointerAccountStore with Store {
   @action
   void purgeReputations() {
     if (reputations != null) {
-      reputations.clear();
+      reputations!.clear();
       writeToCache();
     }
   }
@@ -112,21 +112,21 @@ abstract class _EncointerAccountStore with Store {
     if (reset) {
       txsTransfer = ObservableList.of(transfers.map((i) => TransferData.fromJson(Map<String, dynamic>.from(i))));
     } else {
-      txsTransfer.addAll(transfers.map((i) => TransferData.fromJson(Map<String, dynamic>.from(i))));
+      txsTransfer!.addAll(transfers.map((i) => TransferData.fromJson(Map<String, dynamic>.from(i))));
     }
 
-    if (needCache && txsTransfer.length > 0) {
+    if (needCache && txsTransfer!.length > 0) {
       writeToCache();
     }
   }
 
-  void initStore(Function cacheFn) {
-    this._cacheFn = cacheFn;
+  void initStore(Function? cacheFn) {
+    this._cacheFn = cacheFn as Future<void> Function()?;
   }
 
   Future<void> writeToCache() {
     if (_cacheFn != null) {
-      return _cacheFn();
+      return _cacheFn!();
     } else {
       return Future.value(null);
     }

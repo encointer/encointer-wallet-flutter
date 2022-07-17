@@ -8,10 +8,10 @@ part of 'meetupOverrides.dart';
 
 MeetupOverrides _$MeetupOverridesFromJson(Map<String, dynamic> json) {
   return MeetupOverrides(
-    json['override-name'] as String,
-    json['network'] as String,
-    (json['communities'] as List)?.map((e) => e as String)?.toList(),
-    (json['meetup-times'] as List)?.map((e) => e == null ? null : DateTime.parse(e as String))?.toList(),
+    json['override-name'] as String?,
+    json['network'] as String?,
+    (json['communities'] as List?)?.map((e) => e as String)?.toList(),
+    (json['meetup-times'] as List?)?.map((e) => e == null ? null : DateTime.parse(e as String))?.toList(),
   );
 }
 

@@ -25,7 +25,7 @@ class ReapVoucherParams {
     this.showFundVoucher = false,
   });
 
-  final VoucherData voucher;
+  final VoucherData? voucher;
   final bool showFundVoucher;
 }
 
@@ -33,16 +33,16 @@ class ReapVoucherPage extends StatefulWidget {
   const ReapVoucherPage(this.store, this.api);
 
   static const String route = '/qrcode/voucher';
-  final AppStore store;
-  final Api api;
+  final AppStore? store;
+  final Api? api;
 
   @override
   _ReapVoucherPageState createState() => _ReapVoucherPageState();
 }
 
 class _ReapVoucherPageState extends State<ReapVoucherPage> {
-  String _voucherAddress;
-  double _voucherBalance;
+  String? _voucherAddress;
+  double? _voucherBalance;
 
   bool _postFrameCallbackCalled = false;
 
@@ -55,10 +55,10 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
     setState(() {});
 
-    var voucherBalanceEntry = await api.encointer.getEncointerBalance(_voucherAddress, cid);
+    var voucherBalanceEntry = await api.encointer!.getEncointerBalance(_voucherAddress, cid);
     _voucherBalance = voucherBalanceEntry.applyDemurrage(
-      widget.store.chain.latestHeaderNumber,
-      widget.store.encointer.community.demurrage,
+      widget.store!.chain!.latestHeaderNumber,
+      widget.store!.encointer!.community.demurrage!,
     );
 
     _isReady = true;
@@ -68,17 +68,17 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
-    final h2Grey = Theme.of(context).textTheme.headline2.copyWith(color: encointerGrey);
-    final h4Grey = Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey);
-    ReapVoucherParams params = ModalRoute.of(context).settings.arguments;
+    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final h2Grey = Theme.of(context).textTheme.headline2!.copyWith(color: encointerGrey);
+    final h4Grey = Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey);
+    ReapVoucherParams params = ModalRoute.of(context)!.settings.arguments as ReapVoucherParams;
 
-    final voucher = params.voucher;
+    final voucher = params.voucher!;
     final voucherUri = voucher.voucherUri;
     final cid = voucher.cid;
     final networkInfo = voucher.network;
     final issuer = voucher.issuer;
-    final recipient = widget.store.account.currentAddress;
+    final recipient = widget.store!.account!.currentAddress;
     final showFundVoucher = params.showFundVoucher;
 
     if (!_postFrameCallbackCalled) {
@@ -88,7 +88,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
           var result = await _changeNetworkAndCommunityIfNeeded(context, networkInfo, cid);
 
           if (result == ChangeResult.ok) {
-            fetchVoucherData(widget.api, voucherUri, cid);
+            fetchVoucherData(widget.api!, voucherUri, cid);
           } else if (result == ChangeResult.invalidNetwork) {
             await showErrorDialog(context, dic.assets.invalidNetwork);
           } else if (result == ChangeResult.invalidCommunity) {
@@ -122,7 +122,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                   : CupertinoActivityIndicator(),
             ),
             Text(
-              "${dic.assets.voucherBalance}, ${widget.store.encointer.community?.symbol}",
+              "${dic.assets.voucherBalance}, ${widget.store!.encointer!.community?.symbol}",
               style: h4Grey,
             ),
             Expanded(
@@ -130,7 +130,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
               child: Center(
                 child: Text(
                   dic.assets.doYouWantToRedeemThisVoucher
-                      .replaceAll("ACCOUNT_PLACEHOLDER", widget.store.account.currentAccount.name),
+                      .replaceAll("ACCOUNT_PLACEHOLDER", widget.store!.account!.currentAccount.name!),
                   style: h2Grey,
                   textAlign: TextAlign.center,
                 ),
@@ -174,7 +174,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     CommunityIdentifier cid,
     String recipientAddress,
   ) async {
-    var res = await submitReapVoucher(widget.api, voucherUri, recipientAddress, cid);
+    var res = await submitReapVoucher(widget.api!, voucherUri, recipientAddress, cid);
 
     if (res['hash'] == null) {
       _log('Error redeeming voucher: ${res['error']}');
@@ -184,14 +184,14 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     }
   }
 
-  Future<ChangeResult> _changeNetworkAndCommunityIfNeeded(
+  Future<ChangeResult?> _changeNetworkAndCommunityIfNeeded(
     BuildContext context,
-    String networkInfo,
+    String? networkInfo,
     CommunityIdentifier cid,
   ) async {
-    var result = ChangeResult.ok;
+    ChangeResult? result = ChangeResult.ok;
 
-    if (widget.store.settings.endpoint.info != networkInfo) {
+    if (widget.store!.settings!.endpoint.info != networkInfo) {
       result = await showChangeNetworkAndCommunityDialog(
         context,
         widget.store,
@@ -205,7 +205,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
       return result;
     }
 
-    if (widget.store.encointer.chosenCid != cid) {
+    if (widget.store!.encointer!.chosenCid != cid) {
       result = await showChangeCommunityDialog(
         context,
         widget.store,
@@ -219,7 +219,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   }
 }
 
-void _pushTransferPage(BuildContext context, VoucherData data, String voucherAddress) {
+void _pushTransferPage(BuildContext context, VoucherData data, String? voucherAddress) {
   Navigator.of(context).popAndPushNamed(
     TransferPage.route,
     arguments: TransferPageParams(

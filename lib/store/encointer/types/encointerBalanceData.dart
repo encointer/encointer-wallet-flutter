@@ -12,9 +12,9 @@ class EncointerBalanceData {
   EncointerBalanceData(this.cid, this.balanceEntry);
 
   @observable
-  final CommunityIdentifier cid;
+  final CommunityIdentifier? cid;
   @observable
-  final BalanceEntry balanceEntry;
+  final BalanceEntry? balanceEntry;
 
   @override
   String toString() {
@@ -31,16 +31,16 @@ class BalanceEntry {
 
   @observable
   @JsonKey(name: 'principal', fromJson: _principalFromMaybeString, toJson: _principalToString)
-  final double principal;
+  final double? principal;
   @observable
-  final int lastUpdate;
+  final int? lastUpdate;
 
   @override
   String toString() {
     return jsonEncode(this);
   }
 
-  static double _principalFromMaybeString(dynamic principalField) {
+  static double? _principalFromMaybeString(dynamic principalField) {
     if (principalField is String) {
       return double.parse(principalField);
     } else if (principalField is int) {
@@ -50,14 +50,14 @@ class BalanceEntry {
     }
   }
 
-  static String _principalToString(double principal) => principal.toString();
+  static String _principalToString(double? principal) => principal.toString();
 
   factory BalanceEntry.fromJson(Map<String, dynamic> json) => _$BalanceEntryFromJson(json);
   Map<String, dynamic> toJson() => _$BalanceEntryToJson(this);
 
   double applyDemurrage(int latestBlockNumber, double demurrageRate) {
-    int elapsed = latestBlockNumber - this.lastUpdate;
+    int elapsed = latestBlockNumber - this.lastUpdate!;
     double exponent = -demurrageRate * elapsed;
-    return this.principal * pow(e, exponent);
+    return this.principal! * pow(e, exponent);
   }
 }

@@ -8,11 +8,11 @@ part of 'bazaar.dart';
 
 IpfsBusiness _$IpfsBusinessFromJson(Map<String, dynamic> json) {
   return IpfsBusiness(
-    json['name'] as String,
-    json['description'] as String,
-    json['contactInfo'] as String,
-    json['imagesCid'] as String,
-    json['openingHours'] as String,
+    json['name'] as String?,
+    json['description'] as String?,
+    json['contactInfo'] as String?,
+    json['imagesCid'] as String?,
+    json['openingHours'] as String?,
   );
 }
 
@@ -26,11 +26,11 @@ Map<String, dynamic> _$IpfsBusinessToJson(IpfsBusiness instance) => <String, dyn
 
 IpfsOffering _$IpfsOfferingFromJson(Map<String, dynamic> json) {
   return IpfsOffering(
-    json['name'] as String,
-    json['price'] as int,
-    json['description'] as String,
-    json['contactInfo'] as String,
-    json['imagesCid'] as String,
+    json['name'] as String?,
+    json['price'] as int?,
+    json['description'] as String?,
+    json['contactInfo'] as String?,
+    json['imagesCid'] as String?,
   );
 }
 
@@ -44,8 +44,8 @@ Map<String, dynamic> _$IpfsOfferingToJson(IpfsOffering instance) => <String, dyn
 
 BusinessData _$BusinessDataFromJson(Map<String, dynamic> json) {
   return BusinessData(
-    json['url'] as String,
-    json['lastOid'] as int,
+    json['url'] as String?,
+    json['lastOid'] as int?,
   );
 }
 
@@ -56,7 +56,7 @@ Map<String, dynamic> _$BusinessDataToJson(BusinessData instance) => <String, dyn
 
 OfferingData _$OfferingDataFromJson(Map<String, dynamic> json) {
   return OfferingData(
-    json['url'] as String,
+    json['url'] as String?,
   );
 }
 
@@ -66,7 +66,7 @@ Map<String, dynamic> _$OfferingDataToJson(OfferingData instance) => <String, dyn
 
 AccountBusinessTuple _$AccountBusinessTupleFromJson(Map<String, dynamic> json) {
   return AccountBusinessTuple(
-    json['controller'] as String,
+    json['controller'] as String?,
     json['businessData'] == null ? null : BusinessData.fromJson(json['businessData'] as Map<String, dynamic>),
   );
 }
@@ -79,7 +79,7 @@ Map<String, dynamic> _$AccountBusinessTupleToJson(AccountBusinessTuple instance)
 BusinessIdentifier _$BusinessIdentifierFromJson(Map<String, dynamic> json) {
   return BusinessIdentifier(
     json['cid'] == null ? null : CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
-    json['controller'] as String,
+    json['controller'] as String?,
   );
 }
 

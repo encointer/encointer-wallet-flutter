@@ -8,15 +8,15 @@ part of 'encointerAccountStore.dart';
 
 EncointerAccountStore _$EncointerAccountStoreFromJson(Map<String, dynamic> json) {
   return EncointerAccountStore(
-    json['network'] as String,
-    json['address'] as String,
+    json['network'] as String?,
+    json['address'] as String?,
   )
     ..balanceEntries = json['balanceEntries'] != null
-        ? ObservableMap<String, BalanceEntry>.of((json['balanceEntries'] as Map<String, dynamic>).map(
+        ? ObservableMap<String, BalanceEntry?>.of((json['balanceEntries'] as Map<String, dynamic>).map(
             (k, e) => MapEntry(k, e == null ? null : BalanceEntry.fromJson(e as Map<String, dynamic>)),
           ))
         : null
-    ..reputations = (json['reputations'] as Map<String, dynamic>)?.map(
+    ..reputations = (json['reputations'] as Map<String, dynamic>?)?.map(
       (k, e) => MapEntry(int.parse(k), e == null ? null : CommunityReputation.fromJson(e as Map<String, dynamic>)),
     )
     ..txsTransfer = json['txsTransfer'] != null
@@ -51,13 +51,13 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
   final _$balanceEntriesAtom = Atom(name: '_EncointerAccountStore.balanceEntries');
 
   @override
-  ObservableMap<String, BalanceEntry> get balanceEntries {
+  ObservableMap<String, BalanceEntry?>? get balanceEntries {
     _$balanceEntriesAtom.reportRead();
     return super.balanceEntries;
   }
 
   @override
-  set balanceEntries(ObservableMap<String, BalanceEntry> value) {
+  set balanceEntries(ObservableMap<String, BalanceEntry?>? value) {
     _$balanceEntriesAtom.reportWrite(value, super.balanceEntries, () {
       super.balanceEntries = value;
     });
@@ -66,13 +66,13 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
   final _$reputationsAtom = Atom(name: '_EncointerAccountStore.reputations');
 
   @override
-  Map<int, CommunityReputation> get reputations {
+  Map<int?, CommunityReputation>? get reputations {
     _$reputationsAtom.reportRead();
     return super.reputations;
   }
 
   @override
-  set reputations(Map<int, CommunityReputation> value) {
+  set reputations(Map<int?, CommunityReputation>? value) {
     _$reputationsAtom.reportWrite(value, super.reputations, () {
       super.reputations = value;
     });
@@ -81,13 +81,13 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
   final _$txsTransferAtom = Atom(name: '_EncointerAccountStore.txsTransfer');
 
   @override
-  ObservableList<TransferData> get txsTransfer {
+  ObservableList<TransferData>? get txsTransfer {
     _$txsTransferAtom.reportRead();
     return super.txsTransfer;
   }
 
   @override
-  set txsTransfer(ObservableList<TransferData> value) {
+  set txsTransfer(ObservableList<TransferData>? value) {
     _$txsTransferAtom.reportWrite(value, super.txsTransfer, () {
       super.txsTransfer = value;
     });
@@ -104,7 +104,7 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
   final _$_EncointerAccountStoreActionController = ActionController(name: '_EncointerAccountStore');
 
   @override
-  void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
+  void addBalanceEntry(CommunityIdentifier cid, BalanceEntry? balanceEntry) {
     final _$actionInfo =
         _$_EncointerAccountStoreActionController.startAction(name: '_EncointerAccountStore.addBalanceEntry');
     try {
@@ -115,7 +115,7 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
   }
 
   @override
-  void setReputations(Map<int, CommunityReputation> reps) {
+  void setReputations(Map<int?, CommunityReputation> reps) {
     final _$actionInfo =
         _$_EncointerAccountStoreActionController.startAction(name: '_EncointerAccountStore.setReputations');
     try {

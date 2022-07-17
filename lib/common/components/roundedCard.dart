@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 class RoundedCard extends StatelessWidget {
   RoundedCard({this.border, this.margin, this.padding, this.child});
 
-  final BoxBorder border;
-  final EdgeInsetsGeometry margin;
-  final EdgeInsetsGeometry padding;
-  final Widget child;
+  final BoxBorder? border;
+  final EdgeInsetsGeometry? margin;
+  final EdgeInsetsGeometry? padding;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {

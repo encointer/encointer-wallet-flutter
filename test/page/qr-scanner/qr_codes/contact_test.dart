@@ -37,7 +37,7 @@ void main() {
       expect(qrCode.context, QrCodeContext.contact);
       expect(qrCode.version, QrCodeVersion.v2_0);
       expect(qrCode.data.account, "account");
-      expect(qrCode.data.cid.toFmtString(), "sqm1v79dF6b");
+      expect(qrCode.data.cid!.toFmtString(), "sqm1v79dF6b");
       expect(qrCode.data.network, "nctr-k");
       expect(qrCode.data.label, "label");
     });

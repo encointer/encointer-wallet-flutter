@@ -15,7 +15,7 @@ import 'mockJSApi.dart';
 /// The getters then return the preconfigured value, which in turn leads to consistent
 /// responses in the test.
 class MockApiEncointer extends EncointerApi {
-  MockApiEncointer(MockJSApi js, MockSubstrateDartApi dartApi) : super(js, dartApi);
+  MockApiEncointer(MockJSApi? js, MockSubstrateDartApi dartApi) : super(js, dartApi);
 
   void _log(String msg) {
     print("[mockApiAssets] $msg");
@@ -37,20 +37,20 @@ class MockApiEncointer extends EncointerApi {
   }
 
   @override
-  Future<CeremonyPhase> getCurrentPhase() async {
-    if (store.encointer.currentPhase == null) {
-      store.encointer.setCurrentPhase(initialPhase);
+  Future<CeremonyPhase?> getCurrentPhase() async {
+    if (store.encointer!.currentPhase == null) {
+      store.encointer!.setCurrentPhase(initialPhase);
     }
 
-    return store.encointer.currentPhase;
+    return store.encointer!.currentPhase;
   }
 
   @override
-  Future<int> getCurrentCeremonyIndex() async {
-    if (store.encointer.currentCeremonyIndex == null) {
-      store.encointer.setCurrentCeremonyIndex(1);
+  Future<int?> getCurrentCeremonyIndex() async {
+    if (store.encointer!.currentCeremonyIndex == null) {
+      store.encointer!.setCurrentCeremonyIndex(1);
     }
-    return store.encointer.currentCeremonyIndex;
+    return store.encointer!.currentCeremonyIndex;
   }
 
   @override
@@ -62,7 +62,7 @@ class MockApiEncointer extends EncointerApi {
   Future<void> getReputations() async {}
 
   @override
-  Future<BalanceEntry> getEncointerBalance(String address, CommunityIdentifier cid) async {
+  Future<BalanceEntry> getEncointerBalance(String? address, CommunityIdentifier cid) async {
     return Future.value(null);
   }
 
@@ -75,8 +75,8 @@ class MockApiEncointer extends EncointerApi {
   }
 
   @override
-  Future<List<CidName>> communitiesGetAll() async {
-    return store.encointer.communities;
+  Future<List<CidName>?> communitiesGetAll() async {
+    return store.encointer!.communities;
   }
 
   @override
@@ -110,22 +110,22 @@ class MockApiEncointer extends EncointerApi {
   }
 
   @override
-  Future<Map<CommunityIdentifier, BalanceEntry>> getAllBalances(String account) async {
-    return Future.value(Map<CommunityIdentifier, BalanceEntry>.of({
-      store.encointer.chosenCid: BalanceEntry.fromJson(testBalanceEntry),
+  Future<Map<CommunityIdentifier?, BalanceEntry>> getAllBalances(String account) async {
+    return Future.value(Map<CommunityIdentifier?, BalanceEntry>.of({
+      store.encointer!.chosenCid: BalanceEntry.fromJson(testBalanceEntry),
     }));
   }
 
   @override
   Future<ClaimOfAttendance> signClaimOfAttendance(int participants, String password) async {
-    Meetup meetup = store.encointer.communityAccount.meetup;
+    Meetup meetup = store.encointer!.communityAccount.meetup!;
 
     var claim = ClaimOfAttendance(
-      store.account.currentAccountPubKey,
-      store.encointer.currentCeremonyIndex,
-      store.encointer.chosenCid,
+      store.account!.currentAccountPubKey,
+      store.encointer!.currentCeremonyIndex,
+      store.encointer!.chosenCid,
       meetup.index,
-      store.encointer.community.meetupLocations[meetup.locationIndex],
+      store.encointer!.community.meetupLocations![meetup.locationIndex!],
       meetup.time,
       participants,
     );

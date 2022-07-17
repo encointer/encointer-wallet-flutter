@@ -11,7 +11,7 @@ class ContactsPage extends StatelessWidget {
   ContactsPage(this.store);
 
   static const String route = '/profile/contacts';
-  final AppStore store;
+  final AppStore? store;
 
   @override
   Widget build(BuildContext context) => Observer(
@@ -19,7 +19,7 @@ class ContactsPage extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               title: Text(
-                I18n.of(context).translationsForLocale().profile.addressBook,
+                I18n.of(context)!.translationsForLocale().profile.addressBook,
                 style: Theme.of(context).textTheme.headline3,
               ),
               iconTheme: IconThemeData(
@@ -40,11 +40,11 @@ class ContactsPage extends StatelessWidget {
             ),
             body: SafeArea(
               child: ListView(
-                children: store.settings.contactList.map((i) {
+                children: store!.settings!.contactList.map((i) {
                   return ListTile(
                     leading: AddressIcon(i.address, i.pubKey, size: 45),
                     title: Text(Fmt.accountName(context, i)),
-                    subtitle: Text(Fmt.address(i.address)),
+                    subtitle: Text(Fmt.address(i.address)!),
                     trailing: Container(
                       width: 36,
                       child: IconButton(

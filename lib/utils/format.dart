@@ -19,7 +19,7 @@ class Fmt {
     return passHex.padRight(32, '0');
   }
 
-  static String address(String addr, {int pad = 6}) {
+  static String? address(String? addr, {int pad = 6}) {
     if (addr == null || addr.length < pad) {
       return addr;
     }
@@ -53,32 +53,32 @@ class Fmt {
 
   /// number transform 2:
   /// from <BigInt> to <double>
-  static double bigIntToDouble(BigInt value, int decimals) {
+  static double bigIntToDouble(BigInt value, int? decimals) {
     if (value == null) {
       return 0;
     }
-    return value / BigInt.from(pow(10, decimals));
+    return value / BigInt.from(pow(10, decimals!));
   }
 
   /// number transform 3:
   /// from <double> to <String> in token format of ",##0.000"
   static String doubleFormat(
-    double value, {
-    int length = 3,
+    double? value, {
+    int? length = 3,
     int round = 0,
   }) {
     if (value == null) {
       return '~';
     }
     value.toStringAsFixed(3);
-    NumberFormat f = NumberFormat(",##0${length > 0 ? '.' : ''}${'#' * length}", "en_US");
+    NumberFormat f = NumberFormat(",##0${length! > 0 ? '.' : ''}${'#' * length}", "en_US");
     return f.format(value);
   }
 
   /// number transform 3a:
   /// from <String> to <String> in token format of ",##0.000"
   static String numberFormat(
-    String value, {
+    String? value, {
     int length = 3,
     int round = 0,
   }) {
@@ -92,9 +92,9 @@ class Fmt {
   /// combined number transform 1-3:
   /// from raw <String> to <String> in token format of ",##0.000"
   static String balance(
-    String raw,
-    int decimals, {
-    int length = 3,
+    String? raw,
+    int? decimals, {
+    int? length = 3,
   }) {
     if (raw == null || raw.length == 0) {
       return '~';
@@ -112,8 +112,8 @@ class Fmt {
   /// from <BigInt> to <String> in token format of ",##0.000"
   static String token(
     BigInt value,
-    int decimals, {
-    int length = 3,
+    int? decimals, {
+    int? length = 3,
   }) {
     if (value == null) {
       return '~';
@@ -130,7 +130,7 @@ class Fmt {
     double v = 0;
     try {
       if (value.contains(',') || value.contains('.')) {
-        v = NumberFormat(",##0.${"0" * decimals}").parse(value);
+        v = NumberFormat(",##0.${"0" * decimals}").parse(value) as double;
       } else {
         v = double.parse(value);
       }
@@ -146,12 +146,12 @@ class Fmt {
   static String priceCeil(
     double value, {
     int lengthFixed = 2,
-    int lengthMax,
+    int? lengthMax,
   }) {
     if (value == null) {
       return '~';
     }
-    final int x = pow(10, lengthMax ?? lengthFixed);
+    final int x = pow(10, lengthMax ?? lengthFixed) as int;
     final double price = (value * x).ceilToDouble() / x;
     final String tailDecimals = lengthMax == null ? '' : "#" * (lengthMax - lengthFixed);
     return NumberFormat(",##0${lengthFixed > 0 ? '.' : ''}${"0" * lengthFixed}$tailDecimals", "en_US").format(price);
@@ -163,12 +163,12 @@ class Fmt {
   static String priceFloor(
     double value, {
     int lengthFixed = 2,
-    int lengthMax,
+    int? lengthMax,
   }) {
     if (value == null) {
       return '~';
     }
-    final int x = pow(10, lengthMax ?? lengthFixed);
+    final int x = pow(10, lengthMax ?? lengthFixed) as int;
     final double price = (value * x).floorToDouble() / x;
     final String tailDecimals = lengthMax == null ? '' : "#" * (lengthMax - lengthFixed);
     return NumberFormat(",##0${lengthFixed > 0 ? '.' : ''}${"0" * lengthFixed}$tailDecimals", "en_US").format(price);
@@ -185,7 +185,7 @@ class Fmt {
     BigInt value,
     int decimals, {
     int lengthFixed = 2,
-    int lengthMax,
+    int? lengthMax,
   }) {
     if (value == null) {
       return '~';
@@ -197,7 +197,7 @@ class Fmt {
     BigInt value,
     int decimals, {
     int lengthFixed = 2,
-    int lengthMax,
+    int? lengthMax,
   }) {
     if (value == null) {
       return '~';
@@ -224,7 +224,7 @@ class Fmt {
     ls.retainWhere((i) {
       String value = filter.trim().toLowerCase();
       String accName = '';
-      Map accInfo = accIndexMap[i[0]];
+      Map? accInfo = accIndexMap[i[0]];
       if (accInfo != null) {
         accName = accInfo['identity']['display'] ?? '';
       }
@@ -255,7 +255,7 @@ class Fmt {
   }
 
   static String accountName(BuildContext context, AccountData acc) {
-    return '${acc.name ?? ''}${(acc.observation ?? false) ? ' (${I18n.of(context).translationsForLocale().account.observe})' : ''}';
+    return '${acc.name ?? ''}${(acc.observation ?? false) ? ' (${I18n.of(context)!.translationsForLocale().account.observe})' : ''}';
   }
 
   static List<int> hexToBytes(String hex) {
@@ -279,8 +279,8 @@ class Fmt {
     return "0x" + hex.encode(bytes);
   }
 
-  static String accountDisplayNameString(String address, Map accInfo) {
-    String display = Fmt.address(address, pad: 6);
+  static String? accountDisplayNameString(String? address, Map? accInfo) {
+    String? display = Fmt.address(address, pad: 6);
     if (accInfo != null) {
       if (accInfo['identity']['display'] != null) {
         display = accInfo['identity']['display'];
@@ -290,12 +290,12 @@ class Fmt {
       } else if (accInfo['accountIndex'] != null) {
         display = accInfo['accountIndex'];
       }
-      display = display.toUpperCase();
+      display = display!.toUpperCase();
     }
     return display;
   }
 
-  static String tokenView(String token) {
+  static String tokenView(String? token) {
     String tokenView = token ?? '';
     return tokenView;
   }
@@ -311,14 +311,14 @@ class Fmt {
               )
             : Container(height: 16),
         Expanded(
-          child: Text(accountDisplayNameString(address, accInfo)),
+          child: Text(accountDisplayNameString(address, accInfo)!),
         )
       ],
     );
   }
 
   static String addressOfAccount(AccountData acc, AppStore store) {
-    return store.account.pubKeyAddressMap[store.settings.endpoint.ss58][acc.pubKey] ?? acc.address ?? '';
+    return store.account!.pubKeyAddressMap[store.settings!.endpoint.ss58!]![acc.pubKey!] ?? acc.address ?? '';
   }
 
   /// Formats fixed point number with the amount of fractional digits given by [fixedPointFraction].

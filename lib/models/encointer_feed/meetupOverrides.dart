@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -15,10 +16,10 @@ class MeetupOverrides {
     this.meetupTimes,
   );
 
-  String overrideName;
-  String network;
-  List<String> communities;
-  List<DateTime> meetupTimes;
+  String? overrideName;
+  String? network;
+  List<String>? communities;
+  List<DateTime>? meetupTimes;
 
   @override
   String toString() {
@@ -28,13 +29,13 @@ class MeetupOverrides {
   /// Returns the next meetup time.
   ///
   /// If it is in the `Attesting` phase it returns the meetup time of the currently ongoing meetup.
-  DateTime getNextMeetupTime(DateTime time, CeremonyPhase phase) {
-    meetupTimes.sort();
+  DateTime? getNextMeetupTime(DateTime time, CeremonyPhase? phase) {
+    meetupTimes!.sort();
 
     if (phase != CeremonyPhase.Attesting) {
-      return meetupTimes.firstWhere((mt) => time.isBefore(mt), orElse: () => null);
+      return meetupTimes!.firstWhereOrNull((mt) => time.isBefore(mt));
     } else {
-      return meetupTimes.reversed.firstWhere((mt) => time.isAfter(mt), orElse: () => null);
+      return meetupTimes!.reversed.firstWhereOrNull((mt) => time.isAfter(mt));
     }
   }
 

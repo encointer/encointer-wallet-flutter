@@ -16,7 +16,7 @@ Future<void> showRedeemSuccessDialog(BuildContext context) {
 }
 
 Widget redeemSuccessDialog(BuildContext context) {
-  final dic = I18n.of(context).translationsForLocale();
+  final dic = I18n.of(context)!.translationsForLocale();
 
   return CupertinoAlertDialog(
     title: Container(),
@@ -32,7 +32,7 @@ Widget redeemSuccessDialog(BuildContext context) {
   );
 }
 
-Future<void> showRedeemFailedDialog(BuildContext context, String error) {
+Future<void> showRedeemFailedDialog(BuildContext context, String? error) {
   return showCupertinoDialog(
     context: context,
     builder: (BuildContext context) {
@@ -41,8 +41,8 @@ Future<void> showRedeemFailedDialog(BuildContext context, String error) {
   );
 }
 
-Widget redeemFailedDialog(BuildContext context, String error) {
-  final dic = I18n.of(context).translationsForLocale();
+Widget redeemFailedDialog(BuildContext context, String? error) {
+  final dic = I18n.of(context)!.translationsForLocale();
 
   return CupertinoAlertDialog(
     title: Container(),
@@ -68,7 +68,7 @@ Future<void> showErrorDialog(BuildContext context, String error) {
 }
 
 Widget errorDialog(BuildContext context, String errorMsg) {
-  final dic = I18n.of(context).translationsForLocale();
+  final dic = I18n.of(context)!.translationsForLocale();
 
   return CupertinoAlertDialog(
     title: Container(),
@@ -84,20 +84,20 @@ Widget errorDialog(BuildContext context, String errorMsg) {
   );
 }
 
-Future<ChangeResult> showChangeNetworkAndCommunityDialog(
+Future<ChangeResult?> showChangeNetworkAndCommunityDialog(
   BuildContext context,
-  AppStore store,
-  Api api,
-  String network,
+  AppStore? store,
+  Api? api,
+  String? network,
   CommunityIdentifier cid,
 ) {
   return showCupertinoDialog(
     context: context,
     builder: (BuildContext context) {
-      final dic = I18n.of(context).translationsForLocale();
+      final dic = I18n.of(context)!.translationsForLocale();
 
       final dialogContent = dic.assets.voucherDifferentNetworkAndCommunity
-          .replaceAll("NETWORK_PLACEHOLDER", network)
+          .replaceAll("NETWORK_PLACEHOLDER", network!)
           .replaceAll("COMMUNITY_PLACEHOLDER", cid.toFmtString());
 
       return CupertinoAlertDialog(
@@ -130,7 +130,7 @@ Future<ChangeResult> changeWithLoadingDialog(
     context: context,
     builder: (BuildContext context) {
       return CupertinoAlertDialog(
-        title: Text(I18n.of(context).translationsForLocale().home.loading),
+        title: Text(I18n.of(context)!.translationsForLocale().home.loading),
         content: Container(height: 64, child: CupertinoActivityIndicator()),
       );
     },
@@ -144,17 +144,17 @@ Future<ChangeResult> changeWithLoadingDialog(
   return result;
 }
 
-Future<ChangeResult> showChangeCommunityDialog(
+Future<ChangeResult?> showChangeCommunityDialog(
   BuildContext context,
-  AppStore store,
-  Api api,
-  String network,
+  AppStore? store,
+  Api? api,
+  String? network,
   CommunityIdentifier cid,
 ) {
   return showCupertinoDialog(
     context: context,
     builder: (BuildContext context) {
-      final dic = I18n.of(context).translationsForLocale();
+      final dic = I18n.of(context)!.translationsForLocale();
 
       final dialogContent = dic.assets.voucherDifferentCommunity.replaceAll("COMMUNITY_PLACEHOLDER", cid.toFmtString());
 
@@ -169,7 +169,7 @@ Future<ChangeResult> showChangeCommunityDialog(
           CupertinoButton(
             child: Text(dic.home.ok),
             onPressed: () async {
-              var result = await changeWithLoadingDialog(context, () => changeCommunity(store, api, network, cid));
+              var result = await changeWithLoadingDialog(context, () => changeCommunity(store, api!, network, cid));
               Navigator.of(context).pop(result);
             },
           ),
@@ -189,7 +189,7 @@ Future<void> showInvalidCommunityDialog(BuildContext context, CommunityIdentifie
 }
 
 Widget invalidCommunityDialog(BuildContext context, CommunityIdentifier cid) {
-  final dic = I18n.of(context).translationsForLocale();
+  final dic = I18n.of(context)!.translationsForLocale();
 
   return CupertinoAlertDialog(
     title: Container(),

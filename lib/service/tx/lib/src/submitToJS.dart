@@ -25,20 +25,20 @@ Future<void> submitToJS(
   AppStore store,
   Api api,
   bool showStatusSnackBar, {
-  Map txParams,
-  String password,
-  BigInt tip,
+  required Map txParams,
+  String? password,
+  BigInt? tip,
 }) async {
-  final Translations dic = I18n.of(context).translationsForLocale();
+  final Translations dic = I18n.of(context)!.translationsForLocale();
 
   Map args = txParams;
 
-  store.assets.setSubmitting(true);
-  store.account.setTxStatus(TxStatus.Queued);
+  store.assets!.setSubmitting(true);
+  store.account!.setTxStatus(TxStatus.Queued);
 
   Map txInfo = args['txInfo'];
-  txInfo['pubKey'] = store.account.currentAccount.pubKey;
-  txInfo['address'] = store.account.currentAddress;
+  txInfo['pubKey'] = store.account!.currentAccount.pubKey;
+  txInfo['address'] = store.account!.currentAddress;
   txInfo['password'] = password;
   txInfo['tip'] = tip.toString();
   // if (_proxyAccount != null) {
@@ -48,31 +48,31 @@ Future<void> submitToJS(
   print(txInfo);
   print(args['params']);
 
-  var onTxFinishFn = (args['onFinish'] as Function(BuildContext, Map));
+  var onTxFinishFn = (args['onFinish'] as Function(BuildContext, Map)?);
 
-  if (await api.isConnected()) {
+  if (await (api.isConnected() as FutureOr<bool>)) {
     if (showStatusSnackBar) {
       _showTxStatusSnackBar(
-        getTxStatusTranslation(dic.home, store.account.txStatus),
+        getTxStatusTranslation(dic.home, store.account!.txStatus),
         CupertinoActivityIndicator(),
       );
     }
 
-    final Map res = await _sendTx(context, api, args);
+    final Map res = await (_sendTx(context, api, args) as FutureOr<Map<dynamic, dynamic>>);
 
     if (res['hash'] == null) {
       _onTxError(context, store, res['error'], showStatusSnackBar);
     } else {
-      _onTxFinish(context, store, res, onTxFinishFn, showStatusSnackBar);
+      _onTxFinish(context, store, res, onTxFinishFn!, showStatusSnackBar);
     }
   } else {
     _showTxStatusSnackBar(dic.home.txQueuedOffline, null);
     args['notificationTitle'] = dic.home.notifySubmittedQueued;
-    store.account.queueTx(args);
+    store.account!.queueTx(args as Map<String, dynamic>);
   }
 }
 
-Future<Map> getTxFee(
+Future<Map?> getTxFee(
   AppStore store,
   Api api,
   Map args, {
@@ -80,8 +80,8 @@ Future<Map> getTxFee(
   bool reload = false,
 }) async {
   Map txInfo = args['txInfo'];
-  txInfo['pubKey'] = store.account.currentAccount.pubKey;
-  txInfo['address'] = store.account.currentAddress;
+  txInfo['pubKey'] = store.account!.currentAccount.pubKey;
+  txInfo['address'] = store.account!.currentAddress;
 
   if (proxyAccount != null) {
     txInfo = proxyAccount.pubKey;
@@ -91,7 +91,7 @@ Future<Map> getTxFee(
 }
 
 void _onTxError(BuildContext context, AppStore store, String errorMsg, bool mounted) {
-  store.assets.setSubmitting(false);
+  store.assets!.setSubmitting(false);
   if (mounted) {
     RootSnackBar.removeCurrent();
   }
@@ -108,12 +108,12 @@ Future<dynamic> _sendTx(BuildContext context, Api api, Map args) async {
     args['txInfo'],
     args['params'],
     args['title'],
-    I18n.of(context).translationsForLocale().home.notifySubmitted,
+    I18n.of(context)!.translationsForLocale().home.notifySubmitted,
     rawParam: args['rawParam'],
   );
 }
 
-void _showTxStatusSnackBar(String status, Widget leading) {
+void _showTxStatusSnackBar(String status, Widget? leading) {
   RootSnackBar.show(
     ListTile(
       leading: leading,
@@ -128,7 +128,7 @@ void _showTxStatusSnackBar(String status, Widget leading) {
 
 void _onTxFinish(BuildContext context, AppStore store, Map res, Function(BuildContext, Map) onTxFinish, bool mounted) {
   print('callback triggered, blockHash: ${res['hash']}');
-  store.assets.setSubmitting(false);
+  store.assets!.setSubmitting(false);
 
   onTxFinish(context, res);
 
@@ -137,7 +137,7 @@ void _onTxFinish(BuildContext context, AppStore store, Map res, Function(BuildCo
       ListTile(
         leading: Container(width: 24, child: Image.asset('assets/images/assets/success.png')),
         title: Text(
-          I18n.of(context).translationsForLocale().assets.success,
+          I18n.of(context)!.translationsForLocale().assets.success,
           style: TextStyle(color: Colors.black54),
         ),
       ),
@@ -146,7 +146,7 @@ void _onTxFinish(BuildContext context, AppStore store, Map res, Function(BuildCo
   }
 }
 
-String getTxStatusTranslation(TranslationsHome dic, TxStatus status) {
+String getTxStatusTranslation(TranslationsHome dic, TxStatus? status) {
   switch (status) {
     case TxStatus.Queued:
       return dic.txQueued;
@@ -167,7 +167,7 @@ String getTxStatusTranslation(TranslationsHome dic, TxStatus status) {
 }
 
 Future<void> showErrorDialog(BuildContext context, String errorMsg) {
-  final Translations dic = I18n.of(context).translationsForLocale();
+  final Translations dic = I18n.of(context)!.translationsForLocale();
 
   return showCupertinoDialog(
     context: context,
@@ -187,7 +187,7 @@ Future<void> showErrorDialog(BuildContext context, String errorMsg) {
 }
 
 Future<void> showInsufficientFundsDialog(BuildContext context) {
-  final Translations dic = I18n.of(context).translationsForLocale();
+  final Translations dic = I18n.of(context)!.translationsForLocale();
   String languageCode = Localizations.localeOf(context).languageCode;
 
   return showCupertinoDialog(

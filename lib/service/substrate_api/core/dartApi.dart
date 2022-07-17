@@ -8,17 +8,17 @@ import '../../../models/index.dart';
 /// Once connected, a websocket channel is maintained until closed by either side.
 class SubstrateDartApi {
   /// Websocket client used to connect to the node.
-  Client _client;
+  Client? _client;
 
   /// The rpc methods exposed by the connected node.
-  RpcMethods _rpc;
+  RpcMethods? _rpc;
 
   /// Address of the node we connect to including ws(s).
-  String _endpoint;
+  String? _endpoint;
 
   /// Returns the rpc nodes of the connected node or an empty list otherwise.
   get rpcMethods {
-    return _rpc != null ? _rpc.methods : [];
+    return _rpc != null ? _rpc!.methods : [];
   }
 
   /// Gets address of the node we connect to including ws(s).
@@ -33,7 +33,7 @@ class SubstrateDartApi {
       // print("Methods: ${methods.toString()}");
 
       // Sanity check that we are running against valid node with offchain indexing enabled
-      if (!_rpc.methods.contains("encointer_getReputations")) {
+      if (!_rpc!.methods!.contains("encointer_getReputations")) {
         _log("rpc_methods does not contain 'getReputations'. Are the following flags passed"
             " to the node? \n '--enable-offchain-indexing true --rpc-methods unsafe'");
       }
@@ -45,7 +45,7 @@ class SubstrateDartApi {
   /// Closes the websocket connection.
   Future<void> close() async {
     if (_client != null) {
-      await _client.close();
+      await _client!.close();
     } else {
       _log("no connection to be closed.");
     }
@@ -59,13 +59,13 @@ class SubstrateDartApi {
     if (_client == null) {
       throw ("[dartApi] Can't call an rpc method because we are not connected to an endpoint");
     }
-    if (_client.isClosed) {
+    if (_client!.isClosed) {
       print("[dartApi] not connected. trying to reconnect to $endpoint");
       this.reconnect();
-      print("[dartApi] connection status: isclosed? ${_client.isClosed}");
+      print("[dartApi] connection status: isclosed? ${_client!.isClosed}");
     }
 
-    return _client.sendRequest(method, params);
+    return _client!.sendRequest(method, params);
   }
 
   /// Reconnect to the same endpoint if the connection was closed.
@@ -80,7 +80,7 @@ class SubstrateDartApi {
     _client = Client(socket.cast<String>());
 
     // The client won't subscribe to the input stream until `listen` is called.
-    return _client.listen();
+    return _client!.listen();
   }
 }
 

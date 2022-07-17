@@ -22,19 +22,19 @@ import 'package:iconsax/iconsax.dart';
 class TransferPageParams {
   TransferPageParams({this.cid, this.communitySymbol, this.recipient, this.label, this.amount, this.redirect});
 
-  final CommunityIdentifier cid;
-  final String communitySymbol;
-  final String recipient;
-  final String label;
-  final double amount;
-  final String redirect;
+  final CommunityIdentifier? cid;
+  final String? communitySymbol;
+  final String? recipient;
+  final String? label;
+  final double? amount;
+  final String? redirect;
 }
 
 class TransferPage extends StatefulWidget {
   const TransferPage(this.store);
 
   static const String route = '/assets/transfer';
-  final AppStore store;
+  final AppStore? store;
 
   @override
   _TransferPageState createState() => _TransferPageState(store);
@@ -43,27 +43,27 @@ class TransferPage extends StatefulWidget {
 class _TransferPageState extends State<TransferPage> {
   _TransferPageState(this.store);
 
-  final AppStore store;
+  final AppStore? store;
 
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _amountCtrl = new TextEditingController();
 
-  AccountData _accountTo;
-  CommunityIdentifier _cid;
-  String _communitySymbol;
+  AccountData? _accountTo;
+  CommunityIdentifier? _cid;
+  String? _communitySymbol;
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
-    TransferPageParams params = ModalRoute.of(context).settings.arguments;
+    final Translations dic = I18n.of(context)!.translationsForLocale();
+    TransferPageParams params = ModalRoute.of(context)!.settings.arguments as TransferPageParams;
 
     _communitySymbol = params.communitySymbol;
-    _cid = params.cid ?? store.encointer.chosenCid;
+    _cid = params.cid ?? store!.encointer!.chosenCid;
 
     int decimals = encointer_currencies_decimals;
 
-    double available = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry);
+    double? available = store!.encointer!.applyDemurrage(store!.encointer!.communityBalanceEntry);
 
     print("[transferPage]: available: $available");
 
@@ -94,16 +94,16 @@ class _TransferPageState extends State<TransferPage> {
                       children: [
                         CombinedCommunityAndAccountAvatar(store, showCommunityNameAndAccountName: false),
                         SizedBox(height: 12),
-                        store.encointer.communityBalance != null
+                        store!.encointer!.communityBalance != null
                             ? AccountBalanceWithMoreDigits(store: store, available: available, decimals: decimals)
                             : CupertinoActivityIndicator(),
                         Text(
-                          I18n.of(context)
+                          I18n.of(context)!
                               .translationsForLocale()
                               .assets
                               .yourBalanceFor
-                              .replaceAll("ACCOUNT_NAME", Fmt.accountName(context, store.account.currentAccount)),
-                          style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
+                              .replaceAll("ACCOUNT_NAME", Fmt.accountName(context, store!.account!.currentAccount)),
+                          style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                           textAlign: TextAlign.center,
                         ),
                         SizedBox(height: 24),
@@ -118,7 +118,7 @@ class _TransferPageState extends State<TransferPage> {
                         SizedBox(height: 24),
                         EncointerTextFormField(
                           labelText: dic.assets.amountToBeTransferred,
-                          textStyle: Theme.of(context).textTheme.headline1.copyWith(color: encointerBlack),
+                          textStyle: Theme.of(context).textTheme.headline1!.copyWith(color: encointerBlack),
                           inputFormatters: [UI.decimalInputFormatter(decimals: decimals)],
                           keyboardType: TextInputType.numberWithOptions(decimal: true),
                           controller: _amountCtrl,
@@ -127,7 +127,7 @@ class _TransferPageState extends State<TransferPage> {
                             if (value.isEmpty) {
                               return dic.assets.amountError;
                             }
-                            if (balanceTooLow(value, available, decimals)) {
+                            if (balanceTooLow(value, available!, decimals)) {
                               return dic.assets.insufficientBalance;
                             }
                             return null;
@@ -156,11 +156,11 @@ class _TransferPageState extends State<TransferPage> {
                     ),
                   ),
                   SizedBox(height: 48),
-                  store.settings.developerMode
+                  store!.settings!.developerMode
                       ? Center(
                           child: Text(
                             "${dic.assets.fee}: TODO compute Fee", // TODO compute fee #589
-                            style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
+                            style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                           ),
                         )
                       : Container(),
@@ -190,7 +190,7 @@ class _TransferPageState extends State<TransferPage> {
   }
 
   void _pushPaymentConfirmationPage() {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState!.validate()) {
       Navigator.pushNamed(
         context,
         PaymentConfirmationPage.route,
@@ -208,7 +208,7 @@ class _TransferPageState extends State<TransferPage> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final TransferPageParams args = ModalRoute.of(context).settings.arguments;
+      final TransferPageParams args = ModalRoute.of(context)!.settings.arguments as TransferPageParams;
       if (args.amount != null) {
         _amountCtrl.text = '${args.amount}';
       }
@@ -221,18 +221,18 @@ class _TransferPageState extends State<TransferPage> {
           _accountTo = acc;
         });
       } else {
-        if (widget.store.account.optionalAccounts.length > 0) {
+        if (widget.store!.account!.optionalAccounts.length > 0) {
           setState(() {
-            _accountTo = widget.store.account.optionalAccounts[0];
+            _accountTo = widget.store!.account!.optionalAccounts[0];
           });
-        } else if (widget.store.settings.contactList.length > 0) {
+        } else if (widget.store!.settings!.contactList.length > 0) {
           setState(() {
-            _accountTo = widget.store.settings.contactList[0];
+            _accountTo = widget.store!.settings!.contactList[0];
           });
         }
       }
 
-      webApi.fetchAccountData();
+      webApi!.fetchAccountData();
     });
   }
 
@@ -249,14 +249,14 @@ class _TransferPageState extends State<TransferPage> {
 
 class AccountBalanceWithMoreDigits extends StatelessWidget {
   const AccountBalanceWithMoreDigits({
-    Key key,
-    @required this.store,
-    @required this.available,
-    @required this.decimals,
+    Key? key,
+    required this.store,
+    required this.available,
+    required this.decimals,
   }) : super(key: key);
 
-  final AppStore store;
-  final double available;
+  final AppStore? store;
+  final double? available;
   final int decimals;
 
   @override
@@ -269,7 +269,7 @@ class AccountBalanceWithMoreDigits extends StatelessWidget {
             available,
             length: 6,
           )} ',
-          style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
+          style: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
           children: const <TextSpan>[
             TextSpan(
               text: 'ⵐ',

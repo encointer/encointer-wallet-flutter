@@ -18,22 +18,22 @@ import 'package:get_storage/get_storage.dart';
 import 'core/jsApi.dart';
 
 // global api instance
-Api webApi;
+Api? webApi;
 
 class Api {
   Api(this.context, this.store);
 
-  final BuildContext context;
-  final AppStore store;
-  var jsStorage;
+  final BuildContext? context;
+  final AppStore? store;
+  late var jsStorage;
 
-  JSApi js;
-  AccountApi account;
-  AssetsApi assets;
-  ChainApi chain;
-  CodecApi codec;
-  EncointerApi encointer;
-  Ipfs ipfs;
+  JSApi? js;
+  late AccountApi account;
+  late AssetsApi assets;
+  late ChainApi chain;
+  late CodecApi codec;
+  EncointerApi? encointer;
+  late Ipfs ipfs;
 
   SubScanApi subScanApi = SubScanApi();
 
@@ -43,14 +43,14 @@ class Api {
 
     // no need to store this as an instance it is only used by the encointerApi
     var dartApi = SubstrateDartApi();
-    dartApi.connect(store.settings.endpoint.value);
+    dartApi.connect(store!.settings!.endpoint.value!);
 
     account = AccountApi(js, fetchAccountData);
     assets = AssetsApi(js);
     chain = ChainApi(js);
     codec = CodecApi(js);
     encointer = EncointerApi(js, dartApi);
-    ipfs = Ipfs(gateway: store.settings.ipfsGateway);
+    ipfs = Ipfs(gateway: store!.settings!.ipfsGateway);
 
     print("launch the webview");
     await launchWebview();
@@ -59,7 +59,7 @@ class Api {
   Future<void> close() async {
     await stopSubscriptions();
     await closeWebView();
-    await encointer.close();
+    await encointer!.close();
   }
 
   Future<void> launchWebview({bool customNode = false}) async {
@@ -69,15 +69,15 @@ class Api {
       // load keyPairs from local data
       await account.initAccounts();
 
-      if (store.account.currentAddress != null) {
+      if (store!.account!.currentAddress != null) {
         // needs to be called after init-accounts
-        store.encointer.initializeUninitializedStores(store.account.currentAddress);
+        store!.encointer!.initializeUninitializedStores(store!.account!.currentAddress);
       }
 
       connectFunc();
     }
 
-    return js.launchWebView(context, postInitCallback);
+    return js!.launchWebView(context!, postInitCallback);
   }
 
   /// Evaluate javascript [code] in the webView.
@@ -93,23 +93,23 @@ class Api {
     // calls to the same method.
     bool allowRepeat = true,
   }) {
-    return js.evalJavascript(code, wrapPromise: wrapPromise, allowRepeat: allowRepeat);
+    return js!.evalJavascript(code, wrapPromise: wrapPromise, allowRepeat: allowRepeat);
   }
 
   Future<void> connectNode() async {
-    String node = store.settings.endpoint.value;
-    NodeConfig config = store.settings.endpoint.overrideConfig;
+    String? node = store!.settings!.endpoint.value;
+    NodeConfig? config = store!.settings!.endpoint.overrideConfig;
     // do connect
-    String res = await evalJavascript('settings.connect("$node", "${jsonEncode(config)}")');
+    String? res = await (evalJavascript('settings.connect("$node", "${jsonEncode(config)}")') as FutureOr<String?>);
     if (res == null) {
       print('connecting to node failed');
-      store.settings.setNetworkName(null);
+      store!.settings!.setNetworkName(null);
       return;
     }
 
-    if (store.settings.endpointIsTeeProxy) {
-      var worker = store.settings.endpoint.worker;
-      var mrenclave = store.settings.endpoint.mrenclave;
+    if (store!.settings!.endpointIsTeeProxy) {
+      var worker = store!.settings!.endpoint.worker;
+      var mrenclave = store!.settings!.endpoint.mrenclave;
       await evalJavascript('settings.setWorkerEndpoint("$worker", "$mrenclave")');
     }
 
@@ -117,34 +117,34 @@ class Api {
   }
 
   Future<void> connectNodeAll() async {
-    List<String> nodes = store.settings.endpointList.map((e) => e.value).toList();
-    List<NodeConfig> configs = store.settings.endpointList.map((e) => e.overrideConfig).toList();
+    List<String?> nodes = store!.settings!.endpointList.map((e) => e.value).toList();
+    List<NodeConfig?> configs = store!.settings!.endpointList.map((e) => e.overrideConfig).toList();
     print("configs: $configs");
     // do connect
-    String res = await evalJavascript('settings.connectAll(${jsonEncode(nodes)}, ${jsonEncode(configs)})');
+    String? res = await (evalJavascript('settings.connectAll(${jsonEncode(nodes)}, ${jsonEncode(configs)})') as FutureOr<String?>);
     if (res == null) {
       print('connect failed');
-      store.settings.setNetworkName(null);
+      store!.settings!.setNetworkName(null);
       return;
     }
 
     // setWorker endpoint on js side
-    if (store.settings.endpointIsTeeProxy) {
-      var worker = store.settings.endpoint.worker;
-      var mrenclave = store.settings.endpoint.mrenclave;
+    if (store!.settings!.endpointIsTeeProxy) {
+      var worker = store!.settings!.endpoint.worker;
+      var mrenclave = store!.settings!.endpoint.mrenclave;
       await evalJavascript('settings.setWorkerEndpoint("$worker", "$mrenclave")');
     }
 
-    int index = store.settings.endpointList.indexWhere((i) => i.value == res);
+    int index = store!.settings!.endpointList.indexWhere((i) => i.value == res);
     if (index < 0) return;
-    store.settings.setEndpoint(store.settings.endpointList[index]);
+    store!.settings!.setEndpoint(store!.settings!.endpointList[index]);
     await fetchNetworkProps();
-    encointer.getCommunityData();
+    encointer!.getCommunityData();
   }
 
   void fetchAccountData() {
     assets.fetchBalance();
-    encointer.getCommunityData();
+    encointer!.getCommunityData();
   }
 
   Future<void> fetchNetworkProps() async {
@@ -154,37 +154,37 @@ class Api {
       evalJavascript('api.rpc.system.properties()'),
       evalJavascript('api.rpc.system.chain()'), // "Development" or "Encointer Testnet Gesell" or whatever
     ]);
-    store.settings.setNetworkConst(info[0]);
-    store.settings.setNetworkState(info[1]);
-    store.settings.setNetworkName(info[2]);
+    store!.settings!.setNetworkConst(info[0]);
+    store!.settings!.setNetworkState(info[1]);
+    store!.settings!.setNetworkName(info[2]);
 
     startSubscriptions();
   }
 
   void startSubscriptions() {
-    this.encointer.startSubscriptions();
+    this.encointer!.startSubscriptions();
     this.chain.startSubscriptions();
     this.assets.startSubscriptions();
   }
 
   Future<void> stopSubscriptions() async {
-    await this.encointer.stopSubscriptions();
+    await this.encointer!.stopSubscriptions();
     await this.chain.stopSubscriptions();
     await this.assets.stopSubscriptions();
   }
 
   Future<void> updateBlocks(List txs) async {
-    Map<int, bool> blocksNeedUpdate = Map<int, bool>();
+    Map<int?, bool> blocksNeedUpdate = Map<int?, bool>();
     txs.forEach((i) {
-      int block = i['attributes']['block_id'];
-      if (store.assets.blockMap[block] == null) {
+      int? block = i['attributes']['block_id'];
+      if (store!.assets!.blockMap[block] == null) {
         blocksNeedUpdate[block] = true;
       }
     });
     String blocks = blocksNeedUpdate.keys.join(',');
     var data = await evalJavascript('account.getBlockTime([$blocks])');
 
-    store.assets.setBlockMap(data);
+    store!.assets!.setBlockMap(data);
   }
 
   Future<void> subscribeMessage(
@@ -192,29 +192,29 @@ class Api {
     String channel,
     Function callback,
   ) async {
-    js.subscribeMessage(code, channel, callback);
+    js!.subscribeMessage(code, channel, callback);
   }
 
   Future<void> unsubscribeMessage(String channel) async {
-    js.unsubscribeMessage(channel);
+    js!.unsubscribeMessage(channel);
   }
 
-  Future<bool> isConnected() async {
-    bool connected = await evalJavascript('settings.isConnected()');
+  Future<bool?> isConnected() async {
+    bool? connected = await (evalJavascript('settings.isConnected()') as FutureOr<bool?>);
     print("Api is connected: $connected");
     return connected;
   }
 
   Future<void> closeWebView() async {
     await stopSubscriptions();
-    return js.closeWebView();
+    return js!.closeWebView();
   }
 
-  Future<List> getExternalLinks(GenExternalLinksParams params) async {
-    final List res = await evalJavascript(
+  Future<List?> getExternalLinks(GenExternalLinksParams params) async {
+    final List? res = await (evalJavascript(
       'settings.genLinks(${jsonEncode(GenExternalLinksParams.toJson(params))})',
       allowRepeat: true,
-    );
+    ) as FutureOr<List<dynamic>?>);
     return res;
   }
 }

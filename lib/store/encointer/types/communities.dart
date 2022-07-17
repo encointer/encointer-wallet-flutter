@@ -16,11 +16,11 @@ part 'communities.g.dart';
 class CommunityMetadata {
   CommunityMetadata(this.name, this.symbol, this.assets, this.url, this.theme);
 
-  String name;
-  String symbol;
-  String assets;
-  String url;
-  String theme;
+  String? name;
+  String? symbol;
+  String? assets;
+  String? url;
+  String? theme;
 
   @override
   String toString() {
@@ -86,8 +86,8 @@ class CommunityIdentifier {
 class CidName {
   CidName(this.cid, this.name);
 
-  CommunityIdentifier cid;
-  String name;
+  CommunityIdentifier? cid;
+  String? name;
 
   @override
   String toString() {

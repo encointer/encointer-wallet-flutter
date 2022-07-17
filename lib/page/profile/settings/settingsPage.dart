@@ -10,7 +10,7 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 class SettingsPage extends StatefulWidget {
   SettingsPage(this.store, this.changeLang);
   static const String route = '/profile/settings';
-  final SettingsStore store;
+  final SettingsStore? store;
   final Function changeLang;
   @override
   _Settings createState() => _Settings(store, changeLang);
@@ -19,7 +19,7 @@ class SettingsPage extends StatefulWidget {
 class _Settings extends State<SettingsPage> {
   _Settings(this.store, this.changeLang);
 
-  final SettingsStore store;
+  final SettingsStore? store;
   final Function changeLang;
 
   final _langOptions = [null, 'en', 'de'];
@@ -28,9 +28,9 @@ class _Settings extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
 
-    String getLang(String code) {
+    String getLang(String? code) {
       switch (code) {
         case 'en':
           return 'English';
@@ -50,7 +50,7 @@ class _Settings extends State<SettingsPage> {
             child: CupertinoPicker(
               backgroundColor: Colors.white,
               itemExtent: 58,
-              scrollController: FixedExtentScrollController(initialItem: _langOptions.indexOf(store.localeCode)),
+              scrollController: FixedExtentScrollController(initialItem: _langOptions.indexOf(store!.localeCode)),
               children: _langOptions.map((i) {
                 return Padding(padding: EdgeInsets.all(16), child: Text(getLang(i)));
               }).toList(),
@@ -61,9 +61,9 @@ class _Settings extends State<SettingsPage> {
               },
             ),
             onWillPop: () async {
-              String code = _langOptions[_selected];
-              if (code != store.localeCode) {
-                store.setLocalCode(code);
+              String? code = _langOptions[_selected];
+              if (code != store!.localeCode) {
+                store!.setLocalCode(code);
                 changeLang(context, code);
               }
               return true;
@@ -75,7 +75,7 @@ class _Settings extends State<SettingsPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context).translationsForLocale().profile.setting),
+        title: Text(I18n.of(context)!.translationsForLocale().profile.setting),
         centerTitle: true,
       ),
       body: Observer(
@@ -85,26 +85,26 @@ class _Settings extends State<SettingsPage> {
               ListTile(
                 leading: Container(
                   width: 36,
-                  child: Image.asset('assets/images/public/${store.endpoint.info}.png'),
+                  child: Image.asset('assets/images/public/${store!.endpoint.info}.png'),
                 ),
                 title: Text(dic.profile.settingNode),
-                subtitle: Text(store.endpoint.text ?? ''),
+                subtitle: Text(store!.endpoint.text ?? ''),
                 trailing: Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.of(context).pushNamed(RemoteNodeListPage.route),
               ),
               ListTile(
                 leading: Container(
                   width: 36,
-                  child: Image.asset('assets/images/public/${store.customSS58Format['info']}.png'),
+                  child: Image.asset('assets/images/public/${store!.customSS58Format['info']}.png'),
                 ),
                 title: Text(dic.profile.settingPrefix),
-                subtitle: Text(store.customSS58Format['text'] ?? ''),
+                subtitle: Text(store!.customSS58Format['text'] ?? ''),
                 trailing: Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.of(context).pushNamed(SS58PrefixListPage.route),
               ),
               ListTile(
                 title: Text(dic.profile.settingLang),
-                subtitle: Text(getLang(store.localeCode)),
+                subtitle: Text(getLang(store!.localeCode)),
                 trailing: Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => _onLanguageTap(),
               )

@@ -117,13 +117,13 @@ mixin _$OpeningHoursState on _OpeningHoursState, Store {
   final _$copiedOpeningHoursAtom = Atom(name: '_OpeningHoursState.copiedOpeningHours');
 
   @override
-  OpeningHoursForDayState get copiedOpeningHours {
+  OpeningHoursForDayState? get copiedOpeningHours {
     _$copiedOpeningHoursAtom.reportRead();
     return super.copiedOpeningHours;
   }
 
   @override
-  set copiedOpeningHours(OpeningHoursForDayState value) {
+  set copiedOpeningHours(OpeningHoursForDayState? value) {
     _$copiedOpeningHoursAtom.reportWrite(value, super.copiedOpeningHours, () {
       super.copiedOpeningHours = value;
     });
@@ -132,13 +132,13 @@ mixin _$OpeningHoursState on _OpeningHoursState, Store {
   final _$dayOnFocusAtom = Atom(name: '_OpeningHoursState.dayOnFocus');
 
   @override
-  int get dayOnFocus {
+  int? get dayOnFocus {
     _$dayOnFocusAtom.reportRead();
     return super.dayOnFocus;
   }
 
   @override
-  set dayOnFocus(int value) {
+  set dayOnFocus(int? value) {
     _$dayOnFocusAtom.reportWrite(value, super.dayOnFocus, () {
       super.dayOnFocus = value;
     });
@@ -147,13 +147,13 @@ mixin _$OpeningHoursState on _OpeningHoursState, Store {
   final _$dayToCopyFromAtom = Atom(name: '_OpeningHoursState.dayToCopyFrom');
 
   @override
-  int get dayToCopyFrom {
+  int? get dayToCopyFrom {
     _$dayToCopyFromAtom.reportRead();
     return super.dayToCopyFrom;
   }
 
   @override
-  set dayToCopyFrom(int value) {
+  set dayToCopyFrom(int? value) {
     _$dayToCopyFromAtom.reportWrite(value, super.dayToCopyFrom, () {
       super.dayToCopyFrom = value;
     });
@@ -228,13 +228,13 @@ mixin _$OpeningHoursForDayState on _OpeningHoursForDayState, Store {
   final _$timeFormatErrorAtom = Atom(name: '_OpeningHoursForDayState.timeFormatError');
 
   @override
-  String get timeFormatError {
+  String? get timeFormatError {
     _$timeFormatErrorAtom.reportRead();
     return super.timeFormatError;
   }
 
   @override
-  set timeFormatError(String value) {
+  set timeFormatError(String? value) {
     _$timeFormatErrorAtom.reportWrite(value, super.timeFormatError, () {
       super.timeFormatError = value;
     });

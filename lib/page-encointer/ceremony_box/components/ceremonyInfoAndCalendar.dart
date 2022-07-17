@@ -10,20 +10,20 @@ class CeremonyInfoAndCalendar extends StatelessWidget {
     this.nextCeremonyDate,
     this.infoLink,
     this.devMode = false,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   final devMode;
 
   /// date for the next ceremony
-  final DateTime nextCeremonyDate;
+  final DateTime? nextCeremonyDate;
 
   /// open this Uri in a browser to give the user background information
-  final String infoLink;
+  final String? infoLink;
 
   @override
   Widget build(BuildContext context) {
-    var dic = I18n.of(context).translationsForLocale();
+    var dic = I18n.of(context)!.translationsForLocale();
     Event calendarEventToAdd = CeremonyBoxService.createCalendarEvent(nextCeremonyDate, dic);
     bool showAddToCalendarIconButton = CeremonyBoxService.showAddToCalendarIconButton();
     return Column(
@@ -33,7 +33,7 @@ class CeremonyInfoAndCalendar extends StatelessWidget {
             quarterTurns: 2,
             child: Icon(Iconsax.info_circle),
           ),
-          onPressed: () => UI.launchURL(infoLink),
+          onPressed: () => UI.launchURL(infoLink!),
         ),
         if (devMode && showAddToCalendarIconButton)
           IconButton(

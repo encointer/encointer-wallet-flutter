@@ -27,7 +27,7 @@ class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     return Container(
       width: double.infinity,
       child: RoundedCard(
@@ -36,35 +36,35 @@ class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
           children: <Widget>[
             Text(dic.assets.communityChoose),
             Observer(
-              builder: (_) => (store.encointer.communities == null)
+              builder: (_) => (store.encointer!.communities == null)
                   ? CupertinoActivityIndicator()
-                  : (store.encointer.communities.isEmpty)
+                  : (store.encointer!.communities!.isEmpty)
                       ? Text(dic.assets.communitiesNotFound)
                       : DropdownButton<dynamic>(
                           key: Key('cid-dropdown'),
                           // todo find out, why adding the hint breaks the integration test walkthrough when choosing community #225
                           // hint: Text(dic.assets.communityChoose),
-                          value: (store.encointer.chosenCid == null ||
-                                  store.encointer.communities
-                                      .where((cn) => cn.cid == store.encointer.chosenCid)
+                          value: (store.encointer!.chosenCid == null ||
+                                  store.encointer!.communities!
+                                      .where((cn) => cn.cid == store.encointer!.chosenCid)
                                       .isEmpty)
                               ? null
-                              : store.encointer.communities.where((cn) => cn.cid == store.encointer.chosenCid).first,
+                              : store.encointer!.communities!.where((cn) => cn.cid == store.encointer!.chosenCid).first,
                           icon: Icon(Icons.arrow_downward),
                           iconSize: 32,
                           elevation: 32,
                           onChanged: (newValue) {
                             setState(() {
-                              store.encointer.setChosenCid(newValue.cid);
+                              store.encointer!.setChosenCid(newValue.cid);
                             });
                           },
-                          items: store.encointer.communities
+                          items: store.encointer!.communities!
                               .asMap()
                               .entries
                               .map((entry) => DropdownMenuItem<dynamic>(
                                     key: Key('cid-${entry.key}'),
                                     value: entry.value,
-                                    child: Text(entry.value.name),
+                                    child: Text(entry.value.name!),
                                   ))
                               .toList(),
                         ),
@@ -79,13 +79,13 @@ class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
 /// the CombinedCommunityAndAccountAvatar should be wrapped in an InkWell to provide the callback on a click
 class CombinedCommunityAndAccountAvatar extends StatefulWidget {
   const CombinedCommunityAndAccountAvatar(this.store,
-      {Key key,
+      {Key? key,
       this.showCommunityNameAndAccountName = true,
       this.communityAvatarSize = 96,
       this.accountAvatarSize = 34})
       : super(key: key);
 
-  final AppStore store;
+  final AppStore? store;
   final double communityAvatarSize;
   final double accountAvatarSize;
 
@@ -96,7 +96,7 @@ class CombinedCommunityAndAccountAvatar extends StatefulWidget {
 }
 
 class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAndAccountAvatar> {
-  final AppStore store;
+  final AppStore? store;
 
   _CombinedCommunityAndAccountAvatarState(this.store);
 
@@ -117,7 +117,7 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
                     ),
                     child: CommunityAvatar(
                       store: store,
-                      avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.community?.assetsCid),
+                      avatarIcon: webApi!.ipfs.getCommunityIcon(store!.encointer!.community?.assetsCid),
                       avatarSize: widget.communityAvatarSize,
                     ),
                   ),
@@ -126,7 +126,7 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
                     right: 0,
                     child: AddressIcon(
                       '',
-                      store.account.currentAccount.pubKey,
+                      store!.account!.currentAccount.pubKey,
                       size: widget.accountAvatarSize,
                       tapToCopy: false,
                     ),
@@ -136,8 +136,8 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
               SizedBox(height: 4),
               if (widget.showCommunityNameAndAccountName)
                 Text(
-                  '${store.encointer.community?.name ?? "..."}\n${Fmt.accountName(context, store.account.currentAccount)}',
-                  style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
+                  '${store!.encointer!.community?.name ?? "..."}\n${Fmt.accountName(context, store!.account!.currentAccount)}',
+                  style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey, height: 1.5),
                   textAlign: TextAlign.center,
                 ),
             ],
@@ -150,13 +150,13 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
 
 class CommunityAvatar extends StatelessWidget {
   const CommunityAvatar({
-    Key key,
-    @required this.store,
-    @required this.avatarIcon,
+    Key? key,
+    required this.store,
+    required this.avatarIcon,
     this.avatarSize = 120,
   }) : super(key: key);
 
-  final AppStore store;
+  final AppStore? store;
   final double avatarSize;
   final Future<SvgPicture> avatarIcon;
 
@@ -169,7 +169,7 @@ class CommunityAvatar extends StatelessWidget {
         future: avatarIcon,
         builder: (_, AsyncSnapshot<SvgPicture> snapshot) {
           if (snapshot.hasData) {
-            return snapshot.data;
+            return snapshot.data!;
           } else {
             return CupertinoActivityIndicator();
           }

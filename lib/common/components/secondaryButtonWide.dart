@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 class SecondaryButtonWide extends StatelessWidget {
   SecondaryButtonWide({
-    @required this.child,
+    required this.child,
     this.onPressed,
   });
 
-  final Widget child;
-  final Function onPressed;
+  final Widget? child;
+  final Function? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class SecondaryButtonWide extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
         child: child,
-        onPressed: onPressed,
+        onPressed: onPressed as void Function()?,
       ),
     );
   }

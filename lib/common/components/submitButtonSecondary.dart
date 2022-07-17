@@ -8,13 +8,13 @@ import 'package:flutter/cupertino.dart';
 /// Same as `SubmitButton` but with the style of the secondary button.
 class SubmitButtonSecondary extends StatefulWidget {
   const SubmitButtonSecondary({
-    Key key,
+    Key? key,
     this.child,
     this.onPressed,
   }) : super(key: key);
 
-  final Widget child;
-  final Future<void> Function(BuildContext) onPressed;
+  final Widget? child;
+  final Future<void> Function(BuildContext)? onPressed;
 
   @override
   _SubmitButtonSecondaryState createState() => _SubmitButtonSecondaryState();
@@ -27,7 +27,7 @@ class _SubmitButtonSecondaryState extends State<SubmitButtonSecondary> {
     setState(() {
       _submitting = true;
     });
-    await widget.onPressed(context);
+    await widget.onPressed!(context);
     setState(() {
       _submitting = false;
     });

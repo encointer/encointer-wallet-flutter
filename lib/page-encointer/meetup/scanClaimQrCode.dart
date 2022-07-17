@@ -16,32 +16,32 @@ import 'package:permission_handler/permission_handler.dart';
 class ScanClaimQrCode extends StatelessWidget {
   ScanClaimQrCode(this.store, this.confirmedParticipantsCount);
 
-  final AppStore store;
+  final AppStore? store;
   final int confirmedParticipantsCount;
 
   final GlobalKey<QrcodeReaderViewState> _qrViewKey = GlobalKey();
 
   void validateAndStoreClaim(BuildContext context, ClaimOfAttendance claim, Translations dic) {
-    List<String> registry = store.encointer.communityAccount.meetup.registry;
+    List<String> registry = store!.encointer!.communityAccount.meetup!.registry!;
     if (!registry.contains(claim.claimantPublic)) {
       // this is important because the runtime checks if there are too many claims trying to be registered.
       RootSnackBar.showMsg(dic.encointer.meetupClaimantInvalid);
       print("[scanClaimQrCode] Claimant: ${claim.claimantPublic} is not part of registry: ${registry.toString()}");
     } else {
-      String msg = store.encointer.communityAccount.containsClaim(claim)
+      String msg = store!.encointer!.communityAccount.containsClaim(claim)
           ? dic.encointer.claimsScannedAlready
           : dic.encointer.claimsScannedNew;
 
-      store.encointer.communityAccount.addParticipantClaim(claim);
+      store!.encointer!.communityAccount.addParticipantClaim(claim);
       RootSnackBar.showMsg(msg);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
 
-    Future _onScan(String base64Data, String _rawData) async {
+    Future _onScan(String? base64Data, String? _rawData) async {
       // Show a cupertino activity indicator as long as we are decoding
       _showActivityIndicatorOverlay(context);
 
@@ -51,7 +51,7 @@ class ScanClaimQrCode extends StatelessWidget {
 
           // Todo: Not good to use the global webApi here, but I wanted to prevent big changes into the code for now.
           // Fix this when #132 is tackled.
-          var claim = await webApi.codec
+          var claim = await webApi!.codec
               .decodeBytes(ClaimOfAttendanceJSRegistryName, data)
               .then((c) => ClaimOfAttendance.fromJson(c));
 
@@ -67,7 +67,7 @@ class ScanClaimQrCode extends StatelessWidget {
       // pops the cupertino activity indicator.
       Navigator.of(context).pop();
 
-      _qrViewKey.currentState.startScan();
+      _qrViewKey.currentState!.startScan();
     }
 
     return Scaffold(
@@ -79,7 +79,7 @@ class ScanClaimQrCode extends StatelessWidget {
               key: _qrViewKey,
               helpWidget: Observer(
                   builder: (_) => Text(dic.encointer.claimsScannedNOfM
-                      .replaceAll('SCANNED_COUNT', store.encointer.communityAccount.scannedClaimsCount.toString())
+                      .replaceAll('SCANNED_COUNT', store!.encointer!.communityAccount.scannedClaimsCount.toString())
                       .replaceAll('TOTAL_COUNT', (confirmedParticipantsCount - 1).toString()))),
               headerWidget: SafeArea(
                   child: Align(

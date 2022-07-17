@@ -11,7 +11,7 @@ class Offerings extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      ToggleButtonsWithTitle(I18n.of(context).translationsForLocale().bazaar.categories, allCategories, null),
+      ToggleButtonsWithTitle(I18n.of(context)!.translationsForLocale().bazaar.categories, allCategories, null),
       Expanded(
         child: ListView.builder(
           itemCount: data.length,

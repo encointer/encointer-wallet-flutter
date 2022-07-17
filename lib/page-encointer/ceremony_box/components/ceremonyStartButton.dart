@@ -5,15 +5,15 @@ import 'package:iconsax/iconsax.dart';
 
 class CeremonyStartButton extends StatelessWidget {
   const CeremonyStartButton({
-    Key key,
+    Key? key,
     this.onPressed,
   }) : super(key: key);
 
-  final Function onPressed;
+  final Function? onPressed;
 
   @override
   Widget build(BuildContext context) {
-    var dic = I18n.of(context).translationsForLocale();
+    var dic = I18n.of(context)!.translationsForLocale();
     return PrimaryButton(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

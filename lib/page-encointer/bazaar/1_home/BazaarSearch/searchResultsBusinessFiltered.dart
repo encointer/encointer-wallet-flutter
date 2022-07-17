@@ -12,11 +12,11 @@ class SearchResultsBusinessFiltered extends StatelessWidget {
   final selectedDeliveryOptions = <bool>[];
   final selectedProductNewnessOptions = <bool>[];
 
-  SearchResultsBusinessFiltered(this.results, {Key key}) : super(key: key);
+  SearchResultsBusinessFiltered(this.results, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Translations dic = I18n.of(context).translationsForLocale();
+    Translations dic = I18n.of(context)!.translationsForLocale();
     var titleStyle = TextStyle(fontWeight: FontWeight.bold);
 
     return Scaffold(
@@ -27,17 +27,17 @@ class SearchResultsBusinessFiltered extends StatelessWidget {
           ),
         ),
         body: ListView(children: [
-          ToggleButtonsWithTitle(I18n.of(context).translationsForLocale().bazaar.categories, categories, null),
+          ToggleButtonsWithTitle(I18n.of(context)!.translationsForLocale().bazaar.categories, categories, null),
         ]),
         floatingActionButton: ButtonBar(
           children: [
             ElevatedButton(
               onPressed: () => null, // TODO state management
-              child: Text(I18n.of(context).translationsForLocale().bazaar.reset),
+              child: Text(I18n.of(context)!.translationsForLocale().bazaar.reset),
             ),
             ElevatedButton(
               onPressed: () => null, //TODO state management
-              child: Text(I18n.of(context).translationsForLocale().bazaar.apply),
+              child: Text(I18n.of(context)!.translationsForLocale().bazaar.apply),
             ),
           ],
         ));

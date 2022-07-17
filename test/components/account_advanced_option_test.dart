@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-Widget makeTestableWidget({Widget child}) {
+Widget makeTestableWidget({Widget? child}) {
   return MediaQuery(
     data: MediaQueryData(),
     child: MaterialApp(
@@ -24,7 +24,7 @@ Widget makeTestableWidget({Widget child}) {
 
 void main() {
   testWidgets('account advanced option widget test', (WidgetTester tester) async {
-    AccountAdvanceOptionParams params;
+    late AccountAdvanceOptionParams params;
     Widget myWidget = AccountAdvanceOption(
       seed: '',
       onChange: (value) {

@@ -44,31 +44,31 @@ abstract class _AccountStore with Store {
   bool loading = true;
 
   @observable
-  TxStatus txStatus;
+  TxStatus? txStatus;
 
   @observable
   AccountCreate newAccount = AccountCreate();
 
   @observable
-  String currentAccountPubKey = '';
+  String? currentAccountPubKey = '';
 
   @observable
   ObservableList<AccountData> accountList = ObservableList<AccountData>();
 
   @observable
-  ObservableMap<String, Map> addressIndexMap = ObservableMap<String, Map>();
+  ObservableMap<String?, Map> addressIndexMap = ObservableMap<String?, Map>();
 
   @observable
-  Map<String, Map> accountIndexMap = Map<String, Map>();
+  Map<String?, Map> accountIndexMap = Map<String, Map>();
 
   @observable
   ObservableMap<int, Map<String, String>> pubKeyAddressMap = ObservableMap<int, Map<String, String>>();
 
   @observable
-  ObservableMap<String, String> pubKeyIconsMap = ObservableMap<String, String>();
+  ObservableMap<String?, String?> pubKeyIconsMap = ObservableMap<String?, String?>();
 
   @observable
-  ObservableMap<String, String> addressIconsMap = ObservableMap<String, String>();
+  ObservableMap<String?, String?> addressIconsMap = ObservableMap<String?, String?>();
 
   @observable
   List<Map<String, dynamic>> queuedTxs = ObservableList<Map<String, dynamic>>();
@@ -78,7 +78,7 @@ abstract class _AccountStore with Store {
     return getAccountData(currentAccountPubKey);
   }
 
-  AccountData getAccountData(String requestedPubKey) {
+  AccountData getAccountData(String? requestedPubKey) {
     int i = accountListAll.indexWhere((i) => i.pubKey == requestedPubKey);
     if (i < 0) {
       if (accountListAll.isNotEmpty) {
@@ -99,7 +99,7 @@ abstract class _AccountStore with Store {
   @computed
   List<AccountData> get accountListAll {
     List<AccountData> accList = accountList.toList();
-    List<AccountData> contactList = rootStore.settings.contactList.toList();
+    List<AccountData> contactList = rootStore.settings!.contactList.toList();
     contactList.retainWhere((i) => i.observation ?? false);
     accList.addAll(contactList);
     return accList;
@@ -111,24 +111,24 @@ abstract class _AccountStore with Store {
   }
 
   @computed
-  String get currentAddress {
+  String? get currentAddress {
     return getNetworkAddress(currentAccountPubKey);
   }
 
   /// Gets the address (SS58) for the corresponding network.
-  String getNetworkAddress(String pubKey) {
+  String? getNetworkAddress(String? pubKey) {
     // _log("currentAddress: endpoint.info: ${rootStore.settings.endpoint.info}");
     // _log("currentAddress: endpoint.ss58: ${rootStore.settings.endpoint.ss58}");
     // _log("currentAddress: customSS58: ${rootStore.settings.customSS58Format.toString()}");
     // _log("currentAddress: AddressMap 42: ${pubKeyAddressMap[42].toString()}");
     // _log("currentAddress: AddressMap 2: ${pubKeyAddressMap[2].toString()}");
 
-    int ss58 = rootStore.settings.customSS58Format['value'];
-    if (rootStore.settings.customSS58Format['info'] == default_ss58_prefix['info']) {
-      ss58 = rootStore.settings.endpoint.ss58;
+    int? ss58 = rootStore.settings!.customSS58Format['value'];
+    if (rootStore.settings!.customSS58Format['info'] == default_ss58_prefix['info']) {
+      ss58 = rootStore.settings!.endpoint.ss58;
     }
 
-    final address = pubKeyAddressMap[ss58] != null ? pubKeyAddressMap[ss58][pubKey] : null;
+    final address = pubKeyAddressMap[ss58!] != null ? pubKeyAddressMap[ss58]![pubKey!] : null;
 
     if (address != null) {
       return address;
@@ -139,7 +139,7 @@ abstract class _AccountStore with Store {
   }
 
   @action
-  void setTxStatus([TxStatus status]) {
+  void setTxStatus([TxStatus? status]) {
     txStatus = status;
   }
 
@@ -159,7 +159,7 @@ abstract class _AccountStore with Store {
   }
 
   @action
-  void setNewAccountKey(String key) {
+  void setNewAccountKey(String? key) {
     newAccount.key = key;
   }
 
@@ -173,15 +173,15 @@ abstract class _AccountStore with Store {
     queuedTxs.add(tx);
 
     new Timer.periodic(Duration(seconds: 5), (Timer timer) async {
-      if (await webApi.isConnected()) {
+      if (await (webApi!.isConnected() as FutureOr<bool>)) {
         queuedTxs.forEach((args) async {
-          Map res = await webApi.account.sendTxAndShowNotification(
+          Map res = await (webApi!.account.sendTxAndShowNotification(
             args['txInfo'],
             args['params'],
             args['title'],
             args['notificationTitle'],
             rawParam: args['rawParam'],
-          );
+          ) as FutureOr<Map<dynamic, dynamic>>);
 
           print("Queued tx result: ${res.toString()}");
           if (res['hash'] == null) {
@@ -191,13 +191,13 @@ abstract class _AccountStore with Store {
               'Failed to sendTx: ${args['title']} - ${args['txInfo']['module']}.${args['txInfo']['call']}',
             );
           } else {
-            if (rootStore.settings.endpointIsEncointer) {
-              rootStore.encointer.account.setTransferTxs([res], rootStore.account.currentAddress);
+            if (rootStore.settings!.endpointIsEncointer) {
+              rootStore.encointer!.account.setTransferTxs([res], rootStore.account!.currentAddress);
             }
           }
         });
-        rootStore.assets.setSubmitting(false);
-        rootStore.account.clearTxStatus();
+        rootStore.assets!.setSubmitting(false);
+        rootStore.account!.clearTxStatus();
         timer.cancel();
         queuedTxs = [];
       } else {
@@ -207,11 +207,11 @@ abstract class _AccountStore with Store {
   }
 
   @action
-  Future<void> setCurrentAccount(String pubKey) async {
+  Future<void> setCurrentAccount(String? pubKey) async {
     if (currentAccountPubKey != pubKey) {
       currentAccountPubKey = pubKey;
 
-      await rootStore.localStorage.setCurrentAccount(pubKey);
+      await rootStore.localStorage.setCurrentAccount(pubKey!);
 
       return loadAccount();
     }
@@ -238,10 +238,10 @@ abstract class _AccountStore with Store {
 
   @action
   Future<void> addAccount(Map<String, dynamic> acc, String password) async {
-    String pubKey = acc['pubKey'];
+    String? pubKey = acc['pubKey'];
     // save seed and remove it before add account
     void saveSeed(String seedType) {
-      String seed = acc[seedType];
+      String? seed = acc[seedType];
       if (seed != null && seed.isNotEmpty) {
         encryptSeed(pubKey, acc[seedType], seedType, password);
         acc.remove(seedType);
@@ -305,18 +305,18 @@ abstract class _AccountStore with Store {
   }
 
   @action
-  Future<void> encryptSeed(String pubKey, String seed, String seedType, String password) async {
+  Future<void> encryptSeed(String? pubKey, String seed, String seedType, String password) async {
     String key = Fmt.passwordToEncryptKey(password);
     String encrypted = await FlutterAesEcbPkcs5.encryptString(seed, key);
-    Map stored = await rootStore.localStorage.getSeeds(seedType);
+    Map stored = await (rootStore.localStorage.getSeeds(seedType) as FutureOr<Map<dynamic, dynamic>>);
     stored[pubKey] = encrypted;
     rootStore.localStorage.setSeeds(seedType, stored);
   }
 
   @action
-  Future<String> decryptSeed(String pubKey, String seedType, String password) async {
-    Map stored = await rootStore.localStorage.getSeeds(seedType);
-    String encrypted = stored[pubKey];
+  Future<String> decryptSeed(String? pubKey, String seedType, String password) async {
+    Map stored = await (rootStore.localStorage.getSeeds(seedType) as FutureOr<Map<dynamic, dynamic>>);
+    String? encrypted = stored[pubKey];
     if (encrypted == null) {
       return Future.value(null);
     }
@@ -324,35 +324,35 @@ abstract class _AccountStore with Store {
   }
 
   @action
-  Future<bool> checkSeedExist(String seedType, String pubKey) async {
-    Map stored = await rootStore.localStorage.getSeeds(seedType);
-    String encrypted = stored[pubKey];
+  Future<bool> checkSeedExist(String seedType, String? pubKey) async {
+    Map stored = await (rootStore.localStorage.getSeeds(seedType) as FutureOr<Map<dynamic, dynamic>>);
+    String? encrypted = stored[pubKey];
     return encrypted != null;
   }
 
   @action
-  Future<void> updateSeed(String pubKey, String passwordOld, String passwordNew) async {
-    Map storedMnemonics = await rootStore.localStorage.getSeeds(AccountStore.seedTypeMnemonic);
-    Map storedRawSeeds = await rootStore.localStorage.getSeeds(AccountStore.seedTypeRawSeed);
-    String encryptedSeed = '';
+  Future<void> updateSeed(String? pubKey, String passwordOld, String passwordNew) async {
+    Map storedMnemonics = await (rootStore.localStorage.getSeeds(AccountStore.seedTypeMnemonic) as FutureOr<Map<dynamic, dynamic>>);
+    Map? storedRawSeeds = await rootStore.localStorage.getSeeds(AccountStore.seedTypeRawSeed);
+    String? encryptedSeed = '';
     String seedType = '';
     if (storedMnemonics[pubKey] != null) {
       encryptedSeed = storedMnemonics[pubKey];
       seedType = AccountStore.seedTypeMnemonic;
     } else if (storedMnemonics[pubKey] != null) {
-      encryptedSeed = storedRawSeeds[pubKey];
+      encryptedSeed = storedRawSeeds![pubKey];
       seedType = AccountStore.seedTypeRawSeed;
     } else {
       return;
     }
 
-    String seed = await FlutterAesEcbPkcs5.decryptString(encryptedSeed, Fmt.passwordToEncryptKey(passwordOld));
+    String seed = await FlutterAesEcbPkcs5.decryptString(encryptedSeed!, Fmt.passwordToEncryptKey(passwordOld));
     encryptSeed(pubKey, seed, seedType, passwordNew);
   }
 
   @action
-  Future<void> deleteSeed(String seedType, String pubKey) async {
-    Map stored = await rootStore.localStorage.getSeeds(seedType);
+  Future<void> deleteSeed(String seedType, String? pubKey) async {
+    Map stored = await (rootStore.localStorage.getSeeds(seedType) as FutureOr<Map<dynamic, dynamic>>);
     if (stored[pubKey] != null) {
       stored.remove(pubKey);
       rootStore.localStorage.setSeeds(seedType, stored);
@@ -365,7 +365,7 @@ abstract class _AccountStore with Store {
       // get old data map
       Map<String, String> addresses = Map.of(pubKeyAddressMap[int.parse(ss58)] ?? {});
       // set new data
-      Map.of(data[ss58]).forEach((k, v) {
+      Map.of(data[ss58]!).forEach((k, v) {
         addresses[k] = v;
       });
       // update state
@@ -391,7 +391,7 @@ abstract class _AccountStore with Store {
 
   @action
   void setAccountsIndex(List list) {
-    final Map<String, Map> data = {};
+    final Map<String?, Map> data = {};
     list.forEach((i) {
       data[i['accountId']] = i;
     });
@@ -416,7 +416,7 @@ abstract class _AccountCreate with Store {
   String password = '';
 
   @observable
-  String key = '';
+  String? key = '';
 }
 
 _log(String msg) {

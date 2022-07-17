@@ -47,9 +47,9 @@ void main() {
         'tokenDecimals': 12,
         'tokenSymbol': 'KSM',
       }));
-      expect(store.networkState.ss58Format, 2);
-      expect(store.networkState.tokenDecimals, 12);
-      expect(store.networkState.tokenSymbol, 'KSM');
+      expect(store.networkState!.ss58Format, 2);
+      expect(store.networkState!.tokenDecimals, 12);
+      expect(store.networkState!.tokenSymbol, 'KSM');
     });
   });
 }

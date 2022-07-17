@@ -22,27 +22,27 @@ Future<void> submitTx(
   AppStore store,
   Api api,
   Map txParams, {
-  Function(BuildContext txPageContext, Map res) onFinish,
+  Function(BuildContext txPageContext, Map res)? onFinish,
 }) async {
-  if (store.settings.cachedPin.isEmpty) {
-    var unlockText = I18n.of(context).translationsForLocale().home.unlockAccount;
+  if (store.settings!.cachedPin.isEmpty) {
+    var unlockText = I18n.of(context)!.translationsForLocale().home.unlockAccount;
     await showCupertinoDialog(
       context: context,
       builder: (context) {
         return showPasswordInputDialog(
           context,
-          store.account.currentAccount,
-          Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
-          (password) => store.settings.setPin(password),
+          store.account!.currentAccount,
+          Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account!.currentAccount.name!)),
+          (password) => store.settings!.setPin(password),
         );
       },
     );
   }
 
-  final txPaymentAsset = store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
+  final txPaymentAsset = store.encointer!.getTxPaymentAsset(store.encointer!.chosenCid);
 
   txParams["txInfo"]["txPaymentAsset"] = txPaymentAsset;
-  txParams["onFinish"] = onFinish ?? (BuildContext txPageContext, Map res) => res;
+  txParams["onFinish"] = onFinish ?? ((BuildContext txPageContext, Map res) => res);
 
   return submitToJS(
     context,
@@ -50,7 +50,7 @@ Future<void> submitTx(
     api,
     false,
     txParams: txParams,
-    password: store.settings.cachedPin,
+    password: store.settings!.cachedPin,
   );
 }
 
@@ -58,7 +58,7 @@ Future<void> submitClaimRewards(
   BuildContext context,
   AppStore store,
   Api api,
-  CommunityIdentifier chosenCid,
+  CommunityIdentifier? chosenCid,
 ) async {
   var txParams = claimRewardsParams(chosenCid);
 
@@ -75,8 +75,8 @@ Future<void> submitEndorseNewcomer(
   BuildContext context,
   AppStore store,
   Api api,
-  CommunityIdentifier chosenCid,
-  String newbie,
+  CommunityIdentifier? chosenCid,
+  String? newbie,
 ) async {
   var txParams = endorseNewcomerParams(chosenCid, newbie);
 
@@ -91,16 +91,16 @@ Future<void> submitEndorseNewcomer(
 
 Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api api) async {
   // this is called inside submitTx too, but we need to unlock the key for the proof of attendance.
-  if (store.settings.cachedPin.isEmpty) {
-    var unlockText = I18n.of(context).translationsForLocale().home.unlockAccount;
+  if (store.settings!.cachedPin.isEmpty) {
+    var unlockText = I18n.of(context)!.translationsForLocale().home.unlockAccount;
     await showCupertinoDialog(
       context: context,
       builder: (context) {
         return showPasswordInputDialog(
           context,
-          store.account.currentAccount,
-          Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
-          (password) => store.settings.setPin(password),
+          store.account!.currentAccount,
+          Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account!.currentAccount.name!)),
+          (password) => store.settings!.setPin(password),
         );
       },
     );
@@ -110,9 +110,9 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
     context,
     store,
     api,
-    registerParticipantParams(store.encointer.chosenCid, proof: await api.encointer.getProofOfAttendance()),
+    registerParticipantParams(store.encointer!.chosenCid, proof: await api.encointer!.getProofOfAttendance()),
     onFinish: (BuildContext txPageContext, Map res) {
-      store.encointer.updateAggregatedAccountData();
+      store.encointer!.updateAggregatedAccountData();
       Navigator.popUntil(
         txPageContext,
         ModalRoute.withName('/'),
@@ -123,9 +123,9 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
 
 Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) async {
   final params = attestClaimsParams(
-    store.encointer.chosenCid,
-    store.encointer.communityAccount.scannedClaimsCount,
-    store.encointer.communityAccount.participantsClaims.values.toList(),
+    store.encointer!.chosenCid,
+    store.encointer!.communityAccount.scannedClaimsCount,
+    store.encointer!.communityAccount.participantsClaims!.values.toList(),
   );
 
   return submitTx(
@@ -134,7 +134,7 @@ Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) a
     api,
     params,
     onFinish: (BuildContext txPageContext, Map res) {
-      store.encointer.communityAccount.setMeetupCompleted();
+      store.encointer!.communityAccount.setMeetupCompleted();
       Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
     },
   );
@@ -147,5 +147,5 @@ Future<dynamic> submitReapVoucher(
   String recipientAddress,
   CommunityIdentifier cid,
 ) async {
-  return api.js.evalJavascript('encointer.reapVoucher("$voucherUri","$recipientAddress", ${jsonEncode(cid)})');
+  return api.js!.evalJavascript('encointer.reapVoucher("$voucherUri","$recipientAddress", ${jsonEncode(cid)})');
 }

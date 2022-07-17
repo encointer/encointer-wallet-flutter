@@ -12,13 +12,13 @@ mixin _$ImagePickerState on _ImagePickerState, Store {
   final _$imagesAtom = Atom(name: '_ImagePickerState.images');
 
   @override
-  ObservableList<PickedFile> get images {
+  ObservableList<PickedFile?> get images {
     _$imagesAtom.reportRead();
     return super.images;
   }
 
   @override
-  set images(ObservableList<PickedFile> value) {
+  set images(ObservableList<PickedFile?> value) {
     _$imagesAtom.reportWrite(value, super.images, () {
       super.images = value;
     });
@@ -27,13 +27,13 @@ mixin _$ImagePickerState on _ImagePickerState, Store {
   final _$pickImageErrorAtom = Atom(name: '_ImagePickerState.pickImageError');
 
   @override
-  String get pickImageError {
+  String? get pickImageError {
     _$pickImageErrorAtom.reportRead();
     return super.pickImageError;
   }
 
   @override
-  set pickImageError(String value) {
+  set pickImageError(String? value) {
     _$pickImageErrorAtom.reportWrite(value, super.pickImageError, () {
       super.pickImageError = value;
     });
@@ -42,13 +42,13 @@ mixin _$ImagePickerState on _ImagePickerState, Store {
   final _$retrieveDataErrorAtom = Atom(name: '_ImagePickerState.retrieveDataError');
 
   @override
-  String get retrieveDataError {
+  String? get retrieveDataError {
     _$retrieveDataErrorAtom.reportRead();
     return super.retrieveDataError;
   }
 
   @override
-  set retrieveDataError(String value) {
+  set retrieveDataError(String? value) {
     _$retrieveDataErrorAtom.reportWrite(value, super.retrieveDataError, () {
       super.retrieveDataError = value;
     });
@@ -57,7 +57,7 @@ mixin _$ImagePickerState on _ImagePickerState, Store {
   final _$_ImagePickerStateActionController = ActionController(name: '_ImagePickerState');
 
   @override
-  void addImage(PickedFile image) {
+  void addImage(PickedFile? image) {
     final _$actionInfo = _$_ImagePickerStateActionController.startAction(name: '_ImagePickerState.addImage');
     try {
       return super.addImage(image);
@@ -67,7 +67,7 @@ mixin _$ImagePickerState on _ImagePickerState, Store {
   }
 
   @override
-  void removeImage(PickedFile toDelete) {
+  void removeImage(PickedFile? toDelete) {
     final _$actionInfo = _$_ImagePickerStateActionController.startAction(name: '_ImagePickerState.removeImage');
     try {
       return super.removeImage(toDelete);

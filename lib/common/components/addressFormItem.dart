@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 
 class AddressFormItem extends StatelessWidget {
   AddressFormItem(this.account, {this.label, this.onTap});
-  final String label;
+  final String? label;
   final AccountData account;
-  final Future<void> Function() onTap;
+  final Future<void> Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class AddressFormItem extends StatelessWidget {
             ? Container(
                 margin: EdgeInsets.only(top: 4),
                 child: Text(
-                  label,
+                  label!,
                   style: TextStyle(color: grey),
                 ),
               )
@@ -52,7 +52,7 @@ class AddressFormItem extends StatelessWidget {
                   children: <Widget>[
                     Text(Fmt.accountName(context, account)),
                     Text(
-                      Fmt.address(address),
+                      Fmt.address(address)!,
                       style: TextStyle(fontSize: 14, color: grey),
                     )
                   ],
@@ -76,7 +76,7 @@ class AddressFormItem extends StatelessWidget {
     }
     return GestureDetector(
       child: content,
-      onTap: () => onTap(),
+      onTap: () => onTap!(),
     );
   }
 }

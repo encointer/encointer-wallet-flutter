@@ -21,20 +21,20 @@ class CeremonyStep2Scan extends StatelessWidget {
   const CeremonyStep2Scan(
     this.store,
     this.api, {
-    @required this.claim,
-    @required this.confirmedParticipantsCount,
-    Key key,
+    required this.claim,
+    required this.confirmedParticipantsCount,
+    Key? key,
   }) : super(key: key);
 
-  final AppStore store;
-  final Api api;
+  final AppStore? store;
+  final Api? api;
 
   final Future<Uint8List> claim;
   final int confirmedParticipantsCount;
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -54,14 +54,14 @@ class CeremonyStep2Scan extends StatelessWidget {
                     Center(
                       child: Text(
                         dic.encointer.scan,
-                        style: Theme.of(context).textTheme.headline2.copyWith(color: ZurichLion.shade600),
+                        style: Theme.of(context).textTheme.headline2!.copyWith(color: ZurichLion.shade600),
                       ),
                     ),
                     Center(
                       child: Text(
                         dic.encointer.scanDescriptionForMeetup,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black, height: 1.25),
+                        style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black, height: 1.25),
                       ),
                     ),
                     SizedBox(height: 12),
@@ -75,7 +75,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                         builder: (_, AsyncSnapshot<Uint8List> snapshot) {
                           if (snapshot.hasData) {
                             return QrImage(
-                              data: base64.encode(snapshot.data),
+                              data: base64.encode(snapshot.data!),
                               errorCorrectionLevel: QrErrorCorrectLevel.L,
                             );
                           } else {
@@ -110,7 +110,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                     SizedBox(width: 12),
                     Text(
                       dic.encointer.scanOthers,
-                      style: Theme.of(context).textTheme.headline3.copyWith(color: ZurichLion.shade50),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(color: ZurichLion.shade50),
                     ),
                   ],
                 ),

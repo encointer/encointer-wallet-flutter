@@ -7,13 +7,13 @@ import 'package:intl/intl.dart';
 
 class CeremonyRegisterButton extends StatefulWidget {
   const CeremonyRegisterButton({
-    Key key,
+    Key? key,
     this.registerUntil,
     this.onPressed,
   }) : super(key: key);
 
-  final int registerUntil;
-  final Future<void> Function(BuildContext) onPressed;
+  final int? registerUntil;
+  final Future<void> Function(BuildContext)? onPressed;
 
   @override
   _CeremonyRegisterButtonState createState() => _CeremonyRegisterButtonState();
@@ -26,7 +26,7 @@ class _CeremonyRegisterButtonState extends State<CeremonyRegisterButton> {
     setState(() {
       _submitting = true;
     });
-    await widget.onPressed(context);
+    await widget.onPressed!(context);
     setState(() {
       _submitting = false;
     });
@@ -35,7 +35,7 @@ class _CeremonyRegisterButtonState extends State<CeremonyRegisterButton> {
   @override
   Widget build(BuildContext context) {
     String languageCode = Localizations.localeOf(context).languageCode;
-    var dic = I18n.of(context).translationsForLocale();
+    var dic = I18n.of(context)!.translationsForLocale();
 
     return PrimaryButton(
       child: !_submitting

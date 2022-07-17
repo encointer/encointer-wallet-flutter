@@ -18,40 +18,40 @@ class CeremonyStep1Count extends StatelessWidget {
   CeremonyStep1Count(
     this.store,
     this.api, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
-  final AppStore store;
-  final Api api;
+  final AppStore? store;
+  final Api? api;
 
   final TextEditingController _attendeesCountController = TextEditingController();
 
   Future<void> _pushStep2ScanPage(BuildContext context, int count) async {
-    if (store.settings.cachedPin.isEmpty) {
+    if (store!.settings!.cachedPin.isEmpty) {
       await showCupertinoDialog(
         context: context,
         builder: (context) {
-          final Translations dic = I18n.of(context).translationsForLocale();
+          final Translations dic = I18n.of(context)!.translationsForLocale();
           return showPasswordInputDialog(
               context,
-              store.account.currentAccount,
+              store!.account!.currentAccount,
               Text(dic.home.unlockAccount
-                  .replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name.toString())), (password) {
-            store.settings.setPin(password);
+                  .replaceAll('CURRENT_ACCOUNT_NAME', store!.account!.currentAccount.name.toString())), (password) {
+            store!.settings!.setPin(password);
           });
         },
       );
     }
 
-    if (count != null && store.settings.cachedPin.isNotEmpty) {
+    if (count != null && store!.settings!.cachedPin.isNotEmpty) {
       Navigator.of(context).push(
         CupertinoPageRoute(
           builder: (BuildContext context) => CeremonyStep2Scan(
             store,
             api,
-            claim: webApi.encointer
-                .signClaimOfAttendance(count, store.settings.cachedPin)
-                .then((claim) => webApi.codec.encodeToBytes(ClaimOfAttendanceJSRegistryName, claim)),
+            claim: webApi!.encointer!
+                .signClaimOfAttendance(count, store!.settings!.cachedPin)
+                .then((claim) => webApi!.codec.encodeToBytes(ClaimOfAttendanceJSRegistryName, claim)),
             confirmedParticipantsCount: count,
           ),
         ),
@@ -61,7 +61,7 @@ class CeremonyStep1Count extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -88,20 +88,20 @@ class CeremonyStep1Count extends StatelessWidget {
                     Center(
                       child: Text(
                         dic.encointer.count,
-                        style: Theme.of(context).textTheme.headline2.copyWith(color: ZurichLion.shade600),
+                        style: Theme.of(context).textTheme.headline2!.copyWith(color: ZurichLion.shade600),
                       ),
                     ),
                     Center(
                       child: Text(
                         dic.encointer.howManyParticipantsShowedUp,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black, height: 2),
+                        style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black, height: 2),
                       ),
                     ),
                     SizedBox(height: 48),
                     EncointerTextFormField(
                       labelText: dic.encointer.numberOfAttendees,
-                      textStyle: Theme.of(context).textTheme.headline1.copyWith(color: encointerBlack),
+                      textStyle: Theme.of(context).textTheme.headline1!.copyWith(color: encointerBlack),
                       controller: _attendeesCountController,
                       keyboardType: TextInputType.numberWithOptions(decimal: true),
                       textFormFieldKey: Key('attendees-count'),
@@ -118,7 +118,7 @@ class CeremonyStep1Count extends StatelessWidget {
                     SizedBox(width: 12),
                     Text(
                       dic.encointer.next,
-                      style: Theme.of(context).textTheme.headline3.copyWith(color: ZurichLion.shade50),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(color: ZurichLion.shade50),
                     ),
                   ],
                 ),

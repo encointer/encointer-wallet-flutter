@@ -8,10 +8,10 @@ part of 'genExternalLinksParams.dart';
 
 GenExternalLinksParams _$GenExternalLinksParamsFromJson(Map<String, dynamic> json) {
   return GenExternalLinksParams()
-    ..data = json['data'] as String
-    ..hash = json['hash'] as String
-    ..type = json['type'] as String
-    ..withShort = json['withShort'] as bool;
+    ..data = json['data'] as String?
+    ..hash = json['hash'] as String?
+    ..type = json['type'] as String?
+    ..withShort = json['withShort'] as bool?;
 }
 
 Map<String, dynamic> _$GenExternalLinksParamsToJson(GenExternalLinksParams instance) => <String, dynamic>{

@@ -15,17 +15,17 @@ class EncointerMap extends StatelessWidget {
 
   /// Used to trigger showing/hiding of popups.
   final PopupController _popupLayerController = PopupController();
-  final Function popupBuilder;
-  final List<Marker> markers;
-  final String title;
-  final LatLng center;
+  final Function? popupBuilder;
+  final List<Marker>? markers;
+  final String? title;
+  final LatLng? center;
   final double initialZoom;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(title!),
         leading: Container(),
         actions: <Widget>[
           IconButton(
@@ -37,7 +37,7 @@ class EncointerMap extends StatelessWidget {
           )
         ],
       ),
-      body: markers.isNotEmpty
+      body: markers!.isNotEmpty
           ? FlutterMap(
               options: MapOptions(
                 center: center,
@@ -56,9 +56,9 @@ class EncointerMap extends StatelessWidget {
                 PopupMarkerLayerWidget(
                   options: PopupMarkerLayerOptions(
                     popupController: _popupLayerController,
-                    markers: markers,
+                    markers: markers!,
                     markerRotateAlignment: PopupMarkerLayerOptions.rotationAlignmentFor(AnchorAlign.top),
-                    popupBuilder: popupBuilder,
+                    popupBuilder: popupBuilder as Widget Function(BuildContext, Marker)?,
                   ),
                 ),
               ],
@@ -72,7 +72,7 @@ class EncointerMap extends StatelessWidget {
 }
 
 Widget noCommunityDialog(BuildContext context) {
-  var translations = I18n.of(context).translationsForLocale();
+  var translations = I18n.of(context)!.translationsForLocale();
 
   return CupertinoAlertDialog(
     title: Container(),
@@ -94,7 +94,7 @@ Future<void> showOnEncointerMap(
   Location location, {
   double initialZoom = 14,
 }) {
-  var dic = I18n.of(context).translationsForLocale();
+  var dic = I18n.of(context)!.translationsForLocale();
 
   return Navigator.push(
     context,

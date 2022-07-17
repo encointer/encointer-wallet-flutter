@@ -16,7 +16,7 @@ part 'communityStore.g.dart';
 /// It also contains sub-stores for account and community specific data.
 @JsonSerializable(explicitToJson: true)
 class CommunityStore extends _CommunityStore with _$CommunityStore {
-  CommunityStore(String network, CommunityIdentifier cid) : super(network, cid);
+  CommunityStore(String? network, CommunityIdentifier? cid) : super(network, cid);
 
   @override
   String toString() {
@@ -31,69 +31,69 @@ abstract class _CommunityStore with Store {
   _CommunityStore(this.network, this.cid);
 
   @JsonKey(ignore: true)
-  Future<void> Function() _cacheFn;
+  Future<void> Function()? _cacheFn;
 
   /// Applies demurrage to the `BalanceEntry`
   ///
   /// It is initialized as a field to prevent a cyclic dependency with the rootStore.
   @JsonKey(ignore: true)
-  double Function(BalanceEntry) _applyDemurrage;
+  double? Function(BalanceEntry)? _applyDemurrage;
 
-  final String network;
+  final String? network;
 
-  final CommunityIdentifier cid;
-
-  @observable
-  CommunityMetadata metadata;
+  final CommunityIdentifier? cid;
 
   @observable
-  double demurrage;
-
-  @computed
-  String get name => metadata?.name;
-
-  @computed
-  String get symbol => metadata?.symbol;
-
-  @computed
-  String get assetsCid => metadata?.assets;
+  CommunityMetadata? metadata;
 
   @observable
-  int meetupTime;
+  double? demurrage;
+
+  @computed
+  String? get name => metadata?.name;
+
+  @computed
+  String? get symbol => metadata?.symbol;
+
+  @computed
+  String? get assetsCid => metadata?.assets;
+
+  @observable
+  int? meetupTime;
 
   /// Override set by the encointer feed.
   @observable
-  int meetupTimeOverride;
+  int? meetupTimeOverride;
 
   @observable
-  List<String> bootstrappers;
+  List<String>? bootstrappers;
 
   @observable
-  ObservableList<Location> meetupLocations = new ObservableList();
+  ObservableList<Location>? meetupLocations = new ObservableList();
 
   @observable
-  ObservableMap<String, CommunityAccountStore> communityAccountStores = new ObservableMap();
+  ObservableMap<String?, CommunityAccountStore>? communityAccountStores = new ObservableMap();
 
   get applyDemurrage => _applyDemurrage;
 
   @action
-  Future<void> initCommunityAccountStore(String address) {
-    if (!communityAccountStores.containsKey(address)) {
-      _log("Adding new communityAccountStore for cid: ${cid.toFmtString()} and account: $address");
+  Future<void> initCommunityAccountStore(String? address) {
+    if (!communityAccountStores!.containsKey(address)) {
+      _log("Adding new communityAccountStore for cid: ${cid!.toFmtString()} and account: $address");
 
       var store = CommunityAccountStore(network, cid, address);
       store.initStore(_cacheFn);
 
-      communityAccountStores[address] = store;
+      communityAccountStores![address] = store;
       return writeToCache();
     } else {
-      _log("Don't add already existing communityAccountStore for cid: ${cid.toFmtString()} and account: $address");
+      _log("Don't add already existing communityAccountStore for cid: ${cid!.toFmtString()} and account: $address");
       return Future.value(null);
     }
   }
 
   @action
-  void setDemurrage(double d) {
+  void setDemurrage(double? d) {
     demurrage = d;
     writeToCache();
   }
@@ -106,14 +106,14 @@ abstract class _CommunityStore with Store {
   }
 
   @action
-  void setCommunityMetadata([CommunityMetadata meta]) {
+  void setCommunityMetadata([CommunityMetadata? meta]) {
     _log("set metadata to $meta");
     metadata = meta;
     writeToCache();
   }
 
   @action
-  void setMeetupTime([int time]) {
+  void setMeetupTime([int? time]) {
     _log("set meetupTime to $time");
     if (meetupTime != time) {
       meetupTime = time;
@@ -122,7 +122,7 @@ abstract class _CommunityStore with Store {
   }
 
   @action
-  void setMeetupTimeOverride([int time]) {
+  void setMeetupTimeOverride([int? time]) {
     _log("set meetupTimeOverride to $time");
     if (meetupTimeOverride != time) {
       meetupTimeOverride = time;
@@ -147,19 +147,19 @@ abstract class _CommunityStore with Store {
   @action
   void purgeCeremonySpecificState() {
     setMeetupTime();
-    communityAccountStores.forEach((key, value) => value.purgeCeremonySpecificState());
+    communityAccountStores!.forEach((key, value) => value.purgeCeremonySpecificState());
   }
 
-  void initStore(Function cacheFn, double Function(BalanceEntry) applyDemurrage) {
-    this._cacheFn = cacheFn;
+  void initStore(Function? cacheFn, double? Function(BalanceEntry)? applyDemurrage) {
+    this._cacheFn = cacheFn as Future<void> Function()?;
     this._applyDemurrage = applyDemurrage;
 
-    communityAccountStores.forEach((_, store) => store.initStore(cacheFn));
+    communityAccountStores!.forEach((_, store) => store.initStore(cacheFn));
   }
 
   Future<void> writeToCache() {
     if (_cacheFn != null) {
-      return _cacheFn();
+      return _cacheFn!();
     } else {
       return Future.value(null);
     }

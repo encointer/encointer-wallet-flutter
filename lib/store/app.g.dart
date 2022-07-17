@@ -12,13 +12,13 @@ mixin _$AppStore on _AppStore, Store {
   final _$settingsAtom = Atom(name: '_AppStore.settings');
 
   @override
-  SettingsStore get settings {
+  SettingsStore? get settings {
     _$settingsAtom.reportRead();
     return super.settings;
   }
 
   @override
-  set settings(SettingsStore value) {
+  set settings(SettingsStore? value) {
     _$settingsAtom.reportWrite(value, super.settings, () {
       super.settings = value;
     });
@@ -27,13 +27,13 @@ mixin _$AppStore on _AppStore, Store {
   final _$accountAtom = Atom(name: '_AppStore.account');
 
   @override
-  AccountStore get account {
+  AccountStore? get account {
     _$accountAtom.reportRead();
     return super.account;
   }
 
   @override
-  set account(AccountStore value) {
+  set account(AccountStore? value) {
     _$accountAtom.reportWrite(value, super.account, () {
       super.account = value;
     });
@@ -42,13 +42,13 @@ mixin _$AppStore on _AppStore, Store {
   final _$assetsAtom = Atom(name: '_AppStore.assets');
 
   @override
-  AssetsStore get assets {
+  AssetsStore? get assets {
     _$assetsAtom.reportRead();
     return super.assets;
   }
 
   @override
-  set assets(AssetsStore value) {
+  set assets(AssetsStore? value) {
     _$assetsAtom.reportWrite(value, super.assets, () {
       super.assets = value;
     });
@@ -57,13 +57,13 @@ mixin _$AppStore on _AppStore, Store {
   final _$chainAtom = Atom(name: '_AppStore.chain');
 
   @override
-  ChainStore get chain {
+  ChainStore? get chain {
     _$chainAtom.reportRead();
     return super.chain;
   }
 
   @override
-  set chain(ChainStore value) {
+  set chain(ChainStore? value) {
     _$chainAtom.reportWrite(value, super.chain, () {
       super.chain = value;
     });
@@ -72,13 +72,13 @@ mixin _$AppStore on _AppStore, Store {
   final _$encointerAtom = Atom(name: '_AppStore.encointer');
 
   @override
-  EncointerStore get encointer {
+  EncointerStore? get encointer {
     _$encointerAtom.reportRead();
     return super.encointer;
   }
 
   @override
-  set encointer(EncointerStore value) {
+  set encointer(EncointerStore? value) {
     _$encointerAtom.reportWrite(value, super.encointer, () {
       super.encointer = value;
     });

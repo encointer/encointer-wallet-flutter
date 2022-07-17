@@ -9,7 +9,7 @@ class ExportResultPage extends StatelessWidget {
   static const String route = '/account/key';
 
   void _showExportDialog(BuildContext context, Map args) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     Clipboard.setData(ClipboardData(
       text: args['key'],
     ));
@@ -21,7 +21,7 @@ class ExportResultPage extends StatelessWidget {
           content: Text(dic.profile.exportMnemonicOk),
           actions: <Widget>[
             CupertinoButton(
-              child: Text(I18n.of(context).translationsForLocale().home.ok),
+              child: Text(I18n.of(context)!.translationsForLocale().home.ok),
               onPressed: () => Navigator.of(context).pop(),
             ),
           ],
@@ -32,8 +32,8 @@ class ExportResultPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
-    final Map args = ModalRoute.of(context).settings.arguments;
+    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final Map args = ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>;
 
     return Scaffold(
       appBar: AppBar(title: Text(dic.profile.export)),
@@ -53,7 +53,7 @@ class ExportResultPage extends StatelessWidget {
                         child: Container(
                           padding: EdgeInsets.all(8),
                           child: Text(
-                            I18n.of(context).translationsForLocale().home.copy,
+                            I18n.of(context)!.translationsForLocale().home.copy,
                             style: TextStyle(fontSize: 14, color: Theme.of(context).primaryColor),
                           ),
                         ),

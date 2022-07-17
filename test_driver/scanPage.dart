@@ -17,8 +17,8 @@ void main() async {
   final PublishSubject<ImageProvider> stream = PublishSubject();
 
   // ignore: missing_return
-  Future<String> dataHandler(String msg) async {
-    final img = MemoryImage(base64Decode(msg));
+  Future<String> dataHandler(String? msg) async {
+    final img = MemoryImage(base64Decode(msg!));
     stream.add(img);
   }
 
@@ -33,7 +33,7 @@ void main() async {
         MockQRScanPage.route: (_) => RestartWidget(
               initialData: MemoryImage(base64Decode("hell")),
               stream: stream,
-              builder: (_, img) => MockQRScanPage(img),
+              builder: (_, dynamic img) => MockQRScanPage(img),
             )
       },
     ),

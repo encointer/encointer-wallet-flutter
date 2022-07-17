@@ -39,8 +39,8 @@ void main() {
       communityStore.setMeetupLocations(testLocations);
       communityStore.initCommunityAccountStore(ALICE_ADDRESS);
       communityStore.initCommunityAccountStore(BOB_ADDRESS);
-      var aliceCommunityAccountStore = communityStore.communityAccountStores[ALICE_ADDRESS];
-      var bobCommunityAccountStore = communityStore.communityAccountStores[BOB_ADDRESS];
+      var aliceCommunityAccountStore = communityStore.communityAccountStores![ALICE_ADDRESS]!;
+      var bobCommunityAccountStore = communityStore.communityAccountStores![BOB_ADDRESS]!;
 
       Map<String, dynamic> targetJson = {
         "network": "My Test Network",
