@@ -6,6 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
+/// `QrSignerPage`, from upstream and currently unused.
+///
+/// See: https://github.com/encointer/encointer-wallet-flutter/issues/676
+
 class QrSignerPage extends StatelessWidget {
   QrSignerPage(this.store);
 

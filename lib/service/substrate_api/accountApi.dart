@@ -117,13 +117,6 @@ class AccountApi {
     }
   }
 
-  Future<void> fetchAccountsBonded(List<String> pubKeys) async {
-    if (pubKeys.length > 0) {
-      List res = await jsApi.evalJavascript('account.queryAccountsBonded(${jsonEncode(pubKeys)})');
-      store.account.setAccountsBonded(res);
-    }
-  }
-
   Future<Map> estimateTxFees(Map txInfo, List params, {String rawParam}) async {
     String param = rawParam != null ? rawParam : jsonEncode(params);
     print(txInfo);
@@ -244,76 +237,26 @@ class AccountApi {
     return res;
   }
 
-  Future<Map> queryRecoverable(String address) async {
-//    address = "J4sW13h2HNerfxTzPGpLT66B3HVvuU32S6upxwSeFJQnAzg";
-    Map res = await jsApi.evalJavascript('api.query.recovery.recoverable("$address")');
-    if (res != null) {
-      res['address'] = address;
-    }
-    store.account.setAccountRecoveryInfo(res);
-
-    if (res != null && List.of(res['friends']).length > 0) {
-      getAddressIcons(res['friends']);
-    }
-    return res;
-  }
-
-  Future<List> queryRecoverableList(List<String> addresses) async {
-    List queries = addresses.map((e) => 'api.query.recovery.recoverable("$e")').toList();
-    final List ls = await jsApi.evalJavascript(
-      'Promise.all([${queries.join(',')}])',
-      allowRepeat: true,
-    );
-
-    List res = [];
-    ls.asMap().forEach((k, v) {
-      if (v != null) {
-        v['address'] = addresses[k];
-      }
-      res.add(v);
-    });
-
-    return res;
-  }
-
-  Future<List> queryActiveRecoveryAttempts(String address, List<String> addressNew) async {
-    List queries = addressNew.map((e) => 'api.query.recovery.activeRecoveries("$address", "$e")').toList();
-    final res = await jsApi.evalJavascript(
-      'Promise.all([${queries.join(',')}])',
-      allowRepeat: true,
-    );
-    return res;
-  }
-
-  Future<List> queryActiveRecoveries(List<String> addresses, String addressNew) async {
-    List queries = addresses.map((e) => 'api.query.recovery.activeRecoveries("$e", "$addressNew")').toList();
-    final res = await jsApi.evalJavascript(
-      'Promise.all([${queries.join(',')}])',
-      allowRepeat: true,
-    );
-    return res;
-  }
-
-  Future<List> queryRecoveryProxies(List<String> addresses) async {
-    List queries = addresses.map((e) => 'api.query.recovery.proxy("$e")').toList();
-    final res = await jsApi.evalJavascript(
-      'Promise.all([${queries.join(',')}])',
-      allowRepeat: true,
-    );
-    return res;
-  }
-
+  /// Parse scanned Qr-code into a transaction.
+  ///
+  /// See: https://github.com/encointer/encointer-wallet-flutter/issues/676
   Future<Map> parseQrCode(String data) async {
     final res = await jsApi.evalJavascript('account.parseQrCode("$data")');
     print('rawData: $data');
     return res;
   }
 
+  /// Sign async with the signer defined by `parseQrCode`.
+  ///
+  /// See: https://github.com/encointer/encointer-wallet-flutter/issues/676
   Future<Map> signAsync(String password) async {
     final res = await jsApi.evalJavascript('account.signAsync("$password")');
     return res;
   }
 
+  /// Create the a QR-code of `txInfo` to be scanned on another device and create a (multiparty-)signature.
+  ///
+  /// See: https://github.com/encointer/encointer-wallet-flutter/issues/676
   Future<Map> makeQrCode(Map txInfo, List params, {String rawParam}) async {
     String param = rawParam != null ? rawParam : jsonEncode(params);
     final Map res = await jsApi.evalJavascript(
@@ -323,15 +266,18 @@ class AccountApi {
     return res;
   }
 
+  /// Add a `signature` to a `txInfo` and send the extrinsics.
+  ///
+  /// See: https://github.com/encointer/encointer-wallet-flutter/issues/676
   Future<Map> addSignatureAndSend(
-    String signed,
+    String signature,
     Map txInfo,
     String pageTile,
     String notificationTitle,
   ) async {
     final String address = store.account.currentAddress;
     final Map res = await jsApi.evalJavascript(
-      'account.addSignatureAndSend("$address", "$signed")',
+      'account.addSignatureAndSend("$address", "$signature")',
       allowRepeat: true,
     );
 

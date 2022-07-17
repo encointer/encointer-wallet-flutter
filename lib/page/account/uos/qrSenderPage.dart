@@ -8,6 +8,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
+/// `QrSenderPage`, from upstream and currently unused.
+///
+/// See: https://github.com/encointer/encointer-wallet-flutter/issues/676
+
 class QrSenderPage extends StatefulWidget {
   static const String route = 'tx/uos/sender';
 

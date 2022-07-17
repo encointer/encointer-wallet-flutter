@@ -4,15 +4,19 @@ import 'package:aes_ecb_pkcs5_flutter/aes_ecb_pkcs5_flutter.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58PrefixListPage.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/account/types/accountBondedInfo.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
-import 'package:encointer_wallet/store/account/types/accountRecoveryInfo.dart';
 import 'package:encointer_wallet/store/account/types/txStatus.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:mobx/mobx.dart';
 
 part 'account.g.dart';
+
+/// Mobx-store containing account related data.
+///
+/// Todo: This store has been inherited from upstream, and I think it would need a refactoring:
+/// * https://github.com/encointer/encointer-wallet-flutter/issues/574
+/// * https://github.com/encointer/encointer-wallet-flutter/issues/487
 
 class AccountStore extends _AccountStore with _$AccountStore {
   AccountStore(AppStore appStore) : super(appStore);
@@ -58,9 +62,6 @@ abstract class _AccountStore with Store {
   Map<String, Map> accountIndexMap = Map<String, Map>();
 
   @observable
-  ObservableMap<String, AccountBondedInfo> pubKeyBondedMap = ObservableMap<String, AccountBondedInfo>();
-
-  @observable
   ObservableMap<int, Map<String, String>> pubKeyAddressMap = ObservableMap<int, Map<String, String>>();
 
   @observable
@@ -68,9 +69,6 @@ abstract class _AccountStore with Store {
 
   @observable
   ObservableMap<String, String> addressIconsMap = ObservableMap<String, String>();
-
-  @observable
-  AccountRecoveryInfo recoveryInfo = AccountRecoveryInfo();
 
   @observable
   List<Map<String, dynamic>> queuedTxs = ObservableList<Map<String, dynamic>>();
@@ -307,13 +305,6 @@ abstract class _AccountStore with Store {
   }
 
   @action
-  Future<void> setAccountsBonded(List ls) async {
-    ls.forEach((i) {
-      pubKeyBondedMap[i[0]] = AccountBondedInfo(i[0], i[1], i[2]);
-    });
-  }
-
-  @action
   Future<void> encryptSeed(String pubKey, String seed, String seedType, String password) async {
     String key = Fmt.passwordToEncryptKey(password);
     String encrypted = await FlutterAesEcbPkcs5.encryptString(seed, key);
@@ -412,11 +403,6 @@ abstract class _AccountStore with Store {
     list.forEach((i) {
       addressIndexMap[i['accountId']] = i;
     });
-  }
-
-  @action
-  void setAccountRecoveryInfo(Map json) {
-    recoveryInfo = json != null ? AccountRecoveryInfo.fromJson(json) : AccountRecoveryInfo();
   }
 }
 
