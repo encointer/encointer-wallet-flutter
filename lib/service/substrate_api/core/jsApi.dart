@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
+const EncointerJsService = "EncointerJsService";
+
 /// Core interface to talk with our JS-service
 class JSApi {
   Map<String, Function> _msgHandlers = {};
@@ -71,7 +73,7 @@ class JSApi {
             });
 
         controller.addJavaScriptHandler(
-            handlerName: 'PolkaWallet',
+            handlerName: EncointerJsService,
             callback: (args) {
               // print arguments coming from the JavaScript side!
               print('received msg: ${args.toString()}');
@@ -92,7 +94,9 @@ class JSApi {
               }
             });
       },
-      onLoadStop: (controller, _) => _webViewPostInitCallback(),
+      onLoadStop: (controller, _) async {
+        await _webViewPostInitCallback();
+      },
     );
 
     await _web.run();
@@ -132,11 +136,14 @@ class JSApi {
     String method = 'uid=${_getEvalJavascriptUID()};${code.split('(')[0]}';
     _msgCompleters[method] = c;
 
-    String script = '$code.then(function(res) {'
-        '  PolkaWallet.postMessage(JSON.stringify({ path: "$method", data: res }));'
-        '}).catch(function(err) {'
-        '  PolkaWallet.postMessage(JSON.stringify({ path: "$method:error", data: err.message }));'
-        '})';
+    String script = """
+        $code.then(function(res) {
+          window.flutter_inappwebview
+            .callHandler("$EncointerJsService", { path: "$method", data: res });
+        }).catch(function(err) {
+          window.flutter_inappwebview
+            .callHandler("$EncointerJsService", { path: "$method:error", data: err.message  });
+        })""";
 
     _web.webViewController.evaluateJavascript(source: script);
 
