@@ -11,7 +11,6 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:update_app/update_app.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class UI {
@@ -40,91 +39,6 @@ class UI {
     } catch (err) {
       print("Could not launch URL: ${err.toString()}");
     }
-  }
-
-  // Todo: Decide if we keep this https://github.com/encointer/encointer-wallet-flutter/issues/517
-  static Future<void> checkUpdate(BuildContext context, Map versions, {bool autoCheck = false}) async {
-    if (versions == null || !Platform.isAndroid && !Platform.isIOS) return;
-    String platform = Platform.isAndroid ? 'android' : 'ios';
-    final Translations dic = I18n.of(context).translationsForLocale();
-
-    int latestCode = versions[platform]['version-code'];
-    String latestBeta = versions[platform]['version-beta'];
-    int latestCodeBeta = versions[platform]['version-code-beta'];
-
-    bool needUpdate = false;
-    if (autoCheck) {
-      if (latestCode > app_beta_version_code) {
-        // new version found
-        needUpdate = true;
-      } else {
-        return;
-      }
-    } else {
-      if (latestCodeBeta > app_beta_version_code) {
-        // new version found
-        needUpdate = true;
-      }
-    }
-
-    showCupertinoDialog(
-      context: context,
-      builder: (BuildContext context) {
-        List versionInfo = versions[platform]['info'][I18n.of(context).locale.toString().contains('zh') ? 'zh' : 'en'];
-        return CupertinoAlertDialog(
-          title: Text('v$latestBeta'),
-          content: Column(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: 12, bottom: 8),
-                child: Text(needUpdate ? dic.home.updateToNewerVersionQ : dic.home.updateLatest),
-              ),
-              needUpdate
-                  ? Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: versionInfo
-                          .map((e) => Text(
-                                '- $e',
-                                textAlign: TextAlign.left,
-                              ))
-                          .toList(),
-                    )
-                  : Container()
-            ],
-          ),
-          actions: <Widget>[
-            CupertinoButton(
-              child: Text(dic.home.cancel),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-            CupertinoButton(
-              child: Text(dic.home.ok),
-              onPressed: () async {
-                Navigator.of(context).pop();
-                if (!needUpdate) {
-                  return;
-                }
-                if (Platform.isIOS) {
-                  // go to ios download page
-                  launchURL('https://polkawallet.io/#download');
-                } else if (Platform.isAndroid) {
-                  // download apk
-                  // START LISTENING FOR DOWNLOAD PROGRESS REPORTING EVENTS
-                  try {
-                    String url = versions['android']['url'];
-                    UpdateApp.updateApp(url: url, appleId: "1520301768");
-                  } catch (e) {
-                    print('Failed to make OTA update. Details: $e');
-                  }
-                }
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 
   static Future<bool> checkJSCodeUpdate(
