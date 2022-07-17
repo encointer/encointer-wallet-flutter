@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -14,6 +15,34 @@ class JSApi {
 
   Function _webViewPostInitCallback;
 
+  String get initialUrl => "data:text/html;base64,${base64Encode(const Utf8Encoder().convert(sSScriptContainer))}";
+
+  static const String sSScriptContainer = """s
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  </head>
+  <body>
+  <h1>JavaScript Handlers (Channels) TEST</h1>
+  <script>
+  window.addEventListener("flutterInAppWebViewPlatformReady", function(event) {
+    window.flutter_inappwebview.callHandler('handlerFoo')
+        .then(function(result) {
+        // print to the console the data coming
+        // from the Flutter side.
+        console.log(JSON.stringify(result));
+
+    window.flutter_inappwebview
+        .callHandler('handlerFooWithArgs', 1, true, ['bar', 5], {foo: 'baz'}, result);
+  });
+  });
+  </script>
+  </body>
+  </html>
+  """;
+
   Future<void> launchWebView(BuildContext context, Future<void> Function() webViewPostInitCallback) async {
     _msgHandlers = {};
     _msgCompleters = {};
@@ -26,41 +55,51 @@ class JSApi {
       closeWebView();
     }
 
-    _web = HeadlessInAppWebView(onWebViewCreated: (controller) async {
-      print('webView with js-api initialized');
+    _web = HeadlessInAppWebView(
+        initialData: InAppWebViewInitialData(data: sSScriptContainer),
+        onWebViewCreated: (controller) {
+          print("Adding the PolkaWallet javascript handler");
 
-      // connects to the endpoint
-      dynamic res =
-          await controller.injectJavascriptFileFromAsset(assetFilePath: "lib/js_service_encointer/dist/main.js");
+          controller.addJavaScriptHandler(
+              handlerName: 'handlerFooWithArgs',
+              callback: (args) {
+                print(args);
+                // it will print: [1, true, [bar, 5], {foo: baz}, {bar: bar_value, baz: baz_value}]
+              });
 
-      print("[launch_webView]: injected js: ${res.toString()}");
+          controller.addJavaScriptHandler(
+              handlerName: 'PolkaWallet',
+              callback: (args) {
+                // print arguments coming from the JavaScript side!
+                print('received msg: ${args.toString()}');
 
-      controller.addJavaScriptHandler(
-          handlerName: 'PolkaWallet',
-          callback: (args) {
-            // print arguments coming from the JavaScript side!
-            print('received msg: ${args.toString()}');
+                var res = args[0];
 
-            var res = args[0];
+                final String path = res['path'];
+                if (_msgCompleters[path] != null) {
+                  Completer handler = _msgCompleters[path];
+                  handler.complete(res['data']);
+                  if (path.contains('uid=')) {
+                    _msgCompleters.remove(path);
+                  }
+                }
+                if (_msgHandlers[path] != null) {
+                  Function handler = _msgHandlers[path];
+                  handler(res['data']);
+                }
+              });
+        });
+    await _web.run();
 
-            final String path = res['path'];
-            if (_msgCompleters[path] != null) {
-              Completer handler = _msgCompleters[path];
-              handler.complete(res['data']);
-              if (path.contains('uid=')) {
-                _msgCompleters.remove(path);
-              }
-            }
-            if (_msgHandlers[path] != null) {
-              Function handler = _msgHandlers[path];
-              handler(res['data']);
-            }
-          });
+    print("Running the webView");
+    dynamic res = await _web.webViewController
+        .injectJavascriptFileFromAsset(assetFilePath: "lib/js_service_encointer/dist/main.js");
 
-      await _webViewPostInitCallback();
-    });
+    print("Injected the js: res: ${res.toString()}");
 
-    return _web.run();
+    await _web.webViewController.evaluateJavascript(source: "console.log('Here is the message!');");
+
+    return _webViewPostInitCallback();
   }
 
   /// Evaluate javascript [code] in the webView.
