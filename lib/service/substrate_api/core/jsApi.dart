@@ -24,59 +24,22 @@ class JSApi {
     _webViewPostInitCallback = webViewPostInitCallback;
 
     if (_web != null) {
-      // we need to call this because `dispose` is not called in a hot-reload
       closeWebView();
     }
 
-    String source = await DefaultAssetBundle.of(context).loadString('lib/js_service_encointer/dist/main.js');
-
-    String jSScriptContainer = """
-  <!DOCTYPE html>
-  <html lang="en">
-  <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  </head>
-  <body>
-  <h1>JavaScript Handlers (Channels) TEST</h1>
-  <script>
-  window.addEventListener("flutterInAppWebViewPlatformReady", function(event) {
-    window.flutter_inappwebview.callHandler('handlerFoo')
-        .then(function(result) {
-        // print to the console the data coming
-        // from the Flutter side.
-        console.log(JSON.stringify(result));
-
-    window.flutter_inappwebview
-        .callHandler('handlerFooWithArgs', 1, true, ['bar', 5], {foo: 'baz'}, result);
-    });
-  });
-  
-  $source
- 
-  </script>
-  </body>
-  </html>
-  """;
+    String jsServiceEncointer =
+        await DefaultAssetBundle.of(context).loadString('lib/js_service_encointer/dist/main.js');
 
     _web = HeadlessInAppWebView(
-      initialData: InAppWebViewInitialData(data: jSScriptContainer),
+      initialData: InAppWebViewInitialData(data: jSSourceHtmlContainer(jsServiceEncointer)),
       onConsoleMessage: (controller, message) => print("JS-Console: ${message.message}"),
       onWebViewCreated: (controller) async {
         print("Adding the PolkaWallet javascript handler");
 
         controller.addJavaScriptHandler(
-            handlerName: 'handlerFooWithArgs',
-            callback: (args) {
-              print(args);
-              // it will print: [1, true, [bar, 5], {foo: baz}, {bar: bar_value, baz: baz_value}]
-            });
-
-        controller.addJavaScriptHandler(
             handlerName: EncointerJsService,
             callback: (args) {
-              // print arguments coming from the JavaScript side!
-              print('received msg: ${args.toString()}');
+              print('[JavaScripHandler/callback]: ${args.toString()}');
 
               var res = args[0];
 
@@ -178,4 +141,23 @@ class JSApi {
       print("[JSApi]: Did not close webView because it was closed already.");
     }
   }
+}
+
+/// Wraps `jSSource` in a html document ready to be hoisted in a webView.
+String jSSourceHtmlContainer(String jSSource) {
+  return """
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    </head>
+    <body>
+      <h1>JavaScript Handlers (Channels) TEST</h1>
+      <script>
+        $jSSource
+      </script>
+    </body>
+  </html>
+  """;
 }
