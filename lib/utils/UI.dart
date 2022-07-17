@@ -35,7 +35,7 @@ class UI {
 
   static Future<void> launchURL(String url) async {
     try {
-      await launch(url);
+      await launchUrl(Uri.parse(url));
     } catch (err) {
       print("Could not launch URL: ${err.toString()}");
     }
