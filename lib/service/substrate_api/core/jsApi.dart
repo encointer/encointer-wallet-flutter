@@ -99,6 +99,7 @@ class JSApi {
     String method = 'uid=${_getEvalJavascriptUID()};${code.split('(')[0]}';
     _msgCompleters[method] = c;
 
+    // Send the result from JS to dart after `code` completed.
     String script = """
         $code.then(function(res) {
           window.flutter_inappwebview
