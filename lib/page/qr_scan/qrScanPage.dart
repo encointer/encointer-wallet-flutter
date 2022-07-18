@@ -13,8 +13,10 @@ export 'qrScanService.dart';
 export 'qr_codes/qrCodeBase.dart';
 
 class ScanPageParams {
-  ScanPageParams({this.scannerContext});
-  final QrScannerContext? scannerContext;
+  ScanPageParams({
+    required this.scannerContext,
+  });
+  final QrScannerContext scannerContext;
 }
 
 class ScanPage extends StatelessWidget {
@@ -34,11 +36,11 @@ class ScanPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
-    ScanPageParams? params = ModalRoute.of(context)!.settings.arguments as ScanPageParams?;
+    ScanPageParams params = ModalRoute.of(context)!.settings.arguments! as ScanPageParams;
     Future? onScan(String? data, String? rawData) {
       try {
         QrCode<dynamic> qrCode = qrScanService.parse(data!);
-        qrScanService.handleQrScan(context, params!.scannerContext, qrCode);
+        qrScanService.handleQrScan(context, params.scannerContext, qrCode);
       } catch (e) {
         print("[ScanPage]: ${e.toString()}");
         RootSnackBar.showMsg(e.toString());

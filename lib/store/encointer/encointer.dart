@@ -425,7 +425,7 @@ abstract class _EncointerStore with Store {
   /// Initializes stores that have not been initialized before.
   ///
   /// This should be called upon changing the current account mainly, or after loading the store from cache.
-  Future<void> initializeUninitializedStores(String? address) {
+  Future<void> initializeUninitializedStores(String address) {
     var futures = [initEncointerAccountStore(address, shouldCache: false)];
 
     if (chosenCid != null) {

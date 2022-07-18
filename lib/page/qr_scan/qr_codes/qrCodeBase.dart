@@ -19,7 +19,7 @@ abstract class QrCode<QrCodeData extends ToQrFields> {
 }
 
 abstract class ToQrFields {
-  List<String?> toQrFields();
+  List<String> toQrFields();
 }
 
 /// context identifier

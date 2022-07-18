@@ -110,9 +110,9 @@ class MockApiEncointer extends EncointerApi {
   }
 
   @override
-  Future<Map<CommunityIdentifier?, BalanceEntry>> getAllBalances(String account) async {
-    return Future.value(Map<CommunityIdentifier?, BalanceEntry>.of({
-      store.encointer!.chosenCid: BalanceEntry.fromJson(testBalanceEntry),
+  Future<Map<CommunityIdentifier, BalanceEntry>> getAllBalances(String account) async {
+    return Future.value(Map<CommunityIdentifier, BalanceEntry>.of({
+      store.encointer!.chosenCid!: BalanceEntry.fromJson(testBalanceEntry),
     }));
   }
 

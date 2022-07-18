@@ -90,7 +90,7 @@ class EncointerApi {
     print("api: getCurrentPhase");
     var res = await jsApi!.evalJavascript('encointer.getCurrentPhase()');
 
-    var phase = ceremonyPhaseFromString(res);
+    var phase = ceremonyPhaseFromString(res)!;
     print("api: Phase enum: " + phase.toString());
     store.encointer!.setCurrentPhase(phase);
     return phase;
@@ -114,9 +114,9 @@ class EncointerApi {
   ///
   /// This is on-chain in Cantillon.
   Future<void> getPhaseDurations() async {
-    Map<CeremonyPhase?, int> phaseDurations = await jsApi!
+    Map<CeremonyPhase, int> phaseDurations = await jsApi!
         .evalJavascript('encointer.getPhaseDurations()')
-        .then((m) => Map.from(m).map((key, value) => MapEntry(ceremonyPhaseFromString(key), int.parse(value))));
+        .then((m) => Map.from(m).map((key, value) => MapEntry(ceremonyPhaseFromString(key)!, int.parse(value))));
 
     store.encointer!.setPhaseDurations(phaseDurations);
   }
@@ -145,7 +145,7 @@ class EncointerApi {
     }
   }
 
-  Future<Map<CommunityIdentifier?, BalanceEntry>> getAllBalances(String account) async {
+  Future<Map<CommunityIdentifier, BalanceEntry>> getAllBalances(String account) async {
     return _dartApi.getAllBalances(account);
   }
 
@@ -322,12 +322,12 @@ class EncointerApi {
     jsApi!.subscribeMessage(
         'encointer.subscribeCurrentPhase("$_currentPhaseSubscribeChannel")', _currentPhaseSubscribeChannel,
         (data) async {
-      var phase = ceremonyPhaseFromString(data.toUpperCase());
+      var phase = ceremonyPhaseFromString(data.toUpperCase())!;
 
       var cid = store.encointer!.chosenCid;
       var address = store.account!.currentAddress;
 
-      if (cid != null && (address?.isNotEmpty ?? false)) {
+      if (cid != null) {
         var data = await pollAggregatedAccountDataUntilNextPhase(phase, cid, address);
         store.encointer!.setAggregatedAccountData(cid, address, data);
       }
@@ -431,9 +431,13 @@ class EncointerApi {
 
     List<dynamic> reputationsList = await jsApi!.evalJavascript('encointer.getReputations("$address")');
 
-    print("api: getReputations: ${reputationsList.toString()}");
+    print("api: getReputations: ${reputationsList?.toString()}");
 
-    Map<int?, CommunityReputation> reputations =
+    if (reputationsList.isEmpty) {
+      return Future.value(null);
+    }
+
+    Map<int, CommunityReputation> reputations =
         Map.fromIterable(reputationsList, key: (cr) => cr[0], value: (cr) => CommunityReputation.fromJson(cr[1]));
 
     store.encointer!.account?.setReputations(reputations);

@@ -108,7 +108,7 @@ abstract class _AssetsStore with Store {
     Map? cache = await rootStore.localStorage.getAccountCache(
       rootStore.account!.currentAccount.pubKey,
       cacheBalanceKey,
-    );
+    ) as Map?;
     if (cache == null) {
       cache = amt;
     } else {

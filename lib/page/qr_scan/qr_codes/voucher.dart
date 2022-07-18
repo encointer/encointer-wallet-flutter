@@ -1,5 +1,4 @@
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
-import 'package:flutter/material.dart';
 
 import 'qrCodeBase.dart';
 
@@ -30,7 +29,7 @@ class VoucherData implements ToQrFields {
   VoucherData({
     required this.voucherUri,
     required this.cid,
-    this.network,
+    required this.network,
     required this.issuer,
   });
 
@@ -41,15 +40,15 @@ class VoucherData implements ToQrFields {
   final CommunityIdentifier cid;
 
   /// Network, e.g: nctr-k, nctr-r.
-  final String? network;
+  final String network;
 
   /// Name of issuer.
   final String issuer;
 
-  List<String?> toQrFields() {
+  List<String> toQrFields() {
     return [
       voucherUri,
-      cid?.toFmtString() ?? "",
+      cid.toFmtString(),
       network,
       issuer,
     ];

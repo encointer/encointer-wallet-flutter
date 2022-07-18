@@ -106,7 +106,7 @@ abstract class _CommunityStore with Store {
   }
 
   @action
-  void setCommunityMetadata([CommunityMetadata? meta]) {
+  void setCommunityMetadata(CommunityMetadata meta) {
     _log("set metadata to $meta");
     metadata = meta;
     writeToCache();

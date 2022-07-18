@@ -222,8 +222,8 @@ class _TransferPageState extends State<TransferPage> {
 
       if (args.recipient != null) {
         final AccountData acc = AccountData();
-        acc.address = args.recipient;
-        acc.name = args.label;
+        acc.address = args.recipient!;
+        acc.name = args.label!;
         setState(() {
           _accountTo = acc;
         });

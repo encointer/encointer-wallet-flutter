@@ -199,7 +199,7 @@ mixin _$CommunityStore on _CommunityStore, Store {
   }
 
   @override
-  void setCommunityMetadata([CommunityMetadata? meta]) {
+  void setCommunityMetadata(CommunityMetadata meta) {
     final _$actionInfo = _$_CommunityStoreActionController.startAction(name: '_CommunityStore.setCommunityMetadata');
     try {
       return super.setCommunityMetadata(meta);

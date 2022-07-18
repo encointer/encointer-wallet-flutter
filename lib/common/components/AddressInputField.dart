@@ -16,7 +16,7 @@ class AddressInputField extends StatefulWidget {
   final AppStore? store;
   final String? label;
   final AccountData? initialValue;
-  final Function(AccountData?)? onChanged;
+  final Function(AccountData)? onChanged;
   final bool hideIdenticon;
   @override
   _AddressInputFieldState createState() => _AddressInputFieldState();
@@ -186,7 +186,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
         asyncItems: (String filter) => _getAccountsFromInput(filter),
         itemAsString: _itemAsString,
         onChanged: (AccountData? data) {
-          if (widget.onChanged != null) {
+          if (widget.onChanged != null && data != null) {
             widget.onChanged!(data);
           }
         },

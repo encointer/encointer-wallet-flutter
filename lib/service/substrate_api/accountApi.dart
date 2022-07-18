@@ -74,7 +74,7 @@ class AccountApi {
     if (res != null) {
       store.account!.setPubKeyAddressMap(Map<String, Map>.from({store.settings!.endpoint.ss58.toString(): res}));
     }
-    return res;
+    return res!;
   }
 
   Future<String> addressFromUri(String uri) async {

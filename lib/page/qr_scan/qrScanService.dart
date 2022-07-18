@@ -41,7 +41,7 @@ class QrScanService {
     }
   }
 
-  void handleQrScan(BuildContext context, QrScannerContext? scanContext, QrCode<dynamic> qrCode) {
+  void handleQrScan(BuildContext context, QrScannerContext scanContext, QrCode<dynamic> qrCode) {
     switch (qrCode.context) {
       case QrCodeContext.contact:
         return handleContactQrCodeScan(context, scanContext, qrCode as ContactQrCode);

@@ -67,8 +67,8 @@ class _CreatePinPageState extends State<CreatePinPage> {
 
                   await onCreatePin();
 
-                  if (store!.encointer!.communityIdentifiers?.length as bool? ?? 0 == 1) {
-                    store!.encointer!.setChosenCid(store!.encointer!.communityIdentifiers![0]);
+                  if (store!.encointer!.communityIdentifiers.length as bool? ?? 0 == 1) {
+                    store!.encointer!.setChosenCid(store!.encointer!.communityIdentifiers[0]);
                   } else {
                     await Navigator.push(
                       context,

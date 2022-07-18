@@ -105,7 +105,7 @@ enum Reputation { Unverified, UnverifiedReputable, VerifiedUnlinked, VerifiedLin
 
 // -- Helper functions for above types
 
-CeremonyPhase? ceremonyPhaseFromString(String? value) {
+CeremonyPhase? ceremonyPhaseFromString(String value) {
   return getEnumFromString(CeremonyPhase.values, value);
 }
 
