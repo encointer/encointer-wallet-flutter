@@ -90,7 +90,7 @@ class JSApi {
     }
 
     if (!wrapPromise) {
-      String? res = await (_web!.webViewController.evaluateJavascript(source: code) as FutureOr<String?>);
+      String res = await _web!.webViewController.evaluateJavascript(source: code);
       return res;
     }
 

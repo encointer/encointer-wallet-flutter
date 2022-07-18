@@ -35,10 +35,10 @@ class _AddAccountPageState extends State<AddAccountPage> {
 
     await webApi!.account.generateAccount();
 
-    var acc = await (webApi!.account.importAccount(
+    var acc = await webApi!.account.importAccount(
       cryptoType: AccountAdvanceOptionParams.encryptTypeSR,
       derivePath: '',
-    ) as FutureOr<Map<String, dynamic>>);
+    );
 
     if (acc['error'] != null) {
       setState(() {

@@ -100,7 +100,7 @@ class Api {
     String? node = store!.settings!.endpoint.value;
     NodeConfig? config = store!.settings!.endpoint.overrideConfig;
     // do connect
-    String? res = await (evalJavascript('settings.connect("$node", "${jsonEncode(config)}")') as FutureOr<String?>);
+    String? res = await evalJavascript('settings.connect("$node", "${jsonEncode(config)}")');
     if (res == null) {
       print('connecting to node failed');
       store!.settings!.setNetworkName(null);
@@ -121,8 +121,7 @@ class Api {
     List<NodeConfig?> configs = store!.settings!.endpointList.map((e) => e.overrideConfig).toList();
     print("configs: $configs");
     // do connect
-    String? res = await (evalJavascript('settings.connectAll(${jsonEncode(nodes)}, ${jsonEncode(configs)})')
-        as FutureOr<String?>);
+    String? res = await evalJavascript('settings.connectAll(${jsonEncode(nodes)}, ${jsonEncode(configs)})');
     if (res == null) {
       print('connect failed');
       store!.settings!.setNetworkName(null);
@@ -198,10 +197,10 @@ class Api {
   }
 
   Future<List?> getExternalLinks(GenExternalLinksParams params) async {
-    final List? res = await (evalJavascript(
+    final List? res = await evalJavascript(
       'settings.genLinks(${jsonEncode(GenExternalLinksParams.toJson(params))})',
       allowRepeat: true,
-    ) as FutureOr<List<dynamic>?>);
+    );
     return res;
   }
 }

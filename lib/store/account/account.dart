@@ -173,15 +173,15 @@ abstract class _AccountStore with Store {
     queuedTxs.add(tx);
 
     new Timer.periodic(Duration(seconds: 5), (Timer timer) async {
-      if (await (webApi!.isConnected() as FutureOr<bool>)) {
+      if (await webApi!.isConnected()) {
         queuedTxs.forEach((args) async {
-          Map res = await (webApi!.account.sendTxAndShowNotification(
+          Map res = await webApi!.account.sendTxAndShowNotification(
             args['txInfo'],
             args['params'],
             args['title'],
             args['notificationTitle'],
             rawParam: args['rawParam'],
-          ) as FutureOr<Map<dynamic, dynamic>>);
+          );
 
           print("Queued tx result: ${res.toString()}");
           if (res['hash'] == null) {
@@ -308,14 +308,14 @@ abstract class _AccountStore with Store {
   Future<void> encryptSeed(String? pubKey, String seed, String seedType, String password) async {
     String key = Fmt.passwordToEncryptKey(password);
     String encrypted = await FlutterAesEcbPkcs5.encryptString(seed, key);
-    Map stored = await (rootStore.localStorage.getSeeds(seedType) as FutureOr<Map<dynamic, dynamic>>);
+    Map stored = await rootStore.localStorage.getSeeds(seedType) as Map<String, dynamic>;
     stored[pubKey] = encrypted;
     rootStore.localStorage.setSeeds(seedType, stored);
   }
 
   @action
   Future<String> decryptSeed(String? pubKey, String seedType, String password) async {
-    Map stored = await (rootStore.localStorage.getSeeds(seedType) as FutureOr<Map<dynamic, dynamic>>);
+    Map stored = await rootStore.localStorage.getSeeds(seedType);
     String? encrypted = stored[pubKey];
     if (encrypted == null) {
       return Future.value(null);
@@ -325,7 +325,7 @@ abstract class _AccountStore with Store {
 
   @action
   Future<bool> checkSeedExist(String seedType, String? pubKey) async {
-    Map stored = await (rootStore.localStorage.getSeeds(seedType) as FutureOr<Map<dynamic, dynamic>>);
+    Map stored = await rootStore.localStorage.getSeeds(seedType);
     String? encrypted = stored[pubKey];
     return encrypted != null;
   }
@@ -333,7 +333,7 @@ abstract class _AccountStore with Store {
   @action
   Future<void> updateSeed(String? pubKey, String passwordOld, String passwordNew) async {
     Map storedMnemonics =
-        await (rootStore.localStorage.getSeeds(AccountStore.seedTypeMnemonic) as FutureOr<Map<dynamic, dynamic>>);
+        await rootStore.localStorage.getSeeds(AccountStore.seedTypeMnemonic);
     Map? storedRawSeeds = await rootStore.localStorage.getSeeds(AccountStore.seedTypeRawSeed);
     String? encryptedSeed = '';
     String seedType = '';
@@ -353,7 +353,7 @@ abstract class _AccountStore with Store {
 
   @action
   Future<void> deleteSeed(String seedType, String? pubKey) async {
-    Map stored = await (rootStore.localStorage.getSeeds(seedType) as FutureOr<Map<dynamic, dynamic>>);
+    Map stored = await rootStore.localStorage.getSeeds(seedType);
     if (stored[pubKey] != null) {
       stored.remove(pubKey);
       rootStore.localStorage.setSeeds(seedType, stored);

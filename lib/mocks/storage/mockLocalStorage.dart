@@ -10,7 +10,7 @@ class MockLocalStorage extends Mock implements LocalStorage {}
 MockLocalStorage getMockLocalStorage() {
   final localStorage = MockLocalStorage();
   when(localStorage.getAccountList()).thenAnswer((_) {
-    return Future.value(accList as FutureOr<List<Map<String, dynamic>>>?);
+    return Future.value(accList);
   } as Future<List<Map<String, dynamic>>> Function(Invocation));
   when(localStorage.addAccount(any)).thenAnswer((invocation) {
     accList.add(invocation.positionalArguments[0]);
@@ -30,9 +30,8 @@ MockLocalStorage getMockLocalStorage() {
   when(localStorage.getSeeds(any)).thenAnswer((_) => Future.value({}));
   when(localStorage.getAccountCache(any, any)).thenAnswer((_) => Future.value(null));
 
-  when(localStorage.getContactList()).thenAnswer(((_) =>
-          Future.value(contactList as FutureOr<List<Map<String, dynamic>>>?))
-      as Future<List<Map<String, dynamic>>> Function(Invocation));
+  when(localStorage.getContactList())
+      .thenAnswer(((_) => Future.value(contactList)) as Future<List<Map<String, dynamic>>> Function(Invocation));
   when(localStorage.addContact(any)).thenAnswer((invocation) {
     contactList.add(invocation.positionalArguments[0]);
     return Future.value();
@@ -60,7 +59,7 @@ MockLocalStorage getMockLocalStorage() {
     String? value = storage[realInvocation.positionalArguments.first];
     if (value != null) {
       Object? data = jsonDecode(value);
-      return data as FutureOr<Map<String, dynamic>>;
+      return data;
     }
     return Future.value(null);
   } as Future<Map<String, dynamic>> Function(Invocation));
