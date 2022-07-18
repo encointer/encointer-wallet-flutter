@@ -160,7 +160,7 @@ class _ProfileState extends State<Profile> {
                   ListTile(
                       title: Text(dic.profile.reputationOverall, style: h3Grey),
                       trailing: store!.encointer!.account?.reputations != null
-                          ? Text(store!.encointer!.account.reputations!.length.toString())
+                          ? Text(store!.encointer!.account?.reputations.length.toString() ?? 0.toString())
                           : Text(dic.encointer.fetchingReputations)),
                   ListTile(
                     title: Text(dic.profile.about, style: Theme.of(context).textTheme.headline3),

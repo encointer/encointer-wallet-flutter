@@ -98,7 +98,7 @@ class Ipfs {
 
       return imageHash;
     } catch (e) {
-      print("Ipfs upload of Image error " + e);
+      print("Ipfs upload of Image error ${e.toString()}");
       return "";
     }
   }
@@ -123,7 +123,7 @@ class Ipfs {
 
       return jsonHash;
     } catch (e) {
-      print("Ipfs upload of json error " + e);
+      print("Ipfs upload of json error ${e.toString()}");
       return "";
     }
   }

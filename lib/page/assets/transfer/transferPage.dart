@@ -20,12 +20,19 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 
 class TransferPageParams {
-  TransferPageParams({this.cid, this.communitySymbol, this.recipient, this.label, this.amount, this.redirect});
+  TransferPageParams({
+    required this.cid,
+    required this.communitySymbol,
+    required this.recipient,
+    required this.label,
+    this.amount,
+    this.redirect,
+  });
 
-  final CommunityIdentifier? cid;
-  final String? communitySymbol;
-  final String? recipient;
-  final String? label;
+  final CommunityIdentifier cid;
+  final String communitySymbol;
+  final String recipient;
+  final String label;
   final double? amount;
   final String? redirect;
 }
@@ -123,8 +130,8 @@ class _TransferPageState extends State<TransferPage> {
                           keyboardType: TextInputType.numberWithOptions(decimal: true),
                           controller: _amountCtrl,
                           textFormFieldKey: Key('transfer-amount-input'),
-                          validator: (String value) {
-                            if (value.isEmpty) {
+                          validator: (String? value) {
+                            if (value == null || value.isEmpty) {
                               return dic.assets.amountError;
                             }
                             if (balanceTooLow(value, available!, decimals)) {

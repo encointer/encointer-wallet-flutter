@@ -35,15 +35,15 @@ class CeremonyBox extends StatelessWidget {
     return Observer(builder: (BuildContext context) {
       int meetupTime = store!.encointer!.community?.meetupTimeOverride ??
           store!.encointer?.community?.meetupTime ??
-          store!.encointer!.attestingPhaseStart;
+          store!.encointer!.attestingPhaseStart!;
 
       // I decided to not introduce anymore degrees of freedom for the demo overrides, otherwise
       // we want to do too much again. So I hardcode the assigning phase duration to 30 minutes
       // if we have meetup time overrides. Before we do something more complex here, I want to
       // think some more, of what we want to do with the feed in the future.
-      int? assigningPhaseStart = store!.encointer!.community?.meetupTimeOverride != null
-          ? store!.encointer!.community.meetupTimeOverride! - Duration(minutes: 30).inMilliseconds
-          : store!.encointer?.assigningPhaseStart;
+      int assigningPhaseStart = store!.encointer!.community?.meetupTimeOverride != null
+          ? store!.encointer!.community!.meetupTimeOverride! - Duration(minutes: 30).inMilliseconds
+          : store!.encointer!.assigningPhaseStart!;
 
       return Column(
         children: [
@@ -95,7 +95,7 @@ class CeremonyBox extends StatelessWidget {
                           Icon(Iconsax.login_1),
                           SizedBox(width: 6),
                           Text(
-                              '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store!.encointer!.communityAccount.scannedClaimsCount.toString())}'),
+                              '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store!.encointer!.communityAccount!.scannedClaimsCount.toString())}'),
                         ],
                       ),
                       onPressed: () => submitAttestClaims(context, store!, api!),
@@ -125,7 +125,8 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
           notificationIconData: Iconsax.tick_square,
           notification: dic.encointer.youAreRegisteredAs.replaceAll(
             'PARTICIPANT_TYPE',
-            store.encointer?.communityAccount?.participantType?.toValue(),
+            store.encointer?.communityAccount?.participantType?.toValue() ??
+                "Non-nulllable-default-which-never-happens",
           ),
         );
       } else {
@@ -160,12 +161,14 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
         if (store.encointer!.communityAccount?.meetupCompleted ?? false) {
           return CeremonyNotification(
             notificationIconData: Iconsax.tick_square,
-            notification: dic.encointer.successfullySentNAttestations
-                .replaceAll('P_COUNT', store.encointer!.communityAccount?.scannedClaimsCount.toString()),
+            notification: dic.encointer.successfullySentNAttestations.replaceAll(
+                'P_COUNT',
+                store.encointer!.communityAccount?.scannedClaimsCount.toString() ??
+                    "non-nullable-default-which-never-happens"),
           );
         } else {
-          var meetup = store.encointer!.communityAccount.meetup!;
-          var location = store.encointer!.community.meetupLocations![meetup.locationIndex!];
+          var meetup = store.encointer!.communityAccount!.meetup!;
+          var location = store.encointer!.community!.meetupLocations![meetup.locationIndex];
           return MeetupInfo(
             meetup,
             location,

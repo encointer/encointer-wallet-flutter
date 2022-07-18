@@ -1,10 +1,7 @@
-import 'dart:convert';
-
-import 'package:flutter/foundation.dart';
-import 'package:mobx/mobx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/assets/types/balancesInfo.dart';
 import 'package:encointer_wallet/store/assets/types/transferData.dart';
+import 'package:mobx/mobx.dart';
 
 part 'assets.g.dart';
 
@@ -180,20 +177,6 @@ abstract class _AssetsStore with Store {
   @action
   void setTxsFilter(int filter) {
     txsFilter = filter;
-  }
-
-  @action
-  Future<void> setBlockMap(String? data) async {
-    var ls = await compute(jsonDecode, data);
-    List.of(ls).forEach((i) {
-      if (blockMap[i['id']] == null) {
-        blockMap[i['id']] = BlockData.fromJson(i);
-      }
-    });
-
-    if (List.of(ls).length > 0) {
-      rootStore.localStorage.setObject(localStorageBlocksKey, blockMap.values.map((i) => BlockData.toJson(i)).toList());
-    }
   }
 
   @action

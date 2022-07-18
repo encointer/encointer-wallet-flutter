@@ -1,5 +1,4 @@
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
-import 'package:flutter/material.dart';
 
 import 'qrCodeBase.dart';
 
@@ -10,10 +9,10 @@ class ContactQrCode extends QrCode<ContactData> {
   }) : super(data);
 
   ContactQrCode({
-    required String? account,
+    required String account,
     CommunityIdentifier? cid,
     String? network,
-    required String? label,
+    required String label,
     this.version = QrCodeVersion.v1_0,
   }) : super(ContactData(account: account, cid: cid, network: network, label: label));
 
@@ -60,7 +59,7 @@ class ContactData implements ToQrFields {
   });
 
   /// ss58 encoded public key of the account address.
-  final String? account;
+  final String account;
 
   /// Community identifier.
   final CommunityIdentifier? cid;
@@ -69,15 +68,15 @@ class ContactData implements ToQrFields {
   final String? network;
 
   /// Name or other identifier for `account`.
-  final String? label;
+  final String label;
 
   // implicitly is v1 to satisfy interface
-  List<String?> toQrFields() {
+  List<String> toQrFields() {
     return [account, "", "", label];
   }
 
-  List<String?> toQrFieldsV2() {
-    return [account, cid!.toFmtString(), network, label];
+  List<String> toQrFieldsV2() {
+    return [account, cid?.toFmtString() ?? "", network ?? "", label];
   }
 
   static ContactData fromQrFieldsV1(List<String> fields) {

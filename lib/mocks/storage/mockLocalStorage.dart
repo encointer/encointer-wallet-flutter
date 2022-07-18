@@ -30,7 +30,9 @@ MockLocalStorage getMockLocalStorage() {
   when(localStorage.getSeeds(any)).thenAnswer((_) => Future.value({}));
   when(localStorage.getAccountCache(any, any)).thenAnswer((_) => Future.value(null));
 
-  when(localStorage.getContactList()).thenAnswer(((_) => Future.value(contactList as FutureOr<List<Map<String, dynamic>>>?)) as Future<List<Map<String, dynamic>>> Function(Invocation));
+  when(localStorage.getContactList()).thenAnswer(((_) =>
+          Future.value(contactList as FutureOr<List<Map<String, dynamic>>>?))
+      as Future<List<Map<String, dynamic>>> Function(Invocation));
   when(localStorage.addContact(any)).thenAnswer((invocation) {
     contactList.add(invocation.positionalArguments[0]);
     return Future.value();

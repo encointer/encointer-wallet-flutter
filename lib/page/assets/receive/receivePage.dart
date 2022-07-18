@@ -78,6 +78,11 @@ class _ReceivePageState extends State<ReceivePage> {
         webApi!.encointer!.getAllBalances(widget.store!.account!.currentAddress).then((balances) {
           if (balances != null) {
             CommunityIdentifier? cid = widget.store!.encointer!.chosenCid;
+
+            if (cid == null) {
+              return;
+            }
+
             double? demurrageRate = widget.store!.encointer!.community.demurrage;
             double? newBalance = widget.store!.encointer!.applyDemurrage(balances[cid]);
             double oldBalance =
@@ -88,16 +93,16 @@ class _ReceivePageState extends State<ReceivePage> {
               if (delta > demurrageRate!) {
                 var msg = dic.assets.incomingConfirmed
                     .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
-                    .replaceAll('CID_SYMBOL', widget.store!.encointer!.community.metadata!.symbol!)
-                    .replaceAll('ACCOUNT_NAME', widget.store!.account!.currentAccount.name!);
+                    .replaceAll('CID_SYMBOL', widget.store!.encointer!.community?.metadata?.symbol ?? "null")
+                    .replaceAll('ACCOUNT_NAME', widget.store!.account!.currentAccount.name);
                 print("[receivePage] $msg");
-                widget.store!.encointer!.account?.addBalanceEntry(cid!, balances[cid]);
+                widget.store!.encointer!.account?.addBalanceEntry(cid, balances[cid]);
                 NotificationPlugin.showNotification(44, dic.assets.fundsReceived, msg, cid: cid.toFmtString());
               }
             }
           }
         });
-        paymentWatchdog
+        paymentWatchdog!
           ..reset()
           ..start();
       },

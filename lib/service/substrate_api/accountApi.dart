@@ -120,7 +120,8 @@ class AccountApi {
   Future<Map?> estimateTxFees(Map txInfo, List? params, {String? rawParam}) async {
     String param = rawParam != null ? rawParam : jsonEncode(params);
     print(txInfo);
-    Map? res = await (jsApi!.evalJavascript('account.txFeeEstimate(${jsonEncode(txInfo)}, $param)', allowRepeat: true) as FutureOr<Map<dynamic, dynamic>?>);
+    Map? res = await (jsApi!.evalJavascript('account.txFeeEstimate(${jsonEncode(txInfo)}, $param)', allowRepeat: true)
+        as FutureOr<Map<dynamic, dynamic>?>);
     return res;
   }
 
@@ -165,7 +166,8 @@ class AccountApi {
     String pass = store.account!.newAccount.password;
     String code = 'account.recover("$keyType", "$cryptoType", \'$key$derivePath\', "$pass")';
     code = code.replaceAll(RegExp(r'\t|\n|\r'), '');
-    Map<String, dynamic>? acc = await (jsApi!.evalJavascript(code, allowRepeat: true) as FutureOr<Map<String, dynamic>?>);
+    Map<String, dynamic>? acc =
+        await (jsApi!.evalJavascript(code, allowRepeat: true) as FutureOr<Map<String, dynamic>?>);
     return acc;
   }
 
@@ -214,7 +216,8 @@ class AccountApi {
     if (keys.length == 0) {
       return [];
     }
-    List res = await (jsApi!.evalJavascript('account.genPubKeyIcons(${jsonEncode(keys)})', allowRepeat: true) as FutureOr<List<dynamic>>);
+    List res = await (jsApi!.evalJavascript('account.genPubKeyIcons(${jsonEncode(keys)})', allowRepeat: true)
+        as FutureOr<List<dynamic>>);
     store.account!.setPubKeyIconsMap(res);
     return res;
   }
@@ -224,7 +227,8 @@ class AccountApi {
     if (addresses.length == 0) {
       return [];
     }
-    List res = await (jsApi!.evalJavascript('account.genIcons(${jsonEncode(addresses)})', allowRepeat: true) as FutureOr<List<dynamic>>);
+    List res = await (jsApi!.evalJavascript('account.genIcons(${jsonEncode(addresses)})', allowRepeat: true)
+        as FutureOr<List<dynamic>>);
     store.account!.setAddressIconsMap(res);
     return res;
   }
@@ -275,7 +279,7 @@ class AccountApi {
     String pageTile,
     String notificationTitle,
   ) async {
-    final String address = store.account!.currentAddress;
+    final String address = store.account!.currentAddress!;
     final Map res = await (jsApi!.evalJavascript(
       'account.addSignatureAndSend("$address", "$signature")',
       allowRepeat: true,

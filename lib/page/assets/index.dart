@@ -101,7 +101,7 @@ class _AssetsState extends State<Assets> {
       () {
         print("[balanceWatchdog] triggered");
         _refreshBalanceAndNotify(dic);
-        balanceWatchdog
+        balanceWatchdog!
           ..reset()
           ..start();
       },
@@ -191,7 +191,8 @@ class _AssetsState extends State<Assets> {
                                       child: (store!.encointer!.chosenCid == null)
                                           ? Container(
                                               width: double.infinity,
-                                              child: Text(dic!.assets.communityNotSelected, textAlign: TextAlign.center))
+                                              child:
+                                                  Text(dic!.assets.communityNotSelected, textAlign: TextAlign.center))
                                           : Container(
                                               width: double.infinity,
                                               child: CupertinoActivityIndicator(),
@@ -389,7 +390,7 @@ class _AssetsState extends State<Assets> {
       AccountOrCommunityData(
         avatar: CommunityAvatar(
           store: store,
-          avatarIcon: webApi!.ipfs.getCommunityIcon(store!.encointer!.community?.assetsCid),
+          avatarIcon: webApi!.ipfs.getCommunityIcon(store!.encointer!.community?.assetsCid ?? "non-nullable-default"),
           avatarSize: avatarSize,
         ),
         name: '${store!.encointer!.community?.name ?? '...'}',
@@ -510,8 +511,8 @@ class _AssetsState extends State<Assets> {
           var community = widget.store!.encointer!.communityStores![cidStr]!;
           double demurrageRate = community.demurrage!;
           double newBalance = community.applyDemurrage(balanceEntry);
-          double oldBalance = community.applyDemurrage(
-                  widget.store!.encointer!.accountStores![widget.store!.account!.currentAddress]!.balanceEntries![cidStr]) ??
+          double oldBalance = community.applyDemurrage(widget
+                  .store!.encointer!.accountStores![widget.store!.account!.currentAddress]!.balanceEntries![cidStr]) ??
               0;
           double delta = newBalance - oldBalance;
           print("[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta");

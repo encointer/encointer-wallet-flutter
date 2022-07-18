@@ -123,7 +123,7 @@ class ContactDetailPage extends StatelessWidget {
                   children: [
                     Icon(Iconsax.send_sqaure_2),
                     SizedBox(width: 12),
-                    Text(dic.profile.tokenSend.replaceAll('SYMBOL', store!.encointer!.community?.symbol),
+                    Text(dic.profile.tokenSend.replaceAll('SYMBOL', store!.encointer!.community?.symbol ?? "null"),
                         style: Theme.of(context).textTheme.headline3),
                   ],
                 ),

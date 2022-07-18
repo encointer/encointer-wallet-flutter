@@ -56,13 +56,16 @@ class ExportAccountPage extends StatelessWidget {
           title: Text(dic.profile.confirmPin),
           content: Padding(
             padding: EdgeInsets.only(top: 16),
-            child: CupertinoTextField(
+            child: CupertinoTextFormFieldRow(
               keyboardType: TextInputType.number,
               placeholder: dic.profile.passOld,
               controller: _passCtrl,
-              clearButtonMode: OverlayVisibilityMode.editing,
-              onChanged: (v) {
-                return Fmt.checkPassword(v.trim()) ? null : dic.account.createPasswordError;
+              // clearButtonMode: OverlayVisibilityMode.editing,
+              validator: (v) {
+                if (v == null || !Fmt.checkPassword(v.trim())) {
+                  return dic.account.createPasswordError;
+                }
+                return null;
               },
               obscureText: true,
               inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],

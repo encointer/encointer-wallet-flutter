@@ -35,7 +35,7 @@ Future<ChangeResult> changeNetwork(
   try {
     network = networkEndpoints.firstWhere(
       (network) => network.info == networkInfo,
-      orElse: (() => throw FormatException('Invalid network in QrCode: $networkInfo')) as EndpointData Function()?,
+      orElse: (() => throw FormatException('Invalid network in QrCode: $networkInfo')),
     );
   } catch (e) {
     return ChangeResult.invalidNetwork;

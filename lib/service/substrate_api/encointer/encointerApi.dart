@@ -231,7 +231,7 @@ class EncointerApi {
   ///
   /// Fixme: Sometimes the PhaseAwareBox takes ages to update. This might be due to multiple network requests on JS side.
   /// We could fetch the phaseDurations at application startup, cache them and supply them in the call here.
-  Future<void> getMeetupTime() async {
+  Future<DateTime?> getMeetupTime() async {
     print("api: getMeetupTime");
 
     // I we are not assigned to a meetup, we just get any location to get an estimate of the chosen community's meetup
@@ -292,7 +292,8 @@ class EncointerApi {
     int lastCIndex = cIndex - 1;
 
     bool? hasPendingIssuance =
-        await (jsApi!.evalJavascript('encointer.hasPendingIssuance(${jsonEncode(cid)}, "$lastCIndex","$pubKey")') as FutureOr<bool?>);
+        await (jsApi!.evalJavascript('encointer.hasPendingIssuance(${jsonEncode(cid)}, "$lastCIndex","$pubKey")')
+            as FutureOr<bool?>);
 
     print("api:has pending issuance $hasPendingIssuance");
 
@@ -429,7 +430,8 @@ class EncointerApi {
   Future<void> getReputations() async {
     var address = store.account!.currentAddress;
 
-    List<dynamic> reputationsList = await (jsApi!.evalJavascript('encointer.getReputations("$address")') as FutureOr<List<dynamic>>);
+    List<dynamic> reputationsList =
+        await (jsApi!.evalJavascript('encointer.getReputations("$address")') as FutureOr<List<dynamic>>);
 
     print("api: getReputations: ${reputationsList.toString()}");
 
@@ -472,15 +474,15 @@ class EncointerApi {
   /// Gets a proof of attendance for the oldest attended ceremony, if available.
   ///
   /// returns null, if none available.
-  Future<ProofOfAttendance> getProofOfAttendance() async {
+  Future<ProofOfAttendance?> getProofOfAttendance() async {
     var pubKey = store.account!.currentAccountPubKey;
-    var cIndex = store.encointer!.account.ceremonyIndexForProofOfAttendance;
+    var cIndex = store.encointer!.account?.ceremonyIndexForProofOfAttendance;
 
     if (cIndex == null || cIndex == 0) {
       return Future.value(null);
     }
 
-    var cid = store.encointer!.account.reputations![cIndex]!.communityIdentifier;
+    var cid = store.encointer!.account?.reputations[cIndex]?.communityIdentifier;
     var pin = store.settings!.cachedPin;
 
     print("getProofOfAttendance: cachedPin: $pin");

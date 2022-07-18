@@ -1,6 +1,6 @@
 import 'package:encointer_wallet/store/app.dart';
-import 'package:mobx/mobx.dart';
 import 'package:encointer_wallet/store/chain/types/header.dart';
+import 'package:mobx/mobx.dart';
 
 part 'chain.g.dart';
 
@@ -28,7 +28,7 @@ abstract class _ChainStore with Store {
   get latestHeaderNumber => latestHeader?.number;
 
   Future<void> loadCache() async {
-    Map h = await (rootStore.loadObject(latestHeaderKey) as FutureOr<Map<dynamic, dynamic>>);
+    var h = await (rootStore.loadObject(latestHeaderKey));
     if (h != null) {
       latestHeader = Header.fromJson(h as Map<String, dynamic>);
     }

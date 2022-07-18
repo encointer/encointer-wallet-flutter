@@ -1,5 +1,4 @@
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
-import 'package:flutter/material.dart';
 
 import 'qrCodeBase.dart';
 
@@ -14,7 +13,7 @@ class InvoiceQrCode extends QrCode<InvoiceData> {
     CommunityIdentifier? cid,
     String? network,
     num? amount,
-    required String? label,
+    required String label,
     this.version = QrCodeVersion.v1_0,
   }) : super(InvoiceData(account: account, cid: cid, network: network, amount: amount, label: label));
 
@@ -74,9 +73,9 @@ class InvoiceData implements ToQrFields {
   num? amount;
 
   /// Name or other identifier for `account`.
-  final String? label;
+  final String label;
 
-  List<String?> toQrFields() {
+  List<String> toQrFields() {
     return [
       account,
       cid?.toFmtString() ?? "",
@@ -85,11 +84,11 @@ class InvoiceData implements ToQrFields {
     ];
   }
 
-  List<String?> toQrFieldsV2() {
+  List<String> toQrFieldsV2() {
     return [
       account,
       cid?.toFmtString() ?? "",
-      network,
+      network ?? "",
       amount?.toString() ?? "",
       label,
     ];

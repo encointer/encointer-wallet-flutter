@@ -124,7 +124,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
             store!.settings!.setPin(password);
           });
 
-          bool isMnemonic = await store!.account!.checkSeedExist(AccountStore.seedTypeMnemonic, accountToBeEdited.pubKey);
+          bool isMnemonic =
+              await store!.account!.checkSeedExist(AccountStore.seedTypeMnemonic, accountToBeEdited.pubKey);
 
           if (isMnemonic) {
             String seed =

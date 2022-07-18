@@ -121,7 +121,8 @@ class Api {
     List<NodeConfig?> configs = store!.settings!.endpointList.map((e) => e.overrideConfig).toList();
     print("configs: $configs");
     // do connect
-    String? res = await (evalJavascript('settings.connectAll(${jsonEncode(nodes)}, ${jsonEncode(configs)})') as FutureOr<String?>);
+    String? res = await (evalJavascript('settings.connectAll(${jsonEncode(nodes)}, ${jsonEncode(configs)})')
+        as FutureOr<String?>);
     if (res == null) {
       print('connect failed');
       store!.settings!.setNetworkName(null);
@@ -171,20 +172,6 @@ class Api {
     await this.encointer!.stopSubscriptions();
     await this.chain.stopSubscriptions();
     await this.assets.stopSubscriptions();
-  }
-
-  Future<void> updateBlocks(List txs) async {
-    Map<int?, bool> blocksNeedUpdate = Map<int?, bool>();
-    txs.forEach((i) {
-      int? block = i['attributes']['block_id'];
-      if (store!.assets!.blockMap[block] == null) {
-        blocksNeedUpdate[block] = true;
-      }
-    });
-    String blocks = blocksNeedUpdate.keys.join(',');
-    var data = await evalJavascript('account.getBlockTime([$blocks])');
-
-    store!.assets!.setBlockMap(data);
   }
 
   Future<void> subscribeMessage(

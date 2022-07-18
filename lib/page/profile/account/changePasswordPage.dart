@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -74,7 +76,8 @@ class _ChangePassword extends State<ChangePasswordPage> {
         settingsStore!.setPin(passNew);
         store!.accountListAll.forEach((account) async {
           final Map? acc =
-              await (api!.evalJavascript('account.changePassword("${account.pubKey}", "$passOld", "$passNew")') as FutureOr<Map<dynamic, dynamic>?>);
+              await (api!.evalJavascript('account.changePassword("${account.pubKey}", "$passOld", "$passNew")')
+                  as FutureOr<Map<dynamic, dynamic>?>);
 
           // update encrypted seed after password updated
           store!.accountListAll.map((accountData) {
@@ -143,7 +146,10 @@ class _ChangePassword extends State<ChangePasswordPage> {
                           labelText: dic.profile.passOld,
                           controller: _passOldCtrl,
                           validator: (v) {
-                            return Fmt.checkPassword(v.trim()) ? null : dic.account.createPasswordError;
+                            if (v == null || !Fmt.checkPassword(v.trim())) {
+                              return dic.account.createPasswordError;
+                            }
+                            return null;
                           },
                           obscureText: true,
                           inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
@@ -154,7 +160,10 @@ class _ChangePassword extends State<ChangePasswordPage> {
                           labelText: dic.profile.yourNewPin,
                           controller: _passCtrl,
                           validator: (v) {
-                            return Fmt.checkPassword(v.trim()) ? null : dic.account.createPasswordError;
+                            if (v == null || !Fmt.checkPassword(v.trim())) {
+                              return dic.account.createPasswordError;
+                            }
+                            return null;
                           },
                           obscureText: true,
                           inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
@@ -165,7 +174,10 @@ class _ChangePassword extends State<ChangePasswordPage> {
                           labelText: dic.profile.pleaseConfirmYourNewPin,
                           controller: _pass2Ctrl,
                           validator: (v) {
-                            return v.trim() != _passCtrl.text ? dic.account.createPassword2Error : null;
+                            if (v == null || v.trim() != _passCtrl.text) {
+                              return dic.account.createPassword2Error;
+                            }
+                            return null;
                           },
                           obscureText: true,
                           inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],

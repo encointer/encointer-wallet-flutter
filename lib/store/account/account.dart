@@ -116,7 +116,7 @@ abstract class _AccountStore with Store {
   }
 
   /// Gets the address (SS58) for the corresponding network.
-  String? getNetworkAddress(String? pubKey) {
+  String getNetworkAddress(String? pubKey) {
     // _log("currentAddress: endpoint.info: ${rootStore.settings.endpoint.info}");
     // _log("currentAddress: endpoint.ss58: ${rootStore.settings.endpoint.ss58}");
     // _log("currentAddress: customSS58: ${rootStore.settings.customSS58Format.toString()}");
@@ -134,7 +134,7 @@ abstract class _AccountStore with Store {
       return address;
     } else {
       _log("getNetworkAddress: could not get address (SS58)");
-      return currentAccount.address;
+      return currentAccount!.address;
     }
   }
 
@@ -332,7 +332,8 @@ abstract class _AccountStore with Store {
 
   @action
   Future<void> updateSeed(String? pubKey, String passwordOld, String passwordNew) async {
-    Map storedMnemonics = await (rootStore.localStorage.getSeeds(AccountStore.seedTypeMnemonic) as FutureOr<Map<dynamic, dynamic>>);
+    Map storedMnemonics =
+        await (rootStore.localStorage.getSeeds(AccountStore.seedTypeMnemonic) as FutureOr<Map<dynamic, dynamic>>);
     Map? storedRawSeeds = await rootStore.localStorage.getSeeds(AccountStore.seedTypeRawSeed);
     String? encryptedSeed = '';
     String seedType = '';

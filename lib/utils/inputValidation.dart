@@ -3,8 +3,12 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 
 class InputValidation {
-  static String? validateAccountName(BuildContext context, String input, List<AccountData> existingAccounts) {
+  static String? validateAccountName(BuildContext context, String? input, List<AccountData> existingAccounts) {
     final dic = I18n.of(context)!.translationsForLocale();
+
+    if (input == null) {
+      return dic.profile.contactNameError;
+    }
 
     String name = input.trim();
     if (name.length == 0) {

@@ -42,7 +42,8 @@ class CeremonyStep3Finish extends StatelessWidget {
                     SizedBox(height: 48),
                     CommunityAvatar(
                       store: store,
-                      avatarIcon: webApi!.ipfs.getCommunityIcon(store!.encointer!.community?.assetsCid),
+                      avatarIcon: webApi!.ipfs
+                          .getCommunityIcon(store!.encointer!.community?.assetsCid ?? "non-nullable-default"),
                       avatarSize: 96,
                     ),
                     Center(
@@ -88,7 +89,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                       Icon(Iconsax.login_1),
                       SizedBox(width: 6),
                       Text(
-                          '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store!.encointer!.communityAccount.scannedClaimsCount.toString())}'),
+                          '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store!.encointer!.communityAccount!.scannedClaimsCount.toString())}'),
                     ],
                   ),
                   onPressed: (context) => submitAttestClaims(context, store!, api!),

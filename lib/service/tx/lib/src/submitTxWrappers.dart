@@ -124,8 +124,8 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
 Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) async {
   final params = attestClaimsParams(
     store.encointer!.chosenCid,
-    store.encointer!.communityAccount.scannedClaimsCount,
-    store.encointer!.communityAccount.participantsClaims!.values.toList(),
+    store.encointer!.communityAccount!.scannedClaimsCount,
+    store.encointer!.communityAccount!.participantsClaims!.values.toList(),
   );
 
   return submitTx(
@@ -134,7 +134,7 @@ Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) a
     api,
     params,
     onFinish: (BuildContext txPageContext, Map res) {
-      store.encointer!.communityAccount.setMeetupCompleted();
+      store.encointer!.communityAccount!.setMeetupCompleted();
       Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
     },
   );

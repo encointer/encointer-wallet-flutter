@@ -16,7 +16,7 @@ class RestartWidget<T> extends StatelessWidget {
   final Stream<T> stream;
   final Widget Function(BuildContext, T?) builder;
 
-  Stream<T> _invalidate(T? config) async* {
+  Stream<T?> _invalidate(T? config) async* {
     yield null;
     await Future<dynamic>.delayed(const Duration(milliseconds: 16));
     yield config!;
@@ -32,7 +32,7 @@ class RestartWidget<T> extends StatelessWidget {
           initialData: snapshot.data,
           stream: _invalidate(snapshot.data),
           builder: (context, snapshot) {
-            return snapshot.data != null ? builder(context, snapshot.data) : const SizedBox();
+            return snapshot.data != null ? builder(context, snapshot.data as T) : const SizedBox();
           },
         );
       },

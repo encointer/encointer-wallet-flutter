@@ -105,7 +105,7 @@ class MockApiEncointer extends EncointerApi {
   }
 
   @override
-  Future<void> getMeetupTime() async {
+  Future<DateTime?> getMeetupTime() async {
     return DateTime.fromMillisecondsSinceEpoch(claim['timestamp']);
   }
 
@@ -118,14 +118,14 @@ class MockApiEncointer extends EncointerApi {
 
   @override
   Future<ClaimOfAttendance> signClaimOfAttendance(int participants, String password) async {
-    Meetup meetup = store.encointer!.communityAccount.meetup!;
+    Meetup meetup = store.encointer!.communityAccount!.meetup!;
 
     var claim = ClaimOfAttendance(
       store.account!.currentAccountPubKey,
       store.encointer!.currentCeremonyIndex,
       store.encointer!.chosenCid,
       meetup.index,
-      store.encointer!.community.meetupLocations![meetup.locationIndex!],
+      store.encointer!.community!.meetupLocations![meetup.locationIndex],
       meetup.time,
       participants,
     );
