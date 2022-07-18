@@ -111,7 +111,7 @@ abstract class _AccountStore with Store {
   }
 
   @computed
-  String? get currentAddress {
+  String get currentAddress {
     return getNetworkAddress(currentAccountPubKey);
   }
 
@@ -134,7 +134,7 @@ abstract class _AccountStore with Store {
       return address;
     } else {
       _log("getNetworkAddress: could not get address (SS58)");
-      return currentAccount!.address;
+      return currentAccount.address!;
     }
   }
 
@@ -192,7 +192,7 @@ abstract class _AccountStore with Store {
             );
           } else {
             if (rootStore.settings!.endpointIsEncointer) {
-              rootStore.encointer!.account.setTransferTxs([res], rootStore.account!.currentAddress);
+              rootStore.encointer!.account!.setTransferTxs([res], rootStore.account!.currentAddress!);
             }
           }
         });

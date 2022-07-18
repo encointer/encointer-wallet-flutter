@@ -44,7 +44,7 @@ void showSnackBar(
 }) {
   rootScaffoldMessengerKey.currentState!.hideCurrentSnackBar();
   rootScaffoldMessengerKey.currentState!.removeCurrentSnackBar();
-  rootScaffoldMessengerKey.currentState
+  rootScaffoldMessengerKey.currentState!
     ..showSnackBar(
       SnackBar(
         content: content,

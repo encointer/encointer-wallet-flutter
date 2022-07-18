@@ -83,7 +83,7 @@ abstract class _SettingsStore with Store {
   }
 
   @computed
-  String? get ipfsGateway => endpoint?.ipfsGateway;
+  String get ipfsGateway => endpoint.ipfsGateway;
 
   @computed
   List<EndpointData> get endpointList {
@@ -147,7 +147,7 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadLocalCode() async {
-    String stored = await (rootStore.localStorage.getObject(localStorageLocaleKey) as FutureOr<String>);
+    String? stored = await rootStore.localStorage.getObject(localStorageLocaleKey) as String?;
     if (stored != null) {
       localeCode = stored;
     }
@@ -258,8 +258,8 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadEndpoint(String sysLocaleCode) async {
-    Map<String, dynamic> value =
-        await (rootStore.localStorage.getObject(localStorageEndpointKey) as FutureOr<Map<String, dynamic>>);
+    Map<String, dynamic>? value =
+        await rootStore.localStorage.getObject(localStorageEndpointKey) as Map<String, dynamic>?;
     if (value == null) {
       endpoint = networkEndpointEncointerMainnet;
     } else {
@@ -275,8 +275,7 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadCustomSS58Format() async {
-    Map<String, dynamic> ss58 =
-        await (rootStore.localStorage.getObject(localStorageSS58Key) as FutureOr<Map<String, dynamic>>);
+    Map<String, dynamic> ss58 = await rootStore.localStorage.getObject(localStorageSS58Key) as Map<String, dynamic>;
 
     customSS58Format = ss58 ?? default_ss58_prefix;
   }
@@ -306,15 +305,15 @@ abstract class _SettingsStore with Store {
 
 @JsonSerializable(createFactory: false)
 class NetworkState extends _NetworkState {
-  NetworkState(String? endpoint, int? ss58Format, int? tokenDecimals, String? tokenSymbol)
+  NetworkState(String endpoint, int ss58Format, int tokenDecimals, String tokenSymbol)
       : super(endpoint, ss58Format, tokenDecimals, tokenSymbol);
 
   static NetworkState fromJson(Map<String, dynamic> json) {
     // js-api changed the return type of 'api.rpc.system.properties()', such that multiple balances are supported.
     // Hence, tokenDecimals/-symbols are returned as a List. However, encointer currently only has one token, thus the
     // `NetworkState` should use the first token.
-    int? decimals = (json['tokenDecimals'] is List) ? json['tokenDecimals'][0] : json['tokenDecimals'];
-    String? symbol = (json['tokenSymbol'] is List) ? json['tokenSymbol'][0] : json['tokenSymbol'];
+    int decimals = (json['tokenDecimals'] is List) ? json['tokenDecimals'][0] : json['tokenDecimals'];
+    String symbol = (json['tokenSymbol'] is List) ? json['tokenSymbol'][0] : json['tokenSymbol'];
 
     NetworkState ns = NetworkState(json['endpoint'], json['ss58Format'], decimals, symbol);
     // --dev chain doesn't specify token symbol -> will break things if not specified
@@ -331,10 +330,10 @@ class NetworkState extends _NetworkState {
 abstract class _NetworkState {
   _NetworkState(this.endpoint, this.ss58Format, this.tokenDecimals, this.tokenSymbol);
 
-  String? endpoint = '';
-  int? ss58Format = 42;
-  int? tokenDecimals = 12;
-  String? tokenSymbol = 'ERT';
+  String endpoint = '';
+  int ss58Format = 42;
+  int tokenDecimals = 12;
+  String tokenSymbol = 'ERT';
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -344,13 +343,13 @@ class EndpointData extends _EndpointData {
 }
 
 abstract class _EndpointData {
-  String? color = 'pink';
-  String? info = '';
-  int? ss58 = 42;
+  String color = 'pink';
+  String info = '';
+  int ss58 = 42;
   String? text = '';
   String? value = '';
   String? worker = ''; // only relevant for cantillon
   String? mrenclave = ''; // relevant until we fetch mrenclave from substrateeRegistry
   NodeConfig? overrideConfig;
-  String? ipfsGateway = '';
+  String ipfsGateway = '';
 }

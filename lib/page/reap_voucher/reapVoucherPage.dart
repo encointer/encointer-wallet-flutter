@@ -58,7 +58,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     var voucherBalanceEntry = await api.encointer!.getEncointerBalance(_voucherAddress, cid);
     _voucherBalance = voucherBalanceEntry.applyDemurrage(
       widget.store!.chain!.latestHeaderNumber,
-      widget.store!.encointer!.community.demurrage!,
+      widget.store!.encointer!.community!.demurrage!,
     );
 
     _isReady = true;
@@ -148,7 +148,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                       Text(dic.assets.fundVoucher),
                     ],
                   ),
-                  onPressed: _isReady ? () => _pushTransferPage(context, voucher, _voucherAddress) : null,
+                  onPressed: _isReady ? () => _pushTransferPage(context, voucher, _voucherAddress!) : null,
                 ),
               ),
             SubmitButton(
@@ -219,7 +219,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   }
 }
 
-void _pushTransferPage(BuildContext context, VoucherData data, String? voucherAddress) {
+void _pushTransferPage(BuildContext context, VoucherData data, String voucherAddress) {
   Navigator.of(context).popAndPushNamed(
     TransferPage.route,
     arguments: TransferPageParams(

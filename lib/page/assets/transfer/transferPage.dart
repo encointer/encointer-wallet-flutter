@@ -21,18 +21,18 @@ import 'package:iconsax/iconsax.dart';
 
 class TransferPageParams {
   TransferPageParams({
-    required this.cid,
-    required this.communitySymbol,
-    required this.recipient,
-    required this.label,
+    this.cid,
+    this.communitySymbol,
+    this.recipient,
+    this.label,
     this.amount,
     this.redirect,
   });
 
-  final CommunityIdentifier cid;
-  final String communitySymbol;
-  final String recipient;
-  final String label;
+  final CommunityIdentifier? cid;
+  final String? communitySymbol;
+  final String? recipient;
+  final String? label;
   final double? amount;
   final String? redirect;
 }

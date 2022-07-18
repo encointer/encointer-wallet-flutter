@@ -45,14 +45,19 @@ class Ipfs {
     }
   }
 
-  Future<SvgPicture> getCommunityIcon(String cid) async {
+  Future<SvgPicture> getCommunityIcon(String? cid) async {
     if (cid == null || cid.isEmpty) {
       print("[IPFS] return default encointer icon because ipfs-cid is not set");
       return SvgPicture.asset(fall_back_community_icon);
     }
 
     try {
-      var data = await (getData(getIconsPath(cid)) as FutureOr<String>);
+      var data = await getData(getIconsPath(cid));
+      if (data == null) {
+        print("[Ipfs] could not find community icon");
+        return SvgPicture.asset(fall_back_community_icon);
+      }
+
       return SvgPicture.string(data);
     } catch (e) {
       print("[Ipfs] error getting communityIcon: $e");
@@ -145,13 +150,12 @@ class IpfsDio {
 }
 
 class Object {
-  List? links;
-  String? data;
+  List links;
+  String data;
 
   Object({
-    this.links,
-    //this.cid,
-    this.data,
+    required this.links,
+    required this.data,
   });
 
   @override

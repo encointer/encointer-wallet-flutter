@@ -390,7 +390,7 @@ class _AssetsState extends State<Assets> {
       AccountOrCommunityData(
         avatar: CommunityAvatar(
           store: store,
-          avatarIcon: webApi!.ipfs.getCommunityIcon(store!.encointer!.community?.assetsCid ?? "non-nullable-default"),
+          avatarIcon: webApi!.ipfs.getCommunityIcon(store!.encointer!.community?.assetsCid),
           avatarSize: avatarSize,
         ),
         name: '${store!.encointer!.community?.name ?? '...'}',

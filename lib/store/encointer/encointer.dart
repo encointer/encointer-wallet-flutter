@@ -110,7 +110,7 @@ abstract class _EncointerStore with Store {
   /// Community sub-stores.
   ///
   /// Map: CommunityIdentifier.toFmtString() -> `CommunityStore`.
-  ObservableMap<String, CommunityStore>? communityStores = new ObservableMap();
+  ObservableMap<String, CommunityStore> communityStores = new ObservableMap();
 
   /// EncointerAccount sub-stores.
   ///
@@ -390,7 +390,7 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  Future<void> initEncointerAccountStore(String? address, {shouldCache = true}) {
+  Future<void> initEncointerAccountStore(String address, {shouldCache = true}) {
     if (!accountStores!.containsKey(address)) {
       _log("Adding new encointerAccountStore for: $address");
 

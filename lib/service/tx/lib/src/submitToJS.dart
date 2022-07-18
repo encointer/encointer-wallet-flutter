@@ -50,7 +50,7 @@ Future<void> submitToJS(
 
   var onTxFinishFn = (args['onFinish'] as Function(BuildContext, Map)?);
 
-  if (await (api.isConnected() as FutureOr<bool>)) {
+  if (await api.isConnected()) {
     if (showStatusSnackBar) {
       _showTxStatusSnackBar(
         getTxStatusTranslation(dic.home, store.account!.txStatus),
@@ -58,7 +58,7 @@ Future<void> submitToJS(
       );
     }
 
-    final Map res = await (_sendTx(context, api, args) as FutureOr<Map<dynamic, dynamic>>);
+    final Map res = await _sendTx(context, api, args) as Map;
 
     if (res['hash'] == null) {
       _onTxError(context, store, res['error'], showStatusSnackBar);

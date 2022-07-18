@@ -105,10 +105,10 @@ abstract class _AssetsStore with Store {
     });
 
     if (!needCache) return;
-    Map? cache = await (rootStore.localStorage.getAccountCache(
+    Map? cache = await rootStore.localStorage.getAccountCache(
       rootStore.account!.currentAccount.pubKey,
       cacheBalanceKey,
-    ) as FutureOr<Map<dynamic, dynamic>?>);
+    );
     if (cache == null) {
       cache = amt;
     } else {
@@ -228,7 +228,7 @@ abstract class _AssetsStore with Store {
 
   @action
   Future<void> loadCache() async {
-    List ls = await (rootStore.localStorage.getObject(localStorageBlocksKey) as FutureOr<List<dynamic>>);
+    List? ls = await rootStore.localStorage.getObject(localStorageBlocksKey) as List?;
     if (ls != null) {
       ls.forEach((i) {
         if (blockMap[i['id']] == null) {

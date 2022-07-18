@@ -32,6 +32,8 @@ void main() {
       default:
         break;
     }
+    // to fix static analysis
+    return Future.value("DataHandler");
   }
 
   enableFlutterDriverExtension(handler: dataHandler);

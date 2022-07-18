@@ -176,7 +176,7 @@ class EncointerApi {
         .then((list) => List.from(list).map((l) => Location.fromJson(l)).toList());
 
     print("api: getAllMeetupLocations: " + locs.toString());
-    store.encointer!.community.setMeetupLocations(locs);
+    store.encointer!.community!.setMeetupLocations(locs);
   }
 
   /// Queries the Communities pallet: encointerCommunities.communityMetadata(cid)
@@ -212,9 +212,9 @@ class EncointerApi {
       return;
     }
 
-    double? dem = await (jsApi!.evalJavascript('encointer.getDemurrage(${jsonEncode(cid)})') as FutureOr<double?>);
+    double dem = await jsApi!.evalJavascript('encointer.getDemurrage(${jsonEncode(cid)})');
     print("api: fetched demurrage: $dem");
-    store.encointer!.community.setDemurrage(dem);
+    store.encointer!.community!.setDemurrage(dem);
   }
 
   /// Calls the custom rpc: api.rpc.communities.communitiesGetAll()
@@ -239,7 +239,7 @@ class EncointerApi {
     int? locationIndex = store.encointer!.communityAccount?.meetup?.locationIndex;
 
     Location? mLocation = locationIndex != null
-        ? store.encointer!.community.meetupLocations![locationIndex]
+        ? store.encointer!.community!.meetupLocations![locationIndex]
         : (store.encointer!.community?.meetupLocations?.first);
 
     if (mLocation == null) {
@@ -253,7 +253,7 @@ class EncointerApi {
 
     print("api: Next Meetup Time: $time");
 
-    store.encointer!.community.setMeetupTime(time);
+    store.encointer!.community!.setMeetupTime(time);
     return DateTime.fromMillisecondsSinceEpoch(time);
   }
 
@@ -269,7 +269,7 @@ class EncointerApi {
           await feed.getMeetupTimeOverride(store.encointer!.network, cid, store.encointer!.currentPhase);
 
       if (meetupTimeOverride != null) {
-        store.encointer!.community.setMeetupTimeOverride(meetupTimeOverride.millisecondsSinceEpoch);
+        store.encointer!.community!.setMeetupTimeOverride(meetupTimeOverride.millisecondsSinceEpoch);
       }
     } catch (e) {
       print("api: exception: ${e.toString()}");
@@ -291,9 +291,8 @@ class EncointerApi {
     // -1 as we get the pending issuance for the last ceremony
     int lastCIndex = cIndex - 1;
 
-    bool? hasPendingIssuance =
-        await (jsApi!.evalJavascript('encointer.hasPendingIssuance(${jsonEncode(cid)}, "$lastCIndex","$pubKey")')
-            as FutureOr<bool?>);
+    bool hasPendingIssuance =
+        await jsApi!.evalJavascript('encointer.hasPendingIssuance(${jsonEncode(cid)}, "$lastCIndex","$pubKey")');
 
     print("api:has pending issuance $hasPendingIssuance");
 
@@ -328,7 +327,7 @@ class EncointerApi {
       var cid = store.encointer!.chosenCid;
       var address = store.account!.currentAddress;
 
-      if (cid != null && address.isNotEmpty) {
+      if (cid != null && (address?.isNotEmpty ?? false)) {
         var data = await pollAggregatedAccountDataUntilNextPhase(phase, cid, address);
         store.encointer!.setAggregatedAccountData(cid, address, data);
       }
@@ -424,21 +423,20 @@ class EncointerApi {
 
     print("api: bootstrappers " + bootstrappers.toString());
 
-    store.encointer!.community.setBootstrappers(bootstrappers);
+    store.encointer!.community!.setBootstrappers(bootstrappers);
   }
 
   Future<void> getReputations() async {
     var address = store.account!.currentAddress;
 
-    List<dynamic> reputationsList =
-        await (jsApi!.evalJavascript('encointer.getReputations("$address")') as FutureOr<List<dynamic>>);
+    List<dynamic> reputationsList = await jsApi!.evalJavascript('encointer.getReputations("$address")');
 
     print("api: getReputations: ${reputationsList.toString()}");
 
     Map<int?, CommunityReputation> reputations =
         Map.fromIterable(reputationsList, key: (cr) => cr[0], value: (cr) => CommunityReputation.fromJson(cr[1]));
 
-    store.encointer!.account.setReputations(reputations);
+    store.encointer!.account?.setReputations(reputations);
   }
 
   Future<dynamic> sendFaucetTx() async {
@@ -452,14 +450,14 @@ class EncointerApi {
   // Below are functions that simply use the Scale-codec already implemented in polkadot-js/api such that we do not
   // have to implement the codec ourselves.
   Future<ClaimOfAttendance> signClaimOfAttendance(int participants, String password) async {
-    Meetup meetup = store.encointer!.communityAccount.meetup!;
+    Meetup meetup = store.encointer!.communityAccount!.meetup!;
 
     var claim = ClaimOfAttendance(
       store.account!.currentAccountPubKey,
       store.encointer!.currentCeremonyIndex,
       store.encointer!.chosenCid,
       meetup.index,
-      store.encointer!.community.meetupLocations![meetup.locationIndex!],
+      store.encointer!.community!.meetupLocations![meetup.locationIndex!],
       meetup.time,
       participants,
     );

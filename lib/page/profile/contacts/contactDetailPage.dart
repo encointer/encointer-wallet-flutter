@@ -108,8 +108,8 @@ class ContactDetailPage extends StatelessWidget {
                 ),
               ),
               Observer(builder: (_) {
-                if (store!.encointer!.community.bootstrappers != null) {
-                  return store!.encointer!.community.bootstrappers!.contains(store!.account!.currentAddress)
+                if (store!.encointer!.community!.bootstrappers != null) {
+                  return store!.encointer!.community!.bootstrappers!.contains(store!.account!.currentAddress)
                       ? EndorseButton(store, api, account)
                       : Container();
                 } else {
@@ -181,7 +181,7 @@ class EndorseButton extends StatelessWidget {
           Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
         ],
       ),
-      onPressed: store!.encointer!.community.bootstrappers!.contains(contact.address)
+      onPressed: store!.encointer!.community!.bootstrappers!.contains(contact.address)
           ? (BuildContext context) => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
           : store!.encointer!.currentPhase != CeremonyPhase.Registering
               ? (BuildContext context) => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)

@@ -27,11 +27,10 @@ EncointerStore _$EncointerStoreFromJson(Map<String, dynamic> json) => EncointerS
               (k, e) => MapEntry(k, BazaarStore.fromJson(e as Map<String, dynamic>)),
             ))
           : null
-      ..communityStores = json['communityStores'] != null
-          ? ObservableMap<String, CommunityStore>.of((json['communityStores'] as Map<String, dynamic>).map(
-              (k, e) => MapEntry(k, CommunityStore.fromJson(e as Map<String, dynamic>)),
-            ))
-          : null
+      ..communityStores =
+          ObservableMap<String, CommunityStore>.of((json['communityStores'] as Map<String, dynamic>).map(
+        (k, e) => MapEntry(k, CommunityStore.fromJson(e as Map<String, dynamic>)),
+      ))
       ..accountStores = json['accountStores'] != null
           ? ObservableMap<String?, EncointerAccountStore>.of((json['accountStores'] as Map<String, dynamic>).map(
               (k, e) => MapEntry(k, EncointerAccountStore.fromJson(e as Map<String, dynamic>)),
@@ -48,7 +47,7 @@ Map<String, dynamic> _$EncointerStoreToJson(EncointerStore instance) => <String,
       'communities': instance.communities?.map((e) => e.toJson()).toList(),
       'chosenCid': instance.chosenCid?.toJson(),
       'bazaarStores': instance.bazaarStores?.map((k, e) => MapEntry(k, e.toJson())),
-      'communityStores': instance.communityStores?.map((k, e) => MapEntry(k, e.toJson())),
+      'communityStores': instance.communityStores.map((k, e) => MapEntry(k, e.toJson())),
       'accountStores': instance.accountStores?.map((k, e) => MapEntry(k, e.toJson())),
     };
 
@@ -296,7 +295,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   late final _$_EncointerStoreActionController = ActionController(name: '_EncointerStore', context: context);
 
   @override
-  void setPhaseDurations(Map<CeremonyPhase?, int> phaseDurations) {
+  void setPhaseDurations(Map<CeremonyPhase, int> phaseDurations) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setPhaseDurations');
     try {
       return super.setPhaseDurations(phaseDurations);
@@ -388,7 +387,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  Future<void> initEncointerAccountStore(String? address, {dynamic shouldCache = true}) {
+  Future<void> initEncointerAccountStore(String address, {dynamic shouldCache = true}) {
     final _$actionInfo =
         _$_EncointerStoreActionController.startAction(name: '_EncointerStore.initEncointerAccountStore');
     try {

@@ -111,7 +111,7 @@ class LocalStorage {
   }
 
   Future<void> setAccountCache(String? accPubKey, String key, Object? value) async {
-    Map data = await (getObject(key) as FutureOr<Map<dynamic, dynamic>>);
+    Map? data = await getObject(key) as Map?;
     if (data == null) {
       data = {};
     }
@@ -120,7 +120,7 @@ class LocalStorage {
   }
 
   Future<Object?> getAccountCache(String? accPubKey, String key) async {
-    Map data = await (getObject(key) as FutureOr<Map<dynamic, dynamic>>);
+    Map? data = await getObject(key) as Map?;
     if (data == null) {
       return Future.value(null);
     }

@@ -7,8 +7,8 @@ part of 'encointerAccountStore.dart';
 // **************************************************************************
 
 EncointerAccountStore _$EncointerAccountStoreFromJson(Map<String, dynamic> json) => EncointerAccountStore(
-      json['network'] as String?,
-      json['address'] as String?,
+      json['network'] as String,
+      json['address'] as String,
     )
       ..balanceEntries = ObservableMap<String, BalanceEntry>.of((json['balanceEntries'] as Map<String, dynamic>).map(
         (k, e) => MapEntry(k, BalanceEntry.fromJson(e as Map<String, dynamic>)),
@@ -110,7 +110,7 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
   }
 
   @override
-  void setReputations(Map<int?, CommunityReputation> reps) {
+  void setReputations(Map<int, CommunityReputation> reps) {
     final _$actionInfo =
         _$_EncointerAccountStoreActionController.startAction(name: '_EncointerAccountStore.setReputations');
     try {

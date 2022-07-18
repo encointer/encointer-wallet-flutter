@@ -22,17 +22,17 @@ class ScanClaimQrCode extends StatelessWidget {
   final GlobalKey<QrcodeReaderViewState> _qrViewKey = GlobalKey();
 
   void validateAndStoreClaim(BuildContext context, ClaimOfAttendance claim, Translations dic) {
-    List<String> registry = store!.encointer!.communityAccount.meetup!.registry!;
+    List<String> registry = store!.encointer!.communityAccount!.meetup!.registry!;
     if (!registry.contains(claim.claimantPublic)) {
       // this is important because the runtime checks if there are too many claims trying to be registered.
       RootSnackBar.showMsg(dic.encointer.meetupClaimantInvalid);
       print("[scanClaimQrCode] Claimant: ${claim.claimantPublic} is not part of registry: ${registry.toString()}");
     } else {
-      String msg = store!.encointer!.communityAccount.containsClaim(claim)
+      String msg = store!.encointer!.communityAccount!.containsClaim(claim)
           ? dic.encointer.claimsScannedAlready
           : dic.encointer.claimsScannedNew;
 
-      store!.encointer!.communityAccount.addParticipantClaim(claim);
+      store!.encointer!.communityAccount!.addParticipantClaim(claim);
       RootSnackBar.showMsg(msg);
     }
   }

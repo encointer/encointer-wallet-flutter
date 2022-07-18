@@ -44,7 +44,7 @@ class _Contact extends State<ContactPage> {
       });
       final Translations dic = I18n.of(context)!.translationsForLocale();
       String addr = _addressCtrl.text.trim();
-      Map pubKeyAddress = await (webApi!.account.decodeAddress([addr]) as FutureOr<Map<dynamic, dynamic>>);
+      Map pubKeyAddress = await webApi!.account.decodeAddress([addr]);
       String pubKey = pubKeyAddress.keys.toList()[0];
       Map<String, dynamic> con = {
         'address': addr,

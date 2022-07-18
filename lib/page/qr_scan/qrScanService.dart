@@ -59,7 +59,7 @@ class QrScanService {
 }
 
 /// Handles the `ContactQrCode` scan based on where it was scanned.
-void handleContactQrCodeScan(BuildContext context, QrScannerContext? scanContext, ContactQrCode qrCode) {
+void handleContactQrCodeScan(BuildContext context, QrScannerContext scanContext, ContactQrCode qrCode) {
   switch (scanContext) {
     case QrScannerContext.mainPage:
       // show add contact and auto-fill data

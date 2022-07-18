@@ -83,7 +83,7 @@ class _ReceivePageState extends State<ReceivePage> {
               return;
             }
 
-            double? demurrageRate = widget.store!.encointer!.community.demurrage;
+            double? demurrageRate = widget.store!.encointer!.community!.demurrage;
             double? newBalance = widget.store!.encointer!.applyDemurrage(balances[cid]);
             double oldBalance =
                 widget.store!.encointer!.applyDemurrage(widget.store!.encointer!.communityBalanceEntry) ?? 0;

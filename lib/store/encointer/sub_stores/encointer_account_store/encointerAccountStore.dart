@@ -15,7 +15,7 @@ part 'encointerAccountStore.g.dart';
 ///
 @JsonSerializable(explicitToJson: true)
 class EncointerAccountStore extends _EncointerAccountStore with _$EncointerAccountStore {
-  EncointerAccountStore(String? network, String? address) : super(network, address);
+  EncointerAccountStore(String network, String address) : super(network, address);
 
   @override
   String toString() {

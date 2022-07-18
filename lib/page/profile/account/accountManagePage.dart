@@ -84,9 +84,9 @@ class _AccountManagePageState extends State<AccountManagePage> {
   Widget _getBalanceEntryListTile(String cidFmt, BalanceEntry? entry, String? address) {
     final TextStyle h3 = Theme.of(context).textTheme.headline3!;
 
-    var community = store!.encointer!.communityStores![cidFmt]!;
+    var community = store!.encointer!.communityStores[cidFmt]!;
 
-    _log("_getBalanceEntryListTile: ${community?.toJson()}");
+    _log("_getBalanceEntryListTile: ${community.toJson()}");
 
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
@@ -241,10 +241,10 @@ class _AccountManagePageState extends State<AccountManagePage> {
                         child: ListView.builder(
                             // Fixme: https://github.com/encointer/encointer-wallet-flutter/issues/586
                             itemCount: store!.encointer!.accountStores!.containsKey(addressSS58)
-                                ? store!.encointer!.accountStores![addressSS58]?.balanceEntries?.length ?? 0
+                                ? store!.encointer!.accountStores![addressSS58]?.balanceEntries.length ?? 0
                                 : 0,
                             itemBuilder: (BuildContext context, int index) {
-                              String community = store!.encointer!.account.balanceEntries!.keys.elementAt(index);
+                              String community = store!.encointer!.account!.balanceEntries.keys.elementAt(index);
                               return _getBalanceEntryListTile(
                                 community,
                                 store!.encointer!.accountStores![addressSS58]!.balanceEntries![community],
@@ -372,8 +372,8 @@ class CommunityIcon extends StatelessWidget {
         ),
         Observer(
           builder: (_) {
-            if (store!.encointer!.community.bootstrappers != null &&
-                store!.encointer!.community.bootstrappers!.contains(address)) {
+            if (store!.encointer!.community!.bootstrappers != null &&
+                store!.encointer!.community!.bootstrappers!.contains(address)) {
               return Positioned(
                 bottom: 0, right: 0, //give the values according to your requirement
                 child: Icon(Iconsax.star, color: Colors.yellow),

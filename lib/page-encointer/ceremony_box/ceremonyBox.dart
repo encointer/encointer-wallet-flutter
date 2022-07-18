@@ -137,8 +137,8 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
       break;
     case CeremonyPhase.Assigning:
       if (store.encointer!.communityAccount?.isAssigned ?? false) {
-        var meetup = store.encointer!.communityAccount.meetup!;
-        var location = store.encointer!.community.meetupLocations![meetup.locationIndex!];
+        var meetup = store.encointer!.communityAccount!.meetup!;
+        var location = store.encointer!.community!.meetupLocations![meetup.locationIndex!];
         return MeetupInfo(
           meetup,
           location,

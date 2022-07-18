@@ -44,19 +44,19 @@ abstract class _CommunityStore with Store {
   final CommunityIdentifier? cid;
 
   @observable
-  CommunityMetadata? metadata;
+  CommunityMetadata metadata;
 
   @observable
   double? demurrage;
 
   @computed
-  String? get name => metadata?.name;
+  String get name => metadata.name;
 
   @computed
-  String? get symbol => metadata?.symbol;
+  String get symbol => metadata.symbol;
 
   @computed
-  String? get assetsCid => metadata?.assets;
+  String get assetsCid => metadata.assets;
 
   @observable
   int? meetupTime;
@@ -131,7 +131,7 @@ abstract class _CommunityStore with Store {
   }
 
   @action
-  void setMeetupLocations([List<Location> locations]) {
+  void setMeetupLocations(List<Location> locations) {
     _log("store: set meetupLocations to ${locations.toString()}");
     meetupLocations = ObservableList.of(locations);
     writeToCache();

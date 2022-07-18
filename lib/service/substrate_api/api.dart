@@ -186,8 +186,8 @@ class Api {
     js!.unsubscribeMessage(channel);
   }
 
-  Future<bool?> isConnected() async {
-    bool? connected = await (evalJavascript('settings.isConnected()') as FutureOr<bool?>);
+  Future<bool> isConnected() async {
+    bool connected = await evalJavascript('settings.isConnected()');
     print("Api is connected: $connected");
     return connected;
   }

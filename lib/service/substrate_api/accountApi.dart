@@ -63,27 +63,27 @@ class AccountApi {
   }
 
   /// decode addresses to publicKeys
-  Future<Map?> decodeAddress(List<String> addresses) async {
+  Future<Map> decodeAddress(List<String> addresses) async {
     if (addresses.length == 0) {
       return {};
     }
-    Map? res = await (jsApi!.evalJavascript(
+    Map? res = await jsApi!.evalJavascript(
       'account.decodeAddress(${jsonEncode(addresses)})',
       allowRepeat: true,
-    ) as FutureOr<Map<dynamic, dynamic>?>);
+    );
     if (res != null) {
       store.account!.setPubKeyAddressMap(Map<String, Map>.from({store.settings!.endpoint.ss58.toString(): res}));
     }
     return res;
   }
 
-  Future<String?> addressFromUri(String uri) async {
+  Future<String> addressFromUri(String uri) async {
     dynamic address = await jsApi!.evalJavascript(
       'account.addressFromUri("$uri")',
       allowRepeat: true,
     );
 
-    _log("addressFromUri: address");
+    _log("addressFromUri: $address");
 
     return address;
   }

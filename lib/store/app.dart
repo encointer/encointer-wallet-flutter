@@ -110,7 +110,7 @@ abstract class _AppStore with Store {
     return localStorage.setObject(encointerCacheKey(networkInfo), null);
   }
 
-  Future<void> loadOrInitEncointerCache(String? networkInfo) async {
+  Future<void> loadOrInitEncointerCache(String networkInfo) async {
     final cacheVersionFinalKey = getCacheKey(encointerCacheVersionPrefix);
     var cacheVersion = await localStorage.getKV(cacheVersionFinalKey);
 
