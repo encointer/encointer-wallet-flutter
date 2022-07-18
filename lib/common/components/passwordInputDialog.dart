@@ -80,18 +80,19 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
       title: widget.title ?? Container(),
       content: Padding(
         padding: EdgeInsets.only(top: 16),
-        child: CupertinoTextField(
+        child: CupertinoTextFormFieldRow(
           autofocus: true,
           keyboardType: TextInputType.number,
           placeholder: I18n.of(context)!.translationsForLocale().profile.passOld,
           controller: _passCtrl,
-          onChanged: (v) {
-            return Fmt.checkPassword(v.trim())
-                ? null
-                : I18n.of(context)!.translationsForLocale().account.createPasswordError;
+          validator: (v) {
+            if (v == null || !Fmt.checkPassword(v.trim())) {
+              return dic.account.createPasswordError;
+            }
+            return null;
           },
           obscureText: true,
-          clearButtonMode: OverlayVisibilityMode.editing,
+          // clearButtonMode: OverlayVisibilityMode.editing,
           inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
         ),
       ),
