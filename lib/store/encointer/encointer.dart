@@ -39,7 +39,7 @@ part 'encointer.g.dart';
 /// later to the store.
 @JsonSerializable(explicitToJson: true)
 class EncointerStore extends _EncointerStore with _$EncointerStore {
-  EncointerStore(String? network) : super(network);
+  EncointerStore(String network) : super(network);
 
   factory EncointerStore.fromJson(Map<String, dynamic> json) => _$EncointerStoreFromJson(json);
   Map<String, dynamic> toJson() => _$EncointerStoreToJson(this);
@@ -64,16 +64,16 @@ abstract class _EncointerStore with Store {
   Future<void> Function()? _cacheFn;
 
   /// The encointer network this store belongs to
-  final String? network;
+  final String network;
 
   @observable
-  CeremonyPhase? currentPhase;
+  CeremonyPhase currentPhase = CeremonyPhase.Registering;
 
   @observable
   int? nextPhaseTimestamp;
 
   @observable
-  Map<CeremonyPhase?, int>? phaseDurations = new Map();
+  Map<CeremonyPhase, int> phaseDurations = new Map();
 
   @computed
   get currentPhaseDuration => phaseDurations![currentPhase];
@@ -82,7 +82,7 @@ abstract class _EncointerStore with Store {
   int? currentCeremonyIndex;
 
   @observable
-  List<CommunityIdentifier>? communityIdentifiers;
+  List<CommunityIdentifier> communityIdentifiers = [];
 
   @observable
   List<CidName>? communities;
@@ -187,7 +187,7 @@ abstract class _EncointerStore with Store {
   // -- Setters for this store
 
   @action
-  void setPhaseDurations(Map<CeremonyPhase?, int> phaseDurations) {
+  void setPhaseDurations(Map<CeremonyPhase, int> phaseDurations) {
     _log("set phase duration to ${phaseDurations.toString()}");
     this.phaseDurations = phaseDurations;
     writeToCache();
@@ -237,7 +237,7 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setCurrentPhase(CeremonyPhase? phase) {
+  void setCurrentPhase(CeremonyPhase phase) {
     _log("set currentPhase to $phase");
     if (currentPhase != phase) {
       currentPhase = phase;
@@ -429,8 +429,10 @@ abstract class _EncointerStore with Store {
     var futures = [initEncointerAccountStore(address, shouldCache: false)];
 
     if (chosenCid != null) {
-      futures.addAll(
-          [initBazaarStore(chosenCid!, shouldCache: false), initCommunityStore(chosenCid!, address, shouldCache: false)]);
+      futures.addAll([
+        initBazaarStore(chosenCid!, shouldCache: false),
+        initCommunityStore(chosenCid!, address, shouldCache: false)
+      ]);
     }
 
     return Future.wait(futures);
@@ -477,7 +479,9 @@ abstract class _EncointerStore with Store {
         return nextPhaseTimestamp! - phaseDurations![CeremonyPhase.Assigning]!;
         break;
       case CeremonyPhase.Attesting:
-        return nextPhaseTimestamp! - phaseDurations![CeremonyPhase.Attesting]! - phaseDurations![CeremonyPhase.Assigning]!;
+        return nextPhaseTimestamp! -
+            phaseDurations![CeremonyPhase.Attesting]! -
+            phaseDurations![CeremonyPhase.Assigning]!;
         break;
       default:
         return null;

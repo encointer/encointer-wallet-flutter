@@ -6,10 +6,10 @@ part of 'app.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AppStore on _AppStore, Store {
-  final _$settingsAtom = Atom(name: '_AppStore.settings');
+  late final _$settingsAtom = Atom(name: '_AppStore.settings', context: context);
 
   @override
   SettingsStore? get settings {
@@ -24,7 +24,7 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
-  final _$accountAtom = Atom(name: '_AppStore.account');
+  late final _$accountAtom = Atom(name: '_AppStore.account', context: context);
 
   @override
   AccountStore? get account {
@@ -39,7 +39,7 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
-  final _$assetsAtom = Atom(name: '_AppStore.assets');
+  late final _$assetsAtom = Atom(name: '_AppStore.assets', context: context);
 
   @override
   AssetsStore? get assets {
@@ -54,7 +54,7 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
-  final _$chainAtom = Atom(name: '_AppStore.chain');
+  late final _$chainAtom = Atom(name: '_AppStore.chain', context: context);
 
   @override
   ChainStore? get chain {
@@ -69,7 +69,7 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
-  final _$encointerAtom = Atom(name: '_AppStore.encointer');
+  late final _$encointerAtom = Atom(name: '_AppStore.encointer', context: context);
 
   @override
   EncointerStore? get encointer {
@@ -84,7 +84,7 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
-  final _$isReadyAtom = Atom(name: '_AppStore.isReady');
+  late final _$isReadyAtom = Atom(name: '_AppStore.isReady', context: context);
 
   @override
   bool get isReady {
@@ -99,7 +99,7 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
-  final _$initAsyncAction = AsyncAction('_AppStore.init');
+  late final _$initAsyncAction = AsyncAction('_AppStore.init', context: context);
 
   @override
   Future<void> init(String sysLocaleCode) {

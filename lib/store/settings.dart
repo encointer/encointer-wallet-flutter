@@ -107,8 +107,8 @@ abstract class _SettingsStore with Store {
 
   @computed
   String get transactionBaseFee {
-    return Fmt.token(
-        BigInt.parse(networkConst!['transactionPayment']['transactionBaseFee'].toString()), networkState!.tokenDecimals);
+    return Fmt.token(BigInt.parse(networkConst!['transactionPayment']['transactionBaseFee'].toString()),
+        networkState!.tokenDecimals);
   }
 
   @computed
@@ -258,7 +258,8 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadEndpoint(String sysLocaleCode) async {
-    Map<String, dynamic> value = await (rootStore.localStorage.getObject(localStorageEndpointKey) as FutureOr<Map<String, dynamic>>);
+    Map<String, dynamic> value =
+        await (rootStore.localStorage.getObject(localStorageEndpointKey) as FutureOr<Map<String, dynamic>>);
     if (value == null) {
       endpoint = networkEndpointEncointerMainnet;
     } else {
@@ -274,7 +275,8 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadCustomSS58Format() async {
-    Map<String, dynamic> ss58 = await (rootStore.localStorage.getObject(localStorageSS58Key) as FutureOr<Map<String, dynamic>>);
+    Map<String, dynamic> ss58 =
+        await (rootStore.localStorage.getObject(localStorageSS58Key) as FutureOr<Map<String, dynamic>>);
 
     customSS58Format = ss58 ?? default_ss58_prefix;
   }

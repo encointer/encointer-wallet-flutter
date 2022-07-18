@@ -13,19 +13,17 @@ Map<String, dynamic> _$NetworkStateToJson(NetworkState instance) => <String, dyn
       'tokenSymbol': instance.tokenSymbol,
     };
 
-EndpointData _$EndpointDataFromJson(Map<String, dynamic> json) {
-  return EndpointData()
-    ..color = json['color'] as String?
-    ..info = json['info'] as String?
-    ..ss58 = json['ss58'] as int?
-    ..text = json['text'] as String?
-    ..value = json['value'] as String?
-    ..worker = json['worker'] as String?
-    ..mrenclave = json['mrenclave'] as String?
-    ..overrideConfig =
-        json['overrideConfig'] == null ? null : NodeConfig.fromJson(json['overrideConfig'] as Map<String, dynamic>)
-    ..ipfsGateway = json['ipfsGateway'] as String?;
-}
+EndpointData _$EndpointDataFromJson(Map<String, dynamic> json) => EndpointData()
+  ..color = json['color'] as String?
+  ..info = json['info'] as String?
+  ..ss58 = json['ss58'] as int?
+  ..text = json['text'] as String?
+  ..value = json['value'] as String?
+  ..worker = json['worker'] as String?
+  ..mrenclave = json['mrenclave'] as String?
+  ..overrideConfig =
+      json['overrideConfig'] == null ? null : NodeConfig.fromJson(json['overrideConfig'] as Map<String, dynamic>)
+  ..ipfsGateway = json['ipfsGateway'] as String?;
 
 Map<String, dynamic> _$EndpointDataToJson(EndpointData instance) => <String, dynamic>{
       'color': instance.color,
@@ -43,69 +41,69 @@ Map<String, dynamic> _$EndpointDataToJson(EndpointData instance) => <String, dyn
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$SettingsStore on _SettingsStore, Store {
-  Computed<bool> _$endpointIsEncointerComputed;
+  Computed<bool>? _$endpointIsEncointerComputed;
 
   @override
   bool get endpointIsEncointer => (_$endpointIsEncointerComputed ??=
           Computed<bool>(() => super.endpointIsEncointer, name: '_SettingsStore.endpointIsEncointer'))
       .value;
-  Computed<bool> _$endpointIsNoTeeComputed;
+  Computed<bool>? _$endpointIsNoTeeComputed;
 
   @override
   bool get endpointIsNoTee => (_$endpointIsNoTeeComputed ??=
           Computed<bool>(() => super.endpointIsNoTee, name: '_SettingsStore.endpointIsNoTee'))
       .value;
-  Computed<bool> _$endpointIsTeeProxyComputed;
+  Computed<bool>? _$endpointIsTeeProxyComputed;
 
   @override
   bool get endpointIsTeeProxy => (_$endpointIsTeeProxyComputed ??=
           Computed<bool>(() => super.endpointIsTeeProxy, name: '_SettingsStore.endpointIsTeeProxy'))
       .value;
-  Computed<String> _$ipfsGatewayComputed;
+  Computed<String?>? _$ipfsGatewayComputed;
 
   @override
-  String get ipfsGateway =>
-      (_$ipfsGatewayComputed ??= Computed<String>(() => super.ipfsGateway!, name: '_SettingsStore.ipfsGateway')).value;
-  Computed<List<EndpointData>> _$endpointListComputed;
+  String? get ipfsGateway =>
+      (_$ipfsGatewayComputed ??= Computed<String?>(() => super.ipfsGateway, name: '_SettingsStore.ipfsGateway')).value;
+  Computed<List<EndpointData>>? _$endpointListComputed;
 
   @override
   List<EndpointData> get endpointList => (_$endpointListComputed ??=
           Computed<List<EndpointData>>(() => super.endpointList, name: '_SettingsStore.endpointList'))
       .value;
-  Computed<List<AccountData>> _$contactListAllComputed;
+  Computed<List<AccountData>>? _$contactListAllComputed;
 
   @override
   List<AccountData> get contactListAll => (_$contactListAllComputed ??=
           Computed<List<AccountData>>(() => super.contactListAll, name: '_SettingsStore.contactListAll'))
       .value;
-  Computed<String> _$existentialDepositComputed;
+  Computed<String>? _$existentialDepositComputed;
 
   @override
   String get existentialDeposit => (_$existentialDepositComputed ??=
           Computed<String>(() => super.existentialDeposit, name: '_SettingsStore.existentialDeposit'))
       .value;
-  Computed<String> _$transactionBaseFeeComputed;
+  Computed<String>? _$transactionBaseFeeComputed;
 
   @override
   String get transactionBaseFee => (_$transactionBaseFeeComputed ??=
           Computed<String>(() => super.transactionBaseFee, name: '_SettingsStore.transactionBaseFee'))
       .value;
-  Computed<String> _$transactionByteFeeComputed;
+  Computed<String>? _$transactionByteFeeComputed;
 
   @override
   String get transactionByteFee => (_$transactionByteFeeComputed ??=
           Computed<String>(() => super.transactionByteFee, name: '_SettingsStore.transactionByteFee'))
       .value;
-  Computed<bool> _$isConnectedComputed;
+  Computed<bool>? _$isConnectedComputed;
 
   @override
   bool get isConnected =>
       (_$isConnectedComputed ??= Computed<bool>(() => super.isConnected, name: '_SettingsStore.isConnected')).value;
 
-  final _$enableBazaarAtom = Atom(name: '_SettingsStore.enableBazaar');
+  late final _$enableBazaarAtom = Atom(name: '_SettingsStore.enableBazaar', context: context);
 
   @override
   bool get enableBazaar {
@@ -120,7 +118,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  final _$cachedPinAtom = Atom(name: '_SettingsStore.cachedPin');
+  late final _$cachedPinAtom = Atom(name: '_SettingsStore.cachedPin', context: context);
 
   @override
   String get cachedPin {
@@ -135,7 +133,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  final _$loadingAtom = Atom(name: '_SettingsStore.loading');
+  late final _$loadingAtom = Atom(name: '_SettingsStore.loading', context: context);
 
   @override
   bool get loading {
@@ -150,7 +148,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  final _$localeCodeAtom = Atom(name: '_SettingsStore.localeCode');
+  late final _$localeCodeAtom = Atom(name: '_SettingsStore.localeCode', context: context);
 
   @override
   String? get localeCode {
@@ -165,7 +163,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  final _$endpointAtom = Atom(name: '_SettingsStore.endpoint');
+  late final _$endpointAtom = Atom(name: '_SettingsStore.endpoint', context: context);
 
   @override
   EndpointData get endpoint {
@@ -180,7 +178,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  final _$customSS58FormatAtom = Atom(name: '_SettingsStore.customSS58Format');
+  late final _$customSS58FormatAtom = Atom(name: '_SettingsStore.customSS58Format', context: context);
 
   @override
   Map<String, dynamic> get customSS58Format {
@@ -195,7 +193,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  final _$networkNameAtom = Atom(name: '_SettingsStore.networkName');
+  late final _$networkNameAtom = Atom(name: '_SettingsStore.networkName', context: context);
 
   @override
   String? get networkName {
@@ -210,7 +208,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  final _$networkStateAtom = Atom(name: '_SettingsStore.networkState');
+  late final _$networkStateAtom = Atom(name: '_SettingsStore.networkState', context: context);
 
   @override
   NetworkState? get networkState {
@@ -225,7 +223,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  final _$networkConstAtom = Atom(name: '_SettingsStore.networkConst');
+  late final _$networkConstAtom = Atom(name: '_SettingsStore.networkConst', context: context);
 
   @override
   Map<dynamic, dynamic>? get networkConst {
@@ -240,7 +238,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  final _$contactListAtom = Atom(name: '_SettingsStore.contactList');
+  late final _$contactListAtom = Atom(name: '_SettingsStore.contactList', context: context);
 
   @override
   ObservableList<AccountData> get contactList {
@@ -255,7 +253,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  final _$developerModeAtom = Atom(name: '_SettingsStore.developerMode');
+  late final _$developerModeAtom = Atom(name: '_SettingsStore.developerMode', context: context);
 
   @override
   bool get developerMode {
@@ -270,91 +268,91 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
-  final _$initAsyncAction = AsyncAction('_SettingsStore.init');
+  late final _$initAsyncAction = AsyncAction('_SettingsStore.init', context: context);
 
   @override
   Future<void> init(String sysLocaleCode) {
     return _$initAsyncAction.run(() => super.init(sysLocaleCode));
   }
 
-  final _$setLocalCodeAsyncAction = AsyncAction('_SettingsStore.setLocalCode');
+  late final _$setLocalCodeAsyncAction = AsyncAction('_SettingsStore.setLocalCode', context: context);
 
   @override
   Future<void> setLocalCode(String? code) {
     return _$setLocalCodeAsyncAction.run(() => super.setLocalCode(code));
   }
 
-  final _$loadLocalCodeAsyncAction = AsyncAction('_SettingsStore.loadLocalCode');
+  late final _$loadLocalCodeAsyncAction = AsyncAction('_SettingsStore.loadLocalCode', context: context);
 
   @override
   Future<void> loadLocalCode() {
     return _$loadLocalCodeAsyncAction.run(() => super.loadLocalCode());
   }
 
-  final _$setNetworkStateAsyncAction = AsyncAction('_SettingsStore.setNetworkState');
+  late final _$setNetworkStateAsyncAction = AsyncAction('_SettingsStore.setNetworkState', context: context);
 
   @override
-  Future<void> setNetworkState(Map<String, dynamic>? data, {bool needCache = true}) {
-    return _$setNetworkStateAsyncAction.run(() => super.setNetworkState(data!, needCache: needCache));
+  Future<void> setNetworkState(Map<String, dynamic> data, {bool needCache = true}) {
+    return _$setNetworkStateAsyncAction.run(() => super.setNetworkState(data, needCache: needCache));
   }
 
-  final _$loadNetworkStateCacheAsyncAction = AsyncAction('_SettingsStore.loadNetworkStateCache');
+  late final _$loadNetworkStateCacheAsyncAction = AsyncAction('_SettingsStore.loadNetworkStateCache', context: context);
 
   @override
   Future<void> loadNetworkStateCache() {
     return _$loadNetworkStateCacheAsyncAction.run(() => super.loadNetworkStateCache());
   }
 
-  final _$setNetworkConstAsyncAction = AsyncAction('_SettingsStore.setNetworkConst');
+  late final _$setNetworkConstAsyncAction = AsyncAction('_SettingsStore.setNetworkConst', context: context);
 
   @override
   Future<void> setNetworkConst(Map<String, dynamic>? data, {bool needCache = true}) {
     return _$setNetworkConstAsyncAction.run(() => super.setNetworkConst(data, needCache: needCache));
   }
 
-  final _$loadContactsAsyncAction = AsyncAction('_SettingsStore.loadContacts');
+  late final _$loadContactsAsyncAction = AsyncAction('_SettingsStore.loadContacts', context: context);
 
   @override
   Future<void> loadContacts() {
     return _$loadContactsAsyncAction.run(() => super.loadContacts());
   }
 
-  final _$addContactAsyncAction = AsyncAction('_SettingsStore.addContact');
+  late final _$addContactAsyncAction = AsyncAction('_SettingsStore.addContact', context: context);
 
   @override
   Future<void> addContact(Map<String, dynamic> con) {
     return _$addContactAsyncAction.run(() => super.addContact(con));
   }
 
-  final _$removeContactAsyncAction = AsyncAction('_SettingsStore.removeContact');
+  late final _$removeContactAsyncAction = AsyncAction('_SettingsStore.removeContact', context: context);
 
   @override
   Future<void> removeContact(AccountData con) {
     return _$removeContactAsyncAction.run(() => super.removeContact(con));
   }
 
-  final _$updateContactAsyncAction = AsyncAction('_SettingsStore.updateContact');
+  late final _$updateContactAsyncAction = AsyncAction('_SettingsStore.updateContact', context: context);
 
   @override
   Future<void> updateContact(Map<String, dynamic> con) {
     return _$updateContactAsyncAction.run(() => super.updateContact(con));
   }
 
-  final _$loadEndpointAsyncAction = AsyncAction('_SettingsStore.loadEndpoint');
+  late final _$loadEndpointAsyncAction = AsyncAction('_SettingsStore.loadEndpoint', context: context);
 
   @override
   Future<void> loadEndpoint(String sysLocaleCode) {
     return _$loadEndpointAsyncAction.run(() => super.loadEndpoint(sysLocaleCode));
   }
 
-  final _$loadCustomSS58FormatAsyncAction = AsyncAction('_SettingsStore.loadCustomSS58Format');
+  late final _$loadCustomSS58FormatAsyncAction = AsyncAction('_SettingsStore.loadCustomSS58Format', context: context);
 
   @override
   Future<void> loadCustomSS58Format() {
     return _$loadCustomSS58FormatAsyncAction.run(() => super.loadCustomSS58Format());
   }
 
-  final _$_SettingsStoreActionController = ActionController(name: '_SettingsStore');
+  late final _$_SettingsStoreActionController = ActionController(name: '_SettingsStore', context: context);
 
   @override
   void toggleDeveloperMode() {

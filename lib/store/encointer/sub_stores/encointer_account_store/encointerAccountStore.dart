@@ -33,25 +33,25 @@ abstract class _EncointerAccountStore with Store {
   Future<void> Function()? _cacheFn;
 
   /// The network this store belongs to.
-  final String? network;
+  final String network;
 
   /// The account (SS58) this store belongs to.
-  final String? address;
+  final String address;
 
   /// `BalanceEntries` for the respective community
   ///
   /// Map: cid.toFmtString() -> BalanceEntry
   @observable
-  ObservableMap<String, BalanceEntry?>? balanceEntries = new ObservableMap();
+  ObservableMap<String, BalanceEntry> balanceEntries = new ObservableMap();
 
   /// `CommunityReputations` across all communities keyed by the respective ceremony index.
   ///
   /// Map: ceremony index -> CommunityReputation
   @observable
-  Map<int?, CommunityReputation>? reputations;
+  Map<int, CommunityReputation> reputations = new Map();
 
   @observable
-  ObservableList<TransferData>? txsTransfer = ObservableList<TransferData>();
+  ObservableList<TransferData> txsTransfer = new ObservableList<TransferData>();
 
   @computed
   get ceremonyIndexForProofOfAttendance {
@@ -66,14 +66,14 @@ abstract class _EncointerAccountStore with Store {
   }
 
   @action
-  void addBalanceEntry(CommunityIdentifier cid, BalanceEntry? balanceEntry) {
+  void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
     _log("balanceEntry $balanceEntry added to cid $cid added");
-    balanceEntries![cid.toFmtString()] = balanceEntry;
+    balanceEntries[cid.toFmtString()] = balanceEntry;
     writeToCache();
   }
 
   @action
-  void setReputations(Map<int?, CommunityReputation> reps) {
+  void setReputations(Map<int, CommunityReputation> reps) {
     reputations = reps;
     writeToCache();
   }

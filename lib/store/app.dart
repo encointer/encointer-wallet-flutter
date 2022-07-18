@@ -84,7 +84,7 @@ abstract class _AppStore with Store {
     return localStorage.setObject(getCacheKey(key), value);
   }
 
-  Future<Object> loadObject(String key) {
+  Future<Object?> loadObject(String key) {
     return localStorage.getObject(getCacheKey(key));
   }
 
@@ -106,7 +106,7 @@ abstract class _AppStore with Store {
     return config == StoreConfig.Test ? "test-$key" : key;
   }
 
-  Future<void> purgeEncointerCache(String? networkInfo) async {
+  Future<bool> purgeEncointerCache(String? networkInfo) async {
     return localStorage.setObject(encointerCacheKey(networkInfo), null);
   }
 
@@ -196,7 +196,7 @@ abstract class _AppStore with Store {
   /// Should be used whenever one switches to a new account. This function needs to be awaited most of the time.
   /// Otherwise, calling webApi queries when the cache has not finished loading might result in outdated or wrong data.
   /// E.g. not awaiting this call was the cause of #357.
-  Future<void> loadAccountCache() async {
+  Future<List<void>> loadAccountCache() async {
     return Future.wait([assets!.clearTxs(), assets!.loadAccountCache()]);
   }
 }

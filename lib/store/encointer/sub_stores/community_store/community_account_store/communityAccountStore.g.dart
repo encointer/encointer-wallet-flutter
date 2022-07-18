@@ -1,67 +1,34 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-import 'package:collection/collection.dart' show IterableExtension;
 part of 'communityAccountStore.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-CommunityAccountStore _$CommunityAccountStoreFromJson(Map<String, dynamic> json) {
-  return CommunityAccountStore(
-    json['network'] as String?,
-    json['cid'] == null ? null : CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
-    json['address'] as String?,
-  )
-    ..participantType = _$enumDecodeNullable(_$ParticipantTypeEnumMap, json['participantType'])
-    ..meetup = json['meetup'] == null ? null : Meetup.fromJson(json['meetup'] as Map<String, dynamic>)
-    ..participantsClaims = json['participantsClaims'] != null
-        ? ObservableMap<String?, ClaimOfAttendance>.of((json['participantsClaims'] as Map<String, dynamic>).map(
-            (k, e) => MapEntry(k, e == null ? null : ClaimOfAttendance.fromJson(e as Map<String, dynamic>)),
-          ))
-        : null
-    ..meetupCompleted = json['meetupCompleted'] as bool?;
-}
+CommunityAccountStore _$CommunityAccountStoreFromJson(Map<String, dynamic> json) => CommunityAccountStore(
+      json['network'] as String?,
+      json['cid'] == null ? null : CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
+      json['address'] as String?,
+    )
+      ..participantType = $enumDecodeNullable(_$ParticipantTypeEnumMap, json['participantType'])
+      ..meetup = json['meetup'] == null ? null : Meetup.fromJson(json['meetup'] as Map<String, dynamic>)
+      ..participantsClaims = json['participantsClaims'] != null
+          ? ObservableMap<String?, ClaimOfAttendance>.of((json['participantsClaims'] as Map<String, dynamic>).map(
+              (k, e) => MapEntry(k, ClaimOfAttendance.fromJson(e as Map<String, dynamic>)),
+            ))
+          : null
+      ..meetupCompleted = json['meetupCompleted'] as bool?;
 
 Map<String, dynamic> _$CommunityAccountStoreToJson(CommunityAccountStore instance) => <String, dynamic>{
       'network': instance.network,
       'cid': instance.cid?.toJson(),
       'address': instance.address,
-      'participantType': _$ParticipantTypeEnumMap[instance.participantType!],
+      'participantType': _$ParticipantTypeEnumMap[instance.participantType],
       'meetup': instance.meetup?.toJson(),
-      'participantsClaims': instance.participantsClaims?.map((k, e) => MapEntry(k, e?.toJson())),
+      'participantsClaims': instance.participantsClaims?.map((k, e) => MapEntry(k, e.toJson())),
       'meetupCompleted': instance.meetupCompleted,
     };
-
-T? _$enumDecode<T>(
-  Map<T, dynamic> enumValues,
-  dynamic source, {
-  T? unknownValue,
-}) {
-  if (source == null) {
-    throw ArgumentError('A value must be provided. Supported values: '
-        '${enumValues.values.join(', ')}');
-  }
-
-  final value = enumValues.entries.singleWhereOrNull((e) => e.value == source)?.key;
-
-  if (value == null && unknownValue == null) {
-    throw ArgumentError('`$source` is not one of the supported values: '
-        '${enumValues.values.join(', ')}');
-  }
-  return value ?? unknownValue;
-}
-
-T? _$enumDecodeNullable<T>(
-  Map<T, dynamic> enumValues,
-  dynamic source, {
-  T? unknownValue,
-}) {
-  if (source == null) {
-    return null;
-  }
-  return _$enumDecode<T>(enumValues, source, unknownValue: unknownValue);
-}
 
 const _$ParticipantTypeEnumMap = {
   ParticipantType.Bootstrapper: 'Bootstrapper',
@@ -74,29 +41,29 @@ const _$ParticipantTypeEnumMap = {
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
-  Computed<dynamic> _$scannedClaimsCountComputed;
+  Computed<dynamic>? _$scannedClaimsCountComputed;
 
   @override
   dynamic get scannedClaimsCount => (_$scannedClaimsCountComputed ??=
           Computed<dynamic>(() => super.scannedClaimsCount, name: '_CommunityAccountStore.scannedClaimsCount'))
       .value;
-  Computed<bool> _$isAssignedComputed;
+  Computed<bool>? _$isAssignedComputed;
 
   @override
   bool get isAssigned =>
       (_$isAssignedComputed ??= Computed<bool>(() => super.isAssigned, name: '_CommunityAccountStore.isAssigned'))
           .value;
-  Computed<bool> _$isRegisteredComputed;
+  Computed<bool>? _$isRegisteredComputed;
 
   @override
   bool get isRegistered =>
       (_$isRegisteredComputed ??= Computed<bool>(() => super.isRegistered, name: '_CommunityAccountStore.isRegistered'))
           .value;
 
-  final _$participantTypeAtom = Atom(name: '_CommunityAccountStore.participantType');
+  late final _$participantTypeAtom = Atom(name: '_CommunityAccountStore.participantType', context: context);
 
   @override
   ParticipantType? get participantType {
@@ -111,7 +78,7 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
     });
   }
 
-  final _$meetupAtom = Atom(name: '_CommunityAccountStore.meetup');
+  late final _$meetupAtom = Atom(name: '_CommunityAccountStore.meetup', context: context);
 
   @override
   Meetup? get meetup {
@@ -126,7 +93,7 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
     });
   }
 
-  final _$participantsClaimsAtom = Atom(name: '_CommunityAccountStore.participantsClaims');
+  late final _$participantsClaimsAtom = Atom(name: '_CommunityAccountStore.participantsClaims', context: context);
 
   @override
   ObservableMap<String?, ClaimOfAttendance>? get participantsClaims {
@@ -141,7 +108,7 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
     });
   }
 
-  final _$meetupCompletedAtom = Atom(name: '_CommunityAccountStore.meetupCompleted');
+  late final _$meetupCompletedAtom = Atom(name: '_CommunityAccountStore.meetupCompleted', context: context);
 
   @override
   bool? get meetupCompleted {
@@ -156,7 +123,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
     });
   }
 
-  final _$_CommunityAccountStoreActionController = ActionController(name: '_CommunityAccountStore');
+  late final _$_CommunityAccountStoreActionController =
+      ActionController(name: '_CommunityAccountStore', context: context);
 
   @override
   void setParticipantType([ParticipantType? type]) {

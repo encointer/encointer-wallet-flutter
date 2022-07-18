@@ -1,57 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-import 'package:collection/collection.dart' show IterableExtension;
 part of 'config.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-Config _$ConfigFromJson(Map<String, dynamic> json) {
-  return Config(
-    initialRoute: json['initialRoute'] as String?,
-    mockLocalStorage: json['mockLocalStorage'] as bool?,
-    mockSubstrateApi: json['mockSubstrateApi'] as bool?,
-    appStoreConfig: _$enumDecodeNullable(_$StoreConfigEnumMap, json['appStoreConfig']),
-  );
-}
+Config _$ConfigFromJson(Map<String, dynamic> json) => Config(
+      initialRoute: json['initialRoute'] as String? ?? EncointerHomePage.route,
+      mockLocalStorage: json['mockLocalStorage'] as bool? ?? false,
+      mockSubstrateApi: json['mockSubstrateApi'] as bool? ?? false,
+      appStoreConfig: $enumDecodeNullable(_$StoreConfigEnumMap, json['appStoreConfig']) ?? StoreConfig.Normal,
+    );
 
 Map<String, dynamic> _$ConfigToJson(Config instance) => <String, dynamic>{
       'initialRoute': instance.initialRoute,
       'mockLocalStorage': instance.mockLocalStorage,
       'mockSubstrateApi': instance.mockSubstrateApi,
-      'appStoreConfig': _$StoreConfigEnumMap[instance.appStoreConfig!],
+      'appStoreConfig': _$StoreConfigEnumMap[instance.appStoreConfig],
     };
-
-T? _$enumDecode<T>(
-  Map<T, dynamic> enumValues,
-  dynamic source, {
-  T? unknownValue,
-}) {
-  if (source == null) {
-    throw ArgumentError('A value must be provided. Supported values: '
-        '${enumValues.values.join(', ')}');
-  }
-
-  final value = enumValues.entries.singleWhereOrNull((e) => e.value == source)?.key;
-
-  if (value == null && unknownValue == null) {
-    throw ArgumentError('`$source` is not one of the supported values: '
-        '${enumValues.values.join(', ')}');
-  }
-  return value ?? unknownValue;
-}
-
-T? _$enumDecodeNullable<T>(
-  Map<T, dynamic> enumValues,
-  dynamic source, {
-  T? unknownValue,
-}) {
-  if (source == null) {
-    return null;
-  }
-  return _$enumDecode<T>(enumValues, source, unknownValue: unknownValue);
-}
 
 const _$StoreConfigEnumMap = {
   StoreConfig.Normal: 'Normal',
