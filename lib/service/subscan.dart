@@ -144,13 +144,11 @@ class SubScanApi {
       "address": params.address,
     });
     Response res = await post(Uri.parse(url), headers: headers, body: body);
-    if (res.body != null) {
-      final obj = await compute(jsonDecode, res.body);
-      if (params.sendPort != null) {
-        params.sendPort!.send(obj['data']);
-      }
-      return obj['data'];
+    final obj = await compute(jsonDecode, res.body);
+    if (params.sendPort != null) {
+      params.sendPort!.send(obj['data']);
     }
+    return obj['data'];
     if (params.sendPort != null) {
       params.sendPort!.send({});
     }
@@ -173,13 +171,11 @@ class SubScanApi {
     }
     String body = jsonEncode(params);
     Response res = await post(Uri.parse(url), headers: headers, body: body);
-    if (res.body != null) {
-      final obj = await compute(jsonDecode, res.body);
-      if (para.sendPort != null) {
-        para.sendPort!.send(obj['data']);
-      }
-      return obj['data'];
+    final obj = await compute(jsonDecode, res.body);
+    if (para.sendPort != null) {
+      para.sendPort!.send(obj['data']);
     }
+    return obj['data'];
     if (para.sendPort != null) {
       para.sendPort!.send({});
     }
@@ -196,13 +192,11 @@ class SubScanApi {
     };
     String body = jsonEncode(params);
     Response res = await post(Uri.parse(url), headers: headers, body: body);
-    if (res.body != null) {
-      final obj = await compute(jsonDecode, res.body);
-      if (para.sendPort != null) {
-        para.sendPort!.send(obj['data']);
-      }
-      return obj['data'];
+    final obj = await compute(jsonDecode, res.body);
+    if (para.sendPort != null) {
+      para.sendPort!.send(obj['data']);
     }
+    return obj['data'];
     if (para.sendPort != null) {
       para.sendPort!.send({});
     }
@@ -231,16 +225,14 @@ class SubScanApi {
     Map<String, String> headers = {"Content-type": "application/json"};
 
     Response res = await post(Uri.parse(url), headers: headers);
-    if (res.body != null) {
-      try {
-        final obj = await compute(jsonDecode, res.body);
-        if (para.sendPort != null) {
-          para.sendPort!.send(obj['data']);
-        }
-        return obj['data'];
-      } catch (err) {
-        // ignore error
+    try {
+      final obj = await compute(jsonDecode, res.body);
+      if (para.sendPort != null) {
+        para.sendPort!.send(obj['data']);
       }
+      return obj['data'];
+    } catch (err) {
+      // ignore error
     }
     if (para.sendPort != null) {
       para.sendPort!.send({});

@@ -247,7 +247,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                               String community = store!.encointer!.account!.balanceEntries.keys.elementAt(index);
                               return _getBalanceEntryListTile(
                                 community,
-                                store!.encointer!.accountStores![addressSS58]!.balanceEntries![community],
+                                store!.encointer!.accountStores![addressSS58]!.balanceEntries[community],
                                 addressSS58,
                               );
                             }),

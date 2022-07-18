@@ -134,7 +134,7 @@ abstract class _AccountStore with Store {
       return address;
     } else {
       _log("getNetworkAddress: could not get address (SS58)");
-      return currentAccount.address!;
+      return currentAccount.address;
     }
   }
 
@@ -192,7 +192,7 @@ abstract class _AccountStore with Store {
             );
           } else {
             if (rootStore.settings!.endpointIsEncointer) {
-              rootStore.encointer!.account!.setTransferTxs([res], rootStore.account!.currentAddress!);
+              rootStore.encointer!.account!.setTransferTxs([res], rootStore.account!.currentAddress);
             }
           }
         });
@@ -340,7 +340,7 @@ abstract class _AccountStore with Store {
       encryptedSeed = storedMnemonics[pubKey];
       seedType = AccountStore.seedTypeMnemonic;
     } else if (storedMnemonics[pubKey] != null) {
-      encryptedSeed = storedRawSeeds![pubKey];
+      encryptedSeed = storedRawSeeds[pubKey];
       seedType = AccountStore.seedTypeRawSeed;
     } else {
       return;

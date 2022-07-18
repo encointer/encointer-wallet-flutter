@@ -76,7 +76,7 @@ abstract class _EncointerStore with Store {
   Map<CeremonyPhase, int> phaseDurations = new Map();
 
   @computed
-  get currentPhaseDuration => phaseDurations![currentPhase];
+  get currentPhaseDuration => phaseDurations[currentPhase];
 
   @observable
   int? currentCeremonyIndex;
@@ -127,7 +127,7 @@ abstract class _EncointerStore with Store {
   /// The `CommunityStore` for the currently chosen community.
   @computed
   CommunityStore? get community {
-    return chosenCid != null ? communityStores![chosenCid!.toFmtString()] : null;
+    return chosenCid != null ? communityStores[chosenCid!.toFmtString()] : null;
   }
 
   /// The `CommunityAccountStore` for the currently chosen community and account.
@@ -147,8 +147,8 @@ abstract class _EncointerStore with Store {
   @computed
   BalanceEntry? get communityBalanceEntry {
     if (chosenCid != null) {
-      bool containsBalance = account?.balanceEntries?.containsKey(chosenCid!.toFmtString()) ?? false;
-      return containsBalance ? account!.balanceEntries![chosenCid!.toFmtString()] : null;
+      bool containsBalance = account?.balanceEntries.containsKey(chosenCid!.toFmtString()) ?? false;
+      return containsBalance ? account!.balanceEntries[chosenCid!.toFmtString()] : null;
     } else {
       return null;
     }
@@ -175,7 +175,7 @@ abstract class _EncointerStore with Store {
     }
 
     try {
-      final fallbackCidFmt = account!.balanceEntries!.entries.firstWhere((e) => applyDemurrage(e.value)! > 0.013).key;
+      final fallbackCidFmt = account!.balanceEntries.entries.firstWhere((e) => applyDemurrage(e.value)! > 0.013).key;
       return CommunityIdentifier.fromFmtString(fallbackCidFmt);
     } catch (_e) {
       _log("${account!.address} does not have sufficient funds in any community."
@@ -272,7 +272,7 @@ abstract class _EncointerStore with Store {
 
   @action
   void setAggregatedAccountData(CommunityIdentifier cid, String address, AggregatedAccountData accountData) {
-    var encointerAccountStore = communityStores![cid.toFmtString()]!.communityAccountStores![address];
+    var encointerAccountStore = communityStores[cid.toFmtString()]!.communityAccountStores![address];
 
     accountData.personal?.meetup != null
         ? encointerAccountStore!.setMeetup(accountData.personal!.meetup)
@@ -314,7 +314,7 @@ abstract class _EncointerStore with Store {
 
   @action
   void purgeCeremonySpecificState() {
-    communityStores!.forEach((cid, store) => store.purgeCeremonySpecificState());
+    communityStores.forEach((cid, store) => store.purgeCeremonySpecificState());
     accountStores!.forEach((cid, store) => store.purgeCeremonySpecificState());
   }
 
@@ -342,7 +342,7 @@ abstract class _EncointerStore with Store {
 
     accountStores!.forEach((cid, store) => store.initStore(cacheFn));
     bazaarStores!.forEach((cid, store) => store.initStore(cacheFn));
-    communityStores!.forEach((cid, store) => store.initStore(cacheFn, applyDemurrage));
+    communityStores.forEach((cid, store) => store.initStore(cacheFn, applyDemurrage));
 
     loadChosenCid(network);
   }
@@ -373,18 +373,18 @@ abstract class _EncointerStore with Store {
   @action
   Future<void> initCommunityStore(CommunityIdentifier cid, String? address, {shouldCache = true}) async {
     var cidFmt = cid.toFmtString();
-    if (!communityStores!.containsKey(cidFmt)) {
+    if (!communityStores.containsKey(cidFmt)) {
       _log("Adding new communityStore for cid: ${cid.toFmtString()}");
 
       var communityStore = CommunityStore(network, cid);
       communityStore.initStore(_cacheFn, applyDemurrage);
       await communityStore.initCommunityAccountStore(address);
 
-      communityStores![cidFmt] = communityStore;
+      communityStores[cidFmt] = communityStore;
       return shouldCache ? writeToCache() : Future.value(null);
     } else {
       _log("Don't add already existing communityStore for cid: ${cid.toFmtString()}");
-      await communityStores![cidFmt]!.initCommunityAccountStore(address);
+      await communityStores[cidFmt]!.initCommunityAccountStore(address);
       return Future.value(null);
     }
   }
@@ -458,7 +458,7 @@ abstract class _EncointerStore with Store {
     Map<String, dynamic> maybeChosenCid = await _rootStore.localStorage.getMap(chosenCidCacheKey(network));
     _log("Setting previously tracked chosenCid: ${maybeChosenCid.toString()}");
 
-    if (maybeChosenCid != null && maybeChosenCid.isNotEmpty) {
+    if (maybeChosenCid.isNotEmpty) {
       // Do not use the setter here. We don't want to trigger reactions here.
       chosenCid = CommunityIdentifier.fromJson(maybeChosenCid);
     }
@@ -468,7 +468,7 @@ abstract class _EncointerStore with Store {
 
   @computed
   int? get assigningPhaseStart {
-    if (currentPhase == null || nextPhaseTimestamp == null || phaseDurations!.isEmpty) {
+    if (nextPhaseTimestamp == null || phaseDurations.isEmpty) {
       return null;
     }
     switch (currentPhase) {
@@ -476,12 +476,12 @@ abstract class _EncointerStore with Store {
         return nextPhaseTimestamp;
         break;
       case CeremonyPhase.Assigning:
-        return nextPhaseTimestamp! - phaseDurations![CeremonyPhase.Assigning]!;
+        return nextPhaseTimestamp! - phaseDurations[CeremonyPhase.Assigning]!;
         break;
       case CeremonyPhase.Attesting:
         return nextPhaseTimestamp! -
-            phaseDurations![CeremonyPhase.Attesting]! -
-            phaseDurations![CeremonyPhase.Assigning]!;
+            phaseDurations[CeremonyPhase.Attesting]! -
+            phaseDurations[CeremonyPhase.Assigning]!;
         break;
       default:
         return null;
@@ -493,7 +493,7 @@ abstract class _EncointerStore with Store {
     if (assigningPhaseStart == null) {
       return null;
     }
-    return assigningPhaseStart! + phaseDurations![CeremonyPhase.Assigning]!;
+    return assigningPhaseStart! + phaseDurations[CeremonyPhase.Assigning]!;
   }
 
   bool get showRegisterButton {

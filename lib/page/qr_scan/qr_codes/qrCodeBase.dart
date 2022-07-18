@@ -46,7 +46,7 @@ extension QrCodeContextExt on QrCodeContext? {
       orElse: () {
         throw FormatException(
             'QR scan context [$value] ->  is not supported; supported values are: ${QrCodeContext.values}');
-      } as QrCodeContext Function()?,
+      },
     );
   }
 
@@ -61,7 +61,7 @@ extension QrCodeVersionExt on QrCodeVersion? {
   static QrCodeVersion fromQrField(String value) {
     return QrCodeVersion.values.firstWhere(
       (type) => type.toVersionNumber().toLowerCase() == value.toLowerCase(),
-      orElse: (() => throw FormatException('Unsupported QrCode version [$value]')) as QrCodeVersion Function()?,
+      orElse: (() => throw FormatException('Unsupported QrCode version [$value]')),
     );
   }
 

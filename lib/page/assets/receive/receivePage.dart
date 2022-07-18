@@ -59,7 +59,7 @@ class _ReceivePageState extends State<ReceivePage> {
       () {
         webApi!.encointer!.pendingExtrinsics().then((extrinsics) {
           print("[receivePage] pendingExtrinsics ${extrinsics.toString()}");
-          if (((extrinsics?.length ?? 0) > 0) && (!observedPendingExtrinsic)) {
+          if (((extrinsics.length ?? 0) > 0) && (!observedPendingExtrinsic)) {
             extrinsics.forEach((xt) {
               if (xt.contains(widget.store!.account!.currentAccountPubKey!.substring(2))) {
                 RootSnackBar.showMsg(
@@ -76,29 +76,27 @@ class _ReceivePageState extends State<ReceivePage> {
           }
         });
         webApi!.encointer!.getAllBalances(widget.store!.account!.currentAddress).then((balances) {
-          if (balances != null) {
-            CommunityIdentifier? cid = widget.store!.encointer!.chosenCid;
+          CommunityIdentifier? cid = widget.store!.encointer!.chosenCid;
 
-            if (cid == null) {
-              return;
-            }
+          if (cid == null) {
+            return;
+          }
 
-            double? demurrageRate = widget.store!.encointer!.community!.demurrage;
-            double? newBalance = widget.store!.encointer!.applyDemurrage(balances[cid]);
-            double oldBalance =
-                widget.store!.encointer!.applyDemurrage(widget.store!.encointer!.communityBalanceEntry) ?? 0;
-            if (newBalance != null) {
-              double delta = newBalance - oldBalance;
-              print("[receivePage] balance was $oldBalance, changed by $delta");
-              if (delta > demurrageRate!) {
-                var msg = dic.assets.incomingConfirmed
-                    .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
-                    .replaceAll('CID_SYMBOL', widget.store!.encointer!.community?.metadata?.symbol ?? "null")
-                    .replaceAll('ACCOUNT_NAME', widget.store!.account!.currentAccount.name);
-                print("[receivePage] $msg");
-                widget.store!.encointer!.account?.addBalanceEntry(cid, balances[cid]!);
-                NotificationPlugin.showNotification(44, dic.assets.fundsReceived, msg, cid: cid.toFmtString());
-              }
+          double? demurrageRate = widget.store!.encointer!.community!.demurrage;
+          double? newBalance = widget.store!.encointer!.applyDemurrage(balances[cid]);
+          double oldBalance =
+              widget.store!.encointer!.applyDemurrage(widget.store!.encointer!.communityBalanceEntry) ?? 0;
+          if (newBalance != null) {
+            double delta = newBalance - oldBalance;
+            print("[receivePage] balance was $oldBalance, changed by $delta");
+            if (delta > demurrageRate!) {
+              var msg = dic.assets.incomingConfirmed
+                  .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
+                  .replaceAll('CID_SYMBOL', widget.store!.encointer!.community?.metadata?.symbol ?? "null")
+                  .replaceAll('ACCOUNT_NAME', widget.store!.account!.currentAccount.name);
+              print("[receivePage] $msg");
+              widget.store!.encointer!.account?.addBalanceEntry(cid, balances[cid]!);
+              NotificationPlugin.showNotification(44, dic.assets.fundsReceived, msg, cid: cid.toFmtString());
             }
           }
         });

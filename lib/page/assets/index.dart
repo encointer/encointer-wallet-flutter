@@ -512,7 +512,7 @@ class _AssetsState extends State<Assets> {
           double demurrageRate = community.demurrage!;
           double newBalance = community.applyDemurrage(balanceEntry);
           double oldBalance = community.applyDemurrage(widget
-                  .store!.encointer!.accountStores![widget.store!.account!.currentAddress]!.balanceEntries![cidStr]) ??
+                  .store!.encointer!.accountStores![widget.store!.account!.currentAddress]!.balanceEntries[cidStr]) ??
               0;
           double delta = newBalance - oldBalance;
           print("[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta");
@@ -522,8 +522,8 @@ class _AssetsState extends State<Assets> {
             if (delta > demurrageRate) {
               var msg = dic!.assets.incomingConfirmed
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
-                  .replaceAll('CID_SYMBOL', community.metadata!.symbol!)
-                  .replaceAll('ACCOUNT_NAME', widget.store!.account!.currentAccount.name!);
+                  .replaceAll('CID_SYMBOL', community.metadata!.symbol)
+                  .replaceAll('ACCOUNT_NAME', widget.store!.account!.currentAccount.name);
               print("[home:balanceWatchdog] $msg");
               NotificationPlugin.showNotification(45, dic.assets.fundsReceived, msg, cid: cidStr);
             }

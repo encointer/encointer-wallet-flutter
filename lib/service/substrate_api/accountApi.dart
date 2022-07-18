@@ -31,7 +31,7 @@ class AccountApi {
     List<AccountData> contacts = List<AccountData>.of(store.settings!.contactList);
     getAddressIcons(contacts.map((i) => i.address).toList());
     // set pubKeyAddressMap for observation accounts
-    contacts.retainWhere((i) => i.observation!);
+    contacts.retainWhere((i) => i.observation);
     List<String?> observations = contacts.map((i) => i.pubKey).toList();
     if (observations.length > 0) {
       encodeAddress(observations);
@@ -47,17 +47,15 @@ class AccountApi {
       allowRepeat: true,
     );
 
-    if (res != null) {
-      store.account!.setPubKeyAddressMap(Map<String, Map>.from(res));
-      var addresses = <String?>[];
+    store.account!.setPubKeyAddressMap(Map<String, Map>.from(res));
+    var addresses = <String?>[];
 
-      for (var pubKey in pubKeys) {
-        _log("New entry for pubKeyAddressMap: Key: $pubKey, address: ${res[store.settings]}");
-        addresses.add(store.account!.pubKeyAddressMap[store.settings!.endpoint.ss58!]![pubKey!]);
-      }
-
-      return addresses;
+    for (var pubKey in pubKeys) {
+      _log("New entry for pubKeyAddressMap: Key: $pubKey, address: ${res[store.settings]}");
+      addresses.add(store.account!.pubKeyAddressMap[store.settings!.endpoint.ss58]![pubKey!]);
     }
+
+    return addresses;
 
     return Future.value(null);
   }
@@ -179,7 +177,7 @@ class AccountApi {
   }
 
   Future<List> fetchAddressIndex(List addresses) async {
-    if (addresses == null || addresses.length == 0) {
+    if (addresses.length == 0) {
       return [];
     }
     addresses.retainWhere((i) => !store.account!.addressIndexMap.keys.contains(i));
@@ -197,7 +195,7 @@ class AccountApi {
 
   Future<List> fetchAccountsIndex() async {
     final addresses = store.account!.accountListAll.map((e) => e.address).toList();
-    if (addresses == null || addresses.length == 0) {
+    if (addresses.length == 0) {
       return [];
     }
 
@@ -275,7 +273,7 @@ class AccountApi {
     String pageTile,
     String notificationTitle,
   ) async {
-    final String address = store.account!.currentAddress!;
+    final String address = store.account!.currentAddress;
     final Map res = await jsApi!.evalJavascript(
       'account.addSignatureAndSend("$address", "$signature")',
       allowRepeat: true,

@@ -113,8 +113,8 @@ class _Contact extends State<ContactPage> {
     ContactData? qrScanData = ModalRoute.of(context)!.settings.arguments as ContactData?;
     final Translations dic = I18n.of(context)!.translationsForLocale();
     if (qrScanData != null) {
-      _addressCtrl.text = qrScanData.account!;
-      _nameCtrl.text = qrScanData.label!;
+      _addressCtrl.text = qrScanData.account;
+      _nameCtrl.text = qrScanData.label;
     }
 
     return Scaffold(

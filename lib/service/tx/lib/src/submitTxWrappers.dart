@@ -32,7 +32,7 @@ Future<void> submitTx(
         return showPasswordInputDialog(
           context,
           store.account!.currentAccount,
-          Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account!.currentAccount.name!)),
+          Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account!.currentAccount.name)),
           (password) => store.settings!.setPin(password),
         );
       },
@@ -99,7 +99,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
         return showPasswordInputDialog(
           context,
           store.account!.currentAccount,
-          Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account!.currentAccount.name!)),
+          Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account!.currentAccount.name)),
           (password) => store.settings!.setPin(password),
         );
       },

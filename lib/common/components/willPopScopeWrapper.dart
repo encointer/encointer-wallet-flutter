@@ -32,7 +32,7 @@ class WillPopScopeWrapper extends StatelessWidget {
                 ),
               ).then((value) => value as bool)
             : Future.value(true);
-      } as Future<bool> Function()?,
+      },
     );
   }
 }

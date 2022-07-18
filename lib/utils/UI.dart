@@ -46,39 +46,37 @@ class UI {
     int jsVersion,
     String network,
   ) async {
-    if (jsVersion != null) {
-      final currentVersion = UpdateJSCodeApi.getPolkadotJSVersion(
-        webApi!.jsStorage,
-        network,
-      )!;
-      if (jsVersion > currentVersion) {
-        final Translations dic = I18n.of(context)!.translationsForLocale();
-        final bool? isOk = await showCupertinoDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return CupertinoAlertDialog(
-              title: Text('metadata v$jsVersion'),
-              content: Text(dic.home.updateJsUp),
-              actions: <Widget>[
-                CupertinoButton(
-                  child: Text(dic.home.cancel),
-                  onPressed: () {
-                    Navigator.of(context).pop(false);
-                    exit(0);
-                  },
-                ),
-                CupertinoButton(
-                  child: Text(dic.home.ok),
-                  onPressed: () {
-                    Navigator.of(context).pop(true);
-                  },
-                ),
-              ],
-            );
-          },
-        );
-        return isOk;
-      }
+    final currentVersion = UpdateJSCodeApi.getPolkadotJSVersion(
+      webApi!.jsStorage,
+      network,
+    )!;
+    if (jsVersion > currentVersion) {
+      final Translations dic = I18n.of(context)!.translationsForLocale();
+      final bool? isOk = await showCupertinoDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoAlertDialog(
+            title: Text('metadata v$jsVersion'),
+            content: Text(dic.home.updateJsUp),
+            actions: <Widget>[
+              CupertinoButton(
+                child: Text(dic.home.cancel),
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                  exit(0);
+                },
+              ),
+              CupertinoButton(
+                child: Text(dic.home.ok),
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+              ),
+            ],
+          );
+        },
+      );
+      return isOk;
     }
     return false;
   }

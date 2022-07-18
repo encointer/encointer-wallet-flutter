@@ -130,7 +130,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
               child: Center(
                 child: Text(
                   dic.assets.doYouWantToRedeemThisVoucher
-                      .replaceAll("ACCOUNT_PLACEHOLDER", widget.store!.account!.currentAccount.name!),
+                      .replaceAll("ACCOUNT_PLACEHOLDER", widget.store!.account!.currentAccount.name),
                   style: h2Grey,
                   textAlign: TextAlign.center,
                 ),

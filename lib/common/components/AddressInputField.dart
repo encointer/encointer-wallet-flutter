@@ -64,9 +64,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
 
     // fetch address info if it's a new address
     final res = await webApi!.account.getAddressIcons([accountData.address]);
-    if (res != null) {
-      await webApi!.account.fetchAddressIndex([accountData.address]);
-    }
+    await webApi!.account.fetchAddressIndex([accountData.address]);
     return [accountData];
   }
 
@@ -77,9 +75,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
     if (accInfo != null && accInfo['accountIndex'] != null) {
       idx = accInfo['accountIndex'];
     }
-    if (item.name != null) {
-      return '${item.name} $idx $address ${item.address}';
-    }
+    return '${item.name} $idx $address ${item.address}';
     return '${Fmt.accountDisplayNameString(address, accInfo)} $idx $address ${item.address}';
   }
 
@@ -104,7 +100,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    item.name?.isNotEmpty ?? false ? item.name! : Fmt.accountDisplayNameString(item.address, accInfo)!,
+                    item.name.isNotEmpty ?? false ? item.name: Fmt.accountDisplayNameString(item.address, accInfo)!,
                   ),
                   Text(
                     Fmt.address(address)!,
@@ -141,7 +137,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
             dense: true,
             title: Text(Fmt.address(address)!),
             subtitle: Text(
-              item.name!.isNotEmpty ? item.name! : Fmt.accountDisplayNameString(item.address, accInfo)!,
+              item.name.isNotEmpty ? item.name: Fmt.accountDisplayNameString(item.address, accInfo)!,
             ),
             leading: CircleAvatar(
               child: AddressIcon(item.address, item.pubKey),
@@ -181,7 +177,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
           ),
         ),
         selectedItem: widget.initialValue,
-        compareFn: (AccountData i, s) => i.pubKey == s?.pubKey,
+        compareFn: (AccountData i, s) => i.pubKey == s.pubKey,
         validator: (AccountData? u) => u == null ? dic.profile.errorUserNameIsRequired : null,
         asyncItems: (String filter) => _getAccountsFromInput(filter),
         itemAsString: _itemAsString,

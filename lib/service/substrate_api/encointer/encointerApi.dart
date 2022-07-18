@@ -431,7 +431,7 @@ class EncointerApi {
 
     List<dynamic> reputationsList = await jsApi!.evalJavascript('encointer.getReputations("$address")');
 
-    print("api: getReputations: ${reputationsList?.toString()}");
+    print("api: getReputations: ${reputationsList.toString()}");
 
     if (reputationsList.isEmpty) {
       return Future.value(null);
@@ -461,7 +461,7 @@ class EncointerApi {
       store.encointer!.currentCeremonyIndex,
       store.encointer!.chosenCid,
       meetup.index,
-      store.encointer!.community!.meetupLocations![meetup.locationIndex!],
+      store.encointer!.community!.meetupLocations![meetup.locationIndex],
       meetup.time,
       participants,
     );

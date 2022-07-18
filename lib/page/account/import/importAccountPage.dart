@@ -59,40 +59,38 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     _log("imported account to JS.");
 
     // check if account duplicate
-    if (acc != null) {
-      if (acc['error'] != null) {
-        var msg = acc['error'];
+    if (acc['error'] != null) {
+      var msg = acc['error'];
 
-        if (acc['error'] == 'unreachable') {
-          msg = "${I18n.of(context)!.translationsForLocale().account.importInvalid}: $_keyType";
-        }
-
-        showCupertinoDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return CupertinoAlertDialog(
-              title: Container(),
-              content: Text('$msg'),
-              actions: <Widget>[
-                CupertinoButton(
-                  child: Text(I18n.of(context)!.translationsForLocale().home.ok),
-                  onPressed: () {
-                    setState(() {
-                      _submitting = false;
-                    });
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            );
-          },
-        );
-        return;
+      if (acc['error'] == 'unreachable') {
+        msg = "${I18n.of(context)!.translationsForLocale().account.importInvalid}: $_keyType";
       }
-      await _checkAccountDuplicate(acc);
+
+      showCupertinoDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoAlertDialog(
+            title: Container(),
+            content: Text('$msg'),
+            actions: <Widget>[
+              CupertinoButton(
+                child: Text(I18n.of(context)!.translationsForLocale().home.ok),
+                onPressed: () {
+                  setState(() {
+                    _submitting = false;
+                  });
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
       return;
     }
+    await _checkAccountDuplicate(acc);
+    return;
 
     // account == null
     showCupertinoDialog(
@@ -121,7 +119,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   Future<void> _checkAccountDuplicate(Map<String, dynamic> acc) async {
     int index = store!.account!.accountList.indexWhere((i) => i.pubKey == acc['pubKey']);
     if (index > -1) {
-      Map<String, String> pubKeyMap = store!.account!.pubKeyAddressMap[store!.settings!.endpoint.ss58!]!;
+      Map<String, String> pubKeyMap = store!.account!.pubKeyAddressMap[store!.settings!.endpoint.ss58]!;
       String? address = pubKeyMap[acc['pubKey']];
       if (address != null) {
         showCupertinoDialog(

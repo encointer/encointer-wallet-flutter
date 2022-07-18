@@ -69,10 +69,7 @@ class Api {
       // load keyPairs from local data
       await account.initAccounts();
 
-      if (store!.account!.currentAddress != null) {
-        // needs to be called after init-accounts
-        store!.encointer!.initializeUninitializedStores(store!.account!.currentAddress);
-      }
+      store!.encointer!.initializeUninitializedStores(store!.account!.currentAddress);
 
       connectFunc();
     }

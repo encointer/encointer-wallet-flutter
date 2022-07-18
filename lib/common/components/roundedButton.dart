@@ -9,7 +9,7 @@ class RoundedButton extends StatelessWidget {
     this.color,
     this.expand,
     this.submitting = false,
-  }) : assert(text != null);
+  });
 
   final String text;
   final Function? onPressed;

@@ -63,7 +63,7 @@ class ContactDetailPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          account.name!,
+          account.name,
           style: Theme.of(context).textTheme.headline3,
         ),
         iconTheme: IconThemeData(

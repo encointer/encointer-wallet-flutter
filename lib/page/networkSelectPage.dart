@@ -123,7 +123,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text(
-            _selectedNetwork!.info!.toUpperCase(),
+            _selectedNetwork!.info.toUpperCase(),
             style: Theme.of(context).textTheme.headline4,
           ),
           IconButton(
@@ -151,8 +151,8 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
 
     res.addAll(accounts.map((i) {
       String? address = i.address;
-      if (store!.account!.pubKeyAddressMap[_selectedNetwork!.ss58!] != null) {
-        address = store!.account!.pubKeyAddressMap[_selectedNetwork!.ss58!]![i.pubKey!];
+      if (store!.account!.pubKeyAddressMap[_selectedNetwork!.ss58] != null) {
+        address = store!.account!.pubKeyAddressMap[_selectedNetwork!.ss58]![i.pubKey];
       }
       final bool isCurrentNetwork = _selectedNetwork!.info == store!.settings!.endpoint.info;
       final accInfo = store!.account!.accountIndexMap[i.address];

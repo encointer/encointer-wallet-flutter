@@ -55,9 +55,9 @@ abstract class _EncointerAccountStore with Store {
 
   @computed
   get ceremonyIndexForProofOfAttendance {
-    if (reputations != null && reputations!.isNotEmpty) {
+    if (reputations.isNotEmpty) {
       try {
-        return reputations!.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
+        return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
       } catch (_e) {
         _log("$address has reputation, but none that has not been linked yet");
         return 0;
@@ -80,10 +80,8 @@ abstract class _EncointerAccountStore with Store {
 
   @action
   void purgeReputations() {
-    if (reputations != null) {
-      reputations!.clear();
-      writeToCache();
-    }
+    reputations.clear();
+    writeToCache();
   }
 
   @action
@@ -112,10 +110,10 @@ abstract class _EncointerAccountStore with Store {
     if (reset) {
       txsTransfer = ObservableList.of(transfers.map((i) => TransferData.fromJson(Map<String, dynamic>.from(i))));
     } else {
-      txsTransfer!.addAll(transfers.map((i) => TransferData.fromJson(Map<String, dynamic>.from(i))));
+      txsTransfer.addAll(transfers.map((i) => TransferData.fromJson(Map<String, dynamic>.from(i))));
     }
 
-    if (needCache && txsTransfer!.length > 0) {
+    if (needCache && txsTransfer.length > 0) {
       writeToCache();
     }
   }

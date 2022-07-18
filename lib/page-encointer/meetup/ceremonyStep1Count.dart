@@ -43,7 +43,7 @@ class CeremonyStep1Count extends StatelessWidget {
       );
     }
 
-    if (count != null && store!.settings!.cachedPin.isNotEmpty) {
+    if (store!.settings!.cachedPin.isNotEmpty) {
       Navigator.of(context).push(
         CupertinoPageRoute(
           builder: (BuildContext context) => CeremonyStep2Scan(

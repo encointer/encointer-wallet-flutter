@@ -41,7 +41,7 @@ class Fmt {
   /// number transform 1:
   /// from raw <String> of Api data to <BigInt>
   static BigInt balanceInt(String raw) {
-    if (raw == null || raw.length == 0) {
+    if (raw.length == 0) {
       return BigInt.zero;
     }
     if (raw.contains(',') || raw.contains('.')) {
@@ -303,7 +303,7 @@ class Fmt {
   static Widget accountDisplayName(String address, Map accInfo) {
     return Row(
       children: <Widget>[
-        accInfo != null && accInfo['identity']['judgements'].length > 0
+        accInfo['identity']['judgements'].length > 0
             ? Container(
                 width: 14,
                 margin: EdgeInsets.only(right: 4),
@@ -318,7 +318,7 @@ class Fmt {
   }
 
   static String addressOfAccount(AccountData acc, AppStore store) {
-    return store.account!.pubKeyAddressMap[store.settings!.endpoint.ss58!]![acc.pubKey!] ?? acc.address ?? '';
+    return store.account!.pubKeyAddressMap[store.settings!.endpoint.ss58]![acc.pubKey] ?? acc.address ?? '';
   }
 
   /// Formats fixed point number with the amount of fractional digits given by [fixedPointFraction].
