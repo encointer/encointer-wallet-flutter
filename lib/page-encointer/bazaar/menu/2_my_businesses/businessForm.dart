@@ -80,15 +80,16 @@ class BusinessForm extends StatelessWidget {
             ButtonBar(
               children: <Widget>[
                 ElevatedButton(
-                  child:
-                      Row(children: [Icon(Icons.delete), Text(I18n.of(context)!.translationsForLocale().bazaar.delete)]),
+                  child: Row(
+                      children: [Icon(Icons.delete), Text(I18n.of(context)!.translationsForLocale().bazaar.delete)]),
                   onPressed: () {
                     // TODO modify state
                     Navigator.pop(context);
                   },
                 ),
                 ElevatedButton(
-                  child: Row(children: [Icon(Icons.check), Text(I18n.of(context)!.translationsForLocale().bazaar.save)]),
+                  child:
+                      Row(children: [Icon(Icons.check), Text(I18n.of(context)!.translationsForLocale().bazaar.save)]),
                   onPressed: () {
                     businessFormState.validateAll();
                     // TODO pop if valid

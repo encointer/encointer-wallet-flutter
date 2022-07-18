@@ -85,10 +85,10 @@ class CommunityReputation {
 class Meetup {
   Meetup(this.index, this.locationIndex, this.time, this.registry);
 
-  int? index;
-  int? locationIndex;
-  int? time;
-  List<String>? registry;
+  int index;
+  int locationIndex;
+  int time;
+  List<String> registry;
 
   @override
   String toString() {

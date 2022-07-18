@@ -111,7 +111,8 @@ abstract class _OpeningHoursForDayState with Store {
   @action
   addParsedIntervalIfValid(String startEnd) {
     try {
-      OpeningIntervalState openingIntervalState = _OpeningIntervalState.parseOpeningIntervalState(startEnd) as OpeningIntervalState;
+      OpeningIntervalState openingIntervalState =
+          _OpeningIntervalState.parseOpeningIntervalState(startEnd) as OpeningIntervalState;
       timeFormatError = null;
       openingIntervals.add(openingIntervalState);
     } catch (e) {

@@ -27,8 +27,9 @@ class BazaarItemVertical extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  (data![index!] is BazaarBusinessData) ? BusinessDetail(data![index!] as BazaarBusinessData?) : OfferingDetail(data![index!] as BazaarOfferingData),
+              builder: (context) => (data![index!] is BazaarBusinessData)
+                  ? BusinessDetail(data![index!] as BazaarBusinessData?)
+                  : OfferingDetail(data![index!] as BazaarOfferingData),
             ),
           );
         },
