@@ -332,8 +332,7 @@ abstract class _AccountStore with Store {
 
   @action
   Future<void> updateSeed(String? pubKey, String passwordOld, String passwordNew) async {
-    Map storedMnemonics =
-        await rootStore.localStorage.getSeeds(AccountStore.seedTypeMnemonic);
+    Map storedMnemonics = await rootStore.localStorage.getSeeds(AccountStore.seedTypeMnemonic);
     Map? storedRawSeeds = await rootStore.localStorage.getSeeds(AccountStore.seedTypeRawSeed);
     String? encryptedSeed = '';
     String seedType = '';

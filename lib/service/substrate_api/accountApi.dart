@@ -259,7 +259,7 @@ class AccountApi {
   /// See: https://github.com/encointer/encointer-wallet-flutter/issues/676
   Future<Map> makeQrCode(Map? txInfo, List? params, {String? rawParam}) async {
     String param = rawParam != null ? rawParam : jsonEncode(params);
-    final Map res = await (jsApi!.evalJavascript(
+    final Map res = await jsApi!.evalJavascript(
       'account.makeTx(${jsonEncode(txInfo)}, $param)',
       allowRepeat: true,
     );

@@ -44,19 +44,19 @@ abstract class _CommunityStore with Store {
   final CommunityIdentifier? cid;
 
   @observable
-  CommunityMetadata metadata;
+  CommunityMetadata? metadata;
 
   @observable
   double? demurrage;
 
   @computed
-  String get name => metadata.name;
+  String? get name => metadata?.name;
 
   @computed
-  String get symbol => metadata.symbol;
+  String? get symbol => metadata?.symbol;
 
   @computed
-  String get assetsCid => metadata.assets;
+  String? get assetsCid => metadata?.assets;
 
   @observable
   int? meetupTime;

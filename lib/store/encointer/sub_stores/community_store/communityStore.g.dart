@@ -10,7 +10,8 @@ CommunityStore _$CommunityStoreFromJson(Map<String, dynamic> json) => CommunityS
       json['network'] as String?,
       json['cid'] == null ? null : CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
     )
-      ..metadata = CommunityMetadata.fromJson(json['metadata'] as Map<String, dynamic>)
+      ..metadata =
+          json['metadata'] == null ? null : CommunityMetadata.fromJson(json['metadata'] as Map<String, dynamic>)
       ..demurrage = (json['demurrage'] as num?)?.toDouble()
       ..meetupTime = json['meetupTime'] as int?
       ..meetupTimeOverride = json['meetupTimeOverride'] as int?
@@ -29,7 +30,7 @@ CommunityStore _$CommunityStoreFromJson(Map<String, dynamic> json) => CommunityS
 Map<String, dynamic> _$CommunityStoreToJson(CommunityStore instance) => <String, dynamic>{
       'network': instance.network,
       'cid': instance.cid?.toJson(),
-      'metadata': instance.metadata.toJson(),
+      'metadata': instance.metadata?.toJson(),
       'demurrage': instance.demurrage,
       'meetupTime': instance.meetupTime,
       'meetupTimeOverride': instance.meetupTimeOverride,
@@ -45,31 +46,31 @@ Map<String, dynamic> _$CommunityStoreToJson(CommunityStore instance) => <String,
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$CommunityStore on _CommunityStore, Store {
-  Computed<String>? _$nameComputed;
+  Computed<String?>? _$nameComputed;
 
   @override
-  String get name => (_$nameComputed ??= Computed<String>(() => super.name, name: '_CommunityStore.name')).value;
-  Computed<String>? _$symbolComputed;
+  String? get name => (_$nameComputed ??= Computed<String?>(() => super.name, name: '_CommunityStore.name')).value;
+  Computed<String?>? _$symbolComputed;
 
   @override
-  String get symbol =>
-      (_$symbolComputed ??= Computed<String>(() => super.symbol, name: '_CommunityStore.symbol')).value;
-  Computed<String>? _$assetsCidComputed;
+  String? get symbol =>
+      (_$symbolComputed ??= Computed<String?>(() => super.symbol, name: '_CommunityStore.symbol')).value;
+  Computed<String?>? _$assetsCidComputed;
 
   @override
-  String get assetsCid =>
-      (_$assetsCidComputed ??= Computed<String>(() => super.assetsCid, name: '_CommunityStore.assetsCid')).value;
+  String? get assetsCid =>
+      (_$assetsCidComputed ??= Computed<String?>(() => super.assetsCid, name: '_CommunityStore.assetsCid')).value;
 
   late final _$metadataAtom = Atom(name: '_CommunityStore.metadata', context: context);
 
   @override
-  CommunityMetadata get metadata {
+  CommunityMetadata? get metadata {
     _$metadataAtom.reportRead();
     return super.metadata;
   }
 
   @override
-  set metadata(CommunityMetadata value) {
+  set metadata(CommunityMetadata? value) {
     _$metadataAtom.reportWrite(value, super.metadata, () {
       super.metadata = value;
     });
