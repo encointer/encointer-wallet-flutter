@@ -275,7 +275,7 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadCustomSS58Format() async {
-    Map<String, dynamic> ss58 = await rootStore.localStorage.getObject(localStorageSS58Key) as Map<String, dynamic>;
+    Map<String, dynamic>? ss58 = await rootStore.localStorage.getObject(localStorageSS58Key) as Map<String, dynamic>?;
 
     customSS58Format = ss58 ?? default_ss58_prefix;
   }

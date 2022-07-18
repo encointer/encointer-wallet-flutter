@@ -100,7 +100,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    item.name.isNotEmpty ?? false ? item.name: Fmt.accountDisplayNameString(item.address, accInfo)!,
+                    item.name.isNotEmpty ? item.name : Fmt.accountDisplayNameString(item.address, accInfo)!,
                   ),
                   Text(
                     Fmt.address(address)!,
@@ -137,7 +137,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
             dense: true,
             title: Text(Fmt.address(address)!),
             subtitle: Text(
-              item.name.isNotEmpty ? item.name: Fmt.accountDisplayNameString(item.address, accInfo)!,
+              item.name.isNotEmpty ? item.name : Fmt.accountDisplayNameString(item.address, accInfo)!,
             ),
             leading: CircleAvatar(
               child: AddressIcon(item.address, item.pubKey),

@@ -255,7 +255,7 @@ class Fmt {
   }
 
   static String accountName(BuildContext context, AccountData acc) {
-    return '${acc.name ?? ''}${(acc.observation ?? false) ? ' (${I18n.of(context)!.translationsForLocale().account.observe})' : ''}';
+    return '${acc.name}${acc.observation ? ' (${I18n.of(context)!.translationsForLocale().account.observe})' : ''}';
   }
 
   static List<int> hexToBytes(String hex) {
@@ -318,7 +318,7 @@ class Fmt {
   }
 
   static String addressOfAccount(AccountData acc, AppStore store) {
-    return store.account!.pubKeyAddressMap[store.settings!.endpoint.ss58]![acc.pubKey] ?? acc.address ?? '';
+    return store.account!.pubKeyAddressMap[store.settings!.endpoint.ss58]![acc.pubKey] ?? acc.address;
   }
 
   /// Formats fixed point number with the amount of fractional digits given by [fixedPointFraction].

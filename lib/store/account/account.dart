@@ -82,7 +82,7 @@ abstract class _AccountStore with Store {
     int i = accountListAll.indexWhere((i) => i.pubKey == requestedPubKey);
     if (i < 0) {
       if (accountListAll.isNotEmpty) {
-        return accountListAll[0] ?? AccountData();
+        return accountListAll[0];
       } else {
         return AccountData();
       }
@@ -100,7 +100,7 @@ abstract class _AccountStore with Store {
   List<AccountData> get accountListAll {
     List<AccountData> accList = accountList.toList();
     List<AccountData> contactList = rootStore.settings!.contactList.toList();
-    contactList.retainWhere((i) => i.observation ?? false);
+    contactList.retainWhere((i) => i.observation);
     accList.addAll(contactList);
     return accList;
   }

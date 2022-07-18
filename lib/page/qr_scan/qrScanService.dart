@@ -90,7 +90,7 @@ void handleContactQrCodeScan(BuildContext context, QrScannerContext scanContext,
 }
 
 /// Handles the `InvoiceQrCode` scan based on where it was scanned.
-void handleInvoiceQrCodeScan(BuildContext context, QrScannerContext? scanContext, InvoiceQrCode qrCode) {
+void handleInvoiceQrCodeScan(BuildContext context, QrScannerContext scanContext, InvoiceQrCode qrCode) {
   switch (scanContext) {
     case QrScannerContext.mainPage:
       // go to transfer page and auto-fill data

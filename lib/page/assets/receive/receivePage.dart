@@ -59,7 +59,7 @@ class _ReceivePageState extends State<ReceivePage> {
       () {
         webApi!.encointer!.pendingExtrinsics().then((extrinsics) {
           print("[receivePage] pendingExtrinsics ${extrinsics.toString()}");
-          if (((extrinsics.length ?? 0) > 0) && (!observedPendingExtrinsic)) {
+          if (((extrinsics.length) > 0) && (!observedPendingExtrinsic)) {
             extrinsics.forEach((xt) {
               if (xt.contains(widget.store!.account!.currentAccountPubKey!.substring(2))) {
                 RootSnackBar.showMsg(
