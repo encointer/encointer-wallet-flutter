@@ -20,6 +20,8 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
   _CeremonyCountDownState();
 
   late int timeToMeetup;
+  // Todo: double check: is this a false positive?
+  // ignore: cancel_subscriptions
   StreamSubscription<CountdownTimer>? sub;
 
   @override
