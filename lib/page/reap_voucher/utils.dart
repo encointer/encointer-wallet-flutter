@@ -41,9 +41,9 @@ Future<ChangeResult> changeNetwork(
     return ChangeResult.invalidNetwork;
   }
 
-  await store.settings!.reloadNetwork(network);
+  await store.settings.reloadNetwork(network);
 
-  while (!store.settings!.isConnected) {
+  while (!store.settings.isConnected) {
     // This is not very nice, but unfortunately we can't await the
     // webView init until it is completely connected without some
     // refactoring.
@@ -64,7 +64,7 @@ Future<ChangeResult> changeCommunity(
   var cids = await api.encointer!.getCommunityIdentifiers();
 
   if (cids.contains(cid)) {
-    store.encointer!.setChosenCid(cid);
+    store.encointer.setChosenCid(cid);
     return ChangeResult.ok;
   } else {
     return ChangeResult.invalidCommunity;

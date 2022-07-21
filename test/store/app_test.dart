@@ -25,7 +25,7 @@ void main() {
 
       expect(store.isReady, true);
 
-      expect(store.account!.accountList.length, 1);
+      expect(store.account.accountList.length, 1);
     });
   });
 }

@@ -42,8 +42,8 @@ class ContactDetailPage extends StatelessWidget {
               child: Text(dic.home.ok),
               onPressed: () {
                 Navigator.of(context).pop();
-                store.settings!.removeContact(account);
-                if (account.pubKey == store.account!.currentAccountPubKey) {
+                store.settings.removeContact(account);
+                if (account.pubKey == store.account.currentAccountPubKey) {
                   webApi!.account.changeCurrentAccount(fetchData: true);
                 }
                 Navigator.of(context).pop();
@@ -108,8 +108,8 @@ class ContactDetailPage extends StatelessWidget {
                 ),
               ),
               Observer(builder: (_) {
-                if (store.encointer!.community!.bootstrappers != null) {
-                  return store.encointer!.community!.bootstrappers!.contains(store.account!.currentAddress)
+                if (store.encointer.community!.bootstrappers != null) {
+                  return store.encointer.community!.bootstrappers!.contains(store.account.currentAddress)
                       ? EndorseButton(store, api, account)
                       : Container();
                 } else {
@@ -123,7 +123,7 @@ class ContactDetailPage extends StatelessWidget {
                   children: [
                     Icon(Iconsax.send_sqaure_2),
                     SizedBox(width: 12),
-                    Text(dic.profile.tokenSend.replaceAll('SYMBOL', store.encointer!.community?.symbol ?? "null"),
+                    Text(dic.profile.tokenSend.replaceAll('SYMBOL', store.encointer.community?.symbol ?? "null"),
                         style: Theme.of(context).textTheme.headline3),
                   ],
                 ),
@@ -131,8 +131,8 @@ class ContactDetailPage extends StatelessWidget {
                   Navigator.of(context).pushNamed(
                     TransferPage.route,
                     arguments: TransferPageParams(
-                      cid: store.encointer!.chosenCid,
-                      communitySymbol: store.encointer!.community?.symbol,
+                      cid: store.encointer.chosenCid,
+                      communitySymbol: store.encointer.community?.symbol,
                       recipient: account.address,
                       label: account.name,
                       amount: null,
@@ -181,15 +181,15 @@ class EndorseButton extends StatelessWidget {
           Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
         ],
       ),
-      onPressed: store.encointer!.community!.bootstrappers!.contains(contact.address)
+      onPressed: store.encointer.community!.bootstrappers!.contains(contact.address)
           ? (BuildContext context) => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
-          : store.encointer!.currentPhase != CeremonyPhase.Registering
+          : store.encointer.currentPhase != CeremonyPhase.Registering
               ? (BuildContext context) => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)
               : (BuildContext context) => submitEndorseNewcomer(
                     context,
                     store,
                     api!,
-                    store.encointer!.chosenCid,
+                    store.encointer.chosenCid,
                     contact.address,
                   ),
     );

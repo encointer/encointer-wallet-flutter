@@ -144,8 +144,8 @@ class UI {
   }
 
   static bool checkBalanceAndAlert(BuildContext context, AppStore store, BigInt amountNeeded) {
-    String? symbol = store.settings!.networkState!.tokenSymbol;
-    if (store.assets!.balances[symbol]!.transferable <= amountNeeded) {
+    String? symbol = store.settings.networkState!.tokenSymbol;
+    if (store.assets.balances[symbol]!.transferable <= amountNeeded) {
       showCupertinoDialog(
         context: context,
         builder: (BuildContext context) {

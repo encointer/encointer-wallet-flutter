@@ -14,7 +14,7 @@ void main() {
       currentAccountPubKey = accList[0]['pubKey'];
 
       await root.init('_en');
-      final store = root.account!;
+      final store = root.account;
 
       /// accounts load
       expect(store.accountList.length, 1);
@@ -91,7 +91,7 @@ void main() {
         "pubKey": "0x86b7409a11700afb027924cb40fa43889d98709ea35319d48fea85dd35004e64",
         "observation": true,
       };
-      await root.settings!.addContact(contact);
+      await root.settings.addContact(contact);
       expect(store.accountListAll.length, 2);
       expect(store.optionalAccounts.length, 1);
 
@@ -109,7 +109,7 @@ void main() {
       /// update observation account
       Map<String, dynamic> contactNew = Map<String, dynamic>.of(contact);
       contactNew['name'] = 'changed-observation';
-      await root.settings!.updateContact(contactNew);
+      await root.settings.updateContact(contactNew);
       expect(store.currentAccount.name, 'changed-observation');
     });
   });

@@ -58,7 +58,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       },
     );
 
-    await store.settings!.reloadNetwork(_selectedNetwork!);
+    await store.settings.reloadNetwork(_selectedNetwork!);
 
     changeTheme();
 
@@ -71,8 +71,8 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   }
 
   Future<void> _onSelect(AccountData i, String? address) async {
-    bool isCurrentNetwork = _selectedNetwork!.info == store.settings!.endpoint.info;
-    if (address != store.account!.currentAddress || !isCurrentNetwork) {
+    bool isCurrentNetwork = _selectedNetwork!.info == store.settings.endpoint.info;
+    if (address != store.account.currentAddress || !isCurrentNetwork) {
       /// set current account
       store.setCurrentAccount(i.pubKey);
 
@@ -89,7 +89,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   }
 
   Future<void> _onCreateAccount() async {
-    bool isCurrentNetwork = _selectedNetwork!.info == store.settings!.endpoint.info;
+    bool isCurrentNetwork = _selectedNetwork!.info == store.settings.endpoint.info;
     if (!isCurrentNetwork) {
       await _reloadNetwork();
     }
@@ -103,11 +103,11 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         return Container(
           child: showPasswordInputDialog(
             context,
-            store.account!.currentAccount,
+            store.account.currentAccount,
             Text(I18n.of(context)!.translationsForLocale().profile.unlock),
             (password) {
               setState(() {
-                store.settings!.setPin(password);
+                store.settings.setPin(password);
               });
             },
           ),
@@ -130,7 +130,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
               icon: Image.asset('assets/images/assets/plus_indigo.png'),
               color: primaryColor,
               onPressed: () async => {
-                    if (store.settings!.cachedPin.isEmpty)
+                    if (store.settings.cachedPin.isEmpty)
                       {
                         await _showPasswordDialog(context),
                       }
@@ -144,23 +144,23 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     ];
 
     /// first item is current account
-    List<AccountData> accounts = [store.account!.currentAccount];
+    List<AccountData> accounts = [store.account.currentAccount];
 
     /// add optional accounts
-    accounts.addAll(store.account!.optionalAccounts);
+    accounts.addAll(store.account.optionalAccounts);
 
     res.addAll(accounts.map((i) {
       String? address = i.address;
-      if (store.account!.pubKeyAddressMap[_selectedNetwork!.ss58] != null) {
-        address = store.account!.pubKeyAddressMap[_selectedNetwork!.ss58]![i.pubKey];
+      if (store.account.pubKeyAddressMap[_selectedNetwork!.ss58] != null) {
+        address = store.account.pubKeyAddressMap[_selectedNetwork!.ss58]![i.pubKey];
       }
-      final bool isCurrentNetwork = _selectedNetwork!.info == store.settings!.endpoint.info;
-      final accInfo = store.account!.accountIndexMap[i.address];
+      final bool isCurrentNetwork = _selectedNetwork!.info == store.settings.endpoint.info;
+      final accInfo = store.account.accountIndexMap[i.address];
       final String accIndex =
           isCurrentNetwork && accInfo != null && accInfo['accountIndex'] != null ? '${accInfo['accountIndex']}\n' : '';
       final double padding = accIndex.isEmpty ? 0 : 7;
       return RoundedCard(
-        border: address == store.account!.currentAddress
+        border: address == store.account.currentAddress
             ? Border.all(color: Theme.of(context).primaryColorLight)
             : Border.all(color: Theme.of(context).cardColor),
         margin: EdgeInsets.only(bottom: 16),
@@ -182,7 +182,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
-        _selectedNetwork = store.settings!.endpoint;
+        _selectedNetwork = store.settings.endpoint;
       });
     });
   }

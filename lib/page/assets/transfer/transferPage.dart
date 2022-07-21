@@ -66,11 +66,11 @@ class _TransferPageState extends State<TransferPage> {
     TransferPageParams params = ModalRoute.of(context)!.settings.arguments as TransferPageParams;
 
     _communitySymbol = params.communitySymbol;
-    _cid = params.cid ?? store.encointer!.chosenCid;
+    _cid = params.cid ?? store.encointer.chosenCid;
 
     int decimals = encointer_currencies_decimals;
 
-    double? available = store.encointer!.applyDemurrage(store.encointer!.communityBalanceEntry);
+    double? available = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry);
 
     print("[transferPage]: available: $available");
 
@@ -101,7 +101,7 @@ class _TransferPageState extends State<TransferPage> {
                       children: [
                         CombinedCommunityAndAccountAvatar(store, showCommunityNameAndAccountName: false),
                         SizedBox(height: 12),
-                        store.encointer!.communityBalance != null
+                        store.encointer.communityBalance != null
                             ? AccountBalanceWithMoreDigits(store: store, available: available, decimals: decimals)
                             : CupertinoActivityIndicator(),
                         Text(
@@ -109,7 +109,7 @@ class _TransferPageState extends State<TransferPage> {
                               .translationsForLocale()
                               .assets
                               .yourBalanceFor
-                              .replaceAll("ACCOUNT_NAME", Fmt.accountName(context, store.account!.currentAccount)),
+                              .replaceAll("ACCOUNT_NAME", Fmt.accountName(context, store.account.currentAccount)),
                           style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                           textAlign: TextAlign.center,
                         ),
@@ -163,7 +163,7 @@ class _TransferPageState extends State<TransferPage> {
                     ),
                   ),
                   SizedBox(height: 48),
-                  store.settings!.developerMode
+                  store.settings.developerMode
                       ? Center(
                           child: Text(
                             "${dic.assets.fee}: TODO compute Fee", // TODO compute fee #589
@@ -228,13 +228,13 @@ class _TransferPageState extends State<TransferPage> {
           _accountTo = acc;
         });
       } else {
-        if (widget.store.account!.optionalAccounts.length > 0) {
+        if (widget.store.account.optionalAccounts.length > 0) {
           setState(() {
-            _accountTo = widget.store.account!.optionalAccounts[0];
+            _accountTo = widget.store.account.optionalAccounts[0];
           });
-        } else if (widget.store.settings!.contactList.length > 0) {
+        } else if (widget.store.settings.contactList.length > 0) {
           setState(() {
-            _accountTo = widget.store.settings!.contactList[0];
+            _accountTo = widget.store.settings.contactList[0];
           });
         }
       }

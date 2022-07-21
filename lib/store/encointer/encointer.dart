@@ -133,13 +133,13 @@ abstract class _EncointerStore with Store {
   /// The `CommunityAccountStore` for the currently chosen community and account.
   @computed
   CommunityAccountStore? get communityAccount {
-    return community != null ? community!.communityAccountStores![_rootStore.account!.currentAddress] : null;
+    return community != null ? community!.communityAccountStores![_rootStore.account.currentAddress] : null;
   }
 
   /// The `EncointerAccountStore` for the currently chosen account.
   @computed
   EncointerAccountStore? get account {
-    return accountStores![_rootStore.account!.currentAddress];
+    return accountStores![_rootStore.account.currentAddress];
   }
 
   // -- computed values derived from sub-stores
@@ -160,11 +160,11 @@ abstract class _EncointerStore with Store {
   }
 
   double? applyDemurrage(BalanceEntry? entry) {
-    if (_rootStore.chain!.latestHeaderNumber != null &&
+    if (_rootStore.chain.latestHeaderNumber != null &&
         entry != null &&
         community != null &&
         community!.demurrage != null) {
-      return entry.applyDemurrage(_rootStore.chain!.latestHeaderNumber, community!.demurrage!);
+      return entry.applyDemurrage(_rootStore.chain.latestHeaderNumber, community!.demurrage!);
     }
     return null;
   }
@@ -220,19 +220,19 @@ abstract class _EncointerStore with Store {
 
       if (cid != null) {
         this._rootStore.localStorage.setObject(chosenCidCacheKey(network), cid.toJson());
-        initCommunityStore(cid, _rootStore.account!.currentAddress);
+        initCommunityStore(cid, _rootStore.account.currentAddress);
         initBazaarStore(cid);
       } else {
         this._rootStore.localStorage.removeKey(chosenCidCacheKey(network));
       }
     }
 
-    if (_rootStore.settings!.endpointIsNoTee) {
+    if (_rootStore.settings.endpointIsNoTee) {
       webApi!.encointer!.subscribeBusinessRegistry();
     }
 
     // update depending values without awaiting
-    if (!_rootStore.settings!.loading) {
+    if (!_rootStore.settings.loading) {
       webApi!.encointer!.getCommunityData();
     }
   }
@@ -309,8 +309,8 @@ abstract class _EncointerStore with Store {
 
   Future<void> updateAggregatedAccountData() async {
     try {
-      var data = await webApi!.encointer!.getAggregatedAccountData(chosenCid!, _rootStore.account!.currentAddress);
-      setAggregatedAccountData(chosenCid!, _rootStore.account!.currentAddress, data);
+      var data = await webApi!.encointer!.getAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress);
+      setAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress, data);
     } catch (e) {
       print(e.toString());
     }

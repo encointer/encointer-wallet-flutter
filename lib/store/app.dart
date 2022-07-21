@@ -39,19 +39,19 @@ abstract class _AppStore with Store {
   final config;
 
   @observable
-  SettingsStore? settings;
+  late final SettingsStore settings;
 
   @observable
-  AccountStore? account;
+  late final AccountStore account;
 
   @observable
-  AssetsStore? assets;
+  late final AssetsStore assets;
 
   @observable
-  ChainStore? chain;
+  late final ChainStore chain;
 
   @observable
-  EncointerStore? encointer;
+  late final EncointerStore encointer;
 
   @observable
   bool isReady = false;
@@ -62,19 +62,19 @@ abstract class _AppStore with Store {
   Future<void> init(String sysLocaleCode) async {
     // wait settings store loaded
     settings = SettingsStore(this as AppStore);
-    await settings!.init(sysLocaleCode);
+    await settings.init(sysLocaleCode);
 
     account = AccountStore(this as AppStore);
-    await account!.loadAccount();
+    await account.loadAccount();
 
     assets = AssetsStore(this as AppStore);
-    assets!.loadCache();
+    assets.loadCache();
 
     chain = ChainStore(this as AppStore);
-    chain!.loadCache();
+    chain.loadCache();
 
     // need to call this after settings was initialized
-    String? networkInfo = settings!.endpoint.info;
+    String? networkInfo = settings.endpoint.info;
     await loadOrInitEncointerCache(networkInfo!);
 
     isReady = true;
@@ -93,7 +93,7 @@ abstract class _AppStore with Store {
   /// Prefixes the key with `test-` if we are in test-mode to prevent overwriting of
   /// the real cache with (unit-)test runs.
   String getCacheKey(String key) {
-    var cacheKey = '${settings!.endpoint.info}_$key';
+    var cacheKey = '${settings.endpoint.info}_$key';
     return config == StoreConfig.Test ? "test-$cacheKey" : cacheKey;
   }
 
@@ -123,16 +123,16 @@ abstract class _AppStore with Store {
     } else {
       _log("Initializing new encointer store.");
       encointer = EncointerStore(networkInfo);
-      encointer!.initStore(
+      encointer.initStore(
         this as AppStore,
-        () => localStorage.setObject(encointerFinalCacheKey, encointer!.toJson()),
+        () => localStorage.setObject(encointerFinalCacheKey, encointer.toJson()),
       );
 
       _log("Persisting cacheVersion: $encointerCacheVersion");
       await localStorage.setKV(cacheVersionFinalKey, encointerCacheVersion);
 
       _log("Writing the new store to cache");
-      return encointer!.writeToCache();
+      return encointer.writeToCache();
     }
   }
 
@@ -150,7 +150,7 @@ abstract class _AppStore with Store {
         this as AppStore,
         () => localStorage.setObject(
           encointerFinalCacheKey,
-          encointer!.toJson(),
+          encointer.toJson(),
         ),
       );
 
@@ -162,31 +162,31 @@ abstract class _AppStore with Store {
 
   Future<void> addAccount(Map<String, dynamic> acc, String password, String? address) {
     return Future.wait([
-      account!.addAccount(acc, password),
+      account.addAccount(acc, password),
     ]);
   }
 
   Future<void> setCurrentAccount(String? pubKey) async {
     _log("setCurrentAccount: setting current account: $pubKey");
 
-    if (account!.currentAccountPubKey == pubKey) {
+    if (account.currentAccountPubKey == pubKey) {
       _log("setCurrentAccount: currentAccount is already new account. returning");
       return Future.value(null);
     }
 
-    await account!.setCurrentAccount(pubKey);
+    await account.setCurrentAccount(pubKey);
 
     if (pubKey == "") {
       // happens only if the last account in the storage has been deleted
       return Future.value(null);
     }
 
-    final address = account!.getNetworkAddress(pubKey);
+    final address = account.getNetworkAddress(pubKey);
     _log("setCurrentAccount: new current account address: $address");
-    await encointer!.initializeUninitializedStores(address);
+    await encointer.initializeUninitializedStores(address);
 
-    if (!settings!.loading) {
-      encointer!.updateState();
+    if (!settings.loading) {
+      encointer.updateState();
       webApi!.assets.subscribeBalance();
     }
   }
@@ -197,7 +197,7 @@ abstract class _AppStore with Store {
   /// Otherwise, calling webApi queries when the cache has not finished loading might result in outdated or wrong data.
   /// E.g. not awaiting this call was the cause of #357.
   Future<List<void>> loadAccountCache() async {
-    return Future.wait([assets!.clearTxs(), assets!.loadAccountCache()]);
+    return Future.wait([assets.clearTxs(), assets.loadAccountCache()]);
   }
 }
 

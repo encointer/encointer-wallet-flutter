@@ -18,8 +18,8 @@ class CommunityChooserOnMap extends StatelessWidget {
   List<Marker> get _markers => getMarkers(store);
 
   CommunityChooserOnMap(this.store) {
-    if (store.encointer!.communities != null) {
-      for (var community in store.encointer!.communities!) {
+    if (store.encointer.communities != null) {
+      for (var community in store.encointer.communities!) {
         communityDataAt[coordinatesOf(community)] = community;
       }
     }
@@ -64,7 +64,7 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
         key: Key('${widget.marker.key.toString().substring(3, widget.marker.key.toString().length - 3)}-description'),
         onTap: () {
           setState(() {
-            store.encointer!.setChosenCid(widget.dataForThisMarker!.cid);
+            store.encointer.setChosenCid(widget.dataForThisMarker!.cid);
           });
           Navigator.pop(context);
         },
@@ -105,9 +105,9 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
 
 List<Marker> getMarkers(AppStore store) {
   List<Marker> markers = [];
-  if (store.encointer!.communities != null) {
-    for (num index = 0; index < store.encointer!.communities!.length; index++) {
-      CidName community = store.encointer!.communities![index as int];
+  if (store.encointer.communities != null) {
+    for (num index = 0; index < store.encointer.communities!.length; index++) {
+      CidName community = store.encointer.communities![index as int];
       markers.add(
         Marker(
           // marker is not a widget, hence test_driver cannot find it (it can find it in the Icon inside, though).

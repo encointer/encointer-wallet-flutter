@@ -50,7 +50,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
 
     var addresses = await webApi!.account.encodeAddress([acc['pubKey']]);
     _log("Created new account with address: ${addresses[0]}");
-    await store.addAccount(acc, store.account!.newAccount.password, addresses[0]);
+    await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
     _log("added new account with address: ${addresses[0]}");
 
     String? pubKey = acc['pubKey'];
@@ -96,11 +96,11 @@ class _AddAccountPageState extends State<AddAccountPage> {
         return Container(
           child: showPasswordInputDialog(
             context,
-            store.account!.currentAccount,
+            store.account.currentAccount,
             Text(I18n.of(context)!.translationsForLocale().profile.unlock),
             (password) {
               setState(() {
-                store.settings!.setPin(password);
+                store.settings.setPin(password);
               });
             },
           ),
@@ -113,7 +113,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
   void initState() {
     super.initState();
 
-    if (store.settings!.cachedPin.isEmpty) {
+    if (store.settings.cachedPin.isEmpty) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         setState(() {
           _showEnterPinDialog(context);

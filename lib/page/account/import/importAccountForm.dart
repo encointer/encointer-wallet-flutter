@@ -103,7 +103,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                     hintText: dic.account.createHint,
                     labelText: I18n.of(context)!.translationsForLocale().profile.accountName,
                     controller: _nameCtrl,
-                    validator: (v) => InputValidation.validateAccountName(context, v, store.account!.optionalAccounts),
+                    validator: (v) => InputValidation.validateAccountName(context, v, store.account.optionalAccounts),
                   ),
                   TextFormField(
                     key: Key('account-source'),
@@ -124,8 +124,8 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
             child: Text(I18n.of(context)!.translationsForLocale().home.next),
             onPressed: () async {
               if (_formKey.currentState!.validate() && !(_advanceOptions.error ?? false)) {
-                store.account!.setNewAccountName(_nameCtrl.text.trim());
-                store.account!.setNewAccountKey(_keyCtrl.text.trim());
+                store.account.setNewAccountName(_nameCtrl.text.trim());
+                store.account.setNewAccountKey(_keyCtrl.text.trim());
 
                 widget.onSubmit({
                   'keyType': _keyType,

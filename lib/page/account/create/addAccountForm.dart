@@ -57,7 +57,7 @@ class AddAccountForm extends StatelessWidget {
                     hintText: dic.account.createHint,
                     labelText: I18n.of(context)!.translationsForLocale().profile.accountName,
                     controller: _nameCtrl,
-                    validator: (v) => InputValidation.validateAccountName(context, v, store.account!.optionalAccounts),
+                    validator: (v) => InputValidation.validateAccountName(context, v, store.account.optionalAccounts),
                   ),
                 ],
               ),
@@ -93,8 +93,8 @@ class AddAccountForm extends StatelessWidget {
                 if (_formKey.currentState!.validate()) {
                   var name = _nameCtrl.text.trim();
 
-                  store.account!.setNewAccountName(name);
-                  store.account!.setNewAccountPin(store.settings!.cachedPin);
+                  store.account.setNewAccountName(name);
+                  store.account.setNewAccountPin(store.settings.cachedPin);
 
                   onSubmit!();
                 } else {

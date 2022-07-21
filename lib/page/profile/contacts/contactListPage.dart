@@ -38,7 +38,7 @@ class ContactListPage extends StatelessWidget {
           builder: (_) {
             return AccountSelectList(
               store,
-              args ?? store.settings!.contactListAll.toList(),
+              args ?? store.settings.contactListAll.toList(),
             );
           },
         ),

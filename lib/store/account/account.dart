@@ -99,7 +99,7 @@ abstract class _AccountStore with Store {
   @computed
   List<AccountData> get accountListAll {
     List<AccountData> accList = accountList.toList();
-    List<AccountData> contactList = rootStore.settings!.contactList.toList();
+    List<AccountData> contactList = rootStore.settings.contactList.toList();
     contactList.retainWhere((i) => i.observation ?? false);
     accList.addAll(contactList);
     return accList;
@@ -123,9 +123,9 @@ abstract class _AccountStore with Store {
     // _log("currentAddress: AddressMap 42: ${pubKeyAddressMap[42].toString()}");
     // _log("currentAddress: AddressMap 2: ${pubKeyAddressMap[2].toString()}");
 
-    int? ss58 = rootStore.settings!.customSS58Format['value'];
-    if (rootStore.settings!.customSS58Format['info'] == default_ss58_prefix['info']) {
-      ss58 = rootStore.settings!.endpoint.ss58;
+    int? ss58 = rootStore.settings.customSS58Format['value'];
+    if (rootStore.settings.customSS58Format['info'] == default_ss58_prefix['info']) {
+      ss58 = rootStore.settings.endpoint.ss58;
     }
 
     final address = pubKeyAddressMap[ss58!] != null ? pubKeyAddressMap[ss58]![pubKey!] : null;
@@ -191,13 +191,13 @@ abstract class _AccountStore with Store {
               'Failed to sendTx: ${args['title']} - ${args['txInfo']['module']}.${args['txInfo']['call']}',
             );
           } else {
-            if (rootStore.settings!.endpointIsEncointer) {
-              rootStore.encointer!.account!.setTransferTxs([res], rootStore.account!.currentAddress);
+            if (rootStore.settings.endpointIsEncointer) {
+              rootStore.encointer.account!.setTransferTxs([res], rootStore.account.currentAddress);
             }
           }
         });
-        rootStore.assets!.setSubmitting(false);
-        rootStore.account!.clearTxStatus();
+        rootStore.assets.setSubmitting(false);
+        rootStore.account.clearTxStatus();
         timer.cancel();
         queuedTxs = [];
       } else {

@@ -24,8 +24,8 @@ class AddressInputField extends StatefulWidget {
 
 class _AddressInputFieldState extends State<AddressInputField> {
   Future<List<AccountData>> _getAccountsFromInput(String input) async {
-    final listLocal = widget.store.account!.accountList.toList();
-    listLocal.addAll(widget.store.settings!.contactList);
+    final listLocal = widget.store.account.accountList.toList();
+    listLocal.addAll(widget.store.settings.contactList);
     // return local account list if input empty
     if (input.isEmpty || input.trim().length < 3) {
       return listLocal;
@@ -42,7 +42,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
     if (input.length < 47) {
       // check if input indices in local account list
       final int indicesIndex = listLocal.indexWhere((e) {
-        final Map? accInfo = widget.store.account!.addressIndexMap[e.address];
+        final Map? accInfo = widget.store.account.addressIndexMap[e.address];
         return accInfo != null && accInfo['accountIndex'] == input;
       });
       if (indicesIndex >= 0) {
@@ -72,7 +72,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
 
   String _itemAsString(AccountData item) {
     final String address = Fmt.addressOfAccount(item, widget.store);
-    final Map? accInfo = widget.store.account!.addressIndexMap[item.address];
+    final Map? accInfo = widget.store.account.addressIndexMap[item.address];
     String? idx = '';
     if (accInfo != null && accInfo['accountIndex'] != null) {
       idx = accInfo['accountIndex'];
@@ -86,7 +86,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
     }
     return Observer(
       builder: (_) {
-        final Map? accInfo = widget.store.account!.addressIndexMap[item.pubKey];
+        final Map? accInfo = widget.store.account.addressIndexMap[item.pubKey];
         final String address = Fmt.addressOfAccount(item, widget.store);
         return Container(
           padding: EdgeInsets.only(top: 8),
@@ -122,7 +122,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
   Widget _listItemBuilder(BuildContext context, AccountData item, bool isSelected) {
     return Observer(
       builder: (_) {
-        final Map? accInfo = widget.store.account!.addressIndexMap[item.pubKey];
+        final Map? accInfo = widget.store.account.addressIndexMap[item.pubKey];
         final String address = Fmt.addressOfAccount(item, widget.store);
         return Container(
           margin: EdgeInsets.symmetric(horizontal: 8),

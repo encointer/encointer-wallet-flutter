@@ -25,11 +25,11 @@ void main() {
       await root.init('_en');
 
       // re-initialize with cacheKey that does not mess with real cache
-      root.settings!.setEndpoint(unitTestEndpoint);
+      root.settings.setEndpoint(unitTestEndpoint);
       await root.init('_en');
       await webApi!.init();
 
-      final encointerStore = root.encointer!;
+      final encointerStore = root.encointer;
 
       var testCid = testCommunityIdentifiers[0];
       var testCidFmt = testCid.toFmtString();
@@ -49,7 +49,7 @@ void main() {
       encointerStore.setChosenCid(testCid);
 
       var testCommunityStore = new CommunityStore(testNetwork, testCid);
-      await testCommunityStore.initCommunityAccountStore(root.account!.currentAddress);
+      await testCommunityStore.initCommunityAccountStore(root.account.currentAddress);
 
       Map<String, dynamic> targetJson = {
         "network": testNetwork,
@@ -75,7 +75,7 @@ void main() {
       expect(deserializedEncointerStore.toJson(), targetJson);
 
       var cachedEncointerStore = await root.loadEncointerCache(root.encointerCacheKey(unitTestEndpoint.info!));
-      expect(cachedEncointerstore.toJson(), targetJson);
+      expect(cachedEncointerStore!.toJson(), targetJson);
     });
 
     test('purging encointer-store works and initializing new works', () async {
@@ -88,7 +88,7 @@ void main() {
       await root.init('_en');
 
       // re-initialize with cacheKey that does not mess with real cache
-      root.settings!.setEndpoint(unitTestEndpoint);
+      root.settings.setEndpoint(unitTestEndpoint);
 
       root.purgeEncointerCache(unitTestEndpoint.info!);
       expect(

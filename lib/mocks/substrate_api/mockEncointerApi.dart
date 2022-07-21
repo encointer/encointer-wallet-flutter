@@ -39,19 +39,19 @@ class MockApiEncointer extends EncointerApi {
   @override
   Future<CeremonyPhase?> getCurrentPhase() async {
     // ignore: unnecessary_null_comparison
-    if (store.encointer!.currentPhase == null) {
-      store.encointer!.setCurrentPhase(initialPhase);
+    if (store.encointer.currentPhase == null) {
+      store.encointer.setCurrentPhase(initialPhase);
     }
 
-    return store.encointer!.currentPhase;
+    return store.encointer.currentPhase;
   }
 
   @override
   Future<int?> getCurrentCeremonyIndex() async {
-    if (store.encointer!.currentCeremonyIndex == null) {
-      store.encointer!.setCurrentCeremonyIndex(1);
+    if (store.encointer.currentCeremonyIndex == null) {
+      store.encointer.setCurrentCeremonyIndex(1);
     }
-    return store.encointer!.currentCeremonyIndex;
+    return store.encointer.currentCeremonyIndex;
   }
 
   @override
@@ -78,7 +78,7 @@ class MockApiEncointer extends EncointerApi {
 
   @override
   Future<List<CidName>?> communitiesGetAll() async {
-    return store.encointer!.communities;
+    return store.encointer.communities;
   }
 
   @override
@@ -114,20 +114,20 @@ class MockApiEncointer extends EncointerApi {
   @override
   Future<Map<CommunityIdentifier, BalanceEntry>> getAllBalances(String account) async {
     return Future.value(Map<CommunityIdentifier, BalanceEntry>.of({
-      store.encointer!.chosenCid!: BalanceEntry.fromJson(testBalanceEntry),
+      store.encointer.chosenCid!: BalanceEntry.fromJson(testBalanceEntry),
     }));
   }
 
   @override
   Future<ClaimOfAttendance> signClaimOfAttendance(int participants, String password) async {
-    Meetup meetup = store.encointer!.communityAccount!.meetup!;
+    Meetup meetup = store.encointer.communityAccount!.meetup!;
 
     var claim = ClaimOfAttendance(
-      store.account!.currentAccountPubKey,
-      store.encointer!.currentCeremonyIndex,
-      store.encointer!.chosenCid,
+      store.account.currentAccountPubKey,
+      store.encointer.currentCeremonyIndex,
+      store.encointer.chosenCid,
       meetup.index,
-      store.encointer!.community!.meetupLocations![meetup.locationIndex],
+      store.encointer.community!.meetupLocations![meetup.locationIndex],
       meetup.time,
       participants,
     );

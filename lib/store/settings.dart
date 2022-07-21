@@ -94,7 +94,7 @@ abstract class _SettingsStore with Store {
 
   @computed
   List<AccountData> get contactListAll {
-    List<AccountData> ls = List<AccountData>.of(rootStore.account!.accountList);
+    List<AccountData> ls = List<AccountData>.of(rootStore.account.accountList);
     ls.addAll(contactList);
     return ls;
   }
@@ -168,7 +168,7 @@ abstract class _SettingsStore with Store {
   void setPin(String pin) {
     cachedPin = pin;
     if (pin.isNotEmpty) {
-      rootStore.encointer!.updateState();
+      rootStore.encointer.updateState();
     }
   }
 
@@ -292,7 +292,7 @@ abstract class _SettingsStore with Store {
     await Future.wait([
       rootStore.loadAccountCache(),
       loadNetworkStateCache(),
-      rootStore.assets!.loadCache(),
+      rootStore.assets.loadCache(),
       rootStore.loadOrInitEncointerCache(network.info!),
     ]);
 

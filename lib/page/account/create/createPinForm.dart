@@ -144,9 +144,9 @@ class _CreatePinFormState extends State<CreatePinForm> {
               ),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  store.account!.setNewAccountPin(_passCtrl.text);
+                  store.account.setNewAccountPin(_passCtrl.text);
 
-                  store.settings!.setPin(_passCtrl.text);
+                  store.settings.setPin(_passCtrl.text);
 
                   widget.onSubmit!();
                 }

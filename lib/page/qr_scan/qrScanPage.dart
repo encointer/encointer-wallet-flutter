@@ -75,7 +75,7 @@ class ScanPage extends StatelessWidget {
           builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
             if (snapshot.hasData && snapshot.data == true) {
               return QrcodeReaderView(
-                headerWidget: store.settings!.developerMode
+                headerWidget: store.settings.developerMode
                     ? Row(children: [
                         ElevatedButton(
                           child: Text(dic.profile.addContact),

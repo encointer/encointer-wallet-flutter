@@ -63,9 +63,9 @@ abstract class _AssetsStore with Store {
     return ObservableList.of(txs.where((i) {
       switch (txsFilter) {
         case 1:
-          return i.to == rootStore.account!.currentAddress;
+          return i.to == rootStore.account.currentAddress;
         case 2:
-          return i.from == rootStore.account!.currentAddress;
+          return i.from == rootStore.account.currentAddress;
         default:
           return true;
       }
@@ -98,7 +98,7 @@ abstract class _AssetsStore with Store {
 
   @action
   Future<void> setAccountBalances(String? pubKey, Map? amt, {bool needCache = true}) async {
-    if (rootStore.account!.currentAccount.pubKey != pubKey) return;
+    if (rootStore.account.currentAccount.pubKey != pubKey) return;
 
     amt!.forEach((k, v) {
       balances[k] = BalancesInfo.fromJson(v);
@@ -106,7 +106,7 @@ abstract class _AssetsStore with Store {
 
     if (!needCache) return;
     Map? cache = await rootStore.localStorage.getAccountCache(
-      rootStore.account!.currentAccount.pubKey,
+      rootStore.account.currentAccount.pubKey,
       cacheBalanceKey,
     ) as Map?;
     if (cache == null) {
@@ -117,7 +117,7 @@ abstract class _AssetsStore with Store {
       });
     }
     rootStore.localStorage.setAccountCache(
-      rootStore.account!.currentAccount.pubKey,
+      rootStore.account.currentAccount.pubKey,
       cacheBalanceKey,
       cache,
     );
@@ -129,7 +129,7 @@ abstract class _AssetsStore with Store {
     Map? amt, {
     bool needCache = true,
   }) async {
-    if (rootStore.account!.currentAccount.pubKey != pubKey) return;
+    if (rootStore.account.currentAccount.pubKey != pubKey) return;
 
     tokenBalances = Map<String, String>.from(amt!);
 
@@ -153,7 +153,7 @@ abstract class _AssetsStore with Store {
 
   @action
   Future<void> addTxs(Map res, String address, {bool shouldCache = false}) async {
-    if (rootStore.account!.currentAddress != address) return;
+    if (rootStore.account.currentAddress != address) return;
 
     txsCount = res['count'];
 
@@ -166,11 +166,11 @@ abstract class _AssetsStore with Store {
     });
 
     if (shouldCache) {
-      rootStore.localStorage.setAccountCache(rootStore.account!.currentAccount.pubKey, _getCacheKey(cacheTxsKey), ls);
+      rootStore.localStorage.setAccountCache(rootStore.account.currentAccount.pubKey, _getCacheKey(cacheTxsKey), ls);
 
       cacheTxsTimestamp = DateTime.now().millisecondsSinceEpoch;
       rootStore.localStorage
-          .setAccountCache(rootStore.account!.currentAccount.pubKey, _getCacheKey(cacheTimeKey), cacheTxsTimestamp);
+          .setAccountCache(rootStore.account.currentAccount.pubKey, _getCacheKey(cacheTimeKey), cacheTxsTimestamp);
     }
   }
 
@@ -197,7 +197,7 @@ abstract class _AssetsStore with Store {
   @action
   Future<void> loadAccountCache() async {
     // return if currentAccount not exist
-    String? pubKey = rootStore.account!.currentAccountPubKey;
+    String? pubKey = rootStore.account.currentAccountPubKey;
     if (pubKey == null || pubKey.isEmpty) {
       return;
     }

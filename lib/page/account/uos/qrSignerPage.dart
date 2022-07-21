@@ -31,7 +31,7 @@ class QrSignerPage extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 AddressFormItem(
-                  store.account!.currentAccount,
+                  store.account.currentAccount,
                   label: dic.account.uosSigner,
                 ),
                 Padding(

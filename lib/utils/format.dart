@@ -273,7 +273,7 @@ class Fmt {
   }
 
   static String addressOfAccount(AccountData acc, AppStore store) {
-    return store.account!.pubKeyAddressMap[store.settings!.endpoint.ss58]![acc.pubKey] ?? acc.address;
+    return store.account.pubKeyAddressMap[store.settings.endpoint.ss58]![acc.pubKey] ?? acc.address;
   }
 
   /// Formats fixed point number with the amount of fractional digits given by [fixedPointFraction].

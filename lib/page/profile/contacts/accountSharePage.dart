@@ -22,8 +22,8 @@ class _AccountSharePageState extends State<AccountSharePage> {
     var textTheme = Theme.of(context).textTheme;
 
     String? accountToBeSharedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
-    AccountData accountToBeShared = widget.store.account!.getAccountData(accountToBeSharedPubKey);
-    final addressSS58 = widget.store.account!.getNetworkAddress(accountToBeSharedPubKey);
+    AccountData accountToBeShared = widget.store.account.getAccountData(accountToBeSharedPubKey);
+    final addressSS58 = widget.store.account.getNetworkAddress(accountToBeSharedPubKey);
 
     var contactQrCode = ContactQrCode(
       account: addressSS58,
