@@ -82,4 +82,10 @@ class MockLocalStorage extends LocalStorage {
     storage[key] = str;
     return Future.value(true);
   }
+
+  @override
+  Future<bool> removeKey(String key) async {
+    storage.remove(key);
+    return Future.value(true);
+  }
 }

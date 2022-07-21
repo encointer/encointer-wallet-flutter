@@ -38,10 +38,6 @@ class LocalStorage {
     return storage.setKV(cacheKey, value);
   }
 
-  Future<bool> removeKey(String cacheKey) {
-    return storage.removeKey(cacheKey);
-  }
-
   Future<String?> getCurrentAccount() async {
     return storage.getKV(currentAccountKey);
   }
@@ -98,6 +94,10 @@ class LocalStorage {
       return data as Object;
     }
     return Future.value(null);
+  }
+
+  Future<bool> removeKey(String key) {
+    return storage.removeKey('${customKVKey}_$key');
   }
 
   /// Gets the more specific return type that `GetObject. This should always be preferred.
