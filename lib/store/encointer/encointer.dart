@@ -322,9 +322,9 @@ abstract class _EncointerStore with Store {
   /// Initialize the store and the sub-stores.
   ///
   /// Should always be called after creating a store to ensure full functionality.
-  void initStore(AppStore root, Function cacheFn) {
+  void initStore(AppStore root, Future<void> Function() cacheFn) {
     this._rootStore = root;
-    this._cacheFn = cacheFn as Future<void> Function()?;
+    this._cacheFn = cacheFn;
 
     // These are merely safety guards, and should never be needed. A null reference error occurred here only because
     // a store was added in the development process after it has been written to cache. Hence, deserialization

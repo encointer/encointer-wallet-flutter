@@ -72,7 +72,7 @@ abstract class _CommunityStore with Store {
   ObservableList<Location>? meetupLocations = new ObservableList();
 
   @observable
-  ObservableMap<String?, CommunityAccountStore>? communityAccountStores = new ObservableMap();
+  ObservableMap<String, CommunityAccountStore>? communityAccountStores = new ObservableMap();
 
   get applyDemurrage => _applyDemurrage;
 

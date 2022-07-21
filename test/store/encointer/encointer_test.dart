@@ -74,7 +74,7 @@ void main() {
       var deserializedEncointerStore = EncointerStore.fromJson(targetJson);
       expect(deserializedEncointerStore.toJson(), targetJson);
 
-      var cachedEncointerStore = await root.loadEncointerCache(root.encointerCacheKey(unitTestEndpoint.info));
+      var cachedEncointerStore = await root.loadEncointerCache(root.encointerCacheKey(unitTestEndpoint.info!));
       expect(cachedEncointerStore!.toJson(), targetJson);
     });
 
@@ -90,9 +90,9 @@ void main() {
       // re-initialize with cacheKey that does not mess with real cache
       root.settings!.setEndpoint(unitTestEndpoint);
 
-      root.purgeEncointerCache(unitTestEndpoint.info);
+      root.purgeEncointerCache(unitTestEndpoint.info!);
       expect(
-        await root.localStorage.getObject(root.encointerCacheKey(unitTestEndpoint.info)),
+        await root.localStorage.getObject(root.encointerCacheKey(unitTestEndpoint.info!)),
         null,
       );
 
@@ -102,7 +102,7 @@ void main() {
       var expectedStore = EncointerStore(unitTestEndpoint.info!);
 
       expect(
-        await root.localStorage.getObject(root.encointerCacheKey(unitTestEndpoint.info)),
+        await root.localStorage.getObject(root.encointerCacheKey(unitTestEndpoint.info!)),
         expectedStore.toJson(),
       );
     });

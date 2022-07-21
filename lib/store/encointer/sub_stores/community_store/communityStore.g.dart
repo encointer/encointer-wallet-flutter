@@ -21,7 +21,7 @@ CommunityStore _$CommunityStoreFromJson(Map<String, dynamic> json) => CommunityS
               (json['meetupLocations'] as List).map((e) => Location.fromJson(e as Map<String, dynamic>)))
           : null
       ..communityAccountStores = json['communityAccountStores'] != null
-          ? ObservableMap<String?, CommunityAccountStore>.of(
+          ? ObservableMap<String, CommunityAccountStore>.of(
               (json['communityAccountStores'] as Map<String, dynamic>).map(
               (k, e) => MapEntry(k, CommunityAccountStore.fromJson(e as Map<String, dynamic>)),
             ))
@@ -154,13 +154,13 @@ mixin _$CommunityStore on _CommunityStore, Store {
   late final _$communityAccountStoresAtom = Atom(name: '_CommunityStore.communityAccountStores', context: context);
 
   @override
-  ObservableMap<String?, CommunityAccountStore>? get communityAccountStores {
+  ObservableMap<String, CommunityAccountStore>? get communityAccountStores {
     _$communityAccountStoresAtom.reportRead();
     return super.communityAccountStores;
   }
 
   @override
-  set communityAccountStores(ObservableMap<String?, CommunityAccountStore>? value) {
+  set communityAccountStores(ObservableMap<String, CommunityAccountStore>? value) {
     _$communityAccountStoresAtom.reportWrite(value, super.communityAccountStores, () {
       super.communityAccountStores = value;
     });

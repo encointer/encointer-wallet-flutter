@@ -101,12 +101,12 @@ abstract class _AppStore with Store {
   ///
   /// Prefixes the key with `test-` if we are in test-mode to prevent overwriting of
   /// the real cache with (unit-)test runs.
-  String encointerCacheKey(String? networkInfo) {
+  String encointerCacheKey(String networkInfo) {
     var key = "$encointerCachePrefix-$networkInfo";
     return config == StoreConfig.Test ? "test-$key" : key;
   }
 
-  Future<bool> purgeEncointerCache(String? networkInfo) async {
+  Future<bool> purgeEncointerCache(String networkInfo) async {
     return localStorage.removeKey(encointerCacheKey(networkInfo));
   }
 
