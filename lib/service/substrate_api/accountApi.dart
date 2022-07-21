@@ -225,14 +225,6 @@ class AccountApi {
     return res;
   }
 
-  Future<String> checkDerivePath(String? seed, String? path, String pairType) async {
-    String res = await jsApi!.evalJavascript(
-      'account.checkDerivePath("$seed", "$path", "$pairType")',
-      allowRepeat: true,
-    );
-    return res;
-  }
-
   /// Parse scanned Qr-code into a transaction.
   ///
   /// See: https://github.com/encointer/encointer-wallet-flutter/issues/676
