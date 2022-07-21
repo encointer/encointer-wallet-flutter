@@ -83,7 +83,7 @@ abstract class _SettingsStore with Store {
   }
 
   @computed
-  String get ipfsGateway => endpoint.ipfsGateway;
+  String get ipfsGateway => endpoint.ipfsGateway!;
 
   @computed
   List<EndpointData> get endpointList {
@@ -293,7 +293,7 @@ abstract class _SettingsStore with Store {
       rootStore.loadAccountCache(),
       loadNetworkStateCache(),
       rootStore.assets!.loadCache(),
-      rootStore.loadOrInitEncointerCache(network.info),
+      rootStore.loadOrInitEncointerCache(network.info!),
     ]);
 
     // Todo: remove global reference when cyclic dependency
@@ -305,7 +305,7 @@ abstract class _SettingsStore with Store {
 
 @JsonSerializable(createFactory: false)
 class NetworkState extends _NetworkState {
-  NetworkState(String endpoint, int ss58Format, int tokenDecimals, String tokenSymbol)
+  NetworkState(String? endpoint, int ss58Format, int tokenDecimals, String tokenSymbol)
       : super(endpoint, ss58Format, tokenDecimals, tokenSymbol);
 
   static NetworkState fromJson(Map<String, dynamic> json) {
@@ -330,7 +330,7 @@ class NetworkState extends _NetworkState {
 abstract class _NetworkState {
   _NetworkState(this.endpoint, this.ss58Format, this.tokenDecimals, this.tokenSymbol);
 
-  String endpoint = '';
+  String? endpoint = '';
   int ss58Format = 42;
   int tokenDecimals = 12;
   String tokenSymbol = 'ERT';
@@ -343,13 +343,13 @@ class EndpointData extends _EndpointData {
 }
 
 abstract class _EndpointData {
-  String color = 'pink';
-  String info = '';
-  int ss58 = 42;
+  String? color = 'pink';
+  String? info = '';
+  int? ss58 = 42;
   String? text = '';
   String? value = '';
   String? worker = ''; // only relevant for cantillon
   String? mrenclave = ''; // relevant until we fetch mrenclave from substrateeRegistry
   NodeConfig? overrideConfig;
-  String ipfsGateway = '';
+  String? ipfsGateway = '';
 }

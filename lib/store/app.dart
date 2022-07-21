@@ -75,7 +75,7 @@ abstract class _AppStore with Store {
 
     // need to call this after settings was initialized
     String? networkInfo = settings!.endpoint.info;
-    await loadOrInitEncointerCache(networkInfo);
+    await loadOrInitEncointerCache(networkInfo!);
 
     isReady = true;
   }

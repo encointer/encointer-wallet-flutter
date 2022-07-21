@@ -99,7 +99,7 @@ void main() {
       // should initialize a new encointer store
       await root.init('_en');
 
-      var expectedStore = EncointerStore(unitTestEndpoint.info);
+      var expectedStore = EncointerStore(unitTestEndpoint.info!);
 
       // This is due to side-effects of parallel executed tests and the global appStore...
       expectedStore.chosenCid = testCommunityIdentifiers[0];

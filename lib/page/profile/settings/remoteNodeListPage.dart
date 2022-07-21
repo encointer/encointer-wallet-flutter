@@ -23,7 +23,7 @@ class RemoteNodeListPage extends StatelessWidget {
                 width: 36,
                 child: Image.asset('assets/images/public/${i.info}.png'),
               ),
-              title: Text(i.info),
+              title: Text(i.info!),
               subtitle: Text(i.text!),
               trailing: Container(
                 width: 40,

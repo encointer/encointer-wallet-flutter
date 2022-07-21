@@ -123,7 +123,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text(
-            _selectedNetwork!.info.toUpperCase(),
+            _selectedNetwork!.info!.toUpperCase(),
             style: Theme.of(context).textTheme.headline4,
           ),
           IconButton(

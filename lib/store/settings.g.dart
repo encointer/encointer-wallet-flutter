@@ -14,16 +14,16 @@ Map<String, dynamic> _$NetworkStateToJson(NetworkState instance) => <String, dyn
     };
 
 EndpointData _$EndpointDataFromJson(Map<String, dynamic> json) => EndpointData()
-  ..color = json['color'] as String
-  ..info = json['info'] as String
-  ..ss58 = json['ss58'] as int
+  ..color = json['color'] as String?
+  ..info = json['info'] as String?
+  ..ss58 = json['ss58'] as int?
   ..text = json['text'] as String?
   ..value = json['value'] as String?
   ..worker = json['worker'] as String?
   ..mrenclave = json['mrenclave'] as String?
   ..overrideConfig =
       json['overrideConfig'] == null ? null : NodeConfig.fromJson(json['overrideConfig'] as Map<String, dynamic>)
-  ..ipfsGateway = json['ipfsGateway'] as String;
+  ..ipfsGateway = json['ipfsGateway'] as String?;
 
 Map<String, dynamic> _$EndpointDataToJson(EndpointData instance) => <String, dynamic>{
       'color': instance.color,
