@@ -55,7 +55,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
     setState(() {});
 
-    var voucherBalanceEntry = await api.encointer!.getEncointerBalance(_voucherAddress!, cid);
+    var voucherBalanceEntry = await api.encointer.getEncointerBalance(_voucherAddress!, cid);
     _voucherBalance = voucherBalanceEntry.applyDemurrage(
       widget.store.chain.latestHeaderNumber,
       widget.store.encointer.community!.demurrage!,

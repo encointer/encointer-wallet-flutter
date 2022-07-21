@@ -25,15 +25,15 @@ class Api {
   final AppStore store;
   final String _jsServiceEncointer;
 
-  late var jsStorage;
+  late final jsStorage;
 
-  JSApi? js;
-  late AccountApi account;
-  late AssetsApi assets;
-  late ChainApi chain;
-  late CodecApi codec;
-  EncointerApi? encointer;
-  late Ipfs ipfs;
+  late final JSApi js;
+  late final AccountApi account;
+  late final AssetsApi assets;
+  late final ChainApi chain;
+  late final CodecApi codec;
+  late final EncointerApi encointer;
+  late final Ipfs ipfs;
 
   SubScanApi subScanApi = SubScanApi();
 
@@ -59,7 +59,7 @@ class Api {
   Future<void> close() async {
     await stopSubscriptions();
     await closeWebView();
-    await encointer!.close();
+    await encointer.close();
   }
 
   Future<void> launchWebview({
@@ -76,7 +76,7 @@ class Api {
       connectFunc();
     }
 
-    return js!.launchWebView(_jsServiceEncointer, postInitCallback);
+    return js.launchWebView(_jsServiceEncointer, postInitCallback);
   }
 
   /// Evaluate javascript [code] in the webView.
@@ -92,7 +92,7 @@ class Api {
     // calls to the same method.
     bool allowRepeat = true,
   }) {
-    return js!.evalJavascript(code, wrapPromise: wrapPromise, allowRepeat: allowRepeat);
+    return js.evalJavascript(code, wrapPromise: wrapPromise, allowRepeat: allowRepeat);
   }
 
   Future<void> connectNode() async {
@@ -138,12 +138,12 @@ class Api {
     if (index < 0) return;
     store.settings.setEndpoint(store.settings.endpointList[index]);
     await fetchNetworkProps();
-    encointer!.getCommunityData();
+    encointer.getCommunityData();
   }
 
   void fetchAccountData() {
     assets.fetchBalance();
-    encointer!.getCommunityData();
+    encointer.getCommunityData();
   }
 
   Future<void> fetchNetworkProps() async {
@@ -161,13 +161,13 @@ class Api {
   }
 
   void startSubscriptions() {
-    this.encointer!.startSubscriptions();
+    this.encointer.startSubscriptions();
     this.chain.startSubscriptions();
     this.assets.startSubscriptions();
   }
 
   Future<void> stopSubscriptions() async {
-    await this.encointer!.stopSubscriptions();
+    await this.encointer.stopSubscriptions();
     await this.chain.stopSubscriptions();
     await this.assets.stopSubscriptions();
   }
@@ -177,11 +177,11 @@ class Api {
     String channel,
     Function callback,
   ) async {
-    js!.subscribeMessage(code, channel, callback);
+    js.subscribeMessage(code, channel, callback);
   }
 
   Future<void> unsubscribeMessage(String channel) async {
-    js!.unsubscribeMessage(channel);
+    js.unsubscribeMessage(channel);
   }
 
   Future<bool> isConnected() async {
@@ -192,7 +192,7 @@ class Api {
 
   Future<void> closeWebView() async {
     await stopSubscriptions();
-    return js!.closeWebView();
+    return js.closeWebView();
   }
 
   Future<List?> getExternalLinks(GenExternalLinksParams params) async {

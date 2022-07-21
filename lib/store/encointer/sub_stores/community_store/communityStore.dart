@@ -138,7 +138,7 @@ abstract class _CommunityStore with Store {
 
     // There is no race-condition with the `getMeetupTime` call in `setMeetupLocation` because `getMeetupTime` uses
     // internally the `meetupLocation`. Hence, the worst case scenario is a redundant rpc call.
-    webApi?.encointer?.getMeetupTime();
+    webApi?.encointer.getMeetupTime();
   }
 
   /// Purges state that is only relevant for one Ceremony.

@@ -41,7 +41,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   @override
   void initState() {
     super.initState();
-    if (store.encointer.chosenCid != null) webApi!.encointer!.getBootstrappers();
+    if (store.encointer.chosenCid != null) webApi!.encointer.getBootstrappers();
   }
 
   @override

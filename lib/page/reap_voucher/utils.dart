@@ -61,7 +61,7 @@ Future<ChangeResult> changeCommunity(
   String? networkInfo,
   CommunityIdentifier cid,
 ) async {
-  var cids = await api.encointer!.getCommunityIdentifiers();
+  var cids = await api.encointer.getCommunityIdentifiers();
 
   if (cids.contains(cid)) {
     store.encointer.setChosenCid(cid);

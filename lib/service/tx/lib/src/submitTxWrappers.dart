@@ -110,7 +110,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
     context,
     store,
     api,
-    registerParticipantParams(store.encointer.chosenCid, proof: await api.encointer!.getProofOfAttendance()),
+    registerParticipantParams(store.encointer.chosenCid, proof: await api.encointer.getProofOfAttendance()),
     onFinish: (BuildContext txPageContext, Map res) {
       store.encointer.updateAggregatedAccountData();
       Navigator.popUntil(
@@ -147,5 +147,5 @@ Future<dynamic> submitReapVoucher(
   String recipientAddress,
   CommunityIdentifier cid,
 ) async {
-  return api.js!.evalJavascript('encointer.reapVoucher("$voucherUri","$recipientAddress", ${jsonEncode(cid)})');
+  return api.js.evalJavascript('encointer.reapVoucher("$voucherUri","$recipientAddress", ${jsonEncode(cid)})');
 }

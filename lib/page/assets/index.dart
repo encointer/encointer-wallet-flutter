@@ -84,7 +84,7 @@ class _AssetsState extends State<Assets> {
 
   Future<void> _refreshEncointerState() async {
     // getCurrentPhase is the root of all state updates.
-    await webApi!.encointer!.getCurrentPhase();
+    await webApi!.encointer.getCurrentPhase();
   }
 
   @override
@@ -283,7 +283,7 @@ class _AssetsState extends State<Assets> {
 
                       return store.settings.isConnected
                           ? FutureBuilder<bool?>(
-                              future: webApi!.encointer!.hasPendingIssuance(),
+                              future: webApi!.encointer.hasPendingIssuance(),
                               builder: (_, AsyncSnapshot<bool?> snapshot) {
                                 if (snapshot.hasData) {
                                   var hasPendingIssuance = snapshot.data!;
@@ -498,7 +498,7 @@ class _AssetsState extends State<Assets> {
   }
 
   void _refreshBalanceAndNotify(Translations? dic) {
-    webApi!.encointer!.getAllBalances(widget.store.account.currentAddress).then((balances) {
+    webApi!.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
       print("[home:refreshBalanceAndNotify] get all balances");
       if (widget.store.encointer.chosenCid == null) {
         print("[home:refreshBalanceAndNotify] no community selected");

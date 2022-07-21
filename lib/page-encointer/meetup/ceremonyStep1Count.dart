@@ -49,7 +49,7 @@ class CeremonyStep1Count extends StatelessWidget {
           builder: (BuildContext context) => CeremonyStep2Scan(
             store,
             api,
-            claim: webApi!.encointer!
+            claim: webApi!.encointer
                 .signClaimOfAttendance(count, store.settings.cachedPin)
                 .then((claim) => webApi!.codec.encodeToBytes(ClaimOfAttendanceJSRegistryName, claim)),
             confirmedParticipantsCount: count,
