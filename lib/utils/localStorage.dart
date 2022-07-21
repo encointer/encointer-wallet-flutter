@@ -99,7 +99,7 @@ class LocalStorage {
   /// Gets the more specific return type that `GetObject. This should always be preferred.
   ///
   /// Should be used instead of `getObject`, see #533.
-  Future<Map<String, dynamic>> getMap(String key) async {
+  Future<Map<String, dynamic>?> getMap(String key) async {
     String? value = await storage.getKV('${customKVKey}_$key');
 
     if (value != null) {

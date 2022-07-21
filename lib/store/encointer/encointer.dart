@@ -474,15 +474,12 @@ abstract class _EncointerStore with Store {
     switch (currentPhase) {
       case CeremonyPhase.Registering:
         return nextPhaseTimestamp;
-        break;
       case CeremonyPhase.Assigning:
         return nextPhaseTimestamp! - phaseDurations[CeremonyPhase.Assigning]!;
-        break;
       case CeremonyPhase.Attesting:
         return nextPhaseTimestamp! -
             phaseDurations[CeremonyPhase.Attesting]! -
             phaseDurations[CeremonyPhase.Assigning]!;
-        break;
       default:
         return null;
     }

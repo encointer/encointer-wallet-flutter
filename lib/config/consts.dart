@@ -131,10 +131,8 @@ String replaceLocalePlaceholder(String link, String locale) {
   switch (locale) {
     case 'en':
       return link.replaceAll(locale_place_holder, 'en');
-      break;
     case 'de':
       return link.replaceAll(locale_place_holder, '');
-      break;
     default:
       print("[replaceLocale] unsupported locale, defaulting to english");
       return link.replaceAll(locale_place_holder, 'en');

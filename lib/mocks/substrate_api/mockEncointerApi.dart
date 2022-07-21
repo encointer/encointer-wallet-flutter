@@ -55,14 +55,14 @@ class MockApiEncointer extends EncointerApi {
 
   @override
   Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String account) {
-    return Future.value(null);
+    return Future.value();
   }
 
   @override
   Future<void> getReputations() async {}
 
   @override
-  Future<BalanceEntry> getEncointerBalance(String? address, CommunityIdentifier cid) async {
+  Future<BalanceEntry?> getEncointerBalance(String? address, CommunityIdentifier cid) async {
     return Future.value(null);
   }
 

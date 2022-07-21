@@ -134,7 +134,6 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
         _log("'getMeetupInfoWidget' trapped in an unexpected if statement: Registering phase + Unregistered");
         return Container();
       }
-      break;
     case CeremonyPhase.Assigning:
       if (store.encointer!.communityAccount?.isAssigned ?? false) {
         var meetup = store.encointer!.communityAccount!.meetup!;
@@ -150,7 +149,6 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
           notification: dic.encointer.youAreNotRegisteredPleaseRegisterNextTime,
         );
       }
-      break;
     case CeremonyPhase.Attesting:
       if (!(store.encointer!.communityAccount?.isAssigned ?? false)) {
         return CeremonyNotification(
@@ -176,7 +174,6 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
           );
         }
       }
-      break;
     default:
       _log("'getMeetupInfoWidget' trapped in an unexpected default case");
       return Container();

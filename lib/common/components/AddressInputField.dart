@@ -76,7 +76,6 @@ class _AddressInputFieldState extends State<AddressInputField> {
       idx = accInfo['accountIndex'];
     }
     return '${item.name} $idx $address ${item.address}';
-    return '${Fmt.accountDisplayNameString(address, accInfo)} $idx $address ${item.address}';
   }
 
   Widget _selectedItemBuilder(BuildContext context, AccountData? item) {

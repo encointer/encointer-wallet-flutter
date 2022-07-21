@@ -29,13 +29,10 @@ class QrScanService {
     switch (context) {
       case QrCodeContext.contact:
         return ContactQrCode.fromQrFields(data);
-        break;
       case QrCodeContext.invoice:
         return InvoiceQrCode.fromQrFields(data);
-        break;
       case QrCodeContext.voucher:
         return VoucherQrCode.fromQrFields(data);
-        break;
       default:
         throw FormatException('[parseQrScan] Unhandled qr scan context');
     }
@@ -45,13 +42,10 @@ class QrScanService {
     switch (qrCode.context) {
       case QrCodeContext.contact:
         return handleContactQrCodeScan(context, scanContext, qrCode as ContactQrCode);
-        break;
       case QrCodeContext.invoice:
         return handleInvoiceQrCodeScan(context, scanContext, qrCode as InvoiceQrCode);
-        break;
       case QrCodeContext.voucher:
         return handleVoucherQrCodeScan(context, scanContext, qrCode as VoucherQrCode);
-        break;
       default:
         throw FormatException('[handleQrScan] Unhandled qr scan context');
     }

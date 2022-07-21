@@ -136,7 +136,7 @@ abstract class _AppStore with Store {
     }
   }
 
-  Future<EncointerStore> loadEncointerCache(String encointerFinalCacheKey) async {
+  Future<EncointerStore?> loadEncointerCache(String encointerFinalCacheKey) async {
     var cachedEncointerStore = await localStorage.getMap(encointerFinalCacheKey);
 
     if (cachedEncointerStore != null) {

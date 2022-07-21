@@ -177,7 +177,6 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
         {
           return Container();
         }
-        break;
       case TransferState.submitting:
         {
           return SizedBox(
@@ -186,7 +185,6 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
             child: CircularProgressIndicator(),
           );
         }
-        break;
       case TransferState.finished:
         {
           if (!_animationInitialized) {
@@ -202,7 +200,6 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
             ),
           );
         }
-        break;
       case TransferState.failed:
         {
           return Container(
@@ -217,10 +214,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
             ),
           );
         }
-        break;
       default:
         return Text("Unknown transfer state");
-        break;
     }
   }
 
@@ -234,12 +229,10 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
         {
           return Text(dic.assets.paymentDoYouWantToProceed, style: h2Grey);
         }
-        break;
       case TransferState.submitting:
         {
           return Text(dic.assets.paymentSubmitting, style: h2Grey);
         }
-        break;
       case TransferState.finished:
         {
           var date = DateFormat.yMd().format(_blockTimestamp);
@@ -259,7 +252,6 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
             ),
           );
         }
-        break;
       case TransferState.failed:
         {
           return Text(
@@ -267,10 +259,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
             style: h2Grey,
           );
         }
-        break;
       default:
         return Text("Unknown transfer state");
-        break;
     }
   }
 
