@@ -24,6 +24,9 @@ const encointerCacheVersionPrefix = 'encointer-cache-version-key';
 /// Should be increased if cache incompatibilities have been introduced.
 const encointerCacheVersion = 'v1.0';
 
+/// Global aggregated storage for the app.
+///
+/// the sub-storages are marked as `late final` as they will be initialized exactly once at startup in `lib/app.dart`.
 class AppStore extends _AppStore with _$AppStore {
   AppStore(
     LocalStorage localStorage, {
