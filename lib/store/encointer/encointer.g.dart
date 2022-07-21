@@ -27,10 +27,11 @@ EncointerStore _$EncointerStoreFromJson(Map<String, dynamic> json) => EncointerS
               (k, e) => MapEntry(k, BazaarStore.fromJson(e as Map<String, dynamic>)),
             ))
           : null
-      ..communityStores =
-          ObservableMap<String, CommunityStore>.of((json['communityStores'] as Map<String, dynamic>).map(
-        (k, e) => MapEntry(k, CommunityStore.fromJson(e as Map<String, dynamic>)),
-      ))
+      ..communityStores = json['communityStores'] != null
+          ? ObservableMap<String, CommunityStore>.of((json['communityStores'] as Map<String, dynamic>).map(
+              (k, e) => MapEntry(k, CommunityStore.fromJson(e as Map<String, dynamic>)),
+            ))
+          : null
       ..accountStores = json['accountStores'] != null
           ? ObservableMap<String?, EncointerAccountStore>.of((json['accountStores'] as Map<String, dynamic>).map(
               (k, e) => MapEntry(k, EncointerAccountStore.fromJson(e as Map<String, dynamic>)),

@@ -54,7 +54,7 @@ class TapTooltip extends StatefulWidget {
     this.waitDuration,
     this.showDuration,
     this.child,
-  })  : super(key: key);
+  }) : super(key: key);
 
   /// The text to display in the tooltip.
   final String message;
