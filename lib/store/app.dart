@@ -25,7 +25,10 @@ const encointerCacheVersionPrefix = 'encointer-cache-version-key';
 const encointerCacheVersion = 'v1.0';
 
 class AppStore extends _AppStore with _$AppStore {
-  AppStore(LocalStorage localStorage, {StoreConfig? config}) : super(localStorage, config: config);
+  AppStore(
+    LocalStorage localStorage, {
+    StoreConfig config = StoreConfig.Normal,
+  }) : super(localStorage, config: config);
 }
 
 enum StoreConfig {

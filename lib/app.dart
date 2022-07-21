@@ -81,7 +81,7 @@ class _WalletAppState extends State<WalletApp> {
 
   Future<int> _initStore(BuildContext context) async {
     // Todo: Use provider pattern instead of globals, see: https://github.com/encointer/encointer-wallet-flutter/issues/132
-    globalAppStore = widget.config.mockLocalStorage!
+    globalAppStore = widget.config.mockLocalStorage
         ? AppStore(MockLocalStorage(), config: widget.config.appStoreConfig)
         : AppStore(LocalStorage(), config: widget.config.appStoreConfig);
 
@@ -94,7 +94,7 @@ class _WalletAppState extends State<WalletApp> {
     final jsServiceEncointer = await DefaultAssetBundle.of(context).loadString('lib/js_service_encointer/dist/main.js');
 
     webApi =
-        widget.config.mockSubstrateApi! ? MockApi(_appStore, jsServiceEncointer) : Api(_appStore, jsServiceEncointer);
+        widget.config.mockSubstrateApi ? MockApi(_appStore, jsServiceEncointer) : Api(_appStore, jsServiceEncointer);
 
     webApi!.init();
 
