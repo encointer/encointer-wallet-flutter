@@ -31,7 +31,7 @@ class AccountApi {
     List<AccountData> contacts = List<AccountData>.of(store.settings!.contactList);
     getAddressIcons(contacts.map((i) => i.address).toList());
     // set pubKeyAddressMap for observation accounts
-    contacts.retainWhere((i) => i.observation);
+    contacts.retainWhere((i) => i.observation ?? false);
     List<String?> observations = contacts.map((i) => i.pubKey).toList();
     if (observations.length > 0) {
       encodeAddress(observations);

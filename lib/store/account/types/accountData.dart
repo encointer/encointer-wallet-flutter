@@ -17,6 +17,6 @@ abstract class _AccountData {
   Map<String, dynamic>? encoding = Map<String, dynamic>();
   Map<String, dynamic>? meta = Map<String, dynamic>();
 
-  String memo = '';
-  bool observation = false;
+  String? memo = '';
+  bool? observation = false;
 }

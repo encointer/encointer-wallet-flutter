@@ -100,7 +100,7 @@ abstract class _AccountStore with Store {
   List<AccountData> get accountListAll {
     List<AccountData> accList = accountList.toList();
     List<AccountData> contactList = rootStore.settings!.contactList.toList();
-    contactList.retainWhere((i) => i.observation);
+    contactList.retainWhere((i) => i.observation ?? false);
     accList.addAll(contactList);
     return accList;
   }
