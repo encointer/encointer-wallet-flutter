@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 const EncointerJsService = "EncointerJsService";
@@ -16,7 +15,7 @@ class JSApi {
 
   late Function _webViewPostInitCallback;
 
-  Future<void> launchWebView(BuildContext context, Future<void> Function() webViewPostInitCallback) async {
+  Future<void> launchWebView(String jsServiceEncointer, Future<void> Function() webViewPostInitCallback) async {
     _msgHandlers = {};
     _msgCompleters = {};
     _evalJavascriptUID = 0;
@@ -26,9 +25,6 @@ class JSApi {
     if (_web != null) {
       closeWebView();
     }
-
-    String jsServiceEncointer =
-        await DefaultAssetBundle.of(context).loadString('lib/js_service_encointer/dist/main.js');
 
     _web = HeadlessInAppWebView(
       initialData: InAppWebViewInitialData(data: jSSourceHtmlContainer(jsServiceEncointer)),

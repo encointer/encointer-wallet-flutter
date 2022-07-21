@@ -20,7 +20,7 @@ void main() {
       accList = [testAcc];
       currentAccountPubKey = accList[0]['pubKey'];
 
-      webApi = MockApi(null, root, withUi: false);
+      webApi = MockApi(root, "", withUi: false);
 
       await root.init('_en');
 
@@ -84,7 +84,7 @@ void main() {
       accList = [testAcc];
       currentAccountPubKey = accList[0]['pubKey'];
 
-      webApi = MockApi(null, root, withUi: false);
+      webApi = MockApi(root, "", withUi: false);
       await root.init('_en');
 
       // re-initialize with cacheKey that does not mess with real cache

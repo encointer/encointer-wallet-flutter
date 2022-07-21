@@ -91,7 +91,11 @@ class _WalletAppState extends State<WalletApp> {
     await _appStore.init(Localizations.localeOf(context).toString());
 
     // init webApi after store initiated
-    webApi = widget.config.mockSubstrateApi! ? MockApi(context, _appStore) : Api(context, _appStore);
+    final jsServiceEncointer = await DefaultAssetBundle.of(context).loadString('lib/js_service_encointer/dist/main.js');
+
+    webApi =
+        widget.config.mockSubstrateApi! ? MockApi(_appStore, jsServiceEncointer) : Api(_appStore, jsServiceEncointer);
+
     webApi!.init();
 
     _changeLang(context, _appStore.settings.localeCode);

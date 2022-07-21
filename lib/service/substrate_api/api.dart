@@ -12,7 +12,6 @@ import 'package:encointer_wallet/service/substrate_api/core/dartApi.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointerApi.dart';
 import 'package:encointer_wallet/service/substrate_api/types/genExternalLinksParams.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'core/jsApi.dart';
@@ -21,10 +20,11 @@ import 'core/jsApi.dart';
 Api? webApi;
 
 class Api {
-  Api(this.context, this.store);
+  Api(this.store, this._jsServiceEncointer);
 
-  final BuildContext? context;
   final AppStore store;
+  final String _jsServiceEncointer;
+
   late var jsStorage;
 
   JSApi? js;
@@ -62,7 +62,9 @@ class Api {
     await encointer!.close();
   }
 
-  Future<void> launchWebview({bool customNode = false}) async {
+  Future<void> launchWebview({
+    bool customNode = false,
+  }) async {
     var connectFunc = customNode ? connectNode : connectNodeAll;
 
     Future<void> postInitCallback() async {
@@ -74,7 +76,7 @@ class Api {
       connectFunc();
     }
 
-    return js!.launchWebView(context!, postInitCallback);
+    return js!.launchWebView(_jsServiceEncointer, postInitCallback);
   }
 
   /// Evaluate javascript [code] in the webView.
