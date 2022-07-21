@@ -3,15 +3,15 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/assets/types/transferData.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class TransferDetailPage extends StatelessWidget {
   TransferDetailPage(this.store);
 
   static const String route = '/assets/tx';
-  final AppStore? store;
+  final AppStore store;
 
   @override
   Widget build(BuildContext context) {

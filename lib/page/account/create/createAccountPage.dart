@@ -8,7 +8,7 @@ class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage(this.store);
 
   static const String route = '/account/createAccount';
-  final AppStore? store;
+  final AppStore store;
 
   @override
   _CreateAccountPageState createState() => _CreateAccountPageState(store);
@@ -17,7 +17,7 @@ class CreateAccountPage extends StatefulWidget {
 class _CreateAccountPageState extends State<CreateAccountPage> {
   _CreateAccountPageState(this.store);
 
-  final AppStore? store;
+  final AppStore store;
 
   @override
   Widget build(BuildContext context) {

@@ -13,7 +13,7 @@ class AddAccountForm extends StatelessWidget {
   AddAccountForm({this.submitting, this.onSubmit, this.store});
   final Function? onSubmit;
   final bool? submitting;
-  final AppStore? store;
+  final AppStore store;
 
   static final _formKey = GlobalKey<FormState>();
 

@@ -10,7 +10,7 @@ enum ChangeResult {
 }
 
 Future<ChangeResult> changeNetworkAndCommunity(
-  AppStore? store,
+  AppStore store,
   Api? api,
   String? networkInfo,
   CommunityIdentifier cid,
@@ -25,7 +25,7 @@ Future<ChangeResult> changeNetworkAndCommunity(
 }
 
 Future<ChangeResult> changeNetwork(
-  AppStore? store,
+  AppStore store,
   Api? api,
   String? networkInfo,
   CommunityIdentifier cid,
@@ -56,7 +56,7 @@ Future<ChangeResult> changeNetwork(
 }
 
 Future<ChangeResult> changeCommunity(
-  AppStore? store,
+  AppStore store,
   Api api,
   String? networkInfo,
   CommunityIdentifier cid,

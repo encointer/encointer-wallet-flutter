@@ -11,7 +11,7 @@ class ImportAccountPage extends StatefulWidget {
   const ImportAccountPage(this.store);
 
   static const String route = '/account/import';
-  final AppStore? store;
+  final AppStore store;
 
   @override
   _ImportAccountPageState createState() => _ImportAccountPageState(store);
@@ -20,7 +20,7 @@ class ImportAccountPage extends StatefulWidget {
 class _ImportAccountPageState extends State<ImportAccountPage> {
   _ImportAccountPageState(this.store);
 
-  final AppStore? store;
+  final AppStore store;
 
   String? _keyType = '';
   String? _cryptoType = '';

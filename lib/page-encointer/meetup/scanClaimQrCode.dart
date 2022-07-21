@@ -16,7 +16,7 @@ import 'package:permission_handler/permission_handler.dart';
 class ScanClaimQrCode extends StatelessWidget {
   ScanClaimQrCode(this.store, this.confirmedParticipantsCount);
 
-  final AppStore? store;
+  final AppStore store;
   final int confirmedParticipantsCount;
 
   final GlobalKey<QrcodeReaderViewState> _qrViewKey = GlobalKey();

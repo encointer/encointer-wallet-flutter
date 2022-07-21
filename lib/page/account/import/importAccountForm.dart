@@ -1,9 +1,9 @@
 import 'package:encointer_wallet/common/components/accountAdvanceOption.dart';
 import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
-import 'package:encointer_wallet/utils/inputValidation.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/inputValidation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/translations/translationsAccount.dart';
@@ -13,7 +13,7 @@ import 'package:flutter/material.dart';
 class ImportAccountForm extends StatefulWidget {
   const ImportAccountForm(this.store, this.onSubmit);
 
-  final AppStore? store;
+  final AppStore store;
   final Function onSubmit;
 
   @override
@@ -28,7 +28,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
 
   final _formKey = GlobalKey<FormState>();
 
-  final AppStore? store;
+  final AppStore store;
 
   final TextEditingController _keyCtrl = new TextEditingController();
   final TextEditingController _nameCtrl = new TextEditingController();

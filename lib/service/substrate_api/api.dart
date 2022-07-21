@@ -24,7 +24,7 @@ class Api {
   Api(this.context, this.store);
 
   final BuildContext? context;
-  final AppStore? store;
+  final AppStore store;
   late var jsStorage;
 
   JSApi? js;

@@ -13,7 +13,7 @@ import '../theme.dart';
 
 class AddressInputField extends StatefulWidget {
   AddressInputField(this.store, {this.label, this.initialValue, this.onChanged, this.hideIdenticon = false});
-  final AppStore? store;
+  final AppStore store;
   final String? label;
   final AccountData? initialValue;
   final Function(AccountData)? onChanged;

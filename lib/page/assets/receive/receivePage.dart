@@ -18,7 +18,7 @@ import 'package:qr_flutter_fork/qr_flutter_fork.dart';
 class ReceivePage extends StatefulWidget {
   ReceivePage(this.store);
   static const String route = '/assets/receive';
-  final AppStore? store;
+  final AppStore store;
   @override
   _ReceivePageState createState() => _ReceivePageState();
 }

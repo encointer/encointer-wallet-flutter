@@ -15,7 +15,7 @@ class EncointerHomePage extends StatefulWidget {
 
   static final GlobalKey encointerHomePageKey = GlobalKey();
   static const String route = '/';
-  final AppStore? store;
+  final AppStore store;
 
   @override
   _EncointerHomePageState createState() => new _EncointerHomePageState(store);
@@ -24,7 +24,7 @@ class EncointerHomePage extends StatefulWidget {
 class _EncointerHomePageState extends State<EncointerHomePage> {
   _EncointerHomePageState(this.store);
 
-  final AppStore? store;
+  final AppStore store;
 
   final PageController _pageController = PageController();
 

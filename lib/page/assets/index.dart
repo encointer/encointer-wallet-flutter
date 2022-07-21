@@ -37,7 +37,7 @@ import 'account_or_community/switchAccountOrCommunity.dart';
 class Assets extends StatefulWidget {
   Assets(this.store);
 
-  final AppStore? store;
+  final AppStore store;
 
   @override
   _AssetsState createState() => _AssetsState(store);
@@ -46,7 +46,7 @@ class Assets extends StatefulWidget {
 class _AssetsState extends State<Assets> {
   _AssetsState(this.store);
 
-  final AppStore? store;
+  final AppStore store;
   static const double panelHeight = 396;
   static const double fractionOfScreenHeight = .7;
   static const double avatarSize = 70;

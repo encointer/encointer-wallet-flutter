@@ -10,7 +10,7 @@ import 'package:qr_flutter_fork/qr_flutter_fork.dart';
 class AccountSharePage extends StatefulWidget {
   AccountSharePage(this.store);
   static const String route = '/profile/share';
-  final AppStore? store;
+  final AppStore store;
   @override
   _AccountSharePageState createState() => _AccountSharePageState();
 }

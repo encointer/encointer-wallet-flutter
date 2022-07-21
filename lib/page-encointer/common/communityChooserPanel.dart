@@ -85,7 +85,7 @@ class CombinedCommunityAndAccountAvatar extends StatefulWidget {
       this.accountAvatarSize = 34})
       : super(key: key);
 
-  final AppStore? store;
+  final AppStore store;
   final double communityAvatarSize;
   final double accountAvatarSize;
 
@@ -96,7 +96,7 @@ class CombinedCommunityAndAccountAvatar extends StatefulWidget {
 }
 
 class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAndAccountAvatar> {
-  final AppStore? store;
+  final AppStore store;
 
   _CombinedCommunityAndAccountAvatarState(this.store);
 
@@ -156,7 +156,7 @@ class CommunityAvatar extends StatelessWidget {
     this.avatarSize = 120,
   }) : super(key: key);
 
-  final AppStore? store;
+  final AppStore store;
   final double avatarSize;
   final Future<SvgPicture> avatarIcon;
 

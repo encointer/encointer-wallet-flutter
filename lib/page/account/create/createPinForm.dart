@@ -10,7 +10,7 @@ import 'package:flutter/services.dart';
 class CreatePinForm extends StatefulWidget {
   CreatePinForm({this.onSubmit, this.store});
   final Function? onSubmit;
-  final AppStore? store;
+  final AppStore store;
 
   @override
   _CreatePinFormState createState() => _CreatePinFormState(store);
@@ -19,7 +19,7 @@ class CreatePinForm extends StatefulWidget {
 class _CreatePinFormState extends State<CreatePinForm> {
   _CreatePinFormState(this.store);
 
-  final AppStore? store;
+  final AppStore store;
 
   final _formKey = GlobalKey<FormState>();
 

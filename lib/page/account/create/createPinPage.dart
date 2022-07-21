@@ -16,7 +16,7 @@ class CreatePinPage extends StatefulWidget {
   const CreatePinPage(this.store);
 
   static const String route = '/account/createPin';
-  final AppStore? store;
+  final AppStore store;
 
   @override
   _CreatePinPageState createState() => _CreatePinPageState(store);
@@ -25,7 +25,7 @@ class CreatePinPage extends StatefulWidget {
 class _CreatePinPageState extends State<CreatePinPage> {
   _CreatePinPageState(this.store);
 
-  final AppStore? store;
+  final AppStore store;
 
   late Future<void> Function() onCreatePin;
 

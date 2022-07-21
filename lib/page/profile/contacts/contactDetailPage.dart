@@ -22,7 +22,7 @@ class ContactDetailPage extends StatelessWidget {
 
   static const String route = '/profile/contactDetail';
 
-  final AppStore? store;
+  final AppStore store;
   final Api? api;
 
   void _removeItem(BuildContext context, AccountData account) {
@@ -164,7 +164,7 @@ class ContactDetailPage extends StatelessWidget {
 class EndorseButton extends StatelessWidget {
   EndorseButton(this.store, this.api, this.contact);
 
-  final AppStore? store;
+  final AppStore store;
   final Api? api;
   final AccountData contact;
 

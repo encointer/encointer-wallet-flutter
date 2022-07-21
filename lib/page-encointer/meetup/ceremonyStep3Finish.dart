@@ -18,7 +18,7 @@ class CeremonyStep3Finish extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final AppStore? store;
+  final AppStore store;
   final Api? api;
 
   @override

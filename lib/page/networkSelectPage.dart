@@ -18,7 +18,7 @@ class NetworkSelectPage extends StatefulWidget {
   NetworkSelectPage(this.store, this.changeTheme);
 
   static const String route = '/network';
-  final AppStore? store;
+  final AppStore store;
   final Function changeTheme;
 
   @override
@@ -28,7 +28,7 @@ class NetworkSelectPage extends StatefulWidget {
 class _NetworkSelectPageState extends State<NetworkSelectPage> {
   _NetworkSelectPageState(this.store, this.changeTheme);
 
-  final AppStore? store;
+  final AppStore store;
   final Function changeTheme;
 
   // Here we commented out the two not-active networks of Cantillon. When they will be relevant, they can be uncommented #232

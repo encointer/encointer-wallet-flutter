@@ -86,7 +86,7 @@ Widget errorDialog(BuildContext context, String errorMsg) {
 
 Future<ChangeResult?> showChangeNetworkAndCommunityDialog(
   BuildContext context,
-  AppStore? store,
+  AppStore store,
   Api? api,
   String? network,
   CommunityIdentifier cid,
@@ -146,7 +146,7 @@ Future<ChangeResult> changeWithLoadingDialog(
 
 Future<ChangeResult?> showChangeCommunityDialog(
   BuildContext context,
-  AppStore? store,
+  AppStore store,
   Api? api,
   String? network,
   CommunityIdentifier cid,

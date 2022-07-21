@@ -15,7 +15,7 @@ class ContactPage extends StatefulWidget {
   ContactPage(this.store);
 
   static const String route = '/profile/contact';
-  final AppStore? store;
+  final AppStore store;
 
   @override
   _Contact createState() => _Contact(store);
@@ -23,7 +23,7 @@ class ContactPage extends StatefulWidget {
 
 class _Contact extends State<ContactPage> {
   _Contact(this.store);
-  final AppStore? store;
+  final AppStore store;
 
   final _formKey = GlobalKey<FormState>();
 

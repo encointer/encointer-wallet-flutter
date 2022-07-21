@@ -21,7 +21,7 @@ class CeremonyStep1Count extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final AppStore? store;
+  final AppStore store;
   final Api? api;
 
   final TextEditingController _attendeesCountController = TextEditingController();

@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 class AccountSelectList extends StatelessWidget {
   AccountSelectList(this.store, this.list);
 
-  final AppStore? store;
+  final AppStore store;
   final List<AccountData> list;
 
   @override

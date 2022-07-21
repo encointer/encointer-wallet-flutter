@@ -17,7 +17,7 @@ import 'package:iconsax/iconsax.dart';
 class CreateAccountForm extends StatelessWidget {
   CreateAccountForm({this.store});
 
-  final AppStore? store;
+  final AppStore store;
 
   final _formKey = GlobalKey<FormState>();
 

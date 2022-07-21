@@ -15,7 +15,7 @@ class AddAccountPage extends StatefulWidget {
   const AddAccountPage(this.store);
 
   static const String route = '/account/addAccount';
-  final AppStore? store;
+  final AppStore store;
 
   @override
   _AddAccountPageState createState() => _AddAccountPageState(store);
@@ -24,7 +24,7 @@ class AddAccountPage extends StatefulWidget {
 class _AddAccountPageState extends State<AddAccountPage> {
   _AddAccountPageState(this.store);
 
-  final AppStore? store;
+  final AppStore store;
 
   bool _submitting = false;
 

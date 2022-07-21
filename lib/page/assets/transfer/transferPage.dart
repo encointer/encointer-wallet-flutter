@@ -41,7 +41,7 @@ class TransferPage extends StatefulWidget {
   const TransferPage(this.store);
 
   static const String route = '/assets/transfer';
-  final AppStore? store;
+  final AppStore store;
 
   @override
   _TransferPageState createState() => _TransferPageState(store);
@@ -50,7 +50,7 @@ class TransferPage extends StatefulWidget {
 class _TransferPageState extends State<TransferPage> {
   _TransferPageState(this.store);
 
-  final AppStore? store;
+  final AppStore store;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -262,7 +262,7 @@ class AccountBalanceWithMoreDigits extends StatelessWidget {
     required this.decimals,
   }) : super(key: key);
 
-  final AppStore? store;
+  final AppStore store;
   final double? available;
   final int decimals;
 

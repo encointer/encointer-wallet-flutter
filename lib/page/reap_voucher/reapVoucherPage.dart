@@ -33,7 +33,7 @@ class ReapVoucherPage extends StatefulWidget {
   const ReapVoucherPage(this.store, this.api);
 
   static const String route = '/qrcode/voucher';
-  final AppStore? store;
+  final AppStore store;
   final Api? api;
 
   @override

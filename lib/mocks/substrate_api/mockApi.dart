@@ -13,7 +13,7 @@ import 'mockEncointerApi.dart';
 import 'mockJSApi.dart';
 
 class MockApi extends Api {
-  MockApi(BuildContext? context, AppStore? store, {this.withUi = true}) : super(context, store);
+  MockApi(BuildContext? context, AppStore store, {this.withUi = true}) : super(context, store);
 
   final bool withUi;
 

@@ -23,7 +23,7 @@ class AccountManagePage extends StatefulWidget {
   AccountManagePage(this.store);
 
   static const String route = '/profile/account';
-  final AppStore? store;
+  final AppStore store;
 
   @override
   _AccountManagePageState createState() => _AccountManagePageState(store);
@@ -34,7 +34,7 @@ enum AccountAction { delete, export }
 class _AccountManagePageState extends State<AccountManagePage> {
   _AccountManagePageState(this.store);
 
-  final AppStore? store;
+  final AppStore store;
   TextEditingController? _nameCtrl;
   bool _isEditingText = false;
 
@@ -357,7 +357,7 @@ class CommunityIcon extends StatelessWidget {
     required this.address,
   }) : super(key: key);
 
-  final AppStore? store;
+  final AppStore store;
   final Widget icon;
   final String? address;
 

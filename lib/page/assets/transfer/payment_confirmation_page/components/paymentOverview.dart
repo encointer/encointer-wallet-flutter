@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 class PaymentOverview extends StatelessWidget {
   PaymentOverview(this.store, this.communitySymbol, this.recipientAccount, this.amount);
 
-  final AppStore? store;
+  final AppStore store;
 
   final String? communitySymbol;
   final AccountData? recipientAccount;

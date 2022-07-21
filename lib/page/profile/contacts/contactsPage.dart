@@ -11,7 +11,7 @@ class ContactsPage extends StatelessWidget {
   ContactsPage(this.store);
 
   static const String route = '/profile/contacts';
-  final AppStore? store;
+  final AppStore store;
 
   @override
   Widget build(BuildContext context) => Observer(

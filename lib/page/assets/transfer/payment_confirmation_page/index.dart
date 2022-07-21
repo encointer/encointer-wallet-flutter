@@ -37,7 +37,7 @@ class PaymentConfirmationPage extends StatefulWidget {
   const PaymentConfirmationPage(this.store, this.api);
 
   static const String route = '/assets/paymentConfirmation';
-  final AppStore? store;
+  final AppStore store;
   final Api? api;
 
   @override

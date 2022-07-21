@@ -26,7 +26,7 @@ class ScanPage extends StatelessWidget {
   final GlobalKey<QrcodeReaderViewState> _qrViewKey = GlobalKey();
 
   final QrScanService qrScanService = QrScanService();
-  final AppStore? store;
+  final AppStore store;
 
   Future<bool> canOpenCamera() async {
     // will do nothing if already granted

@@ -19,7 +19,7 @@ import 'package:iconsax/iconsax.dart';
 class Profile extends StatefulWidget {
   Profile(this.store);
 
-  final AppStore? store;
+  final AppStore store;
 
   @override
   _ProfileState createState() => _ProfileState(store);
@@ -28,7 +28,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   _ProfileState(this.store);
 
-  final AppStore? store;
+  final AppStore store;
   final Api? api = webApi;
   EndpointData? _selectedNetwork;
 
@@ -218,7 +218,7 @@ class _ProfileState extends State<Profile> {
   }
 }
 
-Future<void> showRemoveAccountsDialog(BuildContext context, AppStore? store) {
+Future<void> showRemoveAccountsDialog(BuildContext context, AppStore store) {
   final dic = I18n.of(context)!.translationsForLocale();
 
   return showCupertinoDialog(
