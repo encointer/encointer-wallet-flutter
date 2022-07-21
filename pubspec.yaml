@@ -94,7 +94,6 @@ dev_dependencies:
   json_serializable: ^6.3.1
   json_serializable_mobx: ^0.10.2
   mobx_codegen: ^2.0.7
-  mockito: ^5.2.0
   # Check unused dependencies. Note: Some packages are not imported by any dart files but are used
   # for their executables. If that is the case, they can be white-listed by using the --ignore option.
   # mobx_codegen, json_seriablizable belong to these.

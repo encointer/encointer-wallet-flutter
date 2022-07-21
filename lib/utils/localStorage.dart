@@ -18,7 +18,7 @@ class LocalStorage {
     return storage.addItemToList(accountsKey, acc);
   }
 
-  Future<void> removeAccount(String? pubKey) async {
+  Future<void> removeAccount(String pubKey) async {
     return storage.removeItemFromList(accountsKey, 'pubKey', pubKey);
   }
 
@@ -50,11 +50,11 @@ class LocalStorage {
     return storage.getKV(encointerCommunityKey);
   }
 
-  Future<void> addContact(Map<String, dynamic> con) async {
-    return storage.addItemToList(contactsKey, con);
+  Future<void> addContact(Map<String, dynamic> contact) async {
+    return storage.addItemToList(contactsKey, contact);
   }
 
-  Future<void> removeContact(String? address) async {
+  Future<void> removeContact(String address) async {
     return storage.removeItemFromList(contactsKey, 'address', address);
   }
 
@@ -82,7 +82,7 @@ class LocalStorage {
     return {};
   }
 
-  Future<bool> setObject(String key, Object? value) async {
+  Future<bool> setObject(String key, Object value) async {
     String str = await compute(jsonEncode, value);
     return storage.setKV('${customKVKey}_$key', str);
   }
@@ -152,7 +152,7 @@ class _LocalStorage {
     setKV(storeKey, jsonEncode(ls));
   }
 
-  Future<void> removeItemFromList(String storeKey, String itemKey, String? itemValue) async {
+  Future<void> removeItemFromList(String storeKey, String itemKey, String itemValue) async {
     var ls = await getList(storeKey);
     ls.removeWhere((item) => item[itemKey] == itemValue);
     setKV(storeKey, jsonEncode(ls));

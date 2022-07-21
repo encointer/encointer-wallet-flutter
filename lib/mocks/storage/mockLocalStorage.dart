@@ -1,75 +1,85 @@
 import 'dart:convert';
 
 import 'package:encointer_wallet/utils/localStorage.dart';
-import 'package:mockito/mockito.dart';
 
 import '../data/mockAccountData.dart';
 
-class MockLocalStorage extends Mock implements LocalStorage {}
-
-MockLocalStorage getMockLocalStorage() {
-  final localStorage = MockLocalStorage();
-  when(localStorage.getAccountList()).thenAnswer((_) {
+class MockLocalStorage extends LocalStorage {
+  @override
+  Future<List<Map<String, dynamic>>> getAccountList() {
     return Future.value(accList);
-  } as Future<List<Map<String, dynamic>>> Function(Invocation));
-  when(localStorage.addAccount(any)).thenAnswer((invocation) {
-    accList.add(invocation.positionalArguments[0]);
-    return Future.value();
-  });
-  when(localStorage.removeAccount(any)).thenAnswer((invocation) {
-    accList.removeWhere((i) => i!['pubKey'] == invocation.positionalArguments[0]);
-    return Future.value();
-  });
-  when(localStorage.setCurrentAccount(any)).thenAnswer((invocation) {
-    currentAccountPubKey = invocation.positionalArguments[0];
-    return Future.value();
-  });
-  when(localStorage.getCurrentAccount()).thenAnswer((_) {
+  }
+
+  @override
+  Future<void> addAccount(Map<String, dynamic> acc) async {
+    accList.add(acc);
+  }
+
+  @override
+  Future<void> removeAccount(String pubKey) async {
+    accList.removeWhere((i) => i['pubKey'] == pubKey);
+  }
+
+  @override
+  Future<bool> setCurrentAccount(String pubKey) async {
+    currentAccountPubKey = pubKey;
+    return Future.value(true);
+  }
+
+  @override
+  Future<String?> getCurrentAccount() async {
     return Future.value(currentAccountPubKey);
-  });
-  when(localStorage.getSeeds(any)).thenAnswer((_) => Future.value({}));
-  when(localStorage.getAccountCache(any, any)).thenAnswer((_) => Future.value(null));
+  }
 
-  when(localStorage.getContactList())
-      .thenAnswer(((_) => Future.value(contactList)) as Future<List<Map<String, dynamic>>> Function(Invocation));
-  when(localStorage.addContact(any)).thenAnswer((invocation) {
-    contactList.add(invocation.positionalArguments[0]);
-    return Future.value();
-  });
-  when(localStorage.removeContact(any)).thenAnswer((invocation) {
-    contactList.removeWhere((i) => i!['address'] == invocation.positionalArguments[0]);
-    return Future.value();
-  });
-  when(localStorage.updateContact(any)).thenAnswer((invocation) {
-    contactList.removeWhere((i) => i!['pubKey'] == invocation.positionalArguments[0]['pubKey']);
-    contactList.add(invocation.positionalArguments[0]);
-    return Future.value();
-  });
+  @override
+  Future<Map> getSeeds(String seedType) async {
+    return Future.value({});
+  }
 
-  when(localStorage.getObject(any)).thenAnswer((realInvocation) async {
-    String? value = storage[realInvocation.positionalArguments.first];
-    if (value != null) {
-      Object? data = jsonDecode(value);
-      return data!;
-    }
+  @override
+  Future<Object?> getAccountCache(String? accPubKey, String key) async {
     return Future.value(null);
-  } as Future<Object> Function(Invocation));
+  }
 
-  when(localStorage.getMap(any)).thenAnswer((realInvocation) async {
-    String? value = storage[realInvocation.positionalArguments.first];
+  @override
+  Future<List<Map<String, dynamic>>> getContactList() async {
+    return Future.value(contactList);
+  }
+
+  @override
+  Future<void> addContact(Map<String, dynamic> contact) async {
+    contactList.add(contact);
+    return Future.value(null);
+  }
+
+  @override
+  Future<void> removeContact(String address) async {
+    contactList.removeWhere((i) => i['address'] == address);
+    return Future.value(null);
+  }
+
+  @override
+  Future<void> updateContact(Map<String, dynamic> con) async {
+    contactList.removeWhere((i) => i['pubKey'] == con['pubKey']);
+    contactList.add(con);
+    return Future.value(null);
+  }
+
+  @override
+  Future<Object?> getObject(String key) async {
+    String? value = storage[key];
+
     if (value != null) {
-      Object? data = jsonDecode(value);
+      Object data = jsonDecode(value);
       return data;
     }
     return Future.value(null);
-  } as Future<Map<String, dynamic>> Function(Invocation));
+  }
 
-  when(localStorage.setObject(any, any)).thenAnswer((realInvocation) async {
-    var args = realInvocation.positionalArguments;
-    String str = jsonEncode(args[1]);
-    storage[args[0]] = str;
-    return Future.value();
-  });
-
-  return localStorage;
+  @override
+  Future<bool> setObject(String key, Object value) async {
+    String str = jsonEncode(value);
+    storage[key] = str;
+    return Future.value(true);
+  }
 }

@@ -83,7 +83,7 @@ class _WalletAppState extends State<WalletApp> {
     if (_appStore == null) {
       // Todo: Use provider pattern instead of globals, see: https://github.com/encointer/encointer-wallet-flutter/issues/132
       globalAppStore = widget.config.mockLocalStorage!
-          ? AppStore(getMockLocalStorage(), config: widget.config.appStoreConfig)
+          ? AppStore(MockLocalStorage(), config: widget.config.appStoreConfig)
           : AppStore(LocalStorage(), config: widget.config.appStoreConfig);
 
       _appStore = globalAppStore;

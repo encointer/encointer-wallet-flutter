@@ -15,10 +15,10 @@ void main() {
 
   group('EncointerStore test', () {
     test('encointer store initialization, serialization and cache works', () async {
-      globalAppStore = AppStore(getMockLocalStorage());
+      globalAppStore = AppStore(MockLocalStorage());
       final AppStore root = globalAppStore;
       accList = [testAcc];
-      currentAccountPubKey = accList[0]!['pubKey'];
+      currentAccountPubKey = accList[0]['pubKey'];
 
       webApi = MockApi(null, root, withUi: false);
 
@@ -79,10 +79,10 @@ void main() {
     });
 
     test('purging encointer-store works and initializing new works', () async {
-      globalAppStore = AppStore(getMockLocalStorage());
+      globalAppStore = AppStore(MockLocalStorage());
       final AppStore root = globalAppStore;
       accList = [testAcc];
-      currentAccountPubKey = accList[0]!['pubKey'];
+      currentAccountPubKey = accList[0]['pubKey'];
 
       webApi = MockApi(null, root, withUi: false);
       await root.init('_en');

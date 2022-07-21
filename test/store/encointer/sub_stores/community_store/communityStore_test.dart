@@ -8,7 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('communityStore', () {
     test('json serialization and caching works', () async {
-      var localStorage = getMockLocalStorage();
+      var localStorage = MockLocalStorage();
       var communityStoreCacheKey = "communityStore-test-cache";
 
       var communityStore = CommunityStore(

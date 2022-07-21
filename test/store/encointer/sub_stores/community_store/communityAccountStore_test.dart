@@ -61,7 +61,7 @@ void main() {
     });
 
     test('cacheFn injection works', () async {
-      var localStorage = getMockLocalStorage();
+      var localStorage = MockLocalStorage();
 
       var communityAccountStore = CommunityAccountStore(
         "My Test Network",

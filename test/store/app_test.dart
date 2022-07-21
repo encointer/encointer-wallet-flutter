@@ -5,9 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  final AppStore store = AppStore(getMockLocalStorage());
+  final AppStore store = AppStore(MockLocalStorage());
   accList = [testAcc];
-  currentAccountPubKey = accList[0]!['pubKey'];
+  currentAccountPubKey = accList[0]['pubKey'];
 
   group('store test', () {
     test('app store created and not ready', () {
