@@ -257,7 +257,7 @@ mixin _$AccountStore on _AccountStore, Store {
   late final _$decryptSeedAsyncAction = AsyncAction('_AccountStore.decryptSeed', context: context);
 
   @override
-  Future<String> decryptSeed(String? pubKey, String seedType, String password) {
+  Future<String?> decryptSeed(String pubKey, String seedType, String password) {
     return _$decryptSeedAsyncAction.run(() => super.decryptSeed(pubKey, seedType, password));
   }
 

@@ -314,7 +314,7 @@ abstract class _AccountStore with Store {
   }
 
   @action
-  Future<String> decryptSeed(String? pubKey, String seedType, String password) async {
+  Future<String?> decryptSeed(String pubKey, String seedType, String password) async {
     Map stored = await rootStore.localStorage.getSeeds(seedType);
     String? encrypted = stored[pubKey];
     if (encrypted == null) {

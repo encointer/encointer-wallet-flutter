@@ -97,7 +97,7 @@ class UI {
         );
       },
     );
-    final String code = await UpdateJSCodeApi.fetchPolkadotJSCode(network);
+    final code = await UpdateJSCodeApi.fetchPolkadotJSCode(network);
     Navigator.of(context).pop();
     showCupertinoDialog(
       context: context,
@@ -109,11 +109,11 @@ class UI {
             CupertinoButton(
               child: Text(dic.home.ok),
               onPressed: () {
-                UpdateJSCodeApi.setPolkadotJSCode(jsStorage, network, code, version);
-                Navigator.of(context).pop();
                 if (code == null) {
                   exit(0);
                 }
+                UpdateJSCodeApi.setPolkadotJSCode(jsStorage, network, code, version);
+                Navigator.of(context).pop();
               },
             ),
           ],

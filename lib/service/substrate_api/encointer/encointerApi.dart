@@ -338,7 +338,10 @@ class EncointerApi {
   /// This is needed because the aggregated account data lags behind, when then the ceremony phase is updated:
   /// See: https://github.com/encointer/encointer-wallet-flutter/issues/632
   Future<AggregatedAccountData> pollAggregatedAccountDataUntilNextPhase(
-      CeremonyPhase? nextPhase, CommunityIdentifier cid, String address) async {
+    CeremonyPhase nextPhase,
+    CommunityIdentifier cid,
+    String address,
+  ) async {
     while (true) {
       final data = await getAggregatedAccountData(cid, address);
       final phase = data.global!.ceremonyPhase;

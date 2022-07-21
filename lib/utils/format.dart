@@ -27,9 +27,6 @@ class Fmt {
   }
 
   static String dateTime(DateTime time) {
-    if (time == null) {
-      return 'date-time';
-    }
     return DateFormat('yyyy-MM-dd hh:mm').format(time);
   }
 
@@ -54,9 +51,6 @@ class Fmt {
   /// number transform 2:
   /// from <BigInt> to <double>
   static double bigIntToDouble(BigInt value, int? decimals) {
-    if (value == null) {
-      return 0;
-    }
     return value / BigInt.from(pow(10, decimals!));
   }
 
@@ -115,18 +109,12 @@ class Fmt {
     int? decimals, {
     int? length = 3,
   }) {
-    if (value == null) {
-      return '~';
-    }
     return doubleFormat(bigIntToDouble(value, decimals), length: length);
   }
 
   /// number transform 4:
   /// from <String of double> to <BigInt>
   static BigInt tokenInt(String value, int decimals) {
-    if (value == null) {
-      return BigInt.zero;
-    }
     double v = 0;
     try {
       if (value.contains(',') || value.contains('.')) {
@@ -148,9 +136,6 @@ class Fmt {
     int lengthFixed = 2,
     int? lengthMax,
   }) {
-    if (value == null) {
-      return '~';
-    }
     final int x = pow(10, lengthMax ?? lengthFixed) as int;
     final double price = (value * x).ceilToDouble() / x;
     final String tailDecimals = lengthMax == null ? '' : "#" * (lengthMax - lengthFixed);
@@ -165,9 +150,6 @@ class Fmt {
     int lengthFixed = 2,
     int? lengthMax,
   }) {
-    if (value == null) {
-      return '~';
-    }
     final int x = pow(10, lengthMax ?? lengthFixed) as int;
     final double price = (value * x).floorToDouble() / x;
     final String tailDecimals = lengthMax == null ? '' : "#" * (lengthMax - lengthFixed);
@@ -187,9 +169,6 @@ class Fmt {
     int lengthFixed = 2,
     int? lengthMax,
   }) {
-    if (value == null) {
-      return '~';
-    }
     return priceCeil(Fmt.bigIntToDouble(value, decimals), lengthFixed: lengthFixed, lengthMax: lengthMax);
   }
 
@@ -199,9 +178,6 @@ class Fmt {
     int lengthFixed = 2,
     int? lengthMax,
   }) {
-    if (value == null) {
-      return '~';
-    }
     return priceFloor(Fmt.bigIntToDouble(value, decimals), lengthFixed: lengthFixed, lengthMax: lengthMax);
   }
 
@@ -231,27 +207,6 @@ class Fmt {
       return i[0].toLowerCase().contains(value) || accName.toLowerCase().contains(value);
     });
     return ls;
-  }
-
-  static String blockToTime(int blocks, int blockDuration) {
-    if (blocks == null) return '~';
-
-    int blocksOfMin = 60000 ~/ blockDuration;
-    int blocksOfHour = 60 * blocksOfMin;
-    int blocksOfDay = 24 * blocksOfHour;
-
-    int day = (blocks / blocksOfDay).floor();
-    int hour = (blocks % blocksOfDay / blocksOfHour).floor();
-    int min = (blocks % blocksOfHour / blocksOfMin).floor();
-
-    String res = '$min mins';
-
-    if (day > 0) {
-      res = '$day days $hour hrs';
-    } else if (hour > 0) {
-      res = '$hour hrs $res';
-    }
-    return res;
   }
 
   static String accountName(BuildContext context, AccountData acc) {

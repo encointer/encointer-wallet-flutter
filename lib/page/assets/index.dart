@@ -507,8 +507,8 @@ class _AssetsState extends State<Assets> {
       bool activeAccountHasBalance = false;
       balances.forEach((cid, balanceEntry) {
         String cidStr = cid.toFmtString();
-        if (widget.store!.encointer!.communityStores.containsKey(cidStr)) {
-          var community = widget.store!.encointer!.communityStores[cidStr]!;
+        if (widget.store!.encointer!.communityStores!.containsKey(cidStr)) {
+          var community = widget.store!.encointer!.communityStores![cidStr]!;
           double demurrageRate = community.demurrage!;
           double newBalance = community.applyDemurrage(balanceEntry);
           double oldBalance = community.applyDemurrage(widget

@@ -24,7 +24,7 @@ class HorizontalBazaarItemList extends StatelessWidget {
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemExtent: cardWidth,
-          itemCount: data != null ? data.length : 0,
+          itemCount: data.length,
           itemBuilder: (context, index) => BazaarItemHorizontal(data: data, index: index),
         ),
       ),

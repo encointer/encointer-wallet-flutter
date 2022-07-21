@@ -110,7 +110,7 @@ abstract class _EncointerStore with Store {
   /// Community sub-stores.
   ///
   /// Map: CommunityIdentifier.toFmtString() -> `CommunityStore`.
-  ObservableMap<String, CommunityStore> communityStores = new ObservableMap();
+  ObservableMap<String, CommunityStore>? communityStores = new ObservableMap();
 
   /// EncointerAccount sub-stores.
   ///
@@ -127,7 +127,7 @@ abstract class _EncointerStore with Store {
   /// The `CommunityStore` for the currently chosen community.
   @computed
   CommunityStore? get community {
-    return chosenCid != null ? communityStores[chosenCid!.toFmtString()] : null;
+    return chosenCid != null ? communityStores![chosenCid!.toFmtString()] : null;
   }
 
   /// The `CommunityAccountStore` for the currently chosen community and account.
@@ -273,7 +273,7 @@ abstract class _EncointerStore with Store {
 
   @action
   void setAggregatedAccountData(CommunityIdentifier cid, String address, AggregatedAccountData accountData) {
-    var encointerAccountStore = communityStores[cid.toFmtString()]!.communityAccountStores![address];
+    var encointerAccountStore = communityStores![cid.toFmtString()]!.communityAccountStores![address];
 
     accountData.personal?.meetup != null
         ? encointerAccountStore!.setMeetup(accountData.personal!.meetup)
@@ -315,7 +315,7 @@ abstract class _EncointerStore with Store {
 
   @action
   void purgeCeremonySpecificState() {
-    communityStores.forEach((cid, store) => store.purgeCeremonySpecificState());
+    communityStores!.forEach((cid, store) => store.purgeCeremonySpecificState());
     accountStores!.forEach((cid, store) => store.purgeCeremonySpecificState());
   }
 
@@ -343,7 +343,7 @@ abstract class _EncointerStore with Store {
 
     accountStores!.forEach((cid, store) => store.initStore(cacheFn));
     bazaarStores!.forEach((cid, store) => store.initStore(cacheFn));
-    communityStores.forEach((cid, store) => store.initStore(cacheFn, applyDemurrage));
+    communityStores!.forEach((cid, store) => store.initStore(cacheFn, applyDemurrage));
 
     loadChosenCid(network);
   }
@@ -374,18 +374,18 @@ abstract class _EncointerStore with Store {
   @action
   Future<void> initCommunityStore(CommunityIdentifier cid, String? address, {shouldCache = true}) async {
     var cidFmt = cid.toFmtString();
-    if (!communityStores.containsKey(cidFmt)) {
+    if (!communityStores!.containsKey(cidFmt)) {
       _log("Adding new communityStore for cid: ${cid.toFmtString()}");
 
       var communityStore = CommunityStore(network, cid);
       communityStore.initStore(_cacheFn, applyDemurrage);
       await communityStore.initCommunityAccountStore(address);
 
-      communityStores[cidFmt] = communityStore;
+      communityStores![cidFmt] = communityStore;
       return shouldCache ? writeToCache() : Future.value(null);
     } else {
       _log("Don't add already existing communityStore for cid: ${cid.toFmtString()}");
-      await communityStores[cidFmt]!.initCommunityAccountStore(address);
+      await communityStores![cidFmt]!.initCommunityAccountStore(address);
       return Future.value(null);
     }
   }
@@ -456,10 +456,10 @@ abstract class _EncointerStore with Store {
   }
 
   Future<void> loadChosenCid(String network) async {
-    Map<String, dynamic> maybeChosenCid = await _rootStore.localStorage.getMap(chosenCidCacheKey(network));
+    Map<String, dynamic>? maybeChosenCid = await _rootStore.localStorage.getMap(chosenCidCacheKey(network));
     _log("Setting previously tracked chosenCid: ${maybeChosenCid.toString()}");
 
-    if (maybeChosenCid.isNotEmpty) {
+    if (maybeChosenCid != null) {
       // Do not use the setter here. We don't want to trigger reactions here.
       chosenCid = CommunityIdentifier.fromJson(maybeChosenCid);
     }

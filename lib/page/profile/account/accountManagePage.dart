@@ -84,7 +84,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   Widget _getBalanceEntryListTile(String cidFmt, BalanceEntry? entry, String? address) {
     final TextStyle h3 = Theme.of(context).textTheme.headline3!;
 
-    var community = store!.encointer!.communityStores[cidFmt]!;
+    var community = store!.encointer!.communityStores![cidFmt]!;
 
     _log("_getBalanceEntryListTile: ${community.toJson()}");
 
@@ -128,7 +128,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
               await store!.account!.checkSeedExist(AccountStore.seedTypeMnemonic, accountToBeEdited.pubKey);
 
           if (isMnemonic) {
-            String seed =
+            String? seed =
                 await store!.account!.decryptSeed(accountToBeEdited.pubKey, AccountStore.seedTypeMnemonic, password);
 
             Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {

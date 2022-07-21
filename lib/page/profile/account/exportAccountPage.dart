@@ -41,9 +41,9 @@ class ExportAccountPage extends StatelessWidget {
         );
       } else {
         Navigator.of(context).pop();
-        String seed = await store!.decryptSeed(store!.currentAccount.pubKey, seedType, _passCtrl.text.trim());
+        String? seed = await store!.decryptSeed(store!.currentAccount.pubKey, seedType, _passCtrl.text.trim());
         Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
-          'key': seed,
+          'key': seed!,
           'type': seedType,
         });
       }

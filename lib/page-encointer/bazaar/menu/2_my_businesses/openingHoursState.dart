@@ -122,7 +122,6 @@ abstract class _OpeningHoursForDayState with Store {
 
   @action
   addInterval(OpeningIntervalState interval) {
-    if (interval == null) return;
     openingIntervals.add(interval);
   }
 

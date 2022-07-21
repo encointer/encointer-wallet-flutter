@@ -47,7 +47,7 @@ Map<String, dynamic> _$EncointerStoreToJson(EncointerStore instance) => <String,
       'communities': instance.communities?.map((e) => e.toJson()).toList(),
       'chosenCid': instance.chosenCid?.toJson(),
       'bazaarStores': instance.bazaarStores?.map((k, e) => MapEntry(k, e.toJson())),
-      'communityStores': instance.communityStores.map((k, e) => MapEntry(k, e.toJson())),
+      'communityStores': instance.communityStores?.map((k, e) => MapEntry(k, e.toJson())),
       'accountStores': instance.accountStores?.map((k, e) => MapEntry(k, e.toJson())),
     };
 
