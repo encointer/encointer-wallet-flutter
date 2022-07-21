@@ -4,7 +4,6 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -91,29 +90,6 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     }
     await _checkAccountDuplicate(acc);
     return;
-
-    // account == null
-    showCupertinoDialog(
-      context: context,
-      builder: (BuildContext context) {
-        final Translations dic = I18n.of(context)!.translationsForLocale();
-        return CupertinoAlertDialog(
-          title: Container(),
-          content: Text('${dic.account.importInvalid} ${dic.account.createPassword}'),
-          actions: <Widget>[
-            CupertinoButton(
-              child: Text(I18n.of(context)!.translationsForLocale().home.cancel),
-              onPressed: () {
-                setState(() {
-                  _submitting = false;
-                });
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 
   Future<void> _checkAccountDuplicate(Map<String, dynamic> acc) async {

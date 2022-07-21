@@ -38,6 +38,7 @@ class MockApiEncointer extends EncointerApi {
 
   @override
   Future<CeremonyPhase?> getCurrentPhase() async {
+    // ignore: unnecessary_null_comparison
     if (store.encointer!.currentPhase == null) {
       store.encointer!.setCurrentPhase(initialPhase);
     }
@@ -55,6 +56,7 @@ class MockApiEncointer extends EncointerApi {
 
   @override
   Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String account) {
+    // ignore: null_argument_to_non_null_type
     return Future.value();
   }
 

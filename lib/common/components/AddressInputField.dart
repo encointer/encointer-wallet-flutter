@@ -33,7 +33,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
 
     // check if user input is valid address or indices
     final checkAddress = await webApi!.account.decodeAddress([input]);
-    if (checkAddress == null) {
+    if (checkAddress.isEmpty) {
       return listLocal;
     }
 
