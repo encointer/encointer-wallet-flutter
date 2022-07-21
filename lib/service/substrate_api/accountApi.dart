@@ -11,7 +11,7 @@ import 'package:encointer_wallet/store/app.dart';
 class AccountApi {
   AccountApi(this.jsApi, this.fetchAccountData);
 
-  final JSApi? jsApi;
+  final JSApi jsApi;
   final store = globalAppStore;
   final Function fetchAccountData;
 
@@ -20,7 +20,7 @@ class AccountApi {
       String accounts = jsonEncode(store.account.accountList.map((i) => AccountData.toJson(i)).toList());
 
       String ss58 = jsonEncode(network_ss58_map.values.toSet().toList());
-      Map keys = await jsApi!.evalJavascript('account.initKeys($accounts, $ss58)');
+      Map keys = await jsApi.evalJavascript('account.initKeys($accounts, $ss58)');
       store.account.setPubKeyAddressMap(Map<String, Map>.from(keys));
 
       // get accounts icons
@@ -42,7 +42,7 @@ class AccountApi {
   /// Encodes publicKeys to SS58-addresses
   Future<List<String?>> encodeAddress(List<String?> pubKeys) async {
     String ss58 = jsonEncode(network_ss58_map.values.toSet().toList());
-    Map res = await jsApi!.evalJavascript(
+    Map res = await jsApi.evalJavascript(
       'account.encodeAddress(${jsonEncode(pubKeys)}, $ss58)',
       allowRepeat: true,
     );
@@ -63,7 +63,7 @@ class AccountApi {
     if (addresses.length == 0) {
       return {};
     }
-    Map? res = await jsApi!.evalJavascript(
+    Map? res = await jsApi.evalJavascript(
       'account.decodeAddress(${jsonEncode(addresses)})',
       allowRepeat: true,
     );
@@ -74,7 +74,7 @@ class AccountApi {
   }
 
   Future<String> addressFromUri(String uri) async {
-    dynamic address = await jsApi!.evalJavascript(
+    dynamic address = await jsApi.evalJavascript(
       'account.addressFromUri("$uri")',
       allowRepeat: true,
     );
@@ -86,7 +86,7 @@ class AccountApi {
 
   /// query address with account index
   Future<List?> queryAddressWithAccountIndex(String index) async {
-    final res = await jsApi!.evalJavascript(
+    final res = await jsApi.evalJavascript(
       'account.queryAddressWithAccountIndex("$index", ${store.settings.endpoint.ss58})',
       allowRepeat: true,
     );
@@ -116,7 +116,7 @@ class AccountApi {
   Future<Map> estimateTxFees(Map txInfo, List? params, {String? rawParam}) async {
     String param = rawParam != null ? rawParam : jsonEncode(params);
     print(txInfo);
-    Map res = await jsApi!.evalJavascript('account.txFeeEstimate(${jsonEncode(txInfo)}, $param)', allowRepeat: true);
+    Map res = await jsApi.evalJavascript('account.txFeeEstimate(${jsonEncode(txInfo)}, $param)', allowRepeat: true);
     return res;
   }
 
@@ -144,11 +144,11 @@ class AccountApi {
     String param = rawParam != null ? rawParam : jsonEncode(params);
     String call = 'account.sendTx(${jsonEncode(txInfo)}, $param)';
     _log("sendTx call: $call");
-    return jsApi!.evalJavascript(call, allowRepeat: true);
+    return jsApi.evalJavascript(call, allowRepeat: true);
   }
 
   Future<void> generateAccount() async {
-    Map<String, dynamic> acc = await jsApi!.evalJavascript('account.gen()');
+    Map<String, dynamic> acc = await jsApi.evalJavascript('account.gen()');
     store.account.setNewAccountKey(acc['mnemonic']);
   }
 
@@ -161,14 +161,14 @@ class AccountApi {
     String pass = store.account.newAccount.password;
     String code = 'account.recover("$keyType", "$cryptoType", \'$key$derivePath\', "$pass")';
     code = code.replaceAll(RegExp(r'\t|\n|\r'), '');
-    Map<String, dynamic> acc = await jsApi!.evalJavascript(code, allowRepeat: true);
+    Map<String, dynamic> acc = await jsApi.evalJavascript(code, allowRepeat: true);
     return acc;
   }
 
   Future<dynamic> checkAccountPassword(AccountData account, String pass) async {
     String? pubKey = account.pubKey;
     print('checkpass: $pubKey, $pass');
-    return jsApi!.evalJavascript(
+    return jsApi.evalJavascript(
       'account.checkPassword("$pubKey", "$pass")',
       allowRepeat: true,
     );
@@ -183,7 +183,7 @@ class AccountApi {
       return [];
     }
 
-    var res = await jsApi!.evalJavascript(
+    var res = await jsApi.evalJavascript(
       'account.getAccountIndex(${jsonEncode(addresses)})',
       allowRepeat: true,
     );
@@ -197,7 +197,7 @@ class AccountApi {
       return [];
     }
 
-    var res = await jsApi!.evalJavascript(
+    var res = await jsApi.evalJavascript(
       'account.getAccountIndex(${jsonEncode(addresses)})',
       allowRepeat: true,
     );
@@ -210,7 +210,7 @@ class AccountApi {
     if (keys.length == 0) {
       return [];
     }
-    List res = await jsApi!.evalJavascript('account.genPubKeyIcons(${jsonEncode(keys)})', allowRepeat: true);
+    List res = await jsApi.evalJavascript('account.genPubKeyIcons(${jsonEncode(keys)})', allowRepeat: true);
     store.account.setPubKeyIconsMap(res);
     return res;
   }
@@ -220,7 +220,7 @@ class AccountApi {
     if (addresses.length == 0) {
       return [];
     }
-    List res = await jsApi!.evalJavascript('account.genIcons(${jsonEncode(addresses)})', allowRepeat: true);
+    List res = await jsApi.evalJavascript('account.genIcons(${jsonEncode(addresses)})', allowRepeat: true);
     store.account.setAddressIconsMap(res);
     return res;
   }
@@ -229,7 +229,7 @@ class AccountApi {
   ///
   /// See: https://github.com/encointer/encointer-wallet-flutter/issues/676
   Future<Map?> parseQrCode(String data) async {
-    final res = await jsApi!.evalJavascript('account.parseQrCode("$data")');
+    final res = await jsApi.evalJavascript('account.parseQrCode("$data")');
     print('rawData: $data');
     return res;
   }
@@ -238,7 +238,7 @@ class AccountApi {
   ///
   /// See: https://github.com/encointer/encointer-wallet-flutter/issues/676
   Future<Map?> signAsync(String password) async {
-    final res = await jsApi!.evalJavascript('account.signAsync("$password")');
+    final res = await jsApi.evalJavascript('account.signAsync("$password")');
     return res;
   }
 
@@ -247,7 +247,7 @@ class AccountApi {
   /// See: https://github.com/encointer/encointer-wallet-flutter/issues/676
   Future<Map> makeQrCode(Map? txInfo, List? params, {String? rawParam}) async {
     String param = rawParam != null ? rawParam : jsonEncode(params);
-    final Map res = await jsApi!.evalJavascript(
+    final Map res = await jsApi.evalJavascript(
       'account.makeTx(${jsonEncode(txInfo)}, $param)',
       allowRepeat: true,
     );
@@ -264,7 +264,7 @@ class AccountApi {
     String notificationTitle,
   ) async {
     final String address = store.account.currentAddress;
-    final Map res = await jsApi!.evalJavascript(
+    final Map res = await jsApi.evalJavascript(
       'account.addSignatureAndSend("$address", "$signature")',
       allowRepeat: true,
     );

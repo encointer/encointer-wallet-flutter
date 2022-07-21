@@ -15,7 +15,7 @@ import 'mockJSApi.dart';
 /// The getters then return the preconfigured value, which in turn leads to consistent
 /// responses in the test.
 class MockApiEncointer extends EncointerApi {
-  MockApiEncointer(MockJSApi? js, MockSubstrateDartApi dartApi) : super(js, dartApi);
+  MockApiEncointer(MockJSApi js, MockSubstrateDartApi dartApi) : super(js, dartApi);
 
   void _log(String msg) {
     print("[mockApiAssets] $msg");

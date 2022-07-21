@@ -25,11 +25,11 @@ class MockApi extends Api {
     jsStorage = GetStorage();
     js = MockJSApi();
 
-    account = MockAccountApi(js as MockJSApi?, fetchAccountData);
-    assets = MockApiAssets(js as MockJSApi?);
-    chain = MockChainApi(js as MockJSApi?);
-    codec = MockCodecApi(js as MockJSApi?);
-    encointer = MockApiEncointer(js as MockJSApi?, MockSubstrateDartApi());
+    account = MockAccountApi(js as MockJSApi, fetchAccountData);
+    assets = MockApiAssets(js as MockJSApi);
+    chain = MockChainApi(js as MockJSApi);
+    codec = MockCodecApi(js as MockJSApi);
+    encointer = MockApiEncointer(js as MockJSApi, MockSubstrateDartApi());
     ipfs = MockIpfs();
 
     if (withUi) {
