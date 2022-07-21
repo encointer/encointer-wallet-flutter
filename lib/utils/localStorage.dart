@@ -74,7 +74,7 @@ class LocalStorage {
     return storage.setKV('${seedKey}_$seedType', jsonEncode(value));
   }
 
-  Future<Map> getSeeds(String seedType) async {
+  Future<Map<String, dynamic>> getSeeds(String seedType) async {
     String? value = await storage.getKV('${seedKey}_$seedType');
     if (value != null) {
       return jsonDecode(value);

@@ -32,7 +32,7 @@ class MockLocalStorage extends LocalStorage {
   }
 
   @override
-  Future<Map> getSeeds(String seedType) async {
+  Future<Map<String, dynamic>> getSeeds(String seedType) async {
     return Future.value({});
   }
 

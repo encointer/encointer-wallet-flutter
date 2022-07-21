@@ -245,7 +245,7 @@ abstract class _EncointerStore with Store {
       writeToCache();
     }
     // update depending values without awaiting
-    webApi!.encointer!.getCurrentCeremonyIndex();
+    webApi?.encointer?.getCurrentCeremonyIndex();
   }
 
   @action
