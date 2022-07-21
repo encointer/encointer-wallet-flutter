@@ -213,20 +213,20 @@ class _WalletAppState extends State<WalletApp> {
                 return CupertinoPageRoute(builder: (_) => ContactPage(_appStore), settings: settings);
               case ChangePasswordPage.route:
                 return CupertinoPageRoute(
-                    builder: (_) => ChangePasswordPage(_appStore.account, _appStore.settings), settings: settings);
+                    builder: (_) => ChangePasswordPage(_appStore), settings: settings);
               case ContactDetailPage.route:
                 return CupertinoPageRoute(builder: (_) => ContactDetailPage(_appStore, webApi), settings: settings);
               case SettingsPage.route:
                 return CupertinoPageRoute(
-                    builder: (_) => SettingsPage(_appStore.settings, _changeLang), settings: settings);
+                    builder: (_) => SettingsPage(_appStore.settings!, _changeLang), settings: settings);
               case ExportAccountPage.route:
-                return CupertinoPageRoute(builder: (_) => ExportAccountPage(_appStore.account), settings: settings);
+                return CupertinoPageRoute(builder: (_) => ExportAccountPage(_appStore.account!), settings: settings);
               case ExportResultPage.route:
                 return CupertinoPageRoute(builder: (_) => ExportResultPage(), settings: settings);
               case RemoteNodeListPage.route:
-                return CupertinoPageRoute(builder: (_) => RemoteNodeListPage(_appStore.settings), settings: settings);
+                return CupertinoPageRoute(builder: (_) => RemoteNodeListPage(_appStore.settings!), settings: settings);
               case SS58PrefixListPage.route:
-                return CupertinoPageRoute(builder: (_) => SS58PrefixListPage(_appStore.settings), settings: settings);
+                return CupertinoPageRoute(builder: (_) => SS58PrefixListPage(_appStore.settings!), settings: settings);
               case AboutPage.route:
                 return CupertinoPageRoute(builder: (_) => AboutPage(), settings: settings);
               case BazaarMain.route:

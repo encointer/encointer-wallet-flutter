@@ -71,7 +71,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
   }
 
   String _itemAsString(AccountData item) {
-    final String address = Fmt.addressOfAccount(item, widget.store!);
+    final String address = Fmt.addressOfAccount(item, widget.store);
     final Map? accInfo = widget.store.account!.addressIndexMap[item.address];
     String? idx = '';
     if (accInfo != null && accInfo['accountIndex'] != null) {
@@ -87,7 +87,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
     return Observer(
       builder: (_) {
         final Map? accInfo = widget.store.account!.addressIndexMap[item.pubKey];
-        final String address = Fmt.addressOfAccount(item, widget.store!);
+        final String address = Fmt.addressOfAccount(item, widget.store);
         return Container(
           padding: EdgeInsets.only(top: 8),
           child: Row(
@@ -123,7 +123,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
     return Observer(
       builder: (_) {
         final Map? accInfo = widget.store.account!.addressIndexMap[item.pubKey];
-        final String address = Fmt.addressOfAccount(item, widget.store!);
+        final String address = Fmt.addressOfAccount(item, widget.store);
         return Container(
           margin: EdgeInsets.symmetric(horizontal: 8),
           decoration: !isSelected

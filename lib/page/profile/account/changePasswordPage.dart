@@ -4,9 +4,8 @@ import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
-import 'package:encointer_wallet/store/settings.dart';
+import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
@@ -15,22 +14,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ChangePasswordPage extends StatefulWidget {
-  ChangePasswordPage(this.store, this.settingsStore);
+  ChangePasswordPage(this.store);
 
   static const String route = '/profile/password';
-  final AccountStore? store;
-  final SettingsStore? settingsStore;
+  final AppStore store;
 
   @override
-  _ChangePassword createState() => _ChangePassword(store, settingsStore);
+  _ChangePassword createState() => _ChangePassword(store);
 }
 
 class _ChangePassword extends State<ChangePasswordPage> {
-  _ChangePassword(this.store, this.settingsStore);
+  _ChangePassword(this.store);
 
   final Api? api = webApi;
-  final AccountStore? store;
-  final SettingsStore? settingsStore;
+  final AppStore store;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _passOldCtrl = new TextEditingController();
   final TextEditingController _passCtrl = new TextEditingController();
@@ -48,7 +45,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
       final String passOld = _passOldCtrl.text.trim();
       final String passNew = _passCtrl.text.trim();
       // check password
-      final passChecked = await webApi!.account.checkAccountPassword(store.currentAccount, passOld);
+      final passChecked = await webApi!.account.checkAccountPassword(store.account!.currentAccount, passOld);
       if (passChecked == null) {
         showCupertinoDialog(
           context: context,
@@ -73,19 +70,19 @@ class _ChangePassword extends State<ChangePasswordPage> {
         );
       } else {
         // we need to iterate over all active accounts and update there password
-        settingsstore.setPin(passNew);
-        store.accountListAll.forEach((account) async {
+        store.settings!.setPin(passNew);
+        store.account!.accountListAll.forEach((account) async {
           final Map<String, dynamic> acc =
               await api!.evalJavascript('account.changePassword("${account.pubKey}", "$passOld", "$passNew")');
 
           // update encrypted seed after password updated
-          store.accountListAll.map((accountData) {
+          store.account!.accountListAll.map((accountData) {
             // use local name, not webApi returned name
             Map<String, dynamic> localAcc = AccountData.toJson(accountData);
             // make metadata the same as the polkadot-js/api's
             acc['meta']['name'] = localAcc['name'];
-            store.updateAccount(acc);
-            store.updateSeed(accountData.pubKey, _passOldCtrl.text, _passCtrl.text);
+            store.account!.updateAccount(acc);
+            store.account!.updateSeed(accountData.pubKey, _passOldCtrl.text, _passCtrl.text);
           });
         });
         showCupertinoDialog(

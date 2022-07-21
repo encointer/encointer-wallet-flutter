@@ -15,7 +15,9 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 class CreateAccountForm extends StatelessWidget {
-  CreateAccountForm({this.store});
+  CreateAccountForm({
+    required this.store,
+  });
 
   final AppStore store;
 

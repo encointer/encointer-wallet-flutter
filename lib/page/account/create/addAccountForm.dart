@@ -10,7 +10,11 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 class AddAccountForm extends StatelessWidget {
-  AddAccountForm({this.submitting, this.onSubmit, this.store});
+  AddAccountForm({
+    required this.store,
+    this.submitting,
+    this.onSubmit,
+  });
   final Function? onSubmit;
   final bool? submitting;
   final AppStore store;

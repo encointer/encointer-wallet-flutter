@@ -293,7 +293,7 @@ class _AssetsState extends State<Assets> {
                                       child: Text(dic.assets.issuancePending),
                                       onPressed: (context) => submitClaimRewards(
                                         context,
-                                        store!,
+                                        store,
                                         webApi!,
                                         store.encointer!.chosenCid,
                                       ),
@@ -339,7 +339,7 @@ class _AssetsState extends State<Assets> {
                           data: allCommunities,
                           onTap: (int index) {
                             if (index == allCommunities.length - 1) {
-                              Navigator.push(context, MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store!)))
+                              Navigator.push(context, MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)))
                                   .then((_) {
                                 _refreshBalanceAndNotify(dic);
                               });

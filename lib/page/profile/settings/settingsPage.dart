@@ -10,7 +10,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 class SettingsPage extends StatefulWidget {
   SettingsPage(this.store, this.changeLang);
   static const String route = '/profile/settings';
-  final SettingsStore? store;
+  final SettingsStore store;
   final Function changeLang;
   @override
   _Settings createState() => _Settings(store, changeLang);
@@ -19,7 +19,7 @@ class SettingsPage extends StatefulWidget {
 class _Settings extends State<SettingsPage> {
   _Settings(this.store, this.changeLang);
 
-  final SettingsStore? store;
+  final SettingsStore store;
   final Function changeLang;
 
   final _langOptions = ['en', 'de'];

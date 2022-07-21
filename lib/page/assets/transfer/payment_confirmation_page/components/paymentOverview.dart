@@ -18,7 +18,7 @@ class PaymentOverview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final recipientLabel =
-        recipientAccount!.name.isNotEmpty ? recipientAccount!.name : Fmt.addressOfAccount(recipientAccount!, store!);
+        recipientAccount!.name.isNotEmpty ? recipientAccount!.name : Fmt.addressOfAccount(recipientAccount!, store);
 
     return IntrinsicHeight(
       child: Row(

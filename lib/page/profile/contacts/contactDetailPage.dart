@@ -187,7 +187,7 @@ class EndorseButton extends StatelessWidget {
               ? (BuildContext context) => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)
               : (BuildContext context) => submitEndorseNewcomer(
                     context,
-                    store!,
+                    store,
                     api!,
                     store.encointer!.chosenCid,
                     contact.address,

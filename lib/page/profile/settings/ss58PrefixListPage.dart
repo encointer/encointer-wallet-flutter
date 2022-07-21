@@ -21,7 +21,7 @@ class SS58PrefixListPage extends StatelessWidget {
 
   static const String route = '/profile/ss58';
   final Api? api = webApi;
-  final SettingsStore? store;
+  final SettingsStore store;
 
   @override
   Widget build(BuildContext context) {

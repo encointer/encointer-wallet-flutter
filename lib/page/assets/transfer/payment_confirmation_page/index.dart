@@ -65,7 +65,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
 
     var cid = params.cid;
     var recipientAccount = params.recipientAccount!;
-    final recipientAddress = Fmt.addressOfAccount(recipientAccount, widget.store!);
+    final recipientAddress = Fmt.addressOfAccount(recipientAccount, widget.store);
     var amount = params.amount;
 
     return Observer(
@@ -156,7 +156,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
       }
     };
 
-    await submitTx(context, widget.store!, widget.api!, params, onFinish: onFinish);
+    await submitTx(context, widget.store, widget.api!, params, onFinish: onFinish);
 
     // for debugging
     // Future.delayed(const Duration(milliseconds: 1500), () {

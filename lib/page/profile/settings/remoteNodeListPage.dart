@@ -10,7 +10,7 @@ class RemoteNodeListPage extends StatelessWidget {
 
   static const String route = '/profile/endpoint';
   final Api? api = webApi;
-  final SettingsStore? store;
+  final SettingsStore store;
 
   @override
   Widget build(BuildContext context) {

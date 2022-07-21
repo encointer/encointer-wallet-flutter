@@ -275,15 +275,18 @@ abstract class _EncointerStore with Store {
   void setAggregatedAccountData(CommunityIdentifier cid, String address, AggregatedAccountData accountData) {
     var encointerAccountStore = communityStores![cid.toFmtString()]!.communityAccountStores![address];
 
+    if (encointerAccountStore == null) {
+      _log("setAggregatedAccountData: encointerAccountStore was null");
+      return;
+    }
+
     accountData.personal?.meetup != null
-        ? encointerAccountstore.setMeetup(accountData.personal!.meetup)
-        : encointerAccountstore.purgeMeetup();
+        ? encointerAccountStore.setMeetup(accountData.personal!.meetup)
+        : encointerAccountStore.purgeMeetup();
 
     accountData.personal?.participantType != null
         ? encointerAccountStore.setParticipantType(accountData.personal!.participantType)
         : encointerAccountStore.purgeParticipantType();
-
-    print("[EncointerStore]: " + encointerAccountStore.toString());
   }
 
   // -- other helpers

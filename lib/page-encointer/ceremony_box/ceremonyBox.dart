@@ -69,7 +69,7 @@ class CeremonyBox extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 12),
                     child: CeremonyRegisterButton(
                       registerUntil: assigningPhaseStart,
-                      onPressed: (context) => submitRegisterParticipant(context, store!, api!),
+                      onPressed: (context) => submitRegisterParticipant(context, store, api!),
                     ),
                   ),
                 if (store.encointer!.showStartCeremonyButton)
@@ -98,7 +98,7 @@ class CeremonyBox extends StatelessWidget {
                               '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store.encointer!.communityAccount!.scannedClaimsCount.toString())}'),
                         ],
                       ),
-                      onPressed: () => submitAttestClaims(context, store!, api!),
+                      onPressed: () => submitAttestClaims(context, store, api!),
                     ),
                   )
               ],
@@ -106,7 +106,7 @@ class CeremonyBox extends StatelessWidget {
           ),
           if (store.encointer!.showMeetupInfo)
             LowerCeremonyBoxContainer(
-              child: getMeetupInfoWidget(context, store!),
+              child: getMeetupInfoWidget(context, store),
             )
         ],
       );
