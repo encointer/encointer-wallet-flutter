@@ -151,13 +151,13 @@ mixin _$SettingsStore on _SettingsStore, Store {
   late final _$localeCodeAtom = Atom(name: '_SettingsStore.localeCode', context: context);
 
   @override
-  String? get localeCode {
+  String get localeCode {
     _$localeCodeAtom.reportRead();
     return super.localeCode;
   }
 
   @override
-  set localeCode(String? value) {
+  set localeCode(String value) {
     _$localeCodeAtom.reportWrite(value, super.localeCode, () {
       super.localeCode = value;
     });
@@ -278,7 +278,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
   late final _$setLocalCodeAsyncAction = AsyncAction('_SettingsStore.setLocalCode', context: context);
 
   @override
-  Future<void> setLocalCode(String? code) {
+  Future<void> setLocalCode(String code) {
     return _$setLocalCodeAsyncAction.run(() => super.setLocalCode(code));
   }
 
@@ -306,7 +306,7 @@ mixin _$SettingsStore on _SettingsStore, Store {
   late final _$setNetworkConstAsyncAction = AsyncAction('_SettingsStore.setNetworkConst', context: context);
 
   @override
-  Future<void> setNetworkConst(Map<String, dynamic>? data, {bool needCache = true}) {
+  Future<void> setNetworkConst(Map<String, dynamic> data, {bool needCache = true}) {
     return _$setNetworkConstAsyncAction.run(() => super.setNetworkConst(data, needCache: needCache));
   }
 

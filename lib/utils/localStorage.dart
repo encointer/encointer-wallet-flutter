@@ -38,6 +38,10 @@ class LocalStorage {
     return storage.setKV(cacheKey, value);
   }
 
+  Future<bool> removeKey(String cacheKey) {
+    return storage.removeKey(cacheKey);
+  }
+
   Future<String?> getCurrentAccount() async {
     return storage.getKV(currentAccountKey);
   }
@@ -99,7 +103,7 @@ class LocalStorage {
   /// Gets the more specific return type that `GetObject. This should always be preferred.
   ///
   /// Should be used instead of `getObject`, see #533.
-  Future<Map<String, dynamic>?> getMap(String key) async {
+  Future<Map<String, dynamic>> getMap(String key) async {
     String? value = await storage.getKV('${customKVKey}_$key');
 
     if (value != null) {
@@ -107,7 +111,7 @@ class LocalStorage {
       var data = await compute(jsonDecode, value);
       return data;
     }
-    return Future.value(null);
+    return Future.value({});
   }
 
   Future<void> setAccountCache(String? accPubKey, String key, Object? value) async {
@@ -144,6 +148,11 @@ class _LocalStorage {
   Future<bool> setKV(String key, value) async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.setString(key, value);
+  }
+
+  Future<bool> removeKey(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.remove(key);
   }
 
   Future<void> addItemToList(String storeKey, Map<String, dynamic> acc) async {

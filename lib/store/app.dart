@@ -107,7 +107,7 @@ abstract class _AppStore with Store {
   }
 
   Future<bool> purgeEncointerCache(String? networkInfo) async {
-    return localStorage.setObject(encointerCacheKey(networkInfo), null);
+    return localStorage.removeKey(encointerCacheKey(networkInfo));
   }
 
   Future<void> loadOrInitEncointerCache(String networkInfo) async {

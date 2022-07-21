@@ -238,7 +238,7 @@ abstract class _AccountStore with Store {
 
   @action
   Future<void> addAccount(Map<String, dynamic> acc, String password) async {
-    String? pubKey = acc['pubKey'];
+    String pubKey = acc['pubKey'];
     // save seed and remove it before add account
     void saveSeed(String seedType) {
       String? seed = acc[seedType];

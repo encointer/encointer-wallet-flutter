@@ -217,12 +217,13 @@ abstract class _EncointerStore with Store {
     if (chosenCid != cid) {
       chosenCid = cid;
       writeToCache();
-      // Fixme: Properly solve this with: https://github.com/encointer/encointer-wallet-flutter/issues/582
-      this._rootStore.localStorage.setObject(chosenCidCacheKey(network), cid?.toJson());
 
       if (cid != null) {
+        this._rootStore.localStorage.setObject(chosenCidCacheKey(network), cid.toJson());
         initCommunityStore(cid, _rootStore.account!.currentAddress);
         initBazaarStore(cid);
+      } else {
+        this._rootStore.localStorage.removeKey(chosenCidCacheKey(network));
       }
     }
 
@@ -454,7 +455,7 @@ abstract class _EncointerStore with Store {
     }
   }
 
-  Future<void> loadChosenCid(String? network) async {
+  Future<void> loadChosenCid(String network) async {
     Map<String, dynamic> maybeChosenCid = await _rootStore.localStorage.getMap(chosenCidCacheKey(network));
     _log("Setting previously tracked chosenCid: ${maybeChosenCid.toString()}");
 

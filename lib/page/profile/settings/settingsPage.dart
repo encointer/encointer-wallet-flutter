@@ -2,10 +2,10 @@ import 'package:encointer_wallet/page/profile/settings/remoteNodeListPage.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58PrefixListPage.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class SettingsPage extends StatefulWidget {
   SettingsPage(this.store, this.changeLang);
@@ -22,7 +22,7 @@ class _Settings extends State<SettingsPage> {
   final SettingsStore? store;
   final Function changeLang;
 
-  final _langOptions = [null, 'en', 'de'];
+  final _langOptions = ['en', 'de'];
 
   int _selected = 0;
 
@@ -30,7 +30,7 @@ class _Settings extends State<SettingsPage> {
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
 
-    String getLang(String? code) {
+    String getLang(String code) {
       switch (code) {
         case 'en':
           return 'English';
@@ -61,7 +61,7 @@ class _Settings extends State<SettingsPage> {
               },
             ),
             onWillPop: () async {
-              String? code = _langOptions[_selected];
+              String code = _langOptions[_selected];
               if (code != store!.localeCode) {
                 store!.setLocalCode(code);
                 changeLang(context, code);

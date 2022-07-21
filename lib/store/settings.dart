@@ -41,7 +41,7 @@ abstract class _SettingsStore with Store {
   bool loading = true;
 
   @observable
-  String? localeCode = '';
+  String localeCode = '';
 
   @observable
   EndpointData endpoint = EndpointData();
@@ -130,7 +130,7 @@ abstract class _SettingsStore with Store {
   }
 
   @action
-  Future<void> setLocalCode(String? code) async {
+  Future<void> setLocalCode(String code) async {
     await rootStore.localStorage.setObject(localStorageLocaleKey, code);
     localeCode = code;
   }
@@ -213,7 +213,7 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> setNetworkConst(
-    Map<String, dynamic>? data, {
+    Map<String, dynamic> data, {
     bool needCache = true,
   }) async {
     networkConst = data;
