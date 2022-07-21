@@ -228,12 +228,12 @@ abstract class _EncointerStore with Store {
     }
 
     if (_rootStore.settings.endpointIsNoTee) {
-      webApi!.encointer.subscribeBusinessRegistry();
+      webApi.encointer.subscribeBusinessRegistry();
     }
 
     // update depending values without awaiting
     if (!_rootStore.settings.loading) {
-      webApi!.encointer.getCommunityData();
+      webApi.encointer.getCommunityData();
     }
   }
 
@@ -245,7 +245,7 @@ abstract class _EncointerStore with Store {
       writeToCache();
     }
     // update depending values without awaiting
-    webApi?.encointer.getCurrentCeremonyIndex();
+    webApi.encointer.getCurrentCeremonyIndex();
   }
 
   @action
@@ -296,20 +296,20 @@ abstract class _EncointerStore with Store {
     _log("[updateState] updating state...");
 
     return Future.wait([
-      webApi!.encointer.getCommunityMetadata(),
-      webApi!.encointer.getAllMeetupLocations(),
-      webApi!.encointer.getDemurrage(),
-      webApi!.encointer.getBootstrappers(),
-      webApi!.encointer.getReputations(),
-      webApi!.encointer.getMeetupTime(),
-      webApi!.encointer.getMeetupTimeOverride(),
+      webApi.encointer.getCommunityMetadata(),
+      webApi.encointer.getAllMeetupLocations(),
+      webApi.encointer.getDemurrage(),
+      webApi.encointer.getBootstrappers(),
+      webApi.encointer.getReputations(),
+      webApi.encointer.getMeetupTime(),
+      webApi.encointer.getMeetupTimeOverride(),
       updateAggregatedAccountData(),
     ]).then((_) => _log("[updateState] finished"));
   }
 
   Future<void> updateAggregatedAccountData() async {
     try {
-      var data = await webApi!.encointer.getAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress);
+      var data = await webApi.encointer.getAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress);
       setAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress, data);
     } catch (e) {
       print(e.toString());

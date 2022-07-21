@@ -57,7 +57,7 @@ class _ReceivePageState extends State<ReceivePage> {
     paymentWatchdog = PausableTimer(
       const Duration(seconds: 1),
       () {
-        webApi!.encointer.pendingExtrinsics().then((extrinsics) {
+        webApi.encointer.pendingExtrinsics().then((extrinsics) {
           print("[receivePage] pendingExtrinsics ${extrinsics.toString()}");
           if (((extrinsics.length) > 0) && (!observedPendingExtrinsic)) {
             extrinsics.forEach((xt) {
@@ -75,7 +75,7 @@ class _ReceivePageState extends State<ReceivePage> {
             observedPendingExtrinsic = false;
           }
         });
-        webApi!.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
+        webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
           CommunityIdentifier? cid = widget.store.encointer.chosenCid;
 
           if (cid == null) {

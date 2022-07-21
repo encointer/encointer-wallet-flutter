@@ -27,7 +27,7 @@ void main() {
       // re-initialize with cacheKey that does not mess with real cache
       root.settings.setEndpoint(unitTestEndpoint);
       await root.init('_en');
-      await webApi!.init();
+      await webApi.init();
 
       final encointerStore = root.encointer;
 

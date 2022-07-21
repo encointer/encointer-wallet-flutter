@@ -96,7 +96,7 @@ class _WalletAppState extends State<WalletApp> {
     webApi =
         widget.config.mockSubstrateApi ? MockApi(_appStore, jsServiceEncointer) : Api(_appStore, jsServiceEncointer);
 
-    webApi!.init();
+    webApi.init();
 
     _changeLang(context, _appStore.settings.localeCode);
 
@@ -115,7 +115,7 @@ class _WalletAppState extends State<WalletApp> {
   void dispose() {
     didReceiveLocalNotificationSubject.close();
     selectNotificationSubject.close();
-    webApi!.close();
+    webApi.close();
     super.dispose();
   }
 

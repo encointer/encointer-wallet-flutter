@@ -239,7 +239,7 @@ class _TransferPageState extends State<TransferPage> {
         }
       }
 
-      webApi!.fetchAccountData();
+      webApi.fetchAccountData();
     });
   }
 

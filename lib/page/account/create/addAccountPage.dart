@@ -33,9 +33,9 @@ class _AddAccountPageState extends State<AddAccountPage> {
       _submitting = true;
     });
 
-    await webApi!.account.generateAccount();
+    await webApi.account.generateAccount();
 
-    var acc = await webApi!.account.importAccount(
+    var acc = await webApi.account.importAccount(
       cryptoType: AccountAdvanceOptionParams.encryptTypeSR,
       derivePath: '',
     );
@@ -48,7 +48,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
       return;
     }
 
-    var addresses = await webApi!.account.encodeAddress([acc['pubKey']]);
+    var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
     _log("Created new account with address: ${addresses[0]}");
     await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
     _log("added new account with address: ${addresses[0]}");
@@ -59,8 +59,8 @@ class _AddAccountPageState extends State<AddAccountPage> {
     await store.loadAccountCache();
 
     // fetch info for the imported account
-    webApi!.fetchAccountData();
-    webApi!.account.getPubKeyIcons([pubKey]);
+    webApi.fetchAccountData();
+    webApi.account.getPubKeyIcons([pubKey]);
 
     setState(() {
       _submitting = false;

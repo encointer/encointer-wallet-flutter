@@ -41,7 +41,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   @override
   void initState() {
     super.initState();
-    if (store.encointer.chosenCid != null) webApi!.encointer.getBootstrappers();
+    if (store.encointer.chosenCid != null) webApi.encointer.getBootstrappers();
   }
 
   @override
@@ -68,7 +68,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                   (_) async {
                     // refresh balance
                     await store.loadAccountCache();
-                    webApi!.fetchAccountData();
+                    webApi.fetchAccountData();
                     Navigator.of(context).pop();
                     Navigator.of(context).pop();
                   },
@@ -94,7 +94,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
         store: store,
         address: address,
         icon: FutureBuilder<SvgPicture>(
-          future: webApi!.ipfs.getCommunityIcon(community.assetsCid),
+          future: webApi.ipfs.getCommunityIcon(community.assetsCid),
           builder: (_, AsyncSnapshot<SvgPicture> snapshot) {
             if (snapshot.hasData) {
               return snapshot.data!;

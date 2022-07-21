@@ -44,7 +44,7 @@ class _Contact extends State<ContactPage> {
       });
       final Translations dic = I18n.of(context)!.translationsForLocale();
       String addr = _addressCtrl.text.trim();
-      Map pubKeyAddress = await webApi!.account.decodeAddress([addr]);
+      Map pubKeyAddress = await webApi.account.decodeAddress([addr]);
       String pubKey = pubKeyAddress.keys.toList()[0];
       Map<String, dynamic> con = {
         'address': addr,
@@ -86,16 +86,16 @@ class _Contact extends State<ContactPage> {
 
       // get contact info
       if (_isObservation!) {
-        webApi!.account.encodeAddress([pubKey]);
-        webApi!.account.getPubKeyIcons([pubKey]);
+        webApi.account.encodeAddress([pubKey]);
+        webApi.account.getPubKeyIcons([pubKey]);
       } else {
         // if this address was used as observation and current account,
         // we need to change current account
         if (pubKey == store.account.currentAccountPubKey) {
-          webApi!.account.changeCurrentAccount(fetchData: true);
+          webApi.account.changeCurrentAccount(fetchData: true);
         }
       }
-      webApi!.account.getAddressIcons([addr]);
+      webApi.account.getAddressIcons([addr]);
       Navigator.of(context).pop();
     }
   }

@@ -36,7 +36,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
     setState(() {
       _submitting = true;
     });
-    var res = await webApi!.account.checkAccountPassword(widget.account!, password);
+    var res = await webApi.account.checkAccountPassword(widget.account!, password);
     if (mounted) {
       setState(() {
         _submitting = false;

@@ -30,9 +30,9 @@ class CreateAccountForm extends StatelessWidget {
     final Translations dic = I18n.of(context)!.translationsForLocale();
 
     Future<void> _createAndImportAccount() async {
-      await webApi!.account.generateAccount();
+      await webApi.account.generateAccount();
 
-      var acc = await webApi!.account.importAccount(
+      var acc = await webApi.account.importAccount(
         cryptoType: AccountAdvanceOptionParams.encryptTypeSR,
         derivePath: '',
       );
@@ -42,7 +42,7 @@ class CreateAccountForm extends StatelessWidget {
         return;
       }
 
-      var addresses = await webApi!.account.encodeAddress([acc['pubKey']]);
+      var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
       await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
 
       String? pubKey = acc['pubKey'];
@@ -51,8 +51,8 @@ class CreateAccountForm extends StatelessWidget {
       await store.loadAccountCache();
 
       // fetch info for the imported account
-      webApi!.fetchAccountData();
-      webApi!.account.getPubKeyIcons([pubKey]);
+      webApi.fetchAccountData();
+      webApi.account.getPubKeyIcons([pubKey]);
     }
 
     return Form(

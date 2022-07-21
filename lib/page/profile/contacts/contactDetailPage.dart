@@ -44,7 +44,7 @@ class ContactDetailPage extends StatelessWidget {
                 Navigator.of(context).pop();
                 store.settings.removeContact(account);
                 if (account.pubKey == store.account.currentAccountPubKey) {
-                  webApi!.account.changeCurrentAccount(fetchData: true);
+                  webApi.account.changeCurrentAccount(fetchData: true);
                 }
                 Navigator.of(context).pop();
               },

@@ -50,7 +50,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     );
 
     /// import account
-    var acc = await webApi!.account.importAccount(
+    var acc = await webApi.account.importAccount(
       keyType: _keyType,
       cryptoType: _cryptoType,
       derivePath: _derivePath,
@@ -133,7 +133,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   }
 
   Future<void> _saveAccount(Map<String, dynamic> acc) async {
-    var addresses = await webApi!.account.encodeAddress([acc['pubKey']]);
+    var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
     await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
 
     String? pubKey = acc['pubKey'];
@@ -142,8 +142,8 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     await store.loadAccountCache();
 
     // fetch info for the imported account
-    webApi!.fetchAccountData();
-    webApi!.account.getPubKeyIcons([pubKey]);
+    webApi.fetchAccountData();
+    webApi.account.getPubKeyIcons([pubKey]);
 
     setState(() {
       _submitting = false;

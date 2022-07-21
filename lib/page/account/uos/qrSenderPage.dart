@@ -30,7 +30,7 @@ class _QrSenderPageState extends State<QrSenderPage> {
     final Map args = ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>;
 
     Map? txInfo = args['txInfo'];
-    final Map? res = await webApi!.account.makeQrCode(txInfo, args['params'], rawParam: args['rawParam']);
+    final Map? res = await webApi.account.makeQrCode(txInfo, args['params'], rawParam: args['rawParam']);
     print('make qr code');
     setState(() {
       _qrPayload = Uint8List.fromList(List<int>.from(Map.of(res!['qrPayload']).values));

@@ -62,7 +62,7 @@ class _AssetsState extends State<Assets> {
     // if network connected failed, reconnect
     if (!store.settings.loading && store.settings.networkName == null) {
       store.settings.setNetworkLoading(true);
-      webApi!.connectNodeAll();
+      webApi.connectNodeAll();
     }
 
     if (panelController == null) {
@@ -84,7 +84,7 @@ class _AssetsState extends State<Assets> {
 
   Future<void> _refreshEncointerState() async {
     // getCurrentPhase is the root of all state updates.
-    await webApi!.encointer.getCurrentPhase();
+    await webApi.encointer.getCurrentPhase();
   }
 
   @override
@@ -283,7 +283,7 @@ class _AssetsState extends State<Assets> {
 
                       return store.settings.isConnected
                           ? FutureBuilder<bool?>(
-                              future: webApi!.encointer.hasPendingIssuance(),
+                              future: webApi.encointer.hasPendingIssuance(),
                               builder: (_, AsyncSnapshot<bool?> snapshot) {
                                 if (snapshot.hasData) {
                                   var hasPendingIssuance = snapshot.data!;
@@ -294,7 +294,7 @@ class _AssetsState extends State<Assets> {
                                       onPressed: (context) => submitClaimRewards(
                                         context,
                                         store,
-                                        webApi!,
+                                        webApi,
                                         store.encointer.chosenCid,
                                       ),
                                     );
@@ -390,7 +390,7 @@ class _AssetsState extends State<Assets> {
       AccountOrCommunityData(
         avatar: CommunityAvatar(
           store: store,
-          avatarIcon: webApi!.ipfs.getCommunityIcon(store.encointer.community?.assetsCid),
+          avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.community?.assetsCid),
           avatarSize: avatarSize,
         ),
         name: '${store.encointer.community?.name ?? '...'}',
@@ -445,7 +445,7 @@ class _AssetsState extends State<Assets> {
       store.setCurrentAccount(account.pubKey);
       await store.loadAccountCache();
 
-      webApi!.fetchAccountData();
+      webApi.fetchAccountData();
     }
   }
 
@@ -498,7 +498,7 @@ class _AssetsState extends State<Assets> {
   }
 
   void _refreshBalanceAndNotify(Translations? dic) {
-    webApi!.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
+    webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
       print("[home:refreshBalanceAndNotify] get all balances");
       if (widget.store.encointer.chosenCid == null) {
         print("[home:refreshBalanceAndNotify] no community selected");

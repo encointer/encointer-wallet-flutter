@@ -45,7 +45,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
       final String passOld = _passOldCtrl.text.trim();
       final String passNew = _passCtrl.text.trim();
       // check password
-      final passChecked = await webApi!.account.checkAccountPassword(store.account.currentAccount, passOld);
+      final passChecked = await webApi.account.checkAccountPassword(store.account.currentAccount, passOld);
       if (passChecked == null) {
         showCupertinoDialog(
           context: context,

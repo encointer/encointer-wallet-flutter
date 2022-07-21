@@ -47,7 +47,7 @@ class UI {
     String network,
   ) async {
     final currentVersion = UpdateJSCodeApi.getPolkadotJSVersion(
-      webApi!.jsStorage,
+      webApi.jsStorage,
       network,
     )!;
     if (jsVersion > currentVersion) {

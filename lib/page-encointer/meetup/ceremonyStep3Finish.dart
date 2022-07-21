@@ -42,7 +42,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                     SizedBox(height: 48),
                     CommunityAvatar(
                       store: store,
-                      avatarIcon: webApi!.ipfs.getCommunityIcon(store.encointer.community?.assetsCid),
+                      avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.community?.assetsCid),
                       avatarSize: 96,
                     ),
                     Center(

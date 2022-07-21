@@ -173,9 +173,9 @@ abstract class _AccountStore with Store {
     queuedTxs.add(tx);
 
     new Timer.periodic(Duration(seconds: 5), (Timer timer) async {
-      if (await webApi!.isConnected()) {
+      if (await webApi.isConnected()) {
         queuedTxs.forEach((args) async {
-          Map res = await webApi!.account.sendTxAndShowNotification(
+          Map res = await webApi.account.sendTxAndShowNotification(
             args['txInfo'],
             args['params'],
             args['title'],

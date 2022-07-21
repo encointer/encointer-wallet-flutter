@@ -32,7 +32,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
     }
 
     // check if user input is valid address or indices
-    final checkAddress = await webApi!.account.decodeAddress([input]);
+    final checkAddress = await webApi.account.decodeAddress([input]);
     if (checkAddress.isEmpty) {
       return listLocal;
     }
@@ -49,7 +49,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
         return [listLocal[indicesIndex]];
       }
       // query account address with account indices
-      final queryRes = await webApi!.account.queryAddressWithAccountIndex(input);
+      final queryRes = await webApi.account.queryAddressWithAccountIndex(input);
       if (queryRes != null) {
         accountData.address = queryRes[0];
         accountData.name = input;
@@ -63,9 +63,9 @@ class _AddressInputFieldState extends State<AddressInputField> {
     }
 
     // fetch address info if it's a new address
-    final res = await webApi!.account.getAddressIcons([accountData.address]);
+    final res = await webApi.account.getAddressIcons([accountData.address]);
     if (res.isNotEmpty) {
-      await webApi!.account.fetchAddressIndex([accountData.address]);
+      await webApi.account.fetchAddressIndex([accountData.address]);
     }
     return [accountData];
   }

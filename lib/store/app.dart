@@ -190,7 +190,7 @@ abstract class _AppStore with Store {
 
     if (!settings.loading) {
       encointer.updateState();
-      webApi!.assets.subscribeBalance();
+      webApi.assets.subscribeBalance();
     }
   }
 

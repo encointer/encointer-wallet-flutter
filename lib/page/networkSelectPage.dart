@@ -79,7 +79,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       if (isCurrentNetwork) {
         await store.loadAccountCache();
 
-        webApi!.fetchAccountData();
+        webApi.fetchAccountData();
       } else {
         /// set new network and reload web view
         await _reloadNetwork();
