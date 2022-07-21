@@ -7,8 +7,8 @@ part of 'communityStore.dart';
 // **************************************************************************
 
 CommunityStore _$CommunityStoreFromJson(Map<String, dynamic> json) => CommunityStore(
-      json['network'] as String?,
-      json['cid'] == null ? null : CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
+      json['network'] as String,
+      CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
     )
       ..metadata =
           json['metadata'] == null ? null : CommunityMetadata.fromJson(json['metadata'] as Map<String, dynamic>)
@@ -29,7 +29,7 @@ CommunityStore _$CommunityStoreFromJson(Map<String, dynamic> json) => CommunityS
 
 Map<String, dynamic> _$CommunityStoreToJson(CommunityStore instance) => <String, dynamic>{
       'network': instance.network,
-      'cid': instance.cid?.toJson(),
+      'cid': instance.cid.toJson(),
       'metadata': instance.metadata?.toJson(),
       'demurrage': instance.demurrage,
       'meetupTime': instance.meetupTime,
@@ -169,7 +169,7 @@ mixin _$CommunityStore on _CommunityStore, Store {
   late final _$_CommunityStoreActionController = ActionController(name: '_CommunityStore', context: context);
 
   @override
-  Future<void> initCommunityAccountStore(String? address) {
+  Future<void> initCommunityAccountStore(String address) {
     final _$actionInfo =
         _$_CommunityStoreActionController.startAction(name: '_CommunityStore.initCommunityAccountStore');
     try {

@@ -372,7 +372,7 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  Future<void> initCommunityStore(CommunityIdentifier cid, String? address, {shouldCache = true}) async {
+  Future<void> initCommunityStore(CommunityIdentifier cid, String address, {shouldCache = true}) async {
     var cidFmt = cid.toFmtString();
     if (!communityStores!.containsKey(cidFmt)) {
       _log("Adding new communityStore for cid: ${cid.toFmtString()}");

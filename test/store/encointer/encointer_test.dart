@@ -33,7 +33,7 @@ void main() {
 
       var testCid = testCommunityIdentifiers[0];
       var testCidFmt = testCid.toFmtString();
-      var testNetwork = unitTestEndpoint.info;
+      var testNetwork = unitTestEndpoint.info!;
 
       encointerStore.setCurrentPhase(CeremonyPhase.Registering);
       encointerStore.setCurrentCeremonyIndex(2);

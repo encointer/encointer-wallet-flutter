@@ -16,7 +16,7 @@ part 'communityStore.g.dart';
 /// It also contains sub-stores for account and community specific data.
 @JsonSerializable(explicitToJson: true)
 class CommunityStore extends _CommunityStore with _$CommunityStore {
-  CommunityStore(String? network, CommunityIdentifier? cid) : super(network, cid);
+  CommunityStore(String network, CommunityIdentifier cid) : super(network, cid);
 
   @override
   String toString() {
@@ -39,9 +39,9 @@ abstract class _CommunityStore with Store {
   @JsonKey(ignore: true)
   double? Function(BalanceEntry)? _applyDemurrage;
 
-  final String? network;
+  final String network;
 
-  final CommunityIdentifier? cid;
+  final CommunityIdentifier cid;
 
   @observable
   CommunityMetadata? metadata;
@@ -77,9 +77,9 @@ abstract class _CommunityStore with Store {
   get applyDemurrage => _applyDemurrage;
 
   @action
-  Future<void> initCommunityAccountStore(String? address) {
+  Future<void> initCommunityAccountStore(String address) {
     if (!communityAccountStores!.containsKey(address)) {
-      _log("Adding new communityAccountStore for cid: ${cid!.toFmtString()} and account: $address");
+      _log("Adding new communityAccountStore for cid: ${cid.toFmtString()} and account: $address");
 
       var store = CommunityAccountStore(network, cid, address);
       store.initStore(_cacheFn);
@@ -87,7 +87,7 @@ abstract class _CommunityStore with Store {
       communityAccountStores![address] = store;
       return writeToCache();
     } else {
-      _log("Don't add already existing communityAccountStore for cid: ${cid!.toFmtString()} and account: $address");
+      _log("Don't add already existing communityAccountStore for cid: ${cid.toFmtString()} and account: $address");
       return Future.value(null);
     }
   }

@@ -7,14 +7,14 @@ part of 'communityAccountStore.dart';
 // **************************************************************************
 
 CommunityAccountStore _$CommunityAccountStoreFromJson(Map<String, dynamic> json) => CommunityAccountStore(
-      json['network'] as String?,
-      json['cid'] == null ? null : CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
-      json['address'] as String?,
+      json['network'] as String,
+      CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
+      json['address'] as String,
     )
       ..participantType = $enumDecodeNullable(_$ParticipantTypeEnumMap, json['participantType'])
       ..meetup = json['meetup'] == null ? null : Meetup.fromJson(json['meetup'] as Map<String, dynamic>)
       ..participantsClaims = json['participantsClaims'] != null
-          ? ObservableMap<String?, ClaimOfAttendance>.of((json['participantsClaims'] as Map<String, dynamic>).map(
+          ? ObservableMap<String, ClaimOfAttendance>.of((json['participantsClaims'] as Map<String, dynamic>).map(
               (k, e) => MapEntry(k, ClaimOfAttendance.fromJson(e as Map<String, dynamic>)),
             ))
           : null
@@ -22,7 +22,7 @@ CommunityAccountStore _$CommunityAccountStoreFromJson(Map<String, dynamic> json)
 
 Map<String, dynamic> _$CommunityAccountStoreToJson(CommunityAccountStore instance) => <String, dynamic>{
       'network': instance.network,
-      'cid': instance.cid?.toJson(),
+      'cid': instance.cid.toJson(),
       'address': instance.address,
       'participantType': _$ParticipantTypeEnumMap[instance.participantType],
       'meetup': instance.meetup?.toJson(),
@@ -96,13 +96,13 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
   late final _$participantsClaimsAtom = Atom(name: '_CommunityAccountStore.participantsClaims', context: context);
 
   @override
-  ObservableMap<String?, ClaimOfAttendance>? get participantsClaims {
+  ObservableMap<String, ClaimOfAttendance>? get participantsClaims {
     _$participantsClaimsAtom.reportRead();
     return super.participantsClaims;
   }
 
   @override
-  set participantsClaims(ObservableMap<String?, ClaimOfAttendance>? value) {
+  set participantsClaims(ObservableMap<String, ClaimOfAttendance>? value) {
     _$participantsClaimsAtom.reportWrite(value, super.participantsClaims, () {
       super.participantsClaims = value;
     });

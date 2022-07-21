@@ -14,7 +14,7 @@ part 'communityAccountStore.g.dart';
 ///
 @JsonSerializable(explicitToJson: true)
 class CommunityAccountStore extends _CommunityAccountStore with _$CommunityAccountStore {
-  CommunityAccountStore(String? network, CommunityIdentifier? cid, String? address) : super(network, cid, address);
+  CommunityAccountStore(String network, CommunityIdentifier cid, String address) : super(network, cid, address);
 
   @override
   String toString() {
@@ -33,13 +33,13 @@ abstract class _CommunityAccountStore with Store {
   Future<void> Function()? _cacheFn;
 
   /// The network this store belongs to.
-  final String? network;
+  final String network;
 
   /// The community this store belongs to.
-  final CommunityIdentifier? cid;
+  final CommunityIdentifier cid;
 
   /// The account (SS58) this store belongs to.
-  final String? address;
+  final String address;
 
   /// Participant type if the account has registered for the next meetup.
   @observable
@@ -53,7 +53,7 @@ abstract class _CommunityAccountStore with Store {
   ///
   /// Map: claimantPublicKey -> ClaimOfAttendance
   @observable
-  ObservableMap<String?, ClaimOfAttendance>? participantsClaims = new ObservableMap();
+  ObservableMap<String, ClaimOfAttendance>? participantsClaims = new ObservableMap();
 
   /// This should be set to true once the attestations have been sent to chain.
   @observable
@@ -128,7 +128,7 @@ abstract class _CommunityAccountStore with Store {
   @action
   void addParticipantClaim(ClaimOfAttendance claim) {
     _log("adding participantsClaims.");
-    participantsClaims![claim.claimantPublic] = claim;
+    participantsClaims![claim.claimantPublic!] = claim;
     writeToCache();
   }
 

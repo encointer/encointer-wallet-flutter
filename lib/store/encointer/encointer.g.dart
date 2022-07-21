@@ -289,7 +289,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   late final _$initCommunityStoreAsyncAction = AsyncAction('_EncointerStore.initCommunityStore', context: context);
 
   @override
-  Future<void> initCommunityStore(CommunityIdentifier cid, String? address, {dynamic shouldCache = true}) {
+  Future<void> initCommunityStore(CommunityIdentifier cid, String address, {dynamic shouldCache = true}) {
     return _$initCommunityStoreAsyncAction.run(() => super.initCommunityStore(cid, address, shouldCache: shouldCache));
   }
 
