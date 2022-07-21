@@ -9,7 +9,7 @@ part of 'accountData.dart';
 AccountData _$AccountDataFromJson(Map<String, dynamic> json) => AccountData()
   ..name = json['name'] as String
   ..address = json['address'] as String
-  ..encoded = json['encoded'] as String
+  ..encoded = json['encoded'] as String?
   ..pubKey = json['pubKey'] as String
   ..encoding = json['encoding'] as Map<String, dynamic>?
   ..meta = json['meta'] as Map<String, dynamic>?
