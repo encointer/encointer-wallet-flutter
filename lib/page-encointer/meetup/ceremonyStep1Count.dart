@@ -27,30 +27,30 @@ class CeremonyStep1Count extends StatelessWidget {
   final TextEditingController _attendeesCountController = TextEditingController();
 
   Future<void> _pushStep2ScanPage(BuildContext context, int count) async {
-    if (store!.settings!.cachedPin.isEmpty) {
+    if (store.settings!.cachedPin.isEmpty) {
       await showCupertinoDialog(
         context: context,
         builder: (context) {
           final Translations dic = I18n.of(context)!.translationsForLocale();
           return showPasswordInputDialog(
               context,
-              store!.account!.currentAccount,
+              store.account!.currentAccount,
               Text(dic.home.unlockAccount
-                  .replaceAll('CURRENT_ACCOUNT_NAME', store!.account!.currentAccount.name.toString())), (password) {
-            store!.settings!.setPin(password);
+                  .replaceAll('CURRENT_ACCOUNT_NAME', store.account!.currentAccount.name.toString())), (password) {
+            store.settings!.setPin(password);
           });
         },
       );
     }
 
-    if (store!.settings!.cachedPin.isNotEmpty) {
+    if (store.settings!.cachedPin.isNotEmpty) {
       Navigator.of(context).push(
         CupertinoPageRoute(
           builder: (BuildContext context) => CeremonyStep2Scan(
             store,
             api,
             claim: webApi!.encointer!
-                .signClaimOfAttendance(count, store!.settings!.cachedPin)
+                .signClaimOfAttendance(count, store.settings!.cachedPin)
                 .then((claim) => webApi!.codec.encodeToBytes(ClaimOfAttendanceJSRegistryName, claim)),
             confirmedParticipantsCount: count,
           ),

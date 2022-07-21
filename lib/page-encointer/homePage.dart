@@ -87,7 +87,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         TabKey.Wallet,
         Iconsax.home_2,
       ),
-      if (store!.settings!.enableBazaar)
+      if (store.settings!.enableBazaar)
         TabData(
           TabKey.Bazaar,
           Iconsax.shop,
@@ -114,7 +114,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         controller: _pageController,
         children: [
           Assets(store),
-          if (store!.settings!.enableBazaar) BazaarMain(store), // dart collection if
+          if (store.settings!.enableBazaar) BazaarMain(store), // dart collection if
           ScanPage(store),
           ContactsPage(store),
           Profile(store),

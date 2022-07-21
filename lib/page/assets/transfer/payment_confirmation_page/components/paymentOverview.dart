@@ -29,7 +29,7 @@ class PaymentOverview extends StatelessWidget {
             children: [
               CombinedCommunityAndAccountAvatar(store, showCommunityNameAndAccountName: false),
               Text(
-                Fmt.accountName(context, store!.account!.currentAccount),
+                Fmt.accountName(context, store.account!.currentAccount),
                 style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey, height: 1.5),
                 textAlign: TextAlign.center,
               ),

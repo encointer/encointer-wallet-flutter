@@ -276,8 +276,8 @@ abstract class _EncointerStore with Store {
     var encointerAccountStore = communityStores![cid.toFmtString()]!.communityAccountStores![address];
 
     accountData.personal?.meetup != null
-        ? encointerAccountStore!.setMeetup(accountData.personal!.meetup)
-        : encointerAccountStore!.purgeMeetup();
+        ? encointerAccountstore.setMeetup(accountData.personal!.meetup)
+        : encointerAccountstore.purgeMeetup();
 
     accountData.personal?.participantType != null
         ? encointerAccountStore.setParticipantType(accountData.personal!.participantType)

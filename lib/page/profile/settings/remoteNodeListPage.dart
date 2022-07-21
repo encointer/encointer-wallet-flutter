@@ -16,7 +16,7 @@ class RemoteNodeListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
     List<EndpointData> endpoints = List<EndpointData>.of(networkEndpoints);
-    endpoints.retainWhere((i) => i.info == store!.endpoint.info);
+    endpoints.retainWhere((i) => i.info == store.endpoint.info);
     List<Widget> list = endpoints
         .map((i) => ListTile(
               leading: Container(
@@ -30,7 +30,7 @@ class RemoteNodeListPage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    store!.endpoint.value == i.value
+                    store.endpoint.value == i.value
                         ? Image.asset(
                             'assets/images/assets/success.png',
                             width: 16,
@@ -41,12 +41,12 @@ class RemoteNodeListPage extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                if (store!.endpoint.value == i.value) {
+                if (store.endpoint.value == i.value) {
                   Navigator.of(context).pop();
                   return;
                 }
-                store!.setEndpoint(i);
-                store!.setNetworkLoading(true);
+                store.setEndpoint(i);
+                store.setNetworkLoading(true);
                 webApi!.launchWebview(customNode: true);
                 Navigator.of(context).pop();
               },

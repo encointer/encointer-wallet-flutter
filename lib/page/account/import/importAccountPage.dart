@@ -93,9 +93,9 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   }
 
   Future<void> _checkAccountDuplicate(Map<String, dynamic> acc) async {
-    int index = store!.account!.accountList.indexWhere((i) => i.pubKey == acc['pubKey']);
+    int index = store.account!.accountList.indexWhere((i) => i.pubKey == acc['pubKey']);
     if (index > -1) {
-      Map<String, String> pubKeyMap = store!.account!.pubKeyAddressMap[store!.settings!.endpoint.ss58]!;
+      Map<String, String> pubKeyMap = store.account!.pubKeyAddressMap[store.settings!.endpoint.ss58]!;
       String? address = pubKeyMap[acc['pubKey']];
       if (address != null) {
         showCupertinoDialog(
@@ -134,12 +134,12 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
 
   Future<void> _saveAccount(Map<String, dynamic> acc) async {
     var addresses = await webApi!.account.encodeAddress([acc['pubKey']]);
-    await store!.addAccount(acc, store!.account!.newAccount.password, addresses[0]);
+    await store.addAccount(acc, store.account!.newAccount.password, addresses[0]);
 
     String? pubKey = acc['pubKey'];
-    await store!.setCurrentAccount(pubKey);
+    await store.setCurrentAccount(pubKey);
 
-    await store!.loadAccountCache();
+    await store.loadAccountCache();
 
     // fetch info for the imported account
     webApi!.fetchAccountData();
@@ -170,10 +170,10 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         _derivePath = data['derivePath'];
       });
 
-      if (store!.account!.isFirstAccount) {
+      if (store.account!.isFirstAccount) {
         Navigator.pushNamed(context, CreatePinPage.route, arguments: CreatePinPageParams(_importAccount));
       } else {
-        store!.account!.setNewAccountPin(store!.settings!.cachedPin);
+        store.account!.setNewAccountPin(store.settings!.cachedPin);
         _importAccount();
       }
     });

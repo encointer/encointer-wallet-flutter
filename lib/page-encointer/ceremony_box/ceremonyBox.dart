@@ -33,17 +33,17 @@ class CeremonyBox extends StatelessWidget {
     var dic = I18n.of(context)!.translationsForLocale();
 
     return Observer(builder: (BuildContext context) {
-      int meetupTime = store!.encointer!.community?.meetupTimeOverride ??
-          store!.encointer?.community?.meetupTime ??
-          store!.encointer!.attestingPhaseStart!;
+      int meetupTime = store.encointer!.community?.meetupTimeOverride ??
+          store.encointer?.community?.meetupTime ??
+          store.encointer!.attestingPhaseStart!;
 
       // I decided to not introduce anymore degrees of freedom for the demo overrides, otherwise
       // we want to do too much again. So I hardcode the assigning phase duration to 30 minutes
       // if we have meetup time overrides. Before we do something more complex here, I want to
       // think some more, of what we want to do with the feed in the future.
-      int assigningPhaseStart = store!.encointer!.community?.meetupTimeOverride != null
-          ? store!.encointer!.community!.meetupTimeOverride! - Duration(minutes: 30).inMilliseconds
-          : store!.encointer!.assigningPhaseStart!;
+      int assigningPhaseStart = store.encointer!.community?.meetupTimeOverride != null
+          ? store.encointer!.community!.meetupTimeOverride! - Duration(minutes: 30).inMilliseconds
+          : store.encointer!.assigningPhaseStart!;
 
       return Column(
         children: [
@@ -51,7 +51,7 @@ class CeremonyBox extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(24, 24, 24, 24),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(15), bottom: Radius.circular(store!.encointer!.showMeetupInfo ? 0 : 15)),
+                  top: Radius.circular(15), bottom: Radius.circular(store.encointer!.showMeetupInfo ? 0 : 15)),
               color: ZurichLion.shade50,
             ),
             child: Column(
@@ -60,11 +60,11 @@ class CeremonyBox extends StatelessWidget {
                   currentTime: DateTime.now().millisecondsSinceEpoch,
                   assigningPhaseStart: assigningPhaseStart,
                   meetupTime: meetupTime,
-                  ceremonyPhaseDurations: store!.encointer!.phaseDurations,
-                  meetupCompleted: store!.encointer?.communityAccount?.meetupCompleted,
-                  devMode: store!.settings!.developerMode,
+                  ceremonyPhaseDurations: store.encointer!.phaseDurations,
+                  meetupCompleted: store.encointer?.communityAccount?.meetupCompleted,
+                  devMode: store.settings!.developerMode,
                 ),
-                if (store!.encointer!.showRegisterButton)
+                if (store.encointer!.showRegisterButton)
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
                     child: CeremonyRegisterButton(
@@ -72,7 +72,7 @@ class CeremonyBox extends StatelessWidget {
                       onPressed: (context) => submitRegisterParticipant(context, store!, api!),
                     ),
                   ),
-                if (store!.encointer!.showStartCeremonyButton)
+                if (store.encointer!.showStartCeremonyButton)
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
                     child: CeremonyStartButton(
@@ -84,7 +84,7 @@ class CeremonyBox extends StatelessWidget {
                       ),
                     ),
                   ),
-                if (store!.encointer!.showSubmitClaimsButton)
+                if (store.encointer!.showSubmitClaimsButton)
                   Padding(
                     padding: const EdgeInsets.only(top: 6),
                     child: PrimaryButton(
@@ -95,7 +95,7 @@ class CeremonyBox extends StatelessWidget {
                           Icon(Iconsax.login_1),
                           SizedBox(width: 6),
                           Text(
-                              '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store!.encointer!.communityAccount!.scannedClaimsCount.toString())}'),
+                              '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store.encointer!.communityAccount!.scannedClaimsCount.toString())}'),
                         ],
                       ),
                       onPressed: () => submitAttestClaims(context, store!, api!),
@@ -104,7 +104,7 @@ class CeremonyBox extends StatelessWidget {
               ],
             ),
           ),
-          if (store!.encointer!.showMeetupInfo)
+          if (store.encointer!.showMeetupInfo)
             LowerCeremonyBoxContainer(
               child: getMeetupInfoWidget(context, store!),
             )

@@ -60,8 +60,8 @@ class _AssetsState extends State<Assets> {
   @override
   void initState() {
     // if network connected failed, reconnect
-    if (!store!.settings!.loading && store!.settings!.networkName == null) {
-      store!.settings!.setNetworkLoading(true);
+    if (!store.settings!.loading && store.settings!.networkName == null) {
+      store.settings!.setNetworkLoading(true);
       webApi!.connectNodeAll();
     }
 
@@ -116,7 +116,7 @@ class _AssetsState extends State<Assets> {
         },
         onFocusGained: () {
           print('[home:FocusDetector] Focus Gained.');
-          if (!store!.settings!.loading) {
+          if (!store.settings!.loading) {
             _refreshBalanceAndNotify(dic);
           }
           balanceWatchdog!.reset();
@@ -144,7 +144,7 @@ class _AssetsState extends State<Assets> {
                   children: [
                     Observer(builder: (_) {
                       if (ModalRoute.of(context)!.isCurrent &&
-                          !_enteredPin & store!.settings!.cachedPin.isEmpty & !store!.settings!.endpointIsNoTee) {
+                          !_enteredPin & store.settings!.cachedPin.isEmpty & !store.settings!.endpointIsNoTee) {
                         // The pin is not immediately propagated to the store, hence we track if the pin has been entered to prevent
                         // showing the dialog multiple times.
                         WidgetsBinding.instance.addPostFrameCallback(
@@ -154,7 +154,7 @@ class _AssetsState extends State<Assets> {
                         );
                       }
 
-                      AccountData accountData = store!.account!.currentAccount;
+                      AccountData accountData = store.account!.currentAccount;
 
                       return Column(
                         children: <Widget>[
@@ -172,15 +172,15 @@ class _AssetsState extends State<Assets> {
                           ),
                           Observer(
                             builder: (_) {
-                              return (store!.encointer!.community?.name != null) & (store!.encointer!.chosenCid != null)
+                              return (store.encointer!.community?.name != null) & (store.encointer!.chosenCid != null)
                                   ? Column(
                                       children: [
                                         TextGradient(
-                                          text: '${Fmt.doubleFormat(store!.encointer!.communityBalance)} ⵐ',
+                                          text: '${Fmt.doubleFormat(store.encointer!.communityBalance)} ⵐ',
                                           style: TextStyle(fontSize: 60),
                                         ),
                                         Text(
-                                          "${dic!.assets.balance}, ${store!.encointer!.community?.symbol}",
+                                          "${dic!.assets.balance}, ${store.encointer!.community?.symbol}",
                                           style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                                         ),
                                       ],
@@ -188,7 +188,7 @@ class _AssetsState extends State<Assets> {
                                   : Container(
                                       margin: EdgeInsets.only(top: 16),
                                       padding: EdgeInsets.symmetric(vertical: 8),
-                                      child: (store!.encointer!.chosenCid == null)
+                                      child: (store.encointer!.chosenCid == null)
                                           ? Container(
                                               width: double.infinity,
                                               child:
@@ -256,15 +256,15 @@ class _AssetsState extends State<Assets> {
                                     ),
                                   ),
                                   key: Key('transfer'),
-                                  onPressed: store!.encointer!.communityBalance != null
+                                  onPressed: store.encointer!.communityBalance != null
                                       ? () {
                                           Navigator.pushNamed(
                                             context,
                                             TransferPage.route,
                                             arguments: TransferPageParams(
                                                 redirect: '/',
-                                                cid: store!.encointer!.chosenCid,
-                                                communitySymbol: store!.encointer!.community?.symbol),
+                                                cid: store.encointer!.chosenCid,
+                                                communitySymbol: store.encointer!.community?.symbol),
                                           );
                                         }
                                       : null,
@@ -281,7 +281,7 @@ class _AssetsState extends State<Assets> {
                     Observer(builder: (_) {
                       final Translations dic = I18n.of(context)!.translationsForLocale();
 
-                      return store!.settings!.isConnected
+                      return store.settings!.isConnected
                           ? FutureBuilder<bool?>(
                               future: webApi!.encointer!.hasPendingIssuance(),
                               builder: (_, AsyncSnapshot<bool?> snapshot) {
@@ -295,11 +295,11 @@ class _AssetsState extends State<Assets> {
                                         context,
                                         store!,
                                         webApi!,
-                                        store!.encointer!.chosenCid,
+                                        store.encointer!.chosenCid,
                                       ),
                                     );
                                   } else {
-                                    return store!.settings!.developerMode
+                                    return store.settings!.developerMode
                                         ? ElevatedButton(
                                             child: Text(dic.assets.issuanceClaimed),
                                             onPressed: null,
@@ -362,7 +362,7 @@ class _AssetsState extends State<Assets> {
                             Navigator.of(context).pushNamed(AddAccountPage.route);
                           } else {
                             setState(() {
-                              switchAccount(store!.account!.accountListAll[index]);
+                              switchAccount(store.account!.accountListAll[index]);
                               _refreshBalanceAndNotify(dic);
                             });
                           }
@@ -390,10 +390,10 @@ class _AssetsState extends State<Assets> {
       AccountOrCommunityData(
         avatar: CommunityAvatar(
           store: store,
-          avatarIcon: webApi!.ipfs.getCommunityIcon(store!.encointer!.community?.assetsCid),
+          avatarIcon: webApi!.ipfs.getCommunityIcon(store.encointer!.community?.assetsCid),
           avatarSize: avatarSize,
         ),
-        name: '${store!.encointer!.community?.name ?? '...'}',
+        name: '${store.encointer!.community?.name ?? '...'}',
         isSelected: true, // TODO #507 this should later be a function applied on each community, cf. initAllAccounts
       ),
     );
@@ -416,11 +416,11 @@ class _AssetsState extends State<Assets> {
 
   List<AccountOrCommunityData> initAllAccounts(Translations dic) {
     List<AccountOrCommunityData> allAccounts = [];
-    allAccounts.addAll(store!.account!.accountListAll.map(
+    allAccounts.addAll(store.account!.accountListAll.map(
       (account) => AccountOrCommunityData(
         avatar: AddressIcon('', account.pubKey, size: avatarSize, tapToCopy: false),
         name: account.name,
-        isSelected: account.pubKey == store!.account!.currentAccountPubKey,
+        isSelected: account.pubKey == store.account!.currentAccountPubKey,
       ),
     ));
     allAccounts.add(
@@ -441,9 +441,9 @@ class _AssetsState extends State<Assets> {
   }
 
   Future<void> switchAccount(AccountData account) async {
-    if (account.pubKey != store!.account!.currentAccountPubKey) {
-      store!.setCurrentAccount(account.pubKey);
-      await store!.loadAccountCache();
+    if (account.pubKey != store.account!.currentAccountPubKey) {
+      store.setCurrentAccount(account.pubKey);
+      await store.loadAccountCache();
 
       webApi!.fetchAccountData();
     }
@@ -456,11 +456,11 @@ class _AssetsState extends State<Assets> {
         return WillPopScope(
           child: showPasswordInputDialog(
             context,
-            store!.account!.currentAccount,
+            store.account!.currentAccount,
             Text(I18n.of(context)!.translationsForLocale().home.unlock),
             (password) {
               setState(() {
-                store!.settings!.setPin(password);
+                store.settings!.setPin(password);
               });
             },
           ),
@@ -498,37 +498,37 @@ class _AssetsState extends State<Assets> {
   }
 
   void _refreshBalanceAndNotify(Translations? dic) {
-    webApi!.encointer!.getAllBalances(widget.store!.account!.currentAddress).then((balances) {
+    webApi!.encointer!.getAllBalances(widget.store.account!.currentAddress).then((balances) {
       print("[home:refreshBalanceAndNotify] get all balances");
-      if (widget.store!.encointer!.chosenCid == null) {
+      if (widget.store.encointer!.chosenCid == null) {
         print("[home:refreshBalanceAndNotify] no community selected");
         return;
       }
       bool activeAccountHasBalance = false;
       balances.forEach((cid, balanceEntry) {
         String cidStr = cid.toFmtString();
-        if (widget.store!.encointer!.communityStores!.containsKey(cidStr)) {
-          var community = widget.store!.encointer!.communityStores![cidStr]!;
+        if (widget.store.encointer!.communityStores!.containsKey(cidStr)) {
+          var community = widget.store.encointer!.communityStores![cidStr]!;
           double demurrageRate = community.demurrage!;
           double newBalance = community.applyDemurrage(balanceEntry);
           double oldBalance = community.applyDemurrage(widget
-                  .store!.encointer!.accountStores![widget.store!.account!.currentAddress]!.balanceEntries[cidStr]) ??
+                  .store.encointer!.accountStores![widget.store.account!.currentAddress]!.balanceEntries[cidStr]) ??
               0;
           double delta = newBalance - oldBalance;
           print("[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta");
           if (delta.abs() > demurrageRate) {
-            widget.store!.encointer!.accountStores![widget.store!.account!.currentAddress]
+            widget.store.encointer!.accountStores![widget.store.account!.currentAddress]
                 ?.addBalanceEntry(cid, balances[cid]!);
             if (delta > demurrageRate) {
               var msg = dic!.assets.incomingConfirmed
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
                   .replaceAll('CID_SYMBOL', community.metadata!.symbol)
-                  .replaceAll('ACCOUNT_NAME', widget.store!.account!.currentAccount.name);
+                  .replaceAll('ACCOUNT_NAME', widget.store.account!.currentAccount.name);
               print("[home:balanceWatchdog] $msg");
               NotificationPlugin.showNotification(45, dic.assets.fundsReceived, msg, cid: cidStr);
             }
           }
-          if (cid == widget.store!.encointer!.chosenCid) {
+          if (cid == widget.store.encointer!.chosenCid) {
             activeAccountHasBalance = true;
           }
         }
@@ -536,8 +536,8 @@ class _AssetsState extends State<Assets> {
       if (!activeAccountHasBalance) {
         print(
             "[home:refreshBalanceAndNotify] didn't get any balance for active account. initialize store balance to zero");
-        widget.store!.encointer!.accountStores![widget.store!.account!.currentAddress]
-            ?.addBalanceEntry(widget.store!.encointer!.chosenCid!, BalanceEntry(0, 0));
+        widget.store.encointer!.accountStores![widget.store.account!.currentAddress]
+            ?.addBalanceEntry(widget.store.encointer!.chosenCid!, BalanceEntry(0, 0));
       }
     }).catchError((e) {
       print('[home:refreshBalanceAndNotify] WARNING: could not update balance: $e');

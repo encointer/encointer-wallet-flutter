@@ -37,10 +37,10 @@ class _ReceivePageState extends State<ReceivePage> {
     super.initState();
 
     invoice = InvoiceQrCode(
-      account: widget.store!.account!.currentAddress,
-      cid: widget.store!.encointer!.chosenCid,
+      account: widget.store.account!.currentAddress,
+      cid: widget.store.encointer!.chosenCid,
       amount: null,
-      label: widget.store!.account!.currentAccount.name,
+      label: widget.store.account!.currentAccount.name,
     );
   }
 
@@ -61,7 +61,7 @@ class _ReceivePageState extends State<ReceivePage> {
           print("[receivePage] pendingExtrinsics ${extrinsics.toString()}");
           if (((extrinsics.length) > 0) && (!observedPendingExtrinsic)) {
             extrinsics.forEach((xt) {
-              if (xt.contains(widget.store!.account!.currentAccountPubKey!.substring(2))) {
+              if (xt.contains(widget.store.account!.currentAccountPubKey!.substring(2))) {
                 RootSnackBar.showMsg(
                   dic.profile.observedPendingExtrinsic,
                   durationMillis: 5000,
@@ -75,27 +75,27 @@ class _ReceivePageState extends State<ReceivePage> {
             observedPendingExtrinsic = false;
           }
         });
-        webApi!.encointer!.getAllBalances(widget.store!.account!.currentAddress).then((balances) {
-          CommunityIdentifier? cid = widget.store!.encointer!.chosenCid;
+        webApi!.encointer!.getAllBalances(widget.store.account!.currentAddress).then((balances) {
+          CommunityIdentifier? cid = widget.store.encointer!.chosenCid;
 
           if (cid == null) {
             return;
           }
 
-          double? demurrageRate = widget.store!.encointer!.community!.demurrage;
-          double? newBalance = widget.store!.encointer!.applyDemurrage(balances[cid]);
+          double? demurrageRate = widget.store.encointer!.community!.demurrage;
+          double? newBalance = widget.store.encointer!.applyDemurrage(balances[cid]);
           double oldBalance =
-              widget.store!.encointer!.applyDemurrage(widget.store!.encointer!.communityBalanceEntry) ?? 0;
+              widget.store.encointer!.applyDemurrage(widget.store.encointer!.communityBalanceEntry) ?? 0;
           if (newBalance != null) {
             double delta = newBalance - oldBalance;
             print("[receivePage] balance was $oldBalance, changed by $delta");
             if (delta > demurrageRate!) {
               var msg = dic.assets.incomingConfirmed
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
-                  .replaceAll('CID_SYMBOL', widget.store!.encointer!.community?.metadata?.symbol ?? "null")
-                  .replaceAll('ACCOUNT_NAME', widget.store!.account!.currentAccount.name);
+                  .replaceAll('CID_SYMBOL', widget.store.encointer!.community?.metadata?.symbol ?? "null")
+                  .replaceAll('ACCOUNT_NAME', widget.store.account!.currentAccount.name);
               print("[receivePage] $msg");
-              widget.store!.encointer!.account?.addBalanceEntry(cid, balances[cid]!);
+              widget.store.encointer!.account?.addBalanceEntry(cid, balances[cid]!);
               NotificationPlugin.showNotification(44, dic.assets.fundsReceived, msg, cid: cid.toFmtString());
             }
           }
@@ -175,7 +175,7 @@ class _ReceivePageState extends State<ReceivePage> {
                       ),
                     ],
                   ),
-                  Text('${dic.profile.receiverAccount} ${widget.store!.account!.currentAccount.name}',
+                  Text('${dic.profile.receiverAccount} ${widget.store.account!.currentAccount.name}',
                       style: Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey),
                       textAlign: TextAlign.center),
                   SizedBox(height: 8),

@@ -41,12 +41,12 @@ class CreateAccountForm extends StatelessWidget {
       }
 
       var addresses = await webApi!.account.encodeAddress([acc['pubKey']]);
-      await store!.addAccount(acc, store!.account!.newAccount.password, addresses[0]);
+      await store.addAccount(acc, store.account!.newAccount.password, addresses[0]);
 
       String? pubKey = acc['pubKey'];
-      store!.setCurrentAccount(pubKey);
+      store.setCurrentAccount(pubKey);
 
-      await store!.loadAccountCache();
+      await store.loadAccountCache();
 
       // fetch info for the imported account
       webApi!.fetchAccountData();
@@ -85,7 +85,7 @@ class CreateAccountForm extends StatelessWidget {
                   hintText: dic.account.createHint,
                   labelText: I18n.of(context)!.translationsForLocale().profile.accountName,
                   controller: _nameCtrl,
-                  validator: (v) => InputValidation.validateAccountName(context, v, store!.account!.optionalAccounts),
+                  validator: (v) => InputValidation.validateAccountName(context, v, store.account!.optionalAccounts),
                 ),
               ],
             ),
@@ -109,7 +109,7 @@ class CreateAccountForm extends StatelessWidget {
               ),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  store!.account!.setNewAccountName(_nameCtrl.text.trim());
+                  store.account!.setNewAccountName(_nameCtrl.text.trim());
                   Navigator.pushNamed(
                     context,
                     CreatePinPage.route,

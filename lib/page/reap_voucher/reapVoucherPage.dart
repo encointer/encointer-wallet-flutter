@@ -57,8 +57,8 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
     var voucherBalanceEntry = await api.encointer!.getEncointerBalance(_voucherAddress!, cid);
     _voucherBalance = voucherBalanceEntry.applyDemurrage(
-      widget.store!.chain!.latestHeaderNumber,
-      widget.store!.encointer!.community!.demurrage!,
+      widget.store.chain!.latestHeaderNumber,
+      widget.store.encointer!.community!.demurrage!,
     );
 
     _isReady = true;
@@ -78,7 +78,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     final cid = voucher.cid;
     final networkInfo = voucher.network;
     final issuer = voucher.issuer;
-    final recipient = widget.store!.account!.currentAddress;
+    final recipient = widget.store.account!.currentAddress;
     final showFundVoucher = params.showFundVoucher;
 
     if (!_postFrameCallbackCalled) {
@@ -122,7 +122,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                   : CupertinoActivityIndicator(),
             ),
             Text(
-              "${dic.assets.voucherBalance}, ${widget.store!.encointer!.community?.symbol}",
+              "${dic.assets.voucherBalance}, ${widget.store.encointer!.community?.symbol}",
               style: h4Grey,
             ),
             Expanded(
@@ -130,7 +130,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
               child: Center(
                 child: Text(
                   dic.assets.doYouWantToRedeemThisVoucher
-                      .replaceAll("ACCOUNT_PLACEHOLDER", widget.store!.account!.currentAccount.name),
+                      .replaceAll("ACCOUNT_PLACEHOLDER", widget.store.account!.currentAccount.name),
                   style: h2Grey,
                   textAlign: TextAlign.center,
                 ),
@@ -191,7 +191,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   ) async {
     ChangeResult? result = ChangeResult.ok;
 
-    if (widget.store!.settings!.endpoint.info != networkInfo) {
+    if (widget.store.settings!.endpoint.info != networkInfo) {
       result = await showChangeNetworkAndCommunityDialog(
         context,
         widget.store,
@@ -205,7 +205,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
       return result;
     }
 
-    if (widget.store!.encointer!.chosenCid != cid) {
+    if (widget.store.encointer!.chosenCid != cid) {
       result = await showChangeCommunityDialog(
         context,
         widget.store,

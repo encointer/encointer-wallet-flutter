@@ -43,14 +43,14 @@ class Api {
 
     // no need to store this as an instance it is only used by the encointerApi
     var dartApi = SubstrateDartApi();
-    dartApi.connect(store!.settings!.endpoint.value!);
+    dartApi.connect(store.settings!.endpoint.value!);
 
     account = AccountApi(js, fetchAccountData);
     assets = AssetsApi(js);
     chain = ChainApi(js);
     codec = CodecApi(js);
     encointer = EncointerApi(js, dartApi);
-    ipfs = Ipfs(gateway: store!.settings!.ipfsGateway);
+    ipfs = Ipfs(gateway: store.settings!.ipfsGateway);
 
     print("launch the webview");
     await launchWebview();
@@ -69,7 +69,7 @@ class Api {
       // load keyPairs from local data
       await account.initAccounts();
 
-      store!.encointer!.initializeUninitializedStores(store!.account!.currentAddress);
+      store.encointer!.initializeUninitializedStores(store.account!.currentAddress);
 
       connectFunc();
     }
@@ -94,19 +94,19 @@ class Api {
   }
 
   Future<void> connectNode() async {
-    String? node = store!.settings!.endpoint.value;
-    NodeConfig? config = store!.settings!.endpoint.overrideConfig;
+    String? node = store.settings!.endpoint.value;
+    NodeConfig? config = store.settings!.endpoint.overrideConfig;
     // do connect
     String? res = await evalJavascript('settings.connect("$node", "${jsonEncode(config)}")');
     if (res == null) {
       print('connecting to node failed');
-      store!.settings!.setNetworkName(null);
+      store.settings!.setNetworkName(null);
       return;
     }
 
-    if (store!.settings!.endpointIsTeeProxy) {
-      var worker = store!.settings!.endpoint.worker;
-      var mrenclave = store!.settings!.endpoint.mrenclave;
+    if (store.settings!.endpointIsTeeProxy) {
+      var worker = store.settings!.endpoint.worker;
+      var mrenclave = store.settings!.endpoint.mrenclave;
       await evalJavascript('settings.setWorkerEndpoint("$worker", "$mrenclave")');
     }
 
@@ -114,27 +114,27 @@ class Api {
   }
 
   Future<void> connectNodeAll() async {
-    List<String?> nodes = store!.settings!.endpointList.map((e) => e.value).toList();
-    List<NodeConfig?> configs = store!.settings!.endpointList.map((e) => e.overrideConfig).toList();
+    List<String?> nodes = store.settings!.endpointList.map((e) => e.value).toList();
+    List<NodeConfig?> configs = store.settings!.endpointList.map((e) => e.overrideConfig).toList();
     print("configs: $configs");
     // do connect
     String? res = await evalJavascript('settings.connectAll(${jsonEncode(nodes)}, ${jsonEncode(configs)})');
     if (res == null) {
       print('connect failed');
-      store!.settings!.setNetworkName(null);
+      store.settings!.setNetworkName(null);
       return;
     }
 
     // setWorker endpoint on js side
-    if (store!.settings!.endpointIsTeeProxy) {
-      var worker = store!.settings!.endpoint.worker;
-      var mrenclave = store!.settings!.endpoint.mrenclave;
+    if (store.settings!.endpointIsTeeProxy) {
+      var worker = store.settings!.endpoint.worker;
+      var mrenclave = store.settings!.endpoint.mrenclave;
       await evalJavascript('settings.setWorkerEndpoint("$worker", "$mrenclave")');
     }
 
-    int index = store!.settings!.endpointList.indexWhere((i) => i.value == res);
+    int index = store.settings!.endpointList.indexWhere((i) => i.value == res);
     if (index < 0) return;
-    store!.settings!.setEndpoint(store!.settings!.endpointList[index]);
+    store.settings!.setEndpoint(store.settings!.endpointList[index]);
     await fetchNetworkProps();
     encointer!.getCommunityData();
   }
@@ -151,9 +151,9 @@ class Api {
       evalJavascript('api.rpc.system.properties()'),
       evalJavascript('api.rpc.system.chain()'), // "Development" or "Encointer Testnet Gesell" or whatever
     ]);
-    store!.settings!.setNetworkConst(info[0]);
-    store!.settings!.setNetworkState(info[1]);
-    store!.settings!.setNetworkName(info[2]);
+    store.settings!.setNetworkConst(info[0]);
+    store.settings!.setNetworkState(info[1]);
+    store.settings!.setNetworkName(info[2]);
 
     startSubscriptions();
   }

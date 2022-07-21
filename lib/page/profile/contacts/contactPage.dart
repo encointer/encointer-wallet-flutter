@@ -58,7 +58,7 @@ class _Contact extends State<ContactPage> {
       });
       if (qrScanData == null) {
         // create new contact
-        int exist = store!.settings!.contactList.indexWhere((i) => i.address == addr);
+        int exist = store.settings!.contactList.indexWhere((i) => i.address == addr);
         if (exist > -1) {
           showCupertinoDialog(
             context: context,
@@ -77,11 +77,11 @@ class _Contact extends State<ContactPage> {
           );
           return;
         } else {
-          store!.settings!.addContact(con);
+          store.settings!.addContact(con);
         }
       } else {
         // edit contact
-        store!.settings!.updateContact(con);
+        store.settings!.updateContact(con);
       }
 
       // get contact info
@@ -91,7 +91,7 @@ class _Contact extends State<ContactPage> {
       } else {
         // if this address was used as observation and current account,
         // we need to change current account
-        if (pubKey == store!.account!.currentAccountPubKey) {
+        if (pubKey == store.account!.currentAccountPubKey) {
           webApi!.account.changeCurrentAccount(fetchData: true);
         }
       }
@@ -160,7 +160,7 @@ class _Contact extends State<ContactPage> {
                         },
                       ),
                     ),
-                    store!.settings!.developerMode
+                    store.settings!.developerMode
                         ? Padding(
                             padding: EdgeInsets.only(left: 16, right: 16),
                             child: TextFormField(
@@ -172,7 +172,7 @@ class _Contact extends State<ContactPage> {
                             ),
                           )
                         : Container(),
-                    store!.settings!.developerMode
+                    store.settings!.developerMode
                         ? Row(
                             children: <Widget>[
                               Checkbox(

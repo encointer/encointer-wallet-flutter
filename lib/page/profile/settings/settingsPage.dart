@@ -50,7 +50,7 @@ class _Settings extends State<SettingsPage> {
             child: CupertinoPicker(
               backgroundColor: Colors.white,
               itemExtent: 58,
-              scrollController: FixedExtentScrollController(initialItem: _langOptions.indexOf(store!.localeCode)),
+              scrollController: FixedExtentScrollController(initialItem: _langOptions.indexOf(store.localeCode)),
               children: _langOptions.map((i) {
                 return Padding(padding: EdgeInsets.all(16), child: Text(getLang(i)));
               }).toList(),
@@ -62,8 +62,8 @@ class _Settings extends State<SettingsPage> {
             ),
             onWillPop: () async {
               String code = _langOptions[_selected];
-              if (code != store!.localeCode) {
-                store!.setLocalCode(code);
+              if (code != store.localeCode) {
+                store.setLocalCode(code);
                 changeLang(context, code);
               }
               return true;
@@ -85,26 +85,26 @@ class _Settings extends State<SettingsPage> {
               ListTile(
                 leading: Container(
                   width: 36,
-                  child: Image.asset('assets/images/public/${store!.endpoint.info}.png'),
+                  child: Image.asset('assets/images/public/${store.endpoint.info}.png'),
                 ),
                 title: Text(dic.profile.settingNode),
-                subtitle: Text(store!.endpoint.text ?? ''),
+                subtitle: Text(store.endpoint.text ?? ''),
                 trailing: Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.of(context).pushNamed(RemoteNodeListPage.route),
               ),
               ListTile(
                 leading: Container(
                   width: 36,
-                  child: Image.asset('assets/images/public/${store!.customSS58Format['info']}.png'),
+                  child: Image.asset('assets/images/public/${store.customSS58Format['info']}.png'),
                 ),
                 title: Text(dic.profile.settingPrefix),
-                subtitle: Text(store!.customSS58Format['text'] ?? ''),
+                subtitle: Text(store.customSS58Format['text'] ?? ''),
                 trailing: Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.of(context).pushNamed(SS58PrefixListPage.route),
               ),
               ListTile(
                 title: Text(dic.profile.settingLang),
-                subtitle: Text(getLang(store!.localeCode)),
+                subtitle: Text(getLang(store.localeCode)),
                 trailing: Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => _onLanguageTap(),
               )
