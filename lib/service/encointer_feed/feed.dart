@@ -17,7 +17,7 @@ Future<List<MeetupOverrides>> getMeetupOverrides() async {
   }
 }
 
-Future<DateTime?> getMeetupTimeOverride(String? network, CommunityIdentifier cid, CeremonyPhase? phase) async {
+Future<DateTime?> getMeetupTimeOverride(String network, CommunityIdentifier cid, CeremonyPhase phase) async {
   // For testing that it works.
   // final overrides = testMeetupOverrides;
   final overrides = await getMeetupOverrides();
