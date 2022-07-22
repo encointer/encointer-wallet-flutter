@@ -73,7 +73,9 @@ class Api {
       // load keyPairs from local data
       await account.initAccounts();
 
-      await store.encointer.initializeUninitializedStores(store.account.currentAddress);
+      if (store.account.currentAddress.isNotEmpty) {
+        await store.encointer.initializeUninitializedStores(store.account.currentAddress);
+      }
 
       return connectFunc();
     }
