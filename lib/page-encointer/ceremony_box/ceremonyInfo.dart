@@ -12,19 +12,19 @@ import 'components/ceremonySchedule.dart';
 class CeremonyInfo extends StatelessWidget {
   CeremonyInfo({
     Key? key,
-    this.currentTime,
-    this.assigningPhaseStart,
-    this.meetupTime,
-    this.ceremonyPhaseDurations,
-    this.meetupCompleted,
+    required this.currentTime,
+    required this.assigningPhaseStart,
+    required this.meetupTime,
+    required this.ceremonyPhaseDurations,
+    required this.meetupCompleted,
     this.devMode = false,
   }) : super(key: key);
 
-  final int? currentTime;
+  final int currentTime;
   final int? assigningPhaseStart;
   final int? meetupTime;
-  final Map<CeremonyPhase?, int>? ceremonyPhaseDurations;
-  final bool? meetupCompleted;
+  final Map<CeremonyPhase, int> ceremonyPhaseDurations;
+  final bool meetupCompleted;
   final bool devMode;
 
   @override
@@ -50,7 +50,7 @@ class CeremonyInfo extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    !(meetupCompleted ?? false)
+                    !meetupCompleted
                         ? CeremonySchedule(
                             nextCeremonyDate: DateTime.fromMillisecondsSinceEpoch(meetupTime!),
                             languageCode: languageCode,
