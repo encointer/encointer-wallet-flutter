@@ -9,6 +9,26 @@ part of 'app.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AppStore on _AppStore, Store {
+  Computed<AccountStore>? _$accountComputed;
+
+  @override
+  AccountStore get account =>
+      (_$accountComputed ??= Computed<AccountStore>(() => super.account, name: '_AppStore.account')).value;
+  Computed<AssetsStore>? _$assetsComputed;
+
+  @override
+  AssetsStore get assets =>
+      (_$assetsComputed ??= Computed<AssetsStore>(() => super.assets, name: '_AppStore.assets')).value;
+  Computed<ChainStore>? _$chainComputed;
+
+  @override
+  ChainStore get chain => (_$chainComputed ??= Computed<ChainStore>(() => super.chain, name: '_AppStore.chain')).value;
+  Computed<EncointerStore>? _$encointerComputed;
+
+  @override
+  EncointerStore get encointer =>
+      (_$encointerComputed ??= Computed<EncointerStore>(() => super.encointer, name: '_AppStore.encointer')).value;
+
   late final _$_settingsAtom = Atom(name: '_AppStore._settings', context: context);
 
   @override
@@ -125,7 +145,11 @@ mixin _$AppStore on _AppStore, Store {
   String toString() {
     return '''
 isReady: ${isReady},
-appIsReady: ${appIsReady}
+appIsReady: ${appIsReady},
+account: ${account},
+assets: ${assets},
+chain: ${chain},
+encointer: ${encointer}
     ''';
   }
 }

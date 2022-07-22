@@ -22,7 +22,7 @@ const encointerCachePrefix = 'encointer-store';
 const encointerCacheVersionPrefix = 'encointer-cache-version-key';
 
 /// Should be increased if cache incompatibilities have been introduced.
-const encointerCacheVersion = 'v1.0';
+const encointerCacheVersion = 'v1.0-a';
 
 /// Global aggregated storage for the app.
 ///
@@ -60,18 +60,22 @@ abstract class _AppStore with Store {
 
   @observable
   AccountStore? _account;
+  @computed
   AccountStore get account => _account!;
 
   @observable
   AssetsStore? _assets;
+  @computed
   AssetsStore get assets => _assets!;
 
   @observable
   ChainStore? _chain;
+  @computed
   ChainStore get chain => _chain!;
 
   @observable
   EncointerStore? _encointer;
+  @computed
   EncointerStore get encointer => _encointer!;
 
   @observable
