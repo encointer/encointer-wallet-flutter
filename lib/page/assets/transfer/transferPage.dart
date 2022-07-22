@@ -57,8 +57,9 @@ class _TransferPageState extends State<TransferPage> {
   final TextEditingController _amountCtrl = new TextEditingController();
 
   AccountData? _accountTo;
-  CommunityIdentifier? _cid;
-  String? _communitySymbol;
+
+  late final CommunityIdentifier _cid;
+  late final _communitySymbol;
 
   @override
   Widget build(BuildContext context) {
@@ -66,7 +67,7 @@ class _TransferPageState extends State<TransferPage> {
     TransferPageParams params = ModalRoute.of(context)!.settings.arguments as TransferPageParams;
 
     _communitySymbol = params.communitySymbol;
-    _cid = params.cid ?? store.encointer.chosenCid;
+    _cid = params.cid ?? store.encointer.chosenCid!;
 
     int decimals = encointer_currencies_decimals;
 
@@ -185,7 +186,7 @@ class _TransferPageState extends State<TransferPage> {
                         ],
                       ),
                     ),
-                    onPressed: _pushPaymentConfirmationPage,
+                    onPressed: _accountTo != null ? _pushPaymentConfirmationPage : null,
                   ),
                 ],
               ),
@@ -204,7 +205,7 @@ class _TransferPageState extends State<TransferPage> {
         arguments: PaymentConfirmationParams(
             cid: _cid,
             communitySymbol: _communitySymbol,
-            recipientAccount: _accountTo,
+            recipientAccount: _accountTo!,
             amount: double.parse(_amountCtrl.text.trim())),
       );
     }

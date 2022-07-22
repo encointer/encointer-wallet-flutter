@@ -5,8 +5,8 @@ import 'package:encointer_wallet/store/encointer/types/proofOfAttendance.dart';
 /// Params for known extrinsics.
 
 Map<String, dynamic> endorseNewcomerParams(
-  CommunityIdentifier? chosenCid,
-  String? newbie,
+  CommunityIdentifier chosenCid,
+  String newbie,
 ) {
   return {
     "title": 'endorse_newcomer',
@@ -20,7 +20,7 @@ Map<String, dynamic> endorseNewcomerParams(
 }
 
 Map<String, dynamic> registerParticipantParams(
-  CommunityIdentifier? chosenCid, {
+  CommunityIdentifier chosenCid, {
   ProofOfAttendance? proof,
 }) {
   return {
@@ -38,7 +38,7 @@ Map<String, dynamic> registerParticipantParams(
 }
 
 Map<String, dynamic> attestClaimsParams(
-  CommunityIdentifier? chosenCid,
+  CommunityIdentifier chosenCid,
   int scannedClaimsCount,
   List<ClaimOfAttendance> claims,
 ) {
@@ -53,7 +53,7 @@ Map<String, dynamic> attestClaimsParams(
   };
 }
 
-Map<String, dynamic> claimRewardsParams(CommunityIdentifier? chosenCid) {
+Map<String, dynamic> claimRewardsParams(CommunityIdentifier chosenCid) {
   return {
     "title": 'claim_rewards',
     "txInfo": {
@@ -66,7 +66,7 @@ Map<String, dynamic> claimRewardsParams(CommunityIdentifier? chosenCid) {
 }
 
 Map<String, dynamic> encointerBalanceTransferParams(
-  CommunityIdentifier? cid,
+  CommunityIdentifier cid,
   String recipientAddress,
   double? amount,
 ) {

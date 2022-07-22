@@ -60,7 +60,7 @@ Future<void> submitClaimRewards(
   Api api,
   CommunityIdentifier? chosenCid,
 ) async {
-  var txParams = claimRewardsParams(chosenCid);
+  var txParams = claimRewardsParams(chosenCid!);
 
   return submitTx(
     context,
@@ -78,7 +78,7 @@ Future<void> submitEndorseNewcomer(
   CommunityIdentifier? chosenCid,
   String? newbie,
 ) async {
-  var txParams = endorseNewcomerParams(chosenCid, newbie);
+  var txParams = endorseNewcomerParams(chosenCid!, newbie!);
 
   return submitTx(
     context,
@@ -110,7 +110,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
     context,
     store,
     api,
-    registerParticipantParams(store.encointer.chosenCid, proof: await api.encointer.getProofOfAttendance()),
+    registerParticipantParams(store.encointer.chosenCid!, proof: await api.encointer.getProofOfAttendance()),
     onFinish: (BuildContext txPageContext, Map res) {
       store.encointer.updateAggregatedAccountData();
       Navigator.popUntil(
@@ -123,7 +123,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
 
 Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) async {
   final params = attestClaimsParams(
-    store.encointer.chosenCid,
+    store.encointer.chosenCid!,
     store.encointer.communityAccount!.scannedClaimsCount,
     store.encointer.communityAccount!.participantsClaims!.values.toList(),
   );

@@ -72,7 +72,7 @@ Future<void> submitToJS(
   }
 }
 
-Future<Map?> getTxFee(
+Future<Map> getTxFee(
   AppStore store,
   Api api,
   Map args, {

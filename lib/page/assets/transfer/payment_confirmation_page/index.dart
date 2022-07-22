@@ -21,16 +21,16 @@ import 'package:intl/intl.dart';
 
 class PaymentConfirmationParams {
   PaymentConfirmationParams({
-    this.cid,
-    this.communitySymbol,
-    this.recipientAccount,
-    this.amount,
+    required this.cid,
+    required this.communitySymbol,
+    required this.recipientAccount,
+    required this.amount,
   });
 
-  final CommunityIdentifier? cid;
-  final String? communitySymbol;
-  final AccountData? recipientAccount;
-  final double? amount;
+  final CommunityIdentifier cid;
+  final String communitySymbol;
+  final AccountData recipientAccount;
+  final double amount;
 }
 
 class PaymentConfirmationPage extends StatefulWidget {
@@ -64,7 +64,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     PaymentConfirmationParams params = ModalRoute.of(context)!.settings.arguments as PaymentConfirmationParams;
 
     var cid = params.cid;
-    var recipientAccount = params.recipientAccount!;
+    var recipientAccount = params.recipientAccount;
     final recipientAddress = Fmt.addressOfAccount(recipientAccount, widget.store);
     var amount = params.amount;
 
@@ -137,7 +137,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     );
   }
 
-  Future<void> _submit(BuildContext context, CommunityIdentifier? cid, String recipientAddress, double? amount) async {
+  Future<void> _submit(BuildContext context, CommunityIdentifier cid, String recipientAddress, double? amount) async {
     var params = encointerBalanceTransferParams(cid, recipientAddress, amount);
 
     setState(() {
@@ -174,17 +174,13 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   Widget _getTransferStateWidget(TransferState state) {
     switch (state) {
       case TransferState.notStarted:
-        {
-          return Container();
-        }
+        return Container();
       case TransferState.submitting:
-        {
-          return SizedBox(
-            height: 80,
-            width: 80,
-            child: CircularProgressIndicator(),
-          );
-        }
+        return SizedBox(
+          height: 80,
+          width: 80,
+          child: CircularProgressIndicator(),
+        );
       case TransferState.finished:
         {
           if (!_animationInitialized) {
@@ -201,19 +197,17 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
           );
         }
       case TransferState.failed:
-        {
-          return Container(
-            decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.red),
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Icon(
-                Icons.highlight_remove,
-                size: 80.0,
-                color: Colors.white,
-              ),
+        return Container(
+          decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.red),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Icon(
+              Icons.highlight_remove,
+              size: 80.0,
+              color: Colors.white,
             ),
-          );
-        }
+          ),
+        );
       default:
         return Text("Unknown transfer state");
     }
