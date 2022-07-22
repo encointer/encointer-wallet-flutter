@@ -23,7 +23,7 @@ class AssetsApi {
     String? pubKey = store.account.currentAccountPubKey;
     String? currentAddress = store.account.currentAddress;
     if (pubKey != null && pubKey.isNotEmpty) {
-      String address = currentAddress!;
+      String address = currentAddress;
       Map res = await jsApi.evalJavascript(
         'account.getBalance("$address")',
         allowRepeat: true,

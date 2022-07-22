@@ -56,26 +56,29 @@ abstract class _AppStore with Store {
   // it removes the `null`-compiler checks and turns them into runtime-checks.
   @observable
   SettingsStore? _settings;
-  get settings => _settings!;
+  SettingsStore get settings => _settings!;
 
   @observable
   AccountStore? _account;
-  get account => _account!;
+  AccountStore get account => _account!;
 
   @observable
   AssetsStore? _assets;
-  get assets => _assets!;
+  AssetsStore get assets => _assets!;
 
   @observable
   ChainStore? _chain;
-  get chain => _chain!;
+  ChainStore get chain => _chain!;
 
   @observable
   EncointerStore? _encointer;
-  get encointer => _encointer!;
+  EncointerStore get encointer => _encointer!;
 
   @observable
   bool isReady = false;
+
+  @observable
+  bool appIsReady = false;
 
   LocalStorage localStorage;
 

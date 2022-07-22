@@ -99,6 +99,21 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
+  late final _$appIsReadyAtom = Atom(name: '_AppStore.appIsReady', context: context);
+
+  @override
+  bool get appIsReady {
+    _$appIsReadyAtom.reportRead();
+    return super.appIsReady;
+  }
+
+  @override
+  set appIsReady(bool value) {
+    _$appIsReadyAtom.reportWrite(value, super.appIsReady, () {
+      super.appIsReady = value;
+    });
+  }
+
   late final _$initAsyncAction = AsyncAction('_AppStore.init', context: context);
 
   @override
@@ -109,7 +124,8 @@ mixin _$AppStore on _AppStore, Store {
   @override
   String toString() {
     return '''
-isReady: ${isReady}
+isReady: ${isReady},
+appIsReady: ${appIsReady}
     ''';
   }
 }
