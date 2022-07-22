@@ -2,10 +2,10 @@ import 'package:encointer_wallet/service/substrate_api/core/jsApi.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 class AssetsApi {
-  AssetsApi(this.jsApi);
+  AssetsApi(this.store, this.jsApi);
 
   final JSApi jsApi;
-  final store = globalAppStore;
+  final AppStore store;
 
   final String _balanceSubscribeChannel = 'gas token balance';
 

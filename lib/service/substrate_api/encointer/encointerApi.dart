@@ -30,7 +30,7 @@ import 'teeProxyApi.dart';
 /// NOTE: If the js-code was changed a rebuild of the application is needed to update the code.
 
 class EncointerApi {
-  EncointerApi(this.jsApi, SubstrateDartApi dartApi)
+  EncointerApi(this.store, this.jsApi, SubstrateDartApi dartApi)
       : _noTee = NoTeeApi(jsApi),
         _teeProxy = TeeProxyApi(jsApi),
         _dartApi = EncointerDartApi(dartApi);
@@ -38,7 +38,7 @@ class EncointerApi {
   final JSApi jsApi;
   final EncointerDartApi _dartApi;
 
-  final store = globalAppStore;
+  final AppStore store;
   final String _currentPhaseSubscribeChannel = 'currentPhase';
   final String _communityIdentifiersChannel = 'communityIdentifiers';
   final String _encointerBalanceChannel = 'encointerBalance';

@@ -47,11 +47,11 @@ class Api {
     var dartApi = SubstrateDartApi();
     dartApi.connect(store.settings.endpoint.value!);
 
-    account = AccountApi(js, fetchAccountData);
-    assets = AssetsApi(js);
-    chain = ChainApi(js);
+    account = AccountApi(store, js, fetchAccountData);
+    assets = AssetsApi(store, js);
+    chain = ChainApi(store, js);
     codec = CodecApi(js);
-    encointer = EncointerApi(js, dartApi);
+    encointer = EncointerApi(store, js, dartApi);
     ipfs = Ipfs(gateway: store.settings.ipfsGateway);
 
     print("launch the webview");

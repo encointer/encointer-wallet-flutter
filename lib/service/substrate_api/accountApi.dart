@@ -9,10 +9,10 @@ import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 class AccountApi {
-  AccountApi(this.jsApi, this.fetchAccountData);
+  AccountApi(this.store, this.jsApi, this.fetchAccountData);
 
   final JSApi jsApi;
-  final store = globalAppStore;
+  final AppStore store;
   final Function fetchAccountData;
 
   Future<void> initAccounts() async {

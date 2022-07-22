@@ -6,6 +6,7 @@ import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 
 import '../../models/index.dart';
+import '../../store/app.dart';
 import 'core/mockDartApi.dart';
 import 'mockJSApi.dart';
 
@@ -15,7 +16,7 @@ import 'mockJSApi.dart';
 /// The getters then return the preconfigured value, which in turn leads to consistent
 /// responses in the test.
 class MockApiEncointer extends EncointerApi {
-  MockApiEncointer(MockJSApi js, MockSubstrateDartApi dartApi) : super(js, dartApi);
+  MockApiEncointer(AppStore store, MockJSApi js, MockSubstrateDartApi dartApi) : super(store, js, dartApi);
 
   void _log(String msg) {
     print("[mockApiEncointer] $msg");
