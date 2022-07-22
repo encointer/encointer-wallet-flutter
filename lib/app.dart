@@ -110,7 +110,6 @@ class _WalletAppState extends State<WalletApp> {
   void reassemble() {
     // this gets executed upon hot-restart or hot-reload only!
     super.reassemble();
-    // TODO: reload dictionary in case it was updated
   }
 
   @override
