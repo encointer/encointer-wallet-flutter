@@ -18,7 +18,7 @@ class MockApiEncointer extends EncointerApi {
   MockApiEncointer(MockJSApi js, MockSubstrateDartApi dartApi) : super(js, dartApi);
 
   void _log(String msg) {
-    print("[mockApiAssets] $msg");
+    print("[mockApiEncointer] $msg");
   }
 
   @override
