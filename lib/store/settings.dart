@@ -289,7 +289,7 @@ abstract class _SettingsStore with Store {
     await setNetworkConst({}, needCache: false);
     setEndpoint(network);
 
-    await Future.wait([
+    await Future.wait(<Future<void>>[
       rootStore.loadAccountCache(),
       loadNetworkStateCache(),
       rootStore.assets.loadCache(),

@@ -15,19 +15,19 @@ void main() {
 
   group('EncointerStore test', () {
     test('encointer store initialization, serialization and cache works', () async {
-      globalAppStore = AppStore(MockLocalStorage());
+      globalAppStore = AppStore(MockLocalStorage(), config: StoreConfig.Test);
+      await globalAppStore.init('_en');
       final AppStore root = globalAppStore;
+      // await root.init('_en');
+
       accList = [testAcc];
       currentAccountPubKey = accList[0]['pubKey'];
 
       webApi = MockApi(root, "", withUi: false);
-
-      await root.init('_en');
+      await webApi.init();
 
       // re-initialize with cacheKey that does not mess with real cache
-      root.settings.setEndpoint(unitTestEndpoint);
-      await root.init('_en');
-      await webApi.init();
+      // root.settings.setEndpoint(unitTestEndpoint);
 
       final encointerStore = root.encointer;
 

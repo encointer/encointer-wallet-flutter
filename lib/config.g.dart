@@ -17,7 +17,7 @@ Map<String, dynamic> _$ConfigToJson(Config instance) => <String, dynamic>{
       'initialRoute': instance.initialRoute,
       'mockLocalStorage': instance.mockLocalStorage,
       'mockSubstrateApi': instance.mockSubstrateApi,
-      'appStoreConfig': _$StoreConfigEnumMap[instance.appStoreConfig],
+      'appStoreConfig': _$StoreConfigEnumMap[instance.appStoreConfig]!,
     };
 
 const _$StoreConfigEnumMap = {

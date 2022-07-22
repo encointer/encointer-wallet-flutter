@@ -1,6 +1,9 @@
 import 'package:encointer_wallet/mocks/data/mockEncointerData.dart';
 import 'package:encointer_wallet/mocks/storage/mockLocalStorage.dart';
+import 'package:encointer_wallet/mocks/substrate_api/mockApi.dart';
 import 'package:encointer_wallet/mocks/testUtils.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/communityStore.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -10,6 +13,10 @@ void main() {
     test('json serialization and caching works', () async {
       var localStorage = MockLocalStorage();
       var communityStoreCacheKey = "communityStore-test-cache";
+
+      // Only to not get null errors in tests
+      webApi = MockApi(globalAppStore, "", withUi: false);
+      webApi.init();
 
       var communityStore = CommunityStore(
         "My Test Network",

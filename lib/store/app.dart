@@ -40,24 +40,39 @@ enum StoreConfig {
 }
 
 abstract class _AppStore with Store {
-  _AppStore(this.localStorage, {this.config = StoreConfig.Normal});
+  _AppStore(
+    this.localStorage, {
+    this.config = StoreConfig.Normal,
+  });
 
   final config;
 
+  // Note, following pattern of a nullable field with a non-nullable getter
+  // is here because mobx can't handle `late` initialization:
+  // https://github.com/mobxjs/mobx.dart/issues/598#issuecomment-814875535
+  //
+  // However, the store initialization process should be refactored so we do not need
+  // to depend on `late`, which should be used as a very last resort only because
+  // it removes the `null`-compiler checks and turns them into runtime-checks.
   @observable
-  late final SettingsStore settings;
+  SettingsStore? _settings;
+  get settings => _settings!;
 
   @observable
-  late final AccountStore account;
+  AccountStore? _account;
+  get account => _account!;
 
   @observable
-  late final AssetsStore assets;
+  AssetsStore? _assets;
+  get assets => _assets!;
 
   @observable
-  late final ChainStore chain;
+  ChainStore? _chain;
+  get chain => _chain!;
 
   @observable
-  late final EncointerStore encointer;
+  EncointerStore? _encointer;
+  get encointer => _encointer!;
 
   @observable
   bool isReady = false;
@@ -67,16 +82,16 @@ abstract class _AppStore with Store {
   @action
   Future<void> init(String sysLocaleCode) async {
     // wait settings store loaded
-    settings = SettingsStore(this as AppStore);
+    _settings = SettingsStore(this as AppStore);
     await settings.init(sysLocaleCode);
 
-    account = AccountStore(this as AppStore);
+    _account = AccountStore(this as AppStore);
     await account.loadAccount();
 
-    assets = AssetsStore(this as AppStore);
+    _assets = AssetsStore(this as AppStore);
     assets.loadCache();
 
-    chain = ChainStore(this as AppStore);
+    _chain = ChainStore(this as AppStore);
     chain.loadCache();
 
     // need to call this after settings was initialized
@@ -125,10 +140,10 @@ abstract class _AppStore with Store {
     var maybeStore = cacheVersion == encointerCacheVersion ? await loadEncointerCache(encointerFinalCacheKey) : null;
 
     if (maybeStore != null) {
-      encointer = maybeStore;
+      _encointer = maybeStore;
     } else {
       _log("Initializing new encointer store.");
-      encointer = EncointerStore(networkInfo);
+      _encointer = EncointerStore(networkInfo);
       encointer.initStore(
         this as AppStore,
         () => localStorage.setObject(encointerFinalCacheKey, encointer.toJson()),
@@ -166,7 +181,7 @@ abstract class _AppStore with Store {
     }
   }
 
-  Future<void> addAccount(Map<String, dynamic> acc, String password, String? address) {
+  Future<List<void>> addAccount(Map<String, dynamic> acc, String password, String? address) {
     return Future.wait([
       account.addAccount(acc, password),
     ]);

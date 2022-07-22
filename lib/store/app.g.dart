@@ -9,78 +9,78 @@ part of 'app.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AppStore on _AppStore, Store {
-  late final _$settingsAtom = Atom(name: '_AppStore.settings', context: context);
+  late final _$_settingsAtom = Atom(name: '_AppStore._settings', context: context);
 
   @override
-  SettingsStore get settings {
-    _$settingsAtom.reportRead();
-    return super.settings;
+  SettingsStore? get _settings {
+    _$_settingsAtom.reportRead();
+    return super._settings;
   }
 
   @override
-  set settings(SettingsStore value) {
-    _$settingsAtom.reportWrite(value, super.settings, () {
-      super.settings = value;
+  set _settings(SettingsStore? value) {
+    _$_settingsAtom.reportWrite(value, super._settings, () {
+      super._settings = value;
     });
   }
 
-  late final _$accountAtom = Atom(name: '_AppStore.account', context: context);
+  late final _$_accountAtom = Atom(name: '_AppStore._account', context: context);
 
   @override
-  AccountStore get account {
-    _$accountAtom.reportRead();
-    return super.account;
+  AccountStore? get _account {
+    _$_accountAtom.reportRead();
+    return super._account;
   }
 
   @override
-  set account(AccountStore value) {
-    _$accountAtom.reportWrite(value, super.account, () {
-      super.account = value;
+  set _account(AccountStore? value) {
+    _$_accountAtom.reportWrite(value, super._account, () {
+      super._account = value;
     });
   }
 
-  late final _$assetsAtom = Atom(name: '_AppStore.assets', context: context);
+  late final _$_assetsAtom = Atom(name: '_AppStore._assets', context: context);
 
   @override
-  AssetsStore get assets {
-    _$assetsAtom.reportRead();
-    return super.assets;
+  AssetsStore? get _assets {
+    _$_assetsAtom.reportRead();
+    return super._assets;
   }
 
   @override
-  set assets(AssetsStore value) {
-    _$assetsAtom.reportWrite(value, super.assets, () {
-      super.assets = value;
+  set _assets(AssetsStore? value) {
+    _$_assetsAtom.reportWrite(value, super._assets, () {
+      super._assets = value;
     });
   }
 
-  late final _$chainAtom = Atom(name: '_AppStore.chain', context: context);
+  late final _$_chainAtom = Atom(name: '_AppStore._chain', context: context);
 
   @override
-  ChainStore get chain {
-    _$chainAtom.reportRead();
-    return super.chain;
+  ChainStore? get _chain {
+    _$_chainAtom.reportRead();
+    return super._chain;
   }
 
   @override
-  set chain(ChainStore value) {
-    _$chainAtom.reportWrite(value, super.chain, () {
-      super.chain = value;
+  set _chain(ChainStore? value) {
+    _$_chainAtom.reportWrite(value, super._chain, () {
+      super._chain = value;
     });
   }
 
-  late final _$encointerAtom = Atom(name: '_AppStore.encointer', context: context);
+  late final _$_encointerAtom = Atom(name: '_AppStore._encointer', context: context);
 
   @override
-  EncointerStore get encointer {
-    _$encointerAtom.reportRead();
-    return super.encointer;
+  EncointerStore? get _encointer {
+    _$_encointerAtom.reportRead();
+    return super._encointer;
   }
 
   @override
-  set encointer(EncointerStore value) {
-    _$encointerAtom.reportWrite(value, super.encointer, () {
-      super.encointer = value;
+  set _encointer(EncointerStore? value) {
+    _$_encointerAtom.reportWrite(value, super._encointer, () {
+      super._encointer = value;
     });
   }
 
@@ -109,11 +109,6 @@ mixin _$AppStore on _AppStore, Store {
   @override
   String toString() {
     return '''
-settings: ${settings},
-account: ${account},
-assets: ${assets},
-chain: ${chain},
-encointer: ${encointer},
 isReady: ${isReady}
     ''';
   }
