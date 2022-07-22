@@ -15,19 +15,13 @@ void main() {
   Future<String> dataHandler(String? msg) async {
     switch (msg) {
       case MockStorageSetup.INIT:
-        {
-          PrepareMockStorage.init(globalAppStore);
-        }
+        PrepareMockStorage.init(globalAppStore);
         break;
       case MockStorageSetup.HOME_PAGE:
-        {
-          PrepareMockStorage.homePage(globalAppStore);
-        }
+        PrepareMockStorage.homePage(globalAppStore);
         break;
       case MockStorageSetup.READY_FOR_MEETUP:
-        {
-          PrepareMockStorage.readyForMeetup(globalAppStore);
-        }
+        PrepareMockStorage.readyForMeetup(globalAppStore);
         break;
       default:
         break;
