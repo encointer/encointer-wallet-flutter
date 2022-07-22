@@ -26,7 +26,7 @@ class CeremonyBox extends StatelessWidget {
   }) : super(key: key);
 
   final AppStore store;
-  final Api? api;
+  final Api api;
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +69,7 @@ class CeremonyBox extends StatelessWidget {
                     padding: const EdgeInsets.only(top: 12),
                     child: CeremonyRegisterButton(
                       registerUntil: assigningPhaseStart,
-                      onPressed: (context) => submitRegisterParticipant(context, store, api!),
+                      onPressed: (context) => submitRegisterParticipant(context, store, api),
                     ),
                   ),
                 if (store.encointer.showStartCeremonyButton)
@@ -98,7 +98,7 @@ class CeremonyBox extends StatelessWidget {
                               '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store.encointer.communityAccount!.scannedClaimsCount.toString())}'),
                         ],
                       ),
-                      onPressed: () => submitAttestClaims(context, store, api!),
+                      onPressed: () => submitAttestClaims(context, store, api),
                     ),
                   )
               ],

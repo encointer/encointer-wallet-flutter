@@ -27,7 +27,7 @@ class CeremonyStep2Scan extends StatelessWidget {
   }) : super(key: key);
 
   final AppStore store;
-  final Api? api;
+  final Api api;
 
   final Future<Uint8List> claim;
   final int confirmedParticipantsCount;
