@@ -35,7 +35,6 @@ import 'package:encointer_wallet/utils/snackBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'common/theme.dart';
 import 'mocks/storage/mockLocalStorage.dart';
@@ -96,9 +95,15 @@ class _WalletAppState extends State<WalletApp> {
     webApi =
         widget.config.mockSubstrateApi ? MockApi(_appStore, jsServiceEncointer) : Api(_appStore, jsServiceEncointer);
 
-    webApi.init();
+    await webApi.init();
 
     _changeLang(context, _appStore.settings.localeCode);
+
+    print('setting app is ready...');
+    _appStore.appIsReady = true;
+
+    print('store ready: ${_appStore.isReady}');
+    print('store appRead: ${_appStore.appIsReady}');
 
     return _appStore.account.accountListAll.length;
   }
@@ -153,21 +158,17 @@ class _WalletAppState extends State<WalletApp> {
             switch (settings.name) {
               case EncointerHomePage.route:
                 return CupertinoPageRoute(
-                    builder: (context) => Observer(
-                          builder: (_) {
-                            return WillPopScopeWrapper(
-                              child: FutureBuilder<int>(
-                                future: _initStore(context),
-                                builder: (_, AsyncSnapshot<int> snapshot) {
-                                  if (snapshot.hasData && _appStore.isReady) {
-                                    return snapshot.data! > 0 ? EncointerHomePage(_appStore) : CreateAccountEntryPage();
-                                  } else {
-                                    return CupertinoActivityIndicator();
-                                  }
-                                },
-                              ),
-                            );
-                          },
+                    builder: (context) => WillPopScopeWrapper(
+                          child: FutureBuilder<int>(
+                            future: _initStore(context),
+                            builder: (_, AsyncSnapshot<int> snapshot) {
+                              if (snapshot.hasData) {
+                                return snapshot.data! > 0 ? EncointerHomePage(_appStore) : CreateAccountEntryPage();
+                              } else {
+                                return CupertinoActivityIndicator();
+                              }
+                            },
+                          ),
                         ),
                     settings: settings);
               case NetworkSelectPage.route:

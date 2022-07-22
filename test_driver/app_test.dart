@@ -16,6 +16,14 @@ void main() {
 
       // waits until the firs frame after ft startup stabilized
       await driver!.waitUntilFirstFrameRasterized();
+
+      var ready = await driver!.requestData(MockStorageSetup.WAIT);
+      while (ready == false.toString()) {
+        print("Waiting for app to be ready: $ready");
+        await Future.delayed(Duration(seconds: 1));
+        ready = await driver!.requestData(MockStorageSetup.WAIT);
+      }
+
       await driver!.requestData(MockStorageSetup.INIT);
     });
 

@@ -8,6 +8,10 @@ import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart
 import '../../models/index.dart';
 
 abstract class PrepareMockStorage {
+  static String wait(AppStore store) {
+    return store.appIsReady.toString();
+  }
+
   static void init(AppStore store) {
     store.encointer.setCurrentPhase(initialPhase);
     store.encointer.setCommunityIdentifiers(testCommunityIdentifiers);

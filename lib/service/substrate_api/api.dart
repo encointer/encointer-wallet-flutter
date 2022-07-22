@@ -73,9 +73,9 @@ class Api {
       // load keyPairs from local data
       await account.initAccounts();
 
-      store.encointer.initializeUninitializedStores(store.account.currentAddress);
+      await store.encointer.initializeUninitializedStores(store.account.currentAddress);
 
-      connectFunc();
+      return connectFunc();
     }
 
     return js.launchWebView(_jsServiceEncointer, postInitCallback);
@@ -140,6 +140,7 @@ class Api {
     if (index < 0) return;
     store.settings.setEndpoint(store.settings.endpointList[index]);
     await fetchNetworkProps();
+    print("get community data");
     encointer.getCommunityData();
   }
 
