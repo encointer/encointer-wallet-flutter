@@ -154,22 +154,23 @@ class _WalletAppState extends State<WalletApp> {
             switch (settings.name) {
               case EncointerHomePage.route:
                 return CupertinoPageRoute(
-                    builder: (context) => WillPopScopeWrapper(
-                          child: FutureBuilder<int>(
-                            future: _initStore(context),
-                            builder: (_, AsyncSnapshot<int> snapshot) {
-                              if (snapshot.hasError) {
-                                _log("SnapshotError: ${snapshot.error.toString()}");
-                              }
-                              if (snapshot.hasData) {
-                                return snapshot.data! > 0 ? EncointerHomePage(_appStore!) : CreateAccountEntryPage();
-                              } else {
-                                return CupertinoActivityIndicator();
-                              }
-                            },
-                          ),
-                        ),
-                    settings: settings);
+                  settings: settings,
+                  builder: (context) => WillPopScopeWrapper(
+                    child: FutureBuilder<int>(
+                      future: _initStore(context),
+                      builder: (_, AsyncSnapshot<int> snapshot) {
+                        if (snapshot.hasError) {
+                          _log("SnapshotError: ${snapshot.error.toString()}");
+                        }
+                        if (snapshot.hasData) {
+                          return snapshot.data! > 0 ? EncointerHomePage(_appStore!) : CreateAccountEntryPage();
+                        } else {
+                          return CupertinoActivityIndicator();
+                        }
+                      },
+                    ),
+                  ),
+                );
               case NetworkSelectPage.route:
                 return CupertinoPageRoute(
                     builder: (_) => NetworkSelectPage(_appStore!, _changeTheme), settings: settings);
