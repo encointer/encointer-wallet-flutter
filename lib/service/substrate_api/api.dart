@@ -19,7 +19,7 @@ import 'core/jsApi.dart';
 /// Global api instance
 ///
 /// `late final` because it will be initialized exactly once in lib/app.dart.
-late final Api webApi;
+late Api webApi;
 
 class Api {
   Api(this.store, this._jsServiceEncointer);
