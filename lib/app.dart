@@ -35,6 +35,7 @@ import 'package:encointer_wallet/utils/snackBar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 import 'common/theme.dart';
 import 'mocks/storage/mockLocalStorage.dart';
@@ -158,18 +159,20 @@ class _WalletAppState extends State<WalletApp> {
                 return CupertinoPageRoute(
                   settings: settings,
                   builder: (context) => WillPopScopeWrapper(
-                    child: FutureBuilder<int>(
-                      future: _initStore(context),
-                      builder: (_, AsyncSnapshot<int> snapshot) {
-                        if (snapshot.hasError) {
-                          _log("SnapshotError: ${snapshot.error.toString()}");
-                        }
-                        if (snapshot.hasData) {
-                          return snapshot.data! > 0 ? EncointerHomePage(_appStore!) : CreateAccountEntryPage();
-                        } else {
-                          return CupertinoActivityIndicator();
-                        }
-                      },
+                    child: Observer(
+                      builder: (_) => FutureBuilder<int>(
+                        future: _initStore(context),
+                        builder: (_, AsyncSnapshot<int> snapshot) {
+                          if (snapshot.hasError) {
+                            _log("SnapshotError: ${snapshot.error.toString()}");
+                          }
+                          if (snapshot.hasData) {
+                            return snapshot.data! > 0 ? EncointerHomePage(_appStore!) : CreateAccountEntryPage();
+                          } else {
+                            return CupertinoActivityIndicator();
+                          }
+                        },
+                      ),
                     ),
                   ),
                 );
