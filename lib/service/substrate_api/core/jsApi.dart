@@ -13,14 +13,10 @@ class JSApi {
 
   int _evalJavascriptUID = 0;
 
-  late Function _webViewPostInitCallback;
-
   Future<void> launchWebView(String jsServiceEncointer, Future<void> Function() webViewPostInitCallback) async {
     _msgHandlers = {};
     _msgCompleters = {};
     _evalJavascriptUID = 0;
-
-    _webViewPostInitCallback = webViewPostInitCallback;
 
     if (_web != null) {
       closeWebView();
@@ -54,7 +50,7 @@ class JSApi {
             });
       },
       onLoadStop: (controller, _) async {
-        await _webViewPostInitCallback();
+        await webViewPostInitCallback();
       },
     );
 

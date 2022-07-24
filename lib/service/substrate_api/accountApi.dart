@@ -9,11 +9,11 @@ import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 class AccountApi {
-  AccountApi(this.store, this.jsApi, this.fetchAccountData);
+  AccountApi(this.store, this.jsApi);
 
   final JSApi jsApi;
   final AppStore store;
-  final Function fetchAccountData;
+  Function? fetchAccountData;
 
   Future<void> initAccounts() async {
     if (store.account.accountList.length > 0) {
@@ -37,6 +37,10 @@ class AccountApi {
       encodeAddress(observations);
       getPubKeyIcons(observations);
     }
+  }
+
+  void setFetchAccountData(Function fetchAccountData) {
+    this.fetchAccountData = fetchAccountData;
   }
 
   /// Encodes publicKeys to SS58-addresses
@@ -109,7 +113,9 @@ class AccountApi {
 
     await store.loadAccountCache();
     if (fetchData) {
-      fetchAccountData();
+      if (fetchAccountData != null) {
+        fetchAccountData!();
+      }
     }
   }
 

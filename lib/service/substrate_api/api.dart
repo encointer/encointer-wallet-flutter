@@ -22,39 +22,39 @@ import 'core/jsApi.dart';
 late Api webApi;
 
 class Api {
-  Api(this.store, this._jsServiceEncointer);
+  Api(this.store, this.js, this.dartApi, this._jsServiceEncointer)
+      : jsStorage = GetStorage(),
+        account = AccountApi(store, js),
+        assets = AssetsApi(store, js),
+        chain = ChainApi(store, js),
+        codec = CodecApi(js),
+        encointer = EncointerApi(store, js, dartApi),
+        ipfs = Ipfs(gateway: store.settings.ipfsGateway);
 
   final AppStore store;
   final String _jsServiceEncointer;
 
-  late final jsStorage;
+  final jsStorage;
 
-  late final JSApi js;
-  late final AccountApi account;
-  late final AssetsApi assets;
-  late final ChainApi chain;
-  late final CodecApi codec;
-  late final EncointerApi encointer;
-  late final Ipfs ipfs;
+  final JSApi js;
+  final SubstrateDartApi dartApi;
+  final AccountApi account;
+  final AssetsApi assets;
+  final ChainApi chain;
+  final CodecApi codec;
+  final EncointerApi encointer;
+  final Ipfs ipfs;
 
   SubScanApi subScanApi = SubScanApi();
 
   Future<void> init() async {
-    jsStorage = GetStorage();
-    js = JSApi();
-
-    // no need to store this as an instance it is only used by the encointerApi
-    var dartApi = SubstrateDartApi();
     dartApi.connect(store.settings.endpoint.value!);
 
-    account = AccountApi(store, js, fetchAccountData);
-    assets = AssetsApi(store, js);
-    chain = ChainApi(store, js);
-    codec = CodecApi(js);
-    encointer = EncointerApi(store, js, dartApi);
-    ipfs = Ipfs(gateway: store.settings.ipfsGateway);
+    // need to do this from here as we can't access instance fields in constructor.
+    account.setFetchAccountData(fetchAccountData);
 
-    print("launch the webview");
+    // launch the webView and connect to the endpoint
+    print("launch the webView");
     await launchWebview();
   }
 

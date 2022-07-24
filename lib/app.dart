@@ -29,6 +29,8 @@ import 'package:encointer_wallet/page/qr_scan/qrScanPage.dart';
 import 'package:encointer_wallet/page/reap_voucher/reapVoucherPage.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/substrate_api/core/dartApi.dart';
+import 'package:encointer_wallet/service/substrate_api/core/jsApi.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/localStorage.dart';
 import 'package:encointer_wallet/utils/snackBar.dart';
@@ -97,7 +99,7 @@ class _WalletAppState extends State<WalletApp> {
 
       webApi = widget.config.mockSubstrateApi
           ? MockApi(_appStore!, jsServiceEncointer)
-          : Api(_appStore!, jsServiceEncointer);
+          : Api(_appStore!, JSApi(), SubstrateDartApi(), jsServiceEncointer);
 
       await webApi.init();
 
@@ -166,7 +168,7 @@ class _WalletAppState extends State<WalletApp> {
                           if (snapshot.hasError) {
                             _log("SnapshotError: ${snapshot.error.toString()}");
                           }
-                          if (snapshot.hasData) {
+                          if (snapshot.hasData && _appStore!.appIsReady) {
                             return snapshot.data! > 0 ? EncointerHomePage(_appStore!) : CreateAccountEntryPage();
                           } else {
                             return CupertinoActivityIndicator();
