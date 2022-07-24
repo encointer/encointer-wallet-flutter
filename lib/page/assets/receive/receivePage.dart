@@ -31,6 +31,7 @@ class _ReceivePageState extends State<ReceivePage> {
 
   PausableTimer? paymentWatchdog;
   bool observedPendingExtrinsic = false;
+  int resetObservedPendingExtrinsicCounter = 0;
 
   @override
   void initState() {
@@ -56,25 +57,18 @@ class _ReceivePageState extends State<ReceivePage> {
     final Translations dic = I18n.of(context)!.translationsForLocale();
     paymentWatchdog = PausableTimer(
       const Duration(seconds: 1),
-      () {
-        webApi.encointer.pendingExtrinsics().then((extrinsics) {
-          print("[receivePage] pendingExtrinsics ${extrinsics.toString()}");
-          if (((extrinsics.length) > 0) && (!observedPendingExtrinsic)) {
-            extrinsics.forEach((xt) {
-              if (xt.contains(widget.store.account.currentAccountPubKey!.substring(2))) {
-                RootSnackBar.showMsg(
-                  dic.profile.observedPendingExtrinsic,
-                  durationMillis: 5000,
-                  textColor: Colors.black,
-                  backgroundColor: Colors.lightBlue,
-                );
-                observedPendingExtrinsic = true;
-              }
-            });
-          } else {
+      () async {
+        if (!observedPendingExtrinsic) {
+          observedPendingExtrinsic = await showSnackBarUponPendingExtrinsics(widget.store, webApi, dic);
+          resetObservedPendingExtrinsicCounter = 0;
+        } else {
+          if (resetObservedPendingExtrinsicCounter++ > 4) {
+            // Wait for 5 seconds until we check again for a pending extrinsic.
+            resetObservedPendingExtrinsicCounter = 0;
             observedPendingExtrinsic = false;
           }
-        });
+        }
+
         webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
           CommunityIdentifier? cid = widget.store.encointer.chosenCid;
 
@@ -213,4 +207,39 @@ class _ReceivePageState extends State<ReceivePage> {
           ),
         ));
   }
+}
+
+/// Shows a [SnackBar] if we found an extrinsic in a transaction pool addressed to the current account.
+///
+/// Returns a true if such an extrinsic was found.
+Future<bool> showSnackBarUponPendingExtrinsics(AppStore store, Api api, Translations dic) async {
+  var observedExtrinsics = false;
+
+  try {
+    var extrinsics = await api.encointer.pendingExtrinsics();
+
+    print("[receivePage] pendingExtrinsics ${extrinsics.toString()}");
+    if (extrinsics.length > 0) {
+      for (var xt in extrinsics) {
+        if (xt.contains(store.account.currentAccountPubKey!.substring(2))) {
+          RootSnackBar.showMsg(
+            dic.profile.observedPendingExtrinsic,
+            durationMillis: 5000,
+            textColor: Colors.black,
+            backgroundColor: Colors.lightBlue,
+          );
+          observedExtrinsics = true;
+          break;
+        }
+      }
+    }
+  } catch (e) {
+    _log(e.toString());
+  }
+
+  return observedExtrinsics;
+}
+
+void _log(String msg) {
+  print("[receivePage] $msg");
 }

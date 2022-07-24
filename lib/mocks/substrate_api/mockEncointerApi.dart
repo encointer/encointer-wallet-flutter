@@ -141,4 +141,10 @@ class MockApiEncointer extends EncointerApi {
   Future<void> getBootstrappers() {
     return Future.value(null);
   }
+
+  @override
+  Future<List<String>> pendingExtrinsics() {
+    _log("calling mock `pendingExtrinsics");
+    return Future.value([]);
+  }
 }
