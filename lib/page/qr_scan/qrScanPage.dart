@@ -38,7 +38,7 @@ class ScanPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
     ScanPageParams params = ModalRoute.of(context)!.settings.arguments! as ScanPageParams;
-    Future<void> onScan(String data) {
+    void onScan(String data) {
       try {
         QrCode<dynamic> qrCode = qrScanService.parse(data);
         qrScanService.handleQrScan(context, params.scannerContext, qrCode);
@@ -46,8 +46,6 @@ class ScanPage extends StatelessWidget {
         print("[ScanPage]: ${e.toString()}");
         RootSnackBar.showMsg(e.toString());
       }
-
-      return Future.value(null);
     }
 
     return Scaffold(
@@ -57,9 +55,7 @@ class ScanPage extends StatelessWidget {
           IconButton(
             key: Key('close-scanner'),
             icon: Icon(Icons.close),
-            onPressed: () {
-              Navigator.pop(context);
-            },
+            onPressed: () => Navigator.pop(context),
           )
         ],
       ),
