@@ -4,6 +4,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qr_scan/qrcode_reader_view.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'qrScanService.dart';
@@ -37,12 +38,10 @@ class ScanPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
     ScanPageParams params = ModalRoute.of(context)!.settings.arguments! as ScanPageParams;
-    Future<void> onScan(String? data, String? _rawData) {
+    Future<void> onScan(String data) {
       try {
-        if (data != null) {
-          QrCode<dynamic> qrCode = qrScanService.parse(data);
-          qrScanService.handleQrScan(context, params.scannerContext, qrCode);
-        }
+        QrCode<dynamic> qrCode = qrScanService.parse(data);
+        qrScanService.handleQrScan(context, params.scannerContext, qrCode);
       } catch (e) {
         print("[ScanPage]: ${e.toString()}");
         RootSnackBar.showMsg(e.toString());
@@ -75,39 +74,48 @@ class ScanPage extends StatelessWidget {
         child: FutureBuilder<bool>(
           future: canOpenCamera(),
           builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-            if (snapshot.hasData && snapshot.data == true) {
-              return QrcodeReaderView(
-                headerWidget: store.settings.developerMode
-                    ? Row(children: [
-                        ElevatedButton(
-                          child: Text(dic.profile.addContact),
-                          onPressed: () => onScan(
-                              "encointer-contact\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nSara", null),
-                        ),
-                        ElevatedButton(
-                          child: Text(dic.assets.invoice),
-                          onPressed: () => onScan(
-                              "encointer-invoice\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX"
-                              "\nsqm1v79dF6b\n0.2343\nAubrey",
-                              null),
-                        ),
-                        ElevatedButton(
-                          child: Text("voucher"),
-                          onPressed: () => onScan(
-                              "encointer-voucher\nv2.0\n//VoucherUri\nsqm1v79dF6b"
-                              "\nnctr-gsl-dev\nAubrey",
-                              null),
-                        ),
-                        Text(' <<< Devs only', style: TextStyle(color: Colors.orange)),
-                      ])
-                    : Container(),
-                key: _qrViewKey,
-                helpWidget: Text(I18n.of(context)!.translationsForLocale().account.qrScan),
-                onScan: onScan,
-              );
-            } else {
-              return Container();
-            }
+            return MobileScanner(
+                allowDuplicates: false,
+                onDetect: (barcode, args) {
+                  if (barcode.rawValue == null) {
+                    debugPrint('Failed to scan Barcode');
+                  } else {
+                    onScan(barcode.rawValue!);
+                  }
+                });
+            // if (snapshot.hasData && snapshot.data == true) {
+            //   return QrcodeReaderView(
+            //     headerWidget: store.settings.developerMode
+            //         ? Row(children: [
+            //             ElevatedButton(
+            //               child: Text(dic.profile.addContact),
+            //               onPressed: () => onScan(
+            //                   "encointer-contact\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nSara", null),
+            //             ),
+            //             ElevatedButton(
+            //               child: Text(dic.assets.invoice),
+            //               onPressed: () => onScan(
+            //                   "encointer-invoice\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX"
+            //                   "\nsqm1v79dF6b\n0.2343\nAubrey",
+            //                   null),
+            //             ),
+            //             ElevatedButton(
+            //               child: Text("voucher"),
+            //               onPressed: () => onScan(
+            //                   "encointer-voucher\nv2.0\n//VoucherUri\nsqm1v79dF6b"
+            //                   "\nnctr-gsl-dev\nAubrey",
+            //                   null),
+            //             ),
+            //             Text(' <<< Devs only', style: TextStyle(color: Colors.orange)),
+            //           ])
+            //         : Container(),
+            //     key: _qrViewKey,
+            //     helpWidget: Text(I18n.of(context)!.translationsForLocale().account.qrScan),
+            //     onScan: onScan,
+            //   );
+            // } else {
+            //   return Container();
+            // }
           },
         ),
       ),
