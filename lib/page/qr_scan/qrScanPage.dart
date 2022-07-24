@@ -2,6 +2,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snackBar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -60,41 +61,45 @@ class ScanPage extends StatelessWidget {
       body: FutureBuilder<bool>(
         future: canOpenCamera(),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          return Stack(
-            children: [
-              MobileScanner(
-                  allowDuplicates: false,
-                  onDetect: (barcode, args) {
-                    if (barcode.rawValue == null) {
-                      debugPrint('Failed to scan Barcode');
-                    } else {
-                      onScan(barcode.rawValue!);
-                    }
-                  }),
-              store.settings.developerMode ? mockQrDataRow(dic, onScan) : Container(),
-              //overlays a semi-transparent rounded square border that is 90% of screen width
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width * 0.9,
-                      height: MediaQuery.of(context).size.width * 0.9,
-                      decoration: BoxDecoration(
-                        color: Colors.transparent,
-                        border: Border.all(color: Colors.white38, width: 2.0),
-                        borderRadius: const BorderRadius.all(Radius.circular(24.0)),
+          if (snapshot.hasData && snapshot.data == true) {
+            return Stack(
+              children: [
+                MobileScanner(
+                    allowDuplicates: false,
+                    onDetect: (barcode, args) {
+                      if (barcode.rawValue == null) {
+                        debugPrint('Failed to scan Barcode');
+                      } else {
+                        onScan(barcode.rawValue!);
+                      }
+                    }),
+                store.settings.developerMode ? mockQrDataRow(dic, onScan) : Container(),
+                //overlays a semi-transparent rounded square border that is 90% of screen width
+                Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        height: MediaQuery.of(context).size.width * 0.9,
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          border: Border.all(color: Colors.white38, width: 2.0),
+                          borderRadius: const BorderRadius.all(Radius.circular(24.0)),
+                        ),
                       ),
-                    ),
-                    Text(
-                      I18n.of(context)!.translationsForLocale().account.qrScan,
-                      style: TextStyle(color: Colors.white38),
-                    ),
-                  ],
+                      Text(
+                        I18n.of(context)!.translationsForLocale().account.qrScan,
+                        style: TextStyle(color: Colors.white38),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          );
+              ],
+            );
+          } else {
+            return CupertinoActivityIndicator();
+          }
         },
       ),
     );
