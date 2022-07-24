@@ -28,6 +28,11 @@ mixin _$AppStore on _AppStore, Store {
   @override
   EncointerStore get encointer =>
       (_$encointerComputed ??= Computed<EncointerStore>(() => super.encointer, name: '_AppStore.encointer')).value;
+  Computed<bool>? _$appIsReadyComputed;
+
+  @override
+  bool get appIsReady =>
+      (_$appIsReadyComputed ??= Computed<bool>(() => super.appIsReady, name: '_AppStore.appIsReady')).value;
 
   late final _$_settingsAtom = Atom(name: '_AppStore._settings', context: context);
 
@@ -104,33 +109,33 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
-  late final _$isReadyAtom = Atom(name: '_AppStore.isReady', context: context);
+  late final _$storeIsReadyAtom = Atom(name: '_AppStore.storeIsReady', context: context);
 
   @override
-  bool get isReady {
-    _$isReadyAtom.reportRead();
-    return super.isReady;
+  bool get storeIsReady {
+    _$storeIsReadyAtom.reportRead();
+    return super.storeIsReady;
   }
 
   @override
-  set isReady(bool value) {
-    _$isReadyAtom.reportWrite(value, super.isReady, () {
-      super.isReady = value;
+  set storeIsReady(bool value) {
+    _$storeIsReadyAtom.reportWrite(value, super.storeIsReady, () {
+      super.storeIsReady = value;
     });
   }
 
-  late final _$appIsReadyAtom = Atom(name: '_AppStore.appIsReady', context: context);
+  late final _$webApiIsReadyAtom = Atom(name: '_AppStore.webApiIsReady', context: context);
 
   @override
-  bool get appIsReady {
-    _$appIsReadyAtom.reportRead();
-    return super.appIsReady;
+  bool get webApiIsReady {
+    _$webApiIsReadyAtom.reportRead();
+    return super.webApiIsReady;
   }
 
   @override
-  set appIsReady(bool value) {
-    _$appIsReadyAtom.reportWrite(value, super.appIsReady, () {
-      super.appIsReady = value;
+  set webApiIsReady(bool value) {
+    _$webApiIsReadyAtom.reportWrite(value, super.webApiIsReady, () {
+      super.webApiIsReady = value;
     });
   }
 
@@ -141,15 +146,28 @@ mixin _$AppStore on _AppStore, Store {
     return _$initAsyncAction.run(() => super.init(sysLocaleCode));
   }
 
+  late final _$_AppStoreActionController = ActionController(name: '_AppStore', context: context);
+
+  @override
+  void setApiReady(bool value) {
+    final _$actionInfo = _$_AppStoreActionController.startAction(name: '_AppStore.setApiReady');
+    try {
+      return super.setApiReady(value);
+    } finally {
+      _$_AppStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
-isReady: ${isReady},
-appIsReady: ${appIsReady},
+storeIsReady: ${storeIsReady},
+webApiIsReady: ${webApiIsReady},
 account: ${account},
 assets: ${assets},
 chain: ${chain},
-encointer: ${encointer}
+encointer: ${encointer},
+appIsReady: ${appIsReady}
     ''';
   }
 }

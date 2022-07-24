@@ -79,10 +79,13 @@ abstract class _AppStore with Store {
   EncointerStore get encointer => _encointer!;
 
   @observable
-  bool isReady = false;
+  bool storeIsReady = false;
 
   @observable
-  bool appIsReady = false;
+  bool webApiIsReady = false;
+
+  @computed
+  bool get appIsReady => storeIsReady && webApiIsReady;
 
   LocalStorage localStorage;
 
@@ -105,7 +108,14 @@ abstract class _AppStore with Store {
     String? networkInfo = settings.endpoint.info;
     await loadOrInitEncointerCache(networkInfo!);
 
-    isReady = true;
+    storeIsReady = true;
+  }
+
+  @action
+  void setApiReady(bool value) {
+    print("Setting Api Ready: $value");
+    webApiIsReady = value;
+    print("Is App Ready?: $appIsReady");
   }
 
   Future<void> cacheObject(String key, value) {

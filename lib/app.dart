@@ -101,6 +101,8 @@ class _WalletAppState extends State<WalletApp> {
       await webApi.init();
 
       _changeLang(context, _appStore!.settings.localeCode);
+
+      _appStore!.setApiReady(true);
     }
     return _appStore!.account.accountListAll.length;
   }

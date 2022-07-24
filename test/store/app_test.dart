@@ -11,7 +11,7 @@ void main() {
 
   group('store test', () {
     test('app store created and not ready', () {
-      expect(store.isReady, false);
+      expect(store.storeIsReady, false);
       // Since introducing null safety, this will throw instead of being null.
       // expect(store.settings, isNull);
     });
@@ -24,7 +24,7 @@ void main() {
       expect(store.assets, isNotNull);
       expect(store.encointer, isNotNull);
 
-      expect(store.isReady, true);
+      expect(store.storeIsReady, true);
 
       expect(store.account.accountList.length, 1);
     });

@@ -14,7 +14,7 @@ void main() {
   // ignore: missing_return
   Future<String> dataHandler(String? msg) async {
     switch (msg) {
-      case MockStorageSetup.WAIT:
+      case MockStorageSetup.WAIT_UNTIL_APP_IS_READY:
         return PrepareMockStorage.wait(globalAppStore);
       case MockStorageSetup.INIT:
         PrepareMockStorage.init(globalAppStore);
