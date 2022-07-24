@@ -37,10 +37,12 @@ class ScanPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
     ScanPageParams params = ModalRoute.of(context)!.settings.arguments! as ScanPageParams;
-    Future? onScan(String? data, String? rawData) {
+    Future<void> onScan(String? data, String? _rawData) {
       try {
-        QrCode<dynamic> qrCode = qrScanService.parse(data!);
-        qrScanService.handleQrScan(context, params.scannerContext, qrCode);
+        if (data != null) {
+          QrCode<dynamic> qrCode = qrScanService.parse(data);
+          qrScanService.handleQrScan(context, params.scannerContext, qrCode);
+        }
       } catch (e) {
         print("[ScanPage]: ${e.toString()}");
         RootSnackBar.showMsg(e.toString());
@@ -53,7 +55,7 @@ class ScanPage extends StatelessWidget {
         });
       }
 
-      return null;
+      return Future.value(null);
     }
 
     return Scaffold(
@@ -101,7 +103,7 @@ class ScanPage extends StatelessWidget {
                     : Container(),
                 key: _qrViewKey,
                 helpWidget: Text(I18n.of(context)!.translationsForLocale().account.qrScan),
-                onScan: onScan as Future<dynamic> Function(String?, String?),
+                onScan: onScan,
               );
             } else {
               return Container();
