@@ -81,7 +81,7 @@ const _$ReputationEnumMap = {
 Meetup _$MeetupFromJson(Map<String, dynamic> json) => Meetup(
       json['index'] as int,
       json['locationIndex'] as int,
-      json['time'] as int,
+      json['time'] as int?,
       (json['registry'] as List<dynamic>).map((e) => e as String).toList(),
     );
 

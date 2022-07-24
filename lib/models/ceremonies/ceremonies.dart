@@ -34,7 +34,7 @@ class AggregatedAccountDataPersonal {
   int? meetupTime;
   List<String>? meetupRegistry;
 
-  get meetup => meetupIndex != null ? Meetup(meetupIndex!, meetupLocationIndex!, meetupTime!, meetupRegistry!) : null;
+  get meetup => meetupIndex != null ? Meetup(meetupIndex!, meetupLocationIndex!, meetupTime, meetupRegistry!) : null;
 
   @override
   String toString() {
@@ -87,7 +87,8 @@ class Meetup {
 
   int index;
   int locationIndex;
-  int time;
+  // time is null in assigning phase
+  int? time;
   List<String> registry;
 
   @override
