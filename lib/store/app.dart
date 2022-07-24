@@ -22,7 +22,7 @@ const encointerCachePrefix = 'encointer-store';
 const encointerCacheVersionPrefix = 'encointer-cache-version-key';
 
 /// Should be increased if cache incompatibilities have been introduced.
-const encointerCacheVersion = 'v1.0-a';
+const encointerCacheVersion = 'v1.0';
 
 /// Global aggregated storage for the app.
 ///
@@ -154,7 +154,15 @@ abstract class _AppStore with Store {
 
     String encointerFinalCacheKey = encointerCacheKey(networkInfo);
 
-    var maybeStore = cacheVersion == encointerCacheVersion ? await loadEncointerCache(encointerFinalCacheKey) : null;
+    var maybeStore;
+
+    if (cacheVersion == encointerCacheVersion) {
+      try {
+        maybeStore = await loadEncointerCache(encointerFinalCacheKey);
+      } catch (e) {
+        _log("Exception loading the cached store: ${e.toString()}");
+      }
+    }
 
     if (maybeStore != null) {
       _encointer = maybeStore;
