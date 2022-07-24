@@ -45,13 +45,6 @@ class ScanPage extends StatelessWidget {
       } catch (e) {
         print("[ScanPage]: ${e.toString()}");
         RootSnackBar.showMsg(e.toString());
-
-        // If we don't wait, scans  of the same qr code are spammed.
-        // My fairly recent cellphone gets too much load for duration < 500 ms. We might need to increase
-        // this for older phones.
-        Future.delayed(const Duration(milliseconds: 1500), () {
-          _qrViewKey.currentState!.startScan();
-        });
       }
 
       return Future.value(null);
@@ -70,55 +63,71 @@ class ScanPage extends StatelessWidget {
           )
         ],
       ),
-      body: SafeArea(
-        child: FutureBuilder<bool>(
-          future: canOpenCamera(),
-          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-            return MobileScanner(
-                allowDuplicates: false,
-                onDetect: (barcode, args) {
-                  if (barcode.rawValue == null) {
-                    debugPrint('Failed to scan Barcode');
-                  } else {
-                    onScan(barcode.rawValue!);
-                  }
-                });
-            // if (snapshot.hasData && snapshot.data == true) {
-            //   return QrcodeReaderView(
-            //     headerWidget: store.settings.developerMode
-            //         ? Row(children: [
-            //             ElevatedButton(
-            //               child: Text(dic.profile.addContact),
-            //               onPressed: () => onScan(
-            //                   "encointer-contact\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nSara", null),
-            //             ),
-            //             ElevatedButton(
-            //               child: Text(dic.assets.invoice),
-            //               onPressed: () => onScan(
-            //                   "encointer-invoice\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX"
-            //                   "\nsqm1v79dF6b\n0.2343\nAubrey",
-            //                   null),
-            //             ),
-            //             ElevatedButton(
-            //               child: Text("voucher"),
-            //               onPressed: () => onScan(
-            //                   "encointer-voucher\nv2.0\n//VoucherUri\nsqm1v79dF6b"
-            //                   "\nnctr-gsl-dev\nAubrey",
-            //                   null),
-            //             ),
-            //             Text(' <<< Devs only', style: TextStyle(color: Colors.orange)),
-            //           ])
-            //         : Container(),
-            //     key: _qrViewKey,
-            //     helpWidget: Text(I18n.of(context)!.translationsForLocale().account.qrScan),
-            //     onScan: onScan,
-            //   );
-            // } else {
-            //   return Container();
-            // }
-          },
-        ),
+      body: FutureBuilder<bool>(
+        future: canOpenCamera(),
+        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+          return Stack(
+            children: [
+              MobileScanner(
+                  allowDuplicates: false,
+                  onDetect: (barcode, args) {
+                    if (barcode.rawValue == null) {
+                      debugPrint('Failed to scan Barcode');
+                    } else {
+                      onScan(barcode.rawValue!);
+                    }
+                  }),
+              store.settings.developerMode ? mockQrDataRow(dic, onScan) : Container(),
+              //overlays a semi-transparent rounded square border that is 90% of screen width
+              Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: MediaQuery.of(context).size.width * 0.9,
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        border: Border.all(color: Colors.white38, width: 2.0),
+                        borderRadius: const BorderRadius.all(Radius.circular(24.0)),
+                      ),
+                    ),
+                    Text(
+                      I18n.of(context)!.translationsForLocale().account.qrScan,
+                      style: TextStyle(color: Colors.white38),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
+}
+
+/// Adds some buttons to activate the scanner with mock data.
+Widget mockQrDataRow(Translations dic, Function(String) onScan) {
+  return Row(children: [
+    ElevatedButton(
+      child: Text(dic.profile.addContact),
+      onPressed: () => onScan("encointer-contact\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nSara"),
+    ),
+    ElevatedButton(
+      child: Text(dic.assets.invoice),
+      onPressed: () => onScan(
+        "encointer-invoice\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX"
+        "\nsqm1v79dF6b\n0.2343\nAubrey",
+      ),
+    ),
+    ElevatedButton(
+      child: Text("voucher"),
+      onPressed: () => onScan(
+        "encointer-voucher\nv2.0\n//VoucherUri\nsqm1v79dF6b"
+        "\nnctr-gsl-dev\nAubrey",
+      ),
+    ),
+    Text(' <<< Devs only', style: TextStyle(color: Colors.orange)),
+  ]);
 }
