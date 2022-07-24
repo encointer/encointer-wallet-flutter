@@ -133,6 +133,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   }
 
   Future<void> _saveAccount(Map<String, dynamic> acc) async {
+    _log("Saving account: ${acc["pubKey"]}");
     var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
     await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
 
@@ -148,8 +149,6 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     setState(() {
       _submitting = false;
     });
-    // go to home page
-    Navigator.popUntil(context, ModalRoute.withName('/'));
   }
 
   @override
@@ -175,6 +174,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       } else {
         store.account.setNewAccountPin(store.settings.cachedPin);
         _importAccount();
+        Navigator.popUntil(context, ModalRoute.withName('/'));
       }
     });
   }
