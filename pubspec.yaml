@@ -65,10 +65,6 @@ dependencies:
     git:
       url: https://github.com/polkawallet-io/qr.flutter.git
       ref: master
-  flutter_qr_scan:
-    git:
-      url: https://github.com/polkawallet-io/flutter_qr_reader.git
-      ref: master
   mobile_scanner: ^2.0.0
   aes_ecb_pkcs5_flutter: ^0.1.2
   permission_handler: ^10.0.0
