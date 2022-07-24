@@ -58,16 +58,13 @@ class _TransferPageState extends State<TransferPage> {
 
   AccountData? _accountTo;
 
-  late final CommunityIdentifier _cid;
-  late final _communitySymbol;
-
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
     TransferPageParams params = ModalRoute.of(context)!.settings.arguments as TransferPageParams;
 
-    _communitySymbol = params.communitySymbol;
-    _cid = params.cid ?? store.encointer.chosenCid!;
+    var communitySymbol = params.communitySymbol ?? store.encointer.community!.symbol!;
+    var cid = params.cid ?? store.encointer.chosenCid!;
 
     int decimals = encointer_currencies_decimals;
 
@@ -186,7 +183,7 @@ class _TransferPageState extends State<TransferPage> {
                         ],
                       ),
                     ),
-                    onPressed: _accountTo != null ? _pushPaymentConfirmationPage : null,
+                    onPressed: _accountTo != null ? () => _pushPaymentConfirmationPage(cid, communitySymbol) : null,
                   ),
                 ],
               ),
@@ -197,14 +194,14 @@ class _TransferPageState extends State<TransferPage> {
     );
   }
 
-  void _pushPaymentConfirmationPage() {
+  void _pushPaymentConfirmationPage(CommunityIdentifier cid, String communitySymbol) {
     if (_formKey.currentState!.validate()) {
       Navigator.pushNamed(
         context,
         PaymentConfirmationPage.route,
         arguments: PaymentConfirmationParams(
-            cid: _cid,
-            communitySymbol: _communitySymbol,
+            cid: cid,
+            communitySymbol: communitySymbol,
             recipientAccount: _accountTo!,
             amount: double.parse(_amountCtrl.text.trim())),
       );
