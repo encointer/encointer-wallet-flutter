@@ -4,6 +4,7 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 showPasswordInputDialog(context, account, title, onOk) {
@@ -81,9 +82,11 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
       content: Padding(
         padding: EdgeInsets.only(top: 16),
         child: CupertinoTextFormFieldRow(
+          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
+          padding: EdgeInsets.zero,
           autofocus: true,
           keyboardType: TextInputType.number,
-          placeholder: I18n.of(context)!.translationsForLocale().profile.passOld,
+          placeholder: dic.profile.passOld,
           controller: _passCtrl,
           validator: (v) {
             if (v == null || !Fmt.checkPassword(v.trim())) {

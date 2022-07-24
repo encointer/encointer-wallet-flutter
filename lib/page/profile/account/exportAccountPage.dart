@@ -57,6 +57,8 @@ class ExportAccountPage extends StatelessWidget {
           content: Padding(
             padding: EdgeInsets.only(top: 16),
             child: CupertinoTextFormFieldRow(
+              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
+              padding: EdgeInsets.zero,
               keyboardType: TextInputType.number,
               placeholder: dic.profile.passOld,
               controller: _passCtrl,
