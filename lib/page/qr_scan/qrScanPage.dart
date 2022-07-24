@@ -3,7 +3,6 @@ import 'package:encointer_wallet/utils/snackBar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_qr_scan/qrcode_reader_view.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -24,7 +23,6 @@ class ScanPage extends StatelessWidget {
   ScanPage(this.store);
 
   static const String route = '/account/scan';
-  final GlobalKey<QrcodeReaderViewState> _qrViewKey = GlobalKey();
 
   final QrScanService qrScanService = QrScanService();
   final AppStore store;
