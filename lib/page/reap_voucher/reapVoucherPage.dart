@@ -21,11 +21,11 @@ import 'utils.dart';
 
 class ReapVoucherParams {
   ReapVoucherParams({
-    this.voucher,
+    required this.voucher,
     this.showFundVoucher = false,
   });
 
-  final VoucherData? voucher;
+  final VoucherData voucher;
   final bool showFundVoucher;
 }
 
@@ -34,7 +34,7 @@ class ReapVoucherPage extends StatefulWidget {
 
   static const String route = '/qrcode/voucher';
   final AppStore store;
-  final Api? api;
+  final Api api;
 
   @override
   _ReapVoucherPageState createState() => _ReapVoucherPageState();
@@ -73,7 +73,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     final h4Grey = Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey);
     ReapVoucherParams params = ModalRoute.of(context)!.settings.arguments as ReapVoucherParams;
 
-    final voucher = params.voucher!;
+    final voucher = params.voucher;
     final voucherUri = voucher.voucherUri;
     final cid = voucher.cid;
     final networkInfo = voucher.network;
@@ -88,7 +88,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
           var result = await _changeNetworkAndCommunityIfNeeded(context, networkInfo, cid);
 
           if (result == ChangeResult.ok) {
-            fetchVoucherData(widget.api!, voucherUri, cid);
+            fetchVoucherData(widget.api, voucherUri, cid);
           } else if (result == ChangeResult.invalidNetwork) {
             await showErrorDialog(context, dic.assets.invalidNetwork);
           } else if (result == ChangeResult.invalidCommunity) {
@@ -174,7 +174,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     CommunityIdentifier cid,
     String recipientAddress,
   ) async {
-    var res = await submitReapVoucher(widget.api!, voucherUri, recipientAddress, cid);
+    var res = await submitReapVoucher(widget.api, voucherUri, recipientAddress, cid);
 
     if (res['hash'] == null) {
       _log('Error redeeming voucher: ${res['error']}');
@@ -186,7 +186,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
   Future<ChangeResult?> _changeNetworkAndCommunityIfNeeded(
     BuildContext context,
-    String? networkInfo,
+    String networkInfo,
     CommunityIdentifier cid,
   ) async {
     ChangeResult? result = ChangeResult.ok;

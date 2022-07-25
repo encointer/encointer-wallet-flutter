@@ -147,8 +147,8 @@ Future<ChangeResult> changeWithLoadingDialog(
 Future<ChangeResult?> showChangeCommunityDialog(
   BuildContext context,
   AppStore store,
-  Api? api,
-  String? network,
+  Api api,
+  String network,
   CommunityIdentifier cid,
 ) {
   return showCupertinoDialog(
@@ -169,7 +169,7 @@ Future<ChangeResult?> showChangeCommunityDialog(
           CupertinoButton(
             child: Text(dic.home.ok),
             onPressed: () async {
-              var result = await changeWithLoadingDialog(context, () => changeCommunity(store, api!, network, cid));
+              var result = await changeWithLoadingDialog(context, () => changeCommunity(store, api, network, cid));
               Navigator.of(context).pop(result);
             },
           ),
