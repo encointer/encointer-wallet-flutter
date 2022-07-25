@@ -38,7 +38,7 @@ class PaymentConfirmationPage extends StatefulWidget {
 
   static const String route = '/assets/paymentConfirmation';
   final AppStore store;
-  final Api? api;
+  final Api api;
 
   @override
   _PaymentConfirmationPageState createState() => _PaymentConfirmationPageState();
@@ -156,7 +156,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
       }
     };
 
-    await submitTx(context, widget.store, widget.api!, params, onFinish: onFinish);
+    await submitTx(context, widget.store, widget.api, params, onFinish: onFinish);
 
     // for debugging
     // Future.delayed(const Duration(milliseconds: 1500), () {
