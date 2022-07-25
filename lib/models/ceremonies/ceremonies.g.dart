@@ -44,12 +44,12 @@ const _$ParticipantTypeEnumMap = {
 
 AggregatedAccountDataGlobal _$AggregatedAccountDataGlobalFromJson(Map<String, dynamic> json) =>
     AggregatedAccountDataGlobal(
-      $enumDecodeNullable(_$CeremonyPhaseEnumMap, json['ceremonyPhase']),
-      json['ceremonyIndex'] as int?,
+      $enumDecode(_$CeremonyPhaseEnumMap, json['ceremonyPhase']),
+      json['ceremonyIndex'] as int,
     );
 
 Map<String, dynamic> _$AggregatedAccountDataGlobalToJson(AggregatedAccountDataGlobal instance) => <String, dynamic>{
-      'ceremonyPhase': _$CeremonyPhaseEnumMap[instance.ceremonyPhase],
+      'ceremonyPhase': _$CeremonyPhaseEnumMap[instance.ceremonyPhase]!,
       'ceremonyIndex': instance.ceremonyIndex,
     };
 

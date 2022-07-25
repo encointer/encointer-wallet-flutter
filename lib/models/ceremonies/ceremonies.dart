@@ -50,8 +50,8 @@ class AggregatedAccountDataPersonal {
 class AggregatedAccountDataGlobal {
   AggregatedAccountDataGlobal(this.ceremonyPhase, this.ceremonyIndex);
 
-  CeremonyPhase? ceremonyPhase;
-  int? ceremonyIndex;
+  CeremonyPhase ceremonyPhase;
+  int ceremonyIndex;
 
   @override
   String toString() {
@@ -120,7 +120,7 @@ extension reputationExtension on Reputation {
   }
 }
 
-extension participantTypeExtension on ParticipantType? {
+extension participantTypeExtension on ParticipantType {
   String toValue() {
     return toEnumValue(this);
   }
