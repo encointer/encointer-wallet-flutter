@@ -15,7 +15,7 @@ class EncointerMap extends StatelessWidget {
 
   /// Used to trigger showing/hiding of popups.
   final PopupController _popupLayerController = PopupController();
-  final Function? popupBuilder;
+  final Widget Function(BuildContext, Marker)? popupBuilder;
   final List<Marker>? markers;
   final String? title;
   final LatLng? center;
@@ -58,7 +58,7 @@ class EncointerMap extends StatelessWidget {
                     popupController: _popupLayerController,
                     markers: markers!,
                     markerRotateAlignment: PopupMarkerLayerOptions.rotationAlignmentFor(AnchorAlign.top),
-                    popupBuilder: popupBuilder as Widget Function(BuildContext, Marker)?,
+                    popupBuilder: popupBuilder,
                   ),
                 ),
               ],
