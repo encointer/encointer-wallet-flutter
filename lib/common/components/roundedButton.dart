@@ -12,7 +12,7 @@ class RoundedButton extends StatelessWidget {
   });
 
   final String text;
-  final Function? onPressed;
+  final void Function()? onPressed;
   final Widget? icon;
   final Color? color;
   final bool? expand;
@@ -44,7 +44,7 @@ class RoundedButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: row,
       ),
-      onPressed: submitting ? null : onPressed as void Function()?,
+      onPressed: submitting ? null : onPressed,
     );
   }
 }
