@@ -48,6 +48,7 @@ dependencies:
 #  image_cropper: ^1.4.0
   image_picker: ^0.7.5+2
   animated_check: ^1.0.5
+  share_plus: ^4.0.10
 
   # Adjust screen brightness and keep awake for qrcodes
   wakelock: ^0.6.2

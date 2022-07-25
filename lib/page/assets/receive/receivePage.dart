@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:pausable_timer/pausable_timer.dart';
 import 'package:qr_flutter_fork/qr_flutter_fork.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ReceivePage extends StatefulWidget {
   ReceivePage(this.store);
@@ -195,8 +196,7 @@ class _ReceivePageState extends State<ReceivePage> {
                         if (_formKey.currentState!.validate())
                           {
                             // Todo: implement invoice.toUrl()
-                            // Todo: use `share_plus` instead of discontinued `share`
-                            // Share.share(invoice.toQrPayload()),
+                            Share.share(invoice.toQrPayload()),
                           }
                       },
                     ),

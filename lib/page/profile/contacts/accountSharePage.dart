@@ -6,6 +6,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter_fork/qr_flutter_fork.dart';
+import 'package:share_plus/share_plus.dart';
 
 class AccountSharePage extends StatefulWidget {
   AccountSharePage(this.store);
@@ -90,8 +91,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
                     Text(dic.profile.sendLink, style: textTheme.headline3),
                   ],
                 ),
-                onPressed: () => null, // Todo: use `share_plus` instead of discontinued `share`
-                // onPressed: () => Share.share(contactQrCode.toQrPayload()),
+                onPressed: () => Share.share(contactQrCode.toQrPayload()),
               ),
             ],
           ),
