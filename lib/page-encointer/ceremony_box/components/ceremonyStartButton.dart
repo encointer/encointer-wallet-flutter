@@ -9,7 +9,7 @@ class CeremonyStartButton extends StatelessWidget {
     this.onPressed,
   }) : super(key: key);
 
-  final Function? onPressed;
+  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {

@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 /// offers further options.
 ///
 class PrimaryButton extends StatelessWidget {
-  final Function? onPressed;
+  final void Function()? onPressed;
   final Widget child;
   final BorderRadiusGeometry borderRadius;
 
@@ -26,7 +26,7 @@ class PrimaryButton extends StatelessWidget {
         borderRadius: borderRadius,
       ),
       child: ElevatedButton(
-        onPressed: onPressed as void Function()?,
+        onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           padding: EdgeInsets.symmetric(vertical: 16), // make splash animation as high as the container
           primary: Colors.transparent,
