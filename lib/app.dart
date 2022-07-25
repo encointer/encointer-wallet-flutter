@@ -83,7 +83,7 @@ class _WalletAppState extends State<WalletApp> {
     });
   }
 
-  Future<int> _initStore(BuildContext context) async {
+  Future<int> _initApp(BuildContext context) async {
     if (_appStore == null) {
       // Todo: Use provider pattern instead of globals, see: https://github.com/encointer/encointer-wallet-flutter/issues/132
       globalAppStore = widget.config.mockLocalStorage
@@ -165,7 +165,7 @@ class _WalletAppState extends State<WalletApp> {
                   builder: (context) => WillPopScopeWrapper(
                     child: Observer(
                       builder: (_) => FutureBuilder<int>(
-                        future: _initStore(context),
+                        future: _initApp(context),
                         builder: (_, AsyncSnapshot<int> snapshot) {
                           if (snapshot.hasError) {
                             _log("SnapshotError: ${snapshot.error.toString()}");
