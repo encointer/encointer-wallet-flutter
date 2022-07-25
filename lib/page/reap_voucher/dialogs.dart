@@ -87,8 +87,8 @@ Widget errorDialog(BuildContext context, String errorMsg) {
 Future<ChangeResult?> showChangeNetworkAndCommunityDialog(
   BuildContext context,
   AppStore store,
-  Api? api,
-  String? network,
+  Api api,
+  String network,
   CommunityIdentifier cid,
 ) {
   return showCupertinoDialog(
@@ -97,7 +97,7 @@ Future<ChangeResult?> showChangeNetworkAndCommunityDialog(
       final dic = I18n.of(context)!.translationsForLocale();
 
       final dialogContent = dic.assets.voucherDifferentNetworkAndCommunity
-          .replaceAll("NETWORK_PLACEHOLDER", network!)
+          .replaceAll("NETWORK_PLACEHOLDER", network)
           .replaceAll("COMMUNITY_PLACEHOLDER", cid.toFmtString());
 
       return CupertinoAlertDialog(
