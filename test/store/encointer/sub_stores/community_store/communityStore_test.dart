@@ -15,7 +15,7 @@ void main() {
       var communityStoreCacheKey = "communityStore-test-cache";
 
       // Only to not get null errors in tests
-      webApi = MockApi(globalAppStore, "", withUi: false);
+      webApi = getMockApi(globalAppStore, withUI: false);
       webApi.init();
 
       var communityStore = CommunityStore(

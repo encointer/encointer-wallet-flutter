@@ -1,5 +1,7 @@
 import 'package:encointer_wallet/common/components/willPopScopeWrapper.dart';
 import 'package:encointer_wallet/config.dart';
+import 'package:encointer_wallet/mocks/substrate_api/core/mockDartApi.dart';
+import 'package:encointer_wallet/mocks/substrate_api/mockJSApi.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaarMain.dart';
 import 'package:encointer_wallet/page-encointer/homePage.dart';
 import 'package:encointer_wallet/page/account/create/addAccountPage.dart';
@@ -98,8 +100,8 @@ class _WalletAppState extends State<WalletApp> {
           await DefaultAssetBundle.of(context).loadString('lib/js_service_encointer/dist/main.js');
 
       webApi = widget.config.mockSubstrateApi
-          ? MockApi(_appStore!, jsServiceEncointer)
-          : Api(_appStore!, JSApi(), SubstrateDartApi(), jsServiceEncointer);
+          ? MockApi(_appStore!, MockJSApi(), MockSubstrateDartApi(), jsServiceEncointer, withUi: true)
+          : Api.create(_appStore!, JSApi(), SubstrateDartApi(), jsServiceEncointer);
 
       await webApi.init();
 

@@ -15,8 +15,8 @@ import 'mockJSApi.dart';
 /// This allows to configure the app storage for specific tests via the `PrepareStorage` class.
 /// The getters then return the preconfigured value, which in turn leads to consistent
 /// responses in the test.
-class MockApiEncointer extends EncointerApi {
-  MockApiEncointer(AppStore store, MockJSApi js, MockSubstrateDartApi dartApi) : super(store, js, dartApi);
+class MockEncointerApi extends EncointerApi {
+  MockEncointerApi(AppStore store, MockJSApi js, MockSubstrateDartApi dartApi) : super(store, js, dartApi);
 
   void _log(String msg) {
     print("[mockApiEncointer] $msg");

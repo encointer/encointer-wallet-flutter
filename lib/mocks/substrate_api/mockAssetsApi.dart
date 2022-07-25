@@ -4,8 +4,8 @@ import 'package:encointer_wallet/store/app.dart';
 
 import 'mockJSApi.dart';
 
-class MockApiAssets extends AssetsApi {
-  MockApiAssets(AppStore store, MockJSApi js) : super(store, js);
+class MockAssetsApi extends AssetsApi {
+  MockAssetsApi(AppStore store, MockJSApi js) : super(store, js);
 
   final store = globalAppStore;
 

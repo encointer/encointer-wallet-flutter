@@ -22,19 +22,44 @@ import 'core/jsApi.dart';
 late Api webApi;
 
 class Api {
-  Api(this.store, this.js, this.dartApi, this._jsServiceEncointer)
-      : jsStorage = GetStorage(),
-        account = AccountApi(store, js),
-        assets = AssetsApi(store, js),
-        chain = ChainApi(store, js),
-        codec = CodecApi(js),
-        encointer = EncointerApi(store, js, dartApi),
-        ipfs = Ipfs(gateway: store.settings.ipfsGateway);
+  Api(
+    this.store,
+    this.js,
+    this.dartApi,
+    this.account,
+    this.assets,
+    this.chain,
+    this.codec,
+    this.encointer,
+    this.ipfs,
+    this._jsServiceEncointer,
+  );
+
+  factory Api.create(
+    AppStore store,
+    JSApi js,
+    SubstrateDartApi dartApi,
+    String jsServiceEncointer,
+  ) {
+    return Api(
+      store,
+      js,
+      dartApi,
+      AccountApi(store, js),
+      AssetsApi(store, js),
+      ChainApi(store, js),
+      CodecApi(js),
+      EncointerApi(store, js, dartApi),
+      Ipfs(gateway: store.settings.ipfsGateway),
+      jsServiceEncointer,
+    );
+  }
 
   final AppStore store;
   final String _jsServiceEncointer;
 
-  final jsStorage;
+  // currently unused, should be removed.
+  final GetStorage jsStorage = GetStorage();
 
   final JSApi js;
   final SubstrateDartApi dartApi;
