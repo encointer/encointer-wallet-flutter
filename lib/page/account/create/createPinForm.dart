@@ -10,9 +10,9 @@ import 'package:flutter/services.dart';
 class CreatePinForm extends StatefulWidget {
   CreatePinForm({
     required this.store,
-    this.onSubmit,
+    required this.onSubmit,
   });
-  final Function? onSubmit;
+  final Function onSubmit;
   final AppStore store;
 
   @override
@@ -148,7 +148,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
 
                   store.settings.setPin(_passCtrl.text);
 
-                  widget.onSubmit!();
+                  widget.onSubmit();
                 }
               },
             ),
