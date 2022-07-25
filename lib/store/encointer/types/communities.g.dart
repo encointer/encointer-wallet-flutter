@@ -23,11 +23,11 @@ Map<String, dynamic> _$CommunityMetadataToJson(CommunityMetadata instance) => <S
     };
 
 CidName _$CidNameFromJson(Map<String, dynamic> json) => CidName(
-      json['cid'] == null ? null : CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
-      json['name'] as String?,
+      CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
+      json['name'] as String,
     );
 
 Map<String, dynamic> _$CidNameToJson(CidName instance) => <String, dynamic>{
-      'cid': instance.cid?.toJson(),
+      'cid': instance.cid.toJson(),
       'name': instance.name,
     };

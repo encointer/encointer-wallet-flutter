@@ -76,7 +76,7 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                widget.dataForThisMarker!.name!,
+                widget.dataForThisMarker!.name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -87,7 +87,7 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
                 padding: EdgeInsets.only(bottom: 2.0),
               ),
               Text(
-                widget.dataForThisMarker!.cid!.toFmtString(),
+                widget.dataForThisMarker!.cid.toFmtString(),
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -132,6 +132,6 @@ List<Marker> getMarkers(AppStore store) {
 }
 
 LatLng coordinatesOf(CidName community) {
-  GeoHash coordinates = GeoHash(utf8.decode(community.cid!.geohash));
+  GeoHash coordinates = GeoHash(utf8.decode(community.cid.geohash));
   return LatLng(coordinates.latitude(), coordinates.longitude());
 }

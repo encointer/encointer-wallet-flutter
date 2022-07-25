@@ -19,10 +19,10 @@ class ProofOfAttendance {
     this.attendeeSignature,
   );
 
-  String? proverPublic;
-  int? ceremonyIndex;
-  CommunityIdentifier? communityIdentifier;
-  String? attendeePublic;
+  String proverPublic;
+  int ceremonyIndex;
+  CommunityIdentifier communityIdentifier;
+  String attendeePublic;
   Map<String, String>? attendeeSignature;
 
   @override

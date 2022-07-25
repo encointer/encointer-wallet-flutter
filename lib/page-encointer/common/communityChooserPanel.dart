@@ -64,7 +64,7 @@ class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
                               .map((entry) => DropdownMenuItem<dynamic>(
                                     key: Key('cid-${entry.key}'),
                                     value: entry.value,
-                                    child: Text(entry.value.name!),
+                                    child: Text(entry.value.name),
                                   ))
                               .toList(),
                         ),
