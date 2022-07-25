@@ -44,12 +44,12 @@ class PrimaryButton extends StatelessWidget {
 
 class TextGradient extends StatelessWidget {
   const TextGradient({
-    this.text,
+    required this.text,
     this.style,
     Key? key,
   }) : super(key: key);
 
-  final String? text;
+  final String text;
   final TextStyle? style;
 
   @override
@@ -59,7 +59,7 @@ class TextGradient extends StatelessWidget {
       shaderCallback: (bounds) => primaryGradient.createShader(
         Rect.fromLTWH(0, 0, bounds.width, bounds.height),
       ),
-      child: Text(text!, style: style),
+      child: Text(text, style: style),
     );
   }
 }
