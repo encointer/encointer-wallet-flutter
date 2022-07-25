@@ -26,7 +26,7 @@ class ChangePasswordPage extends StatefulWidget {
 class _ChangePassword extends State<ChangePasswordPage> {
   _ChangePassword(this.store);
 
-  final Api? api = webApi;
+  final Api api = webApi;
   final AppStore store;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _passOldCtrl = new TextEditingController();
@@ -73,7 +73,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
         store.settings.setPin(passNew);
         store.account.accountListAll.forEach((account) async {
           final Map<String, dynamic> acc =
-              await api!.evalJavascript('account.changePassword("${account.pubKey}", "$passOld", "$passNew")');
+              await api.evalJavascript('account.changePassword("${account.pubKey}", "$passOld", "$passNew")');
 
           // update encrypted seed after password updated
           store.account.accountListAll.map((accountData) {

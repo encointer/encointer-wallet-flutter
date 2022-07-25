@@ -23,7 +23,7 @@ class ContactDetailPage extends StatelessWidget {
   static const String route = '/profile/contactDetail';
 
   final AppStore store;
-  final Api? api;
+  final Api api;
 
   void _removeItem(BuildContext context, AccountData account) {
     var dic = I18n.of(context)!.translationsForLocale();
@@ -165,7 +165,7 @@ class EndorseButton extends StatelessWidget {
   EndorseButton(this.store, this.api, this.contact);
 
   final AppStore store;
-  final Api? api;
+  final Api api;
   final AccountData contact;
 
   @override
@@ -188,7 +188,7 @@ class EndorseButton extends StatelessWidget {
               : (BuildContext context) => submitEndorseNewcomer(
                     context,
                     store,
-                    api!,
+                    api,
                     store.encointer.chosenCid,
                     contact.address,
                   ),
