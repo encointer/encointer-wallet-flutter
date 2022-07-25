@@ -33,7 +33,7 @@ class CeremonyBoxService {
     return (timeLeftUntilCeremonyStarts.compareTo(Duration(days: 2)) < 0);
   }
 
-  static Event createCalendarEvent(DateTime? nextCeremonyDate, Translations dic) {
+  static Event createCalendarEvent(DateTime nextCeremonyDate, Translations dic) {
     return Event(
       title: dic.encointer.encointerCeremony,
       description: dic.encointer.calendarEntryDescription,
@@ -61,7 +61,7 @@ class CeremonyBoxService {
     int currentTime,
     int assigningStart,
     int? meetupTime,
-    Map<CeremonyPhase?, int> ceremonyPhaseDurations,
+    Map<CeremonyPhase, int> ceremonyPhaseDurations,
     double registerFlex,
     double assigningFlex,
     double attestingFlex,

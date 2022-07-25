@@ -21,7 +21,7 @@ class CeremonyProgressBar extends StatelessWidget {
   final int? currentTime;
   final int? assigningPhaseStart;
   final int? meetupTime;
-  final Map<CeremonyPhase?, int>? ceremonyPhaseDurations;
+  final Map<CeremonyPhase, int>? ceremonyPhaseDurations;
 
   /// Total width of the progress bar.
   final double width;

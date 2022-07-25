@@ -7,7 +7,7 @@ import 'package:iconsax/iconsax.dart';
 
 class CeremonyInfoAndCalendar extends StatelessWidget {
   const CeremonyInfoAndCalendar({
-    this.nextCeremonyDate,
+    required this.nextCeremonyDate,
     this.infoLink,
     this.devMode = false,
     Key? key,
@@ -16,7 +16,7 @@ class CeremonyInfoAndCalendar extends StatelessWidget {
   final devMode;
 
   /// date for the next ceremony
-  final DateTime? nextCeremonyDate;
+  final DateTime nextCeremonyDate;
 
   /// open this Uri in a browser to give the user background information
   final String? infoLink;

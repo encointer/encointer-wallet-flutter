@@ -125,7 +125,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
           notificationIconData: Iconsax.tick_square,
           notification: dic.encointer.youAreRegisteredAs.replaceAll(
             'PARTICIPANT_TYPE',
-            store.encointer.communityAccount?.participantType?.toValue() ?? "Non-nulllable-default-which-never-happens",
+            store.encointer.communityAccount!.participantType!.toValue(),
           ),
         );
       } else {
@@ -158,10 +158,8 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
         if (store.encointer.communityAccount?.meetupCompleted ?? false) {
           return CeremonyNotification(
             notificationIconData: Iconsax.tick_square,
-            notification: dic.encointer.successfullySentNAttestations.replaceAll(
-                'P_COUNT',
-                store.encointer.communityAccount?.scannedClaimsCount.toString() ??
-                    "non-nullable-default-which-never-happens"),
+            notification: dic.encointer.successfullySentNAttestations
+                .replaceAll('P_COUNT', store.encointer.communityAccount!.scannedClaimsCount.toString()),
           );
         } else {
           var meetup = store.encointer.communityAccount!.meetup!;
