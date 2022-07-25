@@ -6,8 +6,8 @@ class SecondaryButtonWide extends StatelessWidget {
     this.onPressed,
   });
 
-  final Widget? child;
-  final Function? onPressed;
+  final Widget child;
+  final void Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class SecondaryButtonWide extends StatelessWidget {
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
         child: child,
-        onPressed: onPressed as void Function()?,
+        onPressed: onPressed,
       ),
     );
   }
