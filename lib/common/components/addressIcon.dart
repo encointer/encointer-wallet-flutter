@@ -12,14 +12,14 @@ class AddressIcon extends StatelessWidget {
     this.size = 96,
     this.tapToCopy = true,
   });
-  final String? address;
-  final String? pubKey;
+  final String address;
+  final String pubKey;
   final double size;
   final bool tapToCopy;
 
   @override
   Widget build(BuildContext context) {
-    String rawSvg = Jdenticon.toSvg(pubKey!,
+    String rawSvg = Jdenticon.toSvg(pubKey,
         colorSaturation: 0.78,
         grayscaleSaturation: 0.48,
         colorLightnessMinValue: 0.33,
