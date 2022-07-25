@@ -13,9 +13,9 @@ class AddAccountForm extends StatelessWidget {
   AddAccountForm({
     required this.store,
     this.submitting,
-    this.onSubmit,
+    required this.onSubmit,
   });
-  final Function? onSubmit;
+  final Function onSubmit;
   final bool? submitting;
   final AppStore store;
 
@@ -96,7 +96,7 @@ class AddAccountForm extends StatelessWidget {
                   store.account.setNewAccountName(name);
                   store.account.setNewAccountPin(store.settings.cachedPin);
 
-                  onSubmit!();
+                  onSubmit();
                 } else {
                   print("formKey.currentState.validate failed");
                 }
