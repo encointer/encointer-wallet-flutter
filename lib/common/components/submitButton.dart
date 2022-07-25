@@ -7,11 +7,11 @@ import 'package:flutter/cupertino.dart';
 class SubmitButton extends StatefulWidget {
   const SubmitButton({
     Key? key,
-    this.child,
+    required this.child,
     this.onPressed,
   }) : super(key: key);
 
-  final Widget? child;
+  final Widget child;
   final Future<void> Function(BuildContext)? onPressed;
 
   @override

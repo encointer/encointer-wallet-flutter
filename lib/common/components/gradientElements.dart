@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 ///
 class PrimaryButton extends StatelessWidget {
   final Function? onPressed;
-  final Widget? child;
+  final Widget child;
   final BorderRadiusGeometry borderRadius;
 
   const PrimaryButton({
-    this.child,
+    required this.child,
     this.onPressed,
     this.borderRadius = const BorderRadius.all(Radius.circular(20)),
     Key? key,
