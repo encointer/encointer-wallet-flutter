@@ -17,11 +17,17 @@ showPasswordInputDialog(context, account, title, onOk) {
 }
 
 class PasswordInputDialog extends StatefulWidget {
-  PasswordInputDialog({this.account, this.title, this.onOk, this.onCancel, this.onAccountSwitch});
+  PasswordInputDialog({
+    required this.account,
+    required this.onOk,
+    this.title,
+    this.onCancel,
+    this.onAccountSwitch,
+  });
 
-  final AccountData? account;
+  final AccountData account;
+  final Function onOk;
   final Widget? title;
-  final Function? onOk;
   final Function? onCancel;
   final Function? onAccountSwitch;
 
@@ -37,7 +43,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
     setState(() {
       _submitting = true;
     });
-    var res = await webApi.account.checkAccountPassword(widget.account!, password);
+    var res = await webApi.account.checkAccountPassword(widget.account, password);
     if (mounted) {
       setState(() {
         _submitting = false;
@@ -62,7 +68,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
         },
       );
     } else {
-      widget.onOk!(password);
+      widget.onOk(password);
       Navigator.of(context).pop();
     }
   }
