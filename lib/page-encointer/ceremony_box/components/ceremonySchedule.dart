@@ -12,17 +12,17 @@ import 'ceremonyCountDown.dart';
 /// If the current time is close to the meetup time, a countdown is shown.
 class CeremonySchedule extends StatelessWidget {
   const CeremonySchedule({
-    this.nextCeremonyDate,
+    required this.nextCeremonyDate,
     this.languageCode,
     Key? key,
   }) : super(key: key);
 
-  final DateTime? nextCeremonyDate;
+  final DateTime nextCeremonyDate;
   final String? languageCode;
 
   @override
   Widget build(BuildContext context) {
-    bool showCountDown = CeremonyBoxService.shouldShowCountdown(nextCeremonyDate!);
+    bool showCountDown = CeremonyBoxService.shouldShowCountdown(nextCeremonyDate);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -41,19 +41,19 @@ class CeremonySchedule extends StatelessWidget {
 
 class CeremonyDateLabelAbsolute extends StatelessWidget {
   const CeremonyDateLabelAbsolute({
-    this.nextCeremonyDate,
+    required this.nextCeremonyDate,
     this.languageCode,
     Key? key,
   }) : super(key: key);
 
-  final DateTime? nextCeremonyDate;
+  final DateTime nextCeremonyDate;
   final String? languageCode;
 
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
 
-    String nextCeremonyHourMinute = '${DateFormat.Hm(languageCode).format(nextCeremonyDate!)}';
-    String nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate!, dic, languageCode);
+    String nextCeremonyHourMinute = '${DateFormat.Hm(languageCode).format(nextCeremonyDate)}';
+    String nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate, dic, languageCode);
 
     return RichText(
       text: TextSpan(
@@ -72,19 +72,19 @@ class CeremonyDateLabelAbsolute extends StatelessWidget {
 
 class CeremonyDateLabelRelative extends StatelessWidget {
   const CeremonyDateLabelRelative({
-    this.nextCeremonyDate,
+    required this.nextCeremonyDate,
     this.languageCode,
     Key? key,
   }) : super(key: key);
 
-  final DateTime? nextCeremonyDate;
+  final DateTime nextCeremonyDate;
   final String? languageCode;
 
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
 
     String timeLeftUntilCeremonyStartsDaysHours =
-        CeremonyBoxService.getTimeLeftUntilCeremonyStartsDaysHours(nextCeremonyDate!);
+        CeremonyBoxService.getTimeLeftUntilCeremonyStartsDaysHours(nextCeremonyDate);
 
     return RichText(
       text: TextSpan(
