@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:encointer_wallet/common/components/accountAdvanceOption.dart';
+import 'package:encointer_wallet/common/components/accountAdvanceOptionParams.dart';
 import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
