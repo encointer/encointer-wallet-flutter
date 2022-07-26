@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:mobx/mobx.dart';
 
 part 'dataUpdate.g.dart';
@@ -16,7 +15,7 @@ abstract class _DataUpdateStore with Store {
   _DataUpdateStore(this.refreshPeriod);
 
   /// The update function to be executed when the state expired.
-  Future<void> Function()? updateFn;
+  Future<void> Function()? _updateFn;
 
   // Not sure yet, if we need to dispose this one.
   ReactionDisposer? _disposer;
@@ -53,13 +52,14 @@ abstract class _DataUpdateStore with Store {
     lastUpdate = dateTime;
   }
 
-  void setupUpdateReaction(Future<void> Function() updateFn) {
+  Future<void> setupUpdateReaction(Future<void> Function() updateFn) async {
+    _updateFn = updateFn;
     _disposer = reaction((_) => now, (_) async {
       if (needsRefresh) {
-        debugPrint("update reaction running...");
-        await updateFn();
-        lastUpdate = DateTime.now();
-        debugPrint("update reaction finished");
+        executeUpdate();
+      } else {
+        // Only enable for debugging purposes, otherwise it spams every second.
+        // _log("Reaction triggered, but no state-update needed.");
       }
     });
   }
@@ -67,4 +67,19 @@ abstract class _DataUpdateStore with Store {
   bool _lastUpdateIsLongerAgoThan(Duration duration) {
     return lastUpdate.millisecondsSinceEpoch + duration.inMilliseconds < now.millisecondsSinceEpoch;
   }
+
+  /// Execute the update and set the timestamp.
+  @action
+  Future<void> executeUpdate() async {
+    if (_updateFn != null) {
+      _log("update reaction running...");
+      lastUpdate = DateTime.now();
+      await _updateFn!();
+      _log("update reaction finished");
+    }
+  }
+}
+
+void _log(String msg) {
+  print("[DataUpdateStore] $msg");
 }

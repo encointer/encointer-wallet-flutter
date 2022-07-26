@@ -49,6 +49,21 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
+  late final _$dataUpdateAtom = Atom(name: '_AppStore.dataUpdate', context: context);
+
+  @override
+  DataUpdateStore get dataUpdate {
+    _$dataUpdateAtom.reportRead();
+    return super.dataUpdate;
+  }
+
+  @override
+  set dataUpdate(DataUpdateStore value) {
+    _$dataUpdateAtom.reportWrite(value, super.dataUpdate, () {
+      super.dataUpdate = value;
+    });
+  }
+
   late final _$_accountAtom = Atom(name: '_AppStore._account', context: context);
 
   @override
@@ -161,6 +176,7 @@ mixin _$AppStore on _AppStore, Store {
   @override
   String toString() {
     return '''
+dataUpdate: ${dataUpdate},
 storeIsReady: ${storeIsReady},
 webApiIsReady: ${webApiIsReady},
 account: ${account},

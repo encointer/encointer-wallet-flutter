@@ -55,6 +55,13 @@ mixin _$DataUpdateStore on _DataUpdateStore, Store {
     });
   }
 
+  late final _$executeUpdateAsyncAction = AsyncAction('_DataUpdateStore.executeUpdate', context: context);
+
+  @override
+  Future<void> executeUpdate() {
+    return _$executeUpdateAsyncAction.run(() => super.executeUpdate());
+  }
+
   late final _$_DataUpdateStoreActionController = ActionController(name: '_DataUpdateStore', context: context);
 
   @override

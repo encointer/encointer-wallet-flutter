@@ -5,7 +5,9 @@ import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qrScanPage.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 
 import 'bazaar/0_main/bazaarMain.dart';
@@ -109,17 +111,24 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
     return Scaffold(
       key: EncointerHomePage.encointerHomePageKey,
       backgroundColor: Colors.white,
-      body: PageView(
-        physics: NeverScrollableScrollPhysics(),
-        controller: _pageController,
-        children: [
-          Assets(store),
-          if (store.settings.enableBazaar) BazaarMain(store), // dart collection if
-          ScanPage(store),
-          ContactsPage(store),
-          Profile(store),
-        ],
-      ),
+      body: Observer(builder: (_) {
+        if (store.dataUpdate.expired) {
+          store.dataUpdate.executeUpdate();
+          return CupertinoActivityIndicator();
+        } else {
+          return PageView(
+            physics: NeverScrollableScrollPhysics(),
+            controller: _pageController,
+            children: [
+              Assets(store),
+              if (store.settings.enableBazaar) BazaarMain(store), // dart collection if
+              ScanPage(store),
+              ContactsPage(store),
+              Profile(store),
+            ],
+          );
+        }
+      }),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _tabIndex,
         iconSize: 22.0,
