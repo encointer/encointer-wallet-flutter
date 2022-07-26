@@ -36,7 +36,7 @@ class CommunityChooserOnMap extends StatelessWidget {
       markers: _markers,
       title: dic.assets.communityChoose,
       center: LatLng(47.389712, 8.517076),
-      initialZoom: 0,
+      initialZoom: 2,
     );
   }
 }
