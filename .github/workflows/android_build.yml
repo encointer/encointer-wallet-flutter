@@ -37,6 +37,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ steps.config.outputs.flutter-version }}
+        run: flutter --version
 
       # JS Stuff
       - uses: actions/setup-node@v2

@@ -22,6 +22,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ steps.config.outputs.flutter-version }}
+        run: flutter --version
 
       # Analyzer throws an error if an asset is missing
       - name: "Make mock-main.js"
