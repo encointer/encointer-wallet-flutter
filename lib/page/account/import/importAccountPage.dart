@@ -117,8 +117,8 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
                 ),
                 CupertinoButton(
                   child: Text(I18n.of(context)!.translationsForLocale().home.ok),
-                  onPressed: () {
-                    _saveAccount(acc);
+                  onPressed: () async {
+                    await _saveAccount(acc);
                     Navigator.of(context).pop();
                   },
                 ),
@@ -162,7 +162,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   }
 
   Widget _getImportForm() {
-    return ImportAccountForm(store, (Map<String, dynamic> data) {
+    return ImportAccountForm(store, (Map<String, dynamic> data) async {
       setState(() {
         _keyType = data['keyType'];
         _cryptoType = data['cryptoType'];
@@ -173,7 +173,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         Navigator.pushNamed(context, CreatePinPage.route, arguments: CreatePinPageParams(_importAccount));
       } else {
         store.account.setNewAccountPin(store.settings.cachedPin);
-        _importAccount();
+        await _importAccount();
         Navigator.popUntil(context, ModalRoute.withName('/'));
       }
     });
