@@ -18,6 +18,7 @@ abstract class _DataUpdateStore with Store {
   /// The update function to be executed when the state expired.
   Future<void> Function()? updateFn;
 
+  // Not sure yet, if we need to dispose this one.
   ReactionDisposer? _disposer;
 
   final Duration refreshPeriod;
