@@ -53,7 +53,6 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ steps.config.outputs.flutter-version }}
-        run: flutter --version
 
       - name: "Create Simulator if iPad Pro 2nd gen"
         if: ${{ matrix.device == 'iPad Pro (12.9-inch) (2nd generation)' }}
