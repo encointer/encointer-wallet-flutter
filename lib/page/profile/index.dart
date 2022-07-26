@@ -4,7 +4,6 @@ import 'package:encointer_wallet/page/account/create/addAccountPage.dart';
 import 'package:encointer_wallet/page/profile/aboutPage.dart';
 import 'package:encointer_wallet/page/profile/account/accountManagePage.dart';
 import 'package:encointer_wallet/page/profile/account/changePasswordPage.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
@@ -29,8 +28,7 @@ class _ProfileState extends State<Profile> {
   _ProfileState(this.store);
 
   final AppStore store;
-  final Api api = webApi;
-  EndpointData _selectedNetwork;
+  EndpointData? _selectedNetwork;
 
   List<Widget> _buildAccountList() {
     List<Widget> allAccountsAsWidgets = [];
@@ -79,7 +77,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    var h3Grey = Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey);
+    var h3Grey = Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey);
     _selectedNetwork = store.settings.endpoint;
 
     // if all accounts are deleted, go to createAccountPage
@@ -89,7 +87,7 @@ class _ProfileState extends State<Profile> {
         Navigator.popUntil(context, ModalRoute.withName('/'));
       });
     }
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
 
     return Observer(
       builder: (_) {
@@ -113,7 +111,7 @@ class _ProfileState extends State<Profile> {
                       children: <Widget>[
                         Text(
                           '${dic.profile.accounts}',
-                          style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
+                          style: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
                         ),
                         IconButton(
                             icon: Icon(Iconsax.add_square),
@@ -160,7 +158,7 @@ class _ProfileState extends State<Profile> {
                   ListTile(
                       title: Text(dic.profile.reputationOverall, style: h3Grey),
                       trailing: store.encointer.account?.reputations != null
-                          ? Text(store.encointer.account.reputations.length.toString())
+                          ? Text(store.encointer.account?.reputations.length.toString() ?? 0.toString())
                           : Text(dic.encointer.fetchingReputations)),
                   ListTile(
                     title: Text(dic.profile.about, style: Theme.of(context).textTheme.headline3),
@@ -219,7 +217,7 @@ class _ProfileState extends State<Profile> {
 }
 
 Future<void> showRemoveAccountsDialog(BuildContext context, AppStore store) {
-  final dic = I18n.of(context).translationsForLocale();
+  final dic = I18n.of(context)!.translationsForLocale();
 
   return showCupertinoDialog(
       context: context,

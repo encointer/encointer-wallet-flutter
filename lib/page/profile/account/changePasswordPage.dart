@@ -1,10 +1,11 @@
+import 'dart:async';
+
 import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
-import 'package:encointer_wallet/store/settings.dart';
+import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
@@ -13,22 +14,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ChangePasswordPage extends StatefulWidget {
-  ChangePasswordPage(this.store, this.settingsStore);
+  ChangePasswordPage(this.store);
 
   static const String route = '/profile/password';
-  final AccountStore store;
-  final SettingsStore settingsStore;
+  final AppStore store;
 
   @override
-  _ChangePassword createState() => _ChangePassword(store, settingsStore);
+  _ChangePassword createState() => _ChangePassword(store);
 }
 
 class _ChangePassword extends State<ChangePasswordPage> {
-  _ChangePassword(this.store, this.settingsStore);
+  _ChangePassword(this.store);
 
   final Api api = webApi;
-  final AccountStore store;
-  final SettingsStore settingsStore;
+  final AppStore store;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _passOldCtrl = new TextEditingController();
   final TextEditingController _passCtrl = new TextEditingController();
@@ -37,16 +36,16 @@ class _ChangePassword extends State<ChangePasswordPage> {
   bool _submitting = false;
 
   Future<void> _onSave() async {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState!.validate()) {
       setState(() {
         _submitting = true;
       });
 
-      final Translations dic = I18n.of(context).translationsForLocale();
+      final Translations dic = I18n.of(context)!.translationsForLocale();
       final String passOld = _passOldCtrl.text.trim();
       final String passNew = _passCtrl.text.trim();
       // check password
-      final passChecked = await webApi.account.checkAccountPassword(store.currentAccount, passOld);
+      final passChecked = await webApi.account.checkAccountPassword(store.account.currentAccount, passOld);
       if (passChecked == null) {
         showCupertinoDialog(
           context: context,
@@ -56,7 +55,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
               content: Text(dic.profile.wrongPinHint),
               actions: <Widget>[
                 CupertinoButton(
-                  child: Text(I18n.of(context).translationsForLocale().home.ok),
+                  child: Text(I18n.of(context)!.translationsForLocale().home.ok),
                   onPressed: () {
                     _passOldCtrl.clear();
                     setState(() {
@@ -71,19 +70,19 @@ class _ChangePassword extends State<ChangePasswordPage> {
         );
       } else {
         // we need to iterate over all active accounts and update there password
-        settingsStore.setPin(passNew);
-        store.accountListAll.forEach((account) async {
-          final Map acc =
+        store.settings.setPin(passNew);
+        store.account.accountListAll.forEach((account) async {
+          final Map<String, dynamic> acc =
               await api.evalJavascript('account.changePassword("${account.pubKey}", "$passOld", "$passNew")');
 
           // update encrypted seed after password updated
-          store.accountListAll.map((accountData) {
+          store.account.accountListAll.map((accountData) {
             // use local name, not webApi returned name
             Map<String, dynamic> localAcc = AccountData.toJson(accountData);
             // make metadata the same as the polkadot-js/api's
             acc['meta']['name'] = localAcc['name'];
-            store.updateAccount(acc);
-            store.updateSeed(accountData.pubKey, _passOldCtrl.text, _passCtrl.text);
+            store.account.updateAccount(acc);
+            store.account.updateSeed(accountData.pubKey, _passOldCtrl.text, _passCtrl.text);
           });
         });
         showCupertinoDialog(
@@ -94,7 +93,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
               content: Text(dic.profile.passSuccessTxt),
               actions: <Widget>[
                 CupertinoButton(
-                    child: Text(I18n.of(context).translationsForLocale().home.ok),
+                    child: Text(I18n.of(context)!.translationsForLocale().home.ok),
                     onPressed: () => {
                           // moving back to profile page after changing password
                           Navigator.popUntil(context, ModalRoute.withName('/')),
@@ -109,7 +108,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         title: Text(dic.profile.changeYourPin),
@@ -136,14 +135,17 @@ class _ChangePassword extends State<ChangePasswordPage> {
                         Text(
                           dic.profile.hintThenEnterANewPin,
                           textAlign: TextAlign.center,
-                          style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black),
+                          style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black),
                         ),
                         SizedBox(height: 30),
                         EncointerTextFormField(
                           labelText: dic.profile.passOld,
                           controller: _passOldCtrl,
                           validator: (v) {
-                            return Fmt.checkPassword(v.trim()) ? null : dic.account.createPasswordError;
+                            if (v == null || !Fmt.checkPassword(v.trim())) {
+                              return dic.account.createPasswordError;
+                            }
+                            return null;
                           },
                           obscureText: true,
                           inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
@@ -154,7 +156,10 @@ class _ChangePassword extends State<ChangePasswordPage> {
                           labelText: dic.profile.yourNewPin,
                           controller: _passCtrl,
                           validator: (v) {
-                            return Fmt.checkPassword(v.trim()) ? null : dic.account.createPasswordError;
+                            if (v == null || !Fmt.checkPassword(v.trim())) {
+                              return dic.account.createPasswordError;
+                            }
+                            return null;
                           },
                           obscureText: true,
                           inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
@@ -165,7 +170,10 @@ class _ChangePassword extends State<ChangePasswordPage> {
                           labelText: dic.profile.pleaseConfirmYourNewPin,
                           controller: _pass2Ctrl,
                           validator: (v) {
-                            return v.trim() != _passCtrl.text ? dic.account.createPassword2Error : null;
+                            if (v == null || v.trim() != _passCtrl.text) {
+                              return dic.account.createPassword2Error;
+                            }
+                            return null;
                           },
                           obscureText: true,
                           inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
@@ -183,7 +191,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                     _submitting ? CupertinoActivityIndicator() : Container(),
                     Text(
                       dic.profile.contactSave,
-                      style: Theme.of(context).textTheme.headline3.copyWith(color: ZurichLion.shade50),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(color: ZurichLion.shade50),
                     ),
                   ],
                 ),

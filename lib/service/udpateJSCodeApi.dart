@@ -1,8 +1,8 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/config/consts.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart';
-import 'package:encointer_wallet/config/consts.dart';
 
 /// Class to update the js-code from in app.
 ///
@@ -16,67 +16,51 @@ class UpdateJSCodeApi {
   static const String _jsCodeStorageKey = 'js_service_';
   static const String _jsCodeStorageVersionKey = 'js_service_version_';
 
-  static Future<Map> getLatestVersion() async {
+  static Future<Map?> getLatestVersion() async {
     try {
       Response res = await get(Uri.parse('$_endpoint/versions.json'));
-      if (res == null) {
-        return Future.value(null);
-      } else {
-        return jsonDecode(utf8.decode(res.bodyBytes)) as Map;
-      }
+      return jsonDecode(utf8.decode(res.bodyBytes)) as Map?;
     } catch (err) {
       print(err);
       return Future.value(null);
     }
   }
 
-  static Future<Map> getRecommended() async {
+  static Future<Map?> getRecommended() async {
     try {
       Response res = await get(Uri.parse('$_endpoint/recommended.json'));
-      if (res == null) {
-        return Future.value(null);
-      } else {
-        return jsonDecode(res.body) as Map;
-      }
+      return jsonDecode(res.body);
     } catch (err) {
       print(err);
       return Future.value(null);
     }
   }
 
-  static Future<int> fetchPolkadotJSVersion(String networkName) async {
+  static Future<int?> fetchPolkadotJSVersion(String networkName) async {
     try {
       Response res = await get(Uri.parse('$_endpoint/jsCodeVersions.json'));
-      if (res == null) {
-        return Future.value(null);
-      } else {
-        return Map.of(jsonDecode(res.body))[networkName];
-      }
+      return Map.of(jsonDecode(res.body))[networkName];
     } catch (err) {
       print(err);
       return Future.value(null);
     }
   }
 
-  static Future<String> fetchPolkadotJSCode(String networkName) async {
+  static Future<String?> fetchPolkadotJSCode(String networkName) async {
     try {
       Response res = await get(Uri.parse('$_endpoint/js_service/$networkName.js'));
-      if (res == null) {
-        return Future.value(null);
-      } else {
-        return utf8.decode(res.bodyBytes);
-      }
+      return utf8.decode(res.bodyBytes);
     } catch (err) {
       print(err);
       return Future.value(null);
     }
   }
 
-  static int getPolkadotJSVersion(
+  static int? getPolkadotJSVersion(
     GetStorage jsStorage,
     String networkName,
   ) {
-    String version = jsStorage.read('$_jsCodeStorageVersionKey$networkName');
+    String? version = jsStorage.read('$_jsCodeStorageVersionKey$networkName');
     if (version != null) {
       return int.parse(version);
     }
@@ -84,11 +68,11 @@ class UpdateJSCodeApi {
     return js_code_version_map[networkName];
   }
 
-  static String getPolkadotJSCode(
+  static String? getPolkadotJSCode(
     GetStorage jsStorage,
     String networkName,
   ) {
-    String jsCode = jsStorage.read('$_jsCodeStorageKey$networkName');
+    String? jsCode = jsStorage.read('$_jsCodeStorageKey$networkName');
     return jsCode;
   }
 
@@ -102,14 +86,10 @@ class UpdateJSCodeApi {
     jsStorage.write('$_jsCodeStorageVersionKey$networkName', version.toString());
   }
 
-  static Future<List> getAnnouncements() async {
+  static Future<List?> getAnnouncements() async {
     try {
       Response res = await get(Uri.parse('$_endpoint/announce.json'));
-      if (res == null) {
-        return Future.value(null);
-      } else {
-        return jsonDecode(utf8.decode(res.bodyBytes));
-      }
+      return jsonDecode(utf8.decode(res.bodyBytes));
     } catch (err) {
       print(err);
       return Future.value(null);

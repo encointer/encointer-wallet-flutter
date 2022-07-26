@@ -10,9 +10,9 @@ class SwitchAccountOrCommunity extends StatefulWidget {
     this.onTap,
   });
 
-  final String rowTitle;
-  final List<AccountOrCommunityData> data;
-  final Function onTap;
+  final String? rowTitle;
+  final List<AccountOrCommunityData>? data;
+  final Function? onTap;
 
   @override
   _SwitchAccountOrCommunityState createState() => _SwitchAccountOrCommunityState();
@@ -32,7 +32,7 @@ class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
       ),
       Center(
         child: Text(
-          widget.rowTitle,
+          widget.rowTitle!,
           style: Theme.of(context).textTheme.headline2,
         ),
       ),
@@ -48,9 +48,9 @@ class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
                 itemExtent: itemExtent,
-                itemCount: widget.data != null ? widget.data.length : 0,
+                itemCount: widget.data != null ? widget.data!.length : 0,
                 itemBuilder: (context, index) => AccountOrCommunityItemHorizontal(
-                  itemData: widget.data[index],
+                  itemData: widget.data![index],
                   index: index,
                   onTap: widget.onTap,
                 ),

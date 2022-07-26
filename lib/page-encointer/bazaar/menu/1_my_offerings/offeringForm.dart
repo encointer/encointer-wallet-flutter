@@ -19,7 +19,7 @@ class _OfferingFormState extends State<OfferingForm> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         title: Text(dic.bazaar.offeringAdd),

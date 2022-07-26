@@ -1,87 +1,60 @@
 import 'dart:async';
-import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+
+const EncointerJsService = "EncointerJsService";
 
 /// Core interface to talk with our JS-service
 class JSApi {
   Map<String, Function> _msgHandlers = {};
   Map<String, Completer> _msgCompleters = {};
-  FlutterWebviewPlugin _web;
-  StreamSubscription _subscription;
+
+  HeadlessInAppWebView? _web;
 
   int _evalJavascriptUID = 0;
 
-  Function _webViewPostInitCallback;
-
-  Future<void> launchWebView(BuildContext context, Function webViewPostInitCallback) async {
+  Future<void> launchWebView(String jsServiceEncointer, Future<void> Function() webViewPostInitCallback) async {
     _msgHandlers = {};
     _msgCompleters = {};
     _evalJavascriptUID = 0;
 
-    _webViewPostInitCallback = webViewPostInitCallback;
-
-    final bool needLaunch = _web == null;
-    if (needLaunch) {
-      _web = FlutterWebviewPlugin();
+    if (_web != null) {
+      closeWebView();
     }
 
-    if (_subscription != null) {
-      //  (should only happen in hot-restart)
-      await _subscription.cancel();
-    }
+    _web = HeadlessInAppWebView(
+      initialData: InAppWebViewInitialData(data: jSSourceHtmlContainer(jsServiceEncointer)),
+      onConsoleMessage: (controller, message) => print("JS-Console: ${message.message}"),
+      onWebViewCreated: (controller) async {
+        print("Adding the PolkaWallet javascript handler");
 
-    _subscription = _web.onStateChanged.listen((viewState) async {
-      if (viewState.type == WebViewState.finishLoad) {
-        String network = 'encointer';
-        print('webview loaded for network $network');
+        controller.addJavaScriptHandler(
+            handlerName: EncointerJsService,
+            callback: (args) {
+              print('[JavaScripHandler/callback]: ${args.toString()}');
 
-        DefaultAssetBundle.of(context).loadString('lib/js_service_$network/dist/main.js').then((String js) {
-          print('js_service_$network loaded in webview');
-          // inject js file to webview
-          _web.evalJavascript(js);
+              var res = args[0];
 
-          _webViewPostInitCallback();
-        });
-      }
-    });
+              final String? path = res['path'];
+              if (_msgCompleters[path!] != null) {
+                Completer handler = _msgCompleters[path]!;
+                handler.complete(res['data']);
+                if (path.contains('uid=')) {
+                  _msgCompleters.remove(path);
+                }
+              }
+              if (_msgHandlers[path] != null) {
+                Function handler = _msgHandlers[path]!;
+                handler(res['data']);
+              }
+            });
+      },
+      onLoadStop: (controller, _) async {
+        await webViewPostInitCallback();
+      },
+    );
 
-    if (!needLaunch) {
-      _web.reload();
-      return;
-    } else {
-      return _web.launch(
-        'about:blank',
-        javascriptChannels: [
-          JavascriptChannel(
-              name: 'PolkaWallet',
-              onMessageReceived: (JavascriptMessage message) {
-                print('received msg: ${message.message}');
-                compute(jsonDecode, message.message).then((msg) {
-                  final String path = msg['path'];
-                  if (_msgCompleters[path] != null) {
-                    Completer handler = _msgCompleters[path];
-                    handler.complete(msg['data']);
-                    if (path.contains('uid=')) {
-                      _msgCompleters.remove(path);
-                    }
-                  }
-                  if (_msgHandlers[path] != null) {
-                    Function handler = _msgHandlers[path];
-                    handler(msg['data']);
-                  }
-                });
-              }),
-        ].toSet(),
-        ignoreSSLErrors: true,
-//      debuggingEnabled: true,
-//        withLocalUrl: true,
-//        localUrlScope: 'lib/polkadot_js_service/dist/',
-        hidden: true,
-      );
-    }
+    await _web!.run();
   }
 
   /// Evaluate javascript [code] in the webView.
@@ -103,13 +76,13 @@ class JSApi {
         String call = code.split('(')[0];
         if (i.compareTo(call) == 0) {
           print('request $call loading');
-          return _msgCompleters[i].future;
+          return _msgCompleters[i]!.future;
         }
       }
     }
 
     if (!wrapPromise) {
-      String res = await _web.evalJavascript(code);
+      String res = await _web!.webViewController.evaluateJavascript(source: code);
       return res;
     }
 
@@ -118,13 +91,17 @@ class JSApi {
     String method = 'uid=${_getEvalJavascriptUID()};${code.split('(')[0]}';
     _msgCompleters[method] = c;
 
-    String script = '$code.then(function(res) {'
-        '  PolkaWallet.postMessage(JSON.stringify({ path: "$method", data: res }));'
-        '}).catch(function(err) {'
-        '  PolkaWallet.postMessage(JSON.stringify({ path: "$method:error", data: err.message }));'
-        '})';
+    // Send the result from JS to dart after `code` completed.
+    String script = """
+        $code.then(function(res) {
+          window.flutter_inappwebview
+            .callHandler("$EncointerJsService", { path: "$method", data: res });
+        }).catch(function(err) {
+          window.flutter_inappwebview
+            .callHandler("$EncointerJsService", { path: "$method:error", data: err.message  });
+        })""";
 
-    _web.evalJavascript(script);
+    _web!.webViewController.evaluateJavascript(source: script);
 
     return c.future;
   }
@@ -144,17 +121,31 @@ class JSApi {
 
   Future<void> unsubscribeMessage(String channel) async {
     if (_msgHandlers[channel] != null) {
-      _web.evalJavascript('unsub$channel()');
+      _web!.webViewController.evaluateJavascript(source: 'unsub$channel()');
     }
   }
 
   Future<void> closeWebView() async {
     print("[JSApi]: closing webView");
     if (_web != null) {
-      await _web.close();
+      await _web!.dispose();
       _web = null;
     } else {
       print("[JSApi]: Did not close webView because it was closed already.");
     }
   }
+}
+
+/// Wraps `jSSource` in a html document ready to be hoisted in a webView.
+String jSSourceHtmlContainer(String jSSource) {
+  return """
+  <!DOCTYPE html>
+  <html lang="en">
+    <body>
+      <script>
+        $jSSource
+      </script>
+    </body>
+  </html>
+  """;
 }

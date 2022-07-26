@@ -19,8 +19,8 @@ class CommunityMetadata {
   String name;
   String symbol;
   String assets;
-  String url;
-  String theme;
+  String? url;
+  String? theme;
 
   @override
   String toString() {

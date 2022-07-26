@@ -6,15 +6,13 @@ part of 'communities.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CommunityMetadata _$CommunityMetadataFromJson(Map<String, dynamic> json) {
-  return CommunityMetadata(
-    json['name'] as String,
-    json['symbol'] as String,
-    json['assets'] as String,
-    json['url'] as String,
-    json['theme'] as String,
-  );
-}
+CommunityMetadata _$CommunityMetadataFromJson(Map<String, dynamic> json) => CommunityMetadata(
+      json['name'] as String,
+      json['symbol'] as String,
+      json['assets'] as String,
+      json['url'] as String?,
+      json['theme'] as String?,
+    );
 
 Map<String, dynamic> _$CommunityMetadataToJson(CommunityMetadata instance) => <String, dynamic>{
       'name': instance.name,
@@ -24,14 +22,12 @@ Map<String, dynamic> _$CommunityMetadataToJson(CommunityMetadata instance) => <S
       'theme': instance.theme,
     };
 
-CidName _$CidNameFromJson(Map<String, dynamic> json) {
-  return CidName(
-    json['cid'] == null ? null : CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
-    json['name'] as String,
-  );
-}
+CidName _$CidNameFromJson(Map<String, dynamic> json) => CidName(
+      CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
+      json['name'] as String,
+    );
 
 Map<String, dynamic> _$CidNameToJson(CidName instance) => <String, dynamic>{
-      'cid': instance.cid?.toJson(),
+      'cid': instance.cid.toJson(),
       'name': instance.name,
     };

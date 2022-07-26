@@ -1,20 +1,19 @@
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
-import 'package:flutter/material.dart';
 
 import 'qrCodeBase.dart';
 
 class VoucherQrCode extends QrCode<VoucherData> {
   VoucherQrCode.withData(VoucherData data) : super(data);
   VoucherQrCode({
-    @required String voucherUri,
-    @required CommunityIdentifier cid,
-    String network,
-    @required String issuer,
+    required String voucherUri,
+    required CommunityIdentifier cid,
+    required network,
+    required String issuer,
   }) : super(VoucherData(voucherUri: voucherUri, cid: cid, network: network, issuer: issuer));
 
-  var context = QrCodeContext.voucher;
+  QrCodeContext? context = QrCodeContext.voucher;
 
-  var version = QrCodeVersion.v2_0;
+  QrCodeVersion? version = QrCodeVersion.v2_0;
 
   static VoucherQrCode fromPayload(String payload) {
     return fromQrFields(payload.split("\n"));
@@ -28,10 +27,10 @@ class VoucherQrCode extends QrCode<VoucherData> {
 
 class VoucherData implements ToQrFields {
   VoucherData({
-    @required this.voucherUri,
-    @required this.cid,
-    this.network,
-    @required this.issuer,
+    required this.voucherUri,
+    required this.cid,
+    required this.network,
+    required this.issuer,
   });
 
   /// Uri seed of the voucher account, e.g. //adf456.
@@ -49,7 +48,7 @@ class VoucherData implements ToQrFields {
   List<String> toQrFields() {
     return [
       voucherUri,
-      cid?.toFmtString() ?? "",
+      cid.toFmtString(),
       network,
       issuer,
     ];

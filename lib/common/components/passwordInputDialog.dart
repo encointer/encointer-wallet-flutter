@@ -4,6 +4,7 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 showPasswordInputDialog(context, account, title, onOk) {
@@ -16,13 +17,19 @@ showPasswordInputDialog(context, account, title, onOk) {
 }
 
 class PasswordInputDialog extends StatefulWidget {
-  PasswordInputDialog({this.account, this.title, this.onOk, this.onCancel, this.onAccountSwitch});
+  PasswordInputDialog({
+    required this.account,
+    required this.onOk,
+    this.title,
+    this.onCancel,
+    this.onAccountSwitch,
+  });
 
   final AccountData account;
-  final Widget title;
   final Function onOk;
-  final Function onCancel;
-  final Function onAccountSwitch;
+  final Widget? title;
+  final Function? onCancel;
+  final Function? onAccountSwitch;
 
   @override
   _PasswordInputDialogState createState() => _PasswordInputDialogState();
@@ -46,14 +53,14 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
       showCupertinoDialog(
         context: context,
         builder: (BuildContext context) {
-          final Translations dic = I18n.of(context).translationsForLocale();
+          final Translations dic = I18n.of(context)!.translationsForLocale();
           return CupertinoAlertDialog(
             title: Text(dic.profile.wrongPin),
             content: Text(dic.profile.wrongPinHint),
             actions: <Widget>[
               CupertinoButton(
                 key: Key('error-dialog-ok'),
-                child: Text(I18n.of(context).translationsForLocale().home.ok),
+                child: Text(I18n.of(context)!.translationsForLocale().home.ok),
                 onPressed: () => Navigator.of(context).pop(),
               ),
             ],
@@ -74,24 +81,27 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
 
     return CupertinoAlertDialog(
       title: widget.title ?? Container(),
       content: Padding(
         padding: EdgeInsets.only(top: 16),
-        child: CupertinoTextField(
+        child: CupertinoTextFormFieldRow(
+          decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
+          padding: EdgeInsets.zero,
           autofocus: true,
           keyboardType: TextInputType.number,
-          placeholder: I18n.of(context).translationsForLocale().profile.passOld,
+          placeholder: dic.profile.passOld,
           controller: _passCtrl,
-          onChanged: (v) {
-            return Fmt.checkPassword(v.trim())
-                ? null
-                : I18n.of(context).translationsForLocale().account.createPasswordError;
+          validator: (v) {
+            if (v == null || !Fmt.checkPassword(v.trim())) {
+              return dic.account.createPasswordError;
+            }
+            return null;
           },
           obscureText: true,
-          clearButtonMode: OverlayVisibilityMode.editing,
+          // clearButtonMode: OverlayVisibilityMode.editing,
           inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
         ),
       ),
@@ -100,7 +110,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
             ? CupertinoButton(
                 child: Text(dic.home.switchAccount),
                 onPressed: () {
-                  widget.onAccountSwitch();
+                  widget.onAccountSwitch!();
                 },
               )
             : Container(),
@@ -108,7 +118,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
             ? CupertinoButton(
                 child: Text(dic.home.cancel),
                 onPressed: () {
-                  widget.onCancel();
+                  widget.onCancel!();
                 },
               )
             : Container(),

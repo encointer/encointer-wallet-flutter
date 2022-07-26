@@ -14,7 +14,7 @@ class BusinessesOnMap extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context).translationsForLocale().bazaar.businesses),
+        title: Text(I18n.of(context)!.translationsForLocale().bazaar.businesses),
       ),
       body: BMap(data),
     );
@@ -42,7 +42,7 @@ class BMap extends StatelessWidget {
         center: LatLng(47.389712, 8.517076),
         zoom: 15.0,
         maxZoom: 18.4,
-        onTap: (_) => _popupLayerController.hideAllPopups(), // Hide popup when the map is tapped.
+        onTap: (_, __) => _popupLayerController.hideAllPopups(), // Hide popup when the map is tapped.
       ),
       children: [
         TileLayerWidget(
@@ -78,7 +78,7 @@ class BMap extends StatelessWidget {
 
 class BusinessDetailsPopup extends StatelessWidget {
   final Marker marker;
-  final BazaarBusinessData dataForThisMarker;
+  final BazaarBusinessData? dataForThisMarker;
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +100,7 @@ class BusinessDetailsPopup extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                dataForThisMarker.title,
+                dataForThisMarker!.title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -111,7 +111,7 @@ class BusinessDetailsPopup extends StatelessWidget {
                 padding: EdgeInsets.only(bottom: 2.0),
               ),
               Text(
-                dataForThisMarker.description,
+                dataForThisMarker!.description,
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -126,5 +126,5 @@ class BusinessDetailsPopup extends StatelessWidget {
     );
   }
 
-  BusinessDetailsPopup(this.marker, this.dataForThisMarker, {Key key}) : super(key: key);
+  BusinessDetailsPopup(this.marker, this.dataForThisMarker, {Key? key}) : super(key: key);
 }

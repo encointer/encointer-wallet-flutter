@@ -1,10 +1,7 @@
-import 'dart:convert';
-
-import 'package:flutter/foundation.dart';
-import 'package:mobx/mobx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/assets/types/balancesInfo.dart';
 import 'package:encointer_wallet/store/assets/types/transferData.dart';
+import 'package:mobx/mobx.dart';
 
 part 'assets.g.dart';
 
@@ -29,7 +26,7 @@ abstract class _AssetsStore with Store {
   }
 
   @observable
-  int cacheTxsTimestamp = 0;
+  int? cacheTxsTimestamp = 0;
 
   @observable
   bool isTxsLoading = true;
@@ -38,13 +35,13 @@ abstract class _AssetsStore with Store {
   bool submitting = false;
 
   @observable
-  ObservableMap<String, BalancesInfo> balances = ObservableMap<String, BalancesInfo>();
+  ObservableMap<String?, BalancesInfo> balances = ObservableMap<String?, BalancesInfo>();
 
   @observable
   Map<String, String> tokenBalances = Map<String, String>();
 
   @observable
-  int txsCount = 0;
+  int? txsCount = 0;
 
   @observable
   ObservableList<TransferData> txs = ObservableList<TransferData>();
@@ -53,10 +50,10 @@ abstract class _AssetsStore with Store {
   int txsFilter = 0;
 
   @observable
-  ObservableMap<int, BlockData> blockMap = ObservableMap<int, BlockData>();
+  ObservableMap<int?, BlockData> blockMap = ObservableMap<int?, BlockData>();
 
   @observable
-  List announcements;
+  List? announcements;
 
   @observable
   ObservableMap<String, double> marketPrices = ObservableMap<String, double>();
@@ -100,23 +97,23 @@ abstract class _AssetsStore with Store {
 //  }
 
   @action
-  Future<void> setAccountBalances(String pubKey, Map amt, {bool needCache = true}) async {
+  Future<void> setAccountBalances(String? pubKey, Map? amt, {bool needCache = true}) async {
     if (rootStore.account.currentAccount.pubKey != pubKey) return;
 
-    amt.forEach((k, v) {
+    amt!.forEach((k, v) {
       balances[k] = BalancesInfo.fromJson(v);
     });
 
     if (!needCache) return;
-    Map cache = await rootStore.localStorage.getAccountCache(
+    Map? cache = await rootStore.localStorage.getAccountCache(
       rootStore.account.currentAccount.pubKey,
       cacheBalanceKey,
-    );
+    ) as Map?;
     if (cache == null) {
       cache = amt;
     } else {
       amt.forEach((k, v) {
-        cache[k] = v;
+        cache![k] = v;
       });
     }
     rootStore.localStorage.setAccountCache(
@@ -129,12 +126,12 @@ abstract class _AssetsStore with Store {
   @action
   Future<void> setAccountTokenBalances(
     String pubKey,
-    Map amt, {
+    Map? amt, {
     bool needCache = true,
   }) async {
     if (rootStore.account.currentAccount.pubKey != pubKey) return;
 
-    tokenBalances = Map<String, String>.from(amt);
+    tokenBalances = Map<String, String>.from(amt!);
 
     if (!needCache) return;
     rootStore.localStorage.setAccountCache(
@@ -160,7 +157,7 @@ abstract class _AssetsStore with Store {
 
     txsCount = res['count'];
 
-    List ls = res['transfers'];
+    List? ls = res['transfers'];
     if (ls == null) return;
 
     ls.forEach((i) {
@@ -183,20 +180,6 @@ abstract class _AssetsStore with Store {
   }
 
   @action
-  Future<void> setBlockMap(String data) async {
-    var ls = await compute(jsonDecode, data);
-    List.of(ls).forEach((i) {
-      if (blockMap[i['id']] == null) {
-        blockMap[i['id']] = BlockData.fromJson(i);
-      }
-    });
-
-    if (List.of(ls).length > 0) {
-      rootStore.localStorage.setObject(localStorageBlocksKey, blockMap.values.map((i) => BlockData.toJson(i)).toList());
-    }
-  }
-
-  @action
   void setSubmitting(bool isSubmitting) {
     submitting = isSubmitting;
   }
@@ -214,7 +197,7 @@ abstract class _AssetsStore with Store {
   @action
   Future<void> loadAccountCache() async {
     // return if currentAccount not exist
-    String pubKey = rootStore.account.currentAccountPubKey;
+    String? pubKey = rootStore.account.currentAccountPubKey;
     if (pubKey == null || pubKey.isEmpty) {
       return;
     }
@@ -245,7 +228,7 @@ abstract class _AssetsStore with Store {
 
   @action
   Future<void> loadCache() async {
-    List ls = await rootStore.localStorage.getObject(localStorageBlocksKey);
+    List? ls = await rootStore.localStorage.getObject(localStorageBlocksKey) as List?;
     if (ls != null) {
       ls.forEach((i) {
         if (blockMap[i['id']] == null) {
@@ -277,9 +260,9 @@ class BlockData extends _BlockData {
 }
 
 abstract class _BlockData {
-  int id = 0;
+  int? id = 0;
 
-  String hash = '';
+  String? hash = '';
 
   DateTime time = DateTime.now();
 }

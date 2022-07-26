@@ -19,7 +19,7 @@ class ExportAccountPage extends StatelessWidget {
   final TextEditingController _passCtrl = new TextEditingController();
 
   void _showPasswordDialog(BuildContext context, String seedType) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
 
     Future<void> onOk() async {
       var res = await webApi.account.checkAccountPassword(store.currentAccount, _passCtrl.text);
@@ -32,7 +32,7 @@ class ExportAccountPage extends StatelessWidget {
               content: Text(dic.profile.wrongPinHint),
               actions: <Widget>[
                 CupertinoButton(
-                  child: Text(I18n.of(context).translationsForLocale().home.ok),
+                  child: Text(I18n.of(context)!.translationsForLocale().home.ok),
                   onPressed: () => Navigator.of(context).pop(),
                 ),
               ],
@@ -41,9 +41,9 @@ class ExportAccountPage extends StatelessWidget {
         );
       } else {
         Navigator.of(context).pop();
-        String seed = await store.decryptSeed(store.currentAccount.pubKey, seedType, _passCtrl.text.trim());
+        String? seed = await store.decryptSeed(store.currentAccount.pubKey, seedType, _passCtrl.text.trim());
         Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
-          'key': seed,
+          'key': seed!,
           'type': seedType,
         });
       }
@@ -56,13 +56,18 @@ class ExportAccountPage extends StatelessWidget {
           title: Text(dic.profile.confirmPin),
           content: Padding(
             padding: EdgeInsets.only(top: 16),
-            child: CupertinoTextField(
+            child: CupertinoTextFormFieldRow(
+              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
+              padding: EdgeInsets.zero,
               keyboardType: TextInputType.number,
               placeholder: dic.profile.passOld,
               controller: _passCtrl,
-              clearButtonMode: OverlayVisibilityMode.editing,
-              onChanged: (v) {
-                return Fmt.checkPassword(v.trim()) ? null : dic.account.createPasswordError;
+              // clearButtonMode: OverlayVisibilityMode.editing,
+              validator: (v) {
+                if (v == null || !Fmt.checkPassword(v.trim())) {
+                  return dic.account.createPasswordError;
+                }
+                return null;
               },
               obscureText: true,
               inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
@@ -70,14 +75,14 @@ class ExportAccountPage extends StatelessWidget {
           ),
           actions: <Widget>[
             CupertinoButton(
-              child: Text(I18n.of(context).translationsForLocale().home.cancel),
+              child: Text(I18n.of(context)!.translationsForLocale().home.cancel),
               onPressed: () {
                 Navigator.of(context).pop();
                 _passCtrl.clear();
               },
             ),
             CupertinoButton(
-              child: Text(I18n.of(context).translationsForLocale().home.ok),
+              child: Text(I18n.of(context)!.translationsForLocale().home.ok),
               onPressed: onOk,
             ),
           ],
@@ -88,7 +93,7 @@ class ExportAccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         title: Text(dic.profile.export),

@@ -10,12 +10,11 @@ import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/snackBar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:pausable_timer/pausable_timer.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-import 'package:share/share.dart';
+import 'package:qr_flutter_fork/qr_flutter_fork.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ReceivePage extends StatefulWidget {
   ReceivePage(this.store);
@@ -29,10 +28,11 @@ class _ReceivePageState extends State<ReceivePage> {
   final TextEditingController _amountController = new TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool generateQR = false;
-  InvoiceQrCode invoice;
+  late InvoiceQrCode invoice;
 
-  PausableTimer paymentWatchdog;
+  PausableTimer? paymentWatchdog;
   bool observedPendingExtrinsic = false;
+  int resetObservedPendingExtrinsicCounter = 0;
 
   @override
   void initState() {
@@ -49,57 +49,52 @@ class _ReceivePageState extends State<ReceivePage> {
   @override
   void dispose() {
     _amountController.dispose();
-    paymentWatchdog.cancel();
+    paymentWatchdog!.cancel();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     paymentWatchdog = PausableTimer(
       const Duration(seconds: 1),
-      () {
-        webApi.encointer.pendingExtrinsics().then((extrinsics) {
-          print("[receivePage] pendingExtrinsics ${extrinsics.toString()}");
-          if (((extrinsics?.length ?? 0) > 0) && (!observedPendingExtrinsic)) {
-            extrinsics.forEach((xt) {
-              if (xt.contains(widget.store.account.currentAccountPubKey.substring(2))) {
-                RootSnackBar.showMsg(
-                  dic.profile.observedPendingExtrinsic,
-                  durationMillis: 5000,
-                  textColor: Colors.black,
-                  backgroundColor: Colors.lightBlue,
-                );
-                observedPendingExtrinsic = true;
-              }
-            });
-          } else {
+      () async {
+        if (!observedPendingExtrinsic) {
+          observedPendingExtrinsic = await showSnackBarUponPendingExtrinsics(widget.store, webApi, dic);
+          resetObservedPendingExtrinsicCounter = 0;
+        } else {
+          if (resetObservedPendingExtrinsicCounter++ > 4) {
+            // Wait for 5 seconds until we check again for a pending extrinsic.
+            resetObservedPendingExtrinsicCounter = 0;
             observedPendingExtrinsic = false;
           }
-        });
+        }
+
         webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
-          if (balances != null) {
-            CommunityIdentifier cid = widget.store.encointer.chosenCid;
-            double demurrageRate = widget.store.encointer.community.demurrage;
-            double newBalance = widget.store.encointer.applyDemurrage(balances[cid]);
-            double oldBalance =
-                widget.store.encointer.applyDemurrage(widget.store.encointer.communityBalanceEntry) ?? 0;
-            if (newBalance != null) {
-              double delta = newBalance - oldBalance;
-              print("[receivePage] balance was $oldBalance, changed by $delta");
-              if (delta > demurrageRate) {
-                var msg = dic.assets.incomingConfirmed
-                    .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
-                    .replaceAll('CID_SYMBOL', widget.store.encointer.community.metadata.symbol)
-                    .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
-                print("[receivePage] $msg");
-                widget.store.encointer.account?.addBalanceEntry(cid, balances[cid]);
-                NotificationPlugin.showNotification(44, dic.assets.fundsReceived, msg, cid: cid.toFmtString());
-              }
+          CommunityIdentifier? cid = widget.store.encointer.chosenCid;
+
+          if (cid == null) {
+            return;
+          }
+
+          double? demurrageRate = widget.store.encointer.community!.demurrage;
+          double? newBalance = widget.store.encointer.applyDemurrage(balances[cid]);
+          double oldBalance = widget.store.encointer.applyDemurrage(widget.store.encointer.communityBalanceEntry) ?? 0;
+          if (newBalance != null) {
+            double delta = newBalance - oldBalance;
+            print("[receivePage] balance was $oldBalance, changed by $delta");
+            if (delta > demurrageRate!) {
+              var msg = dic.assets.incomingConfirmed
+                  .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
+                  .replaceAll('CID_SYMBOL', widget.store.encointer.community?.metadata?.symbol ?? "null")
+                  .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
+              print("[receivePage] $msg");
+              widget.store.encointer.account?.addBalanceEntry(cid, balances[cid]!);
+              NotificationPlugin.showNotification(44, dic.assets.fundsReceived, msg, cid: cid.toFmtString());
             }
           }
         });
-        paymentWatchdog
+        paymentWatchdog!
           ..reset()
           ..start();
       },
@@ -108,12 +103,12 @@ class _ReceivePageState extends State<ReceivePage> {
     return FocusDetector(
         onFocusLost: () {
           print('[receivePage:FocusDetector] Focus Lost.');
-          paymentWatchdog.pause();
+          paymentWatchdog!.pause();
         },
         onFocusGained: () {
           print('[receivePage:FocusDetector] Focus Gained.');
-          paymentWatchdog.reset();
-          paymentWatchdog.start();
+          paymentWatchdog!.reset();
+          paymentWatchdog!.start();
         },
         child: Form(
           key: _formKey,
@@ -141,7 +136,7 @@ class _ReceivePageState extends State<ReceivePage> {
                         padding: const EdgeInsets.symmetric(horizontal: 48),
                         child: Text(
                           dic.profile.qrScanHint,
-                          style: Theme.of(context).textTheme.headline3.copyWith(color: encointerBlack),
+                          style: Theme.of(context).textTheme.headline3!.copyWith(color: encointerBlack),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -150,7 +145,7 @@ class _ReceivePageState extends State<ReceivePage> {
                         padding: const EdgeInsets.all(30),
                         child: EncointerTextFormField(
                           labelText: dic.assets.invoiceAmount,
-                          textStyle: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
+                          textStyle: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
                           inputFormatters: [UI.decimalInputFormatter()],
                           controller: _amountController,
                           keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -175,7 +170,7 @@ class _ReceivePageState extends State<ReceivePage> {
                     ],
                   ),
                   Text('${dic.profile.receiverAccount} ${widget.store.account.currentAccount.name}',
-                      style: Theme.of(context).textTheme.headline3.copyWith(color: encointerGrey),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey),
                       textAlign: TextAlign.center),
                   SizedBox(height: 8),
                   Column(children: [
@@ -198,7 +193,7 @@ class _ReceivePageState extends State<ReceivePage> {
                             ]),
                       ),
                       onTap: () => {
-                        if (_formKey.currentState.validate())
+                        if (_formKey.currentState!.validate())
                           {
                             // Todo: implement invoice.toUrl()
                             Share.share(invoice.toQrPayload()),
@@ -212,4 +207,39 @@ class _ReceivePageState extends State<ReceivePage> {
           ),
         ));
   }
+}
+
+/// Shows a [SnackBar] if we found an extrinsic in a transaction pool addressed to the current account.
+///
+/// Returns a true if such an extrinsic was found.
+Future<bool> showSnackBarUponPendingExtrinsics(AppStore store, Api api, Translations dic) async {
+  var observedExtrinsics = false;
+
+  try {
+    var extrinsics = await api.encointer.pendingExtrinsics();
+
+    print("[receivePage] pendingExtrinsics ${extrinsics.toString()}");
+    if (extrinsics.length > 0) {
+      for (var xt in extrinsics) {
+        if (xt.contains(store.account.currentAccountPubKey!.substring(2))) {
+          RootSnackBar.showMsg(
+            dic.profile.observedPendingExtrinsic,
+            durationMillis: 5000,
+            textColor: Colors.black,
+            backgroundColor: Colors.lightBlue,
+          );
+          observedExtrinsics = true;
+          break;
+        }
+      }
+    }
+  } catch (e) {
+    _log(e.toString());
+  }
+
+  return observedExtrinsics;
+}
+
+void _log(String msg) {
+  print("[receivePage] $msg");
 }

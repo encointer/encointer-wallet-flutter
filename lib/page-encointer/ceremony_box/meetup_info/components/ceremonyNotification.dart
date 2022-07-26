@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 class CeremonyNotification extends StatelessWidget {
   const CeremonyNotification({
-    Key key,
-    @required this.notificationIconData,
-    @required this.notification,
+    Key? key,
+    required this.notificationIconData,
+    required this.notification,
   }) : super(key: key);
 
   final IconData notificationIconData;
@@ -21,7 +21,7 @@ class CeremonyNotification extends StatelessWidget {
         Flexible(
           child: Text(
             notification,
-            style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
+            style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
           ),
         ),
       ],

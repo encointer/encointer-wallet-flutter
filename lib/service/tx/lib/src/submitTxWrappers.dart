@@ -6,7 +6,6 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 import 'params.dart';
 import 'submitToJS.dart';
@@ -23,10 +22,10 @@ Future<void> submitTx(
   AppStore store,
   Api api,
   Map txParams, {
-  Function(BuildContext txPageContext, Map res) onFinish,
+  Function(BuildContext txPageContext, Map res)? onFinish,
 }) async {
   if (store.settings.cachedPin.isEmpty) {
-    var unlockText = I18n.of(context).translationsForLocale().home.unlockAccount;
+    var unlockText = I18n.of(context)!.translationsForLocale().home.unlockAccount;
     await showCupertinoDialog(
       context: context,
       builder: (context) {
@@ -43,7 +42,7 @@ Future<void> submitTx(
   final txPaymentAsset = store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
 
   txParams["txInfo"]["txPaymentAsset"] = txPaymentAsset;
-  txParams["onFinish"] = onFinish ?? (BuildContext txPageContext, Map res) => res;
+  txParams["onFinish"] = onFinish ?? ((BuildContext txPageContext, Map res) => res);
 
   return submitToJS(
     context,
@@ -59,9 +58,9 @@ Future<void> submitClaimRewards(
   BuildContext context,
   AppStore store,
   Api api,
-  CommunityIdentifier chosenCid,
+  CommunityIdentifier? chosenCid,
 ) async {
-  var txParams = claimRewardsParams(chosenCid);
+  var txParams = claimRewardsParams(chosenCid!);
 
   return submitTx(
     context,
@@ -76,10 +75,10 @@ Future<void> submitEndorseNewcomer(
   BuildContext context,
   AppStore store,
   Api api,
-  CommunityIdentifier chosenCid,
-  String newbie,
+  CommunityIdentifier? chosenCid,
+  String? newbie,
 ) async {
-  var txParams = endorseNewcomerParams(chosenCid, newbie);
+  var txParams = endorseNewcomerParams(chosenCid!, newbie!);
 
   return submitTx(
     context,
@@ -93,7 +92,7 @@ Future<void> submitEndorseNewcomer(
 Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api api) async {
   // this is called inside submitTx too, but we need to unlock the key for the proof of attendance.
   if (store.settings.cachedPin.isEmpty) {
-    var unlockText = I18n.of(context).translationsForLocale().home.unlockAccount;
+    var unlockText = I18n.of(context)!.translationsForLocale().home.unlockAccount;
     await showCupertinoDialog(
       context: context,
       builder: (context) {
@@ -111,7 +110,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
     context,
     store,
     api,
-    registerParticipantParams(store.encointer.chosenCid, proof: await api.encointer.getProofOfAttendance()),
+    registerParticipantParams(store.encointer.chosenCid!, proof: await api.encointer.getProofOfAttendance()),
     onFinish: (BuildContext txPageContext, Map res) {
       store.encointer.updateAggregatedAccountData();
       Navigator.popUntil(
@@ -124,9 +123,9 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
 
 Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) async {
   final params = attestClaimsParams(
-    store.encointer.chosenCid,
-    store.encointer.communityAccount.scannedClaimsCount,
-    store.encointer.communityAccount.participantsClaims.values.toList(),
+    store.encointer.chosenCid!,
+    store.encointer.communityAccount!.scannedClaimsCount,
+    store.encointer.communityAccount!.participantsClaims!.values.toList(),
   );
 
   return submitTx(
@@ -135,7 +134,7 @@ Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) a
     api,
     params,
     onFinish: (BuildContext txPageContext, Map res) {
-      store.encointer.communityAccount.setMeetupCompleted();
+      store.encointer.communityAccount!.setMeetupCompleted();
       Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
     },
   );

@@ -1,5 +1,4 @@
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
-import 'package:flutter/material.dart';
 
 import 'qrCodeBase.dart';
 
@@ -10,17 +9,17 @@ class InvoiceQrCode extends QrCode<InvoiceData> {
   }) : super(data);
 
   InvoiceQrCode({
-    @required String account,
-    CommunityIdentifier cid,
-    String network,
-    num amount,
-    @required String label,
+    required String account,
+    CommunityIdentifier? cid,
+    String? network,
+    num? amount,
+    required String label,
     this.version = QrCodeVersion.v1_0,
   }) : super(InvoiceData(account: account, cid: cid, network: network, amount: amount, label: label));
 
-  var context = QrCodeContext.invoice;
+  QrCodeContext? context = QrCodeContext.invoice;
 
-  var version;
+  QrCodeVersion? version;
 
   @override
   String toQrPayload() {
@@ -54,24 +53,24 @@ class InvoiceQrCode extends QrCode<InvoiceData> {
 
 class InvoiceData implements ToQrFields {
   InvoiceData({
-    @required this.account,
+    required this.account,
     this.cid,
     this.network,
     this.amount,
-    @required this.label,
+    required this.label,
   });
 
   /// ss58 encoded public key of the account address.
   final String account;
 
   /// Community identifier.
-  final CommunityIdentifier cid;
+  final CommunityIdentifier? cid;
 
   /// Network, e.g: nctr-k, nctr-r.
-  final String network;
+  final String? network;
 
   /// Optional payment amount for the invoice.
-  num amount;
+  num? amount;
 
   /// Name or other identifier for `account`.
   final String label;
@@ -89,7 +88,7 @@ class InvoiceData implements ToQrFields {
     return [
       account,
       cid?.toFmtString() ?? "",
-      network,
+      network ?? "",
       amount?.toString() ?? "",
       label,
     ];

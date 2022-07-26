@@ -10,18 +10,18 @@ import '../../../models/index.dart';
 /// on certain phases.
 class CeremonyProgressBar extends StatelessWidget {
   const CeremonyProgressBar({
-    @required this.currentTime,
-    @required this.assigningPhaseStart,
-    @required this.meetupTime,
-    @required this.ceremonyPhaseDurations,
-    @required this.width,
-    Key key,
+    required this.currentTime,
+    required this.assigningPhaseStart,
+    required this.meetupTime,
+    required this.ceremonyPhaseDurations,
+    required this.width,
+    Key? key,
   }) : super(key: key);
 
-  final int currentTime;
-  final int assigningPhaseStart;
-  final int meetupTime;
-  final Map<CeremonyPhase, int> ceremonyPhaseDurations;
+  final int? currentTime;
+  final int? assigningPhaseStart;
+  final int? meetupTime;
+  final Map<CeremonyPhase, int>? ceremonyPhaseDurations;
 
   /// Total width of the progress bar.
   final double width;
@@ -35,14 +35,14 @@ class CeremonyProgressBar extends StatelessWidget {
   /// Fractional width of the attesting segment of the progress bar.
   final double attestingPhaseFractionalWidth = 0.15;
 
-  double _getCeremonyProgress() {
+  double? _getCeremonyProgress() {
     try {
       // todo inject this service for mocking
       return CeremonyBoxService.getProgressElapsed(
-        currentTime,
-        assigningPhaseStart,
+        currentTime!,
+        assigningPhaseStart!,
         meetupTime,
-        ceremonyPhaseDurations,
+        ceremonyPhaseDurations!,
         registeringPhaseFractionalWidth,
         assigningPhaseFractionalWidth,
         attestingPhaseFractionalWidth,
@@ -55,7 +55,7 @@ class CeremonyProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double progressElapsed = _getCeremonyProgress();
+    double progressElapsed = _getCeremonyProgress()!;
     _log("ceremony progress: $progressElapsed");
 
     return Container(

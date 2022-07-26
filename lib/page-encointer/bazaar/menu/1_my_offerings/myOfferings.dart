@@ -12,10 +12,10 @@ class MyOfferings extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context).translationsForLocale().bazaar.offeringsMy),
+        title: Text(I18n.of(context)!.translationsForLocale().bazaar.offeringsMy),
       ),
       body: Column(children: [
-        ToggleButtonsWithTitle(I18n.of(context).translationsForLocale().bazaar.categories, allCategories, null),
+        ToggleButtonsWithTitle(I18n.of(context)!.translationsForLocale().bazaar.categories, allCategories, null),
         Expanded(
           child: ListView.builder(
             itemCount: data.length,

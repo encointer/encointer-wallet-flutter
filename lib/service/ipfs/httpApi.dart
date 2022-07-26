@@ -45,7 +45,7 @@ class Ipfs {
     }
   }
 
-  Future<SvgPicture> getCommunityIcon(String cid) async {
+  Future<SvgPicture> getCommunityIcon(String? cid) async {
     if (cid == null || cid.isEmpty) {
       print("[IPFS] return default encointer icon because ipfs-cid is not set");
       return SvgPicture.asset(fall_back_community_icon);
@@ -53,6 +53,11 @@ class Ipfs {
 
     try {
       var data = await getData(getIconsPath(cid));
+      if (data == null) {
+        print("[Ipfs] could not find community icon");
+        return SvgPicture.asset(fall_back_community_icon);
+      }
+
       return SvgPicture.string(data);
     } catch (e) {
       print("[Ipfs] error getting communityIcon: $e");
@@ -60,7 +65,7 @@ class Ipfs {
     }
   }
 
-  Future<String> getData(String src) async {
+  Future<String?> getData(String src) async {
     final dio = IpfsDio(BaseOptions(baseUrl: gateway, connectTimeout: 5000, receiveTimeout: 3000));
 
     try {
@@ -98,7 +103,7 @@ class Ipfs {
 
       return imageHash;
     } catch (e) {
-      print("Ipfs upload of Image error " + e);
+      print("Ipfs upload of Image error ${e.toString()}");
       return "";
     }
   }
@@ -123,7 +128,7 @@ class Ipfs {
 
       return jsonHash;
     } catch (e) {
-      print("Ipfs upload of json error " + e);
+      print("Ipfs upload of json error ${e.toString()}");
       return "";
     }
   }
@@ -132,11 +137,11 @@ class Ipfs {
 const String getRequest = '/api/v0/object/get?arg=';
 
 class IpfsDio {
-  IpfsDio([BaseOptions options]) {
+  IpfsDio([BaseOptions? options]) {
     this.dio = Dio(options);
   }
 
-  Dio dio;
+  late Dio dio;
 
   Future<Response<T>> get<T>(String cid) async {
     print("[IPFS] fetching data from: ${dio.options.baseUrl}$getRequest$cid}");
@@ -149,9 +154,8 @@ class Object {
   String data;
 
   Object({
-    this.links,
-    //this.cid,
-    this.data,
+    required this.links,
+    required this.data,
   });
 
   @override

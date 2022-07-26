@@ -1,10 +1,9 @@
 import 'package:encointer_wallet/common/components/addressFormItem.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter/material.dart';
+import 'package:qr_flutter_fork/qr_flutter_fork.dart';
 
 /// `QrSignerPage`, from upstream and currently unused.
 ///
@@ -19,8 +18,8 @@ class QrSignerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
-    final String text = ModalRoute.of(context).settings.arguments;
+    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final String text = ModalRoute.of(context)!.settings.arguments as String;
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(title: Text(dic.account.uosTitle), centerTitle: true),

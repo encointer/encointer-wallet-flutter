@@ -4,7 +4,6 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -23,9 +22,9 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
 
   final AppStore store;
 
-  String _keyType = '';
-  String _cryptoType = '';
-  String _derivePath = '';
+  String? _keyType = '';
+  String? _cryptoType = '';
+  String? _derivePath = '';
   bool _submitting = false;
 
   final TextEditingController _nameCtrl = new TextEditingController();
@@ -44,7 +43,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: Text(I18n.of(context).translationsForLocale().home.loading),
+          title: Text(I18n.of(context)!.translationsForLocale().home.loading),
           content: Container(height: 64, child: CupertinoActivityIndicator()),
         );
       },
@@ -59,80 +58,55 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     _log("imported account to JS.");
 
     // check if account duplicate
-    if (acc != null) {
-      if (acc['error'] != null) {
-        var msg = acc['error'];
+    if (acc['error'] != null) {
+      var msg = acc['error'];
 
-        if (acc['error'] == 'unreachable') {
-          msg = "${I18n.of(context).translationsForLocale().account.importInvalid}: $_keyType";
-        }
-
-        showCupertinoDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return CupertinoAlertDialog(
-              title: Container(),
-              content: Text('$msg'),
-              actions: <Widget>[
-                CupertinoButton(
-                  child: Text(I18n.of(context).translationsForLocale().home.ok),
-                  onPressed: () {
-                    setState(() {
-                      _submitting = false;
-                    });
-                    Navigator.of(context).pop();
-                    Navigator.of(context).pop();
-                  },
-                ),
-              ],
-            );
-          },
-        );
-        return;
+      if (acc['error'] == 'unreachable') {
+        msg = "${I18n.of(context)!.translationsForLocale().account.importInvalid}: $_keyType";
       }
-      await _checkAccountDuplicate(acc);
+
+      showCupertinoDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return CupertinoAlertDialog(
+            title: Container(),
+            content: Text('$msg'),
+            actions: <Widget>[
+              CupertinoButton(
+                child: Text(I18n.of(context)!.translationsForLocale().home.ok),
+                onPressed: () {
+                  setState(() {
+                    _submitting = false;
+                  });
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
       return;
     }
-
-    // account == null
-    showCupertinoDialog(
-      context: context,
-      builder: (BuildContext context) {
-        final Translations dic = I18n.of(context).translationsForLocale();
-        return CupertinoAlertDialog(
-          title: Container(),
-          content: Text('${dic.account.importInvalid} ${dic.account.createPassword}'),
-          actions: <Widget>[
-            CupertinoButton(
-              child: Text(I18n.of(context).translationsForLocale().home.cancel),
-              onPressed: () {
-                setState(() {
-                  _submitting = false;
-                });
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
+    await _checkAccountDuplicate(acc);
+    return;
   }
 
   Future<void> _checkAccountDuplicate(Map<String, dynamic> acc) async {
     int index = store.account.accountList.indexWhere((i) => i.pubKey == acc['pubKey']);
     if (index > -1) {
-      Map<String, String> pubKeyMap = store.account.pubKeyAddressMap[store.settings.endpoint.ss58];
-      String address = pubKeyMap[acc['pubKey']];
+      Map<String, String> pubKeyMap = store.account.pubKeyAddressMap[store.settings.endpoint.ss58]!;
+      String? address = pubKeyMap[acc['pubKey']];
       if (address != null) {
         showCupertinoDialog(
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
-              title: Text(Fmt.address(address)),
-              content: Text(I18n.of(context).translationsForLocale().account.importDuplicate),
+              title: Text(Fmt.address(address)!),
+              content: Text(I18n.of(context)!.translationsForLocale().account.importDuplicate),
               actions: <Widget>[
                 CupertinoButton(
-                  child: Text(I18n.of(context).translationsForLocale().home.cancel),
+                  child: Text(I18n.of(context)!.translationsForLocale().home.cancel),
                   onPressed: () {
                     setState(() {
                       _submitting = false;
@@ -142,7 +116,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
                   },
                 ),
                 CupertinoButton(
-                  child: Text(I18n.of(context).translationsForLocale().home.ok),
+                  child: Text(I18n.of(context)!.translationsForLocale().home.ok),
                   onPressed: () {
                     _saveAccount(acc);
                     Navigator.of(context).pop();
@@ -159,10 +133,11 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   }
 
   Future<void> _saveAccount(Map<String, dynamic> acc) async {
+    _log("Saving account: ${acc["pubKey"]}");
     var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
     await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
 
-    String pubKey = acc['pubKey'];
+    String? pubKey = acc['pubKey'];
     await store.setCurrentAccount(pubKey);
 
     await store.loadAccountCache();
@@ -174,14 +149,12 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     setState(() {
       _submitting = false;
     });
-    // go to home page
-    Navigator.popUntil(context, ModalRoute.withName('/'));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(I18n.of(context).translationsForLocale().home.accountImport)),
+      appBar: AppBar(title: Text(I18n.of(context)!.translationsForLocale().home.accountImport)),
       body: SafeArea(
         child: !_submitting ? _getImportForm() : Center(child: CupertinoActivityIndicator()),
       ),
@@ -201,6 +174,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       } else {
         store.account.setNewAccountPin(store.settings.cachedPin);
         _importAccount();
+        Navigator.popUntil(context, ModalRoute.withName('/'));
       }
     });
   }

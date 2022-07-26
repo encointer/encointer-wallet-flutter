@@ -3,19 +3,19 @@ import 'package:flutter/material.dart';
 
 class RoundedButton extends StatelessWidget {
   RoundedButton({
-    this.text,
+    required this.text,
     this.onPressed,
     this.icon,
     this.color,
     this.expand,
     this.submitting = false,
-  }) : assert(text != null);
+  });
 
   final String text;
-  final Function onPressed;
-  final Widget icon;
-  final Color color;
-  final bool expand;
+  final void Function()? onPressed;
+  final Widget? icon;
+  final Color? color;
+  final bool? expand;
   final bool submitting;
 
   @override
@@ -31,7 +31,7 @@ class RoundedButton extends StatelessWidget {
       ));
     }
     row.add(Text(
-      text ?? '',
+      text,
       style: Theme.of(context).textTheme.button,
     ));
     return ElevatedButton(

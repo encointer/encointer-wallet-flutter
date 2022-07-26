@@ -9,7 +9,7 @@ part 'commons.g.dart';
 class RpcMethods {
   RpcMethods(this.methods);
 
-  final List<String> methods;
+  final List<String>? methods;
 
   @override
   String toString() {

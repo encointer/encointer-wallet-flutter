@@ -1,19 +1,18 @@
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 /// Button that shows a `CupertinoActivityIndicator` within while `onPressed` is executed.
 ///
 /// Useful for sending transactions because it takes a while until we know the result.
 class SubmitButton extends StatefulWidget {
   const SubmitButton({
-    Key key,
-    this.child,
+    Key? key,
+    required this.child,
     this.onPressed,
   }) : super(key: key);
 
   final Widget child;
-  final Future<void> Function(BuildContext) onPressed;
+  final Future<void> Function(BuildContext)? onPressed;
 
   @override
   _SubmitButtonState createState() => _SubmitButtonState();
@@ -26,7 +25,7 @@ class _SubmitButtonState extends State<SubmitButton> {
     setState(() {
       _submitting = true;
     });
-    await widget.onPressed(context);
+    await widget.onPressed!(context);
     setState(() {
       _submitting = false;
     });

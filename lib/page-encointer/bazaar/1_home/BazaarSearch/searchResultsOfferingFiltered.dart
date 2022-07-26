@@ -2,7 +2,6 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_da
 import 'package:encointer_wallet/page-encointer/bazaar/shared/toggleButtonsWithTitle.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SearchResultsOfferingFiltered extends StatelessWidget {
@@ -14,12 +13,12 @@ class SearchResultsOfferingFiltered extends StatelessWidget {
   final selectedProductNewnessOptions = <bool>[];
   final _currentRangeValues = const RangeValues(40, 80);
 
-  SearchResultsOfferingFiltered(this.results, {Key key}) : super(key: key);
+  SearchResultsOfferingFiltered(this.results, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     var titleStyle = TextStyle(fontWeight: FontWeight.bold, height: 2.5);
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         title: Text("Filter ${dic.bazaar.found} ${dic.bazaar.offerings}"),

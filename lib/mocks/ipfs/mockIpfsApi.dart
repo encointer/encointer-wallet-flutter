@@ -13,7 +13,7 @@ class MockIpfs extends Ipfs {
   }
 
   @override
-  Future<SvgPicture> getCommunityIcon(String cid) {
+  Future<SvgPicture> getCommunityIcon(String? cid) {
     final mockIcon = "assets/images/assets/icon_leu.svg";
     print("Getting mock icon: $mockIcon");
     return Future.value(SvgPicture.asset(mockIcon));

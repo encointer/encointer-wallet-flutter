@@ -9,8 +9,8 @@ part 'workerApi.g.dart';
 class PubKeyPinPair {
   PubKeyPinPair(this.pubKey, this.pin);
 
-  String pubKey;
-  String pin;
+  String? pubKey;
+  String? pin;
 
   @override
   String toString() {

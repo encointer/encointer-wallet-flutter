@@ -24,8 +24,14 @@ const encointerCacheVersionPrefix = 'encointer-cache-version-key';
 /// Should be increased if cache incompatibilities have been introduced.
 const encointerCacheVersion = 'v1.0';
 
+/// Global aggregated storage for the app.
+///
+/// the sub-storages are marked as `late final` as they will be initialized exactly once at startup in `lib/app.dart`.
 class AppStore extends _AppStore with _$AppStore {
-  AppStore(LocalStorage localStorage, {StoreConfig config}) : super(localStorage, config: config);
+  AppStore(
+    LocalStorage localStorage, {
+    StoreConfig config = StoreConfig.Normal,
+  }) : super(localStorage, config: config);
 }
 
 enum StoreConfig {
@@ -34,57 +40,89 @@ enum StoreConfig {
 }
 
 abstract class _AppStore with Store {
-  _AppStore(this.localStorage, {this.config = StoreConfig.Normal});
+  _AppStore(
+    this.localStorage, {
+    this.config = StoreConfig.Normal,
+  });
 
   final config;
 
+  // Note, following pattern of a nullable field with a non-nullable getter
+  // is here because mobx can't handle `late` initialization:
+  // https://github.com/mobxjs/mobx.dart/issues/598#issuecomment-814875535
+  //
+  // However, the store initialization process should be refactored so we do not need
+  // to depend on `late`, which should be used as a very last resort only because
+  // it removes the `null`-compiler checks and turns them into runtime-checks.
   @observable
-  SettingsStore settings;
+  SettingsStore? _settings;
+  SettingsStore get settings => _settings!;
 
   @observable
-  AccountStore account;
+  AccountStore? _account;
+  @computed
+  AccountStore get account => _account!;
 
   @observable
-  AssetsStore assets;
+  AssetsStore? _assets;
+  @computed
+  AssetsStore get assets => _assets!;
 
   @observable
-  ChainStore chain;
+  ChainStore? _chain;
+  @computed
+  ChainStore get chain => _chain!;
 
   @observable
-  EncointerStore encointer;
+  EncointerStore? _encointer;
+  @computed
+  EncointerStore get encointer => _encointer!;
 
   @observable
-  bool isReady = false;
+  bool storeIsReady = false;
+
+  @observable
+  bool webApiIsReady = false;
+
+  @computed
+  bool get appIsReady => storeIsReady && webApiIsReady;
 
   LocalStorage localStorage;
 
   @action
   Future<void> init(String sysLocaleCode) async {
     // wait settings store loaded
-    settings = SettingsStore(this);
+    _settings = SettingsStore(this as AppStore);
     await settings.init(sysLocaleCode);
 
-    account = AccountStore(this);
+    _account = AccountStore(this as AppStore);
     await account.loadAccount();
 
-    assets = AssetsStore(this);
+    _assets = AssetsStore(this as AppStore);
     assets.loadCache();
 
-    chain = ChainStore(this);
+    _chain = ChainStore(this as AppStore);
     chain.loadCache();
 
     // need to call this after settings was initialized
-    String networkInfo = settings.endpoint.info;
-    await loadOrInitEncointerCache(networkInfo);
+    String? networkInfo = settings.endpoint.info;
+    await loadOrInitEncointerCache(networkInfo!);
 
-    isReady = true;
+    storeIsReady = true;
+  }
+
+  @action
+  void setApiReady(bool value) {
+    print("Setting Api Ready: $value");
+    webApiIsReady = value;
+    print("Is App Ready?: $appIsReady");
   }
 
   Future<void> cacheObject(String key, value) {
     return localStorage.setObject(getCacheKey(key), value);
   }
 
-  Future<Object> loadObject(String key) {
+  Future<Object?> loadObject(String key) {
     return localStorage.getObject(getCacheKey(key));
   }
 
@@ -106,8 +144,8 @@ abstract class _AppStore with Store {
     return config == StoreConfig.Test ? "test-$key" : key;
   }
 
-  Future<void> purgeEncointerCache(String networkInfo) async {
-    return localStorage.setObject(encointerCacheKey(networkInfo), null);
+  Future<bool> purgeEncointerCache(String networkInfo) async {
+    return localStorage.removeKey(encointerCacheKey(networkInfo));
   }
 
   Future<void> loadOrInitEncointerCache(String networkInfo) async {
@@ -116,15 +154,23 @@ abstract class _AppStore with Store {
 
     String encointerFinalCacheKey = encointerCacheKey(networkInfo);
 
-    var maybeStore = cacheVersion == encointerCacheVersion ? await loadEncointerCache(encointerFinalCacheKey) : null;
+    var maybeStore;
+
+    if (cacheVersion == encointerCacheVersion) {
+      try {
+        maybeStore = await loadEncointerCache(encointerFinalCacheKey);
+      } catch (e) {
+        _log("Exception loading the cached store: ${e.toString()}");
+      }
+    }
 
     if (maybeStore != null) {
-      encointer = maybeStore;
+      _encointer = maybeStore;
     } else {
       _log("Initializing new encointer store.");
-      encointer = EncointerStore(networkInfo);
+      _encointer = EncointerStore(networkInfo);
       encointer.initStore(
-        this,
+        this as AppStore,
         () => localStorage.setObject(encointerFinalCacheKey, encointer.toJson()),
       );
 
@@ -136,7 +182,7 @@ abstract class _AppStore with Store {
     }
   }
 
-  Future<EncointerStore> loadEncointerCache(String encointerFinalCacheKey) async {
+  Future<EncointerStore?> loadEncointerCache(String encointerFinalCacheKey) async {
     var cachedEncointerStore = await localStorage.getMap(encointerFinalCacheKey);
 
     if (cachedEncointerStore != null) {
@@ -147,7 +193,7 @@ abstract class _AppStore with Store {
       // when many accounts/cids exist in store. But as the caching future is in general not awaited,
       // it should be fine.
       encointerStore.initStore(
-        this,
+        this as AppStore,
         () => localStorage.setObject(
           encointerFinalCacheKey,
           encointer.toJson(),
@@ -160,13 +206,13 @@ abstract class _AppStore with Store {
     }
   }
 
-  Future<void> addAccount(Map<String, dynamic> acc, String password, String address) {
+  Future<List<void>> addAccount(Map<String, dynamic> acc, String password, String? address) {
     return Future.wait([
       account.addAccount(acc, password),
     ]);
   }
 
-  Future<void> setCurrentAccount(String pubKey) async {
+  Future<void> setCurrentAccount(String? pubKey) async {
     _log("setCurrentAccount: setting current account: $pubKey");
 
     if (account.currentAccountPubKey == pubKey) {
@@ -196,7 +242,7 @@ abstract class _AppStore with Store {
   /// Should be used whenever one switches to a new account. This function needs to be awaited most of the time.
   /// Otherwise, calling webApi queries when the cache has not finished loading might result in outdated or wrong data.
   /// E.g. not awaiting this call was the cause of #357.
-  Future<void> loadAccountCache() async {
+  Future<List<void>> loadAccountCache() async {
     return Future.wait([assets.clearTxs(), assets.loadAccountCache()]);
   }
 }

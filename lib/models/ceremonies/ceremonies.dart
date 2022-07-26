@@ -11,8 +11,8 @@ part 'ceremonies.g.dart';
 class AggregatedAccountData {
   AggregatedAccountData(this.global, this.personal);
 
-  AggregatedAccountDataGlobal global;
-  AggregatedAccountDataPersonal personal;
+  AggregatedAccountDataGlobal? global;
+  AggregatedAccountDataPersonal? personal;
 
   @override
   String toString() {
@@ -28,13 +28,13 @@ class AggregatedAccountDataPersonal {
   AggregatedAccountDataPersonal(
       this.participantType, this.meetupIndex, this.meetupLocationIndex, this.meetupTime, this.meetupRegistry);
 
-  ParticipantType participantType;
-  int meetupIndex;
-  int meetupLocationIndex;
-  int meetupTime;
-  List<String> meetupRegistry;
+  ParticipantType? participantType;
+  int? meetupIndex;
+  int? meetupLocationIndex;
+  int? meetupTime;
+  List<String>? meetupRegistry;
 
-  get meetup => meetupIndex != null ? Meetup(meetupIndex, meetupLocationIndex, meetupTime, meetupRegistry) : null;
+  get meetup => meetupIndex != null ? Meetup(meetupIndex!, meetupLocationIndex!, meetupTime, meetupRegistry!) : null;
 
   @override
   String toString() {
@@ -69,8 +69,8 @@ enum ParticipantType { Bootstrapper, Reputable, Endorsee, Newbie }
 class CommunityReputation {
   CommunityReputation(this.communityIdentifier, this.reputation);
 
-  CommunityIdentifier communityIdentifier;
-  Reputation reputation;
+  CommunityIdentifier? communityIdentifier;
+  Reputation? reputation;
 
   @override
   String toString() {
@@ -87,7 +87,8 @@ class Meetup {
 
   int index;
   int locationIndex;
-  int time;
+  // time is null in assigning phase
+  int? time;
   List<String> registry;
 
   @override
@@ -105,11 +106,11 @@ enum Reputation { Unverified, UnverifiedReputable, VerifiedUnlinked, VerifiedLin
 
 // -- Helper functions for above types
 
-CeremonyPhase ceremonyPhaseFromString(String value) {
+CeremonyPhase? ceremonyPhaseFromString(String value) {
   return getEnumFromString(CeremonyPhase.values, value);
 }
 
-Reputation reputationFromString(String value) {
+Reputation? reputationFromString(String value) {
   return getEnumFromString(Reputation.values, value);
 }
 

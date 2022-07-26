@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/dragHandle.dart';
@@ -54,9 +53,9 @@ class _AssetsState extends State<Assets> {
 
   bool _enteredPin = false;
 
-  PanelController panelController;
+  PanelController? panelController;
 
-  PausableTimer balanceWatchdog;
+  PausableTimer? balanceWatchdog;
 
   @override
   void initState() {
@@ -75,13 +74,13 @@ class _AssetsState extends State<Assets> {
 
   @override
   void dispose() {
-    balanceWatchdog.cancel();
+    balanceWatchdog!.cancel();
     super.dispose();
   }
 
-  double _panelHeightOpen;
+  late double _panelHeightOpen;
   double _panelHeightClosed = 0;
-  Translations dic;
+  Translations? dic;
 
   Future<void> _refreshEncointerState() async {
     // getCurrentPhase is the root of all state updates.
@@ -90,7 +89,7 @@ class _AssetsState extends State<Assets> {
 
   @override
   Widget build(BuildContext context) {
-    dic = I18n.of(context).translationsForLocale();
+    dic = I18n.of(context)!.translationsForLocale();
     _panelHeightOpen = min(MediaQuery.of(context).size.height * fractionOfScreenHeight,
         panelHeight); // should typically not be higher than panelHeight, but on really small devices it should not exceed fractionOfScreenHeight x the screen height.
 
@@ -102,26 +101,26 @@ class _AssetsState extends State<Assets> {
       () {
         print("[balanceWatchdog] triggered");
         _refreshBalanceAndNotify(dic);
-        balanceWatchdog
+        balanceWatchdog!
           ..reset()
           ..start();
       },
     )..start();
 
-    final appBar = AppBar(title: Text(dic.assets.home));
+    final appBar = AppBar(title: Text(dic!.assets.home));
 
     return FocusDetector(
         onFocusLost: () {
           print('[home:FocusDetector] Focus Lost.');
-          balanceWatchdog.pause();
+          balanceWatchdog!.pause();
         },
         onFocusGained: () {
           print('[home:FocusDetector] Focus Gained.');
           if (!store.settings.loading) {
             _refreshBalanceAndNotify(dic);
           }
-          balanceWatchdog.reset();
-          balanceWatchdog.start();
+          balanceWatchdog!.reset();
+          balanceWatchdog!.start();
         },
         child: Scaffold(
           appBar: appBar,
@@ -144,7 +143,7 @@ class _AssetsState extends State<Assets> {
                   padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
                   children: [
                     Observer(builder: (_) {
-                      if (ModalRoute.of(context).isCurrent &&
+                      if (ModalRoute.of(context)!.isCurrent &&
                           !_enteredPin & store.settings.cachedPin.isEmpty & !store.settings.endpointIsNoTee) {
                         // The pin is not immediately propagated to the store, hence we track if the pin has been entered to prevent
                         // showing the dialog multiple times.
@@ -165,8 +164,8 @@ class _AssetsState extends State<Assets> {
                               InkWell(
                                   child: CombinedCommunityAndAccountAvatar(store),
                                   onTap: () {
-                                    if (panelController != null && panelController.isAttached) {
-                                      panelController.open();
+                                    if (panelController != null && panelController!.isAttached) {
+                                      panelController!.open();
                                     }
                                   }),
                             ],
@@ -181,8 +180,8 @@ class _AssetsState extends State<Assets> {
                                           style: TextStyle(fontSize: 60),
                                         ),
                                         Text(
-                                          "${dic.assets.balance}, ${store.encointer.community?.symbol}",
-                                          style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey),
+                                          "${dic!.assets.balance}, ${store.encointer.community?.symbol}",
+                                          style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                                         ),
                                       ],
                                     )
@@ -192,7 +191,8 @@ class _AssetsState extends State<Assets> {
                                       child: (store.encointer.chosenCid == null)
                                           ? Container(
                                               width: double.infinity,
-                                              child: Text(dic.assets.communityNotSelected, textAlign: TextAlign.center))
+                                              child:
+                                                  Text(dic!.assets.communityNotSelected, textAlign: TextAlign.center))
                                           : Container(
                                               width: double.infinity,
                                               child: CupertinoActivityIndicator(),
@@ -222,7 +222,7 @@ class _AssetsState extends State<Assets> {
                                       children: [
                                         Icon(Iconsax.receive_square_2),
                                         SizedBox(width: 12),
-                                        Text(dic.assets.receive),
+                                        Text(dic!.assets.receive),
                                       ],
                                     ),
                                   ),
@@ -249,7 +249,7 @@ class _AssetsState extends State<Assets> {
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        Text(dic.assets.transfer),
+                                        Text(dic!.assets.transfer),
                                         SizedBox(width: 12),
                                         Icon(Iconsax.send_sqaure_2),
                                       ],
@@ -263,8 +263,8 @@ class _AssetsState extends State<Assets> {
                                             TransferPage.route,
                                             arguments: TransferPageParams(
                                                 redirect: '/',
-                                                cid: store.encointer.chosenCid,
-                                                communitySymbol: store.encointer.community?.symbol),
+                                                cid: store.encointer.chosenCid!,
+                                                communitySymbol: store.encointer.community!.symbol!),
                                           );
                                         }
                                       : null,
@@ -279,14 +279,14 @@ class _AssetsState extends State<Assets> {
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 0),
                     ),
                     Observer(builder: (_) {
-                      final Translations dic = I18n.of(context).translationsForLocale();
+                      final Translations dic = I18n.of(context)!.translationsForLocale();
 
                       return store.settings.isConnected
-                          ? FutureBuilder<bool>(
+                          ? FutureBuilder<bool?>(
                               future: webApi.encointer.hasPendingIssuance(),
-                              builder: (_, AsyncSnapshot<bool> snapshot) {
+                              builder: (_, AsyncSnapshot<bool?> snapshot) {
                                 if (snapshot.hasData) {
-                                  var hasPendingIssuance = snapshot.data;
+                                  var hasPendingIssuance = snapshot.data!;
 
                                   if (hasPendingIssuance) {
                                     return SubmitButton(
@@ -335,7 +335,7 @@ class _AssetsState extends State<Assets> {
                       builder: (BuildContext context) {
                         allCommunities = initAllCommunities();
                         return SwitchAccountOrCommunity(
-                          rowTitle: dic.home.switchCommunity,
+                          rowTitle: dic!.home.switchCommunity,
                           data: allCommunities,
                           onTap: (int index) {
                             if (index == allCommunities.length - 1) {
@@ -353,9 +353,9 @@ class _AssetsState extends State<Assets> {
                       },
                     ),
                     Observer(builder: (BuildContext context) {
-                      allAccounts = initAllAccounts(dic);
+                      allAccounts = initAllAccounts(dic!);
                       return SwitchAccountOrCommunity(
-                        rowTitle: dic.home.switchAccount,
+                        rowTitle: dic!.home.switchAccount,
                         data: allAccounts,
                         onTap: (int index) {
                           if (index == allAccounts.length - 1) {
@@ -408,7 +408,7 @@ class _AssetsState extends State<Assets> {
           ),
           child: Icon(Icons.add, size: 36),
         ),
-        name: dic.profile.addCommunity,
+        name: dic!.profile.addCommunity,
       ),
     );
     return allCommunities;
@@ -457,7 +457,7 @@ class _AssetsState extends State<Assets> {
           child: showPasswordInputDialog(
             context,
             store.account.currentAccount,
-            Text(I18n.of(context).translationsForLocale().home.unlock),
+            Text(I18n.of(context)!.translationsForLocale().home.unlock),
             (password) {
               setState(() {
                 store.settings.setPin(password);
@@ -466,7 +466,7 @@ class _AssetsState extends State<Assets> {
           ),
           onWillPop: () {
             // handles back button press
-            return _showPasswordNotEnteredDialog(context);
+            return _showPasswordNotEnteredDialog(context).then((value) => value as bool);
           },
         );
       },
@@ -481,14 +481,14 @@ class _AssetsState extends State<Assets> {
       context: context,
       builder: (_) {
         return CupertinoAlertDialog(
-          title: Text(I18n.of(context).translationsForLocale().home.pinNeeded),
+          title: Text(I18n.of(context)!.translationsForLocale().home.pinNeeded),
           actions: <Widget>[
             CupertinoButton(
-              child: Text(I18n.of(context).translationsForLocale().home.cancel),
+              child: Text(I18n.of(context)!.translationsForLocale().home.cancel),
               onPressed: () => Navigator.of(context).pop(),
             ),
             CupertinoButton(
-              child: Text(I18n.of(context).translationsForLocale().home.closeApp),
+              child: Text(I18n.of(context)!.translationsForLocale().home.closeApp),
               onPressed: () => SystemChannels.platform.invokeMethod('SystemNavigator.pop'),
             ),
           ],
@@ -497,7 +497,7 @@ class _AssetsState extends State<Assets> {
     );
   }
 
-  void _refreshBalanceAndNotify(Translations dic) {
+  void _refreshBalanceAndNotify(Translations? dic) {
     webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
       print("[home:refreshBalanceAndNotify] get all balances");
       if (widget.store.encointer.chosenCid == null) {
@@ -505,24 +505,24 @@ class _AssetsState extends State<Assets> {
         return;
       }
       bool activeAccountHasBalance = false;
-      balances?.forEach((cid, balanceEntry) {
+      balances.forEach((cid, balanceEntry) {
         String cidStr = cid.toFmtString();
-        if (widget.store.encointer.communityStores.containsKey(cidStr)) {
-          var community = widget.store.encointer.communityStores[cidStr];
-          double demurrageRate = community.demurrage;
+        if (widget.store.encointer.communityStores!.containsKey(cidStr)) {
+          var community = widget.store.encointer.communityStores![cidStr]!;
+          double demurrageRate = community.demurrage!;
           double newBalance = community.applyDemurrage(balanceEntry);
           double oldBalance = community.applyDemurrage(
-                  widget.store.encointer.accountStores[widget.store.account.currentAddress].balanceEntries[cidStr]) ??
+                  widget.store.encointer.accountStores![widget.store.account.currentAddress]!.balanceEntries[cidStr]) ??
               0;
           double delta = newBalance - oldBalance;
           print("[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta");
           if (delta.abs() > demurrageRate) {
-            widget.store.encointer.accountStores[widget.store.account.currentAddress]
-                ?.addBalanceEntry(cid, balances[cid]);
+            widget.store.encointer.accountStores![widget.store.account.currentAddress]
+                ?.addBalanceEntry(cid, balances[cid]!);
             if (delta > demurrageRate) {
-              var msg = dic.assets.incomingConfirmed
+              var msg = dic!.assets.incomingConfirmed
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
-                  .replaceAll('CID_SYMBOL', community.metadata.symbol)
+                  .replaceAll('CID_SYMBOL', community.metadata!.symbol)
                   .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
               print("[home:balanceWatchdog] $msg");
               NotificationPlugin.showNotification(45, dic.assets.fundsReceived, msg, cid: cidStr);
@@ -536,8 +536,8 @@ class _AssetsState extends State<Assets> {
       if (!activeAccountHasBalance) {
         print(
             "[home:refreshBalanceAndNotify] didn't get any balance for active account. initialize store balance to zero");
-        widget.store.encointer.accountStores[widget.store.account.currentAddress]
-            ?.addBalanceEntry(widget.store.encointer.chosenCid, BalanceEntry(0, 0));
+        widget.store.encointer.accountStores![widget.store.account.currentAddress]
+            ?.addBalanceEntry(widget.store.encointer.chosenCid!, BalanceEntry(0, 0));
       }
     }).catchError((e) {
       print('[home:refreshBalanceAndNotify] WARNING: could not update balance: $e');

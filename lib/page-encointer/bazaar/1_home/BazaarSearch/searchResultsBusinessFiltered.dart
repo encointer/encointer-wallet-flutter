@@ -2,7 +2,6 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_da
 import 'package:encointer_wallet/page-encointer/bazaar/shared/toggleButtonsWithTitle.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SearchResultsBusinessFiltered extends StatelessWidget {
@@ -13,11 +12,11 @@ class SearchResultsBusinessFiltered extends StatelessWidget {
   final selectedDeliveryOptions = <bool>[];
   final selectedProductNewnessOptions = <bool>[];
 
-  SearchResultsBusinessFiltered(this.results, {Key key}) : super(key: key);
+  SearchResultsBusinessFiltered(this.results, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Translations dic = I18n.of(context).translationsForLocale();
+    Translations dic = I18n.of(context)!.translationsForLocale();
     var titleStyle = TextStyle(fontWeight: FontWeight.bold);
 
     return Scaffold(
@@ -28,17 +27,17 @@ class SearchResultsBusinessFiltered extends StatelessWidget {
           ),
         ),
         body: ListView(children: [
-          ToggleButtonsWithTitle(I18n.of(context).translationsForLocale().bazaar.categories, categories, null),
+          ToggleButtonsWithTitle(I18n.of(context)!.translationsForLocale().bazaar.categories, categories, null),
         ]),
         floatingActionButton: ButtonBar(
           children: [
             ElevatedButton(
               onPressed: () => null, // TODO state management
-              child: Text(I18n.of(context).translationsForLocale().bazaar.reset),
+              child: Text(I18n.of(context)!.translationsForLocale().bazaar.reset),
             ),
             ElevatedButton(
               onPressed: () => null, //TODO state management
-              child: Text(I18n.of(context).translationsForLocale().bazaar.apply),
+              child: Text(I18n.of(context)!.translationsForLocale().bazaar.apply),
             ),
           ],
         ));

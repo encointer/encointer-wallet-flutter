@@ -10,7 +10,7 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_qr_scan/qrcode_reader_view.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 class ScanClaimQrCode extends StatelessWidget {
@@ -19,55 +19,47 @@ class ScanClaimQrCode extends StatelessWidget {
   final AppStore store;
   final int confirmedParticipantsCount;
 
-  final GlobalKey<QrcodeReaderViewState> _qrViewKey = GlobalKey();
-
   void validateAndStoreClaim(BuildContext context, ClaimOfAttendance claim, Translations dic) {
-    List<String> registry = store.encointer.communityAccount.meetup.registry;
+    List<String> registry = store.encointer.communityAccount!.meetup!.registry;
     if (!registry.contains(claim.claimantPublic)) {
       // this is important because the runtime checks if there are too many claims trying to be registered.
       RootSnackBar.showMsg(dic.encointer.meetupClaimantInvalid);
       print("[scanClaimQrCode] Claimant: ${claim.claimantPublic} is not part of registry: ${registry.toString()}");
     } else {
-      String msg = store.encointer.communityAccount.containsClaim(claim)
+      String msg = store.encointer.communityAccount!.containsClaim(claim)
           ? dic.encointer.claimsScannedAlready
           : dic.encointer.claimsScannedNew;
 
-      store.encointer.communityAccount.addParticipantClaim(claim);
+      store.encointer.communityAccount!.addParticipantClaim(claim);
       RootSnackBar.showMsg(msg);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
 
-    Future _onScan(String base64Data, String _rawData) async {
+    Future _onScan(String base64Data) async {
       // Show a cupertino activity indicator as long as we are decoding
       _showActivityIndicatorOverlay(context);
 
-      if (base64Data != null) {
-        try {
-          var data = base64.decode(base64Data);
+      try {
+        var data = base64.decode(base64Data);
 
-          // Todo: Not good to use the global webApi here, but I wanted to prevent big changes into the code for now.
-          // Fix this when #132 is tackled.
-          var claim = await webApi.codec
-              .decodeBytes(ClaimOfAttendanceJSRegistryName, data)
-              .then((c) => ClaimOfAttendance.fromJson(c));
+        // Todo: Not good to use the global webApi here, but I wanted to prevent big changes into the code for now.
+        // Fix this when #132 is tackled.
+        var claim = await webApi.codec
+            .decodeBytes(ClaimOfAttendanceJSRegistryName, data)
+            .then((c) => ClaimOfAttendance.fromJson(c));
 
-          if (claim != null) {
-            validateAndStoreClaim(context, claim, dic);
-          }
-        } catch (e) {
-          _log("Error decoding claim: ${e.toString()}");
-          RootSnackBar.showMsg(dic.encointer.claimsScannedDecodeFailed);
-        }
+        validateAndStoreClaim(context, claim, dic);
+      } catch (e) {
+        _log("Error decoding claim: ${e.toString()}");
+        RootSnackBar.showMsg(dic.encointer.claimsScannedDecodeFailed);
       }
 
       // pops the cupertino activity indicator.
       Navigator.of(context).pop();
-
-      _qrViewKey.currentState.startScan();
     }
 
     return Scaffold(
@@ -75,27 +67,58 @@ class ScanClaimQrCode extends StatelessWidget {
         future: canOpenCamera(),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           if (snapshot.hasData && snapshot.data == true) {
-            return QrcodeReaderView(
-              key: _qrViewKey,
-              helpWidget: Observer(
-                  builder: (_) => Text(dic.encointer.claimsScannedNOfM
-                      .replaceAll('SCANNED_COUNT', store.encointer.communityAccount.scannedClaimsCount.toString())
-                      .replaceAll('TOTAL_COUNT', (confirmedParticipantsCount - 1).toString()))),
-              headerWidget: SafeArea(
-                  child: Align(
-                alignment: Alignment.topRight,
-                child: IconButton(
-                  icon: Icon(
-                    Icons.close,
-                    color: Theme.of(context).cardColor,
+            return Stack(
+              children: [
+                Align(
+                  alignment: Alignment.topRight,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.close,
+                      color: Theme.of(context).cardColor,
+                    ),
+                    onPressed: () => Navigator.of(context).pop(),
                   ),
-                  onPressed: () => Navigator.of(context).pop(),
                 ),
-              )),
-              onScan: _onScan,
+                MobileScanner(
+                    allowDuplicates: false,
+                    onDetect: (barcode, args) {
+                      if (barcode.rawValue == null) {
+                        debugPrint('Failed to scan Barcode');
+                      } else {
+                        _onScan(barcode.rawValue!);
+                      }
+                    }),
+                //overlays a semi-transparent rounded square border that is 90% of screen width
+                Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        height: MediaQuery.of(context).size.width * 0.9,
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                          border: Border.all(color: Colors.white38, width: 2.0),
+                          borderRadius: const BorderRadius.all(Radius.circular(24.0)),
+                        ),
+                      ),
+                      Observer(builder: (_) {
+                        final txt = dic.encointer.claimsScannedNOfM
+                            .replaceAll(
+                                'SCANNED_COUNT', store.encointer.communityAccount!.scannedClaimsCount.toString())
+                            .replaceAll(
+                              'TOTAL_COUNT',
+                              (confirmedParticipantsCount - 1).toString(),
+                            );
+                        return Text(txt, style: TextStyle(color: Colors.white38));
+                      }),
+                    ],
+                  ),
+                ),
+              ],
             );
           } else {
-            return Container();
+            return CupertinoActivityIndicator();
           }
         },
       ),

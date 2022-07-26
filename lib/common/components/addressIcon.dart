@@ -1,10 +1,9 @@
+import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jdenticon_dart/jdenticon_dart.dart';
-import 'package:encointer_wallet/common/theme.dart';
 
 class AddressIcon extends StatelessWidget {
   AddressIcon(
@@ -63,11 +62,11 @@ class AddressIconWithLabel extends StatelessWidget {
   final String pubKey;
   final double size;
   final bool tapToCopy;
-  final TextStyle labelStyle;
+  final TextStyle? labelStyle;
 
   @override
   Widget build(BuildContext context) {
-    final style = labelStyle ?? Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5);
+    final style = labelStyle ?? Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey, height: 1.5);
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -77,7 +76,7 @@ class AddressIconWithLabel extends StatelessWidget {
           size: size,
         ),
         Text(
-          Fmt.address(address),
+          Fmt.address(address)!,
           style: style,
           textAlign: TextAlign.center,
         ),

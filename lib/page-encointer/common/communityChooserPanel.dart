@@ -27,7 +27,7 @@ class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     return Container(
       width: double.infinity,
       child: RoundedCard(
@@ -38,18 +38,18 @@ class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
             Observer(
               builder: (_) => (store.encointer.communities == null)
                   ? CupertinoActivityIndicator()
-                  : (store.encointer.communities.isEmpty)
+                  : (store.encointer.communities!.isEmpty)
                       ? Text(dic.assets.communitiesNotFound)
                       : DropdownButton<dynamic>(
                           key: Key('cid-dropdown'),
                           // todo find out, why adding the hint breaks the integration test walkthrough when choosing community #225
                           // hint: Text(dic.assets.communityChoose),
                           value: (store.encointer.chosenCid == null ||
-                                  store.encointer.communities
+                                  store.encointer.communities!
                                       .where((cn) => cn.cid == store.encointer.chosenCid)
                                       .isEmpty)
                               ? null
-                              : store.encointer.communities.where((cn) => cn.cid == store.encointer.chosenCid).first,
+                              : store.encointer.communities!.where((cn) => cn.cid == store.encointer.chosenCid).first,
                           icon: Icon(Icons.arrow_downward),
                           iconSize: 32,
                           elevation: 32,
@@ -58,7 +58,7 @@ class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
                               store.encointer.setChosenCid(newValue.cid);
                             });
                           },
-                          items: store.encointer.communities
+                          items: store.encointer.communities!
                               .asMap()
                               .entries
                               .map((entry) => DropdownMenuItem<dynamic>(
@@ -79,7 +79,7 @@ class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
 /// the CombinedCommunityAndAccountAvatar should be wrapped in an InkWell to provide the callback on a click
 class CombinedCommunityAndAccountAvatar extends StatefulWidget {
   const CombinedCommunityAndAccountAvatar(this.store,
-      {Key key,
+      {Key? key,
       this.showCommunityNameAndAccountName = true,
       this.communityAvatarSize = 96,
       this.accountAvatarSize = 34})
@@ -137,7 +137,7 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
               if (widget.showCommunityNameAndAccountName)
                 Text(
                   '${store.encointer.community?.name ?? "..."}\n${Fmt.accountName(context, store.account.currentAccount)}',
-                  style: Theme.of(context).textTheme.headline4.copyWith(color: encointerGrey, height: 1.5),
+                  style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey, height: 1.5),
                   textAlign: TextAlign.center,
                 ),
             ],
@@ -150,9 +150,9 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
 
 class CommunityAvatar extends StatelessWidget {
   const CommunityAvatar({
-    Key key,
-    @required this.store,
-    @required this.avatarIcon,
+    Key? key,
+    required this.store,
+    required this.avatarIcon,
     this.avatarSize = 120,
   }) : super(key: key);
 
@@ -169,7 +169,7 @@ class CommunityAvatar extends StatelessWidget {
         future: avatarIcon,
         builder: (_, AsyncSnapshot<SvgPicture> snapshot) {
           if (snapshot.hasData) {
-            return snapshot.data;
+            return snapshot.data!;
           } else {
             return CupertinoActivityIndicator();
           }

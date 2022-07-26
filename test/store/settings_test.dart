@@ -8,7 +8,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('SettingsStore test', () {
-    final AppStore root = AppStore(getMockLocalStorage());
+    final AppStore root = AppStore(MockLocalStorage());
     final store = SettingsStore(root);
 
     test('settings store created', () {
@@ -47,9 +47,9 @@ void main() {
         'tokenDecimals': 12,
         'tokenSymbol': 'KSM',
       }));
-      expect(store.networkState.ss58Format, 2);
-      expect(store.networkState.tokenDecimals, 12);
-      expect(store.networkState.tokenSymbol, 'KSM');
+      expect(store.networkState!.ss58Format, 2);
+      expect(store.networkState!.tokenDecimals, 12);
+      expect(store.networkState!.tokenSymbol, 'KSM');
     });
   });
 }

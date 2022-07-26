@@ -8,22 +8,22 @@ import "package:latlong2/latlong.dart";
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class BusinessDetail extends StatelessWidget {
-  final BazaarBusinessData business;
+  final BazaarBusinessData? business;
   final double cardHeight = 200;
   final double cardWidth = 160;
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         title: Row(
           children: [
-            Text("${business.title}"),
+            Text("${business!.title}"),
             SizedBox(
               width: 6,
             ),
-            business.icon
+            business!.icon
           ],
         ),
       ),
@@ -31,12 +31,12 @@ class BusinessDetail extends StatelessWidget {
         children: [
           Column(
             children: [
-              Container(padding: EdgeInsets.all(4), child: business.image),
+              Container(padding: EdgeInsets.all(4), child: business!.image),
               Align(
                   alignment: Alignment.topLeft,
                   child: Container(
                     padding: EdgeInsets.fromLTRB(2, 8, 0, 16),
-                    child: Text("${business.description}"),
+                    child: Text("${business!.description}"),
                   )),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,10 +65,10 @@ class BusinessDetail extends StatelessWidget {
                             (int index) => DataRow(
                               cells: <DataCell>[
                                 DataCell(
-                                  Container(width: 30, child: Text(business.openingHours.getDayString(index))),
+                                  Container(width: 30, child: Text(business!.openingHours.getDayString(index))),
                                 ),
                                 DataCell(Text(
-                                  business.openingHours.getOpeningHoursFor(index).toString(),
+                                  business!.openingHours.getOpeningHoursFor(index).toString(),
                                 ))
                               ],
                             ),
@@ -79,7 +79,7 @@ class BusinessDetail extends StatelessWidget {
                   )
                 ],
               ),
-              HorizontalBazaarItemList(business.offerings, dic.bazaar.offerings, cardHeight, cardWidth),
+              HorizontalBazaarItemList(business!.offerings, dic.bazaar.offerings, cardHeight, cardWidth),
             ],
           ),
         ],
@@ -92,7 +92,7 @@ class BusinessDetail extends StatelessWidget {
 
 class SmallLeaflet extends StatelessWidget {
   const SmallLeaflet({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

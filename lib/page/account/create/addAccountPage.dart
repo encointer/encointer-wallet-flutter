@@ -1,4 +1,6 @@
-import 'package:encointer_wallet/common/components/accountAdvanceOption.dart';
+import 'dart:async';
+
+import 'package:encointer_wallet/common/components/accountAdvanceOptionParams.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/create/addAccountForm.dart';
@@ -51,7 +53,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
     await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
     _log("added new account with address: ${addresses[0]}");
 
-    String pubKey = acc['pubKey'];
+    String? pubKey = acc['pubKey'];
     await store.setCurrentAccount(pubKey);
 
     await store.loadAccountCache();
@@ -73,10 +75,10 @@ class _AddAccountPageState extends State<AddAccountPage> {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Container(),
-          content: Text(I18n.of(context).translationsForLocale().account.createError),
+          content: Text(I18n.of(context)!.translationsForLocale().account.createError),
           actions: <Widget>[
             CupertinoButton(
-              child: Text(I18n.of(context).translationsForLocale().home.ok),
+              child: Text(I18n.of(context)!.translationsForLocale().home.ok),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -95,7 +97,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
           child: showPasswordInputDialog(
             context,
             store.account.currentAccount,
-            Text(I18n.of(context).translationsForLocale().profile.unlock),
+            Text(I18n.of(context)!.translationsForLocale().profile.unlock),
             (password) {
               setState(() {
                 store.settings.setPin(password);
@@ -122,7 +124,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
 
     return Scaffold(
       appBar: AppBar(

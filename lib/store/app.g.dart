@@ -6,115 +6,168 @@ part of 'app.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AppStore on _AppStore, Store {
-  final _$settingsAtom = Atom(name: '_AppStore.settings');
+  Computed<AccountStore>? _$accountComputed;
 
   @override
-  SettingsStore get settings {
-    _$settingsAtom.reportRead();
-    return super.settings;
+  AccountStore get account =>
+      (_$accountComputed ??= Computed<AccountStore>(() => super.account, name: '_AppStore.account')).value;
+  Computed<AssetsStore>? _$assetsComputed;
+
+  @override
+  AssetsStore get assets =>
+      (_$assetsComputed ??= Computed<AssetsStore>(() => super.assets, name: '_AppStore.assets')).value;
+  Computed<ChainStore>? _$chainComputed;
+
+  @override
+  ChainStore get chain => (_$chainComputed ??= Computed<ChainStore>(() => super.chain, name: '_AppStore.chain')).value;
+  Computed<EncointerStore>? _$encointerComputed;
+
+  @override
+  EncointerStore get encointer =>
+      (_$encointerComputed ??= Computed<EncointerStore>(() => super.encointer, name: '_AppStore.encointer')).value;
+  Computed<bool>? _$appIsReadyComputed;
+
+  @override
+  bool get appIsReady =>
+      (_$appIsReadyComputed ??= Computed<bool>(() => super.appIsReady, name: '_AppStore.appIsReady')).value;
+
+  late final _$_settingsAtom = Atom(name: '_AppStore._settings', context: context);
+
+  @override
+  SettingsStore? get _settings {
+    _$_settingsAtom.reportRead();
+    return super._settings;
   }
 
   @override
-  set settings(SettingsStore value) {
-    _$settingsAtom.reportWrite(value, super.settings, () {
-      super.settings = value;
+  set _settings(SettingsStore? value) {
+    _$_settingsAtom.reportWrite(value, super._settings, () {
+      super._settings = value;
     });
   }
 
-  final _$accountAtom = Atom(name: '_AppStore.account');
+  late final _$_accountAtom = Atom(name: '_AppStore._account', context: context);
 
   @override
-  AccountStore get account {
-    _$accountAtom.reportRead();
-    return super.account;
+  AccountStore? get _account {
+    _$_accountAtom.reportRead();
+    return super._account;
   }
 
   @override
-  set account(AccountStore value) {
-    _$accountAtom.reportWrite(value, super.account, () {
-      super.account = value;
+  set _account(AccountStore? value) {
+    _$_accountAtom.reportWrite(value, super._account, () {
+      super._account = value;
     });
   }
 
-  final _$assetsAtom = Atom(name: '_AppStore.assets');
+  late final _$_assetsAtom = Atom(name: '_AppStore._assets', context: context);
 
   @override
-  AssetsStore get assets {
-    _$assetsAtom.reportRead();
-    return super.assets;
+  AssetsStore? get _assets {
+    _$_assetsAtom.reportRead();
+    return super._assets;
   }
 
   @override
-  set assets(AssetsStore value) {
-    _$assetsAtom.reportWrite(value, super.assets, () {
-      super.assets = value;
+  set _assets(AssetsStore? value) {
+    _$_assetsAtom.reportWrite(value, super._assets, () {
+      super._assets = value;
     });
   }
 
-  final _$chainAtom = Atom(name: '_AppStore.chain');
+  late final _$_chainAtom = Atom(name: '_AppStore._chain', context: context);
 
   @override
-  ChainStore get chain {
-    _$chainAtom.reportRead();
-    return super.chain;
+  ChainStore? get _chain {
+    _$_chainAtom.reportRead();
+    return super._chain;
   }
 
   @override
-  set chain(ChainStore value) {
-    _$chainAtom.reportWrite(value, super.chain, () {
-      super.chain = value;
+  set _chain(ChainStore? value) {
+    _$_chainAtom.reportWrite(value, super._chain, () {
+      super._chain = value;
     });
   }
 
-  final _$encointerAtom = Atom(name: '_AppStore.encointer');
+  late final _$_encointerAtom = Atom(name: '_AppStore._encointer', context: context);
 
   @override
-  EncointerStore get encointer {
-    _$encointerAtom.reportRead();
-    return super.encointer;
+  EncointerStore? get _encointer {
+    _$_encointerAtom.reportRead();
+    return super._encointer;
   }
 
   @override
-  set encointer(EncointerStore value) {
-    _$encointerAtom.reportWrite(value, super.encointer, () {
-      super.encointer = value;
+  set _encointer(EncointerStore? value) {
+    _$_encointerAtom.reportWrite(value, super._encointer, () {
+      super._encointer = value;
     });
   }
 
-  final _$isReadyAtom = Atom(name: '_AppStore.isReady');
+  late final _$storeIsReadyAtom = Atom(name: '_AppStore.storeIsReady', context: context);
 
   @override
-  bool get isReady {
-    _$isReadyAtom.reportRead();
-    return super.isReady;
+  bool get storeIsReady {
+    _$storeIsReadyAtom.reportRead();
+    return super.storeIsReady;
   }
 
   @override
-  set isReady(bool value) {
-    _$isReadyAtom.reportWrite(value, super.isReady, () {
-      super.isReady = value;
+  set storeIsReady(bool value) {
+    _$storeIsReadyAtom.reportWrite(value, super.storeIsReady, () {
+      super.storeIsReady = value;
     });
   }
 
-  final _$initAsyncAction = AsyncAction('_AppStore.init');
+  late final _$webApiIsReadyAtom = Atom(name: '_AppStore.webApiIsReady', context: context);
+
+  @override
+  bool get webApiIsReady {
+    _$webApiIsReadyAtom.reportRead();
+    return super.webApiIsReady;
+  }
+
+  @override
+  set webApiIsReady(bool value) {
+    _$webApiIsReadyAtom.reportWrite(value, super.webApiIsReady, () {
+      super.webApiIsReady = value;
+    });
+  }
+
+  late final _$initAsyncAction = AsyncAction('_AppStore.init', context: context);
 
   @override
   Future<void> init(String sysLocaleCode) {
     return _$initAsyncAction.run(() => super.init(sysLocaleCode));
   }
 
+  late final _$_AppStoreActionController = ActionController(name: '_AppStore', context: context);
+
+  @override
+  void setApiReady(bool value) {
+    final _$actionInfo = _$_AppStoreActionController.startAction(name: '_AppStore.setApiReady');
+    try {
+      return super.setApiReady(value);
+    } finally {
+      _$_AppStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     return '''
-settings: ${settings},
+storeIsReady: ${storeIsReady},
+webApiIsReady: ${webApiIsReady},
 account: ${account},
 assets: ${assets},
 chain: ${chain},
 encointer: ${encointer},
-isReady: ${isReady}
+appIsReady: ${appIsReady}
     ''';
   }
 }

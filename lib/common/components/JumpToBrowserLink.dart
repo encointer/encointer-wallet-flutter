@@ -1,13 +1,12 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:encointer_wallet/utils/UI.dart';
+import 'package:flutter/material.dart';
 
 class JumpToBrowserLink extends StatefulWidget {
   JumpToBrowserLink(this.url, {this.text, this.mainAxisAlignment});
 
-  final String text;
-  final String url;
-  final MainAxisAlignment mainAxisAlignment;
+  final String? text;
+  final String? url;
+  final MainAxisAlignment? mainAxisAlignment;
 
   @override
   _JumpToBrowserLinkState createState() => _JumpToBrowserLinkState();
@@ -21,7 +20,7 @@ class _JumpToBrowserLinkState extends State<JumpToBrowserLink> {
     setState(() {
       _loading = true;
     });
-    await UI.launchURL(widget.url);
+    await UI.launchURL(widget.url!);
     setState(() {
       _loading = false;
     });
@@ -37,7 +36,7 @@ class _JumpToBrowserLinkState extends State<JumpToBrowserLink> {
           Padding(
             padding: EdgeInsets.only(right: 4),
             child: Text(
-              widget.text ?? widget.url,
+              widget.text ?? widget.url!,
               style: TextStyle(color: Theme.of(context).primaryColor),
             ),
           ),

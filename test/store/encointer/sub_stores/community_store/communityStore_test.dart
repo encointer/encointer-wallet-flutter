@@ -1,6 +1,9 @@
 import 'package:encointer_wallet/mocks/data/mockEncointerData.dart';
 import 'package:encointer_wallet/mocks/storage/mockLocalStorage.dart';
+import 'package:encointer_wallet/mocks/substrate_api/mockApi.dart';
 import 'package:encointer_wallet/mocks/testUtils.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/communityStore.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -8,8 +11,12 @@ import 'package:flutter_test/flutter_test.dart';
 void main() {
   group('communityStore', () {
     test('json serialization and caching works', () async {
-      var localStorage = getMockLocalStorage();
+      var localStorage = MockLocalStorage();
       var communityStoreCacheKey = "communityStore-test-cache";
+
+      // Only to not get null errors in tests
+      webApi = getMockApi(globalAppStore, withUI: false);
+      webApi.init();
 
       var communityStore = CommunityStore(
         "My Test Network",
@@ -39,8 +46,8 @@ void main() {
       communityStore.setMeetupLocations(testLocations);
       communityStore.initCommunityAccountStore(ALICE_ADDRESS);
       communityStore.initCommunityAccountStore(BOB_ADDRESS);
-      var aliceCommunityAccountStore = communityStore.communityAccountStores[ALICE_ADDRESS];
-      var bobCommunityAccountStore = communityStore.communityAccountStores[BOB_ADDRESS];
+      var aliceCommunityAccountStore = communityStore.communityAccountStores![ALICE_ADDRESS]!;
+      var bobCommunityAccountStore = communityStore.communityAccountStores![BOB_ADDRESS]!;
 
       Map<String, dynamic> targetJson = {
         "network": "My Test Network",

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class PhotoTiles extends StatelessWidget {
   const PhotoTiles({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -24,7 +24,7 @@ class PhotoTiles extends StatelessWidget {
           color: Colors.grey,
           child: ListTile(
             leading: Icon(Icons.add_a_photo),
-            title: Text(I18n.of(context).translationsForLocale().bazaar.photoAdd),
+            title: Text(I18n.of(context)!.translationsForLocale().bazaar.photoAdd),
           ),
         ),
       ],

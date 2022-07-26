@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:encointer_wallet/mocks/restartWidget.dart';
 import 'package:encointer_wallet/mocks/mockQRScanPage.dart';
+import 'package:encointer_wallet/mocks/restartWidget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:rxdart/rxdart.dart';
@@ -16,10 +16,12 @@ void main() async {
   // ignore: close_sinks
   final PublishSubject<ImageProvider> stream = PublishSubject();
 
-  // ignore: missing_return
-  Future<String> dataHandler(String msg) async {
-    final img = MemoryImage(base64Decode(msg));
+  Future<String> dataHandler(String? msg) async {
+    final img = MemoryImage(base64Decode(msg!));
     stream.add(img);
+
+    // to fix static analysis
+    return Future.value("DataHandler");
   }
 
   enableFlutterDriverExtension(handler: dataHandler);
@@ -33,7 +35,7 @@ void main() async {
         MockQRScanPage.route: (_) => RestartWidget(
               initialData: MemoryImage(base64Decode("hell")),
               stream: stream,
-              builder: (_, img) => MockQRScanPage(img),
+              builder: (_, dynamic img) => MockQRScanPage(img),
             )
       },
     ),

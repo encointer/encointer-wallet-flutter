@@ -1,5 +1,7 @@
 import 'package:encointer_wallet/common/components/willPopScopeWrapper.dart';
 import 'package:encointer_wallet/config.dart';
+import 'package:encointer_wallet/mocks/substrate_api/core/mockDartApi.dart';
+import 'package:encointer_wallet/mocks/substrate_api/mockJSApi.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaarMain.dart';
 import 'package:encointer_wallet/page-encointer/homePage.dart';
 import 'package:encointer_wallet/page/account/create/addAccountPage.dart';
@@ -29,6 +31,8 @@ import 'package:encointer_wallet/page/qr_scan/qrScanPage.dart';
 import 'package:encointer_wallet/page/reap_voucher/reapVoucherPage.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/substrate_api/core/dartApi.dart';
+import 'package:encointer_wallet/service/substrate_api/core/jsApi.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/localStorage.dart';
 import 'package:encointer_wallet/utils/snackBar.dart';
@@ -52,7 +56,7 @@ class WalletApp extends StatefulWidget {
 }
 
 class _WalletAppState extends State<WalletApp> {
-  AppStore _appStore;
+  AppStore? _appStore;
   Locale _locale = const Locale('en', '');
   ThemeData _theme = appThemeEncointer;
 
@@ -62,7 +66,7 @@ class _WalletAppState extends State<WalletApp> {
     // the network selection page.
   }
 
-  void _changeLang(BuildContext context, String code) {
+  void _changeLang(BuildContext context, String? code) {
     Locale res;
     switch (code) {
       case 'en':
@@ -79,25 +83,33 @@ class _WalletAppState extends State<WalletApp> {
     });
   }
 
-  Future<int> _initStore(BuildContext context) async {
+  Future<int> _initApp(BuildContext context) async {
     if (_appStore == null) {
       // Todo: Use provider pattern instead of globals, see: https://github.com/encointer/encointer-wallet-flutter/issues/132
       globalAppStore = widget.config.mockLocalStorage
-          ? AppStore(getMockLocalStorage(), config: widget.config.appStoreConfig)
+          ? AppStore(MockLocalStorage(), config: widget.config.appStoreConfig)
           : AppStore(LocalStorage(), config: widget.config.appStoreConfig);
 
       _appStore = globalAppStore;
-      print('initializing app state');
-      print('sys locale: ${Localizations.localeOf(context)}');
-      await _appStore.init(Localizations.localeOf(context).toString());
+      _log('Initializing app state');
+      _log('sys locale: ${Localizations.localeOf(context)}');
+      await _appStore!.init(Localizations.localeOf(context).toString());
 
       // init webApi after store initiated
-      webApi = widget.config.mockSubstrateApi ? MockApi(context, _appStore) : Api(context, _appStore);
-      webApi.init();
+      final jsServiceEncointer =
+          await DefaultAssetBundle.of(context).loadString('lib/js_service_encointer/dist/main.js');
 
-      _changeLang(context, _appStore.settings.localeCode);
+      webApi = widget.config.mockSubstrateApi
+          ? MockApi(_appStore!, MockJSApi(), MockSubstrateDartApi(), jsServiceEncointer, withUi: true)
+          : Api.create(_appStore!, JSApi(), SubstrateDartApi(), jsServiceEncointer);
+
+      await webApi.init();
+
+      _changeLang(context, _appStore!.settings.localeCode);
+
+      _appStore!.setApiReady(true);
     }
-    return _appStore.account.accountListAll.length;
+    return _appStore!.account.accountListAll.length;
   }
 
   @protected
@@ -105,7 +117,6 @@ class _WalletAppState extends State<WalletApp> {
   void reassemble() {
     // this gets executed upon hot-restart or hot-reload only!
     super.reassemble();
-    // TODO: reload dictionary in case it was updated
   }
 
   @override
@@ -124,7 +135,7 @@ class _WalletAppState extends State<WalletApp> {
           FocusScopeNode currentFocus = FocusScope.of(context);
 
           if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
-            FocusManager.instance.primaryFocus.unfocus();
+            FocusManager.instance.primaryFocus!.unfocus();
           }
         },
         child: MaterialApp(
@@ -150,92 +161,97 @@ class _WalletAppState extends State<WalletApp> {
             switch (settings.name) {
               case EncointerHomePage.route:
                 return CupertinoPageRoute(
-                    builder: (context) => Observer(
-                          builder: (_) {
-                            return WillPopScopeWrapper(
-                              child: FutureBuilder<int>(
-                                future: _initStore(context),
-                                builder: (_, AsyncSnapshot<int> snapshot) {
-                                  if (snapshot.hasData && _appStore.isReady) {
-                                    return snapshot.data > 0 ? EncointerHomePage(_appStore) : CreateAccountEntryPage();
-                                  } else {
-                                    return CupertinoActivityIndicator();
-                                  }
-                                },
-                              ),
-                            );
-                          },
-                        ),
-                    settings: settings);
+                  settings: settings,
+                  builder: (context) => WillPopScopeWrapper(
+                    child: Observer(
+                      builder: (_) => FutureBuilder<int>(
+                        future: _initApp(context),
+                        builder: (_, AsyncSnapshot<int> snapshot) {
+                          if (snapshot.hasError) {
+                            _log("SnapshotError: ${snapshot.error.toString()}");
+                          }
+                          if (snapshot.hasData && _appStore!.appIsReady) {
+                            return snapshot.data! > 0 ? EncointerHomePage(_appStore!) : CreateAccountEntryPage();
+                          } else {
+                            return CupertinoActivityIndicator();
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                );
               case NetworkSelectPage.route:
                 return CupertinoPageRoute(
-                    builder: (_) => NetworkSelectPage(_appStore, _changeTheme), settings: settings);
+                    builder: (_) => NetworkSelectPage(_appStore!, _changeTheme), settings: settings);
               case CreateAccountEntryPage.route:
                 return CupertinoPageRoute(
                     builder: (_) => CreateAccountEntryPage(), settings: settings, fullscreenDialog: true);
               case CreateAccountPage.route:
                 return CupertinoPageRoute(
-                    builder: (_) => CreateAccountPage(_appStore), settings: settings, fullscreenDialog: true);
+                    builder: (_) => CreateAccountPage(_appStore!), settings: settings, fullscreenDialog: true);
               case AddAccountPage.route:
                 return CupertinoPageRoute(
-                    builder: (_) => AddAccountPage(_appStore), settings: settings, fullscreenDialog: true);
+                    builder: (_) => AddAccountPage(_appStore!), settings: settings, fullscreenDialog: true);
               case AccountSharePage.route:
                 return CupertinoPageRoute(
-                    builder: (_) => AccountSharePage(_appStore), settings: settings, fullscreenDialog: true);
+                    builder: (_) => AccountSharePage(_appStore!), settings: settings, fullscreenDialog: true);
               case CreatePinPage.route:
-                return CupertinoPageRoute(builder: (_) => CreatePinPage(_appStore), settings: settings);
+                return CupertinoPageRoute(builder: (_) => CreatePinPage(_appStore!), settings: settings);
               case ImportAccountPage.route:
-                return CupertinoPageRoute(builder: (_) => ImportAccountPage(_appStore), settings: settings);
+                return CupertinoPageRoute(builder: (_) => ImportAccountPage(_appStore!), settings: settings);
               case ScanPage.route:
-                return CupertinoPageRoute(builder: (_) => ScanPage(_appStore), settings: settings);
+                return CupertinoPageRoute(builder: (_) => ScanPage(_appStore!), settings: settings);
               case TransferPage.route:
                 return CupertinoPageRoute(
-                    builder: (_) => TransferPage(_appStore), settings: settings, fullscreenDialog: true);
+                    builder: (_) => TransferPage(_appStore!), settings: settings, fullscreenDialog: true);
               case PaymentConfirmationPage.route:
                 return CupertinoPageRoute(
-                    builder: (_) => PaymentConfirmationPage(_appStore, webApi), settings: settings);
+                    builder: (_) => PaymentConfirmationPage(_appStore!, webApi), settings: settings);
               case ReapVoucherPage.route:
                 return CupertinoPageRoute(
-                    builder: (_) => ReapVoucherPage(_appStore, webApi), settings: settings, fullscreenDialog: true);
+                    builder: (_) => ReapVoucherPage(_appStore!, webApi), settings: settings, fullscreenDialog: true);
               case ReceivePage.route:
                 return CupertinoPageRoute(
-                    builder: (_) => ReceivePage(_appStore), settings: settings, fullscreenDialog: true);
+                    builder: (_) => ReceivePage(_appStore!), settings: settings, fullscreenDialog: true);
               case TransferDetailPage.route:
                 return CupertinoPageRoute(
-                    builder: (_) => TransferDetailPage(_appStore), settings: settings, fullscreenDialog: true);
+                    builder: (_) => TransferDetailPage(_appStore!), settings: settings, fullscreenDialog: true);
               case AccountManagePage.route:
                 return CupertinoPageRoute(
-                    builder: (_) => AccountManagePage(_appStore), settings: settings, fullscreenDialog: true);
+                    builder: (_) => AccountManagePage(_appStore!), settings: settings, fullscreenDialog: true);
               case ContactsPage.route:
-                return CupertinoPageRoute(builder: (_) => ContactsPage(_appStore), settings: settings);
+                return CupertinoPageRoute(builder: (_) => ContactsPage(_appStore!), settings: settings);
               case ContactListPage.route:
-                return CupertinoPageRoute(builder: (_) => ContactListPage(_appStore), settings: settings);
+                return CupertinoPageRoute(builder: (_) => ContactListPage(_appStore!), settings: settings);
               case ContactPage.route:
-                return CupertinoPageRoute(builder: (_) => ContactPage(_appStore), settings: settings);
+                return CupertinoPageRoute(builder: (_) => ContactPage(_appStore!), settings: settings);
               case ChangePasswordPage.route:
-                return CupertinoPageRoute(
-                    builder: (_) => ChangePasswordPage(_appStore.account, _appStore.settings), settings: settings);
+                return CupertinoPageRoute(builder: (_) => ChangePasswordPage(_appStore!), settings: settings);
               case ContactDetailPage.route:
-                return CupertinoPageRoute(builder: (_) => ContactDetailPage(_appStore, webApi), settings: settings);
+                return CupertinoPageRoute(builder: (_) => ContactDetailPage(_appStore!, webApi), settings: settings);
               case SettingsPage.route:
                 return CupertinoPageRoute(
-                    builder: (_) => SettingsPage(_appStore.settings, _changeLang), settings: settings);
+                    builder: (_) => SettingsPage(_appStore!.settings, _changeLang), settings: settings);
               case ExportAccountPage.route:
-                return CupertinoPageRoute(builder: (_) => ExportAccountPage(_appStore.account), settings: settings);
+                return CupertinoPageRoute(builder: (_) => ExportAccountPage(_appStore!.account), settings: settings);
               case ExportResultPage.route:
                 return CupertinoPageRoute(builder: (_) => ExportResultPage(), settings: settings);
               case RemoteNodeListPage.route:
-                return CupertinoPageRoute(builder: (_) => RemoteNodeListPage(_appStore.settings), settings: settings);
+                return CupertinoPageRoute(builder: (_) => RemoteNodeListPage(_appStore!.settings), settings: settings);
               case SS58PrefixListPage.route:
-                return CupertinoPageRoute(builder: (_) => SS58PrefixListPage(_appStore.settings), settings: settings);
+                return CupertinoPageRoute(builder: (_) => SS58PrefixListPage(_appStore!.settings), settings: settings);
               case AboutPage.route:
                 return CupertinoPageRoute(builder: (_) => AboutPage(), settings: settings);
               case BazaarMain.route:
-                return CupertinoPageRoute(builder: (_) => BazaarMain(_appStore), settings: settings);
+                return CupertinoPageRoute(builder: (_) => BazaarMain(_appStore!), settings: settings);
               default:
                 throw Exception('no builder specified for route named: [${settings.name}]');
             }
           },
         ));
   }
+}
+
+void _log(String msg) {
+  print("[App] $msg");
 }

@@ -23,13 +23,13 @@ abstract class _OpeningHoursState with Store {
   OpeningHoursForDayState sun;
 
   @observable
-  OpeningHoursForDayState copiedOpeningHours;
+  OpeningHoursForDayState? copiedOpeningHours;
 
   @observable
-  int dayOnFocus;
+  int? dayOnFocus;
 
   @observable
-  int dayToCopyFrom;
+  int? dayToCopyFrom;
 
   @action
   copyFrom(int day) {
@@ -58,15 +58,15 @@ abstract class _OpeningHoursState with Store {
     var target = getOpeningHoursFor(day);
     if (copiedOpeningHours == null) return;
 
-    copiedOpeningHours.openingIntervals.forEach(
-      (OpeningIntervalState interval) => target.addInterval(interval),
+    copiedOpeningHours!.openingIntervals.forEach(
+      (OpeningIntervalState interval) => target!.addInterval(interval),
     );
   }
 
   _OpeningHoursState(this.mon, this.tue, this.wed, this.thu, this.fri, this.sat, this.sun);
 
   // generic getter
-  OpeningHoursForDayState getOpeningHoursFor(int day) {
+  OpeningHoursForDayState? getOpeningHoursFor(int day) {
     switch (day) {
       case 0:
         return mon;
@@ -106,12 +106,13 @@ abstract class _OpeningHoursForDayState with Store {
   _OpeningHoursForDayState(this.openingIntervals);
 
   @observable
-  String timeFormatError;
+  String? timeFormatError;
 
   @action
   addParsedIntervalIfValid(String startEnd) {
     try {
-      OpeningIntervalState openingIntervalState = _OpeningIntervalState.parseOpeningIntervalState(startEnd);
+      OpeningIntervalState openingIntervalState =
+          _OpeningIntervalState.parseOpeningIntervalState(startEnd) as OpeningIntervalState;
       timeFormatError = null;
       openingIntervals.add(openingIntervalState);
     } catch (e) {
@@ -121,7 +122,6 @@ abstract class _OpeningHoursForDayState with Store {
 
   @action
   addInterval(OpeningIntervalState interval) {
-    if (interval == null) return;
     openingIntervals.add(interval);
   }
 

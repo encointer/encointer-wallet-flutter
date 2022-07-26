@@ -4,11 +4,11 @@ final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey = new GlobalKey
 
 class RootSnackBar {
   static void hideCurrent() {
-    rootScaffoldMessengerKey.currentState.hideCurrentSnackBar();
+    rootScaffoldMessengerKey.currentState!.hideCurrentSnackBar();
   }
 
   static void removeCurrent() {
-    rootScaffoldMessengerKey.currentState.removeCurrentSnackBar();
+    rootScaffoldMessengerKey.currentState!.removeCurrentSnackBar();
   }
 
   static void show(
@@ -42,9 +42,9 @@ void showSnackBar(
   int durationMillis: 1500,
   backgroundColor: Colors.white,
 }) {
-  rootScaffoldMessengerKey.currentState.hideCurrentSnackBar();
-  rootScaffoldMessengerKey.currentState.removeCurrentSnackBar();
-  rootScaffoldMessengerKey.currentState
+  rootScaffoldMessengerKey.currentState!.hideCurrentSnackBar();
+  rootScaffoldMessengerKey.currentState!.removeCurrentSnackBar();
+  rootScaffoldMessengerKey.currentState!
     ..showSnackBar(
       SnackBar(
         content: content,

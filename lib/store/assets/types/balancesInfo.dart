@@ -16,25 +16,25 @@ class BalancesInfo extends _BalancesInfo {
 
 class _BalancesInfo {
   /// votingBalance
-  BigInt total;
+  BigInt? total;
 
   /// freeBalance = total - reserved
-  BigInt freeBalance;
+  late BigInt freeBalance;
 
   /// availableBalance
-  BigInt transferable;
+  late BigInt transferable;
 
   /// frozenFee
-  BigInt bonded;
+  BigInt? bonded;
 
   /// reservedBalance
-  BigInt reserved;
+  late BigInt reserved;
 
   /// lockedBalance
-  BigInt lockedBalance;
+  BigInt? lockedBalance;
 
   /// locked details
-  List<BalanceLockedItemData> lockedBreakdown;
+  List<BalanceLockedItemData>? lockedBreakdown;
 }
 
 class BalanceLockedItemData extends _BalanceLockedItemData {
@@ -48,7 +48,7 @@ class BalanceLockedItemData extends _BalanceLockedItemData {
 }
 
 class _BalanceLockedItemData {
-  BigInt amount;
-  String reasons;
-  String use;
+  BigInt? amount;
+  String? reasons;
+  String? use;
 }

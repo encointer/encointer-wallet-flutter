@@ -21,7 +21,7 @@ Map<String, dynamic> endorseNewcomerParams(
 
 Map<String, dynamic> registerParticipantParams(
   CommunityIdentifier chosenCid, {
-  ProofOfAttendance proof,
+  ProofOfAttendance? proof,
 }) {
   return {
     "title": 'register_participant',
@@ -68,7 +68,7 @@ Map<String, dynamic> claimRewardsParams(CommunityIdentifier chosenCid) {
 Map<String, dynamic> encointerBalanceTransferParams(
   CommunityIdentifier cid,
   String recipientAddress,
-  double amount,
+  double? amount,
 ) {
   return {
     "title": 'encointerBalancesTransfer',

@@ -23,7 +23,7 @@ class ProofOfAttendance {
   int ceremonyIndex;
   CommunityIdentifier communityIdentifier;
   String attendeePublic;
-  Map<String, String> attendeeSignature;
+  Map<String, String>? attendeeSignature;
 
   @override
   String toString() {

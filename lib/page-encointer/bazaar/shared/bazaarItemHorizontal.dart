@@ -24,7 +24,7 @@ class HorizontalBazaarItemList extends StatelessWidget {
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
           itemExtent: cardWidth,
-          itemCount: data != null ? data.length : 0,
+          itemCount: data.length,
           itemBuilder: (context, index) => BazaarItemHorizontal(data: data, index: index),
         ),
       ),
@@ -34,9 +34,9 @@ class HorizontalBazaarItemList extends StatelessWidget {
 
 class BazaarItemHorizontal extends StatelessWidget {
   const BazaarItemHorizontal({
-    Key key,
-    @required this.data,
-    @required this.index,
+    Key? key,
+    required this.data,
+    required this.index,
   }) : super(key: key);
 
   final List<BazaarItemData> data;
@@ -55,8 +55,9 @@ class BazaarItemHorizontal extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  (data[index] is BazaarBusinessData) ? BusinessDetail(data[index]) : OfferingDetail(data[index]),
+              builder: (context) => (data[index] is BazaarBusinessData)
+                  ? BusinessDetail(data[index] as BazaarBusinessData?)
+                  : OfferingDetail(data[index] as BazaarOfferingData),
             ),
           );
         },
@@ -87,9 +88,9 @@ class BazaarItemHorizontal extends StatelessWidget {
 
 class _ImageWithOverlaidIcon extends StatelessWidget {
   const _ImageWithOverlaidIcon({
-    Key key,
-    @required this.data,
-    @required this.index,
+    Key? key,
+    required this.data,
+    required this.index,
   }) : super(key: key);
 
   final List<BazaarItemData> data;

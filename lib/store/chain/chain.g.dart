@@ -6,32 +6,32 @@ part of 'chain.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$ChainStore on _ChainStore, Store {
-  Computed<dynamic> _$latestHeaderNumberComputed;
+  Computed<dynamic>? _$latestHeaderNumberComputed;
 
   @override
   dynamic get latestHeaderNumber => (_$latestHeaderNumberComputed ??=
           Computed<dynamic>(() => super.latestHeaderNumber, name: '_ChainStore.latestHeaderNumber'))
       .value;
 
-  final _$latestHeaderAtom = Atom(name: '_ChainStore.latestHeader');
+  late final _$latestHeaderAtom = Atom(name: '_ChainStore.latestHeader', context: context);
 
   @override
-  Header get latestHeader {
+  Header? get latestHeader {
     _$latestHeaderAtom.reportRead();
     return super.latestHeader;
   }
 
   @override
-  set latestHeader(Header value) {
+  set latestHeader(Header? value) {
     _$latestHeaderAtom.reportWrite(value, super.latestHeader, () {
       super.latestHeader = value;
     });
   }
 
-  final _$_ChainStoreActionController = ActionController(name: '_ChainStore');
+  late final _$_ChainStoreActionController = ActionController(name: '_ChainStore', context: context);
 
   @override
   void setLatestHeader(Header latest) {

@@ -10,7 +10,7 @@ const int tx_list_page_size = 10;
 
 class MyHttpOverrides extends HttpOverrides {
   @override
-  HttpClient createHttpClient(SecurityContext context) {
+  HttpClient createHttpClient(SecurityContext? context) {
     return super.createHttpClient(context)
       ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
   }
@@ -28,14 +28,14 @@ class SubScanRequestParams {
   });
 
   /// exec in isolate with a message send port
-  SendPort sendPort;
+  SendPort? sendPort;
 
-  String network;
-  String address;
-  int page;
-  int row;
-  String module;
-  String call;
+  String? network;
+  String? address;
+  int? page;
+  int? row;
+  String? module;
+  String? call;
 }
 
 class SubScanApi {
@@ -77,15 +77,15 @@ class SubScanApi {
       isolateIns.kill(priority: Isolate.immediate);
       completer.complete(msg);
     });
-    return completer.future;
+    return completer.future as FutureOr<Map<dynamic, dynamic>>;
   }
 
   Future<Map> fetchTxsAsync(
     String module, {
-    String call,
+    String? call,
     int page = 0,
     int size = tx_list_page_size,
-    String sender,
+    String? sender,
     String network = 'kusama',
   }) async {
     Completer completer = new Completer<Map>();
@@ -106,13 +106,13 @@ class SubScanApi {
       isolateIns.kill(priority: Isolate.immediate);
       completer.complete(msg);
     });
-    return completer.future;
+    return completer.future as FutureOr<Map<dynamic, dynamic>>;
   }
 
   Future<Map> fetchRewardTxsAsync({
     int page = 0,
     int size = tx_list_page_size,
-    String sender,
+    String? sender,
     String network = 'kusama',
   }) async {
     Completer completer = new Completer<Map>();
@@ -132,11 +132,11 @@ class SubScanApi {
       isolateIns.kill(priority: Isolate.immediate);
       completer.complete(msg);
     });
-    return completer.future;
+    return completer.future as FutureOr<Map<dynamic, dynamic>>;
   }
 
-  static Future<Map> fetchTransfers(SubScanRequestParams params) async {
-    String url = '${getSnEndpoint(params.network)}/transfers';
+  static Future<Map?> fetchTransfers(SubScanRequestParams params) async {
+    String url = '${getSnEndpoint(params.network!)}/transfers';
     Map<String, String> headers = {"Content-type": "application/json", "Accept": "*/*"};
     String body = jsonEncode({
       "page": params.page,
@@ -144,21 +144,15 @@ class SubScanApi {
       "address": params.address,
     });
     Response res = await post(Uri.parse(url), headers: headers, body: body);
-    if (res.body != null) {
-      final obj = await compute(jsonDecode, res.body);
-      if (params.sendPort != null) {
-        params.sendPort.send(obj['data']);
-      }
-      return obj['data'];
-    }
+    final obj = await compute(jsonDecode, res.body);
     if (params.sendPort != null) {
-      params.sendPort.send({});
+      params.sendPort!.send(obj['data']);
     }
-    return {};
+    return obj['data'];
   }
 
-  static Future<Map> fetchTxs(SubScanRequestParams para) async {
-    String url = '${getSnEndpoint(para.network)}/extrinsics';
+  static Future<Map?> fetchTxs(SubScanRequestParams para) async {
+    String url = '${getSnEndpoint(para.network!)}/extrinsics';
     Map<String, String> headers = {"Content-type": "application/json"};
     Map params = {
       "page": para.page,
@@ -173,21 +167,15 @@ class SubScanApi {
     }
     String body = jsonEncode(params);
     Response res = await post(Uri.parse(url), headers: headers, body: body);
-    if (res.body != null) {
-      final obj = await compute(jsonDecode, res.body);
-      if (para.sendPort != null) {
-        para.sendPort.send(obj['data']);
-      }
-      return obj['data'];
-    }
+    final obj = await compute(jsonDecode, res.body);
     if (para.sendPort != null) {
-      para.sendPort.send({});
+      para.sendPort!.send(obj['data']);
     }
-    return {};
+    return obj['data'];
   }
 
-  static Future<Map> fetchRewardTxs(SubScanRequestParams para) async {
-    String url = '${getSnEndpoint(para.network)}/account/reward_slash';
+  static Future<Map?> fetchRewardTxs(SubScanRequestParams para) async {
+    String url = '${getSnEndpoint(para.network!)}/account/reward_slash';
     Map<String, String> headers = {"Content-type": "application/json"};
     Map params = {
       "address": para.address,
@@ -196,17 +184,11 @@ class SubScanApi {
     };
     String body = jsonEncode(params);
     Response res = await post(Uri.parse(url), headers: headers, body: body);
-    if (res.body != null) {
-      final obj = await compute(jsonDecode, res.body);
-      if (para.sendPort != null) {
-        para.sendPort.send(obj['data']);
-      }
-      return obj['data'];
-    }
+    final obj = await compute(jsonDecode, res.body);
     if (para.sendPort != null) {
-      para.sendPort.send({});
+      para.sendPort!.send(obj['data']);
     }
-    return {};
+    return obj['data'];
   }
 
   Future<Map> fetchTokenPriceAsync(String network) async {
@@ -223,27 +205,25 @@ class SubScanApi {
       isolateIns.kill(priority: Isolate.immediate);
       completer.complete(msg);
     });
-    return completer.future;
+    return completer.future as FutureOr<Map<dynamic, dynamic>>;
   }
 
-  static Future<Map> fetchTokenPrice(SubScanRequestParams para) async {
-    String url = '${getSnEndpoint(para.network)}/token';
+  static Future<Map?> fetchTokenPrice(SubScanRequestParams para) async {
+    String url = '${getSnEndpoint(para.network!)}/token';
     Map<String, String> headers = {"Content-type": "application/json"};
 
     Response res = await post(Uri.parse(url), headers: headers);
-    if (res.body != null) {
-      try {
-        final obj = await compute(jsonDecode, res.body);
-        if (para.sendPort != null) {
-          para.sendPort.send(obj['data']);
-        }
-        return obj['data'];
-      } catch (err) {
-        // ignore error
+    try {
+      final obj = await compute(jsonDecode, res.body);
+      if (para.sendPort != null) {
+        para.sendPort!.send(obj['data']);
       }
+      return obj['data'];
+    } catch (err) {
+      // ignore error
     }
     if (para.sendPort != null) {
-      para.sendPort.send({});
+      para.sendPort!.send({});
     }
     return {};
   }

@@ -47,7 +47,7 @@ jobs:
         with:
           java-version: ${{ steps.config.outputs.java-version }}
 
-      - uses: subosito/flutter-action@v1
+      - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ steps.config.outputs.flutter-version }}
 

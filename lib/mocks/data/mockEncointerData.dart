@@ -31,7 +31,7 @@ Map<int, CommunityReputation> testReputations = {
 const Map<String, dynamic> communityMetadata = {
   'name': 'Züri Loi',
   'symbol': 'ZUL',
-  'icons': 'ShouldBeValidCidSometime',
+  'assets': 'ShouldBeValidCidSometime',
   'theme': null,
   'url': null
 };

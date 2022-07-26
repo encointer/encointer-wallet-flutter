@@ -7,7 +7,7 @@ import '../../models/index.dart';
 /// stateless service that computes some of the view logic of the ceremony box
 class CeremonyBoxService {
   /// Returns a formatted date yMd or tomorrow or today
-  static String formatYearMonthDay(DateTime input, Translations dic, String languageCode) {
+  static String formatYearMonthDay(DateTime input, Translations dic, String? languageCode) {
     String formatted = '${DateFormat.yMd(languageCode).format(input)}';
     String todayYearMonthDay = DateFormat.yMd(languageCode).format(DateTime.now());
     String tomorrowYearMonthDay = DateFormat.yMd(languageCode).format(DateTime.now().add(Duration(days: 1)));
@@ -57,17 +57,17 @@ class CeremonyBoxService {
   }
 
   /// Gets the ceremony progress as a fraction
-  static double getProgressElapsed(
+  static double? getProgressElapsed(
     int currentTime,
     int assigningStart,
-    int meetupTime,
+    int? meetupTime,
     Map<CeremonyPhase, int> ceremonyPhaseDurations,
     double registerFlex,
     double assigningFlex,
     double attestingFlex,
   ) {
     var totalFlex = registerFlex + assigningFlex + attestingFlex;
-    var ceremonyStart = assigningStart - ceremonyPhaseDurations[CeremonyPhase.Registering];
+    var ceremonyStart = assigningStart - ceremonyPhaseDurations[CeremonyPhase.Registering]!;
 
     if (currentTime < ceremonyStart) {
       throw Exception("[CeremonyProgressBar] Current time was smaller than ceremony start");
@@ -77,14 +77,14 @@ class CeremonyBoxService {
 
     if (currentTime < assigningStart) {
       progressUnormalized =
-          (currentTime - ceremonyStart) / ceremonyPhaseDurations[CeremonyPhase.Registering] * registerFlex;
-    } else if (currentTime < meetupTime) {
+          (currentTime - ceremonyStart) / ceremonyPhaseDurations[CeremonyPhase.Registering]! * registerFlex;
+    } else if (currentTime < meetupTime!) {
       progressUnormalized = registerFlex +
-          (currentTime - assigningStart) / ceremonyPhaseDurations[CeremonyPhase.Assigning] * assigningFlex;
+          (currentTime - assigningStart) / ceremonyPhaseDurations[CeremonyPhase.Assigning]! * assigningFlex;
     } else {
       progressUnormalized = registerFlex +
           assigningFlex +
-          (currentTime - meetupTime) / ceremonyPhaseDurations[CeremonyPhase.Attesting] * attestingFlex;
+          (currentTime - meetupTime) / ceremonyPhaseDurations[CeremonyPhase.Attesting]! * attestingFlex;
     }
 
     return progressUnormalized / totalFlex;

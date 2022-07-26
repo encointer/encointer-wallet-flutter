@@ -6,7 +6,6 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -15,9 +14,9 @@ import '../theme.dart';
 class AddressInputField extends StatefulWidget {
   AddressInputField(this.store, {this.label, this.initialValue, this.onChanged, this.hideIdenticon = false});
   final AppStore store;
-  final String label;
-  final AccountData initialValue;
-  final Function(AccountData) onChanged;
+  final String? label;
+  final AccountData? initialValue;
+  final Function(AccountData)? onChanged;
   final bool hideIdenticon;
   @override
   _AddressInputFieldState createState() => _AddressInputFieldState();
@@ -34,7 +33,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
 
     // check if user input is valid address or indices
     final checkAddress = await webApi.account.decodeAddress([input]);
-    if (checkAddress == null) {
+    if (checkAddress.isEmpty) {
       return listLocal;
     }
 
@@ -43,7 +42,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
     if (input.length < 47) {
       // check if input indices in local account list
       final int indicesIndex = listLocal.indexWhere((e) {
-        final Map accInfo = widget.store.account.addressIndexMap[e.address];
+        final Map? accInfo = widget.store.account.addressIndexMap[e.address];
         return accInfo != null && accInfo['accountIndex'] == input;
       });
       if (indicesIndex >= 0) {
@@ -65,7 +64,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
 
     // fetch address info if it's a new address
     final res = await webApi.account.getAddressIcons([accountData.address]);
-    if (res != null) {
+    if (res.isNotEmpty) {
       await webApi.account.fetchAddressIndex([accountData.address]);
     }
     return [accountData];
@@ -73,24 +72,21 @@ class _AddressInputFieldState extends State<AddressInputField> {
 
   String _itemAsString(AccountData item) {
     final String address = Fmt.addressOfAccount(item, widget.store);
-    final Map accInfo = widget.store.account.addressIndexMap[item.address];
-    String idx = '';
+    final Map? accInfo = widget.store.account.addressIndexMap[item.address];
+    String? idx = '';
     if (accInfo != null && accInfo['accountIndex'] != null) {
       idx = accInfo['accountIndex'];
     }
-    if (item.name != null) {
-      return '${item.name} $idx $address ${item.address}';
-    }
-    return '${Fmt.accountDisplayNameString(address, accInfo)} $idx $address ${item.address}';
+    return '${item.name} $idx $address ${item.address}';
   }
 
-  Widget _selectedItemBuilder(BuildContext context, AccountData item, String itemDesignation) {
+  Widget _selectedItemBuilder(BuildContext context, AccountData? item) {
     if (item == null) {
       return Container();
     }
     return Observer(
       builder: (_) {
-        final Map accInfo = widget.store.account.addressIndexMap[item.pubKey];
+        final Map? accInfo = widget.store.account.addressIndexMap[item.pubKey];
         final String address = Fmt.addressOfAccount(item, widget.store);
         return Container(
           padding: EdgeInsets.only(top: 8),
@@ -105,10 +101,10 @@ class _AddressInputFieldState extends State<AddressInputField> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    item.name?.isNotEmpty ?? false ? item.name : Fmt.accountDisplayNameString(item.address, accInfo),
+                    item.name.isNotEmpty ? item.name : Fmt.accountDisplayNameString(item.address, accInfo)!,
                   ),
                   Text(
-                    Fmt.address(address),
+                    Fmt.address(address)!,
                     style: TextStyle(
                       fontSize: 12,
                       color: Theme.of(context).unselectedWidgetColor,
@@ -126,7 +122,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
   Widget _listItemBuilder(BuildContext context, AccountData item, bool isSelected) {
     return Observer(
       builder: (_) {
-        final Map accInfo = widget.store.account.addressIndexMap[item.pubKey];
+        final Map? accInfo = widget.store.account.addressIndexMap[item.pubKey];
         final String address = Fmt.addressOfAccount(item, widget.store);
         return Container(
           margin: EdgeInsets.symmetric(horizontal: 8),
@@ -140,9 +136,9 @@ class _AddressInputFieldState extends State<AddressInputField> {
           child: ListTile(
             selected: isSelected,
             dense: true,
-            title: Text(Fmt.address(address)),
+            title: Text(Fmt.address(address)!),
             subtitle: Text(
-              item.name.isNotEmpty ? item.name : Fmt.accountDisplayNameString(item.address, accInfo),
+              item.name.isNotEmpty ? item.name : Fmt.accountDisplayNameString(item.address, accInfo)!,
             ),
             leading: CircleAvatar(
               child: AddressIcon(item.address, item.pubKey),
@@ -155,42 +151,43 @@ class _AddressInputFieldState extends State<AddressInputField> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     return Container(
       decoration: BoxDecoration(
         color: ZurichLion.shade50,
         borderRadius: BorderRadius.circular(15),
       ),
       child: DropdownSearch<AccountData>(
-        mode: Mode.BOTTOM_SHEET,
-        isFilteredOnline: true,
-        showSearchBox: true,
-        showSelectedItem: true,
-        autoFocusSearchBox: true,
-        dropdownSearchDecoration: InputDecoration(
-          labelText: widget.label,
-          labelStyle: Theme.of(context).textTheme.headline4,
-          contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 25),
-          border: UnderlineInputBorder(
-            borderSide: BorderSide(
-              width: 0,
-              style: BorderStyle.none,
+        popupProps: PopupProps.modalBottomSheet(
+          isFilterOnline: true,
+          showSearchBox: true,
+          showSelectedItems: true,
+          itemBuilder: _listItemBuilder,
+        ),
+        dropdownDecoratorProps: DropDownDecoratorProps(
+          dropdownSearchDecoration: InputDecoration(
+            labelText: widget.label,
+            labelStyle: Theme.of(context).textTheme.headline4,
+            contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 25),
+            border: UnderlineInputBorder(
+              borderSide: BorderSide(
+                width: 0,
+                style: BorderStyle.none,
+              ),
             ),
           ),
         ),
-        label: widget.label,
         selectedItem: widget.initialValue,
-        compareFn: (AccountData i, s) => i.pubKey == s?.pubKey,
-        validator: (AccountData u) => u == null ? dic.profile.errorUserNameIsRequired : null,
-        onFind: (String filter) => _getAccountsFromInput(filter),
+        compareFn: (AccountData i, s) => i.pubKey == s.pubKey,
+        validator: (AccountData? u) => u == null ? dic.profile.errorUserNameIsRequired : null,
+        asyncItems: (String filter) => _getAccountsFromInput(filter),
         itemAsString: _itemAsString,
-        onChanged: (AccountData data) {
-          if (widget.onChanged != null) {
-            widget.onChanged(data);
+        onChanged: (AccountData? data) {
+          if (widget.onChanged != null && data != null) {
+            widget.onChanged!(data);
           }
         },
         dropdownBuilder: _selectedItemBuilder,
-        popupItemBuilder: _listItemBuilder,
       ),
     );
   }

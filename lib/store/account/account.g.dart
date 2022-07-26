@@ -6,41 +6,41 @@ part of 'account.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AccountStore on _AccountStore, Store {
-  Computed<AccountData> _$currentAccountComputed;
+  Computed<AccountData>? _$currentAccountComputed;
 
   @override
   AccountData get currentAccount => (_$currentAccountComputed ??=
           Computed<AccountData>(() => super.currentAccount, name: '_AccountStore.currentAccount'))
       .value;
-  Computed<List<AccountData>> _$optionalAccountsComputed;
+  Computed<List<AccountData>>? _$optionalAccountsComputed;
 
   @override
   List<AccountData> get optionalAccounts => (_$optionalAccountsComputed ??=
           Computed<List<AccountData>>(() => super.optionalAccounts, name: '_AccountStore.optionalAccounts'))
       .value;
-  Computed<List<AccountData>> _$accountListAllComputed;
+  Computed<List<AccountData>>? _$accountListAllComputed;
 
   @override
   List<AccountData> get accountListAll => (_$accountListAllComputed ??=
           Computed<List<AccountData>>(() => super.accountListAll, name: '_AccountStore.accountListAll'))
       .value;
-  Computed<bool> _$isFirstAccountComputed;
+  Computed<bool>? _$isFirstAccountComputed;
 
   @override
   bool get isFirstAccount =>
       (_$isFirstAccountComputed ??= Computed<bool>(() => super.isFirstAccount, name: '_AccountStore.isFirstAccount'))
           .value;
-  Computed<String> _$currentAddressComputed;
+  Computed<String>? _$currentAddressComputed;
 
   @override
   String get currentAddress =>
       (_$currentAddressComputed ??= Computed<String>(() => super.currentAddress, name: '_AccountStore.currentAddress'))
           .value;
 
-  final _$loadingAtom = Atom(name: '_AccountStore.loading');
+  late final _$loadingAtom = Atom(name: '_AccountStore.loading', context: context);
 
   @override
   bool get loading {
@@ -55,22 +55,22 @@ mixin _$AccountStore on _AccountStore, Store {
     });
   }
 
-  final _$txStatusAtom = Atom(name: '_AccountStore.txStatus');
+  late final _$txStatusAtom = Atom(name: '_AccountStore.txStatus', context: context);
 
   @override
-  TxStatus get txStatus {
+  TxStatus? get txStatus {
     _$txStatusAtom.reportRead();
     return super.txStatus;
   }
 
   @override
-  set txStatus(TxStatus value) {
+  set txStatus(TxStatus? value) {
     _$txStatusAtom.reportWrite(value, super.txStatus, () {
       super.txStatus = value;
     });
   }
 
-  final _$newAccountAtom = Atom(name: '_AccountStore.newAccount');
+  late final _$newAccountAtom = Atom(name: '_AccountStore.newAccount', context: context);
 
   @override
   AccountCreate get newAccount {
@@ -85,22 +85,22 @@ mixin _$AccountStore on _AccountStore, Store {
     });
   }
 
-  final _$currentAccountPubKeyAtom = Atom(name: '_AccountStore.currentAccountPubKey');
+  late final _$currentAccountPubKeyAtom = Atom(name: '_AccountStore.currentAccountPubKey', context: context);
 
   @override
-  String get currentAccountPubKey {
+  String? get currentAccountPubKey {
     _$currentAccountPubKeyAtom.reportRead();
     return super.currentAccountPubKey;
   }
 
   @override
-  set currentAccountPubKey(String value) {
+  set currentAccountPubKey(String? value) {
     _$currentAccountPubKeyAtom.reportWrite(value, super.currentAccountPubKey, () {
       super.currentAccountPubKey = value;
     });
   }
 
-  final _$accountListAtom = Atom(name: '_AccountStore.accountList');
+  late final _$accountListAtom = Atom(name: '_AccountStore.accountList', context: context);
 
   @override
   ObservableList<AccountData> get accountList {
@@ -115,37 +115,37 @@ mixin _$AccountStore on _AccountStore, Store {
     });
   }
 
-  final _$addressIndexMapAtom = Atom(name: '_AccountStore.addressIndexMap');
+  late final _$addressIndexMapAtom = Atom(name: '_AccountStore.addressIndexMap', context: context);
 
   @override
-  ObservableMap<String, Map<dynamic, dynamic>> get addressIndexMap {
+  ObservableMap<String?, Map<dynamic, dynamic>> get addressIndexMap {
     _$addressIndexMapAtom.reportRead();
     return super.addressIndexMap;
   }
 
   @override
-  set addressIndexMap(ObservableMap<String, Map<dynamic, dynamic>> value) {
+  set addressIndexMap(ObservableMap<String?, Map<dynamic, dynamic>> value) {
     _$addressIndexMapAtom.reportWrite(value, super.addressIndexMap, () {
       super.addressIndexMap = value;
     });
   }
 
-  final _$accountIndexMapAtom = Atom(name: '_AccountStore.accountIndexMap');
+  late final _$accountIndexMapAtom = Atom(name: '_AccountStore.accountIndexMap', context: context);
 
   @override
-  Map<String, Map<dynamic, dynamic>> get accountIndexMap {
+  Map<String?, Map<dynamic, dynamic>> get accountIndexMap {
     _$accountIndexMapAtom.reportRead();
     return super.accountIndexMap;
   }
 
   @override
-  set accountIndexMap(Map<String, Map<dynamic, dynamic>> value) {
+  set accountIndexMap(Map<String?, Map<dynamic, dynamic>> value) {
     _$accountIndexMapAtom.reportWrite(value, super.accountIndexMap, () {
       super.accountIndexMap = value;
     });
   }
 
-  final _$pubKeyAddressMapAtom = Atom(name: '_AccountStore.pubKeyAddressMap');
+  late final _$pubKeyAddressMapAtom = Atom(name: '_AccountStore.pubKeyAddressMap', context: context);
 
   @override
   ObservableMap<int, Map<String, String>> get pubKeyAddressMap {
@@ -160,37 +160,37 @@ mixin _$AccountStore on _AccountStore, Store {
     });
   }
 
-  final _$pubKeyIconsMapAtom = Atom(name: '_AccountStore.pubKeyIconsMap');
+  late final _$pubKeyIconsMapAtom = Atom(name: '_AccountStore.pubKeyIconsMap', context: context);
 
   @override
-  ObservableMap<String, String> get pubKeyIconsMap {
+  ObservableMap<String?, String?> get pubKeyIconsMap {
     _$pubKeyIconsMapAtom.reportRead();
     return super.pubKeyIconsMap;
   }
 
   @override
-  set pubKeyIconsMap(ObservableMap<String, String> value) {
+  set pubKeyIconsMap(ObservableMap<String?, String?> value) {
     _$pubKeyIconsMapAtom.reportWrite(value, super.pubKeyIconsMap, () {
       super.pubKeyIconsMap = value;
     });
   }
 
-  final _$addressIconsMapAtom = Atom(name: '_AccountStore.addressIconsMap');
+  late final _$addressIconsMapAtom = Atom(name: '_AccountStore.addressIconsMap', context: context);
 
   @override
-  ObservableMap<String, String> get addressIconsMap {
+  ObservableMap<String?, String?> get addressIconsMap {
     _$addressIconsMapAtom.reportRead();
     return super.addressIconsMap;
   }
 
   @override
-  set addressIconsMap(ObservableMap<String, String> value) {
+  set addressIconsMap(ObservableMap<String?, String?> value) {
     _$addressIconsMapAtom.reportWrite(value, super.addressIconsMap, () {
       super.addressIconsMap = value;
     });
   }
 
-  final _$queuedTxsAtom = Atom(name: '_AccountStore.queuedTxs');
+  late final _$queuedTxsAtom = Atom(name: '_AccountStore.queuedTxs', context: context);
 
   @override
   List<Map<String, dynamic>> get queuedTxs {
@@ -205,87 +205,87 @@ mixin _$AccountStore on _AccountStore, Store {
     });
   }
 
-  final _$setCurrentAccountAsyncAction = AsyncAction('_AccountStore.setCurrentAccount');
+  late final _$setCurrentAccountAsyncAction = AsyncAction('_AccountStore.setCurrentAccount', context: context);
 
   @override
-  Future<void> setCurrentAccount(String pubKey) {
+  Future<void> setCurrentAccount(String? pubKey) {
     return _$setCurrentAccountAsyncAction.run(() => super.setCurrentAccount(pubKey));
   }
 
-  final _$updateAccountNameAsyncAction = AsyncAction('_AccountStore.updateAccountName');
+  late final _$updateAccountNameAsyncAction = AsyncAction('_AccountStore.updateAccountName', context: context);
 
   @override
   Future<void> updateAccountName(AccountData account, String newName) {
     return _$updateAccountNameAsyncAction.run(() => super.updateAccountName(account, newName));
   }
 
-  final _$updateAccountAsyncAction = AsyncAction('_AccountStore.updateAccount');
+  late final _$updateAccountAsyncAction = AsyncAction('_AccountStore.updateAccount', context: context);
 
   @override
   Future<void> updateAccount(Map<String, dynamic> acc) {
     return _$updateAccountAsyncAction.run(() => super.updateAccount(acc));
   }
 
-  final _$addAccountAsyncAction = AsyncAction('_AccountStore.addAccount');
+  late final _$addAccountAsyncAction = AsyncAction('_AccountStore.addAccount', context: context);
 
   @override
   Future<void> addAccount(Map<String, dynamic> acc, String password) {
     return _$addAccountAsyncAction.run(() => super.addAccount(acc, password));
   }
 
-  final _$removeAccountAsyncAction = AsyncAction('_AccountStore.removeAccount');
+  late final _$removeAccountAsyncAction = AsyncAction('_AccountStore.removeAccount', context: context);
 
   @override
   Future<void> removeAccount(AccountData acc) {
     return _$removeAccountAsyncAction.run(() => super.removeAccount(acc));
   }
 
-  final _$loadAccountAsyncAction = AsyncAction('_AccountStore.loadAccount');
+  late final _$loadAccountAsyncAction = AsyncAction('_AccountStore.loadAccount', context: context);
 
   @override
   Future<void> loadAccount() {
     return _$loadAccountAsyncAction.run(() => super.loadAccount());
   }
 
-  final _$encryptSeedAsyncAction = AsyncAction('_AccountStore.encryptSeed');
+  late final _$encryptSeedAsyncAction = AsyncAction('_AccountStore.encryptSeed', context: context);
 
   @override
-  Future<void> encryptSeed(String pubKey, String seed, String seedType, String password) {
+  Future<void> encryptSeed(String? pubKey, String seed, String seedType, String password) {
     return _$encryptSeedAsyncAction.run(() => super.encryptSeed(pubKey, seed, seedType, password));
   }
 
-  final _$decryptSeedAsyncAction = AsyncAction('_AccountStore.decryptSeed');
+  late final _$decryptSeedAsyncAction = AsyncAction('_AccountStore.decryptSeed', context: context);
 
   @override
-  Future<String> decryptSeed(String pubKey, String seedType, String password) {
+  Future<String?> decryptSeed(String pubKey, String seedType, String password) {
     return _$decryptSeedAsyncAction.run(() => super.decryptSeed(pubKey, seedType, password));
   }
 
-  final _$checkSeedExistAsyncAction = AsyncAction('_AccountStore.checkSeedExist');
+  late final _$checkSeedExistAsyncAction = AsyncAction('_AccountStore.checkSeedExist', context: context);
 
   @override
-  Future<bool> checkSeedExist(String seedType, String pubKey) {
+  Future<bool> checkSeedExist(String seedType, String? pubKey) {
     return _$checkSeedExistAsyncAction.run(() => super.checkSeedExist(seedType, pubKey));
   }
 
-  final _$updateSeedAsyncAction = AsyncAction('_AccountStore.updateSeed');
+  late final _$updateSeedAsyncAction = AsyncAction('_AccountStore.updateSeed', context: context);
 
   @override
-  Future<void> updateSeed(String pubKey, String passwordOld, String passwordNew) {
+  Future<void> updateSeed(String? pubKey, String passwordOld, String passwordNew) {
     return _$updateSeedAsyncAction.run(() => super.updateSeed(pubKey, passwordOld, passwordNew));
   }
 
-  final _$deleteSeedAsyncAction = AsyncAction('_AccountStore.deleteSeed');
+  late final _$deleteSeedAsyncAction = AsyncAction('_AccountStore.deleteSeed', context: context);
 
   @override
-  Future<void> deleteSeed(String seedType, String pubKey) {
+  Future<void> deleteSeed(String seedType, String? pubKey) {
     return _$deleteSeedAsyncAction.run(() => super.deleteSeed(seedType, pubKey));
   }
 
-  final _$_AccountStoreActionController = ActionController(name: '_AccountStore');
+  late final _$_AccountStoreActionController = ActionController(name: '_AccountStore', context: context);
 
   @override
-  void setTxStatus([TxStatus status]) {
+  void setTxStatus([TxStatus? status]) {
     final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setTxStatus');
     try {
       return super.setTxStatus(status);
@@ -325,7 +325,7 @@ mixin _$AccountStore on _AccountStore, Store {
   }
 
   @override
-  void setNewAccountKey(String key) {
+  void setNewAccountKey(String? key) {
     final _$actionInfo = _$_AccountStoreActionController.startAction(name: '_AccountStore.setNewAccountKey');
     try {
       return super.setNewAccountKey(key);
@@ -428,7 +428,7 @@ currentAddress: ${currentAddress}
 }
 
 mixin _$AccountCreate on _AccountCreate, Store {
-  final _$nameAtom = Atom(name: '_AccountCreate.name');
+  late final _$nameAtom = Atom(name: '_AccountCreate.name', context: context);
 
   @override
   String get name {
@@ -443,7 +443,7 @@ mixin _$AccountCreate on _AccountCreate, Store {
     });
   }
 
-  final _$passwordAtom = Atom(name: '_AccountCreate.password');
+  late final _$passwordAtom = Atom(name: '_AccountCreate.password', context: context);
 
   @override
   String get password {
@@ -458,16 +458,16 @@ mixin _$AccountCreate on _AccountCreate, Store {
     });
   }
 
-  final _$keyAtom = Atom(name: '_AccountCreate.key');
+  late final _$keyAtom = Atom(name: '_AccountCreate.key', context: context);
 
   @override
-  String get key {
+  String? get key {
     _$keyAtom.reportRead();
     return super.key;
   }
 
   @override
-  set key(String value) {
+  set key(String? value) {
     _$keyAtom.reportWrite(value, super.key, () {
       super.key = value;
     });

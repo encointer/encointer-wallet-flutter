@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_qr_scan/qrcode_reader_view.dart';
 
 class MockQRScanPage extends StatelessWidget {
   MockQRScanPage(this.background);
@@ -12,34 +10,48 @@ class MockQRScanPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Future onScan(String txt, String rawData) async {}
-
     return Scaffold(
-      body: QrcodeReaderView(
-        key: Key('mockQr'),
-        helpWidget: Text("scan Qr Code"),
-        headerWidget: Stack(children: <Widget>[
-          Container(
-              constraints: BoxConstraints.expand(),
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: background,
-                  fit: BoxFit.cover,
+      body: Stack(children: [
+        Container(
+            constraints: BoxConstraints.expand(),
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                image: background,
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: Container()),
+        SafeArea(
+          child: IconButton(
+            icon: Icon(
+              Icons.arrow_back_ios,
+              color: Theme.of(context).cardColor,
+            ),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ),
+        //overlays a semi-transparent rounded square border that is 90% of screen width
+        Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width * 0.9,
+                height: MediaQuery.of(context).size.width * 0.9,
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  border: Border.all(color: Colors.white38, width: 2.0),
+                  borderRadius: const BorderRadius.all(Radius.circular(24.0)),
                 ),
               ),
-              child: Container()),
-          SafeArea(
-            child: IconButton(
-              icon: Icon(
-                Icons.arrow_back_ios,
-                color: Theme.of(context).cardColor,
+              Text(
+                "Scan Qr Code",
+                style: TextStyle(color: Colors.white38),
               ),
-              onPressed: () => Navigator.of(context).pop(),
-            ),
+            ],
           ),
-        ]),
-        onScan: onScan,
-      ),
+        ),
+      ]),
     );
   }
 }

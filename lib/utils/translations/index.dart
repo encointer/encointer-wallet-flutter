@@ -26,7 +26,7 @@ class I18n {
 
   final Locale locale;
 
-  static I18n of(BuildContext context) {
+  static I18n? of(BuildContext context) {
     return Localizations.of<I18n>(context, I18n);
   }
 

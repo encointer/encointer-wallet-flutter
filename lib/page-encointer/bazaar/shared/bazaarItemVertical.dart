@@ -8,15 +8,15 @@ import 'data_model/model/bazaarItemData.dart';
 
 class BazaarItemVertical extends StatelessWidget {
   const BazaarItemVertical({
-    Key key,
+    Key? key,
     this.data,
     this.index,
     this.cardHeight,
   }) : super(key: key);
 
-  final List<BazaarItemData> data;
-  final int index;
-  final double cardHeight;
+  final List<BazaarItemData>? data;
+  final int? index;
+  final double? cardHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +27,9 @@ class BazaarItemVertical extends StatelessWidget {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) =>
-                  (data[index] is BazaarBusinessData) ? BusinessDetail(data[index]) : OfferingDetail(data[index]),
+              builder: (context) => (data![index!] is BazaarBusinessData)
+                  ? BusinessDetail(data![index!] as BazaarBusinessData?)
+                  : OfferingDetail(data![index!] as BazaarOfferingData),
             ),
           );
         },
@@ -41,7 +42,7 @@ class BazaarItemVertical extends StatelessWidget {
                 aspectRatio: .8,
                 child: Stack(children: [
                   Center(
-                    child: data[index].image,
+                    child: data![index!].image,
                   ),
                   Positioned(
                     right: -8,
@@ -68,9 +69,9 @@ class BazaarItemVertical extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.fromLTRB(20, 4, 2, 4),
                   child: _ItemDescription(
-                    title: data[index].title,
-                    description: data[index].description,
-                    info: data[index].info.toString(),
+                    title: data![index!].title,
+                    description: data![index!].description,
+                    info: data![index!].info.toString(),
                   ),
                 ),
               )
@@ -84,15 +85,15 @@ class BazaarItemVertical extends StatelessWidget {
 
 class _ItemDescription extends StatelessWidget {
   const _ItemDescription({
-    Key key,
+    Key? key,
     this.title,
     this.description,
     this.info,
   }) : super(key: key);
 
-  final String title;
-  final String description;
-  final String info;
+  final String? title;
+  final String? description;
+  final String? info;
 
   @override
   Widget build(BuildContext context) {
@@ -105,7 +106,7 @@ class _ItemDescription extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                title,
+                title!,
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -115,7 +116,7 @@ class _ItemDescription extends StatelessWidget {
               Container(
                 padding: EdgeInsets.only(top: 6),
                 child: Text(
-                  description,
+                  description!,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
@@ -134,7 +135,7 @@ class _ItemDescription extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               Text(
-                info,
+                info!,
                 style: const TextStyle(
                   fontSize: 12.0,
                   color: Colors.black87,

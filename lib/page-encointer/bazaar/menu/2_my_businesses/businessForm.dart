@@ -19,7 +19,7 @@ class BusinessFormScaffold extends StatelessWidget {
         create: (_) => BusinessFormState(),
         child: Scaffold(
           appBar: AppBar(
-            title: Text(I18n.of(context).translationsForLocale().bazaar.businessAdd),
+            title: Text(I18n.of(context)!.translationsForLocale().bazaar.businessAdd),
           ),
           body: BusinessForm(categories: categories),
         ),
@@ -28,7 +28,7 @@ class BusinessFormScaffold extends StatelessWidget {
 
 class BusinessForm extends StatelessWidget {
   const BusinessForm({
-    @required this.categories,
+    required this.categories,
   });
 
   final List<String> categories;
@@ -51,7 +51,7 @@ class BusinessForm extends StatelessWidget {
                 onChanged: (value) => businessFormState.name = value,
                 decoration: InputDecoration(
                   labelText: 'Name',
-                  hintText: I18n.of(context).translationsForLocale().bazaar.businessNameHint,
+                  hintText: I18n.of(context)!.translationsForLocale().bazaar.businessNameHint,
                   errorText: businessFormState.errors.name,
                 ),
               ),
@@ -63,32 +63,33 @@ class BusinessForm extends StatelessWidget {
                 // maxLines: 3,
                 onChanged: (value) => businessFormState.description = value,
                 decoration: InputDecoration(
-                    labelText: I18n.of(context).translationsForLocale().bazaar.description,
-                    hintText: I18n.of(context).translationsForLocale().bazaar.businessDescriptionHint,
+                    labelText: I18n.of(context)!.translationsForLocale().bazaar.description,
+                    hintText: I18n.of(context)!.translationsForLocale().bazaar.businessDescriptionHint,
                     errorText: businessFormState.errors.description),
               ),
             ),
 
-            ToggleButtonsWithTitle(I18n.of(context).translationsForLocale().bazaar.categories, categories, null),
+            ToggleButtonsWithTitle(I18n.of(context)!.translationsForLocale().bazaar.categories, categories, null),
             // TODO state mananagement
             BusinessAddress(),
             Text(
-              I18n.of(context).translationsForLocale().bazaar.openningHours,
+              I18n.of(context)!.translationsForLocale().bazaar.openningHours,
               style: TextStyle(height: 2, fontWeight: FontWeight.bold),
             ),
             OpeningHours(),
             ButtonBar(
               children: <Widget>[
                 ElevatedButton(
-                  child:
-                      Row(children: [Icon(Icons.delete), Text(I18n.of(context).translationsForLocale().bazaar.delete)]),
+                  child: Row(
+                      children: [Icon(Icons.delete), Text(I18n.of(context)!.translationsForLocale().bazaar.delete)]),
                   onPressed: () {
                     // TODO modify state
                     Navigator.pop(context);
                   },
                 ),
                 ElevatedButton(
-                  child: Row(children: [Icon(Icons.check), Text(I18n.of(context).translationsForLocale().bazaar.save)]),
+                  child:
+                      Row(children: [Icon(Icons.check), Text(I18n.of(context)!.translationsForLocale().bazaar.save)]),
                   onPressed: () {
                     businessFormState.validateAll();
                     // TODO pop if valid
@@ -106,18 +107,18 @@ class BusinessForm extends StatelessWidget {
 
 class BusinessAddress extends StatelessWidget {
   const BusinessAddress({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     final businessFormState = Provider.of<BusinessFormState>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          I18n.of(context).translationsForLocale().bazaar.address,
+          I18n.of(context)!.translationsForLocale().bazaar.address,
           style: TextStyle(fontWeight: FontWeight.bold, height: 2.5),
         ),
         Row(
@@ -129,7 +130,7 @@ class BusinessAddress extends StatelessWidget {
                 builder: (_) => TextField(
                   onChanged: (value) => businessFormState.street = value,
                   decoration: InputDecoration(
-                    labelText: I18n.of(context).translationsForLocale().bazaar.street,
+                    labelText: I18n.of(context)!.translationsForLocale().bazaar.street,
                     errorText: businessFormState.errors.street,
                   ),
                 ),
@@ -159,7 +160,7 @@ class BusinessAddress extends StatelessWidget {
                 builder: (_) => TextField(
                   onChanged: (value) => businessFormState.zipCode = value,
                   decoration: InputDecoration(
-                    labelText: I18n.of(context).translationsForLocale().bazaar.zipCode,
+                    labelText: I18n.of(context)!.translationsForLocale().bazaar.zipCode,
                     errorText: businessFormState.errors.zipCode,
                   ),
                 ),
@@ -174,7 +175,7 @@ class BusinessAddress extends StatelessWidget {
                 builder: (_) => TextField(
                   onChanged: (value) => businessFormState.city = value,
                   decoration: InputDecoration(
-                    labelText: I18n.of(context).translationsForLocale().bazaar.city,
+                    labelText: I18n.of(context)!.translationsForLocale().bazaar.city,
                     errorText: businessFormState.errors.city,
                   ),
                 ),
