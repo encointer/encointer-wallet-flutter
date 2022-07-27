@@ -9,6 +9,7 @@ part of 'encointer.dart';
 EncointerStore _$EncointerStoreFromJson(Map<String, dynamic> json) => EncointerStore(
       json['network'] as String,
     )
+      ..updating = json['updating'] as bool
       ..currentPhase = $enumDecode(_$CeremonyPhaseEnumMap, json['currentPhase'])
       ..nextPhaseTimestamp = json['nextPhaseTimestamp'] as int?
       ..phaseDurations = (json['phaseDurations'] as Map<String, dynamic>).map(
@@ -40,6 +41,7 @@ EncointerStore _$EncointerStoreFromJson(Map<String, dynamic> json) => EncointerS
 
 Map<String, dynamic> _$EncointerStoreToJson(EncointerStore instance) => <String, dynamic>{
       'network': instance.network,
+      'updating': instance.updating,
       'currentPhase': _$CeremonyPhaseEnumMap[instance.currentPhase]!,
       'nextPhaseTimestamp': instance.nextPhaseTimestamp,
       'phaseDurations': instance.phaseDurations.map((k, e) => MapEntry(_$CeremonyPhaseEnumMap[k]!, e)),
@@ -143,6 +145,21 @@ mixin _$EncointerStore on _EncointerStore, Store {
   bool get showMeetupInfo =>
       (_$showMeetupInfoComputed ??= Computed<bool>(() => super.showMeetupInfo, name: '_EncointerStore.showMeetupInfo'))
           .value;
+
+  late final _$updatingAtom = Atom(name: '_EncointerStore.updating', context: context);
+
+  @override
+  bool get updating {
+    _$updatingAtom.reportRead();
+    return super.updating;
+  }
+
+  @override
+  set updating(bool value) {
+    _$updatingAtom.reportWrite(value, super.updating, () {
+      super.updating = value;
+    });
+  }
 
   late final _$currentPhaseAtom = Atom(name: '_EncointerStore.currentPhase', context: context);
 
@@ -411,6 +428,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   @override
   String toString() {
     return '''
+updating: ${updating},
 currentPhase: ${currentPhase},
 nextPhaseTimestamp: ${nextPhaseTimestamp},
 phaseDurations: ${phaseDurations},

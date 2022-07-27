@@ -66,6 +66,10 @@ abstract class _EncointerStore with Store {
   /// The encointer network this store belongs to
   final String network;
 
+  /// In order to prevent multiple simultaneous update calls.
+  @observable
+  bool updating = false;
+
   @observable
   CeremonyPhase currentPhase = CeremonyPhase.Registering;
 
@@ -293,8 +297,12 @@ abstract class _EncointerStore with Store {
 
   @action
   Future<void> updateState() async {
+    if (updating) {
+      _log("[updateState] already updating state. skipping");
+      return;
+    }
     _log("[updateState] updating state...");
-
+    updating = true;
     try {
       await Future.wait(<Future<void>>[
         webApi.encointer.getCommunityMetadata(),
@@ -311,9 +319,9 @@ abstract class _EncointerStore with Store {
     } catch (e) {
       _log("Error executing update state");
     }
-
+    updating = false;
     _log("returning future...");
-    return Future.value(null);
+    return;
   }
 
   Future<void> updateAggregatedAccountData() async {
