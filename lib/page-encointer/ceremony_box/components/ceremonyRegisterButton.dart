@@ -2,6 +2,7 @@ import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/components/maybeDateTime.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
@@ -48,7 +49,10 @@ class _CeremonyRegisterButtonState extends State<CeremonyRegisterButton> {
                 MaybeDateTime(widget.registerUntil, dateFormat: DateFormat.yMd(languageCode).add_Hm())
               ],
             )
-          : CupertinoActivityIndicator(),
+          : Theme(
+              // we make the indicator believe the theme is dark to make it appear bright on top of dark blue button
+              data: ThemeData(cupertinoOverrideTheme: CupertinoThemeData(brightness: Brightness.dark)),
+              child: CupertinoActivityIndicator()),
       onPressed: !_submitting && widget.registerUntil != null ? () => _onPressed() : null,
     );
   }
