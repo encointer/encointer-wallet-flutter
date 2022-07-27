@@ -14,6 +14,7 @@ void main() {
 
       store.setupUpdateReaction(() async {
         count = count + 1;
+        return Future.delayed(Duration(seconds: 1));
       });
 
       await Future.delayed(Duration(seconds: 2));
