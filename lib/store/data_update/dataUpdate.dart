@@ -19,7 +19,7 @@ abstract class _DataUpdateStore with Store {
 
   /// Stores the reaction. Call `_disposer()` to remove the reaction.
   ///
-  /// **Caveat:** This is not disposed upon `hot-restart`. Hence, I we change the reaction that is assigned to the
+  /// **Caveat:** This is not disposed upon `hot-restart`. Hence, if we change the reaction that is assigned to the
   /// [_disposer], we need to rebuild the app to have a clean state.
   ReactionDisposer? _disposer;
 

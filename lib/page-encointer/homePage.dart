@@ -114,7 +114,10 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       body: Observer(builder: (_) {
         if (store.dataUpdate.expired) {
           store.dataUpdate.executeUpdate();
-          return CupertinoActivityIndicator();
+          return CupertinoAlertDialog(
+            title: Text("We are getting your app ready..."),
+            content: CupertinoActivityIndicator(),
+          );
         } else {
           return PageView(
             physics: NeverScrollableScrollPhysics(),
