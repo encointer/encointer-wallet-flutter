@@ -55,6 +55,21 @@ mixin _$DataUpdateStore on _DataUpdateStore, Store {
     });
   }
 
+  late final _$updatingAtom = Atom(name: '_DataUpdateStore.updating', context: context);
+
+  @override
+  bool get updating {
+    _$updatingAtom.reportRead();
+    return super.updating;
+  }
+
+  @override
+  set updating(bool value) {
+    _$updatingAtom.reportWrite(value, super.updating, () {
+      super.updating = value;
+    });
+  }
+
   late final _$executeUpdateAsyncAction = AsyncAction('_DataUpdateStore.executeUpdate', context: context);
 
   @override
@@ -78,6 +93,7 @@ mixin _$DataUpdateStore on _DataUpdateStore, Store {
   String toString() {
     return '''
 lastUpdate: ${lastUpdate},
+updating: ${updating},
 now: ${now},
 expired: ${expired},
 needsRefresh: ${needsRefresh}

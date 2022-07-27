@@ -17,7 +17,10 @@ abstract class _DataUpdateStore with Store {
   /// The update function to be executed when the state expired.
   Future<void> Function()? _updateFn;
 
-  // Not sure yet, if we need to dispose this one.
+  /// Stores the reaction. Call `_disposer()` to remove the reaction.
+  ///
+  /// **Caveat:** This is not disposed upon `hot-restart`. Hence, I we change the reaction that is assigned to the
+  /// [_disposer], we need to rebuild the app to have a clean state.
   ReactionDisposer? _disposer;
 
   final Duration refreshPeriod;
@@ -27,7 +30,10 @@ abstract class _DataUpdateStore with Store {
 
   /// Time that is updated every second.
   @observable
-  ObservableStream<DateTime> _time = Stream.periodic(Duration(seconds: 1)).map((_) => DateTime.now()).asObservable();
+  ObservableStream<DateTime> _time = Stream.periodic(Duration(seconds: 1)).map((_) {
+    _log("updating time: ${DateTime.now()}");
+    return DateTime.now();
+  }).asObservable();
 
   @computed
   DateTime get now => _time.value ?? DateTime.now();
@@ -47,19 +53,29 @@ abstract class _DataUpdateStore with Store {
   @computed
   bool get needsRefresh => _lastUpdateIsLongerAgoThan(refreshPeriod);
 
+  /// In order to prevent multiple simultaneous update calls.
+  @observable
+  bool updating = false;
+
   @action
   void setLastUpdate(DateTime dateTime) {
     lastUpdate = dateTime;
   }
 
-  Future<void> setupUpdateReaction(Future<void> Function() updateFn) async {
+  void setupUpdateReaction(Future<void> Function() updateFn) {
     _updateFn = updateFn;
-    _disposer = reaction((_) => now, (_) async {
+
+    if (_disposer != null) {
+      _disposer!();
+    }
+
+    _disposer = reaction((_) => now, (_) {
       if (needsRefresh) {
+        _log("Reaction triggered...");
         executeUpdate();
       } else {
         // Only enable for debugging purposes, otherwise it spams every second.
-        // _log("Reaction triggered, but no state-update needed.");
+        _log("Reaction triggered, but no state-update needed.");
       }
     });
   }
@@ -68,13 +84,35 @@ abstract class _DataUpdateStore with Store {
     return lastUpdate.millisecondsSinceEpoch + duration.inMilliseconds < now.millisecondsSinceEpoch;
   }
 
+  void disposeReaction() {
+    if (_disposer != null) {
+      _disposer!();
+    }
+  }
+
   /// Execute the update and set the timestamp.
   @action
   Future<void> executeUpdate() async {
-    if (_updateFn != null) {
+    if (_updateFn != null && !updating) {
       _log("update reaction running...");
-      lastUpdate = DateTime.now();
-      await _updateFn!();
+
+      updating = true;
+
+      try {
+        _log("running `updateFn");
+        // Todo: why does update function not return!!!!!
+        // Even worse, it seems to brick the reaction, such that it is not triggered anymore.
+        await _updateFn!().timeout(Duration(seconds: 15));
+        // The below works.
+        // await Future.delayed(Duration(seconds: 3));
+        _log("`updateFn finished");
+        lastUpdate = DateTime.now();
+      } catch (e) {
+        _log("Error while executing `updateFn`: ${e.toString()}");
+      }
+
+      updating = false;
+
       _log("update reaction finished");
     }
   }

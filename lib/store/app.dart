@@ -61,7 +61,9 @@ abstract class _AppStore with Store {
   SettingsStore get settings => _settings!;
 
   @observable
-  DataUpdateStore dataUpdate = DataUpdateStore(refreshPeriod: Duration(minutes: 2));
+  DataUpdateStore? _dataUpdate;
+  @computed
+  DataUpdateStore get dataUpdate => _dataUpdate!;
 
   @observable
   AccountStore? _account;
@@ -100,6 +102,8 @@ abstract class _AppStore with Store {
     _settings = SettingsStore(this as AppStore);
     await settings.init(sysLocaleCode);
 
+    _dataUpdate = DataUpdateStore(refreshPeriod: Duration(minutes: 2));
+
     _account = AccountStore(this as AppStore);
     await account.loadAccount();
 
@@ -112,8 +116,6 @@ abstract class _AppStore with Store {
     // need to call this after settings was initialized
     String? networkInfo = settings.endpoint.info;
     await loadOrInitEncointerCache(networkInfo!);
-
-    dataUpdate.setupUpdateReaction(encointer.updateState);
 
     storeIsReady = true;
   }

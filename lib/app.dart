@@ -104,6 +104,11 @@ class _WalletAppState extends State<WalletApp> {
           : Api.create(_appStore!, JSApi(), SubstrateDartApi(), jsServiceEncointer);
 
       await webApi.init();
+      _appStore!.dataUpdate.setupUpdateReaction(() async {
+        print('inside update fn');
+        await _appStore!.encointer.updateState();
+        // return Future.delayed(Duration(seconds: 3));
+      });
 
       _changeLang(context, _appStore!.settings.localeCode);
 
