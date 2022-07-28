@@ -94,8 +94,8 @@ class ScanClaimQrCode extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        height: MediaQuery.of(context).size.width * 0.9,
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        height: MediaQuery.of(context).size.width * 0.7,
                         decoration: BoxDecoration(
                           color: Colors.transparent,
                           border: Border.all(color: Colors.white38, width: 2.0),
@@ -110,7 +110,8 @@ class ScanClaimQrCode extends StatelessWidget {
                               'TOTAL_COUNT',
                               (confirmedParticipantsCount - 1).toString(),
                             );
-                        return Text(txt, style: TextStyle(color: Colors.white38));
+                        return Text(txt,
+                            style: TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16));
                       }),
                     ],
                   ),
