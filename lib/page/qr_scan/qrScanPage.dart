@@ -80,8 +80,8 @@ class ScanPage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.9,
-                        height: MediaQuery.of(context).size.width * 0.9,
+                        width: MediaQuery.of(context).size.width * 0.7,
+                        height: MediaQuery.of(context).size.width * 0.7,
                         decoration: BoxDecoration(
                           color: Colors.transparent,
                           border: Border.all(color: Colors.white38, width: 2.0),
@@ -90,7 +90,7 @@ class ScanPage extends StatelessWidget {
                       ),
                       Text(
                         I18n.of(context)!.translationsForLocale().account.qrScan,
-                        style: TextStyle(color: Colors.white38),
+                        style: TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16),
                       ),
                     ],
                   ),
