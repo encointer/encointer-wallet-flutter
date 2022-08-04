@@ -67,7 +67,10 @@ Future<void> submitClaimRewards(
     store,
     api,
     txParams,
-    onFinish: (BuildContext txPageContext, Map res) => (res),
+    onFinish: (BuildContext txPageContext, Map res) {
+      store.dataUpdate.setInvalidated();
+      return res;
+    },
   );
 }
 
@@ -112,11 +115,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
     api,
     registerParticipantParams(store.encointer.chosenCid!, proof: await api.encointer.getProofOfAttendance()),
     onFinish: (BuildContext txPageContext, Map res) {
-      store.encointer.updateAggregatedAccountData();
-      Navigator.popUntil(
-        txPageContext,
-        ModalRoute.withName('/'),
-      );
+      store.dataUpdate.setInvalidated();
     },
   );
 }
