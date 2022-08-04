@@ -35,6 +35,8 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
   late List<TabData> _tabList;
   int _tabIndex = 0;
 
+  bool _awaitingStateUpdate = false;
+
   List<BottomNavigationBarItem> _navBarItems(int activeItem) {
     return _tabList
         .map(
@@ -113,24 +115,21 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       backgroundColor: Colors.white,
       body: Observer(builder: (_) {
         if (store.dataUpdate.expired) {
-          store.dataUpdate.executeUpdate();
-          return CupertinoAlertDialog(
-            title: Text("We are getting your app ready..."),
-            content: CupertinoActivityIndicator(),
-          );
+          scheduleStateUpdate();
         } else {
-          return PageView(
-            physics: NeverScrollableScrollPhysics(),
-            controller: _pageController,
-            children: [
-              Assets(store),
-              if (store.settings.enableBazaar) BazaarMain(store), // dart collection if
-              ScanPage(store),
-              ContactsPage(store),
-              Profile(store),
-            ],
-          );
+          clearAwaitingStateUpdate();
         }
+        return PageView(
+          physics: NeverScrollableScrollPhysics(),
+          controller: _pageController,
+          children: [
+            Assets(store),
+            if (store.settings.enableBazaar) BazaarMain(store), // dart collection if
+            ScanPage(store),
+            ContactsPage(store),
+            Profile(store),
+          ],
+        );
       }),
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _tabIndex,
@@ -155,6 +154,28 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         showUnselectedLabels: false,
       ),
     );
+  }
+
+  // Todo: Can we put this into the `DataUpdateStore`?
+  void scheduleStateUpdate() {
+    _awaitingStateUpdate = true;
+    store.dataUpdate.executeUpdate();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      showCupertinoDialog(
+        context: context,
+        builder: (_) => CupertinoAlertDialog(
+          title: Text("We are getting your app ready..."),
+          content: CupertinoActivityIndicator(),
+        ),
+      );
+    });
+  }
+
+  void clearAwaitingStateUpdate() {
+    if (_awaitingStateUpdate) {
+      _awaitingStateUpdate = false;
+      Navigator.of(context).pop();
+    }
   }
 }
 
