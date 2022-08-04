@@ -103,7 +103,10 @@ class _WalletAppState extends State<WalletApp> {
           ? MockApi(_appStore!, MockJSApi(), MockSubstrateDartApi(), jsServiceEncointer, withUi: true)
           : Api.create(_appStore!, JSApi(), SubstrateDartApi(), jsServiceEncointer);
 
-      await webApi.init();
+      await webApi.init().timeout(
+            Duration(seconds: 20),
+            onTimeout: () => print("webApi.init() has run into a timeout. We might be offline."),
+          );
       _appStore!.dataUpdate.setupUpdateReaction(() async {
         print('inside update fn');
         await _appStore!.encointer.updateState();
