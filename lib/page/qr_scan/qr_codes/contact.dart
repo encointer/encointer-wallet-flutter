@@ -84,11 +84,10 @@ class ContactData implements ToQrFields {
   }
 
   static ContactData fromQrFieldsV2(List<String> fields) {
-    
     return ContactData(
       account: fields[0],
       cid: null, // fields[1].isNotEmpty ? CommunityIdentifier.fromFmtString(fields[1]) : null,
-      network: 'fields[2]',
+      network: fields[0].isNotEmpty ? fields[0] : 'network',
       label: fields[1],
     );
   }
