@@ -40,7 +40,6 @@ class ScanPage extends StatelessWidget {
         final qrCode = qrScanService.parse(data);
         qrScanService.handleQrScan(context, params.scannerContext, qrCode);
       } catch (e) {
-        print("[ScanPage]: ${e.toString()}");
         RootSnackBar.showMsg(e.toString());
       }
     }
@@ -89,7 +88,8 @@ class ScanPage extends StatelessWidget {
                       ),
                       Text(
                         I18n.of(context)!.translationsForLocale().account.qrScan,
-                        style: TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16),
+                        style: TextStyle(
+                            color: Colors.white, backgroundColor: Colors.black38, fontSize: 16),
                       ),
                     ],
                   ),
@@ -117,7 +117,7 @@ Widget mockQrDataRow(Translations dic, Function(String) onScan) {
     ElevatedButton(
       child: Text(dic.assets.invoice),
       onPressed: () => onScan(
-        "encointer-invoice\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX"
+        "encointer-invoice\nv1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX"
         "\nsqm1v79dF6b\n0.2343\nAubrey",
       ),
     ),
