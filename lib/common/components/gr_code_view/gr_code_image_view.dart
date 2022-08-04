@@ -24,19 +24,12 @@ class QrCodeImage extends StatelessWidget {
         children: [
           Align(
             alignment: Alignment.bottomCenter,
-            child: InkWell(
-              onTap: onTap,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Icon(Icons.share, color: ZurichLion.shade500),
-                  SizedBox(width: 8),
-                  Text(
-                    text,
-                    style: Theme.of(context).textTheme.headline3,
-                  ),
-                ],
+            child: TextButton.icon(
+              onPressed: onTap,
+              icon: Icon(Icons.share, color: ZurichLion.shade500),
+              label: Text(
+                text,
+                style: Theme.of(context).textTheme.headline3,
               ),
             ),
           ),
