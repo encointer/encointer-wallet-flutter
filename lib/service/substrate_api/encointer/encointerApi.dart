@@ -268,9 +268,7 @@ class EncointerApi {
       final meetupTimeOverride =
           await feed.getMeetupTimeOverride(store.encointer.network, cid, store.encointer.currentPhase);
 
-      if (meetupTimeOverride != null) {
-        store.encointer.community!.setMeetupTimeOverride(meetupTimeOverride.millisecondsSinceEpoch);
-      }
+      store.encointer.community!.setMeetupTimeOverride(meetupTimeOverride?.millisecondsSinceEpoch);
     } catch (e) {
       print("api: exception: ${e.toString()}");
     }
