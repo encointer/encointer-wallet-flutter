@@ -31,12 +31,18 @@ abstract class _DataUpdateStore with Store {
   /// Time that is updated every second.
   @observable
   ObservableStream<DateTime> _time = Stream.periodic(Duration(seconds: 1)).map((_) {
-    _log("updating time: ${DateTime.now()}");
+    // _log("updating time: ${DateTime.now()}");
     return DateTime.now();
   }).asObservable();
 
   @computed
   DateTime get now => _time.value ?? DateTime.now();
+
+  /// If the data has been invalidated.
+  ///
+  /// This is intended to be set from the outside due to certain actions that invalidate the data.
+  @observable
+  bool invalidated = false;
 
   /// The data is expired.
   ///
@@ -45,13 +51,13 @@ abstract class _DataUpdateStore with Store {
   /// This should only be needed after app startup or when the app resumes from the background because `needsRefresh`
   /// should trigger updates before `expired` becomes true in the normal case.
   @computed
-  bool get expired => _lastUpdateIsLongerAgoThan(refreshPeriod + Duration(seconds: 30));
+  bool get expired => _lastUpdateIsLongerAgoThan(refreshPeriod + Duration(seconds: 30)) | invalidated;
 
   /// The data is needs a refresh.
   ///
   /// This is intended to be tracked internally such that the `setUpdateReaction` gets fired before `expired` is true.
   @computed
-  bool get needsRefresh => _lastUpdateIsLongerAgoThan(refreshPeriod);
+  bool get needsRefresh => _lastUpdateIsLongerAgoThan(refreshPeriod) | invalidated;
 
   /// In order to prevent multiple simultaneous update calls.
   @observable
@@ -60,6 +66,11 @@ abstract class _DataUpdateStore with Store {
   @action
   void setLastUpdate(DateTime dateTime) {
     lastUpdate = dateTime;
+  }
+
+  @action
+  setInvalidated() {
+    invalidated = true;
   }
 
   void setupUpdateReaction(Future<void> Function() updateFn) {
@@ -102,6 +113,9 @@ abstract class _DataUpdateStore with Store {
         _log("running `updateFn");
         await _updateFn!().timeout(Duration(seconds: 15));
         _log("`updateFn finished");
+
+        // Data is valid and up-to-date again
+        invalidated = false;
         lastUpdate = DateTime.now();
       } catch (e) {
         _log("Error while executing `updateFn`: ${e.toString()}");

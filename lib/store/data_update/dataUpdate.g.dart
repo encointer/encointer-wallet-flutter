@@ -55,6 +55,21 @@ mixin _$DataUpdateStore on _DataUpdateStore, Store {
     });
   }
 
+  late final _$invalidatedAtom = Atom(name: '_DataUpdateStore.invalidated', context: context);
+
+  @override
+  bool get invalidated {
+    _$invalidatedAtom.reportRead();
+    return super.invalidated;
+  }
+
+  @override
+  set invalidated(bool value) {
+    _$invalidatedAtom.reportWrite(value, super.invalidated, () {
+      super.invalidated = value;
+    });
+  }
+
   late final _$updatingAtom = Atom(name: '_DataUpdateStore.updating', context: context);
 
   @override
@@ -90,9 +105,20 @@ mixin _$DataUpdateStore on _DataUpdateStore, Store {
   }
 
   @override
+  dynamic setInvalidated() {
+    final _$actionInfo = _$_DataUpdateStoreActionController.startAction(name: '_DataUpdateStore.setInvalidated');
+    try {
+      return super.setInvalidated();
+    } finally {
+      _$_DataUpdateStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 lastUpdate: ${lastUpdate},
+invalidated: ${invalidated},
 updating: ${updating},
 now: ${now},
 expired: ${expired},
