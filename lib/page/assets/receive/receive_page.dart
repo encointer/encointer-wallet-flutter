@@ -13,8 +13,9 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:pausable_timer/pausable_timer.dart';
-import 'package:qr_flutter_fork/qr_flutter_fork.dart';
 import 'package:share_plus/share_plus.dart';
+
+import '../../../common/components/gr_code_view/gr_code_image_view.dart';
 
 class ReceivePage extends StatefulWidget {
   ReceivePage(this.store);
@@ -60,7 +61,8 @@ class _ReceivePageState extends State<ReceivePage> {
       const Duration(seconds: 1),
       () async {
         if (!observedPendingExtrinsic) {
-          observedPendingExtrinsic = await showSnackBarUponPendingExtrinsics(widget.store, webApi, dic);
+          observedPendingExtrinsic =
+              await showSnackBarUponPendingExtrinsics(widget.store, webApi, dic);
           resetObservedPendingExtrinsicCounter = 0;
         } else {
           if (resetObservedPendingExtrinsicCounter++ > 4) {
@@ -79,18 +81,22 @@ class _ReceivePageState extends State<ReceivePage> {
 
           double? demurrageRate = widget.store.encointer.community!.demurrage;
           double? newBalance = widget.store.encointer.applyDemurrage(balances[cid]);
-          double oldBalance = widget.store.encointer.applyDemurrage(widget.store.encointer.communityBalanceEntry) ?? 0;
+          double oldBalance =
+              widget.store.encointer.applyDemurrage(widget.store.encointer.communityBalanceEntry) ??
+                  0;
           if (newBalance != null) {
             double delta = newBalance - oldBalance;
             print("[receivePage] balance was $oldBalance, changed by $delta");
             if (delta > demurrageRate!) {
               var msg = dic.assets.incomingConfirmed
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
-                  .replaceAll('CID_SYMBOL', widget.store.encointer.community?.metadata?.symbol ?? "null")
+                  .replaceAll(
+                      'CID_SYMBOL', widget.store.encointer.community?.metadata?.symbol ?? "null")
                   .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
               print("[receivePage] $msg");
               widget.store.encointer.account?.addBalanceEntry(cid, balances[cid]!);
-              NotificationPlugin.showNotification(44, dic.assets.fundsReceived, msg, cid: cid.toFmtString());
+              NotificationPlugin.showNotification(44, dic.assets.fundsReceived, msg,
+                  cid: cid.toFmtString());
             }
           }
         });
@@ -136,7 +142,10 @@ class _ReceivePageState extends State<ReceivePage> {
                         padding: const EdgeInsets.symmetric(horizontal: 48),
                         child: Text(
                           dic.profile.qrScanHint,
-                          style: Theme.of(context).textTheme.headline3!.copyWith(color: encointerBlack),
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline3!
+                              .copyWith(color: encointerBlack),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -145,7 +154,10 @@ class _ReceivePageState extends State<ReceivePage> {
                         padding: const EdgeInsets.all(30),
                         child: EncointerTextFormField(
                           labelText: dic.assets.invoiceAmount,
-                          textStyle: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
+                          textStyle: Theme.of(context)
+                              .textTheme
+                              .headline2!
+                              .copyWith(color: encointerBlack),
                           inputFormatters: [UI.decimalInputFormatter()],
                           controller: _amountController,
                           keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -173,34 +185,24 @@ class _ReceivePageState extends State<ReceivePage> {
                       style: Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey),
                       textAlign: TextAlign.center),
                   SizedBox(height: 8),
-                  Column(children: [
-                    // Enhance brightness for the QR-code
-                    WakeLockAndBrightnessEnhancer(brightness: 1),
-                    QrImage(data: invoice.toQrPayload()),
-                    InkWell(
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 24),
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(Icons.share, color: ZurichLion.shade500),
-                              SizedBox(width: 8),
-                              Text(
-                                dic.assets.shareInvoice,
-                                style: Theme.of(context).textTheme.headline3,
-                              ),
-                            ]),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // Enhance brightness for the QR-code
+                      WakeLockAndBrightnessEnhancer(brightness: 1),
+                      QrCodeImage(
+                        qrCode: invoice.toQrPayload(),
+                        text: dic.assets.shareInvoice,
+                        onTap: () => {
+                          if (_formKey.currentState!.validate())
+                            {
+                              // Todo: implement invoice.toUrl()
+                              Share.share(invoice.toQrPayload()),
+                            }
+                        },
                       ),
-                      onTap: () => {
-                        if (_formKey.currentState!.validate())
-                          {
-                            // Todo: implement invoice.toUrl()
-                            Share.share(invoice.toQrPayload()),
-                          }
-                      },
-                    ),
-                  ])
+                    ],
+                  )
                 ],
               ),
             ),
