@@ -100,11 +100,7 @@ abstract class _DataUpdateStore with Store {
 
       try {
         _log("running `updateFn");
-        // Todo: why does update function not return!!!!!
-        // Even worse, it seems to brick the reaction, such that it is not triggered anymore.
         await _updateFn!().timeout(Duration(seconds: 15));
-        // The below works.
-        // await Future.delayed(Duration(seconds: 3));
         _log("`updateFn finished");
         lastUpdate = DateTime.now();
       } catch (e) {
