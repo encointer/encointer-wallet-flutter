@@ -40,3 +40,6 @@ lib/generated_plugin_registrant.dart
 **/dist
 **/node_modules/
 /android/fastlane/metadata/android/en-US/images/phoneScreenshots/
+
+# source files
+/source

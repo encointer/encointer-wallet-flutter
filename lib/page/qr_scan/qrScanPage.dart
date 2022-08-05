@@ -88,8 +88,7 @@ class ScanPage extends StatelessWidget {
                       ),
                       Text(
                         I18n.of(context)!.translationsForLocale().account.qrScan,
-                        style: TextStyle(
-                            color: Colors.white, backgroundColor: Colors.black38, fontSize: 16),
+                        style: TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16),
                       ),
                     ],
                   ),

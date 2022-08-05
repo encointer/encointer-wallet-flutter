@@ -27,8 +27,7 @@ class CommunityMetadata {
     return jsonEncode(this);
   }
 
-  factory CommunityMetadata.fromJson(Map<String, dynamic> json) =>
-      _$CommunityMetadataFromJson(json);
+  factory CommunityMetadata.fromJson(Map<String, dynamic> json) => _$CommunityMetadataFromJson(json);
 
   Map<String, dynamic> toJson() => _$CommunityMetadataToJson(this);
 }

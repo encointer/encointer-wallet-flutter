@@ -53,8 +53,7 @@ class QrScanService {
 }
 
 /// Handles the `ContactQrCode` scan based on where it was scanned.
-void handleContactQrCodeScan(
-    BuildContext context, QrScannerContext scanContext, ContactQrCode qrCode) {
+void handleContactQrCodeScan(BuildContext context, QrScannerContext scanContext, ContactQrCode qrCode) {
   switch (scanContext) {
     case QrScannerContext.mainPage:
       // show add contact and auto-fill data
@@ -85,8 +84,7 @@ void handleContactQrCodeScan(
 }
 
 /// Handles the `InvoiceQrCode` scan based on where it was scanned.
-void handleInvoiceQrCodeScan(
-    BuildContext context, QrScannerContext scanContext, InvoiceQrCode qrCode) {
+void handleInvoiceQrCodeScan(BuildContext context, QrScannerContext scanContext, InvoiceQrCode qrCode) {
   switch (scanContext) {
     case QrScannerContext.mainPage:
       // go to transfer page and auto-fill data
@@ -107,8 +105,7 @@ void handleInvoiceQrCodeScan(
 }
 
 /// Handles the `VoucherQrCode` scan based on where it was scanned.
-void handleVoucherQrCodeScan(
-    BuildContext context, QrScannerContext? scanContext, VoucherQrCode qrCode) {
+void handleVoucherQrCodeScan(BuildContext context, QrScannerContext? scanContext, VoucherQrCode qrCode) {
   var showFundVoucher = false;
   if (scanContext == QrScannerContext.transferPage) {
     showFundVoucher = true;

@@ -22,40 +22,32 @@ class QrCodeImage extends StatelessWidget {
       width: double.infinity,
       child: Stack(
         children: [
-          _icon(context),
-          _qrCode(context),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: TextButton.icon(
+              onPressed: onTap,
+              icon: Icon(Icons.share, color: ZurichLion.shade500),
+              label: Text(
+                text,
+                style: Theme.of(context).textTheme.headline3,
+              ),
+            ),
+          ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: InteractiveViewer(
+              clipBehavior: Clip.none,
+              scaleFactor: 800,
+              minScale: 0.1,
+              maxScale: 2.0,
+              child: QrImage(
+                backgroundColor: Theme.of(context).canvasColor,
+                data: qrCode,
+                size: 300,
+              ),
+            ),
+          ),
         ],
-      ),
-    );
-  }
-
-  Widget _qrCode(BuildContext context) {
-    return Align(
-      alignment: Alignment.topCenter,
-      child: InteractiveViewer(
-        clipBehavior: Clip.none,
-        scaleFactor: 800,
-        minScale: 0.1,
-        maxScale: 2.0,
-        child: QrImage(
-          backgroundColor: Theme.of(context).canvasColor,
-          data: qrCode,
-          size: 300,
-        ),
-      ),
-    );
-  }
-
-  Widget _icon(BuildContext context) {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: TextButton.icon(
-        onPressed: onTap,
-        icon: Icon(Icons.share, color: ZurichLion.shade500),
-        label: Text(
-          text,
-          style: Theme.of(context).textTheme.headline3,
-        ),
       ),
     );
   }

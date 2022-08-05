@@ -61,8 +61,11 @@ class _ReceivePageState extends State<ReceivePage> {
       const Duration(seconds: 1),
       () async {
         if (!observedPendingExtrinsic) {
-          observedPendingExtrinsic =
-              await showSnackBarUponPendingExtrinsics(widget.store, webApi, dic);
+          observedPendingExtrinsic = await showSnackBarUponPendingExtrinsics(
+            widget.store,
+            webApi,
+            dic,
+          );
           resetObservedPendingExtrinsicCounter = 0;
         } else {
           if (resetObservedPendingExtrinsicCounter++ > 4) {
