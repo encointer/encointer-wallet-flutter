@@ -61,11 +61,8 @@ class _ReceivePageState extends State<ReceivePage> {
       const Duration(seconds: 1),
       () async {
         if (!observedPendingExtrinsic) {
-          observedPendingExtrinsic = await showSnackBarUponPendingExtrinsics(
-            widget.store,
-            webApi,
-            dic,
-          );
+          observedPendingExtrinsic = await showSnackBarUponPendingExtrinsics(widget.store, webApi, dic);
+
           resetObservedPendingExtrinsicCounter = 0;
         } else {
           if (resetObservedPendingExtrinsicCounter++ > 4) {
@@ -84,22 +81,18 @@ class _ReceivePageState extends State<ReceivePage> {
 
           double? demurrageRate = widget.store.encointer.community!.demurrage;
           double? newBalance = widget.store.encointer.applyDemurrage(balances[cid]);
-          double oldBalance =
-              widget.store.encointer.applyDemurrage(widget.store.encointer.communityBalanceEntry) ??
-                  0;
+          double oldBalance = widget.store.encointer.applyDemurrage(widget.store.encointer.communityBalanceEntry) ?? 0;
           if (newBalance != null) {
             double delta = newBalance - oldBalance;
             print("[receivePage] balance was $oldBalance, changed by $delta");
             if (delta > demurrageRate!) {
               var msg = dic.assets.incomingConfirmed
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
-                  .replaceAll(
-                      'CID_SYMBOL', widget.store.encointer.community?.metadata?.symbol ?? "null")
+                  .replaceAll('CID_SYMBOL', widget.store.encointer.community?.metadata?.symbol ?? "null")
                   .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
               print("[receivePage] $msg");
               widget.store.encointer.account?.addBalanceEntry(cid, balances[cid]!);
-              NotificationPlugin.showNotification(44, dic.assets.fundsReceived, msg,
-                  cid: cid.toFmtString());
+              NotificationPlugin.showNotification(44, dic.assets.fundsReceived, msg, cid: cid.toFmtString());
             }
           }
         });
@@ -145,10 +138,7 @@ class _ReceivePageState extends State<ReceivePage> {
                         padding: const EdgeInsets.symmetric(horizontal: 48),
                         child: Text(
                           dic.profile.qrScanHint,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline3!
-                              .copyWith(color: encointerBlack),
+                          style: Theme.of(context).textTheme.headline3!.copyWith(color: encointerBlack),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -157,10 +147,7 @@ class _ReceivePageState extends State<ReceivePage> {
                         padding: const EdgeInsets.all(30),
                         child: EncointerTextFormField(
                           labelText: dic.assets.invoiceAmount,
-                          textStyle: Theme.of(context)
-                              .textTheme
-                              .headline2!
-                              .copyWith(color: encointerBlack),
+                          textStyle: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
                           inputFormatters: [UI.decimalInputFormatter()],
                           controller: _amountController,
                           keyboardType: TextInputType.numberWithOptions(decimal: true),
