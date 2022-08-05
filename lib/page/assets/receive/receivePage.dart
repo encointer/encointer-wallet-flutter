@@ -29,7 +29,8 @@ class _ReceivePageState extends State<ReceivePage> {
   final _formKey = GlobalKey<FormState>();
   bool generateQR = false;
   late InvoiceQrCode invoice;
-
+  final double minScale = 1;
+  final double maxScale = 2;
   PausableTimer? paymentWatchdog;
   bool observedPendingExtrinsic = false;
   int resetObservedPendingExtrinsicCounter = 0;
@@ -176,7 +177,20 @@ class _ReceivePageState extends State<ReceivePage> {
                   Column(children: [
                     // Enhance brightness for the QR-code
                     WakeLockAndBrightnessEnhancer(brightness: 1),
-                    QrImage(data: invoice.toQrPayload()),
+
+                    AspectRatio(
+                        aspectRatio: 2,
+                        child: Center(
+                          child: InteractiveViewer(
+                              clipBehavior: Clip.none,
+                              panEnabled: false,
+                              minScale: 1,
+                              maxScale: 2,
+                              child: QrImage(
+                                data: invoice.toQrPayload(),
+                                backgroundColor: Theme.of(context).canvasColor,
+                              )),
+                        )),
                     InkWell(
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 24),
