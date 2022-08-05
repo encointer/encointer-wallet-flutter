@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/common/components/addressIcon.dart';
+import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/secondaryButtonWide.dart';
 import 'package:encointer_wallet/common/components/submitButtonSecondary.dart';
 import 'package:encointer_wallet/common/theme.dart';

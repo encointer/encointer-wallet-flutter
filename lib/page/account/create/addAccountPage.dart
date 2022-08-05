@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:encointer_wallet/common/components/accountAdvanceOptionParams.dart';
+import 'package:encointer_wallet/common/components/account_advance_option_params.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/create/addAccountForm.dart';

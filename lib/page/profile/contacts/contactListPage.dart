@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/common/components/accountSelectList.dart';
+import 'package:encointer_wallet/common/components/account_select_list.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactPage.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';

@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/common/components/addressIcon.dart';
+import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactDetailPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactPage.dart';
 import 'package:encointer_wallet/store/app.dart';
