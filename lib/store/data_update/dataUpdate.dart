@@ -60,8 +60,7 @@ abstract class _DataUpdateStore with Store {
   bool get needsRefresh => _lastUpdateIsLongerAgoThan(refreshPeriod) | invalidated;
 
   /// In order to prevent multiple simultaneous update calls.
-  @observable
-  bool updating = false;
+  Future<void>? _updateFuture;
 
   @action
   void setLastUpdate(DateTime dateTime) {
@@ -104,27 +103,29 @@ abstract class _DataUpdateStore with Store {
   /// Execute the update and set the timestamp.
   @action
   Future<void> executeUpdate() async {
-    if (_updateFn != null && !updating) {
-      _log("update reaction running...");
-
-      updating = true;
-
-      try {
-        _log("running `updateFn");
-        await _updateFn!().timeout(Duration(seconds: 15));
-        _log("`updateFn finished");
-
-        // Data is valid and up-to-date again
-        invalidated = false;
-        lastUpdate = DateTime.now();
-      } catch (e) {
-        _log("Error while executing `updateFn`: ${e.toString()}");
-      }
-
-      updating = false;
-
-      _log("update reaction finished");
+    if (_updateFn == null) {
+      _log("No `updateFn` set, returning...");
+      return;
     }
+
+    if (_updateFuture != null) {
+      _log("already updating, awaiting the previously set future.");
+      await _updateFuture!;
+      return;
+    }
+
+    _updateFuture = _updateFn!().timeout(Duration(seconds: 15)).then((value) {
+      // Data is valid and up-to-date again
+      invalidated = false;
+      lastUpdate = DateTime.now();
+    }).catchError((e) {
+      _log("Error while executing `updateFn`: ${e.toString()}");
+    }).whenComplete(() {
+      _updateFuture = null;
+      _log("update reaction finished");
+    });
+
+    await _updateFuture!;
   }
 }
 
