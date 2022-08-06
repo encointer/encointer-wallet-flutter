@@ -170,9 +170,9 @@ class _WalletAppState extends State<WalletApp> {
                 return CupertinoPageRoute(
                   settings: settings,
                   builder: (context) => Observer(
-                    // Note: There is a false positive about no observables being inside the observer.
-                    // However, for some reason the observer needs to be on top-level to properly update
-                    // the pages.
+                    // Note: There is a false positive about no observables being inside the observer or we are doing
+                    // something wrong. However, for some reason the observer needs to be on top-level to properly
+                    // update.
                     builder: (_) => WillPopScopeWrapper(
                       child: FutureBuilder<int>(
                         future: _initApp(context),
