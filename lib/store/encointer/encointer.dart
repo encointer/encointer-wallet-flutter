@@ -313,11 +313,11 @@ abstract class _EncointerStore with Store {
         webApi.encointer.getMeetupTime(),
         webApi.encointer.getMeetupTimeOverride(),
         updateAggregatedAccountData(),
-      ]);
+      ]).timeout(Duration(seconds: 15), onTimeout: () => _log("[updateState] run into timeout..."));
 
       _log("[updateState] finished");
     } catch (e) {
-      _log("Error executing update state");
+      _log("Error executing update state: ${e.toString()}");
     }
     updating = false;
     _log("returning future...");
