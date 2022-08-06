@@ -154,7 +154,6 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
     );
   }
 
-  // Todo: Can we put this into the `DataUpdateStore`?
   void scheduleStateUpdate() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       showCupertinoDialog(

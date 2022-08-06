@@ -68,6 +68,8 @@ Future<void> submitClaimRewards(
     api,
     txParams,
     onFinish: (BuildContext txPageContext, Map res) {
+      // Claiming the rewards creates new reputation if successful.
+      // Hence, we should update the state afterwards.
       store.dataUpdate.setInvalidated();
       return res;
     },
@@ -115,6 +117,8 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
     api,
     registerParticipantParams(store.encointer.chosenCid!, proof: await api.encointer.getProofOfAttendance()),
     onFinish: (BuildContext txPageContext, Map res) {
+      // Registering the participant invalidates the reputation.
+      // Hence, we should fetch the new state afterwards.
       store.dataUpdate.setInvalidated();
     },
   );
