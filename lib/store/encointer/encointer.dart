@@ -67,8 +67,11 @@ abstract class _EncointerStore with Store {
   final String network;
 
   /// In order to prevent multiple simultaneous update calls.
+  ///
+  /// Ignore it in serialization as we always want to update after the store is loaded from cache.
   @observable
-  bool updating = false;
+  @JsonKey(ignore: true)
+  bool isUpdating = false;
 
   @observable
   CeremonyPhase currentPhase = CeremonyPhase.Registering;
@@ -297,31 +300,29 @@ abstract class _EncointerStore with Store {
 
   @action
   Future<void> updateState() async {
-    if (updating) {
+    if (isUpdating) {
       _log("[updateState] already updating state. skipping");
       return;
     }
-    _log("[updateState] updating state...");
-    updating = true;
-    try {
-      await Future.wait(<Future<void>>[
-        webApi.encointer.getCommunityMetadata(),
-        webApi.encointer.getAllMeetupLocations(),
-        webApi.encointer.getDemurrage(),
-        webApi.encointer.getBootstrappers(),
-        webApi.encointer.getReputations(),
-        webApi.encointer.getMeetupTime(),
-        webApi.encointer.getMeetupTimeOverride(),
-        updateAggregatedAccountData(),
-      ]).timeout(Duration(seconds: 15), onTimeout: () => _log("[updateState] run into timeout..."));
 
+    _log("[updateState] updating state...");
+    isUpdating = true;
+
+    final future = Future.wait([
+      webApi.encointer.getCommunityMetadata(),
+      webApi.encointer.getAllMeetupLocations(),
+      webApi.encointer.getDemurrage(),
+      webApi.encointer.getBootstrappers(),
+      webApi.encointer.getReputations(),
+      webApi.encointer.getMeetupTime(),
+      webApi.encointer.getMeetupTimeOverride(),
+      updateAggregatedAccountData(),
+    ]).timeout(Duration(seconds: 15));
+
+    await future.catchError((e) => _log("Error executing update state: ${e.toString()}")).whenComplete(() {
       _log("[updateState] finished");
-    } catch (e) {
-      _log("Error executing update state: ${e.toString()}");
-    }
-    updating = false;
-    _log("returning future...");
-    return;
+      isUpdating = false;
+    });
   }
 
   Future<void> updateAggregatedAccountData() async {
