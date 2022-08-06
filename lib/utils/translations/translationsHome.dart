@@ -44,6 +44,7 @@ abstract class TranslationsHome {
   String get txBroadcast;
   String get txInBlock;
   String get txError;
+  String get updatingAppState;
 }
 
 class TranslationsEnHome implements TranslationsHome {
@@ -92,6 +93,7 @@ class TranslationsEnHome implements TranslationsHome {
   get txBroadcast => 'Transaction has been broadcast.';
   get txInBlock => 'Transaction is in a block.';
   get txError => 'Transaction error';
+  get updatingAppState => 'Updating the app state...';
 }
 
 class TranslationsDeHome implements TranslationsHome {
@@ -139,6 +141,7 @@ class TranslationsDeHome implements TranslationsHome {
   get txBroadcast => 'Transaktion wurde im Netzwerk';
   get txInBlock => 'Transaction ist in einem Block';
   get txError => 'Transaktionsfehler';
+  get updatingAppState => 'App-Zustand wird actualisiert...';
 }
 
 class TranslationsZhHome implements TranslationsHome {
@@ -185,4 +188,5 @@ class TranslationsZhHome implements TranslationsHome {
   get txBroadcast => throw UnimplementedError();
   get txInBlock => throw UnimplementedError();
   get txError => throw UnimplementedError();
+  get updatingAppState => throw UnimplementedError();
 }

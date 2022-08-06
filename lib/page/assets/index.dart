@@ -200,6 +200,7 @@ class _AssetsState extends State<Assets> {
                                     );
                             },
                           ),
+                          ElevatedButton(onPressed: store.dataUpdate.setInvalidated, child: Text("Invalidate")),
                           SizedBox(
                             height: 42,
                           ),
