@@ -7,6 +7,7 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
@@ -68,9 +69,13 @@ class CeremonyBox extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
                     child: CeremonyRegisterButton(
-                      registerUntil: assigningPhaseStart,
-                      onPressed: (context) => submitRegisterParticipant(context, store, api),
-                    ),
+                        registerUntil: assigningPhaseStart,
+                        onPressed: (context) async {
+                          if (store.dataUpdate.expired) {
+                            await awaitDataUpdateWithDialog(context, store);
+                          }
+                          return submitRegisterParticipant(context, store, api);
+                        }),
                   ),
                 if (store.encointer.showStartCeremonyButton)
                   Padding(
@@ -179,4 +184,16 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
 
 void _log(String msg) {
   print("[CeremonyBox] $msg");
+}
+
+Future<void> awaitDataUpdateWithDialog(BuildContext context, AppStore store) async {
+  showCupertinoDialog(
+    context: context,
+    builder: (_) => CupertinoAlertDialog(
+      title: Text(I18n.of(context)!.translationsForLocale().home.updatingAppState),
+      content: CupertinoActivityIndicator(),
+    ),
+  );
+
+  await store.dataUpdate.executeUpdate().whenComplete(() => Navigator.of(context).pop());
 }

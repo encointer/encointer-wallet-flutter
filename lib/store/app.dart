@@ -7,6 +7,8 @@ import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/localStorage.dart';
 import 'package:mobx/mobx.dart';
 
+import 'data_update/dataUpdate.dart';
+
 part 'app.g.dart';
 
 AppStore globalAppStore = AppStore(LocalStorage());
@@ -59,6 +61,11 @@ abstract class _AppStore with Store {
   SettingsStore get settings => _settings!;
 
   @observable
+  DataUpdateStore? _dataUpdate;
+  @computed
+  DataUpdateStore get dataUpdate => _dataUpdate!;
+
+  @observable
   AccountStore? _account;
   @computed
   AccountStore get account => _account!;
@@ -94,6 +101,8 @@ abstract class _AppStore with Store {
     // wait settings store loaded
     _settings = SettingsStore(this as AppStore);
     await settings.init(sysLocaleCode);
+
+    _dataUpdate = DataUpdateStore(refreshPeriod: Duration(minutes: 2));
 
     _account = AccountStore(this as AppStore);
     await account.loadAccount();
@@ -232,7 +241,7 @@ abstract class _AppStore with Store {
     await encointer.initializeUninitializedStores(address);
 
     if (!settings.loading) {
-      encointer.updateState();
+      dataUpdate.setInvalidated();
       webApi.assets.subscribeBalance();
     }
   }
