@@ -115,9 +115,8 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       backgroundColor: Colors.white,
       body: Observer(builder: (_) {
         if (store.dataUpdate.expired) {
+          print("Homepage: scheduling state update");
           scheduleStateUpdate();
-        } else {
-          clearAwaitingStateUpdate();
         }
         return PageView(
           physics: NeverScrollableScrollPhysics(),
@@ -158,8 +157,6 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   // Todo: Can we put this into the `DataUpdateStore`?
   void scheduleStateUpdate() {
-    _awaitingStateUpdate = true;
-    store.dataUpdate.executeUpdate();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       showCupertinoDialog(
         context: context,
@@ -169,13 +166,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         ),
       );
     });
-  }
-
-  void clearAwaitingStateUpdate() {
-    if (_awaitingStateUpdate) {
-      _awaitingStateUpdate = false;
-      Navigator.of(context).pop();
-    }
+    store.dataUpdate.executeUpdate().whenComplete(() => Navigator.of(context).pop());
   }
 }
 
