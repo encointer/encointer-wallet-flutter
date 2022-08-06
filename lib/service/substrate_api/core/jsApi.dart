@@ -22,7 +22,7 @@ class JSApi {
       closeWebView();
     }
 
-    bool webViewReady = false;
+    final initWebViewCompleter = Completer<void>();
 
     _web = HeadlessInAppWebView(
       initialData: InAppWebViewInitialData(data: jSSourceHtmlContainer(jsServiceEncointer)),
@@ -53,16 +53,23 @@ class JSApi {
       },
       onLoadStop: (controller, _) async {
         await webViewPostInitCallback();
-        webViewReady = true;
+        initWebViewCompleter.complete();
       },
     );
 
     await _web!.run();
 
-    while (!webViewReady) {
-      _log("waiting until webView ready");
-      await Future.delayed(Duration(seconds: 2));
-    }
+    // log updates about the webView state until it is ready.
+    Timer.periodic(Duration(seconds: 2), (timer) {
+      if (!initWebViewCompleter.isCompleted) {
+        _log("webView is being initialized...");
+      } else {
+        _log("webView is ready");
+        timer.cancel();
+      }
+    });
+
+    return initWebViewCompleter.future;
   }
 
   /// Evaluate javascript [code] in the webView.
