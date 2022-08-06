@@ -241,7 +241,7 @@ abstract class _AppStore with Store {
     await encointer.initializeUninitializedStores(address);
 
     if (!settings.loading) {
-      encointer.updateState();
+      dataUpdate.setInvalidated();
       webApi.assets.subscribeBalance();
     }
   }

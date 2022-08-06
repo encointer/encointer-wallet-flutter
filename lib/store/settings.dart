@@ -168,7 +168,7 @@ abstract class _SettingsStore with Store {
   void setPin(String pin) {
     cachedPin = pin;
     if (pin.isNotEmpty) {
-      rootStore.encointer.updateState();
+      rootStore.dataUpdate.setInvalidated();
     }
   }
 
