@@ -35,8 +35,6 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
   late List<TabData> _tabList;
   int _tabIndex = 0;
 
-  bool _awaitingStateUpdate = false;
-
   List<BottomNavigationBarItem> _navBarItems(int activeItem) {
     return _tabList
         .map(
