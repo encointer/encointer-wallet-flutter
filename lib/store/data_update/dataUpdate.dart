@@ -85,7 +85,7 @@ abstract class _DataUpdateStore with Store {
         executeUpdate();
       } else {
         // Only enable for debugging purposes, otherwise it spams every second.
-        _log("Reaction triggered, but no state-update needed.");
+        // _log("Reaction triggered, but no state-update needed.");
       }
     });
   }

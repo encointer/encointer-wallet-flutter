@@ -72,7 +72,7 @@ class CeremonyBox extends StatelessWidget {
                         registerUntil: assigningPhaseStart,
                         onPressed: (context) async {
                           if (store.dataUpdate.expired) {
-                            await awaitUpdateWithDialog(context, store);
+                            await awaitDataUpdateWithDialog(context, store);
                           }
                           return submitRegisterParticipant(context, store, api);
                         }),
@@ -186,7 +186,7 @@ void _log(String msg) {
   print("[CeremonyBox] $msg");
 }
 
-Future<void> awaitUpdateWithDialog(BuildContext context, AppStore store) async {
+Future<void> awaitDataUpdateWithDialog(BuildContext context, AppStore store) async {
   showCupertinoDialog(
     context: context,
     builder: (_) => CupertinoAlertDialog(

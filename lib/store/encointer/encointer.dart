@@ -69,7 +69,6 @@ abstract class _EncointerStore with Store {
   /// In order to prevent multiple simultaneous update calls.
   ///
   /// * It does not need to be an observable, as we only read it actively.
-  /// * Ignore it in serialization, as we always want to update after the store is loaded from cache.
   @JsonKey(ignore: true)
   Future<void>? _updateStateFuture;
 
