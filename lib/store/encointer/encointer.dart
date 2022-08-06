@@ -68,10 +68,10 @@ abstract class _EncointerStore with Store {
 
   /// In order to prevent multiple simultaneous update calls.
   ///
-  /// Ignore it in serialization as we always want to update after the store is loaded from cache.
-  @observable
+  /// * It does not need to be an observable, as we only read it actively.
+  /// * Ignore it in serialization, as we always want to update after the store is loaded from cache.
   @JsonKey(ignore: true)
-  bool isUpdating = false;
+  Future<void>? _updateStateFuture;
 
   @observable
   CeremonyPhase currentPhase = CeremonyPhase.Registering;
@@ -298,17 +298,18 @@ abstract class _EncointerStore with Store {
 
   // -- other helpers
 
+  /// Update all the encointer state.
+  ///
+  /// Will await a previous update future if an update has already been triggered.
   @action
   Future<void> updateState() async {
-    if (isUpdating) {
-      _log("[updateState] already updating state. skipping");
+    if (_updateStateFuture != null) {
+      _log("[updateState] already updating state, awaiting the previously set future.");
+      await _updateStateFuture!;
       return;
     }
 
-    _log("[updateState] updating state...");
-    isUpdating = true;
-
-    final future = Future.wait([
+    _updateStateFuture = Future.wait([
       webApi.encointer.getCommunityMetadata(),
       webApi.encointer.getAllMeetupLocations(),
       webApi.encointer.getDemurrage(),
@@ -317,12 +318,15 @@ abstract class _EncointerStore with Store {
       webApi.encointer.getMeetupTime(),
       webApi.encointer.getMeetupTimeOverride(),
       updateAggregatedAccountData(),
-    ]).timeout(Duration(seconds: 15));
-
-    await future.catchError((e) => _log("Error executing update state: ${e.toString()}")).whenComplete(() {
+    ])
+        .timeout(Duration(seconds: 15))
+        .catchError((e) => _log("Error executing update state: ${e.toString()}"))
+        .whenComplete(() {
       _log("[updateState] finished");
-      isUpdating = false;
+      _updateStateFuture = null;
     });
+
+    await _updateStateFuture!;
   }
 
   Future<void> updateAggregatedAccountData() async {

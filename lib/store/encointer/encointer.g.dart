@@ -144,21 +144,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
       (_$showMeetupInfoComputed ??= Computed<bool>(() => super.showMeetupInfo, name: '_EncointerStore.showMeetupInfo'))
           .value;
 
-  late final _$isUpdatingAtom = Atom(name: '_EncointerStore.isUpdating', context: context);
-
-  @override
-  bool get isUpdating {
-    _$isUpdatingAtom.reportRead();
-    return super.isUpdating;
-  }
-
-  @override
-  set isUpdating(bool value) {
-    _$isUpdatingAtom.reportWrite(value, super.isUpdating, () {
-      super.isUpdating = value;
-    });
-  }
-
   late final _$currentPhaseAtom = Atom(name: '_EncointerStore.currentPhase', context: context);
 
   @override
@@ -426,7 +411,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
   @override
   String toString() {
     return '''
-isUpdating: ${isUpdating},
 currentPhase: ${currentPhase},
 nextPhaseTimestamp: ${nextPhaseTimestamp},
 phaseDurations: ${phaseDurations},
