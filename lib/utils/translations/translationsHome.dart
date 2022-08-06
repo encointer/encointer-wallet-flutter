@@ -141,7 +141,7 @@ class TranslationsDeHome implements TranslationsHome {
   get txBroadcast => 'Transaktion wurde im Netzwerk';
   get txInBlock => 'Transaction ist in einem Block';
   get txError => 'Transaktionsfehler';
-  get updatingAppState => 'App-Zustand wird actualisiert...';
+  get updatingAppState => 'App-Zustand wird aktualisiert...';
 }
 
 class TranslationsZhHome implements TranslationsHome {
