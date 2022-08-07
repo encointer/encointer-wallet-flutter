@@ -2,10 +2,10 @@ import 'package:encointer_wallet/common/components/submitButton.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:encointer_wallet/utils/tx.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -15,7 +15,7 @@ class CeremonyStep3Finish extends StatelessWidget {
   const CeremonyStep3Finish(
     this.store,
     this.api, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   final AppStore store;
@@ -23,7 +23,7 @@ class CeremonyStep3Finish extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -48,14 +48,14 @@ class CeremonyStep3Finish extends StatelessWidget {
                     Center(
                       child: Text(
                         dic.encointer.thankYou,
-                        style: Theme.of(context).textTheme.headline2.copyWith(color: ZurichLion.shade600),
+                        style: Theme.of(context).textTheme.headline2!.copyWith(color: ZurichLion.shade600),
                       ),
                     ),
                     Center(
                       child: Text(
                         dic.encointer.weHopeToSeeYouAtTheNextMeetup,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black, height: 1.5),
+                        style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black, height: 1.5),
                       ),
                     ),
                   ],
@@ -88,7 +88,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                       Icon(Iconsax.login_1),
                       SizedBox(width: 6),
                       Text(
-                          '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store.encointer.communityAccount.scannedClaimsCount.toString())}'),
+                          '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store.encointer.communityAccount!.scannedClaimsCount.toString())}'),
                     ],
                   ),
                   onPressed: (context) => submitAttestClaims(context, store, api),

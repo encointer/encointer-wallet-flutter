@@ -4,10 +4,10 @@ import 'package:encointer_wallet/store/chain/types/header.dart';
 import 'core/jsApi.dart';
 
 class ChainApi {
-  ChainApi(this.jsApi);
+  ChainApi(this.store, this.jsApi);
 
   final JSApi jsApi;
-  final store = globalAppStore;
+  final AppStore store;
 
   final String _timeStampSubscribeChannel = 'timestamp';
   final String _newHeadsSubscribeChannel = 'latestHeader';

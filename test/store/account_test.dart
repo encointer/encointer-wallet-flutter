@@ -7,7 +7,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('AccountStore test', () {
-    final AppStore root = AppStore(getMockLocalStorage());
+    final AppStore root = AppStore(MockLocalStorage());
 
     test('account store test', () async {
       accList = [testAcc];

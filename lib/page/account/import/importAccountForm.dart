@@ -1,14 +1,13 @@
-import 'package:encointer_wallet/common/components/accountAdvanceOption.dart';
+import 'package:encointer_wallet/common/components/accountAdvanceOptionParams.dart';
 import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
-import 'package:encointer_wallet/utils/inputValidation.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/inputValidation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/translations/translationsAccount.dart';
 import 'package:encointer_wallet/utils/validateKeys.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ImportAccountForm extends StatefulWidget {
@@ -25,7 +24,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
   _ImportAccountFormState(this.store);
 
   // Todo: introduce enum/class for that
-  String _keyType;
+  String? _keyType;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -43,8 +42,8 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
     super.dispose();
   }
 
-  String _validateAccountSource(BuildContext context, String v) {
-    final TranslationsAccount dic = I18n.of(context).translationsForLocale().account;
+  String? _validateAccountSource(BuildContext context, String v) {
+    final TranslationsAccount dic = I18n.of(context)!.translationsForLocale().account;
 
     String input = v.trim();
 
@@ -71,7 +70,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
 
     return Padding(
       padding: EdgeInsets.fromLTRB(32, 0, 16, 32),
@@ -85,7 +84,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                 children: <Widget>[
                   SizedBox(height: 80),
                   Text(
-                    I18n.of(context).translationsForLocale().profile.detailsEnter,
+                    I18n.of(context)!.translationsForLocale().profile.detailsEnter,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headline2,
                   ),
@@ -93,16 +92,16 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
-                      I18n.of(context).translationsForLocale().profile.personalKeyEnter,
+                      I18n.of(context)!.translationsForLocale().profile.personalKeyEnter,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black),
+                      style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black),
                     ),
                   ),
                   SizedBox(height: 30),
                   EncointerTextFormField(
                     key: Key('create-account-name'),
                     hintText: dic.account.createHint,
-                    labelText: I18n.of(context).translationsForLocale().profile.accountName,
+                    labelText: I18n.of(context)!.translationsForLocale().profile.accountName,
                     controller: _nameCtrl,
                     validator: (v) => InputValidation.validateAccountName(context, v, store.account.optionalAccounts),
                   ),
@@ -114,7 +113,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                     ),
                     controller: _keyCtrl,
                     maxLines: 2,
-                    validator: (String value) => _validateAccountSource(context, value),
+                    validator: (String? value) => _validateAccountSource(context, value!),
                   ),
                 ],
               ),
@@ -122,9 +121,9 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
           ),
           PrimaryButton(
             key: Key('account-import-next'),
-            child: Text(I18n.of(context).translationsForLocale().home.next),
+            child: Text(I18n.of(context)!.translationsForLocale().home.next),
             onPressed: () async {
-              if (_formKey.currentState.validate() && !(_advanceOptions.error ?? false)) {
+              if (_formKey.currentState!.validate() && !(_advanceOptions.error ?? false)) {
                 store.account.setNewAccountName(_nameCtrl.text.trim());
                 store.account.setNewAccountKey(_keyCtrl.text.trim());
 

@@ -22,6 +22,7 @@ final appThemeEncointer = ThemeData(
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
+      elevation: 0,
       primary: ZurichLion.shade50,
       onPrimary: ZurichLion.shade500,
       shadowColor: Colors.transparent,
@@ -34,20 +35,28 @@ final appThemeEncointer = ThemeData(
     color: ZurichLion.shade500,
   ),
   appBarTheme: AppBarTheme(
+    elevation: 0,
     // foregroundColor: Colors.orange, // this gets for some reason ignored and we have to define iconTheme and textTheme
     backgroundColor: Colors.white,
     iconTheme: IconThemeData(
       color: ZurichLion.shade500,
     ),
     shadowColor: Colors.transparent,
-    textTheme: TextTheme(
+    centerTitle: true,
+    toolbarTextStyle: TextTheme(
       headline6: TextStyle(
         // it's not obvious but appBar uses headline6
         fontSize: 19,
         color: ZurichLion.shade500,
       ),
-    ),
-    centerTitle: true,
+    ).bodyText2,
+    titleTextStyle: TextTheme(
+      headline6: TextStyle(
+        // it's not obvious but appBar uses headline6
+        fontSize: 19,
+        color: ZurichLion.shade500,
+      ),
+    ).headline6,
   ),
   scaffoldBackgroundColor: Colors.white,
 );

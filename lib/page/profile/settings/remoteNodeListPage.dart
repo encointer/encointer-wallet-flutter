@@ -3,19 +3,18 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RemoteNodeListPage extends StatelessWidget {
   RemoteNodeListPage(this.store);
 
   static const String route = '/profile/endpoint';
-  final Api api = webApi;
+  final Api? api = webApi;
   final SettingsStore store;
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     List<EndpointData> endpoints = List<EndpointData>.of(networkEndpoints);
     endpoints.retainWhere((i) => i.info == store.endpoint.info);
     List<Widget> list = endpoints
@@ -24,8 +23,8 @@ class RemoteNodeListPage extends StatelessWidget {
                 width: 36,
                 child: Image.asset('assets/images/public/${i.info}.png'),
               ),
-              title: Text(i.info),
-              subtitle: Text(i.text),
+              title: Text(i.info!),
+              subtitle: Text(i.text!),
               trailing: Container(
                 width: 40,
                 child: Row(

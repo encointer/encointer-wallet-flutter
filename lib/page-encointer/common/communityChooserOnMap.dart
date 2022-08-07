@@ -6,7 +6,6 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import "package:latlong2/latlong.dart";
@@ -20,7 +19,7 @@ class CommunityChooserOnMap extends StatelessWidget {
 
   CommunityChooserOnMap(this.store) {
     if (store.encointer.communities != null) {
-      for (var community in store.encointer.communities) {
+      for (var community in store.encointer.communities!) {
         communityDataAt[coordinatesOf(community)] = community;
       }
     }
@@ -28,7 +27,7 @@ class CommunityChooserOnMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
 
     return EncointerMap(
       store,
@@ -37,7 +36,7 @@ class CommunityChooserOnMap extends StatelessWidget {
       markers: _markers,
       title: dic.assets.communityChoose,
       center: LatLng(47.389712, 8.517076),
-      initialZoom: 0,
+      initialZoom: 2,
     );
   }
 }
@@ -45,7 +44,7 @@ class CommunityChooserOnMap extends StatelessWidget {
 class CommunityDetailsPopup extends StatefulWidget {
   final AppStore store;
   final Marker marker;
-  final CidName dataForThisMarker;
+  final CidName? dataForThisMarker;
 
   CommunityDetailsPopup(this.store, this.marker, this.dataForThisMarker);
 
@@ -65,7 +64,7 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
         key: Key('${widget.marker.key.toString().substring(3, widget.marker.key.toString().length - 3)}-description'),
         onTap: () {
           setState(() {
-            store.encointer.setChosenCid(widget.dataForThisMarker.cid);
+            store.encointer.setChosenCid(widget.dataForThisMarker!.cid);
           });
           Navigator.pop(context);
         },
@@ -77,7 +76,7 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                widget.dataForThisMarker.name,
+                widget.dataForThisMarker!.name,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -88,7 +87,7 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
                 padding: EdgeInsets.only(bottom: 2.0),
               ),
               Text(
-                widget.dataForThisMarker.cid.toFmtString(),
+                widget.dataForThisMarker!.cid.toFmtString(),
                 maxLines: 3,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
@@ -107,8 +106,8 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
 List<Marker> getMarkers(AppStore store) {
   List<Marker> markers = [];
   if (store.encointer.communities != null) {
-    for (num index = 0; index < store.encointer.communities.length; index++) {
-      CidName community = store.encointer.communities[index];
+    for (num index = 0; index < store.encointer.communities!.length; index++) {
+      CidName community = store.encointer.communities![index as int];
       markers.add(
         Marker(
           // marker is not a widget, hence test_driver cannot find it (it can find it in the Icon inside, though).

@@ -8,8 +8,8 @@ import 'package:wakelock/wakelock.dart';
 /// Useful when a QR-code is shown.
 class WakeLockAndBrightnessEnhancer extends StatefulWidget {
   const WakeLockAndBrightnessEnhancer({
-    Key key,
-    @required this.brightness,
+    Key? key,
+    required this.brightness,
   }) : super(key: key);
 
   /// Brightness of the screen in the interval of [0,1].

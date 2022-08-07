@@ -50,13 +50,13 @@ abstract class _SettingsStore with Store {
   Map<String, dynamic> customSS58Format = Map<String, dynamic>();
 
   @observable
-  String networkName = '';
+  String? networkName = '';
 
   @observable
-  NetworkState networkState;
+  NetworkState? networkState;
 
   @observable
-  Map networkConst = Map();
+  Map? networkConst = Map();
 
   @observable
   ObservableList<AccountData> contactList = ObservableList<AccountData>();
@@ -83,7 +83,7 @@ abstract class _SettingsStore with Store {
   }
 
   @computed
-  String get ipfsGateway => endpoint?.ipfsGateway;
+  String get ipfsGateway => endpoint.ipfsGateway!;
 
   @computed
   List<EndpointData> get endpointList {
@@ -102,20 +102,20 @@ abstract class _SettingsStore with Store {
   @computed
   String get existentialDeposit {
     return Fmt.token(
-        BigInt.parse(networkConst['balances']['existentialDeposit'].toString()), networkState.tokenDecimals);
+        BigInt.parse(networkConst!['balances']['existentialDeposit'].toString()), networkState!.tokenDecimals);
   }
 
   @computed
   String get transactionBaseFee {
-    return Fmt.token(
-        BigInt.parse(networkConst['transactionPayment']['transactionBaseFee'].toString()), networkState.tokenDecimals);
+    return Fmt.token(BigInt.parse(networkConst!['transactionPayment']['transactionBaseFee'].toString()),
+        networkState!.tokenDecimals);
   }
 
   @computed
   String get transactionByteFee {
     return Fmt.token(
-        BigInt.parse(networkConst['transactionPayment']['transactionByteFee'].toString()), networkState.tokenDecimals,
-        length: networkState.tokenDecimals);
+        BigInt.parse(networkConst!['transactionPayment']['transactionByteFee'].toString()), networkState!.tokenDecimals,
+        length: networkState!.tokenDecimals);
   }
 
   @action
@@ -147,7 +147,7 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadLocalCode() async {
-    String stored = await rootStore.localStorage.getObject(localStorageLocaleKey);
+    String? stored = await rootStore.localStorage.getObject(localStorageLocaleKey) as String?;
     if (stored != null) {
       localeCode = stored;
     }
@@ -159,7 +159,7 @@ abstract class _SettingsStore with Store {
   }
 
   @action
-  void setNetworkName(String name) {
+  void setNetworkName(String? name) {
     networkName = name;
     loading = false;
   }
@@ -167,14 +167,11 @@ abstract class _SettingsStore with Store {
   @action
   void setPin(String pin) {
     cachedPin = pin;
-    if (pin.isNotEmpty) {
-      rootStore.encointer.updateState();
-    }
   }
 
   @computed
   bool get isConnected {
-    return !loading && networkName.isNotEmpty;
+    return !loading && networkName!.isNotEmpty;
   }
 
   @action
@@ -258,7 +255,8 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadEndpoint(String sysLocaleCode) async {
-    Map<String, dynamic> value = await rootStore.localStorage.getObject(localStorageEndpointKey);
+    Map<String, dynamic>? value =
+        await rootStore.localStorage.getObject(localStorageEndpointKey) as Map<String, dynamic>?;
     if (value == null) {
       endpoint = networkEndpointEncointerMainnet;
     } else {
@@ -274,7 +272,7 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadCustomSS58Format() async {
-    Map<String, dynamic> ss58 = await rootStore.localStorage.getObject(localStorageSS58Key);
+    Map<String, dynamic>? ss58 = await rootStore.localStorage.getObject(localStorageSS58Key) as Map<String, dynamic>?;
 
     customSS58Format = ss58 ?? default_ss58_prefix;
   }
@@ -288,11 +286,11 @@ abstract class _SettingsStore with Store {
     await setNetworkConst({}, needCache: false);
     setEndpoint(network);
 
-    await Future.wait([
+    await Future.wait(<Future<void>>[
       rootStore.loadAccountCache(),
       loadNetworkStateCache(),
       rootStore.assets.loadCache(),
-      rootStore.loadOrInitEncointerCache(network.info),
+      rootStore.loadOrInitEncointerCache(network.info!),
     ]);
 
     // Todo: remove global reference when cyclic dependency
@@ -304,19 +302,19 @@ abstract class _SettingsStore with Store {
 
 @JsonSerializable(createFactory: false)
 class NetworkState extends _NetworkState {
-  NetworkState(String endpoint, int ss58Format, int tokenDecimals, String tokenSymbol)
+  NetworkState(String? endpoint, int? ss58Format, int? tokenDecimals, String? tokenSymbol)
       : super(endpoint, ss58Format, tokenDecimals, tokenSymbol);
 
   static NetworkState fromJson(Map<String, dynamic> json) {
     // js-api changed the return type of 'api.rpc.system.properties()', such that multiple balances are supported.
     // Hence, tokenDecimals/-symbols are returned as a List. However, encointer currently only has one token, thus the
     // `NetworkState` should use the first token.
-    int decimals = (json['tokenDecimals'] is List) ? json['tokenDecimals'][0] : json['tokenDecimals'];
-    String symbol = (json['tokenSymbol'] is List) ? json['tokenSymbol'][0] : json['tokenSymbol'];
+    int? decimals = (json['tokenDecimals'] is List) ? json['tokenDecimals'][0] : json['tokenDecimals'];
+    String? symbol = (json['tokenSymbol'] is List) ? json['tokenSymbol'][0] : json['tokenSymbol'];
 
     NetworkState ns = NetworkState(json['endpoint'], json['ss58Format'], decimals, symbol);
     // --dev chain doesn't specify token symbol -> will break things if not specified
-    if (ns.tokenSymbol == null || (ns.tokenSymbol.length < 1)) {
+    if (((ns.tokenSymbol?.length ?? 0) < 1)) {
       ns.tokenSymbol = 'ERT';
     }
     return ns;
@@ -329,10 +327,10 @@ class NetworkState extends _NetworkState {
 abstract class _NetworkState {
   _NetworkState(this.endpoint, this.ss58Format, this.tokenDecimals, this.tokenSymbol);
 
-  String endpoint = '';
-  int ss58Format = 42;
-  int tokenDecimals = 12;
-  String tokenSymbol = 'ERT';
+  String? endpoint = '';
+  int? ss58Format = 42;
+  int? tokenDecimals = 12;
+  String? tokenSymbol = 'ERT';
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -342,13 +340,13 @@ class EndpointData extends _EndpointData {
 }
 
 abstract class _EndpointData {
-  String color = 'pink';
-  String info = '';
-  int ss58 = 42;
-  String text = '';
-  String value = '';
-  String worker = ''; // only relevant for cantillon
-  String mrenclave = ''; // relevant until we fetch mrenclave from substrateeRegistry
-  NodeConfig overrideConfig;
-  String ipfsGateway = '';
+  String? color = 'pink';
+  String? info = '';
+  int? ss58 = 42;
+  String? text = '';
+  String? value = '';
+  String? worker = ''; // only relevant for cantillon
+  String? mrenclave = ''; // relevant until we fetch mrenclave from substrateeRegistry
+  NodeConfig? overrideConfig;
+  String? ipfsGateway = '';
 }

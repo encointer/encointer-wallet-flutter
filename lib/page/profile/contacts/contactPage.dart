@@ -31,18 +31,18 @@ class _Contact extends State<ContactPage> {
   final TextEditingController _nameCtrl = new TextEditingController();
   final TextEditingController _memoCtrl = new TextEditingController();
 
-  bool _isObservation = false;
+  bool? _isObservation = false;
 
-  ContactData qrScanData;
+  ContactData? qrScanData;
 
   bool _submitting = false;
 
   Future<void> _onSave() async {
-    if (_formKey.currentState.validate()) {
+    if (_formKey.currentState!.validate()) {
       setState(() {
         _submitting = true;
       });
-      final Translations dic = I18n.of(context).translationsForLocale();
+      final Translations dic = I18n.of(context)!.translationsForLocale();
       String addr = _addressCtrl.text.trim();
       Map pubKeyAddress = await webApi.account.decodeAddress([addr]);
       String pubKey = pubKeyAddress.keys.toList()[0];
@@ -68,7 +68,7 @@ class _Contact extends State<ContactPage> {
                 content: Text(dic.profile.contactAlreadyExists),
                 actions: <Widget>[
                   CupertinoButton(
-                    child: Text(I18n.of(context).translationsForLocale().home.ok),
+                    child: Text(I18n.of(context)!.translationsForLocale().home.ok),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                 ],
@@ -85,7 +85,7 @@ class _Contact extends State<ContactPage> {
       }
 
       // get contact info
-      if (_isObservation) {
+      if (_isObservation!) {
         webApi.account.encodeAddress([pubKey]);
         webApi.account.getPubKeyIcons([pubKey]);
       } else {
@@ -110,8 +110,8 @@ class _Contact extends State<ContactPage> {
 
   @override
   Widget build(BuildContext context) {
-    ContactData qrScanData = ModalRoute.of(context).settings.arguments;
-    final Translations dic = I18n.of(context).translationsForLocale();
+    ContactData? qrScanData = ModalRoute.of(context)!.settings.arguments as ContactData?;
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     if (qrScanData != null) {
       _addressCtrl.text = qrScanData.account;
       _nameCtrl.text = qrScanData.label;
@@ -139,7 +139,7 @@ class _Contact extends State<ContactPage> {
                         ),
                         controller: _addressCtrl,
                         validator: (v) {
-                          if (!Fmt.isAddress(v.trim())) {
+                          if (!Fmt.isAddress(v!.trim())) {
                             return dic.profile.contactAddressError;
                           }
                           return null;
@@ -156,7 +156,7 @@ class _Contact extends State<ContactPage> {
                         ),
                         controller: _nameCtrl,
                         validator: (v) {
-                          return v.trim().length > 0 ? null : dic.profile.contactNameError;
+                          return v!.trim().length > 0 ? null : dic.profile.contactNameError;
                         },
                       ),
                     ),
@@ -184,10 +184,10 @@ class _Contact extends State<ContactPage> {
                                 },
                               ),
                               GestureDetector(
-                                child: Text(I18n.of(context).translationsForLocale().account.observe),
+                                child: Text(I18n.of(context)!.translationsForLocale().account.observe),
                                 onTap: () {
                                   setState(() {
-                                    _isObservation = !_isObservation;
+                                    _isObservation = !_isObservation!;
                                   });
                                 },
                               ),
@@ -196,7 +196,7 @@ class _Contact extends State<ContactPage> {
                                   padding: EdgeInsets.only(left: 8),
                                   child: Icon(Icons.info_outline, size: 16),
                                 ),
-                                message: I18n.of(context).translationsForLocale().account.observeBrief,
+                                message: I18n.of(context)!.translationsForLocale().account.observeBrief,
                               ),
                             ],
                           )

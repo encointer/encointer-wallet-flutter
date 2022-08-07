@@ -1,14 +1,15 @@
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/secondaryButtonWide.dart';
+import 'package:encointer_wallet/common/components/submitButtonSecondary.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/tx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -17,14 +18,15 @@ import 'package:iconsax/iconsax.dart';
 import '../../../models/index.dart';
 
 class ContactDetailPage extends StatelessWidget {
-  ContactDetailPage(this.store);
+  ContactDetailPage(this.store, this.api);
 
   static const String route = '/profile/contactDetail';
 
   final AppStore store;
+  final Api api;
 
   void _removeItem(BuildContext context, AccountData account) {
-    var dic = I18n.of(context).translationsForLocale();
+    var dic = I18n.of(context)!.translationsForLocale();
     showCupertinoDialog(
       context: context,
       builder: (BuildContext context) {
@@ -55,8 +57,8 @@ class ContactDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AccountData account = ModalRoute.of(context).settings.arguments;
-    var dic = I18n.of(context).translationsForLocale();
+    AccountData account = ModalRoute.of(context)!.settings.arguments as AccountData;
+    var dic = I18n.of(context)!.translationsForLocale();
 
     return Scaffold(
       appBar: AppBar(
@@ -94,7 +96,7 @@ class ContactDetailPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(Fmt.address(account.address), style: TextStyle(fontSize: 20)),
+                        Text(Fmt.address(account.address)!, style: TextStyle(fontSize: 20)),
                         IconButton(
                           icon: Icon(Iconsax.copy),
                           color: ZurichLion.shade500,
@@ -106,9 +108,9 @@ class ContactDetailPage extends StatelessWidget {
                 ),
               ),
               Observer(builder: (_) {
-                if (store.encointer.community.bootstrappers != null) {
-                  return store.encointer.community.bootstrappers.contains(store.account.currentAddress)
-                      ? EndorseButton(store, account)
+                if (store.encointer.community!.bootstrappers != null) {
+                  return store.encointer.community!.bootstrappers!.contains(store.account.currentAddress)
+                      ? EndorseButton(store, api, account)
                       : Container();
                 } else {
                   return CupertinoActivityIndicator();
@@ -121,7 +123,7 @@ class ContactDetailPage extends StatelessWidget {
                   children: [
                     Icon(Iconsax.send_sqaure_2),
                     SizedBox(width: 12),
-                    Text(dic.profile.tokenSend.replaceAll('SYMBOL', store.encointer.community?.symbol),
+                    Text(dic.profile.tokenSend.replaceAll('SYMBOL', store.encointer.community?.symbol ?? "null"),
                         style: Theme.of(context).textTheme.headline3),
                   ],
                 ),
@@ -160,16 +162,17 @@ class ContactDetailPage extends StatelessWidget {
 }
 
 class EndorseButton extends StatelessWidget {
-  EndorseButton(this.store, this.contact);
+  EndorseButton(this.store, this.api, this.contact);
 
   final AppStore store;
+  final Api api;
   final AccountData contact;
 
   @override
   Widget build(BuildContext context) {
-    var dic = I18n.of(context).translationsForLocale();
+    var dic = I18n.of(context)!.translationsForLocale();
 
-    return SecondaryButtonWide(
+    return SubmitButtonSecondary(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -178,19 +181,17 @@ class EndorseButton extends StatelessWidget {
           Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
         ],
       ),
-      onPressed: store.encointer.community.bootstrappers.contains(contact.address)
-          ? () => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
+      onPressed: store.encointer.community!.bootstrappers!.contains(contact.address)
+          ? (BuildContext context) => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
           : store.encointer.currentPhase != CeremonyPhase.Registering
-              ? () => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)
-              : () {
-                  final txPaymentAsset = store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
-                  submitEndorseNewcomer(
+              ? (BuildContext context) => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)
+              : (BuildContext context) => submitEndorseNewcomer(
                     context,
+                    store,
+                    api,
                     store.encointer.chosenCid,
                     contact.address,
-                    txPaymentAsset: txPaymentAsset,
-                  );
-                },
+                  ),
     );
   }
 }
@@ -204,7 +205,7 @@ Future<void> _popupDialog(BuildContext context, String content) async {
         content: Text(content),
         actions: <Widget>[
           CupertinoButton(
-            child: Text(I18n.of(context).translationsForLocale().home.ok),
+            child: Text(I18n.of(context)!.translationsForLocale().home.ok),
             onPressed: () {
               Navigator.of(context).pop();
             },

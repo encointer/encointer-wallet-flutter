@@ -9,7 +9,7 @@ class BazaarSearch extends StatelessWidget {
     final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;
 
     return FloatingSearchBar(
-      hint: I18n.of(context).translationsForLocale().bazaar.search,
+      hint: I18n.of(context)!.translationsForLocale().bazaar.search,
       scrollPadding: const EdgeInsets.only(top: 16, bottom: 56),
       transitionDuration: const Duration(milliseconds: 800),
       transitionCurve: Curves.easeInOut,

@@ -45,7 +45,7 @@ class Balances {
 
   final JSApi jsApi;
 
-  Future<BalanceEntry> balance(CommunityIdentifier cid, String pubKey, String pin) async {
+  Future<BalanceEntry> balance(CommunityIdentifier cid, String? pubKey, String pin) async {
     return jsApi
         .evalJavascript('worker.getBalance(${jsonEncode(PubKeyPinPair(pubKey, pin))}, ${jsonEncode(cid)})')
         .then((balance) => BalanceEntry.fromJson(balance));

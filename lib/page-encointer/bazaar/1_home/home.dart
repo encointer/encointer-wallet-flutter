@@ -12,7 +12,7 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     return Stack(fit: StackFit.expand, children: [
       Padding(
         padding: const EdgeInsets.only(top: 54),

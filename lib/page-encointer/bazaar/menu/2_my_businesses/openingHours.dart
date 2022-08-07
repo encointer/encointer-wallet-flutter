@@ -1,7 +1,6 @@
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/businessFormState.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
@@ -76,7 +75,7 @@ class OpeningHoursViewForDay extends StatelessWidget {
                     builder: (_) => ListView.builder(
                         shrinkWrap: true,
                         physics: ClampingScrollPhysics(),
-                        itemCount: openingHoursForThisDay.openingIntervals.length,
+                        itemCount: openingHoursForThisDay!.openingIntervals.length,
                         itemBuilder: (_, index) {
                           final interval = openingHoursForThisDay.openingIntervals[index];
                           return Container(
@@ -157,10 +156,10 @@ class AddOpeningIntervalForDay extends StatelessWidget {
         // ],
         autofocus: true,
         decoration: InputDecoration(
-            labelText: I18n.of(context).translationsForLocale().bazaar.timeIntervalAdd,
-            hintText: I18n.of(context).translationsForLocale().bazaar.openningHoursInputHint,
+            labelText: I18n.of(context)!.translationsForLocale().bazaar.timeIntervalAdd,
+            hintText: I18n.of(context)!.translationsForLocale().bazaar.openningHoursInputHint,
             contentPadding: EdgeInsets.all(8),
-            errorText: openingHoursForDay.timeFormatError),
+            errorText: openingHoursForDay!.timeFormatError),
         controller: _textController,
         textInputAction: TextInputAction.done,
         onSubmitted: (String startEnd) {

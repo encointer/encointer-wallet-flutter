@@ -12,26 +12,24 @@ void main() {
   // More info in: https://medium.com/stuart-engineering/mocking-integration-tests-with-flutter-af3b6ba846c7
   //
   // ignore: missing_return
-  Future<String> dataHandler(String msg) async {
+  Future<String> dataHandler(String? msg) async {
     switch (msg) {
+      case MockStorageSetup.WAIT_UNTIL_APP_IS_READY:
+        return PrepareMockStorage.wait(globalAppStore);
       case MockStorageSetup.INIT:
-        {
-          PrepareMockStorage.init(globalAppStore);
-        }
+        PrepareMockStorage.init(globalAppStore);
         break;
       case MockStorageSetup.HOME_PAGE:
-        {
-          PrepareMockStorage.homePage(globalAppStore);
-        }
+        PrepareMockStorage.homePage(globalAppStore);
         break;
       case MockStorageSetup.READY_FOR_MEETUP:
-        {
-          PrepareMockStorage.readyForMeetup(globalAppStore);
-        }
+        PrepareMockStorage.readyForMeetup(globalAppStore);
         break;
       default:
         break;
     }
+    // to fix static analysis
+    return Future.value("DataHandler");
   }
 
   enableFlutterDriverExtension(handler: dataHandler);

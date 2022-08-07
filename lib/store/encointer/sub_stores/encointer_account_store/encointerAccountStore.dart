@@ -30,7 +30,7 @@ abstract class _EncointerAccountStore with Store {
   _EncointerAccountStore(this.network, this.address);
 
   @JsonKey(ignore: true)
-  Future<void> Function() _cacheFn;
+  Future<void> Function()? _cacheFn;
 
   /// The network this store belongs to.
   final String network;
@@ -48,14 +48,14 @@ abstract class _EncointerAccountStore with Store {
   ///
   /// Map: ceremony index -> CommunityReputation
   @observable
-  Map<int, CommunityReputation> reputations;
+  Map<int, CommunityReputation> reputations = new Map();
 
   @observable
-  ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
+  ObservableList<TransferData> txsTransfer = new ObservableList<TransferData>();
 
   @computed
   get ceremonyIndexForProofOfAttendance {
-    if (reputations != null && reputations.isNotEmpty) {
+    if (reputations.isNotEmpty) {
       try {
         return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
       } catch (_e) {
@@ -80,10 +80,8 @@ abstract class _EncointerAccountStore with Store {
 
   @action
   void purgeReputations() {
-    if (reputations != null) {
-      reputations.clear();
-      writeToCache();
-    }
+    reputations.clear();
+    writeToCache();
   }
 
   @action
@@ -120,13 +118,13 @@ abstract class _EncointerAccountStore with Store {
     }
   }
 
-  void initStore(Function cacheFn) {
-    this._cacheFn = cacheFn;
+  void initStore(Function? cacheFn) {
+    this._cacheFn = cacheFn as Future<void> Function()?;
   }
 
   Future<void> writeToCache() {
     if (_cacheFn != null) {
-      return _cacheFn();
+      return _cacheFn!();
     } else {
       return Future.value(null);
     }

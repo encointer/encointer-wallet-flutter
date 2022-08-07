@@ -18,7 +18,7 @@ class CeremonyStep1Count extends StatelessWidget {
   CeremonyStep1Count(
     this.store,
     this.api, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   final AppStore store;
@@ -31,7 +31,7 @@ class CeremonyStep1Count extends StatelessWidget {
       await showCupertinoDialog(
         context: context,
         builder: (context) {
-          final Translations dic = I18n.of(context).translationsForLocale();
+          final Translations dic = I18n.of(context)!.translationsForLocale();
           return showPasswordInputDialog(
               context,
               store.account.currentAccount,
@@ -43,7 +43,7 @@ class CeremonyStep1Count extends StatelessWidget {
       );
     }
 
-    if (count != null && store.settings.cachedPin.isNotEmpty) {
+    if (store.settings.cachedPin.isNotEmpty) {
       Navigator.of(context).push(
         CupertinoPageRoute(
           builder: (BuildContext context) => CeremonyStep2Scan(
@@ -61,7 +61,7 @@ class CeremonyStep1Count extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -88,20 +88,20 @@ class CeremonyStep1Count extends StatelessWidget {
                     Center(
                       child: Text(
                         dic.encointer.count,
-                        style: Theme.of(context).textTheme.headline2.copyWith(color: ZurichLion.shade600),
+                        style: Theme.of(context).textTheme.headline2!.copyWith(color: ZurichLion.shade600),
                       ),
                     ),
                     Center(
                       child: Text(
                         dic.encointer.howManyParticipantsShowedUp,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black, height: 2),
+                        style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black, height: 2),
                       ),
                     ),
                     SizedBox(height: 48),
                     EncointerTextFormField(
                       labelText: dic.encointer.numberOfAttendees,
-                      textStyle: Theme.of(context).textTheme.headline1.copyWith(color: encointerBlack),
+                      textStyle: Theme.of(context).textTheme.headline1!.copyWith(color: encointerBlack),
                       controller: _attendeesCountController,
                       keyboardType: TextInputType.numberWithOptions(decimal: true),
                       textFormFieldKey: Key('attendees-count'),
@@ -118,7 +118,7 @@ class CeremonyStep1Count extends StatelessWidget {
                     SizedBox(width: 12),
                     Text(
                       dic.encointer.next,
-                      style: Theme.of(context).textTheme.headline3.copyWith(color: ZurichLion.shade50),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(color: ZurichLion.shade50),
                     ),
                   ],
                 ),

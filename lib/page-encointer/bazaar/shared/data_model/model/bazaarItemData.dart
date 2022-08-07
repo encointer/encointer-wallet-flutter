@@ -10,7 +10,7 @@ abstract class BazaarItemData {
   final String description;
   final Image image;
 
-  Color get cardColor;
+  Color? get cardColor;
 
   Icon get icon;
 
@@ -26,7 +26,7 @@ class BazaarOfferingData extends BazaarItemData {
   String get info => price.toString();
 
   @override
-  Color get cardColor => Colors.red[300];
+  Color? get cardColor => Colors.red[300];
 
   @override
   Icon get icon => Icon(Icons.local_offer);
@@ -51,7 +51,7 @@ class BazaarBusinessData extends BazaarItemData {
   }
 
   @override
-  Color get cardColor => Colors.blue[300];
+  Color? get cardColor => Colors.blue[300];
 
   @override
   Icon get icon => Icon(Icons.business);
@@ -69,7 +69,7 @@ class OpeningHours {
 
   OpeningHours(this.mon, this.tue, this.wed, this.thu, this.fri, this.sat, this.sun);
 
-  OpeningHoursForDay getOpeningHoursFor(int day) {
+  OpeningHoursForDay? getOpeningHoursFor(int day) {
     switch (day) {
       case 0:
         return mon;

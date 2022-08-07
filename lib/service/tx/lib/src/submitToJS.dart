@@ -5,39 +5,33 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/txStatus.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/UI.dart';
+import 'package:encointer_wallet/utils/snackBar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/translations/translationsHome.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
-/// Contains most of the logic from the `txConfirmPage.dart`
-///
-/// This is a preparatory task the remove the `txConfirmPage` as seamless as possible.
+/// Contains most of the logic from the `txConfirmPage.dart`, which was removed.
 
 const INSUFFICIENT_FUNDS_ERROR = "1010";
 
-Future<void> onSubmit(
+/// Inner function to submit a tx via the JS interface.
+///
+/// Should be private but dart lacks intelligent support to manage privacy. `submitTxWrappers/submitTx` should be
+/// called from the outside instead of this one.
+Future<void> submitToJS(
   BuildContext context,
   AppStore store,
   Api api,
-  bool mounted, {
-  Map txParams,
-  String password,
-  bool viaQr = false,
-  BigInt tip,
+  bool showStatusSnackBar, {
+  required Map txParams,
+  String? password,
+  BigInt? tip,
 }) async {
-  final Translations dic = I18n.of(context).translationsForLocale();
+  final Translations dic = I18n.of(context)!.translationsForLocale();
 
-  Map args;
-
-  if (txParams == null) {
-    // backwards compatibility if navigated here from the txConfirmPage.
-    args = ModalRoute.of(context).settings.arguments;
-  } else {
-    args = txParams;
-  }
+  Map args = txParams;
 
   store.assets.setSubmitting(true);
   store.account.setTxStatus(TxStatus.Queued);
@@ -54,26 +48,27 @@ Future<void> onSubmit(
   print(txInfo);
   print(args['params']);
 
-  var onTxFinishFn = (args['onFinish'] as Function(BuildContext, Map));
+  var onTxFinishFn = (args['onFinish'] as Function(BuildContext, Map)?);
 
   if (await api.isConnected()) {
-    // _showTxStatusSnackBar(
-    //   context,
-    //   getTxStatusTranslation(dic.home, store.account.txStatus),
-    //   CupertinoActivityIndicator(),
-    // ); // TODO armin, fix transfer status logic
+    if (showStatusSnackBar) {
+      _showTxStatusSnackBar(
+        getTxStatusTranslation(dic.home, store.account.txStatus),
+        CupertinoActivityIndicator(),
+      );
+    }
 
-    final Map res = await _sendTx(context, api, args);
+    final Map res = await _sendTx(context, api, args) as Map;
 
     if (res['hash'] == null) {
-      _onTxError(context, store, res['error'], mounted);
+      _onTxError(context, store, res['error'], showStatusSnackBar);
     } else {
-      _onTxFinish(context, store, res, onTxFinishFn, mounted);
+      _onTxFinish(context, store, res, onTxFinishFn!, showStatusSnackBar);
     }
   } else {
-    _showTxStatusSnackBar(context, dic.home.txQueuedOffline, null);
-    args['notificationTitle'] = I18n.of(context).translationsForLocale().home.notifySubmittedQueued;
-    store.account.queueTx(args);
+    _showTxStatusSnackBar(dic.home.txQueuedOffline, null);
+    args['notificationTitle'] = dic.home.notifySubmittedQueued;
+    store.account.queueTx(args as Map<String, dynamic>);
   }
 }
 
@@ -92,13 +87,13 @@ Future<Map> getTxFee(
     txInfo = proxyAccount.pubKey;
   }
 
-  return webApi.account.estimateTxFees(txInfo, args['params'], rawParam: args['rawParam']);
+  return api.account.estimateTxFees(txInfo, args['params'], rawParam: args['rawParam']);
 }
 
 void _onTxError(BuildContext context, AppStore store, String errorMsg, bool mounted) {
   store.assets.setSubmitting(false);
   if (mounted) {
-    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    RootSnackBar.removeCurrent();
   }
 
   if (errorMsg.startsWith(INSUFFICIENT_FUNDS_ERROR)) {
@@ -113,23 +108,22 @@ Future<dynamic> _sendTx(BuildContext context, Api api, Map args) async {
     args['txInfo'],
     args['params'],
     args['title'],
-    I18n.of(context).translationsForLocale().home.notifySubmitted,
+    I18n.of(context)!.translationsForLocale().home.notifySubmitted,
     rawParam: args['rawParam'],
   );
 }
 
-void _showTxStatusSnackBar(BuildContext context, String status, Widget leading) {
-  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-    backgroundColor: Theme.of(context).cardColor,
-    content: ListTile(
+void _showTxStatusSnackBar(String status, Widget? leading) {
+  RootSnackBar.show(
+    ListTile(
       leading: leading,
       title: Text(
         status,
         style: TextStyle(color: Colors.black54),
       ),
     ),
-    duration: Duration(seconds: 12),
-  ));
+    durationMillis: Duration(seconds: 12).inMilliseconds,
+  );
 }
 
 void _onTxFinish(BuildContext context, AppStore store, Map res, Function(BuildContext, Map) onTxFinish, bool mounted) {
@@ -139,25 +133,20 @@ void _onTxFinish(BuildContext context, AppStore store, Map res, Function(BuildCo
   onTxFinish(context, res);
 
   if (mounted) {
-    ScaffoldMessenger.of(context).removeCurrentSnackBar();
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      backgroundColor: Colors.white,
-      content: ListTile(
-        leading: Container(
-          width: 24,
-          child: Image.asset('assets/images/assets/success.png'),
-        ),
+    RootSnackBar.show(
+      ListTile(
+        leading: Container(width: 24, child: Image.asset('assets/images/assets/success.png')),
         title: Text(
-          I18n.of(context).translationsForLocale().assets.success,
+          I18n.of(context)!.translationsForLocale().assets.success,
           style: TextStyle(color: Colors.black54),
         ),
       ),
-      duration: Duration(seconds: 2),
-    ));
+      durationMillis: 2000,
+    );
   }
 }
 
-String getTxStatusTranslation(TranslationsHome dic, TxStatus status) {
+String getTxStatusTranslation(TranslationsHome dic, TxStatus? status) {
   switch (status) {
     case TxStatus.Queued:
       return dic.txQueued;
@@ -178,7 +167,7 @@ String getTxStatusTranslation(TranslationsHome dic, TxStatus status) {
 }
 
 Future<void> showErrorDialog(BuildContext context, String errorMsg) {
-  final Translations dic = I18n.of(context).translationsForLocale();
+  final Translations dic = I18n.of(context)!.translationsForLocale();
 
   return showCupertinoDialog(
     context: context,
@@ -198,7 +187,7 @@ Future<void> showErrorDialog(BuildContext context, String errorMsg) {
 }
 
 Future<void> showInsufficientFundsDialog(BuildContext context) {
-  final Translations dic = I18n.of(context).translationsForLocale();
+  final Translations dic = I18n.of(context)!.translationsForLocale();
   String languageCode = Localizations.localeOf(context).languageCode;
 
   return showCupertinoDialog(

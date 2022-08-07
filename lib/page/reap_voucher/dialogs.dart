@@ -3,7 +3,6 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 import 'utils.dart';
 
@@ -17,7 +16,7 @@ Future<void> showRedeemSuccessDialog(BuildContext context) {
 }
 
 Widget redeemSuccessDialog(BuildContext context) {
-  final dic = I18n.of(context).translationsForLocale();
+  final dic = I18n.of(context)!.translationsForLocale();
 
   return CupertinoAlertDialog(
     title: Container(),
@@ -33,7 +32,7 @@ Widget redeemSuccessDialog(BuildContext context) {
   );
 }
 
-Future<void> showRedeemFailedDialog(BuildContext context, String error) {
+Future<void> showRedeemFailedDialog(BuildContext context, String? error) {
   return showCupertinoDialog(
     context: context,
     builder: (BuildContext context) {
@@ -42,8 +41,8 @@ Future<void> showRedeemFailedDialog(BuildContext context, String error) {
   );
 }
 
-Widget redeemFailedDialog(BuildContext context, String error) {
-  final dic = I18n.of(context).translationsForLocale();
+Widget redeemFailedDialog(BuildContext context, String? error) {
+  final dic = I18n.of(context)!.translationsForLocale();
 
   return CupertinoAlertDialog(
     title: Container(),
@@ -69,7 +68,7 @@ Future<void> showErrorDialog(BuildContext context, String error) {
 }
 
 Widget errorDialog(BuildContext context, String errorMsg) {
-  final dic = I18n.of(context).translationsForLocale();
+  final dic = I18n.of(context)!.translationsForLocale();
 
   return CupertinoAlertDialog(
     title: Container(),
@@ -85,7 +84,7 @@ Widget errorDialog(BuildContext context, String errorMsg) {
   );
 }
 
-Future<ChangeResult> showChangeNetworkAndCommunityDialog(
+Future<ChangeResult?> showChangeNetworkAndCommunityDialog(
   BuildContext context,
   AppStore store,
   Api api,
@@ -95,7 +94,7 @@ Future<ChangeResult> showChangeNetworkAndCommunityDialog(
   return showCupertinoDialog(
     context: context,
     builder: (BuildContext context) {
-      final dic = I18n.of(context).translationsForLocale();
+      final dic = I18n.of(context)!.translationsForLocale();
 
       final dialogContent = dic.assets.voucherDifferentNetworkAndCommunity
           .replaceAll("NETWORK_PLACEHOLDER", network)
@@ -131,7 +130,7 @@ Future<ChangeResult> changeWithLoadingDialog(
     context: context,
     builder: (BuildContext context) {
       return CupertinoAlertDialog(
-        title: Text(I18n.of(context).translationsForLocale().home.loading),
+        title: Text(I18n.of(context)!.translationsForLocale().home.loading),
         content: Container(height: 64, child: CupertinoActivityIndicator()),
       );
     },
@@ -145,7 +144,7 @@ Future<ChangeResult> changeWithLoadingDialog(
   return result;
 }
 
-Future<ChangeResult> showChangeCommunityDialog(
+Future<ChangeResult?> showChangeCommunityDialog(
   BuildContext context,
   AppStore store,
   Api api,
@@ -155,7 +154,7 @@ Future<ChangeResult> showChangeCommunityDialog(
   return showCupertinoDialog(
     context: context,
     builder: (BuildContext context) {
-      final dic = I18n.of(context).translationsForLocale();
+      final dic = I18n.of(context)!.translationsForLocale();
 
       final dialogContent = dic.assets.voucherDifferentCommunity.replaceAll("COMMUNITY_PLACEHOLDER", cid.toFmtString());
 
@@ -190,7 +189,7 @@ Future<void> showInvalidCommunityDialog(BuildContext context, CommunityIdentifie
 }
 
 Widget invalidCommunityDialog(BuildContext context, CommunityIdentifier cid) {
-  final dic = I18n.of(context).translationsForLocale();
+  final dic = I18n.of(context)!.translationsForLocale();
 
   return CupertinoAlertDialog(
     title: Container(),

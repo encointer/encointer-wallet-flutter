@@ -6,14 +6,14 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 class CeremonyLocationButton extends StatelessWidget {
   const CeremonyLocationButton({
     this.onPressed,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
-  final Future<void> Function() onPressed;
+  final Future<void> Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
-    var dic = I18n.of(context).translationsForLocale();
+    var dic = I18n.of(context)!.translationsForLocale();
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         padding: EdgeInsets.symmetric(vertical: 16),

@@ -4,9 +4,10 @@ import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/page-encointer/common/encointerMap.dart';
 import 'package:encointer_wallet/page-encointer/meetup/ceremonyStep1Count.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/tx.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
@@ -22,7 +23,7 @@ class CeremonyBox extends StatelessWidget {
   CeremonyBox(
     this.store,
     this.api, {
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   final AppStore store;
@@ -30,20 +31,20 @@ class CeremonyBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var dic = I18n.of(context).translationsForLocale();
+    var dic = I18n.of(context)!.translationsForLocale();
 
     return Observer(builder: (BuildContext context) {
-      int meetupTime = store.encointer.community?.meetupTimeOverride ??
-          store.encointer?.community?.meetupTime ??
+      int? meetupTime = store.encointer.community?.meetupTimeOverride ??
+          store.encointer.community?.meetupTime ??
           store.encointer.attestingPhaseStart;
 
       // I decided to not introduce anymore degrees of freedom for the demo overrides, otherwise
       // we want to do too much again. So I hardcode the assigning phase duration to 30 minutes
       // if we have meetup time overrides. Before we do something more complex here, I want to
       // think some more, of what we want to do with the feed in the future.
-      int assigningPhaseStart = store.encointer.community?.meetupTimeOverride != null
-          ? store.encointer.community.meetupTimeOverride - Duration(minutes: 30).inMilliseconds
-          : store.encointer?.assigningPhaseStart;
+      int? assigningPhaseStart = store.encointer.community?.meetupTimeOverride != null
+          ? store.encointer.community!.meetupTimeOverride! - Duration(minutes: 30).inMilliseconds
+          : store.encointer.assigningPhaseStart;
 
       return Column(
         children: [
@@ -61,16 +62,20 @@ class CeremonyBox extends StatelessWidget {
                   assigningPhaseStart: assigningPhaseStart,
                   meetupTime: meetupTime,
                   ceremonyPhaseDurations: store.encointer.phaseDurations,
-                  meetupCompleted: store.encointer?.communityAccount?.meetupCompleted,
+                  meetupCompleted: store.encointer.communityAccount?.meetupCompleted ?? false,
                   devMode: store.settings.developerMode,
                 ),
                 if (store.encointer.showRegisterButton)
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
                     child: CeremonyRegisterButton(
-                      registerUntil: assigningPhaseStart,
-                      onPressed: (context) => submitRegisterParticipant(context, store, api),
-                    ),
+                        registerUntil: assigningPhaseStart,
+                        onPressed: (context) async {
+                          if (store.dataUpdate.expired) {
+                            await awaitDataUpdateWithDialog(context, store);
+                          }
+                          return submitRegisterParticipant(context, store, api);
+                        }),
                   ),
                 if (store.encointer.showStartCeremonyButton)
                   Padding(
@@ -95,7 +100,7 @@ class CeremonyBox extends StatelessWidget {
                           Icon(Iconsax.login_1),
                           SizedBox(width: 6),
                           Text(
-                              '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store.encointer.communityAccount.scannedClaimsCount.toString())}'),
+                              '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store.encointer.communityAccount!.scannedClaimsCount.toString())}'),
                         ],
                       ),
                       onPressed: () => submitAttestClaims(context, store, api),
@@ -115,7 +120,7 @@ class CeremonyBox extends StatelessWidget {
 }
 
 Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
-  final dic = I18n.of(context).translationsForLocale();
+  final dic = I18n.of(context)!.translationsForLocale();
   final communityAccount = store.encointer.communityAccount;
 
   switch (store.encointer.currentPhase) {
@@ -125,7 +130,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
           notificationIconData: Iconsax.tick_square,
           notification: dic.encointer.youAreRegisteredAs.replaceAll(
             'PARTICIPANT_TYPE',
-            store.encointer?.communityAccount?.participantType?.toValue(),
+            store.encointer.communityAccount!.participantType!.toValue(),
           ),
         );
       } else {
@@ -133,11 +138,10 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
         _log("'getMeetupInfoWidget' trapped in an unexpected if statement: Registering phase + Unregistered");
         return Container();
       }
-      break;
     case CeremonyPhase.Assigning:
       if (store.encointer.communityAccount?.isAssigned ?? false) {
-        var meetup = store.encointer.communityAccount.meetup;
-        var location = store.encointer.community.meetupLocations[meetup.locationIndex];
+        var meetup = store.encointer.communityAccount!.meetup!;
+        var location = store.encointer.community!.meetupLocations![meetup.locationIndex];
         return MeetupInfo(
           meetup,
           location,
@@ -149,7 +153,6 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
           notification: dic.encointer.youAreNotRegisteredPleaseRegisterNextTime,
         );
       }
-      break;
     case CeremonyPhase.Attesting:
       if (!(store.encointer.communityAccount?.isAssigned ?? false)) {
         return CeremonyNotification(
@@ -161,11 +164,11 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
           return CeremonyNotification(
             notificationIconData: Iconsax.tick_square,
             notification: dic.encointer.successfullySentNAttestations
-                .replaceAll('P_COUNT', store.encointer.communityAccount?.scannedClaimsCount.toString()),
+                .replaceAll('P_COUNT', store.encointer.communityAccount!.scannedClaimsCount.toString()),
           );
         } else {
-          var meetup = store.encointer.communityAccount.meetup;
-          var location = store.encointer.community.meetupLocations[meetup.locationIndex];
+          var meetup = store.encointer.communityAccount!.meetup!;
+          var location = store.encointer.community!.meetupLocations![meetup.locationIndex];
           return MeetupInfo(
             meetup,
             location,
@@ -173,7 +176,6 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
           );
         }
       }
-      break;
     default:
       _log("'getMeetupInfoWidget' trapped in an unexpected default case");
       return Container();
@@ -182,4 +184,16 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
 
 void _log(String msg) {
   print("[CeremonyBox] $msg");
+}
+
+Future<void> awaitDataUpdateWithDialog(BuildContext context, AppStore store) async {
+  showCupertinoDialog(
+    context: context,
+    builder: (_) => CupertinoAlertDialog(
+      title: Text(I18n.of(context)!.translationsForLocale().home.updatingAppState),
+      content: CupertinoActivityIndicator(),
+    ),
+  );
+
+  await store.dataUpdate.executeUpdate().whenComplete(() => Navigator.of(context).pop());
 }

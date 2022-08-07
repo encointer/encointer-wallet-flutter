@@ -4,12 +4,14 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class CreatePinForm extends StatefulWidget {
-  CreatePinForm({this.onSubmit, this.store});
+  CreatePinForm({
+    required this.store,
+    required this.onSubmit,
+  });
   final Function onSubmit;
   final AppStore store;
 
@@ -36,7 +38,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
 
     return Form(
       key: _formKey,
@@ -57,7 +59,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
                     child: Text(
                       dic.profile.pinHint,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline2.copyWith(
+                      style: Theme.of(context).textTheme.headline2!.copyWith(
                             color: encointerBlack,
                           ),
                     ),
@@ -80,7 +82,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
                   ),
                   controller: _passCtrl,
                   validator: (v) {
-                    return Fmt.checkPassword(v.trim()) ? null : dic.account.createPasswordError;
+                    return Fmt.checkPassword(v!.trim()) ? null : dic.account.createPasswordError;
                   },
                   obscureText: true,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
@@ -119,7 +121,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
                         width: 250,
                         child: Text(
                           dic.profile.pinInfo,
-                          style: Theme.of(context).textTheme.headline4.copyWith(
+                          style: Theme.of(context).textTheme.headline4!.copyWith(
                                 color: encointerGrey,
                               ),
                         ),
@@ -135,13 +137,13 @@ class _CreatePinFormState extends State<CreatePinForm> {
             padding: EdgeInsets.all(16),
             child: PrimaryButton(
               child: Text(
-                I18n.of(context).translationsForLocale().account.create,
-                style: Theme.of(context).textTheme.headline3.copyWith(
+                I18n.of(context)!.translationsForLocale().account.create,
+                style: Theme.of(context).textTheme.headline3!.copyWith(
                       color: ZurichLion.shade50,
                     ),
               ),
               onPressed: () {
-                if (_formKey.currentState.validate()) {
+                if (_formKey.currentState!.validate()) {
                   store.account.setNewAccountPin(_passCtrl.text);
 
                   store.settings.setPin(_passCtrl.text);

@@ -1,6 +1,5 @@
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaarItemVertical.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
@@ -9,14 +8,14 @@ import 'searchResultsBusinessFiltered.dart';
 class SearchResultsBusiness extends StatelessWidget {
   final results;
 
-  const SearchResultsBusiness(this.results, {Key key}) : super(key: key);
+  const SearchResultsBusiness(this.results, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Translations dic = I18n.of(context).translationsForLocale();
+    Translations dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
-        title: Text('${results.length} ${I18n.of(context).translationsForLocale().bazaar.businessesFound}'),
+        title: Text('${results.length} ${I18n.of(context)!.translationsForLocale().bazaar.businessesFound}'),
       ),
       body: Column(
         children: [

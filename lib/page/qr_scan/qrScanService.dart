@@ -1,7 +1,6 @@
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/contactPage.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
-import 'package:encointer_wallet/page/qr_scan/qr_codes/qrCodeBase.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -30,13 +29,10 @@ class QrScanService {
     switch (context) {
       case QrCodeContext.contact:
         return ContactQrCode.fromQrFields(data);
-        break;
       case QrCodeContext.invoice:
         return InvoiceQrCode.fromQrFields(data);
-        break;
       case QrCodeContext.voucher:
         return VoucherQrCode.fromQrFields(data);
-        break;
       default:
         throw FormatException('[parseQrScan] Unhandled qr scan context');
     }
@@ -45,14 +41,11 @@ class QrScanService {
   void handleQrScan(BuildContext context, QrScannerContext scanContext, QrCode<dynamic> qrCode) {
     switch (qrCode.context) {
       case QrCodeContext.contact:
-        return handleContactQrCodeScan(context, scanContext, qrCode);
-        break;
+        return handleContactQrCodeScan(context, scanContext, qrCode as ContactQrCode);
       case QrCodeContext.invoice:
-        return handleInvoiceQrCodeScan(context, scanContext, qrCode);
-        break;
+        return handleInvoiceQrCodeScan(context, scanContext, qrCode as InvoiceQrCode);
       case QrCodeContext.voucher:
-        return handleVoucherQrCodeScan(context, scanContext, qrCode);
-        break;
+        return handleVoucherQrCodeScan(context, scanContext, qrCode as VoucherQrCode);
       default:
         throw FormatException('[handleQrScan] Unhandled qr scan context');
     }
@@ -112,7 +105,7 @@ void handleInvoiceQrCodeScan(BuildContext context, QrScannerContext scanContext,
 }
 
 /// Handles the `VoucherQrCode` scan based on where it was scanned.
-void handleVoucherQrCodeScan(BuildContext context, QrScannerContext scanContext, VoucherQrCode qrCode) {
+void handleVoucherQrCodeScan(BuildContext context, QrScannerContext? scanContext, VoucherQrCode qrCode) {
   var showFundVoucher = false;
   if (scanContext == QrScannerContext.transferPage) {
     showFundVoucher = true;
@@ -132,7 +125,7 @@ void popAndPushTransferPageWithInvoice(BuildContext context, InvoiceData data) {
       cid: data.cid,
       recipient: data.account,
       label: data.label,
-      amount: data.amount,
+      amount: data.amount as double?,
       redirect: '/',
     ),
   );

@@ -16,7 +16,7 @@ class ImagePreview extends StatelessWidget {
     return Observer(
       builder: (_) => ListView(
         children: [
-          if (imagePickerState.retrieveDataError != null) Text(imagePickerState.retrieveDataError),
+          if (imagePickerState.retrieveDataError != null) Text(imagePickerState.retrieveDataError!),
           if (imagePickerState.pickImageError != null)
             Text(
               'Pick image error: ${imagePickerState.pickImageError}',
@@ -24,10 +24,10 @@ class ImagePreview extends StatelessWidget {
             ),
           if (imagePickerState.images.isEmpty)
             Text(
-              I18n.of(context).translationsForLocale().bazaar.imageNotPicked,
+              I18n.of(context)!.translationsForLocale().bazaar.imageNotPicked,
               textAlign: TextAlign.center,
             ),
-          Text("${imagePickerState.images.length} ${I18n.of(context).translationsForLocale().bazaar.imagesAdded}"),
+          Text("${imagePickerState.images.length} ${I18n.of(context)!.translationsForLocale().bazaar.imagesAdded}"),
           Column(
             children: imagePickerState.images
                 .map(
@@ -35,7 +35,7 @@ class ImagePreview extends StatelessWidget {
                     children: [
                       Container(
                         height: 200,
-                        child: kIsWeb ? Image.network(image.path) : Image.file(File(image.path)),
+                        child: kIsWeb ? Image.network(image!.path) : Image.file(File(image!.path)),
                       ),
                       IconButton(
                         icon: Icon(

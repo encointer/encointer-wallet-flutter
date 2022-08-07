@@ -11,12 +11,12 @@ class AccountData extends _AccountData {
 abstract class _AccountData {
   String name = '';
   String address = '';
-  String encoded = '';
+  String? encoded = '';
   String pubKey = '';
 
-  Map<String, dynamic> encoding = Map<String, dynamic>();
-  Map<String, dynamic> meta = Map<String, dynamic>();
+  Map<String, dynamic>? encoding = Map<String, dynamic>();
+  Map<String, dynamic>? meta = Map<String, dynamic>();
 
-  String memo = '';
-  bool observation = false;
+  String? memo = '';
+  bool? observation = false;
 }

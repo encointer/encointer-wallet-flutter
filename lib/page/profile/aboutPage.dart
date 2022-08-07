@@ -10,7 +10,7 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       backgroundColor: Theme.of(context).cardColor,
       appBar: AppBar(
@@ -35,7 +35,7 @@ class AboutPage extends StatelessWidget {
               builder: (_, AsyncSnapshot<PackageInfo> snapshot) {
                 print(snapshot);
                 if (snapshot.hasData) {
-                  return Text('${dic.profile.aboutVersion}: v${snapshot.data.version}+${snapshot.data.buildNumber}');
+                  return Text('${dic.profile.aboutVersion}: v${snapshot.data!.version}+${snapshot.data!.buildNumber}');
                 } else {
                   return CupertinoActivityIndicator();
                 }

@@ -6,15 +6,15 @@ import 'package:flutter/material.dart';
 /// offers further options.
 ///
 class PrimaryButton extends StatelessWidget {
-  final Function onPressed;
+  final void Function()? onPressed;
   final Widget child;
   final BorderRadiusGeometry borderRadius;
 
   const PrimaryButton({
-    this.child,
+    required this.child,
     this.onPressed,
     this.borderRadius = const BorderRadius.all(Radius.circular(20)),
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -44,13 +44,13 @@ class PrimaryButton extends StatelessWidget {
 
 class TextGradient extends StatelessWidget {
   const TextGradient({
-    this.text,
+    required this.text,
     this.style,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   final String text;
-  final TextStyle style;
+  final TextStyle? style;
 
   @override
   Widget build(BuildContext context) {

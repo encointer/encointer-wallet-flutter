@@ -15,17 +15,17 @@ class EncointerMap extends StatelessWidget {
 
   /// Used to trigger showing/hiding of popups.
   final PopupController _popupLayerController = PopupController();
-  final Function popupBuilder;
-  final List<Marker> markers;
-  final String title;
-  final LatLng center;
+  final Widget Function(BuildContext, Marker)? popupBuilder;
+  final List<Marker>? markers;
+  final String? title;
+  final LatLng? center;
   final double initialZoom;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(title!, maxLines: 2),
         leading: Container(),
         actions: <Widget>[
           IconButton(
@@ -37,13 +37,13 @@ class EncointerMap extends StatelessWidget {
           )
         ],
       ),
-      body: markers.isNotEmpty
+      body: markers!.isNotEmpty
           ? FlutterMap(
               options: MapOptions(
                 center: center,
                 zoom: initialZoom,
                 maxZoom: 18.4,
-                onTap: (_) => _popupLayerController.hideAllPopups(), // Hide popup when the map is tapped.
+                onTap: (_, __) => _popupLayerController.hideAllPopups(), // Hide popup when the map is tapped.
               ),
               children: [
                 TileLayerWidget(
@@ -56,7 +56,7 @@ class EncointerMap extends StatelessWidget {
                 PopupMarkerLayerWidget(
                   options: PopupMarkerLayerOptions(
                     popupController: _popupLayerController,
-                    markers: markers,
+                    markers: markers!,
                     markerRotateAlignment: PopupMarkerLayerOptions.rotationAlignmentFor(AnchorAlign.top),
                     popupBuilder: popupBuilder,
                   ),
@@ -72,7 +72,7 @@ class EncointerMap extends StatelessWidget {
 }
 
 Widget noCommunityDialog(BuildContext context) {
-  var translations = I18n.of(context).translationsForLocale();
+  var translations = I18n.of(context)!.translationsForLocale();
 
   return CupertinoAlertDialog(
     title: Container(),
@@ -94,7 +94,7 @@ Future<void> showOnEncointerMap(
   Location location, {
   double initialZoom = 14,
 }) {
-  var dic = I18n.of(context).translationsForLocale();
+  var dic = I18n.of(context)!.translationsForLocale();
 
   return Navigator.push(
     context,

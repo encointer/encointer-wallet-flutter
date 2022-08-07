@@ -6,13 +6,13 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/paymentOverview.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/transferState.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:encointer_wallet/utils/tx.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -21,10 +21,10 @@ import 'package:intl/intl.dart';
 
 class PaymentConfirmationParams {
   PaymentConfirmationParams({
-    this.cid,
-    this.communitySymbol,
-    this.recipientAccount,
-    this.amount,
+    required this.cid,
+    required this.communitySymbol,
+    required this.recipientAccount,
+    required this.amount,
   });
 
   final CommunityIdentifier cid;
@@ -48,20 +48,20 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   TransferState _transferState = TransferState.notStarted;
 
   /// Transaction result, will only be used in the error case.
-  Map _transactionResult;
+  late Map _transactionResult;
 
-  DateTime _blockTimestamp;
+  late DateTime _blockTimestamp;
 
   // for the animated tick.
-  AnimationController _animationController;
-  Animation<double> _animation;
-  Timer _timer;
+  AnimationController? _animationController;
+  Animation<double>? _animation;
+  late Timer _timer;
   bool _animationInitialized = false;
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
-    PaymentConfirmationParams params = ModalRoute.of(context).settings.arguments;
+    final Translations dic = I18n.of(context)!.translationsForLocale();
+    PaymentConfirmationParams params = ModalRoute.of(context)!.settings.arguments as PaymentConfirmationParams;
 
     var cid = params.cid;
     var recipientAccount = params.recipientAccount;
@@ -137,7 +137,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     );
   }
 
-  Future<void> _submit(BuildContext context, CommunityIdentifier cid, String recipientAddress, double amount) async {
+  Future<void> _submit(BuildContext context, CommunityIdentifier cid, String recipientAddress, double? amount) async {
     var params = encointerBalanceTransferParams(cid, recipientAddress, amount);
 
     setState(() {
@@ -174,19 +174,13 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   Widget _getTransferStateWidget(TransferState state) {
     switch (state) {
       case TransferState.notStarted:
-        {
-          return Container();
-        }
-        break;
+        return Container();
       case TransferState.submitting:
-        {
-          return SizedBox(
-            height: 80,
-            width: 80,
-            child: CircularProgressIndicator(),
-          );
-        }
-        break;
+        return SizedBox(
+          height: 80,
+          width: 80,
+          child: CircularProgressIndicator(),
+        );
       case TransferState.finished:
         {
           if (!_animationInitialized) {
@@ -196,50 +190,43 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
           return Container(
             decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.green),
             child: AnimatedCheck(
-              progress: _animation,
+              progress: _animation!,
               size: 100,
               color: Colors.white,
             ),
           );
         }
-        break;
       case TransferState.failed:
-        {
-          return Container(
-            decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.red),
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Icon(
-                Icons.highlight_remove,
-                size: 80.0,
-                color: Colors.white,
-              ),
+        return Container(
+          decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.red),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Icon(
+              Icons.highlight_remove,
+              size: 80.0,
+              color: Colors.white,
             ),
-          );
-        }
-        break;
+          ),
+        );
       default:
         return Text("Unknown transfer state");
-        break;
     }
   }
 
   Widget _txStateTextInfo(TransferState state) {
-    final h1Grey = Theme.of(context).textTheme.headline1.copyWith(color: encointerGrey);
-    final h2Grey = Theme.of(context).textTheme.headline2.copyWith(color: encointerGrey);
+    final h1Grey = Theme.of(context).textTheme.headline1!.copyWith(color: encointerGrey);
+    final h2Grey = Theme.of(context).textTheme.headline2!.copyWith(color: encointerGrey);
 
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     switch (state) {
       case TransferState.notStarted:
         {
           return Text(dic.assets.paymentDoYouWantToProceed, style: h2Grey);
         }
-        break;
       case TransferState.submitting:
         {
           return Text(dic.assets.paymentSubmitting, style: h2Grey);
         }
-        break;
       case TransferState.finished:
         {
           var date = DateFormat.yMd().format(_blockTimestamp);
@@ -259,7 +246,6 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
             ),
           );
         }
-        break;
       case TransferState.failed:
         {
           return Text(
@@ -267,25 +253,23 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
             style: h2Grey,
           );
         }
-        break;
       default:
         return Text("Unknown transfer state");
-        break;
     }
   }
 
   void _animateTick() {
-    _animationController.forward();
-    Future.delayed(Duration(seconds: 1), () => _animationController.reset());
+    _animationController!.forward();
+    Future.delayed(Duration(seconds: 1), () => _animationController!.reset());
   }
 
   void _initializeAnimation() {
     _animationController = AnimationController(vsync: this, duration: Duration(seconds: 1));
 
     _animation = new Tween<double>(begin: 0, end: 1)
-        .animate(new CurvedAnimation(parent: _animationController, curve: Curves.easeInOutCirc));
+        .animate(new CurvedAnimation(parent: _animationController!, curve: Curves.easeInOutCirc));
 
-    _animationController.forward();
+    _animationController!.forward();
 
     _timer = Timer.periodic(
       Duration(seconds: 2),
@@ -298,7 +282,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   @override
   void dispose() {
     if (_animationController != null) {
-      _animationController.dispose();
+      _animationController!.dispose();
       _animation = null;
       _timer.cancel();
     }

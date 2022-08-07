@@ -7,13 +7,13 @@ import 'package:flutter/material.dart';
 /// Useful for sending transactions because it takes a while until we know the result.
 class SubmitButton extends StatefulWidget {
   const SubmitButton({
-    Key key,
-    this.child,
+    Key? key,
+    required this.child,
     this.onPressed,
   }) : super(key: key);
 
   final Widget child;
-  final Future<void> Function(BuildContext) onPressed;
+  final Future<void> Function(BuildContext)? onPressed;
 
   @override
   _SubmitButtonState createState() => _SubmitButtonState();
@@ -26,7 +26,7 @@ class _SubmitButtonState extends State<SubmitButton> {
     setState(() {
       _submitting = true;
     });
-    await widget.onPressed(context);
+    await widget.onPressed!(context);
     setState(() {
       _submitting = false;
     });
@@ -35,7 +35,12 @@ class _SubmitButtonState extends State<SubmitButton> {
   @override
   Widget build(BuildContext context) {
     return PrimaryButton(
-      child: !_submitting ? widget.child : CupertinoActivityIndicator(),
+      child: !_submitting
+          ? widget.child
+          : Theme(
+              // change theme locally to dark such that the activity indicator appears bright
+              data: ThemeData(cupertinoOverrideTheme: CupertinoThemeData(brightness: Brightness.dark)),
+              child: CupertinoActivityIndicator()),
       onPressed: (!_submitting && widget.onPressed != null) ? _onPressed : null,
     );
   }

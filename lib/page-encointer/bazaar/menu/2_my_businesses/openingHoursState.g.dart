@@ -6,10 +6,10 @@ part of 'openingHoursState.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$OpeningHoursState on _OpeningHoursState, Store {
-  final _$monAtom = Atom(name: '_OpeningHoursState.mon');
+  late final _$monAtom = Atom(name: '_OpeningHoursState.mon', context: context);
 
   @override
   OpeningHoursForDayState get mon {
@@ -24,7 +24,7 @@ mixin _$OpeningHoursState on _OpeningHoursState, Store {
     });
   }
 
-  final _$tueAtom = Atom(name: '_OpeningHoursState.tue');
+  late final _$tueAtom = Atom(name: '_OpeningHoursState.tue', context: context);
 
   @override
   OpeningHoursForDayState get tue {
@@ -39,7 +39,7 @@ mixin _$OpeningHoursState on _OpeningHoursState, Store {
     });
   }
 
-  final _$wedAtom = Atom(name: '_OpeningHoursState.wed');
+  late final _$wedAtom = Atom(name: '_OpeningHoursState.wed', context: context);
 
   @override
   OpeningHoursForDayState get wed {
@@ -54,7 +54,7 @@ mixin _$OpeningHoursState on _OpeningHoursState, Store {
     });
   }
 
-  final _$thuAtom = Atom(name: '_OpeningHoursState.thu');
+  late final _$thuAtom = Atom(name: '_OpeningHoursState.thu', context: context);
 
   @override
   OpeningHoursForDayState get thu {
@@ -69,7 +69,7 @@ mixin _$OpeningHoursState on _OpeningHoursState, Store {
     });
   }
 
-  final _$friAtom = Atom(name: '_OpeningHoursState.fri');
+  late final _$friAtom = Atom(name: '_OpeningHoursState.fri', context: context);
 
   @override
   OpeningHoursForDayState get fri {
@@ -84,7 +84,7 @@ mixin _$OpeningHoursState on _OpeningHoursState, Store {
     });
   }
 
-  final _$satAtom = Atom(name: '_OpeningHoursState.sat');
+  late final _$satAtom = Atom(name: '_OpeningHoursState.sat', context: context);
 
   @override
   OpeningHoursForDayState get sat {
@@ -99,7 +99,7 @@ mixin _$OpeningHoursState on _OpeningHoursState, Store {
     });
   }
 
-  final _$sunAtom = Atom(name: '_OpeningHoursState.sun');
+  late final _$sunAtom = Atom(name: '_OpeningHoursState.sun', context: context);
 
   @override
   OpeningHoursForDayState get sun {
@@ -114,52 +114,52 @@ mixin _$OpeningHoursState on _OpeningHoursState, Store {
     });
   }
 
-  final _$copiedOpeningHoursAtom = Atom(name: '_OpeningHoursState.copiedOpeningHours');
+  late final _$copiedOpeningHoursAtom = Atom(name: '_OpeningHoursState.copiedOpeningHours', context: context);
 
   @override
-  OpeningHoursForDayState get copiedOpeningHours {
+  OpeningHoursForDayState? get copiedOpeningHours {
     _$copiedOpeningHoursAtom.reportRead();
     return super.copiedOpeningHours;
   }
 
   @override
-  set copiedOpeningHours(OpeningHoursForDayState value) {
+  set copiedOpeningHours(OpeningHoursForDayState? value) {
     _$copiedOpeningHoursAtom.reportWrite(value, super.copiedOpeningHours, () {
       super.copiedOpeningHours = value;
     });
   }
 
-  final _$dayOnFocusAtom = Atom(name: '_OpeningHoursState.dayOnFocus');
+  late final _$dayOnFocusAtom = Atom(name: '_OpeningHoursState.dayOnFocus', context: context);
 
   @override
-  int get dayOnFocus {
+  int? get dayOnFocus {
     _$dayOnFocusAtom.reportRead();
     return super.dayOnFocus;
   }
 
   @override
-  set dayOnFocus(int value) {
+  set dayOnFocus(int? value) {
     _$dayOnFocusAtom.reportWrite(value, super.dayOnFocus, () {
       super.dayOnFocus = value;
     });
   }
 
-  final _$dayToCopyFromAtom = Atom(name: '_OpeningHoursState.dayToCopyFrom');
+  late final _$dayToCopyFromAtom = Atom(name: '_OpeningHoursState.dayToCopyFrom', context: context);
 
   @override
-  int get dayToCopyFrom {
+  int? get dayToCopyFrom {
     _$dayToCopyFromAtom.reportRead();
     return super.dayToCopyFrom;
   }
 
   @override
-  set dayToCopyFrom(int value) {
+  set dayToCopyFrom(int? value) {
     _$dayToCopyFromAtom.reportWrite(value, super.dayToCopyFrom, () {
       super.dayToCopyFrom = value;
     });
   }
 
-  final _$_OpeningHoursStateActionController = ActionController(name: '_OpeningHoursState');
+  late final _$_OpeningHoursStateActionController = ActionController(name: '_OpeningHoursState', context: context);
 
   @override
   dynamic copyFrom(int day) {
@@ -210,7 +210,7 @@ dayToCopyFrom: ${dayToCopyFrom}
 }
 
 mixin _$OpeningHoursForDayState on _OpeningHoursForDayState, Store {
-  final _$openingIntervalsAtom = Atom(name: '_OpeningHoursForDayState.openingIntervals');
+  late final _$openingIntervalsAtom = Atom(name: '_OpeningHoursForDayState.openingIntervals', context: context);
 
   @override
   ObservableList<OpeningIntervalState> get openingIntervals {
@@ -225,22 +225,23 @@ mixin _$OpeningHoursForDayState on _OpeningHoursForDayState, Store {
     });
   }
 
-  final _$timeFormatErrorAtom = Atom(name: '_OpeningHoursForDayState.timeFormatError');
+  late final _$timeFormatErrorAtom = Atom(name: '_OpeningHoursForDayState.timeFormatError', context: context);
 
   @override
-  String get timeFormatError {
+  String? get timeFormatError {
     _$timeFormatErrorAtom.reportRead();
     return super.timeFormatError;
   }
 
   @override
-  set timeFormatError(String value) {
+  set timeFormatError(String? value) {
     _$timeFormatErrorAtom.reportWrite(value, super.timeFormatError, () {
       super.timeFormatError = value;
     });
   }
 
-  final _$_OpeningHoursForDayStateActionController = ActionController(name: '_OpeningHoursForDayState');
+  late final _$_OpeningHoursForDayStateActionController =
+      ActionController(name: '_OpeningHoursForDayState', context: context);
 
   @override
   dynamic addParsedIntervalIfValid(String startEnd) {
@@ -285,7 +286,7 @@ timeFormatError: ${timeFormatError}
 }
 
 mixin _$OpeningIntervalState on _OpeningIntervalState, Store {
-  final _$startAtom = Atom(name: '_OpeningIntervalState.start');
+  late final _$startAtom = Atom(name: '_OpeningIntervalState.start', context: context);
 
   @override
   int get start {
@@ -300,7 +301,7 @@ mixin _$OpeningIntervalState on _OpeningIntervalState, Store {
     });
   }
 
-  final _$endAtom = Atom(name: '_OpeningIntervalState.end');
+  late final _$endAtom = Atom(name: '_OpeningIntervalState.end', context: context);
 
   @override
   int get end {

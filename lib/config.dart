@@ -1,5 +1,5 @@
-import 'package:json_annotation/json_annotation.dart';
 import 'package:encointer_wallet/page-encointer/homePage.dart';
+import 'package:json_annotation/json_annotation.dart';
 
 import 'store/app.dart';
 

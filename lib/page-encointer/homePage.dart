@@ -5,7 +5,6 @@ import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qrScanPage.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -29,9 +28,9 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   final PageController _pageController = PageController();
 
-  NotificationPlugin _notificationPlugin;
+  NotificationPlugin? _notificationPlugin;
 
-  List<TabData> _tabList;
+  late List<TabData> _tabList;
   int _tabIndex = 0;
 
   List<BottomNavigationBarItem> _navBarItems(int activeItem) {
@@ -75,7 +74,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
   void initState() {
     if (_notificationPlugin == null) {
       _notificationPlugin = NotificationPlugin();
-      _notificationPlugin.init(context);
+      _notificationPlugin!.init(context);
     }
 
     super.initState();

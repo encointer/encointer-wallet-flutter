@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 
 class LowerCeremonyBoxContainer extends StatelessWidget {
   LowerCeremonyBoxContainer({
-    this.child,
-    Key key,
+    required this.child,
+    Key? key,
   }) : super(key: key);
 
   final Widget child;

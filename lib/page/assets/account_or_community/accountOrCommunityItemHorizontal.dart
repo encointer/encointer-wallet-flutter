@@ -6,13 +6,13 @@ import 'AccountOrCommunityData.dart';
 class AccountOrCommunityItemHorizontal extends StatefulWidget {
   final AccountOrCommunityData itemData;
   final int index;
-  final Function onTap;
+  final Function? onTap;
 
   const AccountOrCommunityItemHorizontal({
-    Key key,
-    @required this.itemData,
-    @required this.index,
-    @required this.onTap,
+    Key? key,
+    required this.itemData,
+    required this.index,
+    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -25,7 +25,7 @@ class _AccountOrCommunityItemHorizontalState extends State<AccountOrCommunityIte
     return Column(
       children: [
         InkWell(
-          onTap: () => widget.onTap(widget.index),
+          onTap: () => widget.onTap!(widget.index),
           child: Container(
             padding: EdgeInsets.all(4),
             decoration: BoxDecoration(
@@ -40,7 +40,7 @@ class _AccountOrCommunityItemHorizontalState extends State<AccountOrCommunityIte
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Text(
-            widget.itemData.name,
+            widget.itemData.name!,
             style: Theme.of(context).textTheme.headline4,
             textAlign: TextAlign.center,
             maxLines: 2,

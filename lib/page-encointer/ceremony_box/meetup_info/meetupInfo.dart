@@ -12,18 +12,18 @@ class MeetupInfo extends StatelessWidget {
     this.meetup,
     this.meetupLocation, {
     this.onLocationPressed,
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   final Meetup meetup;
 
   final Location meetupLocation;
 
-  final Future<void> Function() onLocationPressed;
+  final Future<void> Function()? onLocationPressed;
 
   @override
   Widget build(BuildContext context) {
-    final dic = I18n.of(context).translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     var info =
         dic.encointer.youAreAssignedToAMeetupWithNParticipants.replaceAll('P_COUNT', meetup.registry.length.toString());
 

@@ -54,14 +54,14 @@ void main() {
       expect(store.cid, mediterraneanTestCommunity);
       expect(store.address, ALICE_ADDRESS);
       expect(store.participantType, ParticipantType.Bootstrapper);
-      expect(store.meetup.index, 2);
-      expect(store.meetup.locationIndex, 3);
-      expect(store.meetup.time, 10);
-      expect(store.meetup.registry, [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]);
+      expect(store.meetup!.index, 2);
+      expect(store.meetup!.locationIndex, 3);
+      expect(store.meetup!.time, 10);
+      expect(store.meetup!.registry, [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]);
     });
 
     test('cacheFn injection works', () async {
-      var localStorage = getMockLocalStorage();
+      var localStorage = MockLocalStorage();
 
       var communityAccountStore = CommunityAccountStore(
         "My Test Network",

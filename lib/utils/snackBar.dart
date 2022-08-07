@@ -4,40 +4,50 @@ final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey = new GlobalKey
 
 class RootSnackBar {
   static void hideCurrent() {
-    rootScaffoldMessengerKey.currentState.hideCurrentSnackBar();
+    rootScaffoldMessengerKey.currentState!.hideCurrentSnackBar();
   }
 
   static void removeCurrent() {
-    rootScaffoldMessengerKey.currentState.removeCurrentSnackBar();
+    rootScaffoldMessengerKey.currentState!.removeCurrentSnackBar();
   }
 
   static void show(
+    Widget content, {
+    int durationMillis: 1500,
+    backgroundColor: Colors.white,
+  }) {
+    showSnackBar(
+      content,
+      durationMillis: durationMillis,
+      backgroundColor: backgroundColor,
+    );
+  }
+
+  static void showMsg(
     String msg, {
     int durationMillis: 1500,
     textColor: Colors.black54,
     backgroundColor: Colors.white,
   }) {
     showSnackBar(
-      msg,
+      Text(msg, style: TextStyle(color: textColor)),
       durationMillis: durationMillis,
-      textColor: textColor,
       backgroundColor: backgroundColor,
     );
   }
 }
 
 void showSnackBar(
-  String msg, {
+  Widget content, {
   int durationMillis: 1500,
-  textColor: Colors.black54,
   backgroundColor: Colors.white,
 }) {
-  rootScaffoldMessengerKey.currentState.hideCurrentSnackBar();
-  rootScaffoldMessengerKey.currentState.removeCurrentSnackBar();
-  rootScaffoldMessengerKey.currentState
+  rootScaffoldMessengerKey.currentState!.hideCurrentSnackBar();
+  rootScaffoldMessengerKey.currentState!.removeCurrentSnackBar();
+  rootScaffoldMessengerKey.currentState!
     ..showSnackBar(
       SnackBar(
-        content: Text(msg, style: TextStyle(color: textColor)),
+        content: content,
         backgroundColor: backgroundColor,
         duration: Duration(milliseconds: durationMillis),
       ),

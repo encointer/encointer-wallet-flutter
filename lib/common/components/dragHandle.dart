@@ -1,11 +1,10 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../theme.dart';
 
 /// handle for sliding up panel, for it look good
 class DragHandle extends StatelessWidget {
   const DragHandle({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

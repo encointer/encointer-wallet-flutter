@@ -30,7 +30,7 @@ import 'teeProxyApi.dart';
 /// NOTE: If the js-code was changed a rebuild of the application is needed to update the code.
 
 class EncointerApi {
-  EncointerApi(this.jsApi, SubstrateDartApi dartApi)
+  EncointerApi(this.store, this.jsApi, SubstrateDartApi dartApi)
       : _noTee = NoTeeApi(jsApi),
         _teeProxy = TeeProxyApi(jsApi),
         _dartApi = EncointerDartApi(dartApi);
@@ -38,7 +38,7 @@ class EncointerApi {
   final JSApi jsApi;
   final EncointerDartApi _dartApi;
 
-  final store = globalAppStore;
+  final AppStore store;
   final String _currentPhaseSubscribeChannel = 'currentPhase';
   final String _communityIdentifiersChannel = 'communityIdentifiers';
   final String _encointerBalanceChannel = 'encointerBalance';
@@ -86,11 +86,11 @@ class EncointerApi {
   /// Queries the Scheduler pallet: encointerScheduler.currentPhase().
   ///
   /// This is on-chain in Cantillon.
-  Future<CeremonyPhase> getCurrentPhase() async {
+  Future<CeremonyPhase?> getCurrentPhase() async {
     print("api: getCurrentPhase");
     var res = await jsApi.evalJavascript('encointer.getCurrentPhase()');
 
-    var phase = ceremonyPhaseFromString(res);
+    var phase = ceremonyPhaseFromString(res)!;
     print("api: Phase enum: " + phase.toString());
     store.encointer.setCurrentPhase(phase);
     return phase;
@@ -116,7 +116,7 @@ class EncointerApi {
   Future<void> getPhaseDurations() async {
     Map<CeremonyPhase, int> phaseDurations = await jsApi
         .evalJavascript('encointer.getPhaseDurations()')
-        .then((m) => Map.from(m).map((key, value) => MapEntry(ceremonyPhaseFromString(key), int.parse(value))));
+        .then((m) => Map.from(m).map((key, value) => MapEntry(ceremonyPhaseFromString(key)!, int.parse(value))));
 
     store.encointer.setPhaseDurations(phaseDurations);
   }
@@ -152,7 +152,7 @@ class EncointerApi {
   /// Queries the Scheduler pallet: encointerScheduler.currentCeremonyIndex().
   ///
   /// This is on-chain in Cantillon.
-  Future<int> getCurrentCeremonyIndex() async {
+  Future<int?> getCurrentCeremonyIndex() async {
     print("api: getCurrentCeremonyIndex");
     int cIndex = await jsApi.evalJavascript('encointer.getCurrentCeremonyIndex()').then((index) => int.parse(index));
     print("api: Current Ceremony index: " + cIndex.toString());
@@ -165,7 +165,7 @@ class EncointerApi {
   /// This is on-chain in Cantillon
   Future<void> getAllMeetupLocations() async {
     print("api: getAllMeetupLocations");
-    CommunityIdentifier cid = store.encointer.chosenCid;
+    CommunityIdentifier? cid = store.encointer.chosenCid;
 
     if (cid == null) {
       return;
@@ -176,7 +176,7 @@ class EncointerApi {
         .then((list) => List.from(list).map((l) => Location.fromJson(l)).toList());
 
     print("api: getAllMeetupLocations: " + locs.toString());
-    store.encointer.community.setMeetupLocations(locs);
+    store.encointer.community!.setMeetupLocations(locs);
   }
 
   /// Queries the Communities pallet: encointerCommunities.communityMetadata(cid)
@@ -184,7 +184,7 @@ class EncointerApi {
   /// This is on-chain in Cantillon
   Future<void> getCommunityMetadata() async {
     print("api: getCommunityMetadata");
-    CommunityIdentifier cid = store.encointer.chosenCid;
+    CommunityIdentifier? cid = store.encointer.chosenCid;
     if (cid == null) {
       return;
     }
@@ -207,14 +207,14 @@ class EncointerApi {
   ///
   /// This is on-chain in Cantillon
   Future<void> getDemurrage() async {
-    CommunityIdentifier cid = store.encointer.chosenCid;
+    CommunityIdentifier? cid = store.encointer.chosenCid;
     if (cid == null) {
       return;
     }
 
     double dem = await jsApi.evalJavascript('encointer.getDemurrage(${jsonEncode(cid)})');
     print("api: fetched demurrage: $dem");
-    store.encointer.community.setDemurrage(dem);
+    store.encointer.community!.setDemurrage(dem);
   }
 
   /// Calls the custom rpc: api.rpc.communities.communitiesGetAll()
@@ -231,15 +231,15 @@ class EncointerApi {
   ///
   /// Fixme: Sometimes the PhaseAwareBox takes ages to update. This might be due to multiple network requests on JS side.
   /// We could fetch the phaseDurations at application startup, cache them and supply them in the call here.
-  Future<void> getMeetupTime() async {
+  Future<DateTime?> getMeetupTime() async {
     print("api: getMeetupTime");
 
     // I we are not assigned to a meetup, we just get any location to get an estimate of the chosen community's meetup
     // times.
-    int locationIndex = store.encointer.communityAccount?.meetup?.locationIndex;
+    int? locationIndex = store.encointer.communityAccount?.meetup?.locationIndex;
 
-    Location mLocation = locationIndex != null
-        ? store.encointer.community.meetupLocations[locationIndex]
+    Location? mLocation = locationIndex != null
+        ? store.encointer.community!.meetupLocations![locationIndex]
         : (store.encointer.community?.meetupLocations?.first);
 
     if (mLocation == null) {
@@ -253,13 +253,13 @@ class EncointerApi {
 
     print("api: Next Meetup Time: $time");
 
-    store.encointer.community.setMeetupTime(time);
+    store.encointer.community!.setMeetupTime(time);
     return DateTime.fromMillisecondsSinceEpoch(time);
   }
 
   Future<void> getMeetupTimeOverride() async {
     print("api: Check if there are meetup time overrides");
-    CommunityIdentifier cid = store.encointer.chosenCid;
+    CommunityIdentifier? cid = store.encointer.chosenCid;
     if (cid == null) {
       return;
     }
@@ -268,20 +268,18 @@ class EncointerApi {
       final meetupTimeOverride =
           await feed.getMeetupTimeOverride(store.encointer.network, cid, store.encointer.currentPhase);
 
-      if (meetupTimeOverride != null) {
-        store.encointer.community.setMeetupTimeOverride(meetupTimeOverride.millisecondsSinceEpoch);
-      }
+      store.encointer.community!.setMeetupTimeOverride(meetupTimeOverride?.millisecondsSinceEpoch);
     } catch (e) {
       print("api: exception: ${e.toString()}");
     }
   }
 
-  Future<bool> hasPendingIssuance() async {
-    CommunityIdentifier cid = store.encointer.chosenCid;
+  Future<bool?> hasPendingIssuance() async {
+    CommunityIdentifier? cid = store.encointer.chosenCid;
 
     // -1 as we get the pending issuance for the last ceremony
-    int cIndex = store.encointer.currentCeremonyIndex;
-    String pubKey = store.account.currentAccountPubKey;
+    int? cIndex = store.encointer.currentCeremonyIndex;
+    String? pubKey = store.account.currentAccountPubKey;
     print("api: Getting pendingIssuance for $pubKey");
 
     if (pubKey == null || pubKey.isEmpty || cid == null || cIndex == null || cIndex <= 1) {
@@ -303,10 +301,6 @@ class EncointerApi {
   ///
   /// This is off-chain and trusted in Cantillon, accessible with TrustedGetter::balance(cid, accountId).
   Future<BalanceEntry> getEncointerBalance(String pubKeyOrAddress, CommunityIdentifier cid) async {
-    if (cid == null) {
-      return Future.value(null);
-    }
-
     print("Getting encointer balance for $pubKeyOrAddress and ${cid.toFmtString()}");
 
     BalanceEntry balanceEntry = store.settings.endpointIsNoTee
@@ -322,12 +316,12 @@ class EncointerApi {
     jsApi.subscribeMessage(
         'encointer.subscribeCurrentPhase("$_currentPhaseSubscribeChannel")', _currentPhaseSubscribeChannel,
         (data) async {
-      var phase = ceremonyPhaseFromString(data.toUpperCase());
+      var phase = ceremonyPhaseFromString(data.toUpperCase())!;
 
       var cid = store.encointer.chosenCid;
       var address = store.account.currentAddress;
 
-      if (cid != null && address.isNotEmpty) {
+      if (cid != null) {
         var data = await pollAggregatedAccountDataUntilNextPhase(phase, cid, address);
         store.encointer.setAggregatedAccountData(cid, address, data);
       }
@@ -342,10 +336,13 @@ class EncointerApi {
   /// This is needed because the aggregated account data lags behind, when then the ceremony phase is updated:
   /// See: https://github.com/encointer/encointer-wallet-flutter/issues/632
   Future<AggregatedAccountData> pollAggregatedAccountDataUntilNextPhase(
-      CeremonyPhase nextPhase, CommunityIdentifier cid, String address) async {
+    CeremonyPhase nextPhase,
+    CommunityIdentifier cid,
+    String address,
+  ) async {
     while (true) {
       final data = await getAggregatedAccountData(cid, address);
-      final phase = data.global.ceremonyPhase;
+      final phase = data.global!.ceremonyPhase;
 
       if (nextPhase == phase) {
         print("[EncointerApi] received account data valid for the new ceremony phase");
@@ -379,8 +376,8 @@ class EncointerApi {
     print('Subscribe encointer balance');
     jsApi.unsubscribeMessage(_encointerBalanceChannel);
 
-    String account = store.account.currentAccountPubKey;
-    CommunityIdentifier cid = store.encointer.chosenCid;
+    String? account = store.account.currentAccountPubKey;
+    CommunityIdentifier? cid = store.encointer.chosenCid;
     if (cid == null) {
       return;
     }
@@ -423,7 +420,7 @@ class EncointerApi {
 
     print("api: bootstrappers " + bootstrappers.toString());
 
-    store.encointer.community.setBootstrappers(bootstrappers);
+    store.encointer.community!.setBootstrappers(bootstrappers);
   }
 
   Future<void> getReputations() async {
@@ -433,10 +430,14 @@ class EncointerApi {
 
     print("api: getReputations: ${reputationsList.toString()}");
 
+    if (reputationsList.isEmpty) {
+      return Future.value(null);
+    }
+
     Map<int, CommunityReputation> reputations =
         Map.fromIterable(reputationsList, key: (cr) => cr[0], value: (cr) => CommunityReputation.fromJson(cr[1]));
 
-    store.encointer.account.setReputations(reputations);
+    store.encointer.account?.setReputations(reputations);
   }
 
   Future<dynamic> sendFaucetTx() async {
@@ -450,14 +451,14 @@ class EncointerApi {
   // Below are functions that simply use the Scale-codec already implemented in polkadot-js/api such that we do not
   // have to implement the codec ourselves.
   Future<ClaimOfAttendance> signClaimOfAttendance(int participants, String password) async {
-    Meetup meetup = store.encointer.communityAccount.meetup;
+    Meetup meetup = store.encointer.communityAccount!.meetup!;
 
     var claim = ClaimOfAttendance(
       store.account.currentAccountPubKey,
       store.encointer.currentCeremonyIndex,
       store.encointer.chosenCid,
       meetup.index,
-      store.encointer.community.meetupLocations[meetup.locationIndex],
+      store.encointer.community!.meetupLocations![meetup.locationIndex],
       meetup.time,
       participants,
     );
@@ -472,15 +473,15 @@ class EncointerApi {
   /// Gets a proof of attendance for the oldest attended ceremony, if available.
   ///
   /// returns null, if none available.
-  Future<ProofOfAttendance> getProofOfAttendance() async {
+  Future<ProofOfAttendance?> getProofOfAttendance() async {
     var pubKey = store.account.currentAccountPubKey;
-    var cIndex = store.encointer.account.ceremonyIndexForProofOfAttendance;
+    var cIndex = store.encointer.account?.ceremonyIndexForProofOfAttendance;
 
     if (cIndex == null || cIndex == 0) {
       return Future.value(null);
     }
 
-    var cid = store.encointer.account.reputations[cIndex].communityIdentifier;
+    var cid = store.encointer.account?.reputations[cIndex]?.communityIdentifier;
     var pin = store.settings.cachedPin;
 
     print("getProofOfAttendance: cachedPin: $pin");

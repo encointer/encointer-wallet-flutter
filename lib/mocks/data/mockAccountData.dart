@@ -35,6 +35,7 @@ Map<String, dynamic> endoEncointer = {
 Map<String, dynamic> endorphineCointer = {
   "name": "Endorphine Cointer",
   "address": "5HKczFYLWA3LDZrKN4kK8wmH6pBv6pxiwbYhmhjiN3KHiQHz",
+  "pubKey": "0x00",
   "encoded":
       "PkGLcXnzjnIn77H4bhaWEpKtOSz1GpOK9ZH4GlstcuEAgAAAAQAAAAgAAADEKys5iFgIyCIceLKTiN9fxkgNZARxVRsgpwUt0xg5f4cYkDPy/+ui8A4XPu8BWl4fwUMJUJ7vZW+H1Zi+2lGQhdhOh9U1aECcOUQoXygR631vRrRU26lvKLHTJlhKEUWifd8h0r4mVfsgHg8Mx8DfHaDwvsuyVDGvyqPSxj55PffWrSEgFgK1b4wgebQgYgtQB+bFbKyc4wRVI1Ua",
   "encoding": {
@@ -68,7 +69,7 @@ Map<String, dynamic> testAcc = {
   "observation": null
 };
 
-String currentAccountPubKey;
+String currentAccountPubKey = "";
 
 List<dynamic> pubKeys = accList.map((e) => e['pubKey']).toList();
 

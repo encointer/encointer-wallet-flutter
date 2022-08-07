@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class InfoItem extends StatelessWidget {
-  InfoItem({this.title, this.content, this.crossAxisAlignment});
+  InfoItem({required this.title, this.content, this.crossAxisAlignment});
   final String title;
-  final String content;
-  final CrossAxisAlignment crossAxisAlignment;
+  final String? content;
+  final CrossAxisAlignment? crossAxisAlignment;
   @override
   Widget build(BuildContext context) {
     return Expanded(

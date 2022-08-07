@@ -10,7 +10,7 @@ class CeremonyCountDown extends StatefulWidget {
 
   static const String route = '/encointer/assigning';
 
-  final DateTime nextCeremonyDate;
+  final DateTime? nextCeremonyDate;
 
   @override
   _CeremonyCountDownState createState() => _CeremonyCountDownState();
@@ -19,8 +19,10 @@ class CeremonyCountDown extends StatefulWidget {
 class _CeremonyCountDownState extends State<CeremonyCountDown> {
   _CeremonyCountDownState();
 
-  int timeToMeetup;
-  StreamSubscription<CountdownTimer> sub;
+  late int timeToMeetup;
+  // Todo: double check: is this a false positive?
+  // ignore: cancel_subscriptions
+  StreamSubscription<CountdownTimer>? sub;
 
   @override
   void initState() {
@@ -29,7 +31,7 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
 
   @override
   void dispose() {
-    sub.cancel();
+    sub!.cancel();
     super.dispose();
   }
 
@@ -42,21 +44,21 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
     );
 
     sub = countDownTimer.listen(null);
-    sub.onData((duration) {
+    sub!.onData((duration) {
       setState(() {
         timeToMeetup = duration.remaining.inSeconds;
       });
     });
 
-    sub.onDone(() {
+    sub!.onDone(() {
       print("Done");
-      sub.cancel();
+      sub!.cancel();
     });
   }
 
   void _cancelTimer() {
     if (sub != null) {
-      sub.cancel();
+      sub!.cancel();
       sub = null;
     }
   }
@@ -64,7 +66,7 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
   @override
   Widget build(BuildContext context) {
     var timeToMeetup =
-        widget.nextCeremonyDate != null ? widget.nextCeremonyDate.difference(DateTime.now()).inSeconds : 0;
+        widget.nextCeremonyDate != null ? widget.nextCeremonyDate!.difference(DateTime.now()).inSeconds : 0;
 
     if (timeToMeetup <= 0) {
       timeToMeetup = 0;
@@ -87,7 +89,7 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
         SizedBox(width: 8),
         Text(
           '${timeLeftUntilCeremonyStarts.inDays}d ${timeLeftUntilCeremonyStarts.inHours.remainder(24)}h ${timeLeftUntilCeremonyStarts.inMinutes.remainder(60)}min ${timeLeftUntilCeremonyStarts.inSeconds.remainder(60)}s',
-          style: Theme.of(context).textTheme.headline2.copyWith(color: encointerBlack),
+          style: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
         ),
       ],
     );

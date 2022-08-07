@@ -27,20 +27,20 @@ class _CreatePinPageState extends State<CreatePinPage> {
 
   final AppStore store;
 
-  Future<void> Function() onCreatePin;
+  late Future<void> Function() onCreatePin;
 
   bool _submitting = false;
 
   @override
   Widget build(BuildContext context) {
-    CreatePinPageParams params = ModalRoute.of(context).settings.arguments;
+    CreatePinPageParams params = ModalRoute.of(context)!.settings.arguments as CreatePinPageParams;
 
     onCreatePin = params.onCreatePin;
 
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          I18n.of(context).translationsForLocale().home.create,
+          I18n.of(context)!.translationsForLocale().home.create,
         ),
         iconTheme: IconThemeData(
           color: encointerGrey, //change your color here

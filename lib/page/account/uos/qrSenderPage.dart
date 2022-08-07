@@ -6,7 +6,11 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
+import 'package:qr_flutter_fork/qr_flutter_fork.dart';
+
+/// `QrSenderPage`, from upstream and currently unused.
+///
+/// See: https://github.com/encointer/encointer-wallet-flutter/issues/676
 
 class QrSenderPage extends StatefulWidget {
   static const String route = 'tx/uos/sender';
@@ -16,20 +20,20 @@ class QrSenderPage extends StatefulWidget {
 }
 
 class _QrSenderPageState extends State<QrSenderPage> {
-  Uint8List _qrPayload;
+  Uint8List? _qrPayload;
 
-  Future<Uint8List> _getQrCodeData(BuildContext context) async {
+  Future<Uint8List?> _getQrCodeData(BuildContext context) async {
     if (_qrPayload != null) {
       return _qrPayload;
     }
 
-    final Map args = ModalRoute.of(context).settings.arguments;
+    final Map args = ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>;
 
-    Map txInfo = args['txInfo'];
-    final Map res = await webApi.account.makeQrCode(txInfo, args['params'], rawParam: args['rawParam']);
+    Map? txInfo = args['txInfo'];
+    final Map? res = await webApi.account.makeQrCode(txInfo, args['params'], rawParam: args['rawParam']);
     print('make qr code');
     setState(() {
-      _qrPayload = Uint8List.fromList(List<int>.from(Map.of(res['qrPayload']).values));
+      _qrPayload = Uint8List.fromList(List<int>.from(Map.of(res!['qrPayload']).values));
     });
     return _qrPayload;
   }
@@ -46,13 +50,13 @@ class _QrSenderPageState extends State<QrSenderPage> {
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text(I18n.of(context).translationsForLocale().home.submitQr),
+        title: Text(I18n.of(context)!.translationsForLocale().home.submitQr),
         centerTitle: true,
       ),
       body: SafeArea(
         child: FutureBuilder(
           future: _getQrCodeData(context),
-          builder: (_, AsyncSnapshot<Uint8List> snapshot) {
+          builder: (_, AsyncSnapshot<Uint8List?> snapshot) {
             return ListView(
               padding: EdgeInsets.only(top: 16),
               children: [
@@ -71,7 +75,7 @@ class _QrSenderPageState extends State<QrSenderPage> {
                             padding: EdgeInsets.all(16),
                             child: RoundedButton(
                               icon: Image.asset('assets/images/assets/scanner.png'),
-                              text: I18n.of(context).translationsForLocale().account.uosScan,
+                              text: I18n.of(context)!.translationsForLocale().account.uosScan,
                               onPressed: () {
                                 _handleScan(context);
                               },

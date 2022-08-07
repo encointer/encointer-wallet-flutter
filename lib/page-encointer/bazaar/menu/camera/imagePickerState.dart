@@ -7,21 +7,21 @@ class ImagePickerState = _ImagePickerState with _$ImagePickerState;
 
 abstract class _ImagePickerState with Store {
   @observable
-  ObservableList<PickedFile> images = new ObservableList<PickedFile>();
+  ObservableList<PickedFile?> images = new ObservableList<PickedFile?>();
 
   @observable
-  String pickImageError;
+  String? pickImageError;
 
   @observable
-  String retrieveDataError;
+  String? retrieveDataError;
 
   @action
-  void addImage(PickedFile image) {
+  void addImage(PickedFile? image) {
     images.add(image);
   }
 
   @action
-  void removeImage(PickedFile toDelete) {
+  void removeImage(PickedFile? toDelete) {
     images.remove(toDelete);
   }
 }

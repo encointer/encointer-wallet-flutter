@@ -15,14 +15,14 @@ void main() {
 
   group('EncointerStore test', () {
     test('encointer store initialization, serialization and cache works', () async {
-      globalAppStore = AppStore(getMockLocalStorage());
+      globalAppStore = AppStore(MockLocalStorage(), config: StoreConfig.Test);
       final AppStore root = globalAppStore;
+      await root.init('_en');
+
       accList = [testAcc];
       currentAccountPubKey = accList[0]['pubKey'];
 
-      webApi = MockApi(null, root, withUi: false);
-
-      await root.init('_en');
+      webApi = getMockApi(root, withUI: false);
 
       // re-initialize with cacheKey that does not mess with real cache
       root.settings.setEndpoint(unitTestEndpoint);
@@ -33,7 +33,7 @@ void main() {
 
       var testCid = testCommunityIdentifiers[0];
       var testCidFmt = testCid.toFmtString();
-      var testNetwork = unitTestEndpoint.info;
+      var testNetwork = unitTestEndpoint.info!;
 
       encointerStore.setCurrentPhase(CeremonyPhase.Registering);
       encointerStore.setCurrentCeremonyIndex(2);
@@ -74,38 +74,38 @@ void main() {
       var deserializedEncointerStore = EncointerStore.fromJson(targetJson);
       expect(deserializedEncointerStore.toJson(), targetJson);
 
-      var cachedEncointerStore = await root.loadEncointerCache(root.encointerCacheKey(unitTestEndpoint.info));
-      expect(cachedEncointerStore.toJson(), targetJson);
+      var cachedEncointerStore = await root.loadEncointerCache(root.encointerCacheKey(unitTestEndpoint.info!));
+      expect(cachedEncointerStore!.toJson(), targetJson);
     });
 
     test('purging encointer-store works and initializing new works', () async {
-      globalAppStore = AppStore(getMockLocalStorage());
+      globalAppStore = AppStore(MockLocalStorage());
       final AppStore root = globalAppStore;
       accList = [testAcc];
       currentAccountPubKey = accList[0]['pubKey'];
 
-      webApi = MockApi(null, root, withUi: false);
+      webApi = getMockApi(root, withUI: false);
       await root.init('_en');
 
       // re-initialize with cacheKey that does not mess with real cache
       root.settings.setEndpoint(unitTestEndpoint);
 
-      root.purgeEncointerCache(unitTestEndpoint.info);
+      root.purgeEncointerCache(unitTestEndpoint.info!);
       expect(
-        await root.localStorage.getObject(root.encointerCacheKey(unitTestEndpoint.info)),
+        await root.localStorage.getObject(root.encointerCacheKey(unitTestEndpoint.info!)),
         null,
       );
 
       // should initialize a new encointer store
       await root.init('_en');
 
-      var expectedStore = EncointerStore(unitTestEndpoint.info);
+      var expectedStore = EncointerStore(unitTestEndpoint.info!);
 
       // This is due to side-effects of parallel executed tests and the global appStore...
       expectedStore.chosenCid = testCommunityIdentifiers[0];
 
       expect(
-        await root.localStorage.getObject(root.encointerCacheKey(unitTestEndpoint.info)),
+        await root.localStorage.getObject(root.encointerCacheKey(unitTestEndpoint.info!)),
         expectedStore.toJson(),
       );
     });

@@ -30,7 +30,7 @@ abstract class _CommunityAccountStore with Store {
 
   /// Function that writes the store to local storage.
   @JsonKey(ignore: true)
-  Future<void> Function() _cacheFn;
+  Future<void> Function()? _cacheFn;
 
   /// The network this store belongs to.
   final String network;
@@ -43,21 +43,21 @@ abstract class _CommunityAccountStore with Store {
 
   /// Participant type if the account has registered for the next meetup.
   @observable
-  ParticipantType participantType;
+  ParticipantType? participantType;
 
   /// Contains the meetup data if the account has been assigned to a meetup in this community.
   @observable
-  Meetup meetup;
+  Meetup? meetup;
 
   /// `ClaimOfAttendances` that were scanned during a meetup.
   ///
   /// Map: claimantPublicKey -> ClaimOfAttendance
   @observable
-  ObservableMap<String, ClaimOfAttendance> participantsClaims = new ObservableMap();
+  ObservableMap<String, ClaimOfAttendance>? participantsClaims = new ObservableMap();
 
   /// This should be set to true once the attestations have been sent to chain.
   @observable
-  bool meetupCompleted = false;
+  bool? meetupCompleted = false;
 
   @computed
   get scannedClaimsCount => participantsClaims?.length ?? 0;
@@ -69,7 +69,7 @@ abstract class _CommunityAccountStore with Store {
   bool get isRegistered => participantType != null;
 
   @action
-  void setParticipantType([ParticipantType type]) {
+  void setParticipantType([ParticipantType? type]) {
     _log("Set participant type: ${participantType.toString()}");
     this.participantType = type;
     writeToCache();
@@ -117,18 +117,18 @@ abstract class _CommunityAccountStore with Store {
   @action
   void purgeParticipantsClaims() {
     _log("Purging participantsClaims.");
-    participantsClaims.clear();
+    participantsClaims!.clear();
     writeToCache();
   }
 
   bool containsClaim(ClaimOfAttendance claim) {
-    return participantsClaims[claim.claimantPublic] != null;
+    return participantsClaims![claim.claimantPublic] != null;
   }
 
   @action
   void addParticipantClaim(ClaimOfAttendance claim) {
     _log("adding participantsClaims.");
-    participantsClaims[claim.claimantPublic] = claim;
+    participantsClaims![claim.claimantPublic!] = claim;
     writeToCache();
   }
 
@@ -143,13 +143,13 @@ abstract class _CommunityAccountStore with Store {
     clearMeetupCompleted();
   }
 
-  void initStore(Function cacheFn) {
-    this._cacheFn = cacheFn;
+  void initStore(Function? cacheFn) {
+    this._cacheFn = cacheFn as Future<void> Function()?;
   }
 
   Future<void> writeToCache() {
     if (_cacheFn != null) {
-      return _cacheFn();
+      return _cacheFn!();
     } else {
       return Future.value(null);
     }

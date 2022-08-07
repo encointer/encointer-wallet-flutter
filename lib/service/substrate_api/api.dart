@@ -12,56 +12,74 @@ import 'package:encointer_wallet/service/substrate_api/core/dartApi.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointerApi.dart';
 import 'package:encointer_wallet/service/substrate_api/types/genExternalLinksParams.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'core/jsApi.dart';
 
-// global api instance
-Api webApi;
+/// Global api instance
+///
+/// `late final` because it will be initialized exactly once in lib/app.dart.
+late Api webApi;
 
 class Api {
-  Api(this.context, this.store);
+  Api(
+    this.store,
+    this.js,
+    this.dartApi,
+    this.account,
+    this.assets,
+    this.chain,
+    this.codec,
+    this.encointer,
+    this.ipfs,
+    this._jsServiceEncointer,
+  );
 
-  final BuildContext context;
+  factory Api.create(
+    AppStore store,
+    JSApi js,
+    SubstrateDartApi dartApi,
+    String jsServiceEncointer,
+  ) {
+    return Api(
+      store,
+      js,
+      dartApi,
+      AccountApi(store, js),
+      AssetsApi(store, js),
+      ChainApi(store, js),
+      CodecApi(js),
+      EncointerApi(store, js, dartApi),
+      Ipfs(gateway: store.settings.ipfsGateway),
+      jsServiceEncointer,
+    );
+  }
+
   final AppStore store;
-  var jsStorage;
+  final String _jsServiceEncointer;
 
-  JSApi js;
-  AccountApi account;
-  AssetsApi assets;
-  ChainApi chain;
-  CodecApi codec;
-  EncointerApi encointer;
-  Ipfs ipfs;
+  // currently unused, should be removed.
+  final GetStorage jsStorage = GetStorage();
+
+  final JSApi js;
+  final SubstrateDartApi dartApi;
+  final AccountApi account;
+  final AssetsApi assets;
+  final ChainApi chain;
+  final CodecApi codec;
+  final EncointerApi encointer;
+  final Ipfs ipfs;
 
   SubScanApi subScanApi = SubScanApi();
 
   Future<void> init() async {
-    jsStorage = GetStorage();
-    js = JSApi();
+    dartApi.connect(store.settings.endpoint.value!);
 
-    // no need to store this as an instance it is only used by the encointerApi
-    var dartApi = SubstrateDartApi();
-    dartApi.connect(store.settings.endpoint.value);
+    // need to do this from here as we can't access instance fields in constructor.
+    account.setFetchAccountData(fetchAccountData);
 
-    account = AccountApi(js, fetchAccountData);
-    assets = AssetsApi(js);
-    chain = ChainApi(js);
-    codec = CodecApi(js);
-    encointer = EncointerApi(js, dartApi);
-    ipfs = Ipfs(gateway: store.settings.ipfsGateway);
-
-    print("first launch of webview");
-    await launchWebview();
-
-    //TODO: fix this properly!
-    // hack to allow hot-restart with re-loaded webview
-    // the problem is that hot-restart doesn't call dispose(),
-    // so the webview will not be closed properly. Therefore,
-    // the first call to launchWebView will crash. The second
-    // one seems to succeed
-    print("second launch of webview");
+    // launch the webView and connect to the endpoint
+    print("launch the webView");
     await launchWebview();
   }
 
@@ -71,22 +89,23 @@ class Api {
     await encointer.close();
   }
 
-  Future<void> launchWebview({bool customNode = false}) async {
+  Future<void> launchWebview({
+    bool customNode = false,
+  }) async {
     var connectFunc = customNode ? connectNode : connectNodeAll;
 
-    void postInitCallback() async {
+    Future<void> postInitCallback() async {
       // load keyPairs from local data
       await account.initAccounts();
 
-      if (store.account.currentAddress != null) {
-        // needs to be called after init-accounts
-        store.encointer.initializeUninitializedStores(store.account.currentAddress);
+      if (store.account.currentAddress.isNotEmpty) {
+        await store.encointer.initializeUninitializedStores(store.account.currentAddress);
       }
 
-      connectFunc();
+      return connectFunc();
     }
 
-    return js.launchWebView(context, postInitCallback);
+    return js.launchWebView(_jsServiceEncointer, postInitCallback);
   }
 
   /// Evaluate javascript [code] in the webView.
@@ -106,10 +125,10 @@ class Api {
   }
 
   Future<void> connectNode() async {
-    String node = store.settings.endpoint.value;
-    NodeConfig config = store.settings.endpoint.overrideConfig;
+    String? node = store.settings.endpoint.value;
+    NodeConfig? config = store.settings.endpoint.overrideConfig;
     // do connect
-    String res = await evalJavascript('settings.connect("$node", "${jsonEncode(config)}")');
+    String? res = await evalJavascript('settings.connect("$node", "${jsonEncode(config)}")');
     if (res == null) {
       print('connecting to node failed');
       store.settings.setNetworkName(null);
@@ -126,11 +145,11 @@ class Api {
   }
 
   Future<void> connectNodeAll() async {
-    List<String> nodes = store.settings.endpointList.map((e) => e.value).toList();
-    List<NodeConfig> configs = store.settings.endpointList.map((e) => e.overrideConfig).toList();
+    List<String?> nodes = store.settings.endpointList.map((e) => e.value).toList();
+    List<NodeConfig?> configs = store.settings.endpointList.map((e) => e.overrideConfig).toList();
     print("configs: $configs");
     // do connect
-    String res = await evalJavascript('settings.connectAll(${jsonEncode(nodes)}, ${jsonEncode(configs)})');
+    String? res = await evalJavascript('settings.connectAll(${jsonEncode(nodes)}, ${jsonEncode(configs)})');
     if (res == null) {
       print('connect failed');
       store.settings.setNetworkName(null);
@@ -148,6 +167,7 @@ class Api {
     if (index < 0) return;
     store.settings.setEndpoint(store.settings.endpointList[index]);
     await fetchNetworkProps();
+    print("get community data");
     encointer.getCommunityData();
   }
 
@@ -182,20 +202,6 @@ class Api {
     await this.assets.stopSubscriptions();
   }
 
-  Future<void> updateBlocks(List txs) async {
-    Map<int, bool> blocksNeedUpdate = Map<int, bool>();
-    txs.forEach((i) {
-      int block = i['attributes']['block_id'];
-      if (store.assets.blockMap[block] == null) {
-        blocksNeedUpdate[block] = true;
-      }
-    });
-    String blocks = blocksNeedUpdate.keys.join(',');
-    var data = await evalJavascript('account.getBlockTime([$blocks])');
-
-    store.assets.setBlockMap(data);
-  }
-
   Future<void> subscribeMessage(
     String code,
     String channel,
@@ -219,8 +225,8 @@ class Api {
     return js.closeWebView();
   }
 
-  Future<List> getExternalLinks(GenExternalLinksParams params) async {
-    final List res = await evalJavascript(
+  Future<List?> getExternalLinks(GenExternalLinksParams params) async {
+    final List? res = await evalJavascript(
       'settings.genLinks(${jsonEncode(GenExternalLinksParams.toJson(params))})',
       allowRepeat: true,
     );

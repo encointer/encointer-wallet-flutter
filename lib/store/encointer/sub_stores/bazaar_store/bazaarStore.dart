@@ -11,7 +11,7 @@ part 'bazaarStore.g.dart';
 ///
 @JsonSerializable(explicitToJson: true)
 class BazaarStore extends _BazaarStore with _$BazaarStore {
-  BazaarStore(String network, CommunityIdentifier cid) : super(network, cid);
+  BazaarStore(String? network, CommunityIdentifier? cid) : super(network, cid);
 
   @override
   String toString() {
@@ -27,17 +27,17 @@ abstract class _BazaarStore with Store {
 
   /// Function that writes the store to local storage.
   @JsonKey(ignore: true)
-  Future<void> Function() _cacheFn;
+  Future<void> Function()? _cacheFn;
 
   /// The network this store belongs to.
-  final String network;
+  final String? network;
 
   /// The community this store belongs to.
-  final CommunityIdentifier cid;
+  final CommunityIdentifier? cid;
 
   /// List of registered businesses in this community.
   @observable
-  ObservableList<AccountBusinessTuple> businessRegistry;
+  ObservableList<AccountBusinessTuple>? businessRegistry;
 
   @action
   void setBusinessRegistry(List<AccountBusinessTuple> accBusinesses) {
@@ -45,13 +45,13 @@ abstract class _BazaarStore with Store {
     writeToCache();
   }
 
-  void initStore(Function cacheFn) {
-    this._cacheFn = cacheFn;
+  void initStore(Function? cacheFn) {
+    this._cacheFn = cacheFn as Future<void> Function()?;
   }
 
   Future<void> writeToCache() {
     if (_cacheFn != null) {
-      return _cacheFn();
+      return _cacheFn!();
     } else {
       return Future.value(null);
     }

@@ -3,7 +3,6 @@ import 'package:encointer_wallet/page/profile/contacts/contactPage.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -15,12 +14,12 @@ class ContactListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<AccountData> args = ModalRoute.of(context).settings.arguments;
+    final List<AccountData>? args = ModalRoute.of(context)!.settings.arguments as List<AccountData>?;
     return Scaffold(
       appBar: AppBar(
         title: Text(args == null
-            ? I18n.of(context).translationsForLocale().profile.addressBook
-            : I18n.of(context).translationsForLocale().account.list),
+            ? I18n.of(context)!.translationsForLocale().profile.addressBook
+            : I18n.of(context)!.translationsForLocale().account.list),
         centerTitle: true,
         actions: <Widget>[
           args == null

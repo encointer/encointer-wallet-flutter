@@ -41,7 +41,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     // networkEndpointEncointerCantillonDev
   ];
 
-  EndpointData _selectedNetwork;
+  EndpointData? _selectedNetwork;
   bool _networkChanging = false;
 
   Future<void> _reloadNetwork() async {
@@ -52,13 +52,13 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: Text(I18n.of(context).translationsForLocale().home.loading),
+          title: Text(I18n.of(context)!.translationsForLocale().home.loading),
           content: Container(height: 64, child: CupertinoActivityIndicator()),
         );
       },
     );
 
-    await store.settings.reloadNetwork(_selectedNetwork);
+    await store.settings.reloadNetwork(_selectedNetwork!);
 
     changeTheme();
 
@@ -70,8 +70,8 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     }
   }
 
-  Future<void> _onSelect(AccountData i, String address) async {
-    bool isCurrentNetwork = _selectedNetwork.info == store.settings.endpoint.info;
+  Future<void> _onSelect(AccountData i, String? address) async {
+    bool isCurrentNetwork = _selectedNetwork!.info == store.settings.endpoint.info;
     if (address != store.account.currentAddress || !isCurrentNetwork) {
       /// set current account
       store.setCurrentAccount(i.pubKey);
@@ -89,7 +89,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   }
 
   Future<void> _onCreateAccount() async {
-    bool isCurrentNetwork = _selectedNetwork.info == store.settings.endpoint.info;
+    bool isCurrentNetwork = _selectedNetwork!.info == store.settings.endpoint.info;
     if (!isCurrentNetwork) {
       await _reloadNetwork();
     }
@@ -104,7 +104,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
           child: showPasswordInputDialog(
             context,
             store.account.currentAccount,
-            Text(I18n.of(context).translationsForLocale().profile.unlock),
+            Text(I18n.of(context)!.translationsForLocale().profile.unlock),
             (password) {
               setState(() {
                 store.settings.setPin(password);
@@ -123,7 +123,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Text(
-            _selectedNetwork.info.toUpperCase(),
+            _selectedNetwork!.info!.toUpperCase(),
             style: Theme.of(context).textTheme.headline4,
           ),
           IconButton(
@@ -150,11 +150,11 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     accounts.addAll(store.account.optionalAccounts);
 
     res.addAll(accounts.map((i) {
-      String address = i.address;
-      if (store.account.pubKeyAddressMap[_selectedNetwork.ss58] != null) {
-        address = store.account.pubKeyAddressMap[_selectedNetwork.ss58][i.pubKey];
+      String? address = i.address;
+      if (store.account.pubKeyAddressMap[_selectedNetwork!.ss58] != null) {
+        address = store.account.pubKeyAddressMap[_selectedNetwork!.ss58]![i.pubKey];
       }
-      final bool isCurrentNetwork = _selectedNetwork.info == store.settings.endpoint.info;
+      final bool isCurrentNetwork = _selectedNetwork!.info == store.settings.endpoint.info;
       final accInfo = store.account.accountIndexMap[i.address];
       final String accIndex =
           isCurrentNetwork && accInfo != null && accInfo['accountIndex'] != null ? '${accInfo['accountIndex']}\n' : '';
@@ -166,7 +166,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         margin: EdgeInsets.only(bottom: 16),
         padding: EdgeInsets.only(top: padding, bottom: padding),
         child: ListTile(
-          leading: AddressIcon(address, i.pubKey),
+          leading: AddressIcon(address!, i.pubKey),
           title: Text(Fmt.accountName(context, i)),
           subtitle: Text('$accIndex${Fmt.address(address)}', maxLines: 2),
           onTap: _networkChanging ? null : () => _onSelect(i, address),
@@ -189,7 +189,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         title: Text(dic.home.settingNetwork),
@@ -215,8 +215,8 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
                 ),
                 child: Column(
                   children: networks.map((i) {
-                    String network = i.info;
-                    bool isCurrent = network == _selectedNetwork.info;
+                    String? network = i.info;
+                    bool isCurrent = network == _selectedNetwork!.info;
                     String img = 'assets/images/public/$network${isCurrent ? '' : '_gray'}.png';
                     return Container(
                       margin: EdgeInsets.only(bottom: 8),

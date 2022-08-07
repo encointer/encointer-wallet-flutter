@@ -12,7 +12,7 @@ enum ChangeResult {
 Future<ChangeResult> changeNetworkAndCommunity(
   AppStore store,
   Api api,
-  String networkInfo,
+  String? networkInfo,
   CommunityIdentifier cid,
 ) async {
   var result = await changeNetwork(store, api, networkInfo, cid);
@@ -27,7 +27,7 @@ Future<ChangeResult> changeNetworkAndCommunity(
 Future<ChangeResult> changeNetwork(
   AppStore store,
   Api api,
-  String networkInfo,
+  String? networkInfo,
   CommunityIdentifier cid,
 ) async {
   var network;
@@ -35,7 +35,7 @@ Future<ChangeResult> changeNetwork(
   try {
     network = networkEndpoints.firstWhere(
       (network) => network.info == networkInfo,
-      orElse: () => throw FormatException('Invalid network in QrCode: $networkInfo'),
+      orElse: (() => throw FormatException('Invalid network in QrCode: $networkInfo')),
     );
   } catch (e) {
     return ChangeResult.invalidNetwork;
@@ -58,7 +58,7 @@ Future<ChangeResult> changeNetwork(
 Future<ChangeResult> changeCommunity(
   AppStore store,
   Api api,
-  String networkInfo,
+  String? networkInfo,
   CommunityIdentifier cid,
 ) async {
   var cids = await api.encointer.getCommunityIdentifiers();

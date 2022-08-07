@@ -4,7 +4,6 @@ import 'package:encointer_wallet/page/profile/contacts/contactPage.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
@@ -20,7 +19,7 @@ class ContactsPage extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               title: Text(
-                I18n.of(context).translationsForLocale().profile.addressBook,
+                I18n.of(context)!.translationsForLocale().profile.addressBook,
                 style: Theme.of(context).textTheme.headline3,
               ),
               iconTheme: IconThemeData(
@@ -45,7 +44,7 @@ class ContactsPage extends StatelessWidget {
                   return ListTile(
                     leading: AddressIcon(i.address, i.pubKey, size: 45),
                     title: Text(Fmt.accountName(context, i)),
-                    subtitle: Text(Fmt.address(i.address)),
+                    subtitle: Text(Fmt.address(i.address)!),
                     trailing: Container(
                       width: 36,
                       child: IconButton(

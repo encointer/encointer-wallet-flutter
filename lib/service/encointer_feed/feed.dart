@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
@@ -16,14 +17,13 @@ Future<List<MeetupOverrides>> getMeetupOverrides() async {
   }
 }
 
-Future<DateTime> getMeetupTimeOverride(String network, CommunityIdentifier cid, CeremonyPhase phase) async {
+Future<DateTime?> getMeetupTimeOverride(String network, CommunityIdentifier cid, CeremonyPhase phase) async {
   // For testing that it works.
   // final overrides = testMeetupOverrides;
   final overrides = await getMeetupOverrides();
 
-  final networkOverride = overrides.firstWhere(
+  final networkOverride = overrides.firstWhereOrNull(
     (o) => o.network == network,
-    orElse: () => null,
   );
 
   if (networkOverride == null) {
@@ -31,7 +31,7 @@ Future<DateTime> getMeetupTimeOverride(String network, CommunityIdentifier cid, 
     return Future.value(null);
   }
 
-  if (networkOverride.communities.contains(cid.toFmtString())) {
+  if (networkOverride.communities!.contains(cid.toFmtString())) {
     final meetupTimeOverride = networkOverride.getNextMeetupTime(DateTime.now(), phase);
     _log("Found meetupTimeOverride: $meetupTimeOverride");
     return meetupTimeOverride;

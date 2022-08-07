@@ -6,100 +6,100 @@ part of 'businessFormState.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$BusinessFormState on _BusinessFormState, Store {
-  final _$nameAtom = Atom(name: '_BusinessFormState.name');
+  late final _$nameAtom = Atom(name: '_BusinessFormState.name', context: context);
 
   @override
-  String get name {
+  String? get name {
     _$nameAtom.reportRead();
     return super.name;
   }
 
   @override
-  set name(String value) {
+  set name(String? value) {
     _$nameAtom.reportWrite(value, super.name, () {
       super.name = value;
     });
   }
 
-  final _$descriptionAtom = Atom(name: '_BusinessFormState.description');
+  late final _$descriptionAtom = Atom(name: '_BusinessFormState.description', context: context);
 
   @override
-  String get description {
+  String? get description {
     _$descriptionAtom.reportRead();
     return super.description;
   }
 
   @override
-  set description(String value) {
+  set description(String? value) {
     _$descriptionAtom.reportWrite(value, super.description, () {
       super.description = value;
     });
   }
 
-  final _$streetAtom = Atom(name: '_BusinessFormState.street');
+  late final _$streetAtom = Atom(name: '_BusinessFormState.street', context: context);
 
   @override
-  String get street {
+  String? get street {
     _$streetAtom.reportRead();
     return super.street;
   }
 
   @override
-  set street(String value) {
+  set street(String? value) {
     _$streetAtom.reportWrite(value, super.street, () {
       super.street = value;
     });
   }
 
-  final _$streetAddendumAtom = Atom(name: '_BusinessFormState.streetAddendum');
+  late final _$streetAddendumAtom = Atom(name: '_BusinessFormState.streetAddendum', context: context);
 
   @override
-  String get streetAddendum {
+  String? get streetAddendum {
     _$streetAddendumAtom.reportRead();
     return super.streetAddendum;
   }
 
   @override
-  set streetAddendum(String value) {
+  set streetAddendum(String? value) {
     _$streetAddendumAtom.reportWrite(value, super.streetAddendum, () {
       super.streetAddendum = value;
     });
   }
 
-  final _$zipCodeAtom = Atom(name: '_BusinessFormState.zipCode');
+  late final _$zipCodeAtom = Atom(name: '_BusinessFormState.zipCode', context: context);
 
   @override
-  String get zipCode {
+  String? get zipCode {
     _$zipCodeAtom.reportRead();
     return super.zipCode;
   }
 
   @override
-  set zipCode(String value) {
+  set zipCode(String? value) {
     _$zipCodeAtom.reportWrite(value, super.zipCode, () {
       super.zipCode = value;
     });
   }
 
-  final _$cityAtom = Atom(name: '_BusinessFormState.city');
+  late final _$cityAtom = Atom(name: '_BusinessFormState.city', context: context);
 
   @override
-  String get city {
+  String? get city {
     _$cityAtom.reportRead();
     return super.city;
   }
 
   @override
-  set city(String value) {
+  set city(String? value) {
     _$cityAtom.reportWrite(value, super.city, () {
       super.city = value;
     });
   }
 
-  final _$_BusinessFormStateActionController = ActionController(name: '_BusinessFormState');
+  late final _$_BusinessFormStateActionController = ActionController(name: '_BusinessFormState', context: context);
 
   @override
   void validateName(dynamic value) {
@@ -177,97 +177,97 @@ city: ${city}
 }
 
 mixin _$BusinessFormErrorState on _BusinessFormErrorState, Store {
-  Computed<bool> _$hasErrorsComputed;
+  Computed<bool>? _$hasErrorsComputed;
 
   @override
   bool get hasErrors =>
       (_$hasErrorsComputed ??= Computed<bool>(() => super.hasErrors, name: '_BusinessFormErrorState.hasErrors')).value;
 
-  final _$nameAtom = Atom(name: '_BusinessFormErrorState.name');
+  late final _$nameAtom = Atom(name: '_BusinessFormErrorState.name', context: context);
 
   @override
-  String get name {
+  String? get name {
     _$nameAtom.reportRead();
     return super.name;
   }
 
   @override
-  set name(String value) {
+  set name(String? value) {
     _$nameAtom.reportWrite(value, super.name, () {
       super.name = value;
     });
   }
 
-  final _$descriptionAtom = Atom(name: '_BusinessFormErrorState.description');
+  late final _$descriptionAtom = Atom(name: '_BusinessFormErrorState.description', context: context);
 
   @override
-  String get description {
+  String? get description {
     _$descriptionAtom.reportRead();
     return super.description;
   }
 
   @override
-  set description(String value) {
+  set description(String? value) {
     _$descriptionAtom.reportWrite(value, super.description, () {
       super.description = value;
     });
   }
 
-  final _$streetAtom = Atom(name: '_BusinessFormErrorState.street');
+  late final _$streetAtom = Atom(name: '_BusinessFormErrorState.street', context: context);
 
   @override
-  String get street {
+  String? get street {
     _$streetAtom.reportRead();
     return super.street;
   }
 
   @override
-  set street(String value) {
+  set street(String? value) {
     _$streetAtom.reportWrite(value, super.street, () {
       super.street = value;
     });
   }
 
-  final _$streetAddendumAtom = Atom(name: '_BusinessFormErrorState.streetAddendum');
+  late final _$streetAddendumAtom = Atom(name: '_BusinessFormErrorState.streetAddendum', context: context);
 
   @override
-  String get streetAddendum {
+  String? get streetAddendum {
     _$streetAddendumAtom.reportRead();
     return super.streetAddendum;
   }
 
   @override
-  set streetAddendum(String value) {
+  set streetAddendum(String? value) {
     _$streetAddendumAtom.reportWrite(value, super.streetAddendum, () {
       super.streetAddendum = value;
     });
   }
 
-  final _$zipCodeAtom = Atom(name: '_BusinessFormErrorState.zipCode');
+  late final _$zipCodeAtom = Atom(name: '_BusinessFormErrorState.zipCode', context: context);
 
   @override
-  String get zipCode {
+  String? get zipCode {
     _$zipCodeAtom.reportRead();
     return super.zipCode;
   }
 
   @override
-  set zipCode(String value) {
+  set zipCode(String? value) {
     _$zipCodeAtom.reportWrite(value, super.zipCode, () {
       super.zipCode = value;
     });
   }
 
-  final _$cityAtom = Atom(name: '_BusinessFormErrorState.city');
+  late final _$cityAtom = Atom(name: '_BusinessFormErrorState.city', context: context);
 
   @override
-  String get city {
+  String? get city {
     _$cityAtom.reportRead();
     return super.city;
   }
 
   @override
-  set city(String value) {
+  set city(String? value) {
     _$cityAtom.reportWrite(value, super.city, () {
       super.city = value;
     });

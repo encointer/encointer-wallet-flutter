@@ -23,11 +23,11 @@ const NodeConfig SgxBranchConfig = const NodeConfig(GesellTypeOverrides, GesellP
 @JsonSerializable(explicitToJson: true)
 class NodeConfig {
   /// type overwrites passed to the JS Api type-registry
-  final Map<String, dynamic> types;
+  final Map<String, dynamic>? types;
 
   /// custom pallet config. The key is the current name of the pallet. The pallet
   /// holds the overwrite data
-  final Map<String, Pallet> pallets;
+  final Map<String, Pallet>? pallets;
 
   const NodeConfig(this.types, this.pallets);
 
@@ -42,8 +42,8 @@ class NodeConfig {
 
 @JsonSerializable(explicitToJson: true)
 class Pallet {
-  final String name;
-  final Map<String, String> calls;
+  final String? name;
+  final Map<String, String>? calls;
 
   const Pallet(this.name, this.calls);
 

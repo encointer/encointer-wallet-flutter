@@ -6,14 +6,17 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/inputValidation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 class AddAccountForm extends StatelessWidget {
-  AddAccountForm({this.submitting, this.onSubmit, this.store});
+  AddAccountForm({
+    required this.store,
+    this.submitting,
+    required this.onSubmit,
+  });
   final Function onSubmit;
-  final bool submitting;
+  final bool? submitting;
   final AppStore store;
 
   static final _formKey = GlobalKey<FormState>();
@@ -22,7 +25,7 @@ class AddAccountForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context).translationsForLocale();
+    final Translations dic = I18n.of(context)!.translationsForLocale();
 
     return Form(
       key: _formKey,
@@ -35,7 +38,7 @@ class AddAccountForm extends StatelessWidget {
                 children: <Widget>[
                   SizedBox(height: 80),
                   Text(
-                    I18n.of(context).translationsForLocale().profile.accountNameChoose,
+                    I18n.of(context)!.translationsForLocale().profile.accountNameChoose,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headline2,
                   ),
@@ -43,16 +46,16 @@ class AddAccountForm extends StatelessWidget {
                   Container(
                     width: 300,
                     child: Text(
-                      I18n.of(context).translationsForLocale().profile.accountNameChooseHint,
+                      I18n.of(context)!.translationsForLocale().profile.accountNameChooseHint,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline2.copyWith(color: Colors.black),
+                      style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black),
                     ),
                   ),
                   SizedBox(height: 30),
                   EncointerTextFormField(
                     key: Key('create-account-name'),
                     hintText: dic.account.createHint,
-                    labelText: I18n.of(context).translationsForLocale().profile.accountName,
+                    labelText: I18n.of(context)!.translationsForLocale().profile.accountName,
                     controller: _nameCtrl,
                     validator: (v) => InputValidation.validateAccountName(context, v, store.account.optionalAccounts),
                   ),
@@ -67,7 +70,7 @@ class AddAccountForm extends StatelessWidget {
                   children: [
                     Icon(Iconsax.import_2),
                     SizedBox(width: 10),
-                    Text(I18n.of(context).translationsForLocale().home.accountImport,
+                    Text(I18n.of(context)!.translationsForLocale().home.accountImport,
                         style: Theme.of(context).textTheme.headline3),
                   ],
                 ),
@@ -81,13 +84,13 @@ class AddAccountForm extends StatelessWidget {
                   Icon(Iconsax.add_square),
                   SizedBox(width: 12),
                   Text(
-                    I18n.of(context).translationsForLocale().profile.accountCreate,
-                    style: Theme.of(context).textTheme.headline3.copyWith(color: ZurichLion.shade50),
+                    I18n.of(context)!.translationsForLocale().profile.accountCreate,
+                    style: Theme.of(context).textTheme.headline3!.copyWith(color: ZurichLion.shade50),
                   ),
                 ],
               ),
               onPressed: () {
-                if (_formKey.currentState.validate()) {
+                if (_formKey.currentState!.validate()) {
                   var name = _nameCtrl.text.trim();
 
                   store.account.setNewAccountName(name);

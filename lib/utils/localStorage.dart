@@ -26,11 +26,11 @@ class LocalStorage {
     return storage.getList(accountsKey);
   }
 
-  Future<void> setCurrentAccount(String pubKey) async {
+  Future<bool> setCurrentAccount(String pubKey) async {
     return storage.setKV(currentAccountKey, pubKey);
   }
 
-  Future<String> getKV(String cacheKey) {
+  Future<String?> getKV(String cacheKey) {
     return storage.getKV(cacheKey);
   }
 
@@ -38,20 +38,20 @@ class LocalStorage {
     return storage.setKV(cacheKey, value);
   }
 
-  Future<String> getCurrentAccount() async {
+  Future<String?> getCurrentAccount() async {
     return storage.getKV(currentAccountKey);
   }
 
-  Future<void> setChosenCid(CommunityIdentifier cid) async {
+  Future<bool> setChosenCid(CommunityIdentifier cid) async {
     return storage.setKV(encointerCommunityKey, cid);
   }
 
-  Future<String> getChosenCid() async {
+  Future<String?> getChosenCid() async {
     return storage.getKV(encointerCommunityKey);
   }
 
-  Future<void> addContact(Map<String, dynamic> con) async {
-    return storage.addItemToList(contactsKey, con);
+  Future<void> addContact(Map<String, dynamic> contact) async {
+    return storage.addItemToList(contactsKey, contact);
   }
 
   Future<void> removeContact(String address) async {
@@ -70,37 +70,41 @@ class LocalStorage {
     return storage.getList(cacheKey);
   }
 
-  Future<void> setSeeds(String seedType, Map value) async {
+  Future<bool> setSeeds(String seedType, Map value) async {
     return storage.setKV('${seedKey}_$seedType', jsonEncode(value));
   }
 
-  Future<Map> getSeeds(String seedType) async {
-    String value = await storage.getKV('${seedKey}_$seedType');
+  Future<Map<String, dynamic>> getSeeds(String seedType) async {
+    String? value = await storage.getKV('${seedKey}_$seedType');
     if (value != null) {
       return jsonDecode(value);
     }
     return {};
   }
 
-  Future<void> setObject(String key, Object value) async {
+  Future<bool> setObject(String key, Object value) async {
     String str = await compute(jsonEncode, value);
     return storage.setKV('${customKVKey}_$key', str);
   }
 
-  Future<Object> getObject(String key) async {
-    String value = await storage.getKV('${customKVKey}_$key');
+  Future<Object?> getObject(String key) async {
+    String? value = await storage.getKV('${customKVKey}_$key');
     if (value != null) {
-      Object data = await compute(jsonDecode, value);
-      return data;
+      dynamic data = await compute(jsonDecode, value);
+      return data as Object;
     }
     return Future.value(null);
+  }
+
+  Future<bool> removeKey(String key) {
+    return storage.removeKey('${customKVKey}_$key');
   }
 
   /// Gets the more specific return type that `GetObject. This should always be preferred.
   ///
   /// Should be used instead of `getObject`, see #533.
-  Future<Map<String, dynamic>> getMap(String key) async {
-    String value = await storage.getKV('${customKVKey}_$key');
+  Future<Map<String, dynamic>?> getMap(String key) async {
+    String? value = await storage.getKV('${customKVKey}_$key');
 
     if (value != null) {
       // String to `Map<String, dynamic>` conversion
@@ -110,8 +114,8 @@ class LocalStorage {
     return Future.value(null);
   }
 
-  Future<void> setAccountCache(String accPubKey, String key, Object value) async {
-    Map data = await getObject(key);
+  Future<void> setAccountCache(String? accPubKey, String key, Object? value) async {
+    Map? data = await getObject(key) as Map?;
     if (data == null) {
       data = {};
     }
@@ -119,8 +123,8 @@ class LocalStorage {
     setObject(key, data);
   }
 
-  Future<Object> getAccountCache(String accPubKey, String key) async {
-    Map data = await getObject(key);
+  Future<Object?> getAccountCache(String? accPubKey, String key) async {
+    Map? data = await getObject(key) as Map?;
     if (data == null) {
       return Future.value(null);
     }
@@ -136,14 +140,19 @@ class LocalStorage {
 }
 
 class _LocalStorage {
-  Future<String> getKV(String key) async {
+  Future<String?> getKV(String key) async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.getString(key);
   }
 
-  Future<void> setKV(String key, value) async {
+  Future<bool> setKV(String key, value) async {
     final prefs = await SharedPreferences.getInstance();
     return prefs.setString(key, value);
+  }
+
+  Future<bool> removeKey(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.remove(key);
   }
 
   Future<void> addItemToList(String storeKey, Map<String, dynamic> acc) async {
@@ -158,7 +167,8 @@ class _LocalStorage {
     setKV(storeKey, jsonEncode(ls));
   }
 
-  Future<void> updateItemInList(String storeKey, String itemKey, String itemValue, Map<String, dynamic> itemNew) async {
+  Future<void> updateItemInList(
+      String storeKey, String itemKey, String? itemValue, Map<String, dynamic> itemNew) async {
     var ls = await getList(storeKey);
     ls.removeWhere((item) => item[itemKey] == itemValue);
     ls.add(itemNew);
@@ -168,7 +178,7 @@ class _LocalStorage {
   Future<List<Map<String, dynamic>>> getList(String storeKey) async {
     List<Map<String, dynamic>> res = [];
 
-    String str = await getKV(storeKey);
+    String? str = await getKV(storeKey);
     if (str != null) {
       Iterable l = jsonDecode(str);
       res = l.map((i) => Map<String, dynamic>.from(i)).toList();

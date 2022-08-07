@@ -29,10 +29,10 @@ jobs:
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
           workflow: build-and-test.yml
-          name: encointer-node-notee-1d0616448ded2a157ef1c46e4fc7e127532ab7ce
+          name: encointer-node-notee-359dbe061f2b61568d9488c20ac8e5d17b7bde50
           # in fact this action should download the latest artifact, but sometimes fails. Then we need to
           # set the `run_id` to force a download of an updated binary.
-          run_id: 2180886957
+          run_id: 2565176111
           path: node
           repo: encointer/encointer-node
 

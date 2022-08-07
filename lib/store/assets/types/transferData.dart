@@ -16,21 +16,21 @@ class TransferData extends _TransferData {
 
 abstract class _TransferData {
   @JsonKey(name: 'block_num')
-  int blockNum = 0;
+  int? blockNum = 0;
 
   @JsonKey(name: 'block_timestamp')
-  int blockTimestamp = 0;
+  int? blockTimestamp = 0;
 
   @JsonKey(name: 'extrinsic_index')
-  String extrinsicIndex = "";
+  String? extrinsicIndex = "";
 
-  String fee = "";
+  String? fee = "";
 
-  String from = "";
-  String to = "";
-  String amount = "";
-  String token = "";
-  String hash = "";
-  String module = "";
-  bool success = true;
+  String? from = "";
+  String? to = "";
+  String? amount = "";
+  String? token = "";
+  String? hash = "";
+  String? module = "";
+  bool? success = true;
 }
