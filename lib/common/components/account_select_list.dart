@@ -1,5 +1,5 @@
 import 'package:encointer_wallet/common/components/address_icon.dart';
-import 'package:encointer_wallet/store/account/types/accountData.dart';
+import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/material.dart';

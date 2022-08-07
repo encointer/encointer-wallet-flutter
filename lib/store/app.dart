@@ -4,7 +4,7 @@ import 'package:encointer_wallet/store/assets/assets.dart';
 import 'package:encointer_wallet/store/chain/chain.dart';
 import 'package:encointer_wallet/store/encointer/encointer.dart';
 import 'package:encointer_wallet/store/settings.dart';
-import 'package:encointer_wallet/utils/localStorage.dart';
+import 'package:encointer_wallet/utils/local_storage.dart';
 import 'package:mobx/mobx.dart';
 
 part 'app.g.dart';
@@ -171,7 +171,8 @@ abstract class _AppStore with Store {
       _encointer = EncointerStore(networkInfo);
       encointer.initStore(
         this as AppStore,
-        () => localStorage.setObject(encointerFinalCacheKey, encointer.toJson()),
+        () =>
+            localStorage.setObject(encointerFinalCacheKey, encointer.toJson()),
       );
 
       _log("Persisting cacheVersion: $encointerCacheVersion");
@@ -182,8 +183,10 @@ abstract class _AppStore with Store {
     }
   }
 
-  Future<EncointerStore?> loadEncointerCache(String encointerFinalCacheKey) async {
-    var cachedEncointerStore = await localStorage.getMap(encointerFinalCacheKey);
+  Future<EncointerStore?> loadEncointerCache(
+      String encointerFinalCacheKey) async {
+    var cachedEncointerStore =
+        await localStorage.getMap(encointerFinalCacheKey);
 
     if (cachedEncointerStore != null) {
       _log("Found cached encointer store $cachedEncointerStore");
@@ -206,7 +209,8 @@ abstract class _AppStore with Store {
     }
   }
 
-  Future<List<void>> addAccount(Map<String, dynamic> acc, String password, String? address) {
+  Future<List<void>> addAccount(
+      Map<String, dynamic> acc, String password, String? address) {
     return Future.wait([
       account.addAccount(acc, password),
     ]);
@@ -216,7 +220,8 @@ abstract class _AppStore with Store {
     _log("setCurrentAccount: setting current account: $pubKey");
 
     if (account.currentAccountPubKey == pubKey) {
-      _log("setCurrentAccount: currentAccount is already new account. returning");
+      _log(
+          "setCurrentAccount: currentAccount is already new account. returning");
       return Future.value(null);
     }
 

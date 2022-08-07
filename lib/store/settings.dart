@@ -1,8 +1,8 @@
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/config/node.dart';
-import 'package:encointer_wallet/page/profile/settings/ss58PrefixListPage.dart';
+import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/account/types/accountData.dart';
+import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -102,19 +102,25 @@ abstract class _SettingsStore with Store {
   @computed
   String get existentialDeposit {
     return Fmt.token(
-        BigInt.parse(networkConst!['balances']['existentialDeposit'].toString()), networkState!.tokenDecimals);
+        BigInt.parse(
+            networkConst!['balances']['existentialDeposit'].toString()),
+        networkState!.tokenDecimals);
   }
 
   @computed
   String get transactionBaseFee {
-    return Fmt.token(BigInt.parse(networkConst!['transactionPayment']['transactionBaseFee'].toString()),
+    return Fmt.token(
+        BigInt.parse(networkConst!['transactionPayment']['transactionBaseFee']
+            .toString()),
         networkState!.tokenDecimals);
   }
 
   @computed
   String get transactionByteFee {
     return Fmt.token(
-        BigInt.parse(networkConst!['transactionPayment']['transactionByteFee'].toString()), networkState!.tokenDecimals,
+        BigInt.parse(networkConst!['transactionPayment']['transactionByteFee']
+            .toString()),
+        networkState!.tokenDecimals,
         length: networkState!.tokenDecimals);
   }
 
@@ -147,7 +153,8 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadLocalCode() async {
-    String? stored = await rootStore.localStorage.getObject(localStorageLocaleKey) as String?;
+    String? stored = await rootStore.localStorage
+        .getObject(localStorageLocaleKey) as String?;
     if (stored != null) {
       localeCode = stored;
     }
@@ -195,8 +202,10 @@ abstract class _SettingsStore with Store {
   @action
   Future<void> loadNetworkStateCache() async {
     final List data = await Future.wait([
-      rootStore.localStorage.getObject(_getCacheKeyOfNetwork(cacheNetworkStateKey)),
-      rootStore.localStorage.getObject(_getCacheKeyOfNetwork(cacheNetworkConstKey)),
+      rootStore.localStorage
+          .getObject(_getCacheKeyOfNetwork(cacheNetworkStateKey)),
+      rootStore.localStorage
+          .getObject(_getCacheKeyOfNetwork(cacheNetworkConstKey)),
     ]);
     if (data[0] != null) {
       setNetworkState(Map<String, dynamic>.of(data[0]), needCache: false);
@@ -228,7 +237,8 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadContacts() async {
-    List<Map<String, dynamic>> ls = await rootStore.localStorage.getContactList();
+    List<Map<String, dynamic>> ls =
+        await rootStore.localStorage.getContactList();
     contactList = ObservableList.of(ls.map((i) => AccountData.fromJson(i)));
   }
 
@@ -253,13 +263,14 @@ abstract class _SettingsStore with Store {
   @action
   void setEndpoint(EndpointData value) {
     endpoint = value;
-    rootStore.localStorage.setObject(localStorageEndpointKey, EndpointData.toJson(value));
+    rootStore.localStorage
+        .setObject(localStorageEndpointKey, EndpointData.toJson(value));
   }
 
   @action
   Future<void> loadEndpoint(String sysLocaleCode) async {
-    Map<String, dynamic>? value =
-        await rootStore.localStorage.getObject(localStorageEndpointKey) as Map<String, dynamic>?;
+    Map<String, dynamic>? value = await rootStore.localStorage
+        .getObject(localStorageEndpointKey) as Map<String, dynamic>?;
     if (value == null) {
       endpoint = networkEndpointEncointerMainnet;
     } else {
@@ -275,7 +286,8 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadCustomSS58Format() async {
-    Map<String, dynamic>? ss58 = await rootStore.localStorage.getObject(localStorageSS58Key) as Map<String, dynamic>?;
+    Map<String, dynamic>? ss58 = await rootStore.localStorage
+        .getObject(localStorageSS58Key) as Map<String, dynamic>?;
 
     customSS58Format = ss58 ?? default_ss58_prefix;
   }
@@ -305,17 +317,23 @@ abstract class _SettingsStore with Store {
 
 @JsonSerializable(createFactory: false)
 class NetworkState extends _NetworkState {
-  NetworkState(String? endpoint, int? ss58Format, int? tokenDecimals, String? tokenSymbol)
+  NetworkState(String? endpoint, int? ss58Format, int? tokenDecimals,
+      String? tokenSymbol)
       : super(endpoint, ss58Format, tokenDecimals, tokenSymbol);
 
   static NetworkState fromJson(Map<String, dynamic> json) {
     // js-api changed the return type of 'api.rpc.system.properties()', such that multiple balances are supported.
     // Hence, tokenDecimals/-symbols are returned as a List. However, encointer currently only has one token, thus the
     // `NetworkState` should use the first token.
-    int? decimals = (json['tokenDecimals'] is List) ? json['tokenDecimals'][0] : json['tokenDecimals'];
-    String? symbol = (json['tokenSymbol'] is List) ? json['tokenSymbol'][0] : json['tokenSymbol'];
+    int? decimals = (json['tokenDecimals'] is List)
+        ? json['tokenDecimals'][0]
+        : json['tokenDecimals'];
+    String? symbol = (json['tokenSymbol'] is List)
+        ? json['tokenSymbol'][0]
+        : json['tokenSymbol'];
 
-    NetworkState ns = NetworkState(json['endpoint'], json['ss58Format'], decimals, symbol);
+    NetworkState ns =
+        NetworkState(json['endpoint'], json['ss58Format'], decimals, symbol);
     // --dev chain doesn't specify token symbol -> will break things if not specified
     if (((ns.tokenSymbol?.length ?? 0) < 1)) {
       ns.tokenSymbol = 'ERT';
@@ -323,12 +341,14 @@ class NetworkState extends _NetworkState {
     return ns;
   }
 
-  static Map<String, dynamic> toJson(NetworkState net) => _$NetworkStateToJson(net);
+  static Map<String, dynamic> toJson(NetworkState net) =>
+      _$NetworkStateToJson(net);
 }
 
 // TODO: these were empty before, but had to add defaults for development chain
 abstract class _NetworkState {
-  _NetworkState(this.endpoint, this.ss58Format, this.tokenDecimals, this.tokenSymbol);
+  _NetworkState(
+      this.endpoint, this.ss58Format, this.tokenDecimals, this.tokenSymbol);
 
   String? endpoint = '';
   int? ss58Format = 42;
@@ -338,8 +358,10 @@ abstract class _NetworkState {
 
 @JsonSerializable(explicitToJson: true)
 class EndpointData extends _EndpointData {
-  static EndpointData fromJson(Map<String, dynamic> json) => _$EndpointDataFromJson(json);
-  static Map<String, dynamic> toJson(EndpointData data) => _$EndpointDataToJson(data);
+  static EndpointData fromJson(Map<String, dynamic> json) =>
+      _$EndpointDataFromJson(json);
+  static Map<String, dynamic> toJson(EndpointData data) =>
+      _$EndpointDataToJson(data);
 }
 
 abstract class _EndpointData {
@@ -349,7 +371,8 @@ abstract class _EndpointData {
   String? text = '';
   String? value = '';
   String? worker = ''; // only relevant for cantillon
-  String? mrenclave = ''; // relevant until we fetch mrenclave from substrateeRegistry
+  String? mrenclave =
+      ''; // relevant until we fetch mrenclave from substrateeRegistry
   NodeConfig? overrideConfig;
   String? ipfsGateway = '';
 }

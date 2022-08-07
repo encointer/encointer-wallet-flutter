@@ -1,5 +1,5 @@
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/utils/UI.dart';
+import 'package:encointer_wallet/utils/ui.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -66,7 +66,11 @@ class AddressIconWithLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = labelStyle ?? Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey, height: 1.5);
+    final style = labelStyle ??
+        Theme.of(context)
+            .textTheme
+            .headline4!
+            .copyWith(color: encointerGrey, height: 1.5);
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [

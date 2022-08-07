@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:encointer_wallet/models/index.dart';
-import 'package:encointer_wallet/store/assets/types/transferData.dart';
+import 'package:encointer_wallet/store/assets/types/transfer_data.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -14,15 +14,18 @@ part 'encointerAccountStore.g.dart';
 ///
 ///
 @JsonSerializable(explicitToJson: true)
-class EncointerAccountStore extends _EncointerAccountStore with _$EncointerAccountStore {
-  EncointerAccountStore(String network, String address) : super(network, address);
+class EncointerAccountStore extends _EncointerAccountStore
+    with _$EncointerAccountStore {
+  EncointerAccountStore(String network, String address)
+      : super(network, address);
 
   @override
   String toString() {
     return jsonEncode(this);
   }
 
-  factory EncointerAccountStore.fromJson(Map<String, dynamic> json) => _$EncointerAccountStoreFromJson(json);
+  factory EncointerAccountStore.fromJson(Map<String, dynamic> json) =>
+      _$EncointerAccountStoreFromJson(json);
   Map<String, dynamic> toJson() => _$EncointerAccountStoreToJson(this);
 }
 
@@ -57,7 +60,10 @@ abstract class _EncointerAccountStore with Store {
   get ceremonyIndexForProofOfAttendance {
     if (reputations.isNotEmpty) {
       try {
-        return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
+        return reputations.entries
+            .firstWhere(
+                (e) => e.value.reputation == Reputation.VerifiedUnlinked)
+            .key;
       } catch (_e) {
         _log("$address has reputation, but none that has not been linked yet");
         return 0;
@@ -90,7 +96,8 @@ abstract class _EncointerAccountStore with Store {
   }
 
   @action
-  Future<void> setTransferTxs(List list, String address, {bool reset = false, needCache = true}) async {
+  Future<void> setTransferTxs(List list, String address,
+      {bool reset = false, needCache = true}) async {
     if (this.address != address) {
       _log("Tried to cached transfer tx's for wrong account. This is a bug.");
       return Future.value(null);
@@ -108,9 +115,11 @@ abstract class _EncointerAccountStore with Store {
       };
     }).toList();
     if (reset) {
-      txsTransfer = ObservableList.of(transfers.map((i) => TransferData.fromJson(Map<String, dynamic>.from(i))));
+      txsTransfer = ObservableList.of(transfers
+          .map((i) => TransferData.fromJson(Map<String, dynamic>.from(i))));
     } else {
-      txsTransfer.addAll(transfers.map((i) => TransferData.fromJson(Map<String, dynamic>.from(i))));
+      txsTransfer.addAll(transfers
+          .map((i) => TransferData.fromJson(Map<String, dynamic>.from(i))));
     }
 
     if (needCache && txsTransfer.length > 0) {

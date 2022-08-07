@@ -1,9 +1,9 @@
-import 'package:encointer_wallet/utils/translations/translationsHome.dart';
-import 'package:encointer_wallet/utils/translations/translationsAccount.dart';
-import 'package:encointer_wallet/utils/translations/translationsAssets.dart';
-import 'package:encointer_wallet/utils/translations/translationsProfile.dart';
-import 'package:encointer_wallet/utils/translations/translationsEncointer.dart';
-import 'package:encointer_wallet/utils/translations/translationsBazaar.dart';
+import 'package:encointer_wallet/utils/translations/translations_home.dart';
+import 'package:encointer_wallet/utils/translations/translations_account.dart';
+import 'package:encointer_wallet/utils/translations/translations_assets.dart';
+import 'package:encointer_wallet/utils/translations/translations_profile.dart';
+import 'package:encointer_wallet/utils/translations/translations_encointer.dart';
+import 'package:encointer_wallet/utils/translations/translations_bazaar.dart';
 
 /// top level contains groups like 'account', 'profile' etc.
 /// (when you add a new group the compiler will force you to add it in all implementations, too.)

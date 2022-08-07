@@ -4,7 +4,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
-import 'package:encointer_wallet/store/account/types/accountData.dart';
+import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
@@ -65,7 +65,8 @@ class Fmt {
       return '~';
     }
     value.toStringAsFixed(3);
-    NumberFormat f = NumberFormat(",##0${length! > 0 ? '.' : ''}${'#' * length}", "en_US");
+    NumberFormat f =
+        NumberFormat(",##0${length! > 0 ? '.' : ''}${'#' * length}", "en_US");
     return f.format(value);
   }
 
@@ -93,7 +94,8 @@ class Fmt {
     if (raw == null || raw.length == 0) {
       return '~';
     }
-    return doubleFormat(bigIntToDouble(balanceInt(raw), decimals), length: length);
+    return doubleFormat(bigIntToDouble(balanceInt(raw), decimals),
+        length: length);
   }
 
   /// combined number transform 1-2:
@@ -138,8 +140,12 @@ class Fmt {
   }) {
     final int x = pow(10, lengthMax ?? lengthFixed) as int;
     final double price = (value * x).ceilToDouble() / x;
-    final String tailDecimals = lengthMax == null ? '' : "#" * (lengthMax - lengthFixed);
-    return NumberFormat(",##0${lengthFixed > 0 ? '.' : ''}${"0" * lengthFixed}$tailDecimals", "en_US").format(price);
+    final String tailDecimals =
+        lengthMax == null ? '' : "#" * (lengthMax - lengthFixed);
+    return NumberFormat(
+            ",##0${lengthFixed > 0 ? '.' : ''}${"0" * lengthFixed}$tailDecimals",
+            "en_US")
+        .format(price);
   }
 
   /// number transform 6:
@@ -152,8 +158,12 @@ class Fmt {
   }) {
     final int x = pow(10, lengthMax ?? lengthFixed) as int;
     final double price = (value * x).floorToDouble() / x;
-    final String tailDecimals = lengthMax == null ? '' : "#" * (lengthMax - lengthFixed);
-    return NumberFormat(",##0${lengthFixed > 0 ? '.' : ''}${"0" * lengthFixed}$tailDecimals", "en_US").format(price);
+    final String tailDecimals =
+        lengthMax == null ? '' : "#" * (lengthMax - lengthFixed);
+    return NumberFormat(
+            ",##0${lengthFixed > 0 ? '.' : ''}${"0" * lengthFixed}$tailDecimals",
+            "en_US")
+        .format(price);
   }
 
   /// number transform 7:
@@ -169,7 +179,8 @@ class Fmt {
     int lengthFixed = 2,
     int? lengthMax,
   }) {
-    return priceCeil(Fmt.bigIntToDouble(value, decimals), lengthFixed: lengthFixed, lengthMax: lengthMax);
+    return priceCeil(Fmt.bigIntToDouble(value, decimals),
+        lengthFixed: lengthFixed, lengthMax: lengthMax);
   }
 
   static String priceFloorBigInt(
@@ -178,7 +189,8 @@ class Fmt {
     int lengthFixed = 2,
     int? lengthMax,
   }) {
-    return priceFloor(Fmt.bigIntToDouble(value, decimals), lengthFixed: lengthFixed, lengthMax: lengthMax);
+    return priceFloor(Fmt.bigIntToDouble(value, decimals),
+        lengthFixed: lengthFixed, lengthMax: lengthMax);
   }
 
   static bool isAddress(String txt) {
@@ -196,7 +208,8 @@ class Fmt {
     return reg.hasMatch(pass);
   }
 
-  static List<List> filterCandidateList(List<List> ls, String filter, Map accIndexMap) {
+  static List<List> filterCandidateList(
+      List<List> ls, String filter, Map accIndexMap) {
     ls.retainWhere((i) {
       String value = filter.trim().toLowerCase();
       String accName = '';
@@ -204,7 +217,8 @@ class Fmt {
       if (accInfo != null) {
         accName = accInfo['identity']['display'] ?? '';
       }
-      return i[0].toLowerCase().contains(value) || accName.toLowerCase().contains(value);
+      return i[0].toLowerCase().contains(value) ||
+          accName.toLowerCase().contains(value);
     });
     return ls;
   }
@@ -273,11 +287,14 @@ class Fmt {
   }
 
   static String addressOfAccount(AccountData acc, AppStore store) {
-    return store.account.pubKeyAddressMap[store.settings.endpoint.ss58]![acc.pubKey] ?? acc.address;
+    return store.account
+            .pubKeyAddressMap[store.settings.endpoint.ss58]![acc.pubKey] ??
+        acc.address;
   }
 
   /// Formats fixed point number with the amount of fractional digits given by [fixedPointFraction].
-  static String degree(String degree, {int fixedPointFraction = 64, int fractionDisplay = 3}) {
+  static String degree(String degree,
+      {int fixedPointFraction = 64, int fractionDisplay = 3}) {
     return (double.tryParse(degree) ?? 0.0).toStringAsFixed(fractionDisplay);
   }
 }

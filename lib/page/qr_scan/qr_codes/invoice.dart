@@ -1,6 +1,6 @@
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 
-import 'qrCodeBase.dart';
+import 'qr_code_base.dart';
 
 class InvoiceQrCode extends QrCode<InvoiceData> {
   InvoiceQrCode.withData(
@@ -15,7 +15,12 @@ class InvoiceQrCode extends QrCode<InvoiceData> {
     num? amount,
     required String label,
     this.version = QrCodeVersion.v1_0,
-  }) : super(InvoiceData(account: account, cid: cid, network: network, amount: amount, label: label));
+  }) : super(InvoiceData(
+            account: account,
+            cid: cid,
+            network: network,
+            amount: amount,
+            label: label));
 
   QrCodeContext? context = QrCodeContext.invoice;
 
@@ -97,7 +102,9 @@ class InvoiceData implements ToQrFields {
   static InvoiceData fromQrFieldsV1(List<String> fields) {
     return InvoiceData(
       account: fields[0],
-      cid: fields[1].isNotEmpty ? CommunityIdentifier.fromFmtString(fields[1]) : null,
+      cid: fields[1].isNotEmpty
+          ? CommunityIdentifier.fromFmtString(fields[1])
+          : null,
       amount: fields[2].trim().isNotEmpty ? double.parse(fields[2]) : null,
       label: fields[3],
     );
@@ -106,7 +113,9 @@ class InvoiceData implements ToQrFields {
   static InvoiceData fromQrFieldsV2(List<String> fields) {
     return InvoiceData(
       account: fields[0],
-      cid: fields[1].isNotEmpty ? CommunityIdentifier.fromFmtString(fields[1]) : null,
+      cid: fields[1].isNotEmpty
+          ? CommunityIdentifier.fromFmtString(fields[1])
+          : null,
       network: fields[2],
       amount: fields[3].trim().isNotEmpty ? double.parse(fields[3]) : null,
       label: fields[4],

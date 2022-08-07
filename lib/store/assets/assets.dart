@@ -1,6 +1,6 @@
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/assets/types/balancesInfo.dart';
-import 'package:encointer_wallet/store/assets/types/transferData.dart';
+import 'package:encointer_wallet/store/assets/types/balances_info.dart';
+import 'package:encointer_wallet/store/assets/types/transfer_data.dart';
 import 'package:mobx/mobx.dart';
 
 part 'assets.g.dart';
@@ -35,7 +35,8 @@ abstract class _AssetsStore with Store {
   bool submitting = false;
 
   @observable
-  ObservableMap<String?, BalancesInfo> balances = ObservableMap<String?, BalancesInfo>();
+  ObservableMap<String?, BalancesInfo> balances =
+      ObservableMap<String?, BalancesInfo>();
 
   @observable
   Map<String, String> tokenBalances = Map<String, String>();
@@ -97,7 +98,8 @@ abstract class _AssetsStore with Store {
 //  }
 
   @action
-  Future<void> setAccountBalances(String? pubKey, Map? amt, {bool needCache = true}) async {
+  Future<void> setAccountBalances(String? pubKey, Map? amt,
+      {bool needCache = true}) async {
     if (rootStore.account.currentAccount.pubKey != pubKey) return;
 
     amt!.forEach((k, v) {
@@ -152,7 +154,8 @@ abstract class _AssetsStore with Store {
   }
 
   @action
-  Future<void> addTxs(Map res, String address, {bool shouldCache = false}) async {
+  Future<void> addTxs(Map res, String address,
+      {bool shouldCache = false}) async {
     if (rootStore.account.currentAddress != address) return;
 
     txsCount = res['count'];
@@ -166,11 +169,16 @@ abstract class _AssetsStore with Store {
     });
 
     if (shouldCache) {
-      rootStore.localStorage.setAccountCache(rootStore.account.currentAccount.pubKey, _getCacheKey(cacheTxsKey), ls);
+      rootStore.localStorage.setAccountCache(
+          rootStore.account.currentAccount.pubKey,
+          _getCacheKey(cacheTxsKey),
+          ls);
 
       cacheTxsTimestamp = DateTime.now().millisecondsSinceEpoch;
-      rootStore.localStorage
-          .setAccountCache(rootStore.account.currentAccount.pubKey, _getCacheKey(cacheTimeKey), cacheTxsTimestamp);
+      rootStore.localStorage.setAccountCache(
+          rootStore.account.currentAccount.pubKey,
+          _getCacheKey(cacheTimeKey),
+          cacheTxsTimestamp);
     }
   }
 
@@ -205,14 +213,17 @@ abstract class _AssetsStore with Store {
     List cache = await Future.wait([
       rootStore.localStorage.getAccountCache(pubKey, cacheBalanceKey),
       rootStore.localStorage.getAccountCache(pubKey, _getCacheKey(cacheTxsKey)),
-      rootStore.localStorage.getAccountCache(pubKey, _getCacheKey(cacheTimeKey)),
-      rootStore.localStorage.getAccountCache(pubKey, _getCacheKey(cacheTokenBalanceKey)),
+      rootStore.localStorage
+          .getAccountCache(pubKey, _getCacheKey(cacheTimeKey)),
+      rootStore.localStorage
+          .getAccountCache(pubKey, _getCacheKey(cacheTokenBalanceKey)),
     ]);
     if (cache[0] != null) {
       setAccountBalances(pubKey, cache[0], needCache: false);
     }
     if (cache[1] != null) {
-      txs = ObservableList.of(List.of(cache[1]).map((i) => TransferData.fromJson(i)).toList());
+      txs = ObservableList.of(
+          List.of(cache[1]).map((i) => TransferData.fromJson(i)).toList());
     } else {
       txs = ObservableList();
     }
@@ -228,7 +239,8 @@ abstract class _AssetsStore with Store {
 
   @action
   Future<void> loadCache() async {
-    List? ls = await rootStore.localStorage.getObject(localStorageBlocksKey) as List?;
+    List? ls =
+        await rootStore.localStorage.getObject(localStorageBlocksKey) as List?;
     if (ls != null) {
       ls.forEach((i) {
         if (blockMap[i['id']] == null) {

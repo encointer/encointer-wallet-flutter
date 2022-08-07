@@ -1,6 +1,8 @@
-import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
+// import 'package:encointer_wallet/store/encointer/types/claim_of_attendance.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
-import 'package:encointer_wallet/store/encointer/types/proofOfAttendance.dart';
+
+import '../../../../store/encointer/types/claimOfAttendance.dart';
+import '../../../../store/encointer/types/proofOfAttendance.dart';
 
 /// Params for known extrinsics.
 

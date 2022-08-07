@@ -1,6 +1,6 @@
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 
-import 'qrCodeBase.dart';
+import 'qr_code_base.dart';
 
 class VoucherQrCode extends QrCode<VoucherData> {
   VoucherQrCode.withData(VoucherData data) : super(data);
@@ -9,7 +9,11 @@ class VoucherQrCode extends QrCode<VoucherData> {
     required CommunityIdentifier cid,
     required network,
     required String issuer,
-  }) : super(VoucherData(voucherUri: voucherUri, cid: cid, network: network, issuer: issuer));
+  }) : super(VoucherData(
+            voucherUri: voucherUri,
+            cid: cid,
+            network: network,
+            issuer: issuer));
 
   QrCodeContext? context = QrCodeContext.voucher;
 

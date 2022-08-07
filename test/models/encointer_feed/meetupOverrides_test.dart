@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
-import 'package:encointer_wallet/models/encointer_feed/meetupOverrides.dart';
+import 'package:encointer_wallet/models/encointer_feed/meetup_overrides.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -29,12 +29,16 @@ void main() {
 
       List<dynamic> list = jsonDecode(response);
 
-      List<MeetupOverrides> meetupOverrides = list.map((e) => MeetupOverrides.fromJson(e)).toList();
+      List<MeetupOverrides> meetupOverrides =
+          list.map((e) => MeetupOverrides.fromJson(e)).toList();
       var override = meetupOverrides[0];
 
       expect(override.overrideName, "Polkadot Decoded Demo 2022");
       expect(override.communities, ["u33e0719fDB", "69y7j4ZEXmy"]);
-      expect(override.meetupTimes![0].isAtSameMomentAs(DateTime.parse("2022-06-29T11:30:00.00+00:00")), true);
+      expect(
+          override.meetupTimes![0]
+              .isAtSameMomentAs(DateTime.parse("2022-06-29T11:30:00.00+00:00")),
+          true);
     });
 
     test('getNextMeetupTimeWorks', () async {
@@ -64,28 +68,79 @@ void main() {
         meetup5,
       ];
 
-      final meetupOverrides = MeetupOverrides("hello", "world", [], testMeetups);
+      final meetupOverrides =
+          MeetupOverrides("hello", "world", [], testMeetups);
 
       // get next meetup time if we are in registering or assigning phase
-      expect(meetupOverrides.getNextMeetupTime(beforeAll, CeremonyPhase.Assigning)!.isAtSameMomentAs(meetup1), true);
       expect(
-          meetupOverrides.getNextMeetupTime(between1And2, CeremonyPhase.Registering)!.isAtSameMomentAs(meetup2), true);
-      expect(meetupOverrides.getNextMeetupTime(between2And3, CeremonyPhase.Assigning)!.isAtSameMomentAs(meetup3), true);
+          meetupOverrides
+              .getNextMeetupTime(beforeAll, CeremonyPhase.Assigning)!
+              .isAtSameMomentAs(meetup1),
+          true);
       expect(
-          meetupOverrides.getNextMeetupTime(between3And4, CeremonyPhase.Registering)!.isAtSameMomentAs(meetup4), true);
-      expect(meetupOverrides.getNextMeetupTime(between4And5, CeremonyPhase.Assigning)!.isAtSameMomentAs(meetup5), true);
+          meetupOverrides
+              .getNextMeetupTime(between1And2, CeremonyPhase.Registering)!
+              .isAtSameMomentAs(meetup2),
+          true);
       expect(
-          meetupOverrides.getNextMeetupTime(between5And6, CeremonyPhase.Registering)!.isAtSameMomentAs(meetup6), true);
-      expect(meetupOverrides.getNextMeetupTime(afterAll, CeremonyPhase.Registering), null);
+          meetupOverrides
+              .getNextMeetupTime(between2And3, CeremonyPhase.Assigning)!
+              .isAtSameMomentAs(meetup3),
+          true);
+      expect(
+          meetupOverrides
+              .getNextMeetupTime(between3And4, CeremonyPhase.Registering)!
+              .isAtSameMomentAs(meetup4),
+          true);
+      expect(
+          meetupOverrides
+              .getNextMeetupTime(between4And5, CeremonyPhase.Assigning)!
+              .isAtSameMomentAs(meetup5),
+          true);
+      expect(
+          meetupOverrides
+              .getNextMeetupTime(between5And6, CeremonyPhase.Registering)!
+              .isAtSameMomentAs(meetup6),
+          true);
+      expect(
+          meetupOverrides.getNextMeetupTime(
+              afterAll, CeremonyPhase.Registering),
+          null);
 
       // get meetup time of the current meetup if we are in attesting phase
-      expect(meetupOverrides.getNextMeetupTime(beforeAll, CeremonyPhase.Attesting), null);
-      expect(meetupOverrides.getNextMeetupTime(between1And2, CeremonyPhase.Attesting)!.isAtSameMomentAs(meetup1), true);
-      expect(meetupOverrides.getNextMeetupTime(between2And3, CeremonyPhase.Attesting)!.isAtSameMomentAs(meetup2), true);
-      expect(meetupOverrides.getNextMeetupTime(between3And4, CeremonyPhase.Attesting)!.isAtSameMomentAs(meetup3), true);
-      expect(meetupOverrides.getNextMeetupTime(between4And5, CeremonyPhase.Attesting)!.isAtSameMomentAs(meetup4), true);
-      expect(meetupOverrides.getNextMeetupTime(between5And6, CeremonyPhase.Attesting)!.isAtSameMomentAs(meetup5), true);
-      expect(meetupOverrides.getNextMeetupTime(afterAll, CeremonyPhase.Attesting)!.isAtSameMomentAs(meetup6), true);
+      expect(
+          meetupOverrides.getNextMeetupTime(beforeAll, CeremonyPhase.Attesting),
+          null);
+      expect(
+          meetupOverrides
+              .getNextMeetupTime(between1And2, CeremonyPhase.Attesting)!
+              .isAtSameMomentAs(meetup1),
+          true);
+      expect(
+          meetupOverrides
+              .getNextMeetupTime(between2And3, CeremonyPhase.Attesting)!
+              .isAtSameMomentAs(meetup2),
+          true);
+      expect(
+          meetupOverrides
+              .getNextMeetupTime(between3And4, CeremonyPhase.Attesting)!
+              .isAtSameMomentAs(meetup3),
+          true);
+      expect(
+          meetupOverrides
+              .getNextMeetupTime(between4And5, CeremonyPhase.Attesting)!
+              .isAtSameMomentAs(meetup4),
+          true);
+      expect(
+          meetupOverrides
+              .getNextMeetupTime(between5And6, CeremonyPhase.Attesting)!
+              .isAtSameMomentAs(meetup5),
+          true);
+      expect(
+          meetupOverrides
+              .getNextMeetupTime(afterAll, CeremonyPhase.Attesting)!
+              .isAtSameMomentAs(meetup6),
+          true);
     });
   });
 }
