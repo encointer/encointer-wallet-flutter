@@ -66,6 +66,12 @@ abstract class _EncointerStore with Store {
   /// The encointer network this store belongs to
   final String network;
 
+  /// In order to prevent multiple simultaneous update calls.
+  ///
+  /// It does not need to be an observable, as we only read it actively.
+  @JsonKey(ignore: true)
+  Future<void>? _updateStateFuture;
+
   @observable
   CeremonyPhase currentPhase = CeremonyPhase.Registering;
 
@@ -291,11 +297,18 @@ abstract class _EncointerStore with Store {
 
   // -- other helpers
 
+  /// Update all the encointer state.
+  ///
+  /// Will await a previous update future if an update has already been triggered.
   @action
   Future<void> updateState() async {
-    _log("[updateState] updating state...");
+    if (_updateStateFuture != null) {
+      _log("[updateState] already updating state, awaiting the previously set future.");
+      await _updateStateFuture!;
+      return;
+    }
 
-    return Future.wait([
+    _updateStateFuture = Future.wait([
       webApi.encointer.getCommunityMetadata(),
       webApi.encointer.getAllMeetupLocations(),
       webApi.encointer.getDemurrage(),
@@ -304,7 +317,15 @@ abstract class _EncointerStore with Store {
       webApi.encointer.getMeetupTime(),
       webApi.encointer.getMeetupTimeOverride(),
       updateAggregatedAccountData(),
-    ]).then((_) => _log("[updateState] finished"));
+    ])
+        .timeout(Duration(seconds: 15))
+        .catchError((e) => _log("Error executing update state: ${e.toString()}"))
+        .whenComplete(() {
+      _log("[updateState] finished");
+      _updateStateFuture = null;
+    });
+
+    await _updateStateFuture!;
   }
 
   Future<void> updateAggregatedAccountData() async {

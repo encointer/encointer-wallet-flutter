@@ -105,7 +105,14 @@ class _WalletAppState extends State<WalletApp> {
           : Api.create(
               _appStore!, JSApi(), SubstrateDartApi(), jsServiceEncointer);
 
-      await webApi.init();
+      await webApi.init().timeout(
+            Duration(seconds: 20),
+            onTimeout: () => print("webApi.init() has run into a timeout. We might be offline."),
+          );
+
+      _appStore!.dataUpdate.setupUpdateReaction(() async {
+        await _appStore!.encointer.updateState();
+      });
 
       _changeLang(context, _appStore!.settings.localeCode);
 
@@ -166,9 +173,12 @@ class _WalletAppState extends State<WalletApp> {
               case EncointerHomePage.route:
                 return CupertinoPageRoute(
                   settings: settings,
-                  builder: (context) => WillPopScopeWrapper(
-                    child: Observer(
-                      builder: (_) => FutureBuilder<int>(
+                  builder: (context) => Observer(
+                    // Note: There is a false positive about no observables being inside the observer or we are doing
+                    // something wrong. However, for some reason the observer needs to be on top-level to properly
+                    // update.
+                    builder: (_) => WillPopScopeWrapper(
+                      child: FutureBuilder<int>(
                         future: _initApp(context),
                         builder: (_, AsyncSnapshot<int> snapshot) {
                           if (snapshot.hasError) {

@@ -41,7 +41,10 @@ Future<void> submitTx(
 
   final txPaymentAsset = store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
 
-  txParams["txInfo"]["txPaymentAsset"] = txPaymentAsset;
+  if (txPaymentAsset != null) {
+    txParams["txInfo"]["txPaymentAsset"] = txPaymentAsset;
+  }
+
   txParams["onFinish"] = onFinish ?? ((BuildContext txPageContext, Map res) => res);
 
   return submitToJS(
@@ -67,7 +70,12 @@ Future<void> submitClaimRewards(
     store,
     api,
     txParams,
-    onFinish: (BuildContext txPageContext, Map res) => (res),
+    onFinish: (BuildContext txPageContext, Map res) {
+      // Claiming the rewards creates a new reputation if successful.
+      // Hence, we should update the state afterwards.
+      store.dataUpdate.setInvalidated();
+      return res;
+    },
   );
 }
 
@@ -112,11 +120,9 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
     api,
     registerParticipantParams(store.encointer.chosenCid!, proof: await api.encointer.getProofOfAttendance()),
     onFinish: (BuildContext txPageContext, Map res) {
-      store.encointer.updateAggregatedAccountData();
-      Navigator.popUntil(
-        txPageContext,
-        ModalRoute.withName('/'),
-      );
+      // Registering the participant burns the reputation.
+      // Hence, we should fetch the new state afterwards.
+      store.dataUpdate.setInvalidated();
     },
   );
 }
