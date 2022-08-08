@@ -12,7 +12,7 @@ cd flutter
 # `precache` ensures that the correct Dart SDK and binaries for IOS and android exist.
 #
 # Version should match the version from the CI.
-git checkout 2.0.5 && flutter precache
+git checkout 3.0.5 && flutter precache
 
 flutter doctor
 
