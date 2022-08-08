@@ -6,12 +6,16 @@ part of 'encointerBalanceData.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-EncointerBalanceData _$EncointerBalanceDataFromJson(Map<String, dynamic> json) => EncointerBalanceData(
+EncointerBalanceData _$EncointerBalanceDataFromJson(
+        Map<String, dynamic> json) =>
+    EncointerBalanceData(
       CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
       BalanceEntry.fromJson(json['balanceEntry'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$EncointerBalanceDataToJson(EncointerBalanceData instance) => <String, dynamic>{
+Map<String, dynamic> _$EncointerBalanceDataToJson(
+        EncointerBalanceData instance) =>
+    <String, dynamic>{
       'cid': instance.cid.toJson(),
       'balanceEntry': instance.balanceEntry.toJson(),
     };
@@ -21,7 +25,8 @@ BalanceEntry _$BalanceEntryFromJson(Map<String, dynamic> json) => BalanceEntry(
       json['lastUpdate'] as int,
     );
 
-Map<String, dynamic> _$BalanceEntryToJson(BalanceEntry instance) => <String, dynamic>{
+Map<String, dynamic> _$BalanceEntryToJson(BalanceEntry instance) =>
+    <String, dynamic>{
       'principal': BalanceEntry._principalToString(instance.principal),
       'lastUpdate': instance.lastUpdate,
     };
