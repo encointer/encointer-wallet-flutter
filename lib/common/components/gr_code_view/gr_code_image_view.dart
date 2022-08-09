@@ -25,10 +25,10 @@ class QrCodeImage extends StatelessWidget {
           height: MediaQuery.of(context).size.width,
           child: PhotoView.customChild(
             maxScale: 1.0001,
-            minScale: 0.5,
-            initialScale: 0.7,
-            backgroundDecoration: const BoxDecoration(
-              color: Color.fromARGB(255, 208, 205, 204),
+            minScale: 0.2,
+            initialScale: 0.8,
+            backgroundDecoration: BoxDecoration(
+              color: ZurichLion.shade50,
             ),
             child: QrImage(
               backgroundColor: Theme.of(context).canvasColor,
