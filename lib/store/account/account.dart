@@ -1,11 +1,10 @@
 import 'dart:async';
-
 import 'package:aes_ecb_pkcs5_flutter/aes_ecb_pkcs5_flutter.dart';
-import 'package:encointer_wallet/page/profile/settings/ss58PrefixListPage.dart';
+import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/account/types/accountData.dart';
-import 'package:encointer_wallet/store/account/types/txStatus.dart';
+import 'package:encointer_wallet/store/account/types/account_data.dart';
+import 'package:encointer_wallet/store/account/types/tx_status.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:mobx/mobx.dart';
@@ -32,7 +31,8 @@ abstract class _AccountStore with Store {
   final AppStore rootStore;
 
   Map<String, dynamic> _formatMetaData(Map<String, dynamic> acc) {
-    acc['name'] = newAccount.name.isEmpty ? acc['meta']['name'] : newAccount.name;
+    acc['name'] =
+        newAccount.name.isEmpty ? acc['meta']['name'] : newAccount.name;
     if (acc['meta']['whenCreated'] == null) {
       acc['meta']['whenCreated'] = DateTime.now().millisecondsSinceEpoch;
     }
@@ -62,13 +62,16 @@ abstract class _AccountStore with Store {
   Map<String?, Map> accountIndexMap = Map<String, Map>();
 
   @observable
-  ObservableMap<int, Map<String, String>> pubKeyAddressMap = ObservableMap<int, Map<String, String>>();
+  ObservableMap<int, Map<String, String>> pubKeyAddressMap =
+      ObservableMap<int, Map<String, String>>();
 
   @observable
-  ObservableMap<String?, String?> pubKeyIconsMap = ObservableMap<String?, String?>();
+  ObservableMap<String?, String?> pubKeyIconsMap =
+      ObservableMap<String?, String?>();
 
   @observable
-  ObservableMap<String?, String?> addressIconsMap = ObservableMap<String?, String?>();
+  ObservableMap<String?, String?> addressIconsMap =
+      ObservableMap<String?, String?>();
 
   @observable
   List<Map<String, dynamic>> queuedTxs = ObservableList<Map<String, dynamic>>();
@@ -92,7 +95,9 @@ abstract class _AccountStore with Store {
 
   @computed
   List<AccountData> get optionalAccounts {
-    return accountListAll.where((i) => i.pubKey != currentAccountPubKey).toList();
+    return accountListAll
+        .where((i) => i.pubKey != currentAccountPubKey)
+        .toList();
   }
 
   /// accountList with observations
@@ -124,11 +129,14 @@ abstract class _AccountStore with Store {
     // _log("currentAddress: AddressMap 2: ${pubKeyAddressMap[2].toString()}");
 
     int? ss58 = rootStore.settings.customSS58Format['value'];
-    if (rootStore.settings.customSS58Format['info'] == default_ss58_prefix['info']) {
+    if (rootStore.settings.customSS58Format['info'] ==
+        default_ss58_prefix['info']) {
       ss58 = rootStore.settings.endpoint.ss58;
     }
 
-    final address = pubKeyAddressMap[ss58!] != null ? pubKeyAddressMap[ss58]![pubKey!] : null;
+    final address = pubKeyAddressMap[ss58!] != null
+        ? pubKeyAddressMap[ss58]![pubKey!]
+        : null;
 
     if (address != null) {
       return address;
@@ -192,7 +200,8 @@ abstract class _AccountStore with Store {
             );
           } else {
             if (rootStore.settings.endpointIsEncointer) {
-              rootStore.encointer.account!.setTransferTxs([res], rootStore.account.currentAddress);
+              rootStore.encointer.account!
+                  .setTransferTxs([res], rootStore.account.currentAddress);
             }
           }
         });
@@ -201,7 +210,8 @@ abstract class _AccountStore with Store {
         timer.cancel();
         queuedTxs = [];
       } else {
-        print("Waiting for the api to reconnect to send ${queuedTxs.length} queued tx(s)");
+        print(
+            "Waiting for the api to reconnect to send ${queuedTxs.length} queued tx(s)");
       }
     });
   }
@@ -279,8 +289,10 @@ abstract class _AccountStore with Store {
 
     if (acc.pubKey == currentAccountPubKey) {
       // set new currentAccount after currentAccount was removed
-      List<Map<String, dynamic>> accounts = await rootStore.localStorage.getAccountList();
-      var newCurrentAccountPubKey = accounts.length > 0 ? accounts[0]['pubKey'] : '';
+      List<Map<String, dynamic>> accounts =
+          await rootStore.localStorage.getAccountList();
+      var newCurrentAccountPubKey =
+          accounts.length > 0 ? accounts[0]['pubKey'] : '';
       _log("removeAccount: newCurrentAccountPubKey $newCurrentAccountPubKey");
 
       await rootStore.setCurrentAccount(newCurrentAccountPubKey);
@@ -297,15 +309,18 @@ abstract class _AccountStore with Store {
   /// Tackle this in #574.
   @action
   Future<void> loadAccount() async {
-    List<Map<String, dynamic>> accList = await rootStore.localStorage.getAccountList();
-    accountList = ObservableList.of(accList.map((i) => AccountData.fromJson(i)));
+    List<Map<String, dynamic>> accList =
+        await rootStore.localStorage.getAccountList();
+    accountList =
+        ObservableList.of(accList.map((i) => AccountData.fromJson(i)));
 
     currentAccountPubKey = await rootStore.localStorage.getCurrentAccount();
     loading = false;
   }
 
   @action
-  Future<void> encryptSeed(String? pubKey, String seed, String seedType, String password) async {
+  Future<void> encryptSeed(
+      String? pubKey, String seed, String seedType, String password) async {
     String key = Fmt.passwordToEncryptKey(password);
     String encrypted = await FlutterAesEcbPkcs5.encryptString(seed, key);
     Map stored = await rootStore.localStorage.getSeeds(seedType);
@@ -314,13 +329,15 @@ abstract class _AccountStore with Store {
   }
 
   @action
-  Future<String?> decryptSeed(String pubKey, String seedType, String password) async {
+  Future<String?> decryptSeed(
+      String pubKey, String seedType, String password) async {
     Map stored = await rootStore.localStorage.getSeeds(seedType);
     String? encrypted = stored[pubKey];
     if (encrypted == null) {
       return Future.value(null);
     }
-    return FlutterAesEcbPkcs5.decryptString(encrypted, Fmt.passwordToEncryptKey(password));
+    return FlutterAesEcbPkcs5.decryptString(
+        encrypted, Fmt.passwordToEncryptKey(password));
   }
 
   @action
@@ -331,9 +348,12 @@ abstract class _AccountStore with Store {
   }
 
   @action
-  Future<void> updateSeed(String? pubKey, String passwordOld, String passwordNew) async {
-    Map storedMnemonics = await rootStore.localStorage.getSeeds(AccountStore.seedTypeMnemonic);
-    Map? storedRawSeeds = await rootStore.localStorage.getSeeds(AccountStore.seedTypeRawSeed);
+  Future<void> updateSeed(
+      String? pubKey, String passwordOld, String passwordNew) async {
+    Map storedMnemonics =
+        await rootStore.localStorage.getSeeds(AccountStore.seedTypeMnemonic);
+    Map? storedRawSeeds =
+        await rootStore.localStorage.getSeeds(AccountStore.seedTypeRawSeed);
     String? encryptedSeed = '';
     String seedType = '';
     if (storedMnemonics[pubKey] != null) {
@@ -346,7 +366,8 @@ abstract class _AccountStore with Store {
       return;
     }
 
-    String seed = await FlutterAesEcbPkcs5.decryptString(encryptedSeed!, Fmt.passwordToEncryptKey(passwordOld));
+    String seed = await FlutterAesEcbPkcs5.decryptString(
+        encryptedSeed!, Fmt.passwordToEncryptKey(passwordOld));
     encryptSeed(pubKey, seed, seedType, passwordNew);
   }
 
@@ -363,7 +384,8 @@ abstract class _AccountStore with Store {
   void setPubKeyAddressMap(Map<String, Map> data) {
     data.keys.forEach((ss58) {
       // get old data map
-      Map<String, String> addresses = Map.of(pubKeyAddressMap[int.parse(ss58)] ?? {});
+      Map<String, String> addresses =
+          Map.of(pubKeyAddressMap[int.parse(ss58)] ?? {});
       // set new data
       Map.of(data[ss58]!).forEach((k, v) {
         addresses[k] = v;

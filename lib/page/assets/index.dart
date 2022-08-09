@@ -1,24 +1,24 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:encointer_wallet/common/components/addressIcon.dart';
-import 'package:encointer_wallet/common/components/dragHandle.dart';
-import 'package:encointer_wallet/common/components/gradientElements.dart';
-import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
-import 'package:encointer_wallet/common/components/submitButton.dart';
+import 'package:encointer_wallet/common/components/address_icon.dart';
+import 'package:encointer_wallet/common/components/drag_handle.dart';
+import 'package:encointer_wallet/common/components/gradient_elements.dart';
+import 'package:encointer_wallet/common/components/password_input_dialog.dart';
+import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/page-encointer/ceremony_box/ceremonyBox.dart';
-import 'package:encointer_wallet/page-encointer/common/communityChooserOnMap.dart';
-import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
-import 'package:encointer_wallet/page/account/create/addAccountPage.dart';
-import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
-import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box.dart';
+import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
+import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
+import 'package:encointer_wallet/page/account/create/add_account_page.dart';
+import 'package:encointer_wallet/page/assets/receive/receive_page.dart';
+import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
-import 'package:encointer_wallet/store/account/types/accountData.dart';
+import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
+
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
@@ -31,8 +31,9 @@ import 'package:iconsax/iconsax.dart';
 import 'package:pausable_timer/pausable_timer.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-import 'account_or_community/AccountOrCommunityData.dart';
-import 'account_or_community/switchAccountOrCommunity.dart';
+import '../../models/encointer_balance_data/balance_entry.dart';
+import 'account_or_community/Account_or_community_data.dart';
+import 'account_or_community/switch_account_or_community.dart';
 
 class Assets extends StatefulWidget {
   Assets(this.store);
@@ -90,7 +91,8 @@ class _AssetsState extends State<Assets> {
   @override
   Widget build(BuildContext context) {
     dic = I18n.of(context)!.translationsForLocale();
-    _panelHeightOpen = min(MediaQuery.of(context).size.height * fractionOfScreenHeight,
+    _panelHeightOpen = min(
+        MediaQuery.of(context).size.height * fractionOfScreenHeight,
         panelHeight); // should typically not be higher than panelHeight, but on really small devices it should not exceed fractionOfScreenHeight x the screen height.
 
     List<AccountOrCommunityData> allCommunities = [];
@@ -136,7 +138,10 @@ class _AssetsState extends State<Assets> {
               padding:
                   // Fixme: 60 is hardcoded because we don't know the tabBar size here.
                   // Should be tackled in #607
-                  EdgeInsets.only(bottom: 60 + appBar.preferredSize.height + MediaQuery.of(context).viewPadding.top),
+                  EdgeInsets.only(
+                      bottom: 60 +
+                          appBar.preferredSize.height +
+                          MediaQuery.of(context).viewPadding.top),
               child: RefreshIndicator(
                 onRefresh: _refreshEncointerState,
                 child: ListView(
@@ -144,7 +149,9 @@ class _AssetsState extends State<Assets> {
                   children: [
                     Observer(builder: (_) {
                       if (ModalRoute.of(context)!.isCurrent &&
-                          !_enteredPin & store.settings.cachedPin.isEmpty & !store.settings.endpointIsNoTee) {
+                          !_enteredPin &
+                              store.settings.cachedPin.isEmpty &
+                              !store.settings.endpointIsNoTee) {
                         // The pin is not immediately propagated to the store, hence we track if the pin has been entered to prevent
                         // showing the dialog multiple times.
                         WidgetsBinding.instance.addPostFrameCallback(
@@ -162,9 +169,11 @@ class _AssetsState extends State<Assets> {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               InkWell(
-                                  child: CombinedCommunityAndAccountAvatar(store),
+                                  child:
+                                      CombinedCommunityAndAccountAvatar(store),
                                   onTap: () {
-                                    if (panelController != null && panelController!.isAttached) {
+                                    if (panelController != null &&
+                                        panelController!.isAttached) {
                                       panelController!.open();
                                     }
                                   }),
@@ -172,30 +181,39 @@ class _AssetsState extends State<Assets> {
                           ),
                           Observer(
                             builder: (_) {
-                              return (store.encointer.community?.name != null) & (store.encointer.chosenCid != null)
+                              return (store.encointer.community?.name != null) &
+                                      (store.encointer.chosenCid != null)
                                   ? Column(
                                       children: [
                                         TextGradient(
-                                          text: '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ',
+                                          text:
+                                              '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ',
                                           style: TextStyle(fontSize: 60),
                                         ),
                                         Text(
                                           "${dic!.assets.balance}, ${store.encointer.community?.symbol}",
-                                          style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .headline4!
+                                              .copyWith(color: encointerGrey),
                                         ),
                                       ],
                                     )
                                   : Container(
                                       margin: EdgeInsets.only(top: 16),
-                                      padding: EdgeInsets.symmetric(vertical: 8),
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 8),
                                       child: (store.encointer.chosenCid == null)
                                           ? Container(
                                               width: double.infinity,
-                                              child:
-                                                  Text(dic!.assets.communityNotSelected, textAlign: TextAlign.center))
+                                              child: Text(
+                                                  dic!.assets
+                                                      .communityNotSelected,
+                                                  textAlign: TextAlign.center))
                                           : Container(
                                               width: double.infinity,
-                                              child: CupertinoActivityIndicator(),
+                                              child:
+                                                  CupertinoActivityIndicator(),
                                             ),
                                     );
                             },
@@ -203,7 +221,8 @@ class _AssetsState extends State<Assets> {
                           if (store.settings.developerMode)
                             ElevatedButton(
                               onPressed: store.dataUpdate.setInvalidated,
-                              child: Text("Invalidate data to trigger state update"),
+                              child: Text(
+                                  "Invalidate data to trigger state update"),
                             ),
                           SizedBox(
                             height: 42,
@@ -216,14 +235,16 @@ class _AssetsState extends State<Assets> {
                                   style: ElevatedButton.styleFrom(
                                     shape: RoundedRectangleBorder(
                                       // don't redefine the entire style just the border radii
-                                      borderRadius:
-                                          BorderRadius.horizontal(left: Radius.circular(15), right: Radius.zero),
+                                      borderRadius: BorderRadius.horizontal(
+                                          left: Radius.circular(15),
+                                          right: Radius.zero),
                                     ),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(16.0),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Icon(Iconsax.receive_square_2),
                                         SizedBox(width: 12),
@@ -234,7 +255,8 @@ class _AssetsState extends State<Assets> {
                                   key: Key('qr-receive'),
                                   onPressed: () {
                                     if (accountData.address != '') {
-                                      Navigator.pushNamed(context, ReceivePage.route);
+                                      Navigator.pushNamed(
+                                          context, ReceivePage.route);
                                     }
                                   },
                                 ),
@@ -245,14 +267,16 @@ class _AssetsState extends State<Assets> {
                                   style: ElevatedButton.styleFrom(
                                     shape: RoundedRectangleBorder(
                                       // don't redefine the entire style just the border radii
-                                      borderRadius:
-                                          BorderRadius.horizontal(left: Radius.zero, right: Radius.circular(15)),
+                                      borderRadius: BorderRadius.horizontal(
+                                          left: Radius.zero,
+                                          right: Radius.circular(15)),
                                     ),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(16.0),
                                     child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Text(dic!.assets.transfer),
                                         SizedBox(width: 12),
@@ -261,7 +285,8 @@ class _AssetsState extends State<Assets> {
                                     ),
                                   ),
                                   key: Key('transfer'),
-                                  onPressed: store.encointer.communityBalance != null
+                                  onPressed: store.encointer.communityBalance !=
+                                          null
                                       ? () {
                                           Navigator.pushNamed(
                                             context,
@@ -269,7 +294,8 @@ class _AssetsState extends State<Assets> {
                                             arguments: TransferPageParams(
                                                 redirect: '/',
                                                 cid: store.encointer.chosenCid!,
-                                                communitySymbol: store.encointer.community!.symbol!),
+                                                communitySymbol: store.encointer
+                                                    .community!.symbol!),
                                           );
                                         }
                                       : null,
@@ -284,7 +310,8 @@ class _AssetsState extends State<Assets> {
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 0),
                     ),
                     Observer(builder: (_) {
-                      final Translations dic = I18n.of(context)!.translationsForLocale();
+                      final Translations dic =
+                          I18n.of(context)!.translationsForLocale();
 
                       return store.settings.isConnected
                           ? FutureBuilder<bool?>(
@@ -296,7 +323,8 @@ class _AssetsState extends State<Assets> {
                                   if (hasPendingIssuance) {
                                     return SubmitButton(
                                       child: Text(dic.assets.issuancePending),
-                                      onPressed: (context) => submitClaimRewards(
+                                      onPressed: (context) =>
+                                          submitClaimRewards(
                                         context,
                                         store,
                                         webApi,
@@ -306,7 +334,8 @@ class _AssetsState extends State<Assets> {
                                   } else {
                                     return store.settings.developerMode
                                         ? ElevatedButton(
-                                            child: Text(dic.assets.issuanceClaimed),
+                                            child: Text(
+                                                dic.assets.issuanceClaimed),
                                             onPressed: null,
                                           )
                                         : Container();
@@ -344,7 +373,11 @@ class _AssetsState extends State<Assets> {
                           data: allCommunities,
                           onTap: (int index) {
                             if (index == allCommunities.length - 1) {
-                              Navigator.push(context, MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)))
+                              Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (_) =>
+                                              CommunityChooserOnMap(store)))
                                   .then((_) {
                                 _refreshBalanceAndNotify(dic);
                               });
@@ -364,10 +397,12 @@ class _AssetsState extends State<Assets> {
                         data: allAccounts,
                         onTap: (int index) {
                           if (index == allAccounts.length - 1) {
-                            Navigator.of(context).pushNamed(AddAccountPage.route);
+                            Navigator.of(context)
+                                .pushNamed(AddAccountPage.route);
                           } else {
                             setState(() {
-                              switchAccount(store.account.accountListAll[index]);
+                              switchAccount(
+                                  store.account.accountListAll[index]);
                               _refreshBalanceAndNotify(dic);
                             });
                           }
@@ -378,7 +413,9 @@ class _AssetsState extends State<Assets> {
                 ],
               ),
             ),
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(40.0), topRight: Radius.circular(40.0)),
+            borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(40.0),
+                topRight: Radius.circular(40.0)),
           ),
         ));
   }
@@ -395,11 +432,13 @@ class _AssetsState extends State<Assets> {
       AccountOrCommunityData(
         avatar: CommunityAvatar(
           store: store,
-          avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.community?.assetsCid),
+          avatarIcon: webApi.ipfs
+              .getCommunityIcon(store.encointer.community?.assetsCid),
           avatarSize: avatarSize,
         ),
         name: '${store.encointer.community?.name ?? '...'}',
-        isSelected: true, // TODO #507 this should later be a function applied on each community, cf. initAllAccounts
+        isSelected:
+            true, // TODO #507 this should later be a function applied on each community, cf. initAllAccounts
       ),
     );
     allCommunities.add(
@@ -423,7 +462,8 @@ class _AssetsState extends State<Assets> {
     List<AccountOrCommunityData> allAccounts = [];
     allAccounts.addAll(store.account.accountListAll.map(
       (account) => AccountOrCommunityData(
-        avatar: AddressIcon('', account.pubKey, size: avatarSize, tapToCopy: false),
+        avatar:
+            AddressIcon('', account.pubKey, size: avatarSize, tapToCopy: false),
         name: account.name,
         isSelected: account.pubKey == store.account.currentAccountPubKey,
       ),
@@ -471,7 +511,8 @@ class _AssetsState extends State<Assets> {
           ),
           onWillPop: () {
             // handles back button press
-            return _showPasswordNotEnteredDialog(context).then((value) => value as bool);
+            return _showPasswordNotEnteredDialog(context)
+                .then((value) => value as bool);
           },
         );
       },
@@ -489,12 +530,15 @@ class _AssetsState extends State<Assets> {
           title: Text(I18n.of(context)!.translationsForLocale().home.pinNeeded),
           actions: <Widget>[
             CupertinoButton(
-              child: Text(I18n.of(context)!.translationsForLocale().home.cancel),
+              child:
+                  Text(I18n.of(context)!.translationsForLocale().home.cancel),
               onPressed: () => Navigator.of(context).pop(),
             ),
             CupertinoButton(
-              child: Text(I18n.of(context)!.translationsForLocale().home.closeApp),
-              onPressed: () => SystemChannels.platform.invokeMethod('SystemNavigator.pop'),
+              child:
+                  Text(I18n.of(context)!.translationsForLocale().home.closeApp),
+              onPressed: () =>
+                  SystemChannels.platform.invokeMethod('SystemNavigator.pop'),
             ),
           ],
         );
@@ -503,7 +547,9 @@ class _AssetsState extends State<Assets> {
   }
 
   void _refreshBalanceAndNotify(Translations? dic) {
-    webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
+    webApi.encointer
+        .getAllBalances(widget.store.account.currentAddress)
+        .then((balances) {
       print("[home:refreshBalanceAndNotify] get all balances");
       if (widget.store.encointer.chosenCid == null) {
         print("[home:refreshBalanceAndNotify] no community selected");
@@ -516,21 +562,29 @@ class _AssetsState extends State<Assets> {
           var community = widget.store.encointer.communityStores![cidStr]!;
           double demurrageRate = community.demurrage!;
           double newBalance = community.applyDemurrage(balanceEntry);
-          double oldBalance = community.applyDemurrage(
-                  widget.store.encointer.accountStores![widget.store.account.currentAddress]!.balanceEntries[cidStr]) ??
+          double oldBalance = community.applyDemurrage(widget
+                  .store
+                  .encointer
+                  .accountStores![widget.store.account.currentAddress]!
+                  .balanceEntries[cidStr]) ??
               0;
           double delta = newBalance - oldBalance;
-          print("[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta");
+          print(
+              "[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta");
           if (delta.abs() > demurrageRate) {
-            widget.store.encointer.accountStores![widget.store.account.currentAddress]
+            widget.store.encointer
+                .accountStores![widget.store.account.currentAddress]
                 ?.addBalanceEntry(cid, balances[cid]!);
             if (delta > demurrageRate) {
               var msg = dic!.assets.incomingConfirmed
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
                   .replaceAll('CID_SYMBOL', community.metadata!.symbol)
-                  .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
+                  .replaceAll(
+                      'ACCOUNT_NAME', widget.store.account.currentAccount.name);
               print("[home:balanceWatchdog] $msg");
-              NotificationPlugin.showNotification(45, dic.assets.fundsReceived, msg, cid: cidStr);
+              NotificationPlugin.showNotification(
+                  45, dic.assets.fundsReceived, msg,
+                  cid: cidStr);
             }
           }
           if (cid == widget.store.encointer.chosenCid) {
@@ -541,11 +595,14 @@ class _AssetsState extends State<Assets> {
       if (!activeAccountHasBalance) {
         print(
             "[home:refreshBalanceAndNotify] didn't get any balance for active account. initialize store balance to zero");
-        widget.store.encointer.accountStores![widget.store.account.currentAddress]
-            ?.addBalanceEntry(widget.store.encointer.chosenCid!, BalanceEntry(0, 0));
+        widget
+            .store.encointer.accountStores![widget.store.account.currentAddress]
+            ?.addBalanceEntry(
+                widget.store.encointer.chosenCid!, BalanceEntry(0, 0));
       }
     }).catchError((e) {
-      print('[home:refreshBalanceAndNotify] WARNING: could not update balance: $e');
+      print(
+          '[home:refreshBalanceAndNotify] WARNING: could not update balance: $e');
     });
   }
 }

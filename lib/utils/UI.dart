@@ -1,10 +1,9 @@
 import 'dart:async';
 import 'dart:io';
-
-import 'package:encointer_wallet/common/regInputFormatter.dart';
+// import 'package:encointer_wallet/common/reg_input_formatter.dart't';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/service/udpateJSCodeApi.dart';
+// import 'package:encointer_wallet/service/udpate_js_code_api.dart'rt';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
@@ -12,6 +11,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../common/reg_input_formatter.dart';
+import '../service/udpate_js_code_api.dart';
 
 class UI {
   static void copyAndNotify(BuildContext context, String? text) {
@@ -104,7 +105,9 @@ class UI {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Container(),
-          content: code == null ? Text(dic.home.updateError) : Text(dic.home.success),
+          content: code == null
+              ? Text(dic.home.updateError)
+              : Text(dic.home.success),
           actions: <Widget>[
             CupertinoButton(
               child: Text(dic.home.ok),
@@ -112,7 +115,8 @@ class UI {
                 if (code == null) {
                   exit(0);
                 }
-                UpdateJSCodeApi.setPolkadotJSCode(jsStorage, network, code, version);
+                UpdateJSCodeApi.setPolkadotJSCode(
+                    jsStorage, network, code, version);
                 Navigator.of(context).pop();
               },
             ),
@@ -128,7 +132,8 @@ class UI {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Container(),
-          content: Text(I18n.of(context)!.translationsForLocale().account.backupError),
+          content: Text(
+              I18n.of(context)!.translationsForLocale().account.backupError),
           actions: <Widget>[
             CupertinoButton(
               child: Text(I18n.of(context)!.translationsForLocale().home.ok),
@@ -143,14 +148,18 @@ class UI {
     );
   }
 
-  static bool checkBalanceAndAlert(BuildContext context, AppStore store, BigInt amountNeeded) {
+  static bool checkBalanceAndAlert(
+      BuildContext context, AppStore store, BigInt amountNeeded) {
     String? symbol = store.settings.networkState!.tokenSymbol;
     if (store.assets.balances[symbol]!.transferable <= amountNeeded) {
       showCupertinoDialog(
         context: context,
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
-            title: Text(I18n.of(context)!.translationsForLocale().assets.insufficientBalance),
+            title: Text(I18n.of(context)!
+                .translationsForLocale()
+                .assets
+                .insufficientBalance),
             content: Container(),
             actions: <Widget>[
               CupertinoButton(
@@ -167,7 +176,9 @@ class UI {
     }
   }
 
-  static TextInputFormatter decimalInputFormatter({int decimals = encointer_currencies_decimals}) {
-    return RegExInputFormatter.withRegex('^[0-9]{0,$decimals}(\\.[0-9]{0,$decimals})?\$');
+  static TextInputFormatter decimalInputFormatter(
+      {int decimals = encointer_currencies_decimals}) {
+    return RegExInputFormatter.withRegex(
+        '^[0-9]{0,$decimals}(\\.[0-9]{0,$decimals})?\$');
   }
 }
