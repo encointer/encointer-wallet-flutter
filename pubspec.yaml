@@ -86,6 +86,7 @@ dependencies:
   focus_detector: ^2.0.1
   jdenticon_dart: ^2.0.0
   collection: ^1.15.0-nullsafety.4
+  photo_view: ^0.14.0
 
 dev_dependencies:
   build_runner: ^2.2.0
