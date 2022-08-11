@@ -88,38 +88,39 @@ class _WalletAppState extends State<WalletApp> {
     if (_appStore == null) {
       // Todo: Use provider pattern instead of globals, see: https://github.com/encointer/encointer-wallet-flutter/issues/132
 
-      // context.read<AppStore>().localStorage = widget.config.mockLocalStorage ? MockLocalStorage() : LocalStorage();
-      _appStore = widget.config.mockLocalStorage
-          ? AppStore(MockLocalStorage(), config: widget.config.appStoreConfig)
-          : AppStore(LocalStorage(), config: widget.config.appStoreConfig);
+      context.read<AppStore>().localStorage = widget.config.mockLocalStorage ? MockLocalStorage() : LocalStorage();
+      // _appStore = widget.config.mockLocalStorage
+      //     ? AppStore(MockLocalStorage(), config: widget.config.appStoreConfig)
+      //     : AppStore(LocalStorage(), config: widget.config.appStoreConfig);
 
       // _appStore = context.read<AppStore>();
       _log('Initializing app state');
       _log('sys locale: ${Localizations.localeOf(context)}');
-      await _appStore!.init(Localizations.localeOf(context).toString());
+      await context.read<AppStore>().init(Localizations.localeOf(context).toString());
 
       // init webApi after store initiated
       final jsServiceEncointer =
           await DefaultAssetBundle.of(context).loadString('lib/js_service_encointer/dist/main.js');
 
       webApi = widget.config.mockSubstrateApi
-          ? MockApi(_appStore!, MockJSApi(), MockSubstrateDartApi(), jsServiceEncointer, withUi: true)
-          : Api.create(_appStore!, JSApi(), SubstrateDartApi(), jsServiceEncointer);
+          ? MockApi(context.read<AppStore>(), MockJSApi(), MockSubstrateDartApi(), jsServiceEncointer, withUi: true)
+          : Api.create(context.read<AppStore>(), JSApi(), SubstrateDartApi(), jsServiceEncointer);
 
       await webApi.init().timeout(
             Duration(seconds: 20),
             onTimeout: () => print("webApi.init() has run into a timeout. We might be offline."),
           );
 
-      _appStore!.dataUpdate.setupUpdateReaction(() async {
-        await _appStore!.encointer.updateState();
+      context.read<AppStore>().dataUpdate.setupUpdateReaction(() async {
+        await context.read<AppStore>().encointer.updateState();
       });
 
-      _changeLang(context, _appStore!.settings.localeCode);
+      _changeLang(context, context.read<AppStore>().settings.localeCode);
 
-      _appStore!.setApiReady(true);
+      context.read<AppStore>().setApiReady(true);
     }
-    return _appStore!.account.accountListAll.length;
+    _appStore = context.read<AppStore>();
+    return context.read<AppStore>().account.accountListAll.length;
   }
 
   @protected

@@ -49,13 +49,13 @@ Future<void> main() async {
 
   HttpOverrides.global = MyHttpOverrides();
 
-  // runApp(
-  //   Provider(
-  //     create: (context) => AppStore(util.LocalStorage()),
-  //     child: WalletApp(Config()),
-  //   ),
-  // );
   runApp(
-    WalletApp(Config()),
+    Provider(
+      create: (context) => AppStore(util.LocalStorage()),
+      child: WalletApp(Config()),
+    ),
   );
+  // runApp(
+  //   WalletApp(Config()),
+  // );
 }
