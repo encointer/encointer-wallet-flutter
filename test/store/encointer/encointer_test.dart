@@ -10,6 +10,8 @@ import 'package:encointer_wallet/store/encointer/sub_stores/bazaar_store/bazaarS
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/communityStore.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+AppStore globalAppStore = AppStore(MockLocalStorage());
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 

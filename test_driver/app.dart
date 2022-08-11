@@ -3,8 +3,11 @@ import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/mocks/storage/mockStorageSetup.dart';
 import 'package:encointer_wallet/mocks/storage/prepareMockStorage.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/localStorage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
+
+final globalAppStore = AppStore(LocalStorage());
 
 void main() {
   // the tests are run in a separate isolate from the app. The test isolate can only interact with

@@ -3,6 +3,7 @@ import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AddressFormItem extends StatelessWidget {
   AddressFormItem(this.account, {this.label, this.onTap});
@@ -14,6 +15,7 @@ class AddressFormItem extends StatelessWidget {
   Widget build(BuildContext context) {
     Color grey = Theme.of(context).unselectedWidgetColor;
 
+    // String address = Fmt.addressOfAccount(account, globalAppStore);
     String address = Fmt.addressOfAccount(account, globalAppStore);
 
     Column content = Column(
@@ -21,16 +23,16 @@ class AddressFormItem extends StatelessWidget {
       children: <Widget>[
         label != null
             ? Container(
-                margin: EdgeInsets.only(top: 4),
+                margin: const EdgeInsets.only(top: 4),
                 child: Text(
                   label!,
                   style: TextStyle(color: grey),
                 ),
               )
-            : Container(),
+            : const SizedBox(),
         Container(
-          margin: EdgeInsets.only(top: 4, bottom: 4),
-          padding: EdgeInsets.all(8),
+          margin: const EdgeInsets.only(top: 4, bottom: 4),
+          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.all(Radius.circular(8)),
             border: Border.all(color: Theme.of(context).disabledColor, width: 0.5),
@@ -38,7 +40,7 @@ class AddressFormItem extends StatelessWidget {
           child: Row(
             children: <Widget>[
               Container(
-                margin: EdgeInsets.only(right: 8),
+                margin: const EdgeInsets.only(right: 8),
                 child: AddressIcon(
                   address,
                   account.pubKey,
@@ -59,7 +61,7 @@ class AddressFormItem extends StatelessWidget {
                 ),
               ),
               onTap == null
-                  ? Container()
+                  ? const SizedBox()
                   : Icon(
                       Icons.arrow_forward_ios,
                       size: 18,
