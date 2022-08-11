@@ -209,11 +209,12 @@ class _WalletAppState extends State<WalletApp> {
                   settings: settings,
                   fullscreenDialog: true,
                 );
-              case AddAccountPage.route:
-                return CupertinoPageRoute(
-                    builder: (_) => AddAccountPage(context.read<AppStore>()),
-                    settings: settings,
-                    fullscreenDialog: true);
+             case AddAccountPage.route:
+              return CupertinoPageRoute(
+                builder: (_) => const AddAccountPage(),
+                settings: settings,
+                fullscreenDialog: true,
+              );
               case AccountSharePage.route:
                 return CupertinoPageRoute(
                     builder: (_) => AccountSharePage(context.read<AppStore>()),

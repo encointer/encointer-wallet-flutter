@@ -14,14 +14,15 @@ class AddAccountForm extends StatelessWidget {
     required this.store,
     this.submitting,
     required this.onSubmit,
-  });
+    Key? key,
+  }) : super(key: key);
   final Function onSubmit;
   final bool? submitting;
   final AppStore store;
 
   static final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _nameCtrl = new TextEditingController();
+  final TextEditingController _nameCtrl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -35,15 +36,15 @@ class AddAccountForm extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: ListView(
-                children: <Widget>[
-                  SizedBox(height: 80),
+                children: [
+                  const SizedBox(height: 80),
                   Text(
                     I18n.of(context)!.translationsForLocale().profile.accountNameChoose,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headline2,
                   ),
-                  SizedBox(height: 10),
-                  Container(
+                  const SizedBox(height: 10),
+                  SizedBox(
                     width: 300,
                     child: Text(
                       I18n.of(context)!.translationsForLocale().profile.accountNameChooseHint,
@@ -51,7 +52,7 @@ class AddAccountForm extends StatelessWidget {
                       style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black),
                     ),
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   EncointerTextFormField(
                     key: Key('create-account-name'),
                     hintText: dic.account.createHint,
@@ -63,26 +64,29 @@ class AddAccountForm extends StatelessWidget {
               ),
             ),
             ElevatedButton(
-                style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
-                key: Key('import-account'),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Iconsax.import_2),
-                    SizedBox(width: 10),
-                    Text(I18n.of(context)!.translationsForLocale().home.accountImport,
-                        style: Theme.of(context).textTheme.headline3),
-                  ],
-                ),
-                onPressed: () => Navigator.pushNamed(context, ImportAccountPage.route)),
-            SizedBox(height: 10),
+              style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
+              key: Key('import-account'),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Iconsax.import_2),
+                  const SizedBox(width: 10),
+                  Text(
+                    I18n.of(context)!.translationsForLocale().home.accountImport,
+                    style: Theme.of(context).textTheme.headline3,
+                  ),
+                ],
+              ),
+              onPressed: () => Navigator.pushNamed(context, ImportAccountPage.route),
+            ),
+            const SizedBox(height: 10),
             PrimaryButton(
               key: Key('create-account-confirm'),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Iconsax.add_square),
-                  SizedBox(width: 12),
+                  const Icon(Iconsax.add_square),
+                  const SizedBox(width: 12),
                   Text(
                     I18n.of(context)!.translationsForLocale().profile.accountCreate,
                     style: Theme.of(context).textTheme.headline3!.copyWith(color: ZurichLion.shade50),
