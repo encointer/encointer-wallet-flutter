@@ -8,6 +8,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class CreateAccountEntryPage extends StatelessWidget {
+  const CreateAccountEntryPage({Key? key}) : super(key: key);
+
   static const String route = '/account/entry';
 
   @override
@@ -37,39 +39,38 @@ class CreateAccountEntryPage extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.end,
-                children: <Widget>[
+                children: [
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
+                      style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16)),
                       key: Key('create-account'),
-                      child: Text(I18n.of(context)!.translationsForLocale().home.create,
-                          style: Theme.of(context).textTheme.headline3),
-                      onPressed: () {
-                        Navigator.pushNamed(context, CreateAccountPage.route);
-                      },
+                      child: Text(
+                        I18n.of(context)!.translationsForLocale().home.create,
+                        style: Theme.of(context).textTheme.headline3,
+                      ),
+                      onPressed: () => Navigator.pushNamed(context, CreateAccountPage.route),
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         '${dic.profile.doYouAlreadyHaveAnAccount} ',
-                        style: TextStyle(
-                          color: ZurichLion.shade50,
-                        ),
+                        style: TextStyle(color: ZurichLion.shade50),
                       ),
                       GestureDetector(
-                          key: Key('import-account'),
-                          child: Text(
-                            I18n.of(context)!.translationsForLocale().profile.import,
-                            style: TextStyle(
-                              color: ZurichLion.shade50,
-                              decoration: TextDecoration.underline,
-                            ),
+                        key: Key('import-account'),
+                        child: Text(
+                          I18n.of(context)!.translationsForLocale().profile.import,
+                          style: TextStyle(
+                            color: ZurichLion.shade50,
+                            decoration: TextDecoration.underline,
                           ),
-                          onTap: () => Navigator.pushNamed(context, ImportAccountPage.route)),
+                        ),
+                        onTap: () => Navigator.pushNamed(context, ImportAccountPage.route),
+                      ),
                     ],
                   ),
                 ],

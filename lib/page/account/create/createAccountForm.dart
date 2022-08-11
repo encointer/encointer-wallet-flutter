@@ -15,58 +15,31 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 class CreateAccountForm extends StatelessWidget {
-  CreateAccountForm({
-    required this.store,
-  });
-
+  CreateAccountForm(this.store, {Key? key}) : super(key: key);
   final AppStore store;
 
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _nameCtrl = new TextEditingController();
+  final _nameCtrl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
 
-    Future<void> _createAndImportAccount() async {
-      await webApi.account.generateAccount();
-
-      var acc = await webApi.account.importAccount(
-        cryptoType: AccountAdvanceOptionParams.encryptTypeSR,
-        derivePath: '',
-      );
-
-      if (acc['error'] != null) {
-        _showErrorCreatingAccountDialog(context);
-        return;
-      }
-
-      var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
-      await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
-
-      String? pubKey = acc['pubKey'];
-      store.setCurrentAccount(pubKey);
-
-      await store.loadAccountCache();
-
-      // fetch info for the imported account
-      webApi.fetchAccountData();
-      webApi.account.getPubKeyIcons([pubKey]);
-    }
-
     return Form(
       key: _formKey,
       child: Column(
         children: <Widget>[
-          SizedBox(height: 80),
+          const SizedBox(height: 80),
           Expanded(
             child: ListView(
               padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
               children: <Widget>[
                 Center(
-                  child: Text(I18n.of(context)!.translationsForLocale().profile.accountNameChoose,
-                      style: Theme.of(context).textTheme.headline2),
+                  child: Text(
+                    I18n.of(context)!.translationsForLocale().profile.accountNameChoose,
+                    style: Theme.of(context).textTheme.headline2,
+                  ),
                 ),
                 SizedBox(height: 10),
                 Center(
@@ -75,9 +48,7 @@ class CreateAccountForm extends StatelessWidget {
                     child: Text(
                       I18n.of(context)!.translationsForLocale().profile.accountNameChooseHint,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.headline2!.copyWith(
-                            color: encointerBlack,
-                          ),
+                      style: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
                     ),
                   ),
                 ),
@@ -87,7 +58,11 @@ class CreateAccountForm extends StatelessWidget {
                   hintText: dic.account.createHint,
                   labelText: I18n.of(context)!.translationsForLocale().profile.accountName,
                   controller: _nameCtrl,
-                  validator: (v) => InputValidation.validateAccountName(context, v, store.account.optionalAccounts),
+                  validator: (v) => InputValidation.validateAccountName(
+                    context,
+                    v,
+                    store.account.optionalAccounts,
+                  ),
                 ),
               ],
             ),
@@ -115,7 +90,7 @@ class CreateAccountForm extends StatelessWidget {
                   Navigator.pushNamed(
                     context,
                     CreatePinPage.route,
-                    arguments: CreatePinPageParams(_createAndImportAccount),
+                    arguments: CreatePinPageParams(() => _createAndImportAccount(context)),
                   );
                 }
               },
@@ -125,24 +100,50 @@ class CreateAccountForm extends StatelessWidget {
       ),
     );
   }
-}
 
-Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
-  showCupertinoDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return CupertinoAlertDialog(
-        title: Container(),
-        content: Text(I18n.of(context)!.translationsForLocale().account.createError),
-        actions: <Widget>[
-          CupertinoButton(
-            child: Text(I18n.of(context)!.translationsForLocale().home.ok),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      );
-    },
-  );
+  Future<void> _createAndImportAccount(BuildContext context) async {
+    await webApi.account.generateAccount();
+
+    var acc = await webApi.account.importAccount(
+      cryptoType: AccountAdvanceOptionParams.encryptTypeSR,
+      derivePath: '',
+    );
+
+    if (acc['error'] != null) {
+      _showErrorCreatingAccountDialog(context);
+      return;
+    }
+
+    var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
+    await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
+
+    String? pubKey = acc['pubKey'];
+    store.setCurrentAccount(pubKey);
+
+    await store.loadAccountCache();
+
+    // fetch info for the imported account
+    webApi.fetchAccountData();
+    webApi.account.getPubKeyIcons([pubKey]);
+  }
+
+  Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
+    showCupertinoDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return CupertinoAlertDialog(
+          title: const SizedBox(),
+          content: Text(I18n.of(context)!.translationsForLocale().account.createError),
+          actions: <Widget>[
+            CupertinoButton(
+              child: Text(I18n.of(context)!.translationsForLocale().home.ok),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

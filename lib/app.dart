@@ -199,12 +199,16 @@ class _WalletAppState extends State<WalletApp> {
                     builder: (_) => NetworkSelectPage(context.read<AppStore>(), _changeTheme), settings: settings);
               case CreateAccountEntryPage.route:
                 return CupertinoPageRoute(
-                    builder: (_) => CreateAccountEntryPage(), settings: settings, fullscreenDialog: true);
+                  builder: (_) => const CreateAccountEntryPage(),
+                  settings: settings,
+                  fullscreenDialog: true,
+                );
               case CreateAccountPage.route:
                 return CupertinoPageRoute(
-                    builder: (_) => CreateAccountPage(context.read<AppStore>()),
-                    settings: settings,
-                    fullscreenDialog: true);
+                  builder: (_) => const CreateAccountPage(),
+                  settings: settings,
+                  fullscreenDialog: true,
+                );
               case AddAccountPage.route:
                 return CupertinoPageRoute(
                     builder: (_) => AddAccountPage(context.read<AppStore>()),

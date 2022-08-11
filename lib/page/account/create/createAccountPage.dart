@@ -3,24 +3,21 @@ import 'package:encointer_wallet/page/account/create/createAccountForm.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CreateAccountPage extends StatefulWidget {
-  const CreateAccountPage(this.store);
+  const CreateAccountPage({Key? key}) : super(key: key);
 
   static const String route = '/account/createAccount';
-  final AppStore store;
 
   @override
-  _CreateAccountPageState createState() => _CreateAccountPageState(store);
+  _CreateAccountPageState createState() => _CreateAccountPageState();
 }
 
 class _CreateAccountPageState extends State<CreateAccountPage> {
-  _CreateAccountPageState(this.store);
-
-  final AppStore store;
-
   @override
   Widget build(BuildContext context) {
+    final store = context.read<AppStore>();
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -29,7 +26,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
         leading: Container(),
         actions: <Widget>[
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.close,
               color: encointerGrey,
             ),
@@ -40,9 +37,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
         ],
       ),
       body: SafeArea(
-        child: CreateAccountForm(
-          store: store,
-        ),
+        child: CreateAccountForm(store),
       ),
     );
   }
