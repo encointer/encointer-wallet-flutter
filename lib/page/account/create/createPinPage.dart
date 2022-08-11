@@ -5,56 +5,39 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CreatePinPageParams {
-  CreatePinPageParams(this.onCreatePin);
+  const CreatePinPageParams(this.onCreatePin);
 
-  final Future<void> Function() onCreatePin;
+  final VoidCallback onCreatePin;
 }
 
 class CreatePinPage extends StatefulWidget {
-  const CreatePinPage(this.store);
+  const CreatePinPage();
 
   static const String route = '/account/createPin';
-  final AppStore store;
 
   @override
-  _CreatePinPageState createState() => _CreatePinPageState(store);
+  _CreatePinPageState createState() => _CreatePinPageState();
 }
 
 class _CreatePinPageState extends State<CreatePinPage> {
-  _CreatePinPageState(this.store);
-
-  final AppStore store;
-
-  late Future<void> Function() onCreatePin;
-
   bool _submitting = false;
 
   @override
   Widget build(BuildContext context) {
-    CreatePinPageParams params = ModalRoute.of(context)!.settings.arguments as CreatePinPageParams;
-
-    onCreatePin = params.onCreatePin;
+    final params = ModalRoute.of(context)!.settings.arguments as CreatePinPageParams;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          I18n.of(context)!.translationsForLocale().home.create,
-        ),
-        iconTheme: IconThemeData(
-          color: encointerGrey, //change your color here
-        ),
-        actions: <Widget>[
+        title: Text(I18n.of(context)!.translationsForLocale().home.create),
+        iconTheme: const IconThemeData(color: encointerGrey), //change your color here
+        actions: [
           IconButton(
-            icon: Icon(
-              Icons.close,
-              color: encointerGrey,
-            ),
-            onPressed: () {
-              Navigator.popUntil(context, ModalRoute.withName('/'));
-            },
-          )
+            icon: const Icon(Icons.close, color: encointerGrey),
+            onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
+          ),
         ],
       ),
       body: SafeArea(
@@ -65,14 +48,16 @@ class _CreatePinPageState extends State<CreatePinPage> {
                     _submitting = true;
                   });
 
-                  await onCreatePin();
+                  params.onCreatePin();
 
-                  if (store.encointer.communityIdentifiers.length == 1) {
-                    store.encointer.setChosenCid(store.encointer.communityIdentifiers[0]);
+                  if (context.read<AppStore>().encointer.communityIdentifiers.length == 1) {
+                    context.read<AppStore>().encointer.setChosenCid(
+                          context.read<AppStore>().encointer.communityIdentifiers[0],
+                        );
                   } else {
                     await Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)),
+                      MaterialPageRoute(builder: (_) => CommunityChooserOnMap(context.read<AppStore>())),
                     );
                   }
 
@@ -83,9 +68,9 @@ class _CreatePinPageState extends State<CreatePinPage> {
                   // Even if we do not choose a community, we go back to the home screen.
                   Navigator.popUntil(context, ModalRoute.withName('/'));
                 },
-                store: store,
+                store: context.read<AppStore>(),
               )
-            : Center(child: CupertinoActivityIndicator()),
+            : const Center(child: CupertinoActivityIndicator()),
       ),
     );
   }
