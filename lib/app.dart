@@ -196,7 +196,9 @@ class _WalletAppState extends State<WalletApp> {
                 );
               case NetworkSelectPage.route:
                 return CupertinoPageRoute(
-                    builder: (_) => NetworkSelectPage(context.read<AppStore>(), _changeTheme), settings: settings);
+                  builder: (_) => NetworkSelectPage(context.read<AppStore>(), _changeTheme),
+                  settings: settings,
+                );
               case CreateAccountEntryPage.route:
                 return CupertinoPageRoute(
                   builder: (_) => const CreateAccountEntryPage(),
@@ -209,17 +211,18 @@ class _WalletAppState extends State<WalletApp> {
                   settings: settings,
                   fullscreenDialog: true,
                 );
-             case AddAccountPage.route:
-              return CupertinoPageRoute(
-                builder: (_) => const AddAccountPage(),
-                settings: settings,
-                fullscreenDialog: true,
-              );
+              case AddAccountPage.route:
+                return CupertinoPageRoute(
+                  builder: (_) => const AddAccountPage(),
+                  settings: settings,
+                  fullscreenDialog: true,
+                );
               case AccountSharePage.route:
                 return CupertinoPageRoute(
-                    builder: (_) => AccountSharePage(context.read<AppStore>()),
-                    settings: settings,
-                    fullscreenDialog: true);
+                  builder: (_) => const AccountSharePage(),
+                  settings: settings,
+                  fullscreenDialog: true,
+                );
               case CreatePinPage.route:
                 return CupertinoPageRoute(builder: (_) => CreatePinPage(_appStore!), settings: settings);
               case ImportAccountPage.route:
