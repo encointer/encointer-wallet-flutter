@@ -336,7 +336,10 @@ class _WalletAppState extends State<WalletApp> {
                 ),
               );
             case AboutPage.route:
-              return CupertinoPageRoute(builder: (_) => AboutPage(), settings: settings);
+              return CupertinoPageRoute(
+                builder: (_) => const AboutPage(),
+                settings: settings,
+              );
             case BazaarMain.route:
               return CupertinoPageRoute(builder: (_) => BazaarMain(context.read<AppStore>()), settings: settings);
             default:
