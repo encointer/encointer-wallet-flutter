@@ -3,10 +3,11 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_da
 import 'package:flutter/material.dart';
 
 class Favorites extends StatelessWidget {
-  final data = favorites;
+  const Favorites({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final data = favorites;
     return ListView.builder(
       itemCount: data.length,
       itemBuilder: (context, index) => BazaarItemVertical(

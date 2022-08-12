@@ -5,7 +5,13 @@ import 'package:flutter/material.dart';
 import 'data_model/model/bazaarItemData.dart';
 
 class HorizontalBazaarItemList extends StatelessWidget {
-  HorizontalBazaarItemList(this.data, this.rowTitle, this.cardHeight, this.cardWidth);
+  const HorizontalBazaarItemList(
+    this.data,
+    this.rowTitle,
+    this.cardHeight,
+    this.cardWidth, {
+    Key? key,
+  }) : super(key: key);
 
   final List<BazaarItemData> data;
   final double cardHeight;
@@ -46,10 +52,7 @@ class BazaarItemHorizontal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: data[index].cardColor,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(
-        Radius.circular(15),
-      )),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(15))),
       child: InkWell(
         onTap: () {
           Navigator.push(
@@ -61,26 +64,28 @@ class BazaarItemHorizontal extends StatelessWidget {
             ),
           );
         },
-        child: Column(children: [
-          AspectRatio(
-            aspectRatio: 1.6,
-            child: _ImageWithOverlaidIcon(data: data, index: index),
-          ),
-          Text(
-            "${data[index].title}",
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontSize: 30),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8, right: 8),
-            child: Text(
-              "${data[index].description}",
-              maxLines: 3,
-              overflow: TextOverflow.ellipsis,
+        child: Column(
+          children: [
+            AspectRatio(
+              aspectRatio: 1.6,
+              child: _ImageWithOverlaidIcon(data: data, index: index),
             ),
-          ),
-        ]),
+            Text(
+              "${data[index].title}",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(fontSize: 30),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 8, right: 8),
+              child: Text(
+                "${data[index].description}",
+                maxLines: 3,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

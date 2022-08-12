@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
 class BazaarSearch extends StatelessWidget {
+  const BazaarSearch({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;

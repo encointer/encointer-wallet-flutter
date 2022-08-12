@@ -341,7 +341,10 @@ class _WalletAppState extends State<WalletApp> {
                 settings: settings,
               );
             case BazaarMain.route:
-              return CupertinoPageRoute(builder: (_) => BazaarMain(context.read<AppStore>()), settings: settings);
+              return CupertinoPageRoute(
+                builder: (_) => const BazaarMain(),
+                settings: settings,
+              );
             default:
               throw Exception('no builder specified for route named: [${settings.name}]');
           }

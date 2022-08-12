@@ -8,7 +8,8 @@ import 'searchResultsBusiness.dart';
 import 'searchResultsOffering.dart';
 
 class SearchResults extends StatelessWidget {
-  // TODO implement state management with logic that takes the first of each list of search results
+  SearchResults({Key? key}) : super(key: key);
+
   final businessResults = searchResultsInBusinesses;
   final offeringsResults = searchResultsInOfferings;
 
@@ -22,7 +23,7 @@ class SearchResults extends StatelessWidget {
         ResultSummaryListTile(offeringsResults, I18n.of(context)!.translationsForLocale().bazaar.offeringsResults),
         Text(
           I18n.of(context)!.translationsForLocale().bazaar.topResults,
-          style: TextStyle(fontWeight: FontWeight.bold, height: 2.5),
+          style: const TextStyle(fontWeight: FontWeight.bold, height: 2.5),
         ),
         Column(
           mainAxisSize: MainAxisSize.min,

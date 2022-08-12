@@ -6,10 +6,11 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 
 class Businesses extends StatelessWidget {
-  final data = allBusinesses;
+  const Businesses({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final data = allBusinesses;
     return Column(children: [
       ToggleButtonsWithTitle(I18n.of(context)!.translationsForLocale().bazaar.categories, allCategories, null),
       Expanded(
@@ -24,17 +25,13 @@ class Businesses extends StatelessWidget {
       ),
       ElevatedButton(
         onPressed: () {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => BusinessesOnMap(),
-              ));
+          Navigator.push(context, MaterialPageRoute(builder: (context) => BusinessesOnMap()));
         },
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            new Icon(Icons.map),
-            new Text(I18n.of(context)!.translationsForLocale().bazaar.map),
+            const Icon(Icons.map),
+            Text(I18n.of(context)!.translationsForLocale().bazaar.map),
           ],
         ),
       )

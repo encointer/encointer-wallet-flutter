@@ -114,7 +114,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         controller: _pageController,
         children: [
           Assets(store),
-          if (store.settings.enableBazaar) BazaarMain(store), // dart collection if
+          if (store.settings.enableBazaar) const BazaarMain(), // dart collection if
           const ScanPage(),
           const ContactsPage(),
           Profile(store),
