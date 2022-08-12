@@ -187,7 +187,7 @@ class _WalletAppState extends State<WalletApp> {
                           if (snapshot.hasData && _appStore!.appIsReady) {
                             return snapshot.data! > 0 ? EncointerHomePage(_appStore!) : const CreateAccountEntryPage();
                           } else {
-                            return CupertinoActivityIndicator();
+                            return const CupertinoActivityIndicator();
                           }
                         },
                       ),
@@ -300,7 +300,12 @@ class _WalletAppState extends State<WalletApp> {
                 );
               case SettingsPage.route:
                 return CupertinoPageRoute(
-                    builder: (_) => SettingsPage(_appStore!.settings, _changeLang), settings: settings);
+                  settings: settings,
+                  builder: (_) => Provider(
+                    create: (context) => context.read<AppStore>().settings,
+                    child: const SettingsPage(),
+                  ),
+                );
               case ExportAccountPage.route:
                 return CupertinoPageRoute(
                     builder: (_) => ExportAccountPage(context.read<AppStore>().account), settings: settings);
