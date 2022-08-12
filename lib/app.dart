@@ -329,7 +329,12 @@ class _WalletAppState extends State<WalletApp> {
               );
             case SS58PrefixListPage.route:
               return CupertinoPageRoute(
-                  builder: (_) => SS58PrefixListPage(context.read<AppStore>().settings), settings: settings);
+                settings: settings,
+                builder: (_) => Provider(
+                  create: (context) => context.watch<AppStore>().settings,
+                  child: const SS58PrefixListPage(),
+                ),
+              );
             case AboutPage.route:
               return CupertinoPageRoute(builder: (_) => AboutPage(), settings: settings);
             case BazaarMain.route:
