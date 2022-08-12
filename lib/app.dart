@@ -244,6 +244,11 @@ class _WalletAppState extends State<WalletApp> {
                   settings: settings,
                   fullscreenDialog: true,
                 );
+              case PaymentConfirmationPage.route:
+                return CupertinoPageRoute(
+                  builder: (_) => const PaymentConfirmationPage(),
+                  settings: settings,
+                );
               case ReapVoucherPage.route:
                 return CupertinoPageRoute(
                     builder: (_) => ReapVoucherPage(context.read<AppStore>(), webApi),
