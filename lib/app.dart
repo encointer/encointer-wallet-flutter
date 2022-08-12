@@ -274,7 +274,10 @@ class _WalletAppState extends State<WalletApp> {
                   fullscreenDialog: true,
                 );
               case ContactsPage.route:
-                return CupertinoPageRoute(builder: (_) => ContactsPage(context.read<AppStore>()), settings: settings);
+                return CupertinoPageRoute(
+                  builder: (_) => const ContactsPage(),
+                  settings: settings,
+                );
               case ContactListPage.route:
                 return CupertinoPageRoute(
                     builder: (_) => ContactListPage(context.read<AppStore>()), settings: settings);
