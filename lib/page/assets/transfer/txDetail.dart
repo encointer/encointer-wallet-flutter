@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class TxDetail extends StatelessWidget {
-  TxDetail({
+  const TxDetail({
     this.success,
     this.networkName,
     this.action,
@@ -16,7 +16,8 @@ class TxDetail extends StatelessWidget {
     this.blockTime,
     this.blockNum,
     this.info,
-  });
+    Key? key,
+  }) : super(key: key);
 
   final bool? success;
   final String? networkName;
@@ -31,21 +32,21 @@ class TxDetail extends StatelessWidget {
     final Translations dic = I18n.of(context)!.translationsForLocale();
     Widget buildLabel(String name) {
       return Container(
-          padding: EdgeInsets.only(left: 8),
-          width: 80,
-          child: Text(name,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).unselectedWidgetColor,
-              )));
+        padding: const EdgeInsets.only(left: 8),
+        width: 80,
+        child: Text(
+          name,
+          style: TextStyle(fontWeight: FontWeight.bold, color: Theme.of(context).unselectedWidgetColor),
+        ),
+      );
     }
 
-    var list = <Widget>[
+    final list = <Widget>[
       Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.all(24),
+            padding: const EdgeInsets.all(24),
             child: success!
                 ? Image.asset('assets/images/assets/success.png')
                 : Image.asset('assets/images/staking/error.png'),
@@ -55,12 +56,12 @@ class TxDetail extends StatelessWidget {
             style: Theme.of(context).textTheme.headline4,
           ),
           Padding(
-            padding: EdgeInsets.only(top: 8, bottom: 32),
+            padding: const EdgeInsets.only(top: 8, bottom: 32),
             child: Text(blockTime!),
           ),
         ],
       ),
-      Divider(),
+      const Divider(),
     ];
     info!.forEach((i) {
       list.add(ListTile(
@@ -96,7 +97,7 @@ class TxDetail extends StatelessWidget {
       ListTile(
         leading: buildLabel(dic.assets.hash),
         title: Text(Fmt.address(hash)!),
-        trailing: Container(
+        trailing: SizedBox(
           width: 140,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -110,7 +111,7 @@ class TxDetail extends StatelessWidget {
                       snLink,
                       text: 'Subscan',
                     )
-                  : Container(),
+                  : const SizedBox(),
             ],
           ),
         ),
@@ -128,7 +129,7 @@ class TxDetail extends StatelessWidget {
       ),
       body: SafeArea(
         child: ListView(
-          padding: EdgeInsets.only(bottom: 32),
+          padding: const EdgeInsets.only(bottom: 32),
           children: _buildListView(context),
         ),
       ),
@@ -137,7 +138,7 @@ class TxDetail extends StatelessWidget {
 }
 
 class DetailInfoItem {
-  DetailInfoItem({this.label, this.title, this.subtitle, this.address});
+  const DetailInfoItem({this.label, this.title, this.subtitle, this.address});
   final String? label;
   final String? title;
   final String? subtitle;

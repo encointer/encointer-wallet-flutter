@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:encointer_wallet/common/components/AddressInputField.dart';
 import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
@@ -13,14 +15,14 @@ import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/utils/UI.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 
 class TransferPageParams {
-  TransferPageParams({
+  const TransferPageParams({
     this.cid,
     this.communitySymbol,
     this.recipient,
@@ -38,20 +40,15 @@ class TransferPageParams {
 }
 
 class TransferPage extends StatefulWidget {
-  const TransferPage(this.store);
+  const TransferPage();
 
   static const String route = '/assets/transfer';
-  final AppStore store;
 
   @override
-  _TransferPageState createState() => _TransferPageState(store);
+  _TransferPageState createState() => _TransferPageState();
 }
 
 class _TransferPageState extends State<TransferPage> {
-  _TransferPageState(this.store);
-
-  final AppStore store;
-
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _amountCtrl = new TextEditingController();
@@ -59,18 +56,52 @@ class _TransferPageState extends State<TransferPage> {
   AccountData? _accountTo;
 
   @override
+  void initState() {
+    super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final TransferPageParams args = ModalRoute.of(context)!.settings.arguments as TransferPageParams;
+      if (args.amount != null) {
+        _amountCtrl.text = '${args.amount}';
+      }
+
+      if (args.recipient != null) {
+        final AccountData acc = AccountData();
+        acc.address = args.recipient!;
+        acc.name = args.label!;
+        setState(() {
+          _accountTo = acc;
+        });
+      } else {
+        if (context.read<AppStore>().account.optionalAccounts.length > 0) {
+          setState(() {
+            _accountTo = context.read<AppStore>().account.optionalAccounts[0];
+          });
+        } else if (context.read<AppStore>().settings.contactList.length > 0) {
+          setState(() {
+            _accountTo = context.read<AppStore>().settings.contactList[0];
+          });
+        }
+      }
+
+      webApi.fetchAccountData();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
-    TransferPageParams params = ModalRoute.of(context)!.settings.arguments as TransferPageParams;
+    final dic = I18n.of(context)!.translationsForLocale();
+    final params = ModalRoute.of(context)!.settings.arguments as TransferPageParams;
+    final store = context.read<AppStore>();
 
     var communitySymbol = params.communitySymbol ?? store.encointer.community!.symbol!;
     var cid = params.cid ?? store.encointer.chosenCid!;
 
-    int decimals = encointer_currencies_decimals;
+    final decimals = encointer_currencies_decimals;
 
-    double? available = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry);
+    final available = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry);
 
-    print("[transferPage]: available: $available");
+    log("[transferPage]: available: $available");
 
     return Observer(
       builder: (_) {
@@ -79,14 +110,12 @@ class _TransferPageState extends State<TransferPage> {
           child: Scaffold(
             appBar: AppBar(
               title: Text(dic.assets.transfer),
-              leading: Container(),
+              leading: const SizedBox(),
               actions: [
                 IconButton(
                   key: Key('close-transfer-page'),
-                  icon: Icon(Icons.close),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+                  icon: const Icon(Icons.close),
+                  onPressed: () => Navigator.pop(context),
                 )
               ],
             ),
@@ -98,29 +127,28 @@ class _TransferPageState extends State<TransferPage> {
                     child: ListView(
                       children: [
                         CombinedCommunityAndAccountAvatar(store, showCommunityNameAndAccountName: false),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         store.encointer.communityBalance != null
                             ? AccountBalanceWithMoreDigits(store: store, available: available, decimals: decimals)
-                            : CupertinoActivityIndicator(),
+                            : const CupertinoActivityIndicator(),
                         Text(
-                          I18n.of(context)!
-                              .translationsForLocale()
-                              .assets
-                              .yourBalanceFor
-                              .replaceAll("ACCOUNT_NAME", Fmt.accountName(context, store.account.currentAccount)),
+                          I18n.of(context)!.translationsForLocale().assets.yourBalanceFor.replaceAll(
+                                "ACCOUNT_NAME",
+                                Fmt.accountName(context, store.account.currentAccount),
+                              ),
                           style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                           textAlign: TextAlign.center,
                         ),
-                        SizedBox(height: 24),
+                        const SizedBox(height: 24),
                         IconButton(
                           iconSize: 48,
-                          icon: Icon(Iconsax.scan_barcode),
+                          icon: const Icon(Iconsax.scan_barcode),
                           onPressed: () => Navigator.of(context).popAndPushNamed(
                             ScanPage.route,
                             arguments: ScanPageParams(scannerContext: QrScannerContext.transferPage),
                           ), // same as for clicking the scan button in the bottom bar
                         ),
-                        SizedBox(height: 24),
+                        const SizedBox(height: 24),
                         EncointerTextFormField(
                           labelText: dic.assets.amountToBeTransferred,
                           textStyle: Theme.of(context).textTheme.headline1!.copyWith(color: encointerBlack),
@@ -139,12 +167,12 @@ class _TransferPageState extends State<TransferPage> {
                           },
                           suffixIcon: Text("ⵐ", style: TextStyle(color: encointerGrey, fontSize: 44)),
                         ),
-                        SizedBox(height: 24),
+                        const SizedBox(height: 24),
                         Row(
                           children: [
                             Expanded(
                               child: AddressInputField(
-                                widget.store,
+                                store,
                                 label: dic.assets.address,
                                 initialValue: _accountTo,
                                 onChanged: (AccountData acc) {
@@ -160,7 +188,7 @@ class _TransferPageState extends State<TransferPage> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 48),
+                  const SizedBox(height: 48),
                   store.settings.developerMode
                       ? Center(
                           child: Text(
@@ -168,17 +196,17 @@ class _TransferPageState extends State<TransferPage> {
                             style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                           ),
                         )
-                      : Container(),
-                  SizedBox(height: 8),
+                      : const SizedBox(),
+                  const SizedBox(height: 8),
                   PrimaryButton(
                     key: Key('make-transfer'),
-                    child: Container(
+                    child: SizedBox(
                       height: 24,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Iconsax.login_1),
-                          SizedBox(width: 12),
+                          const Icon(Iconsax.login_1),
+                          const SizedBox(width: 12),
                           Text(dic.account.next),
                         ],
                       ),
@@ -200,45 +228,13 @@ class _TransferPageState extends State<TransferPage> {
         context,
         PaymentConfirmationPage.route,
         arguments: PaymentConfirmationParams(
-            cid: cid,
-            communitySymbol: communitySymbol,
-            recipientAccount: _accountTo!,
-            amount: double.parse(_amountCtrl.text.trim())),
+          cid: cid,
+          communitySymbol: communitySymbol,
+          recipientAccount: _accountTo!,
+          amount: double.parse(_amountCtrl.text.trim()),
+        ),
       );
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final TransferPageParams args = ModalRoute.of(context)!.settings.arguments as TransferPageParams;
-      if (args.amount != null) {
-        _amountCtrl.text = '${args.amount}';
-      }
-
-      if (args.recipient != null) {
-        final AccountData acc = AccountData();
-        acc.address = args.recipient!;
-        acc.name = args.label!;
-        setState(() {
-          _accountTo = acc;
-        });
-      } else {
-        if (widget.store.account.optionalAccounts.length > 0) {
-          setState(() {
-            _accountTo = widget.store.account.optionalAccounts[0];
-          });
-        } else if (widget.store.settings.contactList.length > 0) {
-          setState(() {
-            _accountTo = widget.store.settings.contactList[0];
-          });
-        }
-      }
-
-      webApi.fetchAccountData();
-    });
   }
 
   @override
@@ -247,9 +243,7 @@ class _TransferPageState extends State<TransferPage> {
     super.dispose();
   }
 
-  bool balanceTooLow(String v, double available, int decimals) {
-    return double.parse(v.trim()) >= available;
-  }
+  bool balanceTooLow(String v, double available, int decimals) => double.parse(v.trim()) >= available;
 }
 
 class AccountBalanceWithMoreDigits extends StatelessWidget {
@@ -270,17 +264,9 @@ class AccountBalanceWithMoreDigits extends StatelessWidget {
       child: RichText(
         // need text base line alignment
         text: TextSpan(
-          text: '${Fmt.doubleFormat(
-            available,
-            length: 6,
-          )} ',
+          text: '${Fmt.doubleFormat(available, length: 6)} ',
           style: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
-          children: const <TextSpan>[
-            TextSpan(
-              text: 'ⵐ',
-              style: TextStyle(color: encointerGrey),
-            ),
-          ],
+          children: const [TextSpan(text: 'ⵐ', style: TextStyle(color: encointerGrey))],
         ),
       ),
     );

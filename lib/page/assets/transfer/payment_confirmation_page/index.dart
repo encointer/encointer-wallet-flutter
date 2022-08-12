@@ -20,7 +20,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
 class PaymentConfirmationParams {
-  PaymentConfirmationParams({
+  const PaymentConfirmationParams({
     required this.cid,
     required this.communitySymbol,
     required this.recipientAccount,
@@ -34,7 +34,7 @@ class PaymentConfirmationParams {
 }
 
 class PaymentConfirmationPage extends StatefulWidget {
-  const PaymentConfirmationPage(this.store, this.api);
+  const PaymentConfirmationPage(this.store, this.api, {Key? key}) : super(key: key);
 
   static const String route = '/assets/paymentConfirmation';
   final AppStore store;
@@ -61,12 +61,12 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
-    PaymentConfirmationParams params = ModalRoute.of(context)!.settings.arguments as PaymentConfirmationParams;
+    final params = ModalRoute.of(context)!.settings.arguments as PaymentConfirmationParams;
 
-    var cid = params.cid;
-    var recipientAccount = params.recipientAccount;
+    final cid = params.cid;
+    final recipientAccount = params.recipientAccount;
     final recipientAddress = Fmt.addressOfAccount(recipientAccount, widget.store);
-    var amount = params.amount;
+    final amount = params.amount;
 
     return Observer(
       builder: (_) {
@@ -77,13 +77,13 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
             child: Column(
               children: [
                 PaymentOverview(widget.store, params.communitySymbol, params.recipientAccount, params.amount),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Flexible(
                   fit: FlexFit.tight,
                   flex: 1,
                   child: TextGradient(
                     text: '${Fmt.doubleFormat(amount)} ⵐ',
-                    style: TextStyle(fontSize: 60),
+                    style: const TextStyle(fontSize: 60),
                   ),
                 ),
                 Flexible(
@@ -106,24 +106,24 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                 !_transferState.isFinishedOrFailed()
                     ? PrimaryButton(
                         key: Key('make-transfer'),
-                        child: Container(
+                        child: SizedBox(
                           height: 24,
                           child: !_transferState.isSubmitting()
                               ? Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    Icon(Iconsax.send_sqaure_2),
-                                    SizedBox(width: 12),
+                                    const Icon(Iconsax.send_sqaure_2),
+                                    const SizedBox(width: 12),
                                     Text(dic.assets.transfer),
                                   ],
                                 )
-                              : CupertinoActivityIndicator(),
+                              : const CupertinoActivityIndicator(),
                         ),
                         onPressed: () => _submit(context, cid, recipientAddress, amount),
                       )
                     : PrimaryButton(
                         key: Key('transfer-done'),
-                        child: Container(
+                        child: SizedBox(
                           height: 24,
                           child: Center(child: Text(dic.assets.done)),
                         ),
@@ -138,13 +138,13 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   }
 
   Future<void> _submit(BuildContext context, CommunityIdentifier cid, String recipientAddress, double? amount) async {
-    var params = encointerBalanceTransferParams(cid, recipientAddress, amount);
+    final params = encointerBalanceTransferParams(cid, recipientAddress, amount);
 
     setState(() {
       _transferState = TransferState.submitting;
     });
 
-    var onFinish = (BuildContext txPageContext, Map res) {
+    final onFinish = (BuildContext txPageContext, Map res) {
       _log("Transfer result ${res.toString()}");
 
       if (res['hash'] == null) {
@@ -174,9 +174,9 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   Widget _getTransferStateWidget(TransferState state) {
     switch (state) {
       case TransferState.notStarted:
-        return Container();
+        return const SizedBox();
       case TransferState.submitting:
-        return SizedBox(
+        return const SizedBox(
           height: 80,
           width: 80,
           child: CircularProgressIndicator(),
@@ -188,7 +188,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
           }
 
           return Container(
-            decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.green),
+            decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.green),
             child: AnimatedCheck(
               progress: _animation!,
               size: 100,
@@ -198,9 +198,9 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
         }
       case TransferState.failed:
         return Container(
-          decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.red),
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
+          decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.red),
+          child: const Padding(
+            padding: EdgeInsets.all(10.0),
             child: Icon(
               Icons.highlight_remove,
               size: 80.0,
@@ -209,7 +209,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
           ),
         );
       default:
-        return Text("Unknown transfer state");
+        return const Text("Unknown transfer state");
     }
   }
 
@@ -217,7 +217,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     final h1Grey = Theme.of(context).textTheme.headline1!.copyWith(color: encointerGrey);
     final h2Grey = Theme.of(context).textTheme.headline2!.copyWith(color: encointerGrey);
 
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     switch (state) {
       case TransferState.notStarted:
         {
@@ -229,8 +229,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
         }
       case TransferState.finished:
         {
-          var date = DateFormat.yMd().format(_blockTimestamp);
-          var time = DateFormat.Hms().format(_blockTimestamp);
+          final date = DateFormat.yMd().format(_blockTimestamp);
+          final time = DateFormat.Hms().format(_blockTimestamp);
 
           return RichText(
             textAlign: TextAlign.center,
@@ -254,7 +254,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
           );
         }
       default:
-        return Text("Unknown transfer state");
+        return const Text("Unknown transfer state");
     }
   }
 
@@ -264,10 +264,11 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   }
 
   void _initializeAnimation() {
-    _animationController = AnimationController(vsync: this, duration: Duration(seconds: 1));
+    _animationController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
 
-    _animation = new Tween<double>(begin: 0, end: 1)
-        .animate(new CurvedAnimation(parent: _animationController!, curve: Curves.easeInOutCirc));
+    _animation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(parent: _animationController!, curve: Curves.easeInOutCirc),
+    );
 
     _animationController!.forward();
 
