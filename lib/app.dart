@@ -201,102 +201,102 @@ class _WalletAppState extends State<WalletApp> {
                 );
               case CreateAccountEntryPage.route:
                 return CupertinoPageRoute(
-                  builder: (_) => const CreateAccountEntryPage(),
                   settings: settings,
                   fullscreenDialog: true,
+                  builder: (_) => const CreateAccountEntryPage(),
                 );
               case CreateAccountPage.route:
                 return CupertinoPageRoute(
-                  builder: (_) => const CreateAccountPage(),
                   settings: settings,
                   fullscreenDialog: true,
+                  builder: (_) => const CreateAccountPage(),
                 );
               case AddAccountPage.route:
                 return CupertinoPageRoute(
-                  builder: (_) => const AddAccountPage(),
                   settings: settings,
                   fullscreenDialog: true,
+                  builder: (_) => const AddAccountPage(),
                 );
               case AccountSharePage.route:
                 return CupertinoPageRoute(
-                  builder: (_) => const AccountSharePage(),
                   settings: settings,
                   fullscreenDialog: true,
+                  builder: (_) => const AccountSharePage(),
                 );
               case CreatePinPage.route:
                 return CupertinoPageRoute(
-                  builder: (_) => const CreatePinPage(),
                   settings: settings,
+                  builder: (_) => const CreatePinPage(),
                 );
               case ImportAccountPage.route:
                 return CupertinoPageRoute(
-                  builder: (_) => const ImportAccountPage(),
                   settings: settings,
+                  builder: (_) => const ImportAccountPage(),
                 );
               case ScanPage.route:
                 return CupertinoPageRoute(
-                  builder: (_) => const ScanPage(),
                   settings: settings,
+                  builder: (_) => const ScanPage(),
                 );
               case TransferPage.route:
                 return CupertinoPageRoute(
-                  builder: (_) => const TransferPage(),
                   settings: settings,
                   fullscreenDialog: true,
+                  builder: (_) => const TransferPage(),
                 );
               case PaymentConfirmationPage.route:
                 return CupertinoPageRoute(
-                  builder: (_) => const PaymentConfirmationPage(),
                   settings: settings,
+                  builder: (_) => const PaymentConfirmationPage(),
                 );
               case ReapVoucherPage.route:
                 return CupertinoPageRoute(
-                  builder: (_) => const ReapVoucherPage(),
                   settings: settings,
                   fullscreenDialog: true,
+                  builder: (_) => const ReapVoucherPage(),
                 );
               case ReceivePage.route:
                 return CupertinoPageRoute(
-                  builder: (_) => const ReceivePage(),
                   settings: settings,
                   fullscreenDialog: true,
+                  builder: (_) => const ReceivePage(),
                 );
               case TransferDetailPage.route:
                 return CupertinoPageRoute(
-                  builder: (_) => const TransferDetailPage(),
                   settings: settings,
                   fullscreenDialog: true,
+                  builder: (_) => const TransferDetailPage(),
                 );
               case AccountManagePage.route:
                 return CupertinoPageRoute(
-                  builder: (_) => const AccountManagePage(),
                   settings: settings,
                   fullscreenDialog: true,
+                  builder: (_) => const AccountManagePage(),
                 );
               case ContactsPage.route:
                 return CupertinoPageRoute(
-                  builder: (_) => const ContactsPage(),
                   settings: settings,
+                  builder: (_) => const ContactsPage(),
                 );
               case ContactListPage.route:
                 return CupertinoPageRoute(
-                  builder: (_) => const ContactListPage(),
                   settings: settings,
+                  builder: (_) => const ContactListPage(),
                 );
               case ContactPage.route:
                 return CupertinoPageRoute(
-                  builder: (_) => const ContactPage(),
                   settings: settings,
+                  builder: (_) => const ContactPage(),
                 );
               case ChangePasswordPage.route:
                 return CupertinoPageRoute(
-                  builder: (_) => const ChangePasswordPage(),
                   settings: settings,
+                  builder: (_) => const ChangePasswordPage(),
                 );
               case ContactDetailPage.route:
                 return CupertinoPageRoute(
-                  builder: (_) => const ContactDetailPage(),
                   settings: settings,
+                  builder: (_) => const ContactDetailPage(),
                 );
               case SettingsPage.route:
                 return CupertinoPageRoute(
@@ -308,11 +308,11 @@ class _WalletAppState extends State<WalletApp> {
                 );
               case ExportAccountPage.route:
                 return CupertinoPageRoute(
+                  settings: settings,
                   builder: (_) => Provider(
                     create: (context) => context.read<AppStore>().account,
                     child: ExportAccountPage(),
                   ),
-                  settings: settings,
                 );
               case ExportResultPage.route:
                 return CupertinoPageRoute(builder: (_) => ExportResultPage(), settings: settings);
