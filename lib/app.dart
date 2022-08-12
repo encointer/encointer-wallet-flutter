@@ -263,9 +263,10 @@ class _WalletAppState extends State<WalletApp> {
                 );
               case TransferDetailPage.route:
                 return CupertinoPageRoute(
-                    builder: (_) => TransferDetailPage(context.read<AppStore>()),
-                    settings: settings,
-                    fullscreenDialog: true);
+                  builder: (_) => const TransferDetailPage(),
+                  settings: settings,
+                  fullscreenDialog: true,
+                );
               case AccountManagePage.route:
                 return CupertinoPageRoute(
                     builder: (_) => AccountManagePage(context.read<AppStore>()),

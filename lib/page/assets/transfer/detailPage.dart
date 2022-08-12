@@ -5,23 +5,24 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TransferDetailPage extends StatelessWidget {
-  const TransferDetailPage(this.store, {Key? key}) : super(key: key);
+  const TransferDetailPage({Key? key}) : super(key: key);
 
   static const String route = '/assets/tx';
-  final AppStore store;
 
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final symbol = store.settings.networkState!.tokenSymbol;
-    final decimals = store.settings.networkState!.tokenDecimals;
+    final symbol = context.read<AppStore>().settings.networkState!.tokenSymbol;
+    final decimals = context.read<AppStore>().settings.networkState!.tokenDecimals;
     final tokenView = Fmt.tokenView(symbol);
 
     final tx = ModalRoute.of(context)!.settings.arguments as TransferData;
 
-    final txType = tx.from == store.account.currentAddress ? dic.assets.transfer : dic.assets.receive;
+    final txType =
+        tx.from == context.read<AppStore>().account.currentAddress ? dic.assets.transfer : dic.assets.receive;
 
     return TxDetail(
       success: true,
@@ -30,7 +31,7 @@ class TransferDetailPage extends StatelessWidget {
       hash: tx.hash,
       blockTime: Fmt.dateTime(DateTime.fromMillisecondsSinceEpoch(tx.blockTimestamp! * 1000)),
       blockNum: tx.blockNum,
-      networkName: store.settings.endpoint.info,
+      networkName: context.read<AppStore>().settings.endpoint.info,
       info: <DetailInfoItem>[
         DetailInfoItem(
           label: dic.assets.value,
@@ -49,7 +50,7 @@ class TransferDetailPage extends StatelessWidget {
           label: dic.assets.to,
           title: Fmt.address(tx.to),
           address: tx.to,
-        )
+        ),
       ],
     );
   }
