@@ -224,12 +224,15 @@ class _WalletAppState extends State<WalletApp> {
                   fullscreenDialog: true,
                 );
               case CreatePinPage.route:
-              return CupertinoPageRoute(
-                builder: (_) => const CreatePinPage(),
-                settings: settings,
-              );
+                return CupertinoPageRoute(
+                  builder: (_) => const CreatePinPage(),
+                  settings: settings,
+                );
               case ImportAccountPage.route:
-                return CupertinoPageRoute(builder: (_) => ImportAccountPage(_appStore!), settings: settings);
+                return CupertinoPageRoute(
+                  builder: (_) => const ImportAccountPage(),
+                  settings: settings,
+                );
               case ScanPage.route:
                 return CupertinoPageRoute(builder: (_) => ScanPage(_appStore!), settings: settings);
               case TransferPage.route:
