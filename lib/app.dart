@@ -284,7 +284,10 @@ class _WalletAppState extends State<WalletApp> {
                   settings: settings,
                 );
               case ContactPage.route:
-                return CupertinoPageRoute(builder: (_) => ContactPage(context.read<AppStore>()), settings: settings);
+                return CupertinoPageRoute(
+                  builder: (_) => const ContactPage(),
+                  settings: settings,
+                );
               case ChangePasswordPage.route:
                 return CupertinoPageRoute(
                     builder: (_) => ChangePasswordPage(context.read<AppStore>()), settings: settings);
