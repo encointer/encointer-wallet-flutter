@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snackBar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -37,7 +38,7 @@ class ScanPage extends StatelessWidget {
         final qrCode = qrScanService.parse(data);
         qrScanService.handleQrScan(context, params.scannerContext, qrCode);
       } catch (e) {
-        print("[ScanPage]: ${e.toString()}");
+        Log.d("[ScanPage]: ${e.toString()}", 'qrScanPage');
         RootSnackBar.showMsg(e.toString());
       }
     }
@@ -63,7 +64,7 @@ class ScanPage extends StatelessWidget {
                     allowDuplicates: false,
                     onDetect: (barcode, args) {
                       if (barcode.rawValue == null) {
-                        debugPrint('Failed to scan Barcode');
+                        Log.d('Failed to scan Barcode', 'qrScanPage');
                       } else {
                         onScan(barcode.rawValue!);
                       }

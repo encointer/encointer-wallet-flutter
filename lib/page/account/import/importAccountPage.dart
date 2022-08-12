@@ -1,5 +1,6 @@
 import 'package:encointer_wallet/page/account/create/createPinPage.dart';
 import 'package:encointer_wallet/page/account/import/importAccountForm.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -51,7 +52,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       cryptoType: _cryptoType,
       derivePath: _derivePath,
     );
-    _log("imported account to JS.");
+    Log.d("imported account to JS.", 'importAccountPage');
 
     // check if account duplicate
     if (acc['error'] != null) {
@@ -127,7 +128,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   }
 
   Future<void> _saveAccount(Map<String, dynamic> acc, AppStore store) async {
-    _log("Saving account: ${acc["pubKey"]}");
+    Log.d("Saving account: ${acc["pubKey"]}", 'importAccountPage.dart');
     final addresses = await webApi.account.encodeAddress([acc['pubKey']]);
     await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
 
@@ -173,8 +174,4 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       }
     });
   }
-}
-
-_log(String msg) {
-  print("[importAccountPage] $msg");
 }

@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:quiver/async.dart';
@@ -51,7 +52,7 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
     });
 
     sub!.onDone(() {
-      print("Done");
+      Log.d("Done", 'ceremonyCountDown');
       sub!.cancel();
     });
   }

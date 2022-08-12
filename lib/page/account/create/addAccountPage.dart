@@ -4,6 +4,7 @@ import 'package:encointer_wallet/common/components/accountAdvanceOptionParams.da
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/create/addAccountForm.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -45,9 +46,9 @@ class _AddAccountPageState extends State<AddAccountPage> {
     }
 
     var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
-    _log("Created new account with address: ${addresses[0]}");
+    Log.d("Created new account with address: ${addresses[0]}", 'addAccountPage.dart');
     await context.read<AppStore>().addAccount(acc, context.read<AppStore>().account.newAccount.password, addresses[0]);
-    _log("added new account with address: ${addresses[0]}");
+    Log.d("added new account with address: ${addresses[0]}", 'addAccountPage.dart');
 
     String? pubKey = acc['pubKey'];
     await context.read<AppStore>().setCurrentAccount(pubKey);
@@ -148,8 +149,4 @@ class _AddAccountPageState extends State<AddAccountPage> {
       ),
     );
   }
-}
-
-_log(String msg) {
-  print("[AddAccountPage] $msg");
 }

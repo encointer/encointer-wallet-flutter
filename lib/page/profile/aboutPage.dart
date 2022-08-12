@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/components/JumpToBrowserLink.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,7 @@ class AboutPage extends StatelessWidget {
             FutureBuilder<PackageInfo>(
               future: PackageInfo.fromPlatform(),
               builder: (_, AsyncSnapshot<PackageInfo> snapshot) {
-                print(snapshot);
+                Log.d('$snapshot', 'aboutPage');
                 if (snapshot.hasData) {
                   return Text('${dic.profile.aboutVersion}: v${snapshot.data!.version}+${snapshot.data!.buildNumber}');
                 } else {

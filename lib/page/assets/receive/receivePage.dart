@@ -4,6 +4,7 @@ import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/components/wakeLockAndBrightnessEnhancer.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -226,7 +227,7 @@ Future<bool> showSnackBarUponPendingExtrinsics(AppStore store, Api api, Translat
   try {
     var extrinsics = await api.encointer.pendingExtrinsics();
 
-    print("[receivePage] pendingExtrinsics ${extrinsics.toString()}");
+    Log.d("[receivePage] pendingExtrinsics ${extrinsics.toString()}", 'recievePage');
     if (extrinsics.length > 0) {
       for (var xt in extrinsics) {
         if (xt.contains(store.account.currentAccountPubKey!.substring(2))) {

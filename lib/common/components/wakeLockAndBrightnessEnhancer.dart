@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:screen_brightness/screen_brightness.dart';
@@ -23,8 +24,8 @@ class _WakeLockAndBrightnessEnhancerState extends State<WakeLockAndBrightnessEnh
   Future<void> setBrightness(double brightness) async {
     try {
       await ScreenBrightness().setScreenBrightness(brightness);
-    } catch (e) {
-      print(e);
+    } catch (e, s) {
+      Log.e('$e', 'common/components/qakeLockAndBrightnessEnhancer', s);
       throw 'Failed to set brightness';
     }
   }
@@ -32,8 +33,8 @@ class _WakeLockAndBrightnessEnhancerState extends State<WakeLockAndBrightnessEnh
   Future<void> resetBrightness() async {
     try {
       await ScreenBrightness().resetScreenBrightness();
-    } catch (e) {
-      print(e);
+    } catch (e, s) {
+      Log.e('$e', 'common/components/qakeLockAndBrightnessEnhancer', s);
       throw 'Failed to reset brightness';
     }
   }

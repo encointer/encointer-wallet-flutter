@@ -39,11 +39,11 @@ Future<void> main() async {
   var initialised = await flutterLocalNotificationsPlugin.initialize(initializationSettings,
       onSelectNotification: (String? payload) async {
     if (payload != null) {
-      debugPrint('notification payload: ' + payload);
+      Log.p('notification payload: $payload', 'main.dart');
     }
     selectNotificationSubject.add(payload);
   });
-  print('notification_plugin initialised: $initialised');
+  Log.p('notification_plugin initialised: $initialised', 'main.dart');
 
   // get_storage dependency
   await GetStorage.init();

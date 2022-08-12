@@ -2,6 +2,7 @@ import 'package:encointer_wallet/mocks/ipfs/mockIpfsApi.dart';
 import 'package:encointer_wallet/mocks/substrate_api/core/mockDartApi.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mockChainApi.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mockCodecApi.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 
@@ -39,7 +40,7 @@ class MockApi extends Api {
   @override
   Future<void> init() async {
     if (withUi) {
-      print("[MockApi] launch of webView");
+      Log.p("[MockApi] launch of webView");
       await launchWebview();
     }
   }

@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/chainApi.dart';
 import 'package:encointer_wallet/store/app.dart';
 
@@ -8,25 +9,21 @@ class MockChainApi extends ChainApi {
 
   @override
   Future<void> startSubscriptions() async {
-    _log("api: unimplemented startSubscriptions");
+    Log.d("api: unimplemented startSubscriptions");
   }
 
   @override
   Future<void> stopSubscriptions() async {
-    _log("api: unimplemented stopSubscriptions");
+    Log.d("api: unimplemented stopSubscriptions");
   }
 
   @override
   Future<void> subscribeTimestamp() async {
-    _log("api: unimplemented subscribeTimestamp");
+    Log.d("api: unimplemented subscribeTimestamp");
   }
 
   @override
   Future<void> subscribeNewHeads() async {
-    _log("api: unimplemented subscribeTimestamp");
+    Log.d("api: unimplemented subscribeTimestamp");
   }
-}
-
-void _log(String msg) {
-  print("[MockChainApi]: $msg");
 }

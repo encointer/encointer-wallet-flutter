@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:encointer_wallet/common/components/roundedButton.dart';
 import 'package:encointer_wallet/page/qr_scan/qrScanPage.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
@@ -31,7 +32,7 @@ class _QrSenderPageState extends State<QrSenderPage> {
 
     Map? txInfo = args['txInfo'];
     final Map? res = await webApi.account.makeQrCode(txInfo, args['params'], rawParam: args['rawParam']);
-    print('make qr code');
+    Log.d('make qr code', 'qrScanPage');
     setState(() {
       _qrPayload = Uint8List.fromList(List<int>.from(Map.of(res!['qrPayload']).values));
     });

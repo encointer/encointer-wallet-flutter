@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/mocks/data/mockEncointerData.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointerApi.dart';
 import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
 import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
@@ -18,23 +19,19 @@ import 'mockJSApi.dart';
 class MockEncointerApi extends EncointerApi {
   MockEncointerApi(AppStore store, MockJSApi js, MockSubstrateDartApi dartApi) : super(store, js, dartApi);
 
-  void _log(String msg) {
-    print("[mockApiEncointer] $msg");
-  }
-
   @override
   Future<void> startSubscriptions() async {
-    _log("empty startSubscriptions stub");
+    Log.d("empty startSubscriptions stub");
   }
 
   @override
   Future<void> stopSubscriptions() async {
-    _log("empty stopSubscriptions stub");
+    Log.d("empty stopSubscriptions stub");
   }
 
   @override
   Future<void> subscribeBusinessRegistry() async {
-    _log("empty subscribeBusinessRegistry stub");
+    Log.d("empty subscribeBusinessRegistry stub");
   }
 
   @override
@@ -92,7 +89,7 @@ class MockEncointerApi extends EncointerApi {
 
   @override
   Future<List<AccountBusinessTuple>> getBusinesses() async {
-    _log("warn: getBusinessRegistry mock is unimplemented");
+    Log.d("warn: getBusinessRegistry mock is unimplemented");
 
     return Future.value([]);
   }
@@ -144,7 +141,7 @@ class MockEncointerApi extends EncointerApi {
 
   @override
   Future<List<String>> pendingExtrinsics() {
-    _log("calling mock `pendingExtrinsics");
+    Log.d("calling mock `pendingExtrinsics");
     return Future.value([]);
   }
 }

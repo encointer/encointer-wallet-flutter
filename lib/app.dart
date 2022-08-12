@@ -44,6 +44,7 @@ import 'package:provider/provider.dart';
 import 'common/theme.dart';
 import 'mocks/storage/mockLocalStorage.dart';
 import 'mocks/substrate_api/mockApi.dart';
+import 'service/log/log_service.dart';
 import 'utils/translations/index.dart';
 
 class WalletApp extends StatefulWidget {
@@ -93,8 +94,8 @@ class _WalletAppState extends State<WalletApp> {
       //     : AppStore(LocalStorage(), config: widget.config.appStoreConfig);
 
       // _appStore = context.read<AppStore>();
-      _log('Initializing app state');
-      _log('sys locale: ${Localizations.localeOf(context)}');
+      Log.p('Initializing app state', 'lib/app.dart');
+      Log.p('sys locale: ${Localizations.localeOf(context)}', 'lib/app.dart');
       await context.read<AppStore>().init(Localizations.localeOf(context).toString());
 
       // init webApi after store initiated
@@ -107,7 +108,7 @@ class _WalletAppState extends State<WalletApp> {
 
       await webApi.init().timeout(
             Duration(seconds: 20),
-            onTimeout: () => print("webApi.init() has run into a timeout. We might be offline."),
+            onTimeout: () => Log.p("webApi.init() has run into a timeout. We might be offline.", 'lib/app.dart'),
           );
 
       context.read<AppStore>().dataUpdate.setupUpdateReaction(() async {
@@ -181,7 +182,7 @@ class _WalletAppState extends State<WalletApp> {
                       future: _initApp(context),
                       builder: (_, AsyncSnapshot<int> snapshot) {
                         if (snapshot.hasError) {
-                          _log("SnapshotError: ${snapshot.error.toString()}");
+                          Log.e("SnapshotError: ${snapshot.error.toString()}", 'lib/app.dart FutureBuilder');
                         }
                         if (snapshot.hasData && _appStore!.appIsReady) {
                           return snapshot.data! > 0 ? const EncointerHomePage() : const CreateAccountEntryPage();
@@ -351,8 +352,4 @@ class _WalletAppState extends State<WalletApp> {
       ),
     );
   }
-}
-
-void _log(String msg) {
-  print("[App] $msg");
 }

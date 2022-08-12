@@ -13,6 +13,7 @@ import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dar
 import 'package:encointer_wallet/page/account/create/addAccountPage.dart';
 import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
@@ -97,7 +98,7 @@ class _AssetsState extends State<Assets> {
     balanceWatchdog = PausableTimer(
       const Duration(seconds: 12),
       () {
-        print("[balanceWatchdog] triggered");
+        Log.d("[balanceWatchdog] triggered", 'page/index.dart');
         _refreshBalanceAndNotify(dic, store);
         balanceWatchdog!
           ..reset()
@@ -109,11 +110,11 @@ class _AssetsState extends State<Assets> {
 
     return FocusDetector(
       onFocusLost: () {
-        print('[home:FocusDetector] Focus Lost.');
+        Log.d('[home:FocusDetector] Focus Lost.', 'page/index.dart');
         balanceWatchdog!.pause();
       },
       onFocusGained: () {
-        print('[home:FocusDetector] Focus Gained.');
+        Log.d('[home:FocusDetector] Focus Gained.', 'page/index.dart');
         if (!store.settings.loading) {
           _refreshBalanceAndNotify(dic, store);
         }
@@ -502,9 +503,9 @@ class _AssetsState extends State<Assets> {
 
   void _refreshBalanceAndNotify(Translations? dic, AppStore store) {
     webApi.encointer.getAllBalances(store.account.currentAddress).then((balances) {
-      print("[home:refreshBalanceAndNotify] get all balances");
+      Log.d("[home:refreshBalanceAndNotify] get all balances", 'page/index.dart');
       if (store.encointer.chosenCid == null) {
-        print("[home:refreshBalanceAndNotify] no community selected");
+        Log.d("[home:refreshBalanceAndNotify] no community selected", 'page/index.dart');
         return;
       }
       bool activeAccountHasBalance = false;
@@ -518,7 +519,8 @@ class _AssetsState extends State<Assets> {
                   store.encointer.accountStores![store.account.currentAddress]!.balanceEntries[cidStr]) ??
               0;
           double delta = newBalance - oldBalance;
-          print("[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta");
+          Log.d("[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta",
+              'page/index.dart');
           if (delta.abs() > demurrageRate) {
             store.encointer.accountStores![store.account.currentAddress]?.addBalanceEntry(cid, balances[cid]!);
             if (delta > demurrageRate) {
@@ -526,7 +528,7 @@ class _AssetsState extends State<Assets> {
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
                   .replaceAll('CID_SYMBOL', community.metadata!.symbol)
                   .replaceAll('ACCOUNT_NAME', store.account.currentAccount.name);
-              print("[home:balanceWatchdog] $msg");
+              Log.d("[home:balanceWatchdog] $msg", 'page/index.dart');
               NotificationPlugin.showNotification(45, dic.assets.fundsReceived, msg, cid: cidStr);
             }
           }
@@ -536,13 +538,13 @@ class _AssetsState extends State<Assets> {
         }
       });
       if (!activeAccountHasBalance) {
-        print(
+        Log.d(
             "[home:refreshBalanceAndNotify] didn't get any balance for active account. initialize store balance to zero");
         store.encointer.accountStores![store.account.currentAddress]
             ?.addBalanceEntry(store.encointer.chosenCid!, BalanceEntry(0, 0));
       }
     }).catchError((e) {
-      print('[home:refreshBalanceAndNotify] WARNING: could not update balance: $e');
+      Log.d('[home:refreshBalanceAndNotify] WARNING: could not update balance: $e');
     });
   }
 }

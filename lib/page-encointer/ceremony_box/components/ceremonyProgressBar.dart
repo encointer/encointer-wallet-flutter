@@ -1,5 +1,6 @@
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremonyBoxService.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:flutter/material.dart';
 
 import '../../../models/index.dart';
@@ -48,7 +49,7 @@ class CeremonyProgressBar extends StatelessWidget {
         attestingPhaseFractionalWidth,
       );
     } catch (e) {
-      _log("Error getting ceremony progress ${e.toString()}");
+      Log.d("Error getting ceremony progress ${e.toString()}", 'ceremonyProgrssingBar');
       return 0;
     }
   }
@@ -56,7 +57,7 @@ class CeremonyProgressBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double progressElapsed = _getCeremonyProgress()!;
-    _log("ceremony progress: $progressElapsed");
+    Log.d("ceremony progress: $progressElapsed", 'ceremonyProgrssingBar');
 
     return Container(
       decoration: BoxDecoration(
@@ -98,8 +99,4 @@ class CeremonyProgressBar extends StatelessWidget {
       ),
     );
   }
-}
-
-_log(String msg) {
-  print("[CeremonyProgressBar] $msg");
 }

@@ -5,6 +5,7 @@ import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/profile/account/exportResultPage.dart';
 import 'package:encointer_wallet/page/profile/contacts/accountSharePage.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
@@ -117,7 +118,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
       context: context,
       builder: (BuildContext context) {
         return showPasswordInputDialog(context, accountToBeEdited, Text(dic.profile.confirmPin), (password) async {
-          print('password is: $password');
+          Log.d('password is: $password', 'account manege page');
           setState(() {
             context.read<AppStore>().settings.setPin(password);
           });

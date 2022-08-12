@@ -3,6 +3,7 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/page-encointer/common/encointerMap.dart';
 import 'package:encointer_wallet/page-encointer/meetup/ceremonyStep1Count.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -20,7 +21,7 @@ import 'meetup_info/components/ceremonyNotification.dart';
 import 'meetup_info/meetupInfo.dart';
 
 class CeremonyBox extends StatelessWidget {
-  CeremonyBox(
+  const CeremonyBox(
     this.store,
     this.api, {
     Key? key,
@@ -49,7 +50,7 @@ class CeremonyBox extends StatelessWidget {
       return Column(
         children: [
           Container(
-            padding: EdgeInsets.fromLTRB(24, 24, 24, 24),
+            padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.vertical(
                   top: Radius.circular(15), bottom: Radius.circular(store.encointer.showMeetupInfo ? 0 : 15)),
@@ -135,7 +136,10 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
         );
       } else {
         // showMeetupInfo == false in this case. So we don't show this widget at all.
-        _log("'getMeetupInfoWidget' trapped in an unexpected if statement: Registering phase + Unregistered");
+        Log.d(
+          "'getMeetupInfoWidget' trapped in an unexpected if statement: Registering phase + Unregistered",
+          'ceremonyBox',
+        );
         return Container();
       }
     case CeremonyPhase.Assigning:
@@ -177,13 +181,9 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
         }
       }
     default:
-      _log("'getMeetupInfoWidget' trapped in an unexpected default case");
+      Log.e("'getMeetupInfoWidget' trapped in an unexpected default case", 'ceremonyBox');
       return Container();
   }
-}
-
-void _log(String msg) {
-  print("[CeremonyBox] $msg");
 }
 
 Future<void> awaitDataUpdateWithDialog(BuildContext context, AppStore store) async {

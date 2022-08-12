@@ -2,6 +2,7 @@ import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/import/importAccountPage.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/inputValidation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -102,7 +103,7 @@ class AddAccountForm extends StatelessWidget {
 
                   onSubmit();
                 } else {
-                  print("formKey.currentState.validate failed");
+                  Log.d("formKey.currentState.validate failed", 'lib/page/account/create/addAcciuntPage');
                 }
               },
             ),
