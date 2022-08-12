@@ -19,14 +19,12 @@ Widget redeemSuccessDialog(BuildContext context) {
   final dic = I18n.of(context)!.translationsForLocale();
 
   return CupertinoAlertDialog(
-    title: Container(),
+    title: const SizedBox(),
     content: Text(dic.assets.redeemSuccess),
     actions: <Widget>[
       CupertinoButton(
         child: Text(dic.home.ok),
-        onPressed: () {
-          Navigator.popUntil(context, ModalRoute.withName('/'));
-        },
+        onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
       ),
     ],
   );
@@ -35,9 +33,7 @@ Widget redeemSuccessDialog(BuildContext context) {
 Future<void> showRedeemFailedDialog(BuildContext context, String? error) {
   return showCupertinoDialog(
     context: context,
-    builder: (BuildContext context) {
-      return redeemFailedDialog(context, error);
-    },
+    builder: (BuildContext context) => redeemFailedDialog(context, error),
   );
 }
 
@@ -45,14 +41,12 @@ Widget redeemFailedDialog(BuildContext context, String? error) {
   final dic = I18n.of(context)!.translationsForLocale();
 
   return CupertinoAlertDialog(
-    title: Container(),
+    title: const SizedBox(),
     content: Text("${dic.assets.redeemFailure} $error"),
     actions: <Widget>[
       CupertinoButton(
         child: Text(dic.home.ok),
-        onPressed: () {
-          Navigator.popUntil(context, ModalRoute.withName('/'));
-        },
+        onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
       ),
     ],
   );
@@ -61,9 +55,7 @@ Widget redeemFailedDialog(BuildContext context, String? error) {
 Future<void> showErrorDialog(BuildContext context, String error) {
   return showCupertinoDialog(
     context: context,
-    builder: (BuildContext context) {
-      return errorDialog(context, error);
-    },
+    builder: (BuildContext context) => errorDialog(context, error),
   );
 }
 
@@ -71,14 +63,12 @@ Widget errorDialog(BuildContext context, String errorMsg) {
   final dic = I18n.of(context)!.translationsForLocale();
 
   return CupertinoAlertDialog(
-    title: Container(),
+    title: const SizedBox(),
     content: Text("${dic.home.errorOccurred} $errorMsg"),
     actions: <Widget>[
       CupertinoButton(
         child: Text(dic.home.ok),
-        onPressed: () {
-          Navigator.popUntil(context, ModalRoute.withName('/'));
-        },
+        onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
       ),
     ],
   );
@@ -101,7 +91,7 @@ Future<ChangeResult?> showChangeNetworkAndCommunityDialog(
           .replaceAll("COMMUNITY_PLACEHOLDER", cid.toFmtString());
 
       return CupertinoAlertDialog(
-        title: Container(),
+        title: const SizedBox(),
         content: Text(dialogContent),
         actions: <Widget>[
           CupertinoButton(
@@ -111,7 +101,7 @@ Future<ChangeResult?> showChangeNetworkAndCommunityDialog(
           CupertinoButton(
             child: Text(dic.home.ok),
             onPressed: () async {
-              var result =
+              final result =
                   await changeWithLoadingDialog(context, () => changeNetworkAndCommunity(store, api, network, cid));
               Navigator.of(context).pop(result);
             },
@@ -131,12 +121,12 @@ Future<ChangeResult> changeWithLoadingDialog(
     builder: (BuildContext context) {
       return CupertinoAlertDialog(
         title: Text(I18n.of(context)!.translationsForLocale().home.loading),
-        content: Container(height: 64, child: CupertinoActivityIndicator()),
+        content: const SizedBox(height: 64, child: CupertinoActivityIndicator()),
       );
     },
   );
 
-  var result = await changeFn();
+  final result = await changeFn();
 
   // pop loading dialog
   Navigator.of(context).pop();
@@ -159,7 +149,7 @@ Future<ChangeResult?> showChangeCommunityDialog(
       final dialogContent = dic.assets.voucherDifferentCommunity.replaceAll("COMMUNITY_PLACEHOLDER", cid.toFmtString());
 
       return CupertinoAlertDialog(
-        title: Container(),
+        title: const SizedBox(),
         content: Text(dialogContent),
         actions: <Widget>[
           CupertinoButton(
@@ -169,7 +159,7 @@ Future<ChangeResult?> showChangeCommunityDialog(
           CupertinoButton(
             child: Text(dic.home.ok),
             onPressed: () async {
-              var result = await changeWithLoadingDialog(context, () => changeCommunity(store, api, network, cid));
+              final result = await changeWithLoadingDialog(context, () => changeCommunity(store, api, network, cid));
               Navigator.of(context).pop(result);
             },
           ),
@@ -182,9 +172,7 @@ Future<ChangeResult?> showChangeCommunityDialog(
 Future<void> showInvalidCommunityDialog(BuildContext context, CommunityIdentifier cid) {
   return showCupertinoDialog(
     context: context,
-    builder: (BuildContext context) {
-      return invalidCommunityDialog(context, cid);
-    },
+    builder: (BuildContext context) => invalidCommunityDialog(context, cid),
   );
 }
 
@@ -192,14 +180,12 @@ Widget invalidCommunityDialog(BuildContext context, CommunityIdentifier cid) {
   final dic = I18n.of(context)!.translationsForLocale();
 
   return CupertinoAlertDialog(
-    title: Container(),
+    title: const SizedBox(),
     content: Text("${dic.assets.voucherContainsInexistentCommunity} ${cid.toFmtString()}"),
     actions: <Widget>[
       CupertinoButton(
         child: Text(dic.home.ok),
-        onPressed: () {
-          Navigator.popUntil(context, ModalRoute.withName('/'));
-        },
+        onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
       ),
     ],
   );

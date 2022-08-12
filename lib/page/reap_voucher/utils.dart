@@ -15,7 +15,7 @@ Future<ChangeResult> changeNetworkAndCommunity(
   String? networkInfo,
   CommunityIdentifier cid,
 ) async {
-  var result = await changeNetwork(store, api, networkInfo, cid);
+  final result = await changeNetwork(store, api, networkInfo, cid);
 
   if (result != ChangeResult.ok) {
     return result;
