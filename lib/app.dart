@@ -41,7 +41,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
-
 import 'common/theme.dart';
 import 'mocks/storage/mockLocalStorage.dart';
 import 'mocks/substrate_api/mockApi.dart';
@@ -61,11 +60,11 @@ class _WalletAppState extends State<WalletApp> {
   Locale _locale = const Locale('en', '');
   ThemeData _theme = appThemeEncointer;
 
-  void _changeTheme() {
-    // todo: Remove this. It was for the network dependent theme.
-    // But his can be done at the same time, when we refactor
-    // the network selection page.
-  }
+  // void _changeTheme() {
+  //   // todo: Remove this. It was for the network dependent theme.
+  //   // But his can be done at the same time, when we refactor
+  //   // the network selection page.
+  // }
 
   void _changeLang(BuildContext context, String? code) {
     Locale res;
@@ -196,8 +195,8 @@ class _WalletAppState extends State<WalletApp> {
               );
             case NetworkSelectPage.route:
               return CupertinoPageRoute(
-                builder: (_) => const NetworkSelectPage(),
                 settings: settings,
+                builder: (_) => const NetworkSelectPage(),
               );
             case CreateAccountEntryPage.route:
               return CupertinoPageRoute(
@@ -337,13 +336,13 @@ class _WalletAppState extends State<WalletApp> {
               );
             case AboutPage.route:
               return CupertinoPageRoute(
-                builder: (_) => const AboutPage(),
                 settings: settings,
+                builder: (_) => const AboutPage(),
               );
             case BazaarMain.route:
               return CupertinoPageRoute(
-                builder: (_) => const BazaarMain(),
                 settings: settings,
+                builder: (_) => const BazaarMain(),
               );
             default:
               throw Exception('no builder specified for route named: [${settings.name}]');
