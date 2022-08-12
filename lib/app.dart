@@ -196,7 +196,7 @@ class _WalletAppState extends State<WalletApp> {
               );
             case NetworkSelectPage.route:
               return CupertinoPageRoute(
-                builder: (_) => NetworkSelectPage(context.read<AppStore>(), _changeTheme),
+                builder: (_) => const NetworkSelectPage(),
                 settings: settings,
               );
             case CreateAccountEntryPage.route:

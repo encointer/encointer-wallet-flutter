@@ -9,28 +9,21 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 
 class NetworkSelectPage extends StatefulWidget {
-  NetworkSelectPage(this.store, this.changeTheme);
+  const NetworkSelectPage({Key? key}) : super(key: key);
 
   static const String route = '/network';
-  final AppStore store;
-  final Function changeTheme;
 
   @override
-  _NetworkSelectPageState createState() => _NetworkSelectPageState(store, changeTheme);
+  _NetworkSelectPageState createState() => _NetworkSelectPageState();
 }
 
 class _NetworkSelectPageState extends State<NetworkSelectPage> {
-  _NetworkSelectPageState(this.store, this.changeTheme);
-
-  final AppStore store;
-  final Function changeTheme;
-
   // Here we commented out the two not-active networks of Cantillon. When they will be relevant, they can be uncommented #232
   final List<EndpointData> networks = [
     networkEndpointEncointerGesell,
@@ -44,7 +37,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   EndpointData? _selectedNetwork;
   bool _networkChanging = false;
 
-  Future<void> _reloadNetwork() async {
+  Future<void> _reloadNetwork(BuildContext context) async {
     setState(() {
       _networkChanging = true;
     });
@@ -53,14 +46,14 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Text(I18n.of(context)!.translationsForLocale().home.loading),
-          content: Container(height: 64, child: CupertinoActivityIndicator()),
+          content: const SizedBox(height: 64, child: CupertinoActivityIndicator()),
         );
       },
     );
 
-    await store.settings.reloadNetwork(_selectedNetwork!);
+    await context.read<AppStore>().settings.reloadNetwork(_selectedNetwork!);
 
-    changeTheme();
+    // widget.changeTheme();
 
     if (mounted) {
       Navigator.of(context).pop();
@@ -70,28 +63,29 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     }
   }
 
-  Future<void> _onSelect(AccountData i, String? address) async {
-    bool isCurrentNetwork = _selectedNetwork!.info == store.settings.endpoint.info;
-    if (address != store.account.currentAddress || !isCurrentNetwork) {
+  Future<void> _onSelect(AccountData i, String? address, BuildContext context) async {
+    final _store = context.read<AppStore>();
+    bool isCurrentNetwork = _selectedNetwork!.info == _store.settings.endpoint.info;
+    if (address != _store.account.currentAddress || !isCurrentNetwork) {
       /// set current account
-      store.setCurrentAccount(i.pubKey);
+      _store.setCurrentAccount(i.pubKey);
 
       if (isCurrentNetwork) {
-        await store.loadAccountCache();
+        await _store.loadAccountCache();
 
         webApi.fetchAccountData();
       } else {
         /// set new network and reload web view
-        await _reloadNetwork();
+        await _reloadNetwork(context);
       }
     }
     Navigator.of(context).pop();
   }
 
-  Future<void> _onCreateAccount() async {
-    bool isCurrentNetwork = _selectedNetwork!.info == store.settings.endpoint.info;
+  Future<void> _onCreateAccount(BuildContext context) async {
+    bool isCurrentNetwork = _selectedNetwork!.info == context.read<AppStore>().settings.endpoint.info;
     if (!isCurrentNetwork) {
-      await _reloadNetwork();
+      await _reloadNetwork(context);
     }
     Navigator.of(context).pushNamed(CreateAccountEntryPage.route);
   }
@@ -103,11 +97,11 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         return Container(
           child: showPasswordInputDialog(
             context,
-            store.account.currentAccount,
+            context.read<AppStore>().account.currentAccount,
             Text(I18n.of(context)!.translationsForLocale().profile.unlock),
             (password) {
               setState(() {
-                store.settings.setPin(password);
+                context.read<AppStore>().settings.setPin(password);
               });
             },
           ),
@@ -116,12 +110,13 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     );
   }
 
-  List<Widget> _buildAccountList() {
-    Color primaryColor = Theme.of(context).primaryColor;
-    List<Widget> res = [
+  List<Widget> _buildAccountList(BuildContext context) {
+    final _store = context.read<AppStore>();
+    final primaryColor = Theme.of(context).primaryColor;
+    List<Widget> res = <Widget>[
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: <Widget>[
+        children: [
           Text(
             _selectedNetwork!.info!.toUpperCase(),
             style: Theme.of(context).textTheme.headline4,
@@ -130,13 +125,13 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
               icon: Image.asset('assets/images/assets/plus_indigo.png'),
               color: primaryColor,
               onPressed: () async => {
-                    if (store.settings.cachedPin.isEmpty)
+                    if (context.read<AppStore>().settings.cachedPin.isEmpty)
                       {
                         await _showPasswordDialog(context),
                       }
                     else
                       {
-                        _onCreateAccount(),
+                        _onCreateAccount(context),
                       }
                   })
         ],
@@ -144,32 +139,32 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     ];
 
     /// first item is current account
-    List<AccountData> accounts = [store.account.currentAccount];
+    List<AccountData> accounts = [_store.account.currentAccount];
 
     /// add optional accounts
-    accounts.addAll(store.account.optionalAccounts);
+    accounts.addAll(_store.account.optionalAccounts);
 
     res.addAll(accounts.map((i) {
       String? address = i.address;
-      if (store.account.pubKeyAddressMap[_selectedNetwork!.ss58] != null) {
-        address = store.account.pubKeyAddressMap[_selectedNetwork!.ss58]![i.pubKey];
+      if (_store.account.pubKeyAddressMap[_selectedNetwork!.ss58] != null) {
+        address = _store.account.pubKeyAddressMap[_selectedNetwork!.ss58]![i.pubKey];
       }
-      final bool isCurrentNetwork = _selectedNetwork!.info == store.settings.endpoint.info;
-      final accInfo = store.account.accountIndexMap[i.address];
-      final String accIndex =
+      final isCurrentNetwork = _selectedNetwork!.info == _store.settings.endpoint.info;
+      final accInfo = _store.account.accountIndexMap[i.address];
+      final accIndex =
           isCurrentNetwork && accInfo != null && accInfo['accountIndex'] != null ? '${accInfo['accountIndex']}\n' : '';
-      final double padding = accIndex.isEmpty ? 0 : 7;
+      final padding = accIndex.isEmpty ? 0.0 : 7.0;
       return RoundedCard(
-        border: address == store.account.currentAddress
+        border: address == _store.account.currentAddress
             ? Border.all(color: Theme.of(context).primaryColorLight)
             : Border.all(color: Theme.of(context).cardColor),
-        margin: EdgeInsets.only(bottom: 16),
+        margin: const EdgeInsets.only(bottom: 16),
         padding: EdgeInsets.only(top: padding, bottom: padding),
         child: ListTile(
           leading: AddressIcon(address!, i.pubKey),
           title: Text(Fmt.accountName(context, i)),
           subtitle: Text('$accIndex${Fmt.address(address)}', maxLines: 2),
-          onTap: _networkChanging ? null : () => _onSelect(i, address),
+          onTap: _networkChanging ? null : () => _onSelect(i, address, context),
         ),
       );
     }).toList());
@@ -182,14 +177,14 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
-        _selectedNetwork = store.settings.endpoint;
+        _selectedNetwork = context.read<AppStore>().settings.endpoint;
       });
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         title: Text(dic.home.settingNetwork),
@@ -197,15 +192,15 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       ),
       body: Observer(
         builder: (_) {
-          if (_selectedNetwork == null) return Container();
+          if (_selectedNetwork == null) return const SizedBox();
           return Row(
-            children: <Widget>[
+            children: [
               // left side bar
               Container(
-                padding: EdgeInsets.fromLTRB(16, 16, 0, 0),
+                padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
                 decoration: BoxDecoration(
                   color: Theme.of(context).cardColor,
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: Colors.black12,
                       blurRadius: 8.0, // has the effect of softening the shadow
@@ -215,19 +210,18 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
                 ),
                 child: Column(
                   children: networks.map((i) {
-                    String? network = i.info;
-                    bool isCurrent = network == _selectedNetwork!.info;
-                    String img = 'assets/images/public/$network${isCurrent ? '' : '_gray'}.png';
+                    final network = i.info;
+                    final isCurrent = network == _selectedNetwork!.info;
+                    final img = 'assets/images/public/$network${isCurrent ? '' : '_gray'}.png';
                     return Container(
-                      margin: EdgeInsets.only(bottom: 8),
-                      padding: EdgeInsets.only(right: 8),
+                      margin: const EdgeInsets.only(bottom: 8),
+                      padding: const EdgeInsets.only(right: 8),
                       decoration: isCurrent
                           ? BoxDecoration(
-                              border: Border(right: BorderSide(width: 2, color: Theme.of(context).primaryColor)),
-                            )
+                              border: Border(right: BorderSide(width: 2, color: Theme.of(context).primaryColor)))
                           : null,
                       child: IconButton(
-                        padding: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
                         icon: Image.asset(img),
                         onPressed: () {
                           if (!isCurrent) {
@@ -243,8 +237,8 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
               ),
               Expanded(
                 child: ListView(
-                  padding: EdgeInsets.all(16),
-                  children: _buildAccountList(),
+                  padding: const EdgeInsets.all(16),
+                  children: _buildAccountList(context),
                 ),
               ),
             ],
