@@ -12,6 +12,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 
+import 'service/log/log_service.dart';
 import 'utils/localStorage.dart' as util;
 
 Future<void> main() async {
@@ -48,6 +49,10 @@ Future<void> main() async {
   await GetStorage.init();
 
   HttpOverrides.global = MyHttpOverrides();
+
+  Log.e('eldiiar', 'menin atym');
+  Log.d('eldiiar', 'menin atym');
+  Log.p('eldiiar', 'menin atym');
 
   runApp(
     Provider(
