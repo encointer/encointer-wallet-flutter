@@ -6,20 +6,20 @@ import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 class ExportAccountPage extends StatelessWidget {
-  ExportAccountPage(this.store);
+  ExportAccountPage({Key? key}) : super(key: key);
+
   static const String route = '/profile/export';
-  final AccountStore store;
 
-  final TextEditingController _passCtrl = new TextEditingController();
+  final _passCtrl = TextEditingController();
 
-  void _showPasswordDialog(BuildContext context, String seedType) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+  void _showPasswordDialog(BuildContext context, String seedType, AccountStore store) {
+    final dic = I18n.of(context)!.translationsForLocale();
 
     Future<void> onOk() async {
       var res = await webApi.account.checkAccountPassword(store.currentAccount, _passCtrl.text);
@@ -30,7 +30,7 @@ class ExportAccountPage extends StatelessWidget {
             return CupertinoAlertDialog(
               title: Text(dic.profile.wrongPin),
               content: Text(dic.profile.wrongPinHint),
-              actions: <Widget>[
+              actions: [
                 CupertinoButton(
                   child: Text(I18n.of(context)!.translationsForLocale().home.ok),
                   onPressed: () => Navigator.of(context).pop(),
@@ -41,7 +41,11 @@ class ExportAccountPage extends StatelessWidget {
         );
       } else {
         Navigator.of(context).pop();
-        String? seed = await store.decryptSeed(store.currentAccount.pubKey, seedType, _passCtrl.text.trim());
+        final seed = await store.decryptSeed(
+          store.currentAccount.pubKey,
+          seedType,
+          _passCtrl.text.trim(),
+        );
         Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
           'key': seed!,
           'type': seedType,
@@ -55,7 +59,7 @@ class ExportAccountPage extends StatelessWidget {
         return CupertinoAlertDialog(
           title: Text(dic.profile.confirmPin),
           content: Padding(
-            padding: EdgeInsets.only(top: 16),
+            padding: const EdgeInsets.only(top: 16),
             child: CupertinoTextFormFieldRow(
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
               padding: EdgeInsets.zero,
@@ -70,10 +74,10 @@ class ExportAccountPage extends StatelessWidget {
                 return null;
               },
               obscureText: true,
-              inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             ),
           ),
-          actions: <Widget>[
+          actions: [
             CupertinoButton(
               child: Text(I18n.of(context)!.translationsForLocale().home.cancel),
               onPressed: () {
@@ -93,18 +97,17 @@ class ExportAccountPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
+    final store = context.read<AccountStore>();
     return Scaffold(
-      appBar: AppBar(
-        title: Text(dic.profile.export),
-      ),
+      appBar: AppBar(title: Text(dic.profile.export)),
       body: ListView(
-        children: <Widget>[
+        children: [
           ListTile(
             title: Text(dic.account.keystore),
-            trailing: Icon(Icons.arrow_forward_ios, size: 18),
+            trailing: const Icon(Icons.arrow_forward_ios, size: 18),
             onTap: () {
-              Map json = AccountData.toJson(store.currentAccount);
+              final json = AccountData.toJson(store.currentAccount);
               json.remove('name');
               json['meta']['name'] = store.currentAccount.name;
               Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
@@ -119,25 +122,26 @@ class ExportAccountPage extends StatelessWidget {
               if (snapshot.hasData && snapshot.data == true) {
                 return ListTile(
                   title: Text(dic.account.mnemonic),
-                  trailing: Icon(Icons.arrow_forward_ios, size: 18),
-                  onTap: () => _showPasswordDialog(context, AccountStore.seedTypeMnemonic),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+                  onTap: () => _showPasswordDialog(context, AccountStore.seedTypeMnemonic, store),
                 );
               } else {
-                return Container();
+                return const SizedBox();
               }
             },
           ),
           FutureBuilder(
-            future: store.checkSeedExist(AccountStore.seedTypeRawSeed, store.currentAccount.pubKey),
+            future:
+                context.read<AccountStore>().checkSeedExist(AccountStore.seedTypeRawSeed, store.currentAccount.pubKey),
             builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
               if (snapshot.hasData && snapshot.data == true) {
                 return ListTile(
                   title: Text(dic.account.rawSeed),
-                  trailing: Icon(Icons.arrow_forward_ios, size: 18),
-                  onTap: () => _showPasswordDialog(context, AccountStore.seedTypeRawSeed),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+                  onTap: () => _showPasswordDialog(context, AccountStore.seedTypeRawSeed, store),
                 );
               } else {
-                return Container();
+                return const SizedBox();
               }
             },
           ),

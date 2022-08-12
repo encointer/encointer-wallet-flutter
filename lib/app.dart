@@ -308,7 +308,12 @@ class _WalletAppState extends State<WalletApp> {
                 );
               case ExportAccountPage.route:
                 return CupertinoPageRoute(
-                    builder: (_) => ExportAccountPage(context.read<AppStore>().account), settings: settings);
+                  builder: (_) => Provider(
+                    create: (context) => context.read<AppStore>().account,
+                    child: ExportAccountPage(),
+                  ),
+                  settings: settings,
+                );
               case ExportResultPage.route:
                 return CupertinoPageRoute(builder: (_) => ExportResultPage(), settings: settings);
               case RemoteNodeListPage.route:
