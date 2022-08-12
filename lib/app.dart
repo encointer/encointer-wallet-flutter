@@ -157,9 +157,9 @@ class _WalletAppState extends State<WalletApp> {
             GlobalCupertinoLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
           ],
-          supportedLocales: [
-            const Locale('en', ''),
-            const Locale('de', ''),
+          supportedLocales: const [
+            Locale('en', ''),
+            Locale('de', ''),
           ],
           initialRoute: widget.config.initialRoute,
           theme: _theme,
@@ -185,7 +185,7 @@ class _WalletAppState extends State<WalletApp> {
                             _log("SnapshotError: ${snapshot.error.toString()}");
                           }
                           if (snapshot.hasData && _appStore!.appIsReady) {
-                            return snapshot.data! > 0 ? EncointerHomePage(_appStore!) : CreateAccountEntryPage();
+                            return snapshot.data! > 0 ? EncointerHomePage(_appStore!) : const CreateAccountEntryPage();
                           } else {
                             return CupertinoActivityIndicator();
                           }
@@ -244,9 +244,6 @@ class _WalletAppState extends State<WalletApp> {
                   settings: settings,
                   fullscreenDialog: true,
                 );
-              case PaymentConfirmationPage.route:
-                return CupertinoPageRoute(
-                    builder: (_) => PaymentConfirmationPage(context.read<AppStore>(), webApi), settings: settings);
               case ReapVoucherPage.route:
                 return CupertinoPageRoute(
                     builder: (_) => ReapVoucherPage(context.read<AppStore>(), webApi),

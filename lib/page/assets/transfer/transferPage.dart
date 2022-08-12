@@ -40,7 +40,7 @@ class TransferPageParams {
 }
 
 class TransferPage extends StatefulWidget {
-  const TransferPage();
+  const TransferPage({Key? key}) : super(key: key);
 
   static const String route = '/assets/transfer';
 
@@ -51,7 +51,7 @@ class TransferPage extends StatefulWidget {
 class _TransferPageState extends State<TransferPage> {
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _amountCtrl = new TextEditingController();
+  final _amountCtrl = new TextEditingController();
 
   AccountData? _accountTo;
 
@@ -60,7 +60,7 @@ class _TransferPageState extends State<TransferPage> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final TransferPageParams args = ModalRoute.of(context)!.settings.arguments as TransferPageParams;
+      final args = ModalRoute.of(context)!.settings.arguments as TransferPageParams;
       if (args.amount != null) {
         _amountCtrl.text = '${args.amount}';
       }
@@ -94,8 +94,8 @@ class _TransferPageState extends State<TransferPage> {
     final params = ModalRoute.of(context)!.settings.arguments as TransferPageParams;
     final store = context.read<AppStore>();
 
-    var communitySymbol = params.communitySymbol ?? store.encointer.community!.symbol!;
-    var cid = params.cid ?? store.encointer.chosenCid!;
+    final communitySymbol = params.communitySymbol ?? store.encointer.community!.symbol!;
+    final cid = params.cid ?? store.encointer.chosenCid!;
 
     final decimals = encointer_currencies_decimals;
 
@@ -165,7 +165,7 @@ class _TransferPageState extends State<TransferPage> {
                             }
                             return null;
                           },
-                          suffixIcon: Text("ⵐ", style: TextStyle(color: encointerGrey, fontSize: 44)),
+                          suffixIcon: const Text("ⵐ", style: TextStyle(color: encointerGrey, fontSize: 44)),
                         ),
                         const SizedBox(height: 24),
                         Row(
