@@ -6,27 +6,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
 import 'qrScanService.dart';
-import 'qr_codes/qrCodeBase.dart';
-
 export 'qrScanService.dart';
 export 'qr_codes/qrCodeBase.dart';
 
 class ScanPageParams {
-  ScanPageParams({
-    required this.scannerContext,
-  });
+  const ScanPageParams({required this.scannerContext});
   final QrScannerContext scannerContext;
 }
 
 class ScanPage extends StatelessWidget {
-  ScanPage(this.store);
+  const ScanPage({Key? key}) : super(key: key);
 
   static const String route = '/account/scan';
-
-  final QrScanService qrScanService = QrScanService();
-  final AppStore store;
 
   Future<bool> canOpenCamera() async {
     // will do nothing if already granted
@@ -36,10 +30,11 @@ class ScanPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
+    final QrScanService qrScanService = QrScanService();
     ScanPageParams params = ModalRoute.of(context)!.settings.arguments! as ScanPageParams;
     void onScan(String data) {
       try {
-        QrCode<dynamic> qrCode = qrScanService.parse(data);
+        final qrCode = qrScanService.parse(data);
         qrScanService.handleQrScan(context, params.scannerContext, qrCode);
       } catch (e) {
         print("[ScanPage]: ${e.toString()}");
@@ -49,11 +44,11 @@ class ScanPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        leading: Container(),
+        leading: const SizedBox(),
         actions: [
           IconButton(
             key: Key('close-scanner'),
-            icon: Icon(Icons.close),
+            icon: const Icon(Icons.close),
             onPressed: () => Navigator.pop(context),
           )
         ],
@@ -73,7 +68,7 @@ class ScanPage extends StatelessWidget {
                         onScan(barcode.rawValue!);
                       }
                     }),
-                store.settings.developerMode ? mockQrDataRow(dic, onScan) : Container(),
+                context.read<AppStore>().settings.developerMode ? mockQrDataRow(dic, onScan) : const SizedBox(),
                 //overlays a semi-transparent rounded square border that is 90% of screen width
                 Center(
                   child: Column(
@@ -90,7 +85,7 @@ class ScanPage extends StatelessWidget {
                       ),
                       Text(
                         I18n.of(context)!.translationsForLocale().account.qrScan,
-                        style: TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16),
+                        style: const TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16),
                       ),
                     ],
                   ),
@@ -98,7 +93,7 @@ class ScanPage extends StatelessWidget {
               ],
             );
           } else {
-            return CupertinoActivityIndicator();
+            return const CupertinoActivityIndicator();
           }
         },
       ),
@@ -127,6 +122,6 @@ Widget mockQrDataRow(Translations dic, Function(String) onScan) {
         "\nnctr-gsl-dev\nAubrey",
       ),
     ),
-    Text(' <<< Devs only', style: TextStyle(color: Colors.orange)),
+    Text(' <<< Devs only', style: const TextStyle(color: Colors.orange)),
   ]);
 }

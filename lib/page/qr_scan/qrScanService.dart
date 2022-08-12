@@ -24,7 +24,7 @@ class QrScanService {
     rawQrString = rawQrString.replaceAll("u0qj92QX9PQ", "u0qj9QqA2Q");
     List<String> data = rawQrString.split(QR_CODE_FIELD_SEPARATOR);
 
-    var context = QrCodeContextExt.fromQrField(data[0]);
+    final context = QrCodeContextExt.fromQrField(data[0]);
 
     switch (context) {
       case QrCodeContext.contact:

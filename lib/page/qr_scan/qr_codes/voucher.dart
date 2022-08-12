@@ -26,7 +26,7 @@ class VoucherQrCode extends QrCode<VoucherData> {
 }
 
 class VoucherData implements ToQrFields {
-  VoucherData({
+  const VoucherData({
     required this.voucherUri,
     required this.cid,
     required this.network,
