@@ -9,31 +9,26 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 
 class Profile extends StatefulWidget {
-  Profile(this.store);
-
-  final AppStore store;
+  const Profile({Key? key}) : super(key: key);
 
   @override
-  _ProfileState createState() => _ProfileState(store);
+  _ProfileState createState() => _ProfileState();
 }
 
 class _ProfileState extends State<Profile> {
-  _ProfileState(this.store);
-
-  final AppStore store;
   EndpointData? _selectedNetwork;
 
-  List<Widget> _buildAccountList() {
+  List<Widget> _buildAccountList(BuildContext context) {
     List<Widget> allAccountsAsWidgets = [];
 
-    List<AccountData> accounts = store.account.accountListAll;
+    List<AccountData> accounts = context.read<AppStore>().account.accountListAll;
 
     allAccountsAsWidgets.addAll(accounts.map((account) {
       return InkWell(
@@ -53,18 +48,16 @@ class _ProfileState extends State<Profile> {
                 ),
               ],
             ),
-            SizedBox(height: 6),
+            const SizedBox(height: 6),
             Text(
               Fmt.accountName(context, account),
               style: Theme.of(context).textTheme.headline4,
             ),
             // This sizedBox is here to define a distance between the accounts
-            SizedBox(width: 100),
+            const SizedBox(width: 100),
           ],
         ),
-        onTap: () => {
-          Navigator.pushNamed(context, AccountManagePage.route, arguments: account.pubKey),
-        },
+        onTap: () => Navigator.pushNamed(context, AccountManagePage.route, arguments: account.pubKey),
       );
     }).toList());
     return allAccountsAsWidgets;
@@ -77,7 +70,8 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    var h3Grey = Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey);
+    final store = context.read<AppStore>();
+    final h3Grey = Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey);
     _selectedNetwork = store.settings.endpoint;
 
     // if all accounts are deleted, go to createAccountPage
@@ -87,14 +81,14 @@ class _ProfileState extends State<Profile> {
         Navigator.popUntil(context, ModalRoute.withName('/'));
       });
     }
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
 
     return Observer(
       builder: (_) {
         return Scaffold(
           appBar: AppBar(
             title: Text(dic.profile.title),
-            iconTheme: IconThemeData(color: encointerGrey), //change your color here,
+            iconTheme: const IconThemeData(color: encointerGrey), //change your color here,
             centerTitle: true,
             backgroundColor: Colors.transparent,
             shadowColor: Colors.transparent,
@@ -103,9 +97,9 @@ class _ProfileState extends State<Profile> {
             builder: (_) {
               if (_selectedNetwork == null) return Container();
               return ListView(
-                children: <Widget>[
+                children: [
                   Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -114,13 +108,14 @@ class _ProfileState extends State<Profile> {
                           style: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
                         ),
                         IconButton(
-                            icon: Icon(Iconsax.add_square),
-                            color: ZurichLion.shade500,
-                            onPressed: () => Navigator.of(context).pushNamed(AddAccountPage.route)),
+                          icon: const Icon(Iconsax.add_square),
+                          color: ZurichLion.shade500,
+                          onPressed: () => Navigator.of(context).pushNamed(AddAccountPage.route),
+                        ),
                       ],
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     height: 130,
                     child: ShaderMask(
                       shaderCallback: (Rect bounds) {
@@ -128,16 +123,16 @@ class _ProfileState extends State<Profile> {
                           begin: Alignment.centerRight,
                           end: Alignment.centerLeft,
                           colors: [
+                            Theme.of(context).scaffoldBackgroundColor,
+                            Theme.of(context).scaffoldBackgroundColor,
                             Theme.of(context).scaffoldBackgroundColor.withOpacity(0.0),
-                            Theme.of(context).scaffoldBackgroundColor,
-                            Theme.of(context).scaffoldBackgroundColor,
                             Theme.of(context).scaffoldBackgroundColor.withOpacity(0.0),
                           ],
                           stops: [0.0, 0.1, 0.9, 1.0],
                         ).createShader(bounds);
                       },
                       child: ListView(
-                        children: _buildAccountList(),
+                        children: _buildAccountList(context),
                         scrollDirection: Axis.horizontal,
                       ),
                       // blendMode: BlendMode.dstATop,
@@ -148,7 +143,7 @@ class _ProfileState extends State<Profile> {
                       dic.profile.changeYourPin,
                       style: Theme.of(context).textTheme.headline3,
                     ),
-                    trailing: Icon(Icons.arrow_forward_ios, size: 18),
+                    trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                     onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
                   ),
                   ListTile(
@@ -156,13 +151,14 @@ class _ProfileState extends State<Profile> {
                     onTap: () => showRemoveAccountsDialog(context, store),
                   ),
                   ListTile(
-                      title: Text(dic.profile.reputationOverall, style: h3Grey),
-                      trailing: store.encointer.account?.reputations != null
-                          ? Text(store.encointer.account?.reputations.length.toString() ?? 0.toString())
-                          : Text(dic.encointer.fetchingReputations)),
+                    title: Text(dic.profile.reputationOverall, style: h3Grey),
+                    trailing: store.encointer.account?.reputations != null
+                        ? Text(store.encointer.account?.reputations.length.toString() ?? 0.toString())
+                        : Text(dic.encointer.fetchingReputations),
+                  ),
                   ListTile(
                     title: Text(dic.profile.about, style: Theme.of(context).textTheme.headline3),
-                    trailing: Icon(Icons.arrow_forward_ios, size: 18),
+                    trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                     onTap: () => Navigator.pushNamed(context, AboutPage.route),
                   ),
                   ListTile(
@@ -188,10 +184,10 @@ class _ProfileState extends State<Profile> {
                             onTap: () => Navigator.of(context).pushNamed('/network'),
                           ),
                           trailing: Padding(
-                            padding: EdgeInsets.only(right: 13), // align with developer checkbox above
+                            padding: const EdgeInsets.only(right: 13), // align with developer checkbox above
                             child: store.settings.isConnected
-                                ? Icon(Icons.check, color: Colors.green)
-                                : CupertinoActivityIndicator(),
+                                ? const Icon(Icons.check, color: Colors.green)
+                                : const CupertinoActivityIndicator(),
                           ),
                         ),
                         ListTile(
@@ -220,24 +216,29 @@ Future<void> showRemoveAccountsDialog(BuildContext context, AppStore store) {
   final dic = I18n.of(context)!.translationsForLocale();
 
   return showCupertinoDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return CupertinoAlertDialog(title: Text(dic.profile.accountsDelete), actions: <Widget>[
+    context: context,
+    builder: (BuildContext context) {
+      return CupertinoAlertDialog(
+        title: Text(dic.profile.accountsDelete),
+        actions: [
           CupertinoButton(
             child: Text(dic.home.cancel),
             onPressed: () => Navigator.of(context).pop(),
           ),
           CupertinoButton(
-              child: Text(dic.home.ok),
-              onPressed: () async {
-                final accounts = store.account.accountListAll;
+            child: Text(dic.home.ok),
+            onPressed: () async {
+              final accounts = store.account.accountListAll;
 
-                for (var acc in accounts) {
-                  await store.account.removeAccount(acc);
-                }
+              for (var acc in accounts) {
+                await store.account.removeAccount(acc);
+              }
 
-                Navigator.of(context).pop();
-              }),
-        ]);
-      });
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

@@ -7,26 +7,23 @@ import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 
 import 'bazaar/0_main/bazaarMain.dart';
 
 class EncointerHomePage extends StatefulWidget {
-  EncointerHomePage(this.store);
+  const EncointerHomePage({Key? key}) : super(key: key);
 
-  static final GlobalKey encointerHomePageKey = GlobalKey();
   static const String route = '/';
-  final AppStore store;
 
   @override
-  _EncointerHomePageState createState() => new _EncointerHomePageState(store);
+  _EncointerHomePageState createState() => _EncointerHomePageState();
 }
 
 class _EncointerHomePageState extends State<EncointerHomePage> {
-  _EncointerHomePageState(this.store);
-
-  final AppStore store;
-
   final PageController _pageController = PageController();
+
+  final GlobalKey encointerHomePageKey = GlobalKey();
 
   NotificationPlugin? _notificationPlugin;
 
@@ -51,7 +48,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
                       Container(
                         height: 4,
                         width: 16,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           border: Border(
                             bottom: BorderSide(width: 2.0),
                           ),
@@ -82,42 +79,42 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    _tabList = <TabData>[
-      TabData(
+    _tabList = [
+      const TabData(
         TabKey.Wallet,
         Iconsax.home_2,
       ),
-      if (store.settings.enableBazaar)
-        TabData(
+      if (context.read<AppStore>().settings.enableBazaar)
+        const TabData(
           TabKey.Bazaar,
           Iconsax.shop,
         ), // dart collection if
-      TabData(
+      const TabData(
         TabKey.Scan,
         Iconsax.scan_barcode,
       ),
-      TabData(
+      const TabData(
         TabKey.Contacts,
         Iconsax.profile_2user,
       ),
-      TabData(
+      const TabData(
         TabKey.Profile,
         Iconsax.profile_circle,
       ),
     ];
 
     return Scaffold(
-      key: EncointerHomePage.encointerHomePageKey,
+      key: encointerHomePageKey,
       backgroundColor: Colors.white,
       body: PageView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,
         children: [
-          Assets(store),
-          if (store.settings.enableBazaar) const BazaarMain(), // dart collection if
-          const ScanPage(),
+          const Assets(),
+          if (context.read<AppStore>().settings.enableBazaar) const BazaarMain(), // dart collection if
+          ScanPage(),
           const ContactsPage(),
-          Profile(store),
+          const Profile(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -153,7 +150,7 @@ class TabData {
   /// used for our integration tests to click on a UI element
   final IconData iconData;
 
-  TabData(this.key, this.iconData);
+  const TabData(this.key, this.iconData);
 }
 
 enum TabKey {

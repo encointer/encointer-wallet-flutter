@@ -29,24 +29,20 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pausable_timer/pausable_timer.dart';
+import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import 'account_or_community/AccountOrCommunityData.dart';
 import 'account_or_community/switchAccountOrCommunity.dart';
 
 class Assets extends StatefulWidget {
-  Assets(this.store);
-
-  final AppStore store;
+  const Assets({Key? key}) : super(key: key);
 
   @override
-  _AssetsState createState() => _AssetsState(store);
+  _AssetsState createState() => _AssetsState();
 }
 
 class _AssetsState extends State<Assets> {
-  _AssetsState(this.store);
-
-  final AppStore store;
   static const double panelHeight = 396;
   static const double fractionOfScreenHeight = .7;
   static const double avatarSize = 70;
@@ -60,6 +56,7 @@ class _AssetsState extends State<Assets> {
   @override
   void initState() {
     // if network connected failed, reconnect
+    final store = context.read<AppStore>();
     if (!store.settings.loading && store.settings.networkName == null) {
       store.settings.setNetworkLoading(true);
       webApi.connectNodeAll();
@@ -89,6 +86,7 @@ class _AssetsState extends State<Assets> {
 
   @override
   Widget build(BuildContext context) {
+    final store = context.read<AppStore>();
     dic = I18n.of(context)!.translationsForLocale();
     _panelHeightOpen = min(MediaQuery.of(context).size.height * fractionOfScreenHeight,
         panelHeight); // should typically not be higher than panelHeight, but on really small devices it should not exceed fractionOfScreenHeight x the screen height.
@@ -100,7 +98,7 @@ class _AssetsState extends State<Assets> {
       const Duration(seconds: 12),
       () {
         print("[balanceWatchdog] triggered");
-        _refreshBalanceAndNotify(dic);
+        _refreshBalanceAndNotify(dic, store);
         balanceWatchdog!
           ..reset()
           ..start();
@@ -110,280 +108,280 @@ class _AssetsState extends State<Assets> {
     final appBar = AppBar(title: Text(dic!.assets.home));
 
     return FocusDetector(
-        onFocusLost: () {
-          print('[home:FocusDetector] Focus Lost.');
-          balanceWatchdog!.pause();
-        },
-        onFocusGained: () {
-          print('[home:FocusDetector] Focus Gained.');
-          if (!store.settings.loading) {
-            _refreshBalanceAndNotify(dic);
-          }
-          balanceWatchdog!.reset();
-          balanceWatchdog!.start();
-        },
-        child: Scaffold(
-          appBar: appBar,
-          body: SlidingUpPanel(
-            maxHeight: _panelHeightOpen,
-            minHeight: _panelHeightClosed,
-            parallaxEnabled: true,
-            parallaxOffset: .5,
-            backdropEnabled: true,
-            controller: panelController,
-            // The padding is a hack for #559, which needs https://github.com/akshathjain/sliding_up_panel/pull/303
-            body: Padding(
-              padding:
-                  // Fixme: 60 is hardcoded because we don't know the tabBar size here.
-                  // Should be tackled in #607
-                  EdgeInsets.only(bottom: 60 + appBar.preferredSize.height + MediaQuery.of(context).viewPadding.top),
-              child: RefreshIndicator(
-                onRefresh: _refreshEncointerState,
-                child: ListView(
-                  padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
-                  children: [
-                    Observer(builder: (_) {
-                      if (ModalRoute.of(context)!.isCurrent &&
-                          !_enteredPin & store.settings.cachedPin.isEmpty & !store.settings.endpointIsNoTee) {
-                        // The pin is not immediately propagated to the store, hence we track if the pin has been entered to prevent
-                        // showing the dialog multiple times.
-                        WidgetsBinding.instance.addPostFrameCallback(
-                          (_) {
-                            _showPasswordDialog(context);
-                          },
-                        );
-                      }
-
-                      AccountData accountData = store.account.currentAccount;
-
-                      return Column(
-                        children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              InkWell(
-                                  child: CombinedCommunityAndAccountAvatar(store),
-                                  onTap: () {
-                                    if (panelController != null && panelController!.isAttached) {
-                                      panelController!.open();
-                                    }
-                                  }),
-                            ],
-                          ),
-                          Observer(
-                            builder: (_) {
-                              return (store.encointer.community?.name != null) & (store.encointer.chosenCid != null)
-                                  ? Column(
-                                      children: [
-                                        TextGradient(
-                                          text: '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ',
-                                          style: TextStyle(fontSize: 60),
-                                        ),
-                                        Text(
-                                          "${dic!.assets.balance}, ${store.encointer.community?.symbol}",
-                                          style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
-                                        ),
-                                      ],
-                                    )
-                                  : Container(
-                                      margin: EdgeInsets.only(top: 16),
-                                      padding: EdgeInsets.symmetric(vertical: 8),
-                                      child: (store.encointer.chosenCid == null)
-                                          ? Container(
-                                              width: double.infinity,
-                                              child:
-                                                  Text(dic!.assets.communityNotSelected, textAlign: TextAlign.center))
-                                          : Container(
-                                              width: double.infinity,
-                                              child: CupertinoActivityIndicator(),
-                                            ),
-                                    );
-                            },
-                          ),
-                          if (store.settings.developerMode)
-                            ElevatedButton(
-                              onPressed: store.dataUpdate.setInvalidated,
-                              child: Text("Invalidate data to trigger state update"),
-                            ),
-                          SizedBox(
-                            height: 42,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Expanded(
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                      // don't redefine the entire style just the border radii
-                                      borderRadius:
-                                          BorderRadius.horizontal(left: Radius.circular(15), right: Radius.zero),
-                                    ),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Icon(Iconsax.receive_square_2),
-                                        SizedBox(width: 12),
-                                        Text(dic!.assets.receive),
-                                      ],
-                                    ),
-                                  ),
-                                  key: Key('qr-receive'),
-                                  onPressed: () {
-                                    if (accountData.address != '') {
-                                      Navigator.pushNamed(context, ReceivePage.route);
-                                    }
-                                  },
-                                ),
-                              ),
-                              SizedBox(width: 2),
-                              Expanded(
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
-                                      // don't redefine the entire style just the border radii
-                                      borderRadius:
-                                          BorderRadius.horizontal(left: Radius.zero, right: Radius.circular(15)),
-                                    ),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text(dic!.assets.transfer),
-                                        SizedBox(width: 12),
-                                        Icon(Iconsax.send_sqaure_2),
-                                      ],
-                                    ),
-                                  ),
-                                  key: Key('transfer'),
-                                  onPressed: store.encointer.communityBalance != null
-                                      ? () {
-                                          Navigator.pushNamed(
-                                            context,
-                                            TransferPage.route,
-                                            arguments: TransferPageParams(
-                                                redirect: '/',
-                                                cid: store.encointer.chosenCid!,
-                                                communitySymbol: store.encointer.community!.symbol!),
-                                          );
-                                        }
-                                      : null,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+      onFocusLost: () {
+        print('[home:FocusDetector] Focus Lost.');
+        balanceWatchdog!.pause();
+      },
+      onFocusGained: () {
+        print('[home:FocusDetector] Focus Gained.');
+        if (!store.settings.loading) {
+          _refreshBalanceAndNotify(dic, store);
+        }
+        balanceWatchdog!.reset();
+        balanceWatchdog!.start();
+      },
+      child: Scaffold(
+        appBar: appBar,
+        body: SlidingUpPanel(
+          maxHeight: _panelHeightOpen,
+          minHeight: _panelHeightClosed,
+          parallaxEnabled: true,
+          parallaxOffset: .5,
+          backdropEnabled: true,
+          controller: panelController,
+          // The padding is a hack for #559, which needs https://github.com/akshathjain/sliding_up_panel/pull/303
+          body: Padding(
+            padding:
+                // Fixme: 60 is hardcoded because we don't know the tabBar size here.
+                // Should be tackled in #607
+                EdgeInsets.only(bottom: 60 + appBar.preferredSize.height + MediaQuery.of(context).viewPadding.top),
+            child: RefreshIndicator(
+              onRefresh: _refreshEncointerState,
+              child: ListView(
+                padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
+                children: [
+                  Observer(builder: (_) {
+                    if (ModalRoute.of(context)!.isCurrent &&
+                        !_enteredPin & store.settings.cachedPin.isEmpty & !store.settings.endpointIsNoTee) {
+                      // The pin is not immediately propagated to the store, hence we track if the pin has been entered to prevent
+                      // showing the dialog multiple times.
+                      WidgetsBinding.instance.addPostFrameCallback(
+                        (_) {
+                          _showPasswordDialog(context);
+                        },
                       );
-                    }),
-                    Padding(
-                      padding: EdgeInsets.symmetric(vertical: 6, horizontal: 0),
-                    ),
-                    Observer(builder: (_) {
-                      final Translations dic = I18n.of(context)!.translationsForLocale();
+                    }
 
-                      return store.settings.isConnected
-                          ? FutureBuilder<bool?>(
-                              future: webApi.encointer.hasPendingIssuance(),
-                              builder: (_, AsyncSnapshot<bool?> snapshot) {
-                                if (snapshot.hasData) {
-                                  var hasPendingIssuance = snapshot.data!;
+                    AccountData accountData = store.account.currentAccount;
 
-                                  if (hasPendingIssuance) {
-                                    return SubmitButton(
-                                      child: Text(dic.assets.issuancePending),
-                                      onPressed: (context) => submitClaimRewards(
-                                        context,
-                                        store,
-                                        webApi,
-                                        store.encointer.chosenCid,
-                                      ),
-                                    );
-                                  } else {
-                                    return store.settings.developerMode
-                                        ? ElevatedButton(
-                                            child: Text(dic.assets.issuanceClaimed),
-                                            onPressed: null,
-                                          )
-                                        : Container();
+                    return Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            InkWell(
+                                child: CombinedCommunityAndAccountAvatar(store),
+                                onTap: () {
+                                  if (panelController != null && panelController!.isAttached) {
+                                    panelController!.open();
                                   }
+                                }),
+                          ],
+                        ),
+                        Observer(
+                          builder: (_) {
+                            return (store.encointer.community?.name != null) & (store.encointer.chosenCid != null)
+                                ? Column(
+                                    children: [
+                                      TextGradient(
+                                        text: '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ',
+                                        style: const TextStyle(fontSize: 60),
+                                      ),
+                                      Text(
+                                        "${dic!.assets.balance}, ${store.encointer.community?.symbol}",
+                                        style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
+                                      ),
+                                    ],
+                                  )
+                                : Container(
+                                    margin: const EdgeInsets.only(top: 16),
+                                    padding: const EdgeInsets.symmetric(vertical: 8),
+                                    child: (store.encointer.chosenCid == null)
+                                        ? SizedBox(
+                                            width: double.infinity,
+                                            child: Text(dic!.assets.communityNotSelected, textAlign: TextAlign.center),
+                                          )
+                                        : const SizedBox(
+                                            width: double.infinity,
+                                            child: CupertinoActivityIndicator(),
+                                          ),
+                                  );
+                          },
+                        ),
+                        if (store.settings.developerMode)
+                          ElevatedButton(
+                            onPressed: store.dataUpdate.setInvalidated,
+                            child: Text("Invalidate data to trigger state update"),
+                          ),
+                        const SizedBox(height: 42),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Expanded(
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    // don't redefine the entire style just the border radii
+                                    borderRadius: BorderRadius.horizontal(
+                                      left: Radius.circular(15),
+                                      right: Radius.zero,
+                                    ),
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      const Icon(Iconsax.receive_square_2),
+                                      const SizedBox(width: 12),
+                                      Text(dic!.assets.receive),
+                                    ],
+                                  ),
+                                ),
+                                key: Key('qr-receive'),
+                                onPressed: () {
+                                  if (accountData.address != '') {
+                                    Navigator.pushNamed(context, ReceivePage.route);
+                                  }
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 2),
+                            Expanded(
+                              child: ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    // don't redefine the entire style just the border radii
+                                    borderRadius: BorderRadius.horizontal(
+                                      left: Radius.zero,
+                                      right: Radius.circular(15),
+                                    ),
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Text(dic!.assets.transfer),
+                                      const SizedBox(width: 12),
+                                      const Icon(Iconsax.send_sqaure_2),
+                                    ],
+                                  ),
+                                ),
+                                key: Key('transfer'),
+                                onPressed: store.encointer.communityBalance != null
+                                    ? () {
+                                        Navigator.pushNamed(
+                                          context,
+                                          TransferPage.route,
+                                          arguments: TransferPageParams(
+                                            redirect: '/',
+                                            cid: store.encointer.chosenCid!,
+                                            communitySymbol: store.encointer.community!.symbol!,
+                                          ),
+                                        );
+                                      }
+                                    : null,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    );
+                  }),
+                  const Padding(padding: EdgeInsets.symmetric(vertical: 6, horizontal: 0)),
+                  Observer(builder: (_) {
+                    final dic = I18n.of(context)!.translationsForLocale();
+
+                    return store.settings.isConnected
+                        ? FutureBuilder<bool?>(
+                            future: webApi.encointer.hasPendingIssuance(),
+                            builder: (_, AsyncSnapshot<bool?> snapshot) {
+                              if (snapshot.hasData) {
+                                var hasPendingIssuance = snapshot.data!;
+
+                                if (hasPendingIssuance) {
+                                  return SubmitButton(
+                                    child: Text(dic.assets.issuancePending),
+                                    onPressed: (context) => submitClaimRewards(
+                                      context,
+                                      store,
+                                      webApi,
+                                      store.encointer.chosenCid,
+                                    ),
+                                  );
                                 } else {
-                                  return CupertinoActivityIndicator();
+                                  return store.settings.developerMode
+                                      ? ElevatedButton(
+                                          child: Text(dic.assets.issuanceClaimed),
+                                          onPressed: null,
+                                        )
+                                      : const SizedBox();
                                 }
-                              },
-                            )
-                          : Container();
-                    }),
-                    SizedBox(height: 24),
-                    CeremonyBox(store, webApi),
-                  ],
-                ),
+                              } else {
+                                return const CupertinoActivityIndicator();
+                              }
+                            },
+                          )
+                        : const SizedBox();
+                  }),
+                  const SizedBox(height: 24),
+                  CeremonyBox(store, webApi),
+                ],
               ),
             ),
-            // panel entering from below
-            panelBuilder: (scrollController) => MediaQuery.removePadding(
-              context: context,
-              removeTop: true,
-              child: ListView(
-                controller: scrollController,
-                children: <Widget>[
-                  SizedBox(
-                    height: 12.0,
-                  ),
-                  DragHandle(),
-                  Column(children: [
-                    Observer(
-                      builder: (BuildContext context) {
-                        allCommunities = initAllCommunities();
-                        return SwitchAccountOrCommunity(
-                          rowTitle: dic!.home.switchCommunity,
-                          data: allCommunities,
-                          onTap: (int index) {
-                            if (index == allCommunities.length - 1) {
-                              Navigator.push(context, MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)))
-                                  .then((_) {
-                                _refreshBalanceAndNotify(dic);
-                              });
-                            } else {
-                              setState(() {
-                                // TODO
-                              });
-                            }
-                          },
-                        );
-                      },
-                    ),
-                    Observer(builder: (BuildContext context) {
-                      allAccounts = initAllAccounts(dic!);
+          ),
+          // panel entering from below
+          panelBuilder: (scrollController) => MediaQuery.removePadding(
+            context: context,
+            removeTop: true,
+            child: ListView(
+              controller: scrollController,
+              children: <Widget>[
+                const SizedBox(height: 12.0),
+                const DragHandle(),
+                Column(children: [
+                  Observer(
+                    builder: (BuildContext context) {
+                      allCommunities = initAllCommunities(store);
                       return SwitchAccountOrCommunity(
-                        rowTitle: dic!.home.switchAccount,
-                        data: allAccounts,
+                        rowTitle: dic!.home.switchCommunity,
+                        data: allCommunities,
                         onTap: (int index) {
-                          if (index == allAccounts.length - 1) {
-                            Navigator.of(context).pushNamed(AddAccountPage.route);
+                          if (index == allCommunities.length - 1) {
+                            Navigator.push(context, MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)))
+                                .then((_) {
+                              _refreshBalanceAndNotify(dic, store);
+                            });
                           } else {
                             setState(() {
-                              switchAccount(store.account.accountListAll[index]);
-                              _refreshBalanceAndNotify(dic);
+                              // TODO
                             });
                           }
                         },
                       );
-                    }),
-                  ]),
-                ],
-              ),
+                    },
+                  ),
+                  Observer(builder: (BuildContext context) {
+                    allAccounts = initAllAccounts(dic!, store);
+                    return SwitchAccountOrCommunity(
+                      rowTitle: dic!.home.switchAccount,
+                      data: allAccounts,
+                      onTap: (int index) {
+                        if (index == allAccounts.length - 1) {
+                          Navigator.of(context).pushNamed(AddAccountPage.route);
+                        } else {
+                          setState(() {
+                            switchAccount(store.account.accountListAll[index], store);
+                            _refreshBalanceAndNotify(dic, store);
+                          });
+                        }
+                      },
+                    );
+                  }),
+                ]),
+              ],
             ),
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(40.0), topRight: Radius.circular(40.0)),
           ),
-        ));
+          borderRadius: BorderRadius.only(topLeft: Radius.circular(40.0), topRight: Radius.circular(40.0)),
+        ),
+      ),
+    );
   }
 
-  List<AccountOrCommunityData> initAllCommunities() {
+  List<AccountOrCommunityData> initAllCommunities(AppStore store) {
     List<AccountOrCommunityData> allCommunities = [];
     // TODO #507 add back end code so we can initialize the list of communities similar to the commented out code
     // allCommunities.addAll(store.communities.communitiesList.map((community) => AccountOrCommunityData(
@@ -419,7 +417,7 @@ class _AssetsState extends State<Assets> {
     return allCommunities;
   }
 
-  List<AccountOrCommunityData> initAllAccounts(Translations dic) {
+  List<AccountOrCommunityData> initAllAccounts(Translations dic, AppStore store) {
     List<AccountOrCommunityData> allAccounts = [];
     allAccounts.addAll(store.account.accountListAll.map(
       (account) => AccountOrCommunityData(
@@ -445,7 +443,7 @@ class _AssetsState extends State<Assets> {
     return allAccounts;
   }
 
-  Future<void> switchAccount(AccountData account) async {
+  Future<void> switchAccount(AccountData account, AppStore store) async {
     if (account.pubKey != store.account.currentAccountPubKey) {
       store.setCurrentAccount(account.pubKey);
       await store.loadAccountCache();
@@ -461,11 +459,11 @@ class _AssetsState extends State<Assets> {
         return WillPopScope(
           child: showPasswordInputDialog(
             context,
-            store.account.currentAccount,
+            context.read<AppStore>().account.currentAccount,
             Text(I18n.of(context)!.translationsForLocale().home.unlock),
             (password) {
               setState(() {
-                store.settings.setPin(password);
+                context.read<AppStore>().settings.setPin(password);
               });
             },
           ),
@@ -502,38 +500,37 @@ class _AssetsState extends State<Assets> {
     );
   }
 
-  void _refreshBalanceAndNotify(Translations? dic) {
-    webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
+  void _refreshBalanceAndNotify(Translations? dic, AppStore store) {
+    webApi.encointer.getAllBalances(store.account.currentAddress).then((balances) {
       print("[home:refreshBalanceAndNotify] get all balances");
-      if (widget.store.encointer.chosenCid == null) {
+      if (store.encointer.chosenCid == null) {
         print("[home:refreshBalanceAndNotify] no community selected");
         return;
       }
       bool activeAccountHasBalance = false;
       balances.forEach((cid, balanceEntry) {
         String cidStr = cid.toFmtString();
-        if (widget.store.encointer.communityStores!.containsKey(cidStr)) {
-          var community = widget.store.encointer.communityStores![cidStr]!;
+        if (store.encointer.communityStores!.containsKey(cidStr)) {
+          var community = store.encointer.communityStores![cidStr]!;
           double demurrageRate = community.demurrage!;
           double newBalance = community.applyDemurrage(balanceEntry);
           double oldBalance = community.applyDemurrage(
-                  widget.store.encointer.accountStores![widget.store.account.currentAddress]!.balanceEntries[cidStr]) ??
+                  store.encointer.accountStores![store.account.currentAddress]!.balanceEntries[cidStr]) ??
               0;
           double delta = newBalance - oldBalance;
           print("[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta");
           if (delta.abs() > demurrageRate) {
-            widget.store.encointer.accountStores![widget.store.account.currentAddress]
-                ?.addBalanceEntry(cid, balances[cid]!);
+            store.encointer.accountStores![store.account.currentAddress]?.addBalanceEntry(cid, balances[cid]!);
             if (delta > demurrageRate) {
               var msg = dic!.assets.incomingConfirmed
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
                   .replaceAll('CID_SYMBOL', community.metadata!.symbol)
-                  .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
+                  .replaceAll('ACCOUNT_NAME', store.account.currentAccount.name);
               print("[home:balanceWatchdog] $msg");
               NotificationPlugin.showNotification(45, dic.assets.fundsReceived, msg, cid: cidStr);
             }
           }
-          if (cid == widget.store.encointer.chosenCid) {
+          if (cid == store.encointer.chosenCid) {
             activeAccountHasBalance = true;
           }
         }
@@ -541,8 +538,8 @@ class _AssetsState extends State<Assets> {
       if (!activeAccountHasBalance) {
         print(
             "[home:refreshBalanceAndNotify] didn't get any balance for active account. initialize store balance to zero");
-        widget.store.encointer.accountStores![widget.store.account.currentAddress]
-            ?.addBalanceEntry(widget.store.encointer.chosenCid!, BalanceEntry(0, 0));
+        store.encointer.accountStores![store.account.currentAddress]
+            ?.addBalanceEntry(store.encointer.chosenCid!, BalanceEntry(0, 0));
       }
     }).catchError((e) {
       print('[home:refreshBalanceAndNotify] WARNING: could not update balance: $e');

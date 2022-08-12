@@ -184,7 +184,7 @@ class _WalletAppState extends State<WalletApp> {
                           _log("SnapshotError: ${snapshot.error.toString()}");
                         }
                         if (snapshot.hasData && _appStore!.appIsReady) {
-                          return snapshot.data! > 0 ? EncointerHomePage(_appStore!) : const CreateAccountEntryPage();
+                          return snapshot.data! > 0 ? const EncointerHomePage() : const CreateAccountEntryPage();
                         } else {
                           return const CupertinoActivityIndicator();
                         }
