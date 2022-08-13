@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
@@ -329,6 +330,7 @@ abstract class _EncointerStore with Store {
   }
 
   Future<void> updateAggregatedAccountData() async {
+    Log.e(chosenCid.toString(), 'ChosenCid[encointer.dart]');
     try {
       var data = await webApi.encointer.getAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress);
       setAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress, data);

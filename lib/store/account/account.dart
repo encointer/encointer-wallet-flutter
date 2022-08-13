@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:aes_ecb_pkcs5_flutter/aes_ecb_pkcs5_flutter.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58PrefixListPage.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
@@ -124,6 +125,7 @@ abstract class _AccountStore with Store {
     // _log("currentAddress: AddressMap 2: ${pubKeyAddressMap[2].toString()}");
 
     int? ss58 = rootStore.settings.customSS58Format['value'];
+    Log.e(ss58.toString(), 'account.dart, 128');
     if (rootStore.settings.customSS58Format['info'] == default_ss58_prefix['info']) {
       ss58 = rootStore.settings.endpoint.ss58;
     }
