@@ -1,5 +1,5 @@
 import 'package:encointer_wallet/mocks/data/mockAccountData.dart';
-import 'package:encointer_wallet/mocks/storage/mockStorageSetup.dart';
+import 'package:encointer_wallet/mocks/storage/mockStorage_setup.dart';
 import 'package:encointer_wallet/utils/screenshot.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
@@ -17,11 +17,13 @@ void main() {
       // waits until the firs frame after ft startup stabilized
       await driver!.waitUntilFirstFrameRasterized();
 
-      var ready = await driver!.requestData(MockStorageSetup.WAIT_UNTIL_APP_IS_READY);
+      var ready =
+          await driver!.requestData(MockStorageSetup.WAIT_UNTIL_APP_IS_READY);
       while (ready == false.toString()) {
         print("Waiting for app to be ready: $ready");
         await Future.delayed(Duration(seconds: 1));
-        ready = await driver!.requestData(MockStorageSetup.WAIT_UNTIL_APP_IS_READY);
+        ready =
+            await driver!.requestData(MockStorageSetup.WAIT_UNTIL_APP_IS_READY);
       }
 
       await driver!.requestData(MockStorageSetup.INIT);
@@ -63,7 +65,9 @@ void main() {
       await driver!.requestData(MockStorageSetup.HOME_PAGE);
       // take a screenshot of the EncointerHome Screen
       await screenshot(driver!, config, 'encointer-home');
-    }, timeout: Timeout(Duration(seconds: 120))); // needed for android CI with github actions
+    },
+        timeout: Timeout(Duration(
+            seconds: 120))); // needed for android CI with github actions
 
     test('show receive qr code', () async {
       await driver!.tap(find.byValueKey('qr-receive'));

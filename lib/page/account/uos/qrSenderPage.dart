@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:encointer_wallet/common/components/roundedButton.dart';
-import 'package:encointer_wallet/page/qr_scan/qrScanPage.dart';
+import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,19 +27,23 @@ class _QrSenderPageState extends State<QrSenderPage> {
       return _qrPayload;
     }
 
-    final Map args = ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>;
+    final Map args =
+        ModalRoute.of(context)!.settings.arguments as Map<dynamic, dynamic>;
 
     Map? txInfo = args['txInfo'];
-    final Map? res = await webApi.account.makeQrCode(txInfo, args['params'], rawParam: args['rawParam']);
+    final Map? res = await webApi.account
+        .makeQrCode(txInfo, args['params'], rawParam: args['rawParam']);
     print('make qr code');
     setState(() {
-      _qrPayload = Uint8List.fromList(List<int>.from(Map.of(res!['qrPayload']).values));
+      _qrPayload =
+          Uint8List.fromList(List<int>.from(Map.of(res!['qrPayload']).values));
     });
     return _qrPayload;
   }
 
   Future<void> _handleScan(BuildContext context) async {
-    final signed = await Navigator.of(context).pushNamed(ScanPage.route, arguments: QrSenderPage.route);
+    final signed = await Navigator.of(context)
+        .pushNamed(ScanPage.route, arguments: QrSenderPage.route);
     if (signed != null) {
       Navigator.of(context).pop(signed);
     }
@@ -74,8 +78,12 @@ class _QrSenderPageState extends State<QrSenderPage> {
                         ? Padding(
                             padding: EdgeInsets.all(16),
                             child: RoundedButton(
-                              icon: Image.asset('assets/images/assets/scanner.png'),
-                              text: I18n.of(context)!.translationsForLocale().account.uosScan,
+                              icon: Image.asset(
+                                  'assets/images/assets/scanner.png'),
+                              text: I18n.of(context)!
+                                  .translationsForLocale()
+                                  .account
+                                  .uosScan,
                               onPressed: () {
                                 _handleScan(context);
                               },

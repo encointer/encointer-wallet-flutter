@@ -5,10 +5,10 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/txStatus.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/UI.dart';
-import 'package:encointer_wallet/utils/snackBar.dart';
+import 'package:encointer_wallet/utils/snackbar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:encointer_wallet/utils/translations/translationsHome.dart';
+import 'package:encointer_wallet/utils/translations/translations_home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -87,10 +87,12 @@ Future<Map> getTxFee(
     txInfo = proxyAccount.pubKey;
   }
 
-  return api.account.estimateTxFees(txInfo, args['params'], rawParam: args['rawParam']);
+  return api.account
+      .estimateTxFees(txInfo, args['params'], rawParam: args['rawParam']);
 }
 
-void _onTxError(BuildContext context, AppStore store, String errorMsg, bool mounted) {
+void _onTxError(
+    BuildContext context, AppStore store, String errorMsg, bool mounted) {
   store.assets.setSubmitting(false);
   if (mounted) {
     RootSnackBar.removeCurrent();
@@ -126,7 +128,8 @@ void _showTxStatusSnackBar(String status, Widget? leading) {
   );
 }
 
-void _onTxFinish(BuildContext context, AppStore store, Map res, Function(BuildContext, Map) onTxFinish, bool mounted) {
+void _onTxFinish(BuildContext context, AppStore store, Map res,
+    Function(BuildContext, Map) onTxFinish, bool mounted) {
   print('callback triggered, blockHash: ${res['hash']}');
   store.assets.setSubmitting(false);
 
@@ -135,7 +138,8 @@ void _onTxFinish(BuildContext context, AppStore store, Map res, Function(BuildCo
   if (mounted) {
     RootSnackBar.show(
       ListTile(
-        leading: Container(width: 24, child: Image.asset('assets/images/assets/success.png')),
+        leading: Container(
+            width: 24, child: Image.asset('assets/images/assets/success.png')),
         title: Text(
           I18n.of(context)!.translationsForLocale().assets.success,
           style: TextStyle(color: Colors.black54),

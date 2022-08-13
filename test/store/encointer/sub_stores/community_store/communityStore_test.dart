@@ -1,7 +1,7 @@
 import 'package:encointer_wallet/mocks/data/mockEncointerData.dart';
-import 'package:encointer_wallet/mocks/storage/mockLocalStorage.dart';
-import 'package:encointer_wallet/mocks/substrate_api/mockApi.dart';
-import 'package:encointer_wallet/mocks/testUtils.dart';
+import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
+import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
+import 'package:encointer_wallet/mocks/test_utils.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/communityStore.dart';
@@ -24,7 +24,8 @@ void main() {
       );
 
       communityStore.initStore(
-        () => localStorage.setObject(communityStoreCacheKey, communityStore.toJson()),
+        () => localStorage.setObject(
+            communityStoreCacheKey, communityStore.toJson()),
         null,
       );
 
@@ -46,8 +47,10 @@ void main() {
       communityStore.setMeetupLocations(testLocations);
       communityStore.initCommunityAccountStore(ALICE_ADDRESS);
       communityStore.initCommunityAccountStore(BOB_ADDRESS);
-      var aliceCommunityAccountStore = communityStore.communityAccountStores![ALICE_ADDRESS]!;
-      var bobCommunityAccountStore = communityStore.communityAccountStores![BOB_ADDRESS]!;
+      var aliceCommunityAccountStore =
+          communityStore.communityAccountStores![ALICE_ADDRESS]!;
+      var bobCommunityAccountStore =
+          communityStore.communityAccountStores![BOB_ADDRESS]!;
 
       Map<String, dynamic> targetJson = {
         "network": "My Test Network",

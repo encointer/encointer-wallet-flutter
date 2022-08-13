@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/notification.dart';
-import 'package:encointer_wallet/service/substrate_api/core/jsApi.dart';
+import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -17,10 +17,12 @@ class AccountApi {
 
   Future<void> initAccounts() async {
     if (store.account.accountList.length > 0) {
-      String accounts = jsonEncode(store.account.accountList.map((i) => AccountData.toJson(i)).toList());
+      String accounts = jsonEncode(
+          store.account.accountList.map((i) => AccountData.toJson(i)).toList());
 
       String ss58 = jsonEncode(network_ss58_map.values.toSet().toList());
-      Map keys = await jsApi.evalJavascript('account.initKeys($accounts, $ss58)');
+      Map keys =
+          await jsApi.evalJavascript('account.initKeys($accounts, $ss58)');
       store.account.setPubKeyAddressMap(Map<String, Map>.from(keys));
 
       // get accounts icons
@@ -28,7 +30,8 @@ class AccountApi {
     }
 
     // and contacts icons
-    List<AccountData> contacts = List<AccountData>.of(store.settings.contactList);
+    List<AccountData> contacts =
+        List<AccountData>.of(store.settings.contactList);
     getAddressIcons(contacts.map((i) => i.address).toList());
     // set pubKeyAddressMap for observation accounts
     contacts.retainWhere((i) => i.observation ?? false);
@@ -55,8 +58,10 @@ class AccountApi {
     var addresses = <String?>[];
 
     for (var pubKey in pubKeys) {
-      _log("New entry for pubKeyAddressMap: Key: $pubKey, address: ${res[store.settings]}");
-      addresses.add(store.account.pubKeyAddressMap[store.settings.endpoint.ss58]![pubKey!]);
+      _log(
+          "New entry for pubKeyAddressMap: Key: $pubKey, address: ${res[store.settings]}");
+      addresses.add(store
+          .account.pubKeyAddressMap[store.settings.endpoint.ss58]![pubKey!]);
     }
 
     return addresses;
@@ -72,7 +77,8 @@ class AccountApi {
       allowRepeat: true,
     );
     if (res != null) {
-      store.account.setPubKeyAddressMap(Map<String, Map>.from({store.settings.endpoint.ss58.toString(): res}));
+      store.account.setPubKeyAddressMap(Map<String, Map>.from(
+          {store.settings.endpoint.ss58.toString(): res}));
     }
     return res ?? {};
   }
@@ -119,10 +125,13 @@ class AccountApi {
     }
   }
 
-  Future<Map> estimateTxFees(Map txInfo, List? params, {String? rawParam}) async {
+  Future<Map> estimateTxFees(Map txInfo, List? params,
+      {String? rawParam}) async {
     String param = rawParam != null ? rawParam : jsonEncode(params);
     print(txInfo);
-    Map res = await jsApi.evalJavascript('account.txFeeEstimate(${jsonEncode(txInfo)}, $param)', allowRepeat: true);
+    Map res = await jsApi.evalJavascript(
+        'account.txFeeEstimate(${jsonEncode(txInfo)}, $param)',
+        allowRepeat: true);
     return res;
   }
 
@@ -165,9 +174,11 @@ class AccountApi {
   }) async {
     String? key = store.account.newAccount.key;
     String pass = store.account.newAccount.password;
-    String code = 'account.recover("$keyType", "$cryptoType", \'$key$derivePath\', "$pass")';
+    String code =
+        'account.recover("$keyType", "$cryptoType", \'$key$derivePath\', "$pass")';
     code = code.replaceAll(RegExp(r'\t|\n|\r'), '');
-    Map<String, dynamic> acc = await jsApi.evalJavascript(code, allowRepeat: true);
+    Map<String, dynamic> acc =
+        await jsApi.evalJavascript(code, allowRepeat: true);
     return acc;
   }
 
@@ -184,7 +195,8 @@ class AccountApi {
     if (addresses.length == 0) {
       return [];
     }
-    addresses.retainWhere((i) => !store.account.addressIndexMap.keys.contains(i));
+    addresses
+        .retainWhere((i) => !store.account.addressIndexMap.keys.contains(i));
     if (addresses.length == 0) {
       return [];
     }
@@ -198,7 +210,8 @@ class AccountApi {
   }
 
   Future<List> fetchAccountsIndex() async {
-    final addresses = store.account.accountListAll.map((e) => e.address).toList();
+    final addresses =
+        store.account.accountListAll.map((e) => e.address).toList();
     if (addresses.length == 0) {
       return [];
     }
@@ -216,17 +229,22 @@ class AccountApi {
     if (keys.length == 0) {
       return [];
     }
-    List res = await jsApi.evalJavascript('account.genPubKeyIcons(${jsonEncode(keys)})', allowRepeat: true);
+    List res = await jsApi.evalJavascript(
+        'account.genPubKeyIcons(${jsonEncode(keys)})',
+        allowRepeat: true);
     store.account.setPubKeyIconsMap(res);
     return res;
   }
 
   Future<List> getAddressIcons(List addresses) async {
-    addresses.retainWhere((i) => !store.account.addressIconsMap.keys.contains(i));
+    addresses
+        .retainWhere((i) => !store.account.addressIconsMap.keys.contains(i));
     if (addresses.length == 0) {
       return [];
     }
-    List res = await jsApi.evalJavascript('account.genIcons(${jsonEncode(addresses)})', allowRepeat: true);
+    List res = await jsApi.evalJavascript(
+        'account.genIcons(${jsonEncode(addresses)})',
+        allowRepeat: true);
     store.account.setAddressIconsMap(res);
     return res;
   }

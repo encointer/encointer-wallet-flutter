@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/utils/validateKeys.dart';
+import 'package:encointer_wallet/utils/validate_keys.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -17,7 +17,8 @@ void main() {
 
       // dart side only verifies length
       expect(
-        ValidateKeys.validatePrivateKey("0x1111111122222222333333334444444411111111222222223333333344444444"),
+        ValidateKeys.validatePrivateKey(
+            "0x1111111122222222333333334444444411111111222222223333333344444444"),
         true,
       );
     });
@@ -41,7 +42,8 @@ void main() {
       expect(ValidateKeys.validateRawSeed("//a"), true);
       expect(ValidateKeys.validateRawSeed("///"), true);
       // longer than 32 bytes
-      expect(ValidateKeys.validateRawSeed("//11111111222222223333333344444444"), false);
+      expect(ValidateKeys.validateRawSeed("//11111111222222223333333344444444"),
+          false);
     });
   });
 
@@ -52,12 +54,14 @@ void main() {
 
       // valid bip39, but illegal length.
       expect(
-        ValidateKeys.validateMnemonic("spray trust gown toast route merge awful sight ghost all degree"),
+        ValidateKeys.validateMnemonic(
+            "spray trust gown toast route merge awful sight ghost all degree"),
         false,
       );
 
       expect(
-        ValidateKeys.validateMnemonic("spray trust gown toast route merge awful sight ghost all degree exit"),
+        ValidateKeys.validateMnemonic(
+            "spray trust gown toast route merge awful sight ghost all degree exit"),
         true,
       );
     });

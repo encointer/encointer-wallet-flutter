@@ -1,0 +1,105 @@
+import 'dart:convert';
+
+import 'package:encointer_wallet/utils/local_storage.dart';
+
+import '../data/mockAccountData.dart';
+
+class MockLocalStorage extends LocalStorage {
+  @override
+  Future<List<Map<String, dynamic>>> getAccountList() {
+    return Future.value(accList);
+  }
+
+  @override
+  Future<void> addAccount(Map<String, dynamic> acc) async {
+    accList.add(acc);
+  }
+
+  @override
+  Future<void> removeAccount(String pubKey) async {
+    accList.removeWhere((i) => i['pubKey'] == pubKey);
+  }
+
+  @override
+  Future<bool> setCurrentAccount(String pubKey) async {
+    currentAccountPubKey = pubKey;
+    return Future.value(true);
+  }
+
+  @override
+  Future<String?> getCurrentAccount() async {
+    return Future.value(currentAccountPubKey);
+  }
+
+  @override
+  Future<Map<String, dynamic>> getSeeds(String seedType) async {
+    return Future.value({});
+  }
+
+  @override
+  Future<Object?> getAccountCache(String? accPubKey, String key) async {
+    return Future.value(null);
+  }
+
+  @override
+  Future<List<Map<String, dynamic>>> getContactList() async {
+    return Future.value(contactList);
+  }
+
+  @override
+  Future<void> addContact(Map<String, dynamic> contact) async {
+    contactList.add(contact);
+    return Future.value(null);
+  }
+
+  @override
+  Future<void> removeContact(String address) async {
+    contactList.removeWhere((i) => i['address'] == address);
+    return Future.value(null);
+  }
+
+  @override
+  Future<void> updateContact(Map<String, dynamic> con) async {
+    contactList.removeWhere((i) => i['pubKey'] == con['pubKey']);
+    contactList.add(con);
+    return Future.value(null);
+  }
+
+  @override
+  Future<Object?> getObject(String key) async {
+    // print("getObject: ${storage.toString()}");
+    String? value = storage[key];
+
+    if (value != null) {
+      Object data = jsonDecode(value);
+      return data;
+    }
+    return Future.value(null);
+  }
+
+  @override
+  Future<bool> setObject(String key, Object value) async {
+    String str = jsonEncode(value);
+    storage[key] = str;
+    return Future.value(true);
+  }
+
+  @override
+  Future<bool> removeKey(String key) async {
+    storage.remove(key);
+    return Future.value(true);
+  }
+
+  @override
+  Future<Map<String, dynamic>?> getMap(String key) async {
+    // print("getMap: ${storage.toString()}");
+    String? value = storage[key];
+
+    if (value != null) {
+      // String to `Map<String, dynamic>` conversion
+      var data = jsonDecode(value);
+      return data;
+    }
+    return Future.value(null);
+  }
+}

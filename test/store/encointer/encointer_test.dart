@@ -1,7 +1,7 @@
 import 'package:encointer_wallet/mocks/data/mockAccountData.dart';
 import 'package:encointer_wallet/mocks/data/mockEncointerData.dart';
-import 'package:encointer_wallet/mocks/storage/mockLocalStorage.dart';
-import 'package:encointer_wallet/mocks/substrate_api/mockApi.dart';
+import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
+import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -14,7 +14,8 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('EncointerStore test', () {
-    test('encointer store initialization, serialization and cache works', () async {
+    test('encointer store initialization, serialization and cache works',
+        () async {
       globalAppStore = AppStore(MockLocalStorage(), config: StoreConfig.Test);
       final AppStore root = globalAppStore;
       await root.init('_en');
@@ -49,7 +50,8 @@ void main() {
       encointerStore.setChosenCid(testCid);
 
       var testCommunityStore = new CommunityStore(testNetwork, testCid);
-      await testCommunityStore.initCommunityAccountStore(root.account.currentAddress);
+      await testCommunityStore
+          .initCommunityAccountStore(root.account.currentAddress);
 
       Map<String, dynamic> targetJson = {
         "network": testNetwork,
@@ -57,7 +59,8 @@ void main() {
         "nextPhaseTimestamp": 3,
         "phaseDurations": Map<String, dynamic>.of({}),
         "currentCeremonyIndex": 2,
-        "communityIdentifiers": testCommunityIdentifiers.map((c) => c.toJson()).toList(),
+        "communityIdentifiers":
+            testCommunityIdentifiers.map((c) => c.toJson()).toList(),
         "communities": testCommunities.map((cn) => cn.toJson()).toList(),
         "chosenCid": testCid.toJson(),
         "accountStores": Map<String, dynamic>.of({}),
@@ -74,7 +77,8 @@ void main() {
       var deserializedEncointerStore = EncointerStore.fromJson(targetJson);
       expect(deserializedEncointerStore.toJson(), targetJson);
 
-      var cachedEncointerStore = await root.loadEncointerCache(root.encointerCacheKey(unitTestEndpoint.info!));
+      var cachedEncointerStore = await root
+          .loadEncointerCache(root.encointerCacheKey(unitTestEndpoint.info!));
       expect(cachedEncointerStore!.toJson(), targetJson);
     });
 
@@ -92,7 +96,8 @@ void main() {
 
       root.purgeEncointerCache(unitTestEndpoint.info!);
       expect(
-        await root.localStorage.getObject(root.encointerCacheKey(unitTestEndpoint.info!)),
+        await root.localStorage
+            .getObject(root.encointerCacheKey(unitTestEndpoint.info!)),
         null,
       );
 
@@ -105,7 +110,8 @@ void main() {
       expectedStore.chosenCid = testCommunityIdentifiers[0];
 
       expect(
-        await root.localStorage.getObject(root.encointerCacheKey(unitTestEndpoint.info!)),
+        await root.localStorage
+            .getObject(root.encointerCacheKey(unitTestEndpoint.info!)),
         expectedStore.toJson(),
       );
     });

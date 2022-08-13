@@ -1,4 +1,4 @@
-import 'package:encointer_wallet/service/substrate_api/core/jsApi.dart';
+import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 class AssetsApi {
@@ -28,7 +28,8 @@ class AssetsApi {
         'account.getBalance("$address")',
         allowRepeat: true,
       );
-      store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol: res}));
+      store.assets.setAccountBalances(
+          pubKey, Map.of({store.settings.networkState!.tokenSymbol: res}));
     }
     _fetchMarketPrice();
   }
@@ -44,7 +45,8 @@ class AssetsApi {
         'account.subscribeBalance("$_balanceSubscribeChannel","$address")',
         _balanceSubscribeChannel,
         (data) => {
-          store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol: data})),
+          store.assets.setAccountBalances(
+              pubKey, Map.of({store.settings.networkState!.tokenSymbol: data})),
         },
       );
     }

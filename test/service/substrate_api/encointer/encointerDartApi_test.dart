@@ -1,6 +1,6 @@
-import 'package:encointer_wallet/mocks/testTags.dart';
-import 'package:encointer_wallet/mocks/testUtils.dart';
-import 'package:encointer_wallet/service/substrate_api/core/dartApi.dart';
+import 'package:encointer_wallet/mocks/test_tags.dart';
+import 'package:encointer_wallet/mocks/test_utils.dart';
+import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointerDartApi.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -12,7 +12,8 @@ void main() {
 
       var encointerDartApi = EncointerDartApi(substrateDartApi);
 
-      var data = await encointerDartApi.getAggregatedAccountData(mediterraneanTestCommunity, ALICE_ADDRESS);
+      var data = await encointerDartApi.getAggregatedAccountData(
+          mediterraneanTestCommunity, ALICE_ADDRESS);
       print("data: ${data.toString()}");
 
       await substrateDartApi.close();

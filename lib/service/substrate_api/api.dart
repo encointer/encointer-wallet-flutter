@@ -2,19 +2,19 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:encointer_wallet/config/node.dart';
-import 'package:encointer_wallet/service/ipfs/httpApi.dart';
+import 'package:encointer_wallet/service/ipfs/http_api.dart';
 import 'package:encointer_wallet/service/subscan.dart';
 import 'package:encointer_wallet/service/substrate_api/accountApi.dart';
 import 'package:encointer_wallet/service/substrate_api/assetsApi.dart';
 import 'package:encointer_wallet/service/substrate_api/chainApi.dart';
 import 'package:encointer_wallet/service/substrate_api/codecApi.dart';
-import 'package:encointer_wallet/service/substrate_api/core/dartApi.dart';
-import 'package:encointer_wallet/service/substrate_api/encointer/encointerApi.dart';
+import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
+import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 import 'package:encointer_wallet/service/substrate_api/types/genExternalLinksParams.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:get_storage/get_storage.dart';
 
-import 'core/jsApi.dart';
+import 'core/js_api.dart';
 
 /// Global api instance
 ///
@@ -99,7 +99,8 @@ class Api {
       await account.initAccounts();
 
       if (store.account.currentAddress.isNotEmpty) {
-        await store.encointer.initializeUninitializedStores(store.account.currentAddress);
+        await store.encointer
+            .initializeUninitializedStores(store.account.currentAddress);
       }
 
       return connectFunc();
@@ -121,14 +122,16 @@ class Api {
     // calls to the same method.
     bool allowRepeat = true,
   }) {
-    return js.evalJavascript(code, wrapPromise: wrapPromise, allowRepeat: allowRepeat);
+    return js.evalJavascript(code,
+        wrapPromise: wrapPromise, allowRepeat: allowRepeat);
   }
 
   Future<void> connectNode() async {
     String? node = store.settings.endpoint.value;
     NodeConfig? config = store.settings.endpoint.overrideConfig;
     // do connect
-    String? res = await evalJavascript('settings.connect("$node", "${jsonEncode(config)}")');
+    String? res = await evalJavascript(
+        'settings.connect("$node", "${jsonEncode(config)}")');
     if (res == null) {
       print('connecting to node failed');
       store.settings.setNetworkName(null);
@@ -138,18 +141,22 @@ class Api {
     if (store.settings.endpointIsTeeProxy) {
       var worker = store.settings.endpoint.worker;
       var mrenclave = store.settings.endpoint.mrenclave;
-      await evalJavascript('settings.setWorkerEndpoint("$worker", "$mrenclave")');
+      await evalJavascript(
+          'settings.setWorkerEndpoint("$worker", "$mrenclave")');
     }
 
     fetchNetworkProps();
   }
 
   Future<void> connectNodeAll() async {
-    List<String?> nodes = store.settings.endpointList.map((e) => e.value).toList();
-    List<NodeConfig?> configs = store.settings.endpointList.map((e) => e.overrideConfig).toList();
+    List<String?> nodes =
+        store.settings.endpointList.map((e) => e.value).toList();
+    List<NodeConfig?> configs =
+        store.settings.endpointList.map((e) => e.overrideConfig).toList();
     print("configs: $configs");
     // do connect
-    String? res = await evalJavascript('settings.connectAll(${jsonEncode(nodes)}, ${jsonEncode(configs)})');
+    String? res = await evalJavascript(
+        'settings.connectAll(${jsonEncode(nodes)}, ${jsonEncode(configs)})');
     if (res == null) {
       print('connect failed');
       store.settings.setNetworkName(null);
@@ -160,7 +167,8 @@ class Api {
     if (store.settings.endpointIsTeeProxy) {
       var worker = store.settings.endpoint.worker;
       var mrenclave = store.settings.endpoint.mrenclave;
-      await evalJavascript('settings.setWorkerEndpoint("$worker", "$mrenclave")');
+      await evalJavascript(
+          'settings.setWorkerEndpoint("$worker", "$mrenclave")');
     }
 
     int index = store.settings.endpointList.indexWhere((i) => i.value == res);
@@ -181,7 +189,8 @@ class Api {
     List<dynamic> info = await Future.wait([
       evalJavascript('settings.getNetworkConst()'),
       evalJavascript('api.rpc.system.properties()'),
-      evalJavascript('api.rpc.system.chain()'), // "Development" or "Encointer Testnet Gesell" or whatever
+      evalJavascript(
+          'api.rpc.system.chain()'), // "Development" or "Encointer Testnet Gesell" or whatever
     ]);
     store.settings.setNetworkConst(info[0]);
     store.settings.setNetworkState(info[1]);

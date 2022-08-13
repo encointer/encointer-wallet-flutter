@@ -1,7 +1,7 @@
-import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/businessesOnMap.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaarItemVertical.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demoData.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/shared/toggleButtonsWithTitle.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/businesses_on_map.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_vertical.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/toggle_buttons_with_title.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 
@@ -11,7 +11,10 @@ class Businesses extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      ToggleButtonsWithTitle(I18n.of(context)!.translationsForLocale().bazaar.categories, allCategories, null),
+      ToggleButtonsWithTitle(
+          I18n.of(context)!.translationsForLocale().bazaar.categories,
+          allCategories,
+          null),
       Expanded(
         child: ListView.builder(
           itemCount: data.length,

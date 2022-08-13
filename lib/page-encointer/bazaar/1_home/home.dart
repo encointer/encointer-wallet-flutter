@@ -1,10 +1,10 @@
-import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaarItemHorizontal.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demoData.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_horizontal.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/material.dart';
 
-import 'BazaarSearch/bazaarSearch.dart';
+import 'BazaarSearch/bazaar_search.dart';
 
 class Home extends StatelessWidget {
   final double cardHeight = 200;
@@ -17,9 +17,12 @@ class Home extends StatelessWidget {
       Padding(
         padding: const EdgeInsets.only(top: 54),
         child: ListView(children: [
-          HorizontalBazaarItemList(newInBazaar, dic.bazaar.bazaarNew, cardHeight, cardWidth),
-          HorizontalBazaarItemList(businessesInVicinity, dic.bazaar.businessesVicinity, cardHeight, cardWidth),
-          HorizontalBazaarItemList(lastVisited, dic.bazaar.lastVisited, cardHeight, cardWidth),
+          HorizontalBazaarItemList(
+              newInBazaar, dic.bazaar.bazaarNew, cardHeight, cardWidth),
+          HorizontalBazaarItemList(businessesInVicinity,
+              dic.bazaar.businessesVicinity, cardHeight, cardWidth),
+          HorizontalBazaarItemList(
+              lastVisited, dic.bazaar.lastVisited, cardHeight, cardWidth),
         ]),
       ),
       BazaarSearch(),

@@ -1,6 +1,6 @@
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 
-import 'qrCodeBase.dart';
+import 'qr_code_base.dart';
 
 class ContactQrCode extends QrCode<ContactData> {
   ContactQrCode.withData(
@@ -14,7 +14,8 @@ class ContactQrCode extends QrCode<ContactData> {
     String? network,
     required String label,
     this.version = QrCodeVersion.v1_0,
-  }) : super(ContactData(account: account, cid: cid, network: network, label: label));
+  }) : super(ContactData(
+            account: account, cid: cid, network: network, label: label));
 
   QrCodeContext? context = QrCodeContext.contact;
 
@@ -86,7 +87,9 @@ class ContactData implements ToQrFields {
   static ContactData fromQrFieldsV2(List<String> fields) {
     return ContactData(
       account: fields[0],
-      cid: fields[1].isNotEmpty ? CommunityIdentifier.fromFmtString(fields[1]) : null,
+      cid: fields[1].isNotEmpty
+          ? CommunityIdentifier.fromFmtString(fields[1])
+          : null,
       network: fields[2],
       label: fields[3],
     );

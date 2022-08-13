@@ -4,7 +4,7 @@ import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:encointer_wallet/store/encointer/types/workerApi.dart';
 
-import '../core/jsApi.dart';
+import '../core/js_api.dart';
 
 class TeeProxyApi {
   TeeProxyApi(this.jsApi)
@@ -21,21 +21,27 @@ class Ceremonies {
 
   final JSApi jsApi;
 
-  Future<int> participantIndex(CommunityIdentifier cid, String pubKey, String pin) async {
+  Future<int> participantIndex(
+      CommunityIdentifier cid, String pubKey, String pin) async {
     return jsApi
-        .evalJavascript('worker.getParticipantIndex(${jsonEncode(PubKeyPinPair(pubKey, pin))}, ${jsonEncode(cid)})')
+        .evalJavascript(
+            'worker.getParticipantIndex(${jsonEncode(PubKeyPinPair(pubKey, pin))}, ${jsonEncode(cid)})')
         .then((value) => int.parse(value));
   }
 
-  Future<int> meetupIndex(CommunityIdentifier cid, String pubKey, String pin) async {
+  Future<int> meetupIndex(
+      CommunityIdentifier cid, String pubKey, String pin) async {
     return jsApi
-        .evalJavascript('worker.getMeetupIndex(${jsonEncode(PubKeyPinPair(pubKey, pin))}, ${jsonEncode(cid)})')
+        .evalJavascript(
+            'worker.getMeetupIndex(${jsonEncode(PubKeyPinPair(pubKey, pin))}, ${jsonEncode(cid)})')
         .then((value) => int.parse(value));
   }
 
-  Future<List<String>> meetupRegistry(CommunityIdentifier cid, String pubKey, String pin) async {
+  Future<List<String>> meetupRegistry(
+      CommunityIdentifier cid, String pubKey, String pin) async {
     return jsApi
-        .evalJavascript('worker.getMeetupRegistry(${jsonEncode(PubKeyPinPair(pubKey, pin))}, ${jsonEncode(cid)})')
+        .evalJavascript(
+            'worker.getMeetupRegistry(${jsonEncode(PubKeyPinPair(pubKey, pin))}, ${jsonEncode(cid)})')
         .then((value) => List<String>.from(value));
   }
 }
@@ -45,9 +51,11 @@ class Balances {
 
   final JSApi jsApi;
 
-  Future<BalanceEntry> balance(CommunityIdentifier cid, String? pubKey, String pin) async {
+  Future<BalanceEntry> balance(
+      CommunityIdentifier cid, String? pubKey, String pin) async {
     return jsApi
-        .evalJavascript('worker.getBalance(${jsonEncode(PubKeyPinPair(pubKey, pin))}, ${jsonEncode(cid)})')
+        .evalJavascript(
+            'worker.getBalance(${jsonEncode(PubKeyPinPair(pubKey, pin))}, ${jsonEncode(cid)})')
         .then((balance) => BalanceEntry.fromJson(balance));
   }
 }

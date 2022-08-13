@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:animated_check/animated_check.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/paymentOverview.dart';
-import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/transferState.dart';
+import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/payment_overview.dart';
+import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/transfer_state.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
@@ -41,10 +41,12 @@ class PaymentConfirmationPage extends StatefulWidget {
   final Api api;
 
   @override
-  _PaymentConfirmationPageState createState() => _PaymentConfirmationPageState();
+  _PaymentConfirmationPageState createState() =>
+      _PaymentConfirmationPageState();
 }
 
-class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with SingleTickerProviderStateMixin {
+class _PaymentConfirmationPageState extends State<PaymentConfirmationPage>
+    with SingleTickerProviderStateMixin {
   TransferState _transferState = TransferState.notStarted;
 
   /// Transaction result, will only be used in the error case.
@@ -61,11 +63,13 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
-    PaymentConfirmationParams params = ModalRoute.of(context)!.settings.arguments as PaymentConfirmationParams;
+    PaymentConfirmationParams params =
+        ModalRoute.of(context)!.settings.arguments as PaymentConfirmationParams;
 
     var cid = params.cid;
     var recipientAccount = params.recipientAccount;
-    final recipientAddress = Fmt.addressOfAccount(recipientAccount, widget.store);
+    final recipientAddress =
+        Fmt.addressOfAccount(recipientAccount, widget.store);
     var amount = params.amount;
 
     return Observer(
@@ -76,7 +80,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
             child: Column(
               children: [
-                PaymentOverview(widget.store, params.communitySymbol, params.recipientAccount, params.amount),
+                PaymentOverview(widget.store, params.communitySymbol,
+                    params.recipientAccount, params.amount),
                 SizedBox(height: 10),
                 Flexible(
                   fit: FlexFit.tight,
@@ -91,7 +96,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                   flex: 2,
                   child: AnimatedSwitcher(
                     duration: const Duration(milliseconds: 500),
-                    transitionBuilder: (Widget child, Animation<double> animation) {
+                    transitionBuilder:
+                        (Widget child, Animation<double> animation) {
                       return RotationTransition(child: child, turns: animation);
                       // return ScaleTransition(child: child, scale: animation);
                     },
@@ -119,7 +125,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                                 )
                               : CupertinoActivityIndicator(),
                         ),
-                        onPressed: () => _submit(context, cid, recipientAddress, amount),
+                        onPressed: () =>
+                            _submit(context, cid, recipientAddress, amount),
                       )
                     : PrimaryButton(
                         key: Key('transfer-done'),
@@ -127,7 +134,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                           height: 24,
                           child: Center(child: Text(dic.assets.done)),
                         ),
-                        onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
+                        onPressed: () => Navigator.popUntil(
+                            context, ModalRoute.withName('/')),
                       )
               ],
             ),
@@ -137,7 +145,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     );
   }
 
-  Future<void> _submit(BuildContext context, CommunityIdentifier cid, String recipientAddress, double? amount) async {
+  Future<void> _submit(BuildContext context, CommunityIdentifier cid,
+      String recipientAddress, double? amount) async {
     var params = encointerBalanceTransferParams(cid, recipientAddress, amount);
 
     setState(() {
@@ -156,7 +165,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
       }
     };
 
-    await submitTx(context, widget.store, widget.api, params, onFinish: onFinish);
+    await submitTx(context, widget.store, widget.api, params,
+        onFinish: onFinish);
 
     // for debugging
     // Future.delayed(const Duration(milliseconds: 1500), () {
@@ -188,7 +198,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
           }
 
           return Container(
-            decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.green),
+            decoration:
+                BoxDecoration(shape: BoxShape.circle, color: Colors.green),
             child: AnimatedCheck(
               progress: _animation!,
               size: 100,
@@ -214,8 +225,10 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   }
 
   Widget _txStateTextInfo(TransferState state) {
-    final h1Grey = Theme.of(context).textTheme.headline1!.copyWith(color: encointerGrey);
-    final h2Grey = Theme.of(context).textTheme.headline2!.copyWith(color: encointerGrey);
+    final h1Grey =
+        Theme.of(context).textTheme.headline1!.copyWith(color: encointerGrey);
+    final h2Grey =
+        Theme.of(context).textTheme.headline2!.copyWith(color: encointerGrey);
 
     final Translations dic = I18n.of(context)!.translationsForLocale();
     switch (state) {
@@ -264,10 +277,12 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   }
 
   void _initializeAnimation() {
-    _animationController = AnimationController(vsync: this, duration: Duration(seconds: 1));
+    _animationController =
+        AnimationController(vsync: this, duration: Duration(seconds: 1));
 
-    _animation = new Tween<double>(begin: 0, end: 1)
-        .animate(new CurvedAnimation(parent: _animationController!, curve: Curves.easeInOutCirc));
+    _animation = new Tween<double>(begin: 0, end: 1).animate(
+        new CurvedAnimation(
+            parent: _animationController!, curve: Curves.easeInOutCirc));
 
     _animationController!.forward();
 

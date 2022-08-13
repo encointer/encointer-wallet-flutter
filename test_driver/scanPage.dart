@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:encointer_wallet/mocks/mockQRScanPage.dart';
-import 'package:encointer_wallet/mocks/restartWidget.dart';
+import 'package:encointer_wallet/mocks/mock_qr_scan_page.dart';
+import 'package:encointer_wallet/mocks/restart_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:rxdart/rxdart.dart';
@@ -25,7 +25,8 @@ void main() async {
   }
 
   enableFlutterDriverExtension(handler: dataHandler);
-  WidgetsApp.debugAllowBannerOverride = false; // remove debug banner for screenshots
+  WidgetsApp.debugAllowBannerOverride =
+      false; // remove debug banner for screenshots
 
   runApp(
     MaterialApp(

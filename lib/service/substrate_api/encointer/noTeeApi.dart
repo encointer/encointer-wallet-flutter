@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:encointer_wallet/service/substrate_api/core/jsApi.dart';
+import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 
@@ -19,21 +19,27 @@ class Ceremonies {
 
   final JSApi jsApi;
 
-  Future<int> participantIndex(CommunityIdentifier cid, int cIndex, String pubKey) async {
+  Future<int> participantIndex(
+      CommunityIdentifier cid, int cIndex, String pubKey) async {
     return jsApi
-        .evalJavascript('encointer.getParticipantIndex(${jsonEncode(cid)}, "$cIndex" ,"$pubKey")')
+        .evalJavascript(
+            'encointer.getParticipantIndex(${jsonEncode(cid)}, "$cIndex" ,"$pubKey")')
         .then((value) => int.parse(value));
   }
 
-  Future<int> meetupIndex(CommunityIdentifier cid, int cIndex, String pubKey) async {
+  Future<int> meetupIndex(
+      CommunityIdentifier cid, int cIndex, String pubKey) async {
     return jsApi
-        .evalJavascript('encointer.getMeetupIndex(${jsonEncode(cid)}, "$cIndex","$pubKey")')
+        .evalJavascript(
+            'encointer.getMeetupIndex(${jsonEncode(cid)}, "$cIndex","$pubKey")')
         .then((value) => int.parse(value));
   }
 
-  Future<List<String>> meetupRegistry(CommunityIdentifier cid, int cIndex, int mIndex) async {
+  Future<List<String>> meetupRegistry(
+      CommunityIdentifier cid, int cIndex, int mIndex) async {
     return jsApi
-        .evalJavascript('encointer.getMeetupRegistry(${jsonEncode(cid)}, "$cIndex", "$mIndex")')
+        .evalJavascript(
+            'encointer.getMeetupRegistry(${jsonEncode(cid)}, "$cIndex", "$mIndex")')
         .then((value) => List<String>.from(value));
   }
 }
@@ -44,7 +50,8 @@ class Balances {
   final JSApi jsApi;
 
   Future<BalanceEntry> balance(CommunityIdentifier cid, String? pubKey) async {
-    Map<String, dynamic> balance = await jsApi.evalJavascript('encointer.getBalance(${jsonEncode(cid)}, "$pubKey")');
+    Map<String, dynamic> balance = await jsApi
+        .evalJavascript('encointer.getBalance(${jsonEncode(cid)}, "$pubKey")');
     return BalanceEntry.fromJson(balance);
   }
 }

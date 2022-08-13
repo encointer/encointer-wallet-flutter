@@ -1,7 +1,7 @@
 import 'package:encointer_wallet/app.dart';
 import 'package:encointer_wallet/config.dart';
-import 'package:encointer_wallet/mocks/storage/mockStorageSetup.dart';
-import 'package:encointer_wallet/mocks/storage/prepareMockStorage.dart';
+import 'package:encointer_wallet/mocks/storage/mockStorage_setup.dart';
+import 'package:encointer_wallet/mocks/storage/prepare_mock_storage.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
@@ -33,11 +33,15 @@ void main() {
   }
 
   enableFlutterDriverExtension(handler: dataHandler);
-  WidgetsApp.debugAllowBannerOverride = false; // remove debug banner for screenshots
+  WidgetsApp.debugAllowBannerOverride =
+      false; // remove debug banner for screenshots
 
   // Call the `main()` function of the app, or call `runApp` with
   // any widget you are interested in testing.
   runApp(
-    WalletApp(Config(mockLocalStorage: true, mockSubstrateApi: true, appStoreConfig: StoreConfig.Test)),
+    WalletApp(Config(
+        mockLocalStorage: true,
+        mockSubstrateApi: true,
+        appStoreConfig: StoreConfig.Test)),
   );
 }

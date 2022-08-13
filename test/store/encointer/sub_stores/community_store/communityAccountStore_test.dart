@@ -1,5 +1,5 @@
-import 'package:encointer_wallet/mocks/storage/mockLocalStorage.dart';
-import 'package:encointer_wallet/mocks/testUtils.dart';
+import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
+import 'package:encointer_wallet/mocks/test_utils.dart';
 import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_account_store/communityAccountStore.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -13,7 +13,8 @@ void main() {
         ALICE_ADDRESS,
       );
       communityAccountStore.participantType = ParticipantType.Bootstrapper;
-      communityAccountStore.setMeetup(Meetup(2, 3, 10, [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]));
+      communityAccountStore.setMeetup(
+          Meetup(2, 3, 10, [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]));
 
       Map<String, dynamic> targetJson = {
         "network": "My Test Network",
@@ -57,7 +58,8 @@ void main() {
       expect(store.meetup!.index, 2);
       expect(store.meetup!.locationIndex, 3);
       expect(store.meetup!.time, 10);
-      expect(store.meetup!.registry, [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]);
+      expect(store.meetup!.registry,
+          [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]);
     });
 
     test('cacheFn injection works', () async {
@@ -70,9 +72,11 @@ void main() {
       );
       communityAccountStore.participantType = ParticipantType.Bootstrapper;
 
-      communityAccountStore.initStore(() => localStorage.setObject("hello", communityAccountStore.toJson()));
+      communityAccountStore.initStore(() =>
+          localStorage.setObject("hello", communityAccountStore.toJson()));
 
-      communityAccountStore.setMeetup(Meetup(2, 3, 10, [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]));
+      communityAccountStore.setMeetup(
+          Meetup(2, 3, 10, [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]));
 
       Map<String, dynamic> targetCachedJson = {
         "network": "My Test Network",
