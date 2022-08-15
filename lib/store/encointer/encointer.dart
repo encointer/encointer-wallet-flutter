@@ -336,12 +336,13 @@ abstract class _EncointerStore with Store {
   }
 
   Future<void> updateAggregatedAccountData() async {
-    Log.e(chosenCid.toString(), 'ChosenCid[encointer.dart]');
+    if (chosenCid == null) Log.e(chosenCid.toString(), 'ChosenCid[encointer.dart]');
+    Log.d(chosenCid.toString(), 'ChosenCid[encointer.dart]');
     try {
       var data = await webApi.encointer.getAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress);
       setAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress, data);
     } catch (e, s) {
-      Log.d(e.toString(), 'encointer.dart', s);
+      Log.e(e.toString(), 'encointer.dart', s);
     }
   }
 
