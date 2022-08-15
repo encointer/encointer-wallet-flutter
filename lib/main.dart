@@ -50,10 +50,6 @@ Future<void> main() async {
 
   HttpOverrides.global = MyHttpOverrides();
 
-  Log.e('eldiiar', 'menin atym');
-  Log.d('eldiiar', 'menin atym');
-  Log.p('eldiiar', 'menin atym');
-
   runApp(
     Provider(
       create: (context) => AppStore(util.LocalStorage()),
