@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/assets/types/transferData.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
@@ -59,7 +60,7 @@ abstract class _EncointerAccountStore with Store {
       try {
         return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
       } catch (_e) {
-        _log("$address has reputation, but none that has not been linked yet");
+        Log.d("$address has reputation, but none that has not been linked yet", 'encointer account store');
         return 0;
       }
     }
@@ -67,7 +68,7 @@ abstract class _EncointerAccountStore with Store {
 
   @action
   void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
-    _log("balanceEntry $balanceEntry added to cid $cid added");
+    Log.d("balanceEntry $balanceEntry added to cid $cid added", 'encointer account store');
     balanceEntries[cid.toFmtString()] = balanceEntry;
     writeToCache();
   }
@@ -92,7 +93,7 @@ abstract class _EncointerAccountStore with Store {
   @action
   Future<void> setTransferTxs(List list, String address, {bool reset = false, needCache = true}) async {
     if (this.address != address) {
-      _log("Tried to cached transfer tx's for wrong account. This is a bug.");
+      Log.d("Tried to cached transfer tx's for wrong account. This is a bug.", 'encointer account store');
       return Future.value(null);
     }
 
@@ -129,8 +130,4 @@ abstract class _EncointerAccountStore with Store {
       return Future.value(null);
     }
   }
-}
-
-void _log(String msg) {
-  print("[encointerAccountStore] $msg");
 }

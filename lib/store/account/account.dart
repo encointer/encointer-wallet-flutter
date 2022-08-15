@@ -107,14 +107,10 @@ abstract class _AccountStore with Store {
   }
 
   @computed
-  bool get isFirstAccount {
-    return accountListAll.isEmpty;
-  }
+  bool get isFirstAccount => accountListAll.isEmpty;
 
   @computed
-  String get currentAddress {
-    return getNetworkAddress(currentAccountPubKey);
-  }
+  String get currentAddress => getNetworkAddress(currentAccountPubKey);
 
   /// Gets the address (SS58) for the corresponding network.
   String getNetworkAddress(String? pubKey) {
@@ -125,7 +121,7 @@ abstract class _AccountStore with Store {
     // _log("currentAddress: AddressMap 2: ${pubKeyAddressMap[2].toString()}");
 
     int? ss58 = rootStore.settings.customSS58Format['value'];
-    Log.e(ss58.toString(), 'account.dart, 128');
+    Log.d(ss58.toString(), 'account.dart, 128');
     if (rootStore.settings.customSS58Format['info'] == default_ss58_prefix['info']) {
       ss58 = rootStore.settings.endpoint.ss58;
     }
@@ -135,40 +131,28 @@ abstract class _AccountStore with Store {
     if (address != null) {
       return address;
     } else {
-      _log("getNetworkAddress: could not get address (SS58)");
+      Log.d("getNetworkAddress: could not get address (SS58)", 'account.dart');
       return currentAccount.address;
     }
   }
 
   @action
-  void setTxStatus([TxStatus? status]) {
-    txStatus = status;
-  }
+  void setTxStatus([TxStatus? status]) => txStatus = status;
 
   @action
-  void clearTxStatus() {
-    txStatus = null;
-  }
+  void clearTxStatus() => txStatus = null;
 
   @action
-  void setNewAccountName(String name) {
-    newAccount.name = name;
-  }
+  void setNewAccountName(String name) => newAccount.name = name;
 
   @action
-  void setNewAccountPin(String pin) {
-    newAccount.password = pin;
-  }
+  void setNewAccountPin(String pin) => newAccount.password = pin;
 
   @action
-  void setNewAccountKey(String? key) {
-    newAccount.key = key;
-  }
+  void setNewAccountKey(String? key) => newAccount.key = key;
 
   @action
-  void resetNewAccount() {
-    newAccount = AccountCreate();
-  }
+  void resetNewAccount() => newAccount = AccountCreate();
 
   @action
   void queueTx(Map<String, dynamic> tx) {
@@ -185,7 +169,7 @@ abstract class _AccountStore with Store {
             rawParam: args['rawParam'],
           );
 
-          print("Queued tx result: ${res.toString()}");
+          Log.d("Queued tx result: ${res.toString()}", 'account.dart');
           if (res['hash'] == null) {
             NotificationPlugin.showNotification(
               0,
@@ -203,7 +187,7 @@ abstract class _AccountStore with Store {
         timer.cancel();
         queuedTxs = [];
       } else {
-        print("Waiting for the api to reconnect to send ${queuedTxs.length} queued tx(s)");
+        Log.d("Waiting for the api to reconnect to send ${queuedTxs.length} queued tx(s)", 'account.dart');
       }
     });
   }
@@ -259,7 +243,7 @@ abstract class _AccountStore with Store {
     int index = accountList.indexWhere((i) => i.pubKey == pubKey);
     if (index > -1) {
       await rootStore.localStorage.removeAccount(pubKey);
-      print('removed acc: $pubKey');
+      Log.d('removed acc: $pubKey', 'account.dart');
     }
     await rootStore.localStorage.addAccount(acc);
 
@@ -272,7 +256,7 @@ abstract class _AccountStore with Store {
 
   @action
   Future<void> removeAccount(AccountData acc) async {
-    _log("removeAccount: removing ${acc.pubKey}");
+    Log.d("removeAccount: removing ${acc.pubKey}", 'account.dart');
     await rootStore.localStorage.removeAccount(acc.pubKey);
 
     // remove encrypted seed after removing account
@@ -283,7 +267,7 @@ abstract class _AccountStore with Store {
       // set new currentAccount after currentAccount was removed
       List<Map<String, dynamic>> accounts = await rootStore.localStorage.getAccountList();
       var newCurrentAccountPubKey = accounts.length > 0 ? accounts[0]['pubKey'] : '';
-      _log("removeAccount: newCurrentAccountPubKey $newCurrentAccountPubKey");
+      Log.d("removeAccount: newCurrentAccountPubKey $newCurrentAccountPubKey", 'account.dart');
 
       await rootStore.setCurrentAccount(newCurrentAccountPubKey);
     } else {
@@ -384,8 +368,8 @@ abstract class _AccountStore with Store {
 
   @action
   void setAddressIconsMap(List list) {
-    print("Address Icons");
-    print(list);
+    Log.d("Address Icons", 'account.dart');
+    Log.d(list.toString(), 'account.dart');
     list.forEach((i) {
       addressIconsMap[i[0]] = i[1];
     });
@@ -419,8 +403,4 @@ abstract class _AccountCreate with Store {
 
   @observable
   String? key = '';
-}
-
-_log(String msg) {
-  print("[AccountStore] $msg");
 }

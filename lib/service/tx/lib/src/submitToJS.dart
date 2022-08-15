@@ -1,6 +1,7 @@
 import 'dart:core';
 
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/txStatus.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -45,8 +46,8 @@ Future<void> submitToJS(
   //   txInfo['proxy'] = _proxyAccount.pubKey;
   //   txInfo['ss58'] = store.settings.endpoint.ss58.toString();
   // }
-  print(txInfo);
-  print(args['params']);
+  Log.d(txInfo.toString(), 'submitToJS.dart');
+  Log.d(args['params'], 'encointer.dart');
 
   var onTxFinishFn = (args['onFinish'] as Function(BuildContext, Map)?);
 
@@ -127,7 +128,7 @@ void _showTxStatusSnackBar(String status, Widget? leading) {
 }
 
 void _onTxFinish(BuildContext context, AppStore store, Map res, Function(BuildContext, Map) onTxFinish, bool mounted) {
-  print('callback triggered, blockHash: ${res['hash']}');
+  Log.d('callback triggered, blockHash: ${res['hash']}', 'encointer.dart');
   store.assets.setSubmitting(false);
 
   onTxFinish(context, res);
@@ -161,13 +162,13 @@ String getTxStatusTranslation(TranslationsHome dic, TxStatus? status) {
     case TxStatus.Error:
       return dic.txError;
     default:
-      print("Illegal TxStatus supplied to translation: ${status.toString()}");
+      Log.d("Illegal TxStatus supplied to translation: ${status.toString()}", 'encointer.dart');
       return "";
   }
 }
 
 Future<void> showErrorDialog(BuildContext context, String errorMsg) {
-  final Translations dic = I18n.of(context)!.translationsForLocale();
+  final dic = I18n.of(context)!.translationsForLocale();
 
   return showCupertinoDialog(
     context: context,
@@ -187,7 +188,7 @@ Future<void> showErrorDialog(BuildContext context, String errorMsg) {
 }
 
 Future<void> showInsufficientFundsDialog(BuildContext context) {
-  final Translations dic = I18n.of(context)!.translationsForLocale();
+  final dic = I18n.of(context)!.translationsForLocale();
   String languageCode = Localizations.localeOf(context).languageCode;
 
   return showCupertinoDialog(
@@ -211,7 +212,3 @@ Future<void> showInsufficientFundsDialog(BuildContext context) {
     },
   );
 }
-
-// void _log(String msg) {
-//   print("[txConfirmLogic] $msg");
-// }

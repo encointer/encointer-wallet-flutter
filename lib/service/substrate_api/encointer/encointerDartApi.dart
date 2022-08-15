@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dartApi.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
@@ -9,7 +10,7 @@ class EncointerDartApi {
   SubstrateDartApi _dartApi;
 
   Future<void> close() async {
-    print("[EncointerDartApi: closing");
+    Log.d("[EncointerDartApi: closing", 'encointer.dart');
     return _dartApi.close();
   }
 
@@ -17,7 +18,8 @@ class EncointerDartApi {
   ///
   Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String account) {
     return _dartApi.rpc("encointer_getAggregatedAccountData", [cid.toJson(), account]).then(
-        (data) => AggregatedAccountData.fromJson(data));
+      (data) => AggregatedAccountData.fromJson(data),
+    );
   }
 
   ///
@@ -27,8 +29,11 @@ class EncointerDartApi {
 
   Future<Map<CommunityIdentifier, BalanceEntry>> getAllBalances(String account) {
     return _dartApi.rpc("encointer_getAllBalances", [account]).then((data) {
-      return Map.fromIterable(data,
-          key: (bal) => CommunityIdentifier.fromJson(bal[0]), value: (bal) => BalanceEntry.fromJson(bal[1]));
+      return Map.fromIterable(
+        data,
+        key: (bal) => CommunityIdentifier.fromJson(bal[0]),
+        value: (bal) => BalanceEntry.fromJson(bal[1]),
+      );
     });
   }
 }

@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 const EncointerJsService = "EncointerJsService";
@@ -26,14 +27,14 @@ class JSApi {
 
     _web = HeadlessInAppWebView(
       initialData: InAppWebViewInitialData(data: jSSourceHtmlContainer(jsServiceEncointer)),
-      onConsoleMessage: (controller, message) => print("JS-Console: ${message.message}"),
+      onConsoleMessage: (controller, message) => Log.d("JS-Console: ${message.message}", 'chainApi.dart'),
       onWebViewCreated: (controller) async {
-        print("Adding the PolkaWallet javascript handler");
+        Log.d("Adding the PolkaWallet javascript handler", 'chainApi.dart');
 
         controller.addJavaScriptHandler(
             handlerName: EncointerJsService,
             callback: (args) {
-              print('[JavaScripHandler/callback]: ${args.toString()}');
+              Log.d('[JavaScripHandler/callback]: ${args.toString()}', 'chainApi.dart');
 
               var res = args[0];
 
@@ -62,9 +63,9 @@ class JSApi {
     // log updates about the webView state until it is ready.
     Timer.periodic(Duration(seconds: 2), (timer) {
       if (!initWebViewCompleter.isCompleted) {
-        _log("webView is being initialized...");
+        Log.d("webView is being initialized...", 'jsApi.dart');
       } else {
-        _log("webView is ready");
+        Log.d("webView is ready", 'jsApi.dart');
         timer.cancel();
       }
     });
@@ -90,7 +91,7 @@ class JSApi {
       for (String i in _msgCompleters.keys) {
         String call = code.split('(')[0];
         if (i.compareTo(call) == 0) {
-          print('request $call loading');
+          Log.d('request $call loading', 'jsApi.dart');
           return _msgCompleters[i]!.future;
         }
       }
@@ -125,11 +126,7 @@ class JSApi {
     return _evalJavascriptUID++;
   }
 
-  Future<void> subscribeMessage(
-    String code,
-    String channel,
-    Function callback,
-  ) async {
+  Future<void> subscribeMessage(String code, String channel, Function callback) async {
     _msgHandlers[channel] = callback;
     evalJavascript(code, allowRepeat: true);
   }
@@ -141,12 +138,12 @@ class JSApi {
   }
 
   Future<void> closeWebView() async {
-    print("[JSApi]: closing webView");
+    Log.d("[JSApi]: closing webView", 'jsApi.dart');
     if (_web != null) {
       await _web!.dispose();
       _web = null;
     } else {
-      print("[JSApi]: Did not close webView because it was closed already.");
+      Log.d("[JSApi]: Did not close webView because it was closed already.", 'jsApi.dart');
     }
   }
 }
@@ -163,8 +160,4 @@ String jSSourceHtmlContainer(String jSSource) {
     </body>
   </html>
   """;
-}
-
-void _log(String msg) {
-  print("[jsApi] $msg");
 }

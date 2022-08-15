@@ -4,6 +4,7 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -122,8 +123,8 @@ class Fmt {
       } else {
         v = double.parse(value);
       }
-    } catch (err) {
-      print('Fmt.tokenInt() error: ${err.toString()}');
+    } catch (e, s) {
+      Log.e('Fmt.tokenInt() error: $e', 'format.dart', s);
     }
     return BigInt.from(v * pow(10, decimals));
   }
@@ -259,12 +260,11 @@ class Fmt {
     return Row(
       children: <Widget>[
         accInfo['identity']['judgements'].length > 0
-            ? Container(
-                width: 14,
-                margin: EdgeInsets.only(right: 4),
-                child: Image.asset('assets/images/assets/success.png'),
+            ? Padding(
+                padding: const EdgeInsets.only(right: 4),
+                child: Image.asset('assets/images/assets/success.png', width: 24),
               )
-            : Container(height: 16),
+            : const SizedBox(height: 16),
         Expanded(
           child: Text(accountDisplayNameString(address, accInfo)!),
         )

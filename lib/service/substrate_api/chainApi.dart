@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/chain/types/header.dart';
 
@@ -13,20 +14,23 @@ class ChainApi {
   final String _newHeadsSubscribeChannel = 'latestHeader';
 
   Future<void> startSubscriptions() async {
-    print("api: starting encointer subscriptions");
+    Log.d("api: starting encointer subscriptions", 'chainApi.dart');
     this.subscribeNewHeads();
   }
 
   Future<void> stopSubscriptions() async {
-    print("api: stopping encointer subscriptions");
+    Log.d("api: stopping encointer subscriptions", 'chainApi.dart');
     jsApi.unsubscribeMessage(_newHeadsSubscribeChannel);
   }
 
   /// Subscribes to the timestamp of the last block. This is only used as a debug method to see if the dart-js interface
   /// is still communicating.
   Future<void> subscribeTimestamp() async {
-    jsApi.subscribeMessage('chain.subscribeTimestamp("$_timeStampSubscribeChannel")', _timeStampSubscribeChannel,
-        (data) => {print("timestamp: $data")});
+    jsApi.subscribeMessage(
+      'chain.subscribeTimestamp("$_timeStampSubscribeChannel")',
+      _timeStampSubscribeChannel,
+      (data) => {Log.d("timestamp: $data", 'chainApi.dart')},
+    );
   }
 
   /// Subscribes to the latest headers

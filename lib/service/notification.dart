@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
 
+import 'log/log_service.dart';
+
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
 // Streams are created so that app can respond to notification-related events since the plugin is initialised in the `main` function
@@ -13,17 +15,17 @@ final BehaviorSubject<ReceivedNotification> didReceiveLocalNotificationSubject =
 final BehaviorSubject<String?> selectNotificationSubject = BehaviorSubject<String?>();
 
 class ReceivedNotification {
-  final int id;
-  final String? title;
-  final String? body;
-  final String? payload;
-
-  ReceivedNotification({
+  const ReceivedNotification({
     required this.id,
     required this.title,
     required this.body,
     required this.payload,
   });
+
+  final int id;
+  final String? title;
+  final String? body;
+  final String? payload;
 }
 
 class NotificationPlugin {
@@ -36,17 +38,13 @@ class NotificationPlugin {
   void _requestIOSPermissions() {
     flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
-        ?.requestPermissions(
-          alert: true,
-          badge: true,
-          sound: true,
-        );
+        ?.requestPermissions(alert: true, badge: true, sound: true);
   }
 
   void _configureDidReceiveLocalNotificationSubject(BuildContext context) {
     didReceiveLocalNotificationSubject.stream.listen((ReceivedNotification receivedNotification) async {
-      print(receivedNotification.title);
-      print(receivedNotification.body);
+      Log.d('${receivedNotification.title}', 'notification.dart');
+      Log.d('${receivedNotification.body}', 'notification.dart');
       await showDialog(
         context: context,
         builder: (BuildContext context) => CupertinoAlertDialog(
@@ -69,7 +67,7 @@ class NotificationPlugin {
   void _configureSelectNotificationSubject(BuildContext context) {
     selectNotificationSubject.stream.listen((String? payload) async {
       // do nothing for now
-//      print(payload);
+//
 //      await Navigator.pushNamed(
 //        context,
 //        '/',

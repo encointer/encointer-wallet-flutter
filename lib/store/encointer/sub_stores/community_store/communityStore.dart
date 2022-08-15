@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
@@ -79,7 +80,7 @@ abstract class _CommunityStore with Store {
   @action
   Future<void> initCommunityAccountStore(String address) {
     if (!communityAccountStores!.containsKey(address)) {
-      _log("Adding new communityAccountStore for cid: ${cid.toFmtString()} and account: $address");
+      Log.d("Adding new communityAccountStore for cid: ${cid.toFmtString()} and account: $address", 'encointer.dart');
 
       var store = CommunityAccountStore(network, cid, address);
       store.initStore(_cacheFn);
@@ -87,7 +88,7 @@ abstract class _CommunityStore with Store {
       communityAccountStores![address] = store;
       return writeToCache();
     } else {
-      _log("Don't add already existing communityAccountStore for cid: ${cid.toFmtString()} and account: $address");
+      Log.d("Don't add already existing communityAccountStore for cid: ${cid.toFmtString()} and account: $address");
       return Future.value(null);
     }
   }
@@ -100,21 +101,21 @@ abstract class _CommunityStore with Store {
 
   @action
   void setBootstrappers(List<String> bs) {
-    _log("set bootstrappers to $bs");
+    Log.d("set bootstrappers to $bs", 'encointer.dart');
     bootstrappers = bs;
     writeToCache();
   }
 
   @action
   void setCommunityMetadata(CommunityMetadata meta) {
-    _log("set metadata to $meta");
+    Log.d("set metadata to $meta", 'encointer.dart');
     metadata = meta;
     writeToCache();
   }
 
   @action
   void setMeetupTime([int? time]) {
-    _log("set meetupTime to $time");
+    Log.d("set meetupTime to $time", 'encointer.dart');
     if (meetupTime != time) {
       meetupTime = time;
       writeToCache();
@@ -123,7 +124,7 @@ abstract class _CommunityStore with Store {
 
   @action
   void setMeetupTimeOverride([int? time]) {
-    _log("set meetupTimeOverride to $time");
+    Log.d("set meetupTimeOverride to $time", 'encointer.dart');
     if (meetupTimeOverride != time) {
       meetupTimeOverride = time;
       writeToCache();
@@ -132,7 +133,7 @@ abstract class _CommunityStore with Store {
 
   @action
   void setMeetupLocations(List<Location> locations) {
-    _log("store: set meetupLocations to ${locations.toString()}");
+    Log.d("store: set meetupLocations to ${locations.toString()}", 'encointer.dart');
     meetupLocations = ObservableList.of(locations);
     writeToCache();
 
@@ -164,8 +165,4 @@ abstract class _CommunityStore with Store {
       return Future.value(null);
     }
   }
-}
-
-void _log(String msg) {
-  print("[communityStore] $msg");
 }

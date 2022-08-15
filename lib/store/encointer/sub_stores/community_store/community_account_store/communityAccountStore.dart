@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
 import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:json_annotation/json_annotation.dart';
@@ -70,7 +71,7 @@ abstract class _CommunityAccountStore with Store {
 
   @action
   void setParticipantType([ParticipantType? type]) {
-    _log("Set participant type: ${participantType.toString()}");
+    Log.d("Set participant type: ${participantType.toString()}", 'communityAccountStore.dart');
     this.participantType = type;
     writeToCache();
   }
@@ -78,7 +79,7 @@ abstract class _CommunityAccountStore with Store {
   @action
   void purgeParticipantType() {
     if (participantType != null) {
-      _log("Purging participantType.");
+      Log.d("Purging participantType.", 'communityAccountStore.dart');
       this.participantType = null;
       writeToCache();
     }
@@ -86,21 +87,21 @@ abstract class _CommunityAccountStore with Store {
 
   @action
   void setMeetup(Meetup meetup) {
-    _log("Set meetup: ${meetup.toJson()}");
+    Log.d("Set meetup: ${meetup.toJson()}", 'communityAccountStore.dart');
     this.meetup = meetup;
     writeToCache();
   }
 
   @action
   void setMeetupCompleted() {
-    _log("settingMeetupCompleted");
+    Log.d("settingMeetupCompleted", 'communityAccountStore.dart');
     meetupCompleted = true;
     writeToCache();
   }
 
   @action
   void clearMeetupCompleted() {
-    _log("clearing meetupCompleted");
+    Log.d("clearing meetupCompleted", 'communityAccountStore.dart');
     meetupCompleted = false;
     writeToCache();
   }
@@ -108,7 +109,7 @@ abstract class _CommunityAccountStore with Store {
   @action
   void purgeMeetup() {
     if (meetup != null) {
-      _log("Purging meetup.");
+      Log.d("Purging meetup.", 'communityAccountStore.dart');
       meetup = null;
       writeToCache();
     }
@@ -116,7 +117,7 @@ abstract class _CommunityAccountStore with Store {
 
   @action
   void purgeParticipantsClaims() {
-    _log("Purging participantsClaims.");
+    Log.d("Purging participantsClaims.", 'communityAccountStore.dart');
     participantsClaims!.clear();
     writeToCache();
   }
@@ -127,7 +128,7 @@ abstract class _CommunityAccountStore with Store {
 
   @action
   void addParticipantClaim(ClaimOfAttendance claim) {
-    _log("adding participantsClaims.");
+    Log.d("adding participantsClaims.", 'communityAccountStore.dart');
     participantsClaims![claim.claimantPublic!] = claim;
     writeToCache();
   }
@@ -154,8 +155,4 @@ abstract class _CommunityAccountStore with Store {
       return Future.value(null);
     }
   }
-}
-
-_log(String msg) {
-  print("[CommunityAccountStore] $msg");
 }

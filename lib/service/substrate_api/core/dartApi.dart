@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:json_rpc_2/json_rpc_2.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
@@ -30,15 +31,17 @@ class SubstrateDartApi {
     try {
       _rpc = await this.rpc('rpc_methods').then((m) => RpcMethods.fromJson(m));
 
-      // print("Methods: ${methods.toString()}");
+      // Log.d("Methods: ${methods.toString()}");
 
       // Sanity check that we are running against valid node with offchain indexing enabled
       if (!_rpc!.methods!.contains("encointer_getReputations")) {
-        _log("rpc_methods does not contain 'getReputations'. Are the following flags passed"
-            " to the node? \n '--enable-offchain-indexing true --rpc-methods unsafe'");
+        Log.d(
+          "rpc_methods does not contain 'getReputations'. Are the following flags passed to the node? \n '--enable-offchain-indexing true --rpc-methods unsafe",
+          'dartApi.dart',
+        );
       }
     } on RpcException catch (error) {
-      _log('RPC error ${error.code}: ${error.message}');
+      Log.d('RPC error ${error.code}: ${error.message}', 'chainApi.dart');
     }
   }
 
@@ -47,7 +50,7 @@ class SubstrateDartApi {
     if (_client != null) {
       await _client!.close();
     } else {
-      _log("no connection to be closed.");
+      Log.d("no connection to be closed.", 'chainApi.dart');
     }
   }
 
@@ -60,9 +63,9 @@ class SubstrateDartApi {
       throw ("[dartApi] Can't call an rpc method because we are not connected to an endpoint");
     }
     if (_client!.isClosed) {
-      print("[dartApi] not connected. trying to reconnect to $endpoint");
+      Log.d("[dartApi] not connected. trying to reconnect to $endpoint", 'chainApi.dart');
       this.reconnect();
-      print("[dartApi] connection status: isclosed? ${_client!.isClosed}");
+      Log.d("[dartApi] connection status: isclosed? ${_client!.isClosed}", 'chainApi.dart');
     }
 
     return _client!.sendRequest(method, params);
@@ -82,8 +85,4 @@ class SubstrateDartApi {
     // The client won't subscribe to the input stream until `listen` is called.
     return _client!.listen();
   }
-}
-
-void _log(String msg) {
-  print('[EncointerDartApi] $msg');
 }

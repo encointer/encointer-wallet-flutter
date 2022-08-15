@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Ipfs {
@@ -39,28 +40,28 @@ class Ipfs {
       }
       var objectData = object.data.substring(indexJsonBegin, indexJsonEnd + 1);
       return objectData;
-    } catch (e) {
-      print(e);
+    } catch (e, s) {
+      Log.e(e.toString(), 'httpApi.dart', s);
       return 0;
     }
   }
 
   Future<SvgPicture> getCommunityIcon(String? cid) async {
     if (cid == null || cid.isEmpty) {
-      print("[IPFS] return default encointer icon because ipfs-cid is not set");
+      Log.d("[IPFS] return default encointer icon because ipfs-cid is not set", 'httpApi.dart');
       return SvgPicture.asset(fall_back_community_icon);
     }
 
     try {
       var data = await getData(getIconsPath(cid));
       if (data == null) {
-        print("[Ipfs] could not find community icon");
+        Log.d("[Ipfs] could not find community icon", 'httpApi.dart');
         return SvgPicture.asset(fall_back_community_icon);
       }
 
       return SvgPicture.string(data);
-    } catch (e) {
-      print("[Ipfs] error getting communityIcon: $e");
+    } catch (e, s) {
+      Log.e("[Ipfs] error getting communityIcon: $e", 'httpApi.dart', s);
       return SvgPicture.asset(fall_back_community_icon);
     }
   }
@@ -71,17 +72,15 @@ class Ipfs {
     try {
       final response = await dio.get(src);
       var object = Object.fromJson(response.data);
-
       return object.data;
-    } catch (e) {
+    } catch (e, s) {
+      Log.e("$e", 'httpApi.dart', s);
       // otherwise we would have to adjust the return type.
       throw (e.toString());
     }
   }
 
-  String getIconsPath(String cid) {
-    return '$cid/$community_icon_name';
-  }
+  String getIconsPath(String cid) => '$cid/$community_icon_name';
 
   Future<String> uploadImage(File image) async {
     try {
@@ -102,8 +101,8 @@ class Ipfs {
       imageHash = imageHash.substring(imageHashBegin, imageHashEnd + 1);
 
       return imageHash;
-    } catch (e) {
-      print("Ipfs upload of Image error ${e.toString()}");
+    } catch (e, s) {
+      Log.e("Ipfs upload of Image error ${e.toString()}", 'httpApi.dart', s);
       return "";
     }
   }
@@ -127,8 +126,8 @@ class Ipfs {
       jsonHash = jsonHash.substring(jsonHashBegin, jsonHashEnd + 1);
 
       return jsonHash;
-    } catch (e) {
-      print("Ipfs upload of json error ${e.toString()}");
+    } catch (e, s) {
+      Log.e("Ipfs upload of json error ${e.toString()}", 'httpApi.dart', s);
       return "";
     }
   }
@@ -144,7 +143,7 @@ class IpfsDio {
   late Dio dio;
 
   Future<Response<T>> get<T>(String cid) async {
-    print("[IPFS] fetching data from: ${dio.options.baseUrl}$getRequest$cid}");
+    Log.d("[IPFS] fetching data from: ${dio.options.baseUrl}$getRequest$cid}", 'httpApi.dart');
     return dio.get('$getRequest$cid');
   }
 }
@@ -159,9 +158,7 @@ class Object {
   });
 
   @override
-  String toString() {
-    return jsonEncode(this);
-  }
+  String toString() => jsonEncode(this);
 
   factory Object.fromJson(Map<String, dynamic> json) {
     return Object(data: json['Data'], links: json['Links']);

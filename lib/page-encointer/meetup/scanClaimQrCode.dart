@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/codecApi.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -24,7 +25,10 @@ class ScanClaimQrCode extends StatelessWidget {
     if (!registry.contains(claim.claimantPublic)) {
       // this is important because the runtime checks if there are too many claims trying to be registered.
       RootSnackBar.showMsg(dic.encointer.meetupClaimantInvalid);
-      print("[scanClaimQrCode] Claimant: ${claim.claimantPublic} is not part of registry: ${registry.toString()}");
+      Log.d(
+        "[scanClaimQrCode] Claimant: ${claim.claimantPublic} is not part of registry: ${registry.toString()}",
+        'scanClaimQrCode.dart',
+      );
     } else {
       String msg = store.encointer.communityAccount!.containsClaim(claim)
           ? dic.encointer.claimsScannedAlready
@@ -54,7 +58,7 @@ class ScanClaimQrCode extends StatelessWidget {
 
         validateAndStoreClaim(context, claim, dic);
       } catch (e) {
-        _log("Error decoding claim: ${e.toString()}");
+        Log.d("Error decoding claim: ${e.toString()}", 'scanClaimQrCode.dart');
         RootSnackBar.showMsg(dic.encointer.claimsScannedDecodeFailed);
       }
 
@@ -83,7 +87,7 @@ class ScanClaimQrCode extends StatelessWidget {
                     allowDuplicates: false,
                     onDetect: (barcode, args) {
                       if (barcode.rawValue == null) {
-                        debugPrint('Failed to scan Barcode');
+                        Log.p('Failed to scan Barcode', 'scanClaimQrCode.dart');
                       } else {
                         _onScan(barcode.rawValue!);
                       }
@@ -141,8 +145,4 @@ void _showActivityIndicatorOverlay(BuildContext context) {
 Future<bool> canOpenCamera() async {
   // will do nothing if already granted
   return Permission.camera.request().isGranted;
-}
-
-_log(String msg) {
-  print("[ScanClaimQrCode] $msg");
 }

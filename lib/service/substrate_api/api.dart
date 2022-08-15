@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:encointer_wallet/config/node.dart';
 import 'package:encointer_wallet/service/ipfs/httpApi.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/subscan.dart';
 import 'package:encointer_wallet/service/substrate_api/accountApi.dart';
 import 'package:encointer_wallet/service/substrate_api/assetsApi.dart';
@@ -79,7 +80,7 @@ class Api {
     account.setFetchAccountData(fetchAccountData);
 
     // launch the webView and connect to the endpoint
-    print("launch the webView");
+    Log.d("launch the webView", 'account_api.dart');
     await launchWebview();
   }
 
@@ -89,9 +90,7 @@ class Api {
     await encointer.close();
   }
 
-  Future<void> launchWebview({
-    bool customNode = false,
-  }) async {
+  Future<void> launchWebview({bool customNode = false}) async {
     var connectFunc = customNode ? connectNode : connectNodeAll;
 
     Future<void> postInitCallback() async {
@@ -130,7 +129,7 @@ class Api {
     // do connect
     String? res = await evalJavascript('settings.connect("$node", "${jsonEncode(config)}")');
     if (res == null) {
-      print('connecting to node failed');
+      Log.d('connecting to node failed', 'api.dart');
       store.settings.setNetworkName(null);
       return;
     }
@@ -147,11 +146,11 @@ class Api {
   Future<void> connectNodeAll() async {
     List<String?> nodes = store.settings.endpointList.map((e) => e.value).toList();
     List<NodeConfig?> configs = store.settings.endpointList.map((e) => e.overrideConfig).toList();
-    print("configs: $configs");
+    Log.d("configs: $configs", 'api.dart');
     // do connect
     String? res = await evalJavascript('settings.connectAll(${jsonEncode(nodes)}, ${jsonEncode(configs)})');
     if (res == null) {
-      print('connect failed');
+      Log.d('connect failed', 'api.dart');
       store.settings.setNetworkName(null);
       return;
     }
@@ -167,7 +166,7 @@ class Api {
     if (index < 0) return;
     store.settings.setEndpoint(store.settings.endpointList[index]);
     await fetchNetworkProps();
-    print("get community data");
+    Log.d("get community data", 'api.dart');
     encointer.getCommunityData();
   }
 
@@ -202,11 +201,7 @@ class Api {
     await this.assets.stopSubscriptions();
   }
 
-  Future<void> subscribeMessage(
-    String code,
-    String channel,
-    Function callback,
-  ) async {
+  Future<void> subscribeMessage(String code, String channel, Function callback) async {
     js.subscribeMessage(code, channel, callback);
   }
 
@@ -215,8 +210,8 @@ class Api {
   }
 
   Future<bool> isConnected() async {
-    bool connected = await evalJavascript('settings.isConnected()');
-    print("Api is connected: $connected");
+    final connected = await evalJavascript('settings.isConnected()');
+    Log.d("Api is connected: $connected", 'api.dart');
     return connected;
   }
 

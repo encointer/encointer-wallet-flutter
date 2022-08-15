@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/assets/assets.dart';
@@ -36,10 +37,7 @@ class AppStore extends _AppStore with _$AppStore {
   }) : super(localStorage, config: config);
 }
 
-enum StoreConfig {
-  Normal,
-  Test,
-}
+enum StoreConfig { Normal, Test }
 
 abstract class _AppStore with Store {
   _AppStore(
@@ -122,9 +120,9 @@ abstract class _AppStore with Store {
 
   @action
   void setApiReady(bool value) {
-    print("Setting Api Ready: $value");
+    Log.d("Setting Api Ready: $value", 'encointer.dart');
     webApiIsReady = value;
-    print("Is App Ready?: $appIsReady");
+    Log.d("Is App Ready?: $appIsReady", 'encointer.dart');
   }
 
   Future<void> cacheObject(String key, value) {
@@ -169,24 +167,24 @@ abstract class _AppStore with Store {
       try {
         maybeStore = await loadEncointerCache(encointerFinalCacheKey);
       } catch (e) {
-        _log("Exception loading the cached store: ${e.toString()}");
+        Log.d("Exception loading the cached store: ${e.toString()}", 'encointer.dart');
       }
     }
 
     if (maybeStore != null) {
       _encointer = maybeStore;
     } else {
-      _log("Initializing new encointer store.");
+      Log.d("Initializing new encointer store.", 'encointer.dart');
       _encointer = EncointerStore(networkInfo);
       encointer.initStore(
         this as AppStore,
         () => localStorage.setObject(encointerFinalCacheKey, encointer.toJson()),
       );
 
-      _log("Persisting cacheVersion: $encointerCacheVersion");
+      Log.d("Persisting cacheVersion: $encointerCacheVersion", 'encointer.dart');
       await localStorage.setKV(cacheVersionFinalKey, encointerCacheVersion);
 
-      _log("Writing the new store to cache");
+      Log.d("Writing the new store to cache", 'encointer.dart');
       return encointer.writeToCache();
     }
   }
@@ -195,7 +193,7 @@ abstract class _AppStore with Store {
     var cachedEncointerStore = await localStorage.getMap(encointerFinalCacheKey);
 
     if (cachedEncointerStore != null) {
-      _log("Found cached encointer store $cachedEncointerStore");
+      Log.d("Found cached encointer store $cachedEncointerStore", 'encointer.dart');
       var encointerStore = EncointerStore.fromJson(cachedEncointerStore);
 
       // Cache the entire encointer store at once: Check if this is too expensive,
@@ -216,16 +214,14 @@ abstract class _AppStore with Store {
   }
 
   Future<List<void>> addAccount(Map<String, dynamic> acc, String password, String? address) {
-    return Future.wait([
-      account.addAccount(acc, password),
-    ]);
+    return Future.wait([account.addAccount(acc, password)]);
   }
 
   Future<void> setCurrentAccount(String? pubKey) async {
-    _log("setCurrentAccount: setting current account: $pubKey");
+    Log.d("setCurrentAccount: setting current account: $pubKey", 'encointer.dart');
 
     if (account.currentAccountPubKey == pubKey) {
-      _log("setCurrentAccount: currentAccount is already new account. returning");
+      Log.d("setCurrentAccount: currentAccount is already new account. returning", 'encointer.dart');
       return Future.value(null);
     }
 
@@ -237,7 +233,7 @@ abstract class _AppStore with Store {
     }
 
     final address = account.getNetworkAddress(pubKey);
-    _log("setCurrentAccount: new current account address: $address");
+    Log.d("setCurrentAccount: new current account address: $address", 'encointer.dart');
     await encointer.initializeUninitializedStores(address);
 
     if (!settings.loading) {
@@ -254,8 +250,4 @@ abstract class _AppStore with Store {
   Future<List<void>> loadAccountCache() async {
     return Future.wait([assets.clearTxs(), assets.loadAccountCache()]);
   }
-}
-
-void _log(String msg) {
-  print("[AppStore] $msg");
 }

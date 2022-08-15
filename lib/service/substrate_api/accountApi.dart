@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/core/jsApi.dart';
 import 'package:encointer_wallet/store/account/account.dart';
@@ -55,7 +56,7 @@ class AccountApi {
     var addresses = <String?>[];
 
     for (var pubKey in pubKeys) {
-      _log("New entry for pubKeyAddressMap: Key: $pubKey, address: ${res[store.settings]}");
+      Log.d("New entry for pubKeyAddressMap: Key: $pubKey, address: ${res[store.settings]}", 'account_api.dart');
       addresses.add(store.account.pubKeyAddressMap[store.settings.endpoint.ss58]![pubKey!]);
     }
 
@@ -83,7 +84,7 @@ class AccountApi {
       allowRepeat: true,
     );
 
-    _log("addressFromUri: $address");
+    Log.d("addressFromUri: $address", 'account_api.dart');
 
     return address;
   }
@@ -120,9 +121,9 @@ class AccountApi {
   }
 
   Future<Map> estimateTxFees(Map txInfo, List? params, {String? rawParam}) async {
-    String param = rawParam != null ? rawParam : jsonEncode(params);
-    print(txInfo);
-    Map res = await jsApi.evalJavascript('account.txFeeEstimate(${jsonEncode(txInfo)}, $param)', allowRepeat: true);
+    final param = rawParam != null ? rawParam : jsonEncode(params);
+    Log.d(txInfo.toString(), 'account_api.dart');
+    final res = await jsApi.evalJavascript('account.txFeeEstimate(${jsonEncode(txInfo)}, $param)', allowRepeat: true);
     return res;
   }
 
@@ -147,9 +148,9 @@ class AccountApi {
   }
 
   Future<dynamic> sendTx(Map? txInfo, List? params, {String? rawParam}) async {
-    String param = rawParam != null ? rawParam : jsonEncode(params);
-    String call = 'account.sendTx(${jsonEncode(txInfo)}, $param)';
-    _log("sendTx call: $call");
+    final param = rawParam != null ? rawParam : jsonEncode(params);
+    final call = 'account.sendTx(${jsonEncode(txInfo)}, $param)';
+    Log.d("sendTx call: $call", 'account_api.dart');
     return jsApi.evalJavascript(call, allowRepeat: true);
   }
 
@@ -173,7 +174,7 @@ class AccountApi {
 
   Future<dynamic> checkAccountPassword(AccountData account, String pass) async {
     String? pubKey = account.pubKey;
-    print('checkpass: $pubKey, $pass');
+    Log.d('checkpass: $pubKey, $pass', 'account_api.dart');
     return jsApi.evalJavascript(
       'account.checkPassword("$pubKey", "$pass")',
       allowRepeat: true,
@@ -216,7 +217,7 @@ class AccountApi {
     if (keys.length == 0) {
       return [];
     }
-    List res = await jsApi.evalJavascript('account.genPubKeyIcons(${jsonEncode(keys)})', allowRepeat: true);
+    final List res = await jsApi.evalJavascript('account.genPubKeyIcons(${jsonEncode(keys)})', allowRepeat: true);
     store.account.setPubKeyIconsMap(res);
     return res;
   }
@@ -236,7 +237,7 @@ class AccountApi {
   /// See: https://github.com/encointer/encointer-wallet-flutter/issues/676
   Future<Map?> parseQrCode(String data) async {
     final res = await jsApi.evalJavascript('account.parseQrCode("$data")');
-    print('rawData: $data');
+    Log.d('rawData: $data', 'account_api.dart');
     return res;
   }
 
@@ -252,7 +253,7 @@ class AccountApi {
   ///
   /// See: https://github.com/encointer/encointer-wallet-flutter/issues/676
   Future<Map> makeQrCode(Map? txInfo, List? params, {String? rawParam}) async {
-    String param = rawParam != null ? rawParam : jsonEncode(params);
+    final param = rawParam != null ? rawParam : jsonEncode(params);
     final Map res = await jsApi.evalJavascript(
       'account.makeTx(${jsonEncode(txInfo)}, $param)',
       allowRepeat: true,
@@ -263,12 +264,7 @@ class AccountApi {
   /// Add a `signature` to a `txInfo` and send the extrinsics.
   ///
   /// See: https://github.com/encointer/encointer-wallet-flutter/issues/676
-  Future<Map> addSignatureAndSend(
-    String signature,
-    Map txInfo,
-    String pageTile,
-    String notificationTitle,
-  ) async {
+  Future<Map> addSignatureAndSend(String signature, Map txInfo, String pageTile, String notificationTitle) async {
     final String address = store.account.currentAddress;
     final Map res = await jsApi.evalJavascript(
       'account.addSignatureAndSend("$address", "$signature")',
@@ -285,8 +281,4 @@ class AccountApi {
     }
     return res;
   }
-}
-
-_log(String msg) {
-  print("[accountApi] $msg");
 }

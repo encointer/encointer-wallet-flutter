@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:encointer_wallet/common/regInputFormatter.dart';
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/udpateJSCodeApi.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -36,8 +37,8 @@ class UI {
   static Future<void> launchURL(String url) async {
     try {
       await launchUrl(Uri.parse(url));
-    } catch (err) {
-      print("Could not launch URL: ${err.toString()}");
+    } catch (e, s) {
+      Log.e("Could not launch URL: $e", 'ui.dart', s);
     }
   }
 
