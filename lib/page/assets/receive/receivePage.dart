@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/components/wakeLockAndBrightnessEnhancer.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -89,13 +87,13 @@ class _ReceivePageState extends State<ReceivePage> {
               0;
           if (newBalance != null) {
             double delta = newBalance - oldBalance;
-            log("[receivePage] balance was $oldBalance, changed by $delta");
+            Log.p("[receivePage] balance was $oldBalance, changed by $delta", 'recievePage.dart');
             if (delta > demurrageRate!) {
               var msg = dic.assets.incomingConfirmed
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
                   .replaceAll('CID_SYMBOL', context.read<AppStore>().encointer.community?.metadata?.symbol ?? "null")
                   .replaceAll('ACCOUNT_NAME', context.read<AppStore>().account.currentAccount.name);
-              log("[receivePage] $msg");
+              Log.p("[receivePage] $msg", 'recievePage.dart');
               context.read<AppStore>().encointer.account?.addBalanceEntry(cid, balances[cid]!);
               NotificationPlugin.showNotification(44, dic.assets.fundsReceived, msg, cid: cid.toFmtString());
             }
@@ -109,11 +107,11 @@ class _ReceivePageState extends State<ReceivePage> {
 
     return FocusDetector(
       onFocusLost: () {
-        log('[receivePage:FocusDetector] Focus Lost.');
+        Log.p('[receivePage:FocusDetector] Focus Lost.', 'recievePage.dart');
         paymentWatchdog!.pause();
       },
       onFocusGained: () {
-        log('[receivePage:FocusDetector] Focus Gained.');
+        Log.p('[receivePage:FocusDetector] Focus Gained.', 'recievePage.dart');
         paymentWatchdog!.reset();
         paymentWatchdog!.start();
       },
@@ -242,8 +240,8 @@ Future<bool> showSnackBarUponPendingExtrinsics(AppStore store, Api api, Translat
         }
       }
     }
-  } catch (e) {
-    log(e.toString());
+  } catch (e, s) {
+    Log.e(e.toString(), 'recievePage.dart', s);
   }
 
   return observedExtrinsics;

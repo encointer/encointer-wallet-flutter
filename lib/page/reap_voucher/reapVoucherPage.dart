@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/components/secondaryButtonWide.dart';
@@ -7,6 +5,7 @@ import 'package:encointer_wallet/common/components/submitButton.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -50,7 +49,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   bool _isReady = false;
 
   Future<void> fetchVoucherData(Api api, String voucherUri, CommunityIdentifier cid, BuildContext context) async {
-    log("Fetching voucher data...");
+    Log.p("Fetching voucher data...", 'reepVoucherPage.dart');
     _voucherAddress = await api.account.addressFromUri(voucherUri);
 
     setState(() {});
@@ -179,7 +178,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     final res = await submitReapVoucher(webApi, voucherUri, recipientAddress, cid);
 
     if (res['hash'] == null) {
-      log('Error redeeming voucher: ${res['error']}');
+      Log.p('Error redeeming voucher: ${res['error']}', 'reepVoucherPage.dart');
       showRedeemFailedDialog(context, res['error']);
     } else {
       showRedeemSuccessDialog(context);

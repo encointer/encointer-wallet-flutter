@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:encointer_wallet/common/components/addressIcon.dart';
 import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -85,7 +83,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
     final community = context.read<AppStore>().encointer.communityStores![cidFmt]!;
 
-    log("_getBalanceEntryListTile: ${community.toJson()}");
+    Log.p("_getBalanceEntryListTile: ${community.toJson()}", 'accountManegePage.dart');
 
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:encointer_wallet/common/components/AddressInputField.dart';
 import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
@@ -8,6 +6,7 @@ import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qrScanPage.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -101,7 +100,7 @@ class _TransferPageState extends State<TransferPage> {
 
     final available = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry);
 
-    log("[transferPage]: available: $available");
+    Log.p("[transferPage]: available: $available", 'transferPage.dart');
 
     return Observer(
       builder: (_) {

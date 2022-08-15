@@ -1,11 +1,10 @@
 import 'dart:async';
-import 'dart:developer';
-
 import 'package:animated_check/animated_check.dart';
 import 'package:encointer_wallet/common/components/gradientElements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/paymentOverview.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/transferState.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/account/types/accountData.dart';
@@ -152,10 +151,10 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     });
 
     var onFinish = (BuildContext txPageContext, Map res) {
-      log("Transfer result ${res.toString()}");
+      Log.p("Transfer result ${res.toString()}", 'index.dart');
 
       if (res['hash'] == null) {
-        log('Error sending transfer ${res['error']}');
+        Log.p('Error sending transfer ${res['error']}', 'index.dart');
         _transferState = TransferState.failed;
       } else {
         _transferState = TransferState.finished;
@@ -172,7 +171,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     //   });
     // });
 
-    log("TransferState after callback: ${_transferState.toString()}");
+    Log.p("TransferState after callback: ${_transferState.toString()}", 'index.dart');
 
     // trigger rebuild after state update in callback
     setState(() {});
