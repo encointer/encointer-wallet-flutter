@@ -107,7 +107,7 @@ class _WalletAppState extends State<WalletApp> {
           : Api.create(context.read<AppStore>(), JSApi(), SubstrateDartApi(), jsServiceEncointer);
 
       await webApi.init().timeout(
-            Duration(seconds: 20),
+            const Duration(seconds: 20),
             onTimeout: () => Log.p("webApi.init() has run into a timeout. We might be offline.", 'lib/app.dart'),
           );
 
