@@ -12,7 +12,7 @@ class AccountSharePage extends StatefulWidget {
   const AccountSharePage();
 
   static const String route = '/profile/share';
-  
+
   @override
   _AccountSharePageState createState() => _AccountSharePageState();
 }
@@ -41,9 +41,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
           IconButton(
             key: Key('close-share-page'),
             icon: const Icon(Icons.close),
-            onPressed: () {
-              Navigator.pop(context);
-            },
+            onPressed: () => Navigator.pop(context),
           )
         ],
       ),
