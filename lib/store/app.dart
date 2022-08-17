@@ -4,10 +4,10 @@ import 'package:encointer_wallet/store/assets/assets.dart';
 import 'package:encointer_wallet/store/chain/chain.dart';
 import 'package:encointer_wallet/store/encointer/encointer.dart';
 import 'package:encointer_wallet/store/settings.dart';
-import 'package:encointer_wallet/utils/localStorage.dart';
+import 'package:encointer_wallet/utils/local_storage.dart';
 import 'package:mobx/mobx.dart';
 
-import 'data_update/dataUpdate.dart';
+import 'data_update/data_update.dart';
 
 part 'app.g.dart';
 

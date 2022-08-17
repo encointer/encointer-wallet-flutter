@@ -1,6 +1,5 @@
 import 'dart:convert';
-
-import 'package:encointer_wallet/store/encointer/types/communities.dart';
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
