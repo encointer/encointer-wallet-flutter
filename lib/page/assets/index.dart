@@ -11,7 +11,7 @@ import 'package:encointer_wallet/page-encointer/ceremony_box/ceremonyBox.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserOnMap.dart';
 import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
 import 'package:encointer_wallet/page/account/create/addAccountPage.dart';
-import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
+import 'package:encointer_wallet/page/assets/receive/receive_page.dart';
 import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';

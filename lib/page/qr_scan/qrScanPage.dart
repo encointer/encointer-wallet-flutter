@@ -8,8 +8,6 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'qrScanService.dart';
-import 'qr_codes/qrCodeBase.dart';
-
 export 'qrScanService.dart';
 export 'qr_codes/qrCodeBase.dart';
 
@@ -35,14 +33,13 @@ class ScanPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
-    ScanPageParams params = ModalRoute.of(context)!.settings.arguments! as ScanPageParams;
+    final dic = I18n.of(context)!.translationsForLocale();
+    final params = ModalRoute.of(context)!.settings.arguments! as ScanPageParams;
     void onScan(String data) {
       try {
-        QrCode<dynamic> qrCode = qrScanService.parse(data);
+        final qrCode = qrScanService.parse(data);
         qrScanService.handleQrScan(context, params.scannerContext, qrCode);
       } catch (e) {
-        print("[ScanPage]: ${e.toString()}");
         RootSnackBar.showMsg(e.toString());
       }
     }
@@ -65,14 +62,15 @@ class ScanPage extends StatelessWidget {
             return Stack(
               children: [
                 MobileScanner(
-                    allowDuplicates: false,
-                    onDetect: (barcode, args) {
-                      if (barcode.rawValue == null) {
-                        debugPrint('Failed to scan Barcode');
-                      } else {
-                        onScan(barcode.rawValue!);
-                      }
-                    }),
+                  allowDuplicates: false,
+                  onDetect: (barcode, args) {
+                    if (barcode.rawValue == null) {
+                      debugPrint('Failed to scan Barcode');
+                    } else {
+                      onScan(barcode.rawValue!);
+                    }
+                  },
+                ),
                 store.settings.developerMode ? mockQrDataRow(dic, onScan) : Container(),
                 //overlays a semi-transparent rounded square border that is 90% of screen width
                 Center(
@@ -111,12 +109,14 @@ Widget mockQrDataRow(Translations dic, Function(String) onScan) {
   return Row(children: [
     ElevatedButton(
       child: Text(dic.profile.addContact),
-      onPressed: () => onScan("encointer-contact\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nSara"),
+      onPressed: () => onScan(
+        "encointer-contact\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nSara",
+      ),
     ),
     ElevatedButton(
       child: Text(dic.assets.invoice),
       onPressed: () => onScan(
-        "encointer-invoice\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX"
+        "encointer-invoice\nv1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX"
         "\nsqm1v79dF6b\n0.2343\nAubrey",
       ),
     ),
