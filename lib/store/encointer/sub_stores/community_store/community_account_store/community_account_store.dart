@@ -11,18 +11,15 @@ part 'community_account_store.g.dart';
 ///
 ///
 @JsonSerializable(explicitToJson: true)
-class CommunityAccountStore extends _CommunityAccountStore
-    with _$CommunityAccountStore {
-  CommunityAccountStore(String network, CommunityIdentifier cid, String address)
-      : super(network, cid, address);
+class CommunityAccountStore extends _CommunityAccountStore with _$CommunityAccountStore {
+  CommunityAccountStore(String network, CommunityIdentifier cid, String address) : super(network, cid, address);
 
   @override
   String toString() {
     return jsonEncode(this);
   }
 
-  factory CommunityAccountStore.fromJson(Map<String, dynamic> json) =>
-      _$CommunityAccountStoreFromJson(json);
+  factory CommunityAccountStore.fromJson(Map<String, dynamic> json) => _$CommunityAccountStoreFromJson(json);
   Map<String, dynamic> toJson() => _$CommunityAccountStoreToJson(this);
 }
 
@@ -54,8 +51,7 @@ abstract class _CommunityAccountStore with Store {
   ///
   /// Map: claimantPublicKey -> ClaimOfAttendance
   @observable
-  ObservableMap<String, ClaimOfAttendance>? participantsClaims =
-      new ObservableMap();
+  ObservableMap<String, ClaimOfAttendance>? participantsClaims = new ObservableMap();
 
   /// This should be set to true once the attestations have been sent to chain.
   @observable

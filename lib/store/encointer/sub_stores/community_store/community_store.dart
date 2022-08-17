@@ -22,8 +22,7 @@ class CommunityStore extends _CommunityStore with _$CommunityStore {
     return jsonEncode(this);
   }
 
-  factory CommunityStore.fromJson(Map<String, dynamic> json) =>
-      _$CommunityStoreFromJson(json);
+  factory CommunityStore.fromJson(Map<String, dynamic> json) => _$CommunityStoreFromJson(json);
   Map<String, dynamic> toJson() => _$CommunityStoreToJson(this);
 }
 
@@ -72,16 +71,14 @@ abstract class _CommunityStore with Store {
   ObservableList<Location>? meetupLocations = new ObservableList();
 
   @observable
-  ObservableMap<String, CommunityAccountStore>? communityAccountStores =
-      new ObservableMap();
+  ObservableMap<String, CommunityAccountStore>? communityAccountStores = new ObservableMap();
 
   get applyDemurrage => _applyDemurrage;
 
   @action
   Future<void> initCommunityAccountStore(String address) {
     if (!communityAccountStores!.containsKey(address)) {
-      _log(
-          "Adding new communityAccountStore for cid: ${cid.toFmtString()} and account: $address");
+      _log("Adding new communityAccountStore for cid: ${cid.toFmtString()} and account: $address");
 
       var store = CommunityAccountStore(network, cid, address);
       store.initStore(_cacheFn);
@@ -89,8 +86,7 @@ abstract class _CommunityStore with Store {
       communityAccountStores![address] = store;
       return writeToCache();
     } else {
-      _log(
-          "Don't add already existing communityAccountStore for cid: ${cid.toFmtString()} and account: $address");
+      _log("Don't add already existing communityAccountStore for cid: ${cid.toFmtString()} and account: $address");
       return Future.value(null);
     }
   }
@@ -150,12 +146,10 @@ abstract class _CommunityStore with Store {
   @action
   void purgeCeremonySpecificState() {
     setMeetupTime();
-    communityAccountStores!
-        .forEach((key, value) => value.purgeCeremonySpecificState());
+    communityAccountStores!.forEach((key, value) => value.purgeCeremonySpecificState());
   }
 
-  void initStore(
-      Function? cacheFn, double? Function(BalanceEntry)? applyDemurrage) {
+  void initStore(Function? cacheFn, double? Function(BalanceEntry)? applyDemurrage) {
     this._cacheFn = cacheFn as Future<void> Function()?;
     this._applyDemurrage = applyDemurrage;
 

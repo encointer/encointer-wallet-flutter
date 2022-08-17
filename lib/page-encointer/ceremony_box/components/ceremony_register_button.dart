@@ -46,19 +46,14 @@ class _CeremonyRegisterButtonState extends State<CeremonyRegisterButton> {
                 Icon(Iconsax.login_1),
                 SizedBox(width: 6),
                 Text('${dic.encointer.registerUntil} '),
-                MaybeDateTime(widget.registerUntil,
-                    dateFormat: DateFormat.yMd(languageCode).add_Hm())
+                MaybeDateTime(widget.registerUntil, dateFormat: DateFormat.yMd(languageCode).add_Hm())
               ],
             )
           : Theme(
               // change theme locally to dark such that the activity indicator appears bright
-              data: ThemeData(
-                  cupertinoOverrideTheme:
-                      CupertinoThemeData(brightness: Brightness.dark)),
+              data: ThemeData(cupertinoOverrideTheme: CupertinoThemeData(brightness: Brightness.dark)),
               child: CupertinoActivityIndicator()),
-      onPressed: !_submitting && widget.registerUntil != null
-          ? () => _onPressed()
-          : null,
+      onPressed: !_submitting && widget.registerUntil != null ? () => _onPressed() : null,
     );
   }
 }

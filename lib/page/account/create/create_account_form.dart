@@ -43,8 +43,7 @@ class CreateAccountForm extends StatelessWidget {
       }
 
       var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
-      await store.addAccount(
-          acc, store.account.newAccount.password, addresses[0]);
+      await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
 
       String? pubKey = acc['pubKey'];
       store.setCurrentAccount(pubKey);
@@ -66,11 +65,7 @@ class CreateAccountForm extends StatelessWidget {
               padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
               children: <Widget>[
                 Center(
-                  child: Text(
-                      I18n.of(context)!
-                          .translationsForLocale()
-                          .profile
-                          .accountNameChoose,
+                  child: Text(I18n.of(context)!.translationsForLocale().profile.accountNameChoose,
                       style: Theme.of(context).textTheme.headline2),
                 ),
                 SizedBox(height: 10),
@@ -78,10 +73,7 @@ class CreateAccountForm extends StatelessWidget {
                   child: Container(
                     width: 300,
                     child: Text(
-                      I18n.of(context)!
-                          .translationsForLocale()
-                          .profile
-                          .accountNameChooseHint,
+                      I18n.of(context)!.translationsForLocale().profile.accountNameChooseHint,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.headline2!.copyWith(
                             color: encointerBlack,
@@ -93,13 +85,9 @@ class CreateAccountForm extends StatelessWidget {
                 EncointerTextFormField(
                   key: Key('create-account-name'),
                   hintText: dic.account.createHint,
-                  labelText: I18n.of(context)!
-                      .translationsForLocale()
-                      .profile
-                      .accountName,
+                  labelText: I18n.of(context)!.translationsForLocale().profile.accountName,
                   controller: _nameCtrl,
-                  validator: (v) => InputValidation.validateAccountName(
-                      context, v, store.account.optionalAccounts),
+                  validator: (v) => InputValidation.validateAccountName(context, v, store.account.optionalAccounts),
                 ),
               ],
             ),
@@ -145,8 +133,7 @@ Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
     builder: (BuildContext context) {
       return CupertinoAlertDialog(
         title: Container(),
-        content:
-            Text(I18n.of(context)!.translationsForLocale().account.createError),
+        content: Text(I18n.of(context)!.translationsForLocale().account.createError),
         actions: <Widget>[
           CupertinoButton(
             child: Text(I18n.of(context)!.translationsForLocale().home.ok),

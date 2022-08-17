@@ -43,8 +43,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
   }
 
   String? _validateAccountSource(BuildContext context, String v) {
-    final TranslationsAccount dic =
-        I18n.of(context)!.translationsForLocale().account;
+    final TranslationsAccount dic = I18n.of(context)!.translationsForLocale().account;
 
     String input = v.trim();
 
@@ -56,9 +55,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
       setState(() {
         _keyType = AccountStore.seedTypeRawSeed;
       });
-      return ValidateKeys.validateRawSeed(input)
-          ? null
-          : dic.importInvalidRawSeed;
+      return ValidateKeys.validateRawSeed(input) ? null : dic.importInvalidRawSeed;
     } else if (ValidateKeys.isPrivateKey(input)) {
       // Todo: #426
       return dic.importPrivateKeyUnsupported;
@@ -67,9 +64,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
       setState(() {
         _keyType = AccountStore.seedTypeMnemonic;
       });
-      return ValidateKeys.validateMnemonic(input)
-          ? null
-          : dic.importInvalidMnemonic;
+      return ValidateKeys.validateMnemonic(input) ? null : dic.importInvalidMnemonic;
     }
   }
 
@@ -89,10 +84,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                 children: <Widget>[
                   SizedBox(height: 80),
                   Text(
-                    I18n.of(context)!
-                        .translationsForLocale()
-                        .profile
-                        .detailsEnter,
+                    I18n.of(context)!.translationsForLocale().profile.detailsEnter,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headline2,
                   ),
@@ -100,28 +92,18 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
-                      I18n.of(context)!
-                          .translationsForLocale()
-                          .profile
-                          .personalKeyEnter,
+                      I18n.of(context)!.translationsForLocale().profile.personalKeyEnter,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline2!
-                          .copyWith(color: Colors.black),
+                      style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black),
                     ),
                   ),
                   SizedBox(height: 30),
                   EncointerTextFormField(
                     key: Key('create-account-name'),
                     hintText: dic.account.createHint,
-                    labelText: I18n.of(context)!
-                        .translationsForLocale()
-                        .profile
-                        .accountName,
+                    labelText: I18n.of(context)!.translationsForLocale().profile.accountName,
                     controller: _nameCtrl,
-                    validator: (v) => InputValidation.validateAccountName(
-                        context, v, store.account.optionalAccounts),
+                    validator: (v) => InputValidation.validateAccountName(context, v, store.account.optionalAccounts),
                   ),
                   TextFormField(
                     key: Key('account-source'),
@@ -131,8 +113,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                     ),
                     controller: _keyCtrl,
                     maxLines: 2,
-                    validator: (String? value) =>
-                        _validateAccountSource(context, value!),
+                    validator: (String? value) => _validateAccountSource(context, value!),
                   ),
                 ],
               ),
@@ -142,15 +123,13 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
             key: Key('account-import-next'),
             child: Text(I18n.of(context)!.translationsForLocale().home.next),
             onPressed: () async {
-              if (_formKey.currentState!.validate() &&
-                  !(_advanceOptions.error ?? false)) {
+              if (_formKey.currentState!.validate() && !(_advanceOptions.error ?? false)) {
                 store.account.setNewAccountName(_nameCtrl.text.trim());
                 store.account.setNewAccountKey(_keyCtrl.text.trim());
 
                 widget.onSubmit({
                   'keyType': _keyType,
-                  'cryptoType': _advanceOptions.type ??
-                      AccountAdvanceOptionParams.encryptTypeSR,
+                  'cryptoType': _advanceOptions.type ?? AccountAdvanceOptionParams.encryptTypeSR,
                   'derivePath': _advanceOptions.path ?? '',
                 });
               }

@@ -33,8 +33,7 @@ class ContactsPage extends StatelessWidget {
                   padding: EdgeInsets.only(right: 8),
                   child: IconButton(
                     icon: Icon(Icons.add, size: 28),
-                    onPressed: () =>
-                        Navigator.of(context).pushNamed(ContactPage.route),
+                    onPressed: () => Navigator.of(context).pushNamed(ContactPage.route),
                   ),
                 )
               ],
@@ -50,8 +49,7 @@ class ContactsPage extends StatelessWidget {
                       width: 36,
                       child: IconButton(
                         icon: Icon(Icons.arrow_forward_ios, size: 18),
-                        onPressed: () => Navigator.of(context)
-                            .pushNamed(ContactDetailPage.route, arguments: i),
+                        onPressed: () => Navigator.of(context).pushNamed(ContactDetailPage.route, arguments: i),
                       ),
                     ),
                   );

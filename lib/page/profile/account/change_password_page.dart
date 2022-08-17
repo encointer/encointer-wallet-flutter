@@ -45,8 +45,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
       final String passOld = _passOldCtrl.text.trim();
       final String passNew = _passCtrl.text.trim();
       // check password
-      final passChecked = await webApi.account
-          .checkAccountPassword(store.account.currentAccount, passOld);
+      final passChecked = await webApi.account.checkAccountPassword(store.account.currentAccount, passOld);
       if (passChecked == null) {
         showCupertinoDialog(
           context: context,
@@ -56,8 +55,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
               content: Text(dic.profile.wrongPinHint),
               actions: <Widget>[
                 CupertinoButton(
-                  child:
-                      Text(I18n.of(context)!.translationsForLocale().home.ok),
+                  child: Text(I18n.of(context)!.translationsForLocale().home.ok),
                   onPressed: () {
                     _passOldCtrl.clear();
                     setState(() {
@@ -74,8 +72,8 @@ class _ChangePassword extends State<ChangePasswordPage> {
         // we need to iterate over all active accounts and update there password
         store.settings.setPin(passNew);
         store.account.accountListAll.forEach((account) async {
-          final Map<String, dynamic> acc = await api.evalJavascript(
-              'account.changePassword("${account.pubKey}", "$passOld", "$passNew")');
+          final Map<String, dynamic> acc =
+              await api.evalJavascript('account.changePassword("${account.pubKey}", "$passOld", "$passNew")');
 
           // update encrypted seed after password updated
           store.account.accountListAll.map((accountData) {
@@ -84,8 +82,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
             // make metadata the same as the polkadot-js/api's
             acc['meta']['name'] = localAcc['name'];
             store.account.updateAccount(acc);
-            store.account.updateSeed(
-                accountData.pubKey, _passOldCtrl.text, _passCtrl.text);
+            store.account.updateSeed(accountData.pubKey, _passOldCtrl.text, _passCtrl.text);
           });
         });
         showCupertinoDialog(
@@ -96,8 +93,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
               content: Text(dic.profile.passSuccessTxt),
               actions: <Widget>[
                 CupertinoButton(
-                    child:
-                        Text(I18n.of(context)!.translationsForLocale().home.ok),
+                    child: Text(I18n.of(context)!.translationsForLocale().home.ok),
                     onPressed: () => {
                           // moving back to profile page after changing password
                           Navigator.popUntil(context, ModalRoute.withName('/')),
@@ -139,10 +135,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                         Text(
                           dic.profile.hintThenEnterANewPin,
                           textAlign: TextAlign.center,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline2!
-                              .copyWith(color: Colors.black),
+                          style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black),
                         ),
                         SizedBox(height: 30),
                         EncointerTextFormField(
@@ -155,11 +148,8 @@ class _ChangePassword extends State<ChangePasswordPage> {
                             return null;
                           },
                           obscureText: true,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.digitsOnly
-                          ],
-                          keyboardType:
-                              TextInputType.numberWithOptions(decimal: true),
+                          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                          keyboardType: TextInputType.numberWithOptions(decimal: true),
                         ),
                         SizedBox(height: 20),
                         EncointerTextFormField(
@@ -172,11 +162,8 @@ class _ChangePassword extends State<ChangePasswordPage> {
                             return null;
                           },
                           obscureText: true,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.digitsOnly
-                          ],
-                          keyboardType:
-                              TextInputType.numberWithOptions(decimal: true),
+                          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                          keyboardType: TextInputType.numberWithOptions(decimal: true),
                         ),
                         SizedBox(height: 20),
                         EncointerTextFormField(
@@ -189,11 +176,8 @@ class _ChangePassword extends State<ChangePasswordPage> {
                             return null;
                           },
                           obscureText: true,
-                          inputFormatters: <TextInputFormatter>[
-                            FilteringTextInputFormatter.digitsOnly
-                          ],
-                          keyboardType:
-                              TextInputType.numberWithOptions(decimal: true),
+                          inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
+                          keyboardType: TextInputType.numberWithOptions(decimal: true),
                         ),
                       ],
                     ),
@@ -207,10 +191,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                     _submitting ? CupertinoActivityIndicator() : Container(),
                     Text(
                       dic.profile.contactSave,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline3!
-                          .copyWith(color: ZurichLion.shade50),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(color: ZurichLion.shade50),
                     ),
                   ],
                 ),

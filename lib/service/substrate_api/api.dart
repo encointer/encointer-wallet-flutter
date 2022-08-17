@@ -98,8 +98,7 @@ class Api {
       await account.initAccounts();
 
       if (store.account.currentAddress.isNotEmpty) {
-        await store.encointer
-            .initializeUninitializedStores(store.account.currentAddress);
+        await store.encointer.initializeUninitializedStores(store.account.currentAddress);
       }
 
       return connectFunc();
@@ -121,16 +120,14 @@ class Api {
     // calls to the same method.
     bool allowRepeat = true,
   }) {
-    return js.evalJavascript(code,
-        wrapPromise: wrapPromise, allowRepeat: allowRepeat);
+    return js.evalJavascript(code, wrapPromise: wrapPromise, allowRepeat: allowRepeat);
   }
 
   Future<void> connectNode() async {
     String? node = store.settings.endpoint.value;
     NodeConfig? config = store.settings.endpoint.overrideConfig;
     // do connect
-    String? res = await evalJavascript(
-        'settings.connect("$node", "${jsonEncode(config)}")');
+    String? res = await evalJavascript('settings.connect("$node", "${jsonEncode(config)}")');
     if (res == null) {
       print('connecting to node failed');
       store.settings.setNetworkName(null);
@@ -140,22 +137,18 @@ class Api {
     if (store.settings.endpointIsTeeProxy) {
       var worker = store.settings.endpoint.worker;
       var mrenclave = store.settings.endpoint.mrenclave;
-      await evalJavascript(
-          'settings.setWorkerEndpoint("$worker", "$mrenclave")');
+      await evalJavascript('settings.setWorkerEndpoint("$worker", "$mrenclave")');
     }
 
     fetchNetworkProps();
   }
 
   Future<void> connectNodeAll() async {
-    List<String?> nodes =
-        store.settings.endpointList.map((e) => e.value).toList();
-    List<NodeConfig?> configs =
-        store.settings.endpointList.map((e) => e.overrideConfig).toList();
+    List<String?> nodes = store.settings.endpointList.map((e) => e.value).toList();
+    List<NodeConfig?> configs = store.settings.endpointList.map((e) => e.overrideConfig).toList();
     print("configs: $configs");
     // do connect
-    String? res = await evalJavascript(
-        'settings.connectAll(${jsonEncode(nodes)}, ${jsonEncode(configs)})');
+    String? res = await evalJavascript('settings.connectAll(${jsonEncode(nodes)}, ${jsonEncode(configs)})');
     if (res == null) {
       print('connect failed');
       store.settings.setNetworkName(null);
@@ -166,8 +159,7 @@ class Api {
     if (store.settings.endpointIsTeeProxy) {
       var worker = store.settings.endpoint.worker;
       var mrenclave = store.settings.endpoint.mrenclave;
-      await evalJavascript(
-          'settings.setWorkerEndpoint("$worker", "$mrenclave")');
+      await evalJavascript('settings.setWorkerEndpoint("$worker", "$mrenclave")');
     }
 
     int index = store.settings.endpointList.indexWhere((i) => i.value == res);
@@ -188,8 +180,7 @@ class Api {
     List<dynamic> info = await Future.wait([
       evalJavascript('settings.getNetworkConst()'),
       evalJavascript('api.rpc.system.properties()'),
-      evalJavascript(
-          'api.rpc.system.chain()'), // "Development" or "Encointer Testnet Gesell" or whatever
+      evalJavascript('api.rpc.system.chain()'), // "Development" or "Encointer Testnet Gesell" or whatever
     ]);
     store.settings.setNetworkConst(info[0]);
     store.settings.setNetworkState(info[1]);

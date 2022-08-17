@@ -38,10 +38,7 @@ class AddAccountForm extends StatelessWidget {
                 children: <Widget>[
                   SizedBox(height: 80),
                   Text(
-                    I18n.of(context)!
-                        .translationsForLocale()
-                        .profile
-                        .accountNameChoose,
+                    I18n.of(context)!.translationsForLocale().profile.accountNameChoose,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headline2,
                   ),
@@ -49,51 +46,35 @@ class AddAccountForm extends StatelessWidget {
                   Container(
                     width: 300,
                     child: Text(
-                      I18n.of(context)!
-                          .translationsForLocale()
-                          .profile
-                          .accountNameChooseHint,
+                      I18n.of(context)!.translationsForLocale().profile.accountNameChooseHint,
                       textAlign: TextAlign.center,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline2!
-                          .copyWith(color: Colors.black),
+                      style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black),
                     ),
                   ),
                   SizedBox(height: 30),
                   EncointerTextFormField(
                     key: Key('create-account-name'),
                     hintText: dic.account.createHint,
-                    labelText: I18n.of(context)!
-                        .translationsForLocale()
-                        .profile
-                        .accountName,
+                    labelText: I18n.of(context)!.translationsForLocale().profile.accountName,
                     controller: _nameCtrl,
-                    validator: (v) => InputValidation.validateAccountName(
-                        context, v, store.account.optionalAccounts),
+                    validator: (v) => InputValidation.validateAccountName(context, v, store.account.optionalAccounts),
                   ),
                 ],
               ),
             ),
             ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(vertical: 16)),
+                style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
                 key: Key('import-account'),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Iconsax.import_2),
                     SizedBox(width: 10),
-                    Text(
-                        I18n.of(context)!
-                            .translationsForLocale()
-                            .home
-                            .accountImport,
+                    Text(I18n.of(context)!.translationsForLocale().home.accountImport,
                         style: Theme.of(context).textTheme.headline3),
                   ],
                 ),
-                onPressed: () =>
-                    Navigator.pushNamed(context, ImportAccountPage.route)),
+                onPressed: () => Navigator.pushNamed(context, ImportAccountPage.route)),
             SizedBox(height: 10),
             PrimaryButton(
               key: Key('create-account-confirm'),
@@ -103,14 +84,8 @@ class AddAccountForm extends StatelessWidget {
                   Icon(Iconsax.add_square),
                   SizedBox(width: 12),
                   Text(
-                    I18n.of(context)!
-                        .translationsForLocale()
-                        .profile
-                        .accountCreate,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline3!
-                        .copyWith(color: ZurichLion.shade50),
+                    I18n.of(context)!.translationsForLocale().profile.accountCreate,
+                    style: Theme.of(context).textTheme.headline3!.copyWith(color: ZurichLion.shade50),
                   ),
                 ],
               ),

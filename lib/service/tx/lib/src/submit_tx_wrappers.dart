@@ -23,31 +23,27 @@ Future<void> submitTx(
   Function(BuildContext txPageContext, Map res)? onFinish,
 }) async {
   if (store.settings.cachedPin.isEmpty) {
-    var unlockText =
-        I18n.of(context)!.translationsForLocale().home.unlockAccount;
+    var unlockText = I18n.of(context)!.translationsForLocale().home.unlockAccount;
     await showCupertinoDialog(
       context: context,
       builder: (context) {
         return showPasswordInputDialog(
           context,
           store.account.currentAccount,
-          Text(unlockText.replaceAll(
-              'CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
+          Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
           (password) => store.settings.setPin(password),
         );
       },
     );
   }
 
-  final txPaymentAsset =
-      store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
+  final txPaymentAsset = store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
 
   if (txPaymentAsset != null) {
     txParams["txInfo"]["txPaymentAsset"] = txPaymentAsset;
   }
 
-  txParams["onFinish"] =
-      onFinish ?? ((BuildContext txPageContext, Map res) => res);
+  txParams["onFinish"] = onFinish ?? ((BuildContext txPageContext, Map res) => res);
 
   return submitToJS(
     context,
@@ -99,20 +95,17 @@ Future<void> submitEndorseNewcomer(
   );
 }
 
-Future<void> submitRegisterParticipant(
-    BuildContext context, AppStore store, Api api) async {
+Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api api) async {
   // this is called inside submitTx too, but we need to unlock the key for the proof of attendance.
   if (store.settings.cachedPin.isEmpty) {
-    var unlockText =
-        I18n.of(context)!.translationsForLocale().home.unlockAccount;
+    var unlockText = I18n.of(context)!.translationsForLocale().home.unlockAccount;
     await showCupertinoDialog(
       context: context,
       builder: (context) {
         return showPasswordInputDialog(
           context,
           store.account.currentAccount,
-          Text(unlockText.replaceAll(
-              'CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
+          Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
           (password) => store.settings.setPin(password),
         );
       },
@@ -123,8 +116,7 @@ Future<void> submitRegisterParticipant(
     context,
     store,
     api,
-    registerParticipantParams(store.encointer.chosenCid!,
-        proof: await api.encointer.getProofOfAttendance()),
+    registerParticipantParams(store.encointer.chosenCid!, proof: await api.encointer.getProofOfAttendance()),
     onFinish: (BuildContext txPageContext, Map res) {
       // Registering the participant burns the reputation.
       // Hence, we should fetch the new state afterwards.
@@ -133,8 +125,7 @@ Future<void> submitRegisterParticipant(
   );
 }
 
-Future<void> submitAttestClaims(
-    BuildContext context, AppStore store, Api api) async {
+Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) async {
   final params = attestClaimsParams(
     store.encointer.chosenCid!,
     store.encointer.communityAccount!.scannedClaimsCount,
@@ -160,6 +151,5 @@ Future<dynamic> submitReapVoucher(
   String recipientAddress,
   CommunityIdentifier cid,
 ) async {
-  return api.js.evalJavascript(
-      'encointer.reapVoucher("$voucherUri","$recipientAddress", ${jsonEncode(cid)})');
+  return api.js.evalJavascript('encointer.reapVoucher("$voucherUri","$recipientAddress", ${jsonEncode(cid)})');
 }

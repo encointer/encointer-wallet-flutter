@@ -14,8 +14,7 @@ class ContactListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<AccountData>? args =
-        ModalRoute.of(context)!.settings.arguments as List<AccountData>?;
+    final List<AccountData>? args = ModalRoute.of(context)!.settings.arguments as List<AccountData>?;
     return Scaffold(
       appBar: AppBar(
         title: Text(args == null
@@ -28,8 +27,7 @@ class ContactListPage extends StatelessWidget {
                   padding: EdgeInsets.only(right: 8),
                   child: IconButton(
                     icon: Icon(Icons.add, size: 28),
-                    onPressed: () =>
-                        Navigator.of(context).pushNamed(ContactPage.route),
+                    onPressed: () => Navigator.of(context).pushNamed(ContactPage.route),
                   ),
                 )
               : Container()

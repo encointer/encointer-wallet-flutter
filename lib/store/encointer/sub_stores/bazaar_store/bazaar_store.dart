@@ -17,8 +17,7 @@ class BazaarStore extends _BazaarStore with _$BazaarStore {
     return jsonEncode(this);
   }
 
-  factory BazaarStore.fromJson(Map<String, dynamic> json) =>
-      _$BazaarStoreFromJson(json);
+  factory BazaarStore.fromJson(Map<String, dynamic> json) => _$BazaarStoreFromJson(json);
   Map<String, dynamic> toJson() => _$BazaarStoreToJson(this);
 }
 

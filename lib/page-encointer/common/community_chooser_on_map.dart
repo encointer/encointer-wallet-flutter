@@ -49,8 +49,7 @@ class CommunityDetailsPopup extends StatefulWidget {
   CommunityDetailsPopup(this.store, this.marker, this.dataForThisMarker);
 
   @override
-  _CommunityDetailsPopupState createState() =>
-      _CommunityDetailsPopupState(store);
+  _CommunityDetailsPopupState createState() => _CommunityDetailsPopupState(store);
 }
 
 class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
@@ -62,8 +61,7 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
   Widget build(BuildContext context) {
     return Card(
       child: InkWell(
-        key: Key(
-            '${widget.marker.key.toString().substring(3, widget.marker.key.toString().length - 3)}-description'),
+        key: Key('${widget.marker.key.toString().substring(3, widget.marker.key.toString().length - 3)}-description'),
         onTap: () {
           setState(() {
             store.encointer.setChosenCid(widget.dataForThisMarker!.cid);

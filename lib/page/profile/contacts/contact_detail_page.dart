@@ -57,8 +57,7 @@ class ContactDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AccountData account =
-        ModalRoute.of(context)!.settings.arguments as AccountData;
+    AccountData account = ModalRoute.of(context)!.settings.arguments as AccountData;
     var dic = I18n.of(context)!.translationsForLocale();
 
     return Scaffold(
@@ -97,13 +96,11 @@ class ContactDetailPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(Fmt.address(account.address)!,
-                            style: TextStyle(fontSize: 20)),
+                        Text(Fmt.address(account.address)!, style: TextStyle(fontSize: 20)),
                         IconButton(
                           icon: Icon(Iconsax.copy),
                           color: ZurichLion.shade500,
-                          onPressed: () =>
-                              UI.copyAndNotify(context, account.address),
+                          onPressed: () => UI.copyAndNotify(context, account.address),
                         ),
                       ],
                     ),
@@ -112,8 +109,7 @@ class ContactDetailPage extends StatelessWidget {
               ),
               Observer(builder: (_) {
                 if (store.encointer.community!.bootstrappers != null) {
-                  return store.encointer.community!.bootstrappers!
-                          .contains(store.account.currentAddress)
+                  return store.encointer.community!.bootstrappers!.contains(store.account.currentAddress)
                       ? EndorseButton(store, api, account)
                       : Container();
                 } else {
@@ -127,9 +123,7 @@ class ContactDetailPage extends StatelessWidget {
                   children: [
                     Icon(Iconsax.send_sqaure_2),
                     SizedBox(width: 12),
-                    Text(
-                        dic.profile.tokenSend.replaceAll('SYMBOL',
-                            store.encointer.community?.symbol ?? "null"),
+                    Text(dic.profile.tokenSend.replaceAll('SYMBOL', store.encointer.community?.symbol ?? "null"),
                         style: Theme.of(context).textTheme.headline3),
                   ],
                 ),
@@ -154,8 +148,7 @@ class ContactDetailPage extends StatelessWidget {
                   children: [
                     Icon(Iconsax.trash),
                     SizedBox(width: 12),
-                    Text(dic.profile.contactDelete,
-                        style: Theme.of(context).textTheme.headline3)
+                    Text(dic.profile.contactDelete, style: Theme.of(context).textTheme.headline3)
                   ],
                 ),
                 onPressed: () => _removeItem(context, account),
@@ -185,24 +178,20 @@ class EndorseButton extends StatelessWidget {
         children: [
           Icon(Iconsax.verify),
           SizedBox(width: 12),
-          Text(dic.profile.contactEndorse,
-              style: Theme.of(context).textTheme.headline3)
+          Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
         ],
       ),
-      onPressed:
-          store.encointer.community!.bootstrappers!.contains(contact.address)
-              ? (BuildContext context) =>
-                  _popupDialog(context, dic.profile.cantEndorseBootstrapper)
-              : store.encointer.currentPhase != CeremonyPhase.Registering
-                  ? (BuildContext context) => _popupDialog(
-                      context, dic.profile.canEndorseInRegisteringPhaseOnly)
-                  : (BuildContext context) => submitEndorseNewcomer(
-                        context,
-                        store,
-                        api,
-                        store.encointer.chosenCid,
-                        contact.address,
-                      ),
+      onPressed: store.encointer.community!.bootstrappers!.contains(contact.address)
+          ? (BuildContext context) => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
+          : store.encointer.currentPhase != CeremonyPhase.Registering
+              ? (BuildContext context) => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)
+              : (BuildContext context) => submitEndorseNewcomer(
+                    context,
+                    store,
+                    api,
+                    store.encointer.chosenCid,
+                    contact.address,
+                  ),
     );
   }
 }

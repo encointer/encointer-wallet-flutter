@@ -22,12 +22,9 @@ class _AccountSharePageState extends State<AccountSharePage> {
     var dic = I18n.of(context)!.translationsForLocale();
     var textTheme = Theme.of(context).textTheme;
 
-    String? accountToBeSharedPubKey =
-        ModalRoute.of(context)!.settings.arguments as String?;
-    AccountData accountToBeShared =
-        widget.store.account.getAccountData(accountToBeSharedPubKey);
-    final addressSS58 =
-        widget.store.account.getNetworkAddress(accountToBeSharedPubKey);
+    String? accountToBeSharedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
+    AccountData accountToBeShared = widget.store.account.getAccountData(accountToBeSharedPubKey);
+    final addressSS58 = widget.store.account.getNetworkAddress(accountToBeSharedPubKey);
 
     var contactQrCode = ContactQrCode(
       account: addressSS58,
@@ -68,8 +65,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
                   QrImage(
                     data: contactQrCode.toQrPayload(),
                     embeddedImage: AssetImage('assets/images/public/app.png'),
-                    embeddedImageStyle:
-                        QrEmbeddedImageStyle(size: Size(40, 40)),
+                    embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
                   ),
                   Text(
                     '${accountToBeShared.name}',
@@ -86,8 +82,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
               ),
               SizedBox(height: 8),
               ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(vertical: 16)),
+                style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

@@ -17,8 +17,7 @@ class CommunityChooserPanel extends StatefulWidget {
   final AppStore store;
 
   @override
-  _CommunityChooserPanelState createState() =>
-      _CommunityChooserPanelState(store);
+  _CommunityChooserPanelState createState() => _CommunityChooserPanelState(store);
 }
 
 class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
@@ -47,14 +46,10 @@ class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
                           // hint: Text(dic.assets.communityChoose),
                           value: (store.encointer.chosenCid == null ||
                                   store.encointer.communities!
-                                      .where((cn) =>
-                                          cn.cid == store.encointer.chosenCid)
+                                      .where((cn) => cn.cid == store.encointer.chosenCid)
                                       .isEmpty)
                               ? null
-                              : store.encointer.communities!
-                                  .where((cn) =>
-                                      cn.cid == store.encointer.chosenCid)
-                                  .first,
+                              : store.encointer.communities!.where((cn) => cn.cid == store.encointer.chosenCid).first,
                           icon: Icon(Icons.arrow_downward),
                           iconSize: 32,
                           elevation: 32,
@@ -97,12 +92,10 @@ class CombinedCommunityAndAccountAvatar extends StatefulWidget {
   final bool showCommunityNameAndAccountName;
 
   @override
-  _CombinedCommunityAndAccountAvatarState createState() =>
-      _CombinedCommunityAndAccountAvatarState(store);
+  _CombinedCommunityAndAccountAvatarState createState() => _CombinedCommunityAndAccountAvatarState(store);
 }
 
-class _CombinedCommunityAndAccountAvatarState
-    extends State<CombinedCommunityAndAccountAvatar> {
+class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAndAccountAvatar> {
   final AppStore store;
 
   _CombinedCommunityAndAccountAvatarState(this.store);
@@ -120,13 +113,11 @@ class _CombinedCommunityAndAccountAvatarState
                   Card(
                     elevation: 10,
                     shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(widget.communityAvatarSize),
+                      borderRadius: BorderRadius.circular(widget.communityAvatarSize),
                     ),
                     child: CommunityAvatar(
                       store: store,
-                      avatarIcon: webApi.ipfs.getCommunityIcon(
-                          store.encointer.community?.assetsCid),
+                      avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.community?.assetsCid),
                       avatarSize: widget.communityAvatarSize,
                     ),
                   ),
@@ -146,10 +137,7 @@ class _CombinedCommunityAndAccountAvatarState
               if (widget.showCommunityNameAndAccountName)
                 Text(
                   '${store.encointer.community?.name ?? "..."}\n${Fmt.accountName(context, store.account.currentAccount)}',
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline4!
-                      .copyWith(color: encointerGrey, height: 1.5),
+                  style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey, height: 1.5),
                   textAlign: TextAlign.center,
                 ),
             ],

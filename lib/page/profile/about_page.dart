@@ -35,8 +35,7 @@ class AboutPage extends StatelessWidget {
               builder: (_, AsyncSnapshot<PackageInfo> snapshot) {
                 print(snapshot);
                 if (snapshot.hasData) {
-                  return Text(
-                      '${dic.profile.aboutVersion}: v${snapshot.data!.version}+${snapshot.data!.buildNumber}');
+                  return Text('${dic.profile.aboutVersion}: v${snapshot.data!.version}+${snapshot.data!.buildNumber}');
                 } else {
                   return CupertinoActivityIndicator();
                 }

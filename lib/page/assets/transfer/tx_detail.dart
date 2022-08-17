@@ -76,10 +76,8 @@ class TxDetail extends StatelessWidget {
       ));
     });
 
-    String? pnLink =
-        'https://polkascan.io/pre/${networkName!.toLowerCase()}/transaction/$hash';
-    String? snLink =
-        'https://${networkName!.toLowerCase()}.subscan.io/extrinsic/$hash';
+    String? pnLink = 'https://polkascan.io/pre/${networkName!.toLowerCase()}/transaction/$hash';
+    String? snLink = 'https://${networkName!.toLowerCase()}.subscan.io/extrinsic/$hash';
     if (networkName == networkEndpointEncointerGesell.info ||
         networkName == networkEndpointEncointerGesellDev.info ||
         networkName == networkEndpointEncointerCantillon.info) {
@@ -125,8 +123,7 @@ class TxDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:
-            Text('${I18n.of(context)!.translationsForLocale().assets.detail}'),
+        title: Text('${I18n.of(context)!.translationsForLocale().assets.detail}'),
         centerTitle: true,
       ),
       body: SafeArea(

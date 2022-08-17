@@ -54,20 +54,14 @@ class CeremonyStep2Scan extends StatelessWidget {
                     Center(
                       child: Text(
                         dic.encointer.scan,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline2!
-                            .copyWith(color: ZurichLion.shade600),
+                        style: Theme.of(context).textTheme.headline2!.copyWith(color: ZurichLion.shade600),
                       ),
                     ),
                     Center(
                       child: Text(
                         dic.encointer.scanDescriptionForMeetup,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline2!
-                            .copyWith(color: Colors.black, height: 1.25),
+                        style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black, height: 1.25),
                       ),
                     ),
                     SizedBox(height: 12),
@@ -100,15 +94,11 @@ class CeremonyStep2Scan extends StatelessWidget {
                   children: [
                     Icon(Iconsax.arrow_right_2),
                     SizedBox(width: 12, height: 60),
-                    Text(dic.encointer.closeMeetup,
-                        style: Theme.of(context).textTheme.headline3),
+                    Text(dic.encointer.closeMeetup, style: Theme.of(context).textTheme.headline3),
                   ],
                 ),
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      CupertinoPageRoute(
-                          builder: (_) => CeremonyStep3Finish(store, api)));
+                  Navigator.push(context, CupertinoPageRoute(builder: (_) => CeremonyStep3Finish(store, api)));
                 },
               ),
               SizedBox(height: 12),
@@ -120,18 +110,14 @@ class CeremonyStep2Scan extends StatelessWidget {
                     SizedBox(width: 12),
                     Text(
                       dic.encointer.scanOthers,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline3!
-                          .copyWith(color: ZurichLion.shade50),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(color: ZurichLion.shade50),
                     ),
                   ],
                 ),
                 onPressed: () {
                   Navigator.of(context).push(
                     MaterialPageRoute(
-                      builder: (_) =>
-                          ScanClaimQrCode(store, confirmedParticipantsCount),
+                      builder: (_) => ScanClaimQrCode(store, confirmedParticipantsCount),
                     ),
                   );
                 },

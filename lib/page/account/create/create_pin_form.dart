@@ -50,8 +50,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
               children: <Widget>[
                 SizedBox(height: 80),
                 Center(
-                  child: Text(dic.profile.pinSecure,
-                      style: Theme.of(context).textTheme.headline2),
+                  child: Text(dic.profile.pinSecure, style: Theme.of(context).textTheme.headline2),
                 ),
                 SizedBox(height: 10),
                 Center(
@@ -73,11 +72,8 @@ class _CreatePinFormState extends State<CreatePinForm> {
                   decoration: InputDecoration(
                     enabledBorder: const OutlineInputBorder(
                       // width: 0.0 produces a thin "hairline" border
-                      borderSide: const BorderSide(
-                          color: Colors.transparent, width: 0.0),
-                      borderRadius: BorderRadius.horizontal(
-                          left: Radius.circular(15),
-                          right: Radius.circular(15)),
+                      borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+                      borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
                     ),
                     filled: true,
                     fillColor: ZurichLion.shade50,
@@ -86,14 +82,10 @@ class _CreatePinFormState extends State<CreatePinForm> {
                   ),
                   controller: _passCtrl,
                   validator: (v) {
-                    return Fmt.checkPassword(v!.trim())
-                        ? null
-                        : dic.account.createPasswordError;
+                    return Fmt.checkPassword(v!.trim()) ? null : dic.account.createPasswordError;
                   },
                   obscureText: true,
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
+                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                 ),
                 SizedBox(height: 20),
                 TextFormField(
@@ -102,11 +94,8 @@ class _CreatePinFormState extends State<CreatePinForm> {
                   decoration: InputDecoration(
                     enabledBorder: const OutlineInputBorder(
                       // width: 0.0 produces a thin "hairline" border
-                      borderSide: const BorderSide(
-                          color: Colors.transparent, width: 0.0),
-                      borderRadius: BorderRadius.horizontal(
-                          left: Radius.circular(15),
-                          right: Radius.circular(15)),
+                      borderSide: const BorderSide(color: Colors.transparent, width: 0.0),
+                      borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
                     ),
                     filled: true,
                     //todo define color
@@ -117,13 +106,9 @@ class _CreatePinFormState extends State<CreatePinForm> {
                   controller: _pass2Ctrl,
                   obscureText: true,
                   validator: (v) {
-                    return _passCtrl.text != v
-                        ? dic.account.createPassword2Error
-                        : null;
+                    return _passCtrl.text != v ? dic.account.createPassword2Error : null;
                   },
-                  inputFormatters: <TextInputFormatter>[
-                    FilteringTextInputFormatter.digitsOnly
-                  ],
+                  inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -136,10 +121,9 @@ class _CreatePinFormState extends State<CreatePinForm> {
                         width: 250,
                         child: Text(
                           dic.profile.pinInfo,
-                          style:
-                              Theme.of(context).textTheme.headline4!.copyWith(
-                                    color: encointerGrey,
-                                  ),
+                          style: Theme.of(context).textTheme.headline4!.copyWith(
+                                color: encointerGrey,
+                              ),
                         ),
                       ),
                     ],

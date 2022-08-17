@@ -23,8 +23,7 @@ class CeremonyStep1Count extends StatelessWidget {
   final AppStore store;
   final Api api;
 
-  final TextEditingController _attendeesCountController =
-      TextEditingController();
+  final TextEditingController _attendeesCountController = TextEditingController();
 
   Future<void> _pushStep2ScanPage(BuildContext context, int count) async {
     if (store.settings.cachedPin.isEmpty) {
@@ -35,8 +34,8 @@ class CeremonyStep1Count extends StatelessWidget {
           return showPasswordInputDialog(
               context,
               store.account.currentAccount,
-              Text(dic.home.unlockAccount.replaceAll('CURRENT_ACCOUNT_NAME',
-                  store.account.currentAccount.name.toString())), (password) {
+              Text(dic.home.unlockAccount
+                  .replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name.toString())), (password) {
             store.settings.setPin(password);
           });
         },
@@ -51,8 +50,7 @@ class CeremonyStep1Count extends StatelessWidget {
             api,
             claim: webApi.encointer
                 .signClaimOfAttendance(count, store.settings.cachedPin)
-                .then((claim) => webApi.codec
-                    .encodeToBytes(ClaimOfAttendanceJSRegistryName, claim)),
+                .then((claim) => webApi.codec.encodeToBytes(ClaimOfAttendanceJSRegistryName, claim)),
             confirmedParticipantsCount: count,
           ),
         ),
@@ -89,32 +87,22 @@ class CeremonyStep1Count extends StatelessWidget {
                     Center(
                       child: Text(
                         dic.encointer.count,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline2!
-                            .copyWith(color: ZurichLion.shade600),
+                        style: Theme.of(context).textTheme.headline2!.copyWith(color: ZurichLion.shade600),
                       ),
                     ),
                     Center(
                       child: Text(
                         dic.encointer.howManyParticipantsShowedUp,
                         textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline2!
-                            .copyWith(color: Colors.black, height: 2),
+                        style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black, height: 2),
                       ),
                     ),
                     SizedBox(height: 48),
                     EncointerTextFormField(
                       labelText: dic.encointer.numberOfAttendees,
-                      textStyle: Theme.of(context)
-                          .textTheme
-                          .headline1!
-                          .copyWith(color: encointerBlack),
+                      textStyle: Theme.of(context).textTheme.headline1!.copyWith(color: encointerBlack),
                       controller: _attendeesCountController,
-                      keyboardType:
-                          TextInputType.numberWithOptions(decimal: true),
+                      keyboardType: TextInputType.numberWithOptions(decimal: true),
                       textFormFieldKey: Key('attendees-count'),
                     ),
                   ],
@@ -129,18 +117,13 @@ class CeremonyStep1Count extends StatelessWidget {
                     SizedBox(width: 12),
                     Text(
                       dic.encointer.next,
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline3!
-                          .copyWith(color: ZurichLion.shade50),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(color: ZurichLion.shade50),
                     ),
                   ],
                 ),
-                onPressed: () =>
-                    _attendeesCountController.text.trim().isNotEmpty
-                        ? _pushStep2ScanPage(context,
-                            int.parse(_attendeesCountController.text.trim()))
-                        : null,
+                onPressed: () => _attendeesCountController.text.trim().isNotEmpty
+                    ? _pushStep2ScanPage(context, int.parse(_attendeesCountController.text.trim()))
+                    : null,
               ),
             ],
           ),

@@ -9,12 +9,7 @@ import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import "package:latlong2/latlong.dart";
 
 class EncointerMap extends StatelessWidget {
-  EncointerMap(this.store,
-      {this.popupBuilder,
-      this.markers,
-      this.title,
-      this.center,
-      this.initialZoom = 0});
+  EncointerMap(this.store, {this.popupBuilder, this.markers, this.title, this.center, this.initialZoom = 0});
 
   final AppStore store;
 
@@ -48,15 +43,13 @@ class EncointerMap extends StatelessWidget {
                 center: center,
                 zoom: initialZoom,
                 maxZoom: 18.4,
-                onTap: (_, __) => _popupLayerController
-                    .hideAllPopups(), // Hide popup when the map is tapped.
+                onTap: (_, __) => _popupLayerController.hideAllPopups(), // Hide popup when the map is tapped.
               ),
               children: [
                 TileLayerWidget(
                   options: TileLayerOptions(
                     backgroundColor: Colors.white,
-                    urlTemplate:
-                        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                     subdomains: ['a', 'b', 'c'],
                   ),
                 ),
@@ -64,9 +57,7 @@ class EncointerMap extends StatelessWidget {
                   options: PopupMarkerLayerOptions(
                     popupController: _popupLayerController,
                     markers: markers!,
-                    markerRotateAlignment:
-                        PopupMarkerLayerOptions.rotationAlignmentFor(
-                            AnchorAlign.top),
+                    markerRotateAlignment: PopupMarkerLayerOptions.rotationAlignmentFor(AnchorAlign.top),
                     popupBuilder: popupBuilder,
                   ),
                 ),

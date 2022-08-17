@@ -50,15 +50,13 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   /// Is true when all the data has been fetched.
   bool _isReady = false;
 
-  Future<void> fetchVoucherData(
-      Api api, String voucherUri, CommunityIdentifier cid) async {
+  Future<void> fetchVoucherData(Api api, String voucherUri, CommunityIdentifier cid) async {
     _log("Fetching voucher data...");
     _voucherAddress = await api.account.addressFromUri(voucherUri);
 
     setState(() {});
 
-    var voucherBalanceEntry =
-        await api.encointer.getEncointerBalance(_voucherAddress!, cid);
+    var voucherBalanceEntry = await api.encointer.getEncointerBalance(_voucherAddress!, cid);
     _voucherBalance = voucherBalanceEntry.applyDemurrage(
       widget.store.chain.latestHeaderNumber,
       widget.store.encointer.community!.demurrage!,
@@ -72,12 +70,9 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
-    final h2Grey =
-        Theme.of(context).textTheme.headline2!.copyWith(color: encointerGrey);
-    final h4Grey =
-        Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey);
-    ReapVoucherParams params =
-        ModalRoute.of(context)!.settings.arguments as ReapVoucherParams;
+    final h2Grey = Theme.of(context).textTheme.headline2!.copyWith(color: encointerGrey);
+    final h4Grey = Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey);
+    ReapVoucherParams params = ModalRoute.of(context)!.settings.arguments as ReapVoucherParams;
 
     final voucher = params.voucher;
     final voucherUri = voucher.voucherUri;
@@ -91,8 +86,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
       _postFrameCallbackCalled = true;
       WidgetsBinding.instance.addPostFrameCallback(
         (_) async {
-          var result = await _changeNetworkAndCommunityIfNeeded(
-              context, networkInfo, cid);
+          var result = await _changeNetworkAndCommunityIfNeeded(context, networkInfo, cid);
 
           if (result == ChangeResult.ok) {
             fetchVoucherData(widget.api, voucherUri, cid);
@@ -136,9 +130,8 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
               // fit: FlexFit.tight,
               child: Center(
                 child: Text(
-                  dic.assets.doYouWantToRedeemThisVoucher.replaceAll(
-                      "ACCOUNT_PLACEHOLDER",
-                      widget.store.account.currentAccount.name),
+                  dic.assets.doYouWantToRedeemThisVoucher
+                      .replaceAll("ACCOUNT_PLACEHOLDER", widget.store.account.currentAccount.name),
                   style: h2Grey,
                   textAlign: TextAlign.center,
                 ),
@@ -156,10 +149,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                       Text(dic.assets.fundVoucher),
                     ],
                   ),
-                  onPressed: _isReady
-                      ? () =>
-                          _pushTransferPage(context, voucher, _voucherAddress!)
-                      : null,
+                  onPressed: _isReady ? () => _pushTransferPage(context, voucher, _voucherAddress!) : null,
                 ),
               ),
             SubmitButton(
@@ -171,10 +161,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                   Text(dic.assets.redeemVoucher),
                 ],
               ),
-              onPressed: _isReady
-                  ? (context) =>
-                      _submitReapVoucher(context, voucherUri, cid, recipient)
-                  : null,
+              onPressed: _isReady ? (context) => _submitReapVoucher(context, voucherUri, cid, recipient) : null,
             ),
           ],
         ),
@@ -188,8 +175,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     CommunityIdentifier cid,
     String recipientAddress,
   ) async {
-    var res =
-        await submitReapVoucher(widget.api, voucherUri, recipientAddress, cid);
+    var res = await submitReapVoucher(widget.api, voucherUri, recipientAddress, cid);
 
     if (res['hash'] == null) {
       _log('Error redeeming voucher: ${res['error']}');
@@ -234,8 +220,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   }
 }
 
-void _pushTransferPage(
-    BuildContext context, VoucherData data, String voucherAddress) {
+void _pushTransferPage(BuildContext context, VoucherData data, String voucherAddress) {
   Navigator.of(context).popAndPushNamed(
     TransferPage.route,
     arguments: TransferPageParams(

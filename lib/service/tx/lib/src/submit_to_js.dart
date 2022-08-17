@@ -86,12 +86,10 @@ Future<Map> getTxFee(
     txInfo = proxyAccount.pubKey;
   }
 
-  return api.account
-      .estimateTxFees(txInfo, args['params'], rawParam: args['rawParam']);
+  return api.account.estimateTxFees(txInfo, args['params'], rawParam: args['rawParam']);
 }
 
-void _onTxError(
-    BuildContext context, AppStore store, String errorMsg, bool mounted) {
+void _onTxError(BuildContext context, AppStore store, String errorMsg, bool mounted) {
   store.assets.setSubmitting(false);
   if (mounted) {
     RootSnackBar.removeCurrent();
@@ -127,8 +125,7 @@ void _showTxStatusSnackBar(String status, Widget? leading) {
   );
 }
 
-void _onTxFinish(BuildContext context, AppStore store, Map res,
-    Function(BuildContext, Map) onTxFinish, bool mounted) {
+void _onTxFinish(BuildContext context, AppStore store, Map res, Function(BuildContext, Map) onTxFinish, bool mounted) {
   print('callback triggered, blockHash: ${res['hash']}');
   store.assets.setSubmitting(false);
 
@@ -137,8 +134,7 @@ void _onTxFinish(BuildContext context, AppStore store, Map res,
   if (mounted) {
     RootSnackBar.show(
       ListTile(
-        leading: Container(
-            width: 24, child: Image.asset('assets/images/assets/success.png')),
+        leading: Container(width: 24, child: Image.asset('assets/images/assets/success.png')),
         title: Text(
           I18n.of(context)!.translationsForLocale().assets.success,
           style: TextStyle(color: Colors.black54),

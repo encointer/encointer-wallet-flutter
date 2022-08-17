@@ -62,8 +62,7 @@ class _ReceivePageState extends State<ReceivePage> {
       const Duration(seconds: 1),
       () async {
         if (!observedPendingExtrinsic) {
-          observedPendingExtrinsic = await showSnackBarUponPendingExtrinsics(
-              widget.store, webApi, dic);
+          observedPendingExtrinsic = await showSnackBarUponPendingExtrinsics(widget.store, webApi, dic);
           resetObservedPendingExtrinsicCounter = 0;
         } else {
           if (resetObservedPendingExtrinsicCounter++ > 4) {
@@ -73,9 +72,7 @@ class _ReceivePageState extends State<ReceivePage> {
           }
         }
 
-        webApi.encointer
-            .getAllBalances(widget.store.account.currentAddress)
-            .then((balances) {
+        webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
           CommunityIdentifier? cid = widget.store.encointer.chosenCid;
 
           if (cid == null) {
@@ -83,29 +80,19 @@ class _ReceivePageState extends State<ReceivePage> {
           }
 
           double? demurrageRate = widget.store.encointer.community!.demurrage;
-          double? newBalance =
-              widget.store.encointer.applyDemurrage(balances[cid]);
-          double oldBalance = widget.store.encointer.applyDemurrage(
-                  widget.store.encointer.communityBalanceEntry) ??
-              0;
+          double? newBalance = widget.store.encointer.applyDemurrage(balances[cid]);
+          double oldBalance = widget.store.encointer.applyDemurrage(widget.store.encointer.communityBalanceEntry) ?? 0;
           if (newBalance != null) {
             double delta = newBalance - oldBalance;
             print("[receivePage] balance was $oldBalance, changed by $delta");
             if (delta > demurrageRate!) {
               var msg = dic.assets.incomingConfirmed
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
-                  .replaceAll(
-                      'CID_SYMBOL',
-                      widget.store.encointer.community?.metadata?.symbol ??
-                          "null")
-                  .replaceAll(
-                      'ACCOUNT_NAME', widget.store.account.currentAccount.name);
+                  .replaceAll('CID_SYMBOL', widget.store.encointer.community?.metadata?.symbol ?? "null")
+                  .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
               print("[receivePage] $msg");
-              widget.store.encointer.account
-                  ?.addBalanceEntry(cid, balances[cid]!);
-              NotificationPlugin.showNotification(
-                  44, dic.assets.fundsReceived, msg,
-                  cid: cid.toFmtString());
+              widget.store.encointer.account?.addBalanceEntry(cid, balances[cid]!);
+              NotificationPlugin.showNotification(44, dic.assets.fundsReceived, msg, cid: cid.toFmtString());
             }
           }
         });
@@ -151,10 +138,7 @@ class _ReceivePageState extends State<ReceivePage> {
                         padding: const EdgeInsets.symmetric(horizontal: 48),
                         child: Text(
                           dic.profile.qrScanHint,
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline3!
-                              .copyWith(color: encointerBlack),
+                          style: Theme.of(context).textTheme.headline3!.copyWith(color: encointerBlack),
                           textAlign: TextAlign.center,
                         ),
                       ),
@@ -163,14 +147,10 @@ class _ReceivePageState extends State<ReceivePage> {
                         padding: const EdgeInsets.all(30),
                         child: EncointerTextFormField(
                           labelText: dic.assets.invoiceAmount,
-                          textStyle: Theme.of(context)
-                              .textTheme
-                              .headline2!
-                              .copyWith(color: encointerBlack),
+                          textStyle: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
                           inputFormatters: [UI.decimalInputFormatter()],
                           controller: _amountController,
-                          keyboardType:
-                              TextInputType.numberWithOptions(decimal: true),
+                          keyboardType: TextInputType.numberWithOptions(decimal: true),
                           textFormFieldKey: Key('invoice-amount-input'),
                           onChanged: (value) {
                             setState(() {
@@ -191,12 +171,8 @@ class _ReceivePageState extends State<ReceivePage> {
                       ),
                     ],
                   ),
-                  Text(
-                      '${dic.profile.receiverAccount} ${widget.store.account.currentAccount.name}',
-                      style: Theme.of(context)
-                          .textTheme
-                          .headline3!
-                          .copyWith(color: encointerGrey),
+                  Text('${dic.profile.receiverAccount} ${widget.store.account.currentAccount.name}',
+                      style: Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey),
                       textAlign: TextAlign.center),
                   SizedBox(height: 8),
                   Column(children: [
@@ -238,8 +214,7 @@ class _ReceivePageState extends State<ReceivePage> {
 /// Shows a [SnackBar] if we found an extrinsic in a transaction pool addressed to the current account.
 ///
 /// Returns a true if such an extrinsic was found.
-Future<bool> showSnackBarUponPendingExtrinsics(
-    AppStore store, Api api, Translations dic) async {
+Future<bool> showSnackBarUponPendingExtrinsics(AppStore store, Api api, Translations dic) async {
   var observedExtrinsics = false;
 
   try {

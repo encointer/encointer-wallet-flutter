@@ -105,9 +105,7 @@ class UI {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Container(),
-          content: code == null
-              ? Text(dic.home.updateError)
-              : Text(dic.home.success),
+          content: code == null ? Text(dic.home.updateError) : Text(dic.home.success),
           actions: <Widget>[
             CupertinoButton(
               child: Text(dic.home.ok),
@@ -115,8 +113,7 @@ class UI {
                 if (code == null) {
                   exit(0);
                 }
-                UpdateJSCodeApi.setPolkadotJSCode(
-                    jsStorage, network, code, version);
+                UpdateJSCodeApi.setPolkadotJSCode(jsStorage, network, code, version);
                 Navigator.of(context).pop();
               },
             ),
@@ -132,8 +129,7 @@ class UI {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Container(),
-          content: Text(
-              I18n.of(context)!.translationsForLocale().account.backupError),
+          content: Text(I18n.of(context)!.translationsForLocale().account.backupError),
           actions: <Widget>[
             CupertinoButton(
               child: Text(I18n.of(context)!.translationsForLocale().home.ok),
@@ -148,18 +144,14 @@ class UI {
     );
   }
 
-  static bool checkBalanceAndAlert(
-      BuildContext context, AppStore store, BigInt amountNeeded) {
+  static bool checkBalanceAndAlert(BuildContext context, AppStore store, BigInt amountNeeded) {
     String? symbol = store.settings.networkState!.tokenSymbol;
     if (store.assets.balances[symbol]!.transferable <= amountNeeded) {
       showCupertinoDialog(
         context: context,
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
-            title: Text(I18n.of(context)!
-                .translationsForLocale()
-                .assets
-                .insufficientBalance),
+            title: Text(I18n.of(context)!.translationsForLocale().assets.insufficientBalance),
             content: Container(),
             actions: <Widget>[
               CupertinoButton(
@@ -176,9 +168,7 @@ class UI {
     }
   }
 
-  static TextInputFormatter decimalInputFormatter(
-      {int decimals = encointer_currencies_decimals}) {
-    return RegExInputFormatter.withRegex(
-        '^[0-9]{0,$decimals}(\\.[0-9]{0,$decimals})?\$');
+  static TextInputFormatter decimalInputFormatter({int decimals = encointer_currencies_decimals}) {
+    return RegExInputFormatter.withRegex('^[0-9]{0,$decimals}(\\.[0-9]{0,$decimals})?\$');
   }
 }

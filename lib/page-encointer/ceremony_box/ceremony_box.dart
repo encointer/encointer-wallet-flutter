@@ -42,11 +42,9 @@ class CeremonyBox extends StatelessWidget {
       // we want to do too much again. So I hardcode the assigning phase duration to 30 minutes
       // if we have meetup time overrides. Before we do something more complex here, I want to
       // think some more, of what we want to do with the feed in the future.
-      int? assigningPhaseStart =
-          store.encointer.community?.meetupTimeOverride != null
-              ? store.encointer.community!.meetupTimeOverride! -
-                  Duration(minutes: 30).inMilliseconds
-              : store.encointer.assigningPhaseStart;
+      int? assigningPhaseStart = store.encointer.community?.meetupTimeOverride != null
+          ? store.encointer.community!.meetupTimeOverride! - Duration(minutes: 30).inMilliseconds
+          : store.encointer.assigningPhaseStart;
 
       return Column(
         children: [
@@ -54,9 +52,7 @@ class CeremonyBox extends StatelessWidget {
             padding: EdgeInsets.fromLTRB(24, 24, 24, 24),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(15),
-                  bottom:
-                      Radius.circular(store.encointer.showMeetupInfo ? 0 : 15)),
+                  top: Radius.circular(15), bottom: Radius.circular(store.encointer.showMeetupInfo ? 0 : 15)),
               color: ZurichLion.shade50,
             ),
             child: Column(
@@ -66,9 +62,7 @@ class CeremonyBox extends StatelessWidget {
                   assigningPhaseStart: assigningPhaseStart,
                   meetupTime: meetupTime,
                   ceremonyPhaseDurations: store.encointer.phaseDurations,
-                  meetupCompleted:
-                      store.encointer.communityAccount?.meetupCompleted ??
-                          false,
+                  meetupCompleted: store.encointer.communityAccount?.meetupCompleted ?? false,
                   devMode: store.settings.developerMode,
                 ),
                 if (store.encointer.showRegisterButton)
@@ -141,15 +135,13 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
         );
       } else {
         // showMeetupInfo == false in this case. So we don't show this widget at all.
-        _log(
-            "'getMeetupInfoWidget' trapped in an unexpected if statement: Registering phase + Unregistered");
+        _log("'getMeetupInfoWidget' trapped in an unexpected if statement: Registering phase + Unregistered");
         return Container();
       }
     case CeremonyPhase.Assigning:
       if (store.encointer.communityAccount?.isAssigned ?? false) {
         var meetup = store.encointer.communityAccount!.meetup!;
-        var location =
-            store.encointer.community!.meetupLocations![meetup.locationIndex];
+        var location = store.encointer.community!.meetupLocations![meetup.locationIndex];
         return MeetupInfo(
           meetup,
           location,
@@ -172,20 +164,15 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
           return CeremonyNotification(
             notificationIconData: Iconsax.tick_square,
             notification: dic.encointer.successfullySentNAttestations
-                .replaceAll(
-                    'P_COUNT',
-                    store.encointer.communityAccount!.scannedClaimsCount
-                        .toString()),
+                .replaceAll('P_COUNT', store.encointer.communityAccount!.scannedClaimsCount.toString()),
           );
         } else {
           var meetup = store.encointer.communityAccount!.meetup!;
-          var location =
-              store.encointer.community!.meetupLocations![meetup.locationIndex];
+          var location = store.encointer.community!.meetupLocations![meetup.locationIndex];
           return MeetupInfo(
             meetup,
             location,
-            onLocationPressed: () =>
-                showOnEncointerMap(context, store, location),
+            onLocationPressed: () => showOnEncointerMap(context, store, location),
           );
         }
       }
@@ -199,18 +186,14 @@ void _log(String msg) {
   print("[CeremonyBox] $msg");
 }
 
-Future<void> awaitDataUpdateWithDialog(
-    BuildContext context, AppStore store) async {
+Future<void> awaitDataUpdateWithDialog(BuildContext context, AppStore store) async {
   showCupertinoDialog(
     context: context,
     builder: (_) => CupertinoAlertDialog(
-      title:
-          Text(I18n.of(context)!.translationsForLocale().home.updatingAppState),
+      title: Text(I18n.of(context)!.translationsForLocale().home.updatingAppState),
       content: CupertinoActivityIndicator(),
     ),
   );
 
-  await store.dataUpdate
-      .executeUpdate()
-      .whenComplete(() => Navigator.of(context).pop());
+  await store.dataUpdate.executeUpdate().whenComplete(() => Navigator.of(context).pop());
 }

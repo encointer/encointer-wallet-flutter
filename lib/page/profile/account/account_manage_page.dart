@@ -56,12 +56,10 @@ class _AccountManagePageState extends State<AccountManagePage> {
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: Text(
-              I18n.of(context)!.translationsForLocale().profile.accountDelete),
+          title: Text(I18n.of(context)!.translationsForLocale().profile.accountDelete),
           actions: <Widget>[
             CupertinoButton(
-              child:
-                  Text(I18n.of(context)!.translationsForLocale().home.cancel),
+              child: Text(I18n.of(context)!.translationsForLocale().home.cancel),
               onPressed: () => Navigator.of(context).pop(),
             ),
             CupertinoButton(
@@ -84,8 +82,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
     );
   }
 
-  Widget _getBalanceEntryListTile(
-      String cidFmt, BalanceEntry? entry, String? address) {
+  Widget _getBalanceEntryListTile(String cidFmt, BalanceEntry? entry, String? address) {
     final TextStyle h3 = Theme.of(context).textTheme.headline3!;
 
     var community = store.encointer.communityStores![cidFmt]!;
@@ -117,28 +114,22 @@ class _AccountManagePageState extends State<AccountManagePage> {
     );
   }
 
-  void _showPasswordDialog(
-      BuildContext context, AccountData accountToBeEdited) {
+  void _showPasswordDialog(BuildContext context, AccountData accountToBeEdited) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
     showCupertinoDialog(
       context: context,
       builder: (BuildContext context) {
-        return showPasswordInputDialog(
-            context, accountToBeEdited, Text(dic.profile.confirmPin),
-            (password) async {
+        return showPasswordInputDialog(context, accountToBeEdited, Text(dic.profile.confirmPin), (password) async {
           print('password is: $password');
           setState(() {
             store.settings.setPin(password);
           });
 
-          bool isMnemonic = await store.account.checkSeedExist(
-              AccountStore.seedTypeMnemonic, accountToBeEdited.pubKey);
+          bool isMnemonic = await store.account.checkSeedExist(AccountStore.seedTypeMnemonic, accountToBeEdited.pubKey);
 
           if (isMnemonic) {
-            String? seed = await store.account.decryptSeed(
-                accountToBeEdited.pubKey,
-                AccountStore.seedTypeMnemonic,
-                password);
+            String? seed =
+                await store.account.decryptSeed(accountToBeEdited.pubKey, AccountStore.seedTypeMnemonic, password);
 
             Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
               'key': seed,
@@ -154,8 +145,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                   content: Text(dic.profile.importedWithRawSeedHenceNoMnemonic),
                   actions: <Widget>[
                     CupertinoButton(
-                      child: Text(
-                          I18n.of(context)!.translationsForLocale().home.ok),
+                      child: Text(I18n.of(context)!.translationsForLocale().home.ok),
                       onPressed: () => Navigator.of(context).pop(),
                     ),
                   ],
@@ -174,16 +164,12 @@ class _AccountManagePageState extends State<AccountManagePage> {
     final TextStyle? h3 = Theme.of(context).textTheme.headline3;
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
 
-    String? accountToBeEditedPubKey =
-        ModalRoute.of(context)!.settings.arguments as String?;
-    AccountData accountToBeEdited =
-        store.account.getAccountData(accountToBeEditedPubKey);
-    final addressSS58 =
-        store.account.getNetworkAddress(accountToBeEditedPubKey);
+    String? accountToBeEditedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
+    AccountData accountToBeEdited = store.account.getAccountData(accountToBeEditedPubKey);
+    final addressSS58 = store.account.getNetworkAddress(accountToBeEditedPubKey);
 
     _nameCtrl = TextEditingController(text: accountToBeEdited.name);
-    _nameCtrl!.selection = TextSelection.fromPosition(
-        TextPosition(offset: _nameCtrl!.text.length));
+    _nameCtrl!.selection = TextSelection.fromPosition(TextPosition(offset: _nameCtrl!.text.length));
 
     return Observer(
       builder: (_) => Scaffold(
@@ -191,8 +177,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
           title: _isEditingText
               ? TextFormField(
                   controller: _nameCtrl,
-                  validator: (v) => InputValidation.validateAccountName(
-                      context, v!, store.account.optionalAccounts),
+                  validator: (v) => InputValidation.validateAccountName(context, v!, store.account.optionalAccounts),
                 )
               : Text(_nameCtrl!.text),
           actions: <Widget>[
@@ -212,8 +197,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       Icons.check,
                     ),
                     onPressed: () {
-                      store.account.updateAccountName(
-                          accountToBeEdited, _nameCtrl!.text.trim());
+                      store.account.updateAccountName(accountToBeEdited, _nameCtrl!.text.trim());
                       setState(() {
                         _isEditingText = false;
                       });
@@ -239,19 +223,16 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(Fmt.address(addressSS58)!,
-                              style: TextStyle(fontSize: 20)),
+                          Text(Fmt.address(addressSS58)!, style: TextStyle(fontSize: 20)),
                           IconButton(
                             icon: Icon(Iconsax.copy),
                             color: ZurichLion.shade500,
-                            onPressed: () =>
-                                UI.copyAndNotify(context, addressSS58),
+                            onPressed: () => UI.copyAndNotify(context, addressSS58),
                           ),
                         ],
                       ),
                       Text(dic.encointer.communities,
-                          style: h3!.copyWith(color: encointerGrey),
-                          textAlign: TextAlign.left),
+                          style: h3!.copyWith(color: encointerGrey), textAlign: TextAlign.left),
                     ],
                   ),
                 ),
@@ -259,28 +240,21 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     ? Expanded(
                         child: ListView.builder(
                             // Fixme: https://github.com/encointer/encointer-wallet-flutter/issues/586
-                            itemCount: store.encointer.accountStores!
-                                    .containsKey(addressSS58)
-                                ? store.encointer.accountStores![addressSS58]
-                                        ?.balanceEntries.length ??
-                                    0
+                            itemCount: store.encointer.accountStores!.containsKey(addressSS58)
+                                ? store.encointer.accountStores![addressSS58]?.balanceEntries.length ?? 0
                                 : 0,
                             itemBuilder: (BuildContext context, int index) {
-                              String community = store
-                                  .encointer.account!.balanceEntries.keys
-                                  .elementAt(index);
+                              String community = store.encointer.account!.balanceEntries.keys.elementAt(index);
                               return _getBalanceEntryListTile(
                                 community,
-                                store.encointer.accountStores![addressSS58]!
-                                    .balanceEntries[community],
+                                store.encointer.accountStores![addressSS58]!.balanceEntries[community],
                                 addressSS58,
                               );
                             }),
                       )
                     : Expanded(
                         child: ListView.builder(
-                            itemCount:
-                                store.encointer.chosenCid != null ? 1 : 0,
+                            itemCount: store.encointer.chosenCid != null ? 1 : 0,
                             itemBuilder: (BuildContext context, int index) {
                               return _getBalanceEntryListTile(
                                 store.encointer.chosenCid!.toFmtString(),
@@ -299,8 +273,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     children: [
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.all(
-                              16), // make splash animation as high as the container
+                          padding: EdgeInsets.all(16), // make splash animation as high as the container
                           primary: Colors.transparent,
                           onPrimary: Colors.white,
                           shadowColor: Colors.transparent,
@@ -310,13 +283,11 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           children: [
                             Icon(Iconsax.share),
                             SizedBox(width: 12),
-                            Text(dic.profile.accountShare,
-                                style: h3.copyWith(color: Colors.white)),
+                            Text(dic.profile.accountShare, style: h3.copyWith(color: Colors.white)),
                           ],
                         ),
-                        onPressed: () => Navigator.pushNamed(
-                            context, AccountSharePage.route,
-                            arguments: accountToBeEditedPubKey),
+                        onPressed: () =>
+                            Navigator.pushNamed(context, AccountSharePage.route, arguments: accountToBeEditedPubKey),
                       ),
                       Spacer(),
                       Container(
@@ -334,21 +305,15 @@ class _AccountManagePageState extends State<AccountManagePage> {
                                   _onDeleteAccount(context, accountToBeEdited);
                                   break;
                                 case AccountAction.export:
-                                  _showPasswordDialog(
-                                      context, accountToBeEdited);
+                                  _showPasswordDialog(context, accountToBeEdited);
                                   break;
                               }
                             },
                             itemBuilder: (BuildContext context) => [
-                                  AccountActionItemData(
-                                      dic.profile.deleteAccount,
-                                      AccountAction.delete),
-                                  AccountActionItemData(
-                                      dic.profile.exportAccount,
-                                      AccountAction.export),
+                                  AccountActionItemData(dic.profile.deleteAccount, AccountAction.delete),
+                                  AccountActionItemData(dic.profile.exportAccount, AccountAction.export),
                                 ]
-                                    .map((AccountActionItemData data) =>
-                                        PopupMenuItem<AccountAction>(
+                                    .map((AccountActionItemData data) => PopupMenuItem<AccountAction>(
                                           value: data.accountAction,
                                           // https://github.com/flutter/flutter/issues/31247 as soon as we use a newer flutter version we might be able to add this to our theme.dart
                                           child: ListTileTheme(

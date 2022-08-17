@@ -58,8 +58,7 @@ class _Contact extends State<ContactPage> {
       });
       if (qrScanData == null) {
         // create new contact
-        int exist =
-            store.settings.contactList.indexWhere((i) => i.address == addr);
+        int exist = store.settings.contactList.indexWhere((i) => i.address == addr);
         if (exist > -1) {
           showCupertinoDialog(
             context: context,
@@ -69,8 +68,7 @@ class _Contact extends State<ContactPage> {
                 content: Text(dic.profile.contactAlreadyExists),
                 actions: <Widget>[
                   CupertinoButton(
-                    child:
-                        Text(I18n.of(context)!.translationsForLocale().home.ok),
+                    child: Text(I18n.of(context)!.translationsForLocale().home.ok),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                 ],
@@ -112,8 +110,7 @@ class _Contact extends State<ContactPage> {
 
   @override
   Widget build(BuildContext context) {
-    ContactData? qrScanData =
-        ModalRoute.of(context)!.settings.arguments as ContactData?;
+    ContactData? qrScanData = ModalRoute.of(context)!.settings.arguments as ContactData?;
     final Translations dic = I18n.of(context)!.translationsForLocale();
     if (qrScanData != null) {
       _addressCtrl.text = qrScanData.account;
@@ -159,9 +156,7 @@ class _Contact extends State<ContactPage> {
                         ),
                         controller: _nameCtrl,
                         validator: (v) {
-                          return v!.trim().length > 0
-                              ? null
-                              : dic.profile.contactNameError;
+                          return v!.trim().length > 0 ? null : dic.profile.contactNameError;
                         },
                       ),
                     ),
@@ -189,10 +184,7 @@ class _Contact extends State<ContactPage> {
                                 },
                               ),
                               GestureDetector(
-                                child: Text(I18n.of(context)!
-                                    .translationsForLocale()
-                                    .account
-                                    .observe),
+                                child: Text(I18n.of(context)!.translationsForLocale().account.observe),
                                 onTap: () {
                                   setState(() {
                                     _isObservation = !_isObservation!;
@@ -204,10 +196,7 @@ class _Contact extends State<ContactPage> {
                                   padding: EdgeInsets.only(left: 8),
                                   child: Icon(Icons.info_outline, size: 16),
                                 ),
-                                message: I18n.of(context)!
-                                    .translationsForLocale()
-                                    .account
-                                    .observeBrief,
+                                message: I18n.of(context)!.translationsForLocale().account.observeBrief,
                               ),
                             ],
                           )
@@ -216,10 +205,8 @@ class _Contact extends State<ContactPage> {
                     IconButton(
                       iconSize: 48,
                       icon: Icon(Iconsax.scan_barcode),
-                      onPressed: () => Navigator.of(context).popAndPushNamed(
-                          ScanPage.route,
-                          arguments: ScanPageParams(
-                              scannerContext: QrScannerContext.contactsPage)),
+                      onPressed: () => Navigator.of(context).popAndPushNamed(ScanPage.route,
+                          arguments: ScanPageParams(scannerContext: QrScannerContext.contactsPage)),
                     ),
                     SizedBox(height: 24),
                   ],

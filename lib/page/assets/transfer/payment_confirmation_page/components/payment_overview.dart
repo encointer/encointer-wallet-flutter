@@ -7,8 +7,7 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/material.dart';
 
 class PaymentOverview extends StatelessWidget {
-  PaymentOverview(
-      this.store, this.communitySymbol, this.recipientAccount, this.amount);
+  PaymentOverview(this.store, this.communitySymbol, this.recipientAccount, this.amount);
 
   final AppStore store;
 
@@ -18,9 +17,8 @@ class PaymentOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final recipientLabel = recipientAccount!.name.isNotEmpty
-        ? recipientAccount!.name
-        : Fmt.addressOfAccount(recipientAccount!, store);
+    final recipientLabel =
+        recipientAccount!.name.isNotEmpty ? recipientAccount!.name : Fmt.addressOfAccount(recipientAccount!, store);
 
     return IntrinsicHeight(
       child: Row(
@@ -29,24 +27,17 @@ class PaymentOverview extends StatelessWidget {
         children: [
           Column(
             children: [
-              CombinedCommunityAndAccountAvatar(store,
-                  showCommunityNameAndAccountName: false),
+              CombinedCommunityAndAccountAvatar(store, showCommunityNameAndAccountName: false),
               Text(
                 Fmt.accountName(context, store.account.currentAccount),
-                style: Theme.of(context)
-                    .textTheme
-                    .headline4!
-                    .copyWith(color: encointerGrey, height: 1.5),
+                style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey, height: 1.5),
                 textAlign: TextAlign.center,
               ),
             ],
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.arrow_forward_ios_outlined),
-              SizedBox(height: 20)
-            ],
+            children: [Icon(Icons.arrow_forward_ios_outlined), SizedBox(height: 20)],
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -58,10 +49,7 @@ class PaymentOverview extends StatelessWidget {
               ),
               Text(
                 Fmt.address(recipientLabel)!,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline4!
-                    .copyWith(color: encointerGrey, height: 1.5),
+                style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey, height: 1.5),
                 textAlign: TextAlign.center,
               ),
             ],
