@@ -6,27 +6,21 @@ part of 'claim_of_attendance.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-ClaimOfAttendance _$ClaimOfAttendanceFromJson(Map<String, dynamic> json) =>
-    ClaimOfAttendance(
+ClaimOfAttendance _$ClaimOfAttendanceFromJson(Map<String, dynamic> json) => ClaimOfAttendance(
       json['claimantPublic'] as String?,
       json['ceremonyIndex'] as int?,
       json['communityIdentifier'] == null
           ? null
-          : CommunityIdentifier.fromJson(
-              json['communityIdentifier'] as Map<String, dynamic>),
+          : CommunityIdentifier.fromJson(json['communityIdentifier'] as Map<String, dynamic>),
       json['meetupIndex'] as int?,
-      json['location'] == null
-          ? null
-          : Location.fromJson(json['location'] as Map<String, dynamic>),
+      json['location'] == null ? null : Location.fromJson(json['location'] as Map<String, dynamic>),
       json['timestamp'] as int?,
       json['numberOfParticipantsConfirmed'] as int?,
-    )..claimantSignature =
-          (json['claimantSignature'] as Map<String, dynamic>?)?.map(
+    )..claimantSignature = (json['claimantSignature'] as Map<String, dynamic>?)?.map(
         (k, e) => MapEntry(k, e as String),
       );
 
-Map<String, dynamic> _$ClaimOfAttendanceToJson(ClaimOfAttendance instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ClaimOfAttendanceToJson(ClaimOfAttendance instance) => <String, dynamic>{
       'claimantPublic': instance.claimantPublic,
       'ceremonyIndex': instance.ceremonyIndex,
       'communityIdentifier': instance.communityIdentifier?.toJson(),
