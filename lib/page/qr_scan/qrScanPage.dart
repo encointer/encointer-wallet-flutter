@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-
 import 'qrScanService.dart';
 export 'qrScanService.dart';
 export 'qr_codes/qrCodeBase.dart';
@@ -30,15 +29,18 @@ class ScanPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
-    final QrScanService qrScanService = QrScanService();
-    ScanPageParams params = ModalRoute.of(context)!.settings.arguments! as ScanPageParams;
+    final  qrScanService = QrScanService();
+    final dic = I18n.of(context)!.translationsForLocale();
+    final params = ModalRoute.of(context)!.settings.arguments! as ScanPageParams;
+
     void onScan(String data) {
       try {
         final qrCode = qrScanService.parse(data);
         qrScanService.handleQrScan(context, params.scannerContext, qrCode);
       } catch (e) {
+
         Log.d("[ScanPage]: ${e.toString()}", 'qrScanPage');
+
         RootSnackBar.showMsg(e.toString());
       }
     }
@@ -107,12 +109,14 @@ Widget mockQrDataRow(Translations dic, Function(String) onScan) {
   return Row(children: [
     ElevatedButton(
       child: Text(dic.profile.addContact),
-      onPressed: () => onScan("encointer-contact\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nSara"),
+      onPressed: () => onScan(
+        "encointer-contact\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nSara",
+      ),
     ),
     ElevatedButton(
       child: Text(dic.assets.invoice),
       onPressed: () => onScan(
-        "encointer-invoice\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX"
+        "encointer-invoice\nv1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX"
         "\nsqm1v79dF6b\n0.2343\nAubrey",
       ),
     ),

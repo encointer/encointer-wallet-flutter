@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/common/components/encointerTextFormField.dart';
+import 'package:encointer_wallet/common/components/gr_code_view/gr_code_image_view.dart';
 import 'package:encointer_wallet/common/components/wakeLockAndBrightnessEnhancer.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
@@ -15,7 +16,6 @@ import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:pausable_timer/pausable_timer.dart';
 import 'package:provider/provider.dart';
-import 'package:qr_flutter_fork/qr_flutter_fork.dart';
 import 'package:share_plus/share_plus.dart';
 
 class ReceivePage extends StatefulWidget {
@@ -178,35 +178,23 @@ class _ReceivePageState extends State<ReceivePage> {
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 8),
-                Column(children: [
-                  // Enhance brightness for the QR-code
-                  const WakeLockAndBrightnessEnhancer(brightness: 1),
-                  QrImage(data: invoice.toQrPayload()),
-                  InkWell(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 24),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.share, color: ZurichLion.shade500),
-                          const SizedBox(width: 8),
-                          Text(
-                            dic.assets.shareInvoice,
-                            style: Theme.of(context).textTheme.headline3,
-                          ),
-                        ],
-                      ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    WakeLockAndBrightnessEnhancer(brightness: 1),
+                    QrCodeImage(
+                      qrCode: invoice.toQrPayload(),
+                      text: dic.assets.shareInvoice,
+                      onTap: () => {
+                        if (_formKey.currentState!.validate())
+                          {
+                            // Todo: implement invoice.toUrl()
+                            Share.share(invoice.toQrPayload()),
+                          }
+                      },
                     ),
-                    onTap: () => {
-                      if (_formKey.currentState!.validate())
-                        {
-                          // Todo: implement invoice.toUrl()
-                          Share.share(invoice.toQrPayload()),
-                        }
-                    },
-                  ),
-                ])
+                  ],
+                )
               ],
             ),
           ),
