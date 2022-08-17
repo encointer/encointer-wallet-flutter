@@ -9,7 +9,8 @@ part of 'bazaar_item_vertical_state.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$BazaarItemVerticalState on _BazaarItemVerticalState, Store {
-  late final _$likedAtom = Atom(name: '_BazaarItemVerticalState.liked', context: context);
+  late final _$likedAtom =
+      Atom(name: '_BazaarItemVerticalState.liked', context: context);
 
   @override
   bool get liked {
@@ -29,8 +30,8 @@ mixin _$BazaarItemVerticalState on _BazaarItemVerticalState, Store {
 
   @override
   void toggleLiked() {
-    final _$actionInfo =
-        _$_BazaarItemVerticalStateActionController.startAction(name: '_BazaarItemVerticalState.toggleLiked');
+    final _$actionInfo = _$_BazaarItemVerticalStateActionController.startAction(
+        name: '_BazaarItemVerticalState.toggleLiked');
     try {
       return super.toggleLiked();
     } finally {

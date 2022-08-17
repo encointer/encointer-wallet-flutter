@@ -6,27 +6,37 @@ part of 'community_account_store.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-CommunityAccountStore _$CommunityAccountStoreFromJson(Map<String, dynamic> json) => CommunityAccountStore(
+CommunityAccountStore _$CommunityAccountStoreFromJson(
+        Map<String, dynamic> json) =>
+    CommunityAccountStore(
       json['network'] as String,
       CommunityIdentifier.fromJson(json['cid'] as Map<String, dynamic>),
       json['address'] as String,
     )
-      ..participantType = $enumDecodeNullable(_$ParticipantTypeEnumMap, json['participantType'])
-      ..meetup = json['meetup'] == null ? null : Meetup.fromJson(json['meetup'] as Map<String, dynamic>)
+      ..participantType =
+          $enumDecodeNullable(_$ParticipantTypeEnumMap, json['participantType'])
+      ..meetup = json['meetup'] == null
+          ? null
+          : Meetup.fromJson(json['meetup'] as Map<String, dynamic>)
       ..participantsClaims = json['participantsClaims'] != null
-          ? ObservableMap<String, ClaimOfAttendance>.of((json['participantsClaims'] as Map<String, dynamic>).map(
-              (k, e) => MapEntry(k, ClaimOfAttendance.fromJson(e as Map<String, dynamic>)),
+          ? ObservableMap<String, ClaimOfAttendance>.of(
+              (json['participantsClaims'] as Map<String, dynamic>).map(
+              (k, e) => MapEntry(
+                  k, ClaimOfAttendance.fromJson(e as Map<String, dynamic>)),
             ))
           : null
       ..meetupCompleted = json['meetupCompleted'] as bool?;
 
-Map<String, dynamic> _$CommunityAccountStoreToJson(CommunityAccountStore instance) => <String, dynamic>{
+Map<String, dynamic> _$CommunityAccountStoreToJson(
+        CommunityAccountStore instance) =>
+    <String, dynamic>{
       'network': instance.network,
       'cid': instance.cid.toJson(),
       'address': instance.address,
       'participantType': _$ParticipantTypeEnumMap[instance.participantType],
       'meetup': instance.meetup?.toJson(),
-      'participantsClaims': instance.participantsClaims?.map((k, e) => MapEntry(k, e.toJson())),
+      'participantsClaims':
+          instance.participantsClaims?.map((k, e) => MapEntry(k, e.toJson())),
       'meetupCompleted': instance.meetupCompleted,
     };
 
@@ -48,22 +58,26 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 
   @override
   dynamic get scannedClaimsCount => (_$scannedClaimsCountComputed ??=
-          Computed<dynamic>(() => super.scannedClaimsCount, name: '_CommunityAccountStore.scannedClaimsCount'))
+          Computed<dynamic>(() => super.scannedClaimsCount,
+              name: '_CommunityAccountStore.scannedClaimsCount'))
       .value;
   Computed<bool>? _$isAssignedComputed;
 
   @override
   bool get isAssigned =>
-      (_$isAssignedComputed ??= Computed<bool>(() => super.isAssigned, name: '_CommunityAccountStore.isAssigned'))
+      (_$isAssignedComputed ??= Computed<bool>(() => super.isAssigned,
+              name: '_CommunityAccountStore.isAssigned'))
           .value;
   Computed<bool>? _$isRegisteredComputed;
 
   @override
   bool get isRegistered =>
-      (_$isRegisteredComputed ??= Computed<bool>(() => super.isRegistered, name: '_CommunityAccountStore.isRegistered'))
+      (_$isRegisteredComputed ??= Computed<bool>(() => super.isRegistered,
+              name: '_CommunityAccountStore.isRegistered'))
           .value;
 
-  late final _$participantTypeAtom = Atom(name: '_CommunityAccountStore.participantType', context: context);
+  late final _$participantTypeAtom =
+      Atom(name: '_CommunityAccountStore.participantType', context: context);
 
   @override
   ParticipantType? get participantType {
@@ -78,7 +92,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
     });
   }
 
-  late final _$meetupAtom = Atom(name: '_CommunityAccountStore.meetup', context: context);
+  late final _$meetupAtom =
+      Atom(name: '_CommunityAccountStore.meetup', context: context);
 
   @override
   Meetup? get meetup {
@@ -93,7 +108,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
     });
   }
 
-  late final _$participantsClaimsAtom = Atom(name: '_CommunityAccountStore.participantsClaims', context: context);
+  late final _$participantsClaimsAtom =
+      Atom(name: '_CommunityAccountStore.participantsClaims', context: context);
 
   @override
   ObservableMap<String, ClaimOfAttendance>? get participantsClaims {
@@ -108,7 +124,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
     });
   }
 
-  late final _$meetupCompletedAtom = Atom(name: '_CommunityAccountStore.meetupCompleted', context: context);
+  late final _$meetupCompletedAtom =
+      Atom(name: '_CommunityAccountStore.meetupCompleted', context: context);
 
   @override
   bool? get meetupCompleted {
@@ -128,8 +145,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 
   @override
   void setParticipantType([ParticipantType? type]) {
-    final _$actionInfo =
-        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.setParticipantType');
+    final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(
+        name: '_CommunityAccountStore.setParticipantType');
     try {
       return super.setParticipantType(type);
     } finally {
@@ -139,8 +156,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 
   @override
   void purgeParticipantType() {
-    final _$actionInfo =
-        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.purgeParticipantType');
+    final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(
+        name: '_CommunityAccountStore.purgeParticipantType');
     try {
       return super.purgeParticipantType();
     } finally {
@@ -150,7 +167,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 
   @override
   void setMeetup(Meetup meetup) {
-    final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.setMeetup');
+    final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(
+        name: '_CommunityAccountStore.setMeetup');
     try {
       return super.setMeetup(meetup);
     } finally {
@@ -160,8 +178,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 
   @override
   void setMeetupCompleted() {
-    final _$actionInfo =
-        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.setMeetupCompleted');
+    final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(
+        name: '_CommunityAccountStore.setMeetupCompleted');
     try {
       return super.setMeetupCompleted();
     } finally {
@@ -171,8 +189,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 
   @override
   void clearMeetupCompleted() {
-    final _$actionInfo =
-        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.clearMeetupCompleted');
+    final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(
+        name: '_CommunityAccountStore.clearMeetupCompleted');
     try {
       return super.clearMeetupCompleted();
     } finally {
@@ -182,8 +200,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 
   @override
   void purgeMeetup() {
-    final _$actionInfo =
-        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.purgeMeetup');
+    final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(
+        name: '_CommunityAccountStore.purgeMeetup');
     try {
       return super.purgeMeetup();
     } finally {
@@ -193,8 +211,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 
   @override
   void purgeParticipantsClaims() {
-    final _$actionInfo =
-        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.purgeParticipantsClaims');
+    final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(
+        name: '_CommunityAccountStore.purgeParticipantsClaims');
     try {
       return super.purgeParticipantsClaims();
     } finally {
@@ -204,8 +222,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 
   @override
   void addParticipantClaim(ClaimOfAttendance claim) {
-    final _$actionInfo =
-        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.addParticipantClaim');
+    final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(
+        name: '_CommunityAccountStore.addParticipantClaim');
     try {
       return super.addParticipantClaim(claim);
     } finally {
@@ -215,8 +233,8 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 
   @override
   void purgeCeremonySpecificState() {
-    final _$actionInfo =
-        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.purgeCeremonySpecificState');
+    final _$actionInfo = _$_CommunityAccountStoreActionController.startAction(
+        name: '_CommunityAccountStore.purgeCeremonySpecificState');
     try {
       return super.purgeCeremonySpecificState();
     } finally {

@@ -3,7 +3,7 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 import '../../../../models/communities/community_identifier.dart';
-import '../../../../models/communities/community_meta_data.dart';
+import '../../../../models/communities/community_metadata.dart';
 import '../../../../models/encointer_balance_data/balance_entry.dart';
 import '../../../../models/location/location.dart';
 import 'community_account_store/community_account_store.dart';

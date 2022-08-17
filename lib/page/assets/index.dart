@@ -31,7 +31,7 @@ import 'package:pausable_timer/pausable_timer.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 import '../../models/encointer_balance_data/balance_entry.dart';
-import 'account_or_community/Account_or_community_data.dart';
+import 'account_or_community/account_or_community_data.dart';
 import 'account_or_community/switch_account_or_community.dart';
 
 class Assets extends StatefulWidget {

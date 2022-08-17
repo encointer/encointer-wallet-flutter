@@ -2,7 +2,7 @@ import 'package:encointer_wallet/mocks/data/mock_chain_data.dart';
 import 'package:encointer_wallet/mocks/data/mock_encointer_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/chain/types/header.dart';
-import '../../models/communities/community_meta_data.dart';
+import '../../models/communities/community_metadata.dart';
 import '../../models/encointer_balance_data/balance_entry.dart';
 import '../../models/index.dart';
 
