@@ -29,7 +29,7 @@ class ScanPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final  qrScanService = QrScanService();
+    final qrScanService = QrScanService();
     final dic = I18n.of(context)!.translationsForLocale();
     final params = ModalRoute.of(context)!.settings.arguments! as ScanPageParams;
 
@@ -38,7 +38,6 @@ class ScanPage extends StatelessWidget {
         final qrCode = qrScanService.parse(data);
         qrScanService.handleQrScan(context, params.scannerContext, qrCode);
       } catch (e) {
-
         Log.d("[ScanPage]: ${e.toString()}", 'qrScanPage');
 
         RootSnackBar.showMsg(e.toString());
