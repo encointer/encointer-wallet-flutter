@@ -4,12 +4,7 @@ import 'package:encointer_wallet/mocks/data/mock_bazaar_data.dart';
 import 'package:encointer_wallet/service/encointer_feed/feed.dart' as feed;
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/store/app.dart';
-// import 'package:encointer_wallet/store/encointer/types/bazaar.dart';
-// import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
-// import 'package:encointer_wallet/store/encointer/types/communities.dart';
-// import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
-// import 'package:encointer_wallet/store/encointer/types/location.dart';
-// import 'package:encointer_wallet/store/encointer/types/proofOfAttendance.dart';
+
 import 'package:encointer_wallet/utils/format.dart';
 import '../../../models/bazaar/account_business_tuple.dart';
 import '../../../models/bazaar/business_identifier.dart';

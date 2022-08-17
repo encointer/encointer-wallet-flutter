@@ -2,10 +2,6 @@ import 'package:encointer_wallet/mocks/data/mock_chain_data.dart';
 import 'package:encointer_wallet/mocks/data/mock_encointer_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/chain/types/header.dart';
-// import 'package:encointer_wallet/store/encointer/types/communities.dart';
-// import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
-import '../../../models/location/location.dart';
-
 import '../../models/communities/community_meta_data.dart';
 import '../../models/encointer_balance_data/balance_entry.dart';
 import '../../models/index.dart';

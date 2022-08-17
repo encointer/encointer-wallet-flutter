@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:io';
-// import 'package:encointer_wallet/common/reg_input_formatter.dart't';
+
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
-// import 'package:encointer_wallet/service/udpate_js_code_api.dart'rt';
+
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';

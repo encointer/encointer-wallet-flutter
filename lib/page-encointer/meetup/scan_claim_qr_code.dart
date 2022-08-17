@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/codec_api.dart';
 import 'package:encointer_wallet/store/app.dart';
-// import 'package:encointer_wallet/store/encointer/types/claimOfAttendance.dart';
+
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
