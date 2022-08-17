@@ -27,9 +27,9 @@ class ScanPage extends StatelessWidget {
   final QrScanService qrScanService = QrScanService();
   final AppStore store;
 
-  Future<bool> canOpenCamera() async {
+  Future<PermissionStatus> canOpenCamera() async {
     // will do nothing if already granted
-    return Permission.camera.request().isGranted;
+    return Permission.camera.request();
   }
 
   @override
@@ -56,10 +56,20 @@ class ScanPage extends StatelessWidget {
           )
         ],
       ),
-      body: FutureBuilder<bool>(
+      body: FutureBuilder<PermissionStatus>(
         future: canOpenCamera(),
-        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          if (snapshot.hasData && snapshot.data == true) {
+        builder: (BuildContext context, AsyncSnapshot<PermissionStatus> snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data != PermissionStatus.granted) {
+              RootSnackBar.showMsg(
+                "There was an error getting the camera permission. "
+                "Permission status is: ${snapshot.data}. Alternatively, you can enable the "
+                "grant permission from the in the devices settings.",
+                durationMillis: 3000,
+              );
+              return Center(child: CupertinoActivityIndicator());
+            }
+
             return Stack(
               children: [
                 MobileScanner(
@@ -97,7 +107,7 @@ class ScanPage extends StatelessWidget {
               ],
             );
           } else {
-            return CupertinoActivityIndicator();
+            return Center(child: CupertinoActivityIndicator());
           }
         },
       ),
