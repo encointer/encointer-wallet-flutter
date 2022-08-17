@@ -1,8 +1,10 @@
 gradle-wrapper.jar
 /.gradle
 /captures/
-/gradlew
-/gradlew.bat
+# Fix that appcenter recognizes the app as an android project.
+# See: https://github.com/flutter/flutter/issues/30858
+# /gradlew
+# /gradlew.bat
 /local.properties
 GeneratedPluginRegistrant.java
 
