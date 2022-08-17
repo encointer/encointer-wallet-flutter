@@ -1,4 +1,3 @@
-// import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_vertical.dart't';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';

@@ -2,11 +2,10 @@ import 'package:encointer_wallet/mocks/data/mock_encointer_data.dart';
 import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
 import 'package:encointer_wallet/mocks/test_utils.dart';
-import 'package:encointer_wallet/models/communities/community_meta_data.dart';
+import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_store.dart';
-// import 'package:encointer_wallet/store/encointer/types/communities.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

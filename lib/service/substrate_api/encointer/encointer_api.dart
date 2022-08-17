@@ -12,7 +12,7 @@ import '../../../models/bazaar/offering_data.dart';
 import '../../../models/claim_of_attendance/claim_of_attendance.dart';
 import '../../../models/communities/cid_name.dart';
 import '../../../models/communities/community_identifier.dart';
-import '../../../models/communities/community_meta_data.dart';
+import '../../../models/communities/community_metadata.dart';
 import '../../../models/encointer_balance_data/balance_entry.dart';
 import '../../../models/index.dart';
 import '../../../models/location/location.dart';

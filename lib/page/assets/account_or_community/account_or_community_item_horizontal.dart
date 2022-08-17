@@ -1,7 +1,7 @@
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:flutter/material.dart';
 
-import 'Account_or_community_data.dart';
+import 'account_or_community_data.dart';
 
 class AccountOrCommunityItemHorizontal extends StatefulWidget {
   final AccountOrCommunityData itemData;
