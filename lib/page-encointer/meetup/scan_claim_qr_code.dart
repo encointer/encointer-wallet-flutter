@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/codec_api.dart';
 import 'package:encointer_wallet/store/app.dart';
-
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
@@ -65,10 +64,18 @@ class ScanClaimQrCode extends StatelessWidget {
     }
 
     return Scaffold(
-      body: FutureBuilder<bool>(
+      body: FutureBuilder<PermissionStatus>(
         future: canOpenCamera(),
-        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          if (snapshot.hasData && snapshot.data == true) {
+        builder: (BuildContext context, AsyncSnapshot<PermissionStatus> snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data != PermissionStatus.granted) {
+              RootSnackBar.showMsg(
+                "${dic.home.cameraPermissionError}\n Permission status: ${snapshot.data}",
+                durationMillis: 3000,
+              );
+              return Center(child: CupertinoActivityIndicator());
+            }
+
             return Stack(
               children: [
                 Align(
@@ -140,9 +147,9 @@ void _showActivityIndicatorOverlay(BuildContext context) {
   );
 }
 
-Future<bool> canOpenCamera() async {
+Future<PermissionStatus> canOpenCamera() async {
   // will do nothing if already granted
-  return Permission.camera.request().isGranted;
+  return Permission.camera.request();
 }
 
 _log(String msg) {
