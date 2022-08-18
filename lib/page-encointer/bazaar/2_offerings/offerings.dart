@@ -1,9 +1,9 @@
-import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaarItemVertical.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demoData.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 
-import '../shared/toggleButtonsWithTitle.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_vertical.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/toggle_buttons_with_title.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 class Offerings extends StatelessWidget {
   const Offerings({Key? key}) : super(key: key);

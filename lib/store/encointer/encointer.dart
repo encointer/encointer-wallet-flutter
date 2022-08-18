@@ -1,16 +1,18 @@
-import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/encointer/types/communities.dart';
-import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
-import '../../models/index.dart';
-import 'sub_stores/bazaar_store/bazaarStore.dart';
-import 'sub_stores/community_store/communityStore.dart';
-import 'sub_stores/community_store/community_account_store/communityAccountStore.dart';
-import 'sub_stores/encointer_account_store/encointerAccountStore.dart';
+import 'package:encointer_wallet/models/communities/cid_name.dart';
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
+import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/store/app.dart';
+
+import 'sub_stores/bazaar_store/bazaar_store.dart';
+import 'sub_stores/community_store/community_account_store/community_account_store.dart';
+import 'sub_stores/community_store/community_store.dart';
+import 'sub_stores/encointer_account_store/encointer_account_store.dart';
 
 part 'encointer.g.dart';
 

@@ -1,23 +1,25 @@
 import 'dart:async';
+
 import 'package:animated_check/animated_check.dart';
-import 'package:encointer_wallet/common/components/gradientElements.dart';
-import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/paymentOverview.dart';
-import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/transferState.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/service/tx/lib/tx.dart';
-import 'package:encointer_wallet/store/account/types/accountData.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/encointer/types/communities.dart';
-import 'package:encointer_wallet/utils/format.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+
+import 'package:encointer_wallet/common/components/gradient_elements.dart';
+import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/payment_overview.dart';
+import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/transfer_state.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/tx/lib/tx.dart';
+import 'package:encointer_wallet/store/account/types/account_data.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/format.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 class PaymentConfirmationParams {
   const PaymentConfirmationParams({

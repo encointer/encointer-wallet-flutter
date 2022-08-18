@@ -3,8 +3,9 @@
 
 import 'dart:io';
 
-import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:flutter_driver/flutter_driver.dart';
+
+import 'package:encointer_wallet/service/log/log_service.dart';
 
 /// Called by integration test to capture images on the currently running device
 Future screenshot(final FlutterDriver driver, Config config, String name,

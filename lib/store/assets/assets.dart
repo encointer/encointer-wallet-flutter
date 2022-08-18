@@ -1,7 +1,8 @@
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/assets/types/balancesInfo.dart';
-import 'package:encointer_wallet/store/assets/types/transferData.dart';
 import 'package:mobx/mobx.dart';
+
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/store/assets/types/balances_info.dart';
+import 'package:encointer_wallet/store/assets/types/transfer_data.dart';
 
 part 'assets.g.dart';
 

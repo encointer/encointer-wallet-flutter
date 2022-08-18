@@ -4,12 +4,13 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/store/account/types/accountData.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
+
+import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/store/account/types/account_data.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 class Fmt {
   static String passwordToEncryptKey(String password) {

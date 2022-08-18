@@ -1,6 +1,6 @@
-import 'package:encointer_wallet/store/encointer/types/communities.dart';
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
 
-import 'qrCodeBase.dart';
+import 'qr_code_base.dart';
 
 class InvoiceQrCode extends QrCode<InvoiceData> {
   InvoiceQrCode.withData(

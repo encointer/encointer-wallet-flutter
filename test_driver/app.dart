@@ -1,9 +1,9 @@
 import 'package:encointer_wallet/app.dart';
 import 'package:encointer_wallet/config.dart';
-import 'package:encointer_wallet/mocks/storage/mockStorageSetup.dart';
-import 'package:encointer_wallet/mocks/storage/prepareMockStorage.dart';
+import 'package:encointer_wallet/mocks/storage/mock_storage_setup.dart';
+import 'package:encointer_wallet/mocks/storage/prepare_mock_storage.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/localStorage.dart';
+import 'package:encointer_wallet/utils/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
 

@@ -1,0 +1,59 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:encointer_wallet/store/settings.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
+
+const default_ss58_prefix = {
+  'info': 'default',
+  'text': 'Default for the connected node',
+  'value': 42,
+};
+const prefixList = [
+  default_ss58_prefix,
+  {'info': 'substrate', 'text': 'Substrate (development)', 'value': 42},
+  {'info': 'kusama', 'text': 'Kusama (canary)', 'value': 2},
+  {'info': 'polkadot', 'text': 'Polkadot (live)', 'value': 0}
+];
+
+class SS58PrefixListPage extends StatelessWidget {
+  const SS58PrefixListPage({Key? key}) : super(key: key);
+
+  static const String route = '/profile/ss58';
+
+  @override
+  Widget build(BuildContext context) {
+    final Translations dic = I18n.of(context)!.translationsForLocale();
+    List<Widget> list = prefixList
+        .map((i) => ListTile(
+              leading: Image.asset('assets/images/public/${i['info']}.png', width: 36),
+              title: Text(i['info'] as String),
+              subtitle: Text(i['text'] as String),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 18),
+              onTap: () {
+                if (context.read<SettingsStore>().customSS58Format['info'] == i['info']) {
+                  Navigator.of(context).pop();
+                }
+                context.read<SettingsStore>().setCustomSS58Format(i);
+//                if (i['info'] == 'default') {
+//                  api.account
+//                      .setSS58Format(default_ss58_map[store.endpoint.info]);
+//                } else {
+//                  api.account.setSS58Format(i['value']);
+//                }
+                Navigator.of(context).pop();
+              },
+            ))
+        .toList();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(dic.profile.settingPrefixList),
+        centerTitle: true,
+      ),
+      body: SafeArea(
+        child: ListView(children: list),
+      ),
+    );
+  }
+}
