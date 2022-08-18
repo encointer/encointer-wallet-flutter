@@ -1,10 +1,10 @@
-import 'package:encointer_wallet/common/components/addressIcon.dart';
+import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/page/account/create/addAccountPage.dart';
-import 'package:encointer_wallet/page/profile/aboutPage.dart';
-import 'package:encointer_wallet/page/profile/account/accountManagePage.dart';
-import 'package:encointer_wallet/page/profile/account/changePasswordPage.dart';
-import 'package:encointer_wallet/store/account/types/accountData.dart';
+import 'package:encointer_wallet/page/account/create/add_account_page.dart';
+import 'package:encointer_wallet/page/profile/about_page.dart';
+import 'package:encointer_wallet/page/profile/account/account_manage_page.dart';
+import 'package:encointer_wallet/page/profile/account/change_password_page.dart';
+import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -48,7 +48,8 @@ class _ProfileState extends State<Profile> {
                   tapToCopy: false,
                 ),
                 Positioned(
-                  bottom: 0, right: 0, //give the values according to your requirement
+                  bottom: 0,
+                  right: 0, //give the values according to your requirement
                   child: Icon(Iconsax.edit, color: ZurichLion.shade800),
                 ),
               ],

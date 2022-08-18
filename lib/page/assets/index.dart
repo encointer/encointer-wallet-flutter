@@ -1,24 +1,23 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:encointer_wallet/common/components/addressIcon.dart';
-import 'package:encointer_wallet/common/components/dragHandle.dart';
-import 'package:encointer_wallet/common/components/gradientElements.dart';
-import 'package:encointer_wallet/common/components/passwordInputDialog.dart';
-import 'package:encointer_wallet/common/components/submitButton.dart';
+import 'package:encointer_wallet/common/components/address_icon.dart';
+import 'package:encointer_wallet/common/components/drag_handle.dart';
+import 'package:encointer_wallet/common/components/gradient_elements.dart';
+import 'package:encointer_wallet/common/components/password_input_dialog.dart';
+import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/page-encointer/ceremony_box/ceremonyBox.dart';
-import 'package:encointer_wallet/page-encointer/common/communityChooserOnMap.dart';
-import 'package:encointer_wallet/page-encointer/common/communityChooserPanel.dart';
-import 'package:encointer_wallet/page/account/create/addAccountPage.dart';
-import 'package:encointer_wallet/page/assets/receive/receivePage.dart';
-import 'package:encointer_wallet/page/assets/transfer/transferPage.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box.dart';
+import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
+import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
+import 'package:encointer_wallet/page/account/create/add_account_page.dart';
+import 'package:encointer_wallet/page/assets/receive/receive_page.dart';
+import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
-import 'package:encointer_wallet/store/account/types/accountData.dart';
+import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/encointer/types/encointerBalanceData.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
@@ -31,8 +30,9 @@ import 'package:iconsax/iconsax.dart';
 import 'package:pausable_timer/pausable_timer.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-import 'account_or_community/AccountOrCommunityData.dart';
-import 'account_or_community/switchAccountOrCommunity.dart';
+import '../../models/encointer_balance_data/balance_entry.dart';
+import 'account_or_community/account_or_community_data.dart';
+import 'account_or_community/switch_account_or_community.dart';
 
 class Assets extends StatefulWidget {
   Assets(this.store);
