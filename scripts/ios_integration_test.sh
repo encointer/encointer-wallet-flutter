@@ -11,7 +11,7 @@ then
 fi
 
 flutter drive --target=test_driver/app.dart
-flutter drive --target=test_driver/scanPage.dart
+flutter drive --target=test_driver/scan_page.dart
 
 mkdir -p "$TEMP_DIR"
 

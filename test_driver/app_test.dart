@@ -1,5 +1,5 @@
-import 'package:encointer_wallet/mocks/data/mockAccountData.dart';
-import 'package:encointer_wallet/mocks/storage/mockStorageSetup.dart';
+import 'package:encointer_wallet/mocks/data/mock_account_data.dart';
+import 'package:encointer_wallet/mocks/storage/mock_storage_setup.dart';
 import 'package:encointer_wallet/utils/screenshot.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';

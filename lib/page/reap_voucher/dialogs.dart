@@ -1,9 +1,10 @@
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/store/encointer/types/communities.dart';
+
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 
+import '../../models/communities/community_identifier.dart';
 import 'utils.dart';
 
 Future<void> showRedeemSuccessDialog(BuildContext context) {

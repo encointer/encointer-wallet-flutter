@@ -1,20 +1,19 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:encointer_wallet/config/node.dart';
-import 'package:encointer_wallet/service/ipfs/httpApi.dart';
+import 'package:encointer_wallet/service/ipfs/http_api.dart';
 import 'package:encointer_wallet/service/subscan.dart';
-import 'package:encointer_wallet/service/substrate_api/accountApi.dart';
-import 'package:encointer_wallet/service/substrate_api/assetsApi.dart';
-import 'package:encointer_wallet/service/substrate_api/chainApi.dart';
-import 'package:encointer_wallet/service/substrate_api/codecApi.dart';
-import 'package:encointer_wallet/service/substrate_api/core/dartApi.dart';
-import 'package:encointer_wallet/service/substrate_api/encointer/encointerApi.dart';
-import 'package:encointer_wallet/service/substrate_api/types/genExternalLinksParams.dart';
+import 'package:encointer_wallet/service/substrate_api/account_api.dart';
+import 'package:encointer_wallet/service/substrate_api/assets_api.dart';
+import 'package:encointer_wallet/service/substrate_api/chain_api.dart';
+import 'package:encointer_wallet/service/substrate_api/codec_api.dart';
+import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
+import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
+import 'package:encointer_wallet/service/substrate_api/types/gen_external_links_params.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:get_storage/get_storage.dart';
 
-import 'core/jsApi.dart';
+import 'core/js_api.dart';
 
 /// Global api instance
 ///
