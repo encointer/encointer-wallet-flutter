@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/page/account/create/create_pin_form.dart';
+import 'package:encointer_wallet/page-encointer/home_page.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
@@ -67,7 +68,11 @@ class _CreatePinPageState extends State<CreatePinPage> {
                   });
 
                   // Even if we do not choose a community, we go back to the home screen.
-                  Navigator.popUntil(context, ModalRoute.withName('/'));
+                  Navigator.pushAndRemoveUntil<void>(
+                    context,
+                    CupertinoPageRoute<void>(builder: (context) => EncointerHomePage()),
+                    (route) => false,
+                  );
                 },
                 store: context.read<AppStore>(),
               )

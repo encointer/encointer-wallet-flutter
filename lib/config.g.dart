@@ -7,10 +7,12 @@ part of 'config.dart';
 // **************************************************************************
 
 Config _$ConfigFromJson(Map<String, dynamic> json) => Config(
-      initialRoute: json['initialRoute'] as String? ?? EncointerHomePage.route,
+      initialRoute: json['initialRoute'] as String? ?? AppRoute.splash,
       mockLocalStorage: json['mockLocalStorage'] as bool? ?? false,
       mockSubstrateApi: json['mockSubstrateApi'] as bool? ?? false,
-      appStoreConfig: $enumDecodeNullable(_$StoreConfigEnumMap, json['appStoreConfig']) ?? StoreConfig.Normal,
+      appStoreConfig:
+          $enumDecodeNullable(_$StoreConfigEnumMap, json['appStoreConfig']) ??
+              StoreConfig.Normal,
     );
 
 Map<String, dynamic> _$ConfigToJson(Config instance) => <String, dynamic>{

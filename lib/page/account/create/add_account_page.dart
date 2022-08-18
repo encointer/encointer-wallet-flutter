@@ -12,7 +12,6 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class AddAccountPage extends StatefulWidget {
   const AddAccountPage({Key? key}) : super(key: key);
@@ -64,7 +63,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
       _submitting = false;
     });
     // go to home page
-    Navigator.popUntil(context, ModalRoute.withName('/'));
+    Navigator.pop(context);
   }
 
   static Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
@@ -120,7 +119,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
 
     return Scaffold(
       appBar: AppBar(

@@ -15,7 +15,7 @@ import 'bazaar/0_main/bazaar_main.dart';
 class EncointerHomePage extends StatefulWidget {
   const EncointerHomePage({Key? key}) : super(key: key);
 
-  static const String route = '/';
+  static const String route = '/home';
 
   @override
   _EncointerHomePageState createState() => _EncointerHomePageState();

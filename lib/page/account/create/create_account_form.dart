@@ -13,7 +13,6 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class CreateAccountForm extends StatelessWidget {
   CreateAccountForm(this.store, {Key? key}) : super(key: key);
@@ -25,7 +24,7 @@ class CreateAccountForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
 
     return Form(
       key: _formKey,
@@ -42,7 +41,7 @@ class CreateAccountForm extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline2,
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Center(
                   child: Container(
                     width: 300,
@@ -53,7 +52,7 @@ class CreateAccountForm extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 50),
+                const SizedBox(height: 50),
                 EncointerTextFormField(
                   key: Key('create-account-name'),
                   hintText: dic.account.createHint,
@@ -70,13 +69,13 @@ class CreateAccountForm extends StatelessWidget {
           ),
           Container(
             key: Key('create-account-next'),
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: PrimaryButton(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Iconsax.login_1),
-                  SizedBox(width: 12),
+                  const Icon(Iconsax.login_1),
+                  const SizedBox(width: 12),
                   Text(
                     dic.account.next,
                     style: Theme.of(context).textTheme.headline3!.copyWith(

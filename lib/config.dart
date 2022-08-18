@@ -1,6 +1,5 @@
+import 'package:encointer_wallet/router/app_router.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-import 'package:encointer_wallet/page-encointer/home_page.dart';
 
 import 'store/app.dart';
 
@@ -9,7 +8,7 @@ part 'config.g.dart';
 @JsonSerializable()
 class Config {
   const Config({
-    this.initialRoute = EncointerHomePage.route,
+    this.initialRoute = AppRoute.splash,
     this.mockLocalStorage = false,
     this.mockSubstrateApi = false,
     this.appStoreConfig = StoreConfig.Normal,
