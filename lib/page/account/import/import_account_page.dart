@@ -25,7 +25,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   String? _derivePath = '';
   bool _submitting = false;
 
-  final _nameCtrl = new TextEditingController();
+  final _nameCtrl = TextEditingController();
 
   @override
   void dispose() {

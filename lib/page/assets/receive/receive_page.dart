@@ -28,7 +28,7 @@ class ReceivePage extends StatefulWidget {
 }
 
 class _ReceivePageState extends State<ReceivePage> {
-  final TextEditingController _amountController = new TextEditingController();
+  final _amountController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool generateQR = false;
   late InvoiceQrCode invoice;
@@ -58,7 +58,7 @@ class _ReceivePageState extends State<ReceivePage> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     paymentWatchdog = PausableTimer(
       const Duration(seconds: 1),
       () async {

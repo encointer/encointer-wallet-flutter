@@ -1,5 +1,5 @@
-import 'package:encointer_wallet/router/app_router.dart';
 import 'package:json_annotation/json_annotation.dart';
+import 'package:encointer_wallet/router/app_router.dart';
 
 import 'store/app.dart';
 

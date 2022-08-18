@@ -60,7 +60,7 @@ class _QrSenderPageState extends State<QrSenderPage> {
           future: _getQrCodeData(context),
           builder: (_, AsyncSnapshot<Uint8List?> snapshot) {
             return ListView(
-              padding: EdgeInsets.only(top: 16),
+              padding: const EdgeInsets.only(top: 16),
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -74,7 +74,7 @@ class _QrSenderPageState extends State<QrSenderPage> {
                         : CupertinoActivityIndicator(),
                     snapshot.hasData
                         ? Padding(
-                            padding: EdgeInsets.all(16),
+                            padding: const EdgeInsets.all(16),
                             child: RoundedButton(
                               icon: Image.asset('assets/images/assets/scanner.png'),
                               text: I18n.of(context)!.translationsForLocale().account.uosScan,

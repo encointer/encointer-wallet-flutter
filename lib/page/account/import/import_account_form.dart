@@ -26,8 +26,8 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
 
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _keyCtrl = new TextEditingController();
-  final TextEditingController _nameCtrl = new TextEditingController();
+  final _keyCtrl = TextEditingController();
+  final _nameCtrl = TextEditingController();
 
   AccountAdvanceOptionParams _advanceOptions = AccountAdvanceOptionParams();
 

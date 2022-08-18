@@ -6,7 +6,6 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class CreatePinForm extends StatefulWidget {
   const CreatePinForm({
@@ -24,8 +23,8 @@ class CreatePinForm extends StatefulWidget {
 class _CreatePinFormState extends State<CreatePinForm> {
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _passCtrl = new TextEditingController();
-  final TextEditingController _pass2Ctrl = new TextEditingController();
+  final _passCtrl = TextEditingController();
+  final _pass2Ctrl = TextEditingController();
 
   @override
   void dispose() {
@@ -36,7 +35,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
 
     return Form(
       key: _formKey,

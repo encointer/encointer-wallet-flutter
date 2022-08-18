@@ -4,11 +4,12 @@ import 'account_or_community_data.dart';
 import 'account_or_community_item_horizontal.dart';
 
 class SwitchAccountOrCommunity extends StatefulWidget {
-  SwitchAccountOrCommunity({
+  const SwitchAccountOrCommunity({
     this.rowTitle,
     this.data,
     this.onTap,
-  });
+    Key? key,
+  }) : super(key: key);
 
   final String? rowTitle;
   final List<AccountOrCommunityData>? data;
@@ -27,16 +28,14 @@ class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      SizedBox(
-        height: 15,
-      ),
+      const SizedBox(height: 15),
       Center(
         child: Text(
           widget.rowTitle!,
           style: Theme.of(context).textTheme.headline2,
         ),
       ),
-      SizedBox(height: 15),
+      const SizedBox(height: 15),
       SizedBox(
         height: identiconPlusTextHeight,
         // otherwise ListView would use infinite height
@@ -44,7 +43,7 @@ class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
           children: [
             Center(
               child: ListView.builder(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
                 itemExtent: itemExtent,
@@ -60,21 +59,23 @@ class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [Colors.white, whiteTransparent],
-                      ),
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Colors.white, whiteTransparent],
                     ),
-                    height: identiconPlusTextHeight,
-                    width: fadeWidth),
+                  ),
+                  height: identiconPlusTextHeight,
+                  width: fadeWidth,
+                ),
                 Container(
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [whiteTransparent, Colors.white],
-                      ),
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [whiteTransparent, Colors.white],
                     ),
-                    height: identiconPlusTextHeight,
-                    width: fadeWidth),
+                  ),
+                  height: identiconPlusTextHeight,
+                  width: fadeWidth,
+                ),
               ],
             ),
           ],
