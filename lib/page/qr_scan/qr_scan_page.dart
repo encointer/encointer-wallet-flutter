@@ -62,9 +62,7 @@ class ScanPage extends StatelessWidget {
           if (snapshot.hasData) {
             if (snapshot.data != PermissionStatus.granted) {
               RootSnackBar.showMsg(
-                "There was an error getting the camera permission. "
-                "Permission status is: ${snapshot.data}. Alternatively, you can enable the "
-                "grant permission from the in the devices settings.",
+                "${dic.home.cameraPermissionError}\n Permission status: ${snapshot.data}",
                 durationMillis: 3000,
               );
               return Center(child: CupertinoActivityIndicator());

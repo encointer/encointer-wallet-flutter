@@ -45,6 +45,7 @@ abstract class TranslationsHome {
   String get txInBlock;
   String get txError;
   String get updatingAppState;
+  String get cameraPermissionError;
 }
 
 class TranslationsEnHome implements TranslationsHome {
@@ -94,6 +95,8 @@ class TranslationsEnHome implements TranslationsHome {
   get txInBlock => 'Transaction is in a block.';
   get txError => 'Transaction error';
   get updatingAppState => 'Updating the app state...';
+  get cameraPermissionError => 'There was an error getting the camera permission. '
+      'Alternatively, you can grant permission from the in the devices settings.';
 }
 
 class TranslationsDeHome implements TranslationsHome {
@@ -142,6 +145,8 @@ class TranslationsDeHome implements TranslationsHome {
   get txInBlock => 'Transaction ist in einem Block';
   get txError => 'Transaktionsfehler';
   get updatingAppState => 'App-Zustand wird aktualisiert...';
+  get cameraPermissionError => 'Es gab einen Fehler beim überprüfen der Kameraerlaubnis'
+      'Du kannst die Erlaubnis für die Kamera auch über Smartphone-Einstellungen erteilen.';
 }
 
 class TranslationsZhHome implements TranslationsHome {
@@ -189,4 +194,5 @@ class TranslationsZhHome implements TranslationsHome {
   get txInBlock => throw UnimplementedError();
   get txError => throw UnimplementedError();
   get updatingAppState => throw UnimplementedError();
+  get cameraPermissionError => throw UnimplementedError();
 }
