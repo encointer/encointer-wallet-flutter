@@ -61,7 +61,8 @@ class ScanPage extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<PermissionStatus> snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data != PermissionStatus.granted) {
-              return permissionErrorDialog(context, snapshot.data!);
+              print("[scanPage] Permission Status: ${snapshot.data!.toString()}");
+              return permissionErrorDialog(context);
             }
 
             return Stack(
@@ -136,20 +137,20 @@ Widget mockQrDataRow(Translations dic, Function(String) onScan) {
   ]);
 }
 
-Widget permissionErrorDialog(BuildContext context, PermissionStatus status) {
+Widget permissionErrorDialog(BuildContext context) {
   final dic = I18n.of(context)!.translationsForLocale();
 
   return CupertinoAlertDialog(
     title: Container(),
-    content: Text(
-      "${dic.home.cameraPermissionError}\n Permission status: ${status.toString()}",
-    ),
+    content: Text(dic.home.cameraPermissionError),
     actions: <Widget>[
       CupertinoButton(
         child: Text(dic.home.ok),
-        onPressed: () {
-          Navigator.popUntil(context, ModalRoute.withName('/'));
-        },
+        onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
+      ),
+      CupertinoButton(
+        child: Text(dic.home.appSettings),
+        onPressed: () => openAppSettings(),
       ),
     ],
   );

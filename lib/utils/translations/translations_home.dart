@@ -46,6 +46,7 @@ abstract class TranslationsHome {
   String get txError;
   String get updatingAppState;
   String get cameraPermissionError;
+  String get appSettings;
 }
 
 class TranslationsEnHome implements TranslationsHome {
@@ -96,7 +97,8 @@ class TranslationsEnHome implements TranslationsHome {
   get txError => 'Transaction error';
   get updatingAppState => 'Updating the app state...';
   get cameraPermissionError => 'There was an error getting the camera permission. '
-      'Alternatively, you can grant permission in the device settings.';
+      'Alternatively, you can grant permission in the app settings.';
+  get appSettings => 'App settings';
 }
 
 class TranslationsDeHome implements TranslationsHome {
@@ -146,7 +148,8 @@ class TranslationsDeHome implements TranslationsHome {
   get txError => 'Transaktionsfehler';
   get updatingAppState => 'App-Zustand wird aktualisiert...';
   get cameraPermissionError => 'Es gab einen Fehler beim überprüfen der Kameraerlaubnis.'
-      'Du kannst die Erlaubnis für die Kamera auch über die Geräteeinstellungen erteilen.';
+      'Du kannst die Erlaubnis für die Kamera auch über die App-Einstellungen erteilen.';
+  get appSettings => 'App-Einstellungen';
 }
 
 class TranslationsZhHome implements TranslationsHome {
@@ -195,4 +198,5 @@ class TranslationsZhHome implements TranslationsHome {
   get txError => throw UnimplementedError();
   get updatingAppState => throw UnimplementedError();
   get cameraPermissionError => throw UnimplementedError();
+  get appSettings => throw UnimplementedError();
 }
