@@ -33,7 +33,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     super.dispose();
   }
 
-  Future<void> _importAccount(AppStore store) async {
+  Future<void> _importAccount() async {
     setState(() {
       _submitting = true;
     });
@@ -42,7 +42,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Text(I18n.of(context)!.translationsForLocale().home.loading),
-          content: const SizedBox(height: 64, child: CupertinoActivityIndicator()),
+          content: Container(height: 64, child: CupertinoActivityIndicator()),
         );
       },
     );
@@ -53,7 +53,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       cryptoType: _cryptoType,
       derivePath: _derivePath,
     );
-    Log.d("imported account to JS.", 'importAccountPage');
+    Log.d("imported account to JS.");
 
     // check if account duplicate
     if (acc['error'] != null) {
@@ -67,7 +67,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         context: context,
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
-            title: const SizedBox(),
+            title: Container(),
             content: Text('$msg'),
             actions: <Widget>[
               CupertinoButton(
@@ -84,14 +84,17 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
           );
         },
       );
+      return;
     }
-    await _checkAccountDuplicate(acc, store);
+    await _checkAccountDuplicate(acc);
+    return;
   }
 
-  Future<void> _checkAccountDuplicate(Map<String, dynamic> acc, AppStore store) async {
-    int index = store.account.accountList.indexWhere((i) => i.pubKey == acc['pubKey']);
+  Future<void> _checkAccountDuplicate(Map<String, dynamic> acc) async {
+    final appStore = context.read<AppStore>();
+    int index = appStore.account.accountList.indexWhere((i) => i.pubKey == acc['pubKey']);
     if (index > -1) {
-      final pubKeyMap = store.account.pubKeyAddressMap[store.settings.endpoint.ss58]!;
+      final pubKeyMap = appStore.account.pubKeyAddressMap[appStore.settings.endpoint.ss58]!;
       final address = pubKeyMap[acc['pubKey']];
       if (address != null) {
         showCupertinoDialog(
@@ -114,7 +117,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
                 CupertinoButton(
                   child: Text(I18n.of(context)!.translationsForLocale().home.ok),
                   onPressed: () async {
-                    await _saveAccount(acc, store);
+                    await _saveAccount(acc);
                     Navigator.of(context).pop();
                   },
                 ),
@@ -124,19 +127,20 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         );
       }
     } else {
-      _saveAccount(acc, store);
+      return _saveAccount(acc);
     }
   }
 
-  Future<void> _saveAccount(Map<String, dynamic> acc, AppStore store) async {
+  Future<void> _saveAccount(Map<String, dynamic> acc) async {
+    final appStore = context.read<AppStore>();
     Log.d("Saving account: ${acc["pubKey"]}", 'importAccountPage.dart');
     final addresses = await webApi.account.encodeAddress([acc['pubKey']]);
-    await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
+    await appStore.addAccount(acc, appStore.account.newAccount.password, addresses[0]);
 
     final pubKey = acc['pubKey'];
-    await store.setCurrentAccount(pubKey);
+    await appStore.setCurrentAccount(pubKey);
 
-    await store.loadAccountCache();
+    await appStore.loadAccountCache();
 
     // fetch info for the imported account
     webApi.fetchAccountData();
@@ -149,16 +153,16 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    final _store = context.read<AppStore>();
     return Scaffold(
       appBar: AppBar(title: Text(I18n.of(context)!.translationsForLocale().home.accountImport)),
       body: SafeArea(
-        child: !_submitting ? _getImportForm(_store) : const Center(child: CupertinoActivityIndicator()),
+        child: !_submitting ? _getImportForm() : const Center(child: CupertinoActivityIndicator()),
       ),
     );
   }
 
-  Widget _getImportForm(AppStore store) {
+  Widget _getImportForm() {
+    final _store = context.read<AppStore>();
     return ImportAccountForm((Map<String, dynamic> data) async {
       setState(() {
         _keyType = data['keyType'];
@@ -166,11 +170,11 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         _derivePath = data['derivePath'];
       });
 
-      if (store.account.isFirstAccount) {
-        Navigator.pushNamed(context, CreatePinPage.route, arguments: CreatePinPageParams(() => _importAccount(store)));
+      if (_store.account.isFirstAccount) {
+        Navigator.pushNamed(context, CreatePinPage.route, arguments: CreatePinPageParams(_importAccount()));
       } else {
-        store.account.setNewAccountPin(store.settings.cachedPin);
-        await _importAccount(store);
+        _store.account.setNewAccountPin(_store.settings.cachedPin);
+        await _importAccount();
         Navigator.popUntil(context, ModalRoute.withName('/'));
       }
     });

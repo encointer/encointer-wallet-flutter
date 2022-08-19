@@ -24,7 +24,7 @@ class _Settings extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-
+    final _settingsStote = context.read<SettingsStore>();
     String getLang(String code) {
       switch (code) {
         case 'en':
@@ -46,7 +46,7 @@ class _Settings extends State<SettingsPage> {
               backgroundColor: Colors.white,
               itemExtent: 58,
               scrollController: FixedExtentScrollController(
-                initialItem: _langOptions.indexOf(context.read<SettingsStore>().localeCode),
+                initialItem: _langOptions.indexOf(_settingsStote.localeCode),
               ),
               children: _langOptions.map((i) {
                 return Padding(padding: const EdgeInsets.all(16), child: Text(getLang(i)));
@@ -59,8 +59,8 @@ class _Settings extends State<SettingsPage> {
             ),
             onWillPop: () async {
               final code = _langOptions[_selected];
-              if (code != context.read<SettingsStore>().localeCode) {
-                context.read<SettingsStore>().setLocalCode(code);
+              if (code != _settingsStote.localeCode) {
+                _settingsStote.setLocalCode(code);
                 // changeLang(context, code);
               }
               return true;
@@ -81,27 +81,27 @@ class _Settings extends State<SettingsPage> {
             children: <Widget>[
               ListTile(
                 leading: Image.asset(
-                  'assets/images/public/${context.read<SettingsStore>().endpoint.info}.png',
+                  'assets/images/public/${_settingsStote.endpoint.info}.png',
                   width: 36,
                 ),
                 title: Text(dic.profile.settingNode),
-                subtitle: Text(context.read<SettingsStore>().endpoint.text ?? ''),
+                subtitle: Text(_settingsStote.endpoint.text ?? ''),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.of(context).pushNamed(RemoteNodeListPage.route),
               ),
               ListTile(
                 leading: Image.asset(
-                  'assets/images/public/${context.read<SettingsStore>().customSS58Format['info']}.png',
+                  'assets/images/public/${_settingsStote.customSS58Format['info']}.png',
                   width: 36,
                 ),
                 title: Text(dic.profile.settingPrefix),
-                subtitle: Text(context.read<SettingsStore>().customSS58Format['text'] ?? ''),
+                subtitle: Text(_settingsStote.customSS58Format['text'] ?? ''),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.of(context).pushNamed(SS58PrefixListPage.route),
               ),
               ListTile(
                 title: Text(dic.profile.settingLang),
-                subtitle: Text(getLang(context.read<SettingsStore>().localeCode)),
+                subtitle: Text(getLang(_settingsStote.localeCode)),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => _onLanguageTap(),
               )

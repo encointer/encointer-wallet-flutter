@@ -16,7 +16,6 @@ class AddressFormItem extends StatelessWidget {
   Widget build(BuildContext context) {
     Color grey = Theme.of(context).unselectedWidgetColor;
 
-    // String address = Fmt.addressOfAccount(account, globalAppStore);
     String address = Fmt.addressOfAccount(account, context.read<AppStore>());
 
     Column content = Column(

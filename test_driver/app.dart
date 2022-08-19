@@ -44,7 +44,9 @@ void main() {
   runApp(
     Provider(
       create: (context) => globalAppStore,
-      child: WalletApp(Config(mockLocalStorage: true, mockSubstrateApi: true, appStoreConfig: StoreConfig.Test)),
+      child: WalletApp(
+        Config(mockLocalStorage: true, mockSubstrateApi: true, appStoreConfig: StoreConfig.Test),
+      ),
     ),
   );
 }

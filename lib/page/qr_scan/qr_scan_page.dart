@@ -21,9 +21,11 @@ class ScanPageParams {
 }
 
 class ScanPage extends StatelessWidget {
-  const ScanPage({Key? key}) : super(key: key);
+  ScanPage({Key? key}) : super(key: key);
 
   static const String route = '/account/scan';
+
+  final qrScanService = QrScanService();
 
   Future<bool> canOpenCamera() async {
     // will do nothing if already granted
@@ -32,7 +34,6 @@ class ScanPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final qrScanService = QrScanService();
     final dic = I18n.of(context)!.translationsForLocale();
     final params = ModalRoute.of(context)!.settings.arguments! as ScanPageParams;
 

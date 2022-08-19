@@ -126,7 +126,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
               icon: Image.asset('assets/images/assets/plus_indigo.png'),
               color: primaryColor,
               onPressed: () async => {
-                    if (context.read<AppStore>().settings.cachedPin.isEmpty)
+                    if (_store.settings.cachedPin.isEmpty)
                       {
                         await _showPasswordDialog(context),
                       }

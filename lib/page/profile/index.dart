@@ -125,9 +125,9 @@ class _ProfileState extends State<Profile> {
                           begin: Alignment.centerRight,
                           end: Alignment.centerLeft,
                           colors: [
-                            Theme.of(context).scaffoldBackgroundColor,
-                            Theme.of(context).scaffoldBackgroundColor,
                             Theme.of(context).scaffoldBackgroundColor.withOpacity(0.0),
+                            Theme.of(context).scaffoldBackgroundColor,
+                            Theme.of(context).scaffoldBackgroundColor,
                             Theme.of(context).scaffoldBackgroundColor.withOpacity(0.0),
                           ],
                           stops: [0.0, 0.1, 0.9, 1.0],

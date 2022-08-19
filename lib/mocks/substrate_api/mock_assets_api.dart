@@ -6,12 +6,9 @@ import 'package:encointer_wallet/store/app.dart';
 import 'mock_js_api.dart';
 
 class MockAssetsApi extends AssetsApi {
-  MockAssetsApi(AppStore store, MockJSApi js)
-      : _store = store,
-        super(store, js);
+  MockAssetsApi(this.store, MockJSApi js) : super(store, js);
 
-  // final store = globalAppStore;
-  final AppStore _store;
+  final AppStore store;
 
   @override
   Future<void> startSubscriptions() async {
@@ -31,9 +28,9 @@ class MockAssetsApi extends AssetsApi {
   @override
   Future<void> fetchBalance() async {
     Log.d('api: fetching mock balance');
-    _store.assets.setAccountBalances(
-      _store.account.currentAccountPubKey,
-      Map.of({_store.settings.networkState!.tokenSymbol: balancesInfo}),
+    store.assets.setAccountBalances(
+      store.account.currentAccountPubKey,
+      Map.of({store.settings.networkState!.tokenSymbol: balancesInfo}),
       needCache: false,
     );
   }

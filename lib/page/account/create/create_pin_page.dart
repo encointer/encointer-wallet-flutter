@@ -12,7 +12,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 class CreatePinPageParams {
   const CreatePinPageParams(this.onCreatePin);
 
-  final VoidCallback onCreatePin;
+  final Future<void> onCreatePin;
 }
 
 class CreatePinPage extends StatefulWidget {
@@ -30,6 +30,7 @@ class _CreatePinPageState extends State<CreatePinPage> {
   @override
   Widget build(BuildContext context) {
     final params = ModalRoute.of(context)!.settings.arguments as CreatePinPageParams;
+    // final _appStore = context.read<AppStore>();
 
     return Scaffold(
       appBar: AppBar(
@@ -50,7 +51,7 @@ class _CreatePinPageState extends State<CreatePinPage> {
                     _submitting = true;
                   });
 
-                  params.onCreatePin();
+                  await params.onCreatePin;
 
                   if (context.read<AppStore>().encointer.communityIdentifiers.length == 1) {
                     context.read<AppStore>().encointer.setChosenCid(

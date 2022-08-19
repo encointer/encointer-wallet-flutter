@@ -90,7 +90,7 @@ class AppRoute {
       case ScanPage.route:
         return CupertinoPageRoute(
           settings: settings,
-          builder: (_) => const ScanPage(),
+          builder: (_) => ScanPage(),
         );
       case TransferPage.route:
         return CupertinoPageRoute(

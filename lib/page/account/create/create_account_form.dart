@@ -90,7 +90,7 @@ class CreateAccountForm extends StatelessWidget {
                   Navigator.pushNamed(
                     context,
                     CreatePinPage.route,
-                    arguments: CreatePinPageParams(() => _createAndImportAccount(context)),
+                    arguments: CreatePinPageParams(_createAndImportAccount(context)),
                   );
                 }
               },
