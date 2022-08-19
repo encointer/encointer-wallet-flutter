@@ -11,7 +11,6 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
 import 'qr_scan_service.dart';
-
 export 'qr_codes/qr_code_base.dart';
 export 'qr_scan_service.dart';
 
@@ -27,9 +26,9 @@ class ScanPage extends StatelessWidget {
 
   final qrScanService = QrScanService();
 
-  Future<bool> canOpenCamera() async {
+  Future<PermissionStatus> canOpenCamera() async {
     // will do nothing if already granted
-    return Permission.camera.request().isGranted;
+    return Permission.camera.request();
   }
 
   @override
@@ -59,10 +58,15 @@ class ScanPage extends StatelessWidget {
           )
         ],
       ),
-      body: FutureBuilder<bool>(
+      body: FutureBuilder<PermissionStatus>(
         future: canOpenCamera(),
-        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          if (snapshot.hasData && snapshot.data == true) {
+        builder: (BuildContext context, AsyncSnapshot<PermissionStatus> snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data != PermissionStatus.granted) {
+              print("[scanPage] Permission Status: ${snapshot.data!.toString()}");
+              return permissionErrorDialog(context);
+            }
+
             return Stack(
               children: [
                 MobileScanner(
@@ -99,7 +103,7 @@ class ScanPage extends StatelessWidget {
               ],
             );
           } else {
-            return const CupertinoActivityIndicator();
+            return Center(child: CupertinoActivityIndicator());
           }
         },
       ),
@@ -132,4 +136,23 @@ Widget mockQrDataRow(Translations dic, Function(String) onScan) {
     ),
     Text(' <<< Devs only', style: const TextStyle(color: Colors.orange)),
   ]);
+}
+
+Widget permissionErrorDialog(BuildContext context) {
+  final dic = I18n.of(context)!.translationsForLocale();
+
+  return CupertinoAlertDialog(
+    title: Container(),
+    content: Text(dic.home.cameraPermissionError),
+    actions: <Widget>[
+      CupertinoButton(
+        child: Text(dic.home.ok),
+        onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
+      ),
+      CupertinoButton(
+        child: Text(dic.home.appSettings),
+        onPressed: () => openAppSettings(),
+      ),
+    ],
+  );
 }

@@ -68,10 +68,15 @@ class ScanClaimQrCode extends StatelessWidget {
     }
 
     return Scaffold(
-      body: FutureBuilder<bool>(
+      body: FutureBuilder<PermissionStatus>(
         future: canOpenCamera(),
-        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-          if (snapshot.hasData && snapshot.data == true) {
+        builder: (BuildContext context, AsyncSnapshot<PermissionStatus> snapshot) {
+          if (snapshot.hasData) {
+            if (snapshot.data != PermissionStatus.granted) {
+              print("[scanPage] Permission Status: ${snapshot.data!.toString()}");
+              return permissionErrorDialog(context);
+            }
+
             return Stack(
               children: [
                 Align(
@@ -143,7 +148,26 @@ void _showActivityIndicatorOverlay(BuildContext context) {
   );
 }
 
-Future<bool> canOpenCamera() async {
+Future<PermissionStatus> canOpenCamera() async {
   // will do nothing if already granted
-  return Permission.camera.request().isGranted;
+  return Permission.camera.request();
+}
+
+Widget permissionErrorDialog(BuildContext context) {
+  final dic = I18n.of(context)!.translationsForLocale();
+
+  return CupertinoAlertDialog(
+    title: Container(),
+    content: Text(dic.home.cameraPermissionError),
+    actions: <Widget>[
+      CupertinoButton(
+        child: Text(dic.home.ok),
+        onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
+      ),
+      CupertinoButton(
+        child: Text(dic.home.appSettings),
+        onPressed: () => openAppSettings(),
+      ),
+    ],
+  );
 }
