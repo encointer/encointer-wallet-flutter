@@ -64,6 +64,16 @@ class ScanClaimQrCode extends StatelessWidget {
     }
 
     return Scaffold(
+      appBar: AppBar(
+        leading: Container(),
+        actions: [
+          IconButton(
+            key: Key('close-scanner'),
+            icon: Icon(Icons.close),
+            onPressed: () => Navigator.pop(context),
+          )
+        ],
+      ),
       body: FutureBuilder<PermissionStatus>(
         future: canOpenCamera(),
         builder: (BuildContext context, AsyncSnapshot<PermissionStatus> snapshot) {
@@ -75,16 +85,6 @@ class ScanClaimQrCode extends StatelessWidget {
 
             return Stack(
               children: [
-                Align(
-                  alignment: Alignment.topRight,
-                  child: IconButton(
-                    icon: Icon(
-                      Icons.close,
-                      color: Theme.of(context).cardColor,
-                    ),
-                    onPressed: () => Navigator.of(context).pop(),
-                  ),
-                ),
                 MobileScanner(
                     allowDuplicates: false,
                     onDetect: (barcode, args) {
@@ -125,7 +125,7 @@ class ScanClaimQrCode extends StatelessWidget {
               ],
             );
           } else {
-            return CupertinoActivityIndicator();
+            return Center(child: CupertinoActivityIndicator());
           }
         },
       ),
