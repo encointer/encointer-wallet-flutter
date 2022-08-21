@@ -62,6 +62,8 @@ class _AddressInputFieldState extends State<AddressInputField> {
       }
     }
 
+    await webApi.account.fetchAddressIndex([accountData.address]);
+
     return [accountData];
   }
 
