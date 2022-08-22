@@ -4,7 +4,6 @@ import 'package:mobx/mobx.dart';
 import '../../../../../models/claim_of_attendance/claim_of_attendance.dart';
 import '../../../../../models/communities/community_identifier.dart';
 import '../../../../../models/index.dart';
-
 part 'community_account_store.g.dart';
 
 /// Stores data specific to an account **and** an encointer community.

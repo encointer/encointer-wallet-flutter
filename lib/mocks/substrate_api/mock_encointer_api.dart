@@ -1,6 +1,5 @@
 import 'package:encointer_wallet/mocks/data/mock_encointer_data.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
-
 import '../../models/bazaar/account_business_tuple.dart';
 import '../../models/claim_of_attendance/claim_of_attendance.dart';
 import '../../models/communities/cid_name.dart';

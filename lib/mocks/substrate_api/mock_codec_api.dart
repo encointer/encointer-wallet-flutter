@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
-
 import 'package:encointer_wallet/service/substrate_api/codec_api.dart';
-
 import 'mock_js_api.dart';
 
 class MockCodecApi extends CodecApi {

@@ -1,5 +1,4 @@
 import 'package:encointer_wallet/store/settings.dart';
-
 import '../../models/communities/cid_name.dart';
 import '../../models/communities/community_identifier.dart';
 import '../../models/index.dart';

@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:core';
 import 'dart:math';
 import 'dart:typed_data';
-
 import 'package:convert/convert.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -264,7 +263,7 @@ class Fmt {
                 margin: EdgeInsets.only(right: 4),
                 child: Image.asset('assets/images/assets/success.png'),
               )
-            : Container(height: 16),
+            : SizedBox(height: 16),
         Expanded(
           child: Text(accountDisplayNameString(address, accInfo)!),
         )

@@ -7,7 +7,6 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
-
 part 'settings.g.dart';
 
 class SettingsStore extends _SettingsStore with _$SettingsStore {

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/ipfs/http_api.dart';
 import 'package:flutter_svg/flutter_svg.dart';

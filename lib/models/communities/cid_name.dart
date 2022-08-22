@@ -1,9 +1,6 @@
 import 'dart:convert';
-
 import 'package:json_annotation/json_annotation.dart';
-
 import 'community_identifier.dart';
-
 part 'cid_name.g.dart';
 
 /// TODO shouldn't this be named CidAndName

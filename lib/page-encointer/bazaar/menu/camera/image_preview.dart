@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/business_form_state.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/foundation.dart';
@@ -33,7 +32,7 @@ class ImagePreview extends StatelessWidget {
                 .map(
                   (image) => Stack(
                     children: [
-                      Container(
+                      SizedBox(
                         height: 200,
                         child: kIsWeb ? Image.network(image!.path) : Image.file(File(image!.path)),
                       ),

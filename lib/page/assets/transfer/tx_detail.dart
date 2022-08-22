@@ -31,13 +31,16 @@ class TxDetail extends StatelessWidget {
     final Translations dic = I18n.of(context)!.translationsForLocale();
     Widget buildLabel(String name) {
       return Container(
-          padding: EdgeInsets.only(left: 8),
-          width: 80,
-          child: Text(name,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Theme.of(context).unselectedWidgetColor,
-              )));
+        padding: EdgeInsets.only(left: 8),
+        width: 80,
+        child: Text(
+          name,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Theme.of(context).unselectedWidgetColor,
+          ),
+        ),
+      );
     }
 
     var list = <Widget>[
@@ -96,7 +99,7 @@ class TxDetail extends StatelessWidget {
       ListTile(
         leading: buildLabel(dic.assets.hash),
         title: Text(Fmt.address(hash)!),
-        trailing: Container(
+        trailing: SizedBox(
           width: 140,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -110,7 +113,7 @@ class TxDetail extends StatelessWidget {
                       snLink,
                       text: 'Subscan',
                     )
-                  : Container(),
+                  : SizedBox(),
             ],
           ),
         ),

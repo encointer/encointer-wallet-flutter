@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 import 'dart:math';
-
 part 'balance_entry.g.dart';
 
 @JsonSerializable()

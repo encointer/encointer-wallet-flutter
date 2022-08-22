@@ -1,7 +1,6 @@
 import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:intl/intl.dart';
-
 import '../../models/index.dart';
 
 /// stateless service that computes some of the view logic of the ceremony box

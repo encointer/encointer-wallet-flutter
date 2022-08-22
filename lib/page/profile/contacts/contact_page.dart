@@ -64,7 +64,7 @@ class _Contact extends State<ContactPage> {
             context: context,
             builder: (BuildContext context) {
               return CupertinoAlertDialog(
-                title: Container(),
+                title: SizedBox(),
                 content: Text(dic.profile.contactAlreadyExists),
                 actions: <Widget>[
                   CupertinoButton(
@@ -171,7 +171,7 @@ class _Contact extends State<ContactPage> {
                               controller: _memoCtrl,
                             ),
                           )
-                        : Container(),
+                        : SizedBox(),
                     store.settings.developerMode
                         ? Row(
                             children: <Widget>[
@@ -200,7 +200,7 @@ class _Contact extends State<ContactPage> {
                               ),
                             ],
                           )
-                        : Container(),
+                        : SizedBox(),
                     SizedBox(height: 24),
                     IconButton(
                       iconSize: 48,

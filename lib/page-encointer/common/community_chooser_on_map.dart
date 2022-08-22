@@ -7,7 +7,6 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import "package:latlong2/latlong.dart";
-
 import '../../models/communities/cid_name.dart';
 
 class CommunityChooserOnMap extends StatelessWidget {

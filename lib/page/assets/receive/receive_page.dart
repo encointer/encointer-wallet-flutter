@@ -13,7 +13,6 @@ import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:pausable_timer/pausable_timer.dart';
 import 'package:share_plus/share_plus.dart';
-
 import '../../../common/components/gr_code_view/gr_code_image_view.dart';
 import '../../../models/communities/community_identifier.dart';
 

@@ -1,8 +1,6 @@
 import 'package:encointer_wallet/page-encointer/home_page.dart';
 import 'package:json_annotation/json_annotation.dart';
-
 import 'store/app.dart';
-
 part 'config.g.dart';
 
 @JsonSerializable()

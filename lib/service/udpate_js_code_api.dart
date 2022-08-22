@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart';

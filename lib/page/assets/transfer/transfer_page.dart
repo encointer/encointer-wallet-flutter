@@ -79,7 +79,7 @@ class _TransferPageState extends State<TransferPage> {
           child: Scaffold(
             appBar: AppBar(
               title: Text(dic.assets.transfer),
-              leading: Container(),
+              leading: SizedBox(),
               actions: [
                 IconButton(
                   key: Key('close-transfer-page'),
@@ -168,11 +168,11 @@ class _TransferPageState extends State<TransferPage> {
                             style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                           ),
                         )
-                      : Container(),
+                      : SizedBox(),
                   SizedBox(height: 8),
                   PrimaryButton(
                     key: Key('make-transfer'),
-                    child: Container(
+                    child: SizedBox(
                       height: 24,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,

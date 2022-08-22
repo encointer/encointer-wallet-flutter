@@ -19,13 +19,13 @@ class RemoteNodeListPage extends StatelessWidget {
     endpoints.retainWhere((i) => i.info == store.endpoint.info);
     List<Widget> list = endpoints
         .map((i) => ListTile(
-              leading: Container(
+              leading: SizedBox(
                 width: 36,
                 child: Image.asset('assets/images/public/${i.info}.png'),
               ),
               title: Text(i.info!),
               subtitle: Text(i.text!),
-              trailing: Container(
+              trailing: SizedBox(
                 width: 40,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -35,7 +35,7 @@ class RemoteNodeListPage extends StatelessWidget {
                             'assets/images/assets/success.png',
                             width: 16,
                           )
-                        : Container(),
+                        : SizedBox(),
                     Icon(Icons.arrow_forward_ios, size: 18)
                   ],
                 ),

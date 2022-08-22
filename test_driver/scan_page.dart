@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:encointer_wallet/mocks/mock_qr_scan_page.dart';
 import 'package:encointer_wallet/mocks/restart_widget.dart';
 import 'package:flutter/material.dart';

@@ -40,7 +40,7 @@ class _WakeLockAndBrightnessEnhancerState extends State<WakeLockAndBrightnessEnh
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return SizedBox();
   }
 
   @override

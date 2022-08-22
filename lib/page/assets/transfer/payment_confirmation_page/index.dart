@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:animated_check/animated_check.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -106,7 +105,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                 !_transferState.isFinishedOrFailed()
                     ? PrimaryButton(
                         key: Key('make-transfer'),
-                        child: Container(
+                        child: SizedBox(
                           height: 24,
                           child: !_transferState.isSubmitting()
                               ? Row(
@@ -123,9 +122,11 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                       )
                     : PrimaryButton(
                         key: Key('transfer-done'),
-                        child: Container(
+                        child: SizedBox(
                           height: 24,
-                          child: Center(child: Text(dic.assets.done)),
+                          child: Center(
+                            child: Text(dic.assets.done),
+                          ),
                         ),
                         onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
                       )

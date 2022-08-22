@@ -1,5 +1,4 @@
 import 'package:encointer_wallet/service/substrate_api/account_api.dart';
-
 import '../../store/app.dart';
 import 'mock_js_api.dart';
 

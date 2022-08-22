@@ -45,7 +45,7 @@ class ContactsPage extends StatelessWidget {
                     leading: AddressIcon(i.address, i.pubKey, size: 45),
                     title: Text(Fmt.accountName(context, i)),
                     subtitle: Text(Fmt.address(i.address)!),
-                    trailing: Container(
+                    trailing: SizedBox(
                       width: 36,
                       child: IconButton(
                         icon: Icon(Icons.arrow_forward_ios, size: 18),

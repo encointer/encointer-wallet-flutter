@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:encointer_wallet/page/profile/account/export_result_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
@@ -137,7 +136,7 @@ class ExportAccountPage extends StatelessWidget {
                   onTap: () => _showPasswordDialog(context, AccountStore.seedTypeRawSeed),
                 );
               } else {
-                return Container();
+                return SizedBox();
               }
             },
           ),

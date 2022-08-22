@@ -65,7 +65,7 @@ class CeremonyStep1Count extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         title: Text(dic.encointer.encointerCeremony),
-        leading: Container(),
+        leading: SizedBox(),
         actions: [
           IconButton(
             key: Key('close-encointer-ceremony-step1'),

@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-
 part 'gen_external_links_params.g.dart';
 
 @JsonSerializable()

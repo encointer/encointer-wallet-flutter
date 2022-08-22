@@ -10,7 +10,6 @@ import 'sub_stores/bazaar_store/bazaar_store.dart';
 import 'sub_stores/community_store/community_store.dart';
 import 'sub_stores/community_store/community_account_store/community_account_store.dart';
 import 'sub_stores/encointer_account_store/encointer_account_store.dart';
-
 part 'encointer.g.dart';
 
 /// Mobx-Store containing all encointer specific data.

@@ -1,9 +1,7 @@
 import 'dart:convert';
-
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
 import 'package:json_annotation/json_annotation.dart';
-
 // Run: `flutter pub run build_runner build` in order to create/update the *.g.dart
 part 'meetup_overrides.g.dart';
 

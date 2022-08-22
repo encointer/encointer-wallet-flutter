@@ -4,7 +4,6 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
-
 import 'ceremony_count_down.dart';
 
 /// Shows primarily the date of the next ceremony.

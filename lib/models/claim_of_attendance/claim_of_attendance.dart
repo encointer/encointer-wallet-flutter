@@ -1,9 +1,7 @@
 import 'dart:convert';
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:json_annotation/json_annotation.dart';
-
 import '../communities/community_identifier.dart';
-
 part 'claim_of_attendance.g.dart';
 
 // explicit = true as we have nested Json with location

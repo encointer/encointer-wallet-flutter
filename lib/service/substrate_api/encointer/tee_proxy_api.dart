@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import '../../../models/communities/community_identifier.dart';
 import '../../../models/encointer_balance_data/balance_entry.dart';
 import '../../../models/worker_api/worker_api.dart';

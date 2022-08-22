@@ -1,7 +1,6 @@
 import 'package:encointer_wallet/page-encointer/bazaar/2_offerings/offering_detail.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/3_businesses/business_detail.dart';
 import 'package:flutter/material.dart';
-
 import 'data_model/model/bazaar_item_data.dart';
 
 class HorizontalBazaarItemList extends StatelessWidget {

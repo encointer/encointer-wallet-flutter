@@ -12,7 +12,6 @@ import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.d
 import 'package:encointer_wallet/service/substrate_api/types/gen_external_links_params.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:get_storage/get_storage.dart';
-
 import 'core/js_api.dart';
 
 /// Global api instance

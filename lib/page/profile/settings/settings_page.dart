@@ -83,7 +83,7 @@ class _Settings extends State<SettingsPage> {
           child: ListView(
             children: <Widget>[
               ListTile(
-                leading: Container(
+                leading: SizedBox(
                   width: 36,
                   child: Image.asset('assets/images/public/${store.endpoint.info}.png'),
                 ),
@@ -93,7 +93,7 @@ class _Settings extends State<SettingsPage> {
                 onTap: () => Navigator.of(context).pushNamed(RemoteNodeListPage.route),
               ),
               ListTile(
-                leading: Container(
+                leading: SizedBox(
                   width: 36,
                   child: Image.asset('assets/images/public/${store.customSS58Format['info']}.png'),
                 ),

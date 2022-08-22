@@ -7,7 +7,6 @@ import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-
 import 'bazaar/0_main/bazaar_main.dart';
 
 class EncointerHomePage extends StatefulWidget {

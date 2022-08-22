@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:flutter_svg/flutter_svg.dart';

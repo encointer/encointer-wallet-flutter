@@ -3,7 +3,6 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 import '../../../../models/bazaar/account_business_tuple.dart';
 import '../../../../models/communities/community_identifier.dart';
-
 part 'bazaar_store.g.dart';
 
 /// Stores data concerning the bazaar specific to a community

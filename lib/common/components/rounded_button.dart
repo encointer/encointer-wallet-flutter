@@ -25,7 +25,7 @@ class RoundedButton extends StatelessWidget {
       row.add(CupertinoActivityIndicator());
     }
     if (icon != null) {
-      row.add(Container(
+      row.add(SizedBox(
         width: 32,
         child: icon,
       ));

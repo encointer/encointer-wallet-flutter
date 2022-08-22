@@ -1,8 +1,6 @@
 /// Simple mock to return some hardcoded data used in the bazaar UI.
-
 import 'package:encointer_wallet/mocks/data/mock_bazaar_data.dart';
 import 'package:flutter/material.dart';
-
 import '../../models/bazaar/ipfs_business.dart';
 import '../../models/bazaar/ipfs_offering.dart';
 

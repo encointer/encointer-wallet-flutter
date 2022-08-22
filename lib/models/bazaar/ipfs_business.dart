@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:json_annotation/json_annotation.dart';
-
 part 'ipfs_business.g.dart';
 
 /// Business metadata living in ipfs

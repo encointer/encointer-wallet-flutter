@@ -3,7 +3,6 @@ import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../models/index.dart';
 import 'components/ceremony_info_and_calendar.dart';
 import 'components/ceremony_progress_bar.dart';
@@ -34,7 +33,7 @@ class CeremonyInfo extends StatelessWidget {
 
     final String infoLink = ceremonyInfoLink(languageCode);
 
-    return Container(
+    return SizedBox(
       child: meetupTime != null
           ? Column(
               children: [

@@ -1,9 +1,7 @@
 import 'dart:convert';
-
 import 'package:base58check/base58.dart';
 import 'package:base58check/base58check.dart';
 import 'package:flutter/foundation.dart';
-
 import '../../utils/format.dart';
 
 /// CommunityIdentifier consisting of a geohash and a 4-bytes crc code.

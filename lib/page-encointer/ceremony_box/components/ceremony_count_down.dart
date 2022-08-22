@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';

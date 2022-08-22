@@ -4,7 +4,6 @@ import 'package:encointer_wallet/page/account/import/import_account_page.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class CreateAccountEntryPage extends StatelessWidget {
@@ -61,15 +60,16 @@ class CreateAccountEntryPage extends StatelessWidget {
                         ),
                       ),
                       GestureDetector(
-                          key: Key('import-account'),
-                          child: Text(
-                            I18n.of(context)!.translationsForLocale().profile.import,
-                            style: TextStyle(
-                              color: ZurichLion.shade50,
-                              decoration: TextDecoration.underline,
-                            ),
+                        key: Key('import-account'),
+                        child: Text(
+                          I18n.of(context)!.translationsForLocale().profile.import,
+                          style: TextStyle(
+                            color: ZurichLion.shade50,
+                            decoration: TextDecoration.underline,
                           ),
-                          onTap: () => Navigator.pushNamed(context, ImportAccountPage.route)),
+                        ),
+                        onTap: () => Navigator.pushNamed(context, ImportAccountPage.route),
+                      ),
                     ],
                   ),
                 ],

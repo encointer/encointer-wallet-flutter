@@ -6,7 +6,6 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 import '../../../../models/communities/community_identifier.dart';
 import '../../../../models/encointer_balance_data/balance_entry.dart';
-
 part 'encointer_account_store.g.dart';
 
 /// Stores data specific to an account across all communities.

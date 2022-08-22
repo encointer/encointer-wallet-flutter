@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:json_annotation/json_annotation.dart';
-
 part 'community_metadata.g.dart';
 
 // explicit = true as we have nested Json with location

@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:json_annotation/json_annotation.dart';
-
 import '../communities/community_identifier.dart';
 part 'business_identifier.g.dart';
 

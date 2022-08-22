@@ -6,9 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 import 'qr_scan_service.dart';
-
 export 'qr_codes/qr_code_base.dart';
 export 'qr_scan_service.dart';
 
@@ -77,7 +75,7 @@ class ScanPage extends StatelessWidget {
                     }
                   },
                 ),
-                store.settings.developerMode ? mockQrDataRow(dic, onScan) : Container(),
+                store.settings.developerMode ? mockQrDataRow(dic, onScan) : SizedBox(),
                 //overlays a semi-transparent rounded square border that is 90% of screen width
                 Center(
                   child: Column(
@@ -141,7 +139,7 @@ Widget permissionErrorDialog(BuildContext context) {
   final dic = I18n.of(context)!.translationsForLocale();
 
   return CupertinoAlertDialog(
-    title: Container(),
+    title: SizedBox(),
     content: Text(dic.home.cameraPermissionError),
     actions: <Widget>[
       CupertinoButton(

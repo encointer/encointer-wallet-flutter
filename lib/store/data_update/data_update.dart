@@ -1,5 +1,4 @@
 import 'package:mobx/mobx.dart';
-
 part 'data_update.g.dart';
 
 /// Store that fires when a certain time has expired since an update.

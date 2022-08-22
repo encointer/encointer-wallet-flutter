@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:math';
-
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/drag_handle.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
@@ -29,7 +28,6 @@ import 'package:focus_detector/focus_detector.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pausable_timer/pausable_timer.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
-
 import '../../models/encointer_balance_data/balance_entry.dart';
 import 'account_or_community/account_or_community_data.dart';
 import 'account_or_community/switch_account_or_community.dart';
@@ -189,11 +187,11 @@ class _AssetsState extends State<Assets> {
                                       margin: EdgeInsets.only(top: 16),
                                       padding: EdgeInsets.symmetric(vertical: 8),
                                       child: (store.encointer.chosenCid == null)
-                                          ? Container(
+                                          ? SizedBox(
                                               width: double.infinity,
                                               child:
                                                   Text(dic!.assets.communityNotSelected, textAlign: TextAlign.center))
-                                          : Container(
+                                          : SizedBox(
                                               width: double.infinity,
                                               child: CupertinoActivityIndicator(),
                                             ),
@@ -309,14 +307,14 @@ class _AssetsState extends State<Assets> {
                                             child: Text(dic.assets.issuanceClaimed),
                                             onPressed: null,
                                           )
-                                        : Container();
+                                        : SizedBox();
                                   }
                                 } else {
                                   return CupertinoActivityIndicator();
                                 }
                               },
                             )
-                          : Container();
+                          : SizedBox();
                     }),
                     SizedBox(height: 24),
                     CeremonyBox(store, webApi),

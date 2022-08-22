@@ -2,7 +2,6 @@
 // https://github.com/mmcc007/screenshots/
 
 import 'dart:io';
-
 import 'package:flutter_driver/flutter_driver.dart';
 
 /// Called by integration test to capture images on the currently running device

@@ -20,7 +20,7 @@ class MockQRScanPage extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            child: Container()),
+            child: SizedBox()),
         SafeArea(
           child: IconButton(
             icon: Icon(

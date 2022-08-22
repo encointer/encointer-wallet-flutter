@@ -17,34 +17,41 @@ class ToggleButtonsWithTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(mainAxisSize: MainAxisSize.min, crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Container(
-        padding: EdgeInsets.fromLTRB(0, 8, 0, 4),
-        child: Text(
-          title,
-          style: TextStyle(fontWeight: FontWeight.bold),
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          padding: EdgeInsets.fromLTRB(0, 8, 0, 4),
+          child: Text(
+            title,
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
         ),
-      ),
-      Container(
-        child: SizedBox(
-          height: 60,
-          child: ListView(scrollDirection: Axis.horizontal, children: [
-            ToggleButtons(
-              children: items
-                  .map(
-                    (cat) => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                      child: Text(cat),
-                    ),
-                  )
-                  .toList(),
-              // TODO add proper state management, add logic for "all" and other categories
-              onPressed: (int index) => onPressed!(index),
-              isSelected: isSelected,
+        Container(
+          child: SizedBox(
+            height: 60,
+            child: ListView(
+              scrollDirection: Axis.horizontal,
+              children: [
+                ToggleButtons(
+                  children: items
+                      .map(
+                        (cat) => Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                          child: Text(cat),
+                        ),
+                      )
+                      .toList(),
+                  // TODO add proper state management, add logic for "all" and other categories
+                  onPressed: (int index) => onPressed!(index),
+                  isSelected: isSelected,
+                ),
+              ],
             ),
-          ]),
+          ),
         ),
-      ),
-    ]);
+      ],
+    );
   }
 }

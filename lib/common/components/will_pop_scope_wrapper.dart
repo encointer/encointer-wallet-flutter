@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 

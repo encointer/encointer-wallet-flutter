@@ -4,7 +4,6 @@ import 'package:encointer_wallet/mocks/substrate_api/mock_chain_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_codec_api.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-
 import 'mock_account_api.dart';
 import 'mock_assets_api.dart';
 import 'mock_encointer_api.dart';

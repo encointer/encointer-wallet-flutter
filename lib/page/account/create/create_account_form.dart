@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:encointer_wallet/common/components/account_advance_option_params.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
@@ -70,7 +69,7 @@ class CreateAccountForm extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 Center(
-                  child: Container(
+                  child: SizedBox(
                     width: 300,
                     child: Text(
                       I18n.of(context)!.translationsForLocale().profile.accountNameChooseHint,
@@ -132,7 +131,7 @@ Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
     context: context,
     builder: (BuildContext context) {
       return CupertinoAlertDialog(
-        title: Container(),
+        title: SizedBox(),
         content: Text(I18n.of(context)!.translationsForLocale().account.createError),
         actions: <Widget>[
           CupertinoButton(

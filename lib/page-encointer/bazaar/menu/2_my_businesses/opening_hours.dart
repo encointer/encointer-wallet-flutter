@@ -50,7 +50,7 @@ class OpeningHoursViewForDay extends StatelessWidget {
                     },
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 32,
                   child: Text(
                     "${openingHours.getDayString(day)}",
@@ -78,30 +78,31 @@ class OpeningHoursViewForDay extends StatelessWidget {
                         itemCount: openingHoursForThisDay!.openingIntervals.length,
                         itemBuilder: (_, index) {
                           final interval = openingHoursForThisDay.openingIntervals[index];
-                          return Container(
-                              width: 200,
-                              child: Row(
-                                children: [
-                                  Text(
-                                    interval.humanReadable(),
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  Observer(
-                                    builder: (_) => IconButton(
-                                      icon: Icon(
-                                        Icons.remove_circle,
-                                        color: Colors.red,
-                                      ),
-                                      iconSize: 36,
-                                      visualDensity: VisualDensity.compact,
-                                      padding: EdgeInsets.zero,
-                                      onPressed: () {
-                                        openingHoursForThisDay.removeInterval(index);
-                                      },
+                          return SizedBox(
+                            width: 200,
+                            child: Row(
+                              children: [
+                                Text(
+                                  interval.humanReadable(),
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Observer(
+                                  builder: (_) => IconButton(
+                                    icon: Icon(
+                                      Icons.remove_circle,
+                                      color: Colors.red,
                                     ),
-                                  )
-                                ],
-                              ));
+                                    iconSize: 36,
+                                    visualDensity: VisualDensity.compact,
+                                    padding: EdgeInsets.zero,
+                                    onPressed: () {
+                                      openingHoursForThisDay.removeInterval(index);
+                                    },
+                                  ),
+                                )
+                              ],
+                            ),
+                          );
                         }),
                   ),
                 ),

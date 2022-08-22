@@ -45,7 +45,7 @@ class ExportResultPage extends StatelessWidget {
               child: ListView(
                 padding: EdgeInsets.all(16),
                 children: <Widget>[
-                  args['type'] == AccountStore.seedTypeKeystore ? Container() : Text(dic.profile.exportWarn),
+                  args['type'] == AccountStore.seedTypeKeystore ? SizedBox() : Text(dic.profile.exportWarn),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[

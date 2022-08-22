@@ -30,7 +30,7 @@ class ContactListPage extends StatelessWidget {
                     onPressed: () => Navigator.of(context).pushNamed(ContactPage.route),
                   ),
                 )
-              : Container()
+              : SizedBox()
         ],
       ),
       body: SafeArea(

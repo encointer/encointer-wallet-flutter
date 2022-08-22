@@ -1,9 +1,7 @@
 import 'package:encointer_wallet/models/index.dart';
-
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../../../models/location/location.dart';
 import 'components/ceremony_location_button.dart';
 import 'components/ceremony_notification.dart';

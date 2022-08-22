@@ -53,7 +53,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Text(I18n.of(context)!.translationsForLocale().home.loading),
-          content: Container(height: 64, child: CupertinoActivityIndicator()),
+          content: const SizedBox(height: 64, child: CupertinoActivityIndicator()),
         );
       },
     );
@@ -100,7 +100,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     await showCupertinoDialog(
       context: context,
       builder: (_) {
-        return Container(
+        return SizedBox(
           child: showPasswordInputDialog(
             context,
             store.account.currentAccount,

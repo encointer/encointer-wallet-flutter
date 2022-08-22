@@ -134,7 +134,10 @@ void _onTxFinish(BuildContext context, AppStore store, Map res, Function(BuildCo
   if (mounted) {
     RootSnackBar.show(
       ListTile(
-        leading: Container(width: 24, child: Image.asset('assets/images/assets/success.png')),
+        leading: SizedBox(
+          width: 24,
+          child: Image.asset('assets/images/assets/success.png'),
+        ),
         title: Text(
           I18n.of(context)!.translationsForLocale().assets.success,
           style: TextStyle(color: Colors.black54),
@@ -196,7 +199,7 @@ Future<void> showInsufficientFundsDialog(BuildContext context) {
         title: Text(dic.assets.transactionError),
         content: Text(dic.assets.insufficientFundsExplanation),
         actions: <Widget>[
-          Container(),
+          SizedBox(),
           CupertinoButton(
             child: Text(dic.encointer.goToLeuZurich),
             onPressed: () => UI.launchURL(leuZurichLink(languageCode)),

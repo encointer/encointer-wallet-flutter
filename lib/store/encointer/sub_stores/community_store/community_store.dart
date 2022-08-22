@@ -7,7 +7,6 @@ import '../../../../models/communities/community_metadata.dart';
 import '../../../../models/encointer_balance_data/balance_entry.dart';
 import '../../../../models/location/location.dart';
 import 'community_account_store/community_account_store.dart';
-
 part 'community_store.g.dart';
 
 /// Stores data specific to an encointer community.

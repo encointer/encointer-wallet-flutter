@@ -44,7 +44,10 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Text(I18n.of(context)!.translationsForLocale().home.loading),
-          content: Container(height: 64, child: CupertinoActivityIndicator()),
+          content: SizedBox(
+            height: 64,
+            child: CupertinoActivityIndicator(),
+          ),
         );
       },
     );
@@ -69,7 +72,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         context: context,
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
-            title: Container(),
+            title: SizedBox(),
             content: Text('$msg'),
             actions: <Widget>[
               CupertinoButton(
@@ -156,7 +159,11 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     return Scaffold(
       appBar: AppBar(title: Text(I18n.of(context)!.translationsForLocale().home.accountImport)),
       body: SafeArea(
-        child: !_submitting ? _getImportForm() : Center(child: CupertinoActivityIndicator()),
+        child: !_submitting
+            ? _getImportForm()
+            : Center(
+                child: CupertinoActivityIndicator(),
+              ),
       ),
     );
   }
@@ -170,7 +177,11 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       });
 
       if (store.account.isFirstAccount) {
-        Navigator.pushNamed(context, CreatePinPage.route, arguments: CreatePinPageParams(_importAccount));
+        Navigator.pushNamed(
+          context,
+          CreatePinPage.route,
+          arguments: CreatePinPageParams(_importAccount),
+        );
       } else {
         store.account.setNewAccountPin(store.settings.cachedPin);
         await _importAccount();

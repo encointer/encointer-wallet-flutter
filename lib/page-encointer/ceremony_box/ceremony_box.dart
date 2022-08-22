@@ -11,7 +11,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
-
 import 'ceremony_info.dart';
 import 'components/ceremony_register_button.dart';
 import 'components/ceremony_start_button.dart';
@@ -136,7 +135,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
       } else {
         // showMeetupInfo == false in this case. So we don't show this widget at all.
         _log("'getMeetupInfoWidget' trapped in an unexpected if statement: Registering phase + Unregistered");
-        return Container();
+        return SizedBox();
       }
     case CeremonyPhase.Assigning:
       if (store.encointer.communityAccount?.isAssigned ?? false) {
@@ -178,7 +177,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
       }
     default:
       _log("'getMeetupInfoWidget' trapped in an unexpected default case");
-      return Container();
+      return SizedBox();
   }
 }
 

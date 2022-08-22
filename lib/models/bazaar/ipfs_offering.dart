@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:json_annotation/json_annotation.dart';
-
 part 'ipfs_offering.g.dart';
 
 /// Offering metadata living in ipfs

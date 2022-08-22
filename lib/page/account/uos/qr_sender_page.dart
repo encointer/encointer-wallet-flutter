@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:encointer_wallet/common/components/rounded_button.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -81,7 +80,7 @@ class _QrSenderPageState extends State<QrSenderPage> {
                               },
                             ),
                           )
-                        : Container()
+                        : SizedBox()
                   ],
                 )
               ],

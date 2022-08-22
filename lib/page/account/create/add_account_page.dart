@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:encointer_wallet/common/components/account_advance_option_params.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -74,7 +73,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: Container(),
+          title: SizedBox(),
           content: Text(I18n.of(context)!.translationsForLocale().account.createError),
           actions: <Widget>[
             CupertinoButton(
@@ -93,7 +92,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
     await showCupertinoDialog(
       context: context,
       builder: (_) {
-        return Container(
+        return SizedBox(
           child: showPasswordInputDialog(
             context,
             store.account.currentAccount,
@@ -129,7 +128,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(dic.profile.addAccount),
-        leading: Container(),
+        leading: SizedBox(),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.close, color: encointerGrey),

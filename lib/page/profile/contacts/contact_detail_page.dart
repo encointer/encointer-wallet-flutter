@@ -14,7 +14,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../../../models/index.dart';
 
 class ContactDetailPage extends StatelessWidget {
@@ -111,7 +110,7 @@ class ContactDetailPage extends StatelessWidget {
                 if (store.encointer.community!.bootstrappers != null) {
                   return store.encointer.community!.bootstrappers!.contains(store.account.currentAddress)
                       ? EndorseButton(store, api, account)
-                      : Container();
+                      : SizedBox();
                 } else {
                   return CupertinoActivityIndicator();
                 }
@@ -201,7 +200,7 @@ Future<void> _popupDialog(BuildContext context, String content) async {
     context: context,
     builder: (BuildContext context) {
       return CupertinoAlertDialog(
-        title: Container(),
+        title: SizedBox(),
         content: Text(content),
         actions: <Widget>[
           CupertinoButton(

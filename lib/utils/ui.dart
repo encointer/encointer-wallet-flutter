@@ -1,9 +1,7 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
-
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
@@ -23,7 +21,7 @@ class UI {
       builder: (BuildContext context) {
         final Translations dic = I18n.of(context)!.translationsForLocale();
         return CupertinoAlertDialog(
-          title: Container(),
+          title: SizedBox(),
           content: Text('${dic.assets.copy} ${dic.assets.success}'),
         );
       },
@@ -104,7 +102,7 @@ class UI {
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: Container(),
+          title: SizedBox(),
           content: code == null ? Text(dic.home.updateError) : Text(dic.home.success),
           actions: <Widget>[
             CupertinoButton(
@@ -128,7 +126,7 @@ class UI {
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
-          title: Container(),
+          title: SizedBox(),
           content: Text(I18n.of(context)!.translationsForLocale().account.backupError),
           actions: <Widget>[
             CupertinoButton(
@@ -152,7 +150,7 @@ class UI {
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
             title: Text(I18n.of(context)!.translationsForLocale().assets.insufficientBalance),
-            content: Container(),
+            content: SizedBox(),
             actions: <Widget>[
               CupertinoButton(
                 child: Text(I18n.of(context)!.translationsForLocale().home.ok),

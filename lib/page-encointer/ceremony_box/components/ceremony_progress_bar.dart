@@ -1,7 +1,6 @@
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box_service.dart';
 import 'package:flutter/material.dart';
-
 import '../../../models/index.dart';
 
 /// Shows the progress of a ceremony cycle.

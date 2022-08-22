@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'account_or_community_data.dart';
 import 'account_or_community_item_horizontal.dart';
 

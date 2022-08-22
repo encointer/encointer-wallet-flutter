@@ -28,7 +28,7 @@ class SS58PrefixListPage extends StatelessWidget {
     final Translations dic = I18n.of(context)!.translationsForLocale();
     List<Widget> list = prefixList
         .map((i) => ListTile(
-              leading: Container(
+              leading: SizedBox(
                 width: 36,
                 child: Image.asset('assets/images/public/${i['info']}.png'),
               ),

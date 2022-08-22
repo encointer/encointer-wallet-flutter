@@ -1,8 +1,6 @@
 import 'package:encointer_wallet/page-encointer/bazaar/menu/camera/image_picker_state.dart';
 import 'package:mobx/mobx.dart';
-
 import 'opening_hours_state.dart';
-
 part 'business_form_state.g.dart';
 
 class BusinessFormState = _BusinessFormState with _$BusinessFormState;

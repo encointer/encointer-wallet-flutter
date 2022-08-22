@@ -1,10 +1,8 @@
 import 'dart:convert';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
-
 import '../communities/community_identifier.dart';
 import 'balance_entry.dart';
-
 part 'encointer_balance_data.g.dart';
 
 @JsonSerializable(explicitToJson: true)

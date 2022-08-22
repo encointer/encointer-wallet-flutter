@@ -1,5 +1,4 @@
 import 'package:mobx/mobx.dart';
-
 part 'opening_hours_state.g.dart';
 
 class OpeningHoursState = _OpeningHoursState with _$OpeningHoursState;

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:encointer_wallet/app.dart';
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/service/notification.dart';

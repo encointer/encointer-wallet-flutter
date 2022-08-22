@@ -1,6 +1,5 @@
 import 'package:image_picker/image_picker.dart';
 import 'package:mobx/mobx.dart';
-
 part 'image_picker_state.g.dart';
 
 class ImagePickerState = _ImagePickerState with _$ImagePickerState;

@@ -84,7 +84,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
     final Translations dic = I18n.of(context)!.translationsForLocale();
 
     return CupertinoAlertDialog(
-      title: widget.title ?? Container(),
+      title: widget.title ?? SizedBox(),
       content: Padding(
         padding: EdgeInsets.only(top: 16),
         child: CupertinoTextFormFieldRow(
@@ -113,7 +113,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
                   widget.onAccountSwitch!();
                 },
               )
-            : Container(),
+            : SizedBox(),
         widget.onCancel != null
             ? CupertinoButton(
                 child: Text(dic.home.cancel),
@@ -121,7 +121,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
                   widget.onCancel!();
                 },
               )
-            : Container(),
+            : SizedBox(),
         CupertinoButton(
           key: Key('password-ok'),
           child: Row(

@@ -3,7 +3,6 @@ import 'package:encointer_wallet/page-encointer/bazaar/3_businesses/business_det
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_vertical_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-
 import 'data_model/model/bazaar_item_data.dart';
 
 class BazaarItemVertical extends StatelessWidget {

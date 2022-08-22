@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:json_annotation/json_annotation.dart';
-
 import 'business_data.dart';
 part 'account_business_tuple.g.dart';
 

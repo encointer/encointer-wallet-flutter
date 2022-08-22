@@ -26,7 +26,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
         title: Text(
           I18n.of(context)!.translationsForLocale().home.create,
         ),
-        leading: Container(),
+        leading: SizedBox(),
         actions: <Widget>[
           IconButton(
             icon: Icon(

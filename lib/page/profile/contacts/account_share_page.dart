@@ -35,7 +35,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         title: Text(dic.profile.share),
-        leading: Container(),
+        leading: SizedBox(),
         actions: [
           IconButton(
             key: Key('close-share-page'),

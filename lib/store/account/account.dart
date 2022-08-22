@@ -8,7 +8,6 @@ import 'package:encointer_wallet/store/account/types/tx_status.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:mobx/mobx.dart';
-
 part 'account.g.dart';
 
 /// Mobx-store containing account related data.

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import '../theme.dart';
 
 /// TextFormField styled for the encointer app

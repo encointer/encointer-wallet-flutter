@@ -1,9 +1,7 @@
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
-
 import '../../models/communities/community_identifier.dart';
 import 'utils.dart';
 
@@ -20,7 +18,7 @@ Widget redeemSuccessDialog(BuildContext context) {
   final dic = I18n.of(context)!.translationsForLocale();
 
   return CupertinoAlertDialog(
-    title: Container(),
+    title: SizedBox(),
     content: Text(dic.assets.redeemSuccess),
     actions: <Widget>[
       CupertinoButton(
@@ -46,7 +44,7 @@ Widget redeemFailedDialog(BuildContext context, String? error) {
   final dic = I18n.of(context)!.translationsForLocale();
 
   return CupertinoAlertDialog(
-    title: Container(),
+    title: SizedBox(),
     content: Text("${dic.assets.redeemFailure} $error"),
     actions: <Widget>[
       CupertinoButton(
@@ -72,7 +70,7 @@ Widget errorDialog(BuildContext context, String errorMsg) {
   final dic = I18n.of(context)!.translationsForLocale();
 
   return CupertinoAlertDialog(
-    title: Container(),
+    title: SizedBox(),
     content: Text("${dic.home.errorOccurred} $errorMsg"),
     actions: <Widget>[
       CupertinoButton(
@@ -102,7 +100,7 @@ Future<ChangeResult?> showChangeNetworkAndCommunityDialog(
           .replaceAll("COMMUNITY_PLACEHOLDER", cid.toFmtString());
 
       return CupertinoAlertDialog(
-        title: Container(),
+        title: SizedBox(),
         content: Text(dialogContent),
         actions: <Widget>[
           CupertinoButton(
@@ -132,7 +130,7 @@ Future<ChangeResult> changeWithLoadingDialog(
     builder: (BuildContext context) {
       return CupertinoAlertDialog(
         title: Text(I18n.of(context)!.translationsForLocale().home.loading),
-        content: Container(height: 64, child: CupertinoActivityIndicator()),
+        content: SizedBox(height: 64, child: CupertinoActivityIndicator()),
       );
     },
   );
@@ -160,7 +158,7 @@ Future<ChangeResult?> showChangeCommunityDialog(
       final dialogContent = dic.assets.voucherDifferentCommunity.replaceAll("COMMUNITY_PLACEHOLDER", cid.toFmtString());
 
       return CupertinoAlertDialog(
-        title: Container(),
+        title: SizedBox(),
         content: Text(dialogContent),
         actions: <Widget>[
           CupertinoButton(
@@ -193,7 +191,7 @@ Widget invalidCommunityDialog(BuildContext context, CommunityIdentifier cid) {
   final dic = I18n.of(context)!.translationsForLocale();
 
   return CupertinoAlertDialog(
-    title: Container(),
+    title: SizedBox(),
     content: Text("${dic.assets.voucherContainsInexistentCommunity} ${cid.toFmtString()}"),
     actions: <Widget>[
       CupertinoButton(

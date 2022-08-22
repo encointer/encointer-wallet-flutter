@@ -6,9 +6,7 @@ import 'package:encointer_wallet/store/encointer/encointer.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/local_storage.dart';
 import 'package:mobx/mobx.dart';
-
 import 'data_update/data_update.dart';
-
 part 'app.g.dart';
 
 AppStore globalAppStore = AppStore(LocalStorage());

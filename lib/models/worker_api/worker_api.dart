@@ -1,8 +1,6 @@
 // Run: `flutter pub run build_runner build` in order to create/update the *.g.dart
 import 'dart:convert';
-
 import 'package:json_annotation/json_annotation.dart';
-
 part 'worker_api.g.dart';
 
 @JsonSerializable()

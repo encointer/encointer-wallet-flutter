@@ -26,7 +26,7 @@ class EncointerMap extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(title!, maxLines: 2),
-        leading: Container(),
+        leading: SizedBox(),
         actions: <Widget>[
           IconButton(
             icon: Icon(
@@ -75,7 +75,7 @@ Widget noCommunityDialog(BuildContext context) {
   var translations = I18n.of(context)!.translationsForLocale();
 
   return CupertinoAlertDialog(
-    title: Container(),
+    title: SizedBox(),
     content: Text(translations.encointer.noCommunitiesAreYouOffline),
     actions: <Widget>[
       CupertinoButton(

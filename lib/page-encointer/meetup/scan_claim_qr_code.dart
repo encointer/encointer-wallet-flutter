@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/codec_api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -11,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 import '../../models/claim_of_attendance/claim_of_attendance.dart';
 
 class ScanClaimQrCode extends StatelessWidget {
@@ -157,7 +155,7 @@ Widget permissionErrorDialog(BuildContext context) {
   final dic = I18n.of(context)!.translationsForLocale();
 
   return CupertinoAlertDialog(
-    title: Container(),
+    title: SizedBox(),
     content: Text(dic.home.cameraPermissionError),
     actions: <Widget>[
       CupertinoButton(

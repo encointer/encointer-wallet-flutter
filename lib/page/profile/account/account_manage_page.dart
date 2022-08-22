@@ -17,7 +17,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../../../models/encointer_balance_data/balance_entry.dart';
 
 class AccountManagePage extends StatefulWidget {
@@ -290,7 +289,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                             Navigator.pushNamed(context, AccountSharePage.route, arguments: accountToBeEditedPubKey),
                       ),
                       Spacer(),
-                      Container(
+                      SizedBox(
                         child: PopupMenuButton<AccountAction>(
                             offset: Offset(-10, -150),
                             icon: Icon(Iconsax.more, color: Colors.white),
@@ -365,7 +364,7 @@ class CommunityIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
+        SizedBox(
           width: 50,
           height: 50,
           child: icon,
@@ -380,7 +379,7 @@ class CommunityIcon extends StatelessWidget {
                 child: Icon(Iconsax.star, color: Colors.yellow),
               );
             } else
-              return Container(width: 0, height: 0);
+              return SizedBox(width: 0, height: 0);
           },
         ),
       ],
