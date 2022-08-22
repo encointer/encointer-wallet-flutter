@@ -62,11 +62,8 @@ class _AddressInputFieldState extends State<AddressInputField> {
       }
     }
 
-    // fetch address info if it's a new address
-    final res = await webApi.account.getAddressIcons([accountData.address]);
-    if (res.isNotEmpty) {
-      await webApi.account.fetchAddressIndex([accountData.address]);
-    }
+    await webApi.account.fetchAddressIndex([accountData.address]);
+
     return [accountData];
   }
 
