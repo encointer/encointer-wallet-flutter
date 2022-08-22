@@ -32,7 +32,6 @@
     "@polkadot/networks": "^8.2.2",
     "@polkadot/rpc-provider": "^7.2.1",
     "@polkadot/types": "^7.2.1",
-    "@polkadot/ui-shared": "^0.88.1",
     "@polkadot/util": "^8.2.2",
     "@polkadot/util-crypto": "^8.2.2",
     "Buffer": "^0.0.0",

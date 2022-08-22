@@ -52,7 +52,6 @@ class CreateAccountForm extends StatelessWidget {
 
       // fetch info for the imported account
       webApi.fetchAccountData();
-      webApi.account.getPubKeyIcons([pubKey]);
     }
 
     return Form(
