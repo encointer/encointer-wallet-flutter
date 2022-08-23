@@ -92,7 +92,8 @@ class _Settings extends State<SettingsPage> {
               ListTile(
                 leading: Container(
                   width: 36,
-                  child: Image.asset('assets/images/public/${context.read<AppStore>().settings.customSS58Format['info']}.png'),
+                  child: Image.asset(
+                      'assets/images/public/${context.read<AppStore>().settings.customSS58Format['info']}.png'),
                 ),
                 title: Text(dic.profile.settingPrefix),
                 subtitle: Text(context.read<AppStore>().settings.customSS58Format['text'] ?? ''),

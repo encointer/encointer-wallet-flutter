@@ -109,7 +109,12 @@ class ContactDetailPage extends StatelessWidget {
               ),
               Observer(builder: (_) {
                 if (context.read<AppStore>().encointer.community!.bootstrappers != null) {
-                  return context.read<AppStore>().encointer.community!.bootstrappers!.contains(context.read<AppStore>().account.currentAddress)
+                  return context
+                          .read<AppStore>()
+                          .encointer
+                          .community!
+                          .bootstrappers!
+                          .contains(context.read<AppStore>().account.currentAddress)
                       ? EndorseButton(context.read<AppStore>(), api, account)
                       : Container();
                 } else {
@@ -123,7 +128,9 @@ class ContactDetailPage extends StatelessWidget {
                   children: [
                     Icon(Iconsax.send_sqaure_2),
                     SizedBox(width: 12),
-                    Text(dic.profile.tokenSend.replaceAll('SYMBOL', context.read<AppStore>().encointer.community?.symbol ?? "null"),
+                    Text(
+                        dic.profile.tokenSend
+                            .replaceAll('SYMBOL', context.read<AppStore>().encointer.community?.symbol ?? "null"),
                         style: Theme.of(context).textTheme.headline3),
                   ],
                 ),

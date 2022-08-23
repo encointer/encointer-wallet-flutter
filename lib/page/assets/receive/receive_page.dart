@@ -80,7 +80,11 @@ class _ReceivePageState extends State<ReceivePage> {
 
           double? demurrageRate = context.read<AppStore>().encointer.community!.demurrage;
           double? newBalance = context.read<AppStore>().encointer.applyDemurrage(balances[cid]);
-          double oldBalance = context.read<AppStore>().encointer.applyDemurrage(context.read<AppStore>().encointer.communityBalanceEntry) ?? 0;
+          double oldBalance = context
+                  .read<AppStore>()
+                  .encointer
+                  .applyDemurrage(context.read<AppStore>().encointer.communityBalanceEntry) ??
+              0;
           if (newBalance != null) {
             double delta = newBalance - oldBalance;
             print("[receivePage] balance was $oldBalance, changed by $delta");

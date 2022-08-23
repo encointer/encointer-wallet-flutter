@@ -91,7 +91,8 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   Future<void> _checkAccountDuplicate(Map<String, dynamic> acc) async {
     int index = context.read<AppStore>().account.accountList.indexWhere((i) => i.pubKey == acc['pubKey']);
     if (index > -1) {
-      Map<String, String> pubKeyMap = context.read<AppStore>().account.pubKeyAddressMap[context.read<AppStore>().settings.endpoint.ss58]!;
+      Map<String, String> pubKeyMap =
+          context.read<AppStore>().account.pubKeyAddressMap[context.read<AppStore>().settings.endpoint.ss58]!;
       String? address = pubKeyMap[acc['pubKey']];
       if (address != null) {
         showCupertinoDialog(

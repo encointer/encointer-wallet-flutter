@@ -121,11 +121,16 @@ class _AccountManagePageState extends State<AccountManagePage> {
             context.read<AppStore>().settings.setPin(password);
           });
 
-          bool isMnemonic = await context.read<AppStore>().account.checkSeedExist(AccountStore.seedTypeMnemonic, accountToBeEdited.pubKey);
+          bool isMnemonic = await context
+              .read<AppStore>()
+              .account
+              .checkSeedExist(AccountStore.seedTypeMnemonic, accountToBeEdited.pubKey);
 
           if (isMnemonic) {
-            String? seed =
-                await context.read<AppStore>().account.decryptSeed(accountToBeEdited.pubKey, AccountStore.seedTypeMnemonic, password);
+            String? seed = await context
+                .read<AppStore>()
+                .account
+                .decryptSeed(accountToBeEdited.pubKey, AccountStore.seedTypeMnemonic, password);
 
             Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
               'key': seed,
@@ -173,7 +178,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
           title: _isEditingText
               ? TextFormField(
                   controller: _nameCtrl,
-                  validator: (v) => InputValidation.validateAccountName(context, v!, context.read<AppStore>().account.optionalAccounts),
+                  validator: (v) => InputValidation.validateAccountName(
+                      context, v!, context.read<AppStore>().account.optionalAccounts),
                 )
               : Text(_nameCtrl!.text),
           actions: <Widget>[
@@ -237,13 +243,24 @@ class _AccountManagePageState extends State<AccountManagePage> {
                         child: ListView.builder(
                             // Fixme: https://github.com/encointer/encointer-wallet-flutter/issues/586
                             itemCount: context.read<AppStore>().encointer.accountStores!.containsKey(addressSS58)
-                                ? context.read<AppStore>().encointer.accountStores![addressSS58]?.balanceEntries.length ?? 0
+                                ? context
+                                        .read<AppStore>()
+                                        .encointer
+                                        .accountStores![addressSS58]
+                                        ?.balanceEntries
+                                        .length ??
+                                    0
                                 : 0,
                             itemBuilder: (BuildContext context, int index) {
-                              String community = context.read<AppStore>().encointer.account!.balanceEntries.keys.elementAt(index);
+                              String community =
+                                  context.read<AppStore>().encointer.account!.balanceEntries.keys.elementAt(index);
                               return _getBalanceEntryListTile(
                                 community,
-                                context.read<AppStore>().encointer.accountStores![addressSS58]!.balanceEntries[community],
+                                context
+                                    .read<AppStore>()
+                                    .encointer
+                                    .accountStores![addressSS58]!
+                                    .balanceEntries[community],
                                 addressSS58,
                               );
                             }),
