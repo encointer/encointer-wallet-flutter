@@ -1,7 +1,8 @@
 import 'dart:convert';
-import 'package:json_annotation/json_annotation.dart';
 
+import 'package:json_annotation/json_annotation.dart';
 import 'business_data.dart';
+
 part 'account_business_tuple.g.dart';
 
 /// flutter pub run build_runner build --delete-conflicting-outputs

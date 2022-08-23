@@ -1,8 +1,9 @@
 import 'dart:convert';
 
+import 'package:flutter_test/flutter_test.dart';
+
 import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
 import 'package:encointer_wallet/models/encointer_feed/meetup_overrides.dart';
-import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('meetupOverrides', () {

@@ -1,18 +1,18 @@
 import 'dart:convert';
 
-import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/service/substrate_api/codec_api.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../../models/claim_of_attendance/claim_of_attendance.dart';
+import 'package:encointer_wallet/models/claim_of_attendance/claim_of_attendance.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/substrate_api/codec_api.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/snack_bar.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class ScanClaimQrCode extends StatelessWidget {
   ScanClaimQrCode(this.store, this.confirmedParticipantsCount);

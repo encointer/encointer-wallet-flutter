@@ -1,5 +1,6 @@
-import 'package:encointer_wallet/common/theme.dart';
 import 'package:flutter/material.dart';
+
+import 'package:encointer_wallet/common/theme.dart';
 
 import 'account_or_community_data.dart';
 

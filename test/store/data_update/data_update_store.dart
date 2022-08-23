@@ -1,5 +1,6 @@
-import 'package:encointer_wallet/store/data_update/data_update.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import 'package:encointer_wallet/store/data_update/data_update.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

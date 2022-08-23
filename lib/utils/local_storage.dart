@@ -1,7 +1,9 @@
 import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../models/communities/community_identifier.dart';
+
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
 
 class LocalStorage {
   final accountsKey = 'wallet_account_list';

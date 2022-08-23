@@ -1,7 +1,8 @@
 import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
 
-import '../communities/community_identifier.dart';
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
 
 part 'proof_of_attendance.g.dart';
 

@@ -1,7 +1,7 @@
 import 'package:json_rpc_2/json_rpc_2.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import '../../../models/index.dart';
+import 'package:encointer_wallet/models/index.dart';
 
 /// Api to talk to an substrate node via the websocket protocol.
 ///
