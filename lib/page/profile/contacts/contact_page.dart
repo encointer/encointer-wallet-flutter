@@ -1,7 +1,7 @@
-import 'package:encointer_wallet/common/components/tap_tool_tip.dart';
 import 'package:encointer_wallet/common/components/rounded_button.dart';
-import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
+import 'package:encointer_wallet/common/components/tap_tool_tip.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
+import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
@@ -84,7 +84,6 @@ class _Contact extends State<ContactPage> {
       // get contact info
       if (_isObservation!) {
         webApi.account.encodeAddress([pubKey]);
-        webApi.account.getPubKeyIcons([pubKey]);
       } else {
         // if this address was used as observation and current account,
         // we need to change current account
@@ -92,7 +91,6 @@ class _Contact extends State<ContactPage> {
           webApi.account.changeCurrentAccount(fetchData: true);
         }
       }
-      webApi.account.getAddressIcons([addr]);
       Navigator.of(context).pop();
     }
   }
