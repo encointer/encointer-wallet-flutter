@@ -6,6 +6,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/local_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
+import 'package:provider/provider.dart';
 
 final globalAppStore = AppStore(LocalStorage());
 
@@ -41,6 +42,9 @@ void main() {
   // Call the `main()` function of the app, or call `runApp` with
   // any widget you are interested in testing.
   runApp(
-    WalletApp(Config(mockLocalStorage: true, mockSubstrateApi: true, appStoreConfig: StoreConfig.Test)),
+    Provider(
+      create: (context) => globalAppStore,
+      child: WalletApp(Config(mockLocalStorage: true, mockSubstrateApi: true, appStoreConfig: StoreConfig.Test)),
+    ),
   );
 }
