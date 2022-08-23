@@ -88,11 +88,7 @@ class _WalletAppState extends State<WalletApp> {
     if (_appStore == null) {
       // Todo: Use provider pattern instead of globals, see: https://github.com/encointer/encointer-wallet-flutter/issues/132
       context.read<AppStore>().localStorage = widget.config.mockLocalStorage ? MockLocalStorage() : LocalStorage();
-      // globalAppStore = widget.config.mockLocalStorage
-      //     ? AppStore(MockLocalStorage(), config: widget.config.appStoreConfig)
-      //     : AppStore(LocalStorage(), config: widget.config.appStoreConfig);
 
-      // _appStore = globalAppStore;
       _log('Initializing app state');
       _log('sys locale: ${Localizations.localeOf(context)}');
       await context.read<AppStore>().init(Localizations.localeOf(context).toString());
