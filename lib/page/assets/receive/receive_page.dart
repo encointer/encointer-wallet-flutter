@@ -30,8 +30,7 @@ class _ReceivePageState extends State<ReceivePage> {
   final _formKey = GlobalKey<FormState>();
   bool generateQR = false;
   late InvoiceQrCode invoice;
-  final double minScale = 1;
-  final double maxScale = 2;
+
   PausableTimer? paymentWatchdog;
   bool observedPendingExtrinsic = false;
   int resetObservedPendingExtrinsicCounter = 0;

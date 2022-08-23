@@ -12,6 +12,7 @@ linter:
     prefer_single_quotes: true
     sized_box_for_whitespace: true
    
+   
     always_declare_return_types: false
     cancel_subscriptions: false
     close_sinks: false

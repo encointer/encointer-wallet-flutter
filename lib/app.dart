@@ -146,7 +146,6 @@ class _WalletAppState extends State<WalletApp> {
           }
         },
         child: MaterialApp(
-          debugShowCheckedModeBanner: false,
           title: 'EncointerWallet',
           localizationsDelegates: [
             AppLocalizationsDelegate(_locale),
