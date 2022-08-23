@@ -8,6 +8,8 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_store.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+AppStore globalAppStore = AppStore(MockLocalStorage());
+
 void main() {
   group('communityStore', () {
     test('json serialization and caching works', () async {
