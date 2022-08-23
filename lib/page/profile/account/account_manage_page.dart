@@ -17,32 +17,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconsax/iconsax.dart';
-
+import 'package:provider/provider.dart';
 import '../../../models/encointer_balance_data/balance_entry.dart';
 
 class AccountManagePage extends StatefulWidget {
-  AccountManagePage(this.store);
+  AccountManagePage();
 
   static const String route = '/profile/account';
-  final AppStore store;
 
   @override
-  _AccountManagePageState createState() => _AccountManagePageState(store);
+  _AccountManagePageState createState() => _AccountManagePageState();
 }
 
 enum AccountAction { delete, export }
 
 class _AccountManagePageState extends State<AccountManagePage> {
-  _AccountManagePageState(this.store);
-
-  final AppStore store;
   TextEditingController? _nameCtrl;
   bool _isEditingText = false;
 
   @override
   void initState() {
     super.initState();
-    if (store.encointer.chosenCid != null) webApi.encointer.getBootstrappers();
+    if (context.read<AppStore>().encointer.chosenCid != null) webApi.encointer.getBootstrappers();
   }
 
   @override
@@ -65,10 +61,10 @@ class _AccountManagePageState extends State<AccountManagePage> {
             CupertinoButton(
               child: Text(I18n.of(context)!.translationsForLocale().home.ok),
               onPressed: () => {
-                store.account.removeAccount(accountToBeEdited).then(
+                context.read<AppStore>().account.removeAccount(accountToBeEdited).then(
                   (_) async {
                     // refresh balance
-                    await store.loadAccountCache();
+                    await context.read<AppStore>().loadAccountCache();
                     webApi.fetchAccountData();
                     Navigator.of(context).pop();
                     Navigator.of(context).pop();
@@ -85,14 +81,14 @@ class _AccountManagePageState extends State<AccountManagePage> {
   Widget _getBalanceEntryListTile(String cidFmt, BalanceEntry? entry, String? address) {
     final TextStyle h3 = Theme.of(context).textTheme.headline3!;
 
-    var community = store.encointer.communityStores![cidFmt]!;
+    var community = context.read<AppStore>().encointer.communityStores![cidFmt]!;
 
     _log("_getBalanceEntryListTile: ${community.toJson()}");
 
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
       leading: CommunityIcon(
-        store: store,
+        store: context.read<AppStore>(),
         address: address,
         icon: FutureBuilder<SvgPicture>(
           future: webApi.ipfs.getCommunityIcon(community.assetsCid),
@@ -122,14 +118,14 @@ class _AccountManagePageState extends State<AccountManagePage> {
         return showPasswordInputDialog(context, accountToBeEdited, Text(dic.profile.confirmPin), (password) async {
           print('password is: $password');
           setState(() {
-            store.settings.setPin(password);
+            context.read<AppStore>().settings.setPin(password);
           });
 
-          bool isMnemonic = await store.account.checkSeedExist(AccountStore.seedTypeMnemonic, accountToBeEdited.pubKey);
+          bool isMnemonic = await context.read<AppStore>().account.checkSeedExist(AccountStore.seedTypeMnemonic, accountToBeEdited.pubKey);
 
           if (isMnemonic) {
             String? seed =
-                await store.account.decryptSeed(accountToBeEdited.pubKey, AccountStore.seedTypeMnemonic, password);
+                await context.read<AppStore>().account.decryptSeed(accountToBeEdited.pubKey, AccountStore.seedTypeMnemonic, password);
 
             Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
               'key': seed,
@@ -165,8 +161,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
 
     String? accountToBeEditedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
-    AccountData accountToBeEdited = store.account.getAccountData(accountToBeEditedPubKey);
-    final addressSS58 = store.account.getNetworkAddress(accountToBeEditedPubKey);
+    AccountData accountToBeEdited = context.read<AppStore>().account.getAccountData(accountToBeEditedPubKey);
+    final addressSS58 = context.read<AppStore>().account.getNetworkAddress(accountToBeEditedPubKey);
 
     _nameCtrl = TextEditingController(text: accountToBeEdited.name);
     _nameCtrl!.selection = TextSelection.fromPosition(TextPosition(offset: _nameCtrl!.text.length));
@@ -177,7 +173,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
           title: _isEditingText
               ? TextFormField(
                   controller: _nameCtrl,
-                  validator: (v) => InputValidation.validateAccountName(context, v!, store.account.optionalAccounts),
+                  validator: (v) => InputValidation.validateAccountName(context, v!, context.read<AppStore>().account.optionalAccounts),
                 )
               : Text(_nameCtrl!.text),
           actions: <Widget>[
@@ -197,7 +193,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       Icons.check,
                     ),
                     onPressed: () {
-                      store.account.updateAccountName(accountToBeEdited, _nameCtrl!.text.trim());
+                      context.read<AppStore>().account.updateAccountName(accountToBeEdited, _nameCtrl!.text.trim());
                       setState(() {
                         _isEditingText = false;
                       });
@@ -236,29 +232,29 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     ],
                   ),
                 ),
-                store.settings.developerMode
+                context.read<AppStore>().settings.developerMode
                     ? Expanded(
                         child: ListView.builder(
                             // Fixme: https://github.com/encointer/encointer-wallet-flutter/issues/586
-                            itemCount: store.encointer.accountStores!.containsKey(addressSS58)
-                                ? store.encointer.accountStores![addressSS58]?.balanceEntries.length ?? 0
+                            itemCount: context.read<AppStore>().encointer.accountStores!.containsKey(addressSS58)
+                                ? context.read<AppStore>().encointer.accountStores![addressSS58]?.balanceEntries.length ?? 0
                                 : 0,
                             itemBuilder: (BuildContext context, int index) {
-                              String community = store.encointer.account!.balanceEntries.keys.elementAt(index);
+                              String community = context.read<AppStore>().encointer.account!.balanceEntries.keys.elementAt(index);
                               return _getBalanceEntryListTile(
                                 community,
-                                store.encointer.accountStores![addressSS58]!.balanceEntries[community],
+                                context.read<AppStore>().encointer.accountStores![addressSS58]!.balanceEntries[community],
                                 addressSS58,
                               );
                             }),
                       )
                     : Expanded(
                         child: ListView.builder(
-                            itemCount: store.encointer.chosenCid != null ? 1 : 0,
+                            itemCount: context.read<AppStore>().encointer.chosenCid != null ? 1 : 0,
                             itemBuilder: (BuildContext context, int index) {
                               return _getBalanceEntryListTile(
-                                store.encointer.chosenCid!.toFmtString(),
-                                store.encointer.communityBalanceEntry,
+                                context.read<AppStore>().encointer.chosenCid!.toFmtString(),
+                                context.read<AppStore>().encointer.communityBalanceEntry,
                                 addressSS58,
                               );
                             }),
@@ -372,8 +368,8 @@ class CommunityIcon extends StatelessWidget {
         ),
         Observer(
           builder: (_) {
-            if (store.encointer.community!.bootstrappers != null &&
-                store.encointer.community!.bootstrappers!.contains(address)) {
+            if (context.read<AppStore>().encointer.community!.bootstrappers != null &&
+                context.read<AppStore>().encointer.community!.bootstrappers!.contains(address)) {
               return Positioned(
                 bottom: 0,
                 right: 0, //give the values according to your requirement

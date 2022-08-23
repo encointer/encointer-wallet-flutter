@@ -10,21 +10,18 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 
 class ContactPage extends StatefulWidget {
-  ContactPage(this.store);
+  ContactPage();
 
   static const String route = '/profile/contact';
-  final AppStore store;
 
   @override
-  _Contact createState() => _Contact(store);
+  _Contact createState() => _Contact();
 }
 
 class _Contact extends State<ContactPage> {
-  _Contact(this.store);
-  final AppStore store;
-
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _addressCtrl = new TextEditingController();
@@ -58,7 +55,7 @@ class _Contact extends State<ContactPage> {
       });
       if (qrScanData == null) {
         // create new contact
-        int exist = store.settings.contactList.indexWhere((i) => i.address == addr);
+        int exist = context.read<AppStore>().settings.contactList.indexWhere((i) => i.address == addr);
         if (exist > -1) {
           showCupertinoDialog(
             context: context,
@@ -77,11 +74,11 @@ class _Contact extends State<ContactPage> {
           );
           return;
         } else {
-          store.settings.addContact(con);
+          context.read<AppStore>().settings.addContact(con);
         }
       } else {
         // edit contact
-        store.settings.updateContact(con);
+        context.read<AppStore>().settings.updateContact(con);
       }
 
       // get contact info
@@ -91,7 +88,7 @@ class _Contact extends State<ContactPage> {
       } else {
         // if this address was used as observation and current account,
         // we need to change current account
-        if (pubKey == store.account.currentAccountPubKey) {
+        if (pubKey == context.read<AppStore>().account.currentAccountPubKey) {
           webApi.account.changeCurrentAccount(fetchData: true);
         }
       }
@@ -160,7 +157,7 @@ class _Contact extends State<ContactPage> {
                         },
                       ),
                     ),
-                    store.settings.developerMode
+                    context.read<AppStore>().settings.developerMode
                         ? Padding(
                             padding: EdgeInsets.only(left: 16, right: 16),
                             child: TextFormField(
@@ -172,7 +169,7 @@ class _Contact extends State<ContactPage> {
                             ),
                           )
                         : Container(),
-                    store.settings.developerMode
+                    context.read<AppStore>().settings.developerMode
                         ? Row(
                             children: <Widget>[
                               Checkbox(

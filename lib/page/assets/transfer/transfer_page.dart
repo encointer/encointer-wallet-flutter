@@ -3,13 +3,13 @@ import 'package:encointer_wallet/common/components/encointer_text_form_field.dar
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
-import '../../../models/communities/community_identifier.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -18,6 +18,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 
 class TransferPageParams {
   TransferPageParams({
@@ -38,20 +39,15 @@ class TransferPageParams {
 }
 
 class TransferPage extends StatefulWidget {
-  const TransferPage(this.store);
+  const TransferPage();
 
   static const String route = '/assets/transfer';
-  final AppStore store;
 
   @override
-  _TransferPageState createState() => _TransferPageState(store);
+  _TransferPageState createState() => _TransferPageState();
 }
 
 class _TransferPageState extends State<TransferPage> {
-  _TransferPageState(this.store);
-
-  final AppStore store;
-
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _amountCtrl = new TextEditingController();
@@ -63,12 +59,13 @@ class _TransferPageState extends State<TransferPage> {
     final Translations dic = I18n.of(context)!.translationsForLocale();
     TransferPageParams params = ModalRoute.of(context)!.settings.arguments as TransferPageParams;
 
-    var communitySymbol = params.communitySymbol ?? store.encointer.community!.symbol!;
-    var cid = params.cid ?? store.encointer.chosenCid!;
+    var communitySymbol = params.communitySymbol ?? context.read<AppStore>().encointer.community!.symbol!;
+    var cid = params.cid ?? context.read<AppStore>().encointer.chosenCid!;
 
     int decimals = encointer_currencies_decimals;
 
-    double? available = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry);
+    double? available =
+        context.read<AppStore>().encointer.applyDemurrage(context.read<AppStore>().encointer.communityBalanceEntry);
 
     print("[transferPage]: available: $available");
 
@@ -97,17 +94,19 @@ class _TransferPageState extends State<TransferPage> {
                   Expanded(
                     child: ListView(
                       children: [
-                        CombinedCommunityAndAccountAvatar(store, showCommunityNameAndAccountName: false),
+                        CombinedCommunityAndAccountAvatar(context.read<AppStore>(),
+                            showCommunityNameAndAccountName: false),
                         SizedBox(height: 12),
-                        store.encointer.communityBalance != null
-                            ? AccountBalanceWithMoreDigits(store: store, available: available, decimals: decimals)
+                        context.read<AppStore>().encointer.communityBalance != null
+                            ? AccountBalanceWithMoreDigits(
+                                store: context.read<AppStore>(),
+                                available: available,
+                                decimals: decimals,
+                              )
                             : CupertinoActivityIndicator(),
                         Text(
-                          I18n.of(context)!
-                              .translationsForLocale()
-                              .assets
-                              .yourBalanceFor
-                              .replaceAll("ACCOUNT_NAME", Fmt.accountName(context, store.account.currentAccount)),
+                          I18n.of(context)!.translationsForLocale().assets.yourBalanceFor.replaceAll("ACCOUNT_NAME",
+                              Fmt.accountName(context, context.read<AppStore>().account.currentAccount)),
                           style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                           textAlign: TextAlign.center,
                         ),
@@ -144,7 +143,7 @@ class _TransferPageState extends State<TransferPage> {
                           children: [
                             Expanded(
                               child: AddressInputField(
-                                widget.store,
+                                context.read<AppStore>(),
                                 label: dic.assets.address,
                                 initialValue: _accountTo,
                                 onChanged: (AccountData acc) {
@@ -161,7 +160,7 @@ class _TransferPageState extends State<TransferPage> {
                     ),
                   ),
                   SizedBox(height: 48),
-                  store.settings.developerMode
+                  context.read<AppStore>().settings.developerMode
                       ? Center(
                           child: Text(
                             "${dic.assets.fee}: TODO compute Fee", // TODO compute fee #589
@@ -226,13 +225,13 @@ class _TransferPageState extends State<TransferPage> {
           _accountTo = acc;
         });
       } else {
-        if (widget.store.account.optionalAccounts.length > 0) {
+        if (context.read<AppStore>().account.optionalAccounts.length > 0) {
           setState(() {
-            _accountTo = widget.store.account.optionalAccounts[0];
+            _accountTo = context.read<AppStore>().account.optionalAccounts[0];
           });
-        } else if (widget.store.settings.contactList.length > 0) {
+        } else if (context.read<AppStore>().settings.contactList.length > 0) {
           setState(() {
-            _accountTo = widget.store.settings.contactList[0];
+            _accountTo = context.read<AppStore>().settings.contactList[0];
           });
         }
       }

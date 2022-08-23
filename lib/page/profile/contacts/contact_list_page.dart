@@ -5,12 +5,12 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 
 class ContactListPage extends StatelessWidget {
-  ContactListPage(this.store);
+  ContactListPage();
 
   static const String route = '/profile/contacts/list';
-  final AppStore store;
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +37,8 @@ class ContactListPage extends StatelessWidget {
         child: Observer(
           builder: (_) {
             return AccountSelectList(
-              store,
-              args ?? store.settings.contactListAll.toList(),
+              context.read<AppStore>(),
+              args ?? context.read<AppStore>().settings.contactListAll.toList(),
             );
           },
         ),

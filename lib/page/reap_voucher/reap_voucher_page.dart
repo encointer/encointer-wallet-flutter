@@ -8,14 +8,13 @@ import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
-
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
-
+import 'package:provider/provider.dart';
 import '../../models/communities/community_identifier.dart';
 import 'dialogs.dart';
 import 'utils.dart';
@@ -31,10 +30,9 @@ class ReapVoucherParams {
 }
 
 class ReapVoucherPage extends StatefulWidget {
-  const ReapVoucherPage(this.store, this.api);
+  const ReapVoucherPage(this.api);
 
   static const String route = '/qrcode/voucher';
-  final AppStore store;
   final Api api;
 
   @override
@@ -58,8 +56,8 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
     var voucherBalanceEntry = await api.encointer.getEncointerBalance(_voucherAddress!, cid);
     _voucherBalance = voucherBalanceEntry.applyDemurrage(
-      widget.store.chain.latestHeaderNumber,
-      widget.store.encointer.community!.demurrage!,
+      context.read<AppStore>().chain.latestHeaderNumber,
+      context.read<AppStore>().encointer.community!.demurrage!,
     );
 
     _isReady = true;
@@ -79,7 +77,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     final cid = voucher.cid;
     final networkInfo = voucher.network;
     final issuer = voucher.issuer;
-    final recipient = widget.store.account.currentAddress;
+    final recipient = context.read<AppStore>().account.currentAddress;
     final showFundVoucher = params.showFundVoucher;
 
     if (!_postFrameCallbackCalled) {
@@ -123,7 +121,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                   : CupertinoActivityIndicator(),
             ),
             Text(
-              "${dic.assets.voucherBalance}, ${widget.store.encointer.community?.symbol}",
+              "${dic.assets.voucherBalance}, ${context.read<AppStore>().encointer.community?.symbol}",
               style: h4Grey,
             ),
             Expanded(
@@ -131,7 +129,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
               child: Center(
                 child: Text(
                   dic.assets.doYouWantToRedeemThisVoucher
-                      .replaceAll("ACCOUNT_PLACEHOLDER", widget.store.account.currentAccount.name),
+                      .replaceAll("ACCOUNT_PLACEHOLDER", context.read<AppStore>().account.currentAccount.name),
                   style: h2Grey,
                   textAlign: TextAlign.center,
                 ),
@@ -192,10 +190,10 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   ) async {
     ChangeResult? result = ChangeResult.ok;
 
-    if (widget.store.settings.endpoint.info != networkInfo) {
+    if (context.read<AppStore>().settings.endpoint.info != networkInfo) {
       result = await showChangeNetworkAndCommunityDialog(
         context,
-        widget.store,
+        context.read<AppStore>(),
         widget.api,
         networkInfo,
         cid,
@@ -206,10 +204,10 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
       return result;
     }
 
-    if (widget.store.encointer.chosenCid != cid) {
+    if (context.read<AppStore>().encointer.chosenCid != cid) {
       result = await showChangeCommunityDialog(
         context,
-        widget.store,
+        context.read<AppStore>(),
         widget.api,
         networkInfo,
         cid,

@@ -7,25 +7,21 @@ import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 
 import 'bazaar/0_main/bazaar_main.dart';
 
 class EncointerHomePage extends StatefulWidget {
-  EncointerHomePage(this.store);
+  EncointerHomePage();
 
   static final GlobalKey encointerHomePageKey = GlobalKey();
   static const String route = '/';
-  final AppStore store;
 
   @override
-  _EncointerHomePageState createState() => new _EncointerHomePageState(store);
+  _EncointerHomePageState createState() => new _EncointerHomePageState();
 }
 
 class _EncointerHomePageState extends State<EncointerHomePage> {
-  _EncointerHomePageState(this.store);
-
-  final AppStore store;
-
   final PageController _pageController = PageController();
 
   NotificationPlugin? _notificationPlugin;
@@ -87,7 +83,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         TabKey.Wallet,
         Iconsax.home_2,
       ),
-      if (store.settings.enableBazaar)
+      if (context.read<AppStore>().settings.enableBazaar)
         TabData(
           TabKey.Bazaar,
           Iconsax.shop,
@@ -113,11 +109,11 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         physics: NeverScrollableScrollPhysics(),
         controller: _pageController,
         children: [
-          Assets(store),
-          if (store.settings.enableBazaar) BazaarMain(store), // dart collection if
-          ScanPage(store),
-          ContactsPage(store),
-          Profile(store),
+          Assets(context.read<AppStore>()),
+          if (context.read<AppStore>().settings.enableBazaar) BazaarMain(), // dart collection if
+          ScanPage(),
+          ContactsPage(),
+          Profile(context.read<AppStore>()),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

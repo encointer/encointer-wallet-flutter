@@ -5,6 +5,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CreatePinPageParams {
   CreatePinPageParams(this.onCreatePin);
@@ -13,20 +14,15 @@ class CreatePinPageParams {
 }
 
 class CreatePinPage extends StatefulWidget {
-  const CreatePinPage(this.store);
+  const CreatePinPage();
 
   static const String route = '/account/createPin';
-  final AppStore store;
 
   @override
-  _CreatePinPageState createState() => _CreatePinPageState(store);
+  _CreatePinPageState createState() => _CreatePinPageState();
 }
 
 class _CreatePinPageState extends State<CreatePinPage> {
-  _CreatePinPageState(this.store);
-
-  final AppStore store;
-
   late Future<void> Function() onCreatePin;
 
   bool _submitting = false;
@@ -67,12 +63,14 @@ class _CreatePinPageState extends State<CreatePinPage> {
 
                   await onCreatePin();
 
-                  if (store.encointer.communityIdentifiers.length == 1) {
-                    store.encointer.setChosenCid(store.encointer.communityIdentifiers[0]);
+                  if (context.read<AppStore>().encointer.communityIdentifiers.length == 1) {
+                    context.read<AppStore>().encointer.setChosenCid(
+                          context.read<AppStore>().encointer.communityIdentifiers[0],
+                        );
                   } else {
                     await Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)),
+                      MaterialPageRoute(builder: (_) => CommunityChooserOnMap(context.read<AppStore>())),
                     );
                   }
 
@@ -83,7 +81,7 @@ class _CreatePinPageState extends State<CreatePinPage> {
                   // Even if we do not choose a community, we go back to the home screen.
                   Navigator.popUntil(context, ModalRoute.withName('/'));
                 },
-                store: store,
+                store: context.read<AppStore>(),
               )
             : Center(child: CupertinoActivityIndicator()),
       ),

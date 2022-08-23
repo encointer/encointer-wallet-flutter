@@ -12,15 +12,14 @@ import 'package:encointer_wallet/utils/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:pausable_timer/pausable_timer.dart';
+import 'package:provider/provider.dart';
 import 'package:share_plus/share_plus.dart';
-
 import '../../../common/components/gr_code_view/gr_code_image_view.dart';
 import '../../../models/communities/community_identifier.dart';
 
 class ReceivePage extends StatefulWidget {
-  ReceivePage(this.store);
+  ReceivePage();
   static const String route = '/assets/receive';
-  final AppStore store;
   @override
   _ReceivePageState createState() => _ReceivePageState();
 }
@@ -40,10 +39,10 @@ class _ReceivePageState extends State<ReceivePage> {
     super.initState();
 
     invoice = InvoiceQrCode(
-      account: widget.store.account.currentAddress,
-      cid: widget.store.encointer.chosenCid,
+      account: context.read<AppStore>().account.currentAddress,
+      cid: context.read<AppStore>().encointer.chosenCid,
       amount: null,
-      label: widget.store.account.currentAccount.name,
+      label: context.read<AppStore>().account.currentAccount.name,
     );
   }
 
@@ -61,7 +60,7 @@ class _ReceivePageState extends State<ReceivePage> {
       const Duration(seconds: 1),
       () async {
         if (!observedPendingExtrinsic) {
-          observedPendingExtrinsic = await showSnackBarUponPendingExtrinsics(widget.store, webApi, dic);
+          observedPendingExtrinsic = await showSnackBarUponPendingExtrinsics(context.read<AppStore>(), webApi, dic);
 
           resetObservedPendingExtrinsicCounter = 0;
         } else {
@@ -72,26 +71,26 @@ class _ReceivePageState extends State<ReceivePage> {
           }
         }
 
-        webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
-          CommunityIdentifier? cid = widget.store.encointer.chosenCid;
+        webApi.encointer.getAllBalances(context.read<AppStore>().account.currentAddress).then((balances) {
+          CommunityIdentifier? cid = context.read<AppStore>().encointer.chosenCid;
 
           if (cid == null) {
             return;
           }
 
-          double? demurrageRate = widget.store.encointer.community!.demurrage;
-          double? newBalance = widget.store.encointer.applyDemurrage(balances[cid]);
-          double oldBalance = widget.store.encointer.applyDemurrage(widget.store.encointer.communityBalanceEntry) ?? 0;
+          double? demurrageRate = context.read<AppStore>().encointer.community!.demurrage;
+          double? newBalance = context.read<AppStore>().encointer.applyDemurrage(balances[cid]);
+          double oldBalance = context.read<AppStore>().encointer.applyDemurrage(context.read<AppStore>().encointer.communityBalanceEntry) ?? 0;
           if (newBalance != null) {
             double delta = newBalance - oldBalance;
             print("[receivePage] balance was $oldBalance, changed by $delta");
             if (delta > demurrageRate!) {
               var msg = dic.assets.incomingConfirmed
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
-                  .replaceAll('CID_SYMBOL', widget.store.encointer.community?.metadata?.symbol ?? "null")
-                  .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
+                  .replaceAll('CID_SYMBOL', context.read<AppStore>().encointer.community?.metadata?.symbol ?? "null")
+                  .replaceAll('ACCOUNT_NAME', context.read<AppStore>().account.currentAccount.name);
               print("[receivePage] $msg");
-              widget.store.encointer.account?.addBalanceEntry(cid, balances[cid]!);
+              context.read<AppStore>().encointer.account?.addBalanceEntry(cid, balances[cid]!);
               NotificationPlugin.showNotification(44, dic.assets.fundsReceived, msg, cid: cid.toFmtString());
             }
           }
@@ -171,7 +170,7 @@ class _ReceivePageState extends State<ReceivePage> {
                       ),
                     ],
                   ),
-                  Text('${dic.profile.receiverAccount} ${widget.store.account.currentAccount.name}',
+                  Text('${dic.profile.receiverAccount} ${context.read<AppStore>().account.currentAccount.name}',
                       style: Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey),
                       textAlign: TextAlign.center),
                   SizedBox(height: 8),

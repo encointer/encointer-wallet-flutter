@@ -10,22 +10,18 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AddAccountPage extends StatefulWidget {
-  const AddAccountPage(this.store);
+  const AddAccountPage();
 
   static const String route = '/account/addAccount';
-  final AppStore store;
 
   @override
-  _AddAccountPageState createState() => _AddAccountPageState(store);
+  _AddAccountPageState createState() => _AddAccountPageState();
 }
 
 class _AddAccountPageState extends State<AddAccountPage> {
-  _AddAccountPageState(this.store);
-
-  final AppStore store;
-
   bool _submitting = false;
 
   Future<void> _createAndImportAccount() async {
@@ -50,13 +46,13 @@ class _AddAccountPageState extends State<AddAccountPage> {
 
     var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
     _log("Created new account with address: ${addresses[0]}");
-    await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
+    await context.read<AppStore>().addAccount(acc, context.read<AppStore>().account.newAccount.password, addresses[0]);
     _log("added new account with address: ${addresses[0]}");
 
     String? pubKey = acc['pubKey'];
-    await store.setCurrentAccount(pubKey);
+    await context.read<AppStore>().setCurrentAccount(pubKey);
 
-    await store.loadAccountCache();
+    await context.read<AppStore>().loadAccountCache();
 
     // fetch info for the imported account
     webApi.fetchAccountData();
@@ -96,11 +92,11 @@ class _AddAccountPageState extends State<AddAccountPage> {
         return Container(
           child: showPasswordInputDialog(
             context,
-            store.account.currentAccount,
+            context.read<AppStore>().account.currentAccount,
             Text(I18n.of(context)!.translationsForLocale().profile.unlock),
             (password) {
               setState(() {
-                store.settings.setPin(password);
+                context.read<AppStore>().settings.setPin(password);
               });
             },
           ),
@@ -113,7 +109,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
   void initState() {
     super.initState();
 
-    if (store.settings.cachedPin.isEmpty) {
+    if (context.read<AppStore>().settings.cachedPin.isEmpty) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         setState(() {
           _showEnterPinDialog(context);
@@ -148,7 +144,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
                     _createAndImportAccount();
                   });
                 },
-                store: store,
+                store: context.read<AppStore>(),
               )
             : Center(child: CupertinoActivityIndicator()),
       ),

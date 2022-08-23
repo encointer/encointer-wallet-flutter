@@ -5,13 +5,13 @@ import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:qr_flutter_fork/qr_flutter_fork.dart';
 import 'package:share_plus/share_plus.dart';
 
 class AccountSharePage extends StatefulWidget {
-  AccountSharePage(this.store);
+  AccountSharePage();
   static const String route = '/profile/share';
-  final AppStore store;
   @override
   _AccountSharePageState createState() => _AccountSharePageState();
 }
@@ -23,8 +23,8 @@ class _AccountSharePageState extends State<AccountSharePage> {
     var textTheme = Theme.of(context).textTheme;
 
     String? accountToBeSharedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
-    AccountData accountToBeShared = widget.store.account.getAccountData(accountToBeSharedPubKey);
-    final addressSS58 = widget.store.account.getNetworkAddress(accountToBeSharedPubKey);
+    AccountData accountToBeShared = context.read<AppStore>().account.getAccountData(accountToBeSharedPubKey);
+    final addressSS58 = context.read<AppStore>().account.getNetworkAddress(accountToBeSharedPubKey);
 
     var contactQrCode = ContactQrCode(
       account: addressSS58,

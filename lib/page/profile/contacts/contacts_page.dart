@@ -6,12 +6,12 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 
 class ContactsPage extends StatelessWidget {
-  ContactsPage(this.store);
+  ContactsPage();
 
   static const String route = '/profile/contacts';
-  final AppStore store;
 
   @override
   Widget build(BuildContext context) => Observer(
@@ -40,7 +40,7 @@ class ContactsPage extends StatelessWidget {
             ),
             body: SafeArea(
               child: ListView(
-                children: store.settings.contactList.map((i) {
+                children: context.read<AppStore>().settings.contactList.map((i) {
                   return ListTile(
                     leading: AddressIcon(i.address, i.pubKey, size: 45),
                     title: Text(Fmt.accountName(context, i)),
