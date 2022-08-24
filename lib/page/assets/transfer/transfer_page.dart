@@ -12,6 +12,7 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -71,7 +72,7 @@ class _TransferPageState extends State<TransferPage> {
 
     double? available = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry);
 
-    print("[transferPage]: available: $available");
+    Log.d("[transferPage]: available: $available", 'TransferPage');
 
     return Observer(
       builder: (_) {

@@ -7,6 +7,7 @@ import 'package:encointer_wallet/common/components/account_advance_option_params
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/create/add_account_form.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -50,9 +51,9 @@ class _AddAccountPageState extends State<AddAccountPage> {
     }
 
     var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
-    _log("Created new account with address: ${addresses[0]}");
+    Log.d("Created new account with address: ${addresses[0]}", 'AddAccountPage');
     await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
-    _log("added new account with address: ${addresses[0]}");
+    Log.d("added new account with address: ${addresses[0]}", 'AddAccountPage');
 
     String? pubKey = acc['pubKey'];
     await store.setCurrentAccount(pubKey);
@@ -154,8 +155,4 @@ class _AddAccountPageState extends State<AddAccountPage> {
       ),
     );
   }
-}
-
-_log(String msg) {
-  print("[AddAccountPage] $msg");
 }

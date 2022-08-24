@@ -5,6 +5,7 @@ import 'package:iconsax/iconsax.dart';
 import 'package:quiver/async.dart';
 
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 
 class CeremonyCountDown extends StatefulWidget {
   CeremonyCountDown(this.nextCeremonyDate);
@@ -52,7 +53,7 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
     });
 
     sub!.onDone(() {
-      print("Done");
+      Log.d("Done", 'CeremonyCountDown');
       sub!.cancel();
     });
   }

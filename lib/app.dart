@@ -34,6 +34,7 @@ import 'package:encointer_wallet/page/profile/settings/settings_page.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/page/reap_voucher/reap_voucher_page.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
@@ -92,8 +93,8 @@ class _WalletAppState extends State<WalletApp> {
           : AppStore(LocalStorage(), config: widget.config.appStoreConfig);
 
       _appStore = globalAppStore;
-      _log('Initializing app state');
-      _log('sys locale: ${Localizations.localeOf(context)}');
+      Log.d('Initializing app state', 'app.dart');
+      Log.d('sys locale: ${Localizations.localeOf(context)}', 'app.dart');
       await _appStore!.init(Localizations.localeOf(context).toString());
 
       // init webApi after store initiated
@@ -106,7 +107,7 @@ class _WalletAppState extends State<WalletApp> {
 
       await webApi.init().timeout(
             Duration(seconds: 20),
-            onTimeout: () => print("webApi.init() has run into a timeout. We might be offline."),
+            onTimeout: () => Log.d("webApi.init() has run into a timeout. We might be offline.", 'app.dart'),
           );
 
       _appStore!.dataUpdate.setupUpdateReaction(() async {
@@ -179,7 +180,7 @@ class _WalletAppState extends State<WalletApp> {
                         future: _initApp(context),
                         builder: (_, AsyncSnapshot<int> snapshot) {
                           if (snapshot.hasError) {
-                            _log("SnapshotError: ${snapshot.error.toString()}");
+                            Log.e("SnapshotError: ${snapshot.error.toString()}");
                           }
                           if (snapshot.hasData && _appStore!.appIsReady) {
                             return snapshot.data! > 0 ? EncointerHomePage(_appStore!) : CreateAccountEntryPage();
@@ -261,8 +262,4 @@ class _WalletAppState extends State<WalletApp> {
           },
         ));
   }
-}
-
-void _log(String msg) {
-  print("[App] $msg");
 }

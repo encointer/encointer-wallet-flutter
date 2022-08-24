@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:animated_check/animated_check.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -146,10 +147,10 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     });
 
     var onFinish = (BuildContext txPageContext, Map res) {
-      _log("Transfer result ${res.toString()}");
+      Log.d("Transfer result $res", 'PaymentConfirmationPage');
 
       if (res['hash'] == null) {
-        _log('Error sending transfer ${res['error']}');
+        Log.d('Error sending transfer ${res['error']}', 'PaymentConfirmationPage');
         _transferState = TransferState.failed;
       } else {
         _transferState = TransferState.finished;
@@ -166,7 +167,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     //   });
     // });
 
-    _log("TransferState after callback: ${_transferState.toString()}");
+    Log.d("TransferState after callback: $_transferState", 'PaymentConfirmationPage');
 
     // trigger rebuild after state update in callback
     setState(() {});
@@ -289,8 +290,4 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     }
     super.dispose();
   }
-}
-
-void _log(String msg) {
-  print("[TxPaymentConfirmation] $msg");
 }

@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/config/node.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/settings.dart';
 
 const String network_name_encointer_gesell = 'nctr-gsl';
@@ -134,7 +135,7 @@ String replaceLocalePlaceholder(String link, String locale) {
     case 'de':
       return link.replaceAll(locale_place_holder, '');
     default:
-      print("[replaceLocale] unsupported locale, defaulting to english");
+      Log.d("[replaceLocale] unsupported locale, defaulting to english", 'consts.dart');
       return link.replaceAll(locale_place_holder, 'en');
   }
 }

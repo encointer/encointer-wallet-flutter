@@ -1,5 +1,6 @@
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 
@@ -48,7 +49,7 @@ Future<ChangeResult> changeNetwork(
     // webView init until it is completely connected without some
     // refactoring.
     await Future.delayed(const Duration(milliseconds: 500), () {
-      _log("Waiting until we connected to new network...");
+      Log.d("Waiting until we connected to new network...", 'changeNetwork');
     });
   }
 
@@ -69,8 +70,4 @@ Future<ChangeResult> changeCommunity(
   } else {
     return ChangeResult.invalidCommunity;
   }
-}
-
-void _log(String msg) {
-  print("[ReapVoucherPage/utils] $msg");
 }

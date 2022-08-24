@@ -8,6 +8,7 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/page-encointer/common/encointer_map.dart';
 import 'package:encointer_wallet/page-encointer/meetup/ceremony_step1_count.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -136,7 +137,10 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
         );
       } else {
         // showMeetupInfo == false in this case. So we don't show this widget at all.
-        _log("'getMeetupInfoWidget' trapped in an unexpected if statement: Registering phase + Unregistered");
+        Log.d(
+          "'getMeetupInfoWidget' trapped in an unexpected if statement: Registering phase + Unregistered",
+          'CeremonyBox',
+        );
         return Container();
       }
     case CeremonyPhase.Assigning:
@@ -178,13 +182,9 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
         }
       }
     default:
-      _log("'getMeetupInfoWidget' trapped in an unexpected default case");
+      Log.d("'getMeetupInfoWidget' trapped in an unexpected default case", 'CeremonyBox');
       return Container();
   }
-}
-
-void _log(String msg) {
-  print("[CeremonyBox] $msg");
 }
 
 Future<void> awaitDataUpdateWithDialog(BuildContext context, AppStore store) async {

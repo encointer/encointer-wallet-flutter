@@ -8,6 +8,7 @@ import 'package:get_storage/get_storage.dart';
 
 import 'package:encointer_wallet/app.dart';
 import 'package:encointer_wallet/config.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/subscan.dart';
 
@@ -35,11 +36,11 @@ Future<void> main() async {
   var initialised = await flutterLocalNotificationsPlugin.initialize(initializationSettings,
       onSelectNotification: (String? payload) async {
     if (payload != null) {
-      debugPrint('notification payload: ' + payload);
+      Log.d('notification payload: ' + payload, 'main.dart');
     }
     selectNotificationSubject.add(payload);
   });
-  print('notification_plugin initialised: $initialised');
+  Log.d('notification_plugin initialised: $initialised', 'main.dart');
 
   // get_storage dependency
   await GetStorage.init();

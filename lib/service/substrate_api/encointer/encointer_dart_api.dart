@@ -1,6 +1,7 @@
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 
 class EncointerDartApi {
@@ -9,7 +10,7 @@ class EncointerDartApi {
   SubstrateDartApi _dartApi;
 
   Future<void> close() async {
-    print("[EncointerDartApi: closing");
+    Log.d("[EncointerDartApi: closing", 'EncointerDartApi');
     return _dartApi.close();
   }
 

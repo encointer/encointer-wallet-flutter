@@ -5,6 +5,7 @@ import 'package:get_storage/get_storage.dart';
 
 import 'package:encointer_wallet/config/node.dart';
 import 'package:encointer_wallet/service/ipfs/http_api.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/subscan.dart';
 import 'package:encointer_wallet/service/substrate_api/account_api.dart';
 import 'package:encointer_wallet/service/substrate_api/assets_api.dart';
@@ -80,7 +81,7 @@ class Api {
     account.setFetchAccountData(fetchAccountData);
 
     // launch the webView and connect to the endpoint
-    print("launch the webView");
+    Log.d("launch the webView", 'Api');
     await launchWebview();
   }
 
@@ -131,7 +132,7 @@ class Api {
     // do connect
     String? res = await evalJavascript('settings.connect("$node", "${jsonEncode(config)}")');
     if (res == null) {
-      print('connecting to node failed');
+      Log.d('connecting to node failed', 'Api');
       store.settings.setNetworkName(null);
       return;
     }
@@ -148,11 +149,11 @@ class Api {
   Future<void> connectNodeAll() async {
     List<String?> nodes = store.settings.endpointList.map((e) => e.value).toList();
     List<NodeConfig?> configs = store.settings.endpointList.map((e) => e.overrideConfig).toList();
-    print("configs: $configs");
+    Log.d("configs: $configs", 'Api');
     // do connect
     String? res = await evalJavascript('settings.connectAll(${jsonEncode(nodes)}, ${jsonEncode(configs)})');
     if (res == null) {
-      print('connect failed');
+      Log.d('connect failed', 'Api');
       store.settings.setNetworkName(null);
       return;
     }
@@ -168,7 +169,7 @@ class Api {
     if (index < 0) return;
     store.settings.setEndpoint(store.settings.endpointList[index]);
     await fetchNetworkProps();
-    print("get community data");
+    Log.d("get community data", 'Api');
     encointer.getCommunityData();
   }
 
@@ -217,7 +218,7 @@ class Api {
 
   Future<bool> isConnected() async {
     bool connected = await evalJavascript('settings.isConnected()');
-    print("Api is connected: $connected");
+    Log.d("Api is connected: $connected", 'Api');
     return connected;
   }
 

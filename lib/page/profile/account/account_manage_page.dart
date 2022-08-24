@@ -10,6 +10,7 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/page/profile/account/export_result_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/account_share_page.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
@@ -87,7 +88,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
     var community = store.encointer.communityStores![cidFmt]!;
 
-    _log("_getBalanceEntryListTile: ${community.toJson()}");
+    Log.d("_getBalanceEntryListTile: $community", 'AccountManagePage');
 
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
@@ -120,7 +121,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
       context: context,
       builder: (BuildContext context) {
         return showPasswordInputDialog(context, accountToBeEdited, Text(dic.profile.confirmPin), (password) async {
-          print('password is: $password');
+          Log.d('password is: $password', 'AccountManagePage');
           setState(() {
             store.settings.setPin(password);
           });
@@ -386,8 +387,4 @@ class CommunityIcon extends StatelessWidget {
       ],
     );
   }
-}
-
-_log(String msg) {
-  print("[accountManagePage] $msg");
 }

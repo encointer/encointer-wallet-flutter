@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box_service.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 
 /// Shows the progress of a ceremony cycle.
 ///
@@ -47,8 +48,8 @@ class CeremonyProgressBar extends StatelessWidget {
         assigningPhaseFractionalWidth,
         attestingPhaseFractionalWidth,
       );
-    } catch (e) {
-      _log("Error getting ceremony progress ${e.toString()}");
+    } catch (e, s) {
+      Log.e("Error getting ceremony progress ${e.toString()}", 'CeremonyProgressBar', s);
       return 0;
     }
   }
@@ -56,7 +57,7 @@ class CeremonyProgressBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double progressElapsed = _getCeremonyProgress()!;
-    _log("ceremony progress: $progressElapsed");
+    Log.d("ceremony progress: $progressElapsed", 'CeremonyProgressBar');
 
     return Container(
       decoration: BoxDecoration(
@@ -98,8 +99,4 @@ class CeremonyProgressBar extends StatelessWidget {
       ),
     );
   }
-}
-
-_log(String msg) {
-  print("[CeremonyProgressBar] $msg");
 }

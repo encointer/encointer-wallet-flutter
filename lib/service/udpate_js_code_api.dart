@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart';
 
@@ -21,8 +22,8 @@ class UpdateJSCodeApi {
     try {
       Response res = await get(Uri.parse('$_endpoint/versions.json'));
       return jsonDecode(utf8.decode(res.bodyBytes)) as Map?;
-    } catch (err) {
-      print(err);
+    } catch (e, s) {
+      Log.e('$e', 'UpdateJSCodeApi', s);
       return Future.value(null);
     }
   }
@@ -31,8 +32,8 @@ class UpdateJSCodeApi {
     try {
       Response res = await get(Uri.parse('$_endpoint/recommended.json'));
       return jsonDecode(res.body);
-    } catch (err) {
-      print(err);
+    } catch (e, s) {
+      Log.e('$e', 'UpdateJSCodeApi', s);
       return Future.value(null);
     }
   }
@@ -41,8 +42,8 @@ class UpdateJSCodeApi {
     try {
       Response res = await get(Uri.parse('$_endpoint/jsCodeVersions.json'));
       return Map.of(jsonDecode(res.body))[networkName];
-    } catch (err) {
-      print(err);
+    } catch (e, s) {
+      Log.e('$e', 'UpdateJSCodeApi', s);
       return Future.value(null);
     }
   }
@@ -51,8 +52,8 @@ class UpdateJSCodeApi {
     try {
       Response res = await get(Uri.parse('$_endpoint/js_service/$networkName.js'));
       return utf8.decode(res.bodyBytes);
-    } catch (err) {
-      print(err);
+    } catch (e, s) {
+      Log.e('$e', 'UpdateJSCodeApi', s);
       return Future.value(null);
     }
   }
@@ -91,8 +92,8 @@ class UpdateJSCodeApi {
     try {
       Response res = await get(Uri.parse('$_endpoint/announce.json'));
       return jsonDecode(utf8.decode(res.bodyBytes));
-    } catch (err) {
-      print(err);
+    } catch (e, s) {
+      Log.e('$e', 'UpdateJSCodeApi', s);
       return Future.value(null);
     }
   }
