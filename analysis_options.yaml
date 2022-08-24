@@ -15,7 +15,7 @@ linter:
     curly_braces_in_flow_structures: false
 
    
-    # todo: false
+
 
     # prefer_const_constructors: true 
     # prefer_const_constructors_in_immutable: false
@@ -47,7 +47,6 @@ analyzer:
   errors:
     todo: false 
     fixme: false 
-    # curly_braces_in_flow_structures: false
     prefer_iterable_wheretype: false
 
 
