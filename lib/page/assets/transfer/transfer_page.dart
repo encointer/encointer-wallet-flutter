@@ -62,10 +62,10 @@ class _TransferPageState extends State<TransferPage> {
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
-    TransferPageParams params = ModalRoute.of(context)!.settings.arguments as TransferPageParams;
+    TransferPageParams? params = ModalRoute.of(context)!.settings.arguments as TransferPageParams?;
 
-    var communitySymbol = params.communitySymbol ?? store.encointer.community!.symbol!;
-    var cid = params.cid ?? store.encointer.chosenCid!;
+    var communitySymbol = params?.communitySymbol; // ?? store.encointer.community!.symbol!;
+    var cid = params?.cid; // ?? store.encointer.chosenCid!;
 
     int decimals = encointer_currencies_decimals;
 
@@ -184,7 +184,7 @@ class _TransferPageState extends State<TransferPage> {
                         ],
                       ),
                     ),
-                    onPressed: _accountTo != null ? () => _pushPaymentConfirmationPage(cid, communitySymbol) : null,
+                    onPressed: _accountTo != null ? () => _pushPaymentConfirmationPage(cid!, communitySymbol!) : null,
                   ),
                 ],
               ),
@@ -214,14 +214,14 @@ class _TransferPageState extends State<TransferPage> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final TransferPageParams args = ModalRoute.of(context)!.settings.arguments as TransferPageParams;
-      if (args.amount != null) {
-        _amountCtrl.text = '${args.amount}';
+      final TransferPageParams? args = ModalRoute.of(context)!.settings.arguments as TransferPageParams?;
+      if (args?.amount != null) {
+        _amountCtrl.text = '${args?.amount}';
       }
 
-      if (args.recipient != null) {
+      if (args?.recipient != null) {
         final AccountData acc = AccountData();
-        acc.address = args.recipient!;
+        acc.address = args!.recipient!;
         acc.name = args.label!;
         setState(() {
           _accountTo = acc;
@@ -229,11 +229,11 @@ class _TransferPageState extends State<TransferPage> {
       } else {
         if (widget.store.account.optionalAccounts.length > 0) {
           setState(() {
-            _accountTo = widget.store.account.optionalAccounts[0];
+            // _accountTo = widget.store.account.optionalAccounts[0];
           });
         } else if (widget.store.settings.contactList.length > 0) {
           setState(() {
-            _accountTo = widget.store.settings.contactList[0];
+            // _accountTo = widget.store.settings.contactList[0];
           });
         }
       }

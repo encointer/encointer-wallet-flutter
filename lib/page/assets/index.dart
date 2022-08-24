@@ -267,10 +267,10 @@ class _AssetsState extends State<Assets> {
                                           Navigator.pushNamed(
                                             context,
                                             TransferPage.route,
-                                            arguments: TransferPageParams(
-                                                redirect: '/',
-                                                cid: store.encointer.chosenCid!,
-                                                communitySymbol: store.encointer.community!.symbol!),
+                                            // arguments: TransferPageParams(
+                                            //     redirect: '/',
+                                            //     cid: store.encointer.chosenCid!,
+                                            //     communitySymbol: store.encointer.community!.symbol!),
                                           );
                                         }
                                       : null,
