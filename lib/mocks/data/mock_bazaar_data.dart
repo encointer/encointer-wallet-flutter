@@ -1,10 +1,10 @@
-import '../../models/bazaar/account_business_tuple.dart';
-import '../../models/bazaar/business_data.dart';
-import '../../models/bazaar/business_identifier.dart';
-import '../../models/bazaar/ipfs_business.dart';
-import '../../models/bazaar/ipfs_offering.dart';
-import '../../models/bazaar/offering_data.dart';
-import '../../models/communities/community_identifier.dart';
+import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
+import 'package:encointer_wallet/models/bazaar/business_data.dart';
+import 'package:encointer_wallet/models/bazaar/business_identifier.dart';
+import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
+import 'package:encointer_wallet/models/bazaar/ipfs_offering.dart';
+import 'package:encointer_wallet/models/bazaar/offering_data.dart';
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
 
 const String controller1 = '0x1cc4e46bbd2bb547d93d952c5de12ea7e3a3f3b638551a8eaf35ad086700c00c';
 const String controller2 = '0x2cc4e46bbd2bb547d93d952c5de12ea7e3a3f3b638551a8eaf35ad086700c00c';

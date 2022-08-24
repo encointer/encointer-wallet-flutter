@@ -1,10 +1,11 @@
-import 'package:encointer_wallet/common/components/gradient_elements.dart';
-import 'package:encointer_wallet/common/components/maybe_date_time.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
+
+import 'package:encointer_wallet/common/components/gradient_elements.dart';
+import 'package:encointer_wallet/common/components/maybe_date_time.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CeremonyRegisterButton extends StatefulWidget {
   const CeremonyRegisterButton({

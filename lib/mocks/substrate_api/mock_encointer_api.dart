@@ -1,13 +1,13 @@
 import 'package:encointer_wallet/mocks/data/mock_encointer_data.dart';
+import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
+import 'package:encointer_wallet/models/ceremonies/ceremonies.dart';
+import 'package:encointer_wallet/models/claim_of_attendance/claim_of_attendance.dart';
+import 'package:encointer_wallet/models/communities/cid_name.dart';
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
+import 'package:encointer_wallet/store/app.dart';
 
-import '../../models/bazaar/account_business_tuple.dart';
-import '../../models/claim_of_attendance/claim_of_attendance.dart';
-import '../../models/communities/cid_name.dart';
-import '../../models/communities/community_identifier.dart';
-import '../../models/encointer_balance_data/balance_entry.dart';
-import '../../models/index.dart';
-import '../../store/app.dart';
 import 'core/mock_dart_api.dart';
 import 'mock_js_api.dart';
 

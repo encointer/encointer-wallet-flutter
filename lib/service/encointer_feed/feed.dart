@@ -1,12 +1,11 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart' show IterableExtension;
-import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/models/index.dart';
-
 import 'package:http/http.dart' as http;
 
-import '../../models/communities/community_identifier.dart';
+import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/models/index.dart';
 
 Future<List<MeetupOverrides>> getMeetupOverrides() async {
   final response = await http.get(Uri.parse(encointer_feed_overrides));

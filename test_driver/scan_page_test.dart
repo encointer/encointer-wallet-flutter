@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:encointer_wallet/utils/screenshot.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
+
+import 'package:encointer_wallet/utils/screenshot.dart';
 
 void main() {
   FlutterDriver? driver;

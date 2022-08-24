@@ -1,7 +1,7 @@
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
-import '../../../models/communities/community_identifier.dart';
-import '../../../models/encointer_balance_data/balance_entry.dart';
 
 class EncointerDartApi {
   EncointerDartApi(this._dartApi);

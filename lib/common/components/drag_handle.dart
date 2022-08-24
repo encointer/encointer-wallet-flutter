@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../theme.dart';
+
+import 'package:encointer_wallet/common/theme.dart';
 
 /// handle for sliding up panel, for it look good
 class DragHandle extends StatelessWidget {

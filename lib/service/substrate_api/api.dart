@@ -1,5 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
+
+import 'package:get_storage/get_storage.dart';
+
 import 'package:encointer_wallet/config/node.dart';
 import 'package:encointer_wallet/service/ipfs/http_api.dart';
 import 'package:encointer_wallet/service/subscan.dart';
@@ -11,7 +14,6 @@ import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 import 'package:encointer_wallet/service/substrate_api/types/gen_external_links_params.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:get_storage/get_storage.dart';
 
 import 'core/js_api.dart';
 

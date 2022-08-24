@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
 
-import '../communities/community_identifier.dart';
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
+
 part 'business_identifier.g.dart';
 
 /// Key to index businesses onchain. It is passed as argument to the rpc `bazaar_getOfferingsForBusiness`.
