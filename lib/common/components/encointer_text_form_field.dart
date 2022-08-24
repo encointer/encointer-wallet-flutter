@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../theme.dart';
+import 'package:encointer_wallet/common/theme.dart';
 
 /// TextFormField styled for the encointer app
 class EncointerTextFormField extends StatelessWidget {

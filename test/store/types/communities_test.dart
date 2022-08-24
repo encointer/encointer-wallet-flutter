@@ -1,6 +1,8 @@
 import 'dart:convert';
-import 'package:encointer_wallet/models/communities/community_identifier.dart';
+
 import 'package:flutter_test/flutter_test.dart';
+
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
 
 void main() {
   group('CommunityIdentifier', () {

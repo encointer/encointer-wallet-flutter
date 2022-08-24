@@ -1,6 +1,7 @@
-import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'package:encointer_wallet/common/components/gradient_elements.dart';
 
 /// Button that shows a `CupertinoActivityIndicator` within while `onPressed` is executed.
 ///

@@ -1,12 +1,22 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:focus_detector/focus_detector.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:pausable_timer/pausable_timer.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
+
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/drag_handle.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
@@ -21,16 +31,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:focus_detector/focus_detector.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:pausable_timer/pausable_timer.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
-import '../../models/encointer_balance_data/balance_entry.dart';
 import 'account_or_community/account_or_community_data.dart';
 import 'account_or_community/switch_account_or_community.dart';
 

@@ -1,5 +1,6 @@
-import 'package:encointer_wallet/common/theme.dart';
 import 'package:flutter/material.dart';
+
+import 'package:encointer_wallet/common/theme.dart';
 
 class LowerCeremonyBoxContainer extends StatelessWidget {
   LowerCeremonyBoxContainer({

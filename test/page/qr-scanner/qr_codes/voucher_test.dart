@@ -1,6 +1,7 @@
+import 'package:flutter_test/flutter_test.dart';
+
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
-import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('Voucher QrCode', () {

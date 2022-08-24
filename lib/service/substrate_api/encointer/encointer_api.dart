@@ -1,23 +1,24 @@
 import 'dart:convert';
+
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/mocks/data/mock_bazaar_data.dart';
+import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
+import 'package:encointer_wallet/models/bazaar/business_identifier.dart';
+import 'package:encointer_wallet/models/bazaar/offering_data.dart';
+import 'package:encointer_wallet/models/claim_of_attendance/claim_of_attendance.dart';
+import 'package:encointer_wallet/models/communities/cid_name.dart';
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/models/communities/community_metadata.dart';
+import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
+import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/models/location/location.dart';
+import 'package:encointer_wallet/models/proof_of_attendance/proof_of_attendance.dart';
 import 'package:encointer_wallet/service/encointer_feed/feed.dart' as feed;
+import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/store/app.dart';
-
 import 'package:encointer_wallet/utils/format.dart';
-import '../../../models/bazaar/account_business_tuple.dart';
-import '../../../models/bazaar/business_identifier.dart';
-import '../../../models/bazaar/offering_data.dart';
-import '../../../models/claim_of_attendance/claim_of_attendance.dart';
-import '../../../models/communities/cid_name.dart';
-import '../../../models/communities/community_identifier.dart';
-import '../../../models/communities/community_metadata.dart';
-import '../../../models/encointer_balance_data/balance_entry.dart';
-import '../../../models/index.dart';
-import '../../../models/location/location.dart';
-import '../../../models/proof_of_attendance/proof_of_attendance.dart';
-import '../core/dart_api.dart';
+
 import 'encointer_dart_api.dart';
 import 'no_tee_api.dart';
 import 'tee_proxy_api.dart';

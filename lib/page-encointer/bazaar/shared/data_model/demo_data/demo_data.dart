@@ -1,7 +1,7 @@
-import 'package:flutter/material.dart';
 import "package:latlong2/latlong.dart";
+import 'package:flutter/material.dart';
 
-import '../model/bazaar_item_data.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
 
 final List<BazaarOfferingData> allOfferings = [
   BazaarOfferingData("Big Ass TV", "This screen takes home cinema to the next level. 8000x6000px, 60fps, asfd asdf",
