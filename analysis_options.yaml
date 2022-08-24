@@ -5,7 +5,7 @@ include: package:lints/recommended.yaml
   
 linter:
   rules:
-    always_use_package_imports: true
+    # always_use_package_imports: false
     prefer_const_constructors: true
     prefer_const_constructors_in_immutable: true
     avoid_unnecessary_containers: true
@@ -32,8 +32,8 @@ linter:
 
 # error: it lines red and will not let you compile anymore
 # warning: lines yellow 
-analyzer:
-  errors:
-    todo: warning
+# analyzer:
+#   errors:
+#     todo: false 
 
 
