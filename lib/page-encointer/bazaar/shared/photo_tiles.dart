@@ -16,7 +16,7 @@ class PhotoTiles extends StatelessWidget {
           width: 150,
           color: Colors.green,
         ),
-        SizedBox(
+        const SizedBox(
           width: 16,
         ),
         Container(
@@ -24,7 +24,7 @@ class PhotoTiles extends StatelessWidget {
           width: 150,
           color: Colors.grey,
           child: ListTile(
-            leading: Icon(Icons.add_a_photo),
+            leading: const Icon(Icons.add_a_photo),
             title: Text(I18n.of(context)!.translationsForLocale().bazaar.photoAdd),
           ),
         ),

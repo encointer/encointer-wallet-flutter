@@ -18,7 +18,7 @@ class HorizontalBazaarItemList extends StatelessWidget {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Text(
         rowTitle,
-        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, height: 2),
+        style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold, height: 2),
       ),
       SizedBox(
         height: cardHeight, // otherwise ListView would use infinite height
@@ -47,7 +47,7 @@ class BazaarItemHorizontal extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       color: data[index].cardColor,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
         Radius.circular(15),
       )),
@@ -71,7 +71,7 @@ class BazaarItemHorizontal extends StatelessWidget {
             "${data[index].title}",
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
-            style: TextStyle(fontSize: 30),
+            style: const TextStyle(fontSize: 30),
           ),
           Padding(
             padding: const EdgeInsets.only(left: 8, right: 8),
@@ -102,7 +102,7 @@ class _ImageWithOverlaidIcon extends StatelessWidget {
     return Stack(children: [
       ClipRRect(
           child: data[index].image,
-          borderRadius: BorderRadius.vertical(
+          borderRadius: const BorderRadius.vertical(
             top: Radius.circular(15),
             bottom: Radius.circular(0),
           )),

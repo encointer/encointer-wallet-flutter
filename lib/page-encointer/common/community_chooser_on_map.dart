@@ -72,7 +72,7 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
         child: Container(
           width: 150,
           height: 70,
-          padding: EdgeInsets.fromLTRB(6, 4, 6, 4),
+          padding: const EdgeInsets.fromLTRB(6, 4, 6, 4),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

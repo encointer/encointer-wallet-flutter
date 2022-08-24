@@ -141,7 +141,7 @@ class _AssetsState extends State<Assets> {
               child: RefreshIndicator(
                 onRefresh: _refreshEncointerState,
                 child: ListView(
-                  padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
+                  padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
                   children: [
                     Observer(builder: (_) {
                       if (ModalRoute.of(context)!.isCurrent &&
@@ -178,7 +178,7 @@ class _AssetsState extends State<Assets> {
                                       children: [
                                         TextGradient(
                                           text: '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ',
-                                          style: TextStyle(fontSize: 60),
+                                          style: const TextStyle(fontSize: 60),
                                         ),
                                         Text(
                                           "${dic!.assets.balance}, ${store.encointer.community?.symbol}",
@@ -187,8 +187,8 @@ class _AssetsState extends State<Assets> {
                                       ],
                                     )
                                   : Container(
-                                      margin: EdgeInsets.only(top: 16),
-                                      padding: EdgeInsets.symmetric(vertical: 8),
+                                      margin: const EdgeInsets.only(top: 16),
+                                      padding: const EdgeInsets.symmetric(vertical: 8),
                                       child: (store.encointer.chosenCid == null)
                                           ? Container(
                                               width: double.infinity,
@@ -196,7 +196,7 @@ class _AssetsState extends State<Assets> {
                                                   Text(dic!.assets.communityNotSelected, textAlign: TextAlign.center))
                                           : Container(
                                               width: double.infinity,
-                                              child: CupertinoActivityIndicator(),
+                                              child: const CupertinoActivityIndicator(),
                                             ),
                                     );
                             },
@@ -204,9 +204,9 @@ class _AssetsState extends State<Assets> {
                           if (store.settings.developerMode)
                             ElevatedButton(
                               onPressed: store.dataUpdate.setInvalidated,
-                              child: Text("Invalidate data to trigger state update"),
+                              child: const Text("Invalidate data to trigger state update"),
                             ),
-                          SizedBox(
+                          const SizedBox(
                             height: 42,
                           ),
                           Row(
@@ -215,7 +215,7 @@ class _AssetsState extends State<Assets> {
                               Expanded(
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
+                                    shape: const RoundedRectangleBorder(
                                       // don't redefine the entire style just the border radii
                                       borderRadius:
                                           BorderRadius.horizontal(left: Radius.circular(15), right: Radius.zero),
@@ -226,13 +226,13 @@ class _AssetsState extends State<Assets> {
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        Icon(Iconsax.receive_square_2),
-                                        SizedBox(width: 12),
+                                        const Icon(Iconsax.receive_square_2),
+                                        const SizedBox(width: 12),
                                         Text(dic!.assets.receive),
                                       ],
                                     ),
                                   ),
-                                  key: Key('qr-receive'),
+                                  key: const Key('qr-receive'),
                                   onPressed: () {
                                     if (accountData.address != '') {
                                       Navigator.pushNamed(context, ReceivePage.route);
@@ -240,11 +240,11 @@ class _AssetsState extends State<Assets> {
                                   },
                                 ),
                               ),
-                              SizedBox(width: 2),
+                              const SizedBox(width: 2),
                               Expanded(
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
+                                    shape: const RoundedRectangleBorder(
                                       // don't redefine the entire style just the border radii
                                       borderRadius:
                                           BorderRadius.horizontal(left: Radius.zero, right: Radius.circular(15)),
@@ -256,12 +256,12 @@ class _AssetsState extends State<Assets> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(dic!.assets.transfer),
-                                        SizedBox(width: 12),
-                                        Icon(Iconsax.send_sqaure_2),
+                                        const SizedBox(width: 12),
+                                        const Icon(Iconsax.send_sqaure_2),
                                       ],
                                     ),
                                   ),
-                                  key: Key('transfer'),
+                                  key: const Key('transfer'),
                                   onPressed: store.encointer.communityBalance != null
                                       ? () {
                                           Navigator.pushNamed(
@@ -281,7 +281,7 @@ class _AssetsState extends State<Assets> {
                         ],
                       );
                     }),
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 0),
                     ),
                     Observer(builder: (_) {
@@ -313,13 +313,13 @@ class _AssetsState extends State<Assets> {
                                         : Container();
                                   }
                                 } else {
-                                  return CupertinoActivityIndicator();
+                                  return const CupertinoActivityIndicator();
                                 }
                               },
                             )
                           : Container();
                     }),
-                    SizedBox(height: 24),
+                    const SizedBox(height: 24),
                     CeremonyBox(store, webApi),
                   ],
                 ),
@@ -332,10 +332,10 @@ class _AssetsState extends State<Assets> {
               child: ListView(
                 controller: scrollController,
                 children: <Widget>[
-                  SizedBox(
+                  const SizedBox(
                     height: 12.0,
                   ),
-                  DragHandle(),
+                  const DragHandle(),
                   Column(children: [
                     Observer(
                       builder: (BuildContext context) {
@@ -379,7 +379,7 @@ class _AssetsState extends State<Assets> {
                 ],
               ),
             ),
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(40.0), topRight: Radius.circular(40.0)),
+            borderRadius: const BorderRadius.only(topLeft: Radius.circular(40.0), topRight: Radius.circular(40.0)),
           ),
         ));
   }
@@ -412,7 +412,7 @@ class _AssetsState extends State<Assets> {
             color: ZurichLion.shade50,
             shape: BoxShape.circle,
           ),
-          child: Icon(Icons.add, size: 36),
+          child: const Icon(Icons.add, size: 36),
         ),
         name: dic!.profile.addCommunity,
       ),
@@ -438,7 +438,7 @@ class _AssetsState extends State<Assets> {
             color: ZurichLion.shade50,
             shape: BoxShape.circle,
           ),
-          child: Icon(Icons.add, size: 36),
+          child: const Icon(Icons.add, size: 36),
         ),
         name: dic.profile.addAccount,
       ),

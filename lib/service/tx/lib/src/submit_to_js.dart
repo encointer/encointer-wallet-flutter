@@ -55,7 +55,7 @@ Future<void> submitToJS(
     if (showStatusSnackBar) {
       _showTxStatusSnackBar(
         getTxStatusTranslation(dic.home, store.account.txStatus),
-        CupertinoActivityIndicator(),
+        const CupertinoActivityIndicator(),
       );
     }
 
@@ -120,10 +120,10 @@ void _showTxStatusSnackBar(String status, Widget? leading) {
       leading: leading,
       title: Text(
         status,
-        style: TextStyle(color: Colors.black54),
+        style: const TextStyle(color: Colors.black54),
       ),
     ),
-    durationMillis: Duration(seconds: 12).inMilliseconds,
+    durationMillis: const Duration(seconds: 12).inMilliseconds,
   );
 }
 
@@ -139,7 +139,7 @@ void _onTxFinish(BuildContext context, AppStore store, Map res, Function(BuildCo
         leading: Container(width: 24, child: Image.asset('assets/images/assets/success.png')),
         title: Text(
           I18n.of(context)!.translationsForLocale().assets.success,
-          style: TextStyle(color: Colors.black54),
+          style: const TextStyle(color: Colors.black54),
         ),
       ),
       durationMillis: 2000,

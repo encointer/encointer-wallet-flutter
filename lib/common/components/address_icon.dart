@@ -35,7 +35,7 @@ class AddressIcon extends StatelessWidget {
         height: size,
         child: ClipOval(
           child: SizedBox.fromSize(
-            size: Size.fromRadius(48), // Image radius
+            size: const Size.fromRadius(48), // Image radius
             child: SvgPicture.string(
               rawSvg,
               fit: BoxFit.fill,

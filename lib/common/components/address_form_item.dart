@@ -22,7 +22,7 @@ class AddressFormItem extends StatelessWidget {
       children: <Widget>[
         label != null
             ? Container(
-                margin: EdgeInsets.only(top: 4),
+                margin: const EdgeInsets.only(top: 4),
                 child: Text(
                   label!,
                   style: TextStyle(color: grey),
@@ -30,16 +30,16 @@ class AddressFormItem extends StatelessWidget {
               )
             : Container(),
         Container(
-          margin: EdgeInsets.only(top: 4, bottom: 4),
-          padding: EdgeInsets.all(8),
+          margin: const EdgeInsets.only(top: 4, bottom: 4),
+          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
             border: Border.all(color: Theme.of(context).disabledColor, width: 0.5),
           ),
           child: Row(
             children: <Widget>[
               Container(
-                margin: EdgeInsets.only(right: 8),
+                margin: const EdgeInsets.only(right: 8),
                 child: AddressIcon(
                   address,
                   account.pubKey,

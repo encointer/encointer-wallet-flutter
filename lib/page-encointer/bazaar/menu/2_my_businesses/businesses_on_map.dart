@@ -71,7 +71,7 @@ class BMap extends StatelessWidget {
             point: item.coordinates,
             width: 40,
             height: 40,
-            builder: (_) => Icon(Icons.location_on, size: 40, color: Colors.blueAccent),
+            builder: (_) => const Icon(Icons.location_on, size: 40, color: Colors.blueAccent),
             anchorPos: AnchorPos.align(AnchorAlign.top)))
         .toList();
   }
@@ -96,7 +96,7 @@ class BusinessDetailsPopup extends StatelessWidget {
         child: Container(
           width: 150,
           height: 70,
-          padding: EdgeInsets.fromLTRB(6, 4, 6, 4),
+          padding: const EdgeInsets.fromLTRB(6, 4, 6, 4),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

@@ -53,7 +53,7 @@ class _Settings extends State<SettingsPage> {
               itemExtent: 58,
               scrollController: FixedExtentScrollController(initialItem: _langOptions.indexOf(store.localeCode)),
               children: _langOptions.map((i) {
-                return Padding(padding: EdgeInsets.all(16), child: Text(getLang(i)));
+                return Padding(padding: const EdgeInsets.all(16), child: Text(getLang(i)));
               }).toList(),
               onSelectedItemChanged: (v) {
                 setState(() {
@@ -90,7 +90,7 @@ class _Settings extends State<SettingsPage> {
                 ),
                 title: Text(dic.profile.settingNode),
                 subtitle: Text(store.endpoint.text ?? ''),
-                trailing: Icon(Icons.arrow_forward_ios, size: 18),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.of(context).pushNamed(RemoteNodeListPage.route),
               ),
               ListTile(
@@ -100,13 +100,13 @@ class _Settings extends State<SettingsPage> {
                 ),
                 title: Text(dic.profile.settingPrefix),
                 subtitle: Text(store.customSS58Format['text'] ?? ''),
-                trailing: Icon(Icons.arrow_forward_ios, size: 18),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.of(context).pushNamed(SS58PrefixListPage.route),
               ),
               ListTile(
                 title: Text(dic.profile.settingLang),
                 subtitle: Text(getLang(store.localeCode)),
-                trailing: Icon(Icons.arrow_forward_ios, size: 18),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => _onLanguageTap(),
               )
             ],

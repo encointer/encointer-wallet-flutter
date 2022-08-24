@@ -52,7 +52,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
                       Container(
                         height: 4,
                         width: 16,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           border: Border(
                             bottom: BorderSide(width: 2.0),
                           ),
@@ -111,7 +111,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       key: EncointerHomePage.encointerHomePageKey,
       backgroundColor: Colors.white,
       body: PageView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,
         children: [
           Assets(store),

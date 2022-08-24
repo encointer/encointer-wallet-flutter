@@ -60,7 +60,7 @@ class CeremonyProgressBar extends StatelessWidget {
 
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(5)),
+        borderRadius: const BorderRadius.all(Radius.circular(5)),
         border: Border.all(color: ZurichLion.shade300),
         color: Colors.white,
       ),
@@ -71,7 +71,7 @@ class CeremonyProgressBar extends StatelessWidget {
             width: width * progressElapsed,
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
+                borderRadius: const BorderRadius.all(Radius.circular(5)),
                 gradient: primaryGradient,
               ),
             ),
@@ -82,7 +82,7 @@ class CeremonyProgressBar extends StatelessWidget {
               SizedBox(
                 width: width * assigningPhaseFractionalWidth,
                 child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 1),
+                  margin: const EdgeInsets.symmetric(vertical: 1),
                   foregroundDecoration: BoxDecoration(
                     // draw the vertical phase dividers
                     border: Border.symmetric(

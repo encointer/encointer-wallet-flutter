@@ -44,7 +44,7 @@ class ExportResultPage extends StatelessWidget {
           children: <Widget>[
             Expanded(
               child: ListView(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 children: <Widget>[
                   args['type'] == AccountStore.seedTypeKeystore ? Container() : Text(dic.profile.exportWarn),
                   Row(
@@ -52,7 +52,7 @@ class ExportResultPage extends StatelessWidget {
                     children: <Widget>[
                       GestureDetector(
                         child: Container(
-                          padding: EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(8),
                           child: Text(
                             I18n.of(context)!.translationsForLocale().home.copy,
                             style: TextStyle(fontSize: 14, color: Theme.of(context).primaryColor),
@@ -69,8 +69,8 @@ class ExportResultPage extends StatelessWidget {
                           color: Colors.black12,
                           width: 1,
                         ),
-                        borderRadius: BorderRadius.all(Radius.circular(4))),
-                    padding: EdgeInsets.all(16),
+                        borderRadius: const BorderRadius.all(Radius.circular(4))),
+                    padding: const EdgeInsets.all(16),
                     child: Text(
                       args['key'],
                       style: Theme.of(context).textTheme.headline4,

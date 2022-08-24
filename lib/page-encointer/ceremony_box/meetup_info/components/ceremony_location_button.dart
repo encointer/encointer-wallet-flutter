@@ -17,7 +17,7 @@ class CeremonyLocationButton extends StatelessWidget {
     var dic = I18n.of(context)!.translationsForLocale();
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(vertical: 16),
+        padding: const EdgeInsets.symmetric(vertical: 16),
         // make splash animation as high as the container
         primary: Colors.white,
         onPrimary: ZurichLion.shade500,
@@ -30,8 +30,8 @@ class CeremonyLocationButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Iconsax.location),
-          SizedBox(width: 6),
+          const Icon(Iconsax.location),
+          const SizedBox(width: 6),
           Text('${dic.encointer.showCeremonyLocation}'),
         ],
       ),

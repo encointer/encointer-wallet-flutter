@@ -56,7 +56,7 @@ class ExportAccountPage extends StatelessWidget {
         return CupertinoAlertDialog(
           title: Text(dic.profile.confirmPin),
           content: Padding(
-            padding: EdgeInsets.only(top: 16),
+            padding: const EdgeInsets.only(top: 16),
             child: CupertinoTextFormFieldRow(
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
               padding: EdgeInsets.zero,
@@ -103,7 +103,7 @@ class ExportAccountPage extends StatelessWidget {
         children: <Widget>[
           ListTile(
             title: Text(dic.account.keystore),
-            trailing: Icon(Icons.arrow_forward_ios, size: 18),
+            trailing: const Icon(Icons.arrow_forward_ios, size: 18),
             onTap: () {
               Map json = AccountData.toJson(store.currentAccount);
               json.remove('name');
@@ -120,7 +120,7 @@ class ExportAccountPage extends StatelessWidget {
               if (snapshot.hasData && snapshot.data == true) {
                 return ListTile(
                   title: Text(dic.account.mnemonic),
-                  trailing: Icon(Icons.arrow_forward_ios, size: 18),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                   onTap: () => _showPasswordDialog(context, AccountStore.seedTypeMnemonic),
                 );
               } else {
@@ -134,7 +134,7 @@ class ExportAccountPage extends StatelessWidget {
               if (snapshot.hasData && snapshot.data == true) {
                 return ListTile(
                   title: Text(dic.account.rawSeed),
-                  trailing: Icon(Icons.arrow_forward_ios, size: 18),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                   onTap: () => _showPasswordDialog(context, AccountStore.seedTypeRawSeed),
                 );
               } else {

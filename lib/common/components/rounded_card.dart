@@ -19,7 +19,7 @@ class RoundedCard extends StatelessWidget {
         borderRadius: const BorderRadius.all(const Radius.circular(8)),
         color: Theme.of(context).cardColor,
         boxShadow: [
-          BoxShadow(
+          const BoxShadow(
             color: Colors.black12,
             blurRadius: 16.0, // has the effect of softening the shadow
             spreadRadius: 4.0, // has the effect of extending the shadow

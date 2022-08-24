@@ -51,8 +51,8 @@ class ScanPage extends StatelessWidget {
         leading: Container(),
         actions: [
           IconButton(
-            key: Key('close-scanner'),
-            icon: Icon(Icons.close),
+            key: const Key('close-scanner'),
+            icon: const Icon(Icons.close),
             onPressed: () => Navigator.pop(context),
           )
         ],
@@ -95,7 +95,7 @@ class ScanPage extends StatelessWidget {
                       ),
                       Text(
                         I18n.of(context)!.translationsForLocale().account.qrScan,
-                        style: TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16),
+                        style: const TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16),
                       ),
                     ],
                   ),
@@ -103,7 +103,7 @@ class ScanPage extends StatelessWidget {
               ],
             );
           } else {
-            return Center(child: CupertinoActivityIndicator());
+            return const Center(child: CupertinoActivityIndicator());
           }
         },
       ),
@@ -128,13 +128,13 @@ Widget mockQrDataRow(Translations dic, Function(String) onScan) {
       ),
     ),
     ElevatedButton(
-      child: Text("voucher"),
+      child: const Text("voucher"),
       onPressed: () => onScan(
         "encointer-voucher\nv2.0\n//VoucherUri\nsqm1v79dF6b"
         "\nnctr-gsl-dev\nAubrey",
       ),
     ),
-    Text(' <<< Devs only', style: TextStyle(color: Colors.orange)),
+    const Text(' <<< Devs only', style: TextStyle(color: Colors.orange)),
   ]);
 }
 

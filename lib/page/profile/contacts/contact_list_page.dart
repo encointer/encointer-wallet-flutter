@@ -25,9 +25,9 @@ class ContactListPage extends StatelessWidget {
         actions: <Widget>[
           args == null
               ? Padding(
-                  padding: EdgeInsets.only(right: 8),
+                  padding: const EdgeInsets.only(right: 8),
                   child: IconButton(
-                    icon: Icon(Icons.add, size: 28),
+                    icon: const Icon(Icons.add, size: 28),
                     onPressed: () => Navigator.of(context).pushNamed(ContactPage.route),
                   ),
                 )

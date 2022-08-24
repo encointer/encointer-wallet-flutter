@@ -53,11 +53,11 @@ class BazaarItemVertical extends StatelessWidget {
                         visualDensity: VisualDensity.compact,
                         onPressed: tempState.toggleLiked,
                         icon: tempState.liked
-                            ? Icon(
+                            ? const Icon(
                                 Icons.favorite,
                                 color: Colors.redAccent,
                               )
-                            : Icon(
+                            : const Icon(
                                 Icons.favorite_border,
                                 color: Colors.blueGrey,
                               ),
@@ -115,7 +115,7 @@ class _ItemDescription extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 6),
+                padding: const EdgeInsets.only(top: 6),
                 child: Text(
                   description!,
                   maxLines: 3,

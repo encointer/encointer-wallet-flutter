@@ -40,8 +40,8 @@ class _SubmitButtonState extends State<SubmitButton> {
           ? widget.child
           : Theme(
               // change theme locally to dark such that the activity indicator appears bright
-              data: ThemeData(cupertinoOverrideTheme: CupertinoThemeData(brightness: Brightness.dark)),
-              child: CupertinoActivityIndicator()),
+              data: ThemeData(cupertinoOverrideTheme: const CupertinoThemeData(brightness: Brightness.dark)),
+              child: const CupertinoActivityIndicator()),
       onPressed: (!_submitting && widget.onPressed != null) ? _onPressed : null,
     );
   }

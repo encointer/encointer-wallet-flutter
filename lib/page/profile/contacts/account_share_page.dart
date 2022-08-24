@@ -39,8 +39,8 @@ class _AccountSharePageState extends State<AccountSharePage> {
         leading: Container(),
         actions: [
           IconButton(
-            key: Key('close-share-page'),
-            icon: Icon(Icons.close),
+            key: const Key('close-share-page'),
+            icon: const Icon(Icons.close),
             onPressed: () {
               Navigator.pop(context);
             },
@@ -60,13 +60,13 @@ class _AccountSharePageState extends State<AccountSharePage> {
                     style: textTheme.headline2!.copyWith(color: encointerBlack),
                     textAlign: TextAlign.center,
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   // Enhance brightness for the QR-code
-                  WakeLockAndBrightnessEnhancer(brightness: 1),
+                  const WakeLockAndBrightnessEnhancer(brightness: 1),
                   QrImage(
                     data: contactQrCode.toQrPayload(),
-                    embeddedImage: AssetImage('assets/images/public/app.png'),
-                    embeddedImageStyle: QrEmbeddedImageStyle(size: Size(40, 40)),
+                    embeddedImage: const AssetImage('assets/images/public/app.png'),
+                    embeddedImageStyle: QrEmbeddedImageStyle(size: const Size(40, 40)),
                   ),
                   Text(
                     '${accountToBeShared.name}',
@@ -75,20 +75,20 @@ class _AccountSharePageState extends State<AccountSharePage> {
                   ),
                 ],
               ),
-              Spacer(),
+              const Spacer(),
               Text(
                 dic.profile.shareLinkHint,
                 textAlign: TextAlign.center,
                 style: textTheme.headline4!.copyWith(color: encointerGrey),
               ),
-              SizedBox(height: 8),
+              const SizedBox(height: 8),
               ElevatedButton(
-                style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
+                style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16)),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.share, color: ZurichLion.shade500),
-                    SizedBox(width: 12),
+                    const SizedBox(width: 12),
                     Text(dic.profile.sendLink, style: textTheme.headline3),
                   ],
                 ),

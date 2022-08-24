@@ -29,7 +29,7 @@ class BazaarOfferingData extends BazaarItemData {
   Color? get cardColor => Colors.red[300];
 
   @override
-  Icon get icon => Icon(Icons.local_offer);
+  Icon get icon => const Icon(Icons.local_offer);
 }
 
 class BazaarBusinessData extends BazaarItemData {
@@ -45,7 +45,7 @@ class BazaarBusinessData extends BazaarItemData {
 
   @override
   String get info {
-    final Distance distance = new Distance();
+    final Distance distance = const Distance();
     final double distanceInMeters = distance(turbinenplatz, coordinates);
     return distanceInMeters.toStringAsFixed(0) + "m";
   }
@@ -54,7 +54,7 @@ class BazaarBusinessData extends BazaarItemData {
   Color? get cardColor => Colors.blue[300];
 
   @override
-  Icon get icon => Icon(Icons.business);
+  Icon get icon => const Icon(Icons.business);
 }
 
 class OpeningHours {

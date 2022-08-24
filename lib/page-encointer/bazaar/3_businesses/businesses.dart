@@ -34,8 +34,8 @@ class Businesses extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            new Icon(Icons.map),
-            new Text(I18n.of(context)!.translationsForLocale().bazaar.map),
+            const Icon(Icons.map),
+            Text(I18n.of(context)!.translationsForLocale().bazaar.map),
           ],
         ),
       )

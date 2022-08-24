@@ -74,7 +74,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
     final Translations dic = I18n.of(context)!.translationsForLocale();
 
     return Padding(
-      padding: EdgeInsets.fromLTRB(32, 0, 16, 32),
+      padding: const EdgeInsets.fromLTRB(32, 0, 16, 32),
       child: Column(
         children: <Widget>[
           Expanded(
@@ -83,13 +83,13 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
 //            autovalidate: true,
               child: ListView(
                 children: <Widget>[
-                  SizedBox(height: 80),
+                  const SizedBox(height: 80),
                   Text(
                     I18n.of(context)!.translationsForLocale().profile.detailsEnter,
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.headline2,
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: Text(
@@ -98,16 +98,16 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
                       style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black),
                     ),
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   EncointerTextFormField(
-                    key: Key('create-account-name'),
+                    key: const Key('create-account-name'),
                     hintText: dic.account.createHint,
                     labelText: I18n.of(context)!.translationsForLocale().profile.accountName,
                     controller: _nameCtrl,
                     validator: (v) => InputValidation.validateAccountName(context, v, store.account.optionalAccounts),
                   ),
                   TextFormField(
-                    key: Key('account-source'),
+                    key: const Key('account-source'),
                     decoration: InputDecoration(
                       hintText: dic.account.mnemonic,
                       labelText: dic.profile.personalKey,
@@ -121,7 +121,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
             ),
           ),
           PrimaryButton(
-            key: Key('account-import-next'),
+            key: const Key('account-import-next'),
             child: Text(I18n.of(context)!.translationsForLocale().home.next),
             onPressed: () async {
               if (_formKey.currentState!.validate() && !(_advanceOptions.error ?? false)) {

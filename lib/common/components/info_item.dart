@@ -13,7 +13,7 @@ class InfoItem extends StatelessWidget {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontSize: 12),
+            style: const TextStyle(fontSize: 12),
           ),
           Text(
             content ?? '-',

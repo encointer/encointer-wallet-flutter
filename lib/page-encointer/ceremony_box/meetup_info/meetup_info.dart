@@ -31,7 +31,7 @@ class MeetupInfo extends StatelessWidget {
     return Column(
       children: [
         CeremonyNotification(notificationIconData: Iconsax.tick_square, notification: info),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         CeremonyLocationButton(onPressed: onLocationPressed)
       ],
     );

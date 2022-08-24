@@ -29,7 +29,7 @@ class PrimaryButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(vertical: 16), // make splash animation as high as the container
+          padding: const EdgeInsets.symmetric(vertical: 16), // make splash animation as high as the container
           primary: Colors.transparent,
           onPrimary: Colors.white,
           shadowColor: Colors.transparent,
