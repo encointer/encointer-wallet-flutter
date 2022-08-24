@@ -394,6 +394,7 @@ class CommunityIcon extends StatelessWidget {
                 child: Icon(Iconsax.star, color: Colors.yellow),
               );
             } else
+              // ignore: curly_braces_in_flow_control_structures
               return Container(width: 0, height: 0);
           },
         ),
