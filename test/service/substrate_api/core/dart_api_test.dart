@@ -1,6 +1,7 @@
+import 'package:flutter_test/flutter_test.dart';
+
 import 'package:encointer_wallet/mocks/test_tags.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
-import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('can connect', () {

@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import '../../../models/communities/community_identifier.dart';
-import '../../../models/encointer_balance_data/balance_entry.dart';
-import '../../../models/worker_api/worker_api.dart';
-import '../core/js_api.dart';
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
+import 'package:encointer_wallet/models/worker_api/worker_api.dart';
+import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 
 class TeeProxyApi {
   TeeProxyApi(this.jsApi)

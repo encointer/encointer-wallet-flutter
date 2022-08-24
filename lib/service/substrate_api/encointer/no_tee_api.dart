@@ -1,7 +1,8 @@
 import 'dart:convert';
+
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
-import '../../../models/communities/community_identifier.dart';
-import '../../../models/encointer_balance_data/balance_entry.dart';
 
 class NoTeeApi {
   NoTeeApi(this.jsApi)

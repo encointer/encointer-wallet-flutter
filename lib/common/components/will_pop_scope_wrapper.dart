@@ -1,7 +1,8 @@
 import 'dart:io';
 
-import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
+
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 class WillPopScopeWrapper extends StatelessWidget {
   WillPopScopeWrapper({required this.child});

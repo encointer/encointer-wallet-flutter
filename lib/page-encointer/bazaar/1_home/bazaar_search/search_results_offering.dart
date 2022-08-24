@@ -1,7 +1,9 @@
-import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
+
+import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_vertical.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import '../../shared/bazaar_item_vertical.dart';
+
 import 'search_results_offering_filtered.dart';
 
 class SearchResultsOffering extends StatelessWidget {

@@ -1,10 +1,11 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/page/account/create/create_pin_form.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class CreatePinPageParams {
   CreatePinPageParams(this.onCreatePin);

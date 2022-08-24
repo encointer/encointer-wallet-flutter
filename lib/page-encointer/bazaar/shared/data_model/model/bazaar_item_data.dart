@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import "package:latlong2/latlong.dart";
+import 'package:flutter/material.dart';
 
 /// A BazaarItem can either be an offering or a business.
 /// info contains the price in case of an offering and the distance in case of a business

@@ -1,6 +1,7 @@
+import 'package:mobx/mobx.dart';
+
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/chain/types/header.dart';
-import 'package:mobx/mobx.dart';
 
 part 'chain.g.dart';
 
