@@ -17,7 +17,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class Profile extends StatefulWidget {
-  Profile(this.store);
+  Profile(this.store, {Key? key}) : super(key: key);
 
   final AppStore store;
 

@@ -18,7 +18,7 @@ class CommunityChooserOnMap extends StatelessWidget {
 
   List<Marker> get _markers => getMarkers(store);
 
-  CommunityChooserOnMap(this.store) {
+  CommunityChooserOnMap(this.store, {Key? key}) : super(key: key) {
     if (store.encointer.communities != null) {
       for (var community in store.encointer.communities!) {
         communityDataAt[coordinatesOf(community)] = community;
@@ -47,7 +47,7 @@ class CommunityDetailsPopup extends StatefulWidget {
   final Marker marker;
   final CidName? dataForThisMarker;
 
-  CommunityDetailsPopup(this.store, this.marker, this.dataForThisMarker);
+  CommunityDetailsPopup(this.store, this.marker, this.dataForThisMarker, {Key? key}) : super(key: key);
 
   @override
   _CommunityDetailsPopupState createState() => _CommunityDetailsPopupState(store);

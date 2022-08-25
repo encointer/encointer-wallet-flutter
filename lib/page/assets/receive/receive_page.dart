@@ -18,7 +18,7 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class ReceivePage extends StatefulWidget {
-  ReceivePage(this.store);
+  ReceivePage(this.store, {Key? key}) : super(key: key);
   static const String route = '/assets/receive';
   final AppStore store;
   @override

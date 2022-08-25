@@ -6,6 +6,8 @@ import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/busi
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class OpeningHours extends StatelessWidget {
+  const OpeningHours({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -19,10 +21,8 @@ class OpeningHours extends StatelessWidget {
 }
 
 class OpeningHoursViewForDay extends StatelessWidget {
+  OpeningHoursViewForDay(this.day, {Key? key}) : super(key: key);
   final day;
-
-  OpeningHoursViewForDay(this.day);
-
   @override
   Widget build(BuildContext context) {
     final businessFormState = Provider.of<BusinessFormState>(context);
@@ -141,7 +141,7 @@ class AddOpeningIntervalForDay extends StatelessWidget {
   final _textController = TextEditingController(text: '');
   final day;
 
-  AddOpeningIntervalForDay(this.day);
+  AddOpeningIntervalForDay(this.day, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

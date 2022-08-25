@@ -15,7 +15,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class ChangePasswordPage extends StatefulWidget {
-  ChangePasswordPage(this.store);
+  ChangePasswordPage(this.store, {Key? key}) : super(key: key);
 
   static const String route = '/profile/password';
   final AppStore store;

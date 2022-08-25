@@ -48,7 +48,7 @@ import 'mocks/substrate_api/mock_api.dart';
 import 'utils/translations/index.dart';
 
 class WalletApp extends StatefulWidget {
-  const WalletApp(this.config);
+  const WalletApp(this.config, {Key? key}) : super(key: key);
 
   final Config config;
 

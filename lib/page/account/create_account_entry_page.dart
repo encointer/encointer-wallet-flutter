@@ -10,6 +10,8 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 class CreateAccountEntryPage extends StatelessWidget {
   static const String route = '/account/entry';
 
+  CreateAccountEntryPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final String nctrLogo = 'assets/nctr_logo.svg';

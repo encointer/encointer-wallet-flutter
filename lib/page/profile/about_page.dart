@@ -9,6 +9,8 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 class AboutPage extends StatelessWidget {
   static const String route = '/profile/about';
 
+  AboutPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();

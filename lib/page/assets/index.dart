@@ -36,7 +36,7 @@ import 'account_or_community/account_or_community_data.dart';
 import 'account_or_community/switch_account_or_community.dart';
 
 class Assets extends StatefulWidget {
-  Assets(this.store);
+  Assets(this.store, {Key? key}) : super(key: key);
 
   final AppStore store;
 

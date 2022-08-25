@@ -16,7 +16,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class NetworkSelectPage extends StatefulWidget {
-  NetworkSelectPage(this.store, this.changeTheme);
+  NetworkSelectPage(this.store, this.changeTheme, {Key? key}) : super(key: key);
 
   static const String route = '/network';
   final AppStore store;

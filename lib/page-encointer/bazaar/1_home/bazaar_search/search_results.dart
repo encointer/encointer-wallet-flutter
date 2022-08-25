@@ -13,6 +13,8 @@ class SearchResults extends StatelessWidget {
   final businessResults = searchResultsInBusinesses;
   final offeringsResults = searchResultsInOfferings;
 
+  SearchResults({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(

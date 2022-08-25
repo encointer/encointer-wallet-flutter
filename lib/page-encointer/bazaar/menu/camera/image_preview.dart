@@ -9,6 +9,8 @@ import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/busi
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class ImagePreview extends StatelessWidget {
+  const ImagePreview({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final businessFormState = Provider.of<BusinessFormState>(context);

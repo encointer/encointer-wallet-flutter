@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MockQRScanPage extends StatelessWidget {
-  MockQRScanPage(this.background);
+  MockQRScanPage(this.background, {Key? key}) : super(key: key);
 
   // image that emulates camera
   final ImageProvider background;

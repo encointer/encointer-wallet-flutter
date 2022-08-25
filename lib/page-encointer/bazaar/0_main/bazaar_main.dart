@@ -17,7 +17,7 @@ class BazaarMain extends StatelessWidget {
 
   final AppStore store;
 
-  BazaarMain(this.store);
+  BazaarMain(this.store, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) => Provider<BazaarMainState>(
@@ -48,7 +48,7 @@ class BazaarMain extends StatelessWidget {
             endDrawer: const BazaarMenu(),
             body: TabBarView(
               children: [
-                Home(),
+                const Home(),
                 Offerings(),
                 Businesses(),
                 Favorites(),

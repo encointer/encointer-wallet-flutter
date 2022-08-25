@@ -9,6 +9,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class BusinessDetail extends StatelessWidget {
+  BusinessDetail(this.business, {Key? key}) : super(key: key);
   final BazaarBusinessData? business;
   final double cardHeight = 200;
   final double cardWidth = 160;
@@ -87,8 +88,6 @@ class BusinessDetail extends StatelessWidget {
       ),
     );
   }
-
-  BusinessDetail(this.business);
 }
 
 class SmallLeaflet extends StatelessWidget {

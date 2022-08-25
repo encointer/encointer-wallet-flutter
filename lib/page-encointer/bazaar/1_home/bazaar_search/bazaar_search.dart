@@ -5,6 +5,8 @@ import 'package:encointer_wallet/page-encointer/bazaar/1_home/bazaar_search/sear
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class BazaarSearch extends StatelessWidget {
+  const BazaarSearch({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final isPortrait = MediaQuery.of(context).orientation == Orientation.portrait;

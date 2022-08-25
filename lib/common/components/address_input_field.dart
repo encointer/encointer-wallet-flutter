@@ -12,7 +12,8 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class AddressInputField extends StatefulWidget {
-  AddressInputField(this.store, {this.label, this.initialValue, this.onChanged, this.hideIdenticon = false});
+  AddressInputField(this.store, {Key? key, this.label, this.initialValue, this.onChanged, this.hideIdenticon = false})
+      : super(key: key);
   final AppStore store;
   final String? label;
   final AccountData? initialValue;

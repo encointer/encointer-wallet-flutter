@@ -21,7 +21,7 @@ class ScanPageParams {
 }
 
 class ScanPage extends StatelessWidget {
-  ScanPage(this.store);
+  ScanPage(this.store, {Key? key}) : super(key: key);
 
   static const String route = '/account/scan';
 

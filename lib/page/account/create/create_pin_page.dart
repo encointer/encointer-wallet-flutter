@@ -14,7 +14,7 @@ class CreatePinPageParams {
 }
 
 class CreatePinPage extends StatefulWidget {
-  const CreatePinPage(this.store);
+  const CreatePinPage(this.store, {Key? key}) : super(key: key);
 
   static const String route = '/account/createPin';
   final AppStore store;

@@ -39,7 +39,7 @@ class TransferPageParams {
 }
 
 class TransferPage extends StatefulWidget {
-  const TransferPage(this.store);
+  TransferPage(this.store, {Key? key}) : super(key: key);
 
   static const String route = '/assets/transfer';
   final AppStore store;

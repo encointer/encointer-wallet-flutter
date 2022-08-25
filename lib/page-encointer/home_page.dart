@@ -12,7 +12,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'bazaar/0_main/bazaar_main.dart';
 
 class EncointerHomePage extends StatefulWidget {
-  EncointerHomePage(this.store);
+  EncointerHomePage(this.store, {Key? key}) : super(key: key);
 
   static final GlobalKey encointerHomePageKey = GlobalKey();
   static const String route = '/';

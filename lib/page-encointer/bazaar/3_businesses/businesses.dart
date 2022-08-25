@@ -9,6 +9,8 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 class Businesses extends StatelessWidget {
   final data = allBusinesses;
 
+  Businesses({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(children: [
