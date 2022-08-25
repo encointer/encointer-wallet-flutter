@@ -23,13 +23,17 @@ class RoundedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> row = <Widget>[];
     if (submitting) {
-      row.add(const CupertinoActivityIndicator());
+      row.add(
+        const CupertinoActivityIndicator(),
+      );
     }
     if (icon != null) {
-      row.add(Container(
-        width: 32,
-        child: icon,
-      ));
+      row.add(
+        SizedBox(
+          width: 32,
+          child: icon,
+        ),
+      );
     }
     row.add(Text(
       text,
@@ -39,7 +43,9 @@ class RoundedButton extends StatelessWidget {
       style: TextButton.styleFrom(
         padding: const EdgeInsets.only(top: 12, bottom: 12),
         backgroundColor: color ?? Theme.of(context).primaryColor,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

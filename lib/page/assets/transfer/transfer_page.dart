@@ -173,7 +173,7 @@ class _TransferPageState extends State<TransferPage> {
                   const SizedBox(height: 8),
                   PrimaryButton(
                     key: const Key('make-transfer'),
-                    child: Container(
+                    child: SizedBox(
                       height: 24,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,

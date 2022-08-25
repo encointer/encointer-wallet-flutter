@@ -365,7 +365,7 @@ class CommunityIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
+        SizedBox(
           width: 50,
           height: 50,
           child: icon,
@@ -381,7 +381,7 @@ class CommunityIcon extends StatelessWidget {
               );
             } else
               // ignore: curly_braces_in_flow_control_structures
-              return Container(width: 0, height: 0);
+              return const SizedBox(width: 0, height: 0);
           },
         ),
       ],

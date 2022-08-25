@@ -56,7 +56,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
                 ),
                 const SizedBox(height: 10),
                 Center(
-                  child: Container(
+                  child: SizedBox(
                     width: 250,
                     child: Text(
                       dic.profile.pinHint,
@@ -119,7 +119,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
                     children: [
                       const Icon(Icons.info_outlined),
                       const SizedBox(width: 12),
-                      Container(
+                      SizedBox(
                         width: 250,
                         child: Text(
                           dic.profile.pinInfo,

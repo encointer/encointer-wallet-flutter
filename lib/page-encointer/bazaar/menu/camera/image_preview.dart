@@ -36,7 +36,7 @@ class ImagePreview extends StatelessWidget {
                 .map(
                   (image) => Stack(
                     children: [
-                      Container(
+                      SizedBox(
                         height: 200,
                         child: kIsWeb ? Image.network(image!.path) : Image.file(File(image!.path)),
                       ),

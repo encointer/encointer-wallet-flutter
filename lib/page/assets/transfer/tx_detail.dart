@@ -98,7 +98,7 @@ class TxDetail extends StatelessWidget {
       ListTile(
         leading: buildLabel(dic.assets.hash),
         title: Text(Fmt.address(hash)!),
-        trailing: Container(
+        trailing: SizedBox(
           width: 140,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

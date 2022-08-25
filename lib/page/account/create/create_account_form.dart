@@ -71,7 +71,7 @@ class CreateAccountForm extends StatelessWidget {
                 ),
                 const SizedBox(height: 10),
                 Center(
-                  child: Container(
+                  child: SizedBox(
                     width: 300,
                     child: Text(
                       I18n.of(context)!.translationsForLocale().profile.accountNameChooseHint,

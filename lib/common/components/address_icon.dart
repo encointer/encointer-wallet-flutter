@@ -31,7 +31,7 @@ class AddressIcon extends StatelessWidget {
         backColor: '#d4edf8ff',
         hues: [199]);
     return GestureDetector(
-      child: Container(
+      child: SizedBox(
         width: size,
         height: size,
         child: ClipOval(

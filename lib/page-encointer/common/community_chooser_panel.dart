@@ -29,7 +29,7 @@ class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: RoundedCard(
         padding: const EdgeInsets.symmetric(vertical: 8),

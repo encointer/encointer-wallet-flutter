@@ -68,7 +68,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                     const SizedBox(height: 12),
                     // Enhance brightness for the QR-code
                     const WakeLockAndBrightnessEnhancer(brightness: 1),
-                    Container(
+                    SizedBox(
                       width: 395,
                       height: 395,
                       child: FutureBuilder<Uint8List>(

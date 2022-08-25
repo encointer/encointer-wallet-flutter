@@ -45,7 +45,7 @@ class AddAccountForm extends StatelessWidget {
                     style: Theme.of(context).textTheme.headline2,
                   ),
                   const SizedBox(height: 10),
-                  Container(
+                  SizedBox(
                     width: 300,
                     child: Text(
                       I18n.of(context)!.translationsForLocale().profile.accountNameChooseHint,

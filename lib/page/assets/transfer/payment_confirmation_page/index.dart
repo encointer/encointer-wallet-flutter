@@ -107,7 +107,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                 !_transferState.isFinishedOrFailed()
                     ? PrimaryButton(
                         key: const Key('make-transfer'),
-                        child: Container(
+                        child: SizedBox(
                           height: 24,
                           child: !_transferState.isSubmitting()
                               ? Row(
@@ -124,7 +124,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                       )
                     : PrimaryButton(
                         key: const Key('transfer-done'),
-                        child: Container(
+                        child: SizedBox(
                           height: 24,
                           child: Center(child: Text(dic.assets.done)),
                         ),

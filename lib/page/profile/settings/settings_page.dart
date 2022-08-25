@@ -45,7 +45,7 @@ class _Settings extends State<SettingsPage> {
     void _onLanguageTap() {
       showCupertinoModalPopup(
         context: context,
-        builder: (_) => Container(
+        builder: (_) => SizedBox(
           height: MediaQuery.of(context).copyWith().size.height / 3,
           child: WillPopScope(
             child: CupertinoPicker(
@@ -84,7 +84,7 @@ class _Settings extends State<SettingsPage> {
           child: ListView(
             children: <Widget>[
               ListTile(
-                leading: Container(
+                leading: SizedBox(
                   width: 36,
                   child: Image.asset('assets/images/public/${store.endpoint.info}.png'),
                 ),
@@ -94,7 +94,7 @@ class _Settings extends State<SettingsPage> {
                 onTap: () => Navigator.of(context).pushNamed(RemoteNodeListPage.route),
               ),
               ListTile(
-                leading: Container(
+                leading: SizedBox(
                   width: 36,
                   child: Image.asset('assets/images/public/${store.customSS58Format['info']}.png'),
                 ),

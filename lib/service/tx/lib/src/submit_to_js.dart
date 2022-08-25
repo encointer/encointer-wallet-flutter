@@ -136,7 +136,7 @@ void _onTxFinish(BuildContext context, AppStore store, Map res, Function(BuildCo
   if (mounted) {
     RootSnackBar.show(
       ListTile(
-        leading: Container(width: 24, child: Image.asset('assets/images/assets/success.png')),
+        leading: SizedBox(width: 24, child: Image.asset('assets/images/assets/success.png')),
         title: Text(
           I18n.of(context)!.translationsForLocale().assets.success,
           style: const TextStyle(color: Colors.black54),
