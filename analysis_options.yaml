@@ -6,6 +6,8 @@ include: package:lints/core.yaml
   
 linter:
   rules:
+    prefer_const_constructors: true 
+
     always_use_package_imports: false
     camel_case_extensions: false
     depend_on_referenced_packages: false
@@ -14,16 +16,12 @@ linter:
     prefer_is_empty: false
     curly_braces_in_flow_structures: false
 
-   
-
-
-    prefer_const_constructors: true 
+    
     # prefer_const_constructors_in_immutable: false
     # avoid_unnecessary_containers: false
     # use_key_in_widget_constructors: false
     # prefer_single_quotes: false
     # sized_box_for_whitespace: false
-
     # always_declare_return_types: false
     # cancel_subscriptions: false
     # close_sinks: false
