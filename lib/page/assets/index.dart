@@ -100,7 +100,7 @@ class _AssetsState extends State<Assets> {
     balanceWatchdog = PausableTimer(
       const Duration(seconds: 12),
       () {
-        print("[balanceWatchdog] triggered");
+        print('[balanceWatchdog] triggered');
         _refreshBalanceAndNotify(dic);
         balanceWatchdog!
           ..reset()
@@ -181,7 +181,7 @@ class _AssetsState extends State<Assets> {
                                           style: const TextStyle(fontSize: 60),
                                         ),
                                         Text(
-                                          "${dic!.assets.balance}, ${store.encointer.community?.symbol}",
+                                          '${dic!.assets.balance}, ${store.encointer.community?.symbol}',
                                           style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                                         ),
                                       ],
@@ -204,7 +204,7 @@ class _AssetsState extends State<Assets> {
                           if (store.settings.developerMode)
                             ElevatedButton(
                               onPressed: store.dataUpdate.setInvalidated,
-                              child: const Text("Invalidate data to trigger state update"),
+                              child: const Text('Invalidate data to trigger state update'),
                             ),
                           const SizedBox(
                             height: 42,
@@ -505,9 +505,9 @@ class _AssetsState extends State<Assets> {
 
   void _refreshBalanceAndNotify(Translations? dic) {
     webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
-      print("[home:refreshBalanceAndNotify] get all balances");
+      print('[home:refreshBalanceAndNotify] get all balances');
       if (widget.store.encointer.chosenCid == null) {
-        print("[home:refreshBalanceAndNotify] no community selected");
+        print('[home:refreshBalanceAndNotify] no community selected');
         return;
       }
       bool activeAccountHasBalance = false;
@@ -521,7 +521,7 @@ class _AssetsState extends State<Assets> {
                   widget.store.encointer.accountStores![widget.store.account.currentAddress]!.balanceEntries[cidStr]) ??
               0;
           double delta = newBalance - oldBalance;
-          print("[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta");
+          print('[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta');
           if (delta.abs() > demurrageRate) {
             widget.store.encointer.accountStores![widget.store.account.currentAddress]
                 ?.addBalanceEntry(cid, balances[cid]!);
@@ -530,7 +530,7 @@ class _AssetsState extends State<Assets> {
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
                   .replaceAll('CID_SYMBOL', community.metadata!.symbol)
                   .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
-              print("[home:balanceWatchdog] $msg");
+              print('[home:balanceWatchdog] $msg');
               NotificationPlugin.showNotification(45, dic.assets.fundsReceived, msg, cid: cidStr);
             }
           }

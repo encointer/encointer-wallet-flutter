@@ -183,7 +183,7 @@ class _ProfileState extends State<Profile> {
                             key: const Key('choose-network'),
                             child: Observer(
                               builder: (_) => Text(
-                                "Change network (current: ${store.settings.endpoint.info})", // for devs only
+                                'Change network (current: ${store.settings.endpoint.info})', // for devs only
                                 style: Theme.of(context).textTheme.headline4,
                               ),
                             ),

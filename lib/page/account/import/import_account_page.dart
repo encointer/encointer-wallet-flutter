@@ -56,14 +56,14 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       cryptoType: _cryptoType,
       derivePath: _derivePath,
     );
-    _log("imported account to JS.");
+    _log('imported account to JS.');
 
     // check if account duplicate
     if (acc['error'] != null) {
       var msg = acc['error'];
 
       if (acc['error'] == 'unreachable') {
-        msg = "${I18n.of(context)!.translationsForLocale().account.importInvalid}: $_keyType";
+        msg = '${I18n.of(context)!.translationsForLocale().account.importInvalid}: $_keyType';
       }
 
       showCupertinoDialog(
@@ -134,7 +134,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   }
 
   Future<void> _saveAccount(Map<String, dynamic> acc) async {
-    _log("Saving account: ${acc["pubKey"]}");
+    _log('Saving account: ${acc["pubKey"]}');
     var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
     await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
 
@@ -181,5 +181,5 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
 }
 
 _log(String msg) {
-  print("[importAccountPage] $msg");
+  print('[importAccountPage] $msg');
 }

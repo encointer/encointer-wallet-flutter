@@ -14,8 +14,8 @@ const String business_ipfs_cid1 = '0x1ebf164a5bb618ec6caad31488161b237e24d75efa3
 const String business_ipfs_cid2 = '0x2ebf164a5bb618ec6caad31488161b237e24d75efa3040286767b620d9183989';
 const String business_ipfs_cid3 = '0x3ebf164a5bb618ec6caad31488161b237e24d75efa3040286767b620d9183989';
 
-final CommunityIdentifier cid1 = CommunityIdentifier.fromFmtString("gbsuv7YXq9G");
-final CommunityIdentifier cid2 = CommunityIdentifier.fromFmtString("fbsuv7YXq9G");
+final CommunityIdentifier cid1 = CommunityIdentifier.fromFmtString('gbsuv7YXq9G');
+final CommunityIdentifier cid2 = CommunityIdentifier.fromFmtString('fbsuv7YXq9G');
 
 final BusinessIdentifier bid1 = BusinessIdentifier(cid1, controller1);
 final BusinessIdentifier bid2 = BusinessIdentifier(cid1, controller2);
@@ -81,18 +81,18 @@ final Map<String, IpfsBusiness> ipfsBusinesses = {
 
 // Todo: @armin add some actual images to assets that look nice in the bazaar.
 // Additionally, the bazaar should support more than one image per asset/business.
-final ipfsBusiness1 = IpfsBusiness("Homemade delicacies", "Everything is yummy", "Бишкек, Ala Too Square",
-    "assets/images/assets/Assets_nav_0.png", "Mo-Thu, 8am-8pm");
-final ipfsBusiness2 = IpfsBusiness("From Malfoy for Dumbledore", "You will love it", "Zürich, Technoparkstrasse 1",
-    "assets/images/assets/Assets_nav_0.png", "Mo-Thu, 8am-8pm");
+final ipfsBusiness1 = IpfsBusiness('Homemade delicacies', 'Everything is yummy', 'Бишкек, Ala Too Square',
+    'assets/images/assets/Assets_nav_0.png', 'Mo-Thu, 8am-8pm');
+final ipfsBusiness2 = IpfsBusiness('From Malfoy for Dumbledore', 'You will love it', 'Zürich, Technoparkstrasse 1',
+    'assets/images/assets/Assets_nav_0.png', 'Mo-Thu, 8am-8pm');
 final ipfsBusiness3 = IpfsBusiness(
-    "NFT plaza", "Everything is yummy", "Miami Beach", "assets/images/assets/Assets_nav_0.png", "Mo-Thu, 8am-8pm");
+    'NFT plaza', 'Everything is yummy', 'Miami Beach', 'assets/images/assets/Assets_nav_0.png', 'Mo-Thu, 8am-8pm');
 
 final ipfsOffering1 =
-    IpfsOffering("Cheesecake", 1, "I am yummy", "Бишкек, Ala Too Square", "assets/images/assets/Assets_nav_0.png");
+    IpfsOffering('Cheesecake', 1, 'I am yummy', 'Бишкек, Ala Too Square', 'assets/images/assets/Assets_nav_0.png');
 final ipfsOffering2 =
-    IpfsOffering("шашлы́к", 1, "I am yummy", "Бишкек, Ala Too Square", "assets/images/assets/Assets_nav_0.png");
-final ipfsOffering3 = IpfsOffering("Harry Potter Heptalogy", 1, "I am interesting", "Zürich, Technoparkstrasse 1",
-    "assets/images/assets/Assets_nav_0.png");
+    IpfsOffering('шашлы́к', 1, 'I am yummy', 'Бишкек, Ala Too Square', 'assets/images/assets/Assets_nav_0.png');
+final ipfsOffering3 = IpfsOffering('Harry Potter Heptalogy', 1, 'I am interesting', 'Zürich, Technoparkstrasse 1',
+    'assets/images/assets/Assets_nav_0.png');
 final ipfsOffering4 = IpfsOffering(
-    "Picasso Fake as NFT by C.L.", 1, "I am beautiful", "Miami Beach", "assets/images/assets/Assets_nav_0.png");
+    'Picasso Fake as NFT by C.L.', 1, 'I am beautiful', 'Miami Beach', 'assets/images/assets/Assets_nav_0.png');

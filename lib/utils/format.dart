@@ -33,7 +33,7 @@ class Fmt {
 
   static String hhmmss(int seconds) {
     Duration d = Duration(seconds: seconds);
-    return d.toString().split('.').first.padLeft(8, "0");
+    return d.toString().split('.').first.padLeft(8, '0');
   }
 
   /// number transform 1:
@@ -43,7 +43,7 @@ class Fmt {
       return BigInt.zero;
     }
     if (raw.contains(',') || raw.contains('.')) {
-      return BigInt.from(NumberFormat(",##0.000").parse(raw));
+      return BigInt.from(NumberFormat(',##0.000').parse(raw));
     } else {
       return BigInt.parse(raw);
     }
@@ -66,7 +66,7 @@ class Fmt {
       return '~';
     }
     value.toStringAsFixed(3);
-    NumberFormat f = NumberFormat(",##0${length! > 0 ? '.' : ''}${'#' * length}", "en_US");
+    NumberFormat f = NumberFormat(",##0${length! > 0 ? '.' : ''}${'#' * length}", 'en_US');
     return f.format(value);
   }
 
@@ -139,8 +139,8 @@ class Fmt {
   }) {
     final int x = pow(10, lengthMax ?? lengthFixed) as int;
     final double price = (value * x).ceilToDouble() / x;
-    final String tailDecimals = lengthMax == null ? '' : "#" * (lengthMax - lengthFixed);
-    return NumberFormat(",##0${lengthFixed > 0 ? '.' : ''}${"0" * lengthFixed}$tailDecimals", "en_US").format(price);
+    final String tailDecimals = lengthMax == null ? '' : '#' * (lengthMax - lengthFixed);
+    return NumberFormat(",##0${lengthFixed > 0 ? '.' : ''}${"0" * lengthFixed}$tailDecimals", 'en_US').format(price);
   }
 
   /// number transform 6:
@@ -153,8 +153,8 @@ class Fmt {
   }) {
     final int x = pow(10, lengthMax ?? lengthFixed) as int;
     final double price = (value * x).floorToDouble() / x;
-    final String tailDecimals = lengthMax == null ? '' : "#" * (lengthMax - lengthFixed);
-    return NumberFormat(",##0${lengthFixed > 0 ? '.' : ''}${"0" * lengthFixed}$tailDecimals", "en_US").format(price);
+    final String tailDecimals = lengthMax == null ? '' : '#' * (lengthMax - lengthFixed);
+    return NumberFormat(",##0${lengthFixed > 0 ? '.' : ''}${"0" * lengthFixed}$tailDecimals", 'en_US').format(price);
   }
 
   /// number transform 7:
@@ -215,12 +215,12 @@ class Fmt {
   }
 
   static List<int> hexToBytes(String hex) {
-    const String _BYTE_ALPHABET = "0123456789abcdef";
+    const String _BYTE_ALPHABET = '0123456789abcdef';
 
-    hex = hex.replaceAll(" ", "");
-    hex = hex.replaceAll("0x", "");
+    hex = hex.replaceAll(' ', '');
+    hex = hex.replaceAll('0x', '');
     hex = hex.toLowerCase();
-    if (hex.length % 2 != 0) hex = "0" + hex;
+    if (hex.length % 2 != 0) hex = '0' + hex;
     Uint8List result = new Uint8List(hex.length ~/ 2);
     for (int i = 0; i < result.length; i++) {
       int value = (_BYTE_ALPHABET.indexOf(hex[i * 2]) << 4) //= byte[0] * 16
@@ -232,7 +232,7 @@ class Fmt {
   }
 
   static String bytesToHex(List<int> bytes) {
-    return "0x" + hex.encode(bytes);
+    return '0x' + hex.encode(bytes);
   }
 
   static String? accountDisplayNameString(String? address, Map? accInfo) {

@@ -50,9 +50,9 @@ class _AddAccountPageState extends State<AddAccountPage> {
     }
 
     var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
-    _log("Created new account with address: ${addresses[0]}");
+    _log('Created new account with address: ${addresses[0]}');
     await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
-    _log("added new account with address: ${addresses[0]}");
+    _log('added new account with address: ${addresses[0]}');
 
     String? pubKey = acc['pubKey'];
     await store.setCurrentAccount(pubKey);
@@ -157,5 +157,5 @@ class _AddAccountPageState extends State<AddAccountPage> {
 }
 
 _log(String msg) {
-  print("[AddAccountPage] $msg");
+  print('[AddAccountPage] $msg');
 }

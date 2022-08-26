@@ -87,7 +87,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
     var community = store.encointer.communityStores![cidFmt]!;
 
-    _log("_getBalanceEntryListTile: ${community.toJson()}");
+    _log('_getBalanceEntryListTile: ${community.toJson()}');
 
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
@@ -390,5 +390,5 @@ class CommunityIcon extends StatelessWidget {
 }
 
 _log(String msg) {
-  print("[accountManagePage] $msg");
+  print('[accountManagePage] $msg');
 }

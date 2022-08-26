@@ -48,20 +48,20 @@ class Ipfs {
 
   Future<SvgPicture> getCommunityIcon(String? cid) async {
     if (cid == null || cid.isEmpty) {
-      print("[IPFS] return default encointer icon because ipfs-cid is not set");
+      print('[IPFS] return default encointer icon because ipfs-cid is not set');
       return SvgPicture.asset(fall_back_community_icon);
     }
 
     try {
       var data = await getData(getIconsPath(cid));
       if (data == null) {
-        print("[Ipfs] could not find community icon");
+        print('[Ipfs] could not find community icon');
         return SvgPicture.asset(fall_back_community_icon);
       }
 
       return SvgPicture.string(data);
     } catch (e) {
-      print("[Ipfs] error getting communityIcon: $e");
+      print('[Ipfs] error getting communityIcon: $e');
       return SvgPicture.asset(fall_back_community_icon);
     }
   }
@@ -91,7 +91,7 @@ class Ipfs {
       _dio.options.connectTimeout = 5000; //5s
       _dio.options.receiveTimeout = 3000;
 
-      final response = await _dio.post("/ipfs/", data: image.openRead());
+      final response = await _dio.post('/ipfs/', data: image.openRead());
       String imageHash = response.headers.map['ipfs-hash'].toString(); // [ipfs_hash]
 
       // TODO: Nicer solution
@@ -104,8 +104,8 @@ class Ipfs {
 
       return imageHash;
     } catch (e) {
-      print("Ipfs upload of Image error ${e.toString()}");
-      return "";
+      print('Ipfs upload of Image error ${e.toString()}');
+      return '';
     }
   }
 
@@ -116,7 +116,7 @@ class Ipfs {
       _dio.options.connectTimeout = 5000; //5s
       _dio.options.receiveTimeout = 3000;
 
-      final response = await _dio.post("/ipfs/", data: json);
+      final response = await _dio.post('/ipfs/', data: json);
       String jsonHash = response.headers.map['ipfs-hash'].toString(); // [ipfs_hash]
 
       // TODO: Nicer solution
@@ -129,8 +129,8 @@ class Ipfs {
 
       return jsonHash;
     } catch (e) {
-      print("Ipfs upload of json error ${e.toString()}");
-      return "";
+      print('Ipfs upload of json error ${e.toString()}');
+      return '';
     }
   }
 }
@@ -145,7 +145,7 @@ class IpfsDio {
   late Dio dio;
 
   Future<Response<T>> get<T>(String cid) async {
-    print("[IPFS] fetching data from: ${dio.options.baseUrl}$getRequest$cid}");
+    print('[IPFS] fetching data from: ${dio.options.baseUrl}$getRequest$cid}');
     return dio.get('$getRequest$cid');
   }
 }

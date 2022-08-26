@@ -70,7 +70,7 @@ class CeremonyBoxService {
     var ceremonyStart = assigningStart - ceremonyPhaseDurations[CeremonyPhase.Registering]!;
 
     if (currentTime < ceremonyStart) {
-      throw Exception("[CeremonyProgressBar] Current time was smaller than ceremony start");
+      throw Exception('[CeremonyProgressBar] Current time was smaller than ceremony start');
     }
 
     var progressUnormalized;

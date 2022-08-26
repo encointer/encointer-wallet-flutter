@@ -33,7 +33,7 @@ class SubstrateDartApi {
       // print("Methods: ${methods.toString()}");
 
       // Sanity check that we are running against valid node with offchain indexing enabled
-      if (!_rpc!.methods!.contains("encointer_getReputations")) {
+      if (!_rpc!.methods!.contains('encointer_getReputations')) {
         _log("rpc_methods does not contain 'getReputations'. Are the following flags passed"
             " to the node? \n '--enable-offchain-indexing true --rpc-methods unsafe'");
       }
@@ -47,7 +47,7 @@ class SubstrateDartApi {
     if (_client != null) {
       await _client!.close();
     } else {
-      _log("no connection to be closed.");
+      _log('no connection to be closed.');
     }
   }
 
@@ -60,9 +60,9 @@ class SubstrateDartApi {
       throw ("[dartApi] Can't call an rpc method because we are not connected to an endpoint");
     }
     if (_client!.isClosed) {
-      print("[dartApi] not connected. trying to reconnect to $endpoint");
+      print('[dartApi] not connected. trying to reconnect to $endpoint');
       this.reconnect();
-      print("[dartApi] connection status: isclosed? ${_client!.isClosed}");
+      print('[dartApi] connection status: isclosed? ${_client!.isClosed}');
     }
 
     return _client!.sendRequest(method, params);

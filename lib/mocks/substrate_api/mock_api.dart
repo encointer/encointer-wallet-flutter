@@ -11,7 +11,7 @@ import 'mock_encointer_api.dart';
 import 'mock_js_api.dart';
 
 MockApi getMockApi(AppStore store, {required bool withUI}) {
-  return MockApi(store, MockJSApi(), MockSubstrateDartApi(), "", withUi: withUI);
+  return MockApi(store, MockJSApi(), MockSubstrateDartApi(), '', withUi: withUI);
 }
 
 class MockApi extends Api {
@@ -39,7 +39,7 @@ class MockApi extends Api {
   @override
   Future<void> init() async {
     if (withUi) {
-      print("[MockApi] launch of webView");
+      print('[MockApi] launch of webView');
       await launchWebview();
     }
   }

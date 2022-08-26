@@ -43,10 +43,10 @@ Future<void> submitTx(
   final txPaymentAsset = store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
 
   if (txPaymentAsset != null) {
-    txParams["txInfo"]["txPaymentAsset"] = txPaymentAsset;
+    txParams['txInfo']['txPaymentAsset'] = txPaymentAsset;
   }
 
-  txParams["onFinish"] = onFinish ?? ((BuildContext txPageContext, Map res) => res);
+  txParams['onFinish'] = onFinish ?? ((BuildContext txPageContext, Map res) => res);
 
   return submitToJS(
     context,

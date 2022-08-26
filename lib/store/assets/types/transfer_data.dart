@@ -22,15 +22,15 @@ abstract class _TransferData {
   int? blockTimestamp = 0;
 
   @JsonKey(name: 'extrinsic_index')
-  String? extrinsicIndex = "";
+  String? extrinsicIndex = '';
 
-  String? fee = "";
+  String? fee = '';
 
-  String? from = "";
-  String? to = "";
-  String? amount = "";
-  String? token = "";
-  String? hash = "";
-  String? module = "";
+  String? from = '';
+  String? to = '';
+  String? amount = '';
+  String? token = '';
+  String? hash = '';
+  String? module = '';
   bool? success = true;
 }
