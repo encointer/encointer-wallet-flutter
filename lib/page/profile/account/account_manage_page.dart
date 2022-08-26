@@ -379,9 +379,9 @@ class CommunityIcon extends StatelessWidget {
                 right: 0, //give the values according to your requirement
                 child: Icon(Iconsax.star, color: Colors.yellow),
               );
-            } else
-              // ignore: curly_braces_in_flow_control_structures
+            } else {
               return const SizedBox(width: 0, height: 0);
+            }
           },
         ),
       ],
