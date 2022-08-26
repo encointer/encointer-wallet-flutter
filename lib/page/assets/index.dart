@@ -196,7 +196,7 @@ class _AssetsState extends State<Assets> {
                                                   Text(dic!.assets.communityNotSelected, textAlign: TextAlign.center))
                                           : const SizedBox(
                                               width: double.infinity,
-                                              child: CupertinoActivityIndicator(),
+                                              child: const CupertinoActivityIndicator(),
                                             ),
                                     );
                             },
