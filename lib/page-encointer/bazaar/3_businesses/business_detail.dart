@@ -67,7 +67,7 @@ class BusinessDetail extends StatelessWidget {
                             (int index) => DataRow(
                               cells: <DataCell>[
                                 DataCell(
-                                  Container(width: 30, child: Text(business!.openingHours.getDayString(index))),
+                                  SizedBox(width: 30, child: Text(business!.openingHours.getDayString(index))),
                                 ),
                                 DataCell(Text(
                                   business!.openingHours.getOpeningHoursFor(index).toString(),
@@ -99,7 +99,7 @@ class SmallLeaflet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
+        SizedBox(
           height: 257,
           child: FlutterMap(
             options: MapOptions(

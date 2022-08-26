@@ -190,11 +190,11 @@ class _AssetsState extends State<Assets> {
                                       margin: const EdgeInsets.only(top: 16),
                                       padding: const EdgeInsets.symmetric(vertical: 8),
                                       child: (store.encointer.chosenCid == null)
-                                          ? Container(
+                                          ? SizedBox(
                                               width: double.infinity,
                                               child:
                                                   Text(dic!.assets.communityNotSelected, textAlign: TextAlign.center))
-                                          : Container(
+                                          : const SizedBox(
                                               width: double.infinity,
                                               child: const CupertinoActivityIndicator(),
                                             ),

@@ -1,11 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:qr_flutter_fork/qr_flutter_fork.dart';
-
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -14,6 +9,10 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:qr_flutter_fork/qr_flutter_fork.dart';
 
 import 'ceremony_progress_bar.dart';
 import 'ceremony_step3_finish.dart';
@@ -68,7 +67,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                     const SizedBox(height: 12),
                     // Enhance brightness for the QR-code
                     const WakeLockAndBrightnessEnhancer(brightness: 1),
-                    Container(
+                    SizedBox(
                       width: 395,
                       height: 395,
                       child: FutureBuilder<Uint8List>(

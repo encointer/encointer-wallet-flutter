@@ -122,7 +122,7 @@ class _ProfileState extends State<Profile> {
                       ],
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     height: 130,
                     child: ShaderMask(
                       shaderCallback: (Rect bounds) {

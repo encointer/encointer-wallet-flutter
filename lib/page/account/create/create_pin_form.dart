@@ -1,12 +1,11 @@
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class CreatePinForm extends StatefulWidget {
   CreatePinForm({
@@ -56,7 +55,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
                 ),
                 const SizedBox(height: 10),
                 Center(
-                  child: Container(
+                  child: SizedBox(
                     width: 250,
                     child: Text(
                       dic.profile.pinHint,
@@ -119,7 +118,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
                     children: [
                       const Icon(Icons.info_outlined),
                       const SizedBox(width: 12),
-                      Container(
+                      SizedBox(
                         width: 250,
                         child: Text(
                           dic.profile.pinInfo,

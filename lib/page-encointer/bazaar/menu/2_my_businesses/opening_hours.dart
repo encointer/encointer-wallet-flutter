@@ -51,7 +51,7 @@ class OpeningHoursViewForDay extends StatelessWidget {
                     },
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 32,
                   child: Text(
                     "${openingHours.getDayString(day)}",
@@ -79,7 +79,7 @@ class OpeningHoursViewForDay extends StatelessWidget {
                         itemCount: openingHoursForThisDay!.openingIntervals.length,
                         itemBuilder: (_, index) {
                           final interval = openingHoursForThisDay.openingIntervals[index];
-                          return Container(
+                          return SizedBox(
                               width: 200,
                               child: Row(
                                 children: [
