@@ -7,7 +7,7 @@ import 'package:quiver/async.dart';
 import 'package:encointer_wallet/common/theme.dart';
 
 class CeremonyCountDown extends StatefulWidget {
-  CeremonyCountDown(this.nextCeremonyDate);
+  CeremonyCountDown(this.nextCeremonyDate, {Key? key}) : super(key: key);
 
   static const String route = '/encointer/assigning';
 

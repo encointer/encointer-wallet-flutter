@@ -9,7 +9,7 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class ImportAccountPage extends StatefulWidget {
-  const ImportAccountPage(this.store);
+  const ImportAccountPage(this.store, {Key? key}) : super(key: key);
 
   static const String route = '/account/import';
   final AppStore store;

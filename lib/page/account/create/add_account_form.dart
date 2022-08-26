@@ -12,10 +12,11 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class AddAccountForm extends StatelessWidget {
   AddAccountForm({
+    Key? key,
     required this.store,
     this.submitting,
     required this.onSubmit,
-  });
+  }) : super(key: key);
   final Function onSubmit;
   final bool? submitting;
   final AppStore store;

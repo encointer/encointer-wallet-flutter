@@ -9,8 +9,8 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/b
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class BusinessesOnMap extends StatelessWidget {
+  BusinessesOnMap({Key? key}) : super(key: key);
   final data = allBusinesses;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,10 +28,11 @@ class BMap extends StatelessWidget {
   final List<BazaarBusinessData> businessData;
   final bazaarBusinessDataFor = Map<LatLng, BazaarBusinessData>();
 
-  BMap(List<BazaarItemData> data)
+  BMap(List<BazaarItemData> data, {Key? key})
       // initializer (only use businesses, offerings do not have coordinates)
       : businessData =
-            data.where((item) => item is BazaarBusinessData).map((item) => item as BazaarBusinessData).toList() {
+            data.where((item) => item is BazaarBusinessData).map((item) => item as BazaarBusinessData).toList(),
+        super(key: key) {
     // construct a map using "collection for"
     bazaarBusinessDataFor.addAll({for (var business in businessData) business.coordinates: business});
   }

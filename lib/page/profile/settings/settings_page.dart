@@ -9,7 +9,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class SettingsPage extends StatefulWidget {
-  SettingsPage(this.store, this.changeLang);
+  SettingsPage(this.store, this.changeLang, {Key? key}) : super(key: key);
   static const String route = '/profile/settings';
   final SettingsStore store;
   final Function changeLang;

@@ -19,12 +19,13 @@ showPasswordInputDialog(context, account, title, onOk) {
 
 class PasswordInputDialog extends StatefulWidget {
   PasswordInputDialog({
+    Key? key,
     required this.account,
     required this.onOk,
     this.title,
     this.onCancel,
     this.onAccountSwitch,
-  });
+  }) : super(key: key);
 
   final AccountData account;
   final Function onOk;

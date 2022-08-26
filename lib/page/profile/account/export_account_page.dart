@@ -13,7 +13,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class ExportAccountPage extends StatelessWidget {
-  ExportAccountPage(this.store);
+  ExportAccountPage(this.store, {Key? key}) : super(key: key);
   static const String route = '/profile/export';
   final AccountStore store;
 

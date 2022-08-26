@@ -9,6 +9,8 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 class ExportResultPage extends StatelessWidget {
   static const String route = '/account/key';
 
+  ExportResultPage({Key? key}) : super(key: key);
+
   void _showExportDialog(BuildContext context, Map args) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
     Clipboard.setData(ClipboardData(

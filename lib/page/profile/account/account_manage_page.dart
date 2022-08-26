@@ -21,7 +21,7 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class AccountManagePage extends StatefulWidget {
-  AccountManagePage(this.store);
+  AccountManagePage(this.store, {Key? key}) : super(key: key);
 
   static const String route = '/profile/account';
   final AppStore store;

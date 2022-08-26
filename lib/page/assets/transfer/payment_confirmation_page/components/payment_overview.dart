@@ -8,7 +8,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 
 class PaymentOverview extends StatelessWidget {
-  PaymentOverview(this.store, this.communitySymbol, this.recipientAccount, this.amount);
+  PaymentOverview(this.store, this.communitySymbol, this.recipientAccount, this.amount, {Key? key}) : super(key: key);
 
   final AppStore store;
 

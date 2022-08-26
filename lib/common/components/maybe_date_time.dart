@@ -7,9 +7,10 @@ import 'package:intl/intl.dart';
 class MaybeDateTime extends StatelessWidget {
   MaybeDateTime(
     this.meetupTime, {
+    Key? key,
     required this.dateFormat,
     this.style,
-  });
+  }) : super(key: key);
 
   final int? meetupTime;
 

@@ -15,7 +15,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class ScanClaimQrCode extends StatelessWidget {
-  ScanClaimQrCode(this.store, this.confirmedParticipantsCount);
+  ScanClaimQrCode(this.store, this.confirmedParticipantsCount, {Key? key}) : super(key: key);
 
   final AppStore store;
   final int confirmedParticipantsCount;

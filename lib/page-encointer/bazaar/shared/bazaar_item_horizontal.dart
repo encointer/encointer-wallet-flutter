@@ -6,7 +6,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/3_businesses/business_det
 import 'data_model/model/bazaar_item_data.dart';
 
 class HorizontalBazaarItemList extends StatelessWidget {
-  HorizontalBazaarItemList(this.data, this.rowTitle, this.cardHeight, this.cardWidth);
+  HorizontalBazaarItemList(this.data, this.rowTitle, this.cardHeight, this.cardWidth, {Key? key}) : super(key: key);
 
   final List<BazaarItemData> data;
   final double cardHeight;

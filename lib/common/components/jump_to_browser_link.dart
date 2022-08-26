@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class JumpToBrowserLink extends StatefulWidget {
-  JumpToBrowserLink(this.url, {this.text, this.mainAxisAlignment});
+  JumpToBrowserLink(this.url, {Key? key, this.text, this.mainAxisAlignment}) : super(key: key);
 
   final String? text;
   final String? url;

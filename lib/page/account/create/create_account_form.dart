@@ -17,8 +17,9 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class CreateAccountForm extends StatelessWidget {
   CreateAccountForm({
+    Key? key,
     required this.store,
-  });
+  }) : super(key: key);
 
   final AppStore store;
 

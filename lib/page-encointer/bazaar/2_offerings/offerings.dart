@@ -8,6 +8,8 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 class Offerings extends StatelessWidget {
   final data = allOfferings;
 
+  Offerings({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(children: [

@@ -6,7 +6,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 
 class AccountSelectList extends StatelessWidget {
-  AccountSelectList(this.store, this.list);
+  AccountSelectList(this.store, this.list, {Key? key}) : super(key: key);
 
   final AppStore store;
   final List<AccountData> list;

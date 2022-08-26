@@ -10,7 +10,8 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class EncointerMap extends StatelessWidget {
-  EncointerMap(this.store, {this.popupBuilder, this.markers, this.title, this.center, this.initialZoom = 0});
+  EncointerMap(this.store, {Key? key, this.popupBuilder, this.markers, this.title, this.center, this.initialZoom = 0})
+      : super(key: key);
 
   final AppStore store;
 

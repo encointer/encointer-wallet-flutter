@@ -13,7 +13,9 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'opening_hours.dart';
 
 class BusinessFormScaffold extends StatelessWidget {
-  final categories = allCategories; // TODO state management
+  final categories = allCategories;
+
+  BusinessFormScaffold({Key? key}) : super(key: key); // TODO state management
 
   @override
   Widget build(BuildContext context) => Provider<BusinessFormState>(
@@ -28,9 +30,7 @@ class BusinessFormScaffold extends StatelessWidget {
 }
 
 class BusinessForm extends StatelessWidget {
-  const BusinessForm({
-    required this.categories,
-  });
+  const BusinessForm({Key? key, required this.categories}) : super(key: key);
 
   final List<String> categories;
 
@@ -77,7 +77,7 @@ class BusinessForm extends StatelessWidget {
               I18n.of(context)!.translationsForLocale().bazaar.openningHours,
               style: const TextStyle(height: 2, fontWeight: FontWeight.bold),
             ),
-            OpeningHours(),
+            const OpeningHours(),
             ButtonBar(
               children: <Widget>[
                 ElevatedButton(

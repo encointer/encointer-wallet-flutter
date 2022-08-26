@@ -5,10 +5,11 @@ import 'account_or_community_item_horizontal.dart';
 
 class SwitchAccountOrCommunity extends StatefulWidget {
   SwitchAccountOrCommunity({
+    Key? key,
     this.rowTitle,
     this.data,
     this.onTap,
-  });
+  }) : super(key: key);
 
   final String? rowTitle;
   final List<AccountOrCommunityData>? data;
