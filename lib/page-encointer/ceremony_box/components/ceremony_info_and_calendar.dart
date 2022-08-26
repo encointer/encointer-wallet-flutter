@@ -30,7 +30,7 @@ class CeremonyInfoAndCalendar extends StatelessWidget {
     return Column(
       children: [
         IconButton(
-          icon: RotatedBox(
+          icon: const RotatedBox(
             quarterTurns: 2,
             child: Icon(Iconsax.info_circle),
           ),
@@ -38,7 +38,7 @@ class CeremonyInfoAndCalendar extends StatelessWidget {
         ),
         if (devMode && showAddToCalendarIconButton)
           IconButton(
-            icon: Icon(Iconsax.calendar_1),
+            icon: const Icon(Iconsax.calendar_1),
             onPressed: () => Add2Calendar.addEvent2Cal(calendarEventToAdd),
           ),
       ],

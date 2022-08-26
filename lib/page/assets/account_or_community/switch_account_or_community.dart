@@ -27,7 +27,7 @@ class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      SizedBox(
+      const SizedBox(
         height: 15,
       ),
       Center(
@@ -36,7 +36,7 @@ class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
           style: Theme.of(context).textTheme.headline2,
         ),
       ),
-      SizedBox(height: 15),
+      const SizedBox(height: 15),
       SizedBox(
         height: identiconPlusTextHeight,
         // otherwise ListView would use infinite height
@@ -44,7 +44,7 @@ class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
           children: [
             Center(
               child: ListView.builder(
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
                 itemExtent: itemExtent,
@@ -60,7 +60,7 @@ class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         colors: [Colors.white, whiteTransparent],
                       ),
@@ -68,7 +68,7 @@ class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
                     height: identiconPlusTextHeight,
                     width: fadeWidth),
                 Container(
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       gradient: LinearGradient(
                         colors: [whiteTransparent, Colors.white],
                       ),

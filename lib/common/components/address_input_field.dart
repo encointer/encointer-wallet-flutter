@@ -86,7 +86,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
         final Map? accInfo = widget.store.account.addressIndexMap[item.pubKey];
         final String address = Fmt.addressOfAccount(item, widget.store);
         return Container(
-          padding: EdgeInsets.only(top: 8),
+          padding: const EdgeInsets.only(top: 8),
           child: Row(
             children: [
               if (!widget.hideIdenticon)
@@ -122,7 +122,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
         final Map? accInfo = widget.store.account.addressIndexMap[item.pubKey];
         final String address = Fmt.addressOfAccount(item, widget.store);
         return Container(
-          margin: EdgeInsets.symmetric(horizontal: 8),
+          margin: const EdgeInsets.symmetric(horizontal: 8),
           decoration: !isSelected
               ? null
               : BoxDecoration(
@@ -165,8 +165,8 @@ class _AddressInputFieldState extends State<AddressInputField> {
           dropdownSearchDecoration: InputDecoration(
             labelText: widget.label,
             labelStyle: Theme.of(context).textTheme.headline4,
-            contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 25),
-            border: UnderlineInputBorder(
+            contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 25),
+            border: const UnderlineInputBorder(
               borderSide: BorderSide(
                 width: 0,
                 style: BorderStyle.none,

@@ -30,7 +30,7 @@ abstract class _DataUpdateStore with Store {
 
   /// Time that is updated every second.
   @observable
-  ObservableStream<DateTime> _time = Stream.periodic(Duration(seconds: 1)).map((_) {
+  ObservableStream<DateTime> _time = Stream.periodic(const Duration(seconds: 1)).map((_) {
     // _log("updating time: ${DateTime.now()}");
     return DateTime.now();
   }).asObservable();
@@ -51,7 +51,7 @@ abstract class _DataUpdateStore with Store {
   /// This should only be needed after app startup or when the app resumes from the background because `needsRefresh`
   /// should trigger updates before `expired` becomes true in the normal case.
   @computed
-  bool get expired => _lastUpdateIsLongerAgoThan(refreshPeriod + Duration(seconds: 30)) | invalidated;
+  bool get expired => _lastUpdateIsLongerAgoThan(refreshPeriod + const Duration(seconds: 30)) | invalidated;
 
   /// The data is needs a refresh.
   ///
@@ -114,7 +114,7 @@ abstract class _DataUpdateStore with Store {
       return;
     }
 
-    _updateFuture = _updateFn!().timeout(Duration(seconds: 15)).then((value) {
+    _updateFuture = _updateFn!().timeout(const Duration(seconds: 15)).then((value) {
       // Data is valid and up-to-date again
       invalidated = false;
       lastUpdate = DateTime.now();

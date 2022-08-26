@@ -54,7 +54,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Text(I18n.of(context)!.translationsForLocale().home.loading),
-          content: Container(height: 64, child: CupertinoActivityIndicator()),
+          content: Container(height: 64, child: const CupertinoActivityIndicator()),
         );
       },
     );
@@ -164,7 +164,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         border: address == store.account.currentAddress
             ? Border.all(color: Theme.of(context).primaryColorLight)
             : Border.all(color: Theme.of(context).cardColor),
-        margin: EdgeInsets.only(bottom: 16),
+        margin: const EdgeInsets.only(bottom: 16),
         padding: EdgeInsets.only(top: padding, bottom: padding),
         child: ListTile(
           leading: AddressIcon(address!, i.pubKey),
@@ -203,11 +203,11 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
             children: <Widget>[
               // left side bar
               Container(
-                padding: EdgeInsets.fromLTRB(16, 16, 0, 0),
+                padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
                 decoration: BoxDecoration(
                   color: Theme.of(context).cardColor,
                   boxShadow: [
-                    BoxShadow(
+                    const BoxShadow(
                       color: Colors.black12,
                       blurRadius: 8.0, // has the effect of softening the shadow
                       spreadRadius: 2.0, // ha
@@ -220,15 +220,15 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
                     bool isCurrent = network == _selectedNetwork!.info;
                     String img = 'assets/images/public/$network${isCurrent ? '' : '_gray'}.png';
                     return Container(
-                      margin: EdgeInsets.only(bottom: 8),
-                      padding: EdgeInsets.only(right: 8),
+                      margin: const EdgeInsets.only(bottom: 8),
+                      padding: const EdgeInsets.only(right: 8),
                       decoration: isCurrent
                           ? BoxDecoration(
                               border: Border(right: BorderSide(width: 2, color: Theme.of(context).primaryColor)),
                             )
                           : null,
                       child: IconButton(
-                        padding: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
                         icon: Image.asset(img),
                         onPressed: () {
                           if (!isCurrent) {
@@ -244,7 +244,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
               ),
               Expanded(
                 child: ListView(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   children: _buildAccountList(),
                 ),
               ),

@@ -320,7 +320,7 @@ abstract class _EncointerStore with Store {
       webApi.encointer.getMeetupTimeOverride(),
       updateAggregatedAccountData(),
     ])
-        .timeout(Duration(seconds: 15))
+        .timeout(const Duration(seconds: 15))
         .catchError((e) => _log("Error executing update state: ${e.toString()}"))
         .whenComplete(() {
       _log("[updateState] finished");

@@ -70,22 +70,22 @@ class CeremonyStep1Count extends StatelessWidget {
         leading: Container(),
         actions: [
           IconButton(
-            key: Key('close-encointer-ceremony-step1'),
-            icon: Icon(Icons.close),
+            key: const Key('close-encointer-ceremony-step1'),
+            icon: const Icon(Icons.close),
             onPressed: () => Navigator.of(context).pop(),
           )
         ],
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(30, 24, 30, 24),
+          padding: const EdgeInsets.fromLTRB(30, 24, 30, 24),
           child: Column(
             children: [
               Expanded(
                 child: ListView(
                   children: [
-                    CeremonyProgressBar(progress: 1),
-                    SizedBox(height: 48),
+                    const CeremonyProgressBar(progress: 1),
+                    const SizedBox(height: 48),
                     Center(
                       child: Text(
                         dic.encointer.count,
@@ -99,24 +99,24 @@ class CeremonyStep1Count extends StatelessWidget {
                         style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black, height: 2),
                       ),
                     ),
-                    SizedBox(height: 48),
+                    const SizedBox(height: 48),
                     EncointerTextFormField(
                       labelText: dic.encointer.numberOfAttendees,
                       textStyle: Theme.of(context).textTheme.headline1!.copyWith(color: encointerBlack),
                       controller: _attendeesCountController,
-                      keyboardType: TextInputType.numberWithOptions(decimal: true),
-                      textFormFieldKey: Key('attendees-count'),
+                      keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                      textFormFieldKey: const Key('attendees-count'),
                     ),
                   ],
                 ),
               ),
               PrimaryButton(
-                key: Key('ceremony-step-1-next'),
+                key: const Key('ceremony-step-1-next'),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Iconsax.arrow_right_2),
-                    SizedBox(width: 12),
+                    const Icon(Iconsax.arrow_right_2),
+                    const SizedBox(width: 12),
                     Text(
                       dic.encointer.next,
                       style: Theme.of(context).textTheme.headline3!.copyWith(color: ZurichLion.shade50),

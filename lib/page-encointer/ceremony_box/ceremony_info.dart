@@ -39,7 +39,7 @@ class CeremonyInfo extends StatelessWidget {
       child: meetupTime != null
           ? Column(
               children: [
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 CeremonyProgressBar(
                   currentTime: currentTime,
                   assigningPhaseStart: assigningPhaseStart,
@@ -47,7 +47,7 @@ class CeremonyInfo extends StatelessWidget {
                   ceremonyPhaseDurations: ceremonyPhaseDurations,
                   width: 262,
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -72,7 +72,7 @@ class CeremonyInfo extends StatelessWidget {
           : Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CupertinoActivityIndicator(),
+                const CupertinoActivityIndicator(),
               ],
             ),
     );

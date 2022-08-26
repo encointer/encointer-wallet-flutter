@@ -14,10 +14,11 @@ linter:
     prefer_is_empty: false
     curly_braces_in_flow_structures: false
 
-   
 
 
-    # prefer_const_constructors: true 
+
+    prefer_const_constructors: true
+
     # prefer_const_constructors_in_immutable: false
     # avoid_unnecessary_containers: false
     # use_key_in_widget_constructors: false

@@ -13,7 +13,7 @@ class MockQRScanPage extends StatelessWidget {
     return Scaffold(
       body: Stack(children: [
         Container(
-            constraints: BoxConstraints.expand(),
+            constraints: const BoxConstraints.expand(),
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: background,
@@ -44,7 +44,7 @@ class MockQRScanPage extends StatelessWidget {
                   borderRadius: const BorderRadius.all(Radius.circular(24.0)),
                 ),
               ),
-              Text(
+              const Text(
                 "Scan Qr Code",
                 style: TextStyle(color: Colors.white38),
               ),

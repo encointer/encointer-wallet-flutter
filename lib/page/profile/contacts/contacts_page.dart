@@ -23,7 +23,7 @@ class ContactsPage extends StatelessWidget {
                 I18n.of(context)!.translationsForLocale().profile.addressBook,
                 style: Theme.of(context).textTheme.headline3,
               ),
-              iconTheme: IconThemeData(
+              iconTheme: const IconThemeData(
                 color: Color(0xff666666), //change your color here
               ),
               centerTitle: true,
@@ -31,9 +31,9 @@ class ContactsPage extends StatelessWidget {
               shadowColor: Colors.transparent,
               actions: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(right: 8),
+                  padding: const EdgeInsets.only(right: 8),
                   child: IconButton(
-                    icon: Icon(Icons.add, size: 28),
+                    icon: const Icon(Icons.add, size: 28),
                     onPressed: () => Navigator.of(context).pushNamed(ContactPage.route),
                   ),
                 )
@@ -49,7 +49,7 @@ class ContactsPage extends StatelessWidget {
                     trailing: Container(
                       width: 36,
                       child: IconButton(
-                        icon: Icon(Icons.arrow_forward_ios, size: 18),
+                        icon: const Icon(Icons.arrow_forward_ios, size: 18),
                         onPressed: () => Navigator.of(context).pushNamed(ContactDetailPage.route, arguments: i),
                       ),
                     ),

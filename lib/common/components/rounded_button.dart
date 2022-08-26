@@ -22,7 +22,7 @@ class RoundedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> row = <Widget>[];
     if (submitting) {
-      row.add(CupertinoActivityIndicator());
+      row.add(const CupertinoActivityIndicator());
     }
     if (icon != null) {
       row.add(Container(
@@ -36,7 +36,7 @@ class RoundedButton extends StatelessWidget {
     ));
     return ElevatedButton(
       style: TextButton.styleFrom(
-        padding: EdgeInsets.only(top: 12, bottom: 12),
+        padding: const EdgeInsets.only(top: 12, bottom: 12),
         backgroundColor: color ?? Theme.of(context).primaryColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       ),

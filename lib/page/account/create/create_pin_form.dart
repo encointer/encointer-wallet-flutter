@@ -47,13 +47,13 @@ class _CreatePinFormState extends State<CreatePinForm> {
         children: <Widget>[
           Expanded(
             child: ListView(
-              padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
               children: <Widget>[
-                SizedBox(height: 80),
+                const SizedBox(height: 80),
                 Center(
                   child: Text(dic.profile.pinSecure, style: Theme.of(context).textTheme.headline2),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Center(
                   child: Container(
                     width: 250,
@@ -66,9 +66,9 @@ class _CreatePinFormState extends State<CreatePinForm> {
                     ),
                   ),
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 TextFormField(
-                  key: Key('create-account-pin'),
+                  key: const Key('create-account-pin'),
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     enabledBorder: const OutlineInputBorder(
@@ -88,9 +88,9 @@ class _CreatePinFormState extends State<CreatePinForm> {
                   obscureText: true,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
-                  key: Key('create-account-pin2'),
+                  key: const Key('create-account-pin2'),
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     enabledBorder: const OutlineInputBorder(
@@ -100,7 +100,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
                     ),
                     filled: true,
                     //todo define color
-                    fillColor: Color(0xffF4F8F9),
+                    fillColor: const Color(0xffF4F8F9),
                     hintText: dic.account.createPassword2,
                     labelText: dic.account.createPassword2,
                   ),
@@ -116,8 +116,8 @@ class _CreatePinFormState extends State<CreatePinForm> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.info_outlined),
-                      SizedBox(width: 12),
+                      const Icon(Icons.info_outlined),
+                      const SizedBox(width: 12),
                       Container(
                         width: 250,
                         child: Text(
@@ -134,8 +134,8 @@ class _CreatePinFormState extends State<CreatePinForm> {
             ),
           ),
           Container(
-            key: Key('create-account-confirm'),
-            padding: EdgeInsets.all(16),
+            key: const Key('create-account-confirm'),
+            padding: const EdgeInsets.all(16),
             child: PrimaryButton(
               child: Text(
                 I18n.of(context)!.translationsForLocale().account.create,

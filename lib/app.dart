@@ -105,7 +105,7 @@ class _WalletAppState extends State<WalletApp> {
           : Api.create(_appStore!, JSApi(), SubstrateDartApi(), jsServiceEncointer);
 
       await webApi.init().timeout(
-            Duration(seconds: 20),
+            const Duration(seconds: 20),
             onTimeout: () => print("webApi.init() has run into a timeout. We might be offline."),
           );
 
@@ -184,7 +184,7 @@ class _WalletAppState extends State<WalletApp> {
                           if (snapshot.hasData && _appStore!.appIsReady) {
                             return snapshot.data! > 0 ? EncointerHomePage(_appStore!) : CreateAccountEntryPage();
                           } else {
-                            return CupertinoActivityIndicator();
+                            return const CupertinoActivityIndicator();
                           }
                         },
                       ),

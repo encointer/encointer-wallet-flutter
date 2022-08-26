@@ -14,7 +14,7 @@ class SecondaryButtonWide extends StatelessWidget {
     return SizedBox(
       width: double.infinity,
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
+        style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16)),
         child: child,
         onPressed: onPressed,
       ),

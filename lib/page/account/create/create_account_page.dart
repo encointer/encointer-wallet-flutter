@@ -30,7 +30,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
         leading: Container(),
         actions: <Widget>[
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.close,
               color: encointerGrey,
             ),

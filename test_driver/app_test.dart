@@ -21,7 +21,7 @@ void main() {
       var ready = await driver!.requestData(MockStorageSetup.WAIT_UNTIL_APP_IS_READY);
       while (ready == false.toString()) {
         print("Waiting for app to be ready: $ready");
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 1));
         ready = await driver!.requestData(MockStorageSetup.WAIT_UNTIL_APP_IS_READY);
       }
 
@@ -64,7 +64,7 @@ void main() {
       await driver!.requestData(MockStorageSetup.HOME_PAGE);
       // take a screenshot of the EncointerHome Screen
       await screenshot(driver!, config, 'encointer-home');
-    }, timeout: Timeout(Duration(seconds: 120))); // needed for android CI with github actions
+    }, timeout: const Timeout(Duration(seconds: 120))); // needed for android CI with github actions
 
     test('show receive qr code', () async {
       await driver!.tap(find.byValueKey('qr-receive'));

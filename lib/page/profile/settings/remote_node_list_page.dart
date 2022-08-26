@@ -37,7 +37,7 @@ class RemoteNodeListPage extends StatelessWidget {
                             width: 16,
                           )
                         : Container(),
-                    Icon(Icons.arrow_forward_ios, size: 18)
+                    const Icon(Icons.arrow_forward_ios, size: 18)
                   ],
                 ),
               ),
@@ -59,7 +59,7 @@ class RemoteNodeListPage extends StatelessWidget {
         centerTitle: true,
       ),
       body: SafeArea(
-        child: ListView(padding: EdgeInsets.only(top: 8), children: list),
+        child: ListView(padding: const EdgeInsets.only(top: 8), children: list),
       ),
     );
   }

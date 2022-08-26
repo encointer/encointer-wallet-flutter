@@ -45,7 +45,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Text(I18n.of(context)!.translationsForLocale().home.loading),
-          content: Container(height: 64, child: CupertinoActivityIndicator()),
+          content: Container(height: 64, child: const CupertinoActivityIndicator()),
         );
       },
     );
@@ -156,7 +156,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     return Scaffold(
       appBar: AppBar(title: Text(I18n.of(context)!.translationsForLocale().home.accountImport)),
       body: SafeArea(
-        child: !_submitting ? _getImportForm() : Center(child: CupertinoActivityIndicator()),
+        child: !_submitting ? _getImportForm() : const Center(child: CupertinoActivityIndicator()),
       ),
     );
   }

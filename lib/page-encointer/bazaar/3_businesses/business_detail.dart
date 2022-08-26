@@ -21,7 +21,7 @@ class BusinessDetail extends StatelessWidget {
         title: Row(
           children: [
             Text("${business!.title}"),
-            SizedBox(
+            const SizedBox(
               width: 6,
             ),
             business!.icon
@@ -32,17 +32,17 @@ class BusinessDetail extends StatelessWidget {
         children: [
           Column(
             children: [
-              Container(padding: EdgeInsets.all(4), child: business!.image),
+              Container(padding: const EdgeInsets.all(4), child: business!.image),
               Align(
                   alignment: Alignment.topLeft,
                   child: Container(
-                    padding: EdgeInsets.fromLTRB(2, 8, 0, 16),
+                    padding: const EdgeInsets.fromLTRB(2, 8, 0, 16),
                     child: Text("${business!.description}"),
                   )),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
+                  const Expanded(
                     flex: 2,
                     child: SmallLeaflet(),
                   ),
@@ -51,7 +51,7 @@ class BusinessDetail extends StatelessWidget {
                     child: Column(children: [
                       // OpeningHoursTable(business.openingHours),
                       Card(
-                        margin: EdgeInsets.fromLTRB(4, 0, 2, 0),
+                        margin: const EdgeInsets.fromLTRB(4, 0, 2, 0),
                         child: DataTable(
                           columns: [
                             DataColumn(label: Text(dic.bazaar.day)),
@@ -119,7 +119,7 @@ class SmallLeaflet extends StatelessWidget {
                     width: 20.0,
                     height: 20.0,
                     point: LatLng(47.389712, 8.517076),
-                    builder: (ctx) => Icon(
+                    builder: (ctx) => const Icon(
                       Icons.location_on,
                       color: Colors.indigoAccent,
                     ),
@@ -139,7 +139,7 @@ class SmallLeaflet extends StatelessWidget {
                     builder: (context) => BusinessesOnMap(),
                   ))
             },
-            child: Icon(Icons.fullscreen, size: 40),
+            child: const Icon(Icons.fullscreen, size: 40),
           ),
         )
       ],

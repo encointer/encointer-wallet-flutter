@@ -39,7 +39,7 @@ class ImagePreview extends StatelessWidget {
                         child: kIsWeb ? Image.network(image!.path) : Image.file(File(image!.path)),
                       ),
                       IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.delete,
                           color: Colors.redAccent,
                         ),

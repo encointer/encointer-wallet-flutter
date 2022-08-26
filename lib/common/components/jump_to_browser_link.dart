@@ -35,7 +35,7 @@ class _JumpToBrowserLinkState extends State<JumpToBrowserLink> {
         mainAxisAlignment: widget.mainAxisAlignment ?? MainAxisAlignment.center,
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(right: 4),
+            padding: const EdgeInsets.only(right: 4),
             child: Text(
               widget.text ?? widget.url!,
               style: TextStyle(color: Theme.of(context).primaryColor),

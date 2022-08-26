@@ -19,8 +19,8 @@ class CeremonyStartButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Iconsax.login_1),
-          SizedBox(width: 6),
+          const Icon(Iconsax.login_1),
+          const SizedBox(width: 6),
           Text('${dic.encointer.startCeremony}'),
         ],
       ),

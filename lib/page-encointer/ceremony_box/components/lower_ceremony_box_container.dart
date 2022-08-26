@@ -13,10 +13,10 @@ class LowerCeremonyBoxContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(top: 2),
-      padding: EdgeInsets.all(24),
+      margin: const EdgeInsets.only(top: 2),
+      padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(0), bottom: Radius.circular(15)),
+        borderRadius: const BorderRadius.vertical(top: Radius.circular(0), bottom: Radius.circular(15)),
         color: ZurichLion.shade50,
       ),
       child: this.child,

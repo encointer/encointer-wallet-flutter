@@ -42,7 +42,7 @@ class BusinessForm extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
         child: ListView(
           children: <Widget>[
-            PhotoTiles(),
+            const PhotoTiles(),
             LimitedBox(
               child: ImagePickerScaffold(),
               maxHeight: 250,
@@ -72,25 +72,27 @@ class BusinessForm extends StatelessWidget {
 
             ToggleButtonsWithTitle(I18n.of(context)!.translationsForLocale().bazaar.categories, categories, null),
             // TODO state mananagement
-            BusinessAddress(),
+            const BusinessAddress(),
             Text(
               I18n.of(context)!.translationsForLocale().bazaar.openningHours,
-              style: TextStyle(height: 2, fontWeight: FontWeight.bold),
+              style: const TextStyle(height: 2, fontWeight: FontWeight.bold),
             ),
             OpeningHours(),
             ButtonBar(
               children: <Widget>[
                 ElevatedButton(
-                  child: Row(
-                      children: [Icon(Icons.delete), Text(I18n.of(context)!.translationsForLocale().bazaar.delete)]),
+                  child: Row(children: [
+                    const Icon(Icons.delete),
+                    Text(I18n.of(context)!.translationsForLocale().bazaar.delete)
+                  ]),
                   onPressed: () {
                     // TODO modify state
                     Navigator.pop(context);
                   },
                 ),
                 ElevatedButton(
-                  child:
-                      Row(children: [Icon(Icons.check), Text(I18n.of(context)!.translationsForLocale().bazaar.save)]),
+                  child: Row(
+                      children: [const Icon(Icons.check), Text(I18n.of(context)!.translationsForLocale().bazaar.save)]),
                   onPressed: () {
                     businessFormState.validateAll();
                     // TODO pop if valid
@@ -120,7 +122,7 @@ class BusinessAddress extends StatelessWidget {
       children: [
         Text(
           I18n.of(context)!.translationsForLocale().bazaar.address,
-          style: TextStyle(fontWeight: FontWeight.bold, height: 2.5),
+          style: const TextStyle(fontWeight: FontWeight.bold, height: 2.5),
         ),
         Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,7 +139,7 @@ class BusinessAddress extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 32,
             ),
             Expanded(
@@ -167,7 +169,7 @@ class BusinessAddress extends StatelessWidget {
                 ),
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 32,
             ),
             Expanded(

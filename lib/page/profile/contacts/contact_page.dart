@@ -127,10 +127,10 @@ class _Contact extends State<ContactPage> {
               child: Form(
                 key: _formKey,
                 child: ListView(
-                  padding: EdgeInsets.only(top: 8, bottom: 8),
+                  padding: const EdgeInsets.only(top: 8, bottom: 8),
                   children: <Widget>[
                     Padding(
-                      padding: EdgeInsets.only(left: 16, right: 16),
+                      padding: const EdgeInsets.only(left: 16, right: 16),
                       child: TextFormField(
                         decoration: InputDecoration(
                           hintText: dic.profile.contactAddress,
@@ -147,7 +147,7 @@ class _Contact extends State<ContactPage> {
                       ),
                     ),
                     Padding(
-                      padding: EdgeInsets.only(left: 16, right: 16),
+                      padding: const EdgeInsets.only(left: 16, right: 16),
                       child: TextFormField(
                         decoration: InputDecoration(
                           hintText: dic.profile.contactName,
@@ -161,7 +161,7 @@ class _Contact extends State<ContactPage> {
                     ),
                     store.settings.developerMode
                         ? Padding(
-                            padding: EdgeInsets.only(left: 16, right: 16),
+                            padding: const EdgeInsets.only(left: 16, right: 16),
                             child: TextFormField(
                               decoration: InputDecoration(
                                 hintText: dic.profile.contactMemo,
@@ -191,7 +191,7 @@ class _Contact extends State<ContactPage> {
                                 },
                               ),
                               TapTooltip(
-                                child: Padding(
+                                child: const Padding(
                                   padding: EdgeInsets.only(left: 8),
                                   child: Icon(Icons.info_outline, size: 16),
                                 ),
@@ -200,20 +200,20 @@ class _Contact extends State<ContactPage> {
                             ],
                           )
                         : Container(),
-                    SizedBox(height: 24),
+                    const SizedBox(height: 24),
                     IconButton(
                       iconSize: 48,
-                      icon: Icon(Iconsax.scan_barcode),
+                      icon: const Icon(Iconsax.scan_barcode),
                       onPressed: () => Navigator.of(context).popAndPushNamed(ScanPage.route,
                           arguments: ScanPageParams(scannerContext: QrScannerContext.contactsPage)),
                     ),
-                    SizedBox(height: 24),
+                    const SizedBox(height: 24),
                   ],
                 ),
               ),
             ),
             Container(
-              margin: EdgeInsets.all(16),
+              margin: const EdgeInsets.all(16),
               child: RoundedButton(
                 submitting: _submitting,
                 text: dic.profile.contactSave,
