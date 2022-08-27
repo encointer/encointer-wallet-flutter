@@ -18,7 +18,7 @@ const prefixList = [
 ];
 
 class SS58PrefixListPage extends StatelessWidget {
-  SS58PrefixListPage(this.store);
+  SS58PrefixListPage(this.store, {Key? key}) : super(key: key);
 
   static const String route = '/profile/ss58';
   final Api? api = webApi;
@@ -29,13 +29,13 @@ class SS58PrefixListPage extends StatelessWidget {
     final Translations dic = I18n.of(context)!.translationsForLocale();
     List<Widget> list = prefixList
         .map((i) => ListTile(
-              leading: Container(
+              leading: SizedBox(
                 width: 36,
                 child: Image.asset('assets/images/public/${i['info']}.png'),
               ),
               title: Text(i['info'] as String),
               subtitle: Text(i['text'] as String),
-              trailing: Icon(Icons.arrow_forward_ios, size: 18),
+              trailing: const Icon(Icons.arrow_forward_ios, size: 18),
               onTap: () {
                 if (store.customSS58Format['info'] == i['info']) {
                   Navigator.of(context).pop();

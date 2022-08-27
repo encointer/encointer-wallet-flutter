@@ -45,16 +45,16 @@ class CeremonyBox extends StatelessWidget {
       // if we have meetup time overrides. Before we do something more complex here, I want to
       // think some more, of what we want to do with the feed in the future.
       int? assigningPhaseStart = store.encointer.community?.meetupTimeOverride != null
-          ? store.encointer.community!.meetupTimeOverride! - Duration(minutes: 30).inMilliseconds
+          ? store.encointer.community!.meetupTimeOverride! - const Duration(minutes: 30).inMilliseconds
           : store.encointer.assigningPhaseStart;
 
       return Column(
         children: [
           Container(
-            padding: EdgeInsets.fromLTRB(24, 24, 24, 24),
+            padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.vertical(
-                  top: Radius.circular(15), bottom: Radius.circular(store.encointer.showMeetupInfo ? 0 : 15)),
+                  top: const Radius.circular(15), bottom: Radius.circular(store.encointer.showMeetupInfo ? 0 : 15)),
               color: ZurichLion.shade50,
             ),
             child: Column(
@@ -83,7 +83,7 @@ class CeremonyBox extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
                     child: CeremonyStartButton(
-                      key: Key('start-meetup'),
+                      key: const Key('start-meetup'),
                       onPressed: () => Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => CeremonyStep1Count(store, api),
@@ -99,8 +99,8 @@ class CeremonyBox extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Iconsax.login_1),
-                          SizedBox(width: 6),
+                          const Icon(Iconsax.login_1),
+                          const SizedBox(width: 6),
                           Text(
                               '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store.encointer.communityAccount!.scannedClaimsCount.toString())}'),
                         ],
@@ -192,7 +192,7 @@ Future<void> awaitDataUpdateWithDialog(BuildContext context, AppStore store) asy
     context: context,
     builder: (_) => CupertinoAlertDialog(
       title: Text(I18n.of(context)!.translationsForLocale().home.updatingAppState),
-      content: CupertinoActivityIndicator(),
+      content: const CupertinoActivityIndicator(),
     ),
   );
 

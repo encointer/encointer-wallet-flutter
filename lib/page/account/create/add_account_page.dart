@@ -14,7 +14,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class AddAccountPage extends StatefulWidget {
-  const AddAccountPage(this.store);
+  const AddAccountPage(this.store, {Key? key}) : super(key: key);
 
   static const String route = '/account/addAccount';
   final AppStore store;
@@ -133,7 +133,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
         leading: Container(),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.close, color: encointerGrey),
+            icon: const Icon(Icons.close, color: encointerGrey),
             onPressed: () {
               Navigator.popUntil(context, ModalRoute.withName('/'));
             },
@@ -151,7 +151,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
                 },
                 store: store,
               )
-            : Center(child: CupertinoActivityIndicator()),
+            : const Center(child: CupertinoActivityIndicator()),
       ),
     );
   }

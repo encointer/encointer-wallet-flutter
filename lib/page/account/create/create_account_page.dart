@@ -6,7 +6,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CreateAccountPage extends StatefulWidget {
-  const CreateAccountPage(this.store);
+  const CreateAccountPage(this.store, {Key? key}) : super(key: key);
 
   static const String route = '/account/createAccount';
   final AppStore store;
@@ -30,7 +30,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
         leading: Container(),
         actions: <Widget>[
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.close,
               color: encointerGrey,
             ),

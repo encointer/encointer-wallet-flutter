@@ -19,7 +19,7 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class ReceivePage extends StatefulWidget {
-  ReceivePage(this.store);
+  ReceivePage(this.store, {Key? key}) : super(key: key);
   static const String route = '/assets/receive';
   final AppStore store;
   @override
@@ -122,8 +122,8 @@ class _ReceivePageState extends State<ReceivePage> {
               leading: Container(),
               actions: [
                 IconButton(
-                  key: Key('close-receive-page'),
-                  icon: Icon(Icons.close),
+                  key: const Key('close-receive-page'),
+                  icon: const Icon(Icons.close),
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -143,7 +143,7 @@ class _ReceivePageState extends State<ReceivePage> {
                           textAlign: TextAlign.center,
                         ),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Padding(
                         padding: const EdgeInsets.all(30),
                         child: EncointerTextFormField(
@@ -151,8 +151,8 @@ class _ReceivePageState extends State<ReceivePage> {
                           textStyle: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
                           inputFormatters: [UI.decimalInputFormatter()],
                           controller: _amountController,
-                          keyboardType: TextInputType.numberWithOptions(decimal: true),
-                          textFormFieldKey: Key('invoice-amount-input'),
+                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                          textFormFieldKey: const Key('invoice-amount-input'),
                           onChanged: (value) {
                             setState(() {
                               var trimmed = _amountController.text.trim();
@@ -161,7 +161,7 @@ class _ReceivePageState extends State<ReceivePage> {
                               }
                             });
                           },
-                          suffixIcon: Text(
+                          suffixIcon: const Text(
                             "ⵐ",
                             style: TextStyle(
                               color: encointerGrey,
@@ -175,12 +175,12 @@ class _ReceivePageState extends State<ReceivePage> {
                   Text('${dic.profile.receiverAccount} ${widget.store.account.currentAccount.name}',
                       style: Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey),
                       textAlign: TextAlign.center),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       // Enhance brightness for the QR-code
-                      WakeLockAndBrightnessEnhancer(brightness: 1),
+                      const WakeLockAndBrightnessEnhancer(brightness: 1),
                       QrCodeImage(
                         qrCode: invoice.toQrPayload(),
                         text: dic.assets.shareInvoice,

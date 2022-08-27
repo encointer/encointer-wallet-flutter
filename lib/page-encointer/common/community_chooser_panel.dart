@@ -13,7 +13,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class CommunityChooserPanel extends StatefulWidget {
-  CommunityChooserPanel(this.store);
+  CommunityChooserPanel(this.store, {Key? key}) : super(key: key);
 
   final AppStore store;
 
@@ -29,20 +29,20 @@ class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
-    return Container(
+    return SizedBox(
       width: double.infinity,
       child: RoundedCard(
-        padding: EdgeInsets.symmetric(vertical: 8),
+        padding: const EdgeInsets.symmetric(vertical: 8),
         child: Column(
           children: <Widget>[
             Text(dic.assets.communityChoose),
             Observer(
               builder: (_) => (store.encointer.communities == null)
-                  ? CupertinoActivityIndicator()
+                  ? const CupertinoActivityIndicator()
                   : (store.encointer.communities!.isEmpty)
                       ? Text(dic.assets.communitiesNotFound)
                       : DropdownButton<dynamic>(
-                          key: Key('cid-dropdown'),
+                          key: const Key('cid-dropdown'),
                           // todo find out, why adding the hint breaks the integration test walkthrough when choosing community #225
                           // hint: Text(dic.assets.communityChoose),
                           value: (store.encointer.chosenCid == null ||
@@ -51,7 +51,7 @@ class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
                                       .isEmpty)
                               ? null
                               : store.encointer.communities!.where((cn) => cn.cid == store.encointer.chosenCid).first,
-                          icon: Icon(Icons.arrow_downward),
+                          icon: const Icon(Icons.arrow_downward),
                           iconSize: 32,
                           elevation: 32,
                           onChanged: (newValue) {
@@ -134,7 +134,7 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
                   )
                 ],
               ),
-              SizedBox(height: 4),
+              const SizedBox(height: 4),
               if (widget.showCommunityNameAndAccountName)
                 Text(
                   '${store.encointer.community?.name ?? "..."}\n${Fmt.accountName(context, store.account.currentAccount)}',
@@ -172,7 +172,7 @@ class CommunityAvatar extends StatelessWidget {
           if (snapshot.hasData) {
             return snapshot.data!;
           } else {
-            return CupertinoActivityIndicator();
+            return const CupertinoActivityIndicator();
           }
         },
       ),

@@ -62,7 +62,7 @@ class JSApi {
     await _web!.run();
 
     // log updates about the webView state until it is ready.
-    Timer.periodic(Duration(seconds: 2), (timer) {
+    Timer.periodic(const Duration(seconds: 2), (timer) {
       if (!initWebViewCompleter.isCompleted) {
         Log.d("webView is being initialized...", 'JSApi');
       } else {

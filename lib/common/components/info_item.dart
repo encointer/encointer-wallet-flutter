@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class InfoItem extends StatelessWidget {
-  InfoItem({required this.title, this.content, this.crossAxisAlignment});
+  InfoItem({Key? key, required this.title, this.content, this.crossAxisAlignment}) : super(key: key);
   final String title;
   final String? content;
   final CrossAxisAlignment? crossAxisAlignment;
@@ -13,7 +13,7 @@ class InfoItem extends StatelessWidget {
         children: <Widget>[
           Text(
             title,
-            style: TextStyle(fontSize: 12),
+            style: const TextStyle(fontSize: 12),
           ),
           Text(
             content ?? '-',

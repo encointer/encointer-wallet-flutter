@@ -23,7 +23,7 @@ class SearchResultsOffering extends StatelessWidget {
           AspectRatio(
             aspectRatio: 6,
             child: ListTile(
-              leading: Icon(Icons.filter_alt),
+              leading: const Icon(Icons.filter_alt),
               title: Text(dic.bazaar.filter),
               onTap: () {
                 Navigator.push(

@@ -30,7 +30,7 @@ class UI {
       },
     );
 
-    Timer(Duration(seconds: 2), () {
+    Timer(const Duration(seconds: 2), () {
       Navigator.of(context).pop();
     });
   }
@@ -95,7 +95,7 @@ class UI {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Text(dic.home.updateDownload),
-          content: CupertinoActivityIndicator(),
+          content: const CupertinoActivityIndicator(),
         );
       },
     );

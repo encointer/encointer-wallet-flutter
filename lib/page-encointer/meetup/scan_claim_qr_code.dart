@@ -16,7 +16,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class ScanClaimQrCode extends StatelessWidget {
-  ScanClaimQrCode(this.store, this.confirmedParticipantsCount);
+  ScanClaimQrCode(this.store, this.confirmedParticipantsCount, {Key? key}) : super(key: key);
 
   final AppStore store;
   final int confirmedParticipantsCount;
@@ -72,8 +72,8 @@ class ScanClaimQrCode extends StatelessWidget {
         leading: Container(),
         actions: [
           IconButton(
-            key: Key('close-scanner'),
-            icon: Icon(Icons.close),
+            key: const Key('close-scanner'),
+            icon: const Icon(Icons.close),
             onPressed: () => Navigator.pop(context),
           )
         ],
@@ -121,7 +121,7 @@ class ScanClaimQrCode extends StatelessWidget {
                               (confirmedParticipantsCount - 1).toString(),
                             );
                         return Text(txt,
-                            style: TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16));
+                            style: const TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16));
                       }),
                     ],
                   ),
@@ -129,7 +129,7 @@ class ScanClaimQrCode extends StatelessWidget {
               ],
             );
           } else {
-            return Center(child: CupertinoActivityIndicator());
+            return const Center(child: CupertinoActivityIndicator());
           }
         },
       ),
@@ -144,7 +144,7 @@ void _showActivityIndicatorOverlay(BuildContext context) {
         height: Size.infinite.height,
         width: Size.infinite.width,
         color: Colors.grey.withOpacity(0.5),
-        child: CupertinoActivityIndicator()),
+        child: const CupertinoActivityIndicator()),
   );
 }
 

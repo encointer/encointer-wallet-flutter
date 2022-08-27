@@ -9,6 +9,8 @@ import 'business_form.dart';
 class MyBusinesses extends StatelessWidget {
   final data = myBusinesses;
 
+  MyBusinesses({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,7 +30,7 @@ class MyBusinesses extends StatelessWidget {
         ),
       ]),
       floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
           onPressed: () {
             Navigator.push(
                 context,

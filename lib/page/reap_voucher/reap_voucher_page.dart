@@ -32,7 +32,7 @@ class ReapVoucherParams {
 }
 
 class ReapVoucherPage extends StatefulWidget {
-  const ReapVoucherPage(this.store, this.api);
+  const ReapVoucherPage(this.store, this.api, {Key? key}) : super(key: key);
 
   static const String route = '/qrcode/voucher';
   final AppStore store;
@@ -110,18 +110,18 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
               height: 96,
               child: _voucherAddress != null
                   ? AddressIcon(_voucherAddress!, _voucherAddress!, size: 96)
-                  : CupertinoActivityIndicator(),
+                  : const CupertinoActivityIndicator(),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(issuer, style: h2Grey),
             SizedBox(
               height: 80,
               child: _voucherBalance != null
                   ? TextGradient(
                       text: '${Fmt.doubleFormat(_voucherBalance)} ⵐ',
-                      style: TextStyle(fontSize: 60),
+                      style: const TextStyle(fontSize: 60),
                     )
-                  : CupertinoActivityIndicator(),
+                  : const CupertinoActivityIndicator(),
             ),
             Text(
               "${dic.assets.voucherBalance}, ${widget.store.encointer.community?.symbol}",
@@ -145,8 +145,8 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Iconsax.login_1),
-                      SizedBox(width: 6),
+                      const Icon(Iconsax.login_1),
+                      const SizedBox(width: 6),
                       Text(dic.assets.fundVoucher),
                     ],
                   ),
@@ -157,8 +157,8 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Iconsax.login_1),
-                  SizedBox(width: 6),
+                  const Icon(Iconsax.login_1),
+                  const SizedBox(width: 6),
                   Text(dic.assets.redeemVoucher),
                 ],
               ),

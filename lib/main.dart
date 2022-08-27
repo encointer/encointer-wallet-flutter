@@ -22,7 +22,7 @@ Future<void> main() async {
     await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
 
-  var initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
+  var initializationSettingsAndroid = const AndroidInitializationSettings('app_icon');
   var initializationSettingsIOS = IOSInitializationSettings(
       requestAlertPermission: false,
       requestBadgePermission: false,
@@ -48,6 +48,6 @@ Future<void> main() async {
   HttpOverrides.global = MyHttpOverrides();
 
   runApp(
-    WalletApp(Config()),
+    const WalletApp(Config()),
   );
 }

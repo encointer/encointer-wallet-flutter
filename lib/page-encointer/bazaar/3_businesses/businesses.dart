@@ -9,6 +9,8 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 class Businesses extends StatelessWidget {
   final data = allBusinesses;
 
+  Businesses({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(children: [
@@ -34,8 +36,8 @@ class Businesses extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            new Icon(Icons.map),
-            new Text(I18n.of(context)!.translationsForLocale().bazaar.map),
+            const Icon(Icons.map),
+            Text(I18n.of(context)!.translationsForLocale().bazaar.map),
           ],
         ),
       )

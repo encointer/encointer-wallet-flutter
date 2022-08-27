@@ -15,16 +15,16 @@ void main() {
 
       store.setupUpdateReaction(() async {
         count = count + 1;
-        return Future.delayed(Duration(seconds: 1));
+        return Future.delayed(const Duration(seconds: 1));
       });
 
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
       expect(count, 1);
 
-      await Future.delayed(Duration(seconds: 4));
+      await Future.delayed(const Duration(seconds: 4));
       expect(count, 1);
 
-      await Future.delayed(Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 2));
       expect(count, 2);
     });
   });

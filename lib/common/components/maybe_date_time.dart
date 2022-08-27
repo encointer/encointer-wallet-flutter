@@ -7,9 +7,10 @@ import 'package:intl/intl.dart';
 class MaybeDateTime extends StatelessWidget {
   MaybeDateTime(
     this.meetupTime, {
+    Key? key,
     required this.dateFormat,
     this.style,
-  });
+  }) : super(key: key);
 
   final int? meetupTime;
 
@@ -24,6 +25,6 @@ class MaybeDateTime extends StatelessWidget {
       date = dateFormat.format(new DateTime.fromMillisecondsSinceEpoch(meetupTime!));
     }
 
-    return meetupTime != null ? Text(date, style: this.style) : CupertinoActivityIndicator();
+    return meetupTime != null ? Text(date, style: this.style) : const CupertinoActivityIndicator();
   }
 }

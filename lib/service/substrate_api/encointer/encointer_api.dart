@@ -356,7 +356,7 @@ class EncointerApi {
         return data;
       } else {
         await Future.delayed(
-          Duration(seconds: 3),
+          const Duration(seconds: 3),
           () => Log.d("[EncointerApi] polling account data until next phase is reached...", 'EncointerApi'),
         );
       }

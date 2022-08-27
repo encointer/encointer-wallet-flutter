@@ -17,8 +17,9 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class CreateAccountForm extends StatelessWidget {
   CreateAccountForm({
+    Key? key,
     required this.store,
-  });
+  }) : super(key: key);
 
   final AppStore store;
 
@@ -59,18 +60,18 @@ class CreateAccountForm extends StatelessWidget {
       key: _formKey,
       child: Column(
         children: <Widget>[
-          SizedBox(height: 80),
+          const SizedBox(height: 80),
           Expanded(
             child: ListView(
-              padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
               children: <Widget>[
                 Center(
                   child: Text(I18n.of(context)!.translationsForLocale().profile.accountNameChoose,
                       style: Theme.of(context).textTheme.headline2),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Center(
-                  child: Container(
+                  child: SizedBox(
                     width: 300,
                     child: Text(
                       I18n.of(context)!.translationsForLocale().profile.accountNameChooseHint,
@@ -81,9 +82,9 @@ class CreateAccountForm extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 50),
+                const SizedBox(height: 50),
                 EncointerTextFormField(
-                  key: Key('create-account-name'),
+                  key: const Key('create-account-name'),
                   hintText: dic.account.createHint,
                   labelText: I18n.of(context)!.translationsForLocale().profile.accountName,
                   controller: _nameCtrl,
@@ -93,14 +94,14 @@ class CreateAccountForm extends StatelessWidget {
             ),
           ),
           Container(
-            key: Key('create-account-next'),
-            padding: EdgeInsets.all(16),
+            key: const Key('create-account-next'),
+            padding: const EdgeInsets.all(16),
             child: PrimaryButton(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Iconsax.login_1),
-                  SizedBox(width: 12),
+                  const Icon(Iconsax.login_1),
+                  const SizedBox(width: 12),
                   Text(
                     dic.account.next,
                     style: Theme.of(context).textTheme.headline3!.copyWith(

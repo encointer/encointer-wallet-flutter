@@ -104,7 +104,7 @@ abstract class _AppStore with Store {
     _settings = SettingsStore(this as AppStore);
     await settings.init(sysLocaleCode);
 
-    _dataUpdate = DataUpdateStore(refreshPeriod: Duration(minutes: 2));
+    _dataUpdate = DataUpdateStore(refreshPeriod: const Duration(minutes: 2));
 
     _account = AccountStore(this as AppStore);
     await account.loadAccount();

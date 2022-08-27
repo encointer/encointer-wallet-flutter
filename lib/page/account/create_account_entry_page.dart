@@ -10,6 +10,8 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 class CreateAccountEntryPage extends StatelessWidget {
   static const String route = '/account/entry';
 
+  CreateAccountEntryPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final String nctrLogo = 'assets/nctr_logo.svg';
@@ -41,8 +43,8 @@ class CreateAccountEntryPage extends StatelessWidget {
                   SizedBox(
                     width: double.infinity,
                     child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(padding: EdgeInsets.symmetric(vertical: 16)),
-                      key: Key('create-account'),
+                      style: ElevatedButton.styleFrom(padding: const EdgeInsets.symmetric(vertical: 16)),
+                      key: const Key('create-account'),
                       child: Text(I18n.of(context)!.translationsForLocale().home.create,
                           style: Theme.of(context).textTheme.headline3),
                       onPressed: () {
@@ -50,7 +52,7 @@ class CreateAccountEntryPage extends StatelessWidget {
                       },
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -61,7 +63,7 @@ class CreateAccountEntryPage extends StatelessWidget {
                         ),
                       ),
                       GestureDetector(
-                          key: Key('import-account'),
+                          key: const Key('import-account'),
                           child: Text(
                             I18n.of(context)!.translationsForLocale().profile.import,
                             style: TextStyle(

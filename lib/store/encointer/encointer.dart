@@ -1,6 +1,3 @@
-import 'package:json_annotation/json_annotation.dart';
-import 'package:mobx/mobx.dart';
-
 import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
@@ -8,6 +5,8 @@ import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:mobx/mobx.dart';
 
 import 'sub_stores/bazaar_store/bazaar_store.dart';
 import 'sub_stores/community_store/community_account_store/community_account_store.dart';
@@ -324,7 +323,7 @@ abstract class _EncointerStore with Store {
       webApi.encointer.getMeetupTimeOverride(),
       updateAggregatedAccountData(),
     ])
-        .timeout(Duration(seconds: 15))
+        .timeout(const Duration(seconds: 15))
         // ignore: invalid_return_type_for_catch_error
         .catchError((e, s) => Log.e("Error executing update state: $e", 'EncointerStore', s))
         .whenComplete(() {

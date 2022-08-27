@@ -263,7 +263,7 @@ class Fmt {
         accInfo['identity']['judgements'].length > 0
             ? Container(
                 width: 14,
-                margin: EdgeInsets.only(right: 4),
+                margin: const EdgeInsets.only(right: 4),
                 child: Image.asset('assets/images/assets/success.png'),
               )
             : Container(height: 16),

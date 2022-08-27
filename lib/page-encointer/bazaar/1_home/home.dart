@@ -11,6 +11,8 @@ class Home extends StatelessWidget {
   final double cardHeight = 200;
   final double cardWidth = 160;
 
+  const Home({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
@@ -23,7 +25,7 @@ class Home extends StatelessWidget {
           HorizontalBazaarItemList(lastVisited, dic.bazaar.lastVisited, cardHeight, cardWidth),
         ]),
       ),
-      BazaarSearch(),
+      const BazaarSearch(),
     ]);
   }
 }
