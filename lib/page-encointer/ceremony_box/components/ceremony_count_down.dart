@@ -7,7 +7,7 @@ import 'package:quiver/async.dart';
 import 'package:encointer_wallet/common/theme.dart';
 
 class CeremonyCountDown extends StatefulWidget {
-  CeremonyCountDown(this.nextCeremonyDate);
+  CeremonyCountDown(this.nextCeremonyDate, {Key? key}) : super(key: key);
 
   static const String route = '/encointer/assigning';
 
@@ -39,9 +39,9 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
   void resetTimer() {
     _cancelTimer();
 
-    CountdownTimer countDownTimer = new CountdownTimer(
+    CountdownTimer countDownTimer = CountdownTimer(
       new Duration(seconds: timeToMeetup),
-      new Duration(seconds: 1),
+      const Duration(seconds: 1),
     );
 
     sub = countDownTimer.listen(null);
@@ -82,12 +82,12 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(
+        const Icon(
           Iconsax.timer_start,
           color: encointerGrey,
           size: 18,
         ),
-        SizedBox(width: 8),
+        const SizedBox(width: 8),
         Text(
           '${timeLeftUntilCeremonyStarts.inDays}d ${timeLeftUntilCeremonyStarts.inHours.remainder(24)}h ${timeLeftUntilCeremonyStarts.inMinutes.remainder(60)}min ${timeLeftUntilCeremonyStarts.inSeconds.remainder(60)}s',
           style: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),

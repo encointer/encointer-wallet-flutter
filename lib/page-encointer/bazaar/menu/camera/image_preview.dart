@@ -9,6 +9,8 @@ import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/busi
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class ImagePreview extends StatelessWidget {
+  const ImagePreview({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final businessFormState = Provider.of<BusinessFormState>(context);
@@ -34,12 +36,12 @@ class ImagePreview extends StatelessWidget {
                 .map(
                   (image) => Stack(
                     children: [
-                      Container(
+                      SizedBox(
                         height: 200,
                         child: kIsWeb ? Image.network(image!.path) : Image.file(File(image!.path)),
                       ),
                       IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.delete,
                           color: Colors.redAccent,
                         ),

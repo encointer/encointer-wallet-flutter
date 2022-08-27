@@ -1,10 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
-
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -20,9 +13,15 @@ import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/ui.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 
 class AccountManagePage extends StatefulWidget {
-  AccountManagePage();
+  AccountManagePage({Key? key}) : super(key: key);
 
   static const String route = '/profile/account';
 
@@ -87,7 +86,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
     _log("_getBalanceEntryListTile: ${community.toJson()}");
 
     return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 0.0),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
       leading: CommunityIcon(
         store: context.read<AppStore>(),
         address: address,
@@ -97,7 +96,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
             if (snapshot.hasData) {
               return snapshot.data!;
             } else {
-              return CupertinoActivityIndicator();
+              return const CupertinoActivityIndicator();
             }
           },
         ),
@@ -186,7 +185,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
           actions: <Widget>[
             !_isEditingText
                 ? IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Iconsax.edit,
                     ),
                     onPressed: () {
@@ -196,7 +195,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     },
                   )
                 : IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.check,
                     ),
                     onPressed: () {
@@ -216,7 +215,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                 SingleChildScrollView(
                   child: Column(
                     children: <Widget>[
-                      SizedBox(height: 20),
+                      const SizedBox(height: 20),
                       if (!isKeyboard)
                         AddressIcon(
                           '',
@@ -226,9 +225,9 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Text(Fmt.address(addressSS58)!, style: TextStyle(fontSize: 20)),
+                          Text(Fmt.address(addressSS58)!, style: const TextStyle(fontSize: 20)),
                           IconButton(
-                            icon: Icon(Iconsax.copy),
+                            icon: const Icon(Iconsax.copy),
                             color: ZurichLion.shade500,
                             onPressed: () => UI.copyAndNotify(context, addressSS58),
                           ),
@@ -287,7 +286,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     children: [
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          padding: EdgeInsets.all(16), // make splash animation as high as the container
+                          padding: const EdgeInsets.all(16), // make splash animation as high as the container
                           primary: Colors.transparent,
                           onPrimary: Colors.white,
                           shadowColor: Colors.transparent,
@@ -295,21 +294,21 @@ class _AccountManagePageState extends State<AccountManagePage> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Icon(Iconsax.share),
-                            SizedBox(width: 12),
+                            const Icon(Iconsax.share),
+                            const SizedBox(width: 12),
                             Text(dic.profile.accountShare, style: h3.copyWith(color: Colors.white)),
                           ],
                         ),
                         onPressed: () =>
                             Navigator.pushNamed(context, AccountSharePage.route, arguments: accountToBeEditedPubKey),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       Container(
                         child: PopupMenuButton<AccountAction>(
-                            offset: Offset(-10, -150),
-                            icon: Icon(Iconsax.more, color: Colors.white),
+                            offset: const Offset(-10, -150),
+                            icon: const Icon(Iconsax.more, color: Colors.white),
                             color: ZurichLion.shade50,
-                            padding: EdgeInsets.all(20),
+                            padding: const EdgeInsets.all(20),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
@@ -336,7 +335,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                                             child: ListTile(
                                               minLeadingWidth: 0,
                                               title: Text(data.title),
-                                              leading: Icon(Iconsax.trash),
+                                              leading: const Icon(Iconsax.trash),
                                             ),
                                           ),
                                         ))
@@ -379,7 +378,7 @@ class CommunityIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
+        SizedBox(
           width: 50,
           height: 50,
           child: icon,
@@ -388,14 +387,14 @@ class CommunityIcon extends StatelessWidget {
           builder: (_) {
             if (context.read<AppStore>().encointer.community!.bootstrappers != null &&
                 context.read<AppStore>().encointer.community!.bootstrappers!.contains(address)) {
-              return Positioned(
+              return const Positioned(
                 bottom: 0,
                 right: 0, //give the values according to your requirement
                 child: Icon(Iconsax.star, color: Colors.yellow),
               );
-            } else
-              // ignore: curly_braces_in_flow_control_structures
-              return Container(width: 0, height: 0);
+            } else {
+              return const SizedBox(width: 0, height: 0);
+            }
           },
         ),
       ],

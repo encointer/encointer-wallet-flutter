@@ -9,6 +9,8 @@ import 'package:encointer_wallet/utils/translations/translations.dart';
 class AboutPage extends StatelessWidget {
   static const String route = '/profile/about';
 
+  AboutPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
@@ -23,14 +25,14 @@ class AboutPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Padding(
-              padding: EdgeInsets.all(48),
+              padding: const EdgeInsets.all(48),
               child: Image.asset('assets/images/public/logo_about.png'),
             ),
             Text(
               dic.profile.aboutBrief,
               style: Theme.of(context).textTheme.headline4,
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             FutureBuilder<PackageInfo>(
               future: PackageInfo.fromPlatform(),
               builder: (_, AsyncSnapshot<PackageInfo> snapshot) {
@@ -38,11 +40,11 @@ class AboutPage extends StatelessWidget {
                 if (snapshot.hasData) {
                   return Text('${dic.profile.aboutVersion}: v${snapshot.data!.version}+${snapshot.data!.buildNumber}');
                 } else {
-                  return CupertinoActivityIndicator();
+                  return const CupertinoActivityIndicator();
                 }
               },
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             JumpToBrowserLink('https://encointer.org'),
           ],
         ),

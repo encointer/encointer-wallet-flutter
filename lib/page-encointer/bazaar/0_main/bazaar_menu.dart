@@ -50,7 +50,7 @@ class BazaarMenu extends StatelessWidget {
               );
             },
           ),
-          SizedBox(
+          const SizedBox(
             height: 50,
           ),
           ListTile(

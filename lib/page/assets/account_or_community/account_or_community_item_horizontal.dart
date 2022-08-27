@@ -28,7 +28,7 @@ class _AccountOrCommunityItemHorizontalState extends State<AccountOrCommunityIte
         InkWell(
           onTap: () => widget.onTap!(widget.index),
           child: Container(
-            padding: EdgeInsets.all(4),
+            padding: const EdgeInsets.all(4),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border:
@@ -37,7 +37,7 @@ class _AccountOrCommunityItemHorizontalState extends State<AccountOrCommunityIte
             child: widget.itemData.avatar,
           ),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Text(

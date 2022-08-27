@@ -1,9 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
-
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/secondary_button_wide.dart';
 import 'package:encointer_wallet/common/components/submit_button_secondary.dart';
@@ -17,9 +11,14 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/ui.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 
 class ContactDetailPage extends StatelessWidget {
-  ContactDetailPage(this.api);
+  ContactDetailPage(this.api, {Key? key}) : super(key: key);
 
   static const String route = '/profile/contactDetail';
 
@@ -66,7 +65,7 @@ class ContactDetailPage extends StatelessWidget {
           account.name,
           style: Theme.of(context).textTheme.headline3,
         ),
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Color(0xff666666), //change your color here
         ),
         centerTitle: true,
@@ -81,7 +80,7 @@ class ContactDetailPage extends StatelessWidget {
               Expanded(
                 child: ListView(
                   children: <Widget>[
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     Row(mainAxisAlignment: MainAxisAlignment.center, children: [
                       AddressIcon(
                         account.address,
@@ -90,15 +89,15 @@ class ContactDetailPage extends StatelessWidget {
                         tapToCopy: true,
                       )
                     ]),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     // The below is duplicate code of `accountManagePage`, but according to figma the design will
                     // change here.
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(Fmt.address(account.address)!, style: TextStyle(fontSize: 20)),
+                        Text(Fmt.address(account.address)!, style: const TextStyle(fontSize: 20)),
                         IconButton(
-                          icon: Icon(Iconsax.copy),
+                          icon: const Icon(Iconsax.copy),
                           color: ZurichLion.shade500,
                           onPressed: () => UI.copyAndNotify(context, account.address),
                         ),
@@ -118,16 +117,16 @@ class ContactDetailPage extends StatelessWidget {
                       ? EndorseButton(context.read<AppStore>(), api, account)
                       : Container();
                 } else {
-                  return CupertinoActivityIndicator();
+                  return const CupertinoActivityIndicator();
                 }
               }),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               SecondaryButtonWide(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Iconsax.send_sqaure_2),
-                    SizedBox(width: 12),
+                    const Icon(Iconsax.send_sqaure_2),
+                    const SizedBox(width: 12),
                     Text(
                         dic.profile.tokenSend
                             .replaceAll('SYMBOL', context.read<AppStore>().encointer.community?.symbol ?? "null"),
@@ -148,13 +147,13 @@ class ContactDetailPage extends StatelessWidget {
                   );
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               SecondaryButtonWide(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Iconsax.trash),
-                    SizedBox(width: 12),
+                    const Icon(Iconsax.trash),
+                    const SizedBox(width: 12),
                     Text(dic.profile.contactDelete, style: Theme.of(context).textTheme.headline3)
                   ],
                 ),
@@ -169,7 +168,7 @@ class ContactDetailPage extends StatelessWidget {
 }
 
 class EndorseButton extends StatelessWidget {
-  EndorseButton(this.store, this.api, this.contact);
+  EndorseButton(this.store, this.api, this.contact, {Key? key}) : super(key: key);
 
   final AppStore store;
   final Api api;
@@ -183,8 +182,8 @@ class EndorseButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Iconsax.verify),
-          SizedBox(width: 12),
+          const Icon(Iconsax.verify),
+          const SizedBox(width: 12),
           Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
         ],
       ),

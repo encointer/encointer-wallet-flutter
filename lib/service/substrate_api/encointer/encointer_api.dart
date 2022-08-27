@@ -352,8 +352,8 @@ class EncointerApi {
         print("[EncointerApi] received account data valid for the new ceremony phase");
         return data;
       } else {
-        await Future.delayed(
-            Duration(seconds: 3), () => print("[EncointerApi] polling account data until next phase is reached..."));
+        await Future.delayed(const Duration(seconds: 3),
+            () => print("[EncointerApi] polling account data until next phase is reached..."));
       }
     }
   }

@@ -1,9 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:focus_detector/focus_detector.dart';
-import 'package:pausable_timer/pausable_timer.dart';
-import 'package:provider/provider.dart';
-import 'package:share_plus/share_plus.dart';
-
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gr_code_view/gr_code_image_view.dart';
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
@@ -17,9 +11,14 @@ import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/ui.dart';
+import 'package:flutter/material.dart';
+import 'package:focus_detector/focus_detector.dart';
+import 'package:pausable_timer/pausable_timer.dart';
+import 'package:provider/provider.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ReceivePage extends StatefulWidget {
-  ReceivePage();
+  ReceivePage({Key? key}) : super(key: key);
   static const String route = '/assets/receive';
   @override
   _ReceivePageState createState() => _ReceivePageState();
@@ -125,8 +124,8 @@ class _ReceivePageState extends State<ReceivePage> {
               leading: Container(),
               actions: [
                 IconButton(
-                  key: Key('close-receive-page'),
-                  icon: Icon(Icons.close),
+                  key: const Key('close-receive-page'),
+                  icon: const Icon(Icons.close),
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -146,7 +145,7 @@ class _ReceivePageState extends State<ReceivePage> {
                           textAlign: TextAlign.center,
                         ),
                       ),
-                      SizedBox(height: 8),
+                      const SizedBox(height: 8),
                       Padding(
                         padding: const EdgeInsets.all(30),
                         child: EncointerTextFormField(
@@ -154,8 +153,8 @@ class _ReceivePageState extends State<ReceivePage> {
                           textStyle: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
                           inputFormatters: [UI.decimalInputFormatter()],
                           controller: _amountController,
-                          keyboardType: TextInputType.numberWithOptions(decimal: true),
-                          textFormFieldKey: Key('invoice-amount-input'),
+                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                          textFormFieldKey: const Key('invoice-amount-input'),
                           onChanged: (value) {
                             setState(() {
                               var trimmed = _amountController.text.trim();
@@ -164,7 +163,7 @@ class _ReceivePageState extends State<ReceivePage> {
                               }
                             });
                           },
-                          suffixIcon: Text(
+                          suffixIcon: const Text(
                             "ⵐ",
                             style: TextStyle(
                               color: encointerGrey,
@@ -178,12 +177,12 @@ class _ReceivePageState extends State<ReceivePage> {
                   Text('${dic.profile.receiverAccount} ${context.read<AppStore>().account.currentAccount.name}',
                       style: Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey),
                       textAlign: TextAlign.center),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       // Enhance brightness for the QR-code
-                      WakeLockAndBrightnessEnhancer(brightness: 1),
+                      const WakeLockAndBrightnessEnhancer(brightness: 1),
                       QrCodeImage(
                         qrCode: invoice.toQrPayload(),
                         text: dic.assets.shareInvoice,

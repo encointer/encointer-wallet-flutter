@@ -12,8 +12,9 @@ import 'image_picker_state.dart';
 import 'image_preview.dart';
 
 class ImagePickerScaffold extends StatelessWidget {
-  final ImagePicker _picker = ImagePicker();
+  ImagePickerScaffold({Key? key}) : super(key: key);
 
+  final ImagePicker _picker = ImagePicker();
   @override
   Widget build(BuildContext context) {
     final businessFormState = Provider.of<BusinessFormState>(context);
@@ -36,7 +37,7 @@ class ImagePickerScaffold extends StatelessWidget {
                         textAlign: TextAlign.center,
                       );
                     case ConnectionState.done:
-                      return ImagePreview();
+                      return const ImagePreview();
                     default:
                       if (snapshot.hasError) {
                         return Text(
@@ -52,7 +53,7 @@ class ImagePickerScaffold extends StatelessWidget {
                   }
                 },
               )
-            : ImagePreview(),
+            : const ImagePreview(),
       ),
       floatingActionButton: Column(
         mainAxisAlignment: MainAxisAlignment.end,

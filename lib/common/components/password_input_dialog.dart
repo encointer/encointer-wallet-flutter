@@ -19,12 +19,13 @@ showPasswordInputDialog(context, account, title, onOk) {
 
 class PasswordInputDialog extends StatefulWidget {
   PasswordInputDialog({
+    Key? key,
     required this.account,
     required this.onOk,
     this.title,
     this.onCancel,
     this.onAccountSwitch,
-  });
+  }) : super(key: key);
 
   final AccountData account;
   final Function onOk;
@@ -60,7 +61,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
             content: Text(dic.profile.wrongPinHint),
             actions: <Widget>[
               CupertinoButton(
-                key: Key('error-dialog-ok'),
+                key: const Key('error-dialog-ok'),
                 child: Text(I18n.of(context)!.translationsForLocale().home.ok),
                 onPressed: () => Navigator.of(context).pop(),
               ),
@@ -87,7 +88,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
     return CupertinoAlertDialog(
       title: widget.title ?? Container(),
       content: Padding(
-        padding: EdgeInsets.only(top: 16),
+        padding: const EdgeInsets.only(top: 16),
         child: CupertinoTextFormFieldRow(
           decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
           padding: EdgeInsets.zero,
@@ -124,10 +125,10 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
               )
             : Container(),
         CupertinoButton(
-          key: Key('password-ok'),
+          key: const Key('password-ok'),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [_submitting ? CupertinoActivityIndicator() : Container(), Text(dic.home.ok)],
+            children: [_submitting ? const CupertinoActivityIndicator() : Container(), Text(dic.home.ok)],
           ),
           onPressed: _submitting
               ? null

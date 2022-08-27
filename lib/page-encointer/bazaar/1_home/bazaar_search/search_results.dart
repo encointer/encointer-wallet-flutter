@@ -13,6 +13,8 @@ class SearchResults extends StatelessWidget {
   final businessResults = searchResultsInBusinesses;
   final offeringsResults = searchResultsInOfferings;
 
+  SearchResults({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -23,7 +25,7 @@ class SearchResults extends StatelessWidget {
         ResultSummaryListTile(offeringsResults, I18n.of(context)!.translationsForLocale().bazaar.offeringsResults),
         Text(
           I18n.of(context)!.translationsForLocale().bazaar.topResults,
-          style: TextStyle(fontWeight: FontWeight.bold, height: 2.5),
+          style: const TextStyle(fontWeight: FontWeight.bold, height: 2.5),
         ),
         Column(
           mainAxisSize: MainAxisSize.min,
@@ -57,7 +59,7 @@ class ResultSummaryListTile extends StatelessWidget {
     return ListTile(
       leading: Container(
         height: 30,
-        padding: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 10),
         decoration: BoxDecoration(
           color: Colors.green[200],
           borderRadius: BorderRadius.circular(16),
@@ -72,7 +74,7 @@ class ResultSummaryListTile extends StatelessWidget {
         ),
       ),
       title: Text(title),
-      trailing: Icon(Icons.arrow_forward_ios),
+      trailing: const Icon(Icons.arrow_forward_ios),
       onTap: () {
         Navigator.push(
           context,

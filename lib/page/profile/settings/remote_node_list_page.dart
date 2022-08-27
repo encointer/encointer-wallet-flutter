@@ -1,15 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class RemoteNodeListPage extends StatelessWidget {
-  RemoteNodeListPage();
+  RemoteNodeListPage({Key? key}) : super(key: key);
 
   static const String route = '/profile/endpoint';
   final Api? api = webApi;
@@ -21,13 +20,13 @@ class RemoteNodeListPage extends StatelessWidget {
     endpoints.retainWhere((i) => i.info == context.read<AppStore>().settings.endpoint.info);
     List<Widget> list = endpoints
         .map((i) => ListTile(
-              leading: Container(
+              leading: SizedBox(
                 width: 36,
                 child: Image.asset('assets/images/public/${i.info}.png'),
               ),
               title: Text(i.info!),
               subtitle: Text(i.text!),
-              trailing: Container(
+              trailing: SizedBox(
                 width: 40,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -38,7 +37,7 @@ class RemoteNodeListPage extends StatelessWidget {
                             width: 16,
                           )
                         : Container(),
-                    Icon(Icons.arrow_forward_ios, size: 18)
+                    const Icon(Icons.arrow_forward_ios, size: 18)
                   ],
                 ),
               ),
@@ -60,7 +59,7 @@ class RemoteNodeListPage extends StatelessWidget {
         centerTitle: true,
       ),
       body: SafeArea(
-        child: ListView(padding: EdgeInsets.only(top: 8), children: list),
+        child: ListView(padding: const EdgeInsets.only(top: 8), children: list),
       ),
     );
   }

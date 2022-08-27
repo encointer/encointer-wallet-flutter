@@ -1,13 +1,12 @@
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/snack_bar.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
-
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 import 'qr_scan_service.dart';
 
@@ -22,7 +21,7 @@ class ScanPageParams {
 }
 
 class ScanPage extends StatelessWidget {
-  ScanPage();
+  ScanPage({Key? key}) : super(key: key);
 
   static const String route = '/account/scan';
 
@@ -51,8 +50,8 @@ class ScanPage extends StatelessWidget {
         leading: Container(),
         actions: [
           IconButton(
-            key: Key('close-scanner'),
-            icon: Icon(Icons.close),
+            key: const Key('close-scanner'),
+            icon: const Icon(Icons.close),
             onPressed: () => Navigator.pop(context),
           )
         ],
@@ -95,7 +94,7 @@ class ScanPage extends StatelessWidget {
                       ),
                       Text(
                         I18n.of(context)!.translationsForLocale().account.qrScan,
-                        style: TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16),
+                        style: const TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16),
                       ),
                     ],
                   ),
@@ -103,7 +102,7 @@ class ScanPage extends StatelessWidget {
               ],
             );
           } else {
-            return Center(child: CupertinoActivityIndicator());
+            return const Center(child: CupertinoActivityIndicator());
           }
         },
       ),
@@ -128,13 +127,13 @@ Widget mockQrDataRow(Translations dic, Function(String) onScan) {
       ),
     ),
     ElevatedButton(
-      child: Text("voucher"),
+      child: const Text("voucher"),
       onPressed: () => onScan(
         "encointer-voucher\nv2.0\n//VoucherUri\nsqm1v79dF6b"
         "\nnctr-gsl-dev\nAubrey",
       ),
     ),
-    Text(' <<< Devs only', style: TextStyle(color: Colors.orange)),
+    const Text(' <<< Devs only', style: TextStyle(color: Colors.orange)),
   ]);
 }
 

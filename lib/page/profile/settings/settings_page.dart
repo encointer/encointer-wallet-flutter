@@ -1,16 +1,15 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
-
 import 'package:encointer_wallet/page/profile/settings/remote_node_list_page.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
 
 class SettingsPage extends StatefulWidget {
-  SettingsPage(this.changeLang);
+  SettingsPage(this.changeLang, {Key? key}) : super(key: key);
   static const String route = '/profile/settings';
   final Function changeLang;
   @override
@@ -40,7 +39,7 @@ class _Settings extends State<SettingsPage> {
     void _onLanguageTap() {
       showCupertinoModalPopup(
         context: context,
-        builder: (_) => Container(
+        builder: (_) => SizedBox(
           height: MediaQuery.of(context).copyWith().size.height / 3,
           child: WillPopScope(
             child: CupertinoPicker(
@@ -50,7 +49,7 @@ class _Settings extends State<SettingsPage> {
                 initialItem: _langOptions.indexOf(context.read<AppStore>().settings.localeCode),
               ),
               children: _langOptions.map((i) {
-                return Padding(padding: EdgeInsets.all(16), child: Text(getLang(i)));
+                return Padding(padding: const EdgeInsets.all(16), child: Text(getLang(i)));
               }).toList(),
               onSelectedItemChanged: (v) {
                 setState(() {
@@ -81,30 +80,30 @@ class _Settings extends State<SettingsPage> {
           child: ListView(
             children: <Widget>[
               ListTile(
-                leading: Container(
+                leading: SizedBox(
                   width: 36,
                   child: Image.asset('assets/images/public/${context.read<AppStore>().settings.endpoint.info}.png'),
                 ),
                 title: Text(dic.profile.settingNode),
                 subtitle: Text(context.read<AppStore>().settings.endpoint.text ?? ''),
-                trailing: Icon(Icons.arrow_forward_ios, size: 18),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.of(context).pushNamed(RemoteNodeListPage.route),
               ),
               ListTile(
-                leading: Container(
+                leading: SizedBox(
                   width: 36,
                   child: Image.asset(
                       'assets/images/public/${context.read<AppStore>().settings.customSS58Format['info']}.png'),
                 ),
                 title: Text(dic.profile.settingPrefix),
                 subtitle: Text(context.read<AppStore>().settings.customSS58Format['text'] ?? ''),
-                trailing: Icon(Icons.arrow_forward_ios, size: 18),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.of(context).pushNamed(SS58PrefixListPage.route),
               ),
               ListTile(
                 title: Text(dic.profile.settingLang),
                 subtitle: Text(getLang(context.read<AppStore>().settings.localeCode)),
-                trailing: Icon(Icons.arrow_forward_ios, size: 18),
+                trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => _onLanguageTap(),
               )
             ],

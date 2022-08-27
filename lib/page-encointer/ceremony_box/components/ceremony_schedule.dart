@@ -31,7 +31,7 @@ class CeremonySchedule extends StatelessWidget {
         showCountDown
             ? CeremonyDateLabelAbsolute(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode)
             : CeremonyDateLabelRelative(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         showCountDown
             ? CeremonyCountDown(nextCeremonyDate)
             : CeremonyDate(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode)
@@ -121,18 +121,18 @@ class CeremonyDate extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(
+        const Icon(
           Iconsax.calendar_1,
           color: encointerGrey,
           size: 18,
         ),
-        SizedBox(width: 6),
+        const SizedBox(width: 6),
         Text(
           nextCeremonyYearMonthDay,
           style: h2BlackTheme,
         ),
-        SizedBox(width: 12),
-        Padding(
+        const SizedBox(width: 12),
+        const Padding(
           padding: const EdgeInsets.only(bottom: 2),
           child: Icon(
             Iconsax.clock,
@@ -140,7 +140,7 @@ class CeremonyDate extends StatelessWidget {
             size: 18,
           ),
         ),
-        SizedBox(width: 6),
+        const SizedBox(width: 6),
         Text(
           nextCeremonyHourMinute,
           style: h2BlackTheme,

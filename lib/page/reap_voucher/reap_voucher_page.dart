@@ -1,8 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
-
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/secondary_button_wide.dart';
@@ -17,6 +12,10 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 
 import 'dialogs.dart';
 import 'utils.dart';
@@ -32,7 +31,7 @@ class ReapVoucherParams {
 }
 
 class ReapVoucherPage extends StatefulWidget {
-  const ReapVoucherPage(this.api);
+  const ReapVoucherPage(this.api, {Key? key}) : super(key: key);
 
   static const String route = '/qrcode/voucher';
   final Api api;
@@ -109,18 +108,18 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
               height: 96,
               child: _voucherAddress != null
                   ? AddressIcon(_voucherAddress!, _voucherAddress!, size: 96)
-                  : CupertinoActivityIndicator(),
+                  : const CupertinoActivityIndicator(),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(issuer, style: h2Grey),
             SizedBox(
               height: 80,
               child: _voucherBalance != null
                   ? TextGradient(
                       text: '${Fmt.doubleFormat(_voucherBalance)} ⵐ',
-                      style: TextStyle(fontSize: 60),
+                      style: const TextStyle(fontSize: 60),
                     )
-                  : CupertinoActivityIndicator(),
+                  : const CupertinoActivityIndicator(),
             ),
             Text(
               "${dic.assets.voucherBalance}, ${context.read<AppStore>().encointer.community?.symbol}",
@@ -144,8 +143,8 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Iconsax.login_1),
-                      SizedBox(width: 6),
+                      const Icon(Iconsax.login_1),
+                      const SizedBox(width: 6),
                       Text(dic.assets.fundVoucher),
                     ],
                   ),
@@ -156,8 +155,8 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Iconsax.login_1),
-                  SizedBox(width: 6),
+                  const Icon(Iconsax.login_1),
+                  const SizedBox(width: 6),
                   Text(dic.assets.redeemVoucher),
                 ],
               ),

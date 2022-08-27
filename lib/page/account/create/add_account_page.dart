@@ -1,9 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import 'package:encointer_wallet/common/components/account_advance_option_params.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -12,9 +8,12 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AddAccountPage extends StatefulWidget {
-  const AddAccountPage();
+  const AddAccountPage({Key? key}) : super(key: key);
 
   static const String route = '/account/addAccount';
 
@@ -128,7 +127,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
         leading: Container(),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.close, color: encointerGrey),
+            icon: const Icon(Icons.close, color: encointerGrey),
             onPressed: () {
               Navigator.popUntil(context, ModalRoute.withName('/'));
             },
@@ -146,7 +145,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
                 },
                 store: context.read<AppStore>(),
               )
-            : Center(child: CupertinoActivityIndicator()),
+            : const Center(child: CupertinoActivityIndicator()),
       ),
     );
   }
