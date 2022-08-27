@@ -196,7 +196,7 @@ class _AssetsState extends State<Assets> {
                                                   Text(dic!.assets.communityNotSelected, textAlign: TextAlign.center))
                                           : const SizedBox(
                                               width: double.infinity,
-                                              child: CupertinoActivityIndicator(),
+                                              child: const CupertinoActivityIndicator(),
                                             ),
                                     );
                             },
@@ -204,7 +204,7 @@ class _AssetsState extends State<Assets> {
                           if (store.settings.developerMode)
                             ElevatedButton(
                               onPressed: store.dataUpdate.setInvalidated,
-                              child: const Text('Invalidate data to trigger state update'),
+                              child: const Text("Invalidate data to trigger state update"),
                             ),
                           const SizedBox(
                             height: 42,

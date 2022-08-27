@@ -161,7 +161,7 @@ class _ReceivePageState extends State<ReceivePage> {
                             });
                           },
                           suffixIcon: const Text(
-                            'ⵐ',
+                            "ⵐ",
                             style: TextStyle(
                               color: encointerGrey,
                               fontSize: 26,

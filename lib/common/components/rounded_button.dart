@@ -23,9 +23,7 @@ class RoundedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> row = <Widget>[];
     if (submitting) {
-      row.add(
-        const CupertinoActivityIndicator(),
-      );
+      row.add(const CupertinoActivityIndicator());
     }
     if (icon != null) {
       row.add(

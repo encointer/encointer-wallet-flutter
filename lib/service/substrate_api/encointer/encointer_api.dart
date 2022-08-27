@@ -353,7 +353,7 @@ class EncointerApi {
         return data;
       } else {
         await Future.delayed(const Duration(seconds: 3),
-            () => print('[EncointerApi] polling account data until next phase is reached...'));
+            () => print("[EncointerApi] polling account data until next phase is reached..."));
       }
     }
   }

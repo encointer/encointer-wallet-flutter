@@ -106,7 +106,7 @@ class _WalletAppState extends State<WalletApp> {
 
       await webApi.init().timeout(
             const Duration(seconds: 20),
-            onTimeout: () => print('webApi.init() has run into a timeout. We might be offline.'),
+            onTimeout: () => print("webApi.init() has run into a timeout. We might be offline."),
           );
 
       _appStore!.dataUpdate.setupUpdateReaction(() async {

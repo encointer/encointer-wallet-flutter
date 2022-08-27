@@ -1,12 +1,6 @@
 import 'dart:async';
 
 import 'package:animated_check/animated_check.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:intl/intl.dart';
-
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
@@ -19,6 +13,11 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
 
 class PaymentConfirmationParams {
   PaymentConfirmationParams({
@@ -210,7 +209,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
           ),
         );
       default:
-        return const Text('Unknown transfer state');
+        return const Text("Unknown transfer state");
     }
   }
 
@@ -255,7 +254,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
           );
         }
       default:
-        return const Text('Unknown transfer state');
+        return const Text("Unknown transfer state");
     }
   }
 

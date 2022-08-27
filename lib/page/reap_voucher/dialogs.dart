@@ -1,9 +1,8 @@
-import 'package:flutter/cupertino.dart';
-
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'utils.dart';
 
@@ -132,7 +131,7 @@ Future<ChangeResult> changeWithLoadingDialog(
     builder: (BuildContext context) {
       return CupertinoAlertDialog(
         title: Text(I18n.of(context)!.translationsForLocale().home.loading),
-        content: const SizedBox(height: 64, child: CupertinoActivityIndicator()),
+        content: Container(height: 64, child: const CupertinoActivityIndicator()),
       );
     },
   );

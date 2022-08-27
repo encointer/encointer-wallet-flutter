@@ -20,7 +20,7 @@ void main() {
 
       var ready = await driver!.requestData(MockStorageSetup.WAIT_UNTIL_APP_IS_READY);
       while (ready == false.toString()) {
-        print('Waiting for app to be ready: $ready');
+        print("Waiting for app to be ready: $ready");
         await Future.delayed(const Duration(seconds: 1));
         ready = await driver!.requestData(MockStorageSetup.WAIT_UNTIL_APP_IS_READY);
       }

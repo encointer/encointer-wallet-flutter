@@ -321,7 +321,7 @@ abstract class _EncointerStore with Store {
       updateAggregatedAccountData(),
     ])
         .timeout(const Duration(seconds: 15))
-        .catchError((e) => _log('Error executing update state: ${e.toString()}'))
+        .catchError((e) => _log("Error executing update state: ${e.toString()}"))
         .whenComplete(() {
       _log('[updateState] finished');
       _updateStateFuture = null;

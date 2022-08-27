@@ -17,7 +17,7 @@ class OfferingDetail extends StatelessWidget {
       appBar: AppBar(
         title: Row(
           children: [
-            Text('${offering.title}'),
+            Text("${offering.title}"),
             const SizedBox(
               width: 6,
             ),
@@ -32,7 +32,7 @@ class OfferingDetail extends StatelessWidget {
               Center(
                 child: Container(padding: const EdgeInsets.all(4), child: offering.image),
               ),
-              Text('${offering.description}'),
+              Text("${offering.description}"),
               const SizedBox(
                 height: 8,
               ),

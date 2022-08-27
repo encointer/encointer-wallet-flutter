@@ -128,7 +128,7 @@ Widget mockQrDataRow(Translations dic, Function(String) onScan) {
       ),
     ),
     ElevatedButton(
-      child: const Text('voucher'),
+      child: const Text("voucher"),
       onPressed: () => onScan(
         'encointer-voucher\nv2.0\n//VoucherUri\nsqm1v79dF6b'
         '\nnctr-gsl-dev\nAubrey',

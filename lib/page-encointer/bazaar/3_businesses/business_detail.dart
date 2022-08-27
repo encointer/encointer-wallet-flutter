@@ -21,7 +21,7 @@ class BusinessDetail extends StatelessWidget {
       appBar: AppBar(
         title: Row(
           children: [
-            Text('${business!.title}'),
+            Text("${business!.title}"),
             const SizedBox(
               width: 6,
             ),
@@ -38,7 +38,7 @@ class BusinessDetail extends StatelessWidget {
                   alignment: Alignment.topLeft,
                   child: Container(
                     padding: const EdgeInsets.fromLTRB(2, 8, 0, 16),
-                    child: Text('${business!.description}'),
+                    child: Text("${business!.description}"),
                   )),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
