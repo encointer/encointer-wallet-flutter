@@ -11,7 +11,7 @@ import 'bazaar_menu.dart';
 import 'bazaar_tab_bar.dart';
 
 class BazaarMain extends StatelessWidget {
-  BazaarMain({Key? key});
+  BazaarMain({Key? key}) : super(key: key);
   static const String route = '/bazaar';
 
   @override

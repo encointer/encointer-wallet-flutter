@@ -202,13 +202,13 @@ class _WalletAppState extends State<WalletApp> {
               );
             case CreateAccountPage.route:
               return CupertinoPageRoute(
-                builder: (_) => CreateAccountPage(),
+                builder: (_) => const CreateAccountPage(),
                 settings: settings,
                 fullscreenDialog: true,
               );
             case AddAccountPage.route:
               return CupertinoPageRoute(
-                builder: (_) => AddAccountPage(),
+                builder: (_) => const AddAccountPage(),
                 settings: settings,
                 fullscreenDialog: true,
               );
@@ -220,12 +220,12 @@ class _WalletAppState extends State<WalletApp> {
               );
             case CreatePinPage.route:
               return CupertinoPageRoute(
-                builder: (_) => CreatePinPage(),
+                builder: (_) => const CreatePinPage(),
                 settings: settings,
               );
             case ImportAccountPage.route:
               return CupertinoPageRoute(
-                builder: (_) => ImportAccountPage(),
+                builder: (_) => const ImportAccountPage(),
                 settings: settings,
               );
             case ScanPage.route:
