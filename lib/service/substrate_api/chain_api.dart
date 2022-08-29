@@ -13,12 +13,12 @@ class ChainApi {
   final String _newHeadsSubscribeChannel = 'latestHeader';
 
   Future<void> startSubscriptions() async {
-    print("api: starting encointer subscriptions");
+    print('api: starting encointer subscriptions');
     this.subscribeNewHeads();
   }
 
   Future<void> stopSubscriptions() async {
-    print("api: stopping encointer subscriptions");
+    print('api: stopping encointer subscriptions');
     jsApi.unsubscribeMessage(_newHeadsSubscribeChannel);
   }
 
@@ -26,7 +26,7 @@ class ChainApi {
   /// is still communicating.
   Future<void> subscribeTimestamp() async {
     jsApi.subscribeMessage('chain.subscribeTimestamp("$_timeStampSubscribeChannel")', _timeStampSubscribeChannel,
-        (data) => {print("timestamp: $data")});
+        (data) => {print('timestamp: $data')});
   }
 
   /// Subscribes to the latest headers

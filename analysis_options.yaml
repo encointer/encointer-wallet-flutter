@@ -18,7 +18,7 @@ linter:
     # prefer_const_constructors_in_immutable: false
     # avoid_unnecessary_containers: false
     use_key_in_widget_constructors: true
-    # prefer_single_quotes: false
+    prefer_single_quotes: true
     sized_box_for_whitespace: true
 
     # always_declare_return_types: false

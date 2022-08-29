@@ -1,4 +1,4 @@
-import "package:latlong2/latlong.dart";
+import 'package:latlong2/latlong.dart';
 import 'package:flutter/material.dart';
 
 /// A BazaarItem can either be an offering or a business.
@@ -47,7 +47,7 @@ class BazaarBusinessData extends BazaarItemData {
   String get info {
     final Distance distance = const Distance();
     final double distanceInMeters = distance(turbinenplatz, coordinates);
-    return distanceInMeters.toStringAsFixed(0) + "m";
+    return distanceInMeters.toStringAsFixed(0) + 'm';
   }
 
   @override
@@ -118,7 +118,7 @@ class OpeningHoursForDay {
   String toString() {
     String asString = '';
     if (openingIntervals.length == 0) {
-      asString += "(closed)";
+      asString += '(closed)';
     } else {
       for (var i = 0; i < openingIntervals.length; i++) {
         asString += openingIntervals[i].toString();
@@ -156,11 +156,11 @@ class OpeningInterval {
   @override
   String toString() {
     return (start ~/ 60).toString() +
-        ":" +
+        ':' +
         (start % 60 + 100).toString().substring(1) +
-        " - " +
+        ' - ' +
         (end ~/ 60).toString() +
-        ":" +
+        ':' +
         (end % 60 + 100).toString().substring(1);
   }
 }

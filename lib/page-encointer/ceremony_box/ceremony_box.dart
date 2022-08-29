@@ -184,7 +184,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
 }
 
 void _log(String msg) {
-  print("[CeremonyBox] $msg");
+  print('[CeremonyBox] $msg');
 }
 
 Future<void> awaitDataUpdateWithDialog(BuildContext context, AppStore store) async {

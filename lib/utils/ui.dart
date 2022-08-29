@@ -38,7 +38,7 @@ class UI {
     try {
       await launchUrl(Uri.parse(url));
     } catch (err) {
-      print("Could not launch URL: ${err.toString()}");
+      print('Could not launch URL: ${err.toString()}');
     }
   }
 

@@ -30,7 +30,7 @@ class ImagePreview extends StatelessWidget {
               I18n.of(context)!.translationsForLocale().bazaar.imageNotPicked,
               textAlign: TextAlign.center,
             ),
-          Text("${imagePickerState.images.length} ${I18n.of(context)!.translationsForLocale().bazaar.imagesAdded}"),
+          Text('${imagePickerState.images.length} ${I18n.of(context)!.translationsForLocale().bazaar.imagesAdded}'),
           Column(
             children: imagePickerState.images
                 .map(

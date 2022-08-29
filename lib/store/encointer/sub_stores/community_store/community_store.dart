@@ -81,7 +81,7 @@ abstract class _CommunityStore with Store {
   @action
   Future<void> initCommunityAccountStore(String address) {
     if (!communityAccountStores!.containsKey(address)) {
-      _log("Adding new communityAccountStore for cid: ${cid.toFmtString()} and account: $address");
+      _log('Adding new communityAccountStore for cid: ${cid.toFmtString()} and account: $address');
 
       var store = CommunityAccountStore(network, cid, address);
       store.initStore(_cacheFn);
@@ -102,21 +102,21 @@ abstract class _CommunityStore with Store {
 
   @action
   void setBootstrappers(List<String> bs) {
-    _log("set bootstrappers to $bs");
+    _log('set bootstrappers to $bs');
     bootstrappers = bs;
     writeToCache();
   }
 
   @action
   void setCommunityMetadata(CommunityMetadata meta) {
-    _log("set metadata to $meta");
+    _log('set metadata to $meta');
     metadata = meta;
     writeToCache();
   }
 
   @action
   void setMeetupTime([int? time]) {
-    _log("set meetupTime to $time");
+    _log('set meetupTime to $time');
     if (meetupTime != time) {
       meetupTime = time;
       writeToCache();
@@ -125,7 +125,7 @@ abstract class _CommunityStore with Store {
 
   @action
   void setMeetupTimeOverride([int? time]) {
-    _log("set meetupTimeOverride to $time");
+    _log('set meetupTimeOverride to $time');
     if (meetupTimeOverride != time) {
       meetupTimeOverride = time;
       writeToCache();
@@ -134,7 +134,7 @@ abstract class _CommunityStore with Store {
 
   @action
   void setMeetupLocations(List<Location> locations) {
-    _log("store: set meetupLocations to ${locations.toString()}");
+    _log('store: set meetupLocations to ${locations.toString()}');
     meetupLocations = ObservableList.of(locations);
     writeToCache();
 
@@ -169,5 +169,5 @@ abstract class _CommunityStore with Store {
 }
 
 void _log(String msg) {
-  print("[communityStore] $msg");
+  print('[communityStore] $msg');
 }

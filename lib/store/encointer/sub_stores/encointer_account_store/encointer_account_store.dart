@@ -60,7 +60,7 @@ abstract class _EncointerAccountStore with Store {
       try {
         return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
       } catch (_e) {
-        _log("$address has reputation, but none that has not been linked yet");
+        _log('$address has reputation, but none that has not been linked yet');
         return 0;
       }
     }
@@ -68,7 +68,7 @@ abstract class _EncointerAccountStore with Store {
 
   @action
   void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
-    _log("balanceEntry $balanceEntry added to cid $cid added");
+    _log('balanceEntry $balanceEntry added to cid $cid added');
     balanceEntries[cid.toFmtString()] = balanceEntry;
     writeToCache();
   }
@@ -99,13 +99,13 @@ abstract class _EncointerAccountStore with Store {
 
     List transfers = list.map((i) {
       return {
-        "block_timestamp": i['time'],
-        "hash": i['hash'],
-        "success": true,
-        "from": address,
-        "to": i['params'][0],
-        "token": CommunityIdentifier.fromJson(i['params'][1]).toFmtString(),
-        "amount": Fmt.numberFormat(i['params'][2]),
+        'block_timestamp': i['time'],
+        'hash': i['hash'],
+        'success': true,
+        'from': address,
+        'to': i['params'][0],
+        'token': CommunityIdentifier.fromJson(i['params'][1]).toFmtString(),
+        'amount': Fmt.numberFormat(i['params'][2]),
       };
     }).toList();
     if (reset) {
@@ -133,5 +133,5 @@ abstract class _EncointerAccountStore with Store {
 }
 
 void _log(String msg) {
-  print("[encointerAccountStore] $msg");
+  print('[encointerAccountStore] $msg');
 }

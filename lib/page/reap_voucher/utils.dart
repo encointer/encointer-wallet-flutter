@@ -48,7 +48,7 @@ Future<ChangeResult> changeNetwork(
     // webView init until it is completely connected without some
     // refactoring.
     await Future.delayed(const Duration(milliseconds: 500), () {
-      _log("Waiting until we connected to new network...");
+      _log('Waiting until we connected to new network...');
     });
   }
 
@@ -72,5 +72,5 @@ Future<ChangeResult> changeCommunity(
 }
 
 void _log(String msg) {
-  print("[ReapVoucherPage/utils] $msg");
+  print('[ReapVoucherPage/utils] $msg');
 }
