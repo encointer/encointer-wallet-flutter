@@ -7,7 +7,7 @@ include: package:lints/core.yaml
 linter:
   rules:
     always_use_package_imports: false
-    camel_case_extensions: false
+    camel_case_extensions: true
     depend_on_referenced_packages: false
     prefer_typing_uninitialized_variables: false
     void_checks: false
