@@ -10,7 +10,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
-import 'ceremony_progress_bar.dart';
+import 'package:encointer_wallet/page-encointer/meetup/ceremony_progress_bar.dart';
 
 class CeremonyStep3Finish extends StatelessWidget {
   const CeremonyStep3Finish(

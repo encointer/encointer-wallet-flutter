@@ -5,7 +5,7 @@ import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 
-import 'balance_entry.dart';
+import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 
 part 'encointer_balance_data.g.dart';
 

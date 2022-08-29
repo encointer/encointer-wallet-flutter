@@ -5,7 +5,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/2_offerings/offering_deta
 import 'package:encointer_wallet/page-encointer/bazaar/3_businesses/business_detail.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_vertical_state.dart';
 
-import 'data_model/model/bazaar_item_data.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
 
 class BazaarItemVertical extends StatelessWidget {
   const BazaarItemVertical({

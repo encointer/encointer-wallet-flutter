@@ -9,7 +9,7 @@ import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
 
-import 'bazaar/0_main/bazaar_main.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 
 class EncointerHomePage extends StatefulWidget {
   EncointerHomePage(this.store, {Key? key}) : super(key: key);

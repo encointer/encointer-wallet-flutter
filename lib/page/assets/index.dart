@@ -32,8 +32,8 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
-import 'account_or_community/account_or_community_data.dart';
-import 'account_or_community/switch_account_or_community.dart';
+import 'package:encointer_wallet/page/assets/account_or_community/account_or_community_data.dart';
+import 'package:encointer_wallet/page/assets/account_or_community/switch_account_or_community.dart';
 
 class Assets extends StatefulWidget {
   Assets(this.store, {Key? key}) : super(key: key);

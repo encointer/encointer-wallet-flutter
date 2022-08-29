@@ -5,8 +5,8 @@ import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
-import 'components/ceremony_location_button.dart';
-import 'components/ceremony_notification.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/components/ceremony_location_button.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/components/ceremony_notification.dart';
 
 class MeetupInfo extends StatelessWidget {
   MeetupInfo(

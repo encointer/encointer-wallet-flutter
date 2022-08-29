@@ -10,7 +10,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/toggle_buttons_wit
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
-import 'opening_hours.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/opening_hours.dart';
 
 class BusinessFormScaffold extends StatelessWidget {
   final categories = allCategories;

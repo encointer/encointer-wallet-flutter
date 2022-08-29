@@ -6,9 +6,9 @@ import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
-import 'components/ceremony_info_and_calendar.dart';
-import 'components/ceremony_progress_bar.dart';
-import 'components/ceremony_schedule.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_info_and_calendar.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_progress_bar.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_schedule.dart';
 
 class CeremonyInfo extends StatelessWidget {
   CeremonyInfo({

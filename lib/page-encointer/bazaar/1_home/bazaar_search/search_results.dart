@@ -5,8 +5,8 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_da
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
-import 'search_results_business.dart';
-import 'search_results_offering.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/1_home/bazaar_search/search_results_business.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/1_home/bazaar_search/search_results_offering.dart';
 
 class SearchResults extends StatelessWidget {
   // TODO implement state management with logic that takes the first of each list of search results

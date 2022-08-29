@@ -9,7 +9,7 @@ import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dar
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 
-import 'community_account_store/community_account_store.dart';
+import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_account_store/community_account_store.dart';
 
 part 'community_store.g.dart';
 

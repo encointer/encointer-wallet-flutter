@@ -8,8 +8,8 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
-import 'params.dart';
-import 'submit_to_js.dart';
+import 'package:encointer_wallet/service/tx/lib/src/params.dart';
+import 'package:encointer_wallet/service/tx/lib/src/submit_to_js.dart';
 
 /// Helpers to submit transactions.
 

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import 'account_or_community_data.dart';
-import 'account_or_community_item_horizontal.dart';
+import 'package:encointer_wallet/page/assets/account_or_community/account_or_community_data.dart';
+import 'package:encointer_wallet/page/assets/account_or_community/account_or_community_item_horizontal.dart';
 
 class SwitchAccountOrCommunity extends StatefulWidget {
   SwitchAccountOrCommunity({

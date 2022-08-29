@@ -8,9 +8,9 @@ import 'package:encointer_wallet/page-encointer/bazaar/4_favorites/favorites.dar
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
-import 'bazaar_main_state.dart';
-import 'bazaar_menu.dart';
-import 'bazaar_tab_bar.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main_state.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_menu.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_tab_bar.dart';
 
 class BazaarMain extends StatelessWidget {
   static const String route = '/bazaar';

@@ -1,6 +1,6 @@
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 
-import 'qr_code_base.dart';
+import 'package:encointer_wallet/page/qr_scan/qr_codes/qr_code_base.dart';
 
 class ContactQrCode extends QrCode<ContactData> {
   ContactQrCode.withData(

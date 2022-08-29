@@ -19,9 +19,9 @@ import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 
-import 'encointer_dart_api.dart';
-import 'no_tee_api.dart';
-import 'tee_proxy_api.dart';
+import 'package:encointer_wallet/service/substrate_api/encointer/encointer_dart_api.dart';
+import 'package:encointer_wallet/service/substrate_api/encointer/no_tee_api.dart';
+import 'package:encointer_wallet/service/substrate_api/encointer/tee_proxy_api.dart';
 
 /// Api to interface with the `js_encointer_service.js`
 ///

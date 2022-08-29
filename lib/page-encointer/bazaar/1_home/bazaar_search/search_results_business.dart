@@ -4,7 +4,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_vertic
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
-import 'search_results_business_filtered.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/1_home/bazaar_search/search_results_business_filtered.dart';
 
 class SearchResultsBusiness extends StatelessWidget {
   final results;

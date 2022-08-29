@@ -17,8 +17,8 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
-import 'dialogs.dart';
-import 'utils.dart';
+import 'package:encointer_wallet/page/reap_voucher/dialogs.dart';
+import 'package:encointer_wallet/page/reap_voucher/utils.dart';
 
 class ReapVoucherParams {
   ReapVoucherParams({

@@ -8,8 +8,8 @@ import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dar
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 import 'package:encointer_wallet/store/app.dart';
 
-import 'core/mock_dart_api.dart';
-import 'mock_js_api.dart';
+import 'package:encointer_wallet/mocks/substrate_api/core/mock_dart_api.dart';
+import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
 
 /// The key rationale behind this mock is that all the getters do not alter the app state.
 ///

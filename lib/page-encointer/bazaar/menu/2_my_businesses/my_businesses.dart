@@ -4,7 +4,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_vertic
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
-import 'business_form.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/business_form.dart';
 
 class MyBusinesses extends StatelessWidget {
   final data = myBusinesses;

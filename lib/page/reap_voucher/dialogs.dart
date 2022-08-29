@@ -4,7 +4,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'utils.dart';
+import 'package:encointer_wallet/page/reap_voucher/utils.dart';
 
 Future<void> showRedeemSuccessDialog(BuildContext context) {
   return showCupertinoDialog(

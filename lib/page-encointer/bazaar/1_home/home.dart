@@ -5,7 +5,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_da
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
-import 'bazaar_search/bazaar_search.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/1_home/bazaar_search/bazaar_search.dart';
 
 class Home extends StatelessWidget {
   final double cardHeight = 200;

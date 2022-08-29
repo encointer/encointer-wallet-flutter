@@ -42,10 +42,10 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/local_storage.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 
-import 'common/theme.dart';
-import 'mocks/storage/mock_local_storage.dart';
-import 'mocks/substrate_api/mock_api.dart';
-import 'utils/translations/index.dart';
+import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
+import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 class WalletApp extends StatefulWidget {
   const WalletApp(this.config, {Key? key}) : super(key: key);

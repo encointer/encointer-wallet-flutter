@@ -8,8 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/business_form_state.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
-import 'image_picker_state.dart';
-import 'image_preview.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/menu/camera/image_picker_state.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/menu/camera/image_preview.dart';
 
 class ImagePickerScaffold extends StatelessWidget {
   ImagePickerScaffold({Key? key}) : super(key: key);

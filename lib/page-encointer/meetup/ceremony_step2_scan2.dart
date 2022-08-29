@@ -14,8 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:qr_flutter_fork/qr_flutter_fork.dart';
 
-import 'ceremony_progress_bar.dart';
-import 'ceremony_step3_finish.dart';
+import 'package:encointer_wallet/page-encointer/meetup/ceremony_progress_bar.dart';
+import 'package:encointer_wallet/page-encointer/meetup/ceremony_step3_finish.dart';
 
 class CeremonyStep2Scan extends StatelessWidget {
   const CeremonyStep2Scan(
