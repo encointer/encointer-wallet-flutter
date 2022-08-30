@@ -34,7 +34,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
   final TextEditingController _keyCtrl = new TextEditingController();
   final TextEditingController _nameCtrl = new TextEditingController();
 
-  AccountAdvanceOptionParams _advanceOptions = AccountAdvanceOptionParams();
+  final AccountAdvanceOptionParams _advanceOptions = AccountAdvanceOptionParams();
 
   @override
   void dispose() {

@@ -59,7 +59,7 @@ class WalletApp extends StatefulWidget {
 class _WalletAppState extends State<WalletApp> {
   AppStore? _appStore;
   Locale _locale = const Locale('en', '');
-  ThemeData _theme = appThemeEncointer;
+  final ThemeData _theme = appThemeEncointer;
 
   void _changeTheme() {
     // todo: Remove this. It was for the network dependent theme.
