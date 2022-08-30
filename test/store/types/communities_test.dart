@@ -36,7 +36,7 @@ void main() {
       var cid = CommunityIdentifier([103, 98, 115, 117, 118], [255, 255, 255, 255]);
       var cid2 = CommunityIdentifier([103, 98, 115, 117, 118], [255, 255, 255, 255]);
 
-      Map<CommunityIdentifier, String> cidMap = new Map();
+      Map<CommunityIdentifier, String> cidMap = Map();
       cidMap[cid] = "Hello";
 
       expect(cidMap[cid2], "Hello");

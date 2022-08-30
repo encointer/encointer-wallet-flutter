@@ -49,7 +49,7 @@ void main() {
       // - CommunityAccountStore(network, testCid, store.account.currentAddress)
       encointerStore.setChosenCid(testCid);
 
-      var testCommunityStore = new CommunityStore(testNetwork, testCid);
+      var testCommunityStore = CommunityStore(testNetwork, testCid);
       await testCommunityStore.initCommunityAccountStore(root.account.currentAddress);
 
       Map<String, dynamic> targetJson = {
@@ -63,7 +63,7 @@ void main() {
         "chosenCid": testCid.toJson(),
         "accountStores": Map<String, dynamic>.of({}),
         "bazaarStores": Map<String, dynamic>.of({
-          testCidFmt: new BazaarStore(testNetwork, testCid).toJson(),
+          testCidFmt: BazaarStore(testNetwork, testCid).toJson(),
         }),
         "communityStores": Map<String, dynamic>.of({
           testCidFmt: testCommunityStore.toJson(),

@@ -1,11 +1,33 @@
-# include: package:lints/recommended.yaml
-include: package:lints/core.yaml
+include: package:lints/recommended.yaml
 
 # info(true/false): it lines blue to warn
-
   
 linter:
   rules:
+    sized_box_for_whitespace: true
+    use_key_in_widget_constructors: true
+    prefer_const_constructors: true
+    unnecessary_new: true
+    unnecessary_this: false
+    unnecessary_const: false
+    prefer_single_quotes: false
+    constant_identifier_names: false
+    prefer_final_fields: false
+    library_private_types_in_public_api: false
+    annotate_overrides: false
+    prefer_interpolation_to_compose_strings: false
+    prefer_collection_literals: false 
+    prefer_conditional_assignment: false
+    prefer_function_declarations_over_variables: false
+    no_leading_underscores_for_local_identifiers: false
+    prefer_if_null_operators: false
+    prefer_equal_for_default_values: false
+    overridden_fields: false
+    unnecessary_string_interpolations: false
+    avoid_single_cascade_in_expression_statements: false
+    avoid_renaming_method_parameters: false
+    avoid_returning_null_for_void: false
+    avoid_function_literals_in_foreach_calls: false
     always_use_package_imports: false
     camel_case_extensions: false
     depend_on_referenced_packages: false
@@ -14,13 +36,9 @@ linter:
     prefer_is_empty: false
     curly_braces_in_flow_structures: false
 
-    prefer_const_constructors: true
+    
     # prefer_const_constructors_in_immutable: false
     # avoid_unnecessary_containers: false
-    use_key_in_widget_constructors: true
-    # prefer_single_quotes: false
-    sized_box_for_whitespace: true
-
     # always_declare_return_types: false
     # cancel_subscriptions: false
     # close_sinks: false
@@ -45,5 +63,5 @@ analyzer:
     todo: false 
     fixme: false 
     prefer_iterable_wheretype: false
-
+    prefer_for_elements_to_map_fromiterable: false
 

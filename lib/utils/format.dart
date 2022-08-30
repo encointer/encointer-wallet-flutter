@@ -221,7 +221,7 @@ class Fmt {
     hex = hex.replaceAll("0x", "");
     hex = hex.toLowerCase();
     if (hex.length % 2 != 0) hex = "0" + hex;
-    Uint8List result = new Uint8List(hex.length ~/ 2);
+    Uint8List result = Uint8List(hex.length ~/ 2);
     for (int i = 0; i < result.length; i++) {
       int value = (_BYTE_ALPHABET.indexOf(hex[i * 2]) << 4) //= byte[0] * 16
           +

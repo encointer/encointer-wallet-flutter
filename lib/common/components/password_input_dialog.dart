@@ -38,7 +38,7 @@ class PasswordInputDialog extends StatefulWidget {
 }
 
 class _PasswordInputDialogState extends State<PasswordInputDialog> {
-  final TextEditingController _passCtrl = new TextEditingController();
+  final TextEditingController _passCtrl = TextEditingController();
   bool _submitting = false;
 
   Future<void> _onOk(String password) async {

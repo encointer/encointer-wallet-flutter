@@ -40,7 +40,7 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
     _cancelTimer();
 
     CountdownTimer countDownTimer = CountdownTimer(
-      new Duration(seconds: timeToMeetup),
+      Duration(seconds: timeToMeetup),
       const Duration(seconds: 1),
     );
 

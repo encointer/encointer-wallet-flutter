@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey = new GlobalKey<ScaffoldMessengerState>();
+final GlobalKey<ScaffoldMessengerState> rootScaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
 class RootSnackBar {
   static void hideCurrent() {

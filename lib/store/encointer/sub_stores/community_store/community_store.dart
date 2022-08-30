@@ -71,10 +71,10 @@ abstract class _CommunityStore with Store {
   List<String>? bootstrappers;
 
   @observable
-  ObservableList<Location>? meetupLocations = new ObservableList();
+  ObservableList<Location>? meetupLocations = ObservableList();
 
   @observable
-  ObservableMap<String, CommunityAccountStore>? communityAccountStores = new ObservableMap();
+  ObservableMap<String, CommunityAccountStore>? communityAccountStores = ObservableMap();
 
   get applyDemurrage => _applyDemurrage;
 

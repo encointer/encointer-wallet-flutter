@@ -43,16 +43,16 @@ abstract class _EncointerAccountStore with Store {
   ///
   /// Map: cid.toFmtString() -> BalanceEntry
   @observable
-  ObservableMap<String, BalanceEntry> balanceEntries = new ObservableMap();
+  ObservableMap<String, BalanceEntry> balanceEntries = ObservableMap();
 
   /// `CommunityReputations` across all communities keyed by the respective ceremony index.
   ///
   /// Map: ceremony index -> CommunityReputation
   @observable
-  Map<int, CommunityReputation> reputations = new Map();
+  Map<int, CommunityReputation> reputations = Map();
 
   @observable
-  ObservableList<TransferData> txsTransfer = new ObservableList<TransferData>();
+  ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
 
   @computed
   get ceremonyIndexForProofOfAttendance {
