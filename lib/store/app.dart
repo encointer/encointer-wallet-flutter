@@ -12,8 +12,6 @@ import 'data_update/data_update.dart';
 
 part 'app.g.dart';
 
-// AppStore globalAppStore = AppStore(LocalStorage());
-
 /// Encointer cache key prefix for the local storage.
 ///
 /// Should be prepended with the network prefix.

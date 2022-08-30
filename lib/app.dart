@@ -86,34 +86,35 @@ class _WalletAppState extends State<WalletApp> {
 
   Future<int> _initApp(BuildContext context) async {
     if (_appStore == null) {
+      final _store = context.watch<AppStore>();
       // Todo: Use provider pattern instead of globals, see: https://github.com/encointer/encointer-wallet-flutter/issues/132
-      context.read<AppStore>().localStorage = widget.config.mockLocalStorage ? MockLocalStorage() : LocalStorage();
+      _store.localStorage = widget.config.mockLocalStorage ? MockLocalStorage() : LocalStorage();
 
       _log('Initializing app state');
       _log('sys locale: ${Localizations.localeOf(context)}');
-      await context.read<AppStore>().init(Localizations.localeOf(context).toString());
+      await _store.init(Localizations.localeOf(context).toString());
 
       // init webApi after store initiated
       final jsServiceEncointer =
           await DefaultAssetBundle.of(context).loadString('lib/js_service_encointer/dist/main.js');
 
       webApi = widget.config.mockSubstrateApi
-          ? MockApi(context.read<AppStore>(), MockJSApi(), MockSubstrateDartApi(), jsServiceEncointer, withUi: true)
-          : Api.create(context.read<AppStore>(), JSApi(), SubstrateDartApi(), jsServiceEncointer);
+          ? MockApi(_store, MockJSApi(), MockSubstrateDartApi(), jsServiceEncointer, withUi: true)
+          : Api.create(_store, JSApi(), SubstrateDartApi(), jsServiceEncointer);
 
       await webApi.init().timeout(
             const Duration(seconds: 20),
             onTimeout: () => print("webApi.init() has run into a timeout. We might be offline."),
           );
 
-      context.read<AppStore>().dataUpdate.setupUpdateReaction(() async {
-        await context.read<AppStore>().encointer.updateState();
+      _store.dataUpdate.setupUpdateReaction(() async {
+        await _store.encointer.updateState();
       });
 
-      _changeLang(context, context.read<AppStore>().settings.localeCode);
+      _changeLang(context, _store.settings.localeCode);
 
-      context.read<AppStore>().setApiReady(true);
-      _appStore = context.read<AppStore>();
+      _store.setApiReady(true);
+      _appStore = _store;
     }
     return context.read<AppStore>().account.accountListAll.length;
   }
