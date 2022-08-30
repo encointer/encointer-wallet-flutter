@@ -143,7 +143,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
                     _createAndImportAccount();
                   });
                 },
-                store: context.read<AppStore>(),
+                store: context.watch<AppStore>(),
               )
             : const Center(child: CupertinoActivityIndicator()),
       ),

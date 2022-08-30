@@ -30,6 +30,7 @@ class _CreatePinPageState extends State<CreatePinPage> {
   @override
   Widget build(BuildContext context) {
     CreatePinPageParams params = ModalRoute.of(context)!.settings.arguments as CreatePinPageParams;
+    final _store = context.watch<AppStore>();
 
     onCreatePin = params.onCreatePin;
 
@@ -63,14 +64,14 @@ class _CreatePinPageState extends State<CreatePinPage> {
 
                   await onCreatePin();
 
-                  if (context.read<AppStore>().encointer.communityIdentifiers.length == 1) {
-                    context.read<AppStore>().encointer.setChosenCid(
-                          context.read<AppStore>().encointer.communityIdentifiers[0],
-                        );
+                  if (_store.encointer.communityIdentifiers.length == 1) {
+                    _store.encointer.setChosenCid(
+                      _store.encointer.communityIdentifiers[0],
+                    );
                   } else {
                     await Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (_) => CommunityChooserOnMap(context.read<AppStore>())),
+                      MaterialPageRoute(builder: (_) => CommunityChooserOnMap(_store)),
                     );
                   }
 
@@ -81,7 +82,7 @@ class _CreatePinPageState extends State<CreatePinPage> {
                   // Even if we do not choose a community, we go back to the home screen.
                   Navigator.popUntil(context, ModalRoute.withName('/'));
                 },
-                store: context.read<AppStore>(),
+                store: _store,
               )
             : const Center(child: CupertinoActivityIndicator()),
       ),

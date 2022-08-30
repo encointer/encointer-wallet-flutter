@@ -122,15 +122,17 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                   : const CupertinoActivityIndicator(),
             ),
             Text(
-              "${dic.assets.voucherBalance}, ${context.read<AppStore>().encointer.community?.symbol}",
+              "${dic.assets.voucherBalance}, ${context.watch<AppStore>().encointer.community?.symbol}",
               style: h4Grey,
             ),
             Expanded(
               // fit: FlexFit.tight,
               child: Center(
                 child: Text(
-                  dic.assets.doYouWantToRedeemThisVoucher
-                      .replaceAll("ACCOUNT_PLACEHOLDER", context.read<AppStore>().account.currentAccount.name),
+                  dic.assets.doYouWantToRedeemThisVoucher.replaceAll(
+                    "ACCOUNT_PLACEHOLDER",
+                    context.watch<AppStore>().account.currentAccount.name,
+                  ),
                   style: h2Grey,
                   textAlign: TextAlign.center,
                 ),

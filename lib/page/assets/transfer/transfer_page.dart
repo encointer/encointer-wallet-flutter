@@ -58,14 +58,14 @@ class _TransferPageState extends State<TransferPage> {
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
     TransferPageParams params = ModalRoute.of(context)!.settings.arguments as TransferPageParams;
+    final _store = context.watch<AppStore>();
 
-    var communitySymbol = params.communitySymbol ?? context.read<AppStore>().encointer.community!.symbol!;
-    var cid = params.cid ?? context.read<AppStore>().encointer.chosenCid!;
+    var communitySymbol = params.communitySymbol ?? _store.encointer.community!.symbol!;
+    var cid = params.cid ?? _store.encointer.chosenCid!;
 
     int decimals = encointer_currencies_decimals;
 
-    double? available =
-        context.read<AppStore>().encointer.applyDemurrage(context.read<AppStore>().encointer.communityBalanceEntry);
+    double? available = _store.encointer.applyDemurrage(_store.encointer.communityBalanceEntry);
 
     print("[transferPage]: available: $available");
 
@@ -97,16 +97,18 @@ class _TransferPageState extends State<TransferPage> {
                         CombinedCommunityAndAccountAvatar(context.read<AppStore>(),
                             showCommunityNameAndAccountName: false),
                         const SizedBox(height: 12),
-                        context.read<AppStore>().encointer.communityBalance != null
+                        _store.encointer.communityBalance != null
                             ? AccountBalanceWithMoreDigits(
-                                store: context.read<AppStore>(),
+                                store: _store,
                                 available: available,
                                 decimals: decimals,
                               )
                             : const CupertinoActivityIndicator(),
                         Text(
-                          I18n.of(context)!.translationsForLocale().assets.yourBalanceFor.replaceAll("ACCOUNT_NAME",
-                              Fmt.accountName(context, context.read<AppStore>().account.currentAccount)),
+                          I18n.of(context)!.translationsForLocale().assets.yourBalanceFor.replaceAll(
+                                "ACCOUNT_NAME",
+                                Fmt.accountName(context, _store.account.currentAccount),
+                              ),
                           style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                           textAlign: TextAlign.center,
                         ),
@@ -143,7 +145,7 @@ class _TransferPageState extends State<TransferPage> {
                           children: [
                             Expanded(
                               child: AddressInputField(
-                                context.read<AppStore>(),
+                                _store,
                                 label: dic.assets.address,
                                 initialValue: _accountTo,
                                 onChanged: (AccountData acc) {
@@ -160,7 +162,7 @@ class _TransferPageState extends State<TransferPage> {
                     ),
                   ),
                   const SizedBox(height: 48),
-                  context.read<AppStore>().settings.developerMode
+                  _store.settings.developerMode
                       ? Center(
                           child: Text(
                             "${dic.assets.fee}: TODO compute Fee", // TODO compute fee #589
@@ -267,7 +269,7 @@ class AccountBalanceWithMoreDigits extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: RichText(
-        // need text base line alignment
+        // need text base line alignment_store
         text: TextSpan(
           text: '${Fmt.doubleFormat(
             available,

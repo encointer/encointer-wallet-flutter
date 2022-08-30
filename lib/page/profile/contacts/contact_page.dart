@@ -167,7 +167,7 @@ class _Contact extends State<ContactPage> {
                             ),
                           )
                         : Container(),
-                    context.read<AppStore>().settings.developerMode
+                    context.watch<AppStore>().settings.developerMode
                         ? Row(
                             children: <Widget>[
                               Checkbox(

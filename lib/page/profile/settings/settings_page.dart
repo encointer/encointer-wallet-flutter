@@ -24,6 +24,7 @@ class _Settings extends State<SettingsPage> {
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
+    final _store = context.watch<AppStore>();
 
     String getLang(String code) {
       switch (code) {
@@ -46,7 +47,7 @@ class _Settings extends State<SettingsPage> {
               backgroundColor: Colors.white,
               itemExtent: 58,
               scrollController: FixedExtentScrollController(
-                initialItem: _langOptions.indexOf(context.read<AppStore>().settings.localeCode),
+                initialItem: _langOptions.indexOf(_store.settings.localeCode),
               ),
               children: _langOptions.map((i) {
                 return Padding(padding: const EdgeInsets.all(16), child: Text(getLang(i)));
@@ -82,27 +83,26 @@ class _Settings extends State<SettingsPage> {
               ListTile(
                 leading: SizedBox(
                   width: 36,
-                  child: Image.asset('assets/images/public/${context.read<AppStore>().settings.endpoint.info}.png'),
+                  child: Image.asset('assets/images/public/${_store.settings.endpoint.info}.png'),
                 ),
                 title: Text(dic.profile.settingNode),
-                subtitle: Text(context.read<AppStore>().settings.endpoint.text ?? ''),
+                subtitle: Text(_store.settings.endpoint.text ?? ''),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.of(context).pushNamed(RemoteNodeListPage.route),
               ),
               ListTile(
                 leading: SizedBox(
                   width: 36,
-                  child: Image.asset(
-                      'assets/images/public/${context.read<AppStore>().settings.customSS58Format['info']}.png'),
+                  child: Image.asset('assets/images/public/${_store.settings.customSS58Format['info']}.png'),
                 ),
                 title: Text(dic.profile.settingPrefix),
-                subtitle: Text(context.read<AppStore>().settings.customSS58Format['text'] ?? ''),
+                subtitle: Text(_store.settings.customSS58Format['text'] ?? ''),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.of(context).pushNamed(SS58PrefixListPage.route),
               ),
               ListTile(
                 title: Text(dic.profile.settingLang),
-                subtitle: Text(getLang(context.read<AppStore>().settings.localeCode)),
+                subtitle: Text(getLang(_store.settings.localeCode)),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => _onLanguageTap(),
               )

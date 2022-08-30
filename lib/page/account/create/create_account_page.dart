@@ -37,7 +37,7 @@ class _CreateAccountPageState extends State<CreateAccountPage> {
       ),
       body: SafeArea(
         child: CreateAccountForm(
-          store: context.read<AppStore>(),
+          store: context.watch<AppStore>(),
         ),
       ),
     );

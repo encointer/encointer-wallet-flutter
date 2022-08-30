@@ -107,14 +107,14 @@ class ContactDetailPage extends StatelessWidget {
                 ),
               ),
               Observer(builder: (_) {
-                if (context.read<AppStore>().encointer.community!.bootstrappers != null) {
+                if (context.watch<AppStore>().encointer.community!.bootstrappers != null) {
                   return context
                           .read<AppStore>()
                           .encointer
                           .community!
                           .bootstrappers!
                           .contains(context.read<AppStore>().account.currentAddress)
-                      ? EndorseButton(context.read<AppStore>(), api, account)
+                      ? EndorseButton(context.watch<AppStore>(), api, account)
                       : Container();
                 } else {
                   return const CupertinoActivityIndicator();
@@ -187,9 +187,9 @@ class EndorseButton extends StatelessWidget {
           Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
         ],
       ),
-      onPressed: context.read<AppStore>().encointer.community!.bootstrappers!.contains(contact.address)
+      onPressed: context.watch<AppStore>().encointer.community!.bootstrappers!.contains(contact.address)
           ? (BuildContext context) => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
-          : context.read<AppStore>().encointer.currentPhase != CeremonyPhase.Registering
+          : context.watch<AppStore>().encointer.currentPhase != CeremonyPhase.Registering
               ? (BuildContext context) => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)
               : (BuildContext context) => submitEndorseNewcomer(
                     context,

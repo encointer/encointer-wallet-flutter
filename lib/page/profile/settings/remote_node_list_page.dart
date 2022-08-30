@@ -17,7 +17,7 @@ class RemoteNodeListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
     List<EndpointData> endpoints = List<EndpointData>.of(networkEndpoints);
-    endpoints.retainWhere((i) => i.info == context.read<AppStore>().settings.endpoint.info);
+    endpoints.retainWhere((i) => i.info == context.watch<AppStore>().settings.endpoint.info);
     List<Widget> list = endpoints
         .map((i) => ListTile(
               leading: SizedBox(
@@ -31,7 +31,7 @@ class RemoteNodeListPage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    context.read<AppStore>().settings.endpoint.value == i.value
+                    context.watch<AppStore>().settings.endpoint.value == i.value
                         ? Image.asset(
                             'assets/images/assets/success.png',
                             width: 16,

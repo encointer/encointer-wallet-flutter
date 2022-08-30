@@ -83,7 +83,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         TabKey.Wallet,
         Iconsax.home_2,
       ),
-      if (context.read<AppStore>().settings.enableBazaar)
+      if (context.select<AppStore, bool>((store) => store.settings.enableBazaar))
         TabData(
           TabKey.Bazaar,
           Iconsax.shop,
@@ -109,11 +109,11 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,
         children: [
-          Assets(context.read<AppStore>()),
-          if (context.read<AppStore>().settings.enableBazaar) BazaarMain(), // dart collection if
+          Assets(context.watch<AppStore>()),
+          if (context.select<AppStore, bool>((store) => store.settings.enableBazaar)) BazaarMain(),
           ScanPage(),
           ContactsPage(),
-          Profile(context.read<AppStore>()),
+          Profile(context.watch<AppStore>()),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

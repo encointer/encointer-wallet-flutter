@@ -37,8 +37,8 @@ class ContactListPage extends StatelessWidget {
         child: Observer(
           builder: (_) {
             return AccountSelectList(
-              context.read<AppStore>(),
-              args ?? context.read<AppStore>().settings.contactListAll.toList(),
+              context.watch<AppStore>(),
+              args ?? context.watch<AppStore>().settings.contactListAll.toList(),
             );
           },
         ),

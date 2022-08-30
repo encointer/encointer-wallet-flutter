@@ -77,7 +77,7 @@ class ScanPage extends StatelessWidget {
                     }
                   },
                 ),
-                context.read<AppStore>().settings.developerMode ? mockQrDataRow(dic, onScan) : Container(),
+                context.watch<AppStore>().settings.developerMode ? mockQrDataRow(dic, onScan) : Container(),
                 //overlays a semi-transparent rounded square border that is 90% of screen width
                 Center(
                   child: Column(

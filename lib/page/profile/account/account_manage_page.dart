@@ -164,6 +164,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
     final Translations dic = I18n.of(context)!.translationsForLocale();
     final TextStyle? h3 = Theme.of(context).textTheme.headline3;
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
+    final _store = context.watch<AppStore>();
 
     String? accountToBeEditedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
     AccountData accountToBeEdited = context.read<AppStore>().account.getAccountData(accountToBeEditedPubKey);
@@ -238,22 +239,15 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     ],
                   ),
                 ),
-                context.read<AppStore>().settings.developerMode
+                _store.settings.developerMode
                     ? Expanded(
                         child: ListView.builder(
                             // Fixme: https://github.com/encointer/encointer-wallet-flutter/issues/586
-                            itemCount: context.read<AppStore>().encointer.accountStores!.containsKey(addressSS58)
-                                ? context
-                                        .read<AppStore>()
-                                        .encointer
-                                        .accountStores![addressSS58]
-                                        ?.balanceEntries
-                                        .length ??
-                                    0
+                            itemCount: _store.encointer.accountStores!.containsKey(addressSS58)
+                                ? _store.encointer.accountStores![addressSS58]?.balanceEntries.length ?? 0
                                 : 0,
                             itemBuilder: (BuildContext context, int index) {
-                              String community =
-                                  context.read<AppStore>().encointer.account!.balanceEntries.keys.elementAt(index);
+                              String community = _store.encointer.account!.balanceEntries.keys.elementAt(index);
                               return _getBalanceEntryListTile(
                                 community,
                                 context
@@ -267,7 +261,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       )
                     : Expanded(
                         child: ListView.builder(
-                            itemCount: context.read<AppStore>().encointer.chosenCid != null ? 1 : 0,
+                            itemCount: _store.encointer.chosenCid != null ? 1 : 0,
                             itemBuilder: (BuildContext context, int index) {
                               return _getBalanceEntryListTile(
                                 context.read<AppStore>().encointer.chosenCid!.toFmtString(),
@@ -376,6 +370,7 @@ class CommunityIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final _store = context.watch<AppStore>();
     return Stack(
       children: [
         SizedBox(
@@ -385,8 +380,8 @@ class CommunityIcon extends StatelessWidget {
         ),
         Observer(
           builder: (_) {
-            if (context.read<AppStore>().encointer.community!.bootstrappers != null &&
-                context.read<AppStore>().encointer.community!.bootstrappers!.contains(address)) {
+            if (_store.encointer.community!.bootstrappers != null &&
+                _store.encointer.community!.bootstrappers!.contains(address)) {
               return const Positioned(
                 bottom: 0,
                 right: 0, //give the values according to your requirement

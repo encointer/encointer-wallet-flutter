@@ -60,7 +60,7 @@ class _ReceivePageState extends State<ReceivePage> {
       const Duration(seconds: 1),
       () async {
         if (!observedPendingExtrinsic) {
-          observedPendingExtrinsic = await showSnackBarUponPendingExtrinsics(context.read<AppStore>(), webApi, dic);
+          observedPendingExtrinsic = await showSnackBarUponPendingExtrinsics(context.watch<AppStore>(), webApi, dic);
 
           resetObservedPendingExtrinsicCounter = 0;
         } else {
@@ -174,9 +174,11 @@ class _ReceivePageState extends State<ReceivePage> {
                       ),
                     ],
                   ),
-                  Text('${dic.profile.receiverAccount} ${context.read<AppStore>().account.currentAccount.name}',
-                      style: Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey),
-                      textAlign: TextAlign.center),
+                  Text(
+                    '${dic.profile.receiverAccount} ${context.watch<AppStore>().account.currentAccount.name}',
+                    style: Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey),
+                    textAlign: TextAlign.center,
+                  ),
                   const SizedBox(height: 8),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

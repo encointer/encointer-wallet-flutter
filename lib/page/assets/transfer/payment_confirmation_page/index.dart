@@ -77,7 +77,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
             child: Column(
               children: [
                 PaymentOverview(
-                  context.read<AppStore>(),
+                  context.watch<AppStore>(),
                   params.communitySymbol,
                   params.recipientAccount,
                   params.amount,
