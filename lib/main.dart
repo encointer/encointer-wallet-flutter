@@ -10,7 +10,6 @@ import 'package:encointer_wallet/app.dart';
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/subscan.dart';
-import 'package:upgrader/upgrader.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +17,7 @@ Future<void> main() async {
   //     await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
 
   // Only call clearSavedSettings() during testing to reset internal values.
-  await Upgrader.clearSavedSettings(); // REMOVE this for release builds
+  // await Upgrader.clearSavedSettings(); // REMOVE this for release builds
 
   if (Platform.isAndroid) {
     // this is enabled by default in IOS dev-builds.

@@ -9,6 +9,7 @@ import 'package:focus_detector/focus_detector.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pausable_timer/pausable_timer.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:upgrader/upgrader.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/drag_handle.dart';
@@ -31,7 +32,6 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:upgrader/upgrader.dart';
 
 import 'account_or_community/account_or_community_data.dart';
 import 'account_or_community/switch_account_or_community.dart';
@@ -111,9 +111,6 @@ class _AssetsState extends State<Assets> {
 
     final appBar = AppBar(title: Text(dic!.assets.home));
 
-    final appcastURL = 'https://raw.githubusercontent.com/larryaasen/upgrader/master/test/testappcast.xml';
-    final cfg = AppcastConfiguration(url: appcastURL, supportedOS: ['android']);
-
     return FocusDetector(
         onFocusLost: () {
           print('[home:FocusDetector] Focus Lost.');
@@ -130,10 +127,6 @@ class _AssetsState extends State<Assets> {
         child: Scaffold(
           appBar: appBar,
           body: UpgradeAlert(
-            upgrader: Upgrader(
-              appcastConfig: cfg,
-              debugLogging: true,
-            ),
             child: SlidingUpPanel(
               maxHeight: _panelHeightOpen,
               minHeight: _panelHeightClosed,
