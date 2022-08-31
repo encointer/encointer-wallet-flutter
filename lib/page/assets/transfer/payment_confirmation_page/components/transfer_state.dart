@@ -5,7 +5,7 @@ enum TransferState {
   failed,
 }
 
-extension transferStateExtension on TransferState {
+extension TransferStateExtension on TransferState {
   bool isFinishedOrFailed() {
     return this == TransferState.finished || this == TransferState.failed;
   }

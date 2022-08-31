@@ -114,19 +114,19 @@ Reputation? reputationFromString(String value) {
   return getEnumFromString(Reputation.values, value);
 }
 
-extension reputationExtension on Reputation {
+extension ReputationExtension on Reputation {
   String toValue() {
     return toEnumValue(this);
   }
 }
 
-extension participantTypeExtension on ParticipantType {
+extension ParticipantTypeExtension on ParticipantType {
   String toValue() {
     return toEnumValue(this);
   }
 }
 
-extension ceremonyPhaseExtension on CeremonyPhase {
+extension CeremonyPhaseExtension on CeremonyPhase {
   String toValue() {
     return toEnumValue(this);
   }
