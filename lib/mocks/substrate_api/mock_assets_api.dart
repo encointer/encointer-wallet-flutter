@@ -11,17 +11,17 @@ class MockAssetsApi extends AssetsApi {
 
   @override
   Future<void> startSubscriptions() async {
-    print("api: unimplemented startSubscription stub");
+    print('api: unimplemented startSubscription stub');
   }
 
   @override
   Future<void> stopSubscriptions() async {
-    print("api: unimplemented stopSubscriptions stub");
+    print('api: unimplemented stopSubscriptions stub');
   }
 
   @override
   Future<void> subscribeBalance() async {
-    print("api: unimplemented subscribeBalance stub");
+    print('api: unimplemented subscribeBalance stub');
   }
 
   @override

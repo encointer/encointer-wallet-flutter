@@ -45,7 +45,7 @@ class MockQRScanPage extends StatelessWidget {
                 ),
               ),
               const Text(
-                "Scan Qr Code",
+                'Scan Qr Code',
                 style: TextStyle(color: Colors.white38),
               ),
             ],

@@ -20,22 +20,22 @@ class MockEncointerApi extends EncointerApi {
   MockEncointerApi(AppStore store, MockJSApi js, MockSubstrateDartApi dartApi) : super(store, js, dartApi);
 
   void _log(String msg) {
-    print("[mockApiEncointer] $msg");
+    print('[mockApiEncointer] $msg');
   }
 
   @override
   Future<void> startSubscriptions() async {
-    _log("empty startSubscriptions stub");
+    _log('empty startSubscriptions stub');
   }
 
   @override
   Future<void> stopSubscriptions() async {
-    _log("empty stopSubscriptions stub");
+    _log('empty stopSubscriptions stub');
   }
 
   @override
   Future<void> subscribeBusinessRegistry() async {
-    _log("empty subscribeBusinessRegistry stub");
+    _log('empty subscribeBusinessRegistry stub');
   }
 
   @override
@@ -93,7 +93,7 @@ class MockEncointerApi extends EncointerApi {
 
   @override
   Future<List<AccountBusinessTuple>> getBusinesses() async {
-    _log("warn: getBusinessRegistry mock is unimplemented");
+    _log('warn: getBusinessRegistry mock is unimplemented');
 
     return Future.value([]);
   }
@@ -145,7 +145,7 @@ class MockEncointerApi extends EncointerApi {
 
   @override
   Future<List<String>> pendingExtrinsics() {
-    _log("calling mock `pendingExtrinsics");
+    _log('calling mock `pendingExtrinsics');
     return Future.value([]);
   }
 }

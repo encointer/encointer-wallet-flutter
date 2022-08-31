@@ -106,7 +106,7 @@ class _WalletAppState extends State<WalletApp> {
 
       await webApi.init().timeout(
             const Duration(seconds: 20),
-            onTimeout: () => print("webApi.init() has run into a timeout. We might be offline."),
+            onTimeout: () => print('webApi.init() has run into a timeout. We might be offline.'),
           );
 
       _appStore!.dataUpdate.setupUpdateReaction(() async {
@@ -179,7 +179,7 @@ class _WalletAppState extends State<WalletApp> {
                         future: _initApp(context),
                         builder: (_, AsyncSnapshot<int> snapshot) {
                           if (snapshot.hasError) {
-                            _log("SnapshotError: ${snapshot.error.toString()}");
+                            _log('SnapshotError: ${snapshot.error.toString()}');
                           }
                           if (snapshot.hasData && _appStore!.appIsReady) {
                             return snapshot.data! > 0 ? EncointerHomePage(_appStore!) : CreateAccountEntryPage();
@@ -264,5 +264,5 @@ class _WalletAppState extends State<WalletApp> {
 }
 
 void _log(String msg) {
-  print("[App] $msg");
+  print('[App] $msg');
 }

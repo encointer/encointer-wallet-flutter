@@ -62,7 +62,7 @@ class ScanPage extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<PermissionStatus> snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data != PermissionStatus.granted) {
-              print("[scanPage] Permission Status: ${snapshot.data!.toString()}");
+              print('[scanPage] Permission Status: ${snapshot.data!.toString()}');
               return permissionErrorDialog(context);
             }
 
@@ -117,21 +117,21 @@ Widget mockQrDataRow(Translations dic, Function(String) onScan) {
     ElevatedButton(
       child: Text(dic.profile.addContact),
       onPressed: () => onScan(
-        "encointer-contact\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nSara",
+        'encointer-contact\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nSara',
       ),
     ),
     ElevatedButton(
       child: Text(dic.assets.invoice),
       onPressed: () => onScan(
-        "encointer-invoice\nv1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX"
-        "\nsqm1v79dF6b\n0.2343\nAubrey",
+        'encointer-invoice\nv1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX'
+        '\nsqm1v79dF6b\n0.2343\nAubrey',
       ),
     ),
     ElevatedButton(
-      child: const Text("voucher"),
+      child: const Text('voucher'),
       onPressed: () => onScan(
-        "encointer-voucher\nv2.0\n//VoucherUri\nsqm1v79dF6b"
-        "\nnctr-gsl-dev\nAubrey",
+        'encointer-voucher\nv2.0\n//VoucherUri\nsqm1v79dF6b'
+        '\nnctr-gsl-dev\nAubrey',
       ),
     ),
     const Text(' <<< Devs only', style: TextStyle(color: Colors.orange)),

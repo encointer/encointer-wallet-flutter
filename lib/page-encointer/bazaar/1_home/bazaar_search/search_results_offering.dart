@@ -16,7 +16,7 @@ class SearchResultsOffering extends StatelessWidget {
     Translations dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
-        title: Text("${results.length} ${I18n.of(context)!.translationsForLocale().bazaar.offeringsFound}"),
+        title: Text('${results.length} ${I18n.of(context)!.translationsForLocale().bazaar.offeringsFound}'),
       ),
       body: Column(
         children: [

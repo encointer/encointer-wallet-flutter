@@ -16,7 +16,7 @@ class VoucherQrCode extends QrCode<VoucherData> {
   QrCodeVersion? version = QrCodeVersion.v2_0;
 
   static VoucherQrCode fromPayload(String payload) {
-    return fromQrFields(payload.split("\n"));
+    return fromQrFields(payload.split('\n'));
   }
 
   static VoucherQrCode fromQrFields(List<String> fields) {

@@ -134,7 +134,7 @@ abstract class _AccountStore with Store {
     if (address != null) {
       return address;
     } else {
-      _log("getNetworkAddress: could not get address (SS58)");
+      _log('getNetworkAddress: could not get address (SS58)');
       return currentAccount.address;
     }
   }
@@ -184,7 +184,7 @@ abstract class _AccountStore with Store {
             rawParam: args['rawParam'],
           );
 
-          print("Queued tx result: ${res.toString()}");
+          print('Queued tx result: ${res.toString()}');
           if (res['hash'] == null) {
             NotificationPlugin.showNotification(
               0,
@@ -202,7 +202,7 @@ abstract class _AccountStore with Store {
         timer.cancel();
         queuedTxs = [];
       } else {
-        print("Waiting for the api to reconnect to send ${queuedTxs.length} queued tx(s)");
+        print('Waiting for the api to reconnect to send ${queuedTxs.length} queued tx(s)');
       }
     });
   }
@@ -271,7 +271,7 @@ abstract class _AccountStore with Store {
 
   @action
   Future<void> removeAccount(AccountData acc) async {
-    _log("removeAccount: removing ${acc.pubKey}");
+    _log('removeAccount: removing ${acc.pubKey}');
     await rootStore.localStorage.removeAccount(acc.pubKey);
 
     // remove encrypted seed after removing account
@@ -282,7 +282,7 @@ abstract class _AccountStore with Store {
       // set new currentAccount after currentAccount was removed
       List<Map<String, dynamic>> accounts = await rootStore.localStorage.getAccountList();
       var newCurrentAccountPubKey = accounts.length > 0 ? accounts[0]['pubKey'] : '';
-      _log("removeAccount: newCurrentAccountPubKey $newCurrentAccountPubKey");
+      _log('removeAccount: newCurrentAccountPubKey $newCurrentAccountPubKey');
 
       await rootStore.setCurrentAccount(newCurrentAccountPubKey);
     } else {
@@ -383,7 +383,7 @@ abstract class _AccountStore with Store {
 
   @action
   void setAddressIconsMap(List list) {
-    print("Address Icons");
+    print('Address Icons');
     print(list);
     list.forEach((i) {
       addressIconsMap[i[0]] = i[1];
@@ -421,5 +421,5 @@ abstract class _AccountCreate with Store {
 }
 
 _log(String msg) {
-  print("[AccountStore] $msg");
+  print('[AccountStore] $msg');
 }

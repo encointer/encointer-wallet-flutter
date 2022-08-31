@@ -23,7 +23,7 @@ class CodecApi {
   Future<dynamic> decodeBytes(String type, Uint8List bytes) async {
     var res = await jsApi.evalJavascript('codec.decode("$type", $bytes)', allowRepeat: true);
 
-    if (res["error"] != null) {
+    if (res['error'] != null) {
       throw Exception("Could not decode bytes into $type. Error: ${res["error"]}");
     }
 

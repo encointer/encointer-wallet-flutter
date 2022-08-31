@@ -51,7 +51,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   bool _isReady = false;
 
   Future<void> fetchVoucherData(Api api, String voucherUri, CommunityIdentifier cid) async {
-    _log("Fetching voucher data...");
+    _log('Fetching voucher data...');
     _voucherAddress = await api.account.addressFromUri(voucherUri);
 
     setState(() {});
@@ -123,7 +123,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                   : const CupertinoActivityIndicator(),
             ),
             Text(
-              "${dic.assets.voucherBalance}, ${widget.store.encointer.community?.symbol}",
+              '${dic.assets.voucherBalance}, ${widget.store.encointer.community?.symbol}',
               style: h4Grey,
             ),
             Expanded(
@@ -131,7 +131,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
               child: Center(
                 child: Text(
                   dic.assets.doYouWantToRedeemThisVoucher
-                      .replaceAll("ACCOUNT_PLACEHOLDER", widget.store.account.currentAccount.name),
+                      .replaceAll('ACCOUNT_PLACEHOLDER', widget.store.account.currentAccount.name),
                   style: h2Grey,
                   textAlign: TextAlign.center,
                 ),
@@ -233,5 +233,5 @@ void _pushTransferPage(BuildContext context, VoucherData data, String voucherAdd
 }
 
 void _log(String msg) {
-  print("[ReapVoucherPage] $msg");
+  print('[ReapVoucherPage] $msg');
 }
