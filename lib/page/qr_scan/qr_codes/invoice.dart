@@ -25,9 +25,9 @@ class InvoiceQrCode extends QrCode<InvoiceData> {
   String toQrPayload() {
     final qrFields = [context.toQrField(), version.toVersionNumber()];
     if (version == QrCodeVersion.v1_0) {
-      qrFields.addAll(this.data.toQrFields());
+      qrFields.addAll(data.toQrFields());
     } else {
-      qrFields.addAll(this.data.toQrFieldsV2());
+      qrFields.addAll(data.toQrFieldsV2());
     }
     return qrFields.join(QR_CODE_FIELD_SEPARATOR);
   }

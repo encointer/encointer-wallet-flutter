@@ -11,7 +11,7 @@ class AssetsApi {
 
   Future<void> startSubscriptions() async {
     print("api: starting assets subscriptions");
-    this.subscribeBalance();
+    subscribeBalance();
   }
 
   Future<void> stopSubscriptions() async {

@@ -14,7 +14,7 @@ class ChainApi {
 
   Future<void> startSubscriptions() async {
     print("api: starting encointer subscriptions");
-    this.subscribeNewHeads();
+    subscribeNewHeads();
   }
 
   Future<void> stopSubscriptions() async {

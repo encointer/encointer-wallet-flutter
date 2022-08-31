@@ -227,11 +227,11 @@ abstract class _EncointerStore with Store {
       writeToCache();
 
       if (cid != null) {
-        this._rootStore.localStorage.setObject(chosenCidCacheKey(network), cid.toJson());
+        _rootStore.localStorage.setObject(chosenCidCacheKey(network), cid.toJson());
         initCommunityStore(cid, _rootStore.account.currentAddress);
         initBazaarStore(cid);
       } else {
-        this._rootStore.localStorage.removeKey(chosenCidCacheKey(network));
+        _rootStore.localStorage.removeKey(chosenCidCacheKey(network));
       }
     }
 
@@ -349,8 +349,8 @@ abstract class _EncointerStore with Store {
   ///
   /// Should always be called after creating a store to ensure full functionality.
   void initStore(AppStore root, Future<void> Function() cacheFn) {
-    this._rootStore = root;
-    this._cacheFn = cacheFn;
+    _rootStore = root;
+    _cacheFn = cacheFn;
 
     // These are merely safety guards, and should never be needed. A null reference error occurred here only because
     // a store was added in the development process after it has been written to cache. Hence, deserialization

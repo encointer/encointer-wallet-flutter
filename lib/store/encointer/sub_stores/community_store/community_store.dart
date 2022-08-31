@@ -153,8 +153,8 @@ abstract class _CommunityStore with Store {
   }
 
   void initStore(Function? cacheFn, double? Function(BalanceEntry)? applyDemurrage) {
-    this._cacheFn = cacheFn as Future<void> Function()?;
-    this._applyDemurrage = applyDemurrage;
+    _cacheFn = cacheFn as Future<void> Function()?;
+    _applyDemurrage = applyDemurrage;
 
     communityAccountStores!.forEach((_, store) => store.initStore(cacheFn));
   }

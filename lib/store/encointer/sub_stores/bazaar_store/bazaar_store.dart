@@ -47,7 +47,7 @@ abstract class _BazaarStore with Store {
   }
 
   void initStore(Function? cacheFn) {
-    this._cacheFn = cacheFn as Future<void> Function()?;
+    _cacheFn = cacheFn as Future<void> Function()?;
   }
 
   Future<void> writeToCache() {

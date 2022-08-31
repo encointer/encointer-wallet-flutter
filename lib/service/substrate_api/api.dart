@@ -192,15 +192,15 @@ class Api {
   }
 
   void startSubscriptions() {
-    this.encointer.startSubscriptions();
-    this.chain.startSubscriptions();
-    this.assets.startSubscriptions();
+    encointer.startSubscriptions();
+    chain.startSubscriptions();
+    assets.startSubscriptions();
   }
 
   Future<void> stopSubscriptions() async {
-    await this.encointer.stopSubscriptions();
-    await this.chain.stopSubscriptions();
-    await this.assets.stopSubscriptions();
+    await encointer.stopSubscriptions();
+    await chain.stopSubscriptions();
+    await assets.stopSubscriptions();
   }
 
   Future<void> subscribeMessage(
