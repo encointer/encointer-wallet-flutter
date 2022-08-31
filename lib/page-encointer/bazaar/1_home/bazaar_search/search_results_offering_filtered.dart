@@ -22,7 +22,7 @@ class SearchResultsOfferingFiltered extends StatelessWidget {
     final Translations dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
-        title: Text("Filter ${dic.bazaar.found} ${dic.bazaar.offerings}"),
+        title: Text('Filter ${dic.bazaar.found} ${dic.bazaar.offerings}'),
       ),
       body: ListView(children: [
         ToggleButtonsWithTitle(dic.bazaar.categories, categories, null),

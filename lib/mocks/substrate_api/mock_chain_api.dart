@@ -8,25 +8,25 @@ class MockChainApi extends ChainApi {
 
   @override
   Future<void> startSubscriptions() async {
-    _log("api: unimplemented startSubscriptions");
+    _log('api: unimplemented startSubscriptions');
   }
 
   @override
   Future<void> stopSubscriptions() async {
-    _log("api: unimplemented stopSubscriptions");
+    _log('api: unimplemented stopSubscriptions');
   }
 
   @override
   Future<void> subscribeTimestamp() async {
-    _log("api: unimplemented subscribeTimestamp");
+    _log('api: unimplemented subscribeTimestamp');
   }
 
   @override
   Future<void> subscribeNewHeads() async {
-    _log("api: unimplemented subscribeTimestamp");
+    _log('api: unimplemented subscribeTimestamp');
   }
 }
 
 void _log(String msg) {
-  print("[MockChainApi]: $msg");
+  print('[MockChainApi]: $msg');
 }

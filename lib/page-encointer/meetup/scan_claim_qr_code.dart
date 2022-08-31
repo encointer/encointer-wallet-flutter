@@ -25,7 +25,7 @@ class ScanClaimQrCode extends StatelessWidget {
     if (!registry.contains(claim.claimantPublic)) {
       // this is important because the runtime checks if there are too many claims trying to be registered.
       RootSnackBar.showMsg(dic.encointer.meetupClaimantInvalid);
-      print("[scanClaimQrCode] Claimant: ${claim.claimantPublic} is not part of registry: ${registry.toString()}");
+      print('[scanClaimQrCode] Claimant: ${claim.claimantPublic} is not part of registry: ${registry.toString()}');
     } else {
       String msg = store.encointer.communityAccount!.containsClaim(claim)
           ? dic.encointer.claimsScannedAlready
@@ -55,7 +55,7 @@ class ScanClaimQrCode extends StatelessWidget {
 
         validateAndStoreClaim(context, claim, dic);
       } catch (e) {
-        _log("Error decoding claim: ${e.toString()}");
+        _log('Error decoding claim: ${e.toString()}');
         RootSnackBar.showMsg(dic.encointer.claimsScannedDecodeFailed);
       }
 
@@ -79,7 +79,7 @@ class ScanClaimQrCode extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<PermissionStatus> snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data != PermissionStatus.granted) {
-              print("[scanPage] Permission Status: ${snapshot.data!.toString()}");
+              print('[scanPage] Permission Status: ${snapshot.data!.toString()}');
               return permissionErrorDialog(context);
             }
 
@@ -150,7 +150,7 @@ Future<PermissionStatus> canOpenCamera() async {
 }
 
 _log(String msg) {
-  print("[ScanClaimQrCode] $msg");
+  print('[ScanClaimQrCode] $msg');
 }
 
 Widget permissionErrorDialog(BuildContext context) {

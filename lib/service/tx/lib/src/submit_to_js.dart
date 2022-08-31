@@ -15,7 +15,7 @@ import 'package:encointer_wallet/utils/ui.dart';
 
 /// Contains most of the logic from the `txConfirmPage.dart`, which was removed.
 
-const INSUFFICIENT_FUNDS_ERROR = "1010";
+const INSUFFICIENT_FUNDS_ERROR = '1010';
 
 /// Inner function to submit a tx via the JS interface.
 ///
@@ -162,8 +162,8 @@ String getTxStatusTranslation(TranslationsHome dic, TxStatus? status) {
     case TxStatus.Error:
       return dic.txError;
     default:
-      print("Illegal TxStatus supplied to translation: ${status.toString()}");
-      return "";
+      print('Illegal TxStatus supplied to translation: ${status.toString()}');
+      return '';
   }
 }
 

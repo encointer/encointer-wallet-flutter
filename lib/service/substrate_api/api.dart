@@ -80,7 +80,7 @@ class Api {
     account.setFetchAccountData(fetchAccountData);
 
     // launch the webView and connect to the endpoint
-    print("launch the webView");
+    print('launch the webView');
     await launchWebview();
   }
 
@@ -148,7 +148,7 @@ class Api {
   Future<void> connectNodeAll() async {
     List<String?> nodes = store.settings.endpointList.map((e) => e.value).toList();
     List<NodeConfig?> configs = store.settings.endpointList.map((e) => e.overrideConfig).toList();
-    print("configs: $configs");
+    print('configs: $configs');
     // do connect
     String? res = await evalJavascript('settings.connectAll(${jsonEncode(nodes)}, ${jsonEncode(configs)})');
     if (res == null) {
@@ -168,7 +168,7 @@ class Api {
     if (index < 0) return;
     store.settings.setEndpoint(store.settings.endpointList[index]);
     await fetchNetworkProps();
-    print("get community data");
+    print('get community data');
     encointer.getCommunityData();
   }
 
@@ -217,7 +217,7 @@ class Api {
 
   Future<bool> isConnected() async {
     bool connected = await evalJavascript('settings.isConnected()');
-    print("Api is connected: $connected");
+    print('Api is connected: $connected');
     return connected;
   }
 
