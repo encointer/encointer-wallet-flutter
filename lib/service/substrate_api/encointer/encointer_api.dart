@@ -16,12 +16,11 @@ import 'package:encointer_wallet/models/proof_of_attendance/proof_of_attendance.
 import 'package:encointer_wallet/service/encointer_feed/feed.dart' as feed;
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/format.dart';
-
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_dart_api.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/no_tee_api.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/tee_proxy_api.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/format.dart';
 
 /// Api to interface with the `js_encointer_service.js`
 ///

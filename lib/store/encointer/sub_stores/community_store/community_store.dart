@@ -1,15 +1,13 @@
 import 'dart:convert';
 
-import 'package:json_annotation/json_annotation.dart';
-import 'package:mobx/mobx.dart';
-
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
-
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_account_store/community_account_store.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:mobx/mobx.dart';
 
 part 'community_store.g.dart';
 

@@ -1,11 +1,10 @@
 import 'dart:convert';
 
-import 'package:json_annotation/json_annotation.dart';
-import 'package:mobx/mobx.dart';
-
 import 'package:encointer_wallet/models/claim_of_attendance/claim_of_attendance.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/index.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:mobx/mobx.dart';
 
 part 'community_account_store.g.dart';
 

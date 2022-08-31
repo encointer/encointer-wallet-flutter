@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_page.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/page/reap_voucher/reap_voucher_page.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 enum QrScannerContext {
   /// QrScanner was opened from the main page

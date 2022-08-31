@@ -1,8 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:focus_detector/focus_detector.dart';
-import 'package:pausable_timer/pausable_timer.dart';
-import 'package:share_plus/share_plus.dart';
-
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gr_code_view/gr_code_image_view.dart';
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
@@ -16,11 +11,16 @@ import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/ui.dart';
+import 'package:flutter/material.dart';
+import 'package:focus_detector/focus_detector.dart';
+import 'package:pausable_timer/pausable_timer.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ReceivePage extends StatefulWidget {
   ReceivePage(this.store, {Key? key}) : super(key: key);
   static const String route = '/assets/receive';
   final AppStore store;
+
   @override
   _ReceivePageState createState() => _ReceivePageState();
 }
