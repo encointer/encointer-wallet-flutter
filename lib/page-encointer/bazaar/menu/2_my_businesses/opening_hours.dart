@@ -54,7 +54,7 @@ class OpeningHoursViewForDay extends StatelessWidget {
                 SizedBox(
                   width: 32,
                   child: Text(
-                    "${openingHours.getDayString(day)}",
+                    '${openingHours.getDayString(day)}',
                   ),
                 ),
                 Observer(

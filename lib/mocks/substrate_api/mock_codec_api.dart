@@ -10,11 +10,11 @@ class MockCodecApi extends CodecApi {
 
   @override
   Future<Uint8List> encodeToBytes(String type, dynamic obj) {
-    _log(":encodeToBytes: Warn: returning mock data");
+    _log(':encodeToBytes: Warn: returning mock data');
     return Future.value(Uint8List.fromList(utf8.encode(obj.toString())));
   }
 }
 
 _log(String msg) {
-  print("[MockCodecApi] $msg");
+  print('[MockCodecApi] $msg');
 }

@@ -68,7 +68,7 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   get claimsScannedAlready => 'Updated previously scanned claim';
   get claimsScannedDecodeFailed => 'Could not decode scanned claim.';
   get claimsScannedNew => 'Scanned new claim';
-  get claimsScannedNOfM => "Scanned SCANNED_COUNT / TOTAL_COUNT Claims";
+  get claimsScannedNOfM => 'Scanned SCANNED_COUNT / TOTAL_COUNT Claims';
   get claimsSubmitDetail => 'Submitting AMOUNT claims for the recent ceremony';
   get communities => 'Communities';
   get noCommunitiesAreYouOffline => 'No communities were found. You can choose one later. Are you offline?.';
@@ -123,7 +123,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get claimsScannedAlready => 'bereits gescannter Antrag wurde aktualisiert';
   get claimsScannedDecodeFailed => 'Gescannter Antrag konnte nicht dekodiert werden.';
   get claimsScannedNew => 'Neuer Antrag gescannt';
-  get claimsScannedNOfM => "SCANNED_COUNT / TOTAL_COUNT gescannte Anträge";
+  get claimsScannedNOfM => 'SCANNED_COUNT / TOTAL_COUNT gescannte Anträge';
   get claimsSubmitDetail => 'Reiche AMOUNT Bezeugungen für die aktuelle Zeremonie ein';
   get communities => 'Gemeinschaften';
   get noCommunitiesAreYouOffline => 'Keine Gemeinschaften gefunden. Du kannst später eine auswählen. Bist du offline?';
@@ -179,7 +179,7 @@ class TranslationsZhEncointer implements TranslationsEncointer {
   get claimsScannedAlready => '更新了之前扫描的声明';
   get claimsScannedDecodeFailed => '无法解码扫描的声明。';
   get claimsScannedNew => '扫描的新声​​明';
-  get claimsScannedNOfM => "扫描的 SCANNED_COUNT / TOTAL_COUNT 个索赔";
+  get claimsScannedNOfM => '扫描的 SCANNED_COUNT / TOTAL_COUNT 个索赔';
   get claimsSubmitDetail => '为最近的仪式提交 AMOUNT 索赔';
   get encointer => 'Encointer 仪式';
   get meetupAttended => '参加了上次聚会';

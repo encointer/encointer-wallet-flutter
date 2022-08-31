@@ -23,7 +23,7 @@ class SearchResultsBusinessFiltered extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            "${dic.bazaar.filter} ${dic.bazaar.businessesFound}",
+            '${dic.bazaar.filter} ${dic.bazaar.businessesFound}',
             style: titleStyle,
           ),
         ),

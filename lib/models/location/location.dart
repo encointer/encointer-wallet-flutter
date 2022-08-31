@@ -1,7 +1,7 @@
 // Run: `flutter pub run build_runner build` in order to create/update the *.g.dart
 import 'dart:convert';
 
-import "package:latlong2/latlong.dart";
+import 'package:latlong2/latlong.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'location.g.dart';
