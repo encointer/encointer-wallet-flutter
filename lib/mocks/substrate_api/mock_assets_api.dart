@@ -1,8 +1,7 @@
 import 'package:encointer_wallet/mocks/data/mock_account_data.dart';
+import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
 import 'package:encointer_wallet/service/substrate_api/assets_api.dart';
 import 'package:encointer_wallet/store/app.dart';
-
-import 'mock_js_api.dart';
 
 class MockAssetsApi extends AssetsApi {
   MockAssetsApi(AppStore store, MockJSApi js) : super(store, js);
@@ -11,17 +10,17 @@ class MockAssetsApi extends AssetsApi {
 
   @override
   Future<void> startSubscriptions() async {
-    print("api: unimplemented startSubscription stub");
+    print('api: unimplemented startSubscription stub');
   }
 
   @override
   Future<void> stopSubscriptions() async {
-    print("api: unimplemented stopSubscriptions stub");
+    print('api: unimplemented stopSubscriptions stub');
   }
 
   @override
   Future<void> subscribeBalance() async {
-    print("api: unimplemented subscribeBalance stub");
+    print('api: unimplemented subscribeBalance stub');
   }
 
   @override

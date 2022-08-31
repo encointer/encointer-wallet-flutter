@@ -1,7 +1,6 @@
-import 'package:flutter/material.dart';
-
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:flutter/material.dart';
 
 class InputValidation {
   static String? validateAccountName(BuildContext context, String? input, List<AccountData> existingAccounts) {

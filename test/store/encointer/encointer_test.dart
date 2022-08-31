@@ -1,5 +1,3 @@
-import 'package:flutter_test/flutter_test.dart';
-
 import 'package:encointer_wallet/mocks/data/mock_account_data.dart';
 import 'package:encointer_wallet/mocks/data/mock_encointer_data.dart';
 import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
@@ -10,6 +8,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/encointer.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/bazaar_store/bazaar_store.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_store.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -53,19 +52,19 @@ void main() {
       await testCommunityStore.initCommunityAccountStore(root.account.currentAddress);
 
       Map<String, dynamic> targetJson = {
-        "network": testNetwork,
-        "currentPhase": "Registering",
-        "nextPhaseTimestamp": 3,
-        "phaseDurations": Map<String, dynamic>.of({}),
-        "currentCeremonyIndex": 2,
-        "communityIdentifiers": testCommunityIdentifiers.map((c) => c.toJson()).toList(),
-        "communities": testCommunities.map((cn) => cn.toJson()).toList(),
-        "chosenCid": testCid.toJson(),
-        "accountStores": Map<String, dynamic>.of({}),
-        "bazaarStores": Map<String, dynamic>.of({
+        'network': testNetwork,
+        'currentPhase': 'Registering',
+        'nextPhaseTimestamp': 3,
+        'phaseDurations': Map<String, dynamic>.of({}),
+        'currentCeremonyIndex': 2,
+        'communityIdentifiers': testCommunityIdentifiers.map((c) => c.toJson()).toList(),
+        'communities': testCommunities.map((cn) => cn.toJson()).toList(),
+        'chosenCid': testCid.toJson(),
+        'accountStores': Map<String, dynamic>.of({}),
+        'bazaarStores': Map<String, dynamic>.of({
           testCidFmt: BazaarStore(testNetwork, testCid).toJson(),
         }),
-        "communityStores": Map<String, dynamic>.of({
+        'communityStores': Map<String, dynamic>.of({
           testCidFmt: testCommunityStore.toJson(),
         }),
       };

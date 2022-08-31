@@ -137,11 +137,11 @@ class SubScanApi {
 
   static Future<Map?> fetchTransfers(SubScanRequestParams params) async {
     String url = '${getSnEndpoint(params.network!)}/transfers';
-    Map<String, String> headers = {"Content-type": "application/json", "Accept": "*/*"};
+    Map<String, String> headers = {'Content-type': 'application/json', 'Accept': '*/*'};
     String body = jsonEncode({
-      "page": params.page,
-      "row": params.row,
-      "address": params.address,
+      'page': params.page,
+      'row': params.row,
+      'address': params.address,
     });
     Response res = await post(Uri.parse(url), headers: headers, body: body);
     final obj = await compute(jsonDecode, res.body);
@@ -153,11 +153,11 @@ class SubScanApi {
 
   static Future<Map?> fetchTxs(SubScanRequestParams para) async {
     String url = '${getSnEndpoint(para.network!)}/extrinsics';
-    Map<String, String> headers = {"Content-type": "application/json"};
+    Map<String, String> headers = {'Content-type': 'application/json'};
     Map params = {
-      "page": para.page,
-      "row": para.row,
-      "module": para.module,
+      'page': para.page,
+      'row': para.row,
+      'module': para.module,
     };
     if (para.address != null) {
       params['address'] = para.address;
@@ -176,11 +176,11 @@ class SubScanApi {
 
   static Future<Map?> fetchRewardTxs(SubScanRequestParams para) async {
     String url = '${getSnEndpoint(para.network!)}/account/reward_slash';
-    Map<String, String> headers = {"Content-type": "application/json"};
+    Map<String, String> headers = {'Content-type': 'application/json'};
     Map params = {
-      "address": para.address,
-      "page": para.page,
-      "row": para.row,
+      'address': para.address,
+      'page': para.page,
+      'row': para.row,
     };
     String body = jsonEncode(params);
     Response res = await post(Uri.parse(url), headers: headers, body: body);
@@ -210,7 +210,7 @@ class SubScanApi {
 
   static Future<Map?> fetchTokenPrice(SubScanRequestParams para) async {
     String url = '${getSnEndpoint(para.network!)}/token';
-    Map<String, String> headers = {"Content-type": "application/json"};
+    Map<String, String> headers = {'Content-type': 'application/json'};
 
     Response res = await post(Uri.parse(url), headers: headers);
     try {

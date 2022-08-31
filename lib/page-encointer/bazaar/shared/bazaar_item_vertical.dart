@@ -1,11 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-
 import 'package:encointer_wallet/page-encointer/bazaar/2_offerings/offering_detail.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/3_businesses/business_detail.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_vertical_state.dart';
-
-import 'data_model/model/bazaar_item_data.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class BazaarItemVertical extends StatelessWidget {
   const BazaarItemVertical({

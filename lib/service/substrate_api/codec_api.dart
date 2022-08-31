@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'core/js_api.dart';
+import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 
 const String ClaimOfAttendanceJSRegistryName = 'ClaimOfAttendance';
 
@@ -23,7 +23,7 @@ class CodecApi {
   Future<dynamic> decodeBytes(String type, Uint8List bytes) async {
     var res = await jsApi.evalJavascript('codec.decode("$type", $bytes)', allowRepeat: true);
 
-    if (res["error"] != null) {
+    if (res['error'] != null) {
       throw Exception("Could not decode bytes into $type. Error: ${res["error"]}");
     }
 

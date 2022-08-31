@@ -50,7 +50,7 @@ class AccountApi {
     var addresses = <String?>[];
 
     for (var pubKey in pubKeys) {
-      _log("New entry for pubKeyAddressMap: Key: $pubKey, address: ${res[store.settings]}");
+      _log('New entry for pubKeyAddressMap: Key: $pubKey, address: ${res[store.settings]}');
       addresses.add(store.account.pubKeyAddressMap[store.settings.endpoint.ss58]![pubKey!]);
     }
 
@@ -78,7 +78,7 @@ class AccountApi {
       allowRepeat: true,
     );
 
-    _log("addressFromUri: $address");
+    _log('addressFromUri: $address');
 
     return address;
   }
@@ -144,7 +144,7 @@ class AccountApi {
   Future<dynamic> sendTx(Map? txInfo, List? params, {String? rawParam}) async {
     String param = rawParam != null ? rawParam : jsonEncode(params);
     String call = 'account.sendTx(${jsonEncode(txInfo)}, $param)';
-    _log("sendTx call: $call");
+    _log('sendTx call: $call');
     return jsApi.evalJavascript(call, allowRepeat: true);
   }
 
@@ -208,5 +208,5 @@ class AccountApi {
 }
 
 _log(String msg) {
-  print("[accountApi] $msg");
+  print('[accountApi] $msg');
 }

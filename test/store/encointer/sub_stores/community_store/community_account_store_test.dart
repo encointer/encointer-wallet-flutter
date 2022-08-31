@@ -9,7 +9,7 @@ void main() {
   group('CommunityAccountStore', () {
     test('json serialization works', () {
       var communityAccountStore = CommunityAccountStore(
-        "My Test Network",
+        'My Test Network',
         mediterraneanTestCommunity,
         ALICE_ADDRESS,
       );
@@ -17,17 +17,17 @@ void main() {
       communityAccountStore.setMeetup(Meetup(2, 3, 10, [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]));
 
       Map<String, dynamic> targetJson = {
-        "network": "My Test Network",
-        "cid": mediterraneanTestCommunity.toJson(),
-        "address": ALICE_ADDRESS,
-        "participantType": 'Bootstrapper',
-        "meetup": {
-          "index": 2,
-          "locationIndex": 3,
-          "time": 10,
-          "registry": [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]
+        'network': 'My Test Network',
+        'cid': mediterraneanTestCommunity.toJson(),
+        'address': ALICE_ADDRESS,
+        'participantType': 'Bootstrapper',
+        'meetup': {
+          'index': 2,
+          'locationIndex': 3,
+          'time': 10,
+          'registry': [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]
         },
-        "participantsClaims": {},
+        'participantsClaims': {},
         'meetupCompleted': false
       };
 
@@ -36,22 +36,22 @@ void main() {
 
     test('json deserialization works', () {
       Map<String, dynamic> sourceJson = {
-        "network": "My Test Network",
-        "cid": mediterraneanTestCommunity.toJson(),
-        "address": ALICE_ADDRESS,
-        "participantType": 'Bootstrapper',
-        "meetup": {
-          "index": 2,
-          "locationIndex": 3,
-          "time": 10,
-          "registry": [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]
+        'network': 'My Test Network',
+        'cid': mediterraneanTestCommunity.toJson(),
+        'address': ALICE_ADDRESS,
+        'participantType': 'Bootstrapper',
+        'meetup': {
+          'index': 2,
+          'locationIndex': 3,
+          'time': 10,
+          'registry': [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]
         },
-        "participantsClaims": Map<String, dynamic>.of({})
+        'participantsClaims': Map<String, dynamic>.of({})
       };
 
       var store = CommunityAccountStore.fromJson(sourceJson);
 
-      expect(store.network, "My Test Network");
+      expect(store.network, 'My Test Network');
       expect(store.cid, mediterraneanTestCommunity);
       expect(store.address, ALICE_ADDRESS);
       expect(store.participantType, ParticipantType.Bootstrapper);
@@ -65,32 +65,32 @@ void main() {
       var localStorage = MockLocalStorage();
 
       var communityAccountStore = CommunityAccountStore(
-        "My Test Network",
+        'My Test Network',
         mediterraneanTestCommunity,
         ALICE_ADDRESS,
       );
       communityAccountStore.participantType = ParticipantType.Bootstrapper;
 
-      communityAccountStore.initStore(() => localStorage.setObject("hello", communityAccountStore.toJson()));
+      communityAccountStore.initStore(() => localStorage.setObject('hello', communityAccountStore.toJson()));
 
       communityAccountStore.setMeetup(Meetup(2, 3, 10, [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]));
 
       Map<String, dynamic> targetCachedJson = {
-        "network": "My Test Network",
-        "cid": mediterraneanTestCommunity.toJson(),
-        "address": ALICE_ADDRESS,
-        "participantType": 'Bootstrapper',
-        "meetup": {
-          "index": 2,
-          "locationIndex": 3,
-          "time": 10,
-          "registry": [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]
+        'network': 'My Test Network',
+        'cid': mediterraneanTestCommunity.toJson(),
+        'address': ALICE_ADDRESS,
+        'participantType': 'Bootstrapper',
+        'meetup': {
+          'index': 2,
+          'locationIndex': 3,
+          'time': 10,
+          'registry': [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]
         },
-        "participantsClaims": Map<String, dynamic>.of({}),
-        "meetupCompleted": false
+        'participantsClaims': Map<String, dynamic>.of({}),
+        'meetupCompleted': false
       };
 
-      var cachedValue = await localStorage.getObject("hello");
+      var cachedValue = await localStorage.getObject('hello');
       expect(cachedValue, targetCachedJson);
     });
   });

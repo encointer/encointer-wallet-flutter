@@ -1,8 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:focus_detector/focus_detector.dart';
-import 'package:pausable_timer/pausable_timer.dart';
-import 'package:share_plus/share_plus.dart';
-
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gr_code_view/gr_code_image_view.dart';
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
@@ -16,11 +11,16 @@ import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/ui.dart';
+import 'package:flutter/material.dart';
+import 'package:focus_detector/focus_detector.dart';
+import 'package:pausable_timer/pausable_timer.dart';
+import 'package:share_plus/share_plus.dart';
 
 class ReceivePage extends StatefulWidget {
   ReceivePage(this.store, {Key? key}) : super(key: key);
   static const String route = '/assets/receive';
   final AppStore store;
+
   @override
   _ReceivePageState createState() => _ReceivePageState();
 }
@@ -84,13 +84,13 @@ class _ReceivePageState extends State<ReceivePage> {
           double oldBalance = widget.store.encointer.applyDemurrage(widget.store.encointer.communityBalanceEntry) ?? 0;
           if (newBalance != null) {
             double delta = newBalance - oldBalance;
-            print("[receivePage] balance was $oldBalance, changed by $delta");
+            print('[receivePage] balance was $oldBalance, changed by $delta');
             if (delta > demurrageRate!) {
               var msg = dic.assets.incomingConfirmed
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
-                  .replaceAll('CID_SYMBOL', widget.store.encointer.community?.metadata?.symbol ?? "null")
+                  .replaceAll('CID_SYMBOL', widget.store.encointer.community?.metadata?.symbol ?? 'null')
                   .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
-              print("[receivePage] $msg");
+              print('[receivePage] $msg');
               widget.store.encointer.account?.addBalanceEntry(cid, balances[cid]!);
               NotificationPlugin.showNotification(44, dic.assets.fundsReceived, msg, cid: cid.toFmtString());
             }
@@ -161,7 +161,7 @@ class _ReceivePageState extends State<ReceivePage> {
                             });
                           },
                           suffixIcon: const Text(
-                            "ⵐ",
+                            'ⵐ',
                             style: TextStyle(
                               color: encointerGrey,
                               fontSize: 26,
@@ -210,7 +210,7 @@ Future<bool> showSnackBarUponPendingExtrinsics(AppStore store, Api api, Translat
   try {
     var extrinsics = await api.encointer.pendingExtrinsics();
 
-    print("[receivePage] pendingExtrinsics ${extrinsics.toString()}");
+    print('[receivePage] pendingExtrinsics ${extrinsics.toString()}');
     if (extrinsics.length > 0) {
       for (var xt in extrinsics) {
         if (xt.contains(store.account.currentAccountPubKey!.substring(2))) {
@@ -233,5 +233,5 @@ Future<bool> showSnackBarUponPendingExtrinsics(AppStore store, Api api, Translat
 }
 
 void _log(String msg) {
-  print("[receivePage] $msg");
+  print('[receivePage] $msg');
 }

@@ -1,15 +1,14 @@
 import 'dart:convert';
 
-import "package:latlong2/latlong.dart";
 import 'package:dart_geohash/dart_geohash.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-
 import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/page-encointer/common/encointer_map.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 
 class CommunityChooserOnMap extends StatelessWidget {
   final AppStore store;

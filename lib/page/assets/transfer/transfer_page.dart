@@ -70,7 +70,7 @@ class _TransferPageState extends State<TransferPage> {
 
     double? available = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry);
 
-    print("[transferPage]: available: $available");
+    print('[transferPage]: available: $available');
 
     return Observer(
       builder: (_) {
@@ -107,7 +107,7 @@ class _TransferPageState extends State<TransferPage> {
                               .translationsForLocale()
                               .assets
                               .yourBalanceFor
-                              .replaceAll("ACCOUNT_NAME", Fmt.accountName(context, store.account.currentAccount)),
+                              .replaceAll('ACCOUNT_NAME', Fmt.accountName(context, store.account.currentAccount)),
                           style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                           textAlign: TextAlign.center,
                         ),
@@ -137,7 +137,7 @@ class _TransferPageState extends State<TransferPage> {
                             }
                             return null;
                           },
-                          suffixIcon: const Text("ⵐ", style: TextStyle(color: encointerGrey, fontSize: 44)),
+                          suffixIcon: const Text('ⵐ', style: TextStyle(color: encointerGrey, fontSize: 44)),
                         ),
                         const SizedBox(height: 24),
                         Row(
@@ -164,7 +164,7 @@ class _TransferPageState extends State<TransferPage> {
                   store.settings.developerMode
                       ? Center(
                           child: Text(
-                            "${dic.assets.fee}: TODO compute Fee", // TODO compute fee #589
+                            '${dic.assets.fee}: TODO compute Fee', // TODO compute fee #589
                             style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                           ),
                         )

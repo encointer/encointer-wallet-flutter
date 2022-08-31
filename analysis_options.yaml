@@ -16,7 +16,7 @@ linter:
     library_private_types_in_public_api: false
     annotate_overrides: false
     prefer_interpolation_to_compose_strings: false
-    prefer_collection_literals: false 
+    prefer_collection_literals: false
     prefer_conditional_assignment: false
     prefer_function_declarations_over_variables: false
     no_leading_underscores_for_local_identifiers: false
@@ -28,7 +28,7 @@ linter:
     avoid_renaming_method_parameters: false
     avoid_returning_null_for_void: false
     avoid_function_literals_in_foreach_calls: false
-    always_use_package_imports: false
+    always_use_package_imports: true
     camel_case_extensions: false
     depend_on_referenced_packages: false
     prefer_typing_uninitialized_variables: false
@@ -36,7 +36,7 @@ linter:
     prefer_is_empty: false
     curly_braces_in_flow_structures: false
 
-    
+
     # prefer_const_constructors_in_immutable: false
     # avoid_unnecessary_containers: false
     # always_declare_return_types: false
