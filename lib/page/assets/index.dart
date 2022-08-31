@@ -127,6 +127,7 @@ class _AssetsState extends State<Assets> {
         child: Scaffold(
           appBar: appBar,
           body: UpgradeAlert(
+            key: const Key('upgader-alert'),
             child: SlidingUpPanel(
               maxHeight: _panelHeightOpen,
               minHeight: _panelHeightClosed,
