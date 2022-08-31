@@ -8,7 +8,7 @@ import 'package:encointer_wallet/utils/screenshot.dart';
 void main() {
   FlutterDriver? driver;
   final config = Config();
-  
+
   // use this for local testing
   // final config = Config(stagingDir: "./screenshots");
 
