@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
-
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/toggle_buttons_with_title.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:flutter/material.dart';
 
 class OfferingDetail extends StatelessWidget {
   OfferingDetail(this.offering, {Key? key}) : super(key: key);

@@ -5,6 +5,7 @@ const String QR_CODE_FIELD_SEPARATOR = '\n';
 
 abstract class QrCode<QrCodeData extends ToQrFields> {
   QrCode(this.data);
+
   QrCodeContext? context;
 
   QrCodeVersion? version;

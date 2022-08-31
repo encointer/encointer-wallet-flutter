@@ -1,24 +1,22 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:iconsax/iconsax.dart';
-
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_info.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_register_button.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_start_button.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/components/lower_ceremony_box_container.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/components/ceremony_notification.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/meetup_info/meetup_info.dart';
 import 'package:encointer_wallet/page-encointer/common/encointer_map.dart';
 import 'package:encointer_wallet/page-encointer/meetup/ceremony_step1_count.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-
-import 'ceremony_info.dart';
-import 'components/ceremony_register_button.dart';
-import 'components/ceremony_start_button.dart';
-import 'components/lower_ceremony_box_container.dart';
-import 'meetup_info/components/ceremony_notification.dart';
-import 'meetup_info/meetup_info.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:iconsax/iconsax.dart';
 
 class CeremonyBox extends StatelessWidget {
   CeremonyBox(

@@ -4,6 +4,8 @@ import 'dart:typed_data';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/page-encointer/meetup/ceremony_progress_bar.dart';
+import 'package:encointer_wallet/page-encointer/meetup/ceremony_step3_finish.dart';
 import 'package:encointer_wallet/page-encointer/meetup/scan_claim_qr_code.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -13,9 +15,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:qr_flutter_fork/qr_flutter_fork.dart';
-
-import 'ceremony_progress_bar.dart';
-import 'ceremony_step3_finish.dart';
 
 class CeremonyStep2Scan extends StatelessWidget {
   const CeremonyStep2Scan(

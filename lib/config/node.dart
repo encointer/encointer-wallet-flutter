@@ -37,6 +37,7 @@ class NodeConfig {
   }
 
   factory NodeConfig.fromJson(Map<String, dynamic> json) => _$NodeConfigFromJson(json);
+
   Map<String, dynamic> toJson() => _$NodeConfigToJson(this);
 }
 
