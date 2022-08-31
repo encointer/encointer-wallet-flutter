@@ -2,9 +2,8 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class Ipfs {
   // Todo: remove default -> migrate bazaar to use ipfs field from webApi instance

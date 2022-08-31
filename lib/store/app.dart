@@ -1,14 +1,12 @@
-import 'package:mobx/mobx.dart';
-
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/assets/assets.dart';
 import 'package:encointer_wallet/store/chain/chain.dart';
+import 'package:encointer_wallet/store/data_update/data_update.dart';
 import 'package:encointer_wallet/store/encointer/encointer.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/local_storage.dart';
-
-import 'data_update/data_update.dart';
+import 'package:mobx/mobx.dart';
 
 part 'app.g.dart';
 

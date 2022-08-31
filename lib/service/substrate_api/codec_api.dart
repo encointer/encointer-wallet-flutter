@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'core/js_api.dart';
+import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 
 const String ClaimOfAttendanceJSRegistryName = 'ClaimOfAttendance';
 
