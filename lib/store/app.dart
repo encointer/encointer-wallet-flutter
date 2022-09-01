@@ -48,7 +48,7 @@ abstract class _AppStore with Store {
     this.config = StoreConfig.Normal,
   });
 
-  final config;
+  final StoreConfig config;
 
   // Note, following pattern of a nullable field with a non-nullable getter
   // is here because mobx can't handle `late` initialization:

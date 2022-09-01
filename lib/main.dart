@@ -16,9 +16,6 @@ Future<void> main() async {
   // var notificationAppLaunchDetails =
   //     await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
 
-  // Only call clearSavedSettings() during testing to reset internal values.
-  // await Upgrader.clearSavedSettings(); // REMOVE this for release builds
-
   if (Platform.isAndroid) {
     // this is enabled by default in IOS dev-builds.
     await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);

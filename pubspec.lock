@@ -274,48 +274,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.2.2"
-  device_info_plus:
-    dependency: transitive
-    description:
-      name: device_info_plus
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.1.2"
-  device_info_plus_linux:
-    dependency: transitive
-    description:
-      name: device_info_plus_linux
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.0"
-  device_info_plus_macos:
-    dependency: transitive
-    description:
-      name: device_info_plus_macos
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.0"
-  device_info_plus_platform_interface:
-    dependency: transitive
-    description:
-      name: device_info_plus_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.0"
-  device_info_plus_web:
-    dependency: transitive
-    description:
-      name: device_info_plus_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.0"
-  device_info_plus_windows:
-    dependency: transitive
-    description:
-      name: device_info_plus_windows
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.0.0"
   dio:
     dependency: "direct main"
     description:
@@ -724,17 +682,17 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
+  new_version:
+    dependency: "direct main"
+    description:
+      name: new_version
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.1"
   node_preamble:
     dependency: transitive
     description:
       name: node_preamble
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.1"
-  os_detect:
-    dependency: transitive
-    description:
-      name: os_detect
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.1"
@@ -1333,13 +1291,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.3.1"
-  upgrader:
-    dependency: "direct main"
-    description:
-      name: upgrader
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.6.1"
   url_launcher:
     dependency: "direct main"
     description:
@@ -1410,13 +1361,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
-  version:
-    dependency: transitive
-    description:
-      name: version
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "3.0.2"
   visibility_detector:
     dependency: transitive
     description:
