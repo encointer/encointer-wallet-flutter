@@ -1,6 +1,5 @@
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
-
-import 'qr_code_base.dart';
+import 'package:encointer_wallet/page/qr_scan/qr_codes/qr_code_base.dart';
 
 class ContactQrCode extends QrCode<ContactData> {
   ContactQrCode.withData(
@@ -32,7 +31,7 @@ class ContactQrCode extends QrCode<ContactData> {
   }
 
   static ContactQrCode fromPayload(String payload) {
-    return fromQrFields(payload.split("\n"));
+    return fromQrFields(payload.split('\n'));
   }
 
   static ContactQrCode fromQrFields(List<String> fields) {
@@ -72,11 +71,11 @@ class ContactData implements ToQrFields {
 
   // implicitly is v1 to satisfy interface
   List<String> toQrFields() {
-    return [account, "", "", label];
+    return [account, '', '', label];
   }
 
   List<String> toQrFieldsV2() {
-    return [account, cid?.toFmtString() ?? "", network ?? "", label];
+    return [account, cid?.toFmtString() ?? '', network ?? '', label];
   }
 
   static ContactData fromQrFieldsV1(List<String> fields) {

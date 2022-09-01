@@ -1,11 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:permission_handler/permission_handler.dart';
-
 import 'package:encointer_wallet/models/claim_of_attendance/claim_of_attendance.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/codec_api.dart';
@@ -13,6 +7,11 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class ScanClaimQrCode extends StatelessWidget {
   ScanClaimQrCode(this.store, this.confirmedParticipantsCount, {Key? key}) : super(key: key);
@@ -25,7 +24,7 @@ class ScanClaimQrCode extends StatelessWidget {
     if (!registry.contains(claim.claimantPublic)) {
       // this is important because the runtime checks if there are too many claims trying to be registered.
       RootSnackBar.showMsg(dic.encointer.meetupClaimantInvalid);
-      print("[scanClaimQrCode] Claimant: ${claim.claimantPublic} is not part of registry: ${registry.toString()}");
+      print('[scanClaimQrCode] Claimant: ${claim.claimantPublic} is not part of registry: ${registry.toString()}');
     } else {
       String msg = store.encointer.communityAccount!.containsClaim(claim)
           ? dic.encointer.claimsScannedAlready
@@ -55,7 +54,7 @@ class ScanClaimQrCode extends StatelessWidget {
 
         validateAndStoreClaim(context, claim, dic);
       } catch (e) {
-        _log("Error decoding claim: ${e.toString()}");
+        _log('Error decoding claim: ${e.toString()}');
         RootSnackBar.showMsg(dic.encointer.claimsScannedDecodeFailed);
       }
 
@@ -79,7 +78,7 @@ class ScanClaimQrCode extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<PermissionStatus> snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data != PermissionStatus.granted) {
-              print("[scanPage] Permission Status: ${snapshot.data!.toString()}");
+              print('[scanPage] Permission Status: ${snapshot.data!.toString()}');
               return permissionErrorDialog(context);
             }
 
@@ -150,7 +149,7 @@ Future<PermissionStatus> canOpenCamera() async {
 }
 
 _log(String msg) {
-  print("[ScanClaimQrCode] $msg");
+  print('[ScanClaimQrCode] $msg');
 }
 
 Widget permissionErrorDialog(BuildContext context) {

@@ -1,10 +1,8 @@
 /// Simple mock to return some hardcoded data used in the bazaar UI.
-
-import 'package:flutter/material.dart';
-
 import 'package:encointer_wallet/mocks/data/mock_bazaar_data.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_business.dart';
 import 'package:encointer_wallet/models/bazaar/ipfs_offering.dart';
+import 'package:flutter/material.dart';
 
 class MockIpfsBazaarApi {
   /// get the business that lives at the specified [ipfsCid].

@@ -109,7 +109,7 @@ class TranslationsEnBazaar implements TranslationsBazaar {
   get imageChoose => 'Choose an image';
   get imageNotPicked => 'You have not yet picked an image.';
   get imagesAdded => 'Images added';
-  get imagesAddRemove => "Add/remove images";
+  get imagesAddRemove => 'Add/remove images';
   get imagesMultiplePick => 'Pick Multiple Images from gallery';
   get imageVideoError => 'Pick image/video error';
   get lastVisited => 'Last visited';
@@ -182,7 +182,7 @@ class TranslationsDeBazaar implements TranslationsBazaar {
   get imageChoose => 'Wähle ein Bild';
   get imageNotPicked => 'Es wurde noch kein Bild ausgewählt.';
   get imagesAdded => 'Bilder wurden hinzugefügt';
-  get imagesAddRemove => "Füge hinzu/entferne Bilder";
+  get imagesAddRemove => 'Füge hinzu/entferne Bilder';
   get imagesMultiplePick => 'Mehrere Bilder aus der Gallerie auswählen';
   get imageVideoError => 'Pick image/video error';
   get lastVisited => 'Zuletzt besucht';
@@ -255,7 +255,7 @@ class TranslationsZhBazaar implements TranslationsBazaar {
   get imageChoose => '选择一张图片';
   get imageNotPicked => '你还没有选择图像。';
   get imagesAdded => '图片添加';
-  get imagesAddRemove => "添加/删除图像";
+  get imagesAddRemove => '添加/删除图像';
   get imagesMultiplePick => '从图库中选择多个图像';
   get imageVideoError => '选择图像/视频错误';
   get lastVisited => '上次访问';

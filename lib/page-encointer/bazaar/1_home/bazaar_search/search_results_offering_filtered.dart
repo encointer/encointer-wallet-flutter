@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
-
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/toggle_buttons_with_title.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter/material.dart';
 
 class SearchResultsOfferingFiltered extends StatelessWidget {
   final results;
@@ -22,7 +21,7 @@ class SearchResultsOfferingFiltered extends StatelessWidget {
     final Translations dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
-        title: Text("Filter ${dic.bazaar.found} ${dic.bazaar.offerings}"),
+        title: Text('Filter ${dic.bazaar.found} ${dic.bazaar.offerings}'),
       ),
       body: ListView(children: [
         ToggleButtonsWithTitle(dic.bazaar.categories, categories, null),

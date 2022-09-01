@@ -92,27 +92,27 @@ class TranslationsEnAssets implements TranslationsAssets {
   get invoice => 'Invoice';
   get incomingConfirmed => 'incoming AMOUNT CID_SYMBOL for ACCOUNT_NAME confirmed';
   get fundsReceived => 'funds received';
-  get paymentDoYouWantToProceed => "Proceed with payment?";
-  get paymentSubmitting => "Payment is being submitted...";
-  get paymentFinished => "Payment complete";
-  get paymentError => "Payment error";
-  get voucher => "Voucher";
-  get voucherBalance => "Voucher Balance";
-  get voucherDifferentNetworkAndCommunity => "The voucher is for a different network. Do you want to change "
-      "to NETWORK_PLACEHOLDER and COMMUNITY_PLACEHOLDER? You can change the network back under Profile > Developer mode";
+  get paymentDoYouWantToProceed => 'Proceed with payment?';
+  get paymentSubmitting => 'Payment is being submitted...';
+  get paymentFinished => 'Payment complete';
+  get paymentError => 'Payment error';
+  get voucher => 'Voucher';
+  get voucherBalance => 'Voucher Balance';
+  get voucherDifferentNetworkAndCommunity => 'The voucher is for a different network. Do you want to change '
+      'to NETWORK_PLACEHOLDER and COMMUNITY_PLACEHOLDER? You can change the network back under Profile > Developer mode';
   get voucherDifferentCommunity =>
-      "The voucher is for a different community. Do you want to change to COMMUNITY_PLACEHOLDER?";
-  get voucherContainsInexistentCommunity => "The voucher contains an inexistent community:";
-  get doYouWantToRedeemThisVoucher => "Do you want to redeem this voucher to ACCOUNT_PLACEHOLDER?";
-  get fundVoucher => "Fund voucher";
-  get redeemVoucher => "Redeem voucher";
-  get redeemSuccess => "Successfully redeemed voucher.";
-  get redeemFailure => "There was an error while redeeming the voucher. Cause:";
-  get invalidNetwork => "Invalid Network";
-  get invalidCommunity => "Invalid Community";
-  get transactionError => "Transaction error";
-  get insufficientFundsExplanation => "You do not have sufficient funds on this account. See on the website of your"
-      " local community how to get some.";
+      'The voucher is for a different community. Do you want to change to COMMUNITY_PLACEHOLDER?';
+  get voucherContainsInexistentCommunity => 'The voucher contains an inexistent community:';
+  get doYouWantToRedeemThisVoucher => 'Do you want to redeem this voucher to ACCOUNT_PLACEHOLDER?';
+  get fundVoucher => 'Fund voucher';
+  get redeemVoucher => 'Redeem voucher';
+  get redeemSuccess => 'Successfully redeemed voucher.';
+  get redeemFailure => 'There was an error while redeeming the voucher. Cause:';
+  get invalidNetwork => 'Invalid Network';
+  get invalidCommunity => 'Invalid Community';
+  get transactionError => 'Transaction error';
+  get insufficientFundsExplanation => 'You do not have sufficient funds on this account. See on the website of your'
+      ' local community how to get some.';
 }
 
 class TranslationsDeAssets implements TranslationsAssets {
@@ -151,27 +151,27 @@ class TranslationsDeAssets implements TranslationsAssets {
   get invoice => 'Rechnungsbetrag';
   get incomingConfirmed => 'Empfang von AMOUNT CID_SYMBOL für ACCOUNT_NAME bestätigt';
   get fundsReceived => 'Zahlungseingang';
-  get paymentDoYouWantToProceed => "Mit Zahlung fortfahren?";
-  get paymentSubmitting => "Zahlung wird eingereicht...";
-  get paymentFinished => "Zahlung erfolgt";
-  get paymentError => "Zahlungsfehler";
-  get voucher => "Gutschein";
-  get voucherBalance => "Gutscheinwert";
-  get voucherDifferentNetworkAndCommunity => "Der Gutschein ist für ein anderes Netzwerk. Wills du zu "
-      "NETWORK_PLACEHOLDER und COMMUNITY_PLACEHOLDER wechseln? Du kannst das Netzwerk zurückändern under Profil > Developer mode.";
+  get paymentDoYouWantToProceed => 'Mit Zahlung fortfahren?';
+  get paymentSubmitting => 'Zahlung wird eingereicht...';
+  get paymentFinished => 'Zahlung erfolgt';
+  get paymentError => 'Zahlungsfehler';
+  get voucher => 'Gutschein';
+  get voucherBalance => 'Gutscheinwert';
+  get voucherDifferentNetworkAndCommunity => 'Der Gutschein ist für ein anderes Netzwerk. Wills du zu '
+      'NETWORK_PLACEHOLDER und COMMUNITY_PLACEHOLDER wechseln? Du kannst das Netzwerk zurückändern under Profil > Developer mode.';
   get voucherDifferentCommunity =>
-      "Der Gutschein ist für eine andere Community. Wills du zu COMMUNITY_PLACEHOLDER wechseln?";
-  get voucherContainsInexistentCommunity => "Der Gutschein enthält eine nicht-existente community:";
-  get doYouWantToRedeemThisVoucher => "Willst du diesen Gutschein für ACCOUNT_PLACEHOLDER einlösen?";
-  get fundVoucher => "Gutschein aufladen";
-  get redeemVoucher => "Gutschein einlösen";
-  get redeemSuccess => "Gutschein erfolgreich eingelöst.";
-  get redeemFailure => "Es gab einen Fehler beim einlösen des Gutscheins. Ursache:";
-  get invalidNetwork => "Ungültiges Netzwerk";
-  get invalidCommunity => "Ungülige Gemeinschaft";
-  get transactionError => "Transaktionsfehler";
-  get insufficientFundsExplanation => "Du hast nicht genügend Geld auf diesem Konto. Schaue auf der Webseite"
-      " deiner lokalen gemeinschaft, wie du welches bekommen kannst.";
+      'Der Gutschein ist für eine andere Community. Wills du zu COMMUNITY_PLACEHOLDER wechseln?';
+  get voucherContainsInexistentCommunity => 'Der Gutschein enthält eine nicht-existente community:';
+  get doYouWantToRedeemThisVoucher => 'Willst du diesen Gutschein für ACCOUNT_PLACEHOLDER einlösen?';
+  get fundVoucher => 'Gutschein aufladen';
+  get redeemVoucher => 'Gutschein einlösen';
+  get redeemSuccess => 'Gutschein erfolgreich eingelöst.';
+  get redeemFailure => 'Es gab einen Fehler beim einlösen des Gutscheins. Ursache:';
+  get invalidNetwork => 'Ungültiges Netzwerk';
+  get invalidCommunity => 'Ungülige Gemeinschaft';
+  get transactionError => 'Transaktionsfehler';
+  get insufficientFundsExplanation => 'Du hast nicht genügend Geld auf diesem Konto. Schaue auf der Webseite'
+      ' deiner lokalen gemeinschaft, wie du welches bekommen kannst.';
 }
 
 class TranslationsZhAssets implements TranslationsAssets {
