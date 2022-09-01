@@ -4,11 +4,10 @@ include: package:lints/recommended.yaml
   
 linter:
   rules:
-
     sized_box_for_whitespace: true
     use_key_in_widget_constructors: true
     prefer_const_constructors: true
-    unnecessary_new: false
+    unnecessary_new: true
     unnecessary_this: false
     unnecessary_const: false
     prefer_single_quotes: false
@@ -17,7 +16,7 @@ linter:
     library_private_types_in_public_api: false
     annotate_overrides: false
     prefer_interpolation_to_compose_strings: false
-    prefer_collection_literals: false 
+    prefer_collection_literals: false
     prefer_conditional_assignment: false
     prefer_function_declarations_over_variables: false
     no_leading_underscores_for_local_identifiers: false
@@ -37,7 +36,6 @@ linter:
     prefer_is_empty: false
     curly_braces_in_flow_structures: false
 
-    
     # prefer_const_constructors_in_immutable: false
     # avoid_unnecessary_containers: false
     # always_declare_return_types: false
@@ -65,6 +63,4 @@ analyzer:
     fixme: false 
     prefer_iterable_wheretype: false
     prefer_for_elements_to_map_fromiterable: false
-
-
 

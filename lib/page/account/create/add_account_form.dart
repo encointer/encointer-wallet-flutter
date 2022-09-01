@@ -22,7 +22,7 @@ class AddAccountForm extends StatelessWidget {
 
   static final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _nameCtrl = new TextEditingController();
+  final TextEditingController _nameCtrl = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
