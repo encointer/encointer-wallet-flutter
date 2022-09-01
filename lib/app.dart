@@ -1,6 +1,14 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
+
 import 'package:encointer_wallet/common/components/will_pop_scope_wrapper.dart';
+import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/mocks/substrate_api/core/mock_dart_api.dart';
+import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page-encointer/home_page.dart';
@@ -35,15 +43,7 @@ import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
-
-import 'common/theme.dart';
-import 'mocks/substrate_api/mock_api.dart';
-import 'utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 class WalletApp extends StatefulWidget {
   const WalletApp(this.config, {Key? key}) : super(key: key);
@@ -101,7 +101,7 @@ class _WalletAppState extends State<WalletApp> {
 
       await webApi.init().timeout(
             const Duration(seconds: 20),
-            onTimeout: () => print("webApi.init() has run into a timeout. We might be offline."),
+            onTimeout: () => print('webApi.init() has run into a timeout. We might be offline.'),
           );
 
       _store.dataUpdate.setupUpdateReaction(() async {
@@ -175,7 +175,7 @@ class _WalletAppState extends State<WalletApp> {
                       future: _initApp(context),
                       builder: (_, AsyncSnapshot<int> snapshot) {
                         if (snapshot.hasError) {
-                          _log("SnapshotError: ${snapshot.error.toString()}");
+                          _log('SnapshotError: ${snapshot.error.toString()}');
                         }
                         if (snapshot.hasData && _appStore!.appIsReady) {
                           return snapshot.data! > 0 ? EncointerHomePage() : CreateAccountEntryPage();
@@ -336,5 +336,5 @@ class _WalletAppState extends State<WalletApp> {
 }
 
 void _log(String msg) {
-  print("[App] $msg");
+  print('[App] $msg');
 }

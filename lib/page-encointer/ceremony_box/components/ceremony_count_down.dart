@@ -1,10 +1,9 @@
 import 'dart:async';
 
+import 'package:encointer_wallet/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:quiver/async.dart';
-
-import 'package:encointer_wallet/common/theme.dart';
 
 class CeremonyCountDown extends StatefulWidget {
   CeremonyCountDown(this.nextCeremonyDate, {Key? key}) : super(key: key);
@@ -21,6 +20,7 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
   _CeremonyCountDownState();
 
   late int timeToMeetup;
+
   // Todo: double check: is this a false positive?
   // ignore: cancel_subscriptions
   StreamSubscription<CountdownTimer>? sub;
@@ -52,7 +52,7 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
     });
 
     sub!.onDone(() {
-      print("Done");
+      print('Done');
       sub!.cancel();
     });
   }

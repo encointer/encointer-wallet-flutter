@@ -56,19 +56,19 @@ void main() {
       await testCommunityStore.initCommunityAccountStore(root.account.currentAddress);
 
       Map<String, dynamic> targetJson = {
-        "network": testNetwork,
-        "currentPhase": "Registering",
-        "nextPhaseTimestamp": 3,
-        "phaseDurations": Map<String, dynamic>.of({}),
-        "currentCeremonyIndex": 2,
-        "communityIdentifiers": testCommunityIdentifiers.map((c) => c.toJson()).toList(),
-        "communities": testCommunities.map((cn) => cn.toJson()).toList(),
-        "chosenCid": testCid.toJson(),
-        "accountStores": Map<String, dynamic>.of({}),
-        "bazaarStores": Map<String, dynamic>.of({
+        'network': testNetwork,
+        'currentPhase': 'Registering',
+        'nextPhaseTimestamp': 3,
+        'phaseDurations': Map<String, dynamic>.of({}),
+        'currentCeremonyIndex': 2,
+        'communityIdentifiers': testCommunityIdentifiers.map((c) => c.toJson()).toList(),
+        'communities': testCommunities.map((cn) => cn.toJson()).toList(),
+        'chosenCid': testCid.toJson(),
+        'accountStores': Map<String, dynamic>.of({}),
+        'bazaarStores': Map<String, dynamic>.of({
           testCidFmt: new BazaarStore(testNetwork, testCid).toJson(),
         }),
-        "communityStores": Map<String, dynamic>.of({
+        'communityStores': Map<String, dynamic>.of({
           testCidFmt: testCommunityStore.toJson(),
         }),
       };

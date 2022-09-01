@@ -1,3 +1,10 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
+
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -13,12 +20,6 @@ import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/ui.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
 
 class AccountManagePage extends StatefulWidget {
   AccountManagePage({Key? key}) : super(key: key);
@@ -83,7 +84,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
     var community = context.read<AppStore>().encointer.communityStores![cidFmt]!;
 
-    _log("_getBalanceEntryListTile: ${community.toJson()}");
+    _log('_getBalanceEntryListTile: ${community.toJson()}');
 
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
@@ -394,5 +395,5 @@ class CommunityIcon extends StatelessWidget {
 }
 
 _log(String msg) {
-  print("[accountManagePage] $msg");
+  print('[accountManagePage] $msg');
 }

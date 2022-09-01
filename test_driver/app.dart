@@ -33,7 +33,7 @@ void main() {
         break;
     }
     // to fix static analysis
-    return Future.value("DataHandler");
+    return Future.value('DataHandler');
   }
 
   enableFlutterDriverExtension(handler: dataHandler);

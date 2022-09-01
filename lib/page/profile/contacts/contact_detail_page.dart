@@ -1,3 +1,9 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
+
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/secondary_button_wide.dart';
 import 'package:encointer_wallet/common/components/submit_button_secondary.dart';
@@ -11,11 +17,6 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/ui.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
 
 class ContactDetailPage extends StatelessWidget {
   ContactDetailPage(this.api, {Key? key}) : super(key: key);
@@ -58,6 +59,7 @@ class ContactDetailPage extends StatelessWidget {
   Widget build(BuildContext context) {
     AccountData account = ModalRoute.of(context)!.settings.arguments as AccountData;
     var dic = I18n.of(context)!.translationsForLocale();
+    final _store = context.watch<AppStore>();
 
     return Scaffold(
       appBar: AppBar(
@@ -114,7 +116,7 @@ class ContactDetailPage extends StatelessWidget {
                           .community!
                           .bootstrappers!
                           .contains(context.read<AppStore>().account.currentAddress)
-                      ? EndorseButton(context.watch<AppStore>(), api, account)
+                      ? EndorseButton(_store, api, account)
                       : Container();
                 } else {
                   return const CupertinoActivityIndicator();
@@ -127,9 +129,7 @@ class ContactDetailPage extends StatelessWidget {
                   children: [
                     const Icon(Iconsax.send_sqaure_2),
                     const SizedBox(width: 12),
-                    Text(
-                        dic.profile.tokenSend
-                            .replaceAll('SYMBOL', context.read<AppStore>().encointer.community?.symbol ?? "null"),
+                    Text(dic.profile.tokenSend.replaceAll('SYMBOL', _store.encointer.community?.symbol ?? 'null'),
                         style: Theme.of(context).textTheme.headline3),
                   ],
                 ),
@@ -177,6 +177,7 @@ class EndorseButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var dic = I18n.of(context)!.translationsForLocale();
+    final _store = context.watch<AppStore>();
 
     return SubmitButtonSecondary(
       child: Row(
@@ -187,9 +188,9 @@ class EndorseButton extends StatelessWidget {
           Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
         ],
       ),
-      onPressed: context.watch<AppStore>().encointer.community!.bootstrappers!.contains(contact.address)
+      onPressed: _store.encointer.community!.bootstrappers!.contains(contact.address)
           ? (BuildContext context) => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
-          : context.watch<AppStore>().encointer.currentPhase != CeremonyPhase.Registering
+          : _store.encointer.currentPhase != CeremonyPhase.Registering
               ? (BuildContext context) => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)
               : (BuildContext context) => submitEndorseNewcomer(
                     context,

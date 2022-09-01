@@ -6,8 +6,8 @@ include: package:lints/core.yaml
   
 linter:
   rules:
-    always_use_package_imports: false
-    camel_case_extensions: false
+    always_use_package_imports: true
+    camel_case_extensions: true
     depend_on_referenced_packages: false
     prefer_typing_uninitialized_variables: false
     void_checks: false
@@ -18,7 +18,7 @@ linter:
     # prefer_const_constructors_in_immutable: false
     # avoid_unnecessary_containers: false
     use_key_in_widget_constructors: true
-    # prefer_single_quotes: false
+    prefer_single_quotes: true
     sized_box_for_whitespace: true
 
     # always_declare_return_types: false

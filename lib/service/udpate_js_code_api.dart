@@ -1,9 +1,8 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/config/consts.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart';
-
-import 'package:encointer_wallet/config/consts.dart';
 
 /// Class to update the js-code from in app.
 ///

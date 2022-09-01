@@ -1,14 +1,14 @@
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
-import 'qr_scan_service.dart';
+import 'package:encointer_wallet/page/qr_scan/qr_scan_service.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/snack_bar.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 
 export 'qr_codes/qr_code_base.dart';
 export 'qr_scan_service.dart';
@@ -17,6 +17,7 @@ class ScanPageParams {
   ScanPageParams({
     required this.scannerContext,
   });
+
   final QrScannerContext scannerContext;
 }
 
@@ -61,7 +62,7 @@ class ScanPage extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<PermissionStatus> snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data != PermissionStatus.granted) {
-              print("[scanPage] Permission Status: ${snapshot.data!.toString()}");
+              print('[scanPage] Permission Status: ${snapshot.data!.toString()}');
               return permissionErrorDialog(context);
             }
 
@@ -116,21 +117,21 @@ Widget mockQrDataRow(Translations dic, Function(String) onScan) {
     ElevatedButton(
       child: Text(dic.profile.addContact),
       onPressed: () => onScan(
-        "encointer-contact\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nSara",
+        'encointer-contact\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nSara',
       ),
     ),
     ElevatedButton(
       child: Text(dic.assets.invoice),
       onPressed: () => onScan(
-        "encointer-invoice\nv1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX"
-        "\nsqm1v79dF6b\n0.2343\nAubrey",
+        'encointer-invoice\nv1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX'
+        '\nsqm1v79dF6b\n0.2343\nAubrey',
       ),
     ),
     ElevatedButton(
-      child: const Text("voucher"),
+      child: const Text('voucher'),
       onPressed: () => onScan(
-        "encointer-voucher\nv2.0\n//VoucherUri\nsqm1v79dF6b"
-        "\nnctr-gsl-dev\nAubrey",
+        'encointer-voucher\nv2.0\n//VoucherUri\nsqm1v79dF6b'
+        '\nnctr-gsl-dev\nAubrey',
       ),
     ),
     const Text(' <<< Devs only', style: TextStyle(color: Colors.orange)),

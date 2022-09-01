@@ -1,10 +1,5 @@
 import 'dart:io';
 
-import 'package:encointer_wallet/app.dart';
-import 'package:encointer_wallet/config.dart';
-import 'package:encointer_wallet/service/notification.dart';
-import 'package:encointer_wallet/service/subscan.dart';
-import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -12,7 +7,12 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
 
-import 'utils/local_storage.dart' as util;
+import 'package:encointer_wallet/app.dart';
+import 'package:encointer_wallet/config.dart';
+import 'package:encointer_wallet/service/notification.dart';
+import 'package:encointer_wallet/service/subscan.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/local_storage.dart' as util;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,3 +1,8 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
+
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/secondary_button_wide.dart';
@@ -6,19 +11,14 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
+import 'package:encointer_wallet/page/reap_voucher/dialogs.dart';
+import 'package:encointer_wallet/page/reap_voucher/utils.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
-
-import 'dialogs.dart';
-import 'utils.dart';
 
 class ReapVoucherParams {
   ReapVoucherParams({
@@ -50,7 +50,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   bool _isReady = false;
 
   Future<void> fetchVoucherData(Api api, String voucherUri, CommunityIdentifier cid) async {
-    _log("Fetching voucher data...");
+    _log('Fetching voucher data...');
     _voucherAddress = await api.account.addressFromUri(voucherUri);
 
     setState(() {});
@@ -71,6 +71,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     final Translations dic = I18n.of(context)!.translationsForLocale();
     final h2Grey = Theme.of(context).textTheme.headline2!.copyWith(color: encointerGrey);
     final h4Grey = Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey);
+    final _store = context.watch<AppStore>();
     ReapVoucherParams params = ModalRoute.of(context)!.settings.arguments as ReapVoucherParams;
 
     final voucher = params.voucher;
@@ -122,7 +123,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                   : const CupertinoActivityIndicator(),
             ),
             Text(
-              "${dic.assets.voucherBalance}, ${context.watch<AppStore>().encointer.community?.symbol}",
+              '${dic.assets.voucherBalance}, ${context.watch<AppStore>().encointer.community?.symbol}',
               style: h4Grey,
             ),
             Expanded(
@@ -130,8 +131,8 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
               child: Center(
                 child: Text(
                   dic.assets.doYouWantToRedeemThisVoucher.replaceAll(
-                    "ACCOUNT_PLACEHOLDER",
-                    context.watch<AppStore>().account.currentAccount.name,
+                    'ACCOUNT_PLACEHOLDER',
+                    _store.account.currentAccount.name,
                   ),
                   style: h2Grey,
                   textAlign: TextAlign.center,
@@ -234,5 +235,5 @@ void _pushTransferPage(BuildContext context, VoucherData data, String voucherAdd
 }
 
 void _log(String msg) {
-  print("[ReapVoucherPage] $msg");
+  print('[ReapVoucherPage] $msg');
 }

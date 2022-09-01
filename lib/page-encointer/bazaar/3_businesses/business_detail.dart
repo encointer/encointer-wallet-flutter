@@ -1,12 +1,11 @@
-import "package:latlong2/latlong.dart";
-import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/businesses_on_map.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_horizontal.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 
 class BusinessDetail extends StatelessWidget {
   BusinessDetail(this.business, {Key? key}) : super(key: key);
@@ -21,7 +20,7 @@ class BusinessDetail extends StatelessWidget {
       appBar: AppBar(
         title: Row(
           children: [
-            Text("${business!.title}"),
+            Text('${business!.title}'),
             const SizedBox(
               width: 6,
             ),
@@ -38,7 +37,7 @@ class BusinessDetail extends StatelessWidget {
                   alignment: Alignment.topLeft,
                   child: Container(
                     padding: const EdgeInsets.fromLTRB(2, 8, 0, 16),
-                    child: Text("${business!.description}"),
+                    child: Text('${business!.description}'),
                   )),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -109,7 +108,7 @@ class SmallLeaflet extends StatelessWidget {
             ),
             layers: [
               TileLayerOptions(
-                urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                 subdomains: ['a', 'b', 'c'],
               ),
               MarkerLayerOptions(

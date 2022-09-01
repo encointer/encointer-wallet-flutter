@@ -20,7 +20,7 @@ void main() {
 
       var ready = await driver!.requestData(MockStorageSetup.WAIT_UNTIL_APP_IS_READY);
       while (ready == false.toString()) {
-        print("Waiting for app to be ready: $ready");
+        print('Waiting for app to be ready: $ready');
         await Future.delayed(const Duration(seconds: 1));
         ready = await driver!.requestData(MockStorageSetup.WAIT_UNTIL_APP_IS_READY);
       }
@@ -100,7 +100,7 @@ void main() {
       // attesting phase
       await driver!.requestData(MockStorageSetup.READY_FOR_MEETUP);
 
-      log("tapping startMeetup");
+      log('tapping startMeetup');
       await driver!.tap(find.byValueKey('start-meetup'));
       await driver!.tap(find.byValueKey('attendees-count'));
       await driver!.enterText('3');
@@ -111,5 +111,5 @@ void main() {
 }
 
 void log(String msg) {
-  print("[test_driver] $msg");
+  print('[test_driver] $msg');
 }

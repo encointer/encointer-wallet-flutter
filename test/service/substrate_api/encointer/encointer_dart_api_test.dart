@@ -14,7 +14,7 @@ void main() {
       var encointerDartApi = EncointerDartApi(substrateDartApi);
 
       var data = await encointerDartApi.getAggregatedAccountData(mediterraneanTestCommunity, ALICE_ADDRESS);
-      print("data: ${data.toString()}");
+      print('data: ${data.toString()}');
 
       await substrateDartApi.close();
     }, tags: encointerNodeE2E);

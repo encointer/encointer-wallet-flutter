@@ -1,8 +1,7 @@
 import 'package:add_2_calendar/add_2_calendar.dart';
-import 'package:intl/intl.dart';
-
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:intl/intl.dart';
 
 /// stateless service that computes some of the view logic of the ceremony box
 class CeremonyBoxService {
@@ -70,7 +69,7 @@ class CeremonyBoxService {
     var ceremonyStart = assigningStart - ceremonyPhaseDurations[CeremonyPhase.Registering]!;
 
     if (currentTime < ceremonyStart) {
-      throw Exception("[CeremonyProgressBar] Current time was smaller than ceremony start");
+      throw Exception('[CeremonyProgressBar] Current time was smaller than ceremony start');
     }
 
     var progressUnormalized;

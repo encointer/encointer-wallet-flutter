@@ -1,7 +1,6 @@
+import 'package:encointer_wallet/models/index.dart';
 import 'package:json_rpc_2/json_rpc_2.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
-
-import 'package:encointer_wallet/models/index.dart';
 
 /// Api to talk to an substrate node via the websocket protocol.
 ///
@@ -33,9 +32,9 @@ class SubstrateDartApi {
       // print("Methods: ${methods.toString()}");
 
       // Sanity check that we are running against valid node with offchain indexing enabled
-      if (!_rpc!.methods!.contains("encointer_getReputations")) {
-        _log("rpc_methods does not contain 'getReputations'. Are the following flags passed"
-            " to the node? \n '--enable-offchain-indexing true --rpc-methods unsafe'");
+      if (!_rpc!.methods!.contains('encointer_getReputations')) {
+        _log('rpc_methods does not contain "getReputations". Are the following flags passed'
+            '" to the node? \n "--enable-offchain-indexing true --rpc-methods unsafe"');
       }
     } on RpcException catch (error) {
       _log('RPC error ${error.code}: ${error.message}');
@@ -47,7 +46,7 @@ class SubstrateDartApi {
     if (_client != null) {
       await _client!.close();
     } else {
-      _log("no connection to be closed.");
+      _log('no connection to be closed.');
     }
   }
 
@@ -60,9 +59,9 @@ class SubstrateDartApi {
       throw ("[dartApi] Can't call an rpc method because we are not connected to an endpoint");
     }
     if (_client!.isClosed) {
-      print("[dartApi] not connected. trying to reconnect to $endpoint");
+      print('[dartApi] not connected. trying to reconnect to $endpoint');
       this.reconnect();
-      print("[dartApi] connection status: isclosed? ${_client!.isClosed}");
+      print('[dartApi] connection status: isclosed? ${_client!.isClosed}');
     }
 
     return _client!.sendRequest(method, params);

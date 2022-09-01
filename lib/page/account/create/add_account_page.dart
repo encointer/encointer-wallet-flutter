@@ -1,5 +1,9 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:encointer_wallet/common/components/account_advance_option_params.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -8,9 +12,6 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class AddAccountPage extends StatefulWidget {
   const AddAccountPage({Key? key}) : super(key: key);
@@ -45,9 +46,10 @@ class _AddAccountPageState extends State<AddAccountPage> {
     }
 
     var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
-    _log("Created new account with address: ${addresses[0]}");
+
+    _log('Created new account with address: ${addresses[0]}');
     await context.read<AppStore>().addAccount(acc, context.read<AppStore>().account.newAccount.password, addresses[0]);
-    _log("added new account with address: ${addresses[0]}");
+    _log('added new account with address: ${addresses[0]}');
 
     String? pubKey = acc['pubKey'];
     await context.read<AppStore>().setCurrentAccount(pubKey);
@@ -152,5 +154,5 @@ class _AddAccountPageState extends State<AddAccountPage> {
 }
 
 _log(String msg) {
-  print("[AddAccountPage] $msg");
+  print('[AddAccountPage] $msg');
 }

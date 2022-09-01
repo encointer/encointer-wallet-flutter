@@ -150,7 +150,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     });
 
     var onFinish = (BuildContext txPageContext, Map res) {
-      _log("Transfer result ${res.toString()}");
+      _log('Transfer result ${res.toString()}');
 
       if (res['hash'] == null) {
         _log('Error sending transfer ${res['error']}');
@@ -170,7 +170,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     //   });
     // });
 
-    _log("TransferState after callback: ${_transferState.toString()}");
+    _log('TransferState after callback: ${_transferState.toString()}');
 
     // trigger rebuild after state update in callback
     setState(() {});
@@ -214,7 +214,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
           ),
         );
       default:
-        return const Text("Unknown transfer state");
+        return const Text('Unknown transfer state');
     }
   }
 
@@ -240,7 +240,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
           return RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
-              text: "${dic.assets.paymentFinished}: $date\n\n",
+              text: '${dic.assets.paymentFinished}: $date\n\n',
               style: h2Grey,
               children: [
                 TextSpan(
@@ -259,7 +259,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
           );
         }
       default:
-        return const Text("Unknown transfer state");
+        return const Text('Unknown transfer state');
     }
   }
 
@@ -296,5 +296,5 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
 }
 
 void _log(String msg) {
-  print("[TxPaymentConfirmation] $msg");
+  print('[TxPaymentConfirmation] $msg');
 }
