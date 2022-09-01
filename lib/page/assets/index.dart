@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
@@ -127,7 +128,11 @@ class _AssetsState extends State<Assets> {
         child: Scaffold(
           appBar: appBar,
           body: UpgradeAlert(
-            key: const Key('upgader-alert'),
+            upgrader: Upgrader(
+              dialogStyle: Platform.isIOS ? UpgradeDialogStyle.cupertino : UpgradeDialogStyle.material,
+              shouldPopScope: () => true,
+              canDismissDialog: true,
+            ),
             child: SlidingUpPanel(
               maxHeight: _panelHeightOpen,
               minHeight: _panelHeightClosed,
@@ -211,6 +216,7 @@ class _AssetsState extends State<Assets> {
                                 child: const Text("Invalidate data to trigger state update"),
                               ),
                             const SizedBox(
+                              key: Key('empty-sizedbox'),
                               height: 42,
                             ),
                             Row(
