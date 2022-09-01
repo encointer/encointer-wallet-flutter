@@ -52,11 +52,11 @@ class EncointerApi {
 
   Future<void> startSubscriptions() async {
     print('api: starting encointer subscriptions');
-    this.getPhaseDurations();
-    this.subscribeCurrentPhase();
-    this.subscribeCommunityIdentifiers();
+    getPhaseDurations();
+    subscribeCurrentPhase();
+    subscribeCommunityIdentifiers();
     if (store.settings.endpointIsNoTee) {
-      this.subscribeBusinessRegistry();
+      subscribeBusinessRegistry();
     }
   }
 
@@ -367,7 +367,7 @@ class EncointerApi {
       List<CommunityIdentifier> cids = List.from(data).map((cn) => CommunityIdentifier.fromJson(cn)).toList();
       store.encointer.setCommunityIdentifiers(cids);
 
-      await this.communitiesGetAll();
+      await communitiesGetAll();
     });
   }
 

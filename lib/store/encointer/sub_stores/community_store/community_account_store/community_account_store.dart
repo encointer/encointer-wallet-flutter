@@ -70,7 +70,7 @@ abstract class _CommunityAccountStore with Store {
   @action
   void setParticipantType([ParticipantType? type]) {
     _log('Set participant type: ${participantType.toString()}');
-    this.participantType = type;
+    participantType = type;
     writeToCache();
   }
 
@@ -78,7 +78,7 @@ abstract class _CommunityAccountStore with Store {
   void purgeParticipantType() {
     if (participantType != null) {
       _log('Purging participantType.');
-      this.participantType = null;
+      participantType = null;
       writeToCache();
     }
   }
@@ -143,7 +143,7 @@ abstract class _CommunityAccountStore with Store {
   }
 
   void initStore(Function? cacheFn) {
-    this._cacheFn = cacheFn as Future<void> Function()?;
+    _cacheFn = cacheFn as Future<void> Function()?;
   }
 
   Future<void> writeToCache() {

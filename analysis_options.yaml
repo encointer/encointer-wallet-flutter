@@ -20,6 +20,7 @@ linter:
     use_key_in_widget_constructors: true
     prefer_single_quotes: true
     sized_box_for_whitespace: true
+    unnecessary_this: true
 
     # always_declare_return_types: false
     # cancel_subscriptions: false

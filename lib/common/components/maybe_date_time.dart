@@ -25,6 +25,6 @@ class MaybeDateTime extends StatelessWidget {
       date = dateFormat.format(new DateTime.fromMillisecondsSinceEpoch(meetupTime!));
     }
 
-    return meetupTime != null ? Text(date, style: this.style) : const CupertinoActivityIndicator();
+    return meetupTime != null ? Text(date, style: style) : const CupertinoActivityIndicator();
   }
 }

@@ -37,8 +37,8 @@ class BalanceEntry {
   Map<String, dynamic> toJson() => _$BalanceEntryToJson(this);
 
   double applyDemurrage(int latestBlockNumber, double demurrageRate) {
-    int elapsed = latestBlockNumber - this.lastUpdate;
+    int elapsed = latestBlockNumber - lastUpdate;
     double exponent = -demurrageRate * elapsed;
-    return this.principal * pow(e, exponent);
+    return principal * pow(e, exponent);
   }
 }
