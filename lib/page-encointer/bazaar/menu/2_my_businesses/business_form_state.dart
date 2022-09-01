@@ -1,8 +1,6 @@
-import 'package:mobx/mobx.dart';
-
+import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/opening_hours_state.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/menu/camera/image_picker_state.dart';
-
-import 'opening_hours_state.dart';
+import 'package:mobx/mobx.dart';
 
 part 'business_form_state.g.dart';
 

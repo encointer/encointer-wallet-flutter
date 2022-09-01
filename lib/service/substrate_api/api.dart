@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:get_storage/get_storage.dart';
-
 import 'package:encointer_wallet/config/node.dart';
 import 'package:encointer_wallet/service/ipfs/http_api.dart';
 import 'package:encointer_wallet/service/subscan.dart';
@@ -11,11 +9,11 @@ import 'package:encointer_wallet/service/substrate_api/assets_api.dart';
 import 'package:encointer_wallet/service/substrate_api/chain_api.dart';
 import 'package:encointer_wallet/service/substrate_api/codec_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
+import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/service/substrate_api/encointer/encointer_api.dart';
 import 'package:encointer_wallet/service/substrate_api/types/gen_external_links_params.dart';
 import 'package:encointer_wallet/store/app.dart';
-
-import 'core/js_api.dart';
+import 'package:get_storage/get_storage.dart';
 
 /// Global api instance
 ///
@@ -80,7 +78,7 @@ class Api {
     account.setFetchAccountData(fetchAccountData);
 
     // launch the webView and connect to the endpoint
-    print("launch the webView");
+    print('launch the webView');
     await launchWebview();
   }
 
@@ -148,7 +146,7 @@ class Api {
   Future<void> connectNodeAll() async {
     List<String?> nodes = store.settings.endpointList.map((e) => e.value).toList();
     List<NodeConfig?> configs = store.settings.endpointList.map((e) => e.overrideConfig).toList();
-    print("configs: $configs");
+    print('configs: $configs');
     // do connect
     String? res = await evalJavascript('settings.connectAll(${jsonEncode(nodes)}, ${jsonEncode(configs)})');
     if (res == null) {
@@ -168,7 +166,7 @@ class Api {
     if (index < 0) return;
     store.settings.setEndpoint(store.settings.endpointList[index]);
     await fetchNetworkProps();
-    print("get community data");
+    print('get community data');
     encointer.getCommunityData();
   }
 
@@ -217,7 +215,7 @@ class Api {
 
   Future<bool> isConnected() async {
     bool connected = await evalJavascript('settings.isConnected()');
-    print("Api is connected: $connected");
+    print('Api is connected: $connected');
     return connected;
   }
 

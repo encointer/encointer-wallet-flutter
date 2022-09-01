@@ -1,11 +1,10 @@
 import 'dart:convert';
 
-import 'package:json_annotation/json_annotation.dart';
-import 'package:mobx/mobx.dart';
-
 import 'package:encointer_wallet/models/claim_of_attendance/claim_of_attendance.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/index.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:mobx/mobx.dart';
 
 part 'community_account_store.g.dart';
 
@@ -70,37 +69,41 @@ abstract class _CommunityAccountStore with Store {
 
   @action
   void setParticipantType([ParticipantType? type]) {
-    _log("Set participant type: ${participantType.toString()}");
-    participantType = type;
+
+    _log('Set participant type: ${participantType.toString()}');
+    this.participantType = type;
+
     writeToCache();
   }
 
   @action
   void purgeParticipantType() {
     if (participantType != null) {
-      _log("Purging participantType.");
-      participantType = null;
+
+      _log('Purging participantType.');
+      this.participantType = null;
+
       writeToCache();
     }
   }
 
   @action
   void setMeetup(Meetup meetup) {
-    _log("Set meetup: ${meetup.toJson()}");
+    _log('Set meetup: ${meetup.toJson()}');
     this.meetup = meetup;
     writeToCache();
   }
 
   @action
   void setMeetupCompleted() {
-    _log("settingMeetupCompleted");
+    _log('settingMeetupCompleted');
     meetupCompleted = true;
     writeToCache();
   }
 
   @action
   void clearMeetupCompleted() {
-    _log("clearing meetupCompleted");
+    _log('clearing meetupCompleted');
     meetupCompleted = false;
     writeToCache();
   }
@@ -108,7 +111,7 @@ abstract class _CommunityAccountStore with Store {
   @action
   void purgeMeetup() {
     if (meetup != null) {
-      _log("Purging meetup.");
+      _log('Purging meetup.');
       meetup = null;
       writeToCache();
     }
@@ -116,7 +119,7 @@ abstract class _CommunityAccountStore with Store {
 
   @action
   void purgeParticipantsClaims() {
-    _log("Purging participantsClaims.");
+    _log('Purging participantsClaims.');
     participantsClaims!.clear();
     writeToCache();
   }
@@ -127,7 +130,7 @@ abstract class _CommunityAccountStore with Store {
 
   @action
   void addParticipantClaim(ClaimOfAttendance claim) {
-    _log("adding participantsClaims.");
+    _log('adding participantsClaims.');
     participantsClaims![claim.claimantPublic!] = claim;
     writeToCache();
   }
@@ -157,5 +160,5 @@ abstract class _CommunityAccountStore with Store {
 }
 
 _log(String msg) {
-  print("[CommunityAccountStore] $msg");
+  print('[CommunityAccountStore] $msg');
 }

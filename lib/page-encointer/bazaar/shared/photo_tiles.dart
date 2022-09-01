@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
-
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:flutter/material.dart';
 
 class PhotoTiles extends StatelessWidget {
   const PhotoTiles({

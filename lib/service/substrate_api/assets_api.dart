@@ -10,12 +10,14 @@ class AssetsApi {
   final String _balanceSubscribeChannel = 'gas token balance';
 
   Future<void> startSubscriptions() async {
-    print("api: starting assets subscriptions");
-    subscribeBalance();
+
+    print('api: starting assets subscriptions');
+    this.subscribeBalance();
+
   }
 
   Future<void> stopSubscriptions() async {
-    print("api: stopping assets subscriptions");
+    print('api: stopping assets subscriptions');
     jsApi.unsubscribeMessage(_balanceSubscribeChannel);
   }
 
@@ -51,6 +53,6 @@ class AssetsApi {
   }
 
   Future<void> _fetchMarketPrice() async {
-    print("Fetch marketprice not implemented for Encointer networks");
+    print('Fetch marketprice not implemented for Encointer networks');
   }
 }

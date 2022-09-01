@@ -2,9 +2,8 @@ import 'dart:convert';
 
 import 'package:base58check/base58.dart';
 import 'package:base58check/base58check.dart';
-import 'package:flutter/foundation.dart';
-
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:flutter/foundation.dart';
 
 /// CommunityIdentifier consisting of a geohash and a 4-bytes crc code.
 class CommunityIdentifier {
@@ -12,6 +11,7 @@ class CommunityIdentifier {
 
   // [u8; 5]
   final List<int> geohash;
+
   // [u8; 4]
   final List<int> digest;
 
