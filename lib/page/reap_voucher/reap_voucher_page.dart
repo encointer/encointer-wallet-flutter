@@ -1,7 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/components/secondary_button_wide.dart';
@@ -10,15 +6,17 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
+import 'package:encointer_wallet/page/reap_voucher/dialogs.dart';
+import 'package:encointer_wallet/page/reap_voucher/utils.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-
-import 'dialogs.dart';
-import 'utils.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 
 class ReapVoucherParams {
   ReapVoucherParams({
@@ -31,7 +29,7 @@ class ReapVoucherParams {
 }
 
 class ReapVoucherPage extends StatefulWidget {
-  const ReapVoucherPage(this.store, this.api);
+  const ReapVoucherPage(this.store, this.api, {Key? key}) : super(key: key);
 
   static const String route = '/qrcode/voucher';
   final AppStore store;
@@ -51,7 +49,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   bool _isReady = false;
 
   Future<void> fetchVoucherData(Api api, String voucherUri, CommunityIdentifier cid) async {
-    _log("Fetching voucher data...");
+    _log('Fetching voucher data...');
     _voucherAddress = await api.account.addressFromUri(voucherUri);
 
     setState(() {});
@@ -109,21 +107,21 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
               height: 96,
               child: _voucherAddress != null
                   ? AddressIcon(_voucherAddress!, _voucherAddress!, size: 96)
-                  : CupertinoActivityIndicator(),
+                  : const CupertinoActivityIndicator(),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Text(issuer, style: h2Grey),
             SizedBox(
               height: 80,
               child: _voucherBalance != null
                   ? TextGradient(
                       text: '${Fmt.doubleFormat(_voucherBalance)} ⵐ',
-                      style: TextStyle(fontSize: 60),
+                      style: const TextStyle(fontSize: 60),
                     )
-                  : CupertinoActivityIndicator(),
+                  : const CupertinoActivityIndicator(),
             ),
             Text(
-              "${dic.assets.voucherBalance}, ${widget.store.encointer.community?.symbol}",
+              '${dic.assets.voucherBalance}, ${widget.store.encointer.community?.symbol}',
               style: h4Grey,
             ),
             Expanded(
@@ -131,7 +129,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
               child: Center(
                 child: Text(
                   dic.assets.doYouWantToRedeemThisVoucher
-                      .replaceAll("ACCOUNT_PLACEHOLDER", widget.store.account.currentAccount.name),
+                      .replaceAll('ACCOUNT_PLACEHOLDER', widget.store.account.currentAccount.name),
                   style: h2Grey,
                   textAlign: TextAlign.center,
                 ),
@@ -144,8 +142,8 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Iconsax.login_1),
-                      SizedBox(width: 6),
+                      const Icon(Iconsax.login_1),
+                      const SizedBox(width: 6),
                       Text(dic.assets.fundVoucher),
                     ],
                   ),
@@ -156,8 +154,8 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Iconsax.login_1),
-                  SizedBox(width: 6),
+                  const Icon(Iconsax.login_1),
+                  const SizedBox(width: 6),
                   Text(dic.assets.redeemVoucher),
                 ],
               ),
@@ -233,5 +231,5 @@ void _pushTransferPage(BuildContext context, VoucherData data, String voucherAdd
 }
 
 void _log(String msg) {
-  print("[ReapVoucherPage] $msg");
+  print('[ReapVoucherPage] $msg');
 }

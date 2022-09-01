@@ -30,7 +30,7 @@ abstract class _DataUpdateStore with Store {
 
   /// Time that is updated every second.
   @observable
-  ObservableStream<DateTime> _time = Stream.periodic(Duration(seconds: 1)).map((_) {
+  ObservableStream<DateTime> _time = Stream.periodic(const Duration(seconds: 1)).map((_) {
     // _log("updating time: ${DateTime.now()}");
     return DateTime.now();
   }).asObservable();
@@ -51,7 +51,7 @@ abstract class _DataUpdateStore with Store {
   /// This should only be needed after app startup or when the app resumes from the background because `needsRefresh`
   /// should trigger updates before `expired` becomes true in the normal case.
   @computed
-  bool get expired => _lastUpdateIsLongerAgoThan(refreshPeriod + Duration(seconds: 30)) | invalidated;
+  bool get expired => _lastUpdateIsLongerAgoThan(refreshPeriod + const Duration(seconds: 30)) | invalidated;
 
   /// The data is needs a refresh.
   ///
@@ -81,7 +81,7 @@ abstract class _DataUpdateStore with Store {
 
     _disposer = reaction((_) => now, (_) {
       if (needsRefresh) {
-        _log("Reaction triggered...");
+        _log('Reaction triggered...');
         executeUpdate();
       } else {
         // Only enable for debugging purposes, otherwise it spams every second.
@@ -104,25 +104,25 @@ abstract class _DataUpdateStore with Store {
   @action
   Future<void> executeUpdate() async {
     if (_updateFn == null) {
-      _log("No `updateFn` set, returning...");
+      _log('No `updateFn` set, returning...');
       return;
     }
 
     if (_updateFuture != null) {
-      _log("already updating, awaiting the previously set future.");
+      _log('already updating, awaiting the previously set future.');
       await _updateFuture!;
       return;
     }
 
-    _updateFuture = _updateFn!().timeout(Duration(seconds: 15)).then((value) {
+    _updateFuture = _updateFn!().timeout(const Duration(seconds: 15)).then((value) {
       // Data is valid and up-to-date again
       invalidated = false;
       lastUpdate = DateTime.now();
     }).catchError((e) {
-      _log("Error while executing `updateFn`: ${e.toString()}");
+      _log('Error while executing `updateFn`: ${e.toString()}');
     }).whenComplete(() {
       _updateFuture = null;
-      _log("update reaction finished");
+      _log('update reaction finished');
     });
 
     await _updateFuture!;
@@ -130,5 +130,5 @@ abstract class _DataUpdateStore with Store {
 }
 
 void _log(String msg) {
-  print("[DataUpdateStore] $msg");
+  print('[DataUpdateStore] $msg');
 }

@@ -5,10 +5,10 @@ class ValidateKeys {
     privateKey = privateKey.trim();
 
     if (privateKey.length == 1) {
-      return privateKey.startsWith("0");
+      return privateKey.startsWith('0');
     }
 
-    return (privateKey.length >= 2) && privateKey.startsWith("0x");
+    return (privateKey.length >= 2) && privateKey.startsWith('0x');
   }
 
   static bool validatePrivateKey(String privateKey) {

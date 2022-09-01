@@ -1,10 +1,8 @@
-import 'package:flutter/material.dart';
-
+import 'package:encointer_wallet/page-encointer/bazaar/1_home/bazaar_search/search_results_offering_filtered.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_vertical.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-
-import 'search_results_offering_filtered.dart';
+import 'package:flutter/material.dart';
 
 class SearchResultsOffering extends StatelessWidget {
   final results;
@@ -16,14 +14,14 @@ class SearchResultsOffering extends StatelessWidget {
     Translations dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
-        title: Text("${results.length} ${I18n.of(context)!.translationsForLocale().bazaar.offeringsFound}"),
+        title: Text('${results.length} ${I18n.of(context)!.translationsForLocale().bazaar.offeringsFound}'),
       ),
       body: Column(
         children: [
           AspectRatio(
             aspectRatio: 6,
             child: ListTile(
-              leading: Icon(Icons.filter_alt),
+              leading: const Icon(Icons.filter_alt),
               title: Text(dic.bazaar.filter),
               onTap: () {
                 Navigator.push(

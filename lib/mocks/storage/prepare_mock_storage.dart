@@ -22,11 +22,11 @@ abstract class PrepareMockStorage {
     final now = DateTime.now().millisecondsSinceEpoch;
     store.encointer.setCurrentPhase(CeremonyPhase.Assigning);
     store.encointer.setPhaseDurations(testPhaseDurations);
-    store.encointer.setNextPhaseTimestamp(now + Duration(hours: 8).inMilliseconds);
+    store.encointer.setNextPhaseTimestamp(now + const Duration(hours: 8).inMilliseconds);
     store.encointer.community!.setCommunityMetadata(CommunityMetadata.fromJson(communityMetadata));
     store.encointer.community!.setDemurrage(demurrage);
     store.encointer.account!.addBalanceEntry(cid, BalanceEntry.fromJson(testBalanceEntry));
-    store.encointer.community!.setMeetupTime(now + Duration(hours: 8).inMilliseconds);
+    store.encointer.community!.setMeetupTime(now + const Duration(hours: 8).inMilliseconds);
   }
 
   static void readyForMeetup(AppStore store) {
@@ -39,7 +39,7 @@ abstract class PrepareMockStorage {
         1,
         1,
         // needs to be the same as above, otherwise the `StartMeetup` button is missing
-        now + Duration(hours: 8).inMilliseconds,
+        now + const Duration(hours: 8).inMilliseconds,
         testMeetupRegistry,
       ),
     );

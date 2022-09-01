@@ -1,7 +1,4 @@
 import 'package:dropdown_search/dropdown_search.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -10,14 +7,18 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class AddressInputField extends StatefulWidget {
-  AddressInputField(this.store, {this.label, this.initialValue, this.onChanged, this.hideIdenticon = false});
+  AddressInputField(this.store, {Key? key, this.label, this.initialValue, this.onChanged, this.hideIdenticon = false})
+      : super(key: key);
   final AppStore store;
   final String? label;
   final AccountData? initialValue;
   final Function(AccountData)? onChanged;
   final bool hideIdenticon;
+
   @override
   _AddressInputFieldState createState() => _AddressInputFieldState();
 }
@@ -86,7 +87,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
         final Map? accInfo = widget.store.account.addressIndexMap[item.pubKey];
         final String address = Fmt.addressOfAccount(item, widget.store);
         return Container(
-          padding: EdgeInsets.only(top: 8),
+          padding: const EdgeInsets.only(top: 8),
           child: Row(
             children: [
               if (!widget.hideIdenticon)
@@ -122,7 +123,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
         final Map? accInfo = widget.store.account.addressIndexMap[item.pubKey];
         final String address = Fmt.addressOfAccount(item, widget.store);
         return Container(
-          margin: EdgeInsets.symmetric(horizontal: 8),
+          margin: const EdgeInsets.symmetric(horizontal: 8),
           decoration: !isSelected
               ? null
               : BoxDecoration(
@@ -165,8 +166,8 @@ class _AddressInputFieldState extends State<AddressInputField> {
           dropdownSearchDecoration: InputDecoration(
             labelText: widget.label,
             labelStyle: Theme.of(context).textTheme.headline4,
-            contentPadding: EdgeInsets.symmetric(vertical: 16, horizontal: 25),
-            border: UnderlineInputBorder(
+            contentPadding: const EdgeInsets.symmetric(vertical: 16, horizontal: 25),
+            border: const UnderlineInputBorder(
               borderSide: BorderSide(
                 width: 0,
                 style: BorderStyle.none,

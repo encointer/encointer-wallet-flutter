@@ -1,14 +1,13 @@
-import 'package:flutter/material.dart';
-
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:flutter/material.dart';
 
 class PaymentOverview extends StatelessWidget {
-  PaymentOverview(this.store, this.communitySymbol, this.recipientAccount, this.amount);
+  PaymentOverview(this.store, this.communitySymbol, this.recipientAccount, this.amount, {Key? key}) : super(key: key);
 
   final AppStore store;
 
@@ -38,7 +37,7 @@ class PaymentOverview extends StatelessWidget {
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [Icon(Icons.arrow_forward_ios_outlined), SizedBox(height: 20)],
+            children: [const Icon(Icons.arrow_forward_ios_outlined), const SizedBox(height: 20)],
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

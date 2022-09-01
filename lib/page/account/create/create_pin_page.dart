@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/page/account/create/create_pin_form.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class CreatePinPageParams {
   CreatePinPageParams(this.onCreatePin);
@@ -14,7 +13,7 @@ class CreatePinPageParams {
 }
 
 class CreatePinPage extends StatefulWidget {
-  const CreatePinPage(this.store);
+  const CreatePinPage(this.store, {Key? key}) : super(key: key);
 
   static const String route = '/account/createPin';
   final AppStore store;
@@ -43,12 +42,12 @@ class _CreatePinPageState extends State<CreatePinPage> {
         title: Text(
           I18n.of(context)!.translationsForLocale().home.create,
         ),
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: encointerGrey, //change your color here
         ),
         actions: <Widget>[
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.close,
               color: encointerGrey,
             ),
@@ -86,7 +85,7 @@ class _CreatePinPageState extends State<CreatePinPage> {
                 },
                 store: store,
               )
-            : Center(child: CupertinoActivityIndicator()),
+            : const Center(child: CupertinoActivityIndicator()),
       ),
     );
   }

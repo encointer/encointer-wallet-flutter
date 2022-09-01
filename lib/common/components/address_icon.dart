@@ -1,18 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:jdenticon_dart/jdenticon_dart.dart';
-
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/ui.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:jdenticon_dart/jdenticon_dart.dart';
 
 class AddressIcon extends StatelessWidget {
   AddressIcon(
     this.address,
     this.pubKey, {
+    Key? key,
     this.size = 96,
     this.tapToCopy = true,
-  });
+  }) : super(key: key);
   final String address;
   final String pubKey;
   final double size;
@@ -30,12 +30,12 @@ class AddressIcon extends StatelessWidget {
         backColor: '#d4edf8ff',
         hues: [199]);
     return GestureDetector(
-      child: Container(
+      child: SizedBox(
         width: size,
         height: size,
         child: ClipOval(
           child: SizedBox.fromSize(
-            size: Size.fromRadius(48), // Image radius
+            size: const Size.fromRadius(48), // Image radius
             child: SvgPicture.string(
               rawSvg,
               fit: BoxFit.fill,
@@ -54,10 +54,11 @@ class AddressIconWithLabel extends StatelessWidget {
   AddressIconWithLabel(
     this.address,
     this.pubKey, {
+    Key? key,
     this.size = 96,
     this.tapToCopy = true,
     this.labelStyle,
-  });
+  }) : super(key: key);
 
   final String address;
   final String pubKey;

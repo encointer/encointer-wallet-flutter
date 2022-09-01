@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-const EncointerJsService = "EncointerJsService";
+const EncointerJsService = 'EncointerJsService';
 
 /// Core interface to talk with our JS-service
 class JSApi {
@@ -26,9 +26,9 @@ class JSApi {
 
     _web = HeadlessInAppWebView(
       initialData: InAppWebViewInitialData(data: jSSourceHtmlContainer(jsServiceEncointer)),
-      onConsoleMessage: (controller, message) => print("JS-Console: ${message.message}"),
+      onConsoleMessage: (controller, message) => print('JS-Console: ${message.message}'),
       onWebViewCreated: (controller) async {
-        print("Adding the PolkaWallet javascript handler");
+        print('Adding the PolkaWallet javascript handler');
 
         controller.addJavaScriptHandler(
             handlerName: EncointerJsService,
@@ -60,11 +60,11 @@ class JSApi {
     await _web!.run();
 
     // log updates about the webView state until it is ready.
-    Timer.periodic(Duration(seconds: 2), (timer) {
+    Timer.periodic(const Duration(seconds: 2), (timer) {
       if (!initWebViewCompleter.isCompleted) {
-        _log("webView is being initialized...");
+        _log('webView is being initialized...');
       } else {
-        _log("webView is ready");
+        _log('webView is ready');
         timer.cancel();
       }
     });
@@ -101,20 +101,20 @@ class JSApi {
       return res;
     }
 
-    Completer c = new Completer();
+    Completer c = Completer();
 
     String method = 'uid=${_getEvalJavascriptUID()};${code.split('(')[0]}';
     _msgCompleters[method] = c;
 
     // Send the result from JS to dart after `code` completed.
-    String script = """
+    String script = '''
         $code.then(function(res) {
           window.flutter_inappwebview
             .callHandler("$EncointerJsService", { path: "$method", data: res });
         }).catch(function(err) {
           window.flutter_inappwebview
             .callHandler("$EncointerJsService", { path: "$method:error", data: err.message  });
-        })""";
+        })''';
 
     _web!.webViewController.evaluateJavascript(source: script);
 
@@ -141,19 +141,19 @@ class JSApi {
   }
 
   Future<void> closeWebView() async {
-    print("[JSApi]: closing webView");
+    print('[JSApi]: closing webView');
     if (_web != null) {
       await _web!.dispose();
       _web = null;
     } else {
-      print("[JSApi]: Did not close webView because it was closed already.");
+      print('[JSApi]: Did not close webView because it was closed already.');
     }
   }
 }
 
 /// Wraps `jSSource` in a html document ready to be hoisted in a webView.
 String jSSourceHtmlContainer(String jSSource) {
-  return """
+  return '''
   <!DOCTYPE html>
   <html lang="en">
     <body>
@@ -162,9 +162,9 @@ String jSSourceHtmlContainer(String jSSource) {
       </script>
     </body>
   </html>
-  """;
+  ''';
 }
 
 void _log(String msg) {
-  print("[jsApi] $msg");
+  print('[jsApi] $msg');
 }

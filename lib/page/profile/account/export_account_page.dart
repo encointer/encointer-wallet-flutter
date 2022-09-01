@@ -1,9 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
 import 'package:encointer_wallet/page/profile/account/export_result_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
@@ -11,13 +7,16 @@ import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class ExportAccountPage extends StatelessWidget {
-  ExportAccountPage(this.store);
+  ExportAccountPage(this.store, {Key? key}) : super(key: key);
   static const String route = '/profile/export';
   final AccountStore store;
 
-  final TextEditingController _passCtrl = new TextEditingController();
+  final TextEditingController _passCtrl = TextEditingController();
 
   void _showPasswordDialog(BuildContext context, String seedType) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
@@ -56,7 +55,7 @@ class ExportAccountPage extends StatelessWidget {
         return CupertinoAlertDialog(
           title: Text(dic.profile.confirmPin),
           content: Padding(
-            padding: EdgeInsets.only(top: 16),
+            padding: const EdgeInsets.only(top: 16),
             child: CupertinoTextFormFieldRow(
               decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
               padding: EdgeInsets.zero,
@@ -103,7 +102,7 @@ class ExportAccountPage extends StatelessWidget {
         children: <Widget>[
           ListTile(
             title: Text(dic.account.keystore),
-            trailing: Icon(Icons.arrow_forward_ios, size: 18),
+            trailing: const Icon(Icons.arrow_forward_ios, size: 18),
             onTap: () {
               Map json = AccountData.toJson(store.currentAccount);
               json.remove('name');
@@ -120,7 +119,7 @@ class ExportAccountPage extends StatelessWidget {
               if (snapshot.hasData && snapshot.data == true) {
                 return ListTile(
                   title: Text(dic.account.mnemonic),
-                  trailing: Icon(Icons.arrow_forward_ios, size: 18),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                   onTap: () => _showPasswordDialog(context, AccountStore.seedTypeMnemonic),
                 );
               } else {
@@ -134,7 +133,7 @@ class ExportAccountPage extends StatelessWidget {
               if (snapshot.hasData && snapshot.data == true) {
                 return ListTile(
                   title: Text(dic.account.rawSeed),
-                  trailing: Icon(Icons.arrow_forward_ios, size: 18),
+                  trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                   onTap: () => _showPasswordDialog(context, AccountStore.seedTypeRawSeed),
                 );
               } else {

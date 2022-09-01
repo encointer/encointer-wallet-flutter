@@ -1,15 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_detail_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_page.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class ContactsPage extends StatelessWidget {
-  ContactsPage(this.store);
+  ContactsPage(this.store, {Key? key}) : super(key: key);
 
   static const String route = '/profile/contacts';
   final AppStore store;
@@ -23,7 +22,7 @@ class ContactsPage extends StatelessWidget {
                 I18n.of(context)!.translationsForLocale().profile.addressBook,
                 style: Theme.of(context).textTheme.headline3,
               ),
-              iconTheme: IconThemeData(
+              iconTheme: const IconThemeData(
                 color: Color(0xff666666), //change your color here
               ),
               centerTitle: true,
@@ -31,9 +30,9 @@ class ContactsPage extends StatelessWidget {
               shadowColor: Colors.transparent,
               actions: <Widget>[
                 Padding(
-                  padding: EdgeInsets.only(right: 8),
+                  padding: const EdgeInsets.only(right: 8),
                   child: IconButton(
-                    icon: Icon(Icons.add, size: 28),
+                    icon: const Icon(Icons.add, size: 28),
                     onPressed: () => Navigator.of(context).pushNamed(ContactPage.route),
                   ),
                 )
@@ -46,10 +45,10 @@ class ContactsPage extends StatelessWidget {
                     leading: AddressIcon(i.address, i.pubKey, size: 45),
                     title: Text(Fmt.accountName(context, i)),
                     subtitle: Text(Fmt.address(i.address)!),
-                    trailing: Container(
+                    trailing: SizedBox(
                       width: 36,
                       child: IconButton(
-                        icon: Icon(Icons.arrow_forward_ios, size: 18),
+                        icon: const Icon(Icons.arrow_forward_ios, size: 18),
                         onPressed: () => Navigator.of(context).pushNamed(ContactDetailPage.route, arguments: i),
                       ),
                     ),
