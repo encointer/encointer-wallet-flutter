@@ -32,7 +32,7 @@ class RemoteNodeListPage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    context.watch<AppStore>().settings.endpoint.value == i.value
+                    context.select<AppStore, bool>((store) => store.settings.endpoint.value == i.value)
                         ? Image.asset(
                             'assets/images/assets/success.png',
                             width: 16,

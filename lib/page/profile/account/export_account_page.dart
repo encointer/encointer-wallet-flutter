@@ -103,6 +103,7 @@ class ExportAccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
+    final _store = context.watch<AppStore>();
     return Scaffold(
       appBar: AppBar(
         title: Text(dic.profile.export),
@@ -123,10 +124,10 @@ class ExportAccountPage extends StatelessWidget {
             },
           ),
           FutureBuilder(
-            future: context.read<AppStore>().account.checkSeedExist(
-                  AccountStore.seedTypeMnemonic,
-                  context.read<AppStore>().account.currentAccount.pubKey,
-                ),
+            future: _store.account.checkSeedExist(
+              AccountStore.seedTypeMnemonic,
+              _store.account.currentAccount.pubKey,
+            ),
             builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
               if (snapshot.hasData && snapshot.data == true) {
                 return ListTile(
@@ -140,10 +141,10 @@ class ExportAccountPage extends StatelessWidget {
             },
           ),
           FutureBuilder(
-            future: context.read<AppStore>().account.checkSeedExist(
-                  AccountStore.seedTypeRawSeed,
-                  context.read<AppStore>().account.currentAccount.pubKey,
-                ),
+            future: _store.account.checkSeedExist(
+              AccountStore.seedTypeRawSeed,
+              _store.account.currentAccount.pubKey,
+            ),
             builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
               if (snapshot.hasData && snapshot.data == true) {
                 return ListTile(

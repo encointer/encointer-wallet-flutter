@@ -69,9 +69,9 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
+    final _store = context.watch<AppStore>();
     final h2Grey = Theme.of(context).textTheme.headline2!.copyWith(color: encointerGrey);
     final h4Grey = Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey);
-    final _store = context.watch<AppStore>();
     ReapVoucherParams params = ModalRoute.of(context)!.settings.arguments as ReapVoucherParams;
 
     final voucher = params.voucher;
@@ -79,7 +79,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     final cid = voucher.cid;
     final networkInfo = voucher.network;
     final issuer = voucher.issuer;
-    final recipient = context.read<AppStore>().account.currentAddress;
+    final recipient = _store.account.currentAddress;
     final showFundVoucher = params.showFundVoucher;
 
     if (!_postFrameCallbackCalled) {
@@ -122,10 +122,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                     )
                   : const CupertinoActivityIndicator(),
             ),
-            Text(
-              '${dic.assets.voucherBalance}, ${context.watch<AppStore>().encointer.community?.symbol}',
-              style: h4Grey,
-            ),
+            Text('${dic.assets.voucherBalance}, ${_store.encointer.community?.symbol}', style: h4Grey),
             Expanded(
               // fit: FlexFit.tight,
               child: Center(
@@ -193,11 +190,12 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     CommunityIdentifier cid,
   ) async {
     ChangeResult? result = ChangeResult.ok;
+    final store = context.read<AppStore>();
 
-    if (context.read<AppStore>().settings.endpoint.info != networkInfo) {
+    if (store.settings.endpoint.info != networkInfo) {
       result = await showChangeNetworkAndCommunityDialog(
         context,
-        context.read<AppStore>(),
+        store,
         widget.api,
         networkInfo,
         cid,
@@ -208,10 +206,10 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
       return result;
     }
 
-    if (context.read<AppStore>().encointer.chosenCid != cid) {
+    if (store.encointer.chosenCid != cid) {
       result = await showChangeCommunityDialog(
         context,
-        context.read<AppStore>(),
+        store,
         widget.api,
         networkInfo,
         cid,

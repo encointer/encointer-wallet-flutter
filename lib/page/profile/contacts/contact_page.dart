@@ -156,7 +156,7 @@ class _Contact extends State<ContactPage> {
                         },
                       ),
                     ),
-                    context.read<AppStore>().settings.developerMode
+                    context.select<AppStore, bool>((store) => store.settings.developerMode)
                         ? Padding(
                             padding: const EdgeInsets.only(left: 16, right: 16),
                             child: TextFormField(

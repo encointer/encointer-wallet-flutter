@@ -25,7 +25,7 @@ class ContactDetailPage extends StatelessWidget {
 
   final Api api;
 
-  void _removeItem(BuildContext context, AccountData account) {
+  void _removeItem(BuildContext context, AccountData account, AppStore store) {
     var dic = I18n.of(context)!.translationsForLocale();
     showCupertinoDialog(
       context: context,
@@ -42,8 +42,8 @@ class ContactDetailPage extends StatelessWidget {
               child: Text(dic.home.ok),
               onPressed: () {
                 Navigator.of(context).pop();
-                context.read<AppStore>().settings.removeContact(account);
-                if (account.pubKey == context.read<AppStore>().account.currentAccountPubKey) {
+                store.settings.removeContact(account);
+                if (store.account.currentAccountPubKey == account.pubKey) {
                   webApi.account.changeCurrentAccount(fetchData: true);
                 }
                 Navigator.of(context).pop();
@@ -109,13 +109,8 @@ class ContactDetailPage extends StatelessWidget {
                 ),
               ),
               Observer(builder: (_) {
-                if (context.watch<AppStore>().encointer.community!.bootstrappers != null) {
-                  return context
-                          .read<AppStore>()
-                          .encointer
-                          .community!
-                          .bootstrappers!
-                          .contains(context.read<AppStore>().account.currentAddress)
+                if (context.select<AppStore, bool>((store) => store.encointer.community!.bootstrappers != null)) {
+                  return _store.encointer.community!.bootstrappers!.contains(_store.account.currentAddress)
                       ? EndorseButton(_store, api, account)
                       : Container();
                 } else {
@@ -157,7 +152,7 @@ class ContactDetailPage extends StatelessWidget {
                     Text(dic.profile.contactDelete, style: Theme.of(context).textTheme.headline3)
                   ],
                 ),
-                onPressed: () => _removeItem(context, account),
+                onPressed: () => _removeItem(context, account, context.read<AppStore>()),
               ),
             ],
           ),
@@ -177,7 +172,6 @@ class EndorseButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var dic = I18n.of(context)!.translationsForLocale();
-    final _store = context.watch<AppStore>();
 
     return SubmitButtonSecondary(
       child: Row(
@@ -188,17 +182,12 @@ class EndorseButton extends StatelessWidget {
           Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
         ],
       ),
-      onPressed: _store.encointer.community!.bootstrappers!.contains(contact.address)
+      onPressed: store.encointer.community!.bootstrappers!.contains(contact.address)
           ? (BuildContext context) => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
-          : _store.encointer.currentPhase != CeremonyPhase.Registering
+          : store.encointer.currentPhase != CeremonyPhase.Registering
               ? (BuildContext context) => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)
-              : (BuildContext context) => submitEndorseNewcomer(
-                    context,
-                    context.read<AppStore>(),
-                    api,
-                    context.read<AppStore>().encointer.chosenCid,
-                    contact.address,
-                  ),
+              : (BuildContext context) =>
+                  submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, contact.address),
     );
   }
 }
