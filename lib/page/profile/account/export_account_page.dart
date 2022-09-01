@@ -22,10 +22,11 @@ class ExportAccountPage extends StatelessWidget {
 
   void _showPasswordDialog(BuildContext context, String seedType) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
+    final _store = context.read<AppStore>();
 
     Future<void> onOk() async {
       var res = await webApi.account.checkAccountPassword(
-        context.read<AppStore>().account.currentAccount,
+        _store.account.currentAccount,
         _passCtrl.text,
       );
       if (res == null) {
@@ -46,11 +47,8 @@ class ExportAccountPage extends StatelessWidget {
         );
       } else {
         Navigator.of(context).pop();
-        String? seed = await context.read<AppStore>().account.decryptSeed(
-              context.read<AppStore>().account.currentAccount.pubKey,
-              seedType,
-              _passCtrl.text.trim(),
-            );
+        String? seed =
+            await _store.account.decryptSeed(_store.account.currentAccount.pubKey, seedType, _passCtrl.text.trim());
         Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
           'key': seed!,
           'type': seedType,

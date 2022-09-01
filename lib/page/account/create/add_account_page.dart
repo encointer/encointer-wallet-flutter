@@ -24,8 +24,22 @@ class AddAccountPage extends StatefulWidget {
 
 class _AddAccountPageState extends State<AddAccountPage> {
   bool _submitting = false;
+  late final AppStore _appStore;
 
-  Future<void> _createAndImportAccount() async {
+  @override
+  void initState() {
+    super.initState();
+    _appStore = context.read<AppStore>();
+    if (_appStore.settings.cachedPin.isEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {
+          _showEnterPinDialog(_appStore);
+        });
+      });
+    }
+  }
+
+  Future<void> _createAndImportAccount(AppStore store) async {
     setState(() {
       _submitting = true;
     });
@@ -48,13 +62,13 @@ class _AddAccountPageState extends State<AddAccountPage> {
     var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
 
     _log('Created new account with address: ${addresses[0]}');
-    await context.read<AppStore>().addAccount(acc, context.read<AppStore>().account.newAccount.password, addresses[0]);
+    await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
     _log('added new account with address: ${addresses[0]}');
 
     String? pubKey = acc['pubKey'];
-    await context.read<AppStore>().setCurrentAccount(pubKey);
+    await store.setCurrentAccount(pubKey);
 
-    await context.read<AppStore>().loadAccountCache();
+    await store.loadAccountCache();
 
     // fetch info for the imported account
     webApi.fetchAccountData();
@@ -86,37 +100,24 @@ class _AddAccountPageState extends State<AddAccountPage> {
     );
   }
 
-  Future<void> _showEnterPinDialog(BuildContext context) async {
+  Future<void> _showEnterPinDialog(AppStore store) async {
     await showCupertinoDialog(
       context: context,
       builder: (_) {
         return Container(
           child: showPasswordInputDialog(
             context,
-            context.read<AppStore>().account.currentAccount,
+            store.account.currentAccount,
             Text(I18n.of(context)!.translationsForLocale().profile.unlock),
             (password) {
               setState(() {
-                context.read<AppStore>().settings.setPin(password);
+                store.settings.setPin(password);
               });
             },
           ),
         );
       },
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    if (context.read<AppStore>().settings.cachedPin.isEmpty) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        setState(() {
-          _showEnterPinDialog(context);
-        });
-      });
-    }
   }
 
   @override
@@ -142,7 +143,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
                 submitting: _submitting,
                 onSubmit: () {
                   setState(() {
-                    _createAndImportAccount();
+                    _createAndImportAccount(context.read<AppStore>());
                   });
                 },
                 store: context.watch<AppStore>(),

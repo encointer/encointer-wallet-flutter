@@ -33,7 +33,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
 
   bool _submitting = false;
 
-  Future<void> _onSave() async {
+  Future<void> _onSave(AppStore store) async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _submitting = true;
@@ -44,7 +44,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
       final String passNew = _passCtrl.text.trim();
       // check password
       final passChecked = await webApi.account.checkAccountPassword(
-        context.read<AppStore>().account.currentAccount,
+        store.account.currentAccount,
         passOld,
       );
       if (passChecked == null) {
@@ -71,19 +71,18 @@ class _ChangePassword extends State<ChangePasswordPage> {
         );
       } else {
         // we need to iterate over all active accounts and update there password
-        context.read<AppStore>().settings.setPin(passNew);
-        context.read<AppStore>().account.accountListAll.forEach((account) async {
-          final Map<String, dynamic> acc =
-              await api.evalJavascript('account.changePassword("${account.pubKey}", "$passOld", "$passNew")');
+        store.settings.setPin(passNew);
+        store.account.accountListAll.forEach((account) async {
+          final acc = await api.evalJavascript('account.changePassword("${account.pubKey}", "$passOld", "$passNew")');
 
           // update encrypted seed after password updated
-          context.read<AppStore>().account.accountListAll.map((accountData) {
+          store.account.accountListAll.map((accountData) {
             // use local name, not webApi returned name
             Map<String, dynamic> localAcc = AccountData.toJson(accountData);
             // make metadata the same as the polkadot-js/api's
             acc['meta']['name'] = localAcc['name'];
-            context.read<AppStore>().account.updateAccount(acc);
-            context.read<AppStore>().account.updateSeed(accountData.pubKey, _passOldCtrl.text, _passCtrl.text);
+            store.account.updateAccount(acc);
+            store.account.updateSeed(accountData.pubKey, _passOldCtrl.text, _passCtrl.text);
           });
         });
         showCupertinoDialog(
@@ -196,7 +195,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                     ),
                   ],
                 ),
-                onPressed: _submitting ? null : _onSave,
+                onPressed: _submitting ? null : () => _onSave(context.read<AppStore>()),
               ),
             ],
           ),
