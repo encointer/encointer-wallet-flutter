@@ -1,9 +1,8 @@
 import 'dart:async';
 
+import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/foundation.dart' show SynchronousFuture;
 import 'package:flutter/material.dart';
-
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class AppLocalizationsDelegate extends LocalizationsDelegate<I18n> {
   const AppLocalizationsDelegate(this.overriddenLocale);
@@ -33,9 +32,9 @@ class I18n {
 
   /// this will be used in different places, also supportedLocales.keys
   static final Map<Locale, Translations> supportedLocales = {
-    Locale('en', ''): TranslationsEn(),
-    Locale('de', ''): TranslationsDe(),
-    Locale('zh', ''): TranslationsZh(),
+    const Locale('en', ''): TranslationsEn(),
+    const Locale('de', ''): TranslationsDe(),
+    const Locale('zh', ''): TranslationsZh(),
   };
 
   Translations translationsForLocale() {

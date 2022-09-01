@@ -1,11 +1,10 @@
+import 'package:encointer_wallet/common/components/gradient_elements.dart';
+import 'package:encointer_wallet/common/components/maybe_date_time.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
-
-import 'package:encointer_wallet/common/components/gradient_elements.dart';
-import 'package:encointer_wallet/common/components/maybe_date_time.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CeremonyRegisterButton extends StatefulWidget {
   const CeremonyRegisterButton({
@@ -44,16 +43,16 @@ class _CeremonyRegisterButtonState extends State<CeremonyRegisterButton> {
           ? Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(Iconsax.login_1),
-                SizedBox(width: 6),
+                const Icon(Iconsax.login_1),
+                const SizedBox(width: 6),
                 Text('${dic.encointer.registerUntil} '),
                 MaybeDateTime(widget.registerUntil, dateFormat: DateFormat.yMd(languageCode).add_Hm())
               ],
             )
           : Theme(
               // change theme locally to dark such that the activity indicator appears bright
-              data: ThemeData(cupertinoOverrideTheme: CupertinoThemeData(brightness: Brightness.dark)),
-              child: CupertinoActivityIndicator()),
+              data: ThemeData(cupertinoOverrideTheme: const CupertinoThemeData(brightness: Brightness.dark)),
+              child: const CupertinoActivityIndicator()),
       onPressed: !_submitting && widget.registerUntil != null ? () => _onPressed() : null,
     );
   }

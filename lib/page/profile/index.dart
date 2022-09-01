@@ -1,8 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:iconsax/iconsax.dart';
-
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/create/add_account_page.dart';
@@ -15,9 +10,13 @@ import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:iconsax/iconsax.dart';
 
 class Profile extends StatefulWidget {
-  Profile(this.store);
+  Profile(this.store, {Key? key}) : super(key: key);
 
   final AppStore store;
 
@@ -55,13 +54,13 @@ class _ProfileState extends State<Profile> {
                 ),
               ],
             ),
-            SizedBox(height: 6),
+            const SizedBox(height: 6),
             Text(
               Fmt.accountName(context, account),
               style: Theme.of(context).textTheme.headline4,
             ),
             // This sizedBox is here to define a distance between the accounts
-            SizedBox(width: 100),
+            const SizedBox(width: 100),
           ],
         ),
         onTap: () => {
@@ -96,7 +95,7 @@ class _ProfileState extends State<Profile> {
         return Scaffold(
           appBar: AppBar(
             title: Text(dic.profile.title),
-            iconTheme: IconThemeData(color: encointerGrey), //change your color here,
+            iconTheme: const IconThemeData(color: encointerGrey), //change your color here,
             centerTitle: true,
             backgroundColor: Colors.transparent,
             shadowColor: Colors.transparent,
@@ -107,7 +106,7 @@ class _ProfileState extends State<Profile> {
               return ListView(
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
@@ -116,13 +115,13 @@ class _ProfileState extends State<Profile> {
                           style: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
                         ),
                         IconButton(
-                            icon: Icon(Iconsax.add_square),
+                            icon: const Icon(Iconsax.add_square),
                             color: ZurichLion.shade500,
                             onPressed: () => Navigator.of(context).pushNamed(AddAccountPage.route)),
                       ],
                     ),
                   ),
-                  Container(
+                  SizedBox(
                     height: 130,
                     child: ShaderMask(
                       shaderCallback: (Rect bounds) {
@@ -150,7 +149,7 @@ class _ProfileState extends State<Profile> {
                       dic.profile.changeYourPin,
                       style: Theme.of(context).textTheme.headline3,
                     ),
-                    trailing: Icon(Icons.arrow_forward_ios, size: 18),
+                    trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                     onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
                   ),
                   ListTile(
@@ -164,7 +163,7 @@ class _ProfileState extends State<Profile> {
                           : Text(dic.encointer.fetchingReputations)),
                   ListTile(
                     title: Text(dic.profile.about, style: Theme.of(context).textTheme.headline3),
-                    trailing: Icon(Icons.arrow_forward_ios, size: 18),
+                    trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                     onTap: () => Navigator.pushNamed(context, AboutPage.route),
                   ),
                   ListTile(
@@ -180,20 +179,20 @@ class _ProfileState extends State<Profile> {
                       children: <Widget>[
                         ListTile(
                           title: InkWell(
-                            key: Key('choose-network'),
+                            key: const Key('choose-network'),
                             child: Observer(
                               builder: (_) => Text(
-                                "Change network (current: ${store.settings.endpoint.info})", // for devs only
+                                'Change network (current: ${store.settings.endpoint.info})', // for devs only
                                 style: Theme.of(context).textTheme.headline4,
                               ),
                             ),
                             onTap: () => Navigator.of(context).pushNamed('/network'),
                           ),
                           trailing: Padding(
-                            padding: EdgeInsets.only(right: 13), // align with developer checkbox above
+                            padding: const EdgeInsets.only(right: 13), // align with developer checkbox above
                             child: store.settings.isConnected
-                                ? Icon(Icons.check, color: Colors.green)
-                                : CupertinoActivityIndicator(),
+                                ? const Icon(Icons.check, color: Colors.green)
+                                : const CupertinoActivityIndicator(),
                           ),
                         ),
                         ListTile(

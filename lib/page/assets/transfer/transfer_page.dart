@@ -1,8 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:iconsax/iconsax.dart';
-
 import 'package:encointer_wallet/common/components/address_input_field.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
@@ -19,6 +14,10 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/ui.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:iconsax/iconsax.dart';
 
 class TransferPageParams {
   TransferPageParams({
@@ -39,7 +38,7 @@ class TransferPageParams {
 }
 
 class TransferPage extends StatefulWidget {
-  const TransferPage(this.store);
+  TransferPage(this.store, {Key? key}) : super(key: key);
 
   static const String route = '/assets/transfer';
   final AppStore store;
@@ -55,7 +54,7 @@ class _TransferPageState extends State<TransferPage> {
 
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _amountCtrl = new TextEditingController();
+  final TextEditingController _amountCtrl = TextEditingController();
 
   AccountData? _accountTo;
 
@@ -71,7 +70,7 @@ class _TransferPageState extends State<TransferPage> {
 
     double? available = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry);
 
-    print("[transferPage]: available: $available");
+    print('[transferPage]: available: $available');
 
     return Observer(
       builder: (_) {
@@ -83,8 +82,8 @@ class _TransferPageState extends State<TransferPage> {
               leading: Container(),
               actions: [
                 IconButton(
-                  key: Key('close-transfer-page'),
-                  icon: Icon(Icons.close),
+                  key: const Key('close-transfer-page'),
+                  icon: const Icon(Icons.close),
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -99,36 +98,36 @@ class _TransferPageState extends State<TransferPage> {
                     child: ListView(
                       children: [
                         CombinedCommunityAndAccountAvatar(store, showCommunityNameAndAccountName: false),
-                        SizedBox(height: 12),
+                        const SizedBox(height: 12),
                         store.encointer.communityBalance != null
                             ? AccountBalanceWithMoreDigits(store: store, available: available, decimals: decimals)
-                            : CupertinoActivityIndicator(),
+                            : const CupertinoActivityIndicator(),
                         Text(
                           I18n.of(context)!
                               .translationsForLocale()
                               .assets
                               .yourBalanceFor
-                              .replaceAll("ACCOUNT_NAME", Fmt.accountName(context, store.account.currentAccount)),
+                              .replaceAll('ACCOUNT_NAME', Fmt.accountName(context, store.account.currentAccount)),
                           style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                           textAlign: TextAlign.center,
                         ),
-                        SizedBox(height: 24),
+                        const SizedBox(height: 24),
                         IconButton(
                           iconSize: 48,
-                          icon: Icon(Iconsax.scan_barcode),
+                          icon: const Icon(Iconsax.scan_barcode),
                           onPressed: () => Navigator.of(context).popAndPushNamed(
                             ScanPage.route,
                             arguments: ScanPageParams(scannerContext: QrScannerContext.transferPage),
                           ), // same as for clicking the scan button in the bottom bar
                         ),
-                        SizedBox(height: 24),
+                        const SizedBox(height: 24),
                         EncointerTextFormField(
                           labelText: dic.assets.amountToBeTransferred,
                           textStyle: Theme.of(context).textTheme.headline1!.copyWith(color: encointerBlack),
                           inputFormatters: [UI.decimalInputFormatter(decimals: decimals)],
-                          keyboardType: TextInputType.numberWithOptions(decimal: true),
+                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
                           controller: _amountCtrl,
-                          textFormFieldKey: Key('transfer-amount-input'),
+                          textFormFieldKey: const Key('transfer-amount-input'),
                           validator: (String? value) {
                             if (value == null || value.isEmpty) {
                               return dic.assets.amountError;
@@ -138,9 +137,9 @@ class _TransferPageState extends State<TransferPage> {
                             }
                             return null;
                           },
-                          suffixIcon: Text("ⵐ", style: TextStyle(color: encointerGrey, fontSize: 44)),
+                          suffixIcon: const Text('ⵐ', style: TextStyle(color: encointerGrey, fontSize: 44)),
                         ),
-                        SizedBox(height: 24),
+                        const SizedBox(height: 24),
                         Row(
                           children: [
                             Expanded(
@@ -161,25 +160,25 @@ class _TransferPageState extends State<TransferPage> {
                       ],
                     ),
                   ),
-                  SizedBox(height: 48),
+                  const SizedBox(height: 48),
                   store.settings.developerMode
                       ? Center(
                           child: Text(
-                            "${dic.assets.fee}: TODO compute Fee", // TODO compute fee #589
+                            '${dic.assets.fee}: TODO compute Fee', // TODO compute fee #589
                             style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                           ),
                         )
                       : Container(),
-                  SizedBox(height: 8),
+                  const SizedBox(height: 8),
                   PrimaryButton(
-                    key: Key('make-transfer'),
-                    child: Container(
+                    key: const Key('make-transfer'),
+                    child: SizedBox(
                       height: 24,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Iconsax.login_1),
-                          SizedBox(width: 12),
+                          const Icon(Iconsax.login_1),
+                          const SizedBox(width: 12),
                           Text(dic.account.next),
                         ],
                       ),

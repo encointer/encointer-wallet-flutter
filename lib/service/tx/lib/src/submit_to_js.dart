@@ -1,8 +1,5 @@
 import 'dart:core';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/tx_status.dart';
@@ -12,10 +9,12 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/translations/translations_home.dart';
 import 'package:encointer_wallet/utils/ui.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 /// Contains most of the logic from the `txConfirmPage.dart`, which was removed.
 
-const INSUFFICIENT_FUNDS_ERROR = "1010";
+const INSUFFICIENT_FUNDS_ERROR = '1010';
 
 /// Inner function to submit a tx via the JS interface.
 ///
@@ -55,7 +54,7 @@ Future<void> submitToJS(
     if (showStatusSnackBar) {
       _showTxStatusSnackBar(
         getTxStatusTranslation(dic.home, store.account.txStatus),
-        CupertinoActivityIndicator(),
+        const CupertinoActivityIndicator(),
       );
     }
 
@@ -120,10 +119,10 @@ void _showTxStatusSnackBar(String status, Widget? leading) {
       leading: leading,
       title: Text(
         status,
-        style: TextStyle(color: Colors.black54),
+        style: const TextStyle(color: Colors.black54),
       ),
     ),
-    durationMillis: Duration(seconds: 12).inMilliseconds,
+    durationMillis: const Duration(seconds: 12).inMilliseconds,
   );
 }
 
@@ -136,10 +135,10 @@ void _onTxFinish(BuildContext context, AppStore store, Map res, Function(BuildCo
   if (mounted) {
     RootSnackBar.show(
       ListTile(
-        leading: Container(width: 24, child: Image.asset('assets/images/assets/success.png')),
+        leading: SizedBox(width: 24, child: Image.asset('assets/images/assets/success.png')),
         title: Text(
           I18n.of(context)!.translationsForLocale().assets.success,
-          style: TextStyle(color: Colors.black54),
+          style: const TextStyle(color: Colors.black54),
         ),
       ),
       durationMillis: 2000,
@@ -162,8 +161,8 @@ String getTxStatusTranslation(TranslationsHome dic, TxStatus? status) {
     case TxStatus.Error:
       return dic.txError;
     default:
-      print("Illegal TxStatus supplied to translation: ${status.toString()}");
-      return "";
+      print('Illegal TxStatus supplied to translation: ${status.toString()}');
+      return '';
   }
 }
 

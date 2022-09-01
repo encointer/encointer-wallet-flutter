@@ -1,13 +1,12 @@
 import 'dart:convert';
 
-import 'package:json_annotation/json_annotation.dart';
-import 'package:mobx/mobx.dart';
-
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/store/assets/types/transfer_data.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:mobx/mobx.dart';
 
 part 'encointer_account_store.g.dart';
 
@@ -43,16 +42,16 @@ abstract class _EncointerAccountStore with Store {
   ///
   /// Map: cid.toFmtString() -> BalanceEntry
   @observable
-  ObservableMap<String, BalanceEntry> balanceEntries = new ObservableMap();
+  ObservableMap<String, BalanceEntry> balanceEntries = ObservableMap();
 
   /// `CommunityReputations` across all communities keyed by the respective ceremony index.
   ///
   /// Map: ceremony index -> CommunityReputation
   @observable
-  Map<int, CommunityReputation> reputations = new Map();
+  Map<int, CommunityReputation> reputations = Map();
 
   @observable
-  ObservableList<TransferData> txsTransfer = new ObservableList<TransferData>();
+  ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
 
   @computed
   get ceremonyIndexForProofOfAttendance {
@@ -60,7 +59,7 @@ abstract class _EncointerAccountStore with Store {
       try {
         return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
       } catch (_e) {
-        _log("$address has reputation, but none that has not been linked yet");
+        _log('$address has reputation, but none that has not been linked yet');
         return 0;
       }
     }
@@ -68,7 +67,7 @@ abstract class _EncointerAccountStore with Store {
 
   @action
   void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
-    _log("balanceEntry $balanceEntry added to cid $cid added");
+    _log('balanceEntry $balanceEntry added to cid $cid added');
     balanceEntries[cid.toFmtString()] = balanceEntry;
     writeToCache();
   }
@@ -99,13 +98,13 @@ abstract class _EncointerAccountStore with Store {
 
     List transfers = list.map((i) {
       return {
-        "block_timestamp": i['time'],
-        "hash": i['hash'],
-        "success": true,
-        "from": address,
-        "to": i['params'][0],
-        "token": CommunityIdentifier.fromJson(i['params'][1]).toFmtString(),
-        "amount": Fmt.numberFormat(i['params'][2]),
+        'block_timestamp': i['time'],
+        'hash': i['hash'],
+        'success': true,
+        'from': address,
+        'to': i['params'][0],
+        'token': CommunityIdentifier.fromJson(i['params'][1]).toFmtString(),
+        'amount': Fmt.numberFormat(i['params'][2]),
       };
     }).toList();
     if (reset) {
@@ -133,5 +132,5 @@ abstract class _EncointerAccountStore with Store {
 }
 
 void _log(String msg) {
-  print("[encointerAccountStore] $msg");
+  print('[encointerAccountStore] $msg');
 }

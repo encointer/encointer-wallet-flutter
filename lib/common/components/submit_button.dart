@@ -1,7 +1,6 @@
+import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:encointer_wallet/common/components/gradient_elements.dart';
 
 /// Button that shows a `CupertinoActivityIndicator` within while `onPressed` is executed.
 ///
@@ -40,8 +39,8 @@ class _SubmitButtonState extends State<SubmitButton> {
           ? widget.child
           : Theme(
               // change theme locally to dark such that the activity indicator appears bright
-              data: ThemeData(cupertinoOverrideTheme: CupertinoThemeData(brightness: Brightness.dark)),
-              child: CupertinoActivityIndicator()),
+              data: ThemeData(cupertinoOverrideTheme: const CupertinoThemeData(brightness: Brightness.dark)),
+              child: const CupertinoActivityIndicator()),
       onPressed: (!_submitting && widget.onPressed != null) ? _onPressed : null,
     );
   }

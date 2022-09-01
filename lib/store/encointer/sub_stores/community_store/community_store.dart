@@ -1,15 +1,13 @@
 import 'dart:convert';
 
-import 'package:json_annotation/json_annotation.dart';
-import 'package:mobx/mobx.dart';
-
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
-
-import 'community_account_store/community_account_store.dart';
+import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_account_store/community_account_store.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:mobx/mobx.dart';
 
 part 'community_store.g.dart';
 
@@ -71,17 +69,17 @@ abstract class _CommunityStore with Store {
   List<String>? bootstrappers;
 
   @observable
-  ObservableList<Location>? meetupLocations = new ObservableList();
+  ObservableList<Location>? meetupLocations = ObservableList();
 
   @observable
-  ObservableMap<String, CommunityAccountStore>? communityAccountStores = new ObservableMap();
+  ObservableMap<String, CommunityAccountStore>? communityAccountStores = ObservableMap();
 
   get applyDemurrage => _applyDemurrage;
 
   @action
   Future<void> initCommunityAccountStore(String address) {
     if (!communityAccountStores!.containsKey(address)) {
-      _log("Adding new communityAccountStore for cid: ${cid.toFmtString()} and account: $address");
+      _log('Adding new communityAccountStore for cid: ${cid.toFmtString()} and account: $address');
 
       var store = CommunityAccountStore(network, cid, address);
       store.initStore(_cacheFn);
@@ -102,21 +100,21 @@ abstract class _CommunityStore with Store {
 
   @action
   void setBootstrappers(List<String> bs) {
-    _log("set bootstrappers to $bs");
+    _log('set bootstrappers to $bs');
     bootstrappers = bs;
     writeToCache();
   }
 
   @action
   void setCommunityMetadata(CommunityMetadata meta) {
-    _log("set metadata to $meta");
+    _log('set metadata to $meta');
     metadata = meta;
     writeToCache();
   }
 
   @action
   void setMeetupTime([int? time]) {
-    _log("set meetupTime to $time");
+    _log('set meetupTime to $time');
     if (meetupTime != time) {
       meetupTime = time;
       writeToCache();
@@ -125,7 +123,7 @@ abstract class _CommunityStore with Store {
 
   @action
   void setMeetupTimeOverride([int? time]) {
-    _log("set meetupTimeOverride to $time");
+    _log('set meetupTimeOverride to $time');
     if (meetupTimeOverride != time) {
       meetupTimeOverride = time;
       writeToCache();
@@ -134,7 +132,7 @@ abstract class _CommunityStore with Store {
 
   @action
   void setMeetupLocations(List<Location> locations) {
-    _log("store: set meetupLocations to ${locations.toString()}");
+    _log('store: set meetupLocations to ${locations.toString()}');
     meetupLocations = ObservableList.of(locations);
     writeToCache();
 
@@ -169,5 +167,5 @@ abstract class _CommunityStore with Store {
 }
 
 void _log(String msg) {
-  print("[communityStore] $msg");
+  print('[communityStore] $msg');
 }

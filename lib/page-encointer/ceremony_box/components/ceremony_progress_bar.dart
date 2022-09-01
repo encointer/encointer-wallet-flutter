@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
-
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box_service.dart';
+import 'package:flutter/material.dart';
 
 /// Shows the progress of a ceremony cycle.
 ///
@@ -48,7 +47,7 @@ class CeremonyProgressBar extends StatelessWidget {
         attestingPhaseFractionalWidth,
       );
     } catch (e) {
-      _log("Error getting ceremony progress ${e.toString()}");
+      _log('Error getting ceremony progress ${e.toString()}');
       return 0;
     }
   }
@@ -56,11 +55,11 @@ class CeremonyProgressBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double progressElapsed = _getCeremonyProgress()!;
-    _log("ceremony progress: $progressElapsed");
+    _log('ceremony progress: $progressElapsed');
 
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.all(Radius.circular(5)),
+        borderRadius: const BorderRadius.all(Radius.circular(5)),
         border: Border.all(color: ZurichLion.shade300),
         color: Colors.white,
       ),
@@ -71,7 +70,7 @@ class CeremonyProgressBar extends StatelessWidget {
             width: width * progressElapsed,
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(5)),
+                borderRadius: const BorderRadius.all(Radius.circular(5)),
                 gradient: primaryGradient,
               ),
             ),
@@ -82,7 +81,7 @@ class CeremonyProgressBar extends StatelessWidget {
               SizedBox(
                 width: width * assigningPhaseFractionalWidth,
                 child: Container(
-                  margin: EdgeInsets.symmetric(vertical: 1),
+                  margin: const EdgeInsets.symmetric(vertical: 1),
                   foregroundDecoration: BoxDecoration(
                     // draw the vertical phase dividers
                     border: Border.symmetric(
@@ -101,5 +100,5 @@ class CeremonyProgressBar extends StatelessWidget {
 }
 
 _log(String msg) {
-  print("[CeremonyProgressBar] $msg");
+  print('[CeremonyProgressBar] $msg');
 }

@@ -1,9 +1,8 @@
+import 'package:encointer_wallet/utils/ui.dart';
 import 'package:flutter/material.dart';
 
-import 'package:encointer_wallet/utils/ui.dart';
-
 class JumpToBrowserLink extends StatefulWidget {
-  JumpToBrowserLink(this.url, {this.text, this.mainAxisAlignment});
+  JumpToBrowserLink(this.url, {Key? key, this.text, this.mainAxisAlignment}) : super(key: key);
 
   final String? text;
   final String? url;
@@ -35,7 +34,7 @@ class _JumpToBrowserLinkState extends State<JumpToBrowserLink> {
         mainAxisAlignment: widget.mainAxisAlignment ?? MainAxisAlignment.center,
         children: <Widget>[
           Padding(
-            padding: EdgeInsets.only(right: 4),
+            padding: const EdgeInsets.only(right: 4),
             child: Text(
               widget.text ?? widget.url!,
               style: TextStyle(color: Theme.of(context).primaryColor),

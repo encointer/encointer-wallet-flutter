@@ -1,16 +1,14 @@
-import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
+import 'package:encointer_wallet/page-encointer/meetup/ceremony_progress_bar.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-
-import 'ceremony_progress_bar.dart';
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 
 class CeremonyStep3Finish extends StatelessWidget {
   const CeremonyStep3Finish(
@@ -32,15 +30,15 @@ class CeremonyStep3Finish extends StatelessWidget {
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(30, 24, 30, 24),
+          padding: const EdgeInsets.fromLTRB(30, 24, 30, 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
                 child: ListView(
                   children: [
-                    CeremonyProgressBar(progress: 3),
-                    SizedBox(height: 48),
+                    const CeremonyProgressBar(progress: 3),
+                    const SizedBox(height: 48),
                     CommunityAvatar(
                       store: store,
                       avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.community?.assetsCid),
@@ -66,8 +64,8 @@ class CeremonyStep3Finish extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Iconsax.arrow_right_2),
-                    SizedBox(width: 12, height: 60),
+                    const Icon(Iconsax.arrow_right_2),
+                    const SizedBox(width: 12, height: 60),
                     Text(
                       dic.encointer.finish,
                       style: Theme.of(context).textTheme.headline3,
@@ -78,7 +76,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                   Navigator.popUntil(context, ModalRoute.withName('/'));
                 },
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               Padding(
                 padding: const EdgeInsets.only(top: 6),
                 child: SubmitButton(
@@ -86,8 +84,8 @@ class CeremonyStep3Finish extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Iconsax.login_1),
-                      SizedBox(width: 6),
+                      const Icon(Iconsax.login_1),
+                      const SizedBox(width: 6),
                       Text(
                           '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store.encointer.communityAccount!.scannedClaimsCount.toString())}'),
                     ],

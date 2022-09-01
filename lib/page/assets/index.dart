@@ -1,15 +1,6 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:focus_detector/focus_detector.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:pausable_timer/pausable_timer.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
-
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/drag_handle.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
@@ -21,6 +12,8 @@ import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
 import 'package:encointer_wallet/page/account/create/add_account_page.dart';
+import 'package:encointer_wallet/page/assets/account_or_community/account_or_community_data.dart';
+import 'package:encointer_wallet/page/assets/account_or_community/switch_account_or_community.dart';
 import 'package:encointer_wallet/page/assets/receive/receive_page.dart';
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/service/notification.dart';
@@ -31,12 +24,17 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-
-import 'account_or_community/account_or_community_data.dart';
-import 'account_or_community/switch_account_or_community.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:focus_detector/focus_detector.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:pausable_timer/pausable_timer.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class Assets extends StatefulWidget {
-  Assets(this.store);
+  Assets(this.store, {Key? key}) : super(key: key);
 
   final AppStore store;
 
@@ -67,7 +65,7 @@ class _AssetsState extends State<Assets> {
     }
 
     if (panelController == null) {
-      panelController = new PanelController();
+      panelController = PanelController();
     }
 
     super.initState();
@@ -100,7 +98,7 @@ class _AssetsState extends State<Assets> {
     balanceWatchdog = PausableTimer(
       const Duration(seconds: 12),
       () {
-        print("[balanceWatchdog] triggered");
+        print('[balanceWatchdog] triggered');
         _refreshBalanceAndNotify(dic);
         balanceWatchdog!
           ..reset()
@@ -141,7 +139,7 @@ class _AssetsState extends State<Assets> {
               child: RefreshIndicator(
                 onRefresh: _refreshEncointerState,
                 child: ListView(
-                  padding: EdgeInsets.fromLTRB(16, 4, 16, 4),
+                  padding: const EdgeInsets.fromLTRB(16, 4, 16, 4),
                   children: [
                     Observer(builder: (_) {
                       if (ModalRoute.of(context)!.isCurrent &&
@@ -178,25 +176,25 @@ class _AssetsState extends State<Assets> {
                                       children: [
                                         TextGradient(
                                           text: '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ',
-                                          style: TextStyle(fontSize: 60),
+                                          style: const TextStyle(fontSize: 60),
                                         ),
                                         Text(
-                                          "${dic!.assets.balance}, ${store.encointer.community?.symbol}",
+                                          '${dic!.assets.balance}, ${store.encointer.community?.symbol}',
                                           style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                                         ),
                                       ],
                                     )
                                   : Container(
-                                      margin: EdgeInsets.only(top: 16),
-                                      padding: EdgeInsets.symmetric(vertical: 8),
+                                      margin: const EdgeInsets.only(top: 16),
+                                      padding: const EdgeInsets.symmetric(vertical: 8),
                                       child: (store.encointer.chosenCid == null)
-                                          ? Container(
+                                          ? SizedBox(
                                               width: double.infinity,
                                               child:
                                                   Text(dic!.assets.communityNotSelected, textAlign: TextAlign.center))
-                                          : Container(
+                                          : const SizedBox(
                                               width: double.infinity,
-                                              child: CupertinoActivityIndicator(),
+                                              child: const CupertinoActivityIndicator(),
                                             ),
                                     );
                             },
@@ -204,9 +202,9 @@ class _AssetsState extends State<Assets> {
                           if (store.settings.developerMode)
                             ElevatedButton(
                               onPressed: store.dataUpdate.setInvalidated,
-                              child: Text("Invalidate data to trigger state update"),
+                              child: const Text('Invalidate data to trigger state update'),
                             ),
-                          SizedBox(
+                          const SizedBox(
                             height: 42,
                           ),
                           Row(
@@ -215,7 +213,7 @@ class _AssetsState extends State<Assets> {
                               Expanded(
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
+                                    shape: const RoundedRectangleBorder(
                                       // don't redefine the entire style just the border radii
                                       borderRadius:
                                           BorderRadius.horizontal(left: Radius.circular(15), right: Radius.zero),
@@ -226,13 +224,13 @@ class _AssetsState extends State<Assets> {
                                     child: Row(
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
-                                        Icon(Iconsax.receive_square_2),
-                                        SizedBox(width: 12),
+                                        const Icon(Iconsax.receive_square_2),
+                                        const SizedBox(width: 12),
                                         Text(dic!.assets.receive),
                                       ],
                                     ),
                                   ),
-                                  key: Key('qr-receive'),
+                                  key: const Key('qr-receive'),
                                   onPressed: () {
                                     if (accountData.address != '') {
                                       Navigator.pushNamed(context, ReceivePage.route);
@@ -240,11 +238,11 @@ class _AssetsState extends State<Assets> {
                                   },
                                 ),
                               ),
-                              SizedBox(width: 2),
+                              const SizedBox(width: 2),
                               Expanded(
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                    shape: RoundedRectangleBorder(
+                                    shape: const RoundedRectangleBorder(
                                       // don't redefine the entire style just the border radii
                                       borderRadius:
                                           BorderRadius.horizontal(left: Radius.zero, right: Radius.circular(15)),
@@ -256,12 +254,12 @@ class _AssetsState extends State<Assets> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(dic!.assets.transfer),
-                                        SizedBox(width: 12),
-                                        Icon(Iconsax.send_sqaure_2),
+                                        const SizedBox(width: 12),
+                                        const Icon(Iconsax.send_sqaure_2),
                                       ],
                                     ),
                                   ),
-                                  key: Key('transfer'),
+                                  key: const Key('transfer'),
                                   onPressed: store.encointer.communityBalance != null
                                       ? () {
                                           Navigator.pushNamed(
@@ -281,7 +279,7 @@ class _AssetsState extends State<Assets> {
                         ],
                       );
                     }),
-                    Padding(
+                    const Padding(
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 0),
                     ),
                     Observer(builder: (_) {
@@ -313,13 +311,13 @@ class _AssetsState extends State<Assets> {
                                         : Container();
                                   }
                                 } else {
-                                  return CupertinoActivityIndicator();
+                                  return const CupertinoActivityIndicator();
                                 }
                               },
                             )
                           : Container();
                     }),
-                    SizedBox(height: 24),
+                    const SizedBox(height: 24),
                     CeremonyBox(store, webApi),
                   ],
                 ),
@@ -332,10 +330,10 @@ class _AssetsState extends State<Assets> {
               child: ListView(
                 controller: scrollController,
                 children: <Widget>[
-                  SizedBox(
+                  const SizedBox(
                     height: 12.0,
                   ),
-                  DragHandle(),
+                  const DragHandle(),
                   Column(children: [
                     Observer(
                       builder: (BuildContext context) {
@@ -379,7 +377,7 @@ class _AssetsState extends State<Assets> {
                 ],
               ),
             ),
-            borderRadius: BorderRadius.only(topLeft: Radius.circular(40.0), topRight: Radius.circular(40.0)),
+            borderRadius: const BorderRadius.only(topLeft: Radius.circular(40.0), topRight: Radius.circular(40.0)),
           ),
         ));
   }
@@ -412,7 +410,7 @@ class _AssetsState extends State<Assets> {
             color: ZurichLion.shade50,
             shape: BoxShape.circle,
           ),
-          child: Icon(Icons.add, size: 36),
+          child: const Icon(Icons.add, size: 36),
         ),
         name: dic!.profile.addCommunity,
       ),
@@ -438,7 +436,7 @@ class _AssetsState extends State<Assets> {
             color: ZurichLion.shade50,
             shape: BoxShape.circle,
           ),
-          child: Icon(Icons.add, size: 36),
+          child: const Icon(Icons.add, size: 36),
         ),
         name: dic.profile.addAccount,
       ),
@@ -505,9 +503,9 @@ class _AssetsState extends State<Assets> {
 
   void _refreshBalanceAndNotify(Translations? dic) {
     webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
-      print("[home:refreshBalanceAndNotify] get all balances");
+      print('[home:refreshBalanceAndNotify] get all balances');
       if (widget.store.encointer.chosenCid == null) {
-        print("[home:refreshBalanceAndNotify] no community selected");
+        print('[home:refreshBalanceAndNotify] no community selected');
         return;
       }
       bool activeAccountHasBalance = false;
@@ -521,7 +519,7 @@ class _AssetsState extends State<Assets> {
                   widget.store.encointer.accountStores![widget.store.account.currentAddress]!.balanceEntries[cidStr]) ??
               0;
           double delta = newBalance - oldBalance;
-          print("[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta");
+          print('[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta');
           if (delta.abs() > demurrageRate) {
             widget.store.encointer.accountStores![widget.store.account.currentAddress]
                 ?.addBalanceEntry(cid, balances[cid]!);
@@ -530,7 +528,7 @@ class _AssetsState extends State<Assets> {
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
                   .replaceAll('CID_SYMBOL', community.metadata!.symbol)
                   .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
-              print("[home:balanceWatchdog] $msg");
+              print('[home:balanceWatchdog] $msg');
               NotificationPlugin.showNotification(45, dic.assets.fundsReceived, msg, cid: cidStr);
             }
           }

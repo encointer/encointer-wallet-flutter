@@ -1,16 +1,16 @@
-import "package:latlong2/latlong.dart";
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
-
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
+import 'package:latlong2/latlong.dart';
 
 class EncointerMap extends StatelessWidget {
-  EncointerMap(this.store, {this.popupBuilder, this.markers, this.title, this.center, this.initialZoom = 0});
+  EncointerMap(this.store, {Key? key, this.popupBuilder, this.markers, this.title, this.center, this.initialZoom = 0})
+      : super(key: key);
 
   final AppStore store;
 
@@ -30,7 +30,7 @@ class EncointerMap extends StatelessWidget {
         leading: Container(),
         actions: <Widget>[
           IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.close,
               color: encointerGrey,
             ),
@@ -103,7 +103,7 @@ Future<void> showOnEncointerMap(
       builder: (context) {
         return EncointerMap(
           store,
-          popupBuilder: (BuildContext context, Marker marker) => SizedBox(),
+          popupBuilder: (BuildContext context, Marker marker) => const SizedBox(),
           markers: buildMarkers(location),
           title: dic.encointer.meetupLocation,
           center: location.toLatLng(),
@@ -120,11 +120,11 @@ List<Marker> buildMarkers(Location meetupLocation) {
     Marker(
       // marker is not a widget, hence test_driver cannot find it (it can find it in the Icon inside, though).
       // But we need the key to derive the popup key
-      key: Key('meetup-location'),
+      key: const Key('meetup-location'),
       point: meetupLocation.toLatLng(),
       width: 40,
       height: 40,
-      builder: (_) => Icon(
+      builder: (_) => const Icon(
         Icons.location_on,
         size: 40,
         color: Colors.blueAccent,

@@ -1,13 +1,14 @@
-import 'package:flutter/material.dart';
-
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/businesses_on_map.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_vertical.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/toggle_buttons_with_title.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:flutter/material.dart';
 
 class Businesses extends StatelessWidget {
   final data = allBusinesses;
+
+  Businesses({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,8 +35,8 @@ class Businesses extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            new Icon(Icons.map),
-            new Text(I18n.of(context)!.translationsForLocale().bazaar.map),
+            const Icon(Icons.map),
+            Text(I18n.of(context)!.translationsForLocale().bazaar.map),
           ],
         ),
       )

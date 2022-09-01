@@ -1,15 +1,14 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-
 import 'package:encointer_wallet/page/account/create/create_pin_page.dart';
 import 'package:encointer_wallet/page/account/import/import_account_form.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ImportAccountPage extends StatefulWidget {
-  const ImportAccountPage(this.store);
+  const ImportAccountPage(this.store, {Key? key}) : super(key: key);
 
   static const String route = '/account/import';
   final AppStore store;
@@ -28,7 +27,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   String? _derivePath = '';
   bool _submitting = false;
 
-  final TextEditingController _nameCtrl = new TextEditingController();
+  final TextEditingController _nameCtrl = TextEditingController();
 
   @override
   void dispose() {
@@ -45,7 +44,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Text(I18n.of(context)!.translationsForLocale().home.loading),
-          content: Container(height: 64, child: CupertinoActivityIndicator()),
+          content: const SizedBox(height: 64, child: const CupertinoActivityIndicator()),
         );
       },
     );
@@ -56,14 +55,14 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       cryptoType: _cryptoType,
       derivePath: _derivePath,
     );
-    _log("imported account to JS.");
+    _log('imported account to JS.');
 
     // check if account duplicate
     if (acc['error'] != null) {
       var msg = acc['error'];
 
       if (acc['error'] == 'unreachable') {
-        msg = "${I18n.of(context)!.translationsForLocale().account.importInvalid}: $_keyType";
+        msg = '${I18n.of(context)!.translationsForLocale().account.importInvalid}: $_keyType';
       }
 
       showCupertinoDialog(
@@ -156,7 +155,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     return Scaffold(
       appBar: AppBar(title: Text(I18n.of(context)!.translationsForLocale().home.accountImport)),
       body: SafeArea(
-        child: !_submitting ? _getImportForm() : Center(child: CupertinoActivityIndicator()),
+        child: !_submitting ? _getImportForm() : const Center(child: CupertinoActivityIndicator()),
       ),
     );
   }
@@ -181,5 +180,5 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
 }
 
 _log(String msg) {
-  print("[importAccountPage] $msg");
+  print('[importAccountPage] $msg');
 }

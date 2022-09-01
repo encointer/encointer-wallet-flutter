@@ -1,25 +1,23 @@
-import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page/assets/index.dart';
 import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
 import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
-
-import 'bazaar/0_main/bazaar_main.dart';
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 
 class EncointerHomePage extends StatefulWidget {
-  EncointerHomePage(this.store);
+  EncointerHomePage(this.store, {Key? key}) : super(key: key);
 
   static final GlobalKey encointerHomePageKey = GlobalKey();
   static const String route = '/';
   final AppStore store;
 
   @override
-  _EncointerHomePageState createState() => new _EncointerHomePageState(store);
+  _EncointerHomePageState createState() => _EncointerHomePageState(store);
 }
 
 class _EncointerHomePageState extends State<EncointerHomePage> {
@@ -52,7 +50,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
                       Container(
                         height: 4,
                         width: 16,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           border: Border(
                             bottom: BorderSide(width: 2.0),
                           ),
@@ -111,7 +109,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       key: EncointerHomePage.encointerHomePageKey,
       backgroundColor: Colors.white,
       body: PageView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,
         children: [
           Assets(store),

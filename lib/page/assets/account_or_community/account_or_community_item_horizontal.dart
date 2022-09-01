@@ -1,8 +1,6 @@
-import 'package:flutter/material.dart';
-
 import 'package:encointer_wallet/common/theme.dart';
-
-import 'account_or_community_data.dart';
+import 'package:encointer_wallet/page/assets/account_or_community/account_or_community_data.dart';
+import 'package:flutter/material.dart';
 
 class AccountOrCommunityItemHorizontal extends StatefulWidget {
   final AccountOrCommunityData itemData;
@@ -28,7 +26,7 @@ class _AccountOrCommunityItemHorizontalState extends State<AccountOrCommunityIte
         InkWell(
           onTap: () => widget.onTap!(widget.index),
           child: Container(
-            padding: EdgeInsets.all(4),
+            padding: const EdgeInsets.all(4),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border:
@@ -37,7 +35,7 @@ class _AccountOrCommunityItemHorizontalState extends State<AccountOrCommunityIte
             child: widget.itemData.avatar,
           ),
         ),
-        SizedBox(height: 16),
+        const SizedBox(height: 16),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Text(
