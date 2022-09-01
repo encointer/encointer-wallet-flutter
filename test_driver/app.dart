@@ -8,9 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:provider/provider.dart';
 
-final globalAppStore = AppStore(MockLocalStorage());
-
 void main() {
+  final globalAppStore = AppStore(MockLocalStorage());
   // the tests are run in a separate isolate from the app. The test isolate can only interact with
   // the app via the driver in order to, for instance, configure the app state.
   // More info in: https://medium.com/stuart-engineering/mocking-integration-tests-with-flutter-af3b6ba846c7

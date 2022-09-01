@@ -50,10 +50,45 @@ class TransferPage extends StatefulWidget {
 
 class _TransferPageState extends State<TransferPage> {
   final _formKey = GlobalKey<FormState>();
+  late final _appStore;
 
   final TextEditingController _amountCtrl = new TextEditingController();
 
   AccountData? _accountTo;
+
+  @override
+  void initState() {
+    super.initState();
+    _appStore = context.read<AppStore>();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final TransferPageParams args = ModalRoute.of(context)!.settings.arguments as TransferPageParams;
+      if (args.amount != null) {
+        _amountCtrl.text = '${args.amount}';
+      }
+
+      if (args.recipient != null) {
+        final AccountData acc = AccountData();
+        acc.address = args.recipient!;
+        acc.name = args.label!;
+        setState(() {
+          _accountTo = acc;
+        });
+      } else {
+        if (_appStore.account.optionalAccounts.length > 0) {
+          setState(() {
+            _accountTo = _appStore.account.optionalAccounts[0];
+          });
+        } else if (_appStore.settings.contactList.length > 0) {
+          setState(() {
+            _accountTo = _appStore.settings.contactList[0];
+          });
+        }
+      }
+
+      webApi.fetchAccountData();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -95,8 +130,7 @@ class _TransferPageState extends State<TransferPage> {
                   Expanded(
                     child: ListView(
                       children: [
-                        CombinedCommunityAndAccountAvatar(context.read<AppStore>(),
-                            showCommunityNameAndAccountName: false),
+                        CombinedCommunityAndAccountAvatar(_appStore, showCommunityNameAndAccountName: false),
                         const SizedBox(height: 12),
                         _store.encointer.communityBalance != null
                             ? AccountBalanceWithMoreDigits(
@@ -208,39 +242,6 @@ class _TransferPageState extends State<TransferPage> {
             amount: double.parse(_amountCtrl.text.trim())),
       );
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final TransferPageParams args = ModalRoute.of(context)!.settings.arguments as TransferPageParams;
-      if (args.amount != null) {
-        _amountCtrl.text = '${args.amount}';
-      }
-
-      if (args.recipient != null) {
-        final AccountData acc = AccountData();
-        acc.address = args.recipient!;
-        acc.name = args.label!;
-        setState(() {
-          _accountTo = acc;
-        });
-      } else {
-        if (context.read<AppStore>().account.optionalAccounts.length > 0) {
-          setState(() {
-            _accountTo = context.read<AppStore>().account.optionalAccounts[0];
-          });
-        } else if (context.read<AppStore>().settings.contactList.length > 0) {
-          setState(() {
-            _accountTo = context.read<AppStore>().settings.contactList[0];
-          });
-        }
-      }
-
-      webApi.fetchAccountData();
-    });
   }
 
   @override

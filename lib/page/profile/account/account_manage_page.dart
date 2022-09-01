@@ -35,11 +35,13 @@ enum AccountAction { delete, export }
 class _AccountManagePageState extends State<AccountManagePage> {
   TextEditingController? _nameCtrl;
   bool _isEditingText = false;
+  late final AppStore _appStore;
 
   @override
   void initState() {
     super.initState();
-    if (context.read<AppStore>().encointer.chosenCid != null) webApi.encointer.getBootstrappers();
+    _appStore = context.read<AppStore>();
+    if (_appStore.encointer.chosenCid != null) webApi.encointer.getBootstrappers();
   }
 
   @override
@@ -62,10 +64,10 @@ class _AccountManagePageState extends State<AccountManagePage> {
             CupertinoButton(
               child: Text(I18n.of(context)!.translationsForLocale().home.ok),
               onPressed: () => {
-                context.read<AppStore>().account.removeAccount(accountToBeEdited).then(
+                _appStore.account.removeAccount(accountToBeEdited).then(
                   (_) async {
                     // refresh balance
-                    await context.read<AppStore>().loadAccountCache();
+                    await _appStore.loadAccountCache();
                     webApi.fetchAccountData();
                     Navigator.of(context).pop();
                     Navigator.of(context).pop();
@@ -82,14 +84,14 @@ class _AccountManagePageState extends State<AccountManagePage> {
   Widget _getBalanceEntryListTile(String cidFmt, BalanceEntry? entry, String? address) {
     final TextStyle h3 = Theme.of(context).textTheme.headline3!;
 
-    var community = context.read<AppStore>().encointer.communityStores![cidFmt]!;
+    var community = _appStore.encointer.communityStores![cidFmt]!;
 
     _log('_getBalanceEntryListTile: ${community.toJson()}');
 
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
       leading: CommunityIcon(
-        store: context.read<AppStore>(),
+        store: _appStore,
         address: address,
         icon: FutureBuilder<SvgPicture>(
           future: webApi.ipfs.getCommunityIcon(community.assetsCid),
@@ -119,19 +121,15 @@ class _AccountManagePageState extends State<AccountManagePage> {
         return showPasswordInputDialog(context, accountToBeEdited, Text(dic.profile.confirmPin), (password) async {
           print('password is: $password');
           setState(() {
-            context.read<AppStore>().settings.setPin(password);
+            _appStore.settings.setPin(password);
           });
 
-          bool isMnemonic = await context
-              .read<AppStore>()
-              .account
-              .checkSeedExist(AccountStore.seedTypeMnemonic, accountToBeEdited.pubKey);
+          bool isMnemonic =
+              await _appStore.account.checkSeedExist(AccountStore.seedTypeMnemonic, accountToBeEdited.pubKey);
 
           if (isMnemonic) {
-            String? seed = await context
-                .read<AppStore>()
-                .account
-                .decryptSeed(accountToBeEdited.pubKey, AccountStore.seedTypeMnemonic, password);
+            String? seed =
+                await _appStore.account.decryptSeed(accountToBeEdited.pubKey, AccountStore.seedTypeMnemonic, password);
 
             Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
               'key': seed,
@@ -168,8 +166,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
     final _store = context.watch<AppStore>();
 
     String? accountToBeEditedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
-    AccountData accountToBeEdited = context.read<AppStore>().account.getAccountData(accountToBeEditedPubKey);
-    final addressSS58 = context.read<AppStore>().account.getNetworkAddress(accountToBeEditedPubKey);
+    AccountData accountToBeEdited = _store.account.getAccountData(accountToBeEditedPubKey);
+    final addressSS58 = _store.account.getNetworkAddress(accountToBeEditedPubKey);
 
     _nameCtrl = TextEditingController(text: accountToBeEdited.name);
     _nameCtrl!.selection = TextSelection.fromPosition(TextPosition(offset: _nameCtrl!.text.length));
@@ -180,8 +178,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
           title: _isEditingText
               ? TextFormField(
                   controller: _nameCtrl,
-                  validator: (v) => InputValidation.validateAccountName(
-                      context, v!, context.read<AppStore>().account.optionalAccounts),
+                  validator: (v) =>
+                      InputValidation.validateAccountName(context, v!, _appStore.account.optionalAccounts),
                 )
               : Text(_nameCtrl!.text),
           actions: <Widget>[
@@ -201,7 +199,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       Icons.check,
                     ),
                     onPressed: () {
-                      context.read<AppStore>().account.updateAccountName(accountToBeEdited, _nameCtrl!.text.trim());
+                      _appStore.account.updateAccountName(accountToBeEdited, _nameCtrl!.text.trim());
                       setState(() {
                         _isEditingText = false;
                       });
@@ -261,8 +259,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
                             itemCount: _store.encointer.chosenCid != null ? 1 : 0,
                             itemBuilder: (BuildContext context, int index) {
                               return _getBalanceEntryListTile(
-                                context.read<AppStore>().encointer.chosenCid!.toFmtString(),
-                                context.read<AppStore>().encointer.communityBalanceEntry,
+                                _appStore.encointer.chosenCid!.toFmtString(),
+                                _appStore.encointer.communityBalanceEntry,
                                 addressSS58,
                               );
                             }),
