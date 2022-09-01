@@ -28,9 +28,9 @@ class _Contact extends State<ContactPage> {
 
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _addressCtrl = new TextEditingController();
-  final TextEditingController _nameCtrl = new TextEditingController();
-  final TextEditingController _memoCtrl = new TextEditingController();
+  final TextEditingController _addressCtrl = TextEditingController();
+  final TextEditingController _nameCtrl = TextEditingController();
+  final TextEditingController _memoCtrl = TextEditingController();
 
   bool? _isObservation = false;
 

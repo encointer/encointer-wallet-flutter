@@ -60,7 +60,7 @@ class SubScanApi {
     int page, {
     String network = 'kusama',
   }) async {
-    Completer completer = new Completer<Map>();
+    Completer completer = Completer<Map>();
 
     ReceivePort receivePort = ReceivePort();
     Isolate isolateIns = await Isolate.spawn(
@@ -88,7 +88,7 @@ class SubScanApi {
     String? sender,
     String network = 'kusama',
   }) async {
-    Completer completer = new Completer<Map>();
+    Completer completer = Completer<Map>();
 
     ReceivePort receivePort = ReceivePort();
     Isolate isolateIns = await Isolate.spawn(
@@ -115,7 +115,7 @@ class SubScanApi {
     String? sender,
     String network = 'kusama',
   }) async {
-    Completer completer = new Completer<Map>();
+    Completer completer = Completer<Map>();
 
     ReceivePort receivePort = ReceivePort();
     Isolate isolateIns = await Isolate.spawn(
@@ -192,7 +192,7 @@ class SubScanApi {
   }
 
   Future<Map> fetchTokenPriceAsync(String network) async {
-    Completer completer = new Completer<Map>();
+    Completer completer = Completer<Map>();
     ReceivePort receivePort = ReceivePort();
     Isolate isolateIns = await Isolate.spawn(
         SubScanApi.fetchTokenPrice,

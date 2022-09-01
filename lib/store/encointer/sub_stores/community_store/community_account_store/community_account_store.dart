@@ -52,7 +52,7 @@ abstract class _CommunityAccountStore with Store {
   ///
   /// Map: claimantPublicKey -> ClaimOfAttendance
   @observable
-  ObservableMap<String, ClaimOfAttendance>? participantsClaims = new ObservableMap();
+  ObservableMap<String, ClaimOfAttendance>? participantsClaims = ObservableMap();
 
   /// This should be set to true once the attestations have been sent to chain.
   @observable
