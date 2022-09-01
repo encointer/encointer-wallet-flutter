@@ -85,7 +85,6 @@ class _WalletAppState extends State<WalletApp> {
   Future<int> _initApp(BuildContext context) async {
     if (_appStore == null) {
       final _store = context.watch<AppStore>();
-      // Todo: Use provider pattern instead of globals, see: https://github.com/encointer/encointer-wallet-flutter/issues/132
 
       _log('Initializing app state');
       _log('sys locale: ${Localizations.localeOf(context)}');

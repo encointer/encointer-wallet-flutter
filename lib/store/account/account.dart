@@ -172,7 +172,7 @@ abstract class _AccountStore with Store {
   void queueTx(Map<String, dynamic> tx) {
     queuedTxs.add(tx);
 
-    new Timer.periodic(const Duration(seconds: 5), (Timer timer) async {
+    Timer.periodic(const Duration(seconds: 5), (Timer timer) async {
       if (await webApi.isConnected()) {
         queuedTxs.forEach((args) async {
           Map res = await webApi.account.sendTxAndShowNotification(

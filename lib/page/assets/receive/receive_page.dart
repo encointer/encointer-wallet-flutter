@@ -27,7 +27,7 @@ class ReceivePage extends StatefulWidget {
 }
 
 class _ReceivePageState extends State<ReceivePage> {
-  final TextEditingController _amountController = new TextEditingController();
+  final TextEditingController _amountController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool generateQR = false;
   late InvoiceQrCode invoice;

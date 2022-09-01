@@ -12,7 +12,7 @@ class WillPopScopeWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
 
-    return new WillPopScope(
+    return WillPopScope(
       child: child,
       onWillPop: () {
         return Platform.isAndroid

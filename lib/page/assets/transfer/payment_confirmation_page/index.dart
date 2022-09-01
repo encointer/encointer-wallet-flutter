@@ -157,7 +157,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
         _transferState = TransferState.failed;
       } else {
         _transferState = TransferState.finished;
-        _blockTimestamp = new DateTime.fromMillisecondsSinceEpoch(res['time']);
+        _blockTimestamp = DateTime.fromMillisecondsSinceEpoch(res['time']);
       }
     };
 
@@ -271,8 +271,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   void _initializeAnimation() {
     _animationController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
 
-    _animation = new Tween<double>(begin: 0, end: 1)
-        .animate(new CurvedAnimation(parent: _animationController!, curve: Curves.easeInOutCirc));
+    _animation = Tween<double>(begin: 0, end: 1)
+        .animate(CurvedAnimation(parent: _animationController!, curve: Curves.easeInOutCirc));
 
     _animationController!.forward();
 

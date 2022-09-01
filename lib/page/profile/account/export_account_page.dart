@@ -18,7 +18,7 @@ class ExportAccountPage extends StatelessWidget {
   ExportAccountPage({Key? key}) : super(key: key);
   static const String route = '/profile/export';
 
-  final TextEditingController _passCtrl = new TextEditingController();
+  final TextEditingController _passCtrl = TextEditingController();
 
   void _showPasswordDialog(BuildContext context, String seedType) {
     final Translations dic = I18n.of(context)!.translationsForLocale();

@@ -18,7 +18,7 @@ class EncointerHomePage extends StatefulWidget {
   static const String route = '/';
 
   @override
-  _EncointerHomePageState createState() => new _EncointerHomePageState();
+  _EncointerHomePageState createState() => _EncointerHomePageState();
 }
 
 class _EncointerHomePageState extends State<EncointerHomePage> {

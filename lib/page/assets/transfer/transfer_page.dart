@@ -52,7 +52,7 @@ class _TransferPageState extends State<TransferPage> {
   final _formKey = GlobalKey<FormState>();
   late final _appStore;
 
-  final TextEditingController _amountCtrl = new TextEditingController();
+  final TextEditingController _amountCtrl = TextEditingController();
 
   AccountData? _accountTo;
 

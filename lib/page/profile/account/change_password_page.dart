@@ -27,9 +27,9 @@ class ChangePasswordPage extends StatefulWidget {
 class _ChangePassword extends State<ChangePasswordPage> {
   final Api api = webApi;
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _passOldCtrl = new TextEditingController();
-  final TextEditingController _passCtrl = new TextEditingController();
-  final TextEditingController _pass2Ctrl = new TextEditingController();
+  final TextEditingController _passOldCtrl = TextEditingController();
+  final TextEditingController _passCtrl = TextEditingController();
+  final TextEditingController _pass2Ctrl = TextEditingController();
 
   bool _submitting = false;
 

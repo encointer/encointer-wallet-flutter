@@ -65,7 +65,7 @@ class _AssetsState extends State<Assets> {
     }
 
     if (panelController == null) {
-      panelController = new PanelController();
+      panelController = PanelController();
     }
 
     super.initState();
