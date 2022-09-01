@@ -11,14 +11,15 @@ import 'package:encointer_wallet/store/encointer/encointer.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/bazaar_store/bazaar_store.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_store.dart';
 
-AppStore globalAppStore = AppStore(MockLocalStorage());
+// AppStore globalAppStore = AppStore(MockLocalStorage());
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  // final root = AppStore(MockLocalStorage(), config: StoreConfig.Test);
 
   group('EncointerStore test', () {
     test('encointer store initialization, serialization and cache works', () async {
-      globalAppStore = AppStore(MockLocalStorage(), config: StoreConfig.Test);
+      final globalAppStore = AppStore(MockLocalStorage(), config: StoreConfig.Test);
       final AppStore root = globalAppStore;
       await root.init('_en');
 
@@ -82,7 +83,7 @@ void main() {
     });
 
     test('purging encointer-store works and initializing new works', () async {
-      globalAppStore = AppStore(MockLocalStorage());
+      final globalAppStore = AppStore(MockLocalStorage(), config: StoreConfig.Test);
       final AppStore root = globalAppStore;
       accList = [testAcc];
       currentAccountPubKey = accList[0]['pubKey'];

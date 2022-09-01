@@ -269,7 +269,7 @@ class AccountBalanceWithMoreDigits extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: RichText(
-        // need text base line alignment_store
+        // need text base line alignment
         text: TextSpan(
           text: '${Fmt.doubleFormat(
             available,

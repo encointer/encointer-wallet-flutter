@@ -34,7 +34,6 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/local_storage.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +42,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 import 'common/theme.dart';
-import 'mocks/storage/mock_local_storage.dart';
 import 'mocks/substrate_api/mock_api.dart';
 import 'utils/translations/index.dart';
 
@@ -88,7 +86,6 @@ class _WalletAppState extends State<WalletApp> {
     if (_appStore == null) {
       final _store = context.watch<AppStore>();
       // Todo: Use provider pattern instead of globals, see: https://github.com/encointer/encointer-wallet-flutter/issues/132
-      _store.localStorage = widget.config.mockLocalStorage ? MockLocalStorage() : LocalStorage();
 
       _log('Initializing app state');
       _log('sys locale: ${Localizations.localeOf(context)}');

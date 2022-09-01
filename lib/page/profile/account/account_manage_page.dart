@@ -250,11 +250,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                               String community = _store.encointer.account!.balanceEntries.keys.elementAt(index);
                               return _getBalanceEntryListTile(
                                 community,
-                                context
-                                    .read<AppStore>()
-                                    .encointer
-                                    .accountStores![addressSS58]!
-                                    .balanceEntries[community],
+                                _store.encointer.accountStores![addressSS58]!.balanceEntries[community],
                                 addressSS58,
                               );
                             }),

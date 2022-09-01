@@ -29,6 +29,7 @@ class _ReceivePageState extends State<ReceivePage> {
   final _formKey = GlobalKey<FormState>();
   bool generateQR = false;
   late InvoiceQrCode invoice;
+  late final AppStore _appStore;
 
   PausableTimer? paymentWatchdog;
   bool observedPendingExtrinsic = false;
@@ -37,12 +38,12 @@ class _ReceivePageState extends State<ReceivePage> {
   @override
   void initState() {
     super.initState();
-
+    _appStore = context.read<AppStore>();
     invoice = InvoiceQrCode(
-      account: context.read<AppStore>().account.currentAddress,
-      cid: context.read<AppStore>().encointer.chosenCid,
+      account: _appStore.account.currentAddress,
+      cid: _appStore.encointer.chosenCid,
       amount: null,
-      label: context.read<AppStore>().account.currentAccount.name,
+      label: _appStore.account.currentAccount.name,
     );
   }
 
@@ -56,11 +57,12 @@ class _ReceivePageState extends State<ReceivePage> {
   @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
+    final _store = context.watch<AppStore>();
     paymentWatchdog = PausableTimer(
       const Duration(seconds: 1),
       () async {
         if (!observedPendingExtrinsic) {
-          observedPendingExtrinsic = await showSnackBarUponPendingExtrinsics(context.watch<AppStore>(), webApi, dic);
+          observedPendingExtrinsic = await showSnackBarUponPendingExtrinsics(_appStore, webApi, dic);
 
           resetObservedPendingExtrinsicCounter = 0;
         } else {
@@ -71,30 +73,27 @@ class _ReceivePageState extends State<ReceivePage> {
           }
         }
 
-        webApi.encointer.getAllBalances(context.read<AppStore>().account.currentAddress).then((balances) {
-          CommunityIdentifier? cid = context.read<AppStore>().encointer.chosenCid;
+        webApi.encointer.getAllBalances(_store.account.currentAddress).then((balances) {
+          CommunityIdentifier? cid = _store.encointer.chosenCid;
 
           if (cid == null) {
             return;
           }
 
-          double? demurrageRate = context.read<AppStore>().encointer.community!.demurrage;
-          double? newBalance = context.read<AppStore>().encointer.applyDemurrage(balances[cid]);
-          double oldBalance = context
-                  .read<AppStore>()
-                  .encointer
-                  .applyDemurrage(context.read<AppStore>().encointer.communityBalanceEntry) ??
-              0;
+          double? demurrageRate = _store.encointer.community!.demurrage;
+          double? newBalance = _store.encointer.applyDemurrage(balances[cid]);
+          double oldBalance = _store.encointer.applyDemurrage(_store.encointer.communityBalanceEntry) ?? 0;
+
           if (newBalance != null) {
             double delta = newBalance - oldBalance;
             print("[receivePage] balance was $oldBalance, changed by $delta");
             if (delta > demurrageRate!) {
               var msg = dic.assets.incomingConfirmed
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
-                  .replaceAll('CID_SYMBOL', context.read<AppStore>().encointer.community?.metadata?.symbol ?? "null")
-                  .replaceAll('ACCOUNT_NAME', context.read<AppStore>().account.currentAccount.name);
+                  .replaceAll('CID_SYMBOL', _store.encointer.community?.metadata?.symbol ?? "null")
+                  .replaceAll('ACCOUNT_NAME', _store.account.currentAccount.name);
               print("[receivePage] $msg");
-              context.read<AppStore>().encointer.account?.addBalanceEntry(cid, balances[cid]!);
+              _store.encointer.account?.addBalanceEntry(cid, balances[cid]!);
               NotificationPlugin.showNotification(44, dic.assets.fundsReceived, msg, cid: cid.toFmtString());
             }
           }
@@ -106,103 +105,104 @@ class _ReceivePageState extends State<ReceivePage> {
     )..start();
 
     return FocusDetector(
-        onFocusLost: () {
-          print('[receivePage:FocusDetector] Focus Lost.');
-          paymentWatchdog!.pause();
-        },
-        onFocusGained: () {
-          print('[receivePage:FocusDetector] Focus Gained.');
-          paymentWatchdog!.reset();
-          paymentWatchdog!.start();
-        },
-        child: Form(
-          key: _formKey,
-          child: Scaffold(
-            appBar: AppBar(
-              backgroundColor: Colors.transparent,
-              title: Text(dic.assets.receive),
-              leading: Container(),
-              actions: [
-                IconButton(
-                  key: const Key('close-receive-page'),
-                  icon: const Icon(Icons.close),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                )
-              ],
-            ),
-            body: SafeArea(
-              child: ListView(
-                children: <Widget>[
-                  Column(
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 48),
-                        child: Text(
-                          dic.profile.qrScanHint,
-                          style: Theme.of(context).textTheme.headline3!.copyWith(color: encointerBlack),
-                          textAlign: TextAlign.center,
-                        ),
+      onFocusLost: () {
+        print('[receivePage:FocusDetector] Focus Lost.');
+        paymentWatchdog!.pause();
+      },
+      onFocusGained: () {
+        print('[receivePage:FocusDetector] Focus Gained.');
+        paymentWatchdog!.reset();
+        paymentWatchdog!.start();
+      },
+      child: Form(
+        key: _formKey,
+        child: Scaffold(
+          appBar: AppBar(
+            backgroundColor: Colors.transparent,
+            title: Text(dic.assets.receive),
+            leading: Container(),
+            actions: [
+              IconButton(
+                key: const Key('close-receive-page'),
+                icon: const Icon(Icons.close),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              )
+            ],
+          ),
+          body: SafeArea(
+            child: ListView(
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 48),
+                      child: Text(
+                        dic.profile.qrScanHint,
+                        style: Theme.of(context).textTheme.headline3!.copyWith(color: encointerBlack),
+                        textAlign: TextAlign.center,
                       ),
-                      const SizedBox(height: 8),
-                      Padding(
-                        padding: const EdgeInsets.all(30),
-                        child: EncointerTextFormField(
-                          labelText: dic.assets.invoiceAmount,
-                          textStyle: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
-                          inputFormatters: [UI.decimalInputFormatter()],
-                          controller: _amountController,
-                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
-                          textFormFieldKey: const Key('invoice-amount-input'),
-                          onChanged: (value) {
-                            setState(() {
-                              var trimmed = _amountController.text.trim();
-                              if (trimmed.isNotEmpty) {
-                                invoice.data.amount = double.parse(trimmed);
-                              }
-                            });
-                          },
-                          suffixIcon: const Text(
-                            "ⵐ",
-                            style: TextStyle(
-                              color: encointerGrey,
-                              fontSize: 26,
-                            ),
+                    ),
+                    const SizedBox(height: 8),
+                    Padding(
+                      padding: const EdgeInsets.all(30),
+                      child: EncointerTextFormField(
+                        labelText: dic.assets.invoiceAmount,
+                        textStyle: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
+                        inputFormatters: [UI.decimalInputFormatter()],
+                        controller: _amountController,
+                        keyboardType: const TextInputType.numberWithOptions(decimal: true),
+                        textFormFieldKey: const Key('invoice-amount-input'),
+                        onChanged: (value) {
+                          setState(() {
+                            var trimmed = _amountController.text.trim();
+                            if (trimmed.isNotEmpty) {
+                              invoice.data.amount = double.parse(trimmed);
+                            }
+                          });
+                        },
+                        suffixIcon: const Text(
+                          "ⵐ",
+                          style: TextStyle(
+                            color: encointerGrey,
+                            fontSize: 26,
                           ),
                         ),
                       ),
-                    ],
-                  ),
-                  Text(
-                    '${dic.profile.receiverAccount} ${context.watch<AppStore>().account.currentAccount.name}',
-                    style: Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 8),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      // Enhance brightness for the QR-code
-                      const WakeLockAndBrightnessEnhancer(brightness: 1),
-                      QrCodeImage(
-                        qrCode: invoice.toQrPayload(),
-                        text: dic.assets.shareInvoice,
-                        onTap: () => {
-                          if (_formKey.currentState!.validate())
-                            {
-                              // Todo: implement invoice.toUrl()
-                              Share.share(invoice.toQrPayload()),
-                            }
-                        },
-                      ),
-                    ],
-                  )
-                ],
-              ),
+                    ),
+                  ],
+                ),
+                Text(
+                  '${dic.profile.receiverAccount} ${_store.account.currentAccount.name}',
+                  style: Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(height: 8),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    // Enhance brightness for the QR-code
+                    const WakeLockAndBrightnessEnhancer(brightness: 1),
+                    QrCodeImage(
+                      qrCode: invoice.toQrPayload(),
+                      text: dic.assets.shareInvoice,
+                      onTap: () => {
+                        if (_formKey.currentState!.validate())
+                          {
+                            // Todo: implement invoice.toUrl()
+                            Share.share(invoice.toQrPayload()),
+                          }
+                      },
+                    ),
+                  ],
+                )
+              ],
             ),
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
 
