@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_page.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/page/reap_voucher/reap_voucher_page.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 enum QrScannerContext {
   /// QrScanner was opened from the main page
@@ -21,8 +20,8 @@ enum QrScannerContext {
 class QrScanService {
   QrCode<dynamic> parse(String rawQrString) {
     // FIXME: this is a hack to redirect old Leu community vouchers to new cid
-    rawQrString = rawQrString.replaceAll("u0qj92QX9PQ", "u0qj944rhWE");
-    rawQrString = rawQrString.replaceAll("u0qj9QqA2Q", "u0qj944rhWE");
+    rawQrString = rawQrString.replaceAll('u0qj92QX9PQ', 'u0qj944rhWE');
+    rawQrString = rawQrString.replaceAll('u0qj9QqA2Q', 'u0qj944rhWE');
     List<String> data = rawQrString.split(QR_CODE_FIELD_SEPARATOR);
 
     var context = QrCodeContextExt.fromQrField(data[0]);

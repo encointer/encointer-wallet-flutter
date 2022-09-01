@@ -1,17 +1,15 @@
-import 'package:json_annotation/json_annotation.dart';
-import 'package:mobx/mobx.dart';
-
 import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
-
-import 'sub_stores/bazaar_store/bazaar_store.dart';
-import 'sub_stores/community_store/community_account_store/community_account_store.dart';
-import 'sub_stores/community_store/community_store.dart';
-import 'sub_stores/encointer_account_store/encointer_account_store.dart';
+import 'package:encointer_wallet/store/encointer/sub_stores/bazaar_store/bazaar_store.dart';
+import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_account_store/community_account_store.dart';
+import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_store.dart';
+import 'package:encointer_wallet/store/encointer/sub_stores/encointer_account_store/encointer_account_store.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:mobx/mobx.dart';
 
 part 'encointer.g.dart';
 
@@ -186,8 +184,8 @@ abstract class _EncointerStore with Store {
       final fallbackCidFmt = account!.balanceEntries.entries.firstWhere((e) => applyDemurrage(e.value)! > 0.013).key;
       return CommunityIdentifier.fromFmtString(fallbackCidFmt);
     } catch (_e) {
-      _log("${account!.address} does not have sufficient funds in any community."
-          "Returning null to pay tx in native token");
+      _log('${account!.address} does not have sufficient funds in any community.'
+          'Returning null to pay tx in native token');
       return null;
     }
   }
@@ -196,14 +194,14 @@ abstract class _EncointerStore with Store {
 
   @action
   void setPhaseDurations(Map<CeremonyPhase, int> phaseDurations) {
-    _log("set phase duration to ${phaseDurations.toString()}");
+    _log('set phase duration to ${phaseDurations.toString()}');
     this.phaseDurations = phaseDurations;
     writeToCache();
   }
 
   @action
   void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
-    _log("set communityIdentifiers to $cids");
+    _log('set communityIdentifiers to $cids');
     communityIdentifiers = cids;
     writeToCache();
 
@@ -215,7 +213,7 @@ abstract class _EncointerStore with Store {
 
   @action
   void setCommunities(List<CidName> c) {
-    _log("set communities to $c");
+    _log('set communities to $c');
     communities = c;
     writeToCache();
   }
@@ -247,7 +245,7 @@ abstract class _EncointerStore with Store {
 
   @action
   void setCurrentPhase(CeremonyPhase phase) {
-    _log("set currentPhase to $phase");
+    _log('set currentPhase to $phase');
     if (currentPhase != phase) {
       currentPhase = phase;
       writeToCache();
@@ -258,7 +256,7 @@ abstract class _EncointerStore with Store {
 
   @action
   void setNextPhaseTimestamp(int timestamp) {
-    _log("set nextPhaseTimestamp to $timestamp");
+    _log('set nextPhaseTimestamp to $timestamp');
     if (nextPhaseTimestamp != timestamp) {
       nextPhaseTimestamp = timestamp;
       writeToCache();
@@ -267,7 +265,7 @@ abstract class _EncointerStore with Store {
 
   @action
   void setCurrentCeremonyIndex(index) {
-    print("store: set currentCeremonyIndex to $index");
+    print('store: set currentCeremonyIndex to $index');
     if (currentCeremonyIndex != index) {
       purgeCeremonySpecificState();
     }
@@ -284,7 +282,7 @@ abstract class _EncointerStore with Store {
     var encointerAccountStore = communityStores![cid.toFmtString()]!.communityAccountStores![address];
 
     if (encointerAccountStore == null) {
-      _log("setAggregatedAccountData: encointerAccountStore was null");
+      _log('setAggregatedAccountData: encointerAccountStore was null');
       return;
     }
 
@@ -305,7 +303,7 @@ abstract class _EncointerStore with Store {
   @action
   Future<void> updateState() async {
     if (_updateStateFuture != null) {
-      _log("[updateState] already updating state, awaiting the previously set future.");
+      _log('[updateState] already updating state, awaiting the previously set future.');
       await _updateStateFuture!;
       return;
     }
@@ -321,9 +319,9 @@ abstract class _EncointerStore with Store {
       updateAggregatedAccountData(),
     ])
         .timeout(const Duration(seconds: 15))
-        .catchError((e) => _log("Error executing update state: ${e.toString()}"))
+        .catchError((e) => _log('Error executing update state: ${e.toString()}'))
         .whenComplete(() {
-      _log("[updateState] finished");
+      _log('[updateState] finished');
       _updateStateFuture = null;
     });
 
@@ -401,7 +399,7 @@ abstract class _EncointerStore with Store {
   Future<void> initCommunityStore(CommunityIdentifier cid, String address, {shouldCache = true}) async {
     var cidFmt = cid.toFmtString();
     if (!communityStores!.containsKey(cidFmt)) {
-      _log("Adding new communityStore for cid: ${cid.toFmtString()}");
+      _log('Adding new communityStore for cid: ${cid.toFmtString()}');
 
       var communityStore = CommunityStore(network, cid);
       communityStore.initStore(_cacheFn, applyDemurrage);
@@ -419,7 +417,7 @@ abstract class _EncointerStore with Store {
   @action
   Future<void> initEncointerAccountStore(String address, {shouldCache = true}) {
     if (!accountStores!.containsKey(address)) {
-      _log("Adding new encointerAccountStore for: $address");
+      _log('Adding new encointerAccountStore for: $address');
 
       var encointerAccountStore = EncointerAccountStore(network, address);
       encointerAccountStore.initStore(_cacheFn);
@@ -436,7 +434,7 @@ abstract class _EncointerStore with Store {
   Future<void> initBazaarStore(CommunityIdentifier cid, {shouldCache = true}) {
     var cidFmt = cid.toFmtString();
     if (!bazaarStores!.containsKey(cidFmt)) {
-      _log("Adding new bazaarStore for cid: ${cid.toFmtString()}");
+      _log('Adding new bazaarStore for cid: ${cid.toFmtString()}');
 
       var bazaarStore = BazaarStore(network, cid);
       bazaarStore.initStore(_cacheFn);
@@ -473,7 +471,7 @@ abstract class _EncointerStore with Store {
   /// Todo: not yet integrated, need to cache this first, and properly think through. Solve in #582.
   Future<void> loadPreviouslyTrackedCommunitiesFromCache(String network) async {
     List<Map<String, dynamic>> maybeCids = await _rootStore.localStorage.getList(trackedCidsCacheKey(network));
-    _log("Initializing previously tracked communities: ${maybeCids.toString()}");
+    _log('Initializing previously tracked communities: ${maybeCids.toString()}');
 
     if (maybeCids.isNotEmpty) {
       List<CommunityIdentifier> cids = maybeCids.map((cid) => CommunityIdentifier.fromJson(cid)).toList();
@@ -483,7 +481,7 @@ abstract class _EncointerStore with Store {
 
   Future<void> loadChosenCid(String network) async {
     Map<String, dynamic>? maybeChosenCid = await _rootStore.localStorage.getMap(chosenCidCacheKey(network));
-    _log("Setting previously tracked chosenCid: ${maybeChosenCid.toString()}");
+    _log('Setting previously tracked chosenCid: ${maybeChosenCid.toString()}');
 
     if (maybeChosenCid != null) {
       // Do not use the setter here. We don't want to trigger reactions here.
@@ -545,13 +543,13 @@ abstract class _EncointerStore with Store {
 }
 
 String chosenCidCacheKey(String? network) {
-  return "$network-chosen-cid";
+  return '$network-chosen-cid';
 }
 
 String trackedCidsCacheKey(String network) {
-  return "$network-tracked-cids";
+  return '$network-tracked-cids';
 }
 
 _log(String msg) {
-  print("[EncointerStore] $msg");
+  print('[EncointerStore] $msg');
 }

@@ -1,15 +1,13 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
-
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/tx/lib/src/params.dart';
+import 'package:encointer_wallet/service/tx/lib/src/submit_to_js.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-
-import 'params.dart';
-import 'submit_to_js.dart';
+import 'package:flutter/cupertino.dart';
 
 /// Helpers to submit transactions.
 
@@ -43,10 +41,10 @@ Future<void> submitTx(
   final txPaymentAsset = store.encointer.getTxPaymentAsset(store.encointer.chosenCid);
 
   if (txPaymentAsset != null) {
-    txParams["txInfo"]["txPaymentAsset"] = txPaymentAsset;
+    txParams['txInfo']['txPaymentAsset'] = txPaymentAsset;
   }
 
-  txParams["onFinish"] = onFinish ?? ((BuildContext txPageContext, Map res) => res);
+  txParams['onFinish'] = onFinish ?? ((BuildContext txPageContext, Map res) => res);
 
   return submitToJS(
     context,

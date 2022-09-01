@@ -82,7 +82,7 @@ abstract class _DataUpdateStore with Store {
 
     _disposer = reaction((_) => now, (_) {
       if (needsRefresh) {
-        _log("Reaction triggered...");
+        _log('Reaction triggered...');
         executeUpdate();
       } else {
         // Only enable for debugging purposes, otherwise it spams every second.
@@ -105,12 +105,12 @@ abstract class _DataUpdateStore with Store {
   @action
   Future<void> executeUpdate() async {
     if (_updateFn == null) {
-      _log("No `updateFn` set, returning...");
+      _log('No `updateFn` set, returning...');
       return;
     }
 
     if (_updateFuture != null) {
-      _log("already updating, awaiting the previously set future.");
+      _log('already updating, awaiting the previously set future.');
       await _updateFuture!;
       return;
     }
@@ -120,10 +120,10 @@ abstract class _DataUpdateStore with Store {
       invalidated = false;
       lastUpdate = DateTime.now();
     }).catchError((e) {
-      _log("Error while executing `updateFn`: ${e.toString()}");
+      _log('Error while executing `updateFn`: ${e.toString()}');
     }).whenComplete(() {
       _updateFuture = null;
-      _log("update reaction finished");
+      _log('update reaction finished');
     });
 
     await _updateFuture!;
@@ -131,5 +131,5 @@ abstract class _DataUpdateStore with Store {
 }
 
 void _log(String msg) {
-  print("[DataUpdateStore] $msg");
+  print('[DataUpdateStore] $msg');
 }

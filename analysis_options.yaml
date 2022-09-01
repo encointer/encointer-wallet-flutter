@@ -4,6 +4,7 @@ include: package:lints/recommended.yaml
   
 linter:
   rules:
+
     sized_box_for_whitespace: true
     use_key_in_widget_constructors: true
     prefer_const_constructors: true
@@ -28,8 +29,8 @@ linter:
     avoid_renaming_method_parameters: false
     avoid_returning_null_for_void: false
     avoid_function_literals_in_foreach_calls: false
-    always_use_package_imports: false
-    camel_case_extensions: false
+    always_use_package_imports: true
+    camel_case_extensions: true
     depend_on_referenced_packages: false
     prefer_typing_uninitialized_variables: false
     void_checks: false
