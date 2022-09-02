@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/create/create_account_form.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CreateAccountPage extends StatefulWidget {
   const CreateAccountPage({Key? key}) : super(key: key);
@@ -12,7 +11,7 @@ class CreateAccountPage extends StatefulWidget {
   static const String route = '/account/createAccount';
 
   @override
-  _CreateAccountPageState createState() => _CreateAccountPageState();
+  State<CreateAccountPage> createState() => _CreateAccountPageState();
 }
 
 class _CreateAccountPageState extends State<CreateAccountPage> {

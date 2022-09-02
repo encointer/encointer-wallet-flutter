@@ -42,7 +42,7 @@ class Assets extends StatefulWidget {
   final AppStore store;
 
   @override
-  _AssetsState createState() => _AssetsState(store);
+  State<Assets> createState() => _AssetsState(store);
 }
 
 class _AssetsState extends State<Assets> {
@@ -130,6 +130,7 @@ class _AssetsState extends State<Assets> {
           upgrader: Upgrader(
             appcastConfig: context.watch<AppStore>().appcastConfiguration,
             debugLogging: context.select<AppStore, bool>((e) => e.appcastConfiguration != null),
+            canDismissDialog: true,
           ),
           child: SlidingUpPanel(
             maxHeight: _panelHeightOpen,

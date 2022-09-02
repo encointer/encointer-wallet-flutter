@@ -17,7 +17,7 @@ class CeremonyRegisterButton extends StatefulWidget {
   final Future<void> Function(BuildContext)? onPressed;
 
   @override
-  _CeremonyRegisterButtonState createState() => _CeremonyRegisterButtonState();
+  State<CeremonyRegisterButton> createState() => _CeremonyRegisterButtonState();
 }
 
 class _CeremonyRegisterButtonState extends State<CeremonyRegisterButton> {
