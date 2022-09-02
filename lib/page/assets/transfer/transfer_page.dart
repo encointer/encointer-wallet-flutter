@@ -1,3 +1,9 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
+
 import 'package:encointer_wallet/common/components/address_input_field.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
@@ -14,10 +20,6 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/ui.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:iconsax/iconsax.dart';
 
 class TransferPageParams {
   TransferPageParams({
@@ -38,37 +40,68 @@ class TransferPageParams {
 }
 
 class TransferPage extends StatefulWidget {
-  TransferPage(this.store, {Key? key}) : super(key: key);
+  TransferPage({Key? key}) : super(key: key);
 
   static const String route = '/assets/transfer';
-  final AppStore store;
 
   @override
-  _TransferPageState createState() => _TransferPageState(store);
+  _TransferPageState createState() => _TransferPageState();
 }
 
 class _TransferPageState extends State<TransferPage> {
-  _TransferPageState(this.store);
-
-  final AppStore store;
-
   final _formKey = GlobalKey<FormState>();
+  late final _appStore;
 
   final TextEditingController _amountCtrl = TextEditingController();
 
   AccountData? _accountTo;
 
   @override
+  void initState() {
+    super.initState();
+    _appStore = context.read<AppStore>();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final TransferPageParams args = ModalRoute.of(context)!.settings.arguments as TransferPageParams;
+      if (args.amount != null) {
+        _amountCtrl.text = '${args.amount}';
+      }
+
+      if (args.recipient != null) {
+        final AccountData acc = AccountData();
+        acc.address = args.recipient!;
+        acc.name = args.label!;
+        setState(() {
+          _accountTo = acc;
+        });
+      } else {
+        if (_appStore.account.optionalAccounts.length > 0) {
+          setState(() {
+            _accountTo = _appStore.account.optionalAccounts[0];
+          });
+        } else if (_appStore.settings.contactList.length > 0) {
+          setState(() {
+            _accountTo = _appStore.settings.contactList[0];
+          });
+        }
+      }
+
+      webApi.fetchAccountData();
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
     TransferPageParams params = ModalRoute.of(context)!.settings.arguments as TransferPageParams;
+    final _store = context.watch<AppStore>();
 
-    var communitySymbol = params.communitySymbol ?? store.encointer.community!.symbol!;
-    var cid = params.cid ?? store.encointer.chosenCid!;
+    var communitySymbol = params.communitySymbol ?? _store.encointer.community!.symbol!;
+    var cid = params.cid ?? _store.encointer.chosenCid!;
 
     int decimals = encointer_currencies_decimals;
 
-    double? available = store.encointer.applyDemurrage(store.encointer.communityBalanceEntry);
+    double? available = _store.encointer.applyDemurrage(_store.encointer.communityBalanceEntry);
 
     print('[transferPage]: available: $available');
 
@@ -97,17 +130,20 @@ class _TransferPageState extends State<TransferPage> {
                   Expanded(
                     child: ListView(
                       children: [
-                        CombinedCommunityAndAccountAvatar(store, showCommunityNameAndAccountName: false),
+                        CombinedCommunityAndAccountAvatar(_appStore, showCommunityNameAndAccountName: false),
                         const SizedBox(height: 12),
-                        store.encointer.communityBalance != null
-                            ? AccountBalanceWithMoreDigits(store: store, available: available, decimals: decimals)
+                        _store.encointer.communityBalance != null
+                            ? AccountBalanceWithMoreDigits(
+                                store: _store,
+                                available: available,
+                                decimals: decimals,
+                              )
                             : const CupertinoActivityIndicator(),
                         Text(
-                          I18n.of(context)!
-                              .translationsForLocale()
-                              .assets
-                              .yourBalanceFor
-                              .replaceAll('ACCOUNT_NAME', Fmt.accountName(context, store.account.currentAccount)),
+                          I18n.of(context)!.translationsForLocale().assets.yourBalanceFor.replaceAll(
+                                'ACCOUNT_NAME',
+                                Fmt.accountName(context, _store.account.currentAccount),
+                              ),
                           style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                           textAlign: TextAlign.center,
                         ),
@@ -144,7 +180,7 @@ class _TransferPageState extends State<TransferPage> {
                           children: [
                             Expanded(
                               child: AddressInputField(
-                                widget.store,
+                                _store,
                                 label: dic.assets.address,
                                 initialValue: _accountTo,
                                 onChanged: (AccountData acc) {
@@ -161,7 +197,7 @@ class _TransferPageState extends State<TransferPage> {
                     ),
                   ),
                   const SizedBox(height: 48),
-                  store.settings.developerMode
+                  _store.settings.developerMode
                       ? Center(
                           child: Text(
                             '${dic.assets.fee}: TODO compute Fee', // TODO compute fee #589
@@ -206,39 +242,6 @@ class _TransferPageState extends State<TransferPage> {
             amount: double.parse(_amountCtrl.text.trim())),
       );
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      final TransferPageParams args = ModalRoute.of(context)!.settings.arguments as TransferPageParams;
-      if (args.amount != null) {
-        _amountCtrl.text = '${args.amount}';
-      }
-
-      if (args.recipient != null) {
-        final AccountData acc = AccountData();
-        acc.address = args.recipient!;
-        acc.name = args.label!;
-        setState(() {
-          _accountTo = acc;
-        });
-      } else {
-        if (widget.store.account.optionalAccounts.length > 0) {
-          setState(() {
-            _accountTo = widget.store.account.optionalAccounts[0];
-          });
-        } else if (widget.store.settings.contactList.length > 0) {
-          setState(() {
-            _accountTo = widget.store.settings.contactList[0];
-          });
-        }
-      }
-
-      webApi.fetchAccountData();
-    });
   }
 
   @override

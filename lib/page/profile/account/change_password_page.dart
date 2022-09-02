@@ -1,5 +1,10 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -9,25 +14,18 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class ChangePasswordPage extends StatefulWidget {
-  ChangePasswordPage(this.store, {Key? key}) : super(key: key);
+  ChangePasswordPage({Key? key}) : super(key: key);
 
   static const String route = '/profile/password';
-  final AppStore store;
 
   @override
-  _ChangePassword createState() => _ChangePassword(store);
+  _ChangePassword createState() => _ChangePassword();
 }
 
 class _ChangePassword extends State<ChangePasswordPage> {
-  _ChangePassword(this.store);
-
   final Api api = webApi;
-  final AppStore store;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _passOldCtrl = TextEditingController();
   final TextEditingController _passCtrl = TextEditingController();
@@ -35,7 +33,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
 
   bool _submitting = false;
 
-  Future<void> _onSave() async {
+  Future<void> _onSave(AppStore store) async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _submitting = true;
@@ -45,7 +43,10 @@ class _ChangePassword extends State<ChangePasswordPage> {
       final String passOld = _passOldCtrl.text.trim();
       final String passNew = _passCtrl.text.trim();
       // check password
-      final passChecked = await webApi.account.checkAccountPassword(store.account.currentAccount, passOld);
+      final passChecked = await webApi.account.checkAccountPassword(
+        store.account.currentAccount,
+        passOld,
+      );
       if (passChecked == null) {
         showCupertinoDialog(
           context: context,
@@ -72,8 +73,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
         // we need to iterate over all active accounts and update there password
         store.settings.setPin(passNew);
         store.account.accountListAll.forEach((account) async {
-          final Map<String, dynamic> acc =
-              await api.evalJavascript('account.changePassword("${account.pubKey}", "$passOld", "$passNew")');
+          final acc = await api.evalJavascript('account.changePassword("${account.pubKey}", "$passOld", "$passNew")');
 
           // update encrypted seed after password updated
           store.account.accountListAll.map((accountData) {
@@ -195,7 +195,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                     ),
                   ],
                 ),
-                onPressed: _submitting ? null : _onSave,
+                onPressed: _submitting ? null : () => _onSave(context.read<AppStore>()),
               ),
             ],
           ),
