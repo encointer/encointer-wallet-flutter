@@ -1,3 +1,7 @@
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
+
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page/assets/index.dart';
@@ -6,25 +10,18 @@ import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 
 class EncointerHomePage extends StatefulWidget {
-  EncointerHomePage(this.store, {Key? key}) : super(key: key);
+  EncointerHomePage({Key? key}) : super(key: key);
 
   static final GlobalKey encointerHomePageKey = GlobalKey();
   static const String route = '/';
-  final AppStore store;
 
   @override
-  _EncointerHomePageState createState() => new _EncointerHomePageState(store);
+  _EncointerHomePageState createState() => _EncointerHomePageState();
 }
 
 class _EncointerHomePageState extends State<EncointerHomePage> {
-  _EncointerHomePageState(this.store);
-
-  final AppStore store;
-
   final PageController _pageController = PageController();
 
   NotificationPlugin? _notificationPlugin;
@@ -81,12 +78,13 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final _store = context.watch<AppStore>();
     _tabList = <TabData>[
       TabData(
         TabKey.Wallet,
         Iconsax.home_2,
       ),
-      if (store.settings.enableBazaar)
+      if (context.select<AppStore, bool>((store) => store.settings.enableBazaar))
         TabData(
           TabKey.Bazaar,
           Iconsax.shop,
@@ -112,11 +110,11 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,
         children: [
-          Assets(store),
-          if (store.settings.enableBazaar) BazaarMain(store), // dart collection if
-          ScanPage(store),
-          ContactsPage(store),
-          Profile(store),
+          Assets(_store),
+          if (context.select<AppStore, bool>((store) => store.settings.enableBazaar)) BazaarMain(),
+          ScanPage(),
+          ContactsPage(),
+          Profile(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

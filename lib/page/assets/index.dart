@@ -8,6 +8,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pausable_timer/pausable_timer.dart';
+import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:upgrader/upgrader.dart';
 
@@ -67,7 +68,7 @@ class _AssetsState extends State<Assets> {
     }
 
     if (panelController == null) {
-      panelController = new PanelController();
+      panelController = PanelController();
     }
 
     super.initState();
@@ -127,8 +128,8 @@ class _AssetsState extends State<Assets> {
         appBar: appBar,
         body: UpgradeAlert(
           upgrader: Upgrader(
-            appcastConfig: globalAppStore.appcastConfiguration,
-            debugLogging: globalAppStore.appcastConfiguration != null,
+            appcastConfig: context.watch<AppStore>().appcastConfiguration,
+            debugLogging: context.select<AppStore, bool>((e) => e.appcastConfiguration != null),
           ),
           child: SlidingUpPanel(
             maxHeight: _panelHeightOpen,

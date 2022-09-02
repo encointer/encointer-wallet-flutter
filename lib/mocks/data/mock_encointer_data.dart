@@ -19,9 +19,9 @@ List<CommunityIdentifier> testCommunityIdentifiers = [
 ];
 
 List<CidName> testCommunities = [
-  new CidName(cid, LeuZurich),
-  new CidName(cid2, bernBaer),
-  new CidName(cid3, buendnerBock),
+  CidName(cid, LeuZurich),
+  CidName(cid2, bernBaer),
+  CidName(cid3, buendnerBock),
 ];
 
 Map<int, CommunityReputation> testReputations = {

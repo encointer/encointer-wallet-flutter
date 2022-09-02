@@ -27,7 +27,7 @@ class SubstrateDartApi {
     _connectAndListen(endpoint);
 
     try {
-      _rpc = await this.rpc('rpc_methods').then((m) => RpcMethods.fromJson(m));
+      _rpc = await rpc('rpc_methods').then((m) => RpcMethods.fromJson(m));
 
       // print("Methods: ${methods.toString()}");
 
@@ -60,7 +60,7 @@ class SubstrateDartApi {
     }
     if (_client!.isClosed) {
       print('[dartApi] not connected. trying to reconnect to $endpoint');
-      this.reconnect();
+      reconnect();
       print('[dartApi] connection status: isclosed? ${_client!.isClosed}');
     }
 

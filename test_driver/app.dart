@@ -1,21 +1,20 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_driver/driver_extension.dart';
-import 'package:upgrader/upgrader.dart';
-
 import 'package:encointer_wallet/app.dart';
 import 'package:encointer_wallet/config.dart';
+import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
 import 'package:encointer_wallet/mocks/storage/mock_storage_setup.dart';
 import 'package:encointer_wallet/mocks/storage/prepare_mock_storage.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/local_storage.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_driver/driver_extension.dart';
+import 'package:provider/provider.dart';
+import 'package:upgrader/upgrader.dart';
 
 void main() async {
-  await Upgrader.clearSavedSettings();
+  // await Upgrader.clearSavedSettings();
 
   final appcastURL = 'https://raw.githubusercontent.com/larryaasen/upgrader/master/test/testappcast.xml';
   final cfg = AppcastConfiguration(url: appcastURL, supportedOS: ['android']);
-
-  AppStore _globalAppStore = AppStore(LocalStorage(), appcastConfiguration: cfg);
+  final _globalAppStore = AppStore(MockLocalStorage(), appcastConfiguration: cfg);
 
   // the tests are run in a separate isolate from the app. The test isolate can only interact with
   // the app via the driver in order to, for instance, configure the app state.
@@ -48,8 +47,11 @@ void main() async {
   // Call the `main()` function of the app, or call `runApp` with
   // any widget you are interested in testing.
   runApp(
-    const WalletApp(
-      Config(mockLocalStorage: true, mockSubstrateApi: true, appStoreConfig: StoreConfig.Test),
+    Provider(
+      create: (context) => _globalAppStore,
+      child: const WalletApp(
+        Config(mockLocalStorage: true, mockSubstrateApi: true, appStoreConfig: StoreConfig.Test),
+      ),
     ),
   );
 }

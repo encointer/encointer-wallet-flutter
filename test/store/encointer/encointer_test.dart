@@ -1,5 +1,3 @@
-import 'package:flutter_test/flutter_test.dart';
-
 import 'package:encointer_wallet/mocks/data/mock_account_data.dart';
 import 'package:encointer_wallet/mocks/data/mock_encointer_data.dart';
 import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
@@ -10,16 +8,15 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/encointer.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/bazaar_store/bazaar_store.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_store.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  final AppStore root = AppStore(MockLocalStorage(), config: StoreConfig.Test);
 
   group('EncointerStore test', () {
     test('encointer store initialization, serialization and cache works', () async {
-      globalAppStore = AppStore(MockLocalStorage(), config: StoreConfig.Test);
-      final AppStore root = globalAppStore;
       await root.init('_en');
-
       accList = [testAcc];
       currentAccountPubKey = accList[0]['pubKey'];
 
@@ -49,7 +46,7 @@ void main() {
       // - CommunityAccountStore(network, testCid, store.account.currentAddress)
       encointerStore.setChosenCid(testCid);
 
-      var testCommunityStore = new CommunityStore(testNetwork, testCid);
+      var testCommunityStore = CommunityStore(testNetwork, testCid);
       await testCommunityStore.initCommunityAccountStore(root.account.currentAddress);
 
       Map<String, dynamic> targetJson = {
@@ -63,7 +60,7 @@ void main() {
         'chosenCid': testCid.toJson(),
         'accountStores': Map<String, dynamic>.of({}),
         'bazaarStores': Map<String, dynamic>.of({
-          testCidFmt: new BazaarStore(testNetwork, testCid).toJson(),
+          testCidFmt: BazaarStore(testNetwork, testCid).toJson(),
         }),
         'communityStores': Map<String, dynamic>.of({
           testCidFmt: testCommunityStore.toJson(),
@@ -80,8 +77,6 @@ void main() {
     });
 
     test('purging encointer-store works and initializing new works', () async {
-      globalAppStore = AppStore(MockLocalStorage());
-      final AppStore root = globalAppStore;
       accList = [testAcc];
       currentAccountPubKey = accList[0]['pubKey'];
 

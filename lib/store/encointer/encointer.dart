@@ -79,7 +79,7 @@ abstract class _EncointerStore with Store {
   int? nextPhaseTimestamp;
 
   @observable
-  Map<CeremonyPhase, int> phaseDurations = new Map();
+  Map<CeremonyPhase, int> phaseDurations = Map();
 
   @computed
   get currentPhaseDuration => phaseDurations[currentPhase];
@@ -111,18 +111,18 @@ abstract class _EncointerStore with Store {
   ///
   /// Map: CommunityIdentifier.toFmtString() -> `BazaarStore`.
   @observable
-  ObservableMap<String, BazaarStore>? bazaarStores = new ObservableMap();
+  ObservableMap<String, BazaarStore>? bazaarStores = ObservableMap();
 
   /// Community sub-stores.
   ///
   /// Map: CommunityIdentifier.toFmtString() -> `CommunityStore`.
-  ObservableMap<String, CommunityStore>? communityStores = new ObservableMap();
+  ObservableMap<String, CommunityStore>? communityStores = ObservableMap();
 
   /// EncointerAccount sub-stores.
   ///
   /// Map: Address SS58 -> `CommunityStore`.
   @observable
-  ObservableMap<String?, EncointerAccountStore>? accountStores = new ObservableMap();
+  ObservableMap<String?, EncointerAccountStore>? accountStores = ObservableMap();
 
   /// The `BazaarStore` for the currently chosen community.
   @computed
@@ -225,11 +225,11 @@ abstract class _EncointerStore with Store {
       writeToCache();
 
       if (cid != null) {
-        this._rootStore.localStorage.setObject(chosenCidCacheKey(network), cid.toJson());
+        _rootStore.localStorage.setObject(chosenCidCacheKey(network), cid.toJson());
         initCommunityStore(cid, _rootStore.account.currentAddress);
         initBazaarStore(cid);
       } else {
-        this._rootStore.localStorage.removeKey(chosenCidCacheKey(network));
+        _rootStore.localStorage.removeKey(chosenCidCacheKey(network));
       }
     }
 
@@ -347,22 +347,22 @@ abstract class _EncointerStore with Store {
   ///
   /// Should always be called after creating a store to ensure full functionality.
   void initStore(AppStore root, Future<void> Function() cacheFn) {
-    this._rootStore = root;
-    this._cacheFn = cacheFn;
+    _rootStore = root;
+    _cacheFn = cacheFn;
 
     // These are merely safety guards, and should never be needed. A null reference error occurred here only because
     // a store was added in the development process after it has been written to cache. Hence, deserialization
     // initialized it with null.
     if (accountStores == null) {
-      accountStores = new ObservableMap();
+      accountStores = ObservableMap();
     }
 
     if (bazaarStores == null) {
-      bazaarStores = new ObservableMap();
+      bazaarStores = ObservableMap();
     }
 
     if (communityStores == null) {
-      communityStores = new ObservableMap();
+      communityStores = ObservableMap();
     }
 
     accountStores!.forEach((cid, store) => store.initStore(cacheFn));

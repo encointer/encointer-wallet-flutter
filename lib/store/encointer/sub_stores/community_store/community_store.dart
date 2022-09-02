@@ -69,10 +69,10 @@ abstract class _CommunityStore with Store {
   List<String>? bootstrappers;
 
   @observable
-  ObservableList<Location>? meetupLocations = new ObservableList();
+  ObservableList<Location>? meetupLocations = ObservableList();
 
   @observable
-  ObservableMap<String, CommunityAccountStore>? communityAccountStores = new ObservableMap();
+  ObservableMap<String, CommunityAccountStore>? communityAccountStores = ObservableMap();
 
   get applyDemurrage => _applyDemurrage;
 
@@ -151,8 +151,8 @@ abstract class _CommunityStore with Store {
   }
 
   void initStore(Function? cacheFn, double? Function(BalanceEntry)? applyDemurrage) {
-    this._cacheFn = cacheFn as Future<void> Function()?;
-    this._applyDemurrage = applyDemurrage;
+    _cacheFn = cacheFn as Future<void> Function()?;
+    _applyDemurrage = applyDemurrage;
 
     communityAccountStores!.forEach((_, store) => store.initStore(cacheFn));
   }
