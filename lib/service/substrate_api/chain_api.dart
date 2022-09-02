@@ -13,12 +13,12 @@ class ChainApi {
   final String _newHeadsSubscribeChannel = 'latestHeader';
 
   Future<void> startSubscriptions() async {
-    Log.d("api: starting encointer subscriptions", 'ChainApi');
-    this.subscribeNewHeads();
+    Log.d('api: starting encointer subscriptions', 'ChainApi');
+    subscribeNewHeads();
   }
 
   Future<void> stopSubscriptions() async {
-    Log.d("api: stopping encointer subscriptions", 'ChainApi');
+    Log.d('api: stopping encointer subscriptions', 'ChainApi');
     jsApi.unsubscribeMessage(_newHeadsSubscribeChannel);
   }
 
@@ -28,7 +28,7 @@ class ChainApi {
     jsApi.subscribeMessage(
       'chain.subscribeTimestamp("$_timeStampSubscribeChannel")',
       _timeStampSubscribeChannel,
-      (data) => {Log.d("timestamp: $data", 'ChainApi')},
+      (data) => {Log.d('timestamp: $data', 'ChainApi')},
     );
   }
 

@@ -49,7 +49,7 @@ class CeremonyProgressBar extends StatelessWidget {
         attestingPhaseFractionalWidth,
       );
     } catch (e, s) {
-      Log.e("Error getting ceremony progress ${e.toString()}", 'CeremonyProgressBar', s);
+      Log.e('Error getting ceremony progress ${e.toString()}', 'CeremonyProgressBar', s);
       return 0;
     }
   }
@@ -57,7 +57,7 @@ class CeremonyProgressBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double progressElapsed = _getCeremonyProgress()!;
-    Log.d("ceremony progress: $progressElapsed", 'CeremonyProgressBar');
+    Log.d('ceremony progress: $progressElapsed', 'CeremonyProgressBar');
 
     return Container(
       decoration: BoxDecoration(

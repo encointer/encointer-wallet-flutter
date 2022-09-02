@@ -8,7 +8,7 @@ class OfferingForm extends StatefulWidget {
   const OfferingForm({Key? key}) : super(key: key);
 
   @override
-  _OfferingFormState createState() => _OfferingFormState();
+  State<OfferingForm> createState() => _OfferingFormState();
 }
 
 class _OfferingFormState extends State<OfferingForm> {

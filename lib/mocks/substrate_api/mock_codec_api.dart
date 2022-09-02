@@ -10,7 +10,7 @@ class MockCodecApi extends CodecApi {
 
   @override
   Future<Uint8List> encodeToBytes(String type, dynamic obj) {
-    Log.d(":encodeToBytes: Warn: returning mock data", 'MockCodecApi');
+    Log.d(':encodeToBytes: Warn: returning mock data', 'MockCodecApi');
     return Future.value(Uint8List.fromList(utf8.encode(obj.toString())));
   }
 }

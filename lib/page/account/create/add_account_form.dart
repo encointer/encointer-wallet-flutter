@@ -101,7 +101,7 @@ class AddAccountForm extends StatelessWidget {
 
                   onSubmit();
                 } else {
-                  Log.d("formKey.currentState.validate failed", 'AddAccountForm');
+                  Log.d('formKey.currentState.validate failed', 'AddAccountForm');
                 }
               },
             ),

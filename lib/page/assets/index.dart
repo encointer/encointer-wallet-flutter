@@ -40,7 +40,7 @@ class Assets extends StatefulWidget {
   final AppStore store;
 
   @override
-  _AssetsState createState() => _AssetsState(store);
+  State<Assets> createState() => _AssetsState(store);
 }
 
 class _AssetsState extends State<Assets> {
@@ -99,7 +99,7 @@ class _AssetsState extends State<Assets> {
     balanceWatchdog = PausableTimer(
       const Duration(seconds: 12),
       () {
-        Log.d("[balanceWatchdog] triggered", 'Assets');
+        Log.d('[balanceWatchdog] triggered', 'Assets');
 
         _refreshBalanceAndNotify(dic);
         balanceWatchdog!
@@ -505,9 +505,9 @@ class _AssetsState extends State<Assets> {
 
   void _refreshBalanceAndNotify(Translations? dic) {
     webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
-      Log.d("[home:refreshBalanceAndNotify] get all balances", 'Assets');
+      Log.d('[home:refreshBalanceAndNotify] get all balances', 'Assets');
       if (widget.store.encointer.chosenCid == null) {
-        Log.d("[home:refreshBalanceAndNotify] no community selected", 'Assets');
+        Log.d('[home:refreshBalanceAndNotify] no community selected', 'Assets');
         return;
       }
       bool activeAccountHasBalance = false;
@@ -521,7 +521,7 @@ class _AssetsState extends State<Assets> {
                   widget.store.encointer.accountStores![widget.store.account.currentAddress]!.balanceEntries[cidStr]) ??
               0;
           double delta = newBalance - oldBalance;
-          Log.d("[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta", 'Assets');
+          Log.d('[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta', 'Assets');
           if (delta.abs() > demurrageRate) {
             widget.store.encointer.accountStores![widget.store.account.currentAddress]
                 ?.addBalanceEntry(cid, balances[cid]!);
@@ -530,7 +530,7 @@ class _AssetsState extends State<Assets> {
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
                   .replaceAll('CID_SYMBOL', community.metadata!.symbol)
                   .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
-              Log.d("[home:balanceWatchdog] $msg", 'Assets');
+              Log.d('[home:balanceWatchdog] $msg', 'Assets');
               NotificationPlugin.showNotification(45, dic.assets.fundsReceived, msg, cid: cidStr);
             }
           }
@@ -541,7 +541,7 @@ class _AssetsState extends State<Assets> {
       });
       if (!activeAccountHasBalance) {
         Log.d(
-          "[home:refreshBalanceAndNotify] didn't get any balance for active account. initialize store balance to zero",
+          '[home:refreshBalanceAndNotify] didn\'t get any balance for active account. initialize store balance to zero',
           'Assets',
         );
         widget.store.encointer.accountStores![widget.store.account.currentAddress]

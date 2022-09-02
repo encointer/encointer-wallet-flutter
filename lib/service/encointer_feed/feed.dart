@@ -29,16 +29,16 @@ Future<DateTime?> getMeetupTimeOverride(String network, CommunityIdentifier cid,
   );
 
   if (networkOverride == null) {
-    Log.d("No network specific override found", 'getMeetupTimeOverride');
+    Log.d('No network specific override found', 'getMeetupTimeOverride');
     return Future.value(null);
   }
 
   if (networkOverride.communities!.contains(cid.toFmtString())) {
     final meetupTimeOverride = networkOverride.getNextMeetupTime(DateTime.now(), phase);
-    Log.d("Found meetupTimeOverride: $meetupTimeOverride", 'getMeetupTimeOverride');
+    Log.d('Found meetupTimeOverride: $meetupTimeOverride', 'getMeetupTimeOverride');
     return meetupTimeOverride;
   } else {
-    Log.d("No community specific override found", 'getMeetupTimeOverride');
+    Log.d('No community specific override found', 'getMeetupTimeOverride');
     return Future.value(null);
   }
 }

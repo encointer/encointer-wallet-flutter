@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/page/account/create/create_pin_page.dart';
 import 'package:encointer_wallet/page/account/import/import_account_form.dart';
@@ -10,20 +11,15 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class ImportAccountPage extends StatefulWidget {
-  const ImportAccountPage(this.store, {Key? key}) : super(key: key);
+  const ImportAccountPage({Key? key}) : super(key: key);
 
   static const String route = '/account/import';
-  final AppStore store;
 
   @override
-  _ImportAccountPageState createState() => _ImportAccountPageState(store);
+  State<ImportAccountPage> createState() => _ImportAccountPageState();
 }
 
 class _ImportAccountPageState extends State<ImportAccountPage> {
-  _ImportAccountPageState(this.store);
-
-  final AppStore store;
-
   String? _keyType = '';
   String? _cryptoType = '';
   String? _derivePath = '';
@@ -57,7 +53,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       cryptoType: _cryptoType,
       derivePath: _derivePath,
     );
-    Log.d("imported account to JS.", 'ImportAccountPage');
+    Log.d('imported account to JS.', 'ImportAccountPage');
 
     // check if account duplicate
     if (acc['error'] != null) {
@@ -95,9 +91,10 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   }
 
   Future<void> _checkAccountDuplicate(Map<String, dynamic> acc) async {
-    int index = store.account.accountList.indexWhere((i) => i.pubKey == acc['pubKey']);
+    int index = context.read<AppStore>().account.accountList.indexWhere((i) => i.pubKey == acc['pubKey']);
     if (index > -1) {
-      Map<String, String> pubKeyMap = store.account.pubKeyAddressMap[store.settings.endpoint.ss58]!;
+      Map<String, String> pubKeyMap =
+          context.read<AppStore>().account.pubKeyAddressMap[context.read<AppStore>().settings.endpoint.ss58]!;
       String? address = pubKeyMap[acc['pubKey']];
       if (address != null) {
         showCupertinoDialog(
@@ -137,12 +134,12 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   Future<void> _saveAccount(Map<String, dynamic> acc) async {
     Log.d("Saving account: ${acc["pubKey"]}", 'ImportAccountPage');
     var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
-    await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
+    await context.read<AppStore>().addAccount(acc, context.read<AppStore>().account.newAccount.password, addresses[0]);
 
     String? pubKey = acc['pubKey'];
-    await store.setCurrentAccount(pubKey);
+    await context.read<AppStore>().setCurrentAccount(pubKey);
 
-    await store.loadAccountCache();
+    await context.read<AppStore>().loadAccountCache();
 
     // fetch info for the imported account
     webApi.fetchAccountData();
@@ -163,17 +160,17 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   }
 
   Widget _getImportForm() {
-    return ImportAccountForm(store, (Map<String, dynamic> data) async {
+    return ImportAccountForm(context.read<AppStore>(), (Map<String, dynamic> data) async {
       setState(() {
         _keyType = data['keyType'];
         _cryptoType = data['cryptoType'];
         _derivePath = data['derivePath'];
       });
 
-      if (store.account.isFirstAccount) {
+      if (context.read<AppStore>().account.isFirstAccount) {
         Navigator.pushNamed(context, CreatePinPage.route, arguments: CreatePinPageParams(_importAccount));
       } else {
-        store.account.setNewAccountPin(store.settings.cachedPin);
+        context.read<AppStore>().account.setNewAccountPin(context.read<AppStore>().settings.cachedPin);
         await _importAccount();
         Navigator.popUntil(context, ModalRoute.withName('/'));
       }

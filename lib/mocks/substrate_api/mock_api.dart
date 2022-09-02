@@ -41,7 +41,7 @@ class MockApi extends Api {
   @override
   Future<void> init() async {
     if (withUi) {
-      Log.d("[MockApi] launch of webView", 'MockApi');
+      Log.d('[MockApi] launch of webView', 'MockApi');
 
       await launchWebview();
     }

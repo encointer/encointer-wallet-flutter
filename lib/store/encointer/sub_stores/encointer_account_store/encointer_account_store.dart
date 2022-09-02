@@ -61,7 +61,7 @@ abstract class _EncointerAccountStore with Store {
       try {
         return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
       } catch (_e, s) {
-        Log.e("$address has reputation, but none that has not been linked yet", 'EncointerAccountStore', s);
+        Log.e('$address has reputation, but none that has not been linked yet', 'EncointerAccountStore', s);
         return 0;
       }
     }
@@ -69,7 +69,7 @@ abstract class _EncointerAccountStore with Store {
 
   @action
   void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
-    Log.d("balanceEntry $balanceEntry added to cid $cid added", 'EncointerAccountStore');
+    Log.d('balanceEntry $balanceEntry added to cid $cid added', 'EncointerAccountStore');
     balanceEntries[cid.toFmtString()] = balanceEntry;
     writeToCache();
   }
@@ -121,7 +121,7 @@ abstract class _EncointerAccountStore with Store {
   }
 
   void initStore(Function? cacheFn) {
-    this._cacheFn = cacheFn as Future<void> Function()?;
+    _cacheFn = cacheFn as Future<void> Function()?;
   }
 
   Future<void> writeToCache() {

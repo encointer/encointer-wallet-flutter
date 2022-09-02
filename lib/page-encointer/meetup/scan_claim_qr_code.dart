@@ -27,7 +27,7 @@ class ScanClaimQrCode extends StatelessWidget {
       // this is important because the runtime checks if there are too many claims trying to be registered.
       RootSnackBar.showMsg(dic.encointer.meetupClaimantInvalid);
       Log.d(
-        "[scanClaimQrCode] Claimant: ${claim.claimantPublic} is not part of registry: $registry",
+        '[scanClaimQrCode] Claimant: ${claim.claimantPublic} is not part of registry: $registry',
         'CeremonyProgressBar',
       );
     } else {
@@ -59,7 +59,7 @@ class ScanClaimQrCode extends StatelessWidget {
 
         validateAndStoreClaim(context, claim, dic);
       } catch (e, s) {
-        Log.e("Error decoding claim: $e", 'CeremonyProgressBar', s);
+        Log.e('Error decoding claim: $e', 'CeremonyProgressBar', s);
         RootSnackBar.showMsg(dic.encointer.claimsScannedDecodeFailed);
       }
 
@@ -83,7 +83,7 @@ class ScanClaimQrCode extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<PermissionStatus> snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data != PermissionStatus.granted) {
-              Log.d("[scanPage] Permission Status: ${snapshot.data}", 'CeremonyProgressBar');
+              Log.d('[scanPage] Permission Status: ${snapshot.data}', 'CeremonyProgressBar');
               return permissionErrorDialog(context);
             }
 

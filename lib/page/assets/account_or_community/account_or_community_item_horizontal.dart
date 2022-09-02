@@ -15,7 +15,7 @@ class AccountOrCommunityItemHorizontal extends StatefulWidget {
   }) : super(key: key);
 
   @override
-  _AccountOrCommunityItemHorizontalState createState() => _AccountOrCommunityItemHorizontalState();
+  State<AccountOrCommunityItemHorizontal> createState() => _AccountOrCommunityItemHorizontalState();
 }
 
 class _AccountOrCommunityItemHorizontalState extends State<AccountOrCommunityItemHorizontal> {

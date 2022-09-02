@@ -162,8 +162,8 @@ String getTxStatusTranslation(TranslationsHome dic, TxStatus? status) {
     case TxStatus.Error:
       return dic.txError;
     default:
-      Log.d("Illegal TxStatus supplied to translation: $status", 'getTxStatusTranslation');
-      return "";
+      Log.d('Illegal TxStatus supplied to translation: $status', 'getTxStatusTranslation');
+      return '';
   }
 }
 

@@ -49,20 +49,20 @@ class Ipfs {
 
   Future<SvgPicture> getCommunityIcon(String? cid) async {
     if (cid == null || cid.isEmpty) {
-      Log.d("[IPFS] return default encointer icon because ipfs-cid is not set", 'Ipfs');
+      Log.d('[IPFS] return default encointer icon because ipfs-cid is not set', 'Ipfs');
       return SvgPicture.asset(fall_back_community_icon);
     }
 
     try {
       var data = await getData(getIconsPath(cid));
       if (data == null) {
-        Log.d("[Ipfs] could not find community icon", 'Ipfs');
+        Log.d('[Ipfs] could not find community icon', 'Ipfs');
         return SvgPicture.asset(fall_back_community_icon);
       }
 
       return SvgPicture.string(data);
     } catch (e, s) {
-      Log.e("[Ipfs] error getting communityIcon: $e", 'Ipfs', s);
+      Log.e('[Ipfs] error getting communityIcon: $e', 'Ipfs', s);
       return SvgPicture.asset(fall_back_community_icon);
     }
   }
@@ -77,7 +77,7 @@ class Ipfs {
       return object.data;
     } catch (e, s) {
       // otherwise we would have to adjust the return type.
-      Log.e("$e", 'Ipfs', s);
+      Log.e('$e', 'Ipfs', s);
       throw (e.toString());
     }
   }
@@ -106,8 +106,8 @@ class Ipfs {
 
       return imageHash;
     } catch (e, s) {
-      Log.e("Ipfs upload of Image error $e", 'Ipfs', s);
-      return "";
+      Log.e('Ipfs upload of Image error $e', 'Ipfs', s);
+      return '';
     }
   }
 
@@ -131,8 +131,8 @@ class Ipfs {
 
       return jsonHash;
     } catch (e, s) {
-      Log.e("Ipfs upload of json error $e", 'Ipfs', s);
-      return "";
+      Log.e('Ipfs upload of json error $e', 'Ipfs', s);
+      return '';
     }
   }
 }
@@ -141,13 +141,13 @@ const String getRequest = '/api/v0/object/get?arg=';
 
 class IpfsDio {
   IpfsDio([BaseOptions? options]) {
-    this.dio = Dio(options);
+    dio = Dio(options);
   }
 
   late Dio dio;
 
   Future<Response<T>> get<T>(String cid) async {
-    Log.d("[IPFS] fetching data from: ${dio.options.baseUrl}$getRequest$cid", 'Ipfs');
+    Log.d('[IPFS] fetching data from: ${dio.options.baseUrl}$getRequest$cid', 'Ipfs');
     return dio.get('$getRequest$cid');
   }
 }
@@ -170,5 +170,5 @@ class Object {
     return Object(data: json['Data'], links: json['Links']);
   }
 
-  Map<String, dynamic> toJson() => <String, dynamic>{'links': this.links, 'data': this.data};
+  Map<String, dynamic> toJson() => <String, dynamic>{'links': links, 'data': data};
 }

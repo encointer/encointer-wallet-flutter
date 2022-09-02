@@ -5,12 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/app.dart';
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/subscan.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/local_storage.dart' as util;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -48,6 +51,10 @@ Future<void> main() async {
   HttpOverrides.global = MyHttpOverrides();
 
   runApp(
-    const WalletApp(Config()),
+    Provider(
+      // On test mode instead of LocalStorage() must be use MockLocalStorage()
+      create: (context) => AppStore(util.LocalStorage()),
+      child: const WalletApp(Config()),
+    ),
   );
 }

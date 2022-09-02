@@ -5,23 +5,23 @@ import 'package:encointer_wallet/service/substrate_api/assets_api.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 class MockAssetsApi extends AssetsApi {
-  MockAssetsApi(AppStore store, MockJSApi js) : super(store, js);
+  MockAssetsApi(this.store, MockJSApi js) : super(store, js);
 
-  final store = globalAppStore;
+  final AppStore store;
 
   @override
   Future<void> startSubscriptions() async {
-    Log.d("api: unimplemented startSubscription stub", 'MockAssetsApi');
+    Log.d('api: unimplemented startSubscription stub', 'MockAssetsApi');
   }
 
   @override
   Future<void> stopSubscriptions() async {
-    Log.d("api: unimplemented stopSubscriptions stub", 'MockAssetsApi');
+    Log.d('api: unimplemented stopSubscriptions stub', 'MockAssetsApi');
   }
 
   @override
   Future<void> subscribeBalance() async {
-    Log.d("api: unimplemented subscribeBalance stub", 'MockAssetsApi');
+    Log.d('api: unimplemented subscribeBalance stub', 'MockAssetsApi');
   }
 
   @override

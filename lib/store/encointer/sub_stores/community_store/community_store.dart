@@ -81,7 +81,7 @@ abstract class _CommunityStore with Store {
   @action
   Future<void> initCommunityAccountStore(String address) {
     if (!communityAccountStores!.containsKey(address)) {
-      Log.d("Adding new communityAccountStore for cid: ${cid.toFmtString()} and account: $address", 'CommunityStore');
+      Log.d('Adding new communityAccountStore for cid: ${cid.toFmtString()} and account: $address', 'CommunityStore');
 
       var store = CommunityAccountStore(network, cid, address);
       store.initStore(_cacheFn);
@@ -105,14 +105,14 @@ abstract class _CommunityStore with Store {
 
   @action
   void setBootstrappers(List<String> bs) {
-    Log.d("set bootstrappers to $bs", 'CommunityStore');
+    Log.d('set bootstrappers to $bs', 'CommunityStore');
     bootstrappers = bs;
     writeToCache();
   }
 
   @action
   void setCommunityMetadata(CommunityMetadata meta) {
-    Log.d("set metadata to $meta", 'CommunityStore');
+    Log.d('set metadata to $meta', 'CommunityStore');
 
     metadata = meta;
     writeToCache();
@@ -120,7 +120,7 @@ abstract class _CommunityStore with Store {
 
   @action
   void setMeetupTime([int? time]) {
-    Log.d("set meetupTime to $time", 'CommunityStore');
+    Log.d('set meetupTime to $time', 'CommunityStore');
 
     if (meetupTime != time) {
       meetupTime = time;
@@ -130,7 +130,7 @@ abstract class _CommunityStore with Store {
 
   @action
   void setMeetupTimeOverride([int? time]) {
-    Log.d("set meetupTimeOverride to $time", 'CommunityStore');
+    Log.d('set meetupTimeOverride to $time', 'CommunityStore');
 
     if (meetupTimeOverride != time) {
       meetupTimeOverride = time;
@@ -140,7 +140,7 @@ abstract class _CommunityStore with Store {
 
   @action
   void setMeetupLocations(List<Location> locations) {
-    Log.d("store: set meetupLocations to $locations", 'CommunityStore');
+    Log.d('store: set meetupLocations to $locations', 'CommunityStore');
     meetupLocations = ObservableList.of(locations);
     writeToCache();
 
@@ -159,8 +159,8 @@ abstract class _CommunityStore with Store {
   }
 
   void initStore(Function? cacheFn, double? Function(BalanceEntry)? applyDemurrage) {
-    this._cacheFn = cacheFn as Future<void> Function()?;
-    this._applyDemurrage = applyDemurrage;
+    _cacheFn = cacheFn as Future<void> Function()?;
+    _applyDemurrage = applyDemurrage;
 
     communityAccountStores!.forEach((_, store) => store.initStore(cacheFn));
   }

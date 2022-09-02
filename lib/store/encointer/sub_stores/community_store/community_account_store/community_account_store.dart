@@ -71,37 +71,37 @@ abstract class _CommunityAccountStore with Store {
 
   @action
   void setParticipantType([ParticipantType? type]) {
-    Log.d("Set participant type: $participantType", 'CommunityAccountStore');
-    this.participantType = type;
+    Log.d('Set participant type: $participantType', 'CommunityAccountStore');
+    participantType = type;
     writeToCache();
   }
 
   @action
   void purgeParticipantType() {
     if (participantType != null) {
-      Log.d("Purging participantType.", 'CommunityAccountStore');
-      this.participantType = null;
+      Log.d('Purging participantType.', 'CommunityAccountStore');
+      participantType = null;
       writeToCache();
     }
   }
 
   @action
   void setMeetup(Meetup meetup) {
-    Log.d("Set meetup: ${meetup.toJson()}", 'CommunityAccountStore');
+    Log.d('Set meetup: ${meetup.toJson()}', 'CommunityAccountStore');
     this.meetup = meetup;
     writeToCache();
   }
 
   @action
   void setMeetupCompleted() {
-    Log.d("settingMeetupCompleted", 'CommunityAccountStore');
+    Log.d('settingMeetupCompleted', 'CommunityAccountStore');
     meetupCompleted = true;
     writeToCache();
   }
 
   @action
   void clearMeetupCompleted() {
-    Log.d("clearing meetupCompleted", 'CommunityAccountStore');
+    Log.d('clearing meetupCompleted', 'CommunityAccountStore');
     meetupCompleted = false;
     writeToCache();
   }
@@ -109,7 +109,7 @@ abstract class _CommunityAccountStore with Store {
   @action
   void purgeMeetup() {
     if (meetup != null) {
-      Log.d("Purging meetup.", 'CommunityAccountStore');
+      Log.d('Purging meetup.', 'CommunityAccountStore');
       meetup = null;
       writeToCache();
     }
@@ -117,7 +117,7 @@ abstract class _CommunityAccountStore with Store {
 
   @action
   void purgeParticipantsClaims() {
-    Log.d("Purging participantsClaims.", 'CommunityAccountStore');
+    Log.d('Purging participantsClaims.', 'CommunityAccountStore');
     participantsClaims!.clear();
     writeToCache();
   }
@@ -128,7 +128,7 @@ abstract class _CommunityAccountStore with Store {
 
   @action
   void addParticipantClaim(ClaimOfAttendance claim) {
-    Log.d("adding participantsClaims.", 'CommunityAccountStore');
+    Log.d('adding participantsClaims.', 'CommunityAccountStore');
     participantsClaims![claim.claimantPublic!] = claim;
     writeToCache();
   }
@@ -145,7 +145,7 @@ abstract class _CommunityAccountStore with Store {
   }
 
   void initStore(Function? cacheFn) {
-    this._cacheFn = cacheFn as Future<void> Function()?;
+    _cacheFn = cacheFn as Future<void> Function()?;
   }
 
   Future<void> writeToCache() {

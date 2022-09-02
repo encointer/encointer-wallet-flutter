@@ -49,7 +49,7 @@ Future<ChangeResult> changeNetwork(
     // webView init until it is completely connected without some
     // refactoring.
     await Future.delayed(const Duration(milliseconds: 500), () {
-      Log.d("Waiting until we connected to new network...", 'changeNetwork');
+      Log.d('Waiting until we connected to new network...', 'changeNetwork');
     });
   }
 

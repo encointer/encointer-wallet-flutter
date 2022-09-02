@@ -135,7 +135,7 @@ abstract class _AccountStore with Store {
     if (address != null) {
       return address;
     } else {
-      Log.d("getNetworkAddress: could not get address (SS58)", 'AccountStore');
+      Log.d('getNetworkAddress: could not get address (SS58)', 'AccountStore');
       return currentAccount.address;
     }
   }
@@ -203,7 +203,7 @@ abstract class _AccountStore with Store {
         timer.cancel();
         queuedTxs = [];
       } else {
-        Log.d("Waiting for the api to reconnect to send ${queuedTxs.length} queued tx(s)", 'AccountStore');
+        Log.d('Waiting for the api to reconnect to send ${queuedTxs.length} queued tx(s)', 'AccountStore');
       }
     });
   }
@@ -272,7 +272,7 @@ abstract class _AccountStore with Store {
 
   @action
   Future<void> removeAccount(AccountData acc) async {
-    Log.d("removeAccount: removing ${acc.pubKey}", 'AccountStore');
+    Log.d('removeAccount: removing ${acc.pubKey}', 'AccountStore');
     await rootStore.localStorage.removeAccount(acc.pubKey);
     // remove encrypted seed after removing account
     deleteSeed(AccountStore.seedTypeMnemonic, acc.pubKey);
@@ -282,7 +282,7 @@ abstract class _AccountStore with Store {
       // set new currentAccount after currentAccount was removed
       List<Map<String, dynamic>> accounts = await rootStore.localStorage.getAccountList();
       var newCurrentAccountPubKey = accounts.length > 0 ? accounts[0]['pubKey'] : '';
-      Log.d("removeAccount: newCurrentAccountPubKey $newCurrentAccountPubKey", 'AccountStore');
+      Log.d('removeAccount: newCurrentAccountPubKey $newCurrentAccountPubKey', 'AccountStore');
       await rootStore.setCurrentAccount(newCurrentAccountPubKey);
     } else {
       // update account list

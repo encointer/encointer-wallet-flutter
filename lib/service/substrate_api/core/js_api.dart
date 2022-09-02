@@ -4,7 +4,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 import 'package:encointer_wallet/service/log/log_service.dart';
 
-const EncointerJsService = "EncointerJsService";
+const EncointerJsService = 'EncointerJsService';
 
 /// Core interface to talk with our JS-service
 class JSApi {
@@ -28,9 +28,9 @@ class JSApi {
 
     _web = HeadlessInAppWebView(
       initialData: InAppWebViewInitialData(data: jSSourceHtmlContainer(jsServiceEncointer)),
-      onConsoleMessage: (controller, message) => Log.d("JS-Console: ${message.message}", 'JSApi'),
+      onConsoleMessage: (controller, message) => Log.d('JS-Console: ${message.message}', 'JSApi'),
       onWebViewCreated: (controller) async {
-        Log.d("Adding the PolkaWallet javascript handler", 'JSApi');
+        Log.d('Adding the PolkaWallet javascript handler', 'JSApi');
         controller.addJavaScriptHandler(
             handlerName: EncointerJsService,
             callback: (args) {
@@ -63,9 +63,9 @@ class JSApi {
     // log updates about the webView state until it is ready.
     Timer.periodic(const Duration(seconds: 2), (timer) {
       if (!initWebViewCompleter.isCompleted) {
-        Log.d("webView is being initialized...", 'JSApi');
+        Log.d('webView is being initialized...', 'JSApi');
       } else {
-        Log.d("webView is ready", 'JSApi');
+        Log.d('webView is ready', 'JSApi');
         timer.cancel();
       }
     });
@@ -142,12 +142,12 @@ class JSApi {
   }
 
   Future<void> closeWebView() async {
-    Log.d("[JSApi]: closing webView", 'JSApi');
+    Log.d('[JSApi]: closing webView', 'JSApi');
     if (_web != null) {
       await _web!.dispose();
       _web = null;
     } else {
-      Log.d("[JSApi]: Did not close webView because it was closed already.", 'JSApi');
+      Log.d('[JSApi]: Did not close webView because it was closed already.', 'JSApi');
     }
   }
 }

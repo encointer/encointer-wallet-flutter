@@ -11,25 +11,25 @@ class MockIpfs extends Ipfs {
 
   @override
   Future getJson(String cid) async {
-    Log.d("unimplemented getJson", 'MockIpfs');
+    Log.d('unimplemented getJson', 'MockIpfs');
   }
 
   @override
   Future<SvgPicture> getCommunityIcon(String? cid) {
-    final mockIcon = "assets/images/assets/icon_leu.svg";
-    Log.d("Getting mock icon: $mockIcon", 'MockIpfs');
+    final mockIcon = 'assets/images/assets/icon_leu.svg';
+    Log.d('Getting mock icon: $mockIcon', 'MockIpfs');
     return Future.value(SvgPicture.asset(mockIcon));
   }
 
   @override
   Future<String> uploadImage(File image) async {
-    Log.d("unimplemented uploadImage", 'MockIpfs');
-    return "unimplemented uploadImage";
+    Log.d('unimplemented uploadImage', 'MockIpfs');
+    return 'unimplemented uploadImage';
   }
 
   @override
   Future<String> uploadJson(Map<String, dynamic> json) async {
-    Log.d("unimplemented uploadJson", 'MockIpfs');
-    return "unimplemented uploadJson";
+    Log.d('unimplemented uploadJson', 'MockIpfs');
+    return 'unimplemented uploadJson';
   }
 }

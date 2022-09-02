@@ -10,7 +10,7 @@ class EncointerDartApi {
   SubstrateDartApi _dartApi;
 
   Future<void> close() async {
-    Log.d("[EncointerDartApi: closing", 'EncointerDartApi');
+    Log.d('[EncointerDartApi: closing', 'EncointerDartApi');
     return _dartApi.close();
   }
 

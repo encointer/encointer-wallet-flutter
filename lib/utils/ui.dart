@@ -39,7 +39,7 @@ class UI {
     try {
       await launchUrl(Uri.parse(url));
     } catch (e, s) {
-      Log.e("Could not launch URL: $e", 'UI', s);
+      Log.e('Could not launch URL: $e', 'UI', s);
     }
   }
 

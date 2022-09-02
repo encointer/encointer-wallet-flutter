@@ -21,17 +21,17 @@ class MockEncointerApi extends EncointerApi {
 
   @override
   Future<void> startSubscriptions() async {
-    Log.d("empty startSubscriptions stub", 'MockEncointerApi');
+    Log.d('empty startSubscriptions stub', 'MockEncointerApi');
   }
 
   @override
   Future<void> stopSubscriptions() async {
-    Log.d("empty stopSubscriptions stub", 'MockEncointerApi');
+    Log.d('empty stopSubscriptions stub', 'MockEncointerApi');
   }
 
   @override
   Future<void> subscribeBusinessRegistry() async {
-    Log.d("empty subscribeBusinessRegistry stub", 'MockEncointerApi');
+    Log.d('empty subscribeBusinessRegistry stub', 'MockEncointerApi');
   }
 
   @override
@@ -89,7 +89,7 @@ class MockEncointerApi extends EncointerApi {
 
   @override
   Future<List<AccountBusinessTuple>> getBusinesses() async {
-    Log.d("warn: getBusinessRegistry mock is unimplemented", 'MockEncointerApi');
+    Log.d('warn: getBusinessRegistry mock is unimplemented', 'MockEncointerApi');
     return Future.value([]);
   }
 
@@ -140,7 +140,7 @@ class MockEncointerApi extends EncointerApi {
 
   @override
   Future<List<String>> pendingExtrinsics() {
-    Log.d("calling mock `pendingExtrinsics", 'MockEncointerApi');
+    Log.d('calling mock `pendingExtrinsics', 'MockEncointerApi');
     return Future.value([]);
   }
 }

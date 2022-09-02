@@ -79,7 +79,7 @@ class Api {
     account.setFetchAccountData(fetchAccountData);
 
     // launch the webView and connect to the endpoint
-    Log.d("launch the webView", 'Api');
+    Log.d('launch the webView', 'Api');
 
     await launchWebview();
   }
@@ -148,7 +148,7 @@ class Api {
   Future<void> connectNodeAll() async {
     List<String?> nodes = store.settings.endpointList.map((e) => e.value).toList();
     List<NodeConfig?> configs = store.settings.endpointList.map((e) => e.overrideConfig).toList();
-    Log.d("configs: $configs", 'Api');
+    Log.d('configs: $configs', 'Api');
 
     // do connect
     String? res = await evalJavascript('settings.connectAll(${jsonEncode(nodes)}, ${jsonEncode(configs)})');
@@ -169,7 +169,7 @@ class Api {
     if (index < 0) return;
     store.settings.setEndpoint(store.settings.endpointList[index]);
     await fetchNetworkProps();
-    Log.d("get community data", 'Api');
+    Log.d('get community data', 'Api');
 
     encointer.getCommunityData();
   }
@@ -194,15 +194,15 @@ class Api {
   }
 
   void startSubscriptions() {
-    this.encointer.startSubscriptions();
-    this.chain.startSubscriptions();
-    this.assets.startSubscriptions();
+    encointer.startSubscriptions();
+    chain.startSubscriptions();
+    assets.startSubscriptions();
   }
 
   Future<void> stopSubscriptions() async {
-    await this.encointer.stopSubscriptions();
-    await this.chain.stopSubscriptions();
-    await this.assets.stopSubscriptions();
+    await encointer.stopSubscriptions();
+    await chain.stopSubscriptions();
+    await assets.stopSubscriptions();
   }
 
   Future<void> subscribeMessage(
@@ -219,7 +219,7 @@ class Api {
 
   Future<bool> isConnected() async {
     bool connected = await evalJavascript('settings.isConnected()');
-    Log.d("Api is connected: $connected", 'Api');
+    Log.d('Api is connected: $connected', 'Api');
 
     return connected;
   }
