@@ -138,7 +138,7 @@ const String getRequest = '/api/v0/object/get?arg=';
 
 class IpfsDio {
   IpfsDio([BaseOptions? options]) {
-    this.dio = Dio(options);
+    dio = Dio(options);
   }
 
   late Dio dio;
@@ -167,5 +167,5 @@ class Object {
     return Object(data: json['Data'], links: json['Links']);
   }
 
-  Map<String, dynamic> toJson() => <String, dynamic>{'links': this.links, 'data': this.data};
+  Map<String, dynamic> toJson() => <String, dynamic>{'links': links, 'data': data};
 }

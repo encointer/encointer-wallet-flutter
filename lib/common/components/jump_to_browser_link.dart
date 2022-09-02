@@ -9,7 +9,7 @@ class JumpToBrowserLink extends StatefulWidget {
   final MainAxisAlignment? mainAxisAlignment;
 
   @override
-  _JumpToBrowserLinkState createState() => _JumpToBrowserLinkState();
+  State<JumpToBrowserLink> createState() => _JumpToBrowserLinkState();
 }
 
 class _JumpToBrowserLinkState extends State<JumpToBrowserLink> {

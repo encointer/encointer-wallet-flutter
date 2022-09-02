@@ -37,7 +37,7 @@ class ReapVoucherPage extends StatefulWidget {
   final Api api;
 
   @override
-  _ReapVoucherPageState createState() => _ReapVoucherPageState();
+  State<ReapVoucherPage> createState() => _ReapVoucherPageState();
 }
 
 class _ReapVoucherPageState extends State<ReapVoucherPage> {

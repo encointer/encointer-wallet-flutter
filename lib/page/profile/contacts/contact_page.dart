@@ -1,8 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
-
 import 'package:encointer_wallet/common/components/rounded_button.dart';
 import 'package:encointer_wallet/common/components/tap_tool_tip.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
@@ -12,6 +7,10 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 
 class ContactPage extends StatefulWidget {
   ContactPage({Key? key}) : super(key: key);
@@ -19,7 +18,7 @@ class ContactPage extends StatefulWidget {
   static const String route = '/profile/contact';
 
   @override
-  _Contact createState() => _Contact();
+  State<ContactPage> createState() => _Contact();
 }
 
 class _Contact extends State<ContactPage> {
