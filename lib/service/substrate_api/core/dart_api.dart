@@ -66,7 +66,6 @@ class SubstrateDartApi {
       this.reconnect();
       Log.d("[dartApi] connection status: isclosed? ${_client?.isClosed}", 'SubstrateDartApi');
     }
-
     return _client!.sendRequest(method, params);
   }
 

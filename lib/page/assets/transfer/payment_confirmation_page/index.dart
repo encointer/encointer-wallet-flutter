@@ -1,6 +1,12 @@
 import 'dart:async';
 
 import 'package:animated_check/animated_check.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
+
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
@@ -14,11 +20,6 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:intl/intl.dart';
 
 class PaymentConfirmationParams {
   PaymentConfirmationParams({
@@ -153,7 +154,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
         _transferState = TransferState.failed;
       } else {
         _transferState = TransferState.finished;
-        _blockTimestamp = new DateTime.fromMillisecondsSinceEpoch(res['time']);
+        _blockTimestamp = DateTime.fromMillisecondsSinceEpoch(res['time']);
       }
     };
 
@@ -167,7 +168,6 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     // });
 
     Log.d("TransferState after callback: $_transferState", 'PaymentConfirmationPage');
-
     // trigger rebuild after state update in callback
     setState(() {});
   }
@@ -210,7 +210,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
           ),
         );
       default:
-        return const Text("Unknown transfer state");
+        return const Text('Unknown transfer state');
     }
   }
 
@@ -236,7 +236,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
           return RichText(
             textAlign: TextAlign.center,
             text: TextSpan(
-              text: "${dic.assets.paymentFinished}: $date\n\n",
+              text: '${dic.assets.paymentFinished}: $date\n\n',
               style: h2Grey,
               children: [
                 TextSpan(
@@ -255,7 +255,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
           );
         }
       default:
-        return const Text("Unknown transfer state");
+        return const Text('Unknown transfer state');
     }
   }
 
@@ -267,8 +267,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   void _initializeAnimation() {
     _animationController = AnimationController(vsync: this, duration: const Duration(seconds: 1));
 
-    _animation = new Tween<double>(begin: 0, end: 1)
-        .animate(new CurvedAnimation(parent: _animationController!, curve: Curves.easeInOutCirc));
+    _animation = Tween<double>(begin: 0, end: 1)
+        .animate(CurvedAnimation(parent: _animationController!, curve: Curves.easeInOutCirc));
 
     _animationController!.forward();
 

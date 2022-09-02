@@ -19,9 +19,9 @@ List<CommunityIdentifier> testCommunityIdentifiers = [
 ];
 
 List<CidName> testCommunities = [
-  new CidName(cid, LeuZurich),
-  new CidName(cid2, bernBaer),
-  new CidName(cid3, buendnerBock),
+  CidName(cid, LeuZurich),
+  CidName(cid2, bernBaer),
+  CidName(cid3, buendnerBock),
 ];
 
 Map<int, CommunityReputation> testReputations = {
@@ -49,9 +49,9 @@ Map<String, dynamic> claim = {
 };
 
 const List<String> testMeetupRegistry = [
-  "0xb67fe3812b469da5cac180161851120a45b6c6cf13f5be7062874bfa6cec381f",
-  "0x1bb4e46bbd2bb547d93d952c5de12ea7e3a3f3b638551a8eaf35ad086700c00c",
-  "0x1cc4e46bbd2bb547d93d952c5de12ea7e3a3f3b638551a8eaf35ad086700c00c",
+  '0xb67fe3812b469da5cac180161851120a45b6c6cf13f5be7062874bfa6cec381f',
+  '0x1bb4e46bbd2bb547d93d952c5de12ea7e3a3f3b638551a8eaf35ad086700c00c',
+  '0x1cc4e46bbd2bb547d93d952c5de12ea7e3a3f3b638551a8eaf35ad086700c00c',
 ];
 
 const Map<CeremonyPhase, int> testPhaseDurations = {
@@ -72,7 +72,7 @@ EndpointData unitTestEndpoint = EndpointData.fromJson({
   'info': 'unit-test-network',
   'ss58': 42,
   'text': 'Unit-Test endpoint data',
-  'value': "Unit-Test network must not connect to a node",
+  'value': 'Unit-Test network must not connect to a node',
   'overrideConfig': Map<String, dynamic>.of({}),
   'ipfsGateway': 'Unit-Test network must no connect to ipfs'
 });

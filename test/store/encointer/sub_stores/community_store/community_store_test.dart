@@ -13,14 +13,14 @@ void main() {
   group('communityStore', () {
     test('json serialization and caching works', () async {
       var localStorage = MockLocalStorage();
-      var communityStoreCacheKey = "communityStore-test-cache";
+      var communityStoreCacheKey = 'communityStore-test-cache';
 
       // Only to not get null errors in tests
       webApi = getMockApi(globalAppStore, withUI: false);
       webApi.init();
 
       var communityStore = CommunityStore(
-        "My Test Network",
+        'My Test Network',
         mediterraneanTestCommunity,
       );
 
@@ -30,11 +30,11 @@ void main() {
       );
 
       var testMetadata = CommunityMetadata(
-        "Test-Community",
-        "TCM",
-        "AssetsCid",
-        "Community-Url",
-        "Theme-String",
+        'Test-Community',
+        'TCM',
+        'AssetsCid',
+        'Community-Url',
+        'Theme-String',
       );
 
       var bootstrappers = [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS];
@@ -51,14 +51,14 @@ void main() {
       var bobCommunityAccountStore = communityStore.communityAccountStores![BOB_ADDRESS]!;
 
       Map<String, dynamic> targetJson = {
-        "network": "My Test Network",
-        "cid": mediterraneanTestCommunity.toJson(),
-        "metadata": testMetadata.toJson(),
-        "demurrage": 1.1,
-        "meetupTime": 10,
-        "meetupTimeOverride": null,
-        "bootstrappers": bootstrappers,
-        "meetupLocations": testLocations.map((l) => l.toJson()).toList(),
+        'network': 'My Test Network',
+        'cid': mediterraneanTestCommunity.toJson(),
+        'metadata': testMetadata.toJson(),
+        'demurrage': 1.1,
+        'meetupTime': 10,
+        'meetupTimeOverride': null,
+        'bootstrappers': bootstrappers,
+        'meetupLocations': testLocations.map((l) => l.toJson()).toList(),
         'communityAccountStores': Map<String, dynamic>.of({
           ALICE_ADDRESS: aliceCommunityAccountStore.toJson(),
           BOB_ADDRESS: bobCommunityAccountStore.toJson(),

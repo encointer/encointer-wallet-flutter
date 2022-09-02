@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/ipfs/http_api.dart';

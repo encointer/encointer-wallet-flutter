@@ -1,3 +1,8 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:iconsax/iconsax.dart';
+
 import 'package:encointer_wallet/common/components/address_input_field.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
@@ -15,10 +20,6 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/ui.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:iconsax/iconsax.dart';
 
 class TransferPageParams {
   TransferPageParams({
@@ -55,7 +56,7 @@ class _TransferPageState extends State<TransferPage> {
 
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _amountCtrl = new TextEditingController();
+  final TextEditingController _amountCtrl = TextEditingController();
 
   AccountData? _accountTo;
 
@@ -108,7 +109,7 @@ class _TransferPageState extends State<TransferPage> {
                               .translationsForLocale()
                               .assets
                               .yourBalanceFor
-                              .replaceAll("ACCOUNT_NAME", Fmt.accountName(context, store.account.currentAccount)),
+                              .replaceAll('ACCOUNT_NAME', Fmt.accountName(context, store.account.currentAccount)),
                           style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                           textAlign: TextAlign.center,
                         ),
@@ -138,7 +139,7 @@ class _TransferPageState extends State<TransferPage> {
                             }
                             return null;
                           },
-                          suffixIcon: const Text("ⵐ", style: TextStyle(color: encointerGrey, fontSize: 44)),
+                          suffixIcon: const Text('ⵐ', style: TextStyle(color: encointerGrey, fontSize: 44)),
                         ),
                         const SizedBox(height: 24),
                         Row(
@@ -165,7 +166,7 @@ class _TransferPageState extends State<TransferPage> {
                   store.settings.developerMode
                       ? Center(
                           child: Text(
-                            "${dic.assets.fee}: TODO compute Fee", // TODO compute fee #589
+                            '${dic.assets.fee}: TODO compute Fee', // TODO compute fee #589
                             style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                           ),
                         )

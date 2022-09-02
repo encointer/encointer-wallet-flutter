@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
@@ -21,6 +20,8 @@ import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
 import 'package:encointer_wallet/page/account/create/add_account_page.dart';
+import 'package:encointer_wallet/page/assets/account_or_community/account_or_community_data.dart';
+import 'package:encointer_wallet/page/assets/account_or_community/switch_account_or_community.dart';
 import 'package:encointer_wallet/page/assets/receive/receive_page.dart';
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -32,9 +33,6 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-
-import 'account_or_community/account_or_community_data.dart';
-import 'account_or_community/switch_account_or_community.dart';
 
 class Assets extends StatefulWidget {
   Assets(this.store, {Key? key}) : super(key: key);
@@ -68,7 +66,7 @@ class _AssetsState extends State<Assets> {
     }
 
     if (panelController == null) {
-      panelController = new PanelController();
+      panelController = PanelController();
     }
 
     super.initState();
@@ -102,6 +100,7 @@ class _AssetsState extends State<Assets> {
       const Duration(seconds: 12),
       () {
         Log.d("[balanceWatchdog] triggered", 'Assets');
+
         _refreshBalanceAndNotify(dic);
         balanceWatchdog!
           ..reset()
@@ -182,7 +181,7 @@ class _AssetsState extends State<Assets> {
                                           style: const TextStyle(fontSize: 60),
                                         ),
                                         Text(
-                                          "${dic!.assets.balance}, ${store.encointer.community?.symbol}",
+                                          '${dic!.assets.balance}, ${store.encointer.community?.symbol}',
                                           style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                                         ),
                                       ],
@@ -205,7 +204,7 @@ class _AssetsState extends State<Assets> {
                           if (store.settings.developerMode)
                             ElevatedButton(
                               onPressed: store.dataUpdate.setInvalidated,
-                              child: const Text("Invalidate data to trigger state update"),
+                              child: const Text('Invalidate data to trigger state update'),
                             ),
                           const SizedBox(
                             height: 42,

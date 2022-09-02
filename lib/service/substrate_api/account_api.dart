@@ -80,7 +80,6 @@ class AccountApi {
     );
 
     Log.d("addressFromUri: $address", 'AccountApi');
-
     return address;
   }
 

@@ -86,14 +86,14 @@ const network_ss58_map = {
   'substrate': 42,
 };
 
-const fall_back_community_icon = "assets/nctr_logo_faces_only_thick.svg";
-const community_icon_name = "community_icon.svg";
+const fall_back_community_icon = 'assets/nctr_logo_faces_only_thick.svg';
+const community_icon_name = 'community_icon.svg';
 
-const String ipfs_gateway_encointer = "http://ipfs.encointer.org:8080"; // AVD: 10.0.2.2 = 127.0.0.1
+const String ipfs_gateway_encointer = 'http://ipfs.encointer.org:8080'; // AVD: 10.0.2.2 = 127.0.0.1
 const String ipfs_gateway_local = 'http://10.0.2.2:8080';
 
-const String encointer_feed = "https://encointer.github.io/feed";
-const String encointer_feed_overrides = "$encointer_feed/overrides.json";
+const String encointer_feed = 'https://encointer.github.io/feed';
+const String encointer_feed_overrides = '$encointer_feed/overrides.json';
 
 const int ert_decimals = 12;
 const int encointer_currencies_decimals = 18;
@@ -135,7 +135,7 @@ String replaceLocalePlaceholder(String link, String locale) {
     case 'de':
       return link.replaceAll(locale_place_holder, '');
     default:
-      Log.d("[replaceLocale] unsupported locale, defaulting to english", 'consts.dart');
+      Log.d('[replaceLocale] unsupported locale, defaulting to english', 'consts.dart');
       return link.replaceAll(locale_place_holder, 'en');
   }
 }

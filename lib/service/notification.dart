@@ -92,7 +92,12 @@ class NotificationPlugin {
     var iOSPlatformChannelSpecifics = const IOSNotificationDetails(sound: 'lions_growl.wav', presentSound: true);
     var platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.show(0, title, body, platformChannelSpecifics,
-        payload: payload ?? 'undefined');
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      title,
+      body,
+      platformChannelSpecifics,
+      payload: payload ?? 'undefined',
+    );
   }
 }

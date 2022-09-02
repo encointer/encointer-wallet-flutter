@@ -1,9 +1,9 @@
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
-
-import 'qr_code_base.dart';
+import 'package:encointer_wallet/page/qr_scan/qr_codes/qr_code_base.dart';
 
 class VoucherQrCode extends QrCode<VoucherData> {
   VoucherQrCode.withData(VoucherData data) : super(data);
+
   VoucherQrCode({
     required String voucherUri,
     required CommunityIdentifier cid,
@@ -16,7 +16,7 @@ class VoucherQrCode extends QrCode<VoucherData> {
   QrCodeVersion? version = QrCodeVersion.v2_0;
 
   static VoucherQrCode fromPayload(String payload) {
-    return fromQrFields(payload.split("\n"));
+    return fromQrFields(payload.split('\n'));
   }
 
   static VoucherQrCode fromQrFields(List<String> fields) {

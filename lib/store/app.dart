@@ -1,15 +1,15 @@
 import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/service/log/log_service.dart';
+
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/assets/assets.dart';
 import 'package:encointer_wallet/store/chain/chain.dart';
+import 'package:encointer_wallet/store/data_update/data_update.dart';
 import 'package:encointer_wallet/store/encointer/encointer.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/local_storage.dart';
-
-import 'data_update/data_update.dart';
 
 part 'app.g.dart';
 
@@ -143,7 +143,7 @@ abstract class _AppStore with Store {
   /// the real cache with (unit-)test runs.
   String getCacheKey(String key) {
     var cacheKey = '${settings.endpoint.info}_$key';
-    return config == StoreConfig.Test ? "test-$cacheKey" : cacheKey;
+    return config == StoreConfig.Test ? 'test-$cacheKey' : cacheKey;
   }
 
   /// Returns the cache key for the encointer-storage.
@@ -151,8 +151,8 @@ abstract class _AppStore with Store {
   /// Prefixes the key with `test-` if we are in test-mode to prevent overwriting of
   /// the real cache with (unit-)test runs.
   String encointerCacheKey(String networkInfo) {
-    var key = "$encointerCachePrefix-$networkInfo";
-    return config == StoreConfig.Test ? "test-$key" : key;
+    var key = '$encointerCachePrefix-$networkInfo';
+    return config == StoreConfig.Test ? 'test-$key' : key;
   }
 
   Future<bool> purgeEncointerCache(String networkInfo) async {
@@ -189,6 +189,7 @@ abstract class _AppStore with Store {
       await localStorage.setKV(cacheVersionFinalKey, encointerCacheVersion);
 
       Log.d("Writing the new store to cache", '_AppStore');
+
       return encointer.writeToCache();
     }
   }
@@ -198,6 +199,7 @@ abstract class _AppStore with Store {
 
     if (cachedEncointerStore != null) {
       Log.d("Found cached encointer store $cachedEncointerStore", '_AppStore');
+
       var encointerStore = EncointerStore.fromJson(cachedEncointerStore);
 
       // Cache the entire encointer store at once: Check if this is too expensive,
@@ -228,12 +230,13 @@ abstract class _AppStore with Store {
 
     if (account.currentAccountPubKey == pubKey) {
       Log.d("setCurrentAccount: currentAccount is already new account. returning", '_AppStore');
+
       return Future.value(null);
     }
 
     await account.setCurrentAccount(pubKey);
 
-    if (pubKey == "") {
+    if (pubKey == '') {
       // happens only if the last account in the storage has been deleted
       return Future.value(null);
     }

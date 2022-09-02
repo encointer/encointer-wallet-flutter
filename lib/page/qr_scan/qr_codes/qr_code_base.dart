@@ -5,6 +5,7 @@ const String QR_CODE_FIELD_SEPARATOR = '\n';
 
 abstract class QrCode<QrCodeData extends ToQrFields> {
   QrCode(this.data);
+
   QrCodeContext? context;
 
   QrCodeVersion? version;
@@ -40,9 +41,9 @@ enum QrCodeVersion { v1_0, v2_0 }
 extension QrCodeContextExt on QrCodeContext? {
   /// Parses `encointer-<context>` into a `QrCodeContext`.
   static QrCodeContext fromQrField(String value) {
-    var context = value.toString().split("-").last.toLowerCase();
+    var context = value.toString().split('-').last.toLowerCase();
     return QrCodeContext.values.firstWhere(
-      (type) => type.toString().split(".").last.toLowerCase() == context,
+      (type) => type.toString().split('.').last.toLowerCase() == context,
       orElse: () {
         throw FormatException(
             'QR scan context [$value] ->  is not supported; supported values are: ${QrCodeContext.values}');
@@ -51,8 +52,8 @@ extension QrCodeContextExt on QrCodeContext? {
   }
 
   String toQrField() {
-    var variant = this.toString().split(".").last.toLowerCase();
-    return "$ENCOINTER_PREFIX-$variant";
+    var variant = this.toString().split('.').last.toLowerCase();
+    return '$ENCOINTER_PREFIX-$variant';
   }
 }
 
@@ -67,7 +68,7 @@ extension QrCodeVersionExt on QrCodeVersion? {
 
   /// Returns the version number in the format 'v2.0'
   String toVersionNumber() {
-    final variant = this.toString().split(".").last;
-    return variant.replaceAll("_", ".");
+    final variant = this.toString().split('.').last;
+    return variant.replaceAll('_', '.');
   }
 }

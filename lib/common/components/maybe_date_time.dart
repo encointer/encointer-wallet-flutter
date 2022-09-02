@@ -22,7 +22,7 @@ class MaybeDateTime extends StatelessWidget {
     late String date;
 
     if (meetupTime != null) {
-      date = dateFormat.format(new DateTime.fromMillisecondsSinceEpoch(meetupTime!));
+      date = dateFormat.format(DateTime.fromMillisecondsSinceEpoch(meetupTime!));
     }
 
     return meetupTime != null ? Text(date, style: this.style) : const CupertinoActivityIndicator();

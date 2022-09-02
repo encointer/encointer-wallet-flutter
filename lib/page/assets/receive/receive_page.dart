@@ -22,12 +22,13 @@ class ReceivePage extends StatefulWidget {
   ReceivePage(this.store, {Key? key}) : super(key: key);
   static const String route = '/assets/receive';
   final AppStore store;
+
   @override
   _ReceivePageState createState() => _ReceivePageState();
 }
 
 class _ReceivePageState extends State<ReceivePage> {
-  final TextEditingController _amountController = new TextEditingController();
+  final TextEditingController _amountController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   bool generateQR = false;
   late InvoiceQrCode invoice;
@@ -85,11 +86,11 @@ class _ReceivePageState extends State<ReceivePage> {
           double oldBalance = widget.store.encointer.applyDemurrage(widget.store.encointer.communityBalanceEntry) ?? 0;
           if (newBalance != null) {
             double delta = newBalance - oldBalance;
-            Log.d("[receivePage] balance was $oldBalance, changed by $delta", 'ReceivePage');
+            Log.d('[receivePage] balance was $oldBalance, changed by $delta', 'ReceivePage');
             if (delta > demurrageRate!) {
               var msg = dic.assets.incomingConfirmed
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
-                  .replaceAll('CID_SYMBOL', widget.store.encointer.community?.metadata?.symbol ?? "null")
+                  .replaceAll('CID_SYMBOL', widget.store.encointer.community?.metadata?.symbol ?? 'null')
                   .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
               Log.d("[receivePage] $msg", 'ReceivePage');
               widget.store.encointer.account?.addBalanceEntry(cid, balances[cid]!);
@@ -162,7 +163,7 @@ class _ReceivePageState extends State<ReceivePage> {
                             });
                           },
                           suffixIcon: const Text(
-                            "ⵐ",
+                            'ⵐ',
                             style: TextStyle(
                               color: encointerGrey,
                               fontSize: 26,
@@ -211,7 +212,7 @@ Future<bool> showSnackBarUponPendingExtrinsics(AppStore store, Api api, Translat
   try {
     var extrinsics = await api.encointer.pendingExtrinsics();
 
-    Log.d("[receivePage] pendingExtrinsics $extrinsics", 'ReceivePage');
+    Log.d('[receivePage] pendingExtrinsics $extrinsics', 'ReceivePage');
     if (extrinsics.length > 0) {
       for (var xt in extrinsics) {
         if (xt.contains(store.account.currentAccountPubKey!.substring(2))) {

@@ -1,12 +1,11 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 showPasswordInputDialog(context, account, title, onOk) {
   return PasswordInputDialog(
@@ -38,7 +37,7 @@ class PasswordInputDialog extends StatefulWidget {
 }
 
 class _PasswordInputDialogState extends State<PasswordInputDialog> {
-  final TextEditingController _passCtrl = new TextEditingController();
+  final TextEditingController _passCtrl = TextEditingController();
   bool _submitting = false;
 
   Future<void> _onOk(String password) async {

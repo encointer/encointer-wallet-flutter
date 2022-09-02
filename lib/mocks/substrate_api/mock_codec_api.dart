@@ -1,10 +1,9 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/codec_api.dart';
-
-import 'mock_js_api.dart';
 
 class MockCodecApi extends CodecApi {
   MockCodecApi(MockJSApi js) : super(js);

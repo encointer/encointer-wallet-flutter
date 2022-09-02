@@ -1,3 +1,6 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 import 'package:encointer_wallet/page/account/create/create_pin_page.dart';
 import 'package:encointer_wallet/page/account/import/import_account_form.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -5,8 +8,6 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class ImportAccountPage extends StatefulWidget {
   const ImportAccountPage(this.store, {Key? key}) : super(key: key);
@@ -28,7 +29,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   String? _derivePath = '';
   bool _submitting = false;
 
-  final TextEditingController _nameCtrl = new TextEditingController();
+  final TextEditingController _nameCtrl = TextEditingController();
 
   @override
   void dispose() {
@@ -63,7 +64,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       var msg = acc['error'];
 
       if (acc['error'] == 'unreachable') {
-        msg = "${I18n.of(context)!.translationsForLocale().account.importInvalid}: $_keyType";
+        msg = '${I18n.of(context)!.translationsForLocale().account.importInvalid}: $_keyType';
       }
 
       showCupertinoDialog(

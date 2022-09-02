@@ -174,7 +174,7 @@ abstract class _AccountStore with Store {
   void queueTx(Map<String, dynamic> tx) {
     queuedTxs.add(tx);
 
-    new Timer.periodic(const Duration(seconds: 5), (Timer timer) async {
+    Timer.periodic(const Duration(seconds: 5), (Timer timer) async {
       if (await webApi.isConnected()) {
         queuedTxs.forEach((args) async {
           Map res = await webApi.account.sendTxAndShowNotification(
@@ -185,7 +185,7 @@ abstract class _AccountStore with Store {
             rawParam: args['rawParam'],
           );
 
-          Log.d("Queued tx result: $res", 'AccountStore');
+          Log.d('Queued tx result: $res', 'AccountStore');
           if (res['hash'] == null) {
             NotificationPlugin.showNotification(
               0,
@@ -274,7 +274,6 @@ abstract class _AccountStore with Store {
   Future<void> removeAccount(AccountData acc) async {
     Log.d("removeAccount: removing ${acc.pubKey}", 'AccountStore');
     await rootStore.localStorage.removeAccount(acc.pubKey);
-
     // remove encrypted seed after removing account
     deleteSeed(AccountStore.seedTypeMnemonic, acc.pubKey);
     deleteSeed(AccountStore.seedTypeRawSeed, acc.pubKey);
@@ -284,7 +283,6 @@ abstract class _AccountStore with Store {
       List<Map<String, dynamic>> accounts = await rootStore.localStorage.getAccountList();
       var newCurrentAccountPubKey = accounts.length > 0 ? accounts[0]['pubKey'] : '';
       Log.d("removeAccount: newCurrentAccountPubKey $newCurrentAccountPubKey", 'AccountStore');
-
       await rootStore.setCurrentAccount(newCurrentAccountPubKey);
     } else {
       // update account list
@@ -384,7 +382,7 @@ abstract class _AccountStore with Store {
 
   @action
   void setAddressIconsMap(List list) {
-    Log.d("Address Icons", 'AccountStore');
+    Log.d('Address Icons', 'AccountStore');
     Log.d('$list', 'AccountStore');
     list.forEach((i) {
       addressIconsMap[i[0]] = i[1];

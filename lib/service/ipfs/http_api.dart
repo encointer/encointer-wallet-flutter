@@ -93,7 +93,7 @@ class Ipfs {
       _dio.options.connectTimeout = 5000; //5s
       _dio.options.receiveTimeout = 3000;
 
-      final response = await _dio.post("/ipfs/", data: image.openRead());
+      final response = await _dio.post('/ipfs/', data: image.openRead());
       String imageHash = response.headers.map['ipfs-hash'].toString(); // [ipfs_hash]
 
       // TODO: Nicer solution
@@ -118,7 +118,7 @@ class Ipfs {
       _dio.options.connectTimeout = 5000; //5s
       _dio.options.receiveTimeout = 3000;
 
-      final response = await _dio.post("/ipfs/", data: json);
+      final response = await _dio.post('/ipfs/', data: json);
       String jsonHash = response.headers.map['ipfs-hash'].toString(); // [ipfs_hash]
 
       // TODO: Nicer solution
@@ -147,7 +147,7 @@ class IpfsDio {
   late Dio dio;
 
   Future<Response<T>> get<T>(String cid) async {
-    Log.d("[IPFS] fetching data from: ${dio.options.baseUrl}$getRequest$cid}", 'Ipfs');
+    Log.d("[IPFS] fetching data from: ${dio.options.baseUrl}$getRequest$cid", 'Ipfs');
     return dio.get('$getRequest$cid');
   }
 }

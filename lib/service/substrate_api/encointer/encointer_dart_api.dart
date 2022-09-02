@@ -17,19 +17,23 @@ class EncointerDartApi {
   /// Queries the rpc 'encointer_getAggregatedAccountData'.
   ///
   Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String account) {
-    return _dartApi.rpc("encointer_getAggregatedAccountData", [cid.toJson(), account]).then(
-        (data) => AggregatedAccountData.fromJson(data));
+    return _dartApi.rpc('encointer_getAggregatedAccountData', [cid.toJson(), account]).then(
+      (data) => AggregatedAccountData.fromJson(data),
+    );
   }
 
   ///
   Future<List<String>> pendingExtrinsics() {
-    return _dartApi.rpc("author_pendingExtrinsics", []).then((data) => List.from(data));
+    return _dartApi.rpc('author_pendingExtrinsics', []).then((data) => List.from(data));
   }
 
   Future<Map<CommunityIdentifier, BalanceEntry>> getAllBalances(String account) {
-    return _dartApi.rpc("encointer_getAllBalances", [account]).then((data) {
-      return Map.fromIterable(data,
-          key: (bal) => CommunityIdentifier.fromJson(bal[0]), value: (bal) => BalanceEntry.fromJson(bal[1]));
+    return _dartApi.rpc('encointer_getAllBalances', [account]).then((data) {
+      return Map.fromIterable(
+        data,
+        key: (bal) => CommunityIdentifier.fromJson(bal[0]),
+        value: (bal) => BalanceEntry.fromJson(bal[1]),
+      );
     });
   }
 }

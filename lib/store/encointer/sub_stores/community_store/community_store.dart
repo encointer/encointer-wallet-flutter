@@ -9,8 +9,7 @@ import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dar
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
-
-import 'community_account_store/community_account_store.dart';
+import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_account_store/community_account_store.dart';
 
 part 'community_store.g.dart';
 
@@ -72,10 +71,10 @@ abstract class _CommunityStore with Store {
   List<String>? bootstrappers;
 
   @observable
-  ObservableList<Location>? meetupLocations = new ObservableList();
+  ObservableList<Location>? meetupLocations = ObservableList();
 
   @observable
-  ObservableMap<String, CommunityAccountStore>? communityAccountStores = new ObservableMap();
+  ObservableMap<String, CommunityAccountStore>? communityAccountStores = ObservableMap();
 
   get applyDemurrage => _applyDemurrage;
 
@@ -114,6 +113,7 @@ abstract class _CommunityStore with Store {
   @action
   void setCommunityMetadata(CommunityMetadata meta) {
     Log.d("set metadata to $meta", 'CommunityStore');
+
     metadata = meta;
     writeToCache();
   }
@@ -121,6 +121,7 @@ abstract class _CommunityStore with Store {
   @action
   void setMeetupTime([int? time]) {
     Log.d("set meetupTime to $time", 'CommunityStore');
+
     if (meetupTime != time) {
       meetupTime = time;
       writeToCache();
@@ -130,6 +131,7 @@ abstract class _CommunityStore with Store {
   @action
   void setMeetupTimeOverride([int? time]) {
     Log.d("set meetupTimeOverride to $time", 'CommunityStore');
+
     if (meetupTimeOverride != time) {
       meetupTimeOverride = time;
       writeToCache();
