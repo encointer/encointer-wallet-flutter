@@ -39,7 +39,7 @@ class Assets extends StatefulWidget {
   final AppStore store;
 
   @override
-  _AssetsState createState() => _AssetsState(store);
+  State<Assets> createState() => _AssetsState(store);
 }
 
 class _AssetsState extends State<Assets> {

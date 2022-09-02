@@ -144,7 +144,7 @@ class TapTooltip extends StatefulWidget {
   final Duration? showDuration;
 
   @override
-  _TooltipState createState() => _TooltipState();
+  State<TapTooltip> createState() => _TooltipState();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {

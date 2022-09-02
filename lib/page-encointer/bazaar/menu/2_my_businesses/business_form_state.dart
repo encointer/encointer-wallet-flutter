@@ -4,6 +4,7 @@ import 'package:mobx/mobx.dart';
 
 part 'business_form_state.g.dart';
 
+// ignore: library_private_types_in_public_api
 class BusinessFormState = _BusinessFormState with _$BusinessFormState;
 
 abstract class _BusinessFormState with Store {
@@ -117,6 +118,7 @@ abstract class _BusinessFormState with Store {
 }
 
 /// error messages for input fields
+// ignore: library_private_types_in_public_api
 class BusinessFormErrorState = _BusinessFormErrorState with _$BusinessFormErrorState;
 
 abstract class _BusinessFormErrorState with Store {

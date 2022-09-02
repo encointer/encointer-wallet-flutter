@@ -2,6 +2,7 @@ import 'package:mobx/mobx.dart';
 
 part 'opening_hours_state.g.dart';
 
+// ignore: library_private_types_in_public_api
 class OpeningHoursState = _OpeningHoursState with _$OpeningHoursState;
 
 abstract class _OpeningHoursState with Store {
@@ -95,6 +96,7 @@ abstract class _OpeningHoursState with Store {
   }
 }
 
+// ignore: library_private_types_in_public_api
 class OpeningHoursForDayState = _OpeningHoursForDayState with _$OpeningHoursForDayState;
 
 /// EmptyList means closed
@@ -148,6 +150,7 @@ abstract class _OpeningHoursForDayState with Store {
   }
 }
 
+// ignore: library_private_types_in_public_api
 class OpeningIntervalState = _OpeningIntervalState with _$OpeningIntervalState;
 
 /// start and end in minutes since midnight of that day

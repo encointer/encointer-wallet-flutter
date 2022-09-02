@@ -18,7 +18,7 @@ class LowerCeremonyBoxContainer extends StatelessWidget {
         borderRadius: const BorderRadius.vertical(top: Radius.circular(0), bottom: Radius.circular(15)),
         color: ZurichLion.shade50,
       ),
-      child: this.child,
+      child: child,
     );
   }
 }
