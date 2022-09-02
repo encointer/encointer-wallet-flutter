@@ -68,6 +68,12 @@ void main() {
     }, timeout: const Timeout(Duration(seconds: 120))); // needed for android CI with github actions
 
     test('show receive qr code', () async {
+      try {
+        await driver!.waitFor(find.byType('AlertDialog'));
+        await driver!.tap(find.text('IGNORE'));
+      } catch (e) {
+        log(e.toString());
+      }
       await driver!.tap(find.byValueKey('qr-receive'));
       await screenshot(driver!, config, 'receive-funds');
 

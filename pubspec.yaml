@@ -87,7 +87,7 @@ dependencies:
   jdenticon_dart: ^2.0.0
   collection: ^1.15.0-nullsafety.4
   photo_view: ^0.14.0
-  new_version: ^0.3.1
+  upgrader: ^4.6.1
 
 dev_dependencies:
   build_runner: ^2.2.0

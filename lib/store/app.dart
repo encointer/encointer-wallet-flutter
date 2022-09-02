@@ -7,6 +7,7 @@ import 'package:encointer_wallet/store/encointer/encointer.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/local_storage.dart';
 import 'package:mobx/mobx.dart';
+import 'package:upgrader/upgrader.dart';
 
 part 'app.g.dart';
 
@@ -32,7 +33,8 @@ class AppStore extends _AppStore with _$AppStore {
   AppStore(
     LocalStorage localStorage, {
     StoreConfig config = StoreConfig.Normal,
-  }) : super(localStorage, config: config);
+    AppcastConfiguration? appcastConfiguration,
+  }) : super(localStorage, config: config, appcastConfiguration: appcastConfiguration);
 }
 
 enum StoreConfig {
@@ -44,9 +46,11 @@ abstract class _AppStore with Store {
   _AppStore(
     this.localStorage, {
     this.config = StoreConfig.Normal,
+    this.appcastConfiguration,
   });
 
   final StoreConfig config;
+  final AppcastConfiguration? appcastConfiguration;
 
   // Note, following pattern of a nullable field with a non-nullable getter
   // is here because mobx can't handle `late` initialization:
