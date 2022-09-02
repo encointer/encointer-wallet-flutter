@@ -12,13 +12,11 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  final AppStore root = AppStore(MockLocalStorage(), config: StoreConfig.Test);
 
   group('EncointerStore test', () {
     test('encointer store initialization, serialization and cache works', () async {
-      globalAppStore = AppStore(MockLocalStorage(), config: StoreConfig.Test);
-      final AppStore root = globalAppStore;
       await root.init('_en');
-
       accList = [testAcc];
       currentAccountPubKey = accList[0]['pubKey'];
 
@@ -79,8 +77,6 @@ void main() {
     });
 
     test('purging encointer-store works and initializing new works', () async {
-      globalAppStore = AppStore(MockLocalStorage());
-      final AppStore root = globalAppStore;
       accList = [testAcc];
       currentAccountPubKey = accList[0]['pubKey'];
 

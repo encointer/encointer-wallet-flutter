@@ -52,7 +52,7 @@ extension QrCodeContextExt on QrCodeContext? {
   }
 
   String toQrField() {
-    var variant = this.toString().split('.').last.toLowerCase();
+    var variant = toString().split('.').last.toLowerCase();
     return '$ENCOINTER_PREFIX-$variant';
   }
 }
@@ -68,7 +68,7 @@ extension QrCodeVersionExt on QrCodeVersion? {
 
   /// Returns the version number in the format 'v2.0'
   String toVersionNumber() {
-    final variant = this.toString().split('.').last;
+    final variant = toString().split('.').last;
     return variant.replaceAll('_', '.');
   }
 }

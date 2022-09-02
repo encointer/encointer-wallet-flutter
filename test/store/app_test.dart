@@ -6,7 +6,7 @@ import 'package:encointer_wallet/store/app.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  final AppStore store = AppStore(MockLocalStorage());
+  final AppStore store = AppStore(MockLocalStorage(), config: StoreConfig.Test);
   accList = [testAcc];
   currentAccountPubKey = accList[0]['pubKey'];
 

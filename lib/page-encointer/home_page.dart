@@ -8,23 +8,19 @@ import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 
 class EncointerHomePage extends StatefulWidget {
-  EncointerHomePage(this.store, {Key? key}) : super(key: key);
+  EncointerHomePage({Key? key}) : super(key: key);
 
   static final GlobalKey encointerHomePageKey = GlobalKey();
   static const String route = '/';
-  final AppStore store;
 
   @override
-  State<EncointerHomePage> createState() => _EncointerHomePageState(store);
+  State<EncointerHomePage> createState() => _EncointerHomePageState();
 }
 
 class _EncointerHomePageState extends State<EncointerHomePage> {
-  _EncointerHomePageState(this.store);
-
-  final AppStore store;
-
   final PageController _pageController = PageController();
 
   NotificationPlugin? _notificationPlugin;
@@ -81,12 +77,13 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final _store = context.watch<AppStore>();
     _tabList = <TabData>[
       TabData(
         TabKey.Wallet,
         Iconsax.home_2,
       ),
-      if (store.settings.enableBazaar)
+      if (context.select<AppStore, bool>((store) => store.settings.enableBazaar))
         TabData(
           TabKey.Bazaar,
           Iconsax.shop,
@@ -112,11 +109,11 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,
         children: [
-          Assets(store),
-          if (store.settings.enableBazaar) BazaarMain(store), // dart collection if
-          ScanPage(store),
-          ContactsPage(store),
-          Profile(store),
+          Assets(_store),
+          if (context.select<AppStore, bool>((store) => store.settings.enableBazaar)) BazaarMain(),
+          ScanPage(),
+          ContactsPage(),
+          Profile(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

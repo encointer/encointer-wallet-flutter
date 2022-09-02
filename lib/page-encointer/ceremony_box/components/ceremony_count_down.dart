@@ -32,7 +32,7 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
 
   @override
   void dispose() {
-    sub!.cancel();
+    if (sub != null) sub!.cancel();
     super.dispose();
   }
 

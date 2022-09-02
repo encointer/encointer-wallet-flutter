@@ -17,7 +17,7 @@ class ImportAccountForm extends StatefulWidget {
   final Function onSubmit;
 
   @override
-  State<ImportAccountForm> createState() => _ImportAccountFormState(this.store);
+  State<ImportAccountForm> createState() => _ImportAccountFormState();
 }
 
 class _ImportAccountFormState extends State<ImportAccountForm> {
