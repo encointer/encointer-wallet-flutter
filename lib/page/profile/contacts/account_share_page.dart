@@ -15,7 +15,7 @@ class AccountSharePage extends StatefulWidget {
   static const String route = '/profile/share';
 
   @override
-  _AccountSharePageState createState() => _AccountSharePageState();
+  State<AccountSharePage> createState() => _AccountSharePageState();
 }
 
 class _AccountSharePageState extends State<AccountSharePage> {

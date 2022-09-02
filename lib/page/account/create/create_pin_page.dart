@@ -1,12 +1,11 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_on_map.dart';
 import 'package:encointer_wallet/page/account/create/create_pin_form.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CreatePinPageParams {
   CreatePinPageParams(this.onCreatePin);
@@ -20,7 +19,7 @@ class CreatePinPage extends StatefulWidget {
   static const String route = '/account/createPin';
 
   @override
-  _CreatePinPageState createState() => _CreatePinPageState();
+  State<CreatePinPage> createState() => _CreatePinPageState();
 }
 
 class _CreatePinPageState extends State<CreatePinPage> {

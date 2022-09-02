@@ -17,7 +17,7 @@ class SubmitButtonSecondary extends StatefulWidget {
   final Future<void> Function(BuildContext)? onPressed;
 
   @override
-  _SubmitButtonSecondaryState createState() => _SubmitButtonSecondaryState();
+  State<SubmitButtonSecondary> createState() => _SubmitButtonSecondaryState();
 }
 
 class _SubmitButtonSecondaryState extends State<SubmitButtonSecondary> {

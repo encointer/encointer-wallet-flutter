@@ -14,7 +14,7 @@ class ImportAccountPage extends StatefulWidget {
   static const String route = '/account/import';
 
   @override
-  _ImportAccountPageState createState() => _ImportAccountPageState();
+  State<ImportAccountPage> createState() => _ImportAccountPageState();
 }
 
 class _ImportAccountPageState extends State<ImportAccountPage> {

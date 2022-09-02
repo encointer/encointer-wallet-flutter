@@ -23,7 +23,7 @@ class ReceivePage extends StatefulWidget {
   static const String route = '/assets/receive';
 
   @override
-  _ReceivePageState createState() => _ReceivePageState();
+  State<ReceivePage> createState() => _ReceivePageState();
 }
 
 class _ReceivePageState extends State<ReceivePage> {
