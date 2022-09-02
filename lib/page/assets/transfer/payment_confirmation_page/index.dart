@@ -18,6 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 class PaymentConfirmationParams {
   PaymentConfirmationParams({
@@ -34,14 +35,13 @@ class PaymentConfirmationParams {
 }
 
 class PaymentConfirmationPage extends StatefulWidget {
-  PaymentConfirmationPage(this.store, this.api, {Key? key}) : super(key: key);
+  const PaymentConfirmationPage(this.api, {Key? key}) : super(key: key);
 
   static const String route = '/assets/paymentConfirmation';
-  final AppStore store;
   final Api api;
 
   @override
-  _PaymentConfirmationPageState createState() => _PaymentConfirmationPageState();
+  State<PaymentConfirmationPage> createState() => _PaymentConfirmationPageState();
 }
 
 class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with SingleTickerProviderStateMixin {
@@ -65,7 +65,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
 
     var cid = params.cid;
     var recipientAccount = params.recipientAccount;
-    final recipientAddress = Fmt.addressOfAccount(recipientAccount, widget.store);
+    final recipientAddress = Fmt.addressOfAccount(recipientAccount, context.read<AppStore>());
     var amount = params.amount;
 
     return Observer(
@@ -76,7 +76,12 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
             child: Column(
               children: [
-                PaymentOverview(widget.store, params.communitySymbol, params.recipientAccount, params.amount),
+                PaymentOverview(
+                  context.watch<AppStore>(),
+                  params.communitySymbol,
+                  params.recipientAccount,
+                  params.amount,
+                ),
                 const SizedBox(height: 10),
                 Flexible(
                   fit: FlexFit.tight,
@@ -156,7 +161,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
       }
     };
 
-    await submitTx(context, widget.store, widget.api, params, onFinish: onFinish);
+    await submitTx(context, context.read<AppStore>(), widget.api, params, onFinish: onFinish);
 
     // for debugging
     // Future.delayed(const Duration(milliseconds: 1500), () {

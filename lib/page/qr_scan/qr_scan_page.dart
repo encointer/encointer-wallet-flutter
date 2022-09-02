@@ -1,12 +1,14 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
+
 import 'package:encointer_wallet/page/qr_scan/qr_scan_service.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 export 'qr_codes/qr_code_base.dart';
 export 'qr_scan_service.dart';
@@ -20,12 +22,11 @@ class ScanPageParams {
 }
 
 class ScanPage extends StatelessWidget {
-  ScanPage(this.store, {Key? key}) : super(key: key);
+  ScanPage({Key? key}) : super(key: key);
 
   static const String route = '/account/scan';
 
   final QrScanService qrScanService = QrScanService();
-  final AppStore store;
 
   Future<PermissionStatus> canOpenCamera() async {
     // will do nothing if already granted
@@ -77,7 +78,9 @@ class ScanPage extends StatelessWidget {
                     }
                   },
                 ),
-                store.settings.developerMode ? mockQrDataRow(dic, onScan) : Container(),
+                context.select<AppStore, bool>((store) => store.settings.developerMode)
+                    ? mockQrDataRow(dic, onScan)
+                    : Container(),
                 //overlays a semi-transparent rounded square border that is 90% of screen width
                 Center(
                   child: Column(

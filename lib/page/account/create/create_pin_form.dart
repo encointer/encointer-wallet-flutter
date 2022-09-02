@@ -17,7 +17,7 @@ class CreatePinForm extends StatefulWidget {
   final AppStore store;
 
   @override
-  _CreatePinFormState createState() => _CreatePinFormState(store);
+  State<CreatePinForm> createState() => _CreatePinFormState(store);
 }
 
 class _CreatePinFormState extends State<CreatePinForm> {

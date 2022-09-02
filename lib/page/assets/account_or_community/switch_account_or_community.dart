@@ -15,7 +15,7 @@ class SwitchAccountOrCommunity extends StatefulWidget {
   final Function? onTap;
 
   @override
-  _SwitchAccountOrCommunityState createState() => _SwitchAccountOrCommunityState();
+  State<SwitchAccountOrCommunity> createState() => _SwitchAccountOrCommunityState();
 }
 
 class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {

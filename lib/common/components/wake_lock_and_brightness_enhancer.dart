@@ -16,7 +16,7 @@ class WakeLockAndBrightnessEnhancer extends StatefulWidget {
   final double brightness;
 
   @override
-  _WakeLockAndBrightnessEnhancerState createState() => _WakeLockAndBrightnessEnhancerState();
+  State<WakeLockAndBrightnessEnhancer> createState() => _WakeLockAndBrightnessEnhancerState();
 }
 
 class _WakeLockAndBrightnessEnhancerState extends State<WakeLockAndBrightnessEnhancer> {
