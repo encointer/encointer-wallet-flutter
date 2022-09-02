@@ -12,7 +12,7 @@ linter:
     unnecessary_const: false
     prefer_single_quotes: true
     constant_identifier_names: false
-    prefer_final_fields: true
+    prefer_final_fields: false
     library_private_types_in_public_api: false
     annotate_overrides: false
     prefer_interpolation_to_compose_strings: false
