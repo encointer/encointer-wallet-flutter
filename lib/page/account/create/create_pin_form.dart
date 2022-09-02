@@ -27,8 +27,8 @@ class _CreatePinFormState extends State<CreatePinForm> {
 
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _passCtrl = new TextEditingController();
-  final TextEditingController _pass2Ctrl = new TextEditingController();
+  final TextEditingController _passCtrl = TextEditingController();
+  final TextEditingController _pass2Ctrl = TextEditingController();
 
   @override
   void dispose() {

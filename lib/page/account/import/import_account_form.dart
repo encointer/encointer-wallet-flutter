@@ -30,8 +30,8 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
 
   final AppStore store;
 
-  final TextEditingController _keyCtrl = new TextEditingController();
-  final TextEditingController _nameCtrl = new TextEditingController();
+  final TextEditingController _keyCtrl = TextEditingController();
+  final TextEditingController _nameCtrl = TextEditingController();
 
   AccountAdvanceOptionParams _advanceOptions = AccountAdvanceOptionParams();
 

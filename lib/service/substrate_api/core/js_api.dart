@@ -101,7 +101,7 @@ class JSApi {
       return res;
     }
 
-    Completer c = new Completer();
+    Completer c = Completer();
 
     String method = 'uid=${_getEvalJavascriptUID()};${code.split('(')[0]}';
     _msgCompleters[method] = c;
