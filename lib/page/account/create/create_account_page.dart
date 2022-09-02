@@ -11,7 +11,7 @@ class CreateAccountPage extends StatefulWidget {
   final AppStore store;
 
   @override
-  _CreateAccountPageState createState() => _CreateAccountPageState(store);
+  State<CreateAccountPage> createState() => _CreateAccountPageState(store);
 }
 
 class _CreateAccountPageState extends State<CreateAccountPage> {

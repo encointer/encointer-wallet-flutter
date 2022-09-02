@@ -19,7 +19,7 @@ class CreatePinPage extends StatefulWidget {
   final AppStore store;
 
   @override
-  _CreatePinPageState createState() => _CreatePinPageState(store);
+  State<CreatePinPage> createState() => _CreatePinPageState(store);
 }
 
 class _CreatePinPageState extends State<CreatePinPage> {

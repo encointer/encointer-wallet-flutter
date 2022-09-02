@@ -26,7 +26,7 @@ class AccountManagePage extends StatefulWidget {
   final AppStore store;
 
   @override
-  _AccountManagePageState createState() => _AccountManagePageState(store);
+  State<AccountManagePage> createState() => _AccountManagePageState(store);
 }
 
 enum AccountAction { delete, export }

@@ -14,7 +14,7 @@ class SettingsPage extends StatefulWidget {
   final Function changeLang;
 
   @override
-  _Settings createState() => _Settings(store, changeLang);
+  State<SettingsPage> createState() => _Settings(store, changeLang);
 }
 
 class _Settings extends State<SettingsPage> {

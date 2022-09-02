@@ -22,7 +22,7 @@ class NetworkSelectPage extends StatefulWidget {
   final Function changeTheme;
 
   @override
-  _NetworkSelectPageState createState() => _NetworkSelectPageState(store, changeTheme);
+  State<NetworkSelectPage> createState() => _NetworkSelectPageState(store, changeTheme);
 }
 
 class _NetworkSelectPageState extends State<NetworkSelectPage> {

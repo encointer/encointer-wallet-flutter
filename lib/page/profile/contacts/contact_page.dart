@@ -18,7 +18,7 @@ class ContactPage extends StatefulWidget {
   final AppStore store;
 
   @override
-  _Contact createState() => _Contact(store);
+  State<ContactPage> createState() => _Contact(store);
 }
 
 class _Contact extends State<ContactPage> {

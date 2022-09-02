@@ -14,7 +14,7 @@ class AccountSharePage extends StatefulWidget {
   final AppStore store;
 
   @override
-  _AccountSharePageState createState() => _AccountSharePageState();
+  State<AccountSharePage> createState() => _AccountSharePageState();
 }
 
 class _AccountSharePageState extends State<AccountSharePage> {

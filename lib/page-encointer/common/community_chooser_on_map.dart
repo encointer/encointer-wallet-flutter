@@ -49,7 +49,7 @@ class CommunityDetailsPopup extends StatefulWidget {
   CommunityDetailsPopup(this.store, this.marker, this.dataForThisMarker, {Key? key}) : super(key: key);
 
   @override
-  _CommunityDetailsPopupState createState() => _CommunityDetailsPopupState(store);
+  State<CommunityDetailsPopup> createState() => _CommunityDetailsPopupState(store);
 }
 
 class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {

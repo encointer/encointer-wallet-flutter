@@ -13,7 +13,7 @@ class CeremonyCountDown extends StatefulWidget {
   final DateTime? nextCeremonyDate;
 
   @override
-  _CeremonyCountDownState createState() => _CeremonyCountDownState();
+  State<CeremonyCountDown> createState() => _CeremonyCountDownState();
 }
 
 class _CeremonyCountDownState extends State<CeremonyCountDown> {

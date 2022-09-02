@@ -17,7 +17,7 @@ class EncointerHomePage extends StatefulWidget {
   final AppStore store;
 
   @override
-  _EncointerHomePageState createState() => _EncointerHomePageState(store);
+  State<EncointerHomePage> createState() => _EncointerHomePageState(store);
 }
 
 class _EncointerHomePageState extends State<EncointerHomePage> {

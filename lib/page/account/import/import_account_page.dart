@@ -14,7 +14,7 @@ class ImportAccountPage extends StatefulWidget {
   final AppStore store;
 
   @override
-  _ImportAccountPageState createState() => _ImportAccountPageState(store);
+  State<ImportAccountPage> createState() => _ImportAccountPageState(store);
 }
 
 class _ImportAccountPageState extends State<ImportAccountPage> {

@@ -22,7 +22,7 @@ class ReceivePage extends StatefulWidget {
   final AppStore store;
 
   @override
-  _ReceivePageState createState() => _ReceivePageState();
+  State<ReceivePage> createState() => _ReceivePageState();
 }
 
 class _ReceivePageState extends State<ReceivePage> {

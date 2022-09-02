@@ -17,7 +17,7 @@ class CommunityChooserPanel extends StatefulWidget {
   final AppStore store;
 
   @override
-  _CommunityChooserPanelState createState() => _CommunityChooserPanelState(store);
+  State<CommunityChooserPanel> createState() => _CommunityChooserPanelState(store);
 }
 
 class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
@@ -92,7 +92,7 @@ class CombinedCommunityAndAccountAvatar extends StatefulWidget {
   final bool showCommunityNameAndAccountName;
 
   @override
-  _CombinedCommunityAndAccountAvatarState createState() => _CombinedCommunityAndAccountAvatarState(store);
+  State<CombinedCommunityAndAccountAvatar> createState() => _CombinedCommunityAndAccountAvatarState(store);
 }
 
 class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAndAccountAvatar> {

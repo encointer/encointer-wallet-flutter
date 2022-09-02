@@ -33,7 +33,7 @@ class PasswordInputDialog extends StatefulWidget {
   final Function? onAccountSwitch;
 
   @override
-  _PasswordInputDialogState createState() => _PasswordInputDialogState();
+  State<PasswordInputDialog> createState() => _PasswordInputDialogState();
 }
 
 class _PasswordInputDialogState extends State<PasswordInputDialog> {

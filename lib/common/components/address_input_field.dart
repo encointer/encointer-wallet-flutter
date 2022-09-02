@@ -20,7 +20,7 @@ class AddressInputField extends StatefulWidget {
   final bool hideIdenticon;
 
   @override
-  _AddressInputFieldState createState() => _AddressInputFieldState();
+  State<AddressInputField> createState() => _AddressInputFieldState();
 }
 
 class _AddressInputFieldState extends State<AddressInputField> {

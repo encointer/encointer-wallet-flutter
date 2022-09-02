@@ -20,7 +20,7 @@ class ChangePasswordPage extends StatefulWidget {
   final AppStore store;
 
   @override
-  _ChangePassword createState() => _ChangePassword(store);
+  State<ChangePasswordPage> createState() => _ChangePassword(store);
 }
 
 class _ChangePassword extends State<ChangePasswordPage> {

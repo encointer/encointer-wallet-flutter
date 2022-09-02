@@ -44,7 +44,7 @@ class TransferPage extends StatefulWidget {
   final AppStore store;
 
   @override
-  _TransferPageState createState() => _TransferPageState(store);
+  State<TransferPage> createState() => _TransferPageState(store);
 }
 
 class _TransferPageState extends State<TransferPage> {

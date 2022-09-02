@@ -41,7 +41,7 @@ class PaymentConfirmationPage extends StatefulWidget {
   final Api api;
 
   @override
-  _PaymentConfirmationPageState createState() => _PaymentConfirmationPageState();
+  State<PaymentConfirmationPage> createState() => _PaymentConfirmationPageState();
 }
 
 class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with SingleTickerProviderStateMixin {

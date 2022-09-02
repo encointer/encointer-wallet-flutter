@@ -51,7 +51,7 @@ class WalletApp extends StatefulWidget {
   final Config config;
 
   @override
-  _WalletAppState createState() => _WalletAppState();
+  State<WalletApp> createState() => _WalletAppState();
 }
 
 class _WalletAppState extends State<WalletApp> {

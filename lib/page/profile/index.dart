@@ -21,7 +21,7 @@ class Profile extends StatefulWidget {
   final AppStore store;
 
   @override
-  _ProfileState createState() => _ProfileState(store);
+  State<Profile> createState() => _ProfileState(store);
 }
 
 class _ProfileState extends State<Profile> {
