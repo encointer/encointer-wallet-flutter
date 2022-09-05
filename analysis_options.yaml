@@ -20,7 +20,7 @@ linter:
     prefer_conditional_assignment: false
     prefer_function_declarations_over_variables: false
     no_leading_underscores_for_local_identifiers: false
-    prefer_if_null_operators: false
+    prefer_if_null_operators: true
     prefer_equal_for_default_values: false
     overridden_fields: false
     unnecessary_string_interpolations: false
