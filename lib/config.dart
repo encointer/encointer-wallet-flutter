@@ -1,5 +1,4 @@
 import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/page-encointer/home_page.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:json_annotation/json_annotation.dart';
 
