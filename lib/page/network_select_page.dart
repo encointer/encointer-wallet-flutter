@@ -16,11 +16,10 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 class NetworkSelectPage extends StatefulWidget {
-  NetworkSelectPage(this.changeTheme, {Key? key}) : super(key: key);
+  NetworkSelectPage({Key? key}) : super(key: key);
 
   static const String route = '/network';
-  final Function changeTheme;
-
+  
   @override
   State<NetworkSelectPage> createState() => _NetworkSelectPageState();
 }
@@ -56,7 +55,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
 
     await context.read<AppStore>().settings.reloadNetwork(_selectedNetwork!);
 
-    widget.changeTheme();
+    context.read<AppStore>().settings.changeTheme();
 
     if (mounted) {
       Navigator.of(context).pop();

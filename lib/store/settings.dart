@@ -1,3 +1,8 @@
+import 'package:flutter/material.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:mobx/mobx.dart';
+
+import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/config/node.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
@@ -5,8 +10,6 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:json_annotation/json_annotation.dart';
-import 'package:mobx/mobx.dart';
 
 part 'settings.g.dart';
 
@@ -63,6 +66,33 @@ abstract class _SettingsStore with Store {
 
   @observable
   bool developerMode = false;
+
+  @observable
+  Locale locale = const Locale('en', '');
+
+  @observable
+  ThemeData theme = appThemeEncointer;
+
+  @action
+  void changeLang(BuildContext context, String? code) {
+    switch (code) {
+      case 'en':
+        locale = const Locale('en', '');
+        break;
+      case 'de':
+        locale = const Locale('de', '');
+        break;
+      default:
+        locale = Localizations.localeOf(context);
+    }
+  }
+
+  @action
+  void changeTheme() {
+    // todo: Remove this. It was for the network dependent theme.
+    // But his can be done at the same time, when we refactor
+    // the network selection page.
+  }
 
   @computed
   bool get endpointIsEncointer {

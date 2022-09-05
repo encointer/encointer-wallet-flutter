@@ -1,14 +1,16 @@
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart' show rootBundle;
+import 'package:flutter_driver/driver_extension.dart';
+import 'package:provider/provider.dart';
+
 import 'package:encointer_wallet/app.dart';
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
 import 'package:encointer_wallet/mocks/storage/mock_storage_setup.dart';
 import 'package:encointer_wallet/mocks/storage/prepare_mock_storage.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_driver/driver_extension.dart';
-import 'package:provider/provider.dart';
 
-void main() {
+void main() async {
   final _globalAppStore = AppStore(MockLocalStorage());
   // the tests are run in a separate isolate from the app. The test isolate can only interact with
   // the app via the driver in order to, for instance, configure the app state.
@@ -40,10 +42,16 @@ void main() {
 
   // Call the `main()` function of the app, or call `runApp` with
   // any widget you are interested in testing.
+  final js = await rootBundle.loadString('lib/js_service_encointer/dist/main.js');
   runApp(
     Provider(
       create: (context) => _globalAppStore,
-      child: const WalletApp(Config(mockLocalStorage: true, mockSubstrateApi: true, appStoreConfig: StoreConfig.Test)),
+      child: WalletApp(Config(
+        mockLocalStorage: true,
+        mockSubstrateApi: true,
+        appStoreConfig: StoreConfig.Test,
+        js: js,
+      )),
     ),
   );
 }
