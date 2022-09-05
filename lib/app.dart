@@ -1,15 +1,10 @@
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/common/components/will_pop_scope_wrapper.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config.dart';
-import 'package:encointer_wallet/mocks/substrate_api/core/mock_dart_api.dart';
-import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
-import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page-encointer/home_page.dart';
 import 'package:encointer_wallet/page/account/create/add_account_page.dart';
@@ -39,9 +34,6 @@ import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/page/reap_voucher/reap_voucher_page.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
-import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
-import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
@@ -55,7 +47,6 @@ class WalletApp extends StatefulWidget {
 }
 
 class _WalletAppState extends State<WalletApp> {
-  AppStore? _appStore;
   Locale _locale = const Locale('en', '');
   ThemeData _theme = appThemeEncointer;
 
@@ -82,38 +73,9 @@ class _WalletAppState extends State<WalletApp> {
     });
   }
 
-  Future<int> _initApp(BuildContext context) async {
-    if (_appStore == null) {
-      final _store = context.watch<AppStore>();
-
-      _log('Initializing app state');
-      _log('sys locale: ${Localizations.localeOf(context)}');
-      await _store.init(Localizations.localeOf(context).toString());
-
-      // init webApi after store initiated
-      final jsServiceEncointer =
-          await DefaultAssetBundle.of(context).loadString('lib/js_service_encointer/dist/main.js');
-
-      webApi = widget.config.mockSubstrateApi
-          ? MockApi(_store, MockJSApi(), MockSubstrateDartApi(), jsServiceEncointer, withUi: true)
-          : Api.create(_store, JSApi(), SubstrateDartApi(), jsServiceEncointer);
-
-      await webApi.init().timeout(
-            const Duration(seconds: 20),
-            onTimeout: () => print('webApi.init() has run into a timeout. We might be offline.'),
-          );
-
-      _store.dataUpdate.setupUpdateReaction(() async {
-        await _store.encointer.updateState();
-      });
-
-      _changeLang(context, _store.settings.localeCode);
-
-      _store.setApiReady(true);
-      _appStore = _store;
-    }
-    return context.read<AppStore>().account.accountListAll.length;
-  }
+  // Future<int> _initApp(BuildContext context) async {
+  //     _changeLang(context, _store.settings.localeCode);
+  // }
 
   @protected
   @mustCallSuper
@@ -162,29 +124,13 @@ class _WalletAppState extends State<WalletApp> {
         // cf. CupertinoPageRoute documentation -> fullscreenDialog: true, (in this case the page slides in from the bottom)
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
+            case SplashView.route:
+              return CupertinoPageRoute(
+                builder: (_) => SplashView(widget.config.mockLocalStorage),
+              );
             case EncointerHomePage.route:
               return CupertinoPageRoute(
-                settings: settings,
-                builder: (context) => Observer(
-                  // Note: There is a false positive about no observables being inside the observer or we are doing
-                  // something wrong. However, for some reason the observer needs to be on top-level to properly
-                  // update.
-                  builder: (_) => WillPopScopeWrapper(
-                    child: FutureBuilder<int>(
-                      future: _initApp(context),
-                      builder: (_, AsyncSnapshot<int> snapshot) {
-                        if (snapshot.hasError) {
-                          _log('SnapshotError: ${snapshot.error.toString()}');
-                        }
-                        if (snapshot.hasData && _appStore!.appIsReady) {
-                          return snapshot.data! > 0 ? EncointerHomePage() : CreateAccountEntryPage();
-                        } else {
-                          return const CupertinoActivityIndicator();
-                        }
-                      },
-                    ),
-                  ),
-                ),
+                builder: (_) => EncointerHomePage(),
               );
             case NetworkSelectPage.route:
               return CupertinoPageRoute(
@@ -332,8 +278,4 @@ class _WalletAppState extends State<WalletApp> {
       ),
     );
   }
-}
-
-void _log(String msg) {
-  print('[App] $msg');
 }
