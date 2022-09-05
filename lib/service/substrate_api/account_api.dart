@@ -115,7 +115,7 @@ class AccountApi {
   }
 
   Future<Map> estimateTxFees(Map txInfo, List? params, {String? rawParam}) async {
-    String param = rawParam != null ? rawParam : jsonEncode(params);
+    String param = rawParam ?? jsonEncode(params);
     print(txInfo);
     Map res = await jsApi.evalJavascript('account.txFeeEstimate(${jsonEncode(txInfo)}, $param)', allowRepeat: true);
     return res;
@@ -142,7 +142,7 @@ class AccountApi {
   }
 
   Future<dynamic> sendTx(Map? txInfo, List? params, {String? rawParam}) async {
-    String param = rawParam != null ? rawParam : jsonEncode(params);
+    String param = rawParam ?? jsonEncode(params);
     String call = 'account.sendTx(${jsonEncode(txInfo)}, $param)';
     _log('sendTx call: $call');
     return jsApi.evalJavascript(call, allowRepeat: true);
