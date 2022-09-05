@@ -39,6 +39,6 @@ class I18n {
 
   Translations translationsForLocale() {
     var translations = supportedLocales[locale];
-    return translations != null ? translations : TranslationsEn();
+    return translations ?? TranslationsEn();
   }
 }
