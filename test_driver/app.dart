@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:provider/provider.dart';
 
@@ -42,16 +41,10 @@ void main() async {
 
   // Call the `main()` function of the app, or call `runApp` with
   // any widget you are interested in testing.
-  final js = await rootBundle.loadString('lib/js_service_encointer/dist/main.js');
   runApp(
     Provider(
       create: (context) => _globalAppStore,
-      child: WalletApp(Config(
-        mockLocalStorage: true,
-        mockSubstrateApi: true,
-        appStoreConfig: StoreConfig.Test,
-        js: js,
-      )),
+      child: const WalletApp(Config(mockLocalStorage: true, mockSubstrateApi: true, appStoreConfig: StoreConfig.Test)),
     ),
   );
 }

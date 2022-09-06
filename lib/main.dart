@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart' show rootBundle;
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_storage/get_storage.dart';
@@ -49,13 +48,12 @@ Future<void> main() async {
   await GetStorage.init();
 
   HttpOverrides.global = MyHttpOverrides();
-  final js = await rootBundle.loadString('lib/js_service_encointer/dist/main.js');
 
   runApp(
     Provider(
       // On test mode instead of LocalStorage() must be use MockLocalStorage()
-      create: (context) => AppStore(util.LocalStorage())..init(WidgetsBinding.instance.window.locale.languageCode),
-      child: WalletApp(Config(js: js)),
+      create: (context) => AppStore(util.LocalStorage()),
+      child: const WalletApp(Config()),
     ),
   );
 }

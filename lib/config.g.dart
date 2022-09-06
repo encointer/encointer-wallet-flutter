@@ -13,7 +13,6 @@ Config _$ConfigFromJson(Map<String, dynamic> json) => Config(
       appStoreConfig:
           $enumDecodeNullable(_$StoreConfigEnumMap, json['appStoreConfig']) ??
               StoreConfig.Normal,
-      js: json['js'] as String,
     );
 
 Map<String, dynamic> _$ConfigToJson(Config instance) => <String, dynamic>{
@@ -21,7 +20,6 @@ Map<String, dynamic> _$ConfigToJson(Config instance) => <String, dynamic>{
       'mockLocalStorage': instance.mockLocalStorage,
       'mockSubstrateApi': instance.mockSubstrateApi,
       'appStoreConfig': _$StoreConfigEnumMap[instance.appStoreConfig]!,
-      'js': instance.js,
     };
 
 const _$StoreConfigEnumMap = {
