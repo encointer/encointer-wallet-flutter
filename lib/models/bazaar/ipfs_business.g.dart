@@ -14,8 +14,7 @@ IpfsBusiness _$IpfsBusinessFromJson(Map<String, dynamic> json) => IpfsBusiness(
       json['openingHours'] as String?,
     );
 
-Map<String, dynamic> _$IpfsBusinessToJson(IpfsBusiness instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$IpfsBusinessToJson(IpfsBusiness instance) => <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
       'contactInfo': instance.contactInfo,

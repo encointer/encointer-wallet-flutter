@@ -19,7 +19,7 @@ class NetworkSelectPage extends StatefulWidget {
   NetworkSelectPage({Key? key}) : super(key: key);
 
   static const String route = '/network';
-  
+
   @override
   State<NetworkSelectPage> createState() => _NetworkSelectPageState();
 }
