@@ -1,9 +1,13 @@
-import 'package:encointer_wallet/common/theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 
+import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config.dart';
+import 'package:encointer_wallet/mocks/substrate_api/core/mock_dart_api.dart';
+import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
+import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page-encointer/home_page.dart';
@@ -32,8 +36,10 @@ import 'package:encointer_wallet/page/profile/settings/settings_page.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/page/reap_voucher/reap_voucher_page.dart';
-import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
+import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
+import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
@@ -49,36 +55,15 @@ class WalletApp extends StatefulWidget {
 class _WalletAppState extends State<WalletApp> {
   Locale _locale = const Locale('en', '');
 
-  void _changeLang(BuildContext context, String? code) {
-    Locale res;
-    switch (code) {
-      case 'en':
-        res = const Locale('en', '');
-        break;
-      case 'de':
-        res = const Locale('de', '');
-        break;
-      default:
-        res = Localizations.localeOf(context);
-    }
-    setState(() {
-      _locale = res;
-    });
-  }
-
-  @protected
-  @mustCallSuper
-  void reassemble() {
-    // this gets executed upon hot-restart or hot-reload only!
-    super.reassemble();
-  }
-
   @override
-  void dispose() {
-    didReceiveLocalNotificationSubject.close();
-    selectNotificationSubject.close();
-    webApi.close();
-    super.dispose();
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final js = await DefaultAssetBundle.of(context).loadString('lib/js_service_encointer/dist/main.js');
+      webApi = widget.config.mockSubstrateApi
+          ? MockApi(context.read<AppStore>(), MockJSApi(), MockSubstrateDartApi(), js, withUi: true)
+          : Api.create(context.read<AppStore>(), JSApi(), SubstrateDartApi(), js);
+    });
   }
 
   @override
@@ -116,7 +101,7 @@ class _WalletAppState extends State<WalletApp> {
           switch (settings.name) {
             case SplashView.route:
               return CupertinoPageRoute(
-                builder: (_) => SplashView(widget.config.mockLocalStorage, _changeLang),
+                builder: (_) => const SplashView(),
               );
             case EncointerHomePage.route:
               return CupertinoPageRoute(

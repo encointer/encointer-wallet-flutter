@@ -1,6 +1,15 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:focus_detector/focus_detector.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:pausable_timer/pausable_timer.dart';
+import 'package:sliding_up_panel/sliding_up_panel.dart';
+
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/drag_handle.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
@@ -24,14 +33,6 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:focus_detector/focus_detector.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:pausable_timer/pausable_timer.dart';
-import 'package:sliding_up_panel/sliding_up_panel.dart';
 
 class Assets extends StatefulWidget {
   Assets(this.store, {Key? key}) : super(key: key);
