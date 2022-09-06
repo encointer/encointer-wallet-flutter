@@ -14,7 +14,7 @@ linter:
     constant_identifier_names: false
     prefer_final_fields: false
     library_private_types_in_public_api: true
-    annotate_overrides: false
+    annotate_overrides: true
     prefer_interpolation_to_compose_strings: false
     prefer_collection_literals: false
     prefer_conditional_assignment: false

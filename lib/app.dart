@@ -115,6 +115,7 @@ class _WalletAppState extends State<WalletApp> {
     return context.read<AppStore>().account.accountListAll.length;
   }
 
+  @override
   @protected
   @mustCallSuper
   void reassemble() {

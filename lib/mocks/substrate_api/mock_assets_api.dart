@@ -6,6 +6,7 @@ import 'package:encointer_wallet/store/app.dart';
 class MockAssetsApi extends AssetsApi {
   MockAssetsApi(this.store, MockJSApi js) : super(store, js);
 
+  @override
   final AppStore store;
 
   @override

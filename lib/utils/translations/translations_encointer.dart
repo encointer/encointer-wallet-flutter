@@ -55,166 +55,319 @@ abstract class TranslationsEncointer {
 }
 
 class TranslationsEnEncointer implements TranslationsEncointer {
+  @override
   get registerParticipant => 'Register';
+  @override
   get claimsSubmit => 'Submit claims';
+  @override
   get claimsSubmitN => 'Submit N_COUNT claims';
+  @override
   get claimsPurge => 'Purge previously scanned claims';
+  @override
   get claimsPurgeConfirm => 'Are you sure, you want to purge all scanned claims?';
+  @override
   get encointerCeremony => 'Encointer Ceremony';
+  @override
   get nextCeremonyTimeLeft => 'Next ceremony is in';
+  @override
   get nextCeremonyDateLabel => 'Next ceremony is on';
+  @override
   get claimQr => 'My Claim of Attendance';
+  @override
   get claimsScanned => 'You have scanned AMOUNT_PLACEHOLDER claims';
+  @override
   get claimsScannedAlready => 'Updated previously scanned claim';
+  @override
   get claimsScannedDecodeFailed => 'Could not decode scanned claim.';
+  @override
   get claimsScannedNew => 'Scanned new claim';
+  @override
   get claimsScannedNOfM => 'Scanned SCANNED_COUNT / TOTAL_COUNT Claims';
+  @override
   get claimsSubmitDetail => 'Submitting AMOUNT claims for the recent ceremony';
+  @override
   get communities => 'Communities';
+  @override
   get noCommunitiesAreYouOffline => 'No communities were found. You can choose one later. Are you offline?.';
+  @override
   get encointer => 'Encointer Ceremony';
+  @override
   get meetupAttended => 'Attended last meetup';
+  @override
   get meetupClaimantInvalid => 'This claimant is not part of the meetup. Claim is not stored.';
+  @override
   get meetupLocation => 'Meetup Location';
+  @override
   get timeUntilCeremonyStarts => 'Time to meetup:';
+  @override
   get startCeremony => 'Start ceremony';
+  @override
   get alreadyRegistered => 'Already Registered';
+  @override
   get registerUntil => 'Register before';
+  @override
   get showCeremonyLocation => 'Ceremony location';
+  @override
   get ceremonyIsOver => 'The ceremony is over';
+  @override
   get today => 'Today';
+  @override
   get tomorrow => 'Tomorrow';
+  @override
   get calendarEntryDescription => 'Meetup to get your community income';
+  @override
   get youAreNotRegistered => 'You are not registered for a ceremony for the selected community on:';
+  @override
   get howManyParticipantsShowedUp => 'How many attendees are present including yourself?';
+  @override
   get ceremonyWillTakePlaceOn => 'The ceremony will take place on';
+  @override
   get ceremonySuccessfullyCompleted => 'Ceremony successfully completed';
+  @override
   get fetchingReputations => 'Checking if you have reputation';
+  @override
   get youAreRegisteredAs => 'You have registered for the next ceremony as PARTICIPANT_TYPE.';
+  @override
   get youAreNotRegisteredPleaseRegisterNextTime =>
       'You haven\'t been assigned for this ceremony. Please join a later ceremony to receive your community income.';
+  @override
   get youAreAssignedToAMeetupWithNParticipants => 'You are assigned to a meetup with P_COUNT people.';
+  @override
   get successfullySentNAttestations => 'You have successfully submitted attestations for P_COUNT other people.';
+  @override
   get countParticipants => 'Count';
+  @override
   get numberOfAttendees => 'Number of attendees';
+  @override
   get next => 'Next';
+  @override
   get closeMeetup => 'Close meetup';
+  @override
   get count => 'Count';
+  @override
   get scan => 'Scan';
+  @override
   get scanDescriptionForMeetup => 'Every attendee must scan and be scanned by everyone else.';
+  @override
   get scanOthers => 'Scan others';
+  @override
   get finish => 'Finish';
+  @override
   get thankYou => 'Thank you';
+  @override
   get weHopeToSeeYouAtTheNextMeetup => 'We hope to see you at the next meetup.';
+  @override
   get goToLeuZurich => 'Open leu.zuerich';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
+  @override
   get registerParticipant => 'Registrieren';
+  @override
   get claimsSubmit => 'Anträge einreichen';
+  @override
   get claimsSubmitN => 'N_COUNT Anträge einreichen';
+  @override
   get claimsPurge => 'Bereits gescannte Anträge löschen';
+  @override
   get claimsPurgeConfirm => 'Bist du sicher, dass du alle gescannte Anträge löschen möchtest?';
+  @override
   get encointerCeremony => 'Encointer Zeremonie';
+  @override
   get nextCeremonyTimeLeft => 'Nächste Zeremonie ist in';
+  @override
   get nextCeremonyDateLabel => 'Nächste Zeremonie:';
+  @override
   get claimQr => 'Mein Antrag auf Anwesenheitsbestätigung';
+  @override
   get claimsScanned => 'Du hast AMOUNT_PLACEHOLDER Anträge gescannt';
+  @override
   get claimsScannedAlready => 'bereits gescannter Antrag wurde aktualisiert';
+  @override
   get claimsScannedDecodeFailed => 'Gescannter Antrag konnte nicht dekodiert werden.';
+  @override
   get claimsScannedNew => 'Neuer Antrag gescannt';
+  @override
   get claimsScannedNOfM => 'SCANNED_COUNT / TOTAL_COUNT gescannte Anträge';
+  @override
   get claimsSubmitDetail => 'Reiche AMOUNT Bezeugungen für die aktuelle Zeremonie ein';
+  @override
   get communities => 'Gemeinschaften';
+  @override
   get noCommunitiesAreYouOffline => 'Keine Gemeinschaften gefunden. Du kannst später eine auswählen. Bist du offline?';
+  @override
   get encointer => 'Encointer Zeremonie';
+  @override
   get meetupAttended => 'An der letzen Versammlung teilgenommen';
+  @override
   get meetupClaimantInvalid =>
       'Diese* Antragssteller*in gehört nicht zu deiner Versammlung. Antrag wurde nicht gespeichert.';
+  @override
   get meetupLocation => 'Treffpunkt';
+  @override
   get timeUntilCeremonyStarts => 'Zeit bis zur Versammlung:';
+  @override
   get startCeremony => 'Versammlung starten';
+  @override
   get alreadyRegistered => 'Bereits registriert';
+  @override
   get registerUntil => 'Registriere dich vor dem';
+  @override
   get showCeremonyLocation => 'Treffpunkt';
+  @override
   get ceremonyIsOver => 'Die Zeremonie ist vorbei';
+  @override
   get today => 'Heute';
+  @override
   get tomorrow => 'Morgen';
+  @override
   get calendarEntryDescription => 'Nimm an der Versammlung teil um dein Einkommen zu erhalten';
+  @override
   get youAreNotRegistered => 'Du bist leider keiner Versammlung zugewiesen worden am';
+  @override
   get howManyParticipantsShowedUp => 'Wieviele Teilnehmende sind da inklusive dir?';
+  @override
   get ceremonyWillTakePlaceOn => 'Die Zeremonie wird stattfinden am';
+  @override
   get ceremonySuccessfullyCompleted => 'Zeremonie erfolgreich durchgeführt';
+  @override
   get fetchingReputations => 'Es wird überprüft, ob du bereits Reputation hast';
+  @override
   get youAreRegisteredAs => 'Du hast dich für die nächste Zeremonie als PARTICIPANT_TYPE registriert.';
+  @override
   get youAreNotRegisteredPleaseRegisterNextTime =>
       'Du wurdest nicht für diese Zeremonie zugewiesen. Bitte registriere dich für eine kommende Zeremonie um dein Gemeinschaftseinkommen zu erhalten.';
+  @override
   get youAreAssignedToAMeetupWithNParticipants => 'Du bist einer Versammlung mit P_COUNT Leuten zugewiesen.';
+  @override
   get successfullySentNAttestations => 'Du hast erfolgreich Bezeugungen für P_COUNT andere Leute eingereicht.';
+  @override
   get countParticipants => 'Zähle';
+  @override
   get numberOfAttendees => 'Anzahl Teilnehmende';
+  @override
   get next => 'Weiter';
+  @override
   get closeMeetup => 'Treffen schliessen';
+  @override
   get count => 'Zähle';
+  @override
   get scan => 'Scannen';
+  @override
   get scanDescriptionForMeetup => 'Jede* Anwesende muss alle anderen scannen, und von allen gescannt werden.';
+  @override
   get scanOthers => 'Andere scannen';
+  @override
   get finish => 'Beenden';
+  @override
   get thankYou => 'Danke';
+  @override
   get weHopeToSeeYouAtTheNextMeetup => 'Wir hoffen, dass wir dich am nächsten Treffen wieder sehen.';
+  @override
   get goToLeuZurich => 'leu.zuerich öffnen';
 }
 
 class TranslationsZhEncointer implements TranslationsEncointer {
+  @override
   get registerParticipant => '注册参与者';
+  @override
   get claimsSubmit => '提交证明';
+  @override
   get claimsSubmitN => throw UnimplementedError();
+  @override
   get claimsPurge => throw UnimplementedError();
+  @override
   get claimsPurgeConfirm => throw UnimplementedError();
+  @override
   get encointerCeremony => 'Encointer 仪式';
+  @override
   get nextCeremonyTimeLeft => throw UnimplementedError();
+  @override
   get nextCeremonyDateLabel => throw UnimplementedError();
+  @override
   get claimQr => '我的出席声明';
+  @override
   get claimsScanned => '您已扫描 AMOUNT_PLACEHOLDER 声明';
+  @override
   get claimsScannedAlready => '更新了之前扫描的声明';
+  @override
   get claimsScannedDecodeFailed => '无法解码扫描的声明。';
+  @override
   get claimsScannedNew => '扫描的新声​​明';
+  @override
   get claimsScannedNOfM => '扫描的 SCANNED_COUNT / TOTAL_COUNT 个索赔';
+  @override
   get claimsSubmitDetail => '为最近的仪式提交 AMOUNT 索赔';
+  @override
   get encointer => 'Encointer 仪式';
+  @override
   get meetupAttended => '参加了上次聚会';
+  @override
   get meetupClaimantInvalid => '此索赔人不是聚会的一部分。声明未存储。';
+  @override
   get meetupLocation => throw UnimplementedError();
+  @override
   get timeUntilCeremonyStarts => '聚会时间：';
+  @override
   get startCeremony => throw UnimplementedError();
+  @override
   get alreadyRegistered => '已经注册';
+  @override
   get communities => throw UnimplementedError();
+  @override
   get noCommunitiesAreYouOffline => throw UnimplementedError();
+  @override
   get registerUntil => throw UnimplementedError();
+  @override
   get showCeremonyLocation => throw UnimplementedError();
+  @override
   get ceremonyIsOver => throw UnimplementedError();
+  @override
   get today => throw UnimplementedError();
+  @override
   get tomorrow => throw UnimplementedError();
+  @override
   get calendarEntryDescription => throw UnimplementedError();
+  @override
   get youAreNotRegistered => throw UnimplementedError();
+  @override
   get howManyParticipantsShowedUp => throw UnimplementedError();
+  @override
   get ceremonyWillTakePlaceOn => throw UnimplementedError();
+  @override
   get ceremonySuccessfullyCompleted => throw UnimplementedError();
+  @override
   get fetchingReputations => throw UnimplementedError();
+  @override
   get youAreRegisteredAs => throw UnimplementedError();
+  @override
   get youAreNotRegisteredPleaseRegisterNextTime => throw UnimplementedError();
+  @override
   get youAreAssignedToAMeetupWithNParticipants => throw UnimplementedError();
+  @override
   get successfullySentNAttestations => throw UnimplementedError();
+  @override
   get countParticipants => throw UnimplementedError();
+  @override
   get numberOfAttendees => throw UnimplementedError();
+  @override
   get next => throw UnimplementedError();
+  @override
   get closeMeetup => throw UnimplementedError();
+  @override
   get count => throw UnimplementedError();
+  @override
   get scan => throw UnimplementedError();
+  @override
   get scanDescriptionForMeetup => throw UnimplementedError();
+  @override
   get scanOthers => throw UnimplementedError();
+  @override
   get finish => throw UnimplementedError();
+  @override
   get thankYou => throw UnimplementedError();
+  @override
   get weHopeToSeeYouAtTheNextMeetup => throw UnimplementedError();
+  @override
   get goToLeuZurich => throw UnimplementedError();
 }
