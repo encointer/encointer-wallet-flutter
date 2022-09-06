@@ -150,7 +150,7 @@ class _TransferPageState extends State<TransferPage> {
                         IconButton(
                           iconSize: 48,
                           icon: const Icon(Iconsax.scan_barcode),
-                          onPressed: () => Navigator.of(context).popAndPushNamed(
+                          onPressed: () => Navigator.of(context).pushNamed(
                             ScanPage.route,
                             arguments: ScanPageParams(scannerContext: QrScannerContext.transferPage),
                           ), // same as for clicking the scan button in the bottom bar
