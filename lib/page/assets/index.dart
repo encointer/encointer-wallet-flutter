@@ -262,14 +262,7 @@ class _AssetsState extends State<Assets> {
                                   key: const Key('transfer'),
                                   onPressed: store.encointer.communityBalance != null
                                       ? () {
-                                          Navigator.pushNamed(
-                                            context,
-                                            TransferPage.route,
-                                            arguments: TransferPageParams(
-                                                redirect: '/',
-                                                cid: store.encointer.chosenCid!,
-                                                communitySymbol: store.encointer.community!.symbol!),
-                                          );
+                                          Navigator.pushNamed(context, TransferPage.route);
                                         }
                                       : null,
                                 ),
