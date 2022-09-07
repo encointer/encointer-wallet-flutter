@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:provider/provider.dart';
@@ -11,8 +13,6 @@ import 'package:encointer_wallet/mocks/storage/prepare_mock_storage.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 void main() async {
-  // await Upgrader.clearSavedSettings();
-
   final _appcastURL = 'https://encointer.github.io/feed/app_cast/testappcast.xml';
   final _cfg = AppcastConfiguration(url: _appcastURL, supportedOS: ['android']);
   final _globalAppStore = AppStore(MockLocalStorage(), appcastConfiguration: _cfg);
@@ -23,27 +23,33 @@ void main() async {
   //
   // ignore: missing_return
   Future<String> dataHandler(String? msg) async {
+    var result = '';
     switch (msg) {
-      case MockStorageSetup.WAIT_UNTIL_APP_IS_READY:
+      case TestCommands.WAIT_UNTIL_APP_IS_READY:
         return PrepareMockStorage.wait(_globalAppStore);
-      case MockStorageSetup.INIT:
+      case TestCommands.INIT:
         PrepareMockStorage.init(_globalAppStore);
         break;
-      case MockStorageSetup.HOME_PAGE:
+      case TestCommands.HOME_PAGE:
         PrepareMockStorage.homePage(_globalAppStore);
         break;
-      case MockStorageSetup.READY_FOR_MEETUP:
+      case TestCommands.READY_FOR_MEETUP:
         PrepareMockStorage.readyForMeetup(_globalAppStore);
+        break;
+      case TestCommands.GET_PLATFORM:
+        result = Platform.operatingSystem;
         break;
       default:
         break;
     }
-    // to fix static analysis
-    return Future.value('DataHandler');
+    return result;
   }
 
   enableFlutterDriverExtension(handler: dataHandler);
   WidgetsApp.debugAllowBannerOverride = false; // remove debug banner for screenshots
+
+  // Clear settings to make upgrade dialog visible in subsequent test runs.
+  await Upgrader.clearSavedSettings();
 
   // Call the `main()` function of the app, or call `runApp` with
   // any widget you are interested in testing.
