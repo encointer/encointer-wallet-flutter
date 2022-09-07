@@ -13,9 +13,9 @@ import 'package:encointer_wallet/store/app.dart';
 void main() async {
   // await Upgrader.clearSavedSettings();
 
-  final appcastURL = 'https://encointer.github.io/feed/app_cast/testappcast.xml';
-  final cfg = AppcastConfiguration(url: appcastURL, supportedOS: ['android']);
-  final _globalAppStore = AppStore(MockLocalStorage(), appcastConfiguration: cfg);
+  final _appcastURL = 'https://encointer.github.io/feed/app_cast/testappcast.xml';
+  final _cfg = AppcastConfiguration(url: _appcastURL, supportedOS: ['android']);
+  final _globalAppStore = AppStore(MockLocalStorage(), appcastConfiguration: _cfg);
 
   // the tests are run in a separate isolate from the app. The test isolate can only interact with
   // the app via the driver in order to, for instance, configure the app state.
