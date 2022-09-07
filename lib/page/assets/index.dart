@@ -7,7 +7,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:pausable_timer/pausable_timer.dart';
+import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
+import 'package:upgrader/upgrader.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/drag_handle.dart';
@@ -111,21 +113,27 @@ class _AssetsState extends State<Assets> {
     final appBar = AppBar(title: Text(dic!.assets.home));
 
     return FocusDetector(
-        onFocusLost: () {
-          Log.d('[home:FocusDetector] Focus Lost.', 'Assets');
-          balanceWatchdog!.pause();
-        },
-        onFocusGained: () {
-          Log.d('[home:FocusDetector] Focus Gained.', 'Assets');
-          if (!store.settings.loading) {
-            _refreshBalanceAndNotify(dic);
-          }
-          balanceWatchdog!.reset();
-          balanceWatchdog!.start();
-        },
-        child: Scaffold(
-          appBar: appBar,
-          body: SlidingUpPanel(
+      onFocusLost: () {
+        print('[home:FocusDetector] Focus Lost.');
+        balanceWatchdog!.pause();
+      },
+      onFocusGained: () {
+        print('[home:FocusDetector] Focus Gained.');
+        if (!store.settings.loading) {
+          _refreshBalanceAndNotify(dic);
+        }
+        balanceWatchdog!.reset();
+        balanceWatchdog!.start();
+      },
+      child: Scaffold(
+        appBar: appBar,
+        body: UpgradeAlert(
+          upgrader: Upgrader(
+            appcastConfig: context.watch<AppStore>().appcastConfiguration,
+            debugLogging: context.select<AppStore, bool>((e) => e.appcastConfiguration != null),
+            canDismissDialog: true,
+          ),
+          child: SlidingUpPanel(
             maxHeight: _panelHeightOpen,
             minHeight: _panelHeightClosed,
             parallaxEnabled: true,
@@ -374,7 +382,9 @@ class _AssetsState extends State<Assets> {
             ),
             borderRadius: const BorderRadius.only(topLeft: Radius.circular(40.0), topRight: Radius.circular(40.0)),
           ),
-        ));
+        ),
+      ),
+    );
   }
 
   List<AccountOrCommunityData> initAllCommunities() {
