@@ -1,12 +1,14 @@
 import 'dart:convert';
 
+import 'package:json_annotation/json_annotation.dart';
+import 'package:mobx/mobx.dart';
+
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/assets/types/transfer_data.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:json_annotation/json_annotation.dart';
-import 'package:mobx/mobx.dart';
 
 part 'encointer_account_store.g.dart';
 
@@ -58,8 +60,8 @@ abstract class _EncointerAccountStore with Store {
     if (reputations.isNotEmpty) {
       try {
         return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
-      } catch (_e) {
-        _log('$address has reputation, but none that has not been linked yet');
+      } catch (_e, s) {
+        Log.e('$address has reputation, but none that has not been linked yet', 'EncointerAccountStore', s);
         return 0;
       }
     }
@@ -67,7 +69,7 @@ abstract class _EncointerAccountStore with Store {
 
   @action
   void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
-    _log('balanceEntry $balanceEntry added to cid $cid added');
+    Log.d('balanceEntry $balanceEntry added to cid $cid added', 'EncointerAccountStore');
     balanceEntries[cid.toFmtString()] = balanceEntry;
     writeToCache();
   }
@@ -92,7 +94,7 @@ abstract class _EncointerAccountStore with Store {
   @action
   Future<void> setTransferTxs(List list, String address, {bool reset = false, needCache = true}) async {
     if (this.address != address) {
-      _log("Tried to cached transfer tx's for wrong account. This is a bug.");
+      Log.d("Tried to cached transfer tx's for wrong account. This is a bug.", 'EncointerAccountStore');
       return Future.value(null);
     }
 
@@ -129,8 +131,4 @@ abstract class _EncointerAccountStore with Store {
       return Future.value(null);
     }
   }
-}
-
-void _log(String msg) {
-  print('[encointerAccountStore] $msg');
 }
