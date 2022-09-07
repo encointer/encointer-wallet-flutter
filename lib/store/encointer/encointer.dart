@@ -345,8 +345,12 @@ abstract class _EncointerStore with Store {
 
   Future<void> updateAggregatedAccountData() async {
     try {
-      var data = await webApi.encointer.getAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress);
-      setAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress, data);
+      if (chosenCid != null) {
+        var data = await webApi.encointer.getAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress);
+        setAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress, data);
+      } else {
+        Log.d('chosenCid is null', 'Encointer updateAggregatedAccountData');
+      }
     } catch (e, s) {
       Log.e('$e', 'EncointerStore', s);
     }

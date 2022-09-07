@@ -37,7 +37,7 @@ class _SplashViewState extends State<SplashView> {
           onTimeout: () => print('webApi.init() has run into a timeout. We might be offline.'),
         );
 
-    context.read<AppStore>().dataUpdate.setupUpdateReaction(() async {
+    await context.read<AppStore>().dataUpdate.setupUpdateReaction(() async {
       await context.read<AppStore>().encointer.updateState();
     });
 
@@ -51,6 +51,12 @@ class _SplashViewState extends State<SplashView> {
       Navigator.pushAndRemoveUntil(
           context, CupertinoPageRoute(builder: (context) => CreateAccountEntryPage()), (route) => false);
     }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
   }
 
   @override
