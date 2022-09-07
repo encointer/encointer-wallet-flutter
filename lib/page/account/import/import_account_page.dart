@@ -1,12 +1,14 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:encointer_wallet/page/account/create/create_pin_page.dart';
 import 'package:encointer_wallet/page/account/import/import_account_form.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ImportAccountPage extends StatefulWidget {
   const ImportAccountPage({Key? key}) : super(key: key);
@@ -51,7 +53,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       cryptoType: _cryptoType,
       derivePath: _derivePath,
     );
-    _log('imported account to JS.');
+    Log.d('imported account to JS.', 'ImportAccountPage');
 
     // check if account duplicate
     if (acc['error'] != null) {
@@ -130,7 +132,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   }
 
   Future<void> _saveAccount(Map<String, dynamic> acc) async {
-    _log("Saving account: ${acc["pubKey"]}");
+    Log.d("Saving account: ${acc["pubKey"]}", 'ImportAccountPage');
     var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
     await context.read<AppStore>().addAccount(acc, context.read<AppStore>().account.newAccount.password, addresses[0]);
 
@@ -174,8 +176,4 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       }
     });
   }
-}
-
-_log(String msg) {
-  print('[importAccountPage] $msg');
 }

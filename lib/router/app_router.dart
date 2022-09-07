@@ -35,6 +35,7 @@ class AppRoute {
 
   static const String splash = '/';
 
+  // cf. CupertinoPageRoute documentation -> fullscreenDialog: true, (in this case the page slides in from the bottom)
   static Route<void> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case SplashView.route:

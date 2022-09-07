@@ -10,6 +10,7 @@ import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enha
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -88,13 +89,13 @@ class _ReceivePageState extends State<ReceivePage> {
 
           if (newBalance != null) {
             double delta = newBalance - oldBalance;
-            print('[receivePage] balance was $oldBalance, changed by $delta');
+            Log.d('[receivePage] balance was $oldBalance, changed by $delta', 'ReceivePage');
             if (delta > demurrageRate!) {
               var msg = dic.assets.incomingConfirmed
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
                   .replaceAll('CID_SYMBOL', _store.encointer.community?.metadata?.symbol ?? 'null')
                   .replaceAll('ACCOUNT_NAME', _store.account.currentAccount.name);
-              print('[receivePage] $msg');
+              Log.d('[receivePage] $msg', 'ReceivePage');
               _store.encointer.account?.addBalanceEntry(cid, balances[cid]!);
 
               NotificationPlugin.showNotification(44, dic.assets.fundsReceived, msg, cid: cid.toFmtString());
@@ -106,14 +107,13 @@ class _ReceivePageState extends State<ReceivePage> {
           ..start();
       },
     )..start();
-
     return FocusDetector(
       onFocusLost: () {
-        print('[receivePage:FocusDetector] Focus Lost.');
+        Log.d('[receivePage:FocusDetector] Focus Lost.', 'ReceivePage');
         paymentWatchdog!.pause();
       },
       onFocusGained: () {
-        print('[receivePage:FocusDetector] Focus Gained.');
+        Log.d('[receivePage:FocusDetector] Focus Gained.', 'ReceivePage');
         paymentWatchdog!.reset();
         paymentWatchdog!.start();
       },
@@ -218,7 +218,7 @@ Future<bool> showSnackBarUponPendingExtrinsics(AppStore store, Api api, Translat
   try {
     var extrinsics = await api.encointer.pendingExtrinsics();
 
-    print('[receivePage] pendingExtrinsics ${extrinsics.toString()}');
+    Log.d('[receivePage] pendingExtrinsics $extrinsics', 'ReceivePage');
     if (extrinsics.length > 0) {
       for (var xt in extrinsics) {
         if (xt.contains(store.account.currentAccountPubKey!.substring(2))) {
@@ -233,13 +233,9 @@ Future<bool> showSnackBarUponPendingExtrinsics(AppStore store, Api api, Translat
         }
       }
     }
-  } catch (e) {
-    _log(e.toString());
+  } catch (e, s) {
+    Log.e('$e', 'ReceivePage', s);
   }
 
   return observedExtrinsics;
-}
-
-void _log(String msg) {
-  print('[receivePage] $msg');
 }

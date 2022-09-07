@@ -13,6 +13,7 @@ import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/page/reap_voucher/dialogs.dart';
 import 'package:encointer_wallet/page/reap_voucher/utils.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -50,7 +51,8 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
   bool _isReady = false;
 
   Future<void> fetchVoucherData(Api api, String voucherUri, CommunityIdentifier cid) async {
-    _log('Fetching voucher data...');
+    Log.d('Fetching voucher data...', 'ReapVoucherPage');
+
     _voucherAddress = await api.account.addressFromUri(voucherUri);
 
     setState(() {});
@@ -177,7 +179,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     var res = await submitReapVoucher(widget.api, voucherUri, recipientAddress, cid);
 
     if (res['hash'] == null) {
-      _log('Error redeeming voucher: ${res['error']}');
+      Log.d('Error redeeming voucher: ${res['error']}', 'ReapVoucherPage');
       showRedeemFailedDialog(context, res['error']);
     } else {
       showRedeemSuccessDialog(context);
@@ -230,8 +232,4 @@ void _pushTransferPage(BuildContext context, VoucherData data, String voucherAdd
       redirect: ReapVoucherPage.route,
     ),
   );
-}
-
-void _log(String msg) {
-  print('[ReapVoucherPage] $msg');
 }

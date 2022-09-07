@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
+import 'package:encointer_wallet/service/log/log_service.dart';
+
 const EncointerJsService = 'EncointerJsService';
 
 /// Core interface to talk with our JS-service
@@ -26,14 +28,13 @@ class JSApi {
 
     _web = HeadlessInAppWebView(
       initialData: InAppWebViewInitialData(data: jSSourceHtmlContainer(jsServiceEncointer)),
-      onConsoleMessage: (controller, message) => print('JS-Console: ${message.message}'),
+      onConsoleMessage: (controller, message) => Log.d('JS-Console: ${message.message}', 'JSApi'),
       onWebViewCreated: (controller) async {
-        print('Adding the PolkaWallet javascript handler');
-
+        Log.d('Adding the PolkaWallet javascript handler', 'JSApi');
         controller.addJavaScriptHandler(
             handlerName: EncointerJsService,
             callback: (args) {
-              print('[JavaScripHandler/callback]: ${args.toString()}');
+              Log.d('[JavaScripHandler/callback]: $args', 'JSApi');
 
               var res = args[0];
 
@@ -62,9 +63,9 @@ class JSApi {
     // log updates about the webView state until it is ready.
     Timer.periodic(const Duration(seconds: 2), (timer) {
       if (!initWebViewCompleter.isCompleted) {
-        _log('webView is being initialized...');
+        Log.d('webView is being initialized...', 'JSApi');
       } else {
-        _log('webView is ready');
+        Log.d('webView is ready', 'JSApi');
         timer.cancel();
       }
     });
@@ -90,7 +91,7 @@ class JSApi {
       for (String i in _msgCompleters.keys) {
         String call = code.split('(')[0];
         if (i.compareTo(call) == 0) {
-          print('request $call loading');
+          Log.d('request $call loading', 'JSApi');
           return _msgCompleters[i]!.future;
         }
       }
@@ -141,12 +142,12 @@ class JSApi {
   }
 
   Future<void> closeWebView() async {
-    print('[JSApi]: closing webView');
+    Log.d('[JSApi]: closing webView', 'JSApi');
     if (_web != null) {
       await _web!.dispose();
       _web = null;
     } else {
-      print('[JSApi]: Did not close webView because it was closed already.');
+      Log.d('[JSApi]: Did not close webView because it was closed already.', 'JSApi');
     }
   }
 }
@@ -163,8 +164,4 @@ String jSSourceHtmlContainer(String jSSource) {
     </body>
   </html>
   ''';
-}
-
-void _log(String msg) {
-  print('[jsApi] $msg');
 }
