@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
@@ -27,6 +26,7 @@ import 'package:encointer_wallet/page/assets/account_or_community/account_or_com
 import 'package:encointer_wallet/page/assets/account_or_community/switch_account_or_community.dart';
 import 'package:encointer_wallet/page/assets/receive/receive_page.dart';
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
@@ -81,7 +81,7 @@ class _AssetsState extends State<Assets> {
   }
 
   late double _panelHeightOpen;
-  double _panelHeightClosed = 0;
+  final double _panelHeightClosed = 0;
   Translations? dic;
 
   Future<void> _refreshEncointerState() async {
@@ -101,7 +101,8 @@ class _AssetsState extends State<Assets> {
     balanceWatchdog = PausableTimer(
       const Duration(seconds: 12),
       () {
-        print('[balanceWatchdog] triggered');
+        Log.d('[balanceWatchdog] triggered', 'Assets');
+
         _refreshBalanceAndNotify(dic);
         balanceWatchdog!
           ..reset()
@@ -507,9 +508,9 @@ class _AssetsState extends State<Assets> {
 
   void _refreshBalanceAndNotify(Translations? dic) {
     webApi.encointer.getAllBalances(widget.store.account.currentAddress).then((balances) {
-      print('[home:refreshBalanceAndNotify] get all balances');
+      Log.d('[home:refreshBalanceAndNotify] get all balances', 'Assets');
       if (widget.store.encointer.chosenCid == null) {
-        print('[home:refreshBalanceAndNotify] no community selected');
+        Log.d('[home:refreshBalanceAndNotify] no community selected', 'Assets');
         return;
       }
       bool activeAccountHasBalance = false;
@@ -523,7 +524,7 @@ class _AssetsState extends State<Assets> {
                   widget.store.encointer.accountStores![widget.store.account.currentAddress]!.balanceEntries[cidStr]) ??
               0;
           double delta = newBalance - oldBalance;
-          print('[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta');
+          Log.d('[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta', 'Assets');
           if (delta.abs() > demurrageRate) {
             widget.store.encointer.accountStores![widget.store.account.currentAddress]
                 ?.addBalanceEntry(cid, balances[cid]!);
@@ -532,7 +533,7 @@ class _AssetsState extends State<Assets> {
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
                   .replaceAll('CID_SYMBOL', community.metadata!.symbol)
                   .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
-              print('[home:balanceWatchdog] $msg');
+              Log.d('[home:balanceWatchdog] $msg', 'Assets');
               NotificationPlugin.showNotification(45, dic.assets.fundsReceived, msg, cid: cidStr);
             }
           }
@@ -542,13 +543,15 @@ class _AssetsState extends State<Assets> {
         }
       });
       if (!activeAccountHasBalance) {
-        print(
-            "[home:refreshBalanceAndNotify] didn't get any balance for active account. initialize store balance to zero");
+        Log.d(
+          '[home:refreshBalanceAndNotify] didn\'t get any balance for active account. initialize store balance to zero',
+          'Assets',
+        );
         widget.store.encointer.accountStores![widget.store.account.currentAddress]
             ?.addBalanceEntry(widget.store.encointer.chosenCid!, BalanceEntry(0, 0));
       }
-    }).catchError((e) {
-      print('[home:refreshBalanceAndNotify] WARNING: could not update balance: $e');
+    }).catchError((e, s) {
+      Log.e('[home:refreshBalanceAndNotify] WARNING: could not update balance: $e', 'Assets', s);
     });
   }
 }
