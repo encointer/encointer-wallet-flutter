@@ -132,9 +132,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.close, color: encointerGrey),
-            onPressed: () {
-              Navigator.popUntil(context, ModalRoute.withName('/'));
-            },
+            onPressed: () => Navigator.pop(context),
           )
         ],
       ),
