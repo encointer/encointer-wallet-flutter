@@ -32,6 +32,7 @@ abstract class _DataUpdateStore with Store {
 
   /// Time that is updated every second.
   @observable
+  // ignore: prefer_final_fields
   ObservableStream<DateTime> _time = Stream.periodic(const Duration(seconds: 1)).map((_) {
     // _log("updating time: ${DateTime.now()}");
     return DateTime.now();
