@@ -1,8 +1,10 @@
-import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:rxdart/rxdart.dart';
+
+import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
@@ -45,8 +47,8 @@ class NotificationPlugin {
 
   void _configureDidReceiveLocalNotificationSubject(BuildContext context) {
     didReceiveLocalNotificationSubject.stream.listen((ReceivedNotification receivedNotification) async {
-      print(receivedNotification.title);
-      print(receivedNotification.body);
+      Log.d('${receivedNotification.title}', 'NotificationPlugin');
+      Log.d('${receivedNotification.body}', 'NotificationPlugin');
       await showDialog(
         context: context,
         builder: (BuildContext context) => CupertinoAlertDialog(
@@ -68,8 +70,6 @@ class NotificationPlugin {
 
   void _configureSelectNotificationSubject(BuildContext context) {
     selectNotificationSubject.stream.listen((String? payload) async {
-      // do nothing for now
-//      print(payload);
 //      await Navigator.pushNamed(
 //        context,
 //        '/',
@@ -92,7 +92,12 @@ class NotificationPlugin {
     var iOSPlatformChannelSpecifics = const IOSNotificationDetails(sound: 'lions_growl.wav', presentSound: true);
     var platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
-    await flutterLocalNotificationsPlugin.show(0, title, body, platformChannelSpecifics,
-        payload: payload ?? 'undefined');
+    await flutterLocalNotificationsPlugin.show(
+      0,
+      title,
+      body,
+      platformChannelSpecifics,
+      payload: payload ?? 'undefined',
+    );
   }
 }

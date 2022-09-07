@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:encointer_wallet/config/consts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 
 class Ipfs {
   // Todo: remove default -> migrate bazaar to use ipfs field from webApi instance
@@ -39,28 +41,28 @@ class Ipfs {
       }
       var objectData = object.data.substring(indexJsonBegin, indexJsonEnd + 1);
       return objectData;
-    } catch (e) {
-      print(e);
+    } catch (e, s) {
+      Log.e('$e', 'Ipfs', s);
       return 0;
     }
   }
 
   Future<SvgPicture> getCommunityIcon(String? cid) async {
     if (cid == null || cid.isEmpty) {
-      print('[IPFS] return default encointer icon because ipfs-cid is not set');
+      Log.d('[IPFS] return default encointer icon because ipfs-cid is not set', 'Ipfs');
       return SvgPicture.asset(fall_back_community_icon);
     }
 
     try {
       var data = await getData(getIconsPath(cid));
       if (data == null) {
-        print('[Ipfs] could not find community icon');
+        Log.d('[Ipfs] could not find community icon', 'Ipfs');
         return SvgPicture.asset(fall_back_community_icon);
       }
 
       return SvgPicture.string(data);
-    } catch (e) {
-      print('[Ipfs] error getting communityIcon: $e');
+    } catch (e, s) {
+      Log.e('[Ipfs] error getting communityIcon: $e', 'Ipfs', s);
       return SvgPicture.asset(fall_back_community_icon);
     }
   }
@@ -73,8 +75,9 @@ class Ipfs {
       var object = Object.fromJson(response.data);
 
       return object.data;
-    } catch (e) {
+    } catch (e, s) {
       // otherwise we would have to adjust the return type.
+      Log.e('$e', 'Ipfs', s);
       throw (e.toString());
     }
   }
@@ -102,8 +105,8 @@ class Ipfs {
       imageHash = imageHash.substring(imageHashBegin, imageHashEnd + 1);
 
       return imageHash;
-    } catch (e) {
-      print('Ipfs upload of Image error ${e.toString()}');
+    } catch (e, s) {
+      Log.e('Ipfs upload of Image error $e', 'Ipfs', s);
       return '';
     }
   }
@@ -127,8 +130,8 @@ class Ipfs {
       jsonHash = jsonHash.substring(jsonHashBegin, jsonHashEnd + 1);
 
       return jsonHash;
-    } catch (e) {
-      print('Ipfs upload of json error ${e.toString()}');
+    } catch (e, s) {
+      Log.e('Ipfs upload of json error $e', 'Ipfs', s);
       return '';
     }
   }
@@ -144,7 +147,7 @@ class IpfsDio {
   late Dio dio;
 
   Future<Response<T>> get<T>(String cid) async {
-    print('[IPFS] fetching data from: ${dio.options.baseUrl}$getRequest$cid}');
+    Log.d('[IPFS] fetching data from: ${dio.options.baseUrl}$getRequest$cid', 'Ipfs');
     return dio.get('$getRequest$cid');
   }
 }

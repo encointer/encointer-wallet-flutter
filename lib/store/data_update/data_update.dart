@@ -1,5 +1,7 @@
 import 'package:mobx/mobx.dart';
 
+import 'package:encointer_wallet/service/log/log_service.dart';
+
 part 'data_update.g.dart';
 
 /// Store that fires when a certain time has expired since an update.
@@ -81,7 +83,7 @@ abstract class _DataUpdateStore with Store {
 
     _disposer = reaction((_) => now, (_) {
       if (needsRefresh) {
-        _log('Reaction triggered...');
+        Log.d('Reaction triggered...', 'DataUpdateStore');
         executeUpdate();
       } else {
         // Only enable for debugging purposes, otherwise it spams every second.
@@ -104,12 +106,12 @@ abstract class _DataUpdateStore with Store {
   @action
   Future<void> executeUpdate() async {
     if (_updateFn == null) {
-      _log('No `updateFn` set, returning...');
+      Log.d('No `updateFn` set, returning...', 'DataUpdateStore');
       return;
     }
 
     if (_updateFuture != null) {
-      _log('already updating, awaiting the previously set future.');
+      Log.d('already updating, awaiting the previously set future.', 'DataUpdateStore');
       await _updateFuture!;
       return;
     }
@@ -118,17 +120,13 @@ abstract class _DataUpdateStore with Store {
       // Data is valid and up-to-date again
       invalidated = false;
       lastUpdate = DateTime.now();
-    }).catchError((e) {
-      _log('Error while executing `updateFn`: ${e.toString()}');
+    }).catchError((e, s) {
+      Log.e('Error while executing `updateFn`: $e', 'DataUpdateStore', s);
     }).whenComplete(() {
       _updateFuture = null;
-      _log('update reaction finished');
+      Log.d('update reaction finished', 'DataUpdateStore');
     });
 
     await _updateFuture!;
   }
-}
-
-void _log(String msg) {
-  print('[DataUpdateStore] $msg');
 }

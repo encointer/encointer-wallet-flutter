@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
@@ -50,7 +51,7 @@ class AccountApi {
     var addresses = <String?>[];
 
     for (var pubKey in pubKeys) {
-      _log('New entry for pubKeyAddressMap: Key: $pubKey, address: ${res[store.settings]}');
+      Log.d('New entry for pubKeyAddressMap: Key: $pubKey, address: ${res[store.settings]}', 'AccountApi');
       addresses.add(store.account.pubKeyAddressMap[store.settings.endpoint.ss58]![pubKey!]);
     }
 
@@ -78,8 +79,7 @@ class AccountApi {
       allowRepeat: true,
     );
 
-    _log('addressFromUri: $address');
-
+    Log.d('addressFromUri: $address', 'AccountApi');
     return address;
   }
 
@@ -116,7 +116,7 @@ class AccountApi {
 
   Future<Map> estimateTxFees(Map txInfo, List? params, {String? rawParam}) async {
     String param = rawParam ?? jsonEncode(params);
-    print(txInfo);
+    Log.d('$txInfo', 'AccountApi');
     Map res = await jsApi.evalJavascript('account.txFeeEstimate(${jsonEncode(txInfo)}, $param)', allowRepeat: true);
     return res;
   }
@@ -144,7 +144,7 @@ class AccountApi {
   Future<dynamic> sendTx(Map? txInfo, List? params, {String? rawParam}) async {
     String param = rawParam ?? jsonEncode(params);
     String call = 'account.sendTx(${jsonEncode(txInfo)}, $param)';
-    _log('sendTx call: $call');
+    Log.d('sendTx call: $call', 'AccountApi');
     return jsApi.evalJavascript(call, allowRepeat: true);
   }
 
@@ -168,7 +168,7 @@ class AccountApi {
 
   Future<dynamic> checkAccountPassword(AccountData account, String pass) async {
     String? pubKey = account.pubKey;
-    print('checkpass: $pubKey, $pass');
+    Log.d('checkpass: $pubKey, $pass', 'AccountApi');
     return jsApi.evalJavascript(
       'account.checkPassword("$pubKey", "$pass")',
       allowRepeat: true,
@@ -205,8 +205,4 @@ class AccountApi {
     store.account.setAccountsIndex(res);
     return res;
   }
-}
-
-_log(String msg) {
-  print('[accountApi] $msg');
 }
