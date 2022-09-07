@@ -37,6 +37,7 @@ import 'package:encointer_wallet/page/profile/settings/settings_page.dart';
 import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/page/reap_voucher/reap_voucher_page.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
@@ -85,9 +86,8 @@ class _WalletAppState extends State<WalletApp> {
   Future<int> _initApp(BuildContext context) async {
     if (_appStore == null) {
       final _store = context.watch<AppStore>();
-
-      _log('Initializing app state');
-      _log('sys locale: ${Localizations.localeOf(context)}');
+      Log.d('Initializing app state', 'app.dart');
+      Log.d('sys locale: ${Localizations.localeOf(context)}', 'app.dart');
       await _store.init(Localizations.localeOf(context).toString());
 
       // init webApi after store initiated
@@ -100,7 +100,7 @@ class _WalletAppState extends State<WalletApp> {
 
       await webApi.init().timeout(
             const Duration(seconds: 20),
-            onTimeout: () => print('webApi.init() has run into a timeout. We might be offline.'),
+            onTimeout: () => Log.d('webApi.init() has run into a timeout. We might be offline.', 'app.dart'),
           );
 
       _store.dataUpdate.setupUpdateReaction(() async {
@@ -156,7 +156,6 @@ class _WalletAppState extends State<WalletApp> {
         initialRoute: widget.config.initialRoute,
         theme: _theme,
         scaffoldMessengerKey: rootScaffoldMessengerKey,
-
         // we use onGenerateRoute with CupertinoPageRoute objects to get specific page transition animations (sliding in from the right if there's a back button, sliding from the bottom up if there's a close button)
         // it is preferable to use Navigator.pushNamed (rather than Navigator.push) for large projects
         // cf. CupertinoPageRoute documentation -> fullscreenDialog: true, (in this case the page slides in from the bottom)
@@ -174,7 +173,7 @@ class _WalletAppState extends State<WalletApp> {
                       future: _initApp(context),
                       builder: (_, AsyncSnapshot<int> snapshot) {
                         if (snapshot.hasError) {
-                          _log('SnapshotError: ${snapshot.error.toString()}');
+                          Log.e('SnapshotError: ${snapshot.error}');
                         }
                         if (snapshot.hasData && _appStore!.appIsReady) {
                           return snapshot.data! > 0 ? EncointerHomePage() : CreateAccountEntryPage();
@@ -332,8 +331,4 @@ class _WalletAppState extends State<WalletApp> {
       ),
     );
   }
-}
-
-void _log(String msg) {
-  print('[App] $msg');
 }
