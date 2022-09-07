@@ -7,7 +7,7 @@ import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 class EncointerDartApi {
   EncointerDartApi(this._dartApi);
 
-  SubstrateDartApi _dartApi;
+  final SubstrateDartApi _dartApi;
 
   Future<void> close() async {
     Log.d('[EncointerDartApi: closing', 'EncointerDartApi');

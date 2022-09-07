@@ -79,7 +79,7 @@ class _AssetsState extends State<Assets> {
   }
 
   late double _panelHeightOpen;
-  double _panelHeightClosed = 0;
+  final double _panelHeightClosed = 0;
   Translations? dic;
 
   Future<void> _refreshEncointerState() async {

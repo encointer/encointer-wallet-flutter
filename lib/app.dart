@@ -25,7 +25,7 @@ class WalletApp extends StatefulWidget {
 }
 
 class _WalletAppState extends State<WalletApp> {
-  Locale _locale = const Locale('en', '');
+  final Locale _locale = const Locale('en', '');
 
   @override
   void initState() {
