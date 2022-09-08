@@ -8,6 +8,7 @@ import 'package:encointer_wallet/mocks/substrate_api/core/mock_dart_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
 import 'package:encointer_wallet/router/app_router.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
@@ -32,9 +33,13 @@ class _WalletAppState extends State<WalletApp> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final js = await DefaultAssetBundle.of(context).loadString('lib/js_service_encointer/dist/main.js');
-      webApi = widget.config.mockSubstrateApi
+      webApi = (widget.config.mockSubstrateApi
           ? MockApi(context.read<AppStore>(), MockJSApi(), MockSubstrateDartApi(), js, withUi: true)
-          : Api.create(context.read<AppStore>(), JSApi(), SubstrateDartApi(), js);
+          : Api.create(context.read<AppStore>(), JSApi(), SubstrateDartApi(), js))
+        ..init().timeout(
+          const Duration(seconds: 20),
+          onTimeout: () => Log.d('webApi.init() has run into a timeout. We might be offline.'),
+        );
     });
   }
 

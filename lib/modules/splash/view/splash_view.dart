@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/page-encointer/home_page.dart';
 import 'package:encointer_wallet/page/account/create_account_entry_page.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 class SplashView extends StatefulWidget {
@@ -25,38 +24,25 @@ class _SplashViewState extends State<SplashView> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
-      _initPage();
+      await _initPage();
     });
   }
 
   Future<void> _initPage() async {
     await context.read<AppStore>().init(Localizations.localeOf(context).toString());
-
-    await webApi.init().timeout(
-          const Duration(seconds: 20),
-          onTimeout: () => print('webApi.init() has run into a timeout. We might be offline.'),
-        );
-
-    await context.read<AppStore>().dataUpdate.setupUpdateReaction(() async {
-      await context.read<AppStore>().encointer.updateState();
-    });
-
     context.read<AppStore>().setApiReady(true);
-    final v = context.read<AppStore>().account.accountListAll.length;
 
-    if (v > 0) {
+    // context.read<AppStore>().dataUpdate.setupUpdateReaction(() async {
+    //   await context.read<AppStore>().encointer.updateState();
+    // });
+
+    if (context.read<AppStore>().account.accountListAll.length > 0) {
       Navigator.pushAndRemoveUntil(
           context, CupertinoPageRoute(builder: (context) => EncointerHomePage()), (route) => false);
     } else {
       Navigator.pushAndRemoveUntil(
           context, CupertinoPageRoute(builder: (context) => CreateAccountEntryPage()), (route) => false);
     }
-  }
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
   }
 
   @override

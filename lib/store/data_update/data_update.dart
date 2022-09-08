@@ -75,7 +75,7 @@ abstract class _DataUpdateStore with Store {
     invalidated = true;
   }
 
-  Future<void> setupUpdateReaction(Future<void> Function() updateFn) async {
+  void setupUpdateReaction(Future<void> Function() updateFn) {
     _updateFn = updateFn;
 
     if (_disposer != null) {

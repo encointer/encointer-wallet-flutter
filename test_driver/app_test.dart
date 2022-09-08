@@ -5,7 +5,7 @@ import 'package:encointer_wallet/mocks/data/mock_account_data.dart';
 import 'package:encointer_wallet/mocks/storage/mock_storage_setup.dart';
 import 'package:encointer_wallet/utils/screenshot.dart';
 
-void main() {
+void main() async {
   FlutterDriver? driver;
   final config = Config();
 
@@ -16,14 +16,18 @@ void main() {
     setUpAll(() async {
       driver = await FlutterDriver.connect();
 
+      log('driver $driver');
+
       // waits until the firs frame after ft startup stabilized
       await driver!.waitUntilFirstFrameRasterized();
 
       var ready = await driver!.requestData(TestCommands.WAIT_UNTIL_APP_IS_READY);
+      log('ready $ready');
       while (ready == false.toString()) {
         print('Waiting for app to be ready: $ready');
         await Future.delayed(const Duration(seconds: 1));
         ready = await driver!.requestData(TestCommands.WAIT_UNTIL_APP_IS_READY);
+        log('ready $ready');
       }
 
       await driver!.requestData(TestCommands.INIT);
