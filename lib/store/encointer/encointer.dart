@@ -81,7 +81,7 @@ abstract class _EncointerStore with Store {
   int? nextPhaseTimestamp;
 
   @observable
-  Map<CeremonyPhase, int> phaseDurations = Map();
+  Map<CeremonyPhase, int> phaseDurations = {};
 
   @computed
   get currentPhaseDuration => phaseDurations[currentPhase];

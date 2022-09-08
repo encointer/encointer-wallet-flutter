@@ -47,7 +47,7 @@ abstract class _SettingsStore with Store {
   EndpointData endpoint = EndpointData();
 
   @observable
-  Map<String, dynamic> customSS58Format = Map<String, dynamic>();
+  Map<String, dynamic> customSS58Format = <String, dynamic>{};
 
   @observable
   String? networkName = '';
@@ -56,7 +56,7 @@ abstract class _SettingsStore with Store {
   NetworkState? networkState;
 
   @observable
-  Map? networkConst = Map();
+  Map? networkConst = {};
 
   @observable
   ObservableList<AccountData> contactList = ObservableList<AccountData>();

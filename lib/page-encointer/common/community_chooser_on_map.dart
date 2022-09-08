@@ -13,7 +13,7 @@ import 'package:latlong2/latlong.dart';
 class CommunityChooserOnMap extends StatelessWidget {
   final AppStore store;
 
-  final communityDataAt = Map<LatLng, CidName>();
+  final communityDataAt = <LatLng, CidName>{};
 
   List<Marker> get _markers => getMarkers(store);
 
