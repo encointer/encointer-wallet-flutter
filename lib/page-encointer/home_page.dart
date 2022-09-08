@@ -74,12 +74,6 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
     }
 
     super.initState();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) async {
-      context.read<AppStore>().dataUpdate.setupUpdateReaction(() async {
-        if (mounted) await context.read<AppStore>().encointer.updateState();
-      });
-    });
   }
 
   @override

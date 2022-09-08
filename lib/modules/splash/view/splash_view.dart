@@ -32,9 +32,9 @@ class _SplashViewState extends State<SplashView> {
     await context.read<AppStore>().init(Localizations.localeOf(context).toString());
     context.read<AppStore>().setApiReady(true);
 
-    // context.read<AppStore>().dataUpdate.setupUpdateReaction(() async {
-    //   await context.read<AppStore>().encointer.updateState();
-    // });
+    await context.read<AppStore>().dataUpdate.setupUpdateReaction(() async {
+      if (mounted) await context.read<AppStore>().encointer.updateState();
+    });
 
     if (context.read<AppStore>().account.accountListAll.length > 0) {
       Navigator.pushAndRemoveUntil(
