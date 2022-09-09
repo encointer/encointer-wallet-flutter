@@ -191,12 +191,6 @@ abstract class _OpeningIntervalState with Store {
   }
 
   String humanReadable() {
-    return (start ~/ 60).toString() +
-        ':' +
-        (start % 60 + 100).toString().substring(1) +
-        ' - ' +
-        (end ~/ 60).toString() +
-        ':' +
-        (end % 60 + 100).toString().substring(1);
+    return '${start ~/ 60}:${(start % 60 + 100).toString().substring(1)} - ${end ~/ 60}:${(end % 60 + 100).toString().substring(1)}';
   }
 }

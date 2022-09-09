@@ -25,7 +25,7 @@ class Fmt {
     if (addr == null || addr.length < pad) {
       return addr;
     }
-    return addr.substring(0, pad) + '...' + addr.substring(addr.length - pad);
+    return '${addr.substring(0, pad)}...${addr.substring(addr.length - pad)}';
   }
 
   static String dateTime(DateTime time) {
@@ -221,7 +221,7 @@ class Fmt {
     hex = hex.replaceAll(' ', '');
     hex = hex.replaceAll('0x', '');
     hex = hex.toLowerCase();
-    if (hex.length % 2 != 0) hex = '0' + hex;
+    if (hex.length % 2 != 0) hex = '0$hex';
     Uint8List result = Uint8List(hex.length ~/ 2);
     for (int i = 0; i < result.length; i++) {
       int value = (_BYTE_ALPHABET.indexOf(hex[i * 2]) << 4) //= byte[0] * 16
@@ -233,7 +233,7 @@ class Fmt {
   }
 
   static String bytesToHex(List<int> bytes) {
-    return '0x' + hex.encode(bytes);
+    return '0x${hex.encode(bytes)}';
   }
 
   static String? accountDisplayNameString(String? address, Map? accInfo) {
