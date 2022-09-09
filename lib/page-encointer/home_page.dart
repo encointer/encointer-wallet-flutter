@@ -1,6 +1,7 @@
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page/assets/index.dart';
+
 import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
 import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
@@ -152,10 +153,4 @@ class TabData {
   TabData(this.key, this.iconData);
 }
 
-enum TabKey {
-  Wallet,
-  Bazaar,
-  Scan,
-  Contacts,
-  Profile,
-}
+enum TabKey { Wallet, Bazaar, Scan, Contacts, Profile }

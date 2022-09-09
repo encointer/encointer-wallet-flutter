@@ -15,6 +15,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
+import 'package:wiredash/wiredash.dart';
 
 class Profile extends StatefulWidget {
   Profile({Key? key}) : super(key: key);
@@ -161,6 +162,14 @@ class _ProfileState extends State<Profile> {
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.pushNamed(context, AboutPage.route),
               ),
+              ListTile(
+                  title: Text(
+                    dic.profile.feedback,
+                    style: h3Grey,
+                  ),
+                  onTap: () => setState(() {
+                        Wiredash.of(context).show();
+                      })),
               ListTile(
                 title: Text(dic.profile.developer, style: h3Grey),
                 trailing: Checkbox(

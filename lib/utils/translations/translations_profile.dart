@@ -81,6 +81,7 @@ abstract class TranslationsProfile {
   String get exportAccount;
   String get errorUserNameIsRequired;
   String get observedPendingExtrinsic;
+  String get feedback;
 }
 
 class TranslationsEnProfile implements TranslationsProfile {
@@ -168,6 +169,7 @@ class TranslationsEnProfile implements TranslationsProfile {
   get exportAccount => 'export';
   get errorUserNameIsRequired => 'User name cannot be blank';
   get observedPendingExtrinsic => 'Pending transaction observed. Please wait for confirmation!';
+  get feedback => 'feedback';
 }
 
 class TranslationsDeProfile implements TranslationsProfile {
@@ -253,6 +255,7 @@ class TranslationsDeProfile implements TranslationsProfile {
   get exportAccount => 'exportieren';
   get errorUserNameIsRequired => 'Benutzername darf nicht leer sein';
   get observedPendingExtrinsic => 'Es wurde eine unbestätigte Transaktion beobachtet. Bitte warte auf Bestätigung!';
+  get feedback => 'rückmeldung';
 }
 
 class TranslationsZhProfile implements TranslationsProfile {
@@ -310,6 +313,7 @@ class TranslationsZhProfile implements TranslationsProfile {
   get pinInfo => 'PIN 应至少包含 4 位数字。 如果 PIN 码丢失，则无法恢复帐户，除非您通过个人资料页面进行了备份。';
   get pinSecure => '使用 PIN 保护您的帐户。';
   get addAccount => '添加帐户';
+  get feedback => '反馈';
   get addCommunity => throw UnimplementedError();
   get recoveryProxy => 'recovery proxy';
   get ceremonies => throw UnimplementedError();
