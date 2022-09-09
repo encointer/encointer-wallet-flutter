@@ -39,7 +39,7 @@ Future<void> main() async {
   var initialised = await flutterLocalNotificationsPlugin.initialize(initializationSettings,
       onSelectNotification: (String? payload) async {
     if (payload != null) {
-      Log.d('notification payload: ' + payload, 'main.dart');
+      Log.d('notification payload: $payload', 'main.dart');
     }
     selectNotificationSubject.add(payload);
   });
