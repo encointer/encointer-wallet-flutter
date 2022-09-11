@@ -197,7 +197,7 @@ class EncointerApi {
         .evalJavascript('encointer.getCommunityMetadata(${jsonEncode(cid)})')
         .then((m) => CommunityMetadata.fromJson(m));
 
-    Log.d('api: community metadata: ' + meta.toString(), 'EncointerApi');
+    Log.d('api: community metadata: $meta', 'EncointerApi');
     store.encointer.community?.setCommunityMetadata(meta);
   }
 

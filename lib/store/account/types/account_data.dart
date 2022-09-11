@@ -14,8 +14,8 @@ abstract class _AccountData {
   String? encoded = '';
   String pubKey = '';
 
-  Map<String, dynamic>? encoding = Map<String, dynamic>();
-  Map<String, dynamic>? meta = Map<String, dynamic>();
+  Map<String, dynamic>? encoding = <String, dynamic>{};
+  Map<String, dynamic>? meta = <String, dynamic>{};
 
   String? memo = '';
   bool? observation = false;

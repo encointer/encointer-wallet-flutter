@@ -47,7 +47,7 @@ class BazaarBusinessData extends BazaarItemData {
   String get info {
     final Distance distance = const Distance();
     final double distanceInMeters = distance(turbinenplatz, coordinates);
-    return distanceInMeters.toStringAsFixed(0) + 'm';
+    return '${distanceInMeters.toStringAsFixed(0)}m';
   }
 
   @override
@@ -155,12 +155,6 @@ class OpeningInterval {
 
   @override
   String toString() {
-    return (start ~/ 60).toString() +
-        ':' +
-        (start % 60 + 100).toString().substring(1) +
-        ' - ' +
-        (end ~/ 60).toString() +
-        ':' +
-        (end % 60 + 100).toString().substring(1);
+    return '${start ~/ 60}:${(start % 60 + 100).toString().substring(1)} - ${end ~/ 60}:${(end % 60 + 100).toString().substring(1)}';
   }
 }

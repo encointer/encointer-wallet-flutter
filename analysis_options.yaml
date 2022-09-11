@@ -15,8 +15,8 @@ linter:
     prefer_final_fields: true
     library_private_types_in_public_api: true
     annotate_overrides: false
-    prefer_interpolation_to_compose_strings: false
-    prefer_collection_literals: false
+    prefer_interpolation_to_compose_strings: true
+    prefer_collection_literals: true
     prefer_conditional_assignment: false
     prefer_function_declarations_over_variables: false
     no_leading_underscores_for_local_identifiers: false
