@@ -93,4 +93,4 @@ Map<String, dynamic> balancesInfo = {
   'vestingTotal': '0x00000000000000000000000000000000',
 };
 
-Map<String, dynamic> storage = Map<String, dynamic>();
+Map<String, dynamic> storage = <String, dynamic>{};

@@ -61,7 +61,7 @@ abstract class _AccountStore with Store {
   ObservableMap<String?, Map> addressIndexMap = ObservableMap<String?, Map>();
 
   @observable
-  Map<String?, Map> accountIndexMap = Map<String, Map>();
+  Map<String?, Map> accountIndexMap = <String, Map>{};
 
   @observable
   ObservableMap<int, Map<String, String>> pubKeyAddressMap = ObservableMap<int, Map<String, String>>();

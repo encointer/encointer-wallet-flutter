@@ -73,7 +73,7 @@ void main() async {
 
     test('dismiss upgrade dialog on android', () async {
       final operationSystem = await driver!.requestData('getPlatform');
-      log('operationSystem ==================> ' + operationSystem);
+      log('operationSystem ==================> $operationSystem');
 
       if (operationSystem != 'android') {
         return;
