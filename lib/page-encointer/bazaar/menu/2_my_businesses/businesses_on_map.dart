@@ -26,7 +26,7 @@ class BMap extends StatelessWidget {
   /// Used to trigger showing/hiding of popups.
   final PopupController _popupLayerController = PopupController();
   final List<BazaarBusinessData> businessData;
-  final bazaarBusinessDataFor = Map<LatLng, BazaarBusinessData>();
+  final bazaarBusinessDataFor = <LatLng, BazaarBusinessData>{};
 
   BMap(List<BazaarItemData> data, {Key? key})
       // initializer (only use businesses, offerings do not have coordinates)

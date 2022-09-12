@@ -50,7 +50,7 @@ abstract class _EncointerAccountStore with Store {
   ///
   /// Map: ceremony index -> CommunityReputation
   @observable
-  Map<int, CommunityReputation> reputations = Map();
+  Map<int, CommunityReputation> reputations = {};
 
   @observable
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
