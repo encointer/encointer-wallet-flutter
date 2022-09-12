@@ -3,15 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
-import 'package:encointer_wallet/mocks/substrate_api/core/mock_dart_api.dart';
-import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
-import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
 import 'package:encointer_wallet/page-encointer/home_page.dart';
 import 'package:encointer_wallet/page/account/create_account_entry_page.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
-import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 class SplashView extends StatefulWidget {
@@ -30,14 +23,6 @@ class _SplashViewState extends State<SplashView> {
   Future<void> _initPage() async {
     final _store = context.watch<AppStore>();
     await _store.init(Localizations.localeOf(context).toString());
-    final js = await DefaultAssetBundle.of(context).loadString('lib/js_service_encointer/dist/main.js');
-    webApi = (_store.config == StoreConfig.Test
-        ? MockApi(_store, MockJSApi(), MockSubstrateDartApi(), js, withUi: true)
-        : Api.create(_store, JSApi(), SubstrateDartApi(), js))
-      ..init().timeout(
-        const Duration(seconds: 20),
-        onTimeout: () => Log.d('webApi.init() has run into a timeout. We might be offline.'),
-      );
     _store.setApiReady(true);
 
     await _store.dataUpdate.setupUpdateReaction(() async {
