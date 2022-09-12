@@ -23,7 +23,7 @@ linter:
     prefer_if_null_operators: true
     prefer_equal_for_default_values: false
     overridden_fields: false
-    unnecessary_string_interpolations: false
+    unnecessary_string_interpolations: true
     avoid_single_cascade_in_expression_statements: false
     avoid_renaming_method_parameters: false
     avoid_returning_null_for_void: false

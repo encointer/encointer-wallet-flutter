@@ -1,21 +1,22 @@
 import 'package:add_2_calendar/add_2_calendar.dart';
+import 'package:intl/intl.dart';
+
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:intl/intl.dart';
 
 /// stateless service that computes some of the view logic of the ceremony box
 class CeremonyBoxService {
   /// Returns a formatted date yMd or tomorrow or today
   static String formatYearMonthDay(DateTime input, Translations dic, String? languageCode) {
-    String formatted = '${DateFormat.yMd(languageCode).format(input)}';
+    String formatted = DateFormat.yMd(languageCode).format(input);
     String todayYearMonthDay = DateFormat.yMd(languageCode).format(DateTime.now());
     String tomorrowYearMonthDay = DateFormat.yMd(languageCode).format(DateTime.now().add(const Duration(days: 1)));
     bool ceremonyIsToday = (formatted == todayYearMonthDay);
     if (ceremonyIsToday) {
-      formatted = '${dic.encointer.today}';
+      formatted = dic.encointer.today;
     }
     if (formatted == tomorrowYearMonthDay) {
-      formatted = '${dic.encointer.tomorrow}';
+      formatted = dic.encointer.tomorrow;
     }
     return formatted;
   }

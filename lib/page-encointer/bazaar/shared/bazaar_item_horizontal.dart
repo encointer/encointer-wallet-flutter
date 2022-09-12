@@ -1,7 +1,8 @@
+import 'package:flutter/material.dart';
+
 import 'package:encointer_wallet/page-encointer/bazaar/2_offerings/offering_detail.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/3_businesses/business_detail.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
-import 'package:flutter/material.dart';
 
 class HorizontalBazaarItemList extends StatelessWidget {
   HorizontalBazaarItemList(this.data, this.rowTitle, this.cardHeight, this.cardWidth, {Key? key}) : super(key: key);
@@ -66,7 +67,7 @@ class BazaarItemHorizontal extends StatelessWidget {
             child: _ImageWithOverlaidIcon(data: data, index: index),
           ),
           Text(
-            '${data[index].title}',
+            data[index].title,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(fontSize: 30),
@@ -74,7 +75,7 @@ class BazaarItemHorizontal extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(left: 8, right: 8),
             child: Text(
-              '${data[index].description}',
+              data[index].description,
               maxLines: 3,
               overflow: TextOverflow.ellipsis,
             ),

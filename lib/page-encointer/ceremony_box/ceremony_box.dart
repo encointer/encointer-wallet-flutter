@@ -101,7 +101,11 @@ class CeremonyBox extends StatelessWidget {
                           const Icon(Iconsax.login_1),
                           const SizedBox(width: 6),
                           Text(
-                              '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store.encointer.communityAccount!.scannedClaimsCount.toString())}'),
+                            dic.encointer.claimsSubmitN.replaceAll(
+                              'N_COUNT',
+                              store.encointer.communityAccount!.scannedClaimsCount,
+                            ),
+                          ),
                         ],
                       ),
                       onPressed: () => submitAttestClaims(context, store, api),

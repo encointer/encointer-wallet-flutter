@@ -1,7 +1,8 @@
-import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+
+import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CeremonyLocationButton extends StatelessWidget {
   const CeremonyLocationButton({
@@ -31,7 +32,7 @@ class CeremonyLocationButton extends StatelessWidget {
         children: [
           const Icon(Iconsax.location),
           const SizedBox(width: 6),
-          Text('${dic.encointer.showCeremonyLocation}'),
+          Text(dic.encointer.showCeremonyLocation),
         ],
       ),
       onPressed: onPressed,

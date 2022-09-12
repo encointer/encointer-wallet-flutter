@@ -1,7 +1,8 @@
-import 'package:encointer_wallet/common/components/gradient_elements.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+
+import 'package:encointer_wallet/common/components/gradient_elements.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CeremonyStartButton extends StatelessWidget {
   const CeremonyStartButton({
@@ -20,7 +21,7 @@ class CeremonyStartButton extends StatelessWidget {
         children: [
           const Icon(Iconsax.login_1),
           const SizedBox(width: 6),
-          Text('${dic.encointer.startCeremony}'),
+          Text(dic.encointer.startCeremony),
         ],
       ),
       onPressed: onPressed,
