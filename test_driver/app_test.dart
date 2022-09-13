@@ -1,9 +1,8 @@
-import 'package:flutter_driver/flutter_driver.dart';
-import 'package:test/test.dart';
-
 import 'package:encointer_wallet/mocks/data/mock_account_data.dart';
 import 'package:encointer_wallet/mocks/storage/mock_storage_setup.dart';
 import 'package:encointer_wallet/utils/screenshot.dart';
+import 'package:flutter_driver/flutter_driver.dart';
+import 'package:test/test.dart';
 
 void main() async {
   FlutterDriver? driver;
@@ -64,11 +63,6 @@ void main() async {
     test('choosing cid', () async {
       await driver!.tap(find.byValueKey('cid-0-marker-icon'));
       await driver!.tap(find.byValueKey('cid-0-marker-description'));
-
-      // Here we get the metadata because it is reset to null in the setChosenCid() method which is called, when a community is chosen
-      await driver!.requestData(TestCommands.HOME_PAGE);
-      // take a screenshot of the EncointerHome Screen
-      await screenshot(driver!, config, 'encointer-home');
     }, timeout: const Timeout(Duration(seconds: 120))); // needed for android CI with github actions
 
     test('dismiss upgrade dialog on android', () async {
@@ -88,6 +82,19 @@ void main() async {
       } catch (e) {
         log(e.toString());
       }
+    });
+
+    test('print-screen of homepage', () async {
+      await driver!.tap(find.byValueKey('qr-receive'));
+      await screenshot(driver!, config, 'receive-funds');
+
+      // Here we get the metadata because it is reset to null in the setChosenCid() method which is called, when a community is chosen
+      await driver!.requestData(TestCommands.HOME_PAGE);
+      // take a screenshot of the EncointerHome Screen
+      await screenshot(driver!, config, 'encointer-home');
+
+      // go back to homepage
+      await driver!.tap(find.byValueKey('close-receive-page'));
     });
 
     test('show receive qr code', () async {
