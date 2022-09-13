@@ -42,7 +42,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
                     child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                       Icon(
                         i.iconData,
-                        key: Key('${i.key.toString()}'),
+                        key: Key(i.key.toString()),
                       ),
                       Container(
                         height: 4,
@@ -57,7 +57,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
                   )
                 : Icon(
                     i.iconData,
-                    key: Key('${i.key.toString()}'),
+                    key: Key(i.key.toString()),
                     color: i.key == TabKey.Scan ? ZurichLion.shade900 : encointerGrey,
                   ),
             label: '',

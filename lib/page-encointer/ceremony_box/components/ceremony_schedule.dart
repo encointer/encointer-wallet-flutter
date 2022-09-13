@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
+
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box_service.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_count_down.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:intl/intl.dart';
 
 /// Shows primarily the date of the next ceremony.
 ///
@@ -51,7 +52,7 @@ class CeremonyDateLabelAbsolute extends StatelessWidget {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
 
-    String nextCeremonyHourMinute = '${DateFormat.Hm(languageCode).format(nextCeremonyDate)}';
+    String nextCeremonyHourMinute = DateFormat.Hm(languageCode).format(nextCeremonyDate);
     String nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate, dic, languageCode);
 
     return RichText(
@@ -114,7 +115,7 @@ class CeremonyDate extends StatelessWidget {
     final dic = I18n.of(context)!.translationsForLocale();
     final h2BlackTheme = Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack);
     String nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate!, dic, languageCode);
-    String nextCeremonyHourMinute = '${DateFormat.Hm(languageCode).format(nextCeremonyDate!)}';
+    String nextCeremonyHourMinute = DateFormat.Hm(languageCode).format(nextCeremonyDate!);
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,

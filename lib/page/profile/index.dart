@@ -108,13 +108,14 @@ class _ProfileState extends State<Profile> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      '${dic.profile.accounts}',
+                      dic.profile.accounts,
                       style: Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack),
                     ),
                     IconButton(
-                        icon: const Icon(Iconsax.add_square),
-                        color: ZurichLion.shade500,
-                        onPressed: () => Navigator.of(context).pushNamed(AddAccountPage.route)),
+                      icon: const Icon(Iconsax.add_square),
+                      color: ZurichLion.shade500,
+                      onPressed: () => Navigator.of(context).pushNamed(AddAccountPage.route),
+                    ),
                   ],
                 ),
               ),

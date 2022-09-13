@@ -403,7 +403,7 @@ class _AssetsState extends State<Assets> {
           avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.community?.assetsCid),
           avatarSize: avatarSize,
         ),
-        name: '${store.encointer.community?.name ?? '...'}',
+        name: store.encointer.community?.name ?? '...',
         isSelected: true, // TODO #507 this should later be a function applied on each community, cf. initAllAccounts
       ),
     );
