@@ -180,7 +180,9 @@ class EncointerApi {
         );
 
     Log.d('api: getAllMeetupLocations: $locs ' 'EncointerApi');
-    store.encointer.community!.setMeetupLocations(locs);
+    if (store.encointer.community != null) {
+      store.encointer.community!.setMeetupLocations(locs);
+    }
   }
 
   /// Queries the Communities pallet: encointerCommunities.communityMetadata(cid)
