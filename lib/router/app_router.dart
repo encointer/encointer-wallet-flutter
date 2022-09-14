@@ -34,7 +34,10 @@ class AppRoute {
   const AppRoute._();
 
   static const String splash = '/';
-
+  
+  // we use onGenerateRoute with CupertinoPageRoute objects to get specific page transition animations
+  // (sliding in from the right if there's a back button, sliding from the bottom up if there's a close button)
+  // it is preferable to use Navigator.pushNamed (rather than Navigator.push) for large projects
   // cf. CupertinoPageRoute documentation -> fullscreenDialog: true, (in this case the page slides in from the bottom)
   static Route<void> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
