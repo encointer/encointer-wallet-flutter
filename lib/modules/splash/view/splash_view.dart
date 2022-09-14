@@ -23,11 +23,12 @@ class _SplashViewState extends State<SplashView> {
   Future<void> _initPage() async {
     final _store = context.watch<AppStore>();
     await _store.init(Localizations.localeOf(context).toString());
-    _store.setApiReady(true);
 
-    await _store.dataUpdate.setupUpdateReaction(() async {
-      if (mounted) await _store.encointer.updateState();
+    _store.dataUpdate.setupUpdateReaction(() async {
+      await _store.encointer.updateState();
     });
+
+    _store.setApiReady(true);
 
     if (_store.account.accountListAll.length > 0) {
       await Navigator.pushAndRemoveUntil(

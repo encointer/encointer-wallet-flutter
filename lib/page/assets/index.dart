@@ -70,9 +70,9 @@ class _AssetsState extends State<Assets> {
     if (panelController == null) {
       panelController = PanelController();
     }
-    if (mounted) {
-      _refreshEncointerState();
-    }
+    // WidgetsBinding.instance.addPostFrameCallback((_) async {
+    //   _refreshEncointerState();
+    // });
 
     super.initState();
   }
