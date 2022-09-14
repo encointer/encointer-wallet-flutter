@@ -84,7 +84,7 @@ class _ProfileState extends State<Profile> {
     if (_store.account.accountListAll.isEmpty) {
       _store.settings.setPin('');
       Future.delayed(Duration.zero, () {
-        Navigator.popUntil(context, ModalRoute.withName('/'));
+        Navigator.pop(context);
       });
     }
     final Translations dic = I18n.of(context)!.translationsForLocale();

@@ -50,9 +50,7 @@ class _CreatePinPageState extends State<CreatePinPage> {
               Icons.close,
               color: encointerGrey,
             ),
-            onPressed: () {
-              Navigator.popUntil(context, ModalRoute.withName('/'));
-            },
+            onPressed: () => Navigator.pop(context),
           )
         ],
       ),
