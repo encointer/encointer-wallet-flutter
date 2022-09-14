@@ -47,6 +47,7 @@ Future<void> main() async {
   Log.d('notification_plugin initialised: $initialised', 'main.dart');
 
   if (Platform.isAndroid) {
+    // meetup notification only for android system
     await Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
     await Workmanager().registerPeriodicTask(
       'task-identifier',
