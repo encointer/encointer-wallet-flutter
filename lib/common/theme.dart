@@ -23,8 +23,8 @@ final appThemeEncointer = ThemeData(
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       elevation: 0,
-      primary: ZurichLion.shade50,
-      onPrimary: ZurichLion.shade500,
+      backgroundColor: ZurichLion.shade50,
+      foregroundColor: ZurichLion.shade500,
       shadowColor: Colors.transparent,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(15)),
