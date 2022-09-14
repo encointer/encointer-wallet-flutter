@@ -70,7 +70,9 @@ class _AssetsState extends State<Assets> {
     if (panelController == null) {
       panelController = PanelController();
     }
-    _refreshEncointerState();
+    if (mounted) {
+      _refreshEncointerState();
+    }
 
     super.initState();
   }

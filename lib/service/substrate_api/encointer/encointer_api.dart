@@ -220,7 +220,9 @@ class EncointerApi {
 
     double dem = await jsApi.evalJavascript('encointer.getDemurrage(${jsonEncode(cid)})');
     Log.d('api: fetched demurrage: $dem', 'EncointerApi');
-    store.encointer.community!.setDemurrage(dem);
+    if (store.encointer.community != null) {
+      store.encointer.community!.setDemurrage(dem);
+    }
   }
 
   /// Calls the custom rpc: api.rpc.communities.communitiesGetAll()
@@ -428,8 +430,9 @@ class EncointerApi {
         await jsApi.evalJavascript('encointer.getBootstrappers($cid)').then((bs) => List<String>.from(bs));
 
     Log.d('api: bootstrappers $bootstrappers', 'EncointerApi');
-
-    store.encointer.community!.setBootstrappers(bootstrappers);
+    if (store.encointer.community != null) {
+      store.encointer.community!.setBootstrappers(bootstrappers);
+    }
   }
 
   Future<void> getReputations() async {
