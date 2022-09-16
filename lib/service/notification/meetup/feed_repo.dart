@@ -10,7 +10,7 @@ class FeedRepo {
 
   final http.Client _client;
 
-  Future<Feed?> fetchData() async {
+  Future<List<Feed>?> fetchData() async {
     final uri = Uri.parse('https://encointer.github.io/feed/community_messages/en/cm.json');
     try {
       final response = await _client.get(uri);

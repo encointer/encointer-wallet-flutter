@@ -6,13 +6,11 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
-import 'package:workmanager/workmanager.dart';
 
 import 'package:encointer_wallet/app.dart';
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
-import 'package:encointer_wallet/service/notification/meetup/feed_repo.dart';
 import 'package:encointer_wallet/service/subscan.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/local_storage.dart' as util;
@@ -46,17 +44,6 @@ Future<void> main() async {
   });
   Log.d('notification_plugin initialised: $initialised', 'main.dart');
 
-  if (Platform.isAndroid) {
-    // meetup notification only for android system
-    await Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
-    await Workmanager().registerPeriodicTask(
-      'task-identifier',
-      'simpleTask',
-      initialDelay: const Duration(seconds: 15),
-      frequency: const Duration(hours: 10),
-    );
-  }
-
   // get_storage dependency
   await GetStorage.init();
 
@@ -69,16 +56,4 @@ Future<void> main() async {
       child: const WalletApp(Config()),
     ),
   );
-}
-
-Future<void> callbackDispatcher() async {
-  Workmanager().executeTask((task, inputData) async {
-    final res = await FeedRepo().fetchData();
-    if (res != null) {
-      await NotificationPlugin.showNotification(1, res.msg1.title, res.msg1.content);
-      await NotificationPlugin.showNotification(2, res.msg2.title, res.msg2.content);
-    }
-
-    return Future.value(true);
-  });
 }

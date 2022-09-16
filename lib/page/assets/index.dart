@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'dart:math';
 
+import 'package:encointer_wallet/service/notification/meetup/callback_dispatcher.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -35,6 +37,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:workmanager/workmanager.dart';
 
 class Assets extends StatefulWidget {
   Assets(this.store, {Key? key}) : super(key: key);
@@ -70,6 +73,18 @@ class _AssetsState extends State<Assets> {
     if (panelController == null) {
       panelController = PanelController();
     }
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      if (Platform.isAndroid) {
+        // meetup notification only for android system
+        await Workmanager().initialize(callbackDispatcher);
+        await Workmanager().registerPeriodicTask(
+          'task-identifier',
+          'simpleTask',
+          initialDelay: const Duration(seconds: 15),
+          frequency: const Duration(minutes: 15),
+        );
+      }
+    });
 
     super.initState();
   }
