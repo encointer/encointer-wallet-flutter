@@ -85,16 +85,11 @@ void main() async {
     });
 
     test('print-screen of homepage', () async {
-      await driver!.tap(find.byValueKey('qr-receive'));
-      await screenshot(driver!, config, 'receive-funds');
-
-      // Here we get the metadata because it is reset to null in the setChosenCid() method which is called, when a community is chosen
+      // Here we get the metadata because it is reset to null in
+      // the setChosenCid() method which is called, when a community is chosen
       await driver!.requestData(TestCommands.HOME_PAGE);
       // take a screenshot of the EncointerHome Screen
       await screenshot(driver!, config, 'encointer-home');
-
-      // go back to homepage
-      await driver!.tap(find.byValueKey('close-receive-page'));
     });
 
     test('show receive qr code', () async {
