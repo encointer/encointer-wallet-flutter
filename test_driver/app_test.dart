@@ -60,10 +60,10 @@ void main() async {
     });
 
     // Note: The second test continues where the first one ended
-    test('choosing cid', () async {
-      await driver!.tap(find.byValueKey('cid-0-marker-icon'));
-      await driver!.tap(find.byValueKey('cid-0-marker-description'));
-    }, timeout: const Timeout(Duration(seconds: 120))); // needed for android CI with github actions
+    // test('choosing cid', () async {
+    //   await driver!.tap(find.byValueKey('cid-0-marker-icon'));
+    //   await driver!.tap(find.byValueKey('cid-0-marker-description'));
+    // }, timeout: const Timeout(Duration(seconds: 120))); // needed for android CI with github actions
 
     test('dismiss upgrade dialog on android', () async {
       final operationSystem = await driver!.requestData('getPlatform');
