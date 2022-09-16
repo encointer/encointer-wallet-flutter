@@ -62,29 +62,13 @@ void main() {
       await driver!.tap(find.byValueKey('cid-0-marker-description'));
     }, timeout: const Timeout(Duration(seconds: 120))); // needed for android CI with github actions
 
-    test('dismiss upgrade dialog on android', () async {
-      final operationSystem = await driver!.requestData('getPlatform');
-      log('operationSystem ==================> $operationSystem');
-
-      if (operationSystem != 'android') {
-        return;
-      }
-
-      try {
-        log('Waiting for upgrader alert dialog');
-        await driver!.waitFor(find.byType('AlertDialog'));
-
-        log('Tapping ignore button');
-        await driver!.tap(find.text('IGNORE'));
-      } catch (e) {
-        log(e.toString());
-      }
-    });
-
     test('print-screen of homepage', () async {
       // Here we get the metadata because it is reset to null in
       // the setChosenCid() method which is called, when a community is chosen
       await driver!.requestData(TestCommands.HOME_PAGE);
+
+      await dismissUpgradeDialogOnAndroid(driver!);
+
       // take a screenshot of the EncointerHome Screen
       await screenshot(driver!, config, 'encointer-home');
     });
@@ -137,4 +121,23 @@ void main() {
 
 void log(String msg) {
   print('[test_driver] $msg');
+}
+
+Future<void> dismissUpgradeDialogOnAndroid(FlutterDriver driver) async {
+  final operationSystem = await driver.requestData('getPlatform');
+  log('operationSystem ==================> $operationSystem');
+
+  if (operationSystem != 'android') {
+    return;
+  }
+
+  try {
+    log('Waiting for upgrader alert dialog');
+    await driver.waitFor(find.byType('AlertDialog'));
+
+    log('Tapping ignore button');
+    await driver.tap(find.text('IGNORE'));
+  } catch (e) {
+    log(e.toString());
+  }
 }
