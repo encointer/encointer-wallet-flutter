@@ -1,3 +1,9 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
+
 import 'package:encointer_wallet/common/components/address_input_field.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
@@ -7,18 +13,13 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/ui.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
 
 class TransferPageParams {
   TransferPageParams({
@@ -59,30 +60,19 @@ class _TransferPageState extends State<TransferPage> {
   void initState() {
     super.initState();
     _appStore = context.read<AppStore>();
-
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final TransferPageParams args = ModalRoute.of(context)!.settings.arguments as TransferPageParams;
-      if (args.amount != null) {
-        _amountCtrl.text = '${args.amount}';
+      final args = ModalRoute.of(context)!.settings.arguments as TransferPageParams?;
+      if (args?.amount != null) {
+        _amountCtrl.text = '${args?.amount}';
       }
 
-      if (args.recipient != null) {
+      if (args?.recipient != null) {
         final AccountData acc = AccountData();
-        acc.address = args.recipient!;
+        acc.address = args!.recipient!;
         acc.name = args.label!;
         setState(() {
           _accountTo = acc;
         });
-      } else {
-        if (_appStore.account.optionalAccounts.length > 0) {
-          setState(() {
-            _accountTo = _appStore.account.optionalAccounts[0];
-          });
-        } else if (_appStore.settings.contactList.length > 0) {
-          setState(() {
-            _accountTo = _appStore.settings.contactList[0];
-          });
-        }
       }
 
       webApi.fetchAccountData();
@@ -91,18 +81,18 @@ class _TransferPageState extends State<TransferPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
-    TransferPageParams params = ModalRoute.of(context)!.settings.arguments as TransferPageParams;
+    final dic = I18n.of(context)!.translationsForLocale();
+    final params = ModalRoute.of(context)!.settings.arguments as TransferPageParams?;
     final _store = context.watch<AppStore>();
 
-    var communitySymbol = params.communitySymbol ?? _store.encointer.community!.symbol!;
-    var cid = params.cid ?? _store.encointer.chosenCid!;
+    var communitySymbol = params?.communitySymbol ?? _store.encointer.community!.symbol!;
+    var cid = params?.cid ?? _store.encointer.chosenCid!;
 
     int decimals = encointer_currencies_decimals;
 
     double? available = _store.encointer.applyDemurrage(_store.encointer.communityBalanceEntry);
 
-    print('[transferPage]: available: $available');
+    Log.d('[transferPage]: available: $available', 'TransferPage');
 
     return Observer(
       builder: (_) {

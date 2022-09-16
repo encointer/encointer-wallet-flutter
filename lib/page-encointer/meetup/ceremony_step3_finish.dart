@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+
 import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
@@ -7,8 +10,6 @@ import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 
 class CeremonyStep3Finish extends StatelessWidget {
   const CeremonyStep3Finish(
@@ -87,7 +88,11 @@ class CeremonyStep3Finish extends StatelessWidget {
                       const Icon(Iconsax.login_1),
                       const SizedBox(width: 6),
                       Text(
-                          '${dic.encointer.claimsSubmitN.replaceAll('N_COUNT', store.encointer.communityAccount!.scannedClaimsCount.toString())}'),
+                        dic.encointer.claimsSubmitN.replaceAll(
+                          'N_COUNT',
+                          store.encointer.communityAccount!.scannedClaimsCount,
+                        ),
+                      ),
                     ],
                   ),
                   onPressed: (context) => submitAttestClaims(context, store, api),

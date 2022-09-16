@@ -71,7 +71,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
                     embeddedImageStyle: QrEmbeddedImageStyle(size: const Size(40, 40)),
                   ),
                   Text(
-                    '${accountToBeShared.name}',
+                    accountToBeShared.name,
                     style: textTheme.headline3!.copyWith(color: encointerGrey),
                     textAlign: TextAlign.center,
                   ),

@@ -1,14 +1,16 @@
 import 'dart:async';
 
 import 'package:aes_ecb_pkcs5_flutter/aes_ecb_pkcs5_flutter.dart';
+import 'package:mobx/mobx.dart';
+
 import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/account/types/tx_status.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:mobx/mobx.dart';
 
 part 'account.g.dart';
 
@@ -59,7 +61,7 @@ abstract class _AccountStore with Store {
   ObservableMap<String?, Map> addressIndexMap = ObservableMap<String?, Map>();
 
   @observable
-  Map<String?, Map> accountIndexMap = Map<String, Map>();
+  Map<String?, Map> accountIndexMap = <String, Map>{};
 
   @observable
   ObservableMap<int, Map<String, String>> pubKeyAddressMap = ObservableMap<int, Map<String, String>>();
@@ -133,7 +135,7 @@ abstract class _AccountStore with Store {
     if (address != null) {
       return address;
     } else {
-      _log('getNetworkAddress: could not get address (SS58)');
+      Log.d('getNetworkAddress: could not get address (SS58)', 'AccountStore');
       return currentAccount.address;
     }
   }
@@ -183,7 +185,7 @@ abstract class _AccountStore with Store {
             rawParam: args['rawParam'],
           );
 
-          print('Queued tx result: ${res.toString()}');
+          Log.d('Queued tx result: $res', 'AccountStore');
           if (res['hash'] == null) {
             NotificationPlugin.showNotification(
               0,
@@ -201,7 +203,7 @@ abstract class _AccountStore with Store {
         timer.cancel();
         queuedTxs = [];
       } else {
-        print('Waiting for the api to reconnect to send ${queuedTxs.length} queued tx(s)');
+        Log.d('Waiting for the api to reconnect to send ${queuedTxs.length} queued tx(s)', 'AccountStore');
       }
     });
   }
@@ -257,7 +259,7 @@ abstract class _AccountStore with Store {
     int index = accountList.indexWhere((i) => i.pubKey == pubKey);
     if (index > -1) {
       await rootStore.localStorage.removeAccount(pubKey);
-      print('removed acc: $pubKey');
+      Log.d('removed acc: $pubKey', 'AccountStore');
     }
     await rootStore.localStorage.addAccount(acc);
 
@@ -270,9 +272,8 @@ abstract class _AccountStore with Store {
 
   @action
   Future<void> removeAccount(AccountData acc) async {
-    _log('removeAccount: removing ${acc.pubKey}');
+    Log.d('removeAccount: removing ${acc.pubKey}', 'AccountStore');
     await rootStore.localStorage.removeAccount(acc.pubKey);
-
     // remove encrypted seed after removing account
     deleteSeed(AccountStore.seedTypeMnemonic, acc.pubKey);
     deleteSeed(AccountStore.seedTypeRawSeed, acc.pubKey);
@@ -281,8 +282,7 @@ abstract class _AccountStore with Store {
       // set new currentAccount after currentAccount was removed
       List<Map<String, dynamic>> accounts = await rootStore.localStorage.getAccountList();
       var newCurrentAccountPubKey = accounts.length > 0 ? accounts[0]['pubKey'] : '';
-      _log('removeAccount: newCurrentAccountPubKey $newCurrentAccountPubKey');
-
+      Log.d('removeAccount: newCurrentAccountPubKey $newCurrentAccountPubKey', 'AccountStore');
       await rootStore.setCurrentAccount(newCurrentAccountPubKey);
     } else {
       // update account list
@@ -382,8 +382,8 @@ abstract class _AccountStore with Store {
 
   @action
   void setAddressIconsMap(List list) {
-    print('Address Icons');
-    print(list);
+    Log.d('Address Icons', 'AccountStore');
+    Log.d('$list', 'AccountStore');
     list.forEach((i) {
       addressIconsMap[i[0]] = i[1];
     });
@@ -417,8 +417,4 @@ abstract class _AccountCreate with Store {
 
   @observable
   String? key = '';
-}
-
-_log(String msg) {
-  print('[AccountStore] $msg');
 }
