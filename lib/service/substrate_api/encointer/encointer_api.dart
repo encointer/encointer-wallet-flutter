@@ -180,9 +180,7 @@ class EncointerApi {
         );
 
     Log.d('api: getAllMeetupLocations: $locs ' 'EncointerApi');
-    if (store.encointer.community != null) {
-      store.encointer.community!.setMeetupLocations(locs);
-    }
+    store.encointer.community!.setMeetupLocations(locs);
   }
 
   /// Queries the Communities pallet: encointerCommunities.communityMetadata(cid)
@@ -220,9 +218,7 @@ class EncointerApi {
 
     double dem = await jsApi.evalJavascript('encointer.getDemurrage(${jsonEncode(cid)})');
     Log.d('api: fetched demurrage: $dem', 'EncointerApi');
-    if (store.encointer.community != null) {
-      store.encointer.community!.setDemurrage(dem);
-    }
+    store.encointer.community!.setDemurrage(dem);
   }
 
   /// Calls the custom rpc: api.rpc.communities.communitiesGetAll()
@@ -278,7 +274,7 @@ class EncointerApi {
         store.encointer.currentPhase,
       );
 
-      store.encointer.community?.setMeetupTimeOverride(meetupTimeOverride?.millisecondsSinceEpoch);
+      store.encointer.community!.setMeetupTimeOverride(meetupTimeOverride?.millisecondsSinceEpoch);
     } catch (e, s) {
       Log.e('api: exception: $e', 'EncointerApi', s);
     }
@@ -430,9 +426,8 @@ class EncointerApi {
         await jsApi.evalJavascript('encointer.getBootstrappers($cid)').then((bs) => List<String>.from(bs));
 
     Log.d('api: bootstrappers $bootstrappers', 'EncointerApi');
-    if (store.encointer.community != null) {
-      store.encointer.community!.setBootstrappers(bootstrappers);
-    }
+
+    store.encointer.community!.setBootstrappers(bootstrappers);
   }
 
   Future<void> getReputations() async {
