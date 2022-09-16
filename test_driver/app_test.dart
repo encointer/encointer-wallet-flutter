@@ -127,6 +127,8 @@ void main() async {
       await driver!.requestData(TestCommands.READY_FOR_MEETUP);
 
       log('tapping startMeetup');
+      await screenshot(driver!, config, 'debug-meetup-start');
+
       await driver!.tap(find.byValueKey('start-meetup'));
       await driver!.tap(find.byValueKey('attendees-count'));
       await driver!.enterText('3');
