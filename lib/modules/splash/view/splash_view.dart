@@ -80,16 +80,18 @@ class _SplashViewState extends State<SplashView> {
   }
 }
 
-Future<Api> initWebApi(BuildContext context, AppStore store) async {
+/// Initialize an the webApi instance.
+///
+/// Currently, `store.init()` must be called before it is passed into the api
+/// due to some cyclic dependencies between webApi <> AppStore.
+Future<void> initWebApi(BuildContext context, AppStore store) async {
   final js = await DefaultAssetBundle.of(context).loadString('lib/js_service_encointer/dist/main.js');
-  final api = store.config.isNormal()
+  webApi = store.config.isNormal()
       ? Api.create(store, JSApi(), SubstrateDartApi(), js)
       : MockApi(store, MockJSApi(), MockSubstrateDartApi(), js, withUi: true);
 
-  await api.init().timeout(
+  await webApi.init().timeout(
         const Duration(seconds: 20),
         onTimeout: () => Log.d('webApi.init() has run into a timeout. We might be offline.'),
       );
-
-  return api;
 }
