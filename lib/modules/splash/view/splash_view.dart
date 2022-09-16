@@ -30,7 +30,7 @@ class _SplashViewState extends State<SplashView> {
     final store = context.watch<AppStore>();
     await store.init(Localizations.localeOf(context).toString());
 
-    webApi = await initWebApi(context, store);
+    await initWebApi(context, store);
 
     // We don't poll updates in tests because we mock the backend anyhow.
     if (store.config.isNormal()) {
