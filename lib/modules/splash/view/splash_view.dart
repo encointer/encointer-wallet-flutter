@@ -30,10 +30,6 @@ class _SplashViewState extends State<SplashView> {
     final _store = context.watch<AppStore>();
     await _store.init(Localizations.localeOf(context).toString());
 
-    _store.dataUpdate.setupUpdateReaction(() async {
-      await _store.encointer.updateState();
-    });
-
     final js = await DefaultAssetBundle.of(context).loadString('lib/js_service_encointer/dist/main.js');
     webApi = (context.read<AppStore>().config == StoreConfig.Test
         ? MockApi(context.read<AppStore>(), MockJSApi(), MockSubstrateDartApi(), js, withUi: true)
@@ -42,6 +38,11 @@ class _SplashViewState extends State<SplashView> {
         const Duration(seconds: 20),
         onTimeout: () => Log.d('webApi.init() has run into a timeout. We might be offline.'),
       );
+
+    // must be set after api is initialized.
+    _store.dataUpdate.setupUpdateReaction(() async {
+      await _store.encointer.updateState();
+    });
 
     _store.setApiReady(true);
 
