@@ -30,6 +30,7 @@ class _SplashViewState extends State<SplashView> {
     final store = context.watch<AppStore>();
     await store.init(Localizations.localeOf(context).toString());
 
+    // initialize it **after** the store was initialized.
     await initWebApi(context, store);
 
     // We don't poll updates in tests because we mock the backend anyhow.
@@ -86,6 +87,8 @@ class _SplashViewState extends State<SplashView> {
 /// due to some cyclic dependencies between webApi <> AppStore.
 Future<void> initWebApi(BuildContext context, AppStore store) async {
   final js = await DefaultAssetBundle.of(context).loadString('lib/js_service_encointer/dist/main.js');
+
+  // Todo: don't use the `StoreConfig` here: #783.
   webApi = store.config.isNormal()
       ? Api.create(store, JSApi(), SubstrateDartApi(), js)
       : MockApi(store, MockJSApi(), MockSubstrateDartApi(), js, withUi: true);
