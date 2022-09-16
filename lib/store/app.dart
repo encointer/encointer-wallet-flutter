@@ -1,6 +1,3 @@
-import 'package:mobx/mobx.dart';
-import 'package:upgrader/upgrader.dart';
-
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
@@ -10,6 +7,8 @@ import 'package:encointer_wallet/store/data_update/data_update.dart';
 import 'package:encointer_wallet/store/encointer/encointer.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/local_storage.dart';
+import 'package:mobx/mobx.dart';
+import 'package:upgrader/upgrader.dart';
 
 part 'app.g.dart';
 
@@ -259,5 +258,15 @@ abstract class _AppStore with Store {
   /// E.g. not awaiting this call was the cause of #357.
   Future<List<void>> loadAccountCache() async {
     return Future.wait([assets.clearTxs(), assets.loadAccountCache()]);
+  }
+}
+
+extension StoreConfigExtensions on StoreConfig {
+  bool isTest() {
+    return this == StoreConfig.Test;
+  }
+
+  bool isNormal() {
+    return this == StoreConfig.Normal;
   }
 }

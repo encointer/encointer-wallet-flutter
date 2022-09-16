@@ -27,26 +27,29 @@ class _SplashViewState extends State<SplashView> {
   final String nctrLogo = 'assets/nctr_logo.svg';
 
   Future<void> _initPage() async {
-    final _store = context.watch<AppStore>();
-    await _store.init(Localizations.localeOf(context).toString());
+    final store = context.watch<AppStore>();
+    await store.init(Localizations.localeOf(context).toString());
 
     final js = await DefaultAssetBundle.of(context).loadString('lib/js_service_encointer/dist/main.js');
-    webApi = (context.read<AppStore>().config == StoreConfig.Test
-        ? MockApi(context.read<AppStore>(), MockJSApi(), MockSubstrateDartApi(), js, withUi: true)
-        : Api.create(context.read<AppStore>(), JSApi(), SubstrateDartApi(), js))
-      ..init().timeout(
-        const Duration(seconds: 20),
-        onTimeout: () => Log.d('webApi.init() has run into a timeout. We might be offline.'),
-      );
+    webApi = store.config.isNormal()
+        ? Api.create(context.read<AppStore>(), JSApi(), SubstrateDartApi(), js)
+        : MockApi(context.read<AppStore>(), MockJSApi(), MockSubstrateDartApi(), js, withUi: true);
+
+    await webApi.init().timeout(
+          const Duration(seconds: 20),
+          onTimeout: () => Log.d('webApi.init() has run into a timeout. We might be offline.'),
+        );
 
     // must be set after api is initialized.
-    _store.dataUpdate.setupUpdateReaction(() async {
-      await _store.encointer.updateState();
-    });
+    if (store.config.isNormal()) {
+      store.dataUpdate.setupUpdateReaction(() async {
+        await store.encointer.updateState();
+      });
+    }
 
-    _store.setApiReady(true);
+    store.setApiReady(true);
 
-    if (_store.account.accountListAll.length > 0) {
+    if (store.account.accountListAll.length > 0) {
       await Navigator.pushAndRemoveUntil(
           context, CupertinoPageRoute(builder: (context) => EncointerHomePage()), (route) => false);
     } else {
