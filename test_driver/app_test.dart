@@ -4,7 +4,7 @@ import 'package:encointer_wallet/utils/screenshot.dart';
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
-void main() async {
+void main() {
   FlutterDriver? driver;
   final config = Config();
 
@@ -15,18 +15,15 @@ void main() async {
     setUpAll(() async {
       driver = await FlutterDriver.connect();
 
-      log('driver $driver');
-
       // waits until the firs frame after ft startup stabilized
       await driver!.waitUntilFirstFrameRasterized();
 
       var ready = await driver!.requestData(TestCommands.WAIT_UNTIL_APP_IS_READY);
-      log('ready $ready');
       while (ready == false.toString()) {
         print('Waiting for app to be ready: $ready');
         await Future.delayed(const Duration(seconds: 1));
         ready = await driver!.requestData(TestCommands.WAIT_UNTIL_APP_IS_READY);
-        log('ready $ready');
+        log('app is ready ready $ready');
       }
 
       await driver!.requestData(TestCommands.INIT);
