@@ -30,18 +30,11 @@ class _SplashViewState extends State<SplashView> {
     final store = context.watch<AppStore>();
     await store.init(Localizations.localeOf(context).toString());
 
-    final js = await DefaultAssetBundle.of(context).loadString('lib/js_service_encointer/dist/main.js');
-    webApi = store.config.isNormal()
-        ? Api.create(context.read<AppStore>(), JSApi(), SubstrateDartApi(), js)
-        : MockApi(context.read<AppStore>(), MockJSApi(), MockSubstrateDartApi(), js, withUi: true);
+    webApi = await initWebApi(context, store);
 
-    await webApi.init().timeout(
-          const Duration(seconds: 20),
-          onTimeout: () => Log.d('webApi.init() has run into a timeout. We might be offline.'),
-        );
-
-    // must be set after api is initialized.
+    // We don't poll updates in tests because we mock the backend anyhow.
     if (store.config.isNormal()) {
+      // must be set after api is initialized.
       store.dataUpdate.setupUpdateReaction(() async {
         await store.encointer.updateState();
       });
@@ -87,14 +80,16 @@ class _SplashViewState extends State<SplashView> {
   }
 }
 
-Future<Api> initWebApi(BuildContext context) async {
+Future<Api> initWebApi(BuildContext context, AppStore store) async {
   final js = await DefaultAssetBundle.of(context).loadString('lib/js_service_encointer/dist/main.js');
+  final api = store.config.isNormal()
+      ? Api.create(store, JSApi(), SubstrateDartApi(), js)
+      : MockApi(store, MockJSApi(), MockSubstrateDartApi(), js, withUi: true);
 
-  return (context.read<AppStore>().config == StoreConfig.Test
-      ? MockApi(context.read<AppStore>(), MockJSApi(), MockSubstrateDartApi(), js, withUi: true)
-      : Api.create(context.read<AppStore>(), JSApi(), SubstrateDartApi(), js))
-    ..init().timeout(
-      const Duration(seconds: 20),
-      onTimeout: () => Log.d('webApi.init() has run into a timeout. We might be offline.'),
-    );
+  await api.init().timeout(
+        const Duration(seconds: 20),
+        onTimeout: () => Log.d('webApi.init() has run into a timeout. We might be offline.'),
+      );
+
+  return api;
 }
