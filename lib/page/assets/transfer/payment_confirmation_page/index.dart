@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:animated_check/animated_check.dart';
+import 'package:encointer_wallet/page-encointer/home_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -134,7 +135,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                           height: 24,
                           child: Center(child: Text(dic.assets.done)),
                         ),
-                        onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
+                        onPressed: () => Navigator.popUntil(context, ModalRoute.withName(EncointerHomePage.route)),
                       )
               ],
             ),
