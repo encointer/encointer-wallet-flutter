@@ -246,8 +246,8 @@ class EncointerApi {
     // times.
     int? locationIndex = store.encointer.communityAccount?.meetup?.locationIndex;
 
-    Location? mLocation = locationIndex != null
-        ? store.encointer.community!.meetupLocations![locationIndex]
+    Location? mLocation = locationIndex != null && store.encointer.community?.meetupLocations != null
+        ? store.encointer.community?.meetupLocations![locationIndex]
         : (store.encointer.community?.meetupLocations?.first);
 
     if (mLocation == null) {
