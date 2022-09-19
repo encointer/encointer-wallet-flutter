@@ -1,8 +1,9 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 
+import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification/meetup/feed_model.dart';
 
 class FeedRepo {
@@ -10,19 +11,19 @@ class FeedRepo {
 
   final http.Client _client;
 
-  Future<List<Feed>?> fetchData() async {
-    final uri = Uri.parse('https://encointer.github.io/feed/community_messages/en/cm.json');
+  Future<List<Feed>?> fetchData([String langCode = 'en']) async {
+    final uri = Uri.parse(replaceLocalePlaceholder(meetup_notification_link, langCode));
     try {
       final response = await _client.get(uri);
       try {
         final feed = feedFromJson(response.body);
         return feed;
       } catch (e) {
-        log(e.toString());
+        Log.e(e.toString(), 'FeedRepo feed_repo.dart');
         return null;
       }
     } catch (e) {
-      log(e.toString());
+      Log.e(e.toString(), 'FeedRepo feed_repo.dart');
       return null;
     }
   }

@@ -11,7 +11,7 @@ class LocalStorage {
   final contactsKey = 'wallet_contact_list';
   final seedKey = 'wallet_seed';
   final customKVKey = 'wallet_kv';
-  final meetupNoticationKey = 'meet_up_nofication';
+  final meetUpNotificationKey = 'meet_up_notification';
 
   final storage = _LocalStorage();
 
@@ -139,12 +139,12 @@ class LocalStorage {
     return DateTime.now().millisecondsSinceEpoch - customCacheTimeLength > cacheTime;
   }
 
-  Future<void> setListString(List<String> value) async {
-    await storage.setListString(meetupNoticationKey, value);
+  Future<void> setShownMessages(List<String> value) async {
+    await storage.setListString(meetUpNotificationKey, value);
   }
 
-  Future<List<String>> getListString() async {
-    return await storage.getListString(meetupNoticationKey);
+  Future<List<String>> getShownMessages() async {
+    return await storage.getListString(meetUpNotificationKey);
   }
 }
 

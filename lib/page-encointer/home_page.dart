@@ -12,7 +12,7 @@ import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
 import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/service/notification.dart';
-import 'package:encointer_wallet/service/notification/meetup/callback_dispatcher.dart';
+import 'package:encointer_wallet/service/notification/callback_dispatcher.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 class EncointerHomePage extends StatefulWidget {
@@ -47,7 +47,8 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
           'task-identifier',
           'simpleTask',
           initialDelay: const Duration(seconds: 15),
-          frequency: const Duration(hours: 12),
+          frequency: const Duration(minutes: 15),
+          inputData: {'langCode': Localizations.localeOf(context).languageCode},
         );
       }
     });
