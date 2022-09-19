@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -28,15 +29,22 @@ class TransferPageParams {
     this.recipient,
     this.label,
     this.amount,
-    this.redirect,
   });
+
+  static TransferPageParams fromInvoiceData(InvoiceData data) {
+    return TransferPageParams(
+      cid: data.cid,
+      recipient: data.account,
+      label: data.label,
+      amount: data.amount as double?,
+    );
+  }
 
   final CommunityIdentifier? cid;
   final String? communitySymbol;
   final String? recipient;
   final String? label;
   final double? amount;
-  final String? redirect;
 }
 
 class TransferPage extends StatefulWidget {
@@ -50,46 +58,52 @@ class TransferPage extends StatefulWidget {
 
 class _TransferPageState extends State<TransferPage> {
   final _formKey = GlobalKey<FormState>();
-  late final _appStore;
 
   final TextEditingController _amountCtrl = TextEditingController();
+
+  var _communitySymbol;
+  var _cid;
 
   AccountData? _accountTo;
 
   @override
   void initState() {
     super.initState();
-    _appStore = context.read<AppStore>();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final args = ModalRoute.of(context)!.settings.arguments as TransferPageParams?;
-      if (args?.amount != null) {
-        _amountCtrl.text = '${args?.amount}';
+      final params = ModalRoute.of(context)!.settings.arguments as TransferPageParams?;
+
+      if (params != null) {
+        handleTransferPageParams(params, context.read<AppStore>());
       }
 
-      if (args?.recipient != null) {
-        final AccountData acc = AccountData();
-        acc.address = args!.recipient!;
-        acc.name = args.label!;
-        setState(() {
-          _accountTo = acc;
-        });
-      }
+      setState(() {});
 
       webApi.fetchAccountData();
     });
   }
 
+  void handleTransferPageParams(TransferPageParams params, AppStore store) {
+    _communitySymbol = params.communitySymbol ?? store.encointer.community!.symbol!;
+    _cid = params.cid ?? store.encointer.chosenCid!;
+
+    if (params.amount != null) {
+      _amountCtrl.text = '${params.amount}';
+    }
+
+    if (params.recipient != null) {
+      final AccountData acc = AccountData();
+      acc.address = params.recipient!;
+      acc.name = params.label!;
+      _accountTo = acc;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final params = ModalRoute.of(context)!.settings.arguments as TransferPageParams?;
     final _store = context.watch<AppStore>();
 
-    var communitySymbol = params?.communitySymbol ?? _store.encointer.community!.symbol!;
-    var cid = params?.cid ?? _store.encointer.chosenCid!;
-
     int decimals = encointer_currencies_decimals;
-
     double? available = _store.encointer.applyDemurrage(_store.encointer.communityBalanceEntry);
 
     Log.d('[transferPage]: available: $available', 'TransferPage');
@@ -119,7 +133,7 @@ class _TransferPageState extends State<TransferPage> {
                   Expanded(
                     child: ListView(
                       children: [
-                        CombinedCommunityAndAccountAvatar(_appStore, showCommunityNameAndAccountName: false),
+                        CombinedCommunityAndAccountAvatar(_store, showCommunityNameAndAccountName: false),
                         const SizedBox(height: 12),
                         _store.encointer.communityBalance != null
                             ? AccountBalanceWithMoreDigits(
@@ -140,10 +154,19 @@ class _TransferPageState extends State<TransferPage> {
                         IconButton(
                           iconSize: 48,
                           icon: const Icon(Iconsax.scan_barcode),
-                          onPressed: () => Navigator.of(context).popAndPushNamed(
-                            ScanPage.route,
-                            arguments: ScanPageParams(scannerContext: QrScannerContext.transferPage),
-                          ), // same as for clicking the scan button in the bottom bar
+                          onPressed: () async {
+                            final invoiceData = await Navigator.of(context).pushNamed(
+                              ScanPage.route,
+                              arguments: ScanPageParams(scannerContext: QrScannerContext.transferPage),
+                            );
+
+                            handleTransferPageParams(
+                              TransferPageParams.fromInvoiceData(invoiceData as InvoiceData),
+                              _store,
+                            );
+
+                            setState(() {});
+                          },
                         ),
                         const SizedBox(height: 24),
                         EncointerTextFormField(
@@ -208,7 +231,7 @@ class _TransferPageState extends State<TransferPage> {
                         ],
                       ),
                     ),
-                    onPressed: _accountTo != null ? () => _pushPaymentConfirmationPage(cid, communitySymbol) : null,
+                    onPressed: _accountTo != null ? () => _pushPaymentConfirmationPage(_cid, _communitySymbol) : null,
                   ),
                 ],
               ),

@@ -229,7 +229,6 @@ void _pushTransferPage(BuildContext context, VoucherData data, String voucherAdd
       cid: data.cid,
       recipient: voucherAddress,
       label: data.issuer,
-      redirect: ReapVoucherPage.route,
     ),
   );
 }
