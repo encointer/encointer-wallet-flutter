@@ -11,6 +11,7 @@ class LocalStorage {
   final contactsKey = 'wallet_contact_list';
   final seedKey = 'wallet_seed';
   final customKVKey = 'wallet_kv';
+  final meetupNoticationKey = 'meet_up_nofication';
 
   final storage = _LocalStorage();
 
@@ -137,6 +138,14 @@ class LocalStorage {
   static bool checkCacheTimeout(int cacheTime) {
     return DateTime.now().millisecondsSinceEpoch - customCacheTimeLength > cacheTime;
   }
+
+  Future<void> setListString(List<String> value) async {
+    await storage.setListString(meetupNoticationKey, value);
+  }
+
+  Future<List<String>> getListString() async {
+    return await storage.getListString(meetupNoticationKey);
+  }
 }
 
 class _LocalStorage {
@@ -184,5 +193,16 @@ class _LocalStorage {
       res = l.map((i) => Map<String, dynamic>.from(i)).toList();
     }
     return res;
+  }
+
+  Future<void> setListString(String key, List<String> value) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(key);
+    await prefs.setStringList(key, value);
+  }
+
+  Future<List<String>> getListString(String key) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getStringList(key) ?? <String>[];
   }
 }
