@@ -11,8 +11,8 @@ import 'package:encointer_wallet/page/assets/index.dart';
 import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
 import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
+import 'package:encointer_wallet/service/background_service/background_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
-import 'package:encointer_wallet/service/notification/callback_dispatcher.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 class EncointerHomePage extends StatefulWidget {
