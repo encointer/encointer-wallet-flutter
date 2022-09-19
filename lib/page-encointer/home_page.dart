@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
+import 'package:workmanager/workmanager.dart';
 
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
@@ -9,6 +12,7 @@ import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
 import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/service/notification.dart';
+import 'package:encointer_wallet/service/notification/meetup/callback_dispatcher.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 class EncointerHomePage extends StatefulWidget {
@@ -28,6 +32,28 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   late List<TabData> _tabList;
   int _tabIndex = 0;
+
+  @override
+  void initState() {
+    if (_notificationPlugin == null) {
+      _notificationPlugin = NotificationPlugin();
+      _notificationPlugin!.init(context);
+    }
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      if (Platform.isAndroid) {
+        // meetup notification only for android system
+        await Workmanager().initialize(callbackDispatcher);
+        await Workmanager().registerPeriodicTask(
+          'task-identifier',
+          'simpleTask',
+          initialDelay: const Duration(seconds: 15),
+          frequency: const Duration(hours: 12),
+        );
+      }
+    });
+
+    super.initState();
+  }
 
   List<BottomNavigationBarItem> _navBarItems(int activeItem) {
     return _tabList
@@ -64,16 +90,6 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
           ),
         )
         .toList();
-  }
-
-  @override
-  void initState() {
-    if (_notificationPlugin == null) {
-      _notificationPlugin = NotificationPlugin();
-      _notificationPlugin!.init(context);
-    }
-
-    super.initState();
   }
 
   @override

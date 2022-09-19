@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
@@ -11,7 +10,6 @@ import 'package:pausable_timer/pausable_timer.dart';
 import 'package:provider/provider.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:upgrader/upgrader.dart';
-import 'package:workmanager/workmanager.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/drag_handle.dart';
@@ -30,7 +28,6 @@ import 'package:encointer_wallet/page/assets/receive/receive_page.dart';
 import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
-import 'package:encointer_wallet/service/notification/meetup/callback_dispatcher.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
@@ -73,18 +70,6 @@ class _AssetsState extends State<Assets> {
     if (panelController == null) {
       panelController = PanelController();
     }
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      if (Platform.isAndroid) {
-        // meetup notification only for android system
-        await Workmanager().initialize(callbackDispatcher);
-        await Workmanager().registerPeriodicTask(
-          'task-identifier',
-          'simpleTask',
-          initialDelay: const Duration(seconds: 15),
-          frequency: const Duration(hours: 12),
-        );
-      }
-    });
 
     super.initState();
   }
