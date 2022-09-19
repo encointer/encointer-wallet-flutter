@@ -1,3 +1,8 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:provider/provider.dart';
+
 import 'package:encointer_wallet/mocks/substrate_api/core/mock_dart_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
@@ -8,10 +13,6 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 
 class SplashView extends StatefulWidget {
   const SplashView({Key? key}) : super(key: key);

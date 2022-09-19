@@ -137,7 +137,6 @@ class ContactDetailPage extends StatelessWidget {
                       recipient: account.address,
                       label: account.name,
                       amount: null,
-                      redirect: '/',
                     ),
                   );
                 },

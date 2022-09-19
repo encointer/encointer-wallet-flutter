@@ -1,10 +1,11 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/router/app_router.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 class WalletApp extends StatefulWidget {
   const WalletApp(this.config, {Key? key}) : super(key: key);

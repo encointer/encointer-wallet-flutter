@@ -1,6 +1,7 @@
+import 'package:json_annotation/json_annotation.dart';
+
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 part 'config.g.dart';
 
