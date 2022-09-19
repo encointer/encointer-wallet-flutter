@@ -11,7 +11,7 @@ Future<void> callbackDispatcher() async {
     final langCode = inputData!['langCode'] as String;
     final storage = LocalStorage();
     final repository = FeedRepo();
-    
+
     final list = await storage.getShownMessages();
     final res = await repository.fetchData(langCode);
 
