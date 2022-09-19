@@ -26,8 +26,8 @@ Future<void> callbackDispatcher() async {
 Future<void> notificationForLoop(
   List<Feed> res,
   List<String> list,
-  Future<void> Function(int id, String title, String body) showNotification,
-  Future<void> Function(List<String> value) cache,
+  Future<bool> Function(int id, String title, String body) showNotification,
+  Future<bool> Function(List<String> value) cache,
 ) async {
   for (int i = 0; i < res.length; i++) {
     if (!(list.contains(res[i].id))) {

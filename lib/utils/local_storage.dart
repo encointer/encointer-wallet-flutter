@@ -139,8 +139,9 @@ class LocalStorage {
     return DateTime.now().millisecondsSinceEpoch - customCacheTimeLength > cacheTime;
   }
 
-  Future<void> setShownMessages(List<String> value) async {
+  Future<bool> setShownMessages(List<String> value) async {
     await storage.setListString(meetUpNotificationKey, value);
+    return Future.value(true);
   }
 
   Future<List<String>> getShownMessages() async {
