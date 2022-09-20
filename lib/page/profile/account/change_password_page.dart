@@ -1,5 +1,10 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -9,10 +14,6 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   ChangePasswordPage({Key? key}) : super(key: key);
@@ -93,10 +94,10 @@ class _ChangePassword extends State<ChangePasswordPage> {
               actions: <Widget>[
                 CupertinoButton(
                     child: Text(I18n.of(context)!.translationsForLocale().home.ok),
-                    onPressed: () => {
-                          // moving back to profile page after changing password
-                          Navigator.popUntil(context, ModalRoute.withName('/')),
-                        }),
+                    onPressed: () {
+                      // moving back to profile page after changing password
+                      Navigator.of(context).popUntil((route) => route.isFirst);
+                    }),
               ],
             );
           },
