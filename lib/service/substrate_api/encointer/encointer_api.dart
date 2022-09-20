@@ -277,8 +277,9 @@ class EncointerApi {
         cid,
         store.encointer.currentPhase,
       );
-
-      store.encointer.community!.setMeetupTimeOverride(meetupTimeOverride?.millisecondsSinceEpoch);
+      if (store.encointer.community != null) {
+        store.encointer.community!.setMeetupTimeOverride(meetupTimeOverride?.millisecondsSinceEpoch);
+      }
     } catch (e, s) {
       Log.e('api: exception: $e', 'EncointerApi', s);
     }
