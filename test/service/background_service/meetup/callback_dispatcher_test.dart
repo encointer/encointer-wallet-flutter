@@ -51,7 +51,7 @@ void main() async {
 
     _responseTrueCache();
 
-    await notificationForLoop(feeds, list, functions.showNotification, functions.cache);
+    await showAllNotificationsFromFeed(feeds, list, functions.showNotification, functions.cache);
 
     _verifyShowNotification(0);
     _verifyShowNotification(1);
@@ -67,7 +67,7 @@ void main() async {
 
     _responseTrueCache();
 
-    await notificationForLoop(feeds, list, functions.showNotification, functions.cache);
+    await showAllNotificationsFromFeed(feeds, list, functions.showNotification, functions.cache);
 
     _verifyNeverShowNotification(0);
     _verifyShowNotification(1);
@@ -83,7 +83,7 @@ void main() async {
 
     _responseTrueCache();
 
-    await notificationForLoop(feeds, list, functions.showNotification, functions.cache);
+    await showAllNotificationsFromFeed(feeds, list, functions.showNotification, functions.cache);
 
     _verifyNeverShowNotification(0);
     _verifyNeverShowNotification(1);
@@ -95,7 +95,7 @@ void main() async {
   test('notificationForLoop show notification 0, cache list=["msg-1", "msg-2", "msg-3"]', () async {
     final list = <String>['msg-1', 'msg-2', 'msg-3'];
 
-    await notificationForLoop(feeds, list, functions.showNotification, functions.cache);
+    await showAllNotificationsFromFeed(feeds, list, functions.showNotification, functions.cache);
 
     _verifyNeverShowNotification(0);
     _verifyNeverShowNotification(1);

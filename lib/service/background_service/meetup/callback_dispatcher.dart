@@ -16,14 +16,14 @@ Future<void> callbackDispatcher() async {
     final res = await repository.fetchData(langCode);
 
     if (res != null) {
-      await notificationForLoop(res, list, NotificationPlugin.showNotification, storage.setShownMessages);
+      await showAllNotificationsFromFeed(res, list, NotificationPlugin.showNotification, storage.setShownMessages);
     }
 
     return Future.value(true);
   });
 }
 
-Future<void> notificationForLoop(
+Future<void> showAllNotificationsFromFeed(
   List<Feed> res,
   List<String> list,
   Future<bool> Function(int id, String title, String body) showNotification,
