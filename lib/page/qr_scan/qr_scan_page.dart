@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:flutter_qr_scan/qrcode_reader_view.dart';
+// import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
@@ -69,16 +70,26 @@ class ScanPage extends StatelessWidget {
 
             return Stack(
               children: [
-                MobileScanner(
-                  allowDuplicates: false,
-                  onDetect: (barcode, args) {
-                    if (barcode.rawValue == null) {
-                      Log.d('Failed to scan Barcode', 'ScanPage');
+                QrcodeReaderView(
+                  // key: _key,
+                  onScan: (barcode, args) async {
+                    if (barcode == null) {
+                      Log.e('Failed to scan Barcode', 'CeremonyProgressBar');
                     } else {
-                      onScan(barcode.rawValue!);
+                      onScan(barcode);
                     }
                   },
                 ),
+                // MobileScanner(
+                //   allowDuplicates: false,
+                //   onDetect: (barcode, args) {
+                //     if (barcode.rawValue == null) {
+                //       Log.d('Failed to scan Barcode', 'ScanPage');
+                //     } else {
+                //       onScan(barcode.rawValue!);
+                //     }
+                //   },
+                // ),
                 context.select<AppStore, bool>((store) => store.settings.developerMode)
                     ? mockQrDataRow(dic, onScan)
                     : Container(),

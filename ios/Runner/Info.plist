@@ -50,6 +50,8 @@
 	<string>Add calendar entries for the next community ceremony</string>
 	<key>NSCameraUsageDescription</key>
 	<string>Read QR Code of addresses.</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>你的操作需要访问录像机权限</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Read QR Code of addresses from photos.</string>
 	<key>UIBackgroundModes</key>

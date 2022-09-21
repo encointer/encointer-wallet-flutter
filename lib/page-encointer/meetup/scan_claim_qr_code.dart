@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:flutter_qr_scan/qrcode_reader_view.dart';
+// import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:encointer_wallet/models/claim_of_attendance/claim_of_attendance.dart';
@@ -89,15 +90,25 @@ class ScanClaimQrCode extends StatelessWidget {
 
             return Stack(
               children: [
-                MobileScanner(
-                    allowDuplicates: false,
-                    onDetect: (barcode, args) {
-                      if (barcode.rawValue == null) {
-                        Log.e('Failed to scan Barcode', 'CeremonyProgressBar');
-                      } else {
-                        _onScan(barcode.rawValue!);
-                      }
-                    }),
+                QrcodeReaderView(
+                  // key: _key,
+                  onScan: (barcode, args) async {
+                    if (barcode == null) {
+                      Log.e('Failed to scan Barcode', 'CeremonyProgressBar');
+                    } else {
+                      _onScan(barcode);
+                    }
+                  },
+                ),
+                // MobileScanner(
+                //     allowDuplicates: false,
+                //     onDetect: (barcode, args) {
+                //       if (barcode.rawValue == null) {
+                //         Log.e('Failed to scan Barcode', 'CeremonyProgressBar');
+                //       } else {
+                //         _onScan(barcode.rawValue!);
+                //       }
+                //     }),
                 //overlays a semi-transparent rounded square border that is 90% of screen width
                 Center(
                   child: Column(

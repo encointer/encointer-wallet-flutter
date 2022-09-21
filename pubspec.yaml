@@ -19,7 +19,7 @@ version: 1.8.6+852
 publish_to: none
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   # intl - format numbers
@@ -45,7 +45,7 @@ dependencies:
   package_info: ^2.0.2
   quiver: ^3.1.0
   dio: ^4.0.0
-#  image_cropper: ^1.4.0
+  #  image_cropper: ^1.4.0
   image_picker: ^0.7.5+2
   animated_check: ^1.0.5
   share_plus: ^4.0.10
@@ -62,11 +62,19 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.5
   # QR code generator & reader
+  flutter_qr_scan:
+    git:
+      url: https://github.com/encointer/flutter_qr_reader.git
+      # ref: flutter-v3
+  # flutter_qr_reader:
+  #   git:
+  #     url: git://github.com/encointer/flutter_qr_reader.git
+  #     ref: flutter-v3
   qr_flutter_fork:
     git:
       url: https://github.com/polkawallet-io/qr.flutter.git
       ref: master
-  mobile_scanner: ^2.0.0
+  # mobile_scanner: ^2.0.0
   aes_ecb_pkcs5_flutter: ^0.1.2
   permission_handler: ^10.0.0
   flutter_svg: ^1.1.1+1
@@ -115,7 +123,6 @@ flutter_icons:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
