@@ -1,10 +1,12 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/app.dart';
@@ -14,6 +16,14 @@ import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/subscan.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/local_storage.dart' as util;
+
+Future<String> writeImageToStorage(Uint8List feedbackScreenShot) async {
+  final Directory output = await getTemporaryDirectory();
+  final screenshotFilePath = '${output.path}/feedback.png';
+  final File screenshotFile = File(screenshotFilePath);
+  await screenshotFile.writeAsBytes(feedbackScreenShot);
+  return screenshotFilePath;
+}
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,3 +1,5 @@
+import 'package:encointer_wallet/main.dart';
+import 'package:feedback/feedback.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -162,6 +164,15 @@ class _ProfileState extends State<Profile> {
                 title: Text(dic.profile.about, style: Theme.of(context).textTheme.headline3),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.pushNamed(context, AboutPage.route),
+              ),
+              ListTile(
+                title: Text('Feedback', style: h3Grey),
+                onTap: () {
+                  BetterFeedback.of(context).show((UserFeedback feedback) async {
+                    final screenshotFilePath = writeImageToStorage(feedback.screenshot);
+                    // final Email email = Email(); also it is possible to add feedback by mail, using flutter_email_sender: ^5.1.0 package
+                  });
+                },
               ),
               ListTile(
                 title: Text(dic.profile.developer, style: h3Grey),
