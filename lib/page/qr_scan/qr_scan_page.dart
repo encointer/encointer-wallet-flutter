@@ -94,26 +94,26 @@ class ScanPage extends StatelessWidget {
                     ? mockQrDataRow(dic, onScan)
                     : Container(),
                 //overlays a semi-transparent rounded square border that is 90% of screen width
-                Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.7,
-                        height: MediaQuery.of(context).size.width * 0.7,
-                        decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          border: Border.all(color: Colors.white38, width: 2.0),
-                          borderRadius: const BorderRadius.all(Radius.circular(24.0)),
-                        ),
-                      ),
-                      Text(
-                        I18n.of(context)!.translationsForLocale().account.qrScan,
-                        style: const TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16),
-                      ),
-                    ],
-                  ),
-                ),
+                // Center(
+                //   child: Column(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       Container(
+                //         width: MediaQuery.of(context).size.width * 0.7,
+                //         height: MediaQuery.of(context).size.width * 0.7,
+                //         decoration: BoxDecoration(
+                //           color: Colors.transparent,
+                //           border: Border.all(color: Colors.white38, width: 2.0),
+                //           borderRadius: const BorderRadius.all(Radius.circular(24.0)),
+                //         ),
+                //       ),
+                //       Text(
+                //         I18n.of(context)!.translationsForLocale().account.qrScan,
+                //         style: const TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16),
+                //       ),
+                //     ],
+                //   ),
+                // ),
               ],
             );
           } else {
