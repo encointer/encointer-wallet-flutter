@@ -74,7 +74,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                   ],
                 ),
                 onPressed: () {
-                  Navigator.popUntil(context, ModalRoute.withName('/'));
+                  Navigator.of(context).popUntil((route) => route.isFirst);
                 },
               ),
               const SizedBox(height: 12),
