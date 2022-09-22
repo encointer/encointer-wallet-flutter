@@ -3,8 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_qr_scan/qrcode_reader_view.dart';
-// import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:flutter_qr_scan/flutter_qr_reader.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:encointer_wallet/models/claim_of_attendance/claim_of_attendance.dart';
@@ -91,7 +90,6 @@ class ScanClaimQrCode extends StatelessWidget {
             return Stack(
               children: [
                 QrcodeReaderView(
-                  // key: _key,
                   onScan: (barcode, args) async {
                     if (barcode == null) {
                       Log.e('Failed to scan Barcode', 'CeremonyProgressBar');
@@ -99,44 +97,45 @@ class ScanClaimQrCode extends StatelessWidget {
                       _onScan(barcode);
                     }
                   },
+                  helpWidget: Observer(builder: (_) {
+                    final txt = dic.encointer.claimsScannedNOfM
+                        .replaceAll('SCANNED_COUNT', store.encointer.communityAccount!.scannedClaimsCount.toString())
+                        .replaceAll(
+                          'TOTAL_COUNT',
+                          (confirmedParticipantsCount - 1).toString(),
+                        );
+                    return Text(txt,
+                        style: const TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16));
+                  }),
                 ),
-                // MobileScanner(
-                //     allowDuplicates: false,
-                //     onDetect: (barcode, args) {
-                //       if (barcode.rawValue == null) {
-                //         Log.e('Failed to scan Barcode', 'CeremonyProgressBar');
-                //       } else {
-                //         _onScan(barcode.rawValue!);
-                //       }
-                //     }),
                 //overlays a semi-transparent rounded square border that is 90% of screen width
-                Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: MediaQuery.of(context).size.width * 0.7,
-                        height: MediaQuery.of(context).size.width * 0.7,
-                        decoration: BoxDecoration(
-                          color: Colors.transparent,
-                          border: Border.all(color: Colors.white38, width: 2.0),
-                          borderRadius: const BorderRadius.all(Radius.circular(24.0)),
-                        ),
-                      ),
-                      Observer(builder: (_) {
-                        final txt = dic.encointer.claimsScannedNOfM
-                            .replaceAll(
-                                'SCANNED_COUNT', store.encointer.communityAccount!.scannedClaimsCount.toString())
-                            .replaceAll(
-                              'TOTAL_COUNT',
-                              (confirmedParticipantsCount - 1).toString(),
-                            );
-                        return Text(txt,
-                            style: const TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16));
-                      }),
-                    ],
-                  ),
-                ),
+                // Center(
+                //   child: Column(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     children: [
+                //       Container(
+                //         width: MediaQuery.of(context).size.width * 0.7,
+                //         height: MediaQuery.of(context).size.width * 0.7,
+                //         decoration: BoxDecoration(
+                //           color: Colors.transparent,
+                //           border: Border.all(color: Colors.white38, width: 2.0),
+                //           borderRadius: const BorderRadius.all(Radius.circular(24.0)),
+                //         ),
+                //       ),
+                //       Observer(builder: (_) {
+                //         final txt = dic.encointer.claimsScannedNOfM
+                //             .replaceAll(
+                //                 'SCANNED_COUNT', store.encointer.communityAccount!.scannedClaimsCount.toString())
+                //             .replaceAll(
+                //               'TOTAL_COUNT',
+                //               (confirmedParticipantsCount - 1).toString(),
+                //             );
+                //         return Text(txt,
+                //             style: const TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16));
+                //       }),
+                //     ],
+                //   ),
+                // ),
               ],
             );
           } else {

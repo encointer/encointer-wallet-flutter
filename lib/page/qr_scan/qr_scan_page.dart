@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_qr_scan/qrcode_reader_view.dart';
-// import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:flutter_qr_scan/flutter_qr_reader.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 
@@ -71,7 +70,7 @@ class ScanPage extends StatelessWidget {
             return Stack(
               children: [
                 QrcodeReaderView(
-                  // key: _key,
+                  text: I18n.of(context)!.translationsForLocale().account.qrScan,
                   onScan: (barcode, args) async {
                     if (barcode == null) {
                       Log.e('Failed to scan Barcode', 'CeremonyProgressBar');
@@ -80,40 +79,9 @@ class ScanPage extends StatelessWidget {
                     }
                   },
                 ),
-                // MobileScanner(
-                //   allowDuplicates: false,
-                //   onDetect: (barcode, args) {
-                //     if (barcode.rawValue == null) {
-                //       Log.d('Failed to scan Barcode', 'ScanPage');
-                //     } else {
-                //       onScan(barcode.rawValue!);
-                //     }
-                //   },
-                // ),
                 context.select<AppStore, bool>((store) => store.settings.developerMode)
                     ? mockQrDataRow(dic, onScan)
                     : Container(),
-                //overlays a semi-transparent rounded square border that is 90% of screen width
-                // Center(
-                //   child: Column(
-                //     mainAxisAlignment: MainAxisAlignment.center,
-                //     children: [
-                //       Container(
-                //         width: MediaQuery.of(context).size.width * 0.7,
-                //         height: MediaQuery.of(context).size.width * 0.7,
-                //         decoration: BoxDecoration(
-                //           color: Colors.transparent,
-                //           border: Border.all(color: Colors.white38, width: 2.0),
-                //           borderRadius: const BorderRadius.all(Radius.circular(24.0)),
-                //         ),
-                //       ),
-                //       Text(
-                //         I18n.of(context)!.translationsForLocale().account.qrScan,
-                //         style: const TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16),
-                //       ),
-                //     ],
-                //   ),
-                // ),
               ],
             );
           } else {

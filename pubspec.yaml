@@ -46,7 +46,7 @@ dependencies:
   quiver: ^3.1.0
   dio: ^4.0.0
   #  image_cropper: ^1.4.0
-  image_picker: ^0.7.5+2
+  image_picker: ^0.8.5+3
   animated_check: ^1.0.5
   share_plus: ^4.0.10
 
@@ -65,7 +65,7 @@ dependencies:
   flutter_qr_scan:
     git:
       url: https://github.com/encointer/flutter_qr_reader.git
-      # ref: flutter-v3
+      ref: 6eee2a1
   # flutter_qr_reader:
   #   git:
   #     url: git://github.com/encointer/flutter_qr_reader.git
