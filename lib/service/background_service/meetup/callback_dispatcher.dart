@@ -13,11 +13,11 @@ Future<void> callbackDispatcher() async {
     final repository = FeedRepo();
 
     final _alreadyShownNotifications = await storage.getShownMessages();
-    final _feed = await repository.fetchData(langCode);
+    final _feeds = await repository.fetchData(langCode);
 
-    if (_feed != null) {
+    if (_feeds != null) {
       await showAllNotificationsFromFeed(
-        _feed,
+        _feeds,
         _alreadyShownNotifications,
         NotificationPlugin.showNotification,
         storage.setShownMessages,
@@ -29,19 +29,19 @@ Future<void> callbackDispatcher() async {
 }
 
 Future<void> showAllNotificationsFromFeed(
-  List<Feed> feed,
+  List<Feed> feeds,
   List<String> alreadyShownNotifications,
   Future<bool> Function(int id, String title, String body) showNotification,
   Future<bool> Function(List<String> value) cache,
 ) async {
-  for (int i = 0; i < feed.length; i++) {
-    if (!(alreadyShownNotifications.contains(feed[i].id))) {
-      alreadyShownNotifications.add(feed[i].id);
+  for (int i = 0; i < feeds.length; i++) {
+    if (!(alreadyShownNotifications.contains(feeds[i].id))) {
+      alreadyShownNotifications.add(feeds[i].id);
       Log.d('cached $alreadyShownNotifications', 'callbackDispatcher');
-      await showNotification(i, feed[i].title, feed[i].content);
-      if (feed[i] == feed.last) cache(alreadyShownNotifications);
+      await showNotification(i, feeds[i].title, feeds[i].content);
+      if (feeds[i] == feeds.last) cache(alreadyShownNotifications);
     } else {
-      Log.d('${feed[i].id}---->${feed[i].showAt} old', 'callbackDispatcher');
+      Log.d('${feeds[i].id}---->${feeds[i].showAt} old', 'callbackDispatcher');
     }
   }
 }
