@@ -12,13 +12,13 @@ mixin _$ImagePickerState on _ImagePickerState, Store {
   late final _$imagesAtom = Atom(name: '_ImagePickerState.images', context: context);
 
   @override
-  ObservableList<PickedFile?> get images {
+  ObservableList<XFile?> get images {
     _$imagesAtom.reportRead();
     return super.images;
   }
 
   @override
-  set images(ObservableList<PickedFile?> value) {
+  set images(ObservableList<XFile?> value) {
     _$imagesAtom.reportWrite(value, super.images, () {
       super.images = value;
     });
@@ -57,7 +57,7 @@ mixin _$ImagePickerState on _ImagePickerState, Store {
   late final _$_ImagePickerStateActionController = ActionController(name: '_ImagePickerState', context: context);
 
   @override
-  void addImage(PickedFile? image) {
+  void addImage(XFile? image) {
     final _$actionInfo = _$_ImagePickerStateActionController.startAction(name: '_ImagePickerState.addImage');
     try {
       return super.addImage(image);
@@ -67,7 +67,7 @@ mixin _$ImagePickerState on _ImagePickerState, Store {
   }
 
   @override
-  void removeImage(PickedFile? toDelete) {
+  void removeImage(XFile? toDelete) {
     final _$actionInfo = _$_ImagePickerStateActionController.startAction(name: '_ImagePickerState.removeImage');
     try {
       return super.removeImage(toDelete);
