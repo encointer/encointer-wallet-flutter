@@ -23,10 +23,10 @@ Future<void> callbackDispatcher() async {
     }
 
     // Todo: change the feed to a set instead of list
-    final feedMap = Map.fromIterable(_feeds.map((e) => MapEntry(e.id, e)));
-
+    // final feedMap = Map.fromIterable(_feeds.map((e) => MapEntry(e.id, e)));
     // remove all cached notifications that are no longer in the feed
-    _alreadyShownNotifications.removeWhere((id) => !feedMap.containsKey(id));
+    // todo: Fix this it removes all the alreadyShownNotifications even if it should not.
+    // _alreadyShownNotifications.removeWhere((id) => !feedMap.containsKey(id));
 
     var shownNotifications = await showAllNotificationsFromFeed(
       _feeds,
