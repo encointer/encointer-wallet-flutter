@@ -16,6 +16,7 @@ Future<void> callbackDispatcher() async {
     final _feeds = await repository.fetchData(langCode);
 
     if (_feeds == null) {
+      Log.d('The result of the feed is null', 'callbackDispatcher');
       return Future.value(true);
     }
 
