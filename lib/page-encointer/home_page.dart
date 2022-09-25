@@ -49,7 +49,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
           'task-identifier',
           'simpleTask',
           initialDelay: const Duration(seconds: 15),
-          frequency: const Duration(minutes: 15),
+          frequency: const Duration(hours: 12),
           inputData: {'langCode': Localizations.localeOf(context).languageCode},
           existingWorkPolicy: ExistingWorkPolicy.replace,
         );
