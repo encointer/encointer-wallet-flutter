@@ -58,8 +58,7 @@ Future<List<String>> showAllNotificationsFromFeed(
         shownNotifications.add(feeds[i].id);
         Log.d('showing new notification ${feeds[i]}', 'callbackDispatcher');
         await showNotification(i, feeds[i].title, feeds[i].content);
-      }
-      {
+      } else {
         Log.d('${feeds[i].id} is new, but it should not be shown yet', 'callbackDispatcher');
       }
     } else {
