@@ -45,6 +45,7 @@ void main() async {
     _verifyShowNotification(0);
     _verifyShowNotification(1);
     _verifyShowNotification(2);
+    _verifyNeverShowNotification(3);
 
     expect(shownNotifications, ['msg-1', 'msg-2', 'msg-3']);
   });
@@ -59,6 +60,7 @@ void main() async {
     _verifyNeverShowNotification(0);
     _verifyShowNotification(1);
     _verifyShowNotification(2);
+    _verifyNeverShowNotification(3);
 
     expect(shownNotifications, ['msg-2', 'msg-3']);
   });
@@ -73,6 +75,7 @@ void main() async {
     _verifyNeverShowNotification(0);
     _verifyNeverShowNotification(1);
     _verifyShowNotification(2);
+    _verifyNeverShowNotification(3);
 
     expect(shownNotifications, ['msg-3']);
   });
@@ -85,6 +88,7 @@ void main() async {
     _verifyNeverShowNotification(0);
     _verifyNeverShowNotification(1);
     _verifyNeverShowNotification(2);
+    _verifyNeverShowNotification(3);
 
     expect(shownNotifications, []);
   });

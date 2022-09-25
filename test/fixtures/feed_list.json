@@ -9,12 +9,18 @@
         "id": "msg-2",
         "title": "Test Community Message Title",
         "content": "Hello, this is a test community notification",
-        "show-at": "2022-11-25T12:30:00.00+00:00"
+        "show-at": "2022-08-25T12:30:00.00+00:00"
     },
     {
         "id": "msg-3",
         "title": "Test Community Message Title",
         "content": "Hello, this is a test community notification",
-        "show-at": "2022-10-25T12:30:00.00+00:00"
+        "show-at": "2022-08-25T12:30:00.00+00:00"
+    },
+    {
+        "id": "msg-4",
+        "title": "Message that should never be shown because it is in the future.",
+        "content": "Hello, this is a test community notification",
+        "show-at": "2099-08-25T12:30:00.00+00:00"
     }
 ]
