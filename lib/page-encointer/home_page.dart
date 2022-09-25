@@ -1,6 +1,10 @@
+import 'dart:io';
+
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
+import 'package:workmanager/workmanager.dart';
 
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
@@ -8,6 +12,7 @@ import 'package:encointer_wallet/page/assets/index.dart';
 import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
 import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
+import 'package:encointer_wallet/service/background_service/background_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
 
@@ -28,6 +33,31 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   late List<TabData> _tabList;
   int _tabIndex = 0;
+
+  @override
+  void initState() {
+    if (_notificationPlugin == null) {
+      _notificationPlugin = NotificationPlugin();
+      _notificationPlugin!.init(context);
+    }
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      if (Platform.isAndroid) {
+        // meetup notification only for android system
+        Log.d('Initializing Workmanager callback...', 'home_page');
+        await Workmanager().initialize(callbackDispatcher);
+        await Workmanager().registerPeriodicTask(
+          'task-identifier',
+          'simpleTask',
+          initialDelay: const Duration(seconds: 15),
+          frequency: const Duration(minutes: 15),
+          inputData: {'langCode': Localizations.localeOf(context).languageCode},
+          existingWorkPolicy: ExistingWorkPolicy.replace,
+        );
+      }
+    });
+
+    super.initState();
+  }
 
   List<BottomNavigationBarItem> _navBarItems(int activeItem) {
     return _tabList
@@ -64,16 +94,6 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
           ),
         )
         .toList();
-  }
-
-  @override
-  void initState() {
-    if (_notificationPlugin == null) {
-      _notificationPlugin = NotificationPlugin();
-      _notificationPlugin!.init(context);
-    }
-
-    super.initState();
   }
 
   @override
