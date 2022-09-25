@@ -8,6 +8,8 @@ import 'package:encointer_wallet/utils/local_storage.dart';
 
 Future<void> callbackDispatcher() async {
   Workmanager().executeTask((task, inputData) async {
+    Log.d('Executing Workmanager callback', 'callbackDispatcher');
+
     final langCode = inputData!['langCode'] as String;
     final storage = LocalStorage();
     final repository = FeedRepo();

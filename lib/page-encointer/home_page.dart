@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
@@ -42,6 +43,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       if (Platform.isAndroid) {
         // meetup notification only for android system
+        Log.d('Initializing Workmanager callback...', 'home_page');
         await Workmanager().initialize(callbackDispatcher);
         await Workmanager().registerPeriodicTask(
           'task-identifier',
@@ -49,6 +51,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
           initialDelay: const Duration(seconds: 15),
           frequency: const Duration(minutes: 15),
           inputData: {'langCode': Localizations.localeOf(context).languageCode},
+          existingWorkPolicy: ExistingWorkPolicy.replace,
         );
       }
     });

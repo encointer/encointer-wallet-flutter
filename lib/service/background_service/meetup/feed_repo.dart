@@ -19,7 +19,7 @@ class FeedRepo {
         final feed = feedFromJson(response.body);
         return feed;
       } catch (e) {
-        Log.e(e.toString(), 'FeedRepo feed_repo.dart');
+        Log.e('error transforming ${response.toString()}. ${e.toString()}', 'feed_repo.dart');
         return null;
       }
     } catch (e) {
