@@ -15,33 +15,49 @@ Future<void> callbackDispatcher() async {
     final _alreadyShownNotifications = await storage.getShownMessages();
     final _feeds = await repository.fetchData(langCode);
 
-    if (_feeds != null) {
-      await showAllNotificationsFromFeed(
-        _feeds,
-        _alreadyShownNotifications,
-        NotificationPlugin.showNotification,
-        storage.setShownMessages,
-      );
+    if (_feeds == null) {
+      return Future.value(true);
     }
+
+    // Todo: change the feed to a set instead of list
+    final feedMap = Map.fromIterable(_feeds.map((e) => MapEntry(e.id, e)));
+
+    // remove all cached notifications that are no longer in the feed
+    _alreadyShownNotifications.removeWhere((id) => !feedMap.containsKey(id));
+
+    var shownNotifications = await showAllNotificationsFromFeed(
+      _feeds,
+      _alreadyShownNotifications,
+      NotificationPlugin.showNotification,
+    );
+
+    _alreadyShownNotifications.addAll(shownNotifications);
+
+    await storage.setShownMessages(_alreadyShownNotifications);
 
     return Future.value(true);
   });
 }
 
-Future<void> showAllNotificationsFromFeed(
+/// Shows a notification if it has not been shown before.
+///
+/// Return the feed ids of the shown notifications.
+Future<List<String>> showAllNotificationsFromFeed(
   List<Feed> feeds,
   List<String> alreadyShownNotifications,
   Future<bool> Function(int id, String title, String body) showNotification,
-  Future<bool> Function(List<String> value) cache,
 ) async {
+  var shownNotifications = <String>[];
+
   for (int i = 0; i < feeds.length; i++) {
     if (!(alreadyShownNotifications.contains(feeds[i].id))) {
-      alreadyShownNotifications.add(feeds[i].id);
-      Log.d('cached $alreadyShownNotifications', 'callbackDispatcher');
+      shownNotifications.add(feeds[i].id);
+      Log.d('showing new notification ${feeds[i]}', 'callbackDispatcher');
       await showNotification(i, feeds[i].title, feeds[i].content);
-      if (feeds[i] == feeds.last) cache(alreadyShownNotifications);
     } else {
-      Log.d('${feeds[i].id}---->${feeds[i].showAt} old', 'callbackDispatcher');
+      Log.d('${feeds[i].id} has already been shown', 'callbackDispatcher');
+      // Log.d('${feeds[i].id}---->${feeds[i].showAt} old', 'callbackDispatcher');
     }
   }
+  return shownNotifications;
 }

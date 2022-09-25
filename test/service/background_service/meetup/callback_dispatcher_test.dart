@@ -19,7 +19,6 @@ class MockFunctions extends Mock implements Functions {}
 
 void main() async {
   final feeds = feedFromJson(fixture('feed_list'));
-  final lastList = <String>['msg-1', 'msg-2', 'msg-3'];
 
   final functions = MockFunctions();
 
@@ -27,16 +26,8 @@ void main() async {
     when(() => functions.showNotification(i, feeds[i].title, feeds[i].content)).thenAnswer((inc) async => true);
   }
 
-  void _responseTrueCache() {
-    when(() => functions.cache(lastList)).thenAnswer((i) async => true);
-  }
-
   void _verifyShowNotification(int i) {
     verify(() => functions.showNotification(i, feeds[i].title, feeds[i].content)).called(1);
-  }
-
-  void _verifyCache() {
-    verify(() => functions.cache(lastList)).called(1);
   }
 
   void _verifyNeverShowNotification(int i) {
@@ -49,15 +40,13 @@ void main() async {
     _responseTrueShowNotification(1);
     _responseTrueShowNotification(2);
 
-    _responseTrueCache();
-
-    await showAllNotificationsFromFeed(feeds, list, functions.showNotification, functions.cache);
+    var shownNotifications = await showAllNotificationsFromFeed(feeds, list, functions.showNotification);
 
     _verifyShowNotification(0);
     _verifyShowNotification(1);
     _verifyShowNotification(2);
 
-    _verifyCache();
+    expect(shownNotifications, ['msg-1', 'msg-2', 'msg-3']);
   });
 
   test('notificationForLoop show notification 2, cache list=["msg-1"]', () async {
@@ -65,15 +54,13 @@ void main() async {
     _responseTrueShowNotification(1);
     _responseTrueShowNotification(2);
 
-    _responseTrueCache();
-
-    await showAllNotificationsFromFeed(feeds, list, functions.showNotification, functions.cache);
+    var shownNotifications = await showAllNotificationsFromFeed(feeds, list, functions.showNotification);
 
     _verifyNeverShowNotification(0);
     _verifyShowNotification(1);
     _verifyShowNotification(2);
 
-    _verifyCache();
+    expect(shownNotifications, ['msg-2', 'msg-3']);
   });
 
   test('notificationForLoop show notification 1, cache list=["msg-1", "msg-2"]', () async {
@@ -81,26 +68,24 @@ void main() async {
 
     _responseTrueShowNotification(2);
 
-    _responseTrueCache();
-
-    await showAllNotificationsFromFeed(feeds, list, functions.showNotification, functions.cache);
+    var shownNotifications = await showAllNotificationsFromFeed(feeds, list, functions.showNotification);
 
     _verifyNeverShowNotification(0);
     _verifyNeverShowNotification(1);
     _verifyShowNotification(2);
 
-    _verifyCache();
+    expect(shownNotifications, ['msg-3']);
   });
 
   test('notificationForLoop show notification 0, cache list=["msg-1", "msg-2", "msg-3"]', () async {
     final list = <String>['msg-1', 'msg-2', 'msg-3'];
 
-    await showAllNotificationsFromFeed(feeds, list, functions.showNotification, functions.cache);
+    var shownNotifications = await showAllNotificationsFromFeed(feeds, list, functions.showNotification);
 
     _verifyNeverShowNotification(0);
     _verifyNeverShowNotification(1);
     _verifyNeverShowNotification(2);
 
-    verifyNever(() => functions.cache(lastList));
+    expect(shownNotifications, []);
   });
 }
