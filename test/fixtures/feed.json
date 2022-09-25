@@ -2,5 +2,5 @@
     "id": "msg-1",
     "title": "Test Community Message Title",
     "content": "Hello, this is a test community notification",
-    "show-at": "2022-08-25T12:30:00.00+00:00"
+    "showAt": "2022-08-25T12:30:00.00+00:00"
 }

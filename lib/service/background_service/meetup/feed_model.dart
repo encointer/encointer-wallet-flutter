@@ -1,7 +1,11 @@
 import 'dart:convert';
+import 'package:json_annotation/json_annotation.dart';
+
+part 'feed_model.g.dart';
 
 List<Feed> feedFromJson(String str) => List<Feed>.from(json.decode(str).map((x) => Feed.fromJson(x)));
 
+@JsonSerializable()
 class Feed {
   const Feed({
     required this.id,
@@ -15,10 +19,11 @@ class Feed {
   final String content;
   final DateTime showAt;
 
-  factory Feed.fromJson(Map<String, dynamic> json) => Feed(
-        id: json['id'],
-        title: json['title'],
-        content: json['content'],
-        showAt: DateTime.parse(json['show-at']),
-      );
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
+
+  factory Feed.fromJson(Map<String, dynamic> json) => _$FeedFromJson(json);
+  Map<String, dynamic> toJson() => _$FeedToJson(this);
 }
