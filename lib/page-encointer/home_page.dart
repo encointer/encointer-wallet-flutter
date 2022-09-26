@@ -42,6 +42,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       _notificationPlugin!.init(context);
     }
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await initialDeepLinks(context);
       if (Platform.isAndroid) {
         // meetup notification only for android system
         Log.d('Initializing Workmanager callback...', 'home_page');
@@ -57,14 +58,6 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       }
     });
     super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await initialDeepLinks(context);
-    });
   }
 
   List<BottomNavigationBarItem> _navBarItems(int activeItem) {

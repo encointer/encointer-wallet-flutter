@@ -82,6 +82,8 @@
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
 	<!-- deep link-uni link -->
+	<key>FlutterDeepLinkingEnabled</key>
+	<true/>
 	<key>CFBundleURLTypes</key>
 	<array>
 		<dict>
@@ -91,7 +93,7 @@
 		<string>org.encointer.wallet</string>
 		<key>CFBundleURLSchemes</key>
 		<array>
-			<string>https</string>
+		<string>https</string>
 		</array>
 		</dict>
 	</array>
