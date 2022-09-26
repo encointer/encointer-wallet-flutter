@@ -78,7 +78,7 @@ class NotificationPlugin {
     });
   }
 
-  static Future<void> showNotification(int id, String? title, String body, {String? payload, String? cid}) async {
+  static Future<bool> showNotification(int id, String? title, String body, {String? payload, String? cid}) async {
     var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
       'transaction_submitted',
       'Tx Submitted',
@@ -99,5 +99,6 @@ class NotificationPlugin {
       platformChannelSpecifics,
       payload: payload ?? 'undefined',
     );
+    return Future.value(true);
   }
 }
