@@ -7,7 +7,7 @@
 	<!-- ... other keys -->
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:org.encointer.wallet</string>
+		<string>org.encointer.wallet</string>
 	</array>
 	<!-- ... other keys -->
 </dict>
