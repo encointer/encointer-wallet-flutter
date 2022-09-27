@@ -31,7 +31,7 @@
                 <!-- Accepts URIs that begin with YOUR_SCHEME://YOUR_HOST -->
                 <data
                 android:scheme="https"
-                android:host="org.encointer.wallet" />
+                android:host="encointer.org" />
             </intent-filter>
 
             <!-- App Links -->
@@ -42,7 +42,7 @@
                 <!-- Accepts URIs that begin with https://YOUR_HOST -->
                 <data
                 android:scheme="https"
-                android:host="org.encointer.wallet" />
+                android:host="encointer.org" />
             </intent-filter>    
         </activity>
 

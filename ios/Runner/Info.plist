@@ -90,7 +90,7 @@
 		<key>CFBundleTypeRole</key>
 		<string>Editor</string>
 		<key>CFBundleURLName</key>
-		<string>org.encointer.wallet</string>
+		<string>encointer.org</string>
 		<key>CFBundleURLSchemes</key>
 		<array>
 		<string>https</string>
