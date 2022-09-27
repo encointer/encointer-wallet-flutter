@@ -426,8 +426,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: "7172c39"
-      resolved-ref: "7172c39b4fdfb0846e1bcb75089f00f2f32d8bb4"
+      ref: master
+      resolved-ref: e60910b3bf5351a78b47524d17ccce5c96e33a58
       url: "https://github.com/encointer/flutter_qr_reader.git"
     source: git
     version: "1.0.7"

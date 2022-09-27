@@ -65,7 +65,7 @@ dependencies:
   flutter_qr_scan:
     git:
       url: https://github.com/encointer/flutter_qr_reader.git
-      ref: 7172c39
+      ref: master
   qr_flutter_fork:
     git:
       url: https://github.com/polkawallet-io/qr.flutter.git
