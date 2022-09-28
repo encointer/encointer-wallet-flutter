@@ -1,8 +1,5 @@
-import 'package:encointer_wallet/main.dart';
-import 'package:feedback/feedback.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
@@ -167,21 +164,21 @@ class _ProfileState extends State<Profile> {
                 onTap: () => Navigator.pushNamed(context, AboutPage.route),
               ),
               ListTile(
-                title: Text('Feedback', style: h3Grey),
-                onTap: () {
-                  BetterFeedback.of(context).show((UserFeedback feedback) async {
-                    final screenshotFilePath = await writeImageToStorage(feedback.screenshot);
-                    final Email email = Email(
-                      body: feedback.text,
-                      subject: 'App Feedback',
-                      recipients: ['123@gmail.com'],
-                      attachmentPaths: [screenshotFilePath],
-                      isHTML: false,
-                    );
-                    await FlutterEmailSender.send(email);
-                  });
-                },
-              ),
+                  title: Text('Feedback', style: h3Grey),
+                  onTap: () {
+                    // BetterFeedback.of(context).show((UserFeedback feedback) async {
+                    //   final screenshotFilePath = await writeImageToStorage(feedback.screenshot);
+                    //   final Email email = Email(
+                    //     body: feedback.text,
+                    //     subject: 'App Feedback',
+                    //     recipients: ['123@gmail.com'],
+                    //     attachmentPaths: [screenshotFilePath],
+                    //     isHTML: false,
+                    //   );
+                    //   await FlutterEmailSender.send(email);
+                    // });
+                  },
+                ),
               ListTile(
                 title: Text(dic.profile.developer, style: h3Grey),
                 trailing: Checkbox(
