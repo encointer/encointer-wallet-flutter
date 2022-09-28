@@ -19,7 +19,7 @@ version: 1.8.6+852
 publish_to: none
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
+  sdk: ">=2.12.0 <3.0.0"
 
 dependencies:
   # intl - format numbers
@@ -45,7 +45,7 @@ dependencies:
   package_info: ^2.0.2
   quiver: ^3.1.0
   dio: ^4.0.0
-#  image_cropper: ^1.4.0
+  #  image_cropper: ^1.4.0
   image_picker: ^0.7.5+2
   animated_check: ^1.0.5
   share_plus: ^4.0.10
@@ -91,6 +91,7 @@ dependencies:
   # feedback: ^2.5.0
   path_provider: ^2.0.11
   flutter_email_sender: ^5.1.0
+  workmanager: ^0.5.0
 
 dev_dependencies:
   build_runner: ^2.2.0
@@ -107,6 +108,7 @@ dev_dependencies:
     sdk: flutter
   test: ^1.16.7
   lints: ^2.0.0
+  mocktail: ^0.3.0
 
 flutter_icons:
   android: "launcher_icon"
@@ -118,7 +120,6 @@ flutter_icons:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
