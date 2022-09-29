@@ -72,8 +72,13 @@ class _TransferPageState extends State<TransferPage> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final params = ModalRoute.of(context)!.settings.arguments as TransferPageParams?;
 
+      final store = context.read<AppStore>();
+
       if (params != null) {
-        handleTransferPageParams(params, context.read<AppStore>());
+        handleTransferPageParams(params, store);
+      } else {
+        _communitySymbol = store.encointer.community!.symbol!;
+        _cid = store.encointer.chosenCid!;
       }
 
       setState(() {});
