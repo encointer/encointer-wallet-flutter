@@ -20,7 +20,7 @@ class EncointerHomePage extends StatefulWidget {
   EncointerHomePage({Key? key}) : super(key: key);
 
   static final GlobalKey encointerHomePageKey = GlobalKey();
-  static const String route = '/';
+  static const String route = '/home';
 
   @override
   State<EncointerHomePage> createState() => _EncointerHomePageState();

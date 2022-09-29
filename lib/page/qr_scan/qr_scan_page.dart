@@ -150,7 +150,7 @@ Widget permissionErrorDialog(BuildContext context) {
     actions: <Widget>[
       CupertinoButton(
         child: Text(dic.home.ok),
-        onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
+        onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
       ),
       CupertinoButton(
         child: Text(dic.home.appSettings),
