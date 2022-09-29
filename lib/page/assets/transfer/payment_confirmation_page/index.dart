@@ -135,7 +135,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                           height: 24,
                           child: Center(child: Text(dic.assets.done)),
                         ),
-                        onPressed: () => Navigator.popUntil(context, ModalRoute.withName(EncointerHomePage.route)),
+                        onPressed: () => Navigator.popUntil(context, (route) => route.isFirst),
                       )
               ],
             ),
