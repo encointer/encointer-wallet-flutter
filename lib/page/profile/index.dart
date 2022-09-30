@@ -165,6 +165,10 @@ class _ProfileState extends State<Profile> {
                 onTap: () => Navigator.pushNamed(context, AboutPage.route),
               ),
               ListTile(
+                title: Text('Instruction', style: h3Grey),
+                onTap: () {},
+              ),
+              ListTile(
                 title: Text(dic.profile.developer, style: h3Grey),
                 trailing: Checkbox(
                   value: _store.settings.developerMode,
