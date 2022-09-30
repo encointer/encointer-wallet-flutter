@@ -140,7 +140,7 @@ Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) a
     params,
     onFinish: (BuildContext txPageContext, Map res) {
       store.encointer.communityAccount!.setMeetupCompleted();
-      Navigator.popUntil(txPageContext, ModalRoute.withName('/'));
+      Navigator.popUntil(txPageContext, (route) => route.isFirst);
     },
   );
 }

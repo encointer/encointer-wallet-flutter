@@ -8,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/create/add_account_page.dart';
+import 'package:encointer_wallet/page/account/create_account_entry_page.dart';
 import 'package:encointer_wallet/page/profile/about_page.dart';
 import 'package:encointer_wallet/page/profile/account/account_manage_page.dart';
 import 'package:encointer_wallet/page/profile/account/change_password_page.dart';
@@ -84,7 +85,7 @@ class _ProfileState extends State<Profile> {
     if (_store.account.accountListAll.isEmpty) {
       _store.settings.setPin('');
       Future.delayed(Duration.zero, () {
-        Navigator.popUntil(context, ModalRoute.withName('/'));
+        Navigator.pop(context);
       });
     }
     final Translations dic = I18n.of(context)!.translationsForLocale();
@@ -230,24 +231,33 @@ Future<void> showRemoveAccountsDialog(BuildContext context, AppStore _store) {
   final dic = I18n.of(context)!.translationsForLocale();
 
   return showCupertinoDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return CupertinoAlertDialog(title: Text(dic.profile.accountsDelete), actions: <Widget>[
+    context: context,
+    builder: (BuildContext context) {
+      return CupertinoAlertDialog(
+        title: Text(dic.profile.accountsDelete),
+        actions: <Widget>[
           CupertinoButton(
             child: Text(dic.home.cancel),
             onPressed: () => Navigator.of(context).pop(),
           ),
           CupertinoButton(
-              child: Text(dic.home.ok),
-              onPressed: () async {
-                final accounts = _store.account.accountListAll;
+            child: Text(dic.home.ok),
+            onPressed: () async {
+              final accounts = _store.account.accountListAll;
 
-                for (var acc in accounts) {
-                  await _store.account.removeAccount(acc);
-                }
+              for (var acc in accounts) {
+                await _store.account.removeAccount(acc);
+              }
 
-                Navigator.of(context).pop();
-              }),
-        ]);
-      });
+              Navigator.pushAndRemoveUntil(
+                context,
+                CupertinoPageRoute(builder: (context) => CreateAccountEntryPage()),
+                (route) => false,
+              );
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
