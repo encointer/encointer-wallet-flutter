@@ -169,8 +169,8 @@ class _ProfileState extends State<Profile> {
                 onTap: () async {
                   final Email email = Email(
                     body: '',
-                    subject: '',
-                    recipients: ['janara2610@gmail.com'],
+                    subject: 'feedback/crash reports',
+                    recipients: ['bugreports@mail.encointer.org'],
                     attachmentPaths: [],
                     isHTML: false,
                   );
