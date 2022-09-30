@@ -74,7 +74,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                   ],
                 ),
                 onPressed: () {
-                  Navigator.popUntil(context, ModalRoute.withName('/'));
+                  Navigator.of(context).popUntil((route) => route.isFirst);
                 },
               ),
               const SizedBox(height: 12),
@@ -90,7 +90,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                       Text(
                         dic.encointer.claimsSubmitN.replaceAll(
                           'N_COUNT',
-                          store.encointer.communityAccount!.scannedClaimsCount,
+                          store.encointer.communityAccount!.scannedClaimsCount.toString(),
                         ),
                       ),
                     ],

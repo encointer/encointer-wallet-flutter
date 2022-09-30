@@ -110,6 +110,7 @@ jobs:
           script: ./scripts/android_integration_test.sh
 
       - name: "Upload screenshots"
+        if: always()
         uses: actions/upload-artifact@v2
         with:
           name:  ${{ matrix.device }}

@@ -330,13 +330,11 @@ abstract class _EncointerStore with Store {
       webApi.encointer.getMeetupTime(),
       webApi.encointer.getMeetupTimeOverride(),
       updateAggregatedAccountData(),
-    ])
-        .timeout(const Duration(seconds: 15))
-        // ignore: invalid_return_type_for_catch_error
-        .catchError((e, s) => Log.e('Error executing update state: $e', 'EncointerStore', s))
-        .whenComplete(() {
+    ]).timeout(const Duration(seconds: 15)).catchError((e, s) {
+      Log.e('Error executing update state: $e', 'EncointerStore', s);
+      return Future.value([]);
+    }).whenComplete(() {
       Log.d('[updateState] finished', 'EncointerStore');
-
       _updateStateFuture = null;
     });
 
@@ -345,8 +343,12 @@ abstract class _EncointerStore with Store {
 
   Future<void> updateAggregatedAccountData() async {
     try {
-      var data = await webApi.encointer.getAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress);
-      setAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress, data);
+      if (chosenCid != null) {
+        var data = await webApi.encointer.getAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress);
+        setAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress, data);
+      } else {
+        Log.d('chosenCid is null', 'Encointer updateAggregatedAccountData');
+      }
     } catch (e, s) {
       Log.e('$e', 'EncointerStore', s);
     }

@@ -1,16 +1,15 @@
-import 'package:flutter_driver/flutter_driver.dart';
-import 'package:test/test.dart';
-
 import 'package:encointer_wallet/mocks/data/mock_account_data.dart';
 import 'package:encointer_wallet/mocks/storage/mock_storage_setup.dart';
 import 'package:encointer_wallet/utils/screenshot.dart';
+import 'package:flutter_driver/flutter_driver.dart';
+import 'package:test/test.dart';
 
 void main() {
   FlutterDriver? driver;
   final config = Config();
 
   // use this for local testing
-  // final config = Config(stagingDir: "./screenshots");
+  // final config = Config(stagingDir: './screenshots');
 
   group('EncointerWallet App', () {
     setUpAll(() async {
@@ -24,6 +23,7 @@ void main() {
         print('Waiting for app to be ready: $ready');
         await Future.delayed(const Duration(seconds: 1));
         ready = await driver!.requestData(TestCommands.WAIT_UNTIL_APP_IS_READY);
+        log('app is ready ready $ready');
       }
 
       await driver!.requestData(TestCommands.INIT);
@@ -60,30 +60,17 @@ void main() {
     test('choosing cid', () async {
       await driver!.tap(find.byValueKey('cid-0-marker-icon'));
       await driver!.tap(find.byValueKey('cid-0-marker-description'));
-
-      // Here we get the metadata because it is reset to null in the setChosenCid() method which is called, when a community is chosen
-      await driver!.requestData(TestCommands.HOME_PAGE);
-      // take a screenshot of the EncointerHome Screen
-      await screenshot(driver!, config, 'encointer-home');
     }, timeout: const Timeout(Duration(seconds: 120))); // needed for android CI with github actions
 
-    test('dismiss upgrade dialog on android', () async {
-      final operationSystem = await driver!.requestData('getPlatform');
-      log('operationSystem ==================> $operationSystem');
+    test('print-screen of homepage', () async {
+      // Here we get the metadata because it is reset to null in
+      // the setChosenCid() method which is called, when a community is chosen
+      await driver!.requestData(TestCommands.HOME_PAGE);
 
-      if (operationSystem != 'android') {
-        return;
-      }
+      await dismissUpgradeDialogOnAndroid(driver!);
 
-      try {
-        log('Waiting for upgrader alert dialog');
-        await driver!.waitFor(find.byType('AlertDialog'));
-
-        log('Tapping ignore button');
-        await driver!.tap(find.text('IGNORE'));
-      } catch (e) {
-        log(e.toString());
-      }
+      // take a screenshot of the EncointerHome Screen
+      await screenshot(driver!, config, 'encointer-home');
     });
 
     test('show receive qr code', () async {
@@ -121,6 +108,8 @@ void main() {
       await driver!.requestData(TestCommands.READY_FOR_MEETUP);
 
       log('tapping startMeetup');
+      await screenshot(driver!, config, 'debug-meetup-start');
+
       await driver!.tap(find.byValueKey('start-meetup'));
       await driver!.tap(find.byValueKey('attendees-count'));
       await driver!.enterText('3');
@@ -132,4 +121,23 @@ void main() {
 
 void log(String msg) {
   print('[test_driver] $msg');
+}
+
+Future<void> dismissUpgradeDialogOnAndroid(FlutterDriver driver) async {
+  final operationSystem = await driver.requestData('getPlatform');
+  log('operationSystem ==================> $operationSystem');
+
+  if (operationSystem != 'android') {
+    return;
+  }
+
+  try {
+    log('Waiting for upgrader alert dialog');
+    await driver.waitFor(find.byType('AlertDialog'));
+
+    log('Tapping ignore button');
+    await driver.tap(find.text('IGNORE'));
+  } catch (e) {
+    log(e.toString());
+  }
 }

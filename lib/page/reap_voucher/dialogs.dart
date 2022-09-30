@@ -24,7 +24,7 @@ Widget redeemSuccessDialog(BuildContext context) {
       CupertinoButton(
         child: Text(dic.home.ok),
         onPressed: () {
-          Navigator.popUntil(context, ModalRoute.withName('/'));
+          Navigator.of(context).popUntil((route) => route.isFirst);
         },
       ),
     ],
@@ -50,7 +50,7 @@ Widget redeemFailedDialog(BuildContext context, String? error) {
       CupertinoButton(
         child: Text(dic.home.ok),
         onPressed: () {
-          Navigator.popUntil(context, ModalRoute.withName('/'));
+          Navigator.of(context).popUntil((route) => route.isFirst);
         },
       ),
     ],
@@ -76,7 +76,7 @@ Widget errorDialog(BuildContext context, String errorMsg) {
       CupertinoButton(
         child: Text(dic.home.ok),
         onPressed: () {
-          Navigator.popUntil(context, ModalRoute.withName('/'));
+          Navigator.of(context).popUntil((route) => route.isFirst);
         },
       ),
     ],
@@ -105,7 +105,7 @@ Future<ChangeResult?> showChangeNetworkAndCommunityDialog(
         actions: <Widget>[
           CupertinoButton(
             child: Text(dic.home.cancel),
-            onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
+            onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
           ),
           CupertinoButton(
             child: Text(dic.home.ok),
@@ -163,7 +163,7 @@ Future<ChangeResult?> showChangeCommunityDialog(
         actions: <Widget>[
           CupertinoButton(
             child: Text(dic.home.cancel),
-            onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
+            onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
           ),
           CupertinoButton(
             child: Text(dic.home.ok),
@@ -197,7 +197,7 @@ Widget invalidCommunityDialog(BuildContext context, CommunityIdentifier cid) {
       CupertinoButton(
         child: Text(dic.home.ok),
         onPressed: () {
-          Navigator.popUntil(context, ModalRoute.withName('/'));
+          Navigator.of(context).popUntil((route) => route.isFirst);
         },
       ),
     ],
