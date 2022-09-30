@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:encointer_wallet/page-encointer/home_page.dart';
 import 'package:encointer_wallet/page/account/create/create_pin_page.dart';
 import 'package:encointer_wallet/page/account/import/import_account_form.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -172,7 +173,11 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       } else {
         context.read<AppStore>().account.setNewAccountPin(context.read<AppStore>().settings.cachedPin);
         await _importAccount();
-        Navigator.popUntil(context, ModalRoute.withName('/'));
+        Navigator.pushAndRemoveUntil<void>(
+          context,
+          CupertinoPageRoute<void>(builder: (context) => EncointerHomePage()),
+          (route) => false,
+        );
       }
     });
   }

@@ -180,7 +180,9 @@ class EncointerApi {
         );
 
     Log.d('api: getAllMeetupLocations: $locs ' 'EncointerApi');
-    store.encointer.community!.setMeetupLocations(locs);
+    if (store.encointer.community != null) {
+      store.encointer.community!.setMeetupLocations(locs);
+    }
   }
 
   /// Queries the Communities pallet: encointerCommunities.communityMetadata(cid)
@@ -218,7 +220,9 @@ class EncointerApi {
 
     double dem = await jsApi.evalJavascript('encointer.getDemurrage(${jsonEncode(cid)})');
     Log.d('api: fetched demurrage: $dem', 'EncointerApi');
-    store.encointer.community!.setDemurrage(dem);
+    if (store.encointer.community != null) {
+      store.encointer.community!.setDemurrage(dem);
+    }
   }
 
   /// Calls the custom rpc: api.rpc.communities.communitiesGetAll()
@@ -242,8 +246,8 @@ class EncointerApi {
     // times.
     int? locationIndex = store.encointer.communityAccount?.meetup?.locationIndex;
 
-    Location? mLocation = locationIndex != null
-        ? store.encointer.community!.meetupLocations![locationIndex]
+    Location? mLocation = locationIndex != null && store.encointer.community?.meetupLocations != null
+        ? store.encointer.community?.meetupLocations![locationIndex]
         : (store.encointer.community?.meetupLocations?.first);
 
     if (mLocation == null) {
@@ -273,8 +277,9 @@ class EncointerApi {
         cid,
         store.encointer.currentPhase,
       );
-
-      store.encointer.community!.setMeetupTimeOverride(meetupTimeOverride?.millisecondsSinceEpoch);
+      if (store.encointer.community != null) {
+        store.encointer.community!.setMeetupTimeOverride(meetupTimeOverride?.millisecondsSinceEpoch);
+      }
     } catch (e, s) {
       Log.e('api: exception: $e', 'EncointerApi', s);
     }
@@ -426,8 +431,9 @@ class EncointerApi {
         await jsApi.evalJavascript('encointer.getBootstrappers($cid)').then((bs) => List<String>.from(bs));
 
     Log.d('api: bootstrappers $bootstrappers', 'EncointerApi');
-
-    store.encointer.community!.setBootstrappers(bootstrappers);
+    if (store.encointer.community != null) {
+      store.encointer.community!.setBootstrappers(bootstrappers);
+    }
   }
 
   Future<void> getReputations() async {

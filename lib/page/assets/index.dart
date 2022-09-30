@@ -271,9 +271,7 @@ class _AssetsState extends State<Assets> {
                                   ),
                                   key: const Key('transfer'),
                                   onPressed: store.encointer.communityBalance != null
-                                      ? () {
-                                          Navigator.pushNamed(context, TransferPage.route);
-                                        }
+                                      ? () => Navigator.pushNamed(context, TransferPage.route)
                                       : null,
                                 ),
                               ),
