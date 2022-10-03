@@ -14,19 +14,24 @@ class Instruction extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          const ExpansionTile(
-            title: Text('Push notification about meetup'),
+          ExpansionTile(
+            title: const Text('Push notification about meetup'),
             children: <Widget>[
               ListTile(
-                title: Text('This is tile number 3'),
-                subtitle: Text('This is tile number 3'),
+                title: const Text('This is tile number 3'),
+                subtitle: Row(
+                  children: [
+                    const Text('This is tile number 3'),
+                    TextButton(
+                      onPressed: () => openAppSettings(),
+                      child: const Text('Open App Settings'),
+                    )
+                  ],
+                ),
               ),
             ],
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => openAppSettings(),
       ),
     );
   }

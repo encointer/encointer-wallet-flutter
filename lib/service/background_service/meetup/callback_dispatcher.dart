@@ -6,6 +6,7 @@ import 'package:encointer_wallet/service/background_service/meetup/feed_model.da
 import 'package:encointer_wallet/service/background_service/meetup/feed_repo.dart';
 import 'package:encointer_wallet/utils/local_storage.dart';
 
+@pragma('vm:entry-point')
 Future<void> callbackDispatcher() async {
   Workmanager().executeTask((task, inputData) async {
     Log.d('Executing Workmanager callback', 'callbackDispatcher');
@@ -15,6 +16,8 @@ Future<void> callbackDispatcher() async {
     final repository = FeedRepo();
 
     final _alreadyShownNotifications = await storage.getShownMessages();
+    // for debugging;
+    // final _alreadyShownNotifications = <String>[];
     final _feeds = await repository.fetchData(langCode);
 
     if (_feeds == null) {

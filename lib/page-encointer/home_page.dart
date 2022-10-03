@@ -51,7 +51,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
           initialDelay: const Duration(seconds: 15),
           frequency: const Duration(minutes: 15),
           inputData: {'langCode': Localizations.localeOf(context).languageCode},
-          existingWorkPolicy: ExistingWorkPolicy.replace,
+          existingWorkPolicy: ExistingWorkPolicy.keep,
         );
       }
     });
