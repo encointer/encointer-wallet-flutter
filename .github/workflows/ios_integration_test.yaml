@@ -86,6 +86,7 @@ jobs:
           RECORD: ${{ matrix.record_video }}
 
       - name: "Upload screenshots and recording"
+        if: always()
         uses: actions/upload-artifact@v2
         with:
           name:  ${{ matrix.device }}

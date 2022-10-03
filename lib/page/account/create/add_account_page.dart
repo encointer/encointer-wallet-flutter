@@ -78,7 +78,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
       _submitting = false;
     });
     // go to home page
-    Navigator.popUntil(context, ModalRoute.withName('/'));
+    Navigator.pop(context);
   }
 
   static Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
@@ -132,9 +132,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.close, color: encointerGrey),
-            onPressed: () {
-              Navigator.popUntil(context, ModalRoute.withName('/'));
-            },
+            onPressed: () => Navigator.pop(context),
           )
         ],
       ),

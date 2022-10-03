@@ -20,7 +20,7 @@ class EncointerHomePage extends StatefulWidget {
   EncointerHomePage({Key? key}) : super(key: key);
 
   static final GlobalKey encointerHomePageKey = GlobalKey();
-  static const String route = '/';
+  static const String route = '/home';
 
   @override
   State<EncointerHomePage> createState() => _EncointerHomePageState();
@@ -45,14 +45,11 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         // meetup notification only for android system
         Log.d('Initializing Workmanager callback...', 'home_page');
         await Workmanager().initialize(callbackDispatcher);
-        await Workmanager().registerPeriodicTask(
-          'task-identifier',
-          'simpleTask',
-          initialDelay: const Duration(seconds: 15),
-          frequency: const Duration(hours: 12),
-          inputData: {'langCode': Localizations.localeOf(context).languageCode},
-          existingWorkPolicy: ExistingWorkPolicy.replace,
-        );
+        await Workmanager().registerPeriodicTask('background-service', 'pull-notification',
+            initialDelay: const Duration(seconds: 15),
+            frequency: const Duration(hours: 12),
+            inputData: {'langCode': Localizations.localeOf(context).languageCode},
+            existingWorkPolicy: ExistingWorkPolicy.keep);
       }
     });
 

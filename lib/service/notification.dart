@@ -79,17 +79,21 @@ class NotificationPlugin {
   }
 
   static Future<bool> showNotification(int id, String? title, String body, {String? payload, String? cid}) async {
-    var androidPlatformChannelSpecifics = const AndroidNotificationDetails(
+    var androidPlatformChannelSpecifics = AndroidNotificationDetails(
       'transaction_submitted',
       'Tx Submitted',
       channelDescription: 'transaction submitted to blockchain network',
       importance: Importance.max,
       priority: Priority.high,
       ticker: 'ticker',
-      sound: RawResourceAndroidNotificationSound('lions_growl'),
+      sound: const RawResourceAndroidNotificationSound('lions_growl'),
+      styleInformation: BigTextStyleInformation(body),
     );
 
-    var iOSPlatformChannelSpecifics = const IOSNotificationDetails(sound: 'lions_growl.wav', presentSound: true);
+    var iOSPlatformChannelSpecifics = const IOSNotificationDetails(
+      sound: 'lions_growl.wav',
+      presentSound: true,
+    );
     var platformChannelSpecifics =
         NotificationDetails(android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
     await flutterLocalNotificationsPlugin.show(
