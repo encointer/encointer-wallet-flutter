@@ -58,7 +58,6 @@ class VoucherData implements ToQrFields {
   }
 
   static VoucherData fromQrFields(List<String> fields) {
-    print('----------- fields $fields');
     return VoucherData(
       voucherUri: fields[0],
       cid: CommunityIdentifier.fromFmtString(fields[1]),

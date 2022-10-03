@@ -1,3 +1,8 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
+
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/components/rounded_card.dart';
@@ -10,16 +15,11 @@ import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:provider/provider.dart';
 
 class NetworkSelectPage extends StatefulWidget {
-  NetworkSelectPage(this.changeTheme, {Key? key}) : super(key: key);
+  NetworkSelectPage({Key? key}) : super(key: key);
 
   static const String route = '/network';
-  final Function changeTheme;
 
   @override
   State<NetworkSelectPage> createState() => _NetworkSelectPageState();
@@ -56,7 +56,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
 
     await context.read<AppStore>().settings.reloadNetwork(_selectedNetwork!);
 
-    widget.changeTheme();
+    context.read<AppStore>().settings.changeTheme();
 
     if (mounted) {
       Navigator.of(context).pop();

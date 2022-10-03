@@ -38,7 +38,7 @@ abstract class _AssetsStore with Store {
   ObservableMap<String?, BalancesInfo> balances = ObservableMap<String?, BalancesInfo>();
 
   @observable
-  Map<String, String> tokenBalances = Map<String, String>();
+  Map<String, String> tokenBalances = <String, String>{};
 
   @observable
   int? txsCount = 0;

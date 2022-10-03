@@ -1,16 +1,18 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:encointer_wallet/common/components/account_advance_option_params.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/create/add_account_form.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class AddAccountPage extends StatefulWidget {
   const AddAccountPage({Key? key}) : super(key: key);
@@ -59,10 +61,10 @@ class _AddAccountPageState extends State<AddAccountPage> {
     }
 
     var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
+    Log.d('Created new account with address: ${addresses[0]}', 'AddAccountPage');
 
-    _log('Created new account with address: ${addresses[0]}');
     await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
-    _log('added new account with address: ${addresses[0]}');
+    Log.d('added new account with address: ${addresses[0]}', 'AddAccountPage');
 
     String? pubKey = acc['pubKey'];
     await store.setCurrentAccount(pubKey);
@@ -76,7 +78,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
       _submitting = false;
     });
     // go to home page
-    Navigator.popUntil(context, ModalRoute.withName('/'));
+    Navigator.pop(context);
   }
 
   static Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
@@ -130,9 +132,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
         actions: <Widget>[
           IconButton(
             icon: const Icon(Icons.close, color: encointerGrey),
-            onPressed: () {
-              Navigator.popUntil(context, ModalRoute.withName('/'));
-            },
+            onPressed: () => Navigator.pop(context),
           )
         ],
       ),
@@ -151,8 +151,4 @@ class _AddAccountPageState extends State<AddAccountPage> {
       ),
     );
   }
-}
-
-_log(String msg) {
-  print('[AddAccountPage] $msg');
 }

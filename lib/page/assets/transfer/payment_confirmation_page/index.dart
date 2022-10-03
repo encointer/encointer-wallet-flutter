@@ -1,11 +1,19 @@
 import 'dart:async';
 
 import 'package:animated_check/animated_check.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/payment_overview.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/components/transfer_state.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
@@ -13,12 +21,6 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
 class PaymentConfirmationParams {
   PaymentConfirmationParams({
@@ -132,7 +134,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                           height: 24,
                           child: Center(child: Text(dic.assets.done)),
                         ),
-                        onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
+                        onPressed: () => Navigator.popUntil(context, (route) => route.isFirst),
                       )
               ],
             ),
@@ -150,10 +152,10 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     });
 
     var onFinish = (BuildContext txPageContext, Map res) {
-      _log('Transfer result ${res.toString()}');
+      Log.d('Transfer result $res', 'PaymentConfirmationPage');
 
       if (res['hash'] == null) {
-        _log('Error sending transfer ${res['error']}');
+        Log.d('Error sending transfer ${res['error']}', 'PaymentConfirmationPage');
         _transferState = TransferState.failed;
       } else {
         _transferState = TransferState.finished;
@@ -170,8 +172,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     //   });
     // });
 
-    _log('TransferState after callback: ${_transferState.toString()}');
-
+    Log.d('TransferState after callback: $_transferState', 'PaymentConfirmationPage');
     // trigger rebuild after state update in callback
     setState(() {});
   }
@@ -293,8 +294,4 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     }
     super.dispose();
   }
-}
-
-void _log(String msg) {
-  print('[TxPaymentConfirmation] $msg');
 }

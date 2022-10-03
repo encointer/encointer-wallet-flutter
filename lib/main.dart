@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/app.dart';
 import 'package:encointer_wallet/config.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/subscan.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -18,7 +19,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   // var notificationAppLaunchDetails =
   //     await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
-
   if (Platform.isAndroid) {
     // this is enabled by default in IOS dev-builds.
     await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
@@ -38,11 +38,11 @@ Future<void> main() async {
   var initialised = await flutterLocalNotificationsPlugin.initialize(initializationSettings,
       onSelectNotification: (String? payload) async {
     if (payload != null) {
-      debugPrint('notification payload: ' + payload);
+      Log.d('notification payload: $payload', 'main.dart');
     }
     selectNotificationSubject.add(payload);
   });
-  print('notification_plugin initialised: $initialised');
+  Log.d('notification_plugin initialised: $initialised', 'main.dart');
 
   // get_storage dependency
   await GetStorage.init();

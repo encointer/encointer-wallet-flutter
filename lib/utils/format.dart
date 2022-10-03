@@ -4,11 +4,13 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
+
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:intl/intl.dart';
 
 class Fmt {
   static String passwordToEncryptKey(String password) {
@@ -23,7 +25,7 @@ class Fmt {
     if (addr == null || addr.length < pad) {
       return addr;
     }
-    return addr.substring(0, pad) + '...' + addr.substring(addr.length - pad);
+    return '${addr.substring(0, pad)}...${addr.substring(addr.length - pad)}';
   }
 
   static String dateTime(DateTime time) {
@@ -122,8 +124,8 @@ class Fmt {
       } else {
         v = double.parse(value);
       }
-    } catch (err) {
-      print('Fmt.tokenInt() error: ${err.toString()}');
+    } catch (e, s) {
+      Log.e('Fmt.tokenInt() error: $e', 'Fmt', s);
     }
     return BigInt.from(v * pow(10, decimals));
   }
@@ -219,7 +221,7 @@ class Fmt {
     hex = hex.replaceAll(' ', '');
     hex = hex.replaceAll('0x', '');
     hex = hex.toLowerCase();
-    if (hex.length % 2 != 0) hex = '0' + hex;
+    if (hex.length % 2 != 0) hex = '0$hex';
     Uint8List result = Uint8List(hex.length ~/ 2);
     for (int i = 0; i < result.length; i++) {
       int value = (_BYTE_ALPHABET.indexOf(hex[i * 2]) << 4) //= byte[0] * 16
@@ -231,7 +233,7 @@ class Fmt {
   }
 
   static String bytesToHex(List<int> bytes) {
-    return '0x' + hex.encode(bytes);
+    return '0x${hex.encode(bytes)}';
   }
 
   static String? accountDisplayNameString(String? address, Map? accInfo) {

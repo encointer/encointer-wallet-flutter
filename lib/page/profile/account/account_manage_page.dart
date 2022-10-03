@@ -1,9 +1,17 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
+
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/page/profile/account/export_result_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/account_share_page.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
@@ -13,12 +21,6 @@ import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/ui.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
 
 class AccountManagePage extends StatefulWidget {
   AccountManagePage({Key? key}) : super(key: key);
@@ -85,7 +87,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
     var community = _appStore.encointer.communityStores![cidFmt]!;
 
-    _log('_getBalanceEntryListTile: ${community.toJson()}');
+    Log.d('_getBalanceEntryListTile: $community', 'AccountManagePage');
 
     return ListTile(
       contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
@@ -118,7 +120,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
       context: context,
       builder: (BuildContext context) {
         return showPasswordInputDialog(context, accountToBeEdited, Text(dic.profile.confirmPin), (password) async {
-          print('password is: $password');
+          Log.d('password is: $password', 'AccountManagePage');
           setState(() {
             _appStore.settings.setPin(password);
           });
@@ -275,8 +277,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.all(16), // make splash animation as high as the container
-                          primary: Colors.transparent,
-                          onPrimary: Colors.white,
+                          backgroundColor: Colors.transparent,
+                          foregroundColor: Colors.white,
                           shadowColor: Colors.transparent,
                         ),
                         child: Row(
@@ -389,8 +391,4 @@ class CommunityIcon extends StatelessWidget {
       ],
     );
   }
-}
-
-_log(String msg) {
-  print('[accountManagePage] $msg');
 }

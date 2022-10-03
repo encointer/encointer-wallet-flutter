@@ -268,6 +268,36 @@ mixin _$SettingsStore on _SettingsStore, Store {
     });
   }
 
+  late final _$localeAtom = Atom(name: '_SettingsStore.locale', context: context);
+
+  @override
+  Locale get locale {
+    _$localeAtom.reportRead();
+    return super.locale;
+  }
+
+  @override
+  set locale(Locale value) {
+    _$localeAtom.reportWrite(value, super.locale, () {
+      super.locale = value;
+    });
+  }
+
+  late final _$themeAtom = Atom(name: '_SettingsStore.theme', context: context);
+
+  @override
+  ThemeData get theme {
+    _$themeAtom.reportRead();
+    return super.theme;
+  }
+
+  @override
+  set theme(ThemeData value) {
+    _$themeAtom.reportWrite(value, super.theme, () {
+      super.theme = value;
+    });
+  }
+
   late final _$initAsyncAction = AsyncAction('_SettingsStore.init', context: context);
 
   @override
@@ -355,6 +385,26 @@ mixin _$SettingsStore on _SettingsStore, Store {
   late final _$_SettingsStoreActionController = ActionController(name: '_SettingsStore', context: context);
 
   @override
+  void changeLang(BuildContext context, String? code) {
+    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.changeLang');
+    try {
+      return super.changeLang(context, code);
+    } finally {
+      _$_SettingsStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void changeTheme() {
+    final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.changeTheme');
+    try {
+      return super.changeTheme();
+    } finally {
+      _$_SettingsStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void toggleDeveloperMode() {
     final _$actionInfo = _$_SettingsStoreActionController.startAction(name: '_SettingsStore.toggleDeveloperMode');
     try {
@@ -438,6 +488,8 @@ networkState: ${networkState},
 networkConst: ${networkConst},
 contactList: ${contactList},
 developerMode: ${developerMode},
+locale: ${locale},
+theme: ${theme},
 endpointIsEncointer: ${endpointIsEncointer},
 endpointIsNoTee: ${endpointIsNoTee},
 endpointIsTeeProxy: ${endpointIsTeeProxy},
