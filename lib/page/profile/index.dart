@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/utils/feedback_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
@@ -168,14 +169,18 @@ class _ProfileState extends State<Profile> {
               ListTile(
                 title: Text('Contact Us', style: h3Grey),
                 onTap: () async {
-                  final Email email = Email(
-                    body: '',
-                    subject: 'feedback/crash reports',
-                    recipients: ['bugreports@mail.encointer.org'],
-                    attachmentPaths: [],
-                    isHTML: false,
+                  // final Email email = Email(
+                  //   body: '',
+                  //   subject: 'feedback/crash reports',
+                  //   recipients: ['bugreports@mail.encointer.org'],
+                  //   attachmentPaths: [],
+                  //   isHTML: false,
+                  // );
+                  // await FlutterEmailSender.send(email);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => FeedbackPage()),
                   );
-                  await FlutterEmailSender.send(email);
                 },
               ),
               ListTile(

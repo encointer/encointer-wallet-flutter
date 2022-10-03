@@ -1,11 +1,32 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-class FeedbackPage extends StatelessWidget {
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
+class FeedbackPage extends StatefulWidget {
   FeedbackPage({Key? key}) : super(key: key);
+
+  @override
+  State<FeedbackPage> createState() => _FeedbackPageState();
+}
+
+class _FeedbackPageState extends State<FeedbackPage> {
   final _formKey = GlobalKey<FormState>();
+
   final nameController = TextEditingController();
+
   final emailController = TextEditingController();
+
   final messageController = TextEditingController();
+  File? image;
+  // Future getImage()async{
+  //   final image = await ImagePicker().pickImage(source: ImageSource.camera);
+  //   if(image == null) return;
+  //   final ImageTemporary = File(image.path);
+  // setState((){
+  //   this._image = imageTemporary;
+  // })
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,6 +85,53 @@ class FeedbackPage extends StatelessWidget {
                     return null;
                   },
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ElevatedButton.icon(
+                      onPressed: () async {
+                        final ImagePicker _picker = ImagePicker();
+                        final img = await _picker.getImage(source: ImageSource.gallery);
+                        // pickImage(source: ImageSource.gallery);
+                        setState(() {
+                          image = img as File?;
+                        });
+                      },
+                      label: const Text('Choose Image'),
+                      icon: const Icon(Icons.image),
+                    ),
+                    // ElevatedButton.icon(
+                    //   onPressed: () async {
+                    //     final ImagePicker _picker = ImagePicker();
+                    //     final img = await _picker.getImage(source: ImageSource.camera);
+                    //     setState(() {
+                    //       image = img as File?;
+                    //     });
+                    //   },
+                    //   label: const Text('Take \nPhoto'),
+                    //   icon: const Icon(Icons.camera_alt_outlined),
+                    // ),
+                  ],
+                ),
+                if (image != null)
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Expanded(child: Image.file(File(image!.path))),
+                        ElevatedButton.icon(
+                          onPressed: () {
+                            setState(() {
+                              image = null;
+                            });
+                          },
+                          label: const Text('Remove Image'),
+                          icon: const Icon(Icons.close),
+                        )
+                      ],
+                    ),
+                  )
+                else
+                  const SizedBox(),
                 SizedBox(
                   height: 45,
                   width: 110,
