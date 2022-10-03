@@ -44,12 +44,12 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       if (Platform.isAndroid) {
         // meetup notification only for android system
         Log.d('Initializing Workmanager callback...', 'home_page');
-        await Workmanager().initialize(callbackDispatcher, isInDebugMode: true);
+        await Workmanager().initialize(callbackDispatcher);
         await Workmanager().registerPeriodicTask(
           'background-service',
           'pull-notification',
           initialDelay: const Duration(seconds: 15),
-          frequency: const Duration(minutes: 15),
+          frequency: const Duration(hours: 12),
           inputData: {'langCode': Localizations.localeOf(context).languageCode},
           existingWorkPolicy: ExistingWorkPolicy.keep,
         );
