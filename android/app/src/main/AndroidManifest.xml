@@ -8,7 +8,6 @@
          <queries>
          <intent>
          <action android:name="android.intent.action.SENDTO"/>
-         <!-- <data android:mimeType="*/*" /> -->
          <data android:scheme="mailto" />
          </intent>
          </queries>
@@ -17,7 +16,8 @@
         android:label="Encointerwallet"
         android:icon="@mipmap/launcher_icon"
         android:allowBackup="false"
-        android:usesCleartextTraffic="true">
+        android:usesCleartextTraffic="true"
+        android:requestLegacyExternalStorage="true">
         <activity
             android:name="io.flutter.embedding.android.FlutterActivity"
             android:exported="true"
