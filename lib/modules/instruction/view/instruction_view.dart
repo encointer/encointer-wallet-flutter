@@ -16,7 +16,7 @@ class Instruction extends StatelessWidget {
       body: ListView(
         children: [
           ExpansionTile(
-            title: const Text('Push notification about meetup'),
+            title: const Text('Meetup push notifications'),
             children: <Widget>[
               ListTile(
                 title: const Text('If your device Xiaomi or Honor: Please give permission for meetup notification'),
@@ -27,7 +27,9 @@ class Instruction extends StatelessWidget {
                       text: TextSpan(
                         children: [
                           TextSpan(
-                              text: '\nClick', style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14)),
+                            text: '\nClick',
+                            style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14),
+                          ),
                           TextSpan(
                             text: ' Open App Settings',
                             style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14, color: ZurichLion),
