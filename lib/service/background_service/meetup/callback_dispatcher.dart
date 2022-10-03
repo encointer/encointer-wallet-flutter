@@ -19,6 +19,7 @@ Future<void> callbackDispatcher() async {
 
     if (_feeds == null) {
       Log.d('The result of the feed is null', 'callbackDispatcher');
+      NotificationPlugin.showNotification(1, 'Bosh', 'Bosh keldi');
       return Future.value(true);
     }
 
@@ -59,9 +60,11 @@ Future<List<String>> showAllNotificationsFromFeed(
         Log.d('showing new notification ${feeds[i]}', 'callbackDispatcher');
         await showNotification(i, feeds[i].title, feeds[i].content);
       } else {
+        await showNotification(i, feeds[i].title, 'date time old');
         Log.d('${feeds[i].id} is new, but it should not be shown yet', 'callbackDispatcher');
       }
     } else {
+      await showNotification(i, feeds[i].title, 'shown old');
       Log.d('${feeds[i].id} has already been shown', 'callbackDispatcher');
     }
   }
