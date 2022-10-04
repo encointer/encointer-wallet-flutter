@@ -1,7 +1,7 @@
-import 'package:encointer_wallet/utils/feedback_page.dart';
+import 'package:encointer_wallet/utils/feedback/feedback_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
+
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
@@ -170,9 +170,9 @@ class _ProfileState extends State<Profile> {
                 title: Text('Contact Us', style: h3Grey),
                 onTap: () async {
                   // final Email email = Email(
-                  //   body: '',
-                  //   subject: 'feedback/crash reports',
+                  //   subject: 'Suggestions, bugs, feedbacks and crash reports',
                   //   recipients: ['bugreports@mail.encointer.org'],
+                  //   body: '',
                   //   attachmentPaths: [],
                   //   isHTML: false,
                   // );
