@@ -18,30 +18,48 @@ abstract class Translations {
 
 /// for english translations
 class TranslationsEn implements Translations {
+  @override
   TranslationsHome get home => TranslationsEnHome();
+  @override
   TranslationsAccount get account => TranslationsEnAccount();
+  @override
   TranslationsAssets get assets => TranslationsEnAssets();
+  @override
   TranslationsProfile get profile => TranslationsEnProfile();
+  @override
   TranslationsEncointer get encointer => TranslationsEnEncointer();
+  @override
   TranslationsBazaar get bazaar => TranslationsEnBazaar();
 }
 
 /// for german translations
 class TranslationsDe implements Translations {
+  @override
   TranslationsHome get home => TranslationsDeHome();
+  @override
   TranslationsAccount get account => TranslationsDeAccount();
+  @override
   TranslationsAssets get assets => TranslationsDeAssets();
+  @override
   TranslationsProfile get profile => TranslationsDeProfile();
+  @override
   TranslationsEncointer get encointer => TranslationsDeEncointer();
+  @override
   TranslationsBazaar get bazaar => TranslationsDeBazaar();
 }
 
 /// for chinese translations
 class TranslationsZh implements Translations {
+  @override
   TranslationsHome get home => TranslationsZhHome();
+  @override
   TranslationsAccount get account => TranslationsZhAccount();
+  @override
   TranslationsAssets get assets => TranslationsZhAssets();
+  @override
   TranslationsProfile get profile => TranslationsZhProfile();
+  @override
   TranslationsEncointer get encointer => TranslationsZhEncointer();
+  @override
   TranslationsBazaar get bazaar => TranslationsZhBazaar();
 }
