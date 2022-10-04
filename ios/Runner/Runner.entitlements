@@ -7,7 +7,7 @@
 	<!-- ... other keys -->
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>encointer.org</string>
+		<string>encointer</string>
 	</array>
 	<!-- ... other keys -->
 </dict>

@@ -90,10 +90,10 @@
 		<key>CFBundleTypeRole</key>
 		<string>Editor</string>
 		<key>CFBundleURLName</key>
-		<string>encointer.org</string>
+		<string>encointer</string>
 		<key>CFBundleURLSchemes</key>
 		<array>
-		<string>https</string>
+		<string>com.encointer</string>
 		</array>
 		</dict>
 	</array>

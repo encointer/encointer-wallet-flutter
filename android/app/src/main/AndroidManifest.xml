@@ -30,20 +30,19 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <!-- Accepts URIs that begin with YOUR_SCHEME://YOUR_HOST -->
                 <data
-                android:scheme="https"
-                android:host="encointer.org" />
+                android:scheme="encointer.app"
+                android:host="encointer"/>
             </intent-filter>
 
             <!-- App Links -->
-            <intent-filter android:autoVerify="true">
+            <!-- <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <!-- Accepts URIs that begin with https://YOUR_HOST -->
                 <data
-                android:scheme="https"
-                android:host="encointer.org" />
-            </intent-filter>    
+                android:scheme="encointer.app"
+                android:host="encointer" />
+            </intent-filter>     -->
         </activity>
 
         <!-- Don't delete the meta-data below.
