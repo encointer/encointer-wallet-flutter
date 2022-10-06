@@ -120,7 +120,7 @@ const locale_place_holder = 'LOCALE_PLACEHOLDER';
 const ceremony_info_link_base = 'https://leu.zuerich/$locale_place_holder/#zeremonien';
 const leu_zurich_link = 'https://leu.zuerich/$locale_place_holder';
 const meetup_notification_link = 'https://encointer.github.io/feed/community_messages/$locale_place_holder/cm.json';
-const encointerLink = 'com.encointer://encointer/';
+const encointerLink = 'https://eldar2021.github.io/';
 
 String setDeepLink([String? linkText])=> '$encointerLink${linkText?.replaceAll('\n', '_')}';
 
