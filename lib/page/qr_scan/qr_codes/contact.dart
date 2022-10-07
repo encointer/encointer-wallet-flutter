@@ -15,8 +15,10 @@ class ContactQrCode extends QrCode<ContactData> {
     this.version = QrCodeVersion.v1_0,
   }) : super(ContactData(account: account, cid: cid, network: network, label: label));
 
+  @override
   QrCodeContext? context = QrCodeContext.contact;
 
+  @override
   QrCodeVersion? version;
 
   @override
@@ -70,6 +72,7 @@ class ContactData implements ToQrFields {
   final String label;
 
   // implicitly is v1 to satisfy interface
+  @override
   List<String> toQrFields() {
     return [account, '', '', label];
   }
