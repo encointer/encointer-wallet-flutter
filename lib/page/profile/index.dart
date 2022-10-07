@@ -166,7 +166,7 @@ class _ProfileState extends State<Profile> {
                 onTap: () => Navigator.pushNamed(context, AboutPage.route),
               ),
               ListTile(
-                title: Text('Instruction', style: h3Grey),
+                title: Text(dic.profile.appHints, style: h3Grey),
                 onTap: () => Navigator.pushNamed(context, Instruction.route),
               ),
               ListTile(

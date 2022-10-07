@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 class Instruction extends StatelessWidget {
   const Instruction({Key? key}) : super(key: key);
@@ -11,15 +12,17 @@ class Instruction extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final dic = I18n.of(context)!.translationsForLocale().profile;
+
     return Scaffold(
-      appBar: AppBar(title: const Text('Instruction')),
+      appBar: AppBar(title: Text(dic.appHints)),
       body: ListView(
         children: [
           ExpansionTile(
-            title: const Text('Meetup push notifications'),
+            title: Text(dic.meetUpNotification),
             children: <Widget>[
               ListTile(
-                title: const Text('If your device Xiaomi or Honor: Please give permission for meetup notification'),
+                title: Text(dic.meetUpListTileTitle),
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -27,18 +30,18 @@ class Instruction extends StatelessWidget {
                       text: TextSpan(
                         children: [
                           TextSpan(
-                            text: '\nClick',
+                            text: '\n${dic.click}',
                             style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14),
                           ),
                           TextSpan(
-                            text: ' Open App Settings',
+                            text: ' ${dic.openAppSettings}',
                             style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14, color: ZurichLion),
                             recognizer: TapGestureRecognizer()..onTap = () => openAppSettings(),
                           ),
                         ],
                       ),
                     ),
-                    const Text('Tap on Autostart\nAllow/Deny an App to autostart'),
+                    Text(dic.enableAutoStart),
                   ],
                 ),
               ),

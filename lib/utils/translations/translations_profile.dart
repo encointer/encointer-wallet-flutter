@@ -81,6 +81,12 @@ abstract class TranslationsProfile {
   String get exportAccount;
   String get errorUserNameIsRequired;
   String get observedPendingExtrinsic;
+  String get appHints;
+  String get meetUpNotification;
+  String get meetUpListTileTitle;
+  String get click;
+  String get openAppSettings;
+  String get enableAutoStart;
 }
 
 class TranslationsEnProfile implements TranslationsProfile {
@@ -168,6 +174,24 @@ class TranslationsEnProfile implements TranslationsProfile {
   get exportAccount => 'export';
   get errorUserNameIsRequired => 'User name cannot be blank';
   get observedPendingExtrinsic => 'Pending transaction observed. Please wait for confirmation!';
+
+  @override
+  String get appHints => 'App-Hints';
+
+  @override
+  String get click => 'Click';
+
+  @override
+  String get enableAutoStart => 'Tap on Autostart\nAllow/Deny an App to autostart';
+
+  @override
+  String get meetUpListTileTitle => 'If your device Xiaomi or Honor: Please give permission for meetup notification';
+
+  @override
+  String get meetUpNotification => 'Meetup notifications';
+
+  @override
+  String get openAppSettings => 'Open App Settings';
 }
 
 class TranslationsDeProfile implements TranslationsProfile {
@@ -253,6 +277,25 @@ class TranslationsDeProfile implements TranslationsProfile {
   get exportAccount => 'exportieren';
   get errorUserNameIsRequired => 'Benutzername darf nicht leer sein';
   get observedPendingExtrinsic => 'Es wurde eine unbestätigte Transaktion beobachtet. Bitte warte auf Bestätigung!';
+
+  @override
+  String get appHints => 'App-Tipps';
+
+  @override
+  String get click => 'Klicken';
+
+  @override
+  String get enableAutoStart => 'Tippen Sie auf Autostart\nApp zulassen/verweigern, um automatisch zu starten';
+
+  @override
+  String get meetUpListTileTitle =>
+      'Wenn Ihr Gerät Xiaomi oder Honor ist: Bitte geben Sie die Erlaubnis für die Meetup-Benachrichtigung';
+
+  @override
+  String get meetUpNotification => 'Meetup-Benachrichtigungen';
+
+  @override
+  String get openAppSettings => 'App-Einstellungen öffnen';
 }
 
 class TranslationsZhProfile implements TranslationsProfile {
@@ -336,4 +379,22 @@ class TranslationsZhProfile implements TranslationsProfile {
   get exportAccount => throw UnimplementedError();
   get errorUserNameIsRequired => throw UnimplementedError();
   get observedPendingExtrinsic => throw UnimplementedError();
+
+  @override
+  String get appHints => '應用提示';
+
+  @override
+  String get click => '點擊';
+
+  @override
+  String get enableAutoStart => '點擊自動\n啟動允許/拒絕應用程序自動啟動';
+
+  @override
+  String get meetUpListTileTitle => '如果您的設備 Xiaomi 或 Honor：請允許聚會通知';
+
+  @override
+  String get meetUpNotification => '聚會通知';
+
+  @override
+  String get openAppSettings => '打開應用設置';
 }
