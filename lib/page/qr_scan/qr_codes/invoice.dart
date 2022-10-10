@@ -16,8 +16,10 @@ class InvoiceQrCode extends QrCode<InvoiceData> {
     this.version = QrCodeVersion.v1_0,
   }) : super(InvoiceData(account: account, cid: cid, network: network, amount: amount, label: label));
 
+  @override
   QrCodeContext? context = QrCodeContext.invoice;
 
+  @override
   QrCodeVersion? version;
 
   @override
@@ -74,6 +76,7 @@ class InvoiceData implements ToQrFields {
   /// Name or other identifier for `account`.
   final String label;
 
+  @override
   List<String> toQrFields() {
     return [
       account,

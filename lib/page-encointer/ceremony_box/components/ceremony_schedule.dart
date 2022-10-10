@@ -49,6 +49,7 @@ class CeremonyDateLabelAbsolute extends StatelessWidget {
   final DateTime nextCeremonyDate;
   final String? languageCode;
 
+  @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
 
@@ -80,6 +81,7 @@ class CeremonyDateLabelRelative extends StatelessWidget {
   final DateTime nextCeremonyDate;
   final String? languageCode;
 
+  @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
 
@@ -111,6 +113,7 @@ class CeremonyDate extends StatelessWidget {
   final DateTime? nextCeremonyDate;
   final String? languageCode;
 
+  @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final h2BlackTheme = Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack);
