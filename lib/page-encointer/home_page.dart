@@ -48,7 +48,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         await Workmanager().registerPeriodicTask(
           'background-service',
           'pull-notification',
-          frequency: const Duration(minutes: 15),
+          frequency: const Duration(hours: 12),
           inputData: {'langCode': Localizations.localeOf(context).languageCode},
           existingWorkPolicy: ExistingWorkPolicy.keep,
         );

@@ -119,15 +119,15 @@ class JSApi {
         })''';
     try {
       final v = await _web!.webViewController.evaluateJavascript(source: script);
-      Log.d('type $v', 'JsApi');
+      Log.d('type1 $v', 'JsApi Notification');
     } catch (e, s) {
-      Log.e('$e', 'JsApi', s);
+      Log.e('$e', 'JsApi Notification', s);
       await webApi.init().timeout(
             const Duration(seconds: 20),
             onTimeout: () => Log.d('webApi.init() has run into a timeout. We might be offline.'),
           );
       final v = await _web!.webViewController.evaluateJavascript(source: script);
-      Log.d('type $v', 'JsApi');
+      Log.d('type2 $v', 'JsApi Notification');
     }
 
     return c.future;
