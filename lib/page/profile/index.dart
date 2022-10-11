@@ -94,7 +94,7 @@ class _ProfileState extends State<Profile> {
     _sendEmail() {
       final Uri _emailLaunchUri = Uri(
         scheme: 'mailto',
-        path: 'janara2610@gmail.com',
+        path: 'bugreports@mail.encointer.org',
       );
       launchUrl(_emailLaunchUri);
     }
@@ -175,7 +175,7 @@ class _ProfileState extends State<Profile> {
                 onTap: () => Navigator.pushNamed(context, AboutPage.route),
               ),
               ListTile(
-                title: Text('Contact Us', style: h3Grey),
+                title: Text(dic.profile.contactUs, style: h3Grey),
                 onTap: _sendEmail,
               ),
               ListTile(

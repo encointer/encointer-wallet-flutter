@@ -81,6 +81,7 @@ abstract class TranslationsProfile {
   String get exportAccount;
   String get errorUserNameIsRequired;
   String get observedPendingExtrinsic;
+  String get contactUs;
 }
 
 class TranslationsEnProfile implements TranslationsProfile {
@@ -248,9 +249,13 @@ class TranslationsEnProfile implements TranslationsProfile {
   get errorUserNameIsRequired => 'User name cannot be blank';
   @override
   get observedPendingExtrinsic => 'Pending transaction observed. Please wait for confirmation!';
+  @override
+  get contactUs => 'Contact Us';
 }
 
 class TranslationsDeProfile implements TranslationsProfile {
+  @override
+  get contactUs => 'Kontaktiere Uns';
   @override
   get about => 'Über';
   @override
@@ -416,6 +421,8 @@ class TranslationsDeProfile implements TranslationsProfile {
 }
 
 class TranslationsZhProfile implements TranslationsProfile {
+  @override
+  get contactUs => '联系我们';
   @override
   get about => '关于';
   @override
