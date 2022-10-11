@@ -1,4 +1,3 @@
-import 'package:encointer_wallet/utils/feedback/feedback_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +18,7 @@ import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Profile extends StatefulWidget {
   Profile({Key? key}) : super(key: key);
@@ -90,6 +90,14 @@ class _ProfileState extends State<Profile> {
       });
     }
     final Translations dic = I18n.of(context)!.translationsForLocale();
+
+    _sendEmail() {
+      final Uri _emailLaunchUri = Uri(
+        scheme: 'mailto',
+        path: 'janara2610@gmail.com',
+      );
+      launchUrl(_emailLaunchUri);
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -168,12 +176,7 @@ class _ProfileState extends State<Profile> {
               ),
               ListTile(
                 title: Text('Contact Us', style: h3Grey),
-                onTap: () async {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => FeedbackPage()),
-                  );
-                },
+                onTap: _sendEmail,
               ),
               ListTile(
                 title: Text(dic.profile.developer, style: h3Grey),
