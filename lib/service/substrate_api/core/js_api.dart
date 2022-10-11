@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 
 const EncointerJsService = 'EncointerJsService';
 
@@ -116,8 +117,18 @@ class JSApi {
           window.flutter_inappwebview
             .callHandler("$EncointerJsService", { path: "$method:error", data: err.message  });
         })''';
-
-    _web!.webViewController.evaluateJavascript(source: script);
+    try {
+      final v = await _web!.webViewController.evaluateJavascript(source: script);
+      Log.d('type $v', 'JsApi');
+    } catch (e, s) {
+      Log.e('$e', 'JsApi', s);
+      await webApi.init().timeout(
+            const Duration(seconds: 20),
+            onTimeout: () => Log.d('webApi.init() has run into a timeout. We might be offline.'),
+          );
+      final v = await _web!.webViewController.evaluateJavascript(source: script);
+      Log.d('type $v', 'JsApi');
+    }
 
     return c.future;
   }
