@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -18,7 +18,6 @@ import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class Profile extends StatefulWidget {
   Profile({Key? key}) : super(key: key);
@@ -76,6 +75,14 @@ class _ProfileState extends State<Profile> {
     super.initState();
   }
 
+  Future<void> _sendEmail() async {
+    final Uri _emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: 'bugreports@mail.encointer.org',
+    );
+    await launchUrl(_emailLaunchUri);
+  }
+
   @override
   Widget build(BuildContext context) {
     var h3Grey = Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey);
@@ -90,14 +97,6 @@ class _ProfileState extends State<Profile> {
       });
     }
     final Translations dic = I18n.of(context)!.translationsForLocale();
-
-    _sendEmail() {
-      final Uri _emailLaunchUri = Uri(
-        scheme: 'mailto',
-        path: 'bugreports@mail.encointer.org',
-      );
-      launchUrl(_emailLaunchUri);
-    }
 
     return Scaffold(
       appBar: AppBar(

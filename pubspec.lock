@@ -361,13 +361,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_email_sender:
-    dependency: "direct main"
-    description:
-      name: flutter_email_sender
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.1.0"
   flutter_inappwebview:
     dependency: "direct main"
     description:
@@ -823,7 +816,7 @@ packages:
     source: hosted
     version: "1.0.1"
   path_provider:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: path_provider
       url: "https://pub.dartlang.org"

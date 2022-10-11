@@ -15,9 +15,6 @@ class EncointerTextFormField extends StatelessWidget {
   final Widget? suffixIcon;
   final ValueChanged<String>? onChanged;
   final bool obscureText;
-  final int? maxLines;
-  final int? minLines;
-  final bool expands;
 
   const EncointerTextFormField({
     Key? key,
@@ -32,9 +29,6 @@ class EncointerTextFormField extends StatelessWidget {
     this.onChanged,
     this.keyboardType,
     this.obscureText = false,
-    this.maxLines,
-    this.minLines,
-    this.expands = true,
   }) : super(key: key);
 
   @override
@@ -47,12 +41,11 @@ class EncointerTextFormField extends StatelessWidget {
       child: TextFormField(
         key: textFormFieldKey,
         style: textStyle,
-        autofocus: true,
         decoration: InputDecoration(
           labelText: labelText,
           hintText: hintText,
           labelStyle: Theme.of(context).textTheme.headline4,
-          contentPadding: const EdgeInsets.only(top: 16, bottom: 16, left: 16),
+          contentPadding: const EdgeInsets.only(top: 16, bottom: 16, left: 25),
           border: const UnderlineInputBorder(
             borderSide: BorderSide(
               width: 0,
