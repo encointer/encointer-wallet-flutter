@@ -169,14 +169,6 @@ class _ProfileState extends State<Profile> {
               ListTile(
                 title: Text('Contact Us', style: h3Grey),
                 onTap: () async {
-                  // final Email email = Email(
-                  //   subject: 'Suggestions, bugs, feedbacks and crash reports',
-                  //   recipients: ['bugreports@mail.encointer.org'],
-                  //   body: '',
-                  //   attachmentPaths: [],
-                  //   isHTML: false,
-                  // );
-                  // await FlutterEmailSender.send(email);
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => FeedbackPage()),

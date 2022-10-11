@@ -17,6 +17,7 @@ class EncointerTextFormField extends StatelessWidget {
   final bool obscureText;
   final int? maxLines;
   final int? minLines;
+  final bool expands;
 
   const EncointerTextFormField({
     Key? key,
@@ -33,6 +34,7 @@ class EncointerTextFormField extends StatelessWidget {
     this.obscureText = false,
     this.maxLines,
     this.minLines,
+    this.expands = true,
   }) : super(key: key);
 
   @override
