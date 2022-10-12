@@ -119,15 +119,16 @@ class JSApi {
         })''';
     try {
       final v = await _web!.webViewController.evaluateJavascript(source: script);
-      Log.d('type1 $v', 'JsApi Notification');
+      Log.d('type1 $v', 'js_api');
     } catch (e, s) {
-      Log.e('$e', 'JsApi Notification', s);
+      Log.e(' $e', 'js_api', s);
+      await webApi.close();
       await webApi.init().timeout(
             const Duration(seconds: 20),
             onTimeout: () => Log.d('webApi.init() has run into a timeout. We might be offline.'),
           );
       final v = await _web!.webViewController.evaluateJavascript(source: script);
-      Log.d('type2 $v', 'JsApi Notification');
+      Log.p('Re-initializing webView because the platform channel broke down $v', 'js_api');
     }
 
     return c.future;
