@@ -34,6 +34,7 @@ class AppRoute {
   const AppRoute._();
 
   static const String splash = '/';
+  static final GlobalKey<NavigatorState> navState = GlobalKey<NavigatorState>();
 
   // we use onGenerateRoute with CupertinoPageRoute objects to get specific page transition animations
   // (sliding in from the right if there's a back button, sliding from the bottom up if there's a close button)

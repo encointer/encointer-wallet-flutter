@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
+import 'package:encointer_wallet/common/components/dialogs/re_start_dialog.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 
 const EncointerJsService = 'EncointerJsService';
 
@@ -124,12 +124,7 @@ class JSApi {
       final v = await _web!.webViewController.evaluateJavascript(source: script);
     } catch (e, s) {
       Log.e(' $e', 'js_api', s);
-      await webApi.init().timeout(
-            const Duration(seconds: 20),
-            onTimeout: () => Log.d('webApi.init() has run into a timeout. We might be offline.'),
-          );
-      final v = await _web!.webViewController.evaluateJavascript(source: script);
-      Log.d('Re-initializing webView because the platform channel broke down $v', 'js_api');
+      await AppAlert.restart();
     }
 
     return c.future;

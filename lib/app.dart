@@ -46,6 +46,7 @@ class _WalletAppState extends State<WalletApp> {
         theme: appThemeEncointer,
         scaffoldMessengerKey: rootScaffoldMessengerKey,
         onGenerateRoute: AppRoute.onGenerateRoute,
+        navigatorKey: AppRoute.navState,
       ),
     );
   }

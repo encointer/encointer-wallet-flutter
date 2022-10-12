@@ -47,6 +47,8 @@ abstract class TranslationsHome {
   String get updatingAppState;
   String get cameraPermissionError;
   String get appSettings;
+  String get restart;
+  String get restartDes;
 }
 
 class TranslationsEnHome implements TranslationsHome {
@@ -145,6 +147,10 @@ class TranslationsEnHome implements TranslationsHome {
       'Alternatively, you can grant permission in the app settings.';
   @override
   get appSettings => 'App settings';
+  @override
+  String get restartDes => 'According to some operations we recommend you to restart the application.';
+  @override
+  String get restart => 'Do you want to restart App?';
 }
 
 class TranslationsDeHome implements TranslationsHome {
@@ -242,6 +248,10 @@ class TranslationsDeHome implements TranslationsHome {
       'Du kannst die Erlaubnis für die Kamera auch über die App-Einstellungen erteilen.';
   @override
   get appSettings => 'App-Einstellungen';
+  @override
+  String get restart => 'Möchten Sie die App neu starten?';
+  @override
+  String get restartDes => 'Bei einigen Vorgängen empfehlen wir Ihnen, die Anwendung neu zu starten.';
 }
 
 class TranslationsZhHome implements TranslationsHome {
@@ -337,4 +347,8 @@ class TranslationsZhHome implements TranslationsHome {
   get cameraPermissionError => throw UnimplementedError();
   @override
   get appSettings => throw UnimplementedError();
+  @override
+  String get restart => '是否要重新啟動應用程序？';
+  @override
+  String get restartDes => '根據某些操作，我們建議您重新啟動應用程序。';
 }
