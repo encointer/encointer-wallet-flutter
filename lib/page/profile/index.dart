@@ -12,7 +12,6 @@ import 'package:encointer_wallet/page/account/create_account_entry_page.dart';
 import 'package:encointer_wallet/page/profile/about_page.dart';
 import 'package:encointer_wallet/page/profile/account/account_manage_page.dart';
 import 'package:encointer_wallet/page/profile/account/change_password_page.dart';
-import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
@@ -76,21 +75,20 @@ class _ProfileState extends State<Profile> {
     super.initState();
   }
 
-  Future<void> _sendEmail() async {
-    final Uri _emailLaunchUri = Uri.parse(
-      // scheme: 'mailto',
-      // path: 'bugreports@mail.encointer.org',
-      // path: 'https://flutter.dev/',
-      // 'https://flutter.dev/',
-      'mailto:bugreports@mail.encointer.org',
+  Future<bool> _sendEmail() async {
+    final Uri _emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: 'bugreports@mail.encointer.org',
     );
-    try {
-      Log.d('$_emailLaunchUri', 'mailto');
-      final v = await launchUrl(_emailLaunchUri);
-      Log.d('$v', 'mailto');
-    } catch (e, s) {
-      Log.e(e.toString(), 'mailto', s);
+    final _isSuccess = await launchUrl(_emailLaunchUri);
+    if (!_isSuccess) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Check that you have downloaded the Email app'),
+        ),
+      );
     }
+    return _isSuccess;
   }
 
   @override
