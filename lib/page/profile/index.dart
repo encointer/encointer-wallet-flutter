@@ -12,6 +12,7 @@ import 'package:encointer_wallet/page/account/create_account_entry_page.dart';
 import 'package:encointer_wallet/page/profile/about_page.dart';
 import 'package:encointer_wallet/page/profile/account/account_manage_page.dart';
 import 'package:encointer_wallet/page/profile/account/change_password_page.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
@@ -76,11 +77,20 @@ class _ProfileState extends State<Profile> {
   }
 
   Future<void> _sendEmail() async {
-    final Uri _emailLaunchUri = Uri(
-      scheme: 'mailto',
-      path: 'bugreports@mail.encointer.org',
+    final Uri _emailLaunchUri = Uri.parse(
+      // scheme: 'mailto',
+      // path: 'bugreports@mail.encointer.org',
+      // path: 'https://flutter.dev/',
+      // 'https://flutter.dev/',
+      'mailto:bugreports@mail.encointer.org',
     );
-    await launchUrl(_emailLaunchUri);
+    try {
+      Log.d('$_emailLaunchUri', 'mailto');
+      final v = await launchUrl(_emailLaunchUri);
+      Log.d('$v', 'mailto');
+    } catch (e, s) {
+      Log.e(e.toString(), 'mailto', s);
+    }
   }
 
   @override
