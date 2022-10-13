@@ -20,7 +20,6 @@ class AccountOrCommunityItemHorizontal extends StatefulWidget {
 }
 
 class _AccountOrCommunityItemHorizontalState extends State<AccountOrCommunityItemHorizontal> {
-  
   @override
   Widget build(BuildContext context) {
     return Column(
