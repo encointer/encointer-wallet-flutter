@@ -1,6 +1,7 @@
+import 'package:flutter/material.dart';
+
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/assets/account_or_community/account_or_community_data.dart';
-import 'package:flutter/material.dart';
 
 class AccountOrCommunityItemHorizontal extends StatefulWidget {
   final AccountOrCommunityData itemData;
@@ -22,6 +23,8 @@ class _AccountOrCommunityItemHorizontalState extends State<AccountOrCommunityIte
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisSize: MainAxisSize.min,
       children: [
         InkWell(
           onTap: () => widget.onTap!(widget.index),
@@ -29,13 +32,14 @@ class _AccountOrCommunityItemHorizontalState extends State<AccountOrCommunityIte
             padding: const EdgeInsets.all(4),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
-              border:
-                  Border.all(width: 2, color: widget.itemData.isSelected ? ZurichLion.shade500 : Colors.transparent),
+              border: Border.all(
+                width: 2,
+                color: widget.itemData.isSelected ? ZurichLion.shade500 : Colors.transparent,
+              ),
             ),
             child: widget.itemData.avatar,
           ),
         ),
-        const SizedBox(height: 16),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8.0),
           child: Text(
