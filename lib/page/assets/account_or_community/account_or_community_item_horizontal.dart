@@ -4,10 +4,6 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/assets/account_or_community/account_or_community_data.dart';
 
 class AccountOrCommunityItemHorizontal extends StatefulWidget {
-  final AccountOrCommunityData itemData;
-  final int index;
-  final Function? onTap;
-
   const AccountOrCommunityItemHorizontal({
     Key? key,
     required this.itemData,
@@ -15,11 +11,16 @@ class AccountOrCommunityItemHorizontal extends StatefulWidget {
     required this.onTap,
   }) : super(key: key);
 
+  final AccountOrCommunityData itemData;
+  final int index;
+  final Function? onTap;
+
   @override
   State<AccountOrCommunityItemHorizontal> createState() => _AccountOrCommunityItemHorizontalState();
 }
 
 class _AccountOrCommunityItemHorizontalState extends State<AccountOrCommunityItemHorizontal> {
+  
   @override
   Widget build(BuildContext context) {
     return Column(
