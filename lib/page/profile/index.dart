@@ -75,40 +75,20 @@ class _ProfileState extends State<Profile> {
     super.initState();
   }
 
-  // String? encodeQueryParameters(Map<String, String> params) {
-  //   return params.entries
-  //       .map((MapEntry<String, String> e) => '${Uri.encodeComponent(e.key)}=${Uri.encodeComponent(e.value)}')
-  //       .join('&');
-  // }
-
-  // Future<void> _sendEmail() async {
-  //   final _emailLaunchUri = Uri(
-  //     scheme: 'mailto',
-  //     path: 'janara2610@mail.com',
-  //     query: encodeQueryParameters(<String, String>{
-  //       'subject': '',
-  //       'message': '',
-  //     }),
-  //   );
-  //   await launchUrl(_emailLaunchUri);
-  // }
-
-  // Future<void> _sendEmail() async {
-  //   final Uri _emailLaunchUri = Uri(
-  //     scheme: 'mailto',
-  //     path: 'bugreports@mail.encointer.org',
-
-  //   );
-  //   await launchUrl(_emailLaunchUri);
-
-  // }
-  Future<void> _sendEmail() async {
-    final toEmail = 'janara2610@gmail.com';
-    final subject = '';
-    final message = '';
-    final Uri _emailLaunchUri =
-        Uri.parse('mailto:$toEmail?subject=${Uri.encodeFull(subject)}&body=${Uri.encodeFull(message)}');
-    await launchUrl(_emailLaunchUri);
+  Future<bool> _sendEmail() async {
+    final Uri _emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: 'bugreports@mail.encointer.org',
+    );
+    final _isSuccess = await launchUrl(_emailLaunchUri);
+    if (!_isSuccess) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Check that you have downloaded the Email app'),
+        ),
+      );
+    }
+    return _isSuccess;
   }
 
   @override
@@ -201,34 +181,7 @@ class _ProfileState extends State<Profile> {
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.pushNamed(context, AboutPage.route),
               ),
-              ListTile(
-                  title: Text(dic.profile.contactUs, style: h3Grey),
-                  onTap: () async {
-                    final url = Uri.parse(
-                      'https://janara2610@gmail.com/',
-                    );
-                    if (await canLaunchUrl(url)) {
-                      launchUrl(url);
-                    } else {
-                      // ignore: avoid_print
-                      print("Can't launch $url");
-                    }
-                  }
-                  // {
-                  //   final url = Uri(
-                  //     scheme: 'mailto',
-                  //     path: 'janara2610@gmail.com',
-                  //     query: 'subject=Hello&body=Test',
-                  //   );
-                  //   if (await canLaunchUrl(url)) {
-                  //     launchUrl(url);
-                  //   } else {
-                  //     // ignore: avoid_print
-                  //     print("Can't launch $url");
-                  //   }
-                  // }
-                  // _sendEmail,
-                  ),
+              ListTile(title: Text(dic.profile.contactUs, style: h3Grey), onTap: _sendEmail),
               ListTile(
                 title: Text(dic.profile.developer, style: h3Grey),
                 trailing: Checkbox(

@@ -37,8 +37,13 @@
 	<array>
 		<string>https</string>
 		<string>http</string>
+<<<<<<< HEAD
 		<string>mailto</string>
    		<string>...</string>
+=======
+		<string>sms</string>
+  		<string>tel</string>
+>>>>>>> c2acee0d33d3f57cee6fb6d69fa12689e28b00b3
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
