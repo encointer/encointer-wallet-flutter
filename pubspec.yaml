@@ -72,7 +72,6 @@ dependencies:
   flutter_svg: ^1.1.1+1
   url_launcher: ^6.1.5
   dropdown_search: ^5.0.2
-  charts_flutter: ^0.12.0
   material_floating_search_bar: ^0.3.7
   provider: ^6.0.3
   flutter_map_marker_popup: ^3.1.0+1
