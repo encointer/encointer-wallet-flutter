@@ -42,7 +42,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   base58check: ^2.0.0
-  package_info: ^2.0.2
+  package_info_plus: ^1.4.3+1
   quiver: ^3.1.0
   dio: ^4.0.0
   #  image_cropper: ^1.4.0
@@ -87,7 +87,7 @@ dependencies:
   jdenticon_dart: ^2.0.0
   collection: ^1.15.0-nullsafety.4
   photo_view: ^0.14.0
-  upgrader: ^4.6.1
+  upgrader: ^4.7.0 
   workmanager: ^0.5.0
 
 dev_dependencies:
