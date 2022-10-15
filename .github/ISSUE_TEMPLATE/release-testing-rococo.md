@@ -29,7 +29,7 @@ Tested on commit <enter-commit>
    - [ ] Add contact with contact qr-code works
    - [ ] Add contact with invoice qr-code works
 - [ ] Profile Page
-  - [ ] Add contact works:
+  - [ ] Add account works:
      - [ ] With import account flow
      - [ ] With create account flow
 - [ ] Removing all accounts works
