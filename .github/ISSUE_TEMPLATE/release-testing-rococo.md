@@ -1,5 +1,5 @@
 ---
-name: Release Testing Rococ
+name: Release Testing Rococo
 about: Manual Release testing tasks before doing a release
 title: Release testing <enter-version>
 labels: ''
