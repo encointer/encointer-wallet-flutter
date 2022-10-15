@@ -2,9 +2,9 @@ name: JS-CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, f-droid ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, f-droid ]
 
 jobs:
   integration-tests:

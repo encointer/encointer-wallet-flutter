@@ -2,9 +2,9 @@ name: IOS CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, f-droid ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, f-droid ]
 
 jobs:
   cancel_previous_runs:
