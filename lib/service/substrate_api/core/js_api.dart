@@ -119,7 +119,8 @@ class JSApi {
         })''';
 
     try {
-      await _web!.webViewController.evaluateJavascript(source: script);
+      // ignore: unused_local_variable
+      final v = await _web!.webViewController.evaluateJavascript(source: script);
     } catch (e, s) {
       // Executing a background task with the workmanager when the app is in
       // foreground kills the platform channel and we get a `MissingPluginException`
@@ -134,7 +135,8 @@ class JSApi {
             onTimeout: () => Log.d('webApi.init() has run into a timeout. We might be offline.'),
           );
 
-      await _web!.webViewController.evaluateJavascript(source: script);
+      final v = await _web!.webViewController.evaluateJavascript(source: script);
+      Log.d('EvaluateJavascript result after re-init of webView: $v', 'js_api');
     }
 
     return c.future;
