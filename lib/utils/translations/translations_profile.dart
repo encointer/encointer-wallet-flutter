@@ -253,22 +253,16 @@ class TranslationsEnProfile implements TranslationsProfile {
   get errorUserNameIsRequired => 'User name cannot be blank';
   @override
   get observedPendingExtrinsic => 'Pending transaction observed. Please wait for confirmation!';
-
   @override
   String get appHints => 'App-Hints';
-
   @override
   String get click => 'Click';
-
   @override
   String get enableAutoStart => 'Enable autostart';
-
   @override
   String get meetUpListTileTitle => 'If your device is a Xiaomi or Honor phone, give permission for app-notifications.';
-
   @override
   String get meetUpNotification => 'Meetup notifications';
-
   @override
   String get openAppSettings => 'Open App Settings';
 }
@@ -612,22 +606,14 @@ class TranslationsZhProfile implements TranslationsProfile {
   get errorUserNameIsRequired => throw UnimplementedError();
   @override
   get observedPendingExtrinsic => throw UnimplementedError();
-
   @override
   String get appHints => '應用提示';
-
-  @override
-  String get click => '點擊';
-
   @override
   String get enableAutoStart => '點擊自動\n啟動允許/拒絕應用程序自動啟動';
-
   @override
   String get meetUpListTileTitle => '如果您的設備 Xiaomi 或 Honor：請允許聚會通知';
-
   @override
   String get meetUpNotification => '聚會通知';
-
   @override
   String get openAppSettings => '打開應用設置';
 }
