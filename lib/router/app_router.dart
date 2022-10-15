@@ -188,6 +188,11 @@ class AppRoute {
           builder: (_) => BazaarMain(),
           settings: settings,
         );
+      case Instruction.route:
+        return CupertinoPageRoute(
+          builder: (_) => const Instruction(),
+          settings: settings,
+        );
       default:
         throw Exception(
           'no builder specified for route named: [${settings.name}]',
