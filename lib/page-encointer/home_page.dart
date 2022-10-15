@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
@@ -13,6 +12,7 @@ import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
 import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/service/background_service/background_service.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
 
@@ -45,11 +45,14 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         // meetup notification only for android system
         Log.d('Initializing Workmanager callback...', 'home_page');
         await Workmanager().initialize(callbackDispatcher);
-        await Workmanager().registerPeriodicTask('background-service', 'pull-notification',
-            initialDelay: const Duration(seconds: 15),
-            frequency: const Duration(hours: 12),
-            inputData: {'langCode': Localizations.localeOf(context).languageCode},
-            existingWorkPolicy: ExistingWorkPolicy.keep);
+        await Workmanager().registerPeriodicTask(
+          'background-service',
+          'pull-notification',
+          initialDelay: const Duration(seconds: 30), // Don't immediately overload the app after app startup.
+          frequency: const Duration(hours: 12),
+          inputData: {'langCode': Localizations.localeOf(context).languageCode},
+          existingWorkPolicy: ExistingWorkPolicy.replace,
+        );
       }
     });
 
