@@ -256,8 +256,6 @@ class TranslationsEnProfile implements TranslationsProfile {
   @override
   String get appHints => 'App-Hints';
   @override
-  String get click => 'Click';
-  @override
   String get enableAutoStart => 'Enable autostart';
   @override
   String get meetUpListTileTitle => 'If your device is a Xiaomi or Honor phone, give permission for app-notifications.';
