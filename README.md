@@ -163,8 +163,6 @@ released after testing.
 ##### AppCenter (Google Play Store & Apple AppStore)
 The AppCenter automatically builds and deploys the HEAD of `beta`.
 
-# bump version on some commit on master
-
 ```shell 
   git checkout master
   git pull
@@ -176,7 +174,10 @@ The AppCenter automatically builds and deploys the HEAD of `beta`.
 ```
 
 ##### F-droid
-F-Droid triggers builds based on the version it reads from pubspec.yaml which it reads from branch `f-droid` HEAD`.
+F-droid triggers builds based on tags. We will use a special tag format for the f-droid releases:, e.g. `vx.x.x-fdroid`.
+
+Note: We have a different release branch for f-droid, as we had to use another, less performant scanner library to meet
+FOSS constraints.
 
 ## Acknowledgements
 This app has been built based on [polkawallet.io](https://polkawallet.io)
