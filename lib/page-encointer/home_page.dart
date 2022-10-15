@@ -50,7 +50,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
           'pull-notification',
           frequency: const Duration(hours: 12),
           inputData: {'langCode': Localizations.localeOf(context).languageCode},
-          existingWorkPolicy: ExistingWorkPolicy.keep,
+          existingWorkPolicy: ExistingWorkPolicy.replace,
         );
       }
     });
