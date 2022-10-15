@@ -26,22 +26,19 @@ class Instruction extends StatelessWidget {
                 subtitle: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    const SizedBox(height: 8),
                     RichText(
                       text: TextSpan(
                         children: [
                           TextSpan(
-                            text: '\n${dic.click}',
-                            style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14),
-                          ),
-                          TextSpan(
-                            text: ' ${dic.openAppSettings}',
+                            text: '1. ${dic.openAppSettings}',
                             style: Theme.of(context).textTheme.bodySmall!.copyWith(fontSize: 14, color: ZurichLion),
                             recognizer: TapGestureRecognizer()..onTap = () => openAppSettings(),
                           ),
                         ],
                       ),
                     ),
-                    Text(dic.enableAutoStart),
+                    Text('2. ${dic.enableAutoStart}'),
                   ],
                 ),
               ),
