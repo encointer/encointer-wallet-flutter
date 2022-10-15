@@ -117,19 +117,24 @@ class JSApi {
           window.flutter_inappwebview
             .callHandler("$EncointerJsService", { path: "$method:error", data: err.message  });
         })''';
-    // When workmanager works we get MissingPluginException error
-    // To solve it we re initialize webApi by using try catch
+
     try {
-      // ignore: unused_local_variable
-      final v = await _web!.webViewController.evaluateJavascript(source: script);
+      await _web!.webViewController.evaluateJavascript(source: script);
     } catch (e, s) {
+      // Executing a background task with the workmanager when the app is in
+      // foreground kills the platform channel and we get a `MissingPluginException`
+      // error. Hence, we must recreate the platform channel.
+      //
+      // See: https://github.com/encointer/encointer-wallet-flutter/issues/801.
+
       Log.e(' $e', 'js_api', s);
+      Log.d('Re-initializing webView because the platform channel broke down', 'js_api');
       await webApi.init().timeout(
             const Duration(seconds: 20),
             onTimeout: () => Log.d('webApi.init() has run into a timeout. We might be offline.'),
           );
-      final v = await _web!.webViewController.evaluateJavascript(source: script);
-      Log.d('Re-initializing webView because the platform channel broke down $v', 'js_api');
+
+      await _web!.webViewController.evaluateJavascript(source: script);
     }
 
     return c.future;
