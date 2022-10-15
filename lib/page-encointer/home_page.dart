@@ -48,10 +48,10 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         await Workmanager().registerPeriodicTask(
           'background-service',
           'pull-notification',
-          initialDelay: const Duration(seconds: 15),
+          initialDelay: const Duration(seconds: 30), // Don't immediately overload the app after app startup.
           frequency: const Duration(hours: 12),
           inputData: {'langCode': Localizations.localeOf(context).languageCode},
-          existingWorkPolicy: ExistingWorkPolicy.keep,
+          existingWorkPolicy: ExistingWorkPolicy.replace,
         );
       }
     });

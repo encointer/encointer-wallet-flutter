@@ -180,7 +180,7 @@ class AppRoute {
         );
       case AboutPage.route:
         return CupertinoPageRoute(
-          builder: (_) => AboutPage(),
+          builder: (_) => const AboutPage(),
           settings: settings,
         );
       case BazaarMain.route:
