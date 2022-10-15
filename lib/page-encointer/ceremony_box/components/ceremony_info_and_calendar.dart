@@ -1,7 +1,7 @@
 import 'package:add_2_calendar/add_2_calendar.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box_service.dart';
-import 'package:encointer_wallet/utils/ui.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/ui.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -29,7 +29,7 @@ class CeremonyInfoAndCalendar extends StatelessWidget {
     return Column(
       children: [
         IconButton(
-          icon: RotatedBox(
+          icon: const RotatedBox(
             quarterTurns: 2,
             child: Icon(Iconsax.info_circle),
           ),
@@ -37,7 +37,7 @@ class CeremonyInfoAndCalendar extends StatelessWidget {
         ),
         if (devMode && showAddToCalendarIconButton)
           IconButton(
-            icon: Icon(Iconsax.calendar_1),
+            icon: const Icon(Iconsax.calendar_1),
             onPressed: () => Add2Calendar.addEvent2Cal(calendarEventToAdd),
           ),
       ],

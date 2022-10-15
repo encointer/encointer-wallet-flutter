@@ -1,21 +1,22 @@
 import 'dart:convert';
 
-import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/service/substrate_api/codec_api.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import '../../models/claim_of_attendance/claim_of_attendance.dart';
+import 'package:encointer_wallet/models/claim_of_attendance/claim_of_attendance.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/substrate_api/codec_api.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/snack_bar.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class ScanClaimQrCode extends StatelessWidget {
-  ScanClaimQrCode(this.store, this.confirmedParticipantsCount);
+  ScanClaimQrCode(this.store, this.confirmedParticipantsCount, {Key? key}) : super(key: key);
 
   final AppStore store;
   final int confirmedParticipantsCount;
@@ -25,7 +26,10 @@ class ScanClaimQrCode extends StatelessWidget {
     if (!registry.contains(claim.claimantPublic)) {
       // this is important because the runtime checks if there are too many claims trying to be registered.
       RootSnackBar.showMsg(dic.encointer.meetupClaimantInvalid);
-      print("[scanClaimQrCode] Claimant: ${claim.claimantPublic} is not part of registry: ${registry.toString()}");
+      Log.d(
+        '[scanClaimQrCode] Claimant: ${claim.claimantPublic} is not part of registry: $registry',
+        'CeremonyProgressBar',
+      );
     } else {
       String msg = store.encointer.communityAccount!.containsClaim(claim)
           ? dic.encointer.claimsScannedAlready
@@ -54,8 +58,8 @@ class ScanClaimQrCode extends StatelessWidget {
             .then((c) => ClaimOfAttendance.fromJson(c));
 
         validateAndStoreClaim(context, claim, dic);
-      } catch (e) {
-        _log("Error decoding claim: ${e.toString()}");
+      } catch (e, s) {
+        Log.e('Error decoding claim: $e', 'CeremonyProgressBar', s);
         RootSnackBar.showMsg(dic.encointer.claimsScannedDecodeFailed);
       }
 
@@ -68,8 +72,8 @@ class ScanClaimQrCode extends StatelessWidget {
         leading: Container(),
         actions: [
           IconButton(
-            key: Key('close-scanner'),
-            icon: Icon(Icons.close),
+            key: const Key('close-scanner'),
+            icon: const Icon(Icons.close),
             onPressed: () => Navigator.pop(context),
           )
         ],
@@ -79,7 +83,7 @@ class ScanClaimQrCode extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<PermissionStatus> snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data != PermissionStatus.granted) {
-              print("[scanPage] Permission Status: ${snapshot.data!.toString()}");
+              Log.d('[scanPage] Permission Status: ${snapshot.data}', 'CeremonyProgressBar');
               return permissionErrorDialog(context);
             }
 
@@ -89,7 +93,7 @@ class ScanClaimQrCode extends StatelessWidget {
                     allowDuplicates: false,
                     onDetect: (barcode, args) {
                       if (barcode.rawValue == null) {
-                        debugPrint('Failed to scan Barcode');
+                        Log.e('Failed to scan Barcode', 'CeremonyProgressBar');
                       } else {
                         _onScan(barcode.rawValue!);
                       }
@@ -117,7 +121,7 @@ class ScanClaimQrCode extends StatelessWidget {
                               (confirmedParticipantsCount - 1).toString(),
                             );
                         return Text(txt,
-                            style: TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16));
+                            style: const TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16));
                       }),
                     ],
                   ),
@@ -125,7 +129,7 @@ class ScanClaimQrCode extends StatelessWidget {
               ],
             );
           } else {
-            return Center(child: CupertinoActivityIndicator());
+            return const Center(child: CupertinoActivityIndicator());
           }
         },
       ),
@@ -140,17 +144,13 @@ void _showActivityIndicatorOverlay(BuildContext context) {
         height: Size.infinite.height,
         width: Size.infinite.width,
         color: Colors.grey.withOpacity(0.5),
-        child: CupertinoActivityIndicator()),
+        child: const CupertinoActivityIndicator()),
   );
 }
 
 Future<PermissionStatus> canOpenCamera() async {
   // will do nothing if already granted
   return Permission.camera.request();
-}
-
-_log(String msg) {
-  print("[ScanClaimQrCode] $msg");
 }
 
 Widget permissionErrorDialog(BuildContext context) {
@@ -162,7 +162,7 @@ Widget permissionErrorDialog(BuildContext context) {
     actions: <Widget>[
       CupertinoButton(
         child: Text(dic.home.ok),
-        onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
+        onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
       ),
       CupertinoButton(
         child: Text(dic.home.appSettings),

@@ -1,8 +1,7 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/mocks/data/mock_account_data.dart';
 import 'package:encointer_wallet/utils/local_storage.dart';
-
-import '../data/mock_account_data.dart';
 
 class MockLocalStorage extends LocalStorage {
   @override
@@ -67,7 +66,7 @@ class MockLocalStorage extends LocalStorage {
 
   @override
   Future<Object?> getObject(String key) async {
-    // print("getObject: ${storage.toString()}");
+    // Log.d("getObject: $storage", 'MockLocalStorage');
     String? value = storage[key];
 
     if (value != null) {
@@ -92,7 +91,7 @@ class MockLocalStorage extends LocalStorage {
 
   @override
   Future<Map<String, dynamic>?> getMap(String key) async {
-    // print("getMap: ${storage.toString()}");
+    // Log.d("getMap: $storage", 'MockLocalStorage');
     String? value = storage[key];
 
     if (value != null) {

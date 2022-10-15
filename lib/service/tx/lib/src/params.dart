@@ -1,6 +1,6 @@
-import '../../../../models/claim_of_attendance/claim_of_attendance.dart';
-import '../../../../models/communities/community_identifier.dart';
-import '../../../../models/proof_of_attendance/proof_of_attendance.dart';
+import 'package:encointer_wallet/models/claim_of_attendance/claim_of_attendance.dart';
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/models/proof_of_attendance/proof_of_attendance.dart';
 
 /// Params for known extrinsics.
 
@@ -9,13 +9,13 @@ Map<String, dynamic> endorseNewcomerParams(
   String newbie,
 ) {
   return {
-    "title": 'endorse_newcomer',
-    "txInfo": {
-      "module": 'encointerCeremonies',
-      "call": 'endorseNewcomer',
-      "cid": chosenCid,
+    'title': 'endorse_newcomer',
+    'txInfo': {
+      'module': 'encointerCeremonies',
+      'call': 'endorseNewcomer',
+      'cid': chosenCid,
     },
-    "params": [chosenCid, newbie],
+    'params': [chosenCid, newbie],
   };
 }
 
@@ -24,13 +24,13 @@ Map<String, dynamic> registerParticipantParams(
   ProofOfAttendance? proof,
 }) {
   return {
-    "title": 'register_participant',
-    "txInfo": {
-      "module": 'encointerCeremonies',
-      "call": 'registerParticipant',
-      "cid": chosenCid,
+    'title': 'register_participant',
+    'txInfo': {
+      'module': 'encointerCeremonies',
+      'call': 'registerParticipant',
+      'cid': chosenCid,
     },
-    "params": [
+    'params': [
       chosenCid,
       proof,
     ],
@@ -43,25 +43,25 @@ Map<String, dynamic> attestClaimsParams(
   List<ClaimOfAttendance> claims,
 ) {
   return {
-    "title": 'attest_claims',
-    "txInfo": {
-      "module": 'encointerCeremonies',
-      "call": 'attestClaims',
-      "cid": chosenCid,
+    'title': 'attest_claims',
+    'txInfo': {
+      'module': 'encointerCeremonies',
+      'call': 'attestClaims',
+      'cid': chosenCid,
     },
-    "params": [claims],
+    'params': [claims],
   };
 }
 
 Map<String, dynamic> claimRewardsParams(CommunityIdentifier chosenCid) {
   return {
-    "title": 'claim_rewards',
-    "txInfo": {
-      "module": 'encointerCeremonies',
-      "call": 'claimRewards',
-      "cid": chosenCid,
+    'title': 'claim_rewards',
+    'txInfo': {
+      'module': 'encointerCeremonies',
+      'call': 'claimRewards',
+      'cid': chosenCid,
     },
-    "params": [chosenCid],
+    'params': [chosenCid],
   };
 }
 
@@ -71,13 +71,13 @@ Map<String, dynamic> encointerBalanceTransferParams(
   double? amount,
 ) {
   return {
-    "title": 'encointerBalancesTransfer',
-    "txInfo": {
-      "module": 'encointerBalances',
-      "call": 'transfer',
-      "cid": cid,
+    'title': 'encointerBalancesTransfer',
+    'txInfo': {
+      'module': 'encointerBalances',
+      'call': 'transfer',
+      'cid': cid,
     },
-    "params": [
+    'params': [
       recipientAddress,
       cid,
       amount.toString(),

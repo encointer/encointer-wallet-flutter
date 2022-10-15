@@ -1,13 +1,12 @@
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_info_and_calendar.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_progress_bar.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_schedule.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import '../../models/index.dart';
-import 'components/ceremony_info_and_calendar.dart';
-import 'components/ceremony_progress_bar.dart';
-import 'components/ceremony_schedule.dart';
 
 class CeremonyInfo extends StatelessWidget {
   CeremonyInfo({
@@ -38,7 +37,7 @@ class CeremonyInfo extends StatelessWidget {
       child: meetupTime != null
           ? Column(
               children: [
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 CeremonyProgressBar(
                   currentTime: currentTime,
                   assigningPhaseStart: assigningPhaseStart,
@@ -46,7 +45,7 @@ class CeremonyInfo extends StatelessWidget {
                   ceremonyPhaseDurations: ceremonyPhaseDurations,
                   width: 262,
                 ),
-                SizedBox(height: 8),
+                const SizedBox(height: 8),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -71,7 +70,7 @@ class CeremonyInfo extends StatelessWidget {
           : Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                CupertinoActivityIndicator(),
+                const CupertinoActivityIndicator(),
               ],
             ),
     );

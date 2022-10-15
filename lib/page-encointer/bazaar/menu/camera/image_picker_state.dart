@@ -3,11 +3,12 @@ import 'package:mobx/mobx.dart';
 
 part 'image_picker_state.g.dart';
 
+// ignore: library_private_types_in_public_api
 class ImagePickerState = _ImagePickerState with _$ImagePickerState;
 
 abstract class _ImagePickerState with Store {
   @observable
-  ObservableList<PickedFile?> images = new ObservableList<PickedFile?>();
+  ObservableList<PickedFile?> images = ObservableList<PickedFile?>();
 
   @observable
   String? pickImageError;

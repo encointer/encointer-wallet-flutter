@@ -4,11 +4,13 @@ import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:convert/convert.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:intl/intl.dart';
+
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:intl/intl.dart';
 
 class Fmt {
   static String passwordToEncryptKey(String password) {
@@ -23,7 +25,7 @@ class Fmt {
     if (addr == null || addr.length < pad) {
       return addr;
     }
-    return addr.substring(0, pad) + '...' + addr.substring(addr.length - pad);
+    return '${addr.substring(0, pad)}...${addr.substring(addr.length - pad)}';
   }
 
   static String dateTime(DateTime time) {
@@ -32,7 +34,7 @@ class Fmt {
 
   static String hhmmss(int seconds) {
     Duration d = Duration(seconds: seconds);
-    return d.toString().split('.').first.padLeft(8, "0");
+    return d.toString().split('.').first.padLeft(8, '0');
   }
 
   /// number transform 1:
@@ -42,7 +44,7 @@ class Fmt {
       return BigInt.zero;
     }
     if (raw.contains(',') || raw.contains('.')) {
-      return BigInt.from(NumberFormat(",##0.000").parse(raw));
+      return BigInt.from(NumberFormat(',##0.000').parse(raw));
     } else {
       return BigInt.parse(raw);
     }
@@ -65,7 +67,7 @@ class Fmt {
       return '~';
     }
     value.toStringAsFixed(3);
-    NumberFormat f = NumberFormat(",##0${length! > 0 ? '.' : ''}${'#' * length}", "en_US");
+    NumberFormat f = NumberFormat(",##0${length! > 0 ? '.' : ''}${'#' * length}", 'en_US');
     return f.format(value);
   }
 
@@ -122,8 +124,8 @@ class Fmt {
       } else {
         v = double.parse(value);
       }
-    } catch (err) {
-      print('Fmt.tokenInt() error: ${err.toString()}');
+    } catch (e, s) {
+      Log.e('Fmt.tokenInt() error: $e', 'Fmt', s);
     }
     return BigInt.from(v * pow(10, decimals));
   }
@@ -138,8 +140,8 @@ class Fmt {
   }) {
     final int x = pow(10, lengthMax ?? lengthFixed) as int;
     final double price = (value * x).ceilToDouble() / x;
-    final String tailDecimals = lengthMax == null ? '' : "#" * (lengthMax - lengthFixed);
-    return NumberFormat(",##0${lengthFixed > 0 ? '.' : ''}${"0" * lengthFixed}$tailDecimals", "en_US").format(price);
+    final String tailDecimals = lengthMax == null ? '' : '#' * (lengthMax - lengthFixed);
+    return NumberFormat(",##0${lengthFixed > 0 ? '.' : ''}${"0" * lengthFixed}$tailDecimals", 'en_US').format(price);
   }
 
   /// number transform 6:
@@ -152,8 +154,8 @@ class Fmt {
   }) {
     final int x = pow(10, lengthMax ?? lengthFixed) as int;
     final double price = (value * x).floorToDouble() / x;
-    final String tailDecimals = lengthMax == null ? '' : "#" * (lengthMax - lengthFixed);
-    return NumberFormat(",##0${lengthFixed > 0 ? '.' : ''}${"0" * lengthFixed}$tailDecimals", "en_US").format(price);
+    final String tailDecimals = lengthMax == null ? '' : '#' * (lengthMax - lengthFixed);
+    return NumberFormat(",##0${lengthFixed > 0 ? '.' : ''}${"0" * lengthFixed}$tailDecimals", 'en_US').format(price);
   }
 
   /// number transform 7:
@@ -214,13 +216,13 @@ class Fmt {
   }
 
   static List<int> hexToBytes(String hex) {
-    const String _BYTE_ALPHABET = "0123456789abcdef";
+    const String _BYTE_ALPHABET = '0123456789abcdef';
 
-    hex = hex.replaceAll(" ", "");
-    hex = hex.replaceAll("0x", "");
+    hex = hex.replaceAll(' ', '');
+    hex = hex.replaceAll('0x', '');
     hex = hex.toLowerCase();
-    if (hex.length % 2 != 0) hex = "0" + hex;
-    Uint8List result = new Uint8List(hex.length ~/ 2);
+    if (hex.length % 2 != 0) hex = '0$hex';
+    Uint8List result = Uint8List(hex.length ~/ 2);
     for (int i = 0; i < result.length; i++) {
       int value = (_BYTE_ALPHABET.indexOf(hex[i * 2]) << 4) //= byte[0] * 16
           +
@@ -231,7 +233,7 @@ class Fmt {
   }
 
   static String bytesToHex(List<int> bytes) {
-    return "0x" + hex.encode(bytes);
+    return '0x${hex.encode(bytes)}';
   }
 
   static String? accountDisplayNameString(String? address, Map? accInfo) {
@@ -261,7 +263,7 @@ class Fmt {
         accInfo['identity']['judgements'].length > 0
             ? Container(
                 width: 14,
-                margin: EdgeInsets.only(right: 4),
+                margin: const EdgeInsets.only(right: 4),
                 child: Image.asset('assets/images/assets/success.png'),
               )
             : Container(height: 16),

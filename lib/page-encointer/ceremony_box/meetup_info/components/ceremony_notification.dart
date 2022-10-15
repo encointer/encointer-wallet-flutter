@@ -17,7 +17,7 @@ class CeremonyNotification extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Icon(notificationIconData, color: encointerGrey, size: 18),
-        SizedBox(width: 12),
+        const SizedBox(width: 12),
         Flexible(
           child: Text(
             notification,

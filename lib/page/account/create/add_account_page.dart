@@ -1,34 +1,46 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:encointer_wallet/common/components/account_advance_option_params.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/create/add_account_form.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class AddAccountPage extends StatefulWidget {
-  const AddAccountPage(this.store);
+  const AddAccountPage({Key? key}) : super(key: key);
 
   static const String route = '/account/addAccount';
-  final AppStore store;
 
   @override
-  _AddAccountPageState createState() => _AddAccountPageState(store);
+  State<AddAccountPage> createState() => _AddAccountPageState();
 }
 
 class _AddAccountPageState extends State<AddAccountPage> {
-  _AddAccountPageState(this.store);
-
-  final AppStore store;
-
   bool _submitting = false;
+  late final AppStore _appStore;
 
-  Future<void> _createAndImportAccount() async {
+  @override
+  void initState() {
+    super.initState();
+    _appStore = context.read<AppStore>();
+    if (_appStore.settings.cachedPin.isEmpty) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        setState(() {
+          _showEnterPinDialog(_appStore);
+        });
+      });
+    }
+  }
+
+  Future<void> _createAndImportAccount(AppStore store) async {
     setState(() {
       _submitting = true;
     });
@@ -49,9 +61,10 @@ class _AddAccountPageState extends State<AddAccountPage> {
     }
 
     var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
-    _log("Created new account with address: ${addresses[0]}");
+    Log.d('Created new account with address: ${addresses[0]}', 'AddAccountPage');
+
     await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
-    _log("added new account with address: ${addresses[0]}");
+    Log.d('added new account with address: ${addresses[0]}', 'AddAccountPage');
 
     String? pubKey = acc['pubKey'];
     await store.setCurrentAccount(pubKey);
@@ -60,13 +73,12 @@ class _AddAccountPageState extends State<AddAccountPage> {
 
     // fetch info for the imported account
     webApi.fetchAccountData();
-    webApi.account.getPubKeyIcons([pubKey]);
 
     setState(() {
       _submitting = false;
     });
     // go to home page
-    Navigator.popUntil(context, ModalRoute.withName('/'));
+    Navigator.pop(context);
   }
 
   static Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
@@ -89,7 +101,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
     );
   }
 
-  Future<void> _showEnterPinDialog(BuildContext context) async {
+  Future<void> _showEnterPinDialog(AppStore store) async {
     await showCupertinoDialog(
       context: context,
       builder: (_) {
@@ -110,19 +122,6 @@ class _AddAccountPageState extends State<AddAccountPage> {
   }
 
   @override
-  void initState() {
-    super.initState();
-
-    if (store.settings.cachedPin.isEmpty) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        setState(() {
-          _showEnterPinDialog(context);
-        });
-      });
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
 
@@ -132,10 +131,8 @@ class _AddAccountPageState extends State<AddAccountPage> {
         leading: Container(),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.close, color: encointerGrey),
-            onPressed: () {
-              Navigator.popUntil(context, ModalRoute.withName('/'));
-            },
+            icon: const Icon(Icons.close, color: encointerGrey),
+            onPressed: () => Navigator.pop(context),
           )
         ],
       ),
@@ -145,17 +142,13 @@ class _AddAccountPageState extends State<AddAccountPage> {
                 submitting: _submitting,
                 onSubmit: () {
                   setState(() {
-                    _createAndImportAccount();
+                    _createAndImportAccount(context.read<AppStore>());
                   });
                 },
-                store: store,
+                store: context.watch<AppStore>(),
               )
-            : Center(child: CupertinoActivityIndicator()),
+            : const Center(child: CupertinoActivityIndicator()),
       ),
     );
   }
-}
-
-_log(String msg) {
-  print("[AddAccountPage] $msg");
 }

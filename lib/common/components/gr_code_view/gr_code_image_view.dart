@@ -1,8 +1,8 @@
+import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/utils/extensions/extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:photo_view/photo_view.dart';
 import 'package:qr_flutter_fork/qr_flutter_fork.dart';
-
-import '../../theme.dart';
 
 class QrCodeImage extends StatelessWidget {
   const QrCodeImage({
@@ -21,12 +21,13 @@ class QrCodeImage extends StatelessWidget {
     return Column(
       children: [
         SizedBox(
-          width: MediaQuery.of(context).size.width,
+          width: context.isMobile ? 600 : 1200,
+          // MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.width,
           child: PhotoView.customChild(
-            maxScale: 1.0001,
-            minScale: 0.2,
-            initialScale: 0.8,
+            maxScale: context.isMobile ? 1.0001 : 1.1,
+            minScale: context.isMobile ? 0.2 : 0.4,
+            initialScale: context.isMobile ? 0.8 : 0.5,
             backgroundDecoration: BoxDecoration(
               color: ZurichLion.shade50,
             ),

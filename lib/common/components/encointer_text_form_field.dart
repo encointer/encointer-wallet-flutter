@@ -1,7 +1,6 @@
+import 'package:encointer_wallet/common/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import '../theme.dart';
 
 /// TextFormField styled for the encointer app
 class EncointerTextFormField extends StatelessWidget {
@@ -46,8 +45,8 @@ class EncointerTextFormField extends StatelessWidget {
           labelText: labelText,
           hintText: hintText,
           labelStyle: Theme.of(context).textTheme.headline4,
-          contentPadding: EdgeInsets.only(top: 16, bottom: 16, left: 25),
-          border: UnderlineInputBorder(
+          contentPadding: const EdgeInsets.only(top: 16, bottom: 16, left: 25),
+          border: const UnderlineInputBorder(
             borderSide: BorderSide(
               width: 0,
               style: BorderStyle.none,

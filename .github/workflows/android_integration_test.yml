@@ -2,9 +2,9 @@ name: Android CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, f-droid ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, f-droid ]
 
 jobs:
   cancel_previous_runs:
@@ -110,6 +110,7 @@ jobs:
           script: ./scripts/android_integration_test.sh
 
       - name: "Upload screenshots"
+        if: always()
         uses: actions/upload-artifact@v2
         with:
           name:  ${{ matrix.device }}

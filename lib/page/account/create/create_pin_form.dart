@@ -9,14 +9,15 @@ import 'package:flutter/services.dart';
 
 class CreatePinForm extends StatefulWidget {
   CreatePinForm({
+    Key? key,
     required this.store,
     required this.onSubmit,
-  });
+  }) : super(key: key);
   final Function onSubmit;
   final AppStore store;
 
   @override
-  _CreatePinFormState createState() => _CreatePinFormState(store);
+  State<CreatePinForm> createState() => _CreatePinFormState(store);
 }
 
 class _CreatePinFormState extends State<CreatePinForm> {
@@ -26,8 +27,8 @@ class _CreatePinFormState extends State<CreatePinForm> {
 
   final _formKey = GlobalKey<FormState>();
 
-  final TextEditingController _passCtrl = new TextEditingController();
-  final TextEditingController _pass2Ctrl = new TextEditingController();
+  final TextEditingController _passCtrl = TextEditingController();
+  final TextEditingController _pass2Ctrl = TextEditingController();
 
   @override
   void dispose() {
@@ -46,15 +47,15 @@ class _CreatePinFormState extends State<CreatePinForm> {
         children: <Widget>[
           Expanded(
             child: ListView(
-              padding: EdgeInsets.fromLTRB(16, 0, 16, 16),
+              padding: const EdgeInsets.fromLTRB(16, 0, 16, 16),
               children: <Widget>[
-                SizedBox(height: 80),
+                const SizedBox(height: 80),
                 Center(
                   child: Text(dic.profile.pinSecure, style: Theme.of(context).textTheme.headline2),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Center(
-                  child: Container(
+                  child: SizedBox(
                     width: 250,
                     child: Text(
                       dic.profile.pinHint,
@@ -65,9 +66,9 @@ class _CreatePinFormState extends State<CreatePinForm> {
                     ),
                   ),
                 ),
-                SizedBox(height: 30),
+                const SizedBox(height: 30),
                 TextFormField(
-                  key: Key('create-account-pin'),
+                  key: const Key('create-account-pin'),
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     enabledBorder: const OutlineInputBorder(
@@ -87,9 +88,9 @@ class _CreatePinFormState extends State<CreatePinForm> {
                   obscureText: true,
                   inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
-                  key: Key('create-account-pin2'),
+                  key: const Key('create-account-pin2'),
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     enabledBorder: const OutlineInputBorder(
@@ -99,7 +100,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
                     ),
                     filled: true,
                     //todo define color
-                    fillColor: Color(0xffF4F8F9),
+                    fillColor: const Color(0xffF4F8F9),
                     hintText: dic.account.createPassword2,
                     labelText: dic.account.createPassword2,
                   ),
@@ -115,9 +116,9 @@ class _CreatePinFormState extends State<CreatePinForm> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Icon(Icons.info_outlined),
-                      SizedBox(width: 12),
-                      Container(
+                      const Icon(Icons.info_outlined),
+                      const SizedBox(width: 12),
+                      SizedBox(
                         width: 250,
                         child: Text(
                           dic.profile.pinInfo,
@@ -133,8 +134,8 @@ class _CreatePinFormState extends State<CreatePinForm> {
             ),
           ),
           Container(
-            key: Key('create-account-confirm'),
-            padding: EdgeInsets.all(16),
+            key: const Key('create-account-confirm'),
+            padding: const EdgeInsets.all(16),
             child: PrimaryButton(
               child: Text(
                 I18n.of(context)!.translationsForLocale().account.create,

@@ -8,6 +8,8 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 class ImagePreview extends StatelessWidget {
+  const ImagePreview({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final businessFormState = Provider.of<BusinessFormState>(context);
@@ -27,18 +29,18 @@ class ImagePreview extends StatelessWidget {
               I18n.of(context)!.translationsForLocale().bazaar.imageNotPicked,
               textAlign: TextAlign.center,
             ),
-          Text("${imagePickerState.images.length} ${I18n.of(context)!.translationsForLocale().bazaar.imagesAdded}"),
+          Text('${imagePickerState.images.length} ${I18n.of(context)!.translationsForLocale().bazaar.imagesAdded}'),
           Column(
             children: imagePickerState.images
                 .map(
                   (image) => Stack(
                     children: [
-                      Container(
+                      SizedBox(
                         height: 200,
                         child: kIsWeb ? Image.network(image!.path) : Image.file(File(image!.path)),
                       ),
                       IconButton(
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.delete,
                           color: Colors.redAccent,
                         ),

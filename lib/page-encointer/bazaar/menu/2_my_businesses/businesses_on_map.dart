@@ -5,9 +5,10 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
-import "package:latlong2/latlong.dart";
+import 'package:latlong2/latlong.dart';
 
 class BusinessesOnMap extends StatelessWidget {
+  BusinessesOnMap({Key? key}) : super(key: key);
   final data = allBusinesses;
 
   @override
@@ -25,12 +26,13 @@ class BMap extends StatelessWidget {
   /// Used to trigger showing/hiding of popups.
   final PopupController _popupLayerController = PopupController();
   final List<BazaarBusinessData> businessData;
-  final bazaarBusinessDataFor = Map<LatLng, BazaarBusinessData>();
+  final bazaarBusinessDataFor = <LatLng, BazaarBusinessData>{};
 
-  BMap(List<BazaarItemData> data)
+  BMap(List<BazaarItemData> data, {Key? key})
       // initializer (only use businesses, offerings do not have coordinates)
       : businessData =
-            data.where((item) => item is BazaarBusinessData).map((item) => item as BazaarBusinessData).toList() {
+            data.where((item) => item is BazaarBusinessData).map((item) => item as BazaarBusinessData).toList(),
+        super(key: key) {
     // construct a map using "collection for"
     bazaarBusinessDataFor.addAll({for (var business in businessData) business.coordinates: business});
   }
@@ -70,7 +72,7 @@ class BMap extends StatelessWidget {
             point: item.coordinates,
             width: 40,
             height: 40,
-            builder: (_) => Icon(Icons.location_on, size: 40, color: Colors.blueAccent),
+            builder: (_) => const Icon(Icons.location_on, size: 40, color: Colors.blueAccent),
             anchorPos: AnchorPos.align(AnchorAlign.top)))
         .toList();
   }
@@ -95,7 +97,7 @@ class BusinessDetailsPopup extends StatelessWidget {
         child: Container(
           width: 150,
           height: 70,
-          padding: EdgeInsets.fromLTRB(6, 4, 6, 4),
+          padding: const EdgeInsets.fromLTRB(6, 4, 6, 4),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

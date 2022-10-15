@@ -1,9 +1,8 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/utils/enum.dart';
 import 'package:json_annotation/json_annotation.dart';
-
-import '../communities/community_identifier.dart';
 
 // Run: `flutter pub run build_runner build` in order to create/update the *.g.dart
 part 'ceremonies.g.dart';
@@ -115,19 +114,19 @@ Reputation? reputationFromString(String value) {
   return getEnumFromString(Reputation.values, value);
 }
 
-extension reputationExtension on Reputation {
+extension ReputationExtension on Reputation {
   String toValue() {
     return toEnumValue(this);
   }
 }
 
-extension participantTypeExtension on ParticipantType {
+extension ParticipantTypeExtension on ParticipantType {
   String toValue() {
     return toEnumValue(this);
   }
 }
 
-extension ceremonyPhaseExtension on CeremonyPhase {
+extension CeremonyPhaseExtension on CeremonyPhase {
   String toValue() {
     return toEnumValue(this);
   }

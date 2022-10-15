@@ -1,5 +1,10 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -9,33 +14,26 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class ChangePasswordPage extends StatefulWidget {
-  ChangePasswordPage(this.store);
+  ChangePasswordPage({Key? key}) : super(key: key);
 
   static const String route = '/profile/password';
-  final AppStore store;
 
   @override
-  _ChangePassword createState() => _ChangePassword(store);
+  State<ChangePasswordPage> createState() => _ChangePassword();
 }
 
 class _ChangePassword extends State<ChangePasswordPage> {
-  _ChangePassword(this.store);
-
   final Api api = webApi;
-  final AppStore store;
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _passOldCtrl = new TextEditingController();
-  final TextEditingController _passCtrl = new TextEditingController();
-  final TextEditingController _pass2Ctrl = new TextEditingController();
+  final TextEditingController _passOldCtrl = TextEditingController();
+  final TextEditingController _passCtrl = TextEditingController();
+  final TextEditingController _pass2Ctrl = TextEditingController();
 
   bool _submitting = false;
 
-  Future<void> _onSave() async {
+  Future<void> _onSave(AppStore store) async {
     if (_formKey.currentState!.validate()) {
       setState(() {
         _submitting = true;
@@ -45,7 +43,10 @@ class _ChangePassword extends State<ChangePasswordPage> {
       final String passOld = _passOldCtrl.text.trim();
       final String passNew = _passCtrl.text.trim();
       // check password
-      final passChecked = await webApi.account.checkAccountPassword(store.account.currentAccount, passOld);
+      final passChecked = await webApi.account.checkAccountPassword(
+        store.account.currentAccount,
+        passOld,
+      );
       if (passChecked == null) {
         showCupertinoDialog(
           context: context,
@@ -72,8 +73,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
         // we need to iterate over all active accounts and update there password
         store.settings.setPin(passNew);
         store.account.accountListAll.forEach((account) async {
-          final Map<String, dynamic> acc =
-              await api.evalJavascript('account.changePassword("${account.pubKey}", "$passOld", "$passNew")');
+          final acc = await api.evalJavascript('account.changePassword("${account.pubKey}", "$passOld", "$passNew")');
 
           // update encrypted seed after password updated
           store.account.accountListAll.map((accountData) {
@@ -94,10 +94,10 @@ class _ChangePassword extends State<ChangePasswordPage> {
               actions: <Widget>[
                 CupertinoButton(
                     child: Text(I18n.of(context)!.translationsForLocale().home.ok),
-                    onPressed: () => {
-                          // moving back to profile page after changing password
-                          Navigator.popUntil(context, ModalRoute.withName('/')),
-                        }),
+                    onPressed: () {
+                      // moving back to profile page after changing password
+                      Navigator.of(context).popUntil((route) => route.isFirst);
+                    }),
               ],
             );
           },
@@ -131,13 +131,13 @@ class _ChangePassword extends State<ChangePasswordPage> {
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.headline2,
                         ),
-                        SizedBox(height: 16),
+                        const SizedBox(height: 16),
                         Text(
                           dic.profile.hintThenEnterANewPin,
                           textAlign: TextAlign.center,
                           style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black),
                         ),
-                        SizedBox(height: 30),
+                        const SizedBox(height: 30),
                         EncointerTextFormField(
                           labelText: dic.profile.passOld,
                           controller: _passOldCtrl,
@@ -149,9 +149,9 @@ class _ChangePassword extends State<ChangePasswordPage> {
                           },
                           obscureText: true,
                           inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-                          keyboardType: TextInputType.numberWithOptions(decimal: true),
+                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         EncointerTextFormField(
                           labelText: dic.profile.yourNewPin,
                           controller: _passCtrl,
@@ -163,9 +163,9 @@ class _ChangePassword extends State<ChangePasswordPage> {
                           },
                           obscureText: true,
                           inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-                          keyboardType: TextInputType.numberWithOptions(decimal: true),
+                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         EncointerTextFormField(
                           labelText: dic.profile.pleaseConfirmYourNewPin,
                           controller: _pass2Ctrl,
@@ -177,7 +177,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                           },
                           obscureText: true,
                           inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly],
-                          keyboardType: TextInputType.numberWithOptions(decimal: true),
+                          keyboardType: const TextInputType.numberWithOptions(decimal: true),
                         ),
                       ],
                     ),
@@ -188,14 +188,14 @@ class _ChangePassword extends State<ChangePasswordPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _submitting ? CupertinoActivityIndicator() : Container(),
+                    _submitting ? const CupertinoActivityIndicator() : Container(),
                     Text(
                       dic.profile.contactSave,
                       style: Theme.of(context).textTheme.headline3!.copyWith(color: ZurichLion.shade50),
                     ),
                   ],
                 ),
-                onPressed: _submitting ? null : _onSave,
+                onPressed: _submitting ? null : () => _onSave(context.read<AppStore>()),
               ),
             ],
           ),

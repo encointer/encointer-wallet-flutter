@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:encointer_wallet/config/consts.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 
 class Ipfs {
   // Todo: remove default -> migrate bazaar to use ipfs field from webApi instance
@@ -39,28 +41,28 @@ class Ipfs {
       }
       var objectData = object.data.substring(indexJsonBegin, indexJsonEnd + 1);
       return objectData;
-    } catch (e) {
-      print(e);
+    } catch (e, s) {
+      Log.e('$e', 'Ipfs', s);
       return 0;
     }
   }
 
   Future<SvgPicture> getCommunityIcon(String? cid) async {
     if (cid == null || cid.isEmpty) {
-      print("[IPFS] return default encointer icon because ipfs-cid is not set");
+      Log.d('[IPFS] return default encointer icon because ipfs-cid is not set', 'Ipfs');
       return SvgPicture.asset(fall_back_community_icon);
     }
 
     try {
       var data = await getData(getIconsPath(cid));
       if (data == null) {
-        print("[Ipfs] could not find community icon");
+        Log.d('[Ipfs] could not find community icon', 'Ipfs');
         return SvgPicture.asset(fall_back_community_icon);
       }
 
       return SvgPicture.string(data);
-    } catch (e) {
-      print("[Ipfs] error getting communityIcon: $e");
+    } catch (e, s) {
+      Log.e('[Ipfs] error getting communityIcon: $e', 'Ipfs', s);
       return SvgPicture.asset(fall_back_community_icon);
     }
   }
@@ -73,8 +75,9 @@ class Ipfs {
       var object = Object.fromJson(response.data);
 
       return object.data;
-    } catch (e) {
+    } catch (e, s) {
       // otherwise we would have to adjust the return type.
+      Log.e('$e', 'Ipfs', s);
       throw (e.toString());
     }
   }
@@ -90,7 +93,7 @@ class Ipfs {
       _dio.options.connectTimeout = 5000; //5s
       _dio.options.receiveTimeout = 3000;
 
-      final response = await _dio.post("/ipfs/", data: image.openRead());
+      final response = await _dio.post('/ipfs/', data: image.openRead());
       String imageHash = response.headers.map['ipfs-hash'].toString(); // [ipfs_hash]
 
       // TODO: Nicer solution
@@ -102,9 +105,9 @@ class Ipfs {
       imageHash = imageHash.substring(imageHashBegin, imageHashEnd + 1);
 
       return imageHash;
-    } catch (e) {
-      print("Ipfs upload of Image error ${e.toString()}");
-      return "";
+    } catch (e, s) {
+      Log.e('Ipfs upload of Image error $e', 'Ipfs', s);
+      return '';
     }
   }
 
@@ -115,7 +118,7 @@ class Ipfs {
       _dio.options.connectTimeout = 5000; //5s
       _dio.options.receiveTimeout = 3000;
 
-      final response = await _dio.post("/ipfs/", data: json);
+      final response = await _dio.post('/ipfs/', data: json);
       String jsonHash = response.headers.map['ipfs-hash'].toString(); // [ipfs_hash]
 
       // TODO: Nicer solution
@@ -127,9 +130,9 @@ class Ipfs {
       jsonHash = jsonHash.substring(jsonHashBegin, jsonHashEnd + 1);
 
       return jsonHash;
-    } catch (e) {
-      print("Ipfs upload of json error ${e.toString()}");
-      return "";
+    } catch (e, s) {
+      Log.e('Ipfs upload of json error $e', 'Ipfs', s);
+      return '';
     }
   }
 }
@@ -138,13 +141,13 @@ const String getRequest = '/api/v0/object/get?arg=';
 
 class IpfsDio {
   IpfsDio([BaseOptions? options]) {
-    this.dio = Dio(options);
+    dio = Dio(options);
   }
 
   late Dio dio;
 
   Future<Response<T>> get<T>(String cid) async {
-    print("[IPFS] fetching data from: ${dio.options.baseUrl}$getRequest$cid}");
+    Log.d('[IPFS] fetching data from: ${dio.options.baseUrl}$getRequest$cid', 'Ipfs');
     return dio.get('$getRequest$cid');
   }
 }
@@ -167,5 +170,5 @@ class Object {
     return Object(data: json['Data'], links: json['Links']);
   }
 
-  Map<String, dynamic> toJson() => <String, dynamic>{'links': this.links, 'data': this.data};
+  Map<String, dynamic> toJson() => <String, dynamic>{'links': links, 'data': data};
 }

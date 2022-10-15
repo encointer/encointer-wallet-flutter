@@ -1,7 +1,8 @@
 import 'dart:convert';
+
+import 'package:encointer_wallet/models/bazaar/business_data.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-import 'business_data.dart';
 part 'account_business_tuple.g.dart';
 
 /// flutter pub run build_runner build --delete-conflicting-outputs
@@ -25,5 +26,6 @@ class AccountBusinessTuple {
   }
 
   factory AccountBusinessTuple.fromJson(Map<String, dynamic> json) => _$AccountBusinessTupleFromJson(json);
+
   Map<String, dynamic> toJson() => _$AccountBusinessTupleToJson(this);
 }

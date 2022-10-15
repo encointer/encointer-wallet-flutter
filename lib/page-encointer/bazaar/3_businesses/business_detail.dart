@@ -1,13 +1,15 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
+
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/businesses_on_map.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_horizontal.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
-import "package:latlong2/latlong.dart";
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class BusinessDetail extends StatelessWidget {
+  BusinessDetail(this.business, {Key? key}) : super(key: key);
   final BazaarBusinessData? business;
   final double cardHeight = 200;
   final double cardWidth = 160;
@@ -19,8 +21,8 @@ class BusinessDetail extends StatelessWidget {
       appBar: AppBar(
         title: Row(
           children: [
-            Text("${business!.title}"),
-            SizedBox(
+            Text(business!.title),
+            const SizedBox(
               width: 6,
             ),
             business!.icon
@@ -31,17 +33,17 @@ class BusinessDetail extends StatelessWidget {
         children: [
           Column(
             children: [
-              Container(padding: EdgeInsets.all(4), child: business!.image),
+              Container(padding: const EdgeInsets.all(4), child: business!.image),
               Align(
                   alignment: Alignment.topLeft,
                   child: Container(
-                    padding: EdgeInsets.fromLTRB(2, 8, 0, 16),
-                    child: Text("${business!.description}"),
+                    padding: const EdgeInsets.fromLTRB(2, 8, 0, 16),
+                    child: Text(business!.description),
                   )),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
+                  const Expanded(
                     flex: 2,
                     child: SmallLeaflet(),
                   ),
@@ -50,7 +52,7 @@ class BusinessDetail extends StatelessWidget {
                     child: Column(children: [
                       // OpeningHoursTable(business.openingHours),
                       Card(
-                        margin: EdgeInsets.fromLTRB(4, 0, 2, 0),
+                        margin: const EdgeInsets.fromLTRB(4, 0, 2, 0),
                         child: DataTable(
                           columns: [
                             DataColumn(label: Text(dic.bazaar.day)),
@@ -65,7 +67,7 @@ class BusinessDetail extends StatelessWidget {
                             (int index) => DataRow(
                               cells: <DataCell>[
                                 DataCell(
-                                  Container(width: 30, child: Text(business!.openingHours.getDayString(index))),
+                                  SizedBox(width: 30, child: Text(business!.openingHours.getDayString(index))),
                                 ),
                                 DataCell(Text(
                                   business!.openingHours.getOpeningHoursFor(index).toString(),
@@ -86,8 +88,6 @@ class BusinessDetail extends StatelessWidget {
       ),
     );
   }
-
-  BusinessDetail(this.business);
 }
 
 class SmallLeaflet extends StatelessWidget {
@@ -99,7 +99,7 @@ class SmallLeaflet extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
+        SizedBox(
           height: 257,
           child: FlutterMap(
             options: MapOptions(
@@ -109,7 +109,7 @@ class SmallLeaflet extends StatelessWidget {
             ),
             layers: [
               TileLayerOptions(
-                urlTemplate: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                 subdomains: ['a', 'b', 'c'],
               ),
               MarkerLayerOptions(
@@ -118,7 +118,7 @@ class SmallLeaflet extends StatelessWidget {
                     width: 20.0,
                     height: 20.0,
                     point: LatLng(47.389712, 8.517076),
-                    builder: (ctx) => Icon(
+                    builder: (ctx) => const Icon(
                       Icons.location_on,
                       color: Colors.indigoAccent,
                     ),
@@ -138,7 +138,7 @@ class SmallLeaflet extends StatelessWidget {
                     builder: (context) => BusinessesOnMap(),
                   ))
             },
-            child: Icon(Icons.fullscreen, size: 40),
+            child: const Icon(Icons.fullscreen, size: 40),
           ),
         )
       ],

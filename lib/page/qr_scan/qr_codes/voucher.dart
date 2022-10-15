@@ -1,8 +1,9 @@
-import '../../../models/communities/community_identifier.dart';
-import 'qr_code_base.dart';
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/page/qr_scan/qr_codes/qr_code_base.dart';
 
 class VoucherQrCode extends QrCode<VoucherData> {
   VoucherQrCode.withData(VoucherData data) : super(data);
+
   VoucherQrCode({
     required String voucherUri,
     required CommunityIdentifier cid,
@@ -10,12 +11,14 @@ class VoucherQrCode extends QrCode<VoucherData> {
     required String issuer,
   }) : super(VoucherData(voucherUri: voucherUri, cid: cid, network: network, issuer: issuer));
 
+  @override
   QrCodeContext? context = QrCodeContext.voucher;
 
+  @override
   QrCodeVersion? version = QrCodeVersion.v2_0;
 
   static VoucherQrCode fromPayload(String payload) {
-    return fromQrFields(payload.split("\n"));
+    return fromQrFields(payload.split('\n'));
   }
 
   static VoucherQrCode fromQrFields(List<String> fields) {
@@ -44,6 +47,7 @@ class VoucherData implements ToQrFields {
   /// Name of issuer.
   final String issuer;
 
+  @override
   List<String> toQrFields() {
     return [
       voucherUri,
@@ -54,7 +58,6 @@ class VoucherData implements ToQrFields {
   }
 
   static VoucherData fromQrFields(List<String> fields) {
-    print('----------- fields $fields');
     return VoucherData(
       voucherUri: fields[0],
       cid: CommunityIdentifier.fromFmtString(fields[1]),

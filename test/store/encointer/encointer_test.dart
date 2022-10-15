@@ -12,13 +12,11 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  final AppStore root = AppStore(MockLocalStorage(), config: StoreConfig.Test);
 
   group('EncointerStore test', () {
     test('encointer store initialization, serialization and cache works', () async {
-      globalAppStore = AppStore(MockLocalStorage(), config: StoreConfig.Test);
-      final AppStore root = globalAppStore;
       await root.init('_en');
-
       accList = [testAcc];
       currentAccountPubKey = accList[0]['pubKey'];
 
@@ -48,23 +46,23 @@ void main() {
       // - CommunityAccountStore(network, testCid, store.account.currentAddress)
       encointerStore.setChosenCid(testCid);
 
-      var testCommunityStore = new CommunityStore(testNetwork, testCid);
+      var testCommunityStore = CommunityStore(testNetwork, testCid);
       await testCommunityStore.initCommunityAccountStore(root.account.currentAddress);
 
       Map<String, dynamic> targetJson = {
-        "network": testNetwork,
-        "currentPhase": "Registering",
-        "nextPhaseTimestamp": 3,
-        "phaseDurations": Map<String, dynamic>.of({}),
-        "currentCeremonyIndex": 2,
-        "communityIdentifiers": testCommunityIdentifiers.map((c) => c.toJson()).toList(),
-        "communities": testCommunities.map((cn) => cn.toJson()).toList(),
-        "chosenCid": testCid.toJson(),
-        "accountStores": Map<String, dynamic>.of({}),
-        "bazaarStores": Map<String, dynamic>.of({
-          testCidFmt: new BazaarStore(testNetwork, testCid).toJson(),
+        'network': testNetwork,
+        'currentPhase': 'Registering',
+        'nextPhaseTimestamp': 3,
+        'phaseDurations': Map<String, dynamic>.of({}),
+        'currentCeremonyIndex': 2,
+        'communityIdentifiers': testCommunityIdentifiers.map((c) => c.toJson()).toList(),
+        'communities': testCommunities.map((cn) => cn.toJson()).toList(),
+        'chosenCid': testCid.toJson(),
+        'accountStores': Map<String, dynamic>.of({}),
+        'bazaarStores': Map<String, dynamic>.of({
+          testCidFmt: BazaarStore(testNetwork, testCid).toJson(),
         }),
-        "communityStores": Map<String, dynamic>.of({
+        'communityStores': Map<String, dynamic>.of({
           testCidFmt: testCommunityStore.toJson(),
         }),
       };
@@ -79,8 +77,6 @@ void main() {
     });
 
     test('purging encointer-store works and initializing new works', () async {
-      globalAppStore = AppStore(MockLocalStorage());
-      final AppStore root = globalAppStore;
       accList = [testAcc];
       currentAccountPubKey = accList[0]['pubKey'];
 

@@ -23,10 +23,10 @@ final appThemeEncointer = ThemeData(
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       elevation: 0,
-      primary: ZurichLion.shade50,
-      onPrimary: ZurichLion.shade500,
+      backgroundColor: ZurichLion.shade50,
+      foregroundColor: ZurichLion.shade500,
       shadowColor: Colors.transparent,
-      shape: RoundedRectangleBorder(
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(15)),
       ),
     ),
@@ -82,7 +82,7 @@ const Color encointerLightBlue = Color(0xffF4F8F9); // TODO issue #334
 
 // TODO later: maybe turn into a function that takes the 2 colors and returns the gradient
 final primaryGradient = LinearGradient(
-  begin: Alignment(-.9, 0),
-  end: Alignment(0.1, -.1),
+  begin: const Alignment(-.9, 0),
+  end: const Alignment(0.1, -.1),
   colors: <Color>[ZurichLion.shade400, ZurichLion.shade600],
 );

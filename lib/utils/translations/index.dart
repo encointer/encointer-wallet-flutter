@@ -32,13 +32,13 @@ class I18n {
 
   /// this will be used in different places, also supportedLocales.keys
   static final Map<Locale, Translations> supportedLocales = {
-    Locale('en', ''): TranslationsEn(),
-    Locale('de', ''): TranslationsDe(),
-    Locale('zh', ''): TranslationsZh(),
+    const Locale('en', ''): TranslationsEn(),
+    const Locale('de', ''): TranslationsDe(),
+    const Locale('zh', ''): TranslationsZh(),
   };
 
   Translations translationsForLocale() {
     var translations = supportedLocales[locale];
-    return translations != null ? translations : TranslationsEn();
+    return translations ?? TranslationsEn();
   }
 }

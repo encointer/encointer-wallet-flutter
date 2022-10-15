@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
@@ -16,10 +17,10 @@ class CeremonyLocationButton extends StatelessWidget {
     var dic = I18n.of(context)!.translationsForLocale();
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(vertical: 16),
+        padding: const EdgeInsets.symmetric(vertical: 16),
         // make splash animation as high as the container
-        primary: Colors.white,
-        onPrimary: ZurichLion.shade500,
+        backgroundColor: Colors.white,
+        foregroundColor: ZurichLion.shade500,
         shadowColor: ZurichLion.shade500,
         elevation: 0,
         shape: RoundedRectangleBorder(
@@ -29,9 +30,9 @@ class CeremonyLocationButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Iconsax.location),
-          SizedBox(width: 6),
-          Text('${dic.encointer.showCeremonyLocation}'),
+          const Icon(Iconsax.location),
+          const SizedBox(width: 6),
+          Text(dic.encointer.showCeremonyLocation),
         ],
       ),
       onPressed: onPressed,

@@ -2,7 +2,10 @@ import 'dart:async';
 
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
-const EncointerJsService = "EncointerJsService";
+import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
+
+const EncointerJsService = 'EncointerJsService';
 
 /// Core interface to talk with our JS-service
 class JSApi {
@@ -26,14 +29,13 @@ class JSApi {
 
     _web = HeadlessInAppWebView(
       initialData: InAppWebViewInitialData(data: jSSourceHtmlContainer(jsServiceEncointer)),
-      onConsoleMessage: (controller, message) => print("JS-Console: ${message.message}"),
+      onConsoleMessage: (controller, message) => Log.d('JS-Console: ${message.message}', 'JSApi'),
       onWebViewCreated: (controller) async {
-        print("Adding the PolkaWallet javascript handler");
-
+        Log.d('Adding the PolkaWallet javascript handler', 'JSApi');
         controller.addJavaScriptHandler(
             handlerName: EncointerJsService,
             callback: (args) {
-              print('[JavaScripHandler/callback]: ${args.toString()}');
+              Log.d('[JavaScripHandler/callback]: $args', 'JSApi');
 
               var res = args[0];
 
@@ -60,11 +62,11 @@ class JSApi {
     await _web!.run();
 
     // log updates about the webView state until it is ready.
-    Timer.periodic(Duration(seconds: 2), (timer) {
+    Timer.periodic(const Duration(seconds: 2), (timer) {
       if (!initWebViewCompleter.isCompleted) {
-        _log("webView is being initialized...");
+        Log.d('webView is being initialized...', 'JSApi');
       } else {
-        _log("webView is ready");
+        Log.d('webView is ready', 'JSApi');
         timer.cancel();
       }
     });
@@ -90,7 +92,7 @@ class JSApi {
       for (String i in _msgCompleters.keys) {
         String call = code.split('(')[0];
         if (i.compareTo(call) == 0) {
-          print('request $call loading');
+          Log.d('request $call loading', 'JSApi');
           return _msgCompleters[i]!.future;
         }
       }
@@ -101,22 +103,41 @@ class JSApi {
       return res;
     }
 
-    Completer c = new Completer();
+    Completer c = Completer();
 
     String method = 'uid=${_getEvalJavascriptUID()};${code.split('(')[0]}';
     _msgCompleters[method] = c;
 
     // Send the result from JS to dart after `code` completed.
-    String script = """
+    String script = '''
         $code.then(function(res) {
           window.flutter_inappwebview
             .callHandler("$EncointerJsService", { path: "$method", data: res });
         }).catch(function(err) {
           window.flutter_inappwebview
             .callHandler("$EncointerJsService", { path: "$method:error", data: err.message  });
-        })""";
+        })''';
 
-    _web!.webViewController.evaluateJavascript(source: script);
+    try {
+      // ignore: unused_local_variable
+      final v = await _web!.webViewController.evaluateJavascript(source: script);
+    } catch (e, s) {
+      // Executing a background task with the workmanager when the app is in
+      // foreground kills the platform channel and we get a `MissingPluginException`
+      // error. Hence, we must recreate the platform channel.
+      //
+      // See: https://github.com/encointer/encointer-wallet-flutter/issues/801.
+
+      Log.e(' $e', 'js_api', s);
+      Log.d('Re-initializing webView because the platform channel broke down', 'js_api');
+      await webApi.init().timeout(
+            const Duration(seconds: 20),
+            onTimeout: () => Log.d('webApi.init() has run into a timeout. We might be offline.'),
+          );
+
+      final v = await _web!.webViewController.evaluateJavascript(source: script);
+      Log.d('EvaluateJavascript result after re-init of webView: $v', 'js_api');
+    }
 
     return c.future;
   }
@@ -141,19 +162,19 @@ class JSApi {
   }
 
   Future<void> closeWebView() async {
-    print("[JSApi]: closing webView");
+    Log.d('[JSApi]: closing webView', 'JSApi');
     if (_web != null) {
       await _web!.dispose();
       _web = null;
     } else {
-      print("[JSApi]: Did not close webView because it was closed already.");
+      Log.d('[JSApi]: Did not close webView because it was closed already.', 'JSApi');
     }
   }
 }
 
 /// Wraps `jSSource` in a html document ready to be hoisted in a webView.
 String jSSourceHtmlContainer(String jSSource) {
-  return """
+  return '''
   <!DOCTYPE html>
   <html lang="en">
     <body>
@@ -162,9 +183,5 @@ String jSSourceHtmlContainer(String jSSource) {
       </script>
     </body>
   </html>
-  """;
-}
-
-void _log(String msg) {
-  print("[jsApi] $msg");
+  ''';
 }

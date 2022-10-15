@@ -1,14 +1,14 @@
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/toggle_buttons_with_title.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/material.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter/material.dart';
 
 class OfferingForm extends StatefulWidget {
-  const OfferingForm();
+  const OfferingForm({Key? key}) : super(key: key);
 
   @override
-  _OfferingFormState createState() => _OfferingFormState();
+  State<OfferingForm> createState() => _OfferingFormState();
 }
 
 class _OfferingFormState extends State<OfferingForm> {
@@ -36,7 +36,7 @@ class _OfferingFormState extends State<OfferingForm> {
                     width: 150,
                     color: Colors.green,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 16,
                   ),
                   Container(
@@ -44,7 +44,7 @@ class _OfferingFormState extends State<OfferingForm> {
                     width: 150,
                     color: Colors.grey,
                     child: ListTile(
-                      leading: Icon(Icons.add_a_photo),
+                      leading: const Icon(Icons.add_a_photo),
                       title: Text(dic.bazaar.photoAdd),
                     ),
                   ),
@@ -79,14 +79,14 @@ class _OfferingFormState extends State<OfferingForm> {
       floatingActionButton: ButtonBar(
         children: <Widget>[
           ElevatedButton(
-            child: Row(children: [Icon(Icons.delete), Text(dic.bazaar.delete)]),
+            child: Row(children: [const Icon(Icons.delete), Text(dic.bazaar.delete)]),
             onPressed: () {
               // TODO modify state
               Navigator.pop(context);
             },
           ),
           ElevatedButton(
-            child: Row(children: [Icon(Icons.check), Text(dic.bazaar.save)]),
+            child: Row(children: [const Icon(Icons.check), Text(dic.bazaar.save)]),
             onPressed: () {
               // TODO modify state
               Navigator.pop(context);

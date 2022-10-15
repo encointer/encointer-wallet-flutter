@@ -1,9 +1,12 @@
 import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
-import '../../../../../models/claim_of_attendance/claim_of_attendance.dart';
-import '../../../../../models/communities/community_identifier.dart';
-import '../../../../../models/index.dart';
+
+import 'package:encointer_wallet/models/claim_of_attendance/claim_of_attendance.dart';
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 
 part 'community_account_store.g.dart';
 
@@ -51,7 +54,7 @@ abstract class _CommunityAccountStore with Store {
   ///
   /// Map: claimantPublicKey -> ClaimOfAttendance
   @observable
-  ObservableMap<String, ClaimOfAttendance>? participantsClaims = new ObservableMap();
+  ObservableMap<String, ClaimOfAttendance>? participantsClaims = ObservableMap();
 
   /// This should be set to true once the attestations have been sent to chain.
   @observable
@@ -68,37 +71,37 @@ abstract class _CommunityAccountStore with Store {
 
   @action
   void setParticipantType([ParticipantType? type]) {
-    _log("Set participant type: ${participantType.toString()}");
-    this.participantType = type;
+    Log.d('Set participant type: $participantType', 'CommunityAccountStore');
+    participantType = type;
     writeToCache();
   }
 
   @action
   void purgeParticipantType() {
     if (participantType != null) {
-      _log("Purging participantType.");
-      this.participantType = null;
+      Log.d('Purging participantType.', 'CommunityAccountStore');
+      participantType = null;
       writeToCache();
     }
   }
 
   @action
   void setMeetup(Meetup meetup) {
-    _log("Set meetup: ${meetup.toJson()}");
+    Log.d('Set meetup: ${meetup.toJson()}', 'CommunityAccountStore');
     this.meetup = meetup;
     writeToCache();
   }
 
   @action
   void setMeetupCompleted() {
-    _log("settingMeetupCompleted");
+    Log.d('settingMeetupCompleted', 'CommunityAccountStore');
     meetupCompleted = true;
     writeToCache();
   }
 
   @action
   void clearMeetupCompleted() {
-    _log("clearing meetupCompleted");
+    Log.d('clearing meetupCompleted', 'CommunityAccountStore');
     meetupCompleted = false;
     writeToCache();
   }
@@ -106,7 +109,7 @@ abstract class _CommunityAccountStore with Store {
   @action
   void purgeMeetup() {
     if (meetup != null) {
-      _log("Purging meetup.");
+      Log.d('Purging meetup.', 'CommunityAccountStore');
       meetup = null;
       writeToCache();
     }
@@ -114,7 +117,7 @@ abstract class _CommunityAccountStore with Store {
 
   @action
   void purgeParticipantsClaims() {
-    _log("Purging participantsClaims.");
+    Log.d('Purging participantsClaims.', 'CommunityAccountStore');
     participantsClaims!.clear();
     writeToCache();
   }
@@ -125,7 +128,7 @@ abstract class _CommunityAccountStore with Store {
 
   @action
   void addParticipantClaim(ClaimOfAttendance claim) {
-    _log("adding participantsClaims.");
+    Log.d('adding participantsClaims.', 'CommunityAccountStore');
     participantsClaims![claim.claimantPublic!] = claim;
     writeToCache();
   }
@@ -142,7 +145,7 @@ abstract class _CommunityAccountStore with Store {
   }
 
   void initStore(Function? cacheFn) {
-    this._cacheFn = cacheFn as Future<void> Function()?;
+    _cacheFn = cacheFn as Future<void> Function()?;
   }
 
   Future<void> writeToCache() {
@@ -152,8 +155,4 @@ abstract class _CommunityAccountStore with Store {
       return Future.value(null);
     }
   }
-}
-
-_log(String msg) {
-  print("[CommunityAccountStore] $msg");
 }

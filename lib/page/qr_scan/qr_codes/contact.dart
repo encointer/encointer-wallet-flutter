@@ -1,5 +1,5 @@
-import '../../../models/communities/community_identifier.dart';
-import 'qr_code_base.dart';
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/page/qr_scan/qr_codes/qr_code_base.dart';
 
 class ContactQrCode extends QrCode<ContactData> {
   ContactQrCode.withData(
@@ -15,23 +15,25 @@ class ContactQrCode extends QrCode<ContactData> {
     this.version = QrCodeVersion.v1_0,
   }) : super(ContactData(account: account, cid: cid, network: network, label: label));
 
+  @override
   QrCodeContext? context = QrCodeContext.contact;
 
+  @override
   QrCodeVersion? version;
 
   @override
   String toQrPayload() {
     final qrFields = [context.toQrField(), version.toVersionNumber()];
     if (version == QrCodeVersion.v1_0) {
-      qrFields.addAll(this.data.toQrFields());
+      qrFields.addAll(data.toQrFields());
     } else {
-      qrFields.addAll(this.data.toQrFieldsV2());
+      qrFields.addAll(data.toQrFieldsV2());
     }
     return qrFields.join(QR_CODE_FIELD_SEPARATOR);
   }
 
   static ContactQrCode fromPayload(String payload) {
-    return fromQrFields(payload.split("\n"));
+    return fromQrFields(payload.split('\n'));
   }
 
   static ContactQrCode fromQrFields(List<String> fields) {
@@ -70,12 +72,13 @@ class ContactData implements ToQrFields {
   final String label;
 
   // implicitly is v1 to satisfy interface
+  @override
   List<String> toQrFields() {
-    return [account, "", "", label];
+    return [account, '', '', label];
   }
 
   List<String> toQrFieldsV2() {
-    return [account, cid?.toFmtString() ?? "", network ?? "", label];
+    return [account, cid?.toFmtString() ?? '', network ?? '', label];
   }
 
   static ContactData fromQrFieldsV1(List<String> fields) {

@@ -1,8 +1,9 @@
 import 'dart:convert';
+
+import 'package:encointer_wallet/models/bazaar/account_business_tuple.dart';
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
-import '../../../../models/bazaar/account_business_tuple.dart';
-import '../../../../models/communities/community_identifier.dart';
 
 part 'bazaar_store.g.dart';
 
@@ -45,7 +46,7 @@ abstract class _BazaarStore with Store {
   }
 
   void initStore(Function? cacheFn) {
-    this._cacheFn = cacheFn as Future<void> Function()?;
+    _cacheFn = cacheFn as Future<void> Function()?;
   }
 
   Future<void> writeToCache() {

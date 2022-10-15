@@ -17,7 +17,7 @@ class SubmitButtonSecondary extends StatefulWidget {
   final Future<void> Function(BuildContext)? onPressed;
 
   @override
-  _SubmitButtonSecondaryState createState() => _SubmitButtonSecondaryState();
+  State<SubmitButtonSecondary> createState() => _SubmitButtonSecondaryState();
 }
 
 class _SubmitButtonSecondaryState extends State<SubmitButtonSecondary> {
@@ -36,7 +36,7 @@ class _SubmitButtonSecondaryState extends State<SubmitButtonSecondary> {
   @override
   Widget build(BuildContext context) {
     return SecondaryButtonWide(
-      child: !_submitting ? widget.child : CupertinoActivityIndicator(),
+      child: !_submitting ? widget.child : const CupertinoActivityIndicator(),
       onPressed: (!_submitting && widget.onPressed != null) ? _onPressed : null,
     );
   }

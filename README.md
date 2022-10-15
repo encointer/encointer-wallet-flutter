@@ -72,7 +72,7 @@ and find the output in `build/app/outputs/bundle/release/app-release.aab`
 
 #### Dev hints
 
-Currently supports flutter: 2.02
+Currently supports flutter: 3.3.4
   
 ### Run tests
 
@@ -148,16 +148,20 @@ command must be run to update the `*.g` files.
 
 *  `flutter pub run build_runner build --delete-conflicting-outputs` 
 
-### Release Flow
+### App Release
 
-F-Droid triggers builds based on the version it reads from pubspec.yaml which it reads from branch `beta` HEAD`.
-AppCenter automatically builds and deploys the HEAD of `beta`
+#### Pre-release testing
+There is quite some manual testing, which we can't automate currently. Before a release, an issue should be created
+based on the `Release Testing Rococo` template. It will generate an issue with a task list of the features that need to
+be tested. Two things need to be inserted into the template: 1. The commit that is tested. 2. The version that should be
+released after testing.
 
-VersionName should follow semver. Minor version bump on pre-1.0.0 release indicates breaking change
+#### Release flow
+* VersionName should follow the semver policy.
+* VersionCode should monotonically increase by 1 for every tagged build
 
-VersionCode should monotonically increase by 1 for every tagged build
-
-  # bump version on some commit on master
+##### AppCenter (Google Play Store & Apple AppStore)
+The AppCenter automatically builds and deploys the HEAD of `beta`.
 
 ```shell 
   git checkout master
@@ -169,6 +173,11 @@ VersionCode should monotonically increase by 1 for every tagged build
   git push
 ```
 
-## Acknowledgements
+##### F-droid
+F-droid triggers builds based on tags. We will use a special tag format for the f-droid releases:, e.g. `vx.x.x-fdroid`.
 
+Note: We have a different release branch for f-droid, as we had to use another, less performant scanner library to meet
+FOSS constraints.
+
+## Acknowledgements
 This app has been built based on [polkawallet.io](https://polkawallet.io)

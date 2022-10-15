@@ -1,10 +1,13 @@
-import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/business_form_state.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
+import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/business_form_state.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+
 class OpeningHours extends StatelessWidget {
+  const OpeningHours({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -18,9 +21,8 @@ class OpeningHours extends StatelessWidget {
 }
 
 class OpeningHoursViewForDay extends StatelessWidget {
+  OpeningHoursViewForDay(this.day, {Key? key}) : super(key: key);
   final day;
-
-  OpeningHoursViewForDay(this.day);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,7 @@ class OpeningHoursViewForDay extends StatelessWidget {
 
     return Card(
       child: ConstrainedBox(
-        constraints: BoxConstraints(minHeight: 36),
+        constraints: const BoxConstraints(minHeight: 36),
         child: Column(
           children: [
             Row(
@@ -39,7 +41,7 @@ class OpeningHoursViewForDay extends StatelessWidget {
                 Observer(
                   builder: (BuildContext context) => IconButton(
                     color: day == openingHours.dayOnFocus ? Colors.lightGreenAccent : Colors.blueGrey,
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.add_circle,
                     ),
                     iconSize: 36,
@@ -50,10 +52,10 @@ class OpeningHoursViewForDay extends StatelessWidget {
                     },
                   ),
                 ),
-                Container(
+                SizedBox(
                   width: 32,
                   child: Text(
-                    "${openingHours.getDayString(day)}",
+                    openingHours.getDayString(day),
                   ),
                 ),
                 Observer(
@@ -74,11 +76,11 @@ class OpeningHoursViewForDay extends StatelessWidget {
                   child: Observer(
                     builder: (_) => ListView.builder(
                         shrinkWrap: true,
-                        physics: ClampingScrollPhysics(),
+                        physics: const ClampingScrollPhysics(),
                         itemCount: openingHoursForThisDay!.openingIntervals.length,
                         itemBuilder: (_, index) {
                           final interval = openingHoursForThisDay.openingIntervals[index];
-                          return Container(
+                          return SizedBox(
                               width: 200,
                               child: Row(
                                 children: [
@@ -88,7 +90,7 @@ class OpeningHoursViewForDay extends StatelessWidget {
                                   ),
                                   Observer(
                                     builder: (_) => IconButton(
-                                      icon: Icon(
+                                      icon: const Icon(
                                         Icons.remove_circle,
                                         color: Colors.red,
                                       ),
@@ -107,7 +109,7 @@ class OpeningHoursViewForDay extends StatelessWidget {
                 ),
                 Observer(
                   builder: (_) => IconButton(
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.paste,
                       color: Colors.blueGrey,
                     ),
@@ -140,7 +142,7 @@ class AddOpeningIntervalForDay extends StatelessWidget {
   final _textController = TextEditingController(text: '');
   final day;
 
-  AddOpeningIntervalForDay(this.day);
+  AddOpeningIntervalForDay(this.day, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -158,7 +160,7 @@ class AddOpeningIntervalForDay extends StatelessWidget {
         decoration: InputDecoration(
             labelText: I18n.of(context)!.translationsForLocale().bazaar.timeIntervalAdd,
             hintText: I18n.of(context)!.translationsForLocale().bazaar.openningHoursInputHint,
-            contentPadding: EdgeInsets.all(8),
+            contentPadding: const EdgeInsets.all(8),
             errorText: openingHoursForDay!.timeFormatError),
         controller: _textController,
         textInputAction: TextInputAction.done,

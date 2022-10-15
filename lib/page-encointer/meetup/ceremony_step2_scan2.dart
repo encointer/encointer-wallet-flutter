@@ -1,21 +1,21 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:encointer_wallet/common/components/gradient_elements.dart';
-import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
-import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/page-encointer/meetup/scan_claim_qr_code.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:qr_flutter_fork/qr_flutter_fork.dart';
 
-import 'ceremony_progress_bar.dart';
-import 'ceremony_step3_finish.dart';
+import 'package:encointer_wallet/common/components/gradient_elements.dart';
+import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
+import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/page-encointer/meetup/ceremony_progress_bar.dart';
+import 'package:encointer_wallet/page-encointer/meetup/ceremony_step3_finish.dart';
+import 'package:encointer_wallet/page-encointer/meetup/scan_claim_qr_code.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class CeremonyStep2Scan extends StatelessWidget {
   const CeremonyStep2Scan(
@@ -42,15 +42,15 @@ class CeremonyStep2Scan extends StatelessWidget {
       ),
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.fromLTRB(30, 24, 30, 24),
+          padding: const EdgeInsets.fromLTRB(30, 24, 30, 24),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Expanded(
                 child: ListView(
                   children: [
-                    CeremonyProgressBar(progress: 2),
-                    SizedBox(height: 48),
+                    const CeremonyProgressBar(progress: 2),
+                    const SizedBox(height: 48),
                     Center(
                       child: Text(
                         dic.encointer.scan,
@@ -64,10 +64,10 @@ class CeremonyStep2Scan extends StatelessWidget {
                         style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black, height: 1.25),
                       ),
                     ),
-                    SizedBox(height: 12),
+                    const SizedBox(height: 12),
                     // Enhance brightness for the QR-code
-                    WakeLockAndBrightnessEnhancer(brightness: 1),
-                    Container(
+                    const WakeLockAndBrightnessEnhancer(brightness: 1),
+                    SizedBox(
                       width: 395,
                       height: 395,
                       child: FutureBuilder<Uint8List>(
@@ -79,7 +79,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                               errorCorrectionLevel: QrErrorCorrectLevel.L,
                             );
                           } else {
-                            return CupertinoActivityIndicator();
+                            return const CupertinoActivityIndicator();
                           }
                         },
                       ),
@@ -87,13 +87,13 @@ class CeremonyStep2Scan extends StatelessWidget {
                   ],
                 ),
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               ElevatedButton(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Iconsax.arrow_right_2),
-                    SizedBox(width: 12, height: 60),
+                    const Icon(Iconsax.arrow_right_2),
+                    const SizedBox(width: 12, height: 60),
                     Text(dic.encointer.closeMeetup, style: Theme.of(context).textTheme.headline3),
                   ],
                 ),
@@ -101,13 +101,13 @@ class CeremonyStep2Scan extends StatelessWidget {
                   Navigator.push(context, CupertinoPageRoute(builder: (_) => CeremonyStep3Finish(store, api)));
                 },
               ),
-              SizedBox(height: 12),
+              const SizedBox(height: 12),
               PrimaryButton(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Iconsax.scan_barcode),
-                    SizedBox(width: 12),
+                    const Icon(Iconsax.scan_barcode),
+                    const SizedBox(width: 12),
                     Text(
                       dic.encointer.scanOthers,
                       style: Theme.of(context).textTheme.headline3!.copyWith(color: ZurichLion.shade50),

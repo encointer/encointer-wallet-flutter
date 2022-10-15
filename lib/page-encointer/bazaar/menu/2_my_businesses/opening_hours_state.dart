@@ -2,6 +2,7 @@ import 'package:mobx/mobx.dart';
 
 part 'opening_hours_state.g.dart';
 
+// ignore: library_private_types_in_public_api
 class OpeningHoursState = _OpeningHoursState with _$OpeningHoursState;
 
 abstract class _OpeningHoursState with Store {
@@ -95,6 +96,7 @@ abstract class _OpeningHoursState with Store {
   }
 }
 
+// ignore: library_private_types_in_public_api
 class OpeningHoursForDayState = _OpeningHoursForDayState with _$OpeningHoursForDayState;
 
 /// EmptyList means closed
@@ -116,7 +118,7 @@ abstract class _OpeningHoursForDayState with Store {
       timeFormatError = null;
       openingIntervals.add(openingIntervalState);
     } catch (e) {
-      timeFormatError = "Invalid time format";
+      timeFormatError = 'Invalid time format';
     }
   }
 
@@ -137,7 +139,7 @@ abstract class _OpeningHoursForDayState with Store {
   String humanReadable() {
     String asString = '';
     if (openingIntervals.length == 0) {
-      asString += "(closed)";
+      asString += '(closed)';
     } else {
       for (var i = 0; i < openingIntervals.length; i++) {
         asString += openingIntervals[i].humanReadable();
@@ -148,6 +150,7 @@ abstract class _OpeningHoursForDayState with Store {
   }
 }
 
+// ignore: library_private_types_in_public_api
 class OpeningIntervalState = _OpeningIntervalState with _$OpeningIntervalState;
 
 /// start and end in minutes since midnight of that day
@@ -175,25 +178,19 @@ abstract class _OpeningIntervalState with Store {
 
   static int _parseTime(String time) {
     var timeLowerCase = time.toLowerCase();
-    var pm = timeLowerCase.contains("p") ? 12 * 60 : 0;
-    var indexOfMeridiem = timeLowerCase.indexOf(RegExp(r"a|p"));
+    var pm = timeLowerCase.contains('p') ? 12 * 60 : 0;
+    var indexOfMeridiem = timeLowerCase.indexOf(RegExp(r'a|p'));
     var timeClean = indexOfMeridiem > 0 ? timeLowerCase.substring(0, indexOfMeridiem) : timeLowerCase;
     var hoursMinutes = timeClean.split(':');
     var hours = int.parse(hoursMinutes[0].trim());
 
     // 12am is midnight, 12pm is noon.
-    hours = (hours == 12 && timeLowerCase.contains("m") ? 0 : hours);
+    hours = (hours == 12 && timeLowerCase.contains('m') ? 0 : hours);
     var minutes = hoursMinutes.length > 1 ? int.parse(hoursMinutes[1].trim()) : 0;
     return (hours * 60 + minutes + pm) % (24 * 60);
   }
 
   String humanReadable() {
-    return (start ~/ 60).toString() +
-        ":" +
-        (start % 60 + 100).toString().substring(1) +
-        " - " +
-        (end ~/ 60).toString() +
-        ":" +
-        (end % 60 + 100).toString().substring(1);
+    return '${start ~/ 60}:${(start % 60 + 100).toString().substring(1)} - ${end ~/ 60}:${(end % 60 + 100).toString().substring(1)}';
   }
 }

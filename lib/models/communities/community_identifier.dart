@@ -2,9 +2,8 @@ import 'dart:convert';
 
 import 'package:base58check/base58.dart';
 import 'package:base58check/base58check.dart';
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/foundation.dart';
-
-import '../../utils/format.dart';
 
 /// CommunityIdentifier consisting of a geohash and a 4-bytes crc code.
 class CommunityIdentifier {
@@ -12,6 +11,7 @@ class CommunityIdentifier {
 
   // [u8; 5]
   final List<int> geohash;
+
   // [u8; 4]
   final List<int> digest;
 
@@ -21,13 +21,13 @@ class CommunityIdentifier {
   }
 
   static CommunityIdentifier fromFmtString(String cid) {
-    Base58Codec codec = Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
+    Base58Codec codec = const Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
 
     return CommunityIdentifier(utf8.encode(cid.substring(0, 5)), codec.decode(cid.substring(5)));
   }
 
   String toFmtString() {
-    Base58Codec codec = Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
+    Base58Codec codec = const Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
 
     return utf8.decode(geohash) + codec.encode(digest);
   }
@@ -43,7 +43,7 @@ class CommunityIdentifier {
           listEquals(digest, other.digest);
 
   @override
-  int get hashCode => this.toFmtString().hashCode;
+  int get hashCode => toFmtString().hashCode;
 
   // JS-passes these values as hex-strings, but this would be more complicated to handle in dart.
   factory CommunityIdentifier.fromJson(Map<String, dynamic> json) =>

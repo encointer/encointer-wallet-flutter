@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 class MyOfferings extends StatelessWidget {
   final data = myOfferings;
 
+  MyOfferings({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,12 +30,12 @@ class MyOfferings extends StatelessWidget {
         ),
       ]),
       floatingActionButton: FloatingActionButton(
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
           onPressed: () {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => OfferingForm(),
+                builder: (context) => const OfferingForm(),
               ),
             );
           }),

@@ -1,10 +1,11 @@
 import 'dart:convert';
 
-import 'package:encointer_wallet/mocks/mock_qr_scan_page.dart';
-import 'package:encointer_wallet/mocks/restart_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_driver/driver_extension.dart';
 import 'package:rxdart/rxdart.dart';
+
+import 'package:encointer_wallet/mocks/mock_qr_scan_page.dart';
+import 'package:encointer_wallet/mocks/restart_widget.dart';
 
 /// Here we start the MockScanPage first with some random background. Afterwards we send the encoded background image
 /// from the driver to the app.
@@ -21,7 +22,7 @@ void main() async {
     stream.add(img);
 
     // to fix static analysis
-    return Future.value("DataHandler");
+    return Future.value('DataHandler');
   }
 
   enableFlutterDriverExtension(handler: dataHandler);
@@ -33,7 +34,7 @@ void main() async {
       initialRoute: MockQRScanPage.route,
       routes: {
         MockQRScanPage.route: (_) => RestartWidget(
-              initialData: MemoryImage(base64Decode("hell")),
+              initialData: MemoryImage(base64Decode('hell')),
               stream: stream,
               builder: (_, dynamic img) => MockQRScanPage(img),
             )

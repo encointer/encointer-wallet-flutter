@@ -1,12 +1,12 @@
 import 'dart:convert';
 
 import 'package:collection/collection.dart' show IterableExtension;
-import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/models/index.dart';
-
 import 'package:http/http.dart' as http;
 
-import '../../models/communities/community_identifier.dart';
+import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 
 Future<List<MeetupOverrides>> getMeetupOverrides() async {
   final response = await http.get(Uri.parse(encointer_feed_overrides));
@@ -29,20 +29,16 @@ Future<DateTime?> getMeetupTimeOverride(String network, CommunityIdentifier cid,
   );
 
   if (networkOverride == null) {
-    _log("No network specific override found");
+    Log.d('No network specific override found', 'getMeetupTimeOverride');
     return Future.value(null);
   }
 
   if (networkOverride.communities!.contains(cid.toFmtString())) {
     final meetupTimeOverride = networkOverride.getNextMeetupTime(DateTime.now(), phase);
-    _log("Found meetupTimeOverride: $meetupTimeOverride");
+    Log.d('Found meetupTimeOverride: $meetupTimeOverride', 'getMeetupTimeOverride');
     return meetupTimeOverride;
   } else {
-    _log("No community specific override found");
+    Log.d('No community specific override found', 'getMeetupTimeOverride');
     return Future.value(null);
   }
-}
-
-void _log(String msg) {
-  print("[EncointerFeed] $msg");
 }

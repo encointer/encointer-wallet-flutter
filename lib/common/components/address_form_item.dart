@@ -1,11 +1,13 @@
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
-import 'package:flutter/material.dart';
 
 class AddressFormItem extends StatelessWidget {
-  AddressFormItem(this.account, {this.label, this.onTap});
+  AddressFormItem(this.account, {Key? key, this.label, this.onTap}) : super(key: key);
   final String? label;
   final AccountData account;
   final Future<void> Function()? onTap;
@@ -14,14 +16,14 @@ class AddressFormItem extends StatelessWidget {
   Widget build(BuildContext context) {
     Color grey = Theme.of(context).unselectedWidgetColor;
 
-    String address = Fmt.addressOfAccount(account, globalAppStore);
+    String address = Fmt.addressOfAccount(account, context.watch<AppStore>());
 
     Column content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         label != null
             ? Container(
-                margin: EdgeInsets.only(top: 4),
+                margin: const EdgeInsets.only(top: 4),
                 child: Text(
                   label!,
                   style: TextStyle(color: grey),
@@ -29,16 +31,16 @@ class AddressFormItem extends StatelessWidget {
               )
             : Container(),
         Container(
-          margin: EdgeInsets.only(top: 4, bottom: 4),
-          padding: EdgeInsets.all(8),
+          margin: const EdgeInsets.only(top: 4, bottom: 4),
+          padding: const EdgeInsets.all(8),
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
+            borderRadius: const BorderRadius.all(Radius.circular(8)),
             border: Border.all(color: Theme.of(context).disabledColor, width: 0.5),
           ),
           child: Row(
             children: <Widget>[
               Container(
-                margin: EdgeInsets.only(right: 8),
+                margin: const EdgeInsets.only(right: 8),
                 child: AddressIcon(
                   address,
                   account.pubKey,

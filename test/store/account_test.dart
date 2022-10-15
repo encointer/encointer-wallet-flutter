@@ -1,7 +1,8 @@
+import 'package:flutter_test/flutter_test.dart';
+
 import 'package:encointer_wallet/mocks/data/mock_account_data.dart';
 import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
@@ -86,10 +87,10 @@ void main() {
 
       /// add observation account
       Map<String, dynamic> contact = {
-        "name": "gav",
-        "address": "FcxNWVy5RESDsErjwyZmPCW6Z8Y3fbfLzmou34YZTrbcraL",
-        "pubKey": "0x86b7409a11700afb027924cb40fa43889d98709ea35319d48fea85dd35004e64",
-        "observation": true,
+        'name': 'gav',
+        'address': 'FcxNWVy5RESDsErjwyZmPCW6Z8Y3fbfLzmou34YZTrbcraL',
+        'pubKey': '0x86b7409a11700afb027924cb40fa43889d98709ea35319d48fea85dd35004e64',
+        'observation': true,
       };
       await root.settings.addContact(contact);
       expect(store.accountListAll.length, 2);

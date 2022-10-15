@@ -1,19 +1,21 @@
 import 'dart:core';
+
 import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/tx_status.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/ui.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/translations/translations_home.dart';
+import 'package:encointer_wallet/utils/ui.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 /// Contains most of the logic from the `txConfirmPage.dart`, which was removed.
 
-const INSUFFICIENT_FUNDS_ERROR = "1010";
+const INSUFFICIENT_FUNDS_ERROR = '1010';
 
 /// Inner function to submit a tx via the JS interface.
 ///
@@ -44,8 +46,8 @@ Future<void> submitToJS(
   //   txInfo['proxy'] = _proxyAccount.pubKey;
   //   txInfo['ss58'] = store.settings.endpoint.ss58.toString();
   // }
-  print(txInfo);
-  print(args['params']);
+  Log.d('$txInfo', 'submitToJS');
+  Log.d('${args['params']}', 'submitToJS');
 
   var onTxFinishFn = (args['onFinish'] as Function(BuildContext, Map)?);
 
@@ -53,7 +55,7 @@ Future<void> submitToJS(
     if (showStatusSnackBar) {
       _showTxStatusSnackBar(
         getTxStatusTranslation(dic.home, store.account.txStatus),
-        CupertinoActivityIndicator(),
+        const CupertinoActivityIndicator(),
       );
     }
 
@@ -118,15 +120,15 @@ void _showTxStatusSnackBar(String status, Widget? leading) {
       leading: leading,
       title: Text(
         status,
-        style: TextStyle(color: Colors.black54),
+        style: const TextStyle(color: Colors.black54),
       ),
     ),
-    durationMillis: Duration(seconds: 12).inMilliseconds,
+    durationMillis: const Duration(seconds: 12).inMilliseconds,
   );
 }
 
 void _onTxFinish(BuildContext context, AppStore store, Map res, Function(BuildContext, Map) onTxFinish, bool mounted) {
-  print('callback triggered, blockHash: ${res['hash']}');
+  Log.d('callback triggered, blockHash: ${res['hash']}', '_onTxFinish');
   store.assets.setSubmitting(false);
 
   onTxFinish(context, res);
@@ -134,10 +136,10 @@ void _onTxFinish(BuildContext context, AppStore store, Map res, Function(BuildCo
   if (mounted) {
     RootSnackBar.show(
       ListTile(
-        leading: Container(width: 24, child: Image.asset('assets/images/assets/success.png')),
+        leading: SizedBox(width: 24, child: Image.asset('assets/images/assets/success.png')),
         title: Text(
           I18n.of(context)!.translationsForLocale().assets.success,
-          style: TextStyle(color: Colors.black54),
+          style: const TextStyle(color: Colors.black54),
         ),
       ),
       durationMillis: 2000,
@@ -160,8 +162,8 @@ String getTxStatusTranslation(TranslationsHome dic, TxStatus? status) {
     case TxStatus.Error:
       return dic.txError;
     default:
-      print("Illegal TxStatus supplied to translation: ${status.toString()}");
-      return "";
+      Log.d('Illegal TxStatus supplied to translation: $status', 'getTxStatusTranslation');
+      return '';
   }
 }
 
@@ -210,7 +212,3 @@ Future<void> showInsufficientFundsDialog(BuildContext context) {
     },
   );
 }
-
-// void _log(String msg) {
-//   print("[txConfirmLogic] $msg");
-// }

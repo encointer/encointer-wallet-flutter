@@ -1,37 +1,63 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
+import 'package:workmanager/workmanager.dart';
+
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page/assets/index.dart';
 import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
 import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
+import 'package:encointer_wallet/service/background_service/background_service.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-
-import 'bazaar/0_main/bazaar_main.dart';
 
 class EncointerHomePage extends StatefulWidget {
-  EncointerHomePage(this.store);
+  EncointerHomePage({Key? key}) : super(key: key);
 
   static final GlobalKey encointerHomePageKey = GlobalKey();
-  static const String route = '/';
-  final AppStore store;
+  static const String route = '/home';
 
   @override
-  _EncointerHomePageState createState() => new _EncointerHomePageState(store);
+  State<EncointerHomePage> createState() => _EncointerHomePageState();
 }
 
 class _EncointerHomePageState extends State<EncointerHomePage> {
-  _EncointerHomePageState(this.store);
-
-  final AppStore store;
-
   final PageController _pageController = PageController();
 
   NotificationPlugin? _notificationPlugin;
 
   late List<TabData> _tabList;
   int _tabIndex = 0;
+
+  @override
+  void initState() {
+    if (_notificationPlugin == null) {
+      _notificationPlugin = NotificationPlugin();
+      _notificationPlugin!.init(context);
+    }
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      if (Platform.isAndroid) {
+        // meetup notification only for android system
+        Log.d('Initializing Workmanager callback...', 'home_page');
+        await Workmanager().initialize(callbackDispatcher);
+        await Workmanager().registerPeriodicTask(
+          'background-service',
+          'pull-notification',
+          initialDelay: const Duration(seconds: 30), // Don't immediately overload the app after app startup.
+          frequency: const Duration(hours: 12),
+          inputData: {'langCode': Localizations.localeOf(context).languageCode},
+          existingWorkPolicy: ExistingWorkPolicy.replace,
+        );
+      }
+    });
+
+    super.initState();
+  }
 
   List<BottomNavigationBarItem> _navBarItems(int activeItem) {
     return _tabList
@@ -46,12 +72,12 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
                     child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                       Icon(
                         i.iconData,
-                        key: Key('${i.key.toString()}'),
+                        key: Key(i.key.toString()),
                       ),
                       Container(
                         height: 4,
                         width: 16,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           border: Border(
                             bottom: BorderSide(width: 2.0),
                           ),
@@ -61,7 +87,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
                   )
                 : Icon(
                     i.iconData,
-                    key: Key('${i.key.toString()}'),
+                    key: Key(i.key.toString()),
                     color: i.key == TabKey.Scan ? ZurichLion.shade900 : encointerGrey,
                   ),
             label: '',
@@ -71,23 +97,14 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
   }
 
   @override
-  void initState() {
-    if (_notificationPlugin == null) {
-      _notificationPlugin = NotificationPlugin();
-      _notificationPlugin!.init(context);
-    }
-
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    final _store = context.watch<AppStore>();
     _tabList = <TabData>[
       TabData(
         TabKey.Wallet,
         Iconsax.home_2,
       ),
-      if (store.settings.enableBazaar)
+      if (context.select<AppStore, bool>((store) => store.settings.enableBazaar))
         TabData(
           TabKey.Bazaar,
           Iconsax.shop,
@@ -110,14 +127,14 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       key: EncointerHomePage.encointerHomePageKey,
       backgroundColor: Colors.white,
       body: PageView(
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,
         children: [
-          Assets(store),
-          if (store.settings.enableBazaar) BazaarMain(store), // dart collection if
-          ScanPage(store),
-          ContactsPage(store),
-          Profile(store),
+          Assets(_store),
+          if (context.select<AppStore, bool>((store) => store.settings.enableBazaar)) BazaarMain(),
+          ScanPage(),
+          ContactsPage(),
+          Profile(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

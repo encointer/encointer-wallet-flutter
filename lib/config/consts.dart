@@ -1,4 +1,5 @@
 import 'package:encointer_wallet/config/node.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/settings.dart';
 
 const String network_name_encointer_gesell = 'nctr-gsl';
@@ -85,14 +86,14 @@ const network_ss58_map = {
   'substrate': 42,
 };
 
-const fall_back_community_icon = "assets/nctr_logo_faces_only_thick.svg";
-const community_icon_name = "community_icon.svg";
+const fall_back_community_icon = 'assets/nctr_logo_faces_only_thick.svg';
+const community_icon_name = 'community_icon.svg';
 
-const String ipfs_gateway_encointer = "http://ipfs.encointer.org:8080"; // AVD: 10.0.2.2 = 127.0.0.1
+const String ipfs_gateway_encointer = 'http://ipfs.encointer.org:8080'; // AVD: 10.0.2.2 = 127.0.0.1
 const String ipfs_gateway_local = 'http://10.0.2.2:8080';
 
-const String encointer_feed = "https://encointer.github.io/feed";
-const String encointer_feed_overrides = "$encointer_feed/overrides.json";
+const String encointer_feed = 'https://encointer.github.io/feed';
+const String encointer_feed_overrides = '$encointer_feed/overrides.json';
 
 const int ert_decimals = 12;
 const int encointer_currencies_decimals = 18;
@@ -118,6 +119,7 @@ const Map<String, int> js_code_version_map = {
 const locale_place_holder = 'LOCALE_PLACEHOLDER';
 const ceremony_info_link_base = 'https://leu.zuerich/$locale_place_holder/#zeremonien';
 const leu_zurich_link = 'https://leu.zuerich/$locale_place_holder';
+const meetup_notification_link = 'https://encointer.github.io/feed/community_messages/$locale_place_holder/cm.json';
 
 String ceremonyInfoLink(String locale) {
   return replaceLocalePlaceholder(ceremony_info_link_base, locale);
@@ -134,7 +136,7 @@ String replaceLocalePlaceholder(String link, String locale) {
     case 'de':
       return link.replaceAll(locale_place_holder, '');
     default:
-      print("[replaceLocale] unsupported locale, defaulting to english");
+      Log.d('[replaceLocale] unsupported locale, defaulting to english', 'consts.dart');
       return link.replaceAll(locale_place_holder, 'en');
   }
 }

@@ -1,3 +1,8 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:provider/provider.dart';
+
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/components/rounded_card.dart';
@@ -10,28 +15,19 @@ import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 
 class NetworkSelectPage extends StatefulWidget {
-  NetworkSelectPage(this.store, this.changeTheme);
+  NetworkSelectPage({Key? key}) : super(key: key);
 
   static const String route = '/network';
-  final AppStore store;
-  final Function changeTheme;
 
   @override
-  _NetworkSelectPageState createState() => _NetworkSelectPageState(store, changeTheme);
+  State<NetworkSelectPage> createState() => _NetworkSelectPageState();
 }
 
 class _NetworkSelectPageState extends State<NetworkSelectPage> {
-  _NetworkSelectPageState(this.store, this.changeTheme);
-
-  final AppStore store;
-  final Function changeTheme;
-
-  // Here we commented out the two not-active networks of Cantillon. When they will be relevant, they can be uncommented #232
+  // Here we commented out the two not-active networks of Cantillon.
+  // When they will be relevant, they can be uncommented #232
   final List<EndpointData> networks = [
     networkEndpointEncointerGesell,
     networkEndpointEncointerLietaer,
@@ -53,14 +49,14 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Text(I18n.of(context)!.translationsForLocale().home.loading),
-          content: Container(height: 64, child: CupertinoActivityIndicator()),
+          content: const SizedBox(height: 64, child: const CupertinoActivityIndicator()),
         );
       },
     );
 
-    await store.settings.reloadNetwork(_selectedNetwork!);
+    await context.read<AppStore>().settings.reloadNetwork(_selectedNetwork!);
 
-    changeTheme();
+    context.read<AppStore>().settings.changeTheme();
 
     if (mounted) {
       Navigator.of(context).pop();
@@ -71,13 +67,13 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   }
 
   Future<void> _onSelect(AccountData i, String? address) async {
-    bool isCurrentNetwork = _selectedNetwork!.info == store.settings.endpoint.info;
-    if (address != store.account.currentAddress || !isCurrentNetwork) {
+    bool isCurrentNetwork = _selectedNetwork!.info == context.read<AppStore>().settings.endpoint.info;
+    if (address != context.read<AppStore>().account.currentAddress || !isCurrentNetwork) {
       /// set current account
-      store.setCurrentAccount(i.pubKey);
+      context.read<AppStore>().setCurrentAccount(i.pubKey);
 
       if (isCurrentNetwork) {
-        await store.loadAccountCache();
+        await context.read<AppStore>().loadAccountCache();
 
         webApi.fetchAccountData();
       } else {
@@ -89,7 +85,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   }
 
   Future<void> _onCreateAccount() async {
-    bool isCurrentNetwork = _selectedNetwork!.info == store.settings.endpoint.info;
+    bool isCurrentNetwork = _selectedNetwork!.info == context.read<AppStore>().settings.endpoint.info;
     if (!isCurrentNetwork) {
       await _reloadNetwork();
     }
@@ -103,11 +99,11 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
         return Container(
           child: showPasswordInputDialog(
             context,
-            store.account.currentAccount,
+            context.read<AppStore>().account.currentAccount,
             Text(I18n.of(context)!.translationsForLocale().profile.unlock),
             (password) {
               setState(() {
-                store.settings.setPin(password);
+                context.read<AppStore>().settings.setPin(password);
               });
             },
           ),
@@ -130,7 +126,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
               icon: Image.asset('assets/images/assets/plus_indigo.png'),
               color: primaryColor,
               onPressed: () async => {
-                    if (store.settings.cachedPin.isEmpty)
+                    if (context.read<AppStore>().settings.cachedPin.isEmpty)
                       {
                         await _showPasswordDialog(context),
                       }
@@ -144,26 +140,26 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     ];
 
     /// first item is current account
-    List<AccountData> accounts = [store.account.currentAccount];
+    List<AccountData> accounts = [context.read<AppStore>().account.currentAccount];
 
     /// add optional accounts
-    accounts.addAll(store.account.optionalAccounts);
+    accounts.addAll(context.read<AppStore>().account.optionalAccounts);
 
     res.addAll(accounts.map((i) {
       String? address = i.address;
-      if (store.account.pubKeyAddressMap[_selectedNetwork!.ss58] != null) {
-        address = store.account.pubKeyAddressMap[_selectedNetwork!.ss58]![i.pubKey];
+      if (context.read<AppStore>().account.pubKeyAddressMap[_selectedNetwork!.ss58] != null) {
+        address = context.read<AppStore>().account.pubKeyAddressMap[_selectedNetwork!.ss58]![i.pubKey];
       }
-      final bool isCurrentNetwork = _selectedNetwork!.info == store.settings.endpoint.info;
-      final accInfo = store.account.accountIndexMap[i.address];
+      final bool isCurrentNetwork = _selectedNetwork!.info == context.read<AppStore>().settings.endpoint.info;
+      final accInfo = context.read<AppStore>().account.accountIndexMap[i.address];
       final String accIndex =
           isCurrentNetwork && accInfo != null && accInfo['accountIndex'] != null ? '${accInfo['accountIndex']}\n' : '';
       final double padding = accIndex.isEmpty ? 0 : 7;
       return RoundedCard(
-        border: address == store.account.currentAddress
+        border: address == context.read<AppStore>().account.currentAddress
             ? Border.all(color: Theme.of(context).primaryColorLight)
             : Border.all(color: Theme.of(context).cardColor),
-        margin: EdgeInsets.only(bottom: 16),
+        margin: const EdgeInsets.only(bottom: 16),
         padding: EdgeInsets.only(top: padding, bottom: padding),
         child: ListTile(
           leading: AddressIcon(address!, i.pubKey),
@@ -182,7 +178,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
-        _selectedNetwork = store.settings.endpoint;
+        _selectedNetwork = context.read<AppStore>().settings.endpoint;
       });
     });
   }
@@ -202,11 +198,11 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
             children: <Widget>[
               // left side bar
               Container(
-                padding: EdgeInsets.fromLTRB(16, 16, 0, 0),
+                padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
                 decoration: BoxDecoration(
                   color: Theme.of(context).cardColor,
                   boxShadow: [
-                    BoxShadow(
+                    const BoxShadow(
                       color: Colors.black12,
                       blurRadius: 8.0, // has the effect of softening the shadow
                       spreadRadius: 2.0, // ha
@@ -219,15 +215,15 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
                     bool isCurrent = network == _selectedNetwork!.info;
                     String img = 'assets/images/public/$network${isCurrent ? '' : '_gray'}.png';
                     return Container(
-                      margin: EdgeInsets.only(bottom: 8),
-                      padding: EdgeInsets.only(right: 8),
+                      margin: const EdgeInsets.only(bottom: 8),
+                      padding: const EdgeInsets.only(right: 8),
                       decoration: isCurrent
                           ? BoxDecoration(
                               border: Border(right: BorderSide(width: 2, color: Theme.of(context).primaryColor)),
                             )
                           : null,
                       child: IconButton(
-                        padding: EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(8),
                         icon: Image.asset(img),
                         onPressed: () {
                           if (!isCurrent) {
@@ -243,7 +239,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
               ),
               Expanded(
                 child: ListView(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   children: _buildAccountList(),
                 ),
               ),

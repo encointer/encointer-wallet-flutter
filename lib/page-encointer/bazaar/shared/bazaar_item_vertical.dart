@@ -1,10 +1,9 @@
 import 'package:encointer_wallet/page-encointer/bazaar/2_offerings/offering_detail.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/3_businesses/business_detail.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_vertical_state.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-
-import 'data_model/model/bazaar_item_data.dart';
 
 class BazaarItemVertical extends StatelessWidget {
   const BazaarItemVertical({
@@ -52,11 +51,11 @@ class BazaarItemVertical extends StatelessWidget {
                         visualDensity: VisualDensity.compact,
                         onPressed: tempState.toggleLiked,
                         icon: tempState.liked
-                            ? Icon(
+                            ? const Icon(
                                 Icons.favorite,
                                 color: Colors.redAccent,
                               )
-                            : Icon(
+                            : const Icon(
                                 Icons.favorite_border,
                                 color: Colors.blueGrey,
                               ),
@@ -114,7 +113,7 @@ class _ItemDescription extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 6),
+                padding: const EdgeInsets.only(top: 6),
                 child: Text(
                   description!,
                   maxLines: 3,

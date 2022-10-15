@@ -1,11 +1,14 @@
 import 'dart:convert';
-import 'package:encointer_wallet/models/index.dart';
-import 'package:encointer_wallet/store/assets/types/transfer_data.dart';
-import 'package:encointer_wallet/utils/format.dart';
+
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
-import '../../../../models/communities/community_identifier.dart';
-import '../../../../models/encointer_balance_data/balance_entry.dart';
+
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
+import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/store/assets/types/transfer_data.dart';
+import 'package:encointer_wallet/utils/format.dart';
 
 part 'encointer_account_store.g.dart';
 
@@ -41,24 +44,24 @@ abstract class _EncointerAccountStore with Store {
   ///
   /// Map: cid.toFmtString() -> BalanceEntry
   @observable
-  ObservableMap<String, BalanceEntry> balanceEntries = new ObservableMap();
+  ObservableMap<String, BalanceEntry> balanceEntries = ObservableMap();
 
   /// `CommunityReputations` across all communities keyed by the respective ceremony index.
   ///
   /// Map: ceremony index -> CommunityReputation
   @observable
-  Map<int, CommunityReputation> reputations = new Map();
+  Map<int, CommunityReputation> reputations = {};
 
   @observable
-  ObservableList<TransferData> txsTransfer = new ObservableList<TransferData>();
+  ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
 
   @computed
   get ceremonyIndexForProofOfAttendance {
     if (reputations.isNotEmpty) {
       try {
         return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
-      } catch (_e) {
-        _log("$address has reputation, but none that has not been linked yet");
+      } catch (_e, s) {
+        Log.e('$address has reputation, but none that has not been linked yet', 'EncointerAccountStore', s);
         return 0;
       }
     }
@@ -66,7 +69,7 @@ abstract class _EncointerAccountStore with Store {
 
   @action
   void addBalanceEntry(CommunityIdentifier cid, BalanceEntry balanceEntry) {
-    _log("balanceEntry $balanceEntry added to cid $cid added");
+    Log.d('balanceEntry $balanceEntry added to cid $cid added', 'EncointerAccountStore');
     balanceEntries[cid.toFmtString()] = balanceEntry;
     writeToCache();
   }
@@ -91,19 +94,19 @@ abstract class _EncointerAccountStore with Store {
   @action
   Future<void> setTransferTxs(List list, String address, {bool reset = false, needCache = true}) async {
     if (this.address != address) {
-      _log("Tried to cached transfer tx's for wrong account. This is a bug.");
+      Log.d("Tried to cached transfer tx's for wrong account. This is a bug.", 'EncointerAccountStore');
       return Future.value(null);
     }
 
     List transfers = list.map((i) {
       return {
-        "block_timestamp": i['time'],
-        "hash": i['hash'],
-        "success": true,
-        "from": address,
-        "to": i['params'][0],
-        "token": CommunityIdentifier.fromJson(i['params'][1]).toFmtString(),
-        "amount": Fmt.numberFormat(i['params'][2]),
+        'block_timestamp': i['time'],
+        'hash': i['hash'],
+        'success': true,
+        'from': address,
+        'to': i['params'][0],
+        'token': CommunityIdentifier.fromJson(i['params'][1]).toFmtString(),
+        'amount': Fmt.numberFormat(i['params'][2]),
       };
     }).toList();
     if (reset) {
@@ -118,7 +121,7 @@ abstract class _EncointerAccountStore with Store {
   }
 
   void initStore(Function? cacheFn) {
-    this._cacheFn = cacheFn as Future<void> Function()?;
+    _cacheFn = cacheFn as Future<void> Function()?;
   }
 
   Future<void> writeToCache() {
@@ -128,8 +131,4 @@ abstract class _EncointerAccountStore with Store {
       return Future.value(null);
     }
   }
-}
-
-void _log(String msg) {
-  print("[encointerAccountStore] $msg");
 }

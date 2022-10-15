@@ -1,7 +1,8 @@
 import 'package:json_rpc_2/json_rpc_2.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
-import '../../../models/index.dart';
+import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 
 /// Api to talk to an substrate node via the websocket protocol.
 ///
@@ -28,17 +29,18 @@ class SubstrateDartApi {
     _connectAndListen(endpoint);
 
     try {
-      _rpc = await this.rpc('rpc_methods').then((m) => RpcMethods.fromJson(m));
-
-      // print("Methods: ${methods.toString()}");
+      _rpc = await rpc('rpc_methods').then((m) => RpcMethods.fromJson(m));
 
       // Sanity check that we are running against valid node with offchain indexing enabled
-      if (!_rpc!.methods!.contains("encointer_getReputations")) {
-        _log("rpc_methods does not contain 'getReputations'. Are the following flags passed"
-            " to the node? \n '--enable-offchain-indexing true --rpc-methods unsafe'");
+      if (!_rpc!.methods!.contains('encointer_getReputations')) {
+        Log.d(
+          "rpc_methods does not contain 'getReputations'. Are the following flags passed"
+              " to the node? \n '--enable-offchain-indexing true --rpc-methods unsafe'",
+          'SubstrateDartApi',
+        );
       }
-    } on RpcException catch (error) {
-      _log('RPC error ${error.code}: ${error.message}');
+    } on RpcException catch (e, s) {
+      Log.e('RPC error ${e.code}: ${e.message}', 'SubstrateDartApi', s);
     }
   }
 
@@ -47,7 +49,7 @@ class SubstrateDartApi {
     if (_client != null) {
       await _client!.close();
     } else {
-      _log("no connection to be closed.");
+      Log.d('no connection to be closed.', 'SubstrateDartApi');
     }
   }
 
@@ -60,11 +62,10 @@ class SubstrateDartApi {
       throw ("[dartApi] Can't call an rpc method because we are not connected to an endpoint");
     }
     if (_client!.isClosed) {
-      print("[dartApi] not connected. trying to reconnect to $endpoint");
-      this.reconnect();
-      print("[dartApi] connection status: isclosed? ${_client!.isClosed}");
+      Log.d('[dartApi] not connected. trying to reconnect to $endpoint', 'SubstrateDartApi');
+      reconnect();
+      Log.d('[dartApi] connection status: isclosed? ${_client?.isClosed}', 'SubstrateDartApi');
     }
-
     return _client!.sendRequest(method, params);
   }
 
@@ -82,8 +83,4 @@ class SubstrateDartApi {
     // The client won't subscribe to the input stream until `listen` is called.
     return _client!.listen();
   }
-}
-
-void _log(String msg) {
-  print('[EncointerDartApi] $msg');
 }

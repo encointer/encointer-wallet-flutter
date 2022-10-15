@@ -1,32 +1,28 @@
+import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/chain_api.dart';
 import 'package:encointer_wallet/store/app.dart';
-
-import 'mock_js_api.dart';
 
 class MockChainApi extends ChainApi {
   MockChainApi(AppStore store, MockJSApi js) : super(store, js);
 
   @override
   Future<void> startSubscriptions() async {
-    _log("api: unimplemented startSubscriptions");
+    Log.d('api: unimplemented startSubscriptions', 'MockChainApi');
   }
 
   @override
   Future<void> stopSubscriptions() async {
-    _log("api: unimplemented stopSubscriptions");
+    Log.d('api: unimplemented stopSubscriptions', 'MockChainApi');
   }
 
   @override
   Future<void> subscribeTimestamp() async {
-    _log("api: unimplemented subscribeTimestamp");
+    Log.d('api: unimplemented subscribeTimestamp', 'MockChainApi');
   }
 
   @override
   Future<void> subscribeNewHeads() async {
-    _log("api: unimplemented subscribeTimestamp");
+    Log.d('api: unimplemented subscribeTimestamp', 'MockChainApi');
   }
-}
-
-void _log(String msg) {
-  print("[MockChainApi]: $msg");
 }

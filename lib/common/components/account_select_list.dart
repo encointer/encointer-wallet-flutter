@@ -5,7 +5,7 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/material.dart';
 
 class AccountSelectList extends StatelessWidget {
-  AccountSelectList(this.store, this.list);
+  AccountSelectList(this.store, this.list, {Key? key}) : super(key: key);
 
   final AppStore store;
   final List<AccountData> list;
@@ -18,7 +18,7 @@ class AccountSelectList extends StatelessWidget {
           leading: AddressIcon(i.address, i.pubKey),
           title: Text(Fmt.accountName(context, i)),
           subtitle: Text(Fmt.address(Fmt.addressOfAccount(i, store))!),
-          trailing: Icon(Icons.arrow_forward_ios, size: 16),
+          trailing: const Icon(Icons.arrow_forward_ios, size: 16),
           onTap: () => Navigator.of(context).pop(i),
         );
       }).toList(),

@@ -1,5 +1,7 @@
 import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
+
 part 'offering_data.g.dart';
 
 /// Offering data living onchain

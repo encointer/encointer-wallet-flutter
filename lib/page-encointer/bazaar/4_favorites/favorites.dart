@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 class Favorites extends StatelessWidget {
   final data = favorites;
 
+  Favorites({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ListView.builder(

@@ -1,23 +1,23 @@
 import 'dart:convert';
+
 import 'package:dart_geohash/dart_geohash.dart';
+import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/page-encointer/common/encointer_map.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
-import "package:latlong2/latlong.dart";
-
-import '../../models/communities/cid_name.dart';
+import 'package:latlong2/latlong.dart';
 
 class CommunityChooserOnMap extends StatelessWidget {
   final AppStore store;
 
-  final communityDataAt = Map<LatLng, CidName>();
+  final communityDataAt = <LatLng, CidName>{};
 
   List<Marker> get _markers => getMarkers(store);
 
-  CommunityChooserOnMap(this.store) {
+  CommunityChooserOnMap(this.store, {Key? key}) : super(key: key) {
     if (store.encointer.communities != null) {
       for (var community in store.encointer.communities!) {
         communityDataAt[coordinatesOf(community)] = community;
@@ -46,10 +46,10 @@ class CommunityDetailsPopup extends StatefulWidget {
   final Marker marker;
   final CidName? dataForThisMarker;
 
-  CommunityDetailsPopup(this.store, this.marker, this.dataForThisMarker);
+  CommunityDetailsPopup(this.store, this.marker, this.dataForThisMarker, {Key? key}) : super(key: key);
 
   @override
-  _CommunityDetailsPopupState createState() => _CommunityDetailsPopupState(store);
+  State<CommunityDetailsPopup> createState() => _CommunityDetailsPopupState(store);
 }
 
 class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
@@ -71,7 +71,7 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
         child: Container(
           width: 150,
           height: 70,
-          padding: EdgeInsets.fromLTRB(6, 4, 6, 4),
+          padding: const EdgeInsets.fromLTRB(6, 4, 6, 4),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[

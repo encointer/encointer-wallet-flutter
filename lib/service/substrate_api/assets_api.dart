@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/core/js_api.dart';
 import 'package:encointer_wallet/store/app.dart';
 
@@ -10,12 +11,12 @@ class AssetsApi {
   final String _balanceSubscribeChannel = 'gas token balance';
 
   Future<void> startSubscriptions() async {
-    print("api: starting assets subscriptions");
-    this.subscribeBalance();
+    Log.d('api: starting assets subscriptions', 'AssetsApi');
+    subscribeBalance();
   }
 
   Future<void> stopSubscriptions() async {
-    print("api: stopping assets subscriptions");
+    Log.d('api: stopping assets subscriptions', 'AssetsApi');
     jsApi.unsubscribeMessage(_balanceSubscribeChannel);
   }
 
@@ -51,6 +52,6 @@ class AssetsApi {
   }
 
   Future<void> _fetchMarketPrice() async {
-    print("Fetch marketprice not implemented for Encointer networks");
+    Log.d('Fetch marketprice not implemented for Encointer networks', 'AssetsApi');
   }
 }

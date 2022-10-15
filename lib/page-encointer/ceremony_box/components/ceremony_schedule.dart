@@ -1,11 +1,11 @@
-import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box_service.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
-import 'ceremony_count_down.dart';
+import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/ceremony_box_service.dart';
+import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_count_down.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 /// Shows primarily the date of the next ceremony.
 ///
@@ -30,7 +30,7 @@ class CeremonySchedule extends StatelessWidget {
         showCountDown
             ? CeremonyDateLabelAbsolute(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode)
             : CeremonyDateLabelRelative(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         showCountDown
             ? CeremonyCountDown(nextCeremonyDate)
             : CeremonyDate(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode)
@@ -49,10 +49,11 @@ class CeremonyDateLabelAbsolute extends StatelessWidget {
   final DateTime nextCeremonyDate;
   final String? languageCode;
 
+  @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
 
-    String nextCeremonyHourMinute = '${DateFormat.Hm(languageCode).format(nextCeremonyDate)}';
+    String nextCeremonyHourMinute = DateFormat.Hm(languageCode).format(nextCeremonyDate);
     String nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate, dic, languageCode);
 
     return RichText(
@@ -80,6 +81,7 @@ class CeremonyDateLabelRelative extends StatelessWidget {
   final DateTime nextCeremonyDate;
   final String? languageCode;
 
+  @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
 
@@ -111,27 +113,28 @@ class CeremonyDate extends StatelessWidget {
   final DateTime? nextCeremonyDate;
   final String? languageCode;
 
+  @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final h2BlackTheme = Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack);
     String nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate!, dic, languageCode);
-    String nextCeremonyHourMinute = '${DateFormat.Hm(languageCode).format(nextCeremonyDate!)}';
+    String nextCeremonyHourMinute = DateFormat.Hm(languageCode).format(nextCeremonyDate!);
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Icon(
+        const Icon(
           Iconsax.calendar_1,
           color: encointerGrey,
           size: 18,
         ),
-        SizedBox(width: 6),
+        const SizedBox(width: 6),
         Text(
           nextCeremonyYearMonthDay,
           style: h2BlackTheme,
         ),
-        SizedBox(width: 12),
-        Padding(
+        const SizedBox(width: 12),
+        const Padding(
           padding: const EdgeInsets.only(bottom: 2),
           child: Icon(
             Iconsax.clock,
@@ -139,7 +142,7 @@ class CeremonyDate extends StatelessWidget {
             size: 18,
           ),
         ),
-        SizedBox(width: 6),
+        const SizedBox(width: 6),
         Text(
           nextCeremonyHourMinute,
           style: h2BlackTheme,

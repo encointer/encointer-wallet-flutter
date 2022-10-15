@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import "package:latlong2/latlong.dart";
+import 'package:latlong2/latlong.dart';
 
 /// A BazaarItem can either be an offering or a business.
 /// info contains the price in case of an offering and the distance in case of a business
@@ -29,7 +29,7 @@ class BazaarOfferingData extends BazaarItemData {
   Color? get cardColor => Colors.red[300];
 
   @override
-  Icon get icon => Icon(Icons.local_offer);
+  Icon get icon => const Icon(Icons.local_offer);
 }
 
 class BazaarBusinessData extends BazaarItemData {
@@ -45,16 +45,16 @@ class BazaarBusinessData extends BazaarItemData {
 
   @override
   String get info {
-    final Distance distance = new Distance();
+    final Distance distance = const Distance();
     final double distanceInMeters = distance(turbinenplatz, coordinates);
-    return distanceInMeters.toStringAsFixed(0) + "m";
+    return '${distanceInMeters.toStringAsFixed(0)}m';
   }
 
   @override
   Color? get cardColor => Colors.blue[300];
 
   @override
-  Icon get icon => Icon(Icons.business);
+  Icon get icon => const Icon(Icons.business);
 }
 
 class OpeningHours {
@@ -118,7 +118,7 @@ class OpeningHoursForDay {
   String toString() {
     String asString = '';
     if (openingIntervals.length == 0) {
-      asString += "(closed)";
+      asString += '(closed)';
     } else {
       for (var i = 0; i < openingIntervals.length; i++) {
         asString += openingIntervals[i].toString();
@@ -155,12 +155,6 @@ class OpeningInterval {
 
   @override
   String toString() {
-    return (start ~/ 60).toString() +
-        ":" +
-        (start % 60 + 100).toString().substring(1) +
-        " - " +
-        (end ~/ 60).toString() +
-        ":" +
-        (end % 60 + 100).toString().substring(1);
+    return '${start ~/ 60}:${(start % 60 + 100).toString().substring(1)} - ${end ~/ 60}:${(end % 60 + 100).toString().substring(1)}';
   }
 }

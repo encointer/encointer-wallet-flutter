@@ -2,9 +2,9 @@ name: IOS CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, f-droid ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, f-droid ]
 
 jobs:
   cancel_previous_runs:
@@ -86,6 +86,7 @@ jobs:
           RECORD: ${{ matrix.record_video }}
 
       - name: "Upload screenshots and recording"
+        if: always()
         uses: actions/upload-artifact@v2
         with:
           name:  ${{ matrix.device }}

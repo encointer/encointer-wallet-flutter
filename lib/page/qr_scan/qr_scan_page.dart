@@ -1,13 +1,15 @@
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/snack_bar.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
 
-import 'qr_scan_service.dart';
+import 'package:encointer_wallet/page/qr_scan/qr_scan_service.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/snack_bar.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
 
 export 'qr_codes/qr_code_base.dart';
 export 'qr_scan_service.dart';
@@ -16,16 +18,16 @@ class ScanPageParams {
   ScanPageParams({
     required this.scannerContext,
   });
+
   final QrScannerContext scannerContext;
 }
 
 class ScanPage extends StatelessWidget {
-  ScanPage(this.store);
+  ScanPage({Key? key}) : super(key: key);
 
   static const String route = '/account/scan';
 
   final QrScanService qrScanService = QrScanService();
-  final AppStore store;
 
   Future<PermissionStatus> canOpenCamera() async {
     // will do nothing if already granted
@@ -50,8 +52,8 @@ class ScanPage extends StatelessWidget {
         leading: Container(),
         actions: [
           IconButton(
-            key: Key('close-scanner'),
-            icon: Icon(Icons.close),
+            key: const Key('close-scanner'),
+            icon: const Icon(Icons.close),
             onPressed: () => Navigator.pop(context),
           )
         ],
@@ -61,7 +63,7 @@ class ScanPage extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<PermissionStatus> snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data != PermissionStatus.granted) {
-              print("[scanPage] Permission Status: ${snapshot.data!.toString()}");
+              Log.d('[scanPage] Permission Status: ${snapshot.data}', 'ScanPage');
               return permissionErrorDialog(context);
             }
 
@@ -71,13 +73,15 @@ class ScanPage extends StatelessWidget {
                   allowDuplicates: false,
                   onDetect: (barcode, args) {
                     if (barcode.rawValue == null) {
-                      debugPrint('Failed to scan Barcode');
+                      Log.d('Failed to scan Barcode', 'ScanPage');
                     } else {
                       onScan(barcode.rawValue!);
                     }
                   },
                 ),
-                store.settings.developerMode ? mockQrDataRow(dic, onScan) : Container(),
+                context.select<AppStore, bool>((store) => store.settings.developerMode)
+                    ? mockQrDataRow(dic, onScan)
+                    : Container(),
                 //overlays a semi-transparent rounded square border that is 90% of screen width
                 Center(
                   child: Column(
@@ -94,7 +98,7 @@ class ScanPage extends StatelessWidget {
                       ),
                       Text(
                         I18n.of(context)!.translationsForLocale().account.qrScan,
-                        style: TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16),
+                        style: const TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16),
                       ),
                     ],
                   ),
@@ -102,7 +106,7 @@ class ScanPage extends StatelessWidget {
               ],
             );
           } else {
-            return Center(child: CupertinoActivityIndicator());
+            return const Center(child: CupertinoActivityIndicator());
           }
         },
       ),
@@ -116,24 +120,24 @@ Widget mockQrDataRow(Translations dic, Function(String) onScan) {
     ElevatedButton(
       child: Text(dic.profile.addContact),
       onPressed: () => onScan(
-        "encointer-contact\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nSara",
+        'encointer-contact\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nSara',
       ),
     ),
     ElevatedButton(
       child: Text(dic.assets.invoice),
       onPressed: () => onScan(
-        "encointer-invoice\nv1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX"
-        "\nsqm1v79dF6b\n0.2343\nAubrey",
+        'encointer-invoice\nv1.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX'
+        '\nsqm1v79dF6b\n0.2343\nAubrey',
       ),
     ),
     ElevatedButton(
-      child: Text("voucher"),
+      child: const Text('voucher'),
       onPressed: () => onScan(
-        "encointer-voucher\nv2.0\n//VoucherUri\nsqm1v79dF6b"
-        "\nnctr-gsl-dev\nAubrey",
+        'encointer-voucher\nv2.0\n//VoucherUri\nsqm1v79dF6b'
+        '\nnctr-gsl-dev\nAubrey',
       ),
     ),
-    Text(' <<< Devs only', style: TextStyle(color: Colors.orange)),
+    const Text(' <<< Devs only', style: TextStyle(color: Colors.orange)),
   ]);
 }
 
@@ -146,7 +150,7 @@ Widget permissionErrorDialog(BuildContext context) {
     actions: <Widget>[
       CupertinoButton(
         child: Text(dic.home.ok),
-        onPressed: () => Navigator.popUntil(context, ModalRoute.withName('/')),
+        onPressed: () => Navigator.of(context).popUntil((route) => route.isFirst),
       ),
       CupertinoButton(
         child: Text(dic.home.appSettings),
