@@ -19,7 +19,7 @@ class Instruction extends StatelessWidget {
       body: ListView(
         children: [
           ExpansionTile(
-            title: Text(dic.meetUpNotification),
+            title: Text(dic.meetUpNotifications),
             children: <Widget>[
               ListTile(
                 title: Text(dic.meetUpListTileTitle),

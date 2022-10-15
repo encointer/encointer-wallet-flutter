@@ -82,7 +82,7 @@ abstract class TranslationsProfile {
   String get errorUserNameIsRequired;
   String get observedPendingExtrinsic;
   String get appHints;
-  String get meetUpNotification;
+  String get meetUpNotifications;
   String get meetUpListTileTitle;
   String get openAppSettings;
   String get enableAutoStart;
@@ -256,13 +256,14 @@ class TranslationsEnProfile implements TranslationsProfile {
   @override
   String get appHints => 'App-Hints';
   @override
-  String get enableAutoStart => 'Enable autostart';
+  String get meetUpNotifications => 'Meetup notifications';
   @override
-  String get meetUpListTileTitle => 'If your device is a Xiaomi or Honor phone, give permission for app-notifications.';
-  @override
-  String get meetUpNotification => 'Meetup notifications';
+  String get meetUpListTileTitle => 'If your device is a Xiaomi or Honor phone, please enable autostart to '
+      'receive meetup notifications.';
   @override
   String get openAppSettings => 'Open App Settings';
+  @override
+  String get enableAutoStart => 'Enable autostart';
 }
 
 class TranslationsDeProfile implements TranslationsProfile {
@@ -428,19 +429,18 @@ class TranslationsDeProfile implements TranslationsProfile {
   get errorUserNameIsRequired => 'Benutzername darf nicht leer sein';
   @override
   get observedPendingExtrinsic => 'Es wurde eine unbestätigte Transaktion beobachtet. Bitte warte auf Bestätigung!';
-
   @override
   String get appHints => 'App-Tipps';
   @override
-  String get meetUpListTileTitle =>
-      'Wenn Dein Gerät ein Xiaomi oder Honor Smartphone is, muss die Erlaubnis für App-Mitteilungen über die'
-      ' App-Einstellungen gegeben werden';
+  String get meetUpNotifications => 'Meetup-Benachrichtigungen';
   @override
-  String get meetUpNotification => 'Meetup-Benachrichtigungen';
+  String get meetUpListTileTitle =>
+      'Wenn Dein Gerät ein Xiaomi oder Honor Smartphone is, muss Autostart aktiviert sein um Meetup-Benachrichtigungen'
+      'zu erhalten.';
   @override
   String get openAppSettings => 'App-Einstellungen öffnen';
   @override
-  String get enableAutoStart => 'Autostart der App erlauben';
+  String get enableAutoStart => 'Autostart aktivieren';
 }
 
 class TranslationsZhProfile implements TranslationsProfile {
@@ -607,11 +607,11 @@ class TranslationsZhProfile implements TranslationsProfile {
   @override
   String get appHints => '應用提示';
   @override
-  String get enableAutoStart => '點擊自動\n啟動允許/拒絕應用程序自動啟動';
+  String get meetUpNotifications => '聚會通知';
   @override
   String get meetUpListTileTitle => '如果您的設備 Xiaomi 或 Honor：請允許聚會通知';
   @override
-  String get meetUpNotification => '聚會通知';
-  @override
   String get openAppSettings => '打開應用設置';
+  @override
+  String get enableAutoStart => '點擊自動\n啟動允許/拒絕應用程序自動啟動';
 }
