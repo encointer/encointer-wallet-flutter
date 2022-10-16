@@ -72,8 +72,14 @@ and find the output in `build/app/outputs/bundle/release/app-release.aab`
 
 #### Dev hints
 
-Currently supports flutter: 3.3.4
-  
+### Flutter version
+The following two files contain the supported flutter version:
+
+* [GitHub Action Config](./.github/action-config.json)
+* [install_flutter.sh](./scripts/install_flutter.sh)
+
+These versions must always be aligned!
+
 ### Run tests
 
 * run all tests from the command line:`flutter test`
