@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -181,7 +182,10 @@ class _ProfileState extends State<Profile> {
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.pushNamed(context, AboutPage.route),
               ),
-              ListTile(title: Text(dic.profile.contactUs, style: h3Grey), onTap: _sendEmail),
+              ListTile(
+                title: Text(dic.profile.contactUs, style: h3Grey),
+                onTap: _sendEmail,
+              ),
               ListTile(
                 title: Text(dic.profile.developer, style: h3Grey),
                 trailing: Checkbox(
