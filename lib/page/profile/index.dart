@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -163,6 +164,10 @@ class _ProfileState extends State<Profile> {
                 title: Text(dic.profile.about, style: Theme.of(context).textTheme.headline3),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.pushNamed(context, AboutPage.route),
+              ),
+              ListTile(
+                title: Text(dic.profile.appHints, style: h3Grey),
+                onTap: () => Navigator.pushNamed(context, Instruction.route),
               ),
               ListTile(
                 title: Text(dic.profile.developer, style: h3Grey),
