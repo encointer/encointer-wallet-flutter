@@ -499,7 +499,7 @@ packages:
       name: http_parser
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.0.1"
+    version: "4.0.2"
   iconsax:
     dependency: "direct main"
     description:
@@ -562,7 +562,7 @@ packages:
       name: json_annotation
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.7.0"
+    version: "4.6.0"
   json_rpc_2:
     dependency: "direct main"
     description:
@@ -576,7 +576,7 @@ packages:
       name: json_serializable
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.5.1"
+    version: "6.3.2"
   json_serializable_mobx:
     dependency: "direct dev"
     description:
@@ -961,7 +961,7 @@ packages:
       name: pub_semver
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1"
+    version: "2.1.2"
   pubspec_parse:
     dependency: transitive
     description:
@@ -1096,7 +1096,7 @@ packages:
       name: shared_preferences_android
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.13"
+    version: "2.0.14"
   shared_preferences_ios:
     dependency: transitive
     description:
@@ -1318,7 +1318,7 @@ packages:
       name: upgrader
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.7.0"
+    version: "4.8.0"
   url_launcher:
     dependency: "direct main"
     description:
@@ -1444,7 +1444,7 @@ packages:
       name: watcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "1.0.2"
   web_socket_channel:
     dependency: "direct main"
     description:
@@ -1472,7 +1472,7 @@ packages:
       name: win32
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "3.0.0"
+    version: "3.0.1"
   wkt_parser:
     dependency: transitive
     description:
