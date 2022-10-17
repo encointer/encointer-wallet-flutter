@@ -51,7 +51,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
           initialDelay: const Duration(seconds: 30), // Don't immediately overload the app after app startup.
           frequency: const Duration(hours: 12),
           inputData: {'langCode': Localizations.localeOf(context).languageCode},
-          existingWorkPolicy: ExistingWorkPolicy.replace,
+          existingWorkPolicy: ExistingWorkPolicy.keep,
         );
       }
     });
