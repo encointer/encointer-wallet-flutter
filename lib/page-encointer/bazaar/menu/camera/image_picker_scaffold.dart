@@ -1,13 +1,12 @@
-import 'dart:async';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/business_form_state.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/menu/camera/image_picker_state.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/menu/camera/image_preview.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:provider/provider.dart';
 
 class ImagePickerScaffold extends StatelessWidget {
   ImagePickerScaffold({Key? key}) : super(key: key);
@@ -90,7 +89,7 @@ class ImagePickerScaffold extends StatelessWidget {
 
   void _onImageButtonPressed(ImagePickerState state, ImageSource source, {BuildContext? context}) async {
     try {
-      final pickedFile = await _picker.getImage(
+      final pickedFile = await _picker.pickImage(
         source: source,
         // maxWidth: maxWidth,
         // maxHeight: maxHeight,
@@ -103,7 +102,7 @@ class ImagePickerScaffold extends StatelessWidget {
   }
 
   Future<void> retrieveLostData(ImagePickerState imagePickerState) async {
-    final LostData response = await _picker.getLostData();
+    final LostDataResponse response = await _picker.retrieveLostData();
     if (response.isEmpty) {
       return;
     }
