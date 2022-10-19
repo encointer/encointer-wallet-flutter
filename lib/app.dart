@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/config.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/router/app_router.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class WalletApp extends StatefulWidget {
-  const WalletApp(this.config, {Key? key}) : super(key: key);
-
-  final Config config;
+  const WalletApp({Key? key}) : super(key: key);
 
   @override
   State<WalletApp> createState() => _WalletAppState();
@@ -42,7 +40,7 @@ class _WalletAppState extends State<WalletApp> {
           const Locale('en', ''),
           const Locale('de', ''),
         ],
-        initialRoute: widget.config.initialRoute,
+        initialRoute: SplashView.route,
         theme: appThemeEncointer,
         scaffoldMessengerKey: rootScaffoldMessengerKey,
         onGenerateRoute: AppRoute.onGenerateRoute,

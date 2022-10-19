@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/config.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:encointer_wallet/config/consts.dart';
@@ -9,7 +10,10 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('SettingsStore test', () {
-    final AppStore root = AppStore(MockLocalStorage());
+    final AppStore root = AppStore(
+      MockLocalStorage(),
+      config: const AppConfig(appStoreConfig: StoreConfig.Test),
+    );
     final store = SettingsStore(root);
 
     test('settings store created', () {

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
+import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/mocks/substrate_api/core/mock_dart_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_api.dart';
 import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
@@ -35,7 +36,7 @@ class _SplashViewState extends State<SplashView> {
     await initWebApi(context, store);
 
     // We don't poll updates in tests because we mock the backend anyhow.
-    if (store.config.isNormal()) {
+    if (store.config.appStoreConfig.isNormal) {
       // must be set after api is initialized.
       store.dataUpdate.setupUpdateReaction(() async {
         await store.encointer.updateState();
@@ -90,7 +91,7 @@ Future<void> initWebApi(BuildContext context, AppStore store) async {
   final js = await DefaultAssetBundle.of(context).loadString('lib/js_service_encointer/dist/main.js');
 
   // Todo: don't use the `StoreConfig` here: #783.
-  webApi = store.config.isNormal()
+  webApi = store.config.appStoreConfig.isNormal
       ? Api.create(store, JSApi(), SubstrateDartApi(), js)
       : MockApi(store, MockJSApi(), MockSubstrateDartApi(), js, withUi: true);
 

@@ -1,3 +1,7 @@
+import 'package:mobx/mobx.dart';
+import 'package:upgrader/upgrader.dart';
+
+import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
@@ -7,8 +11,6 @@ import 'package:encointer_wallet/store/data_update/data_update.dart';
 import 'package:encointer_wallet/store/encointer/encointer.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/local_storage.dart';
-import 'package:mobx/mobx.dart';
-import 'package:upgrader/upgrader.dart';
 
 part 'app.g.dart';
 
@@ -31,24 +33,19 @@ const encointerCacheVersion = 'v1.0';
 class AppStore extends _AppStore with _$AppStore {
   AppStore(
     LocalStorage localStorage, {
-    StoreConfig config = StoreConfig.Normal,
+    required AppConfig config,
     AppcastConfiguration? appcastConfiguration,
   }) : super(localStorage, config: config, appcastConfiguration: appcastConfiguration);
-}
-
-enum StoreConfig {
-  Normal,
-  Test,
 }
 
 abstract class _AppStore with Store {
   _AppStore(
     this.localStorage, {
-    this.config = StoreConfig.Normal,
+    required this.config,
     this.appcastConfiguration,
   });
 
-  final StoreConfig config;
+  final AppConfig config;
   final AppcastConfiguration? appcastConfiguration;
 
   // Note, following pattern of a nullable field with a non-nullable getter
@@ -143,7 +140,7 @@ abstract class _AppStore with Store {
   /// the real cache with (unit-)test runs.
   String getCacheKey(String key) {
     var cacheKey = '${settings.endpoint.info}_$key';
-    return config == StoreConfig.Test ? 'test-$cacheKey' : cacheKey;
+    return config.appStoreConfig.isTest ? 'test-$cacheKey' : cacheKey;
   }
 
   /// Returns the cache key for the encointer-storage.
@@ -152,7 +149,7 @@ abstract class _AppStore with Store {
   /// the real cache with (unit-)test runs.
   String encointerCacheKey(String networkInfo) {
     var key = '$encointerCachePrefix-$networkInfo';
-    return config == StoreConfig.Test ? 'test-$key' : key;
+    return config.appStoreConfig.isTest ? 'test-$key' : key;
   }
 
   Future<bool> purgeEncointerCache(String networkInfo) async {
@@ -258,15 +255,5 @@ abstract class _AppStore with Store {
   /// E.g. not awaiting this call was the cause of #357.
   Future<List<void>> loadAccountCache() async {
     return Future.wait([assets.clearTxs(), assets.loadAccountCache()]);
-  }
-}
-
-extension StoreConfigExtensions on StoreConfig {
-  bool isTest() {
-    return this == StoreConfig.Test;
-  }
-
-  bool isNormal() {
-    return this == StoreConfig.Normal;
   }
 }

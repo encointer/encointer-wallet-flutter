@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/config.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:encointer_wallet/mocks/data/mock_account_data.dart';
@@ -8,7 +9,10 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('AccountStore test', () {
-    final AppStore root = AppStore(MockLocalStorage());
+    final AppStore root = AppStore(
+      MockLocalStorage(),
+      config: const AppConfig(appStoreConfig: StoreConfig.Test),
+    );
 
     test('account store test', () async {
       accList = [testAcc];

@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/mocks/data/mock_account_data.dart';
 import 'package:encointer_wallet/mocks/data/mock_encointer_data.dart';
 import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
@@ -12,7 +13,10 @@ import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  final AppStore root = AppStore(MockLocalStorage(), config: StoreConfig.Test);
+  final AppStore root = AppStore(
+    MockLocalStorage(),
+    config: const AppConfig(appStoreConfig: StoreConfig.Test),
+  );
 
   group('EncointerStore test', () {
     test('encointer store initialization, serialization and cache works', () async {
