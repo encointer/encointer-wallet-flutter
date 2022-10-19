@@ -52,8 +52,8 @@ Future<void> main() async {
   runApp(
     Provider(
       // On test mode instead of LocalStorage() must be use MockLocalStorage()
-      create: (context) => AppStore(util.LocalStorage()),
-      child: const WalletApp(Config()),
+      create: (context) => AppStore(util.LocalStorage(), config: const AppConfig()),
+      child: const WalletApp(),
     ),
   );
 }

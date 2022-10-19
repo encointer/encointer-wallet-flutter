@@ -16,7 +16,7 @@ void main() async {
   final _cfg = AppcastConfiguration(url: _appcastURL, supportedOS: ['android']);
   final _globalAppStore = AppStore(
     MockLocalStorage(),
-    config: StoreConfig.Test,
+    config: const AppConfig(appStoreConfig: StoreConfig.Test),
     appcastConfiguration: _cfg,
   );
 
@@ -59,9 +59,7 @@ void main() async {
   runApp(
     Provider(
       create: (context) => _globalAppStore,
-      child: const WalletApp(
-        Config(mockLocalStorage: true, mockSubstrateApi: true, appStoreConfig: StoreConfig.Test),
-      ),
+      child: const WalletApp(),
     ),
   );
 }
