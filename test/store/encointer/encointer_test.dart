@@ -1,4 +1,5 @@
-import 'package:encointer_wallet/config.dart';
+import 'package:flutter_test/flutter_test.dart';
+
 import 'package:encointer_wallet/mocks/data/mock_account_data.dart';
 import 'package:encointer_wallet/mocks/data/mock_encointer_data.dart';
 import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
@@ -9,13 +10,13 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/encointer/encointer.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/bazaar_store/bazaar_store.dart';
 import 'package:encointer_wallet/store/encointer/sub_stores/community_store/community_store.dart';
-import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  var appConfig;
   final AppStore root = AppStore(
     MockLocalStorage(),
-    config: const AppConfig(appStoreConfig: StoreConfig.Test),
+    config: appConfig,
   );
 
   group('EncointerStore test', () {
