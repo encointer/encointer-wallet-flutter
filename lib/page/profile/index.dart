@@ -1,10 +1,9 @@
-import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/utils/feedback_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -76,21 +75,21 @@ class _ProfileState extends State<Profile> {
     super.initState();
   }
 
-  Future<bool> _sendEmail() async {
-    final Uri _emailLaunchUri = Uri(
-      scheme: 'mailto',
-      path: 'bugreports@mail.encointer.org',
-    );
-    final _isSuccess = await launchUrl(_emailLaunchUri);
-    if (!_isSuccess) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Check that you have downloaded the Email app'),
-        ),
-      );
-    }
-    return _isSuccess;
-  }
+  // Future<bool> _sendEmail() async {
+  //   final Uri _emailLaunchUri = Uri(
+  //     scheme: 'mailto',
+  //     path: 'bugreports@mail.encointer.org',
+  //   );
+  //   final _isSuccess = await launchUrl(_emailLaunchUri);
+  //   if (!_isSuccess) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       const SnackBar(
+  //         content: Text('Check that you have downloaded the Email app'),
+  //       ),
+  //     );
+  //   }
+  //   return _isSuccess;
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -183,9 +182,15 @@ class _ProfileState extends State<Profile> {
                 onTap: () => Navigator.pushNamed(context, AboutPage.route),
               ),
               ListTile(
-                title: Text(dic.profile.contactUs, style: h3Grey),
-                onTap: _sendEmail,
-              ),
+                  title: Text(dic.profile.contactUs, style: h3Grey),
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FeedbackPage()),
+                    );
+                  }
+                  // _sendEmail,
+                  ),
               ListTile(
                 title: Text(dic.profile.developer, style: h3Grey),
                 trailing: Checkbox(
