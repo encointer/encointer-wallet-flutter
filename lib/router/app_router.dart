@@ -140,7 +140,7 @@ class AppRoute {
         );
       case ContactPage.route:
         return CupertinoPageRoute(
-          builder: (_) => ContactPage(),
+          builder: (_) => const ContactPage(),
           settings: settings,
         );
       case ChangePasswordPage.route:

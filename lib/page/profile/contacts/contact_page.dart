@@ -1,3 +1,8 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
+
 import 'package:encointer_wallet/common/components/rounded_button.dart';
 import 'package:encointer_wallet/common/components/tap_tool_tip.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
@@ -7,13 +12,9 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
 
 class ContactPage extends StatefulWidget {
-  ContactPage({Key? key}) : super(key: key);
+  const ContactPage({Key? key}) : super(key: key);
 
   static const String route = '/profile/contact';
 
@@ -35,12 +36,13 @@ class _Contact extends State<ContactPage> {
   bool _submitting = false;
 
   Future<void> _onSave() async {
+    print(_formKey.currentState!.validate());
     if (_formKey.currentState!.validate()) {
       setState(() {
         _submitting = true;
       });
       final Translations dic = I18n.of(context)!.translationsForLocale();
-      String addr = _addressCtrl.text.trim();
+      String addr = _addressCtrl.text.replaceAll(' ', '').trim();
       Map pubKeyAddress = await webApi.account.decodeAddress([addr]);
       String pubKey = pubKeyAddress.keys.toList()[0];
       Map<String, dynamic> con = {
@@ -134,7 +136,8 @@ class _Contact extends State<ContactPage> {
                         ),
                         controller: _addressCtrl,
                         validator: (v) {
-                          if (!Fmt.isAddress(v!.trim())) {
+                          if (!Fmt.isAddress(v!.replaceAll(' ', '').trim())) {
+                            print(false);
                             return dic.profile.contactAddressError;
                           }
                           return null;
