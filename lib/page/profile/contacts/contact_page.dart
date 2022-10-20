@@ -42,7 +42,7 @@ class _Contact extends State<ContactPage> {
         _submitting = true;
       });
       final Translations dic = I18n.of(context)!.translationsForLocale();
-      String addr = _addressCtrl.text.replaceAll(' ', '').trim();
+      String addr = _addressCtrl.text.replaceAll(' ', '');
       Map pubKeyAddress = await webApi.account.decodeAddress([addr]);
       String pubKey = pubKeyAddress.keys.toList()[0];
       Map<String, dynamic> con = {
@@ -136,8 +136,7 @@ class _Contact extends State<ContactPage> {
                         ),
                         controller: _addressCtrl,
                         validator: (v) {
-                          if (!Fmt.isAddress(v!.replaceAll(' ', '').trim())) {
-                            print(false);
+                          if (!Fmt.isAddress(v!.replaceAll(' ', ''))) {
                             return dic.profile.contactAddressError;
                           }
                           return null;
