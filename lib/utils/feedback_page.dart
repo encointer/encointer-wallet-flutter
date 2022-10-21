@@ -51,9 +51,9 @@ class _FeedbackPageState extends State<FeedbackPage> {
                   child: EncointerTextFormField(
                     controller: bodyController,
                     hintText: 'Message',
-                    keyboardType: TextInputType.multiline,
+                    keyboardType: TextInputType.emailAddress,
                     maxLines: 5,
-                    minLines: 1,
+                    // minLines: 1,
                   ),
                 ),
                 SizedBox(
@@ -64,6 +64,23 @@ class _FeedbackPageState extends State<FeedbackPage> {
                         foregroundColor: Colors.white,
                         backgroundColor: Theme.of(context).primaryColor,
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40))),
+
+                    // Future<bool> _sendEmail() async {
+                    //   final Uri _emailLaunchUri = Uri(
+                    //     scheme: 'mailto',
+                    //     path: 'bugreports@mail.encointer.org',
+                    //   );
+                    //   final _isSuccess = await launchUrl(_emailLaunchUri);
+                    //   if (!_isSuccess) {
+                    //     ScaffoldMessenger.of(context).showSnackBar(
+                    //       const SnackBar(
+                    //         content: Text('Check that you have downloaded the Email app'),
+                    //       ),
+                    //     );
+                    //   }
+                    //   return _isSuccess;
+                    // }
+
                     onPressed: () async {
                       String recipient = 'janara2610@gmail.com';
                       String subject = subjectController.text;

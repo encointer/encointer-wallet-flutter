@@ -16,7 +16,7 @@ class EncointerTextFormField extends StatelessWidget {
   final ValueChanged<String>? onChanged;
   final bool obscureText;
   final int? maxLines;
-  final int? minLines;
+  // final int? minLines;
 
   const EncointerTextFormField({
     Key? key,
@@ -32,7 +32,7 @@ class EncointerTextFormField extends StatelessWidget {
     this.keyboardType,
     this.obscureText = false,
     this.maxLines,
-    this.minLines,
+    // this.minLines,
   }) : super(key: key);
 
   @override
@@ -64,6 +64,7 @@ class EncointerTextFormField extends StatelessWidget {
         validator: validator,
         onChanged: onChanged,
         obscureText: obscureText,
+        maxLines: maxLines,
       ),
     );
   }
