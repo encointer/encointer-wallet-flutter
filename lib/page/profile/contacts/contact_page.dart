@@ -36,7 +36,6 @@ class _Contact extends State<ContactPage> {
   bool _submitting = false;
 
   Future<void> _onSave() async {
-    print(_formKey.currentState!.validate());
     if (_formKey.currentState!.validate()) {
       setState(() {
         _submitting = true;
