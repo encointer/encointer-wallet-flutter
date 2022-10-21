@@ -39,7 +39,7 @@ class TranslationsEnAccount implements TranslationsAccount {
   get advanced => 'Advanced Options';
   @override
   get backupError =>
-      'This device does not support key type sr25519, you can select [Advanced Options -> Encrypt Type -> ed25519] to continue.';
+      'This device does not support key type sr25519, you can select [Advanced Options -> Encrypt Type -> ed25519] to continue. ';
   @override
   get create => 'Create Account';
   @override
