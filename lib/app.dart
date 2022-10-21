@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/router/app_router.dart';
+import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
@@ -40,7 +41,7 @@ class _WalletAppState extends State<WalletApp> {
           const Locale('en', ''),
           const Locale('de', ''),
         ],
-        initialRoute: SplashView.route,
+        initialRoute: context.watch<AppStore>().config.initialRoute,
         theme: appThemeEncointer,
         scaffoldMessengerKey: rootScaffoldMessengerKey,
         onGenerateRoute: AppRoute.onGenerateRoute,
