@@ -18,6 +18,7 @@ import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Profile extends StatefulWidget {
   Profile({Key? key}) : super(key: key);
@@ -75,21 +76,22 @@ class _ProfileState extends State<Profile> {
     super.initState();
   }
 
-  // Future<bool> _sendEmail() async {
-  //   final Uri _emailLaunchUri = Uri(
-  //     scheme: 'mailto',
-  //     path: 'bugreports@mail.encointer.org',
-  //   );
-  //   final _isSuccess = await launchUrl(_emailLaunchUri);
-  //   if (!_isSuccess) {
-  //     ScaffoldMessenger.of(context).showSnackBar(
-  //       const SnackBar(
-  //         content: Text('Check that you have downloaded the Email app'),
-  //       ),
-  //     );
-  //   }
-  //   return _isSuccess;
-  // }
+  Future<bool> _sendEmail() async {
+    final Uri _emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: 'janara2610@gmail.com',
+      // 'bugreports@mail.encointer.org',
+    );
+    final _isSuccess = await launchUrl(_emailLaunchUri);
+    if (!_isSuccess) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Check that you have downloaded the Email app'),
+        ),
+      );
+    }
+    return _isSuccess;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -182,15 +184,13 @@ class _ProfileState extends State<Profile> {
                 onTap: () => Navigator.pushNamed(context, AboutPage.route),
               ),
               ListTile(
-                  title: Text(dic.profile.contactUs, style: h3Grey),
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => FeedbackPage()),
-                    );
-                  }
-                  // _sendEmail,
-                  ),
+                title: Text(dic.profile.contactUs, style: h3Grey),
+                onTap: _sendEmail,
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => FeedbackPage()),
+                // );
+              ),
               ListTile(
                 title: Text(dic.profile.developer, style: h3Grey),
                 trailing: Checkbox(
