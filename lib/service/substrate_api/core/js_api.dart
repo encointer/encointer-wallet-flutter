@@ -119,8 +119,8 @@ class JSApi {
         })''';
 
     try {
-    // ignore: unused_local_variable
-    final v = await _web!.webViewController.evaluateJavascript(source: script);
+      // ignore: unused_local_variable
+      final v = await _web!.webViewController.evaluateJavascript(source: script);
     } catch (e, s) {
       // Executing a background task with the workmanager when the app is in
       // foreground kills the platform channel and we get a `MissingPluginException`
