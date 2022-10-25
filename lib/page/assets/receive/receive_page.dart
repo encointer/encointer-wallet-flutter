@@ -187,7 +187,7 @@ class _ReceivePageState extends State<ReceivePage> {
                   children: [
                     // Enhance brightness for the QR-code
                     const WakeLockAndBrightnessEnhancer(brightness: 1),
-                    QrCodeImage(
+                    QrCodeImageWithButton(
                       qrCode: invoice.toQrPayload(),
                       text: dic.assets.shareInvoice,
                       onTap: () => {
