@@ -1,15 +1,16 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
+import 'package:flutter_driver/driver_extension.dart';
+import 'package:provider/provider.dart';
+import 'package:upgrader/upgrader.dart';
+
 import 'package:encointer_wallet/app.dart';
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
 import 'package:encointer_wallet/mocks/storage/mock_storage_setup.dart';
 import 'package:encointer_wallet/mocks/storage/prepare_mock_storage.dart';
 import 'package:encointer_wallet/store/app.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_driver/driver_extension.dart';
-import 'package:provider/provider.dart';
-import 'package:upgrader/upgrader.dart';
 
 void main() async {
   final _appcastURL = 'https://encointer.github.io/feed/app_cast/testappcast.xml';

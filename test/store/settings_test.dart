@@ -5,11 +5,12 @@ import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
 
+import 'app_test.dart';
+
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('SettingsStore test', () {
-    var appConfig;
     final AppStore root = AppStore(
       MockLocalStorage(),
       config: appConfig,
