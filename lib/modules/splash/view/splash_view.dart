@@ -35,7 +35,7 @@ class _SplashViewState extends State<SplashView> {
     await initWebApi(context, store);
 
     // We don't poll updates in tests because we mock the backend anyhow.
-    if (store.config.isNormal()) {
+    if (store.config.mockSubstrateApi) {
       // must be set after api is initialized.
       store.dataUpdate.setupUpdateReaction(() async {
         await store.encointer.updateState();
@@ -90,7 +90,7 @@ Future<void> initWebApi(BuildContext context, AppStore store) async {
   final js = await DefaultAssetBundle.of(context).loadString('lib/js_service_encointer/dist/main.js');
 
   // Todo: don't use the `StoreConfig` here: #783.
-  webApi = store.config.isNormal()
+  webApi = store.config.mockSubstrateApi
       ? Api.create(store, JSApi(), SubstrateDartApi(), js)
       : MockApi(store, MockJSApi(), MockSubstrateDartApi(), js, withUi: true);
 
