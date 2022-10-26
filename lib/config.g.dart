@@ -8,14 +8,12 @@ part of 'config.dart';
 
 AppConfig _$AppConfigFromJson(Map<String, dynamic> json) => AppConfig(
       initialRoute: json['initialRoute'] as String? ?? SplashView.route,
-      mockLocalStorage: json['mockLocalStorage'] as bool? ?? false,
       mockSubstrateApi: json['mockSubstrateApi'] as bool? ?? false,
       appStoreConfig: $enumDecodeNullable(_$StoreConfigEnumMap, json['appStoreConfig']) ?? StoreConfig.Normal,
     );
 
 Map<String, dynamic> _$AppConfigToJson(AppConfig instance) => <String, dynamic>{
       'initialRoute': instance.initialRoute,
-      'mockLocalStorage': instance.mockLocalStorage,
       'mockSubstrateApi': instance.mockSubstrateApi,
       'appStoreConfig': _$StoreConfigEnumMap[instance.appStoreConfig]!,
     };

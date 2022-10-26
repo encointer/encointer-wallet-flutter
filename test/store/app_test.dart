@@ -5,11 +5,7 @@ import 'package:encointer_wallet/mocks/data/mock_account_data.dart';
 import 'package:encointer_wallet/mocks/storage/mock_local_storage.dart';
 import 'package:encointer_wallet/store/app.dart';
 
-const AppConfig appConfig = AppConfig(
-  appStoreConfig: StoreConfig.Test,
-  mockLocalStorage: true,
-  mockSubstrateApi: true,
-);
+const AppConfig appConfig = AppConfig(appStoreConfig: StoreConfig.Test, mockSubstrateApi: true);
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();

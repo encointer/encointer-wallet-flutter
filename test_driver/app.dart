@@ -17,7 +17,7 @@ void main() async {
   final _cfg = AppcastConfiguration(url: _appcastURL, supportedOS: ['android']);
   final _globalAppStore = AppStore(
     MockLocalStorage(),
-    config: const AppConfig(mockLocalStorage: true, mockSubstrateApi: true, appStoreConfig: StoreConfig.Test),
+    config: const AppConfig(mockSubstrateApi: true, appStoreConfig: StoreConfig.Test),
     appcastConfiguration: _cfg,
   );
 
