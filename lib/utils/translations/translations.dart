@@ -48,18 +48,18 @@ class TranslationsDe implements Translations {
   TranslationsBazaar get bazaar => TranslationsDeBazaar();
 }
 
-/// for chinese translations
-class TranslationsZh implements Translations {
+/// for french translations
+class TranslationsFr implements Translations {
   @override
-  TranslationsHome get home => TranslationsZhHome();
+  TranslationsHome get home => TranslationsFrHome();
   @override
-  TranslationsAccount get account => TranslationsZhAccount();
+  TranslationsAccount get account => TranslationsFrAccount();
   @override
-  TranslationsAssets get assets => TranslationsZhAssets();
+  TranslationsAssets get assets => TranslationsFrAssets();
   @override
-  TranslationsProfile get profile => TranslationsZhProfile();
+  TranslationsProfile get profile => TranslationsFrProfile();
   @override
-  TranslationsEncointer get encointer => TranslationsZhEncointer();
+  TranslationsEncointer get encointer => TranslationsFrEncointer();
   @override
-  TranslationsBazaar get bazaar => TranslationsZhBazaar();
+  TranslationsBazaar get bazaar => TranslationsFrBazaar();
 }

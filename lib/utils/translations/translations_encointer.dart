@@ -267,11 +267,11 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get goToLeuZurich => 'leu.zuerich öffnen';
 }
 
-class TranslationsZhEncointer implements TranslationsEncointer {
+class TranslationsFrEncointer implements TranslationsEncointer {
   @override
-  get registerParticipant => '注册参与者';
+  get registerParticipant => throw UnimplementedError();
   @override
-  get claimsSubmit => '提交证明';
+  get claimsSubmit => throw UnimplementedError();
   @override
   get claimsSubmitN => throw UnimplementedError();
   @override
@@ -279,39 +279,39 @@ class TranslationsZhEncointer implements TranslationsEncointer {
   @override
   get claimsPurgeConfirm => throw UnimplementedError();
   @override
-  get encointerCeremony => 'Encointer 仪式';
+  get encointerCeremony => throw UnimplementedError();
   @override
   get nextCeremonyTimeLeft => throw UnimplementedError();
   @override
   get nextCeremonyDateLabel => throw UnimplementedError();
   @override
-  get claimQr => '我的出席声明';
+  get claimQr => throw UnimplementedError();
   @override
-  get claimsScanned => '您已扫描 AMOUNT_PLACEHOLDER 声明';
+  get claimsScanned => throw UnimplementedError();
   @override
-  get claimsScannedAlready => '更新了之前扫描的声明';
+  get claimsScannedAlready => throw UnimplementedError();
   @override
-  get claimsScannedDecodeFailed => '无法解码扫描的声明。';
+  get claimsScannedDecodeFailed => throw UnimplementedError();
   @override
-  get claimsScannedNew => '扫描的新声​​明';
+  get claimsScannedNew => throw UnimplementedError();
   @override
-  get claimsScannedNOfM => '扫描的 SCANNED_COUNT / TOTAL_COUNT 个索赔';
+  get claimsScannedNOfM => throw UnimplementedError();
   @override
-  get claimsSubmitDetail => '为最近的仪式提交 AMOUNT 索赔';
+  get claimsSubmitDetail => throw UnimplementedError();
   @override
-  get encointer => 'Encointer 仪式';
+  get encointer => throw UnimplementedError();
   @override
-  get meetupAttended => '参加了上次聚会';
+  get meetupAttended => throw UnimplementedError();
   @override
-  get meetupClaimantInvalid => '此索赔人不是聚会的一部分。声明未存储。';
+  get meetupClaimantInvalid => throw UnimplementedError();
   @override
   get meetupLocation => throw UnimplementedError();
   @override
-  get timeUntilCeremonyStarts => '聚会时间：';
+  get timeUntilCeremonyStarts => throw UnimplementedError();
   @override
   get startCeremony => throw UnimplementedError();
   @override
-  get alreadyRegistered => '已经注册';
+  get alreadyRegistered => throw UnimplementedError();
   @override
   get communities => throw UnimplementedError();
   @override
