@@ -19,18 +19,3 @@ class AppConfig {
   factory AppConfig.fromJson(Map<String, dynamic> json) => _$AppConfigFromJson(json);
   Map<String, dynamic> toJson() => _$AppConfigToJson(this);
 }
-
-// enum StoreConfig {
-//   Normal,
-//   Test,
-// }
-
-// extension StoreConfigExtensions on StoreConfig {
-//   bool isTest() {
-//     return this == StoreConfig.Test;
-//   }
-
-//   bool isNormal() {
-//     return this == StoreConfig.Normal;
-//   }
-// }
