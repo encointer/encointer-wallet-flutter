@@ -244,81 +244,81 @@ class TranslationsDeHome implements TranslationsHome {
   get appSettings => 'App-Einstellungen';
 }
 
-class TranslationsZhHome implements TranslationsHome {
+class TranslationsFrHome implements TranslationsHome {
   @override
-  get cancel => '取消';
+  get cancel => throw UnimplementedError();
   @override
-  get scan => '扫描';
+  get scan => throw UnimplementedError();
   @override
-  get contacts => '联系人';
+  get contacts => throw UnimplementedError();
   @override
-  get closeApp => '关闭应用程序';
+  get closeApp => throw UnimplementedError();
   @override
-  get copy => '复制到剪贴板';
+  get copy => throw UnimplementedError();
   @override
-  get create => '新建账户';
+  get create => throw UnimplementedError();
   @override
-  get detail => '详情';
+  get detail => throw UnimplementedError();
   @override
-  get exitConfirm => '确定要退出 App 吗？';
+  get exitConfirm => throw UnimplementedError();
   @override
   get errorOccurred => throw UnimplementedError();
   @override
-  get loading => '载入中。。。';
+  get loading => throw UnimplementedError();
   @override
-  get next => '下一步';
+  get next => throw UnimplementedError();
   @override
-  get notifySubmitted => '交易已打包完成';
+  get notifySubmitted => throw UnimplementedError();
   @override
-  get notifySubmittedQueued => '已提交排队传输';
+  get notifySubmittedQueued => throw UnimplementedError();
   @override
-  get ok => '确认';
+  get ok => throw UnimplementedError();
   @override
-  get pinNeeded => '需要一个密码才能使用该应用程序';
+  get pinNeeded => throw UnimplementedError();
   @override
-  get settingNetwork => '选择钱包';
+  get settingNetwork => throw UnimplementedError();
   @override
-  get submit => '签名并发送';
+  get submit => throw UnimplementedError();
   @override
-  get submitCall => '调用 ';
+  get submitCall => throw UnimplementedError();
   @override
-  get submitFees => '交易费';
+  get submitFees => throw UnimplementedError();
   @override
-  get submitFeesOffline => '费用不可用（该应用程序处于离线状态）';
+  get submitFeesOffline => throw UnimplementedError();
   @override
-  get submitFrom => '你将使用以下账户发送交易：';
+  get submitFrom => throw UnimplementedError();
   @override
-  get submitNoSign => '发送(不签名)';
+  get submitNoSign => throw UnimplementedError();
   @override
-  get submitQr => '二维码签名';
+  get submitQr => throw UnimplementedError();
   @override
-  get submitTransaction => '发送交易';
+  get submitTransaction => throw UnimplementedError();
   @override
-  get success => '操作成功';
+  get success => throw UnimplementedError();
   @override
-  get switchAccount => '切换帐号';
+  get switchAccount => throw UnimplementedError();
   @override
   get switchCommunity => throw UnimplementedError();
   @override
-  get transactionQueued => '已加入队列';
+  get transactionQueued => throw UnimplementedError();
   @override
-  get transactionQueuedOffline => '该应用程序未连接到区块链。 排队交易（将在重新连接时自动发送）';
+  get transactionQueuedOffline => throw UnimplementedError();
   @override
-  get unlock => '使用密码解锁账户';
+  get unlock => throw UnimplementedError();
   @override
-  get unlockAccount => '使用 PIN 解锁帐户 CURRENT_ACCOUNT_NAME';
+  get unlockAccount => throw UnimplementedError();
   @override
-  get updateDownload => '正在下载...';
+  get updateDownload => throw UnimplementedError();
   @override
-  get updateError => '更新失败';
+  get updateError => throw UnimplementedError();
   @override
-  get updateJsUp => '发现网络 Metadata 更新，需要下载才能继续使用。';
+  get updateJsUp => throw UnimplementedError();
   @override
-  get updateLatest => '您的应用已是最新版本。';
+  get updateLatest => throw UnimplementedError();
   @override
-  get updateToNewerVersionQ => '发现新版本，立即更新吗？';
+  get updateToNewerVersionQ => throw UnimplementedError();
   @override
-  get accountImport => '导入账户';
+  get accountImport => throw UnimplementedError();
   @override
   get txQueued => throw UnimplementedError();
   @override
