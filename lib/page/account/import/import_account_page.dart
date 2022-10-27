@@ -175,7 +175,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         await _importAccount();
         Navigator.pushAndRemoveUntil<void>(
           context,
-          CupertinoPageRoute<void>(builder: (context) => EncointerHomePage()),
+          CupertinoPageRoute<void>(builder: (context) => const EncointerHomePage()),
           (route) => false,
         );
       }
