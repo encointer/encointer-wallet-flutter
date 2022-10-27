@@ -86,9 +86,12 @@ abstract class TranslationsProfile {
   String get meetUpListTileTitle;
   String get openAppSettings;
   String get enableAutoStart;
+  String get contactUs;
 }
 
 class TranslationsEnProfile implements TranslationsProfile {
+  @override
+  get contactUs => 'Contact Us';
   @override
   get about => 'About';
   @override
@@ -268,6 +271,8 @@ class TranslationsEnProfile implements TranslationsProfile {
 
 class TranslationsDeProfile implements TranslationsProfile {
   @override
+  get contactUs => 'Kontaktiere Uns';
+  @override
   get about => 'Über';
   @override
   get aboutBrief => 'Mobiles Wallet für Encointer';
@@ -444,6 +449,8 @@ class TranslationsDeProfile implements TranslationsProfile {
 }
 
 class TranslationsFrProfile implements TranslationsProfile {
+  @override
+  get contactUs => throw UnimplementedError();
   @override
   get about => throw UnimplementedError();
   @override
