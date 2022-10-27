@@ -33,10 +33,13 @@ Tested on commit <enter-commit>
      - [ ] With import account flow
      - [ ] With create account flow
 - [ ] Removing all accounts works
+- [ ] Changing communities works.
 
 ## Meetup Flow
 This needs two bootstrappers on a rococo test community, and preferably three smartphones to streamline the process.
 
 - [ ] Registering 2 bootstrappers and 1 newbie and performing meetup works. (This needs the rococo single councillor account to call next phase.)
-- [ ] Claiming rewards works (currently only possible in registering phase from the app side)
+- [ ] Claiming rewards works
+   - [ ]  early rewards payout in attesting phase
+   - [ ] regular rewards payout in next registering phase
 - [ ] Registering 2 bootstrappers and a reputable and performing meetup works. (This needs the rococo single councillor account to call next phase.)

@@ -58,7 +58,7 @@ class CeremonyDateLabelAbsolute extends StatelessWidget {
 
     return RichText(
       text: TextSpan(
-        text: '${dic.encointer.nextCeremonyDateLabel} ',
+        text: '${dic.encointer.nextCycleDateLabel} ',
         style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
         children: [
           TextSpan(
@@ -90,7 +90,7 @@ class CeremonyDateLabelRelative extends StatelessWidget {
 
     return RichText(
       text: TextSpan(
-        text: '${dic.encointer.nextCeremonyTimeLeft} ',
+        text: '${dic.encointer.nextCycleTimeLeft} ',
         style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
         children: [
           TextSpan(

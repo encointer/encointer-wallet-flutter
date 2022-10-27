@@ -280,69 +280,69 @@ class TranslationsDeAssets implements TranslationsAssets {
       ' deiner lokalen gemeinschaft, wie du welches bekommen kannst.';
 }
 
-class TranslationsZhAssets implements TranslationsAssets {
+class TranslationsFrAssets implements TranslationsAssets {
   @override
-  get address => '收款地址';
+  get address => throw UnimplementedError();
   @override
-  get amountError => '格式错误';
+  get amountError => throw UnimplementedError();
   @override
-  get insufficientBalance => '余额不足';
+  get insufficientBalance => throw UnimplementedError();
   @override
-  get block => '区块';
+  get block => throw UnimplementedError();
   @override
-  get communitiesNotFound => '没有找到社区';
+  get communitiesNotFound => throw UnimplementedError();
   @override
-  get communityChoose => '选择币种';
+  get communityChoose => throw UnimplementedError();
   @override
-  get communityNotSelected => '未选择社区，点击图标选择一个';
+  get communityNotSelected => throw UnimplementedError();
   @override
-  get copy => '复制';
+  get copy => throw UnimplementedError();
   @override
-  get detail => '详情';
+  get detail => throw UnimplementedError();
   @override
-  get done => '完成';
+  get done => throw UnimplementedError();
   @override
-  get event => '交易ID';
+  get event => throw UnimplementedError();
   @override
-  get fail => '失败';
+  get fail => throw UnimplementedError();
   @override
-  get fee => '手续费';
+  get fee => throw UnimplementedError();
   @override
-  get from => '付款地址';
+  get from => throw UnimplementedError();
   @override
-  get hash => '交易Hash';
+  get hash => throw UnimplementedError();
   @override
-  get home => '家';
+  get home => throw UnimplementedError();
   @override
-  get issuanceClaimed => '没有待处理的社区收入';
+  get issuanceClaimed => throw UnimplementedError();
   @override
-  get issuancePending => '申领待处理的社区收入';
+  get issuancePending => throw UnimplementedError();
   @override
-  get receive => '收款';
+  get receive => throw UnimplementedError();
   @override
-  get scan => '扫描';
+  get scan => throw UnimplementedError();
   @override
-  get success => '成功';
+  get success => throw UnimplementedError();
   @override
-  get tip => '小费';
+  get tip => throw UnimplementedError();
   @override
-  get tipHint => '为出块人支付额外的费用，可以提高交易打包优先级。';
+  get tipHint => throw UnimplementedError();
   @override
-  get to => '收款地址';
+  get to => throw UnimplementedError();
   @override
-  get transfer => '转账';
+  get transfer => throw UnimplementedError();
   @override
   get payment => throw UnimplementedError();
   @override
-  get value => '金额';
+  get value => throw UnimplementedError();
   @override
-  get amountToBeTransferred => '发票金额';
+  get amountToBeTransferred => throw UnimplementedError();
   @override
-  get invoiceAmount => '发票金额';
+  get invoiceAmount => throw UnimplementedError();
   @override
-  get shareInvoice => '分享二维码';
+  get shareInvoice => throw UnimplementedError();
   @override
-  get yourBalanceFor => '你的余额';
+  get yourBalanceFor => throw UnimplementedError();
   @override
   get balance => throw UnimplementedError();
   @override

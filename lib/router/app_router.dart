@@ -47,7 +47,7 @@ class AppRoute {
         );
       case EncointerHomePage.route:
         return CupertinoPageRoute(
-          builder: (_) => EncointerHomePage(),
+          builder: (_) => const EncointerHomePage(),
         );
       case NetworkSelectPage.route:
         return CupertinoPageRoute(
@@ -140,7 +140,7 @@ class AppRoute {
         );
       case ContactPage.route:
         return CupertinoPageRoute(
-          builder: (_) => ContactPage(),
+          builder: (_) => const ContactPage(),
           settings: settings,
         );
       case ChangePasswordPage.route:

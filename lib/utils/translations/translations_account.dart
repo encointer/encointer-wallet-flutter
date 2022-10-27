@@ -168,31 +168,31 @@ class TranslationsDeAccount implements TranslationsAccount {
   get uosTitle => 'Offline Signatur';
 }
 
-class TranslationsZhAccount implements TranslationsAccount {
+class TranslationsFrAccount implements TranslationsAccount {
   @override
-  get advanced => '高级选项';
+  get advanced => throw UnimplementedError();
   @override
-  get backupError => '此设备不支持密钥类型 sr25519，您可以选择 [高级选项 -> 加密类型 -> ed25519] 继续。';
+  get backupError => throw UnimplementedError();
   @override
-  get create => '创建帐户';
+  get create => throw UnimplementedError();
   @override
-  get createError => '创建帐户时出错';
+  get createError => throw UnimplementedError();
   @override
-  get createHint => '（默认值：我的帐户）';
+  get createHint => throw UnimplementedError();
   @override
-  get createPassword => 'PIN';
+  get createPassword => throw UnimplementedError();
   @override
-  get createPassword2 => '确认 PIN';
+  get createPassword2 => throw UnimplementedError();
   @override
-  get createPassword2Error => 'PIN 不一致';
+  get createPassword2Error => throw UnimplementedError();
   @override
-  get createPasswordError => 'PIN 必须包含至少 4 位数字且不得包含其他符号';
+  get createPasswordError => throw UnimplementedError();
   @override
-  get importDuplicate => '账户存在，是否覆盖现有账户？';
+  get importDuplicate => throw UnimplementedError();
   @override
-  get importEncrypt => '加密类型';
+  get importEncrypt => throw UnimplementedError();
   @override
-  get importInvalid => '无效';
+  get importInvalid => throw UnimplementedError();
   @override
   get importInvalidRawSeed => throw UnimplementedError();
   @override
@@ -202,33 +202,33 @@ class TranslationsZhAccount implements TranslationsAccount {
   @override
   get importPrivateKeyUnsupported => throw UnimplementedError();
   @override
-  get keystore => '密钥库 (json)';
+  get keystore => throw UnimplementedError();
   @override
-  get list => '账户选择';
+  get list => throw UnimplementedError();
   @override
-  get mnemonic => '助记符';
+  get mnemonic => throw UnimplementedError();
   @override
-  get next => '韦特';
+  get next => throw UnimplementedError();
   @override
-  get observe => '观察';
+  get observe => throw UnimplementedError();
   @override
   get observeBrief => throw UnimplementedError();
   @override
-  get observeProxyInvalid => '无效的代理帐户';
+  get observeProxyInvalid => throw UnimplementedError();
   @override
-  get path => '秘密推导路径';
+  get path => throw UnimplementedError();
   @override
-  get qrScan => '扫描二维码';
+  get qrScan => throw UnimplementedError();
   @override
-  get rawSeed => '原始种子';
+  get rawSeed => throw UnimplementedError();
   @override
-  get uosCanceled => 'Transaction 取消';
+  get uosCanceled => throw UnimplementedError();
   @override
-  get uosPush => '扫描发布';
+  get uosPush => throw UnimplementedError();
   @override
-  get uosScan => '扫描签名并发送';
+  get uosScan => throw UnimplementedError();
   @override
-  get uosSigner => '签名者';
+  get uosSigner => throw UnimplementedError();
   @override
-  get uosTitle => '离线签名';
+  get uosTitle => throw UnimplementedError();
 }
