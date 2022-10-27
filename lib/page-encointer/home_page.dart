@@ -47,7 +47,8 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         await Workmanager().registerPeriodicTask(
           'background-service',
           'pull-notification',
-          initialDelay: const Duration(seconds: 30), // Don't immediately overload the app after app startup.
+          // Find a window where the app is in background because of #819.
+          initialDelay: const Duration(hours: 8),
           frequency: const Duration(hours: 12),
           inputData: {'langCode': Localizations.localeOf(context).languageCode},
           existingWorkPolicy: ExistingWorkPolicy.replace,
