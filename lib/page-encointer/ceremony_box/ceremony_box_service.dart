@@ -35,7 +35,7 @@ class CeremonyBoxService {
 
   static Event createCalendarEvent(DateTime nextCeremonyDate, Translations dic) {
     return Event(
-      title: dic.encointer.encointerCeremony,
+      title: dic.encointer.keySigningCycle,
       description: dic.encointer.calendarEntryDescription,
       location: 'yet unknown',
       startDate: DateTime.now(),

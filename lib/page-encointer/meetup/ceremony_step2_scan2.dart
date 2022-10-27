@@ -38,7 +38,7 @@ class CeremonyStep2Scan extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: Text(dic.encointer.encointerCeremony),
+        title: Text(dic.encointer.keySigningCycle),
       ),
       body: SafeArea(
         child: Column(
@@ -97,7 +97,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                   children: [
                     const Icon(Iconsax.arrow_right_2),
                     const SizedBox(width: 12, height: 60),
-                    Text(dic.encointer.closeMeetup, style: Theme.of(context).textTheme.headline3),
+                    Text(dic.encointer.closeGathering, style: Theme.of(context).textTheme.headline3),
                   ],
                 ),
                 onPressed: () {

@@ -73,7 +73,6 @@ abstract class TranslationsProfile {
   String get pinSecure;
   String get personalKey;
   String get recoveryProxy;
-  String get ceremonies;
   String get tokenSend;
   String get reputation;
   String get addContact;
@@ -241,8 +240,6 @@ class TranslationsEnProfile implements TranslationsProfile {
   get pinSecure => 'Secure your account with a PIN.';
   @override
   get recoveryProxy => 'recovery proxy';
-  @override
-  get ceremonies => 'Ceremonies';
   @override
   get reputation => 'Reputation';
   @override
@@ -424,8 +421,6 @@ class TranslationsDeProfile implements TranslationsProfile {
   @override
   get recoveryProxy => 'Wiederherstellungsproxy';
   @override
-  get ceremonies => 'Zeremonien';
-  @override
   get reputation => 'Reputation';
   @override
   get tokenSend => 'SYMBOL senden';
@@ -570,8 +565,6 @@ class TranslationsFrProfile implements TranslationsProfile {
   get addCommunity => throw UnimplementedError();
   @override
   get recoveryProxy => 'recovery proxy';
-  @override
-  get ceremonies => throw UnimplementedError();
   @override
   get reputation => throw UnimplementedError();
   @override
