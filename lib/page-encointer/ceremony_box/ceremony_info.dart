@@ -56,7 +56,7 @@ class CeremonyInfo extends StatelessWidget {
                             languageCode: languageCode,
                           )
                         : Text(
-                            dic.encointer.ceremonySuccessfullyCompleted,
+                            dic.encointer.gatheringSuccessfullyCompleted,
                             style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerBlack),
                           ),
                     CeremonyInfoAndCalendar(
