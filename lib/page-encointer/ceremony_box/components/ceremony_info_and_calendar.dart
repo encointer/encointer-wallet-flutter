@@ -36,7 +36,7 @@ class CeremonyInfoAndCalendar extends StatelessWidget {
           ),
           onPressed: () => UI.launchURL(infoLink!),
         ),
-        if (devMode && showAddToCalendarIconButton)
+        if (showAddToCalendarIconButton)
           IconButton(
             icon: const Icon(Iconsax.calendar_1),
             onPressed: () => Add2Calendar.addEvent2Cal(calendarEventToAdd),
