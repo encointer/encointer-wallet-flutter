@@ -77,6 +77,7 @@ class _ProfileState extends State<Profile> {
   }
 
   Future<bool> _sendEmail() async {
+    final dic = I18n.of(context)!.translationsForLocale().profile;
     final Uri _emailLaunchUri = Uri(
       scheme: 'mailto',
       path: 'bugreports@mail.encointer.org',
@@ -84,8 +85,8 @@ class _ProfileState extends State<Profile> {
     final _isSuccess = await launchUrl(_emailLaunchUri);
     if (!_isSuccess) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Check that you have downloaded the Email app'),
+        SnackBar(
+          content: Text(dic.checkEmailApp),
         ),
       );
     }
