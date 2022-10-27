@@ -359,145 +359,145 @@ class TranslationsDeBazaar implements TranslationsBazaar {
   get filter => 'Filtern';
 }
 
-class TranslationsZhBazaar implements TranslationsBazaar {
+class TranslationsFrBazaar implements TranslationsBazaar {
   @override
-  get address => '地址';
+  get address => throw UnimplementedError();
   @override
-  get apply => '应用';
+  get apply => throw UnimplementedError();
   @override
-  get bazaarNew => '市集新品';
+  get bazaarNew => throw UnimplementedError();
   @override
-  get bazaarTitle => '集市';
+  get bazaarTitle => throw UnimplementedError();
   @override
-  get businessAdd => '+ 添加新业务';
+  get businessAdd => throw UnimplementedError();
   @override
-  get businessCreate => '创建新业务';
+  get businessCreate => throw UnimplementedError();
   @override
-  get businessDescription => '业务描述';
+  get businessDescription => throw UnimplementedError();
   @override
-  get businessDescriptionHint => '激发对您的产品的兴趣并提供简洁的描述';
+  get businessDescriptionHint => throw UnimplementedError();
   @override
-  get businesses => '企业';
+  get businesses => throw UnimplementedError();
   @override
-  get businessesFound => '找到的企业';
+  get businessesFound => throw UnimplementedError();
   @override
-  get businessesMy => '我的企业';
+  get businessesMy => throw UnimplementedError();
   @override
-  get businessesOffered => '在企业中提供';
+  get businessesOffered => throw UnimplementedError();
   @override
-  get businessesResults => '商业结果';
+  get businessesResults => throw UnimplementedError();
   @override
-  get businessesVicinity => '我附近的企业';
+  get businessesVicinity => throw UnimplementedError();
   @override
-  get businessName => '企业名称';
+  get businessName => throw UnimplementedError();
   @override
-  get businessNameHint => '使用描述性名称';
+  get businessNameHint => throw UnimplementedError();
   @override
-  get businessUrl => '企业网址';
+  get businessUrl => throw UnimplementedError();
   @override
-  get cameraDefault => '相机';
+  get cameraDefault => throw UnimplementedError();
   @override
-  get cancelDefault => '取消';
+  get cancelDefault => throw UnimplementedError();
   @override
-  get categories => '类别';
+  get categories => throw UnimplementedError();
   @override
-  get city => '城市';
+  get city => throw UnimplementedError();
   @override
-  get communityChoose => '选择社区：';
+  get communityChoose => throw UnimplementedError();
   @override
-  get communityLoad => '正在加载社区..';
+  get communityLoad => throw UnimplementedError();
   @override
-  get communityNotFound => '未找到社区';
+  get communityNotFound => throw UnimplementedError();
   @override
-  get day => '日';
+  get day => throw UnimplementedError();
   @override
-  get delete => '删除';
+  get delete => throw UnimplementedError();
   @override
-  get delivery => '交付';
+  get delivery => throw UnimplementedError();
   @override
-  get deliveryOptions => '送货选项';
+  get deliveryOptions => throw UnimplementedError();
   @override
-  get description => '描述';
+  get description => throw UnimplementedError();
   @override
-  get favorites => '收藏夹';
+  get favorites => throw UnimplementedError();
   @override
-  get found => '找到';
+  get found => throw UnimplementedError();
   @override
-  get galleryDefault => '画廊';
+  get galleryDefault => throw UnimplementedError();
   @override
-  get imageChoose => '选择一张图片';
+  get imageChoose => throw UnimplementedError();
   @override
-  get imageNotPicked => '你还没有选择图像。';
+  get imageNotPicked => throw UnimplementedError();
   @override
-  get imagesAdded => '图片添加';
+  get imagesAdded => throw UnimplementedError();
   @override
-  get imagesAddRemove => '添加/删除图像';
+  get imagesAddRemove => throw UnimplementedError();
   @override
-  get imagesMultiplePick => '从图库中选择多个图像';
+  get imagesMultiplePick => throw UnimplementedError();
   @override
-  get imageVideoError => '选择图像/视频错误';
+  get imageVideoError => throw UnimplementedError();
   @override
-  get lastVisited => '上次访问';
+  get lastVisited => throw UnimplementedError();
   @override
-  get lookingFor => '你在找什么？';
+  get lookingFor => throw UnimplementedError();
   @override
-  get map => '地图';
+  get map => throw UnimplementedError();
   @override
-  get menu => '菜单';
+  get menu => throw UnimplementedError();
   @override
-  get no => '不。';
+  get no => throw UnimplementedError();
   @override
-  get noItems => '未找到任何物品';
+  get noItems => throw UnimplementedError();
   @override
-  get notifications => '通知';
+  get notifications => throw UnimplementedError();
   @override
-  get offeringAdd => '+ 添加一个产品';
+  get offeringAdd => throw UnimplementedError();
   @override
-  get offeringNew => '精选最新';
+  get offeringNew => throw UnimplementedError();
   @override
-  get offerings => '产品';
+  get offerings => throw UnimplementedError();
   @override
-  get offeringsFound => '找到的企业';
+  get offeringsFound => throw UnimplementedError();
   @override
-  get offeringsMy => '我的奉献';
+  get offeringsMy => throw UnimplementedError();
   @override
-  get offeringsResults => '产品结果';
+  get offeringsResults => throw UnimplementedError();
   @override
-  get openningHours => '营业时间';
+  get openningHours => throw UnimplementedError();
   @override
-  get openningHoursInputHint => 'eG. 8:15-14:45 或 9-5pm';
+  get openningHoursInputHint => throw UnimplementedError();
   @override
-  get photoAdd => '添加照片';
+  get photoAdd => throw UnimplementedError();
   @override
-  get photoTake => '拍照';
+  get photoTake => throw UnimplementedError();
   @override
-  get price => '价格';
+  get price => throw UnimplementedError();
   @override
-  get productNewness => '产品新度';
+  get productNewness => throw UnimplementedError();
   @override
-  get recentlyAdded => '最近添加';
+  get recentlyAdded => throw UnimplementedError();
   @override
-  get reset => '重置';
+  get reset => throw UnimplementedError();
   @override
-  get save => '保存';
+  get save => throw UnimplementedError();
   @override
-  get search => '搜索...';
+  get search => throw UnimplementedError();
   @override
-  get showAll => '+ 显示全部';
+  get showAll => throw UnimplementedError();
   @override
-  get state => '状态';
+  get state => throw UnimplementedError();
   @override
-  get street => '街道';
+  get street => throw UnimplementedError();
   @override
-  get timeIntervalAdd => '添加时间间隔';
+  get timeIntervalAdd => throw UnimplementedError();
   @override
-  get topResults => '热门结果';
+  get topResults => throw UnimplementedError();
   @override
-  get waiting => '等待...';
+  get waiting => throw UnimplementedError();
   @override
-  get zipCode => '邮政编码';
+  get zipCode => throw UnimplementedError();
   @override
-  get useDescriptiveName => 'Please, use a descriptive name';
+  get useDescriptiveName => throw UnimplementedError();
   @override
   get filter => throw UnimplementedError();
 }

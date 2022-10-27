@@ -443,115 +443,115 @@ class TranslationsDeProfile implements TranslationsProfile {
   String get enableAutoStart => 'Autostart aktivieren';
 }
 
-class TranslationsZhProfile implements TranslationsProfile {
+class TranslationsFrProfile implements TranslationsProfile {
   @override
-  get about => '关于';
+  get about => throw UnimplementedError();
   @override
-  get aboutBrief => 'Encointer 手机钱包';
+  get aboutBrief => throw UnimplementedError();
   @override
-  get aboutVersion => '版本';
+  get aboutVersion => throw UnimplementedError();
   @override
-  get accounts => '帐户';
+  get accounts => throw UnimplementedError();
   @override
-  get accountDelete => '您确定要删除该帐户吗？';
+  get accountDelete => throw UnimplementedError();
   @override
-  get accountShare => '共享账户';
+  get accountShare => throw UnimplementedError();
   @override
-  get addressBook => '地址簿';
+  get addressBook => throw UnimplementedError();
   @override
   get cantEndorseBootstrapper => throw UnimplementedError();
   @override
   get canEndorseInRegisteringPhaseOnly => throw UnimplementedError();
   @override
-  get contactAddress => '地址';
+  get contactAddress => throw UnimplementedError();
   @override
-  get contactAddressError => '无效地址';
+  get contactAddressError => throw UnimplementedError();
   @override
-  get contactDelete => '删除';
+  get contactDelete => throw UnimplementedError();
   @override
-  get contactDeleteWarn => '确认删除该地址吗？';
+  get contactDeleteWarn => throw UnimplementedError();
   @override
   get contactEndorse => throw UnimplementedError();
   @override
-  get contactAlreadyExists => '地址已存在';
+  get contactAlreadyExists => throw UnimplementedError();
   @override
-  get contactMemo => '备注';
+  get contactMemo => throw UnimplementedError();
   @override
-  get contactName => '名称';
+  get contactName => throw UnimplementedError();
   @override
-  get contactNameError => '名称不能为空';
+  get contactNameError => throw UnimplementedError();
   @override
-  get contactNameAlreadyExists => '名称已存在';
+  get contactNameAlreadyExists => throw UnimplementedError();
   @override
-  get contactSave => '保存';
+  get contactSave => throw UnimplementedError();
   @override
-  get confirmPin => '输入密码确认操作';
+  get confirmPin => throw UnimplementedError();
   @override
-  get developer => '开发者模式';
+  get developer => throw UnimplementedError();
   @override
-  get export => '导出账户';
+  get export => throw UnimplementedError();
   @override
-  get exportMnemonicOk => 'Mnemonic 已经复制到剪切板';
+  get exportMnemonicOk => throw UnimplementedError();
   @override
-  get exportWarn => '请把以下文字抄写到纸条上并妥善保存，以下文字允许任何人恢复当前账户并获取其中的数字资产。';
+  get exportWarn => throw UnimplementedError();
   @override
-  get changeYourPin => '修改密码';
+  get changeYourPin => throw UnimplementedError();
   @override
-  get wrongPin => '密码错误';
+  get wrongPin => throw UnimplementedError();
   @override
-  get wrongPinHint => '解锁账户失败，请检查密码';
+  get wrongPinHint => throw UnimplementedError();
   @override
-  get yourNewPin => '新密码';
+  get yourNewPin => throw UnimplementedError();
   @override
-  get pleaseConfirmYourNewPin => '确认新密码';
+  get pleaseConfirmYourNewPin => throw UnimplementedError();
   @override
-  get passOld => '当前密码';
+  get passOld => throw UnimplementedError();
   @override
-  get passSuccess => '操作成功';
+  get passSuccess => throw UnimplementedError();
   @override
-  get passSuccessTxt => '密码已修改';
+  get passSuccessTxt => throw UnimplementedError();
   @override
-  get qrScanHint => '请输入您希望收到的金额并让发件人扫描二维码。';
+  get qrScanHint => throw UnimplementedError();
   @override
-  get setting => '设置';
+  get setting => throw UnimplementedError();
   @override
-  get settingLang => '语言';
+  get settingLang => throw UnimplementedError();
   @override
-  get settingLangAuto => '自动检测';
+  get settingLangAuto => throw UnimplementedError();
   @override
-  get settingNode => '远程节点';
+  get settingNode => throw UnimplementedError();
   @override
-  get settingNodeList => '可选节点';
+  get settingNodeList => throw UnimplementedError();
   @override
-  get settingPrefix => '地址前缀';
+  get settingPrefix => throw UnimplementedError();
   @override
-  get settingPrefixList => '可选格式';
+  get settingPrefixList => throw UnimplementedError();
   @override
-  get share => '分享';
+  get share => throw UnimplementedError();
   @override
-  get title => '设置';
+  get title => throw UnimplementedError();
   @override
-  get unlock => '您需要输入您的 PIN 才能添加新帐户';
+  get unlock => throw UnimplementedError();
   @override
-  get accountCreate => '创建帐户';
+  get accountCreate => throw UnimplementedError();
   @override
-  get doYouAlreadyHaveAnAccount => '已经有账户了？';
+  get doYouAlreadyHaveAnAccount => throw UnimplementedError();
   @override
-  get accountNameChooseHint => '您可以稍后在您的个人资料设置中更改它';
+  get accountNameChooseHint => throw UnimplementedError();
   @override
-  get accountNameChoose => '选择一个帐户名。';
+  get accountNameChoose => throw UnimplementedError();
   @override
-  get accountName => '账户名';
+  get accountName => throw UnimplementedError();
   @override
-  get import => '导入';
+  get import => throw UnimplementedError();
   @override
-  get pinHint => '您将需要此 PIN 进行交易和添加新帐户。';
+  get pinHint => throw UnimplementedError();
   @override
-  get pinInfo => 'PIN 应至少包含 4 位数字。 如果 PIN 码丢失，则无法恢复帐户，除非您通过个人资料页面进行了备份。';
+  get pinInfo => throw UnimplementedError();
   @override
-  get pinSecure => '使用 PIN 保护您的帐户。';
+  get pinSecure => throw UnimplementedError();
   @override
-  get addAccount => '添加帐户';
+  get addAccount => throw UnimplementedError();
   @override
   get addCommunity => throw UnimplementedError();
   @override
@@ -605,13 +605,13 @@ class TranslationsZhProfile implements TranslationsProfile {
   @override
   get observedPendingExtrinsic => throw UnimplementedError();
   @override
-  String get appHints => '應用提示';
+  String get appHints => throw UnimplementedError();
   @override
-  String get meetUpNotifications => '聚會通知';
+  String get meetUpNotifications => throw UnimplementedError();
   @override
-  String get meetUpListTileTitle => '如果您的設備 Xiaomi 或 Honor：請允許聚會通知';
+  String get meetUpListTileTitle => throw UnimplementedError();
   @override
-  String get openAppSettings => '打開應用設置';
+  String get openAppSettings => throw UnimplementedError();
   @override
-  String get enableAutoStart => '點擊自動\n啟動允許/拒絕應用程序自動啟動';
+  String get enableAutoStart => throw UnimplementedError();
 }

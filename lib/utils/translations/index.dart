@@ -10,7 +10,7 @@ class AppLocalizationsDelegate extends LocalizationsDelegate<I18n> {
   final Locale overriddenLocale;
 
   @override
-  bool isSupported(Locale locale) => ['en', 'de', 'zh'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => ['en', 'de', 'fr'].contains(locale.languageCode);
 
   @override
   Future<I18n> load(Locale locale) {
@@ -34,7 +34,7 @@ class I18n {
   static final Map<Locale, Translations> supportedLocales = {
     const Locale('en', ''): TranslationsEn(),
     const Locale('de', ''): TranslationsDe(),
-    const Locale('zh', ''): TranslationsZh(),
+    const Locale('fr', ''): TranslationsFr(),
   };
 
   Translations translationsForLocale() {
