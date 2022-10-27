@@ -184,7 +184,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   @override
   get claimsScannedNOfM => 'SCANNED_COUNT / TOTAL_COUNT gescannte Anträge';
   @override
-  get claimsSubmitDetail => 'Reiche AMOUNT Bezeugungen für diese Versammling ein';
+  get claimsSubmitDetail => 'Reiche AMOUNT Bezeugungen für diese Versammlung ein';
   @override
   get communities => 'Gemeinschaften';
   @override
