@@ -17,9 +17,8 @@ import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 class EncointerHomePage extends StatefulWidget {
-  EncointerHomePage({Key? key}) : super(key: key);
+  const EncointerHomePage({Key? key}) : super(key: key);
 
-  static final GlobalKey encointerHomePageKey = GlobalKey();
   static const String route = '/home';
 
   @override
@@ -124,7 +123,6 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
     ];
 
     return Scaffold(
-      key: EncointerHomePage.encointerHomePageKey,
       backgroundColor: Colors.white,
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
