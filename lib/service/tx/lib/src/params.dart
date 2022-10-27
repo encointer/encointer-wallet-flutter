@@ -61,8 +61,7 @@ Map<String, dynamic> claimRewardsParams(CommunityIdentifier chosenCid) {
       'call': 'claimRewards',
       'cid': chosenCid,
     },
-    // meetupIndex == null. The chain will figure out our index.
-    'params': [chosenCid, null],
+    'params': [chosenCid],
   };
 }
 

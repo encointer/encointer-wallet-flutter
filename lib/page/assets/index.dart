@@ -1,6 +1,5 @@
 import 'dart:math';
 
-import 'package:encointer_wallet/models/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -287,10 +286,7 @@ class _AssetsState extends State<Assets> {
                     Observer(builder: (_) {
                       final Translations dic = I18n.of(context)!.translationsForLocale();
 
-                      final shouldFetch = store.encointer.currentPhase == CeremonyPhase.Registering ||
-                          (store.encointer.communityAccount?.meetupCompleted ?? false);
-
-                      return store.settings.isConnected && shouldFetch
+                      return store.settings.isConnected
                           ? FutureBuilder<bool?>(
                               future: webApi.encointer.hasPendingIssuance(),
                               builder: (_, AsyncSnapshot<bool?> snapshot) {
@@ -304,7 +300,7 @@ class _AssetsState extends State<Assets> {
                                         context,
                                         store,
                                         webApi,
-                                        store.encointer.chosenCid!,
+                                        store.encointer.chosenCid,
                                       ),
                                     );
                                   } else {

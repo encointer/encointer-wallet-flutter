@@ -288,6 +288,7 @@ class EncointerApi {
   Future<bool?> hasPendingIssuance() async {
     CommunityIdentifier? cid = store.encointer.chosenCid;
 
+    // -1 as we get the pending issuance for the last ceremony
     int? cIndex = store.encointer.currentCeremonyIndex;
     String? pubKey = store.account.currentAccountPubKey;
     Log.d('api: Getting pendingIssuance for $pubKey', 'EncointerApi');
@@ -297,16 +298,10 @@ class EncointerApi {
     }
 
     // -1 as we get the pending issuance for the last ceremony
-    int issuanceCIndex = cIndex - 1;
-
-    if (store.encointer.currentPhase == CeremonyPhase.Attesting) {
-      // If we are in the attesting phase we want to payout the current meetup
-      // aka early payout directly after the key-signing gathering.
-      issuanceCIndex = cIndex;
-    }
+    int lastCIndex = cIndex - 1;
 
     bool hasPendingIssuance =
-        await jsApi.evalJavascript('encointer.hasPendingIssuance(${jsonEncode(cid)}, "$issuanceCIndex","$pubKey")');
+        await jsApi.evalJavascript('encointer.hasPendingIssuance(${jsonEncode(cid)}, "$lastCIndex","$pubKey")');
 
     Log.d('api:has pending issuance $hasPendingIssuance', 'EncointerApi');
     return hasPendingIssuance;
