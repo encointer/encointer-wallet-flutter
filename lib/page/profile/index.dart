@@ -18,6 +18,7 @@ import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Profile extends StatefulWidget {
   Profile({Key? key}) : super(key: key);
@@ -73,6 +74,22 @@ class _ProfileState extends State<Profile> {
   @override
   void initState() {
     super.initState();
+  }
+
+  Future<bool> _sendEmail() async {
+    final Uri _emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: 'bugreports@mail.encointer.org',
+    );
+    final _isSuccess = await launchUrl(_emailLaunchUri);
+    if (!_isSuccess) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Check that you have downloaded the Email app'),
+        ),
+      );
+    }
+    return _isSuccess;
   }
 
   @override
@@ -168,6 +185,10 @@ class _ProfileState extends State<Profile> {
               ListTile(
                 title: Text(dic.profile.appHints, style: h3Grey),
                 onTap: () => Navigator.pushNamed(context, Instruction.route),
+              ),
+              ListTile(
+                title: Text(dic.profile.contactUs, style: h3Grey),
+                onTap: _sendEmail,
               ),
               ListTile(
                 title: Text(dic.profile.developer, style: h3Grey),
