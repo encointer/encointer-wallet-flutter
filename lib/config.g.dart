@@ -6,21 +6,14 @@ part of 'config.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Config _$ConfigFromJson(Map<String, dynamic> json) => Config(
+AppConfig _$AppConfigFromJson(Map<String, dynamic> json) => AppConfig(
       initialRoute: json['initialRoute'] as String? ?? SplashView.route,
-      mockLocalStorage: json['mockLocalStorage'] as bool? ?? false,
       mockSubstrateApi: json['mockSubstrateApi'] as bool? ?? false,
-      appStoreConfig: $enumDecodeNullable(_$StoreConfigEnumMap, json['appStoreConfig']) ?? StoreConfig.Normal,
+      isTest: json['isTest'] as bool? ?? false,
     );
 
-Map<String, dynamic> _$ConfigToJson(Config instance) => <String, dynamic>{
+Map<String, dynamic> _$AppConfigToJson(AppConfig instance) => <String, dynamic>{
       'initialRoute': instance.initialRoute,
-      'mockLocalStorage': instance.mockLocalStorage,
       'mockSubstrateApi': instance.mockSubstrateApi,
-      'appStoreConfig': _$StoreConfigEnumMap[instance.appStoreConfig]!,
+      'isTest': instance.isTest,
     };
-
-const _$StoreConfigEnumMap = {
-  StoreConfig.Normal: 'Normal',
-  StoreConfig.Test: 'Test',
-};
