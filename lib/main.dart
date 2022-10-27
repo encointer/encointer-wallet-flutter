@@ -21,7 +21,7 @@ Future<void> main() async {
   //     await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
   if (Platform.isAndroid) {
     // this is enabled by default in IOS dev-builds.
-    await AndroidInAppWebViewController.setWebContentsDebuggingEnabled(true);
+    await InAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
 
   var initializationSettingsAndroid = const AndroidInitializationSettings('app_icon');
