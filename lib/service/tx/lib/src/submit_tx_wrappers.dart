@@ -60,9 +60,9 @@ Future<void> submitClaimRewards(
   BuildContext context,
   AppStore store,
   Api api,
-  CommunityIdentifier? chosenCid,
+  CommunityIdentifier chosenCid,
 ) async {
-  var txParams = claimRewardsParams(chosenCid!);
+  var txParams = claimRewardsParams(chosenCid);
 
   return submitTx(
     context,
