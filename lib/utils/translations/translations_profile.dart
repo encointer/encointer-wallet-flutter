@@ -87,9 +87,12 @@ abstract class TranslationsProfile {
   String get openAppSettings;
   String get enableAutoStart;
   String get contactUs;
+  String get checkEmailApp;
 }
 
 class TranslationsEnProfile implements TranslationsProfile {
+  @override
+  get checkEmailApp => 'Check that you have downloaded the Email app';
   @override
   get contactUs => 'Contact Us';
   @override
@@ -271,6 +274,8 @@ class TranslationsEnProfile implements TranslationsProfile {
 
 class TranslationsDeProfile implements TranslationsProfile {
   @override
+  get checkEmailApp => 'Keine Email-App installiert';
+  @override
   get contactUs => 'Kontaktiere Uns';
   @override
   get about => 'Über';
@@ -449,6 +454,8 @@ class TranslationsDeProfile implements TranslationsProfile {
 }
 
 class TranslationsFrProfile implements TranslationsProfile {
+  @override
+  get checkEmailApp => throw UnimplementedError();
   @override
   get contactUs => throw UnimplementedError();
   @override
