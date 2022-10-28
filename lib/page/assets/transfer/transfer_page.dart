@@ -1,4 +1,3 @@
-import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -13,6 +12,7 @@ import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/index.dart';
+import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -90,6 +90,9 @@ class _TransferPageState extends State<TransferPage> {
   void handleTransferPageParams(TransferPageParams params, AppStore store) {
     _communitySymbol = params.communitySymbol ?? store.encointer.community!.symbol!;
     _cid = params.cid ?? store.encointer.chosenCid!;
+    if (params.cid != store.encointer.chosenCid!) {
+      Log.d('====================> hheeeeeeeeey>>>>>>>>>>');
+    }
 
     if (params.amount != null) {
       _amountCtrl.text = '${params.amount}';
