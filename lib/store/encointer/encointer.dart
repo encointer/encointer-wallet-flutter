@@ -231,14 +231,14 @@ abstract class _EncointerStore with Store {
   Future<void> setChosenCid([CommunityIdentifier? cid]) async {
     if (chosenCid != cid) {
       chosenCid = cid;
-      await writeToCache();
+      writeToCache();
 
       if (cid != null) {
         _rootStore.localStorage.setObject(chosenCidCacheKey(network), cid.toJson());
         await initCommunityStore(cid, _rootStore.account.currentAddress);
-        await initBazaarStore(cid);
+        initBazaarStore(cid);
       } else {
-        await _rootStore.localStorage.removeKey(chosenCidCacheKey(network));
+        _rootStore.localStorage.removeKey(chosenCidCacheKey(network));
       }
     }
 
