@@ -5,6 +5,8 @@ import 'package:encointer_wallet/page/reap_voucher/reap_voucher_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../../service/log/log_service.dart';
+
 enum QrScannerContext {
   /// QrScanner was opened from the main page
   mainPage,
@@ -19,6 +21,8 @@ enum QrScannerContext {
 /// Handles QrCode scans.
 class QrScanService {
   QrCode<dynamic> parse(String rawQrString) {
+    Log.d('Raw qrcode data: $rawQrString', 'QrScanService');
+
     // FIXME: this is a hack to redirect old Leu community vouchers to new cid
     rawQrString = rawQrString.replaceAll('u0qj92QX9PQ', 'u0qj944rhWE');
     rawQrString = rawQrString.replaceAll('u0qj9QqA2Q', 'u0qj944rhWE');
