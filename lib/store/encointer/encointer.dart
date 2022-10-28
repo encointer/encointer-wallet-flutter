@@ -234,7 +234,7 @@ abstract class _EncointerStore with Store {
       writeToCache();
 
       if (cid != null) {
-        _rootStore.localStorage.setObject(chosenCidCacheKey(network), cid.toJson());
+        await _rootStore.localStorage.setObject(chosenCidCacheKey(network), cid.toJson());
         await initCommunityStore(cid, _rootStore.account.currentAddress);
         initBazaarStore(cid);
       } else {
