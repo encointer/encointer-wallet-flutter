@@ -228,17 +228,17 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setChosenCid([CommunityIdentifier? cid]) {
+  Future<void> setChosenCid([CommunityIdentifier? cid]) async {
     if (chosenCid != cid) {
       chosenCid = cid;
       writeToCache();
 
       if (cid != null) {
         _rootStore.localStorage.setObject(chosenCidCacheKey(network), cid.toJson());
-        initCommunityStore(cid, _rootStore.account.currentAddress);
-        initBazaarStore(cid);
+        await initCommunityStore(cid, _rootStore.account.currentAddress);
+        await initBazaarStore(cid);
       } else {
-        _rootStore.localStorage.removeKey(chosenCidCacheKey(network));
+        await _rootStore.localStorage.removeKey(chosenCidCacheKey(network));
       }
     }
 
