@@ -1,7 +1,5 @@
 import 'dart:io';
 
-import 'package:flutter_svg/svg.dart';
-
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/ipfs/http_api.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -15,10 +13,10 @@ class MockIpfs extends Ipfs {
   }
 
   @override
-  Future<SvgPicture> getCommunityIcon(String? cid) {
+  Future<String?> getCommunityIcon(String? cid) {
     final mockIcon = 'assets/images/assets/icon_leu.svg';
     Log.d('Getting mock icon: $mockIcon', 'MockIpfs');
-    return Future.value(SvgPicture.asset(mockIcon));
+    return Future.value(mockIcon);
   }
 
   @override
