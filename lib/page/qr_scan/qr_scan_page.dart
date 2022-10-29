@@ -120,7 +120,7 @@ Widget mockQrDataRow(Translations dic, Function(String) onScan) {
     ElevatedButton(
       child: Text(dic.profile.addContact),
       onPressed: () => onScan(
-        'encointer-contact\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nSara',
+        'encointer-contact\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\n\n\nSara',
       ),
     ),
     ElevatedButton(
