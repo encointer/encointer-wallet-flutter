@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +22,7 @@ class CeremonyStep2Scan extends StatelessWidget {
   const CeremonyStep2Scan(
     this.store,
     this.api, {
-    required this.claimantAddress,
+    required this.claim,
     required this.confirmedParticipantsCount,
     Key? key,
   }) : super(key: key);
@@ -27,7 +30,7 @@ class CeremonyStep2Scan extends StatelessWidget {
   final AppStore store;
   final Api api;
 
-  final String claimantAddress;
+  final Future<Uint8List> claim;
   final int confirmedParticipantsCount;
 
   @override
@@ -70,9 +73,18 @@ class CeremonyStep2Scan extends StatelessWidget {
                   const SizedBox(height: 12),
                   // Enhance brightness for the QR-code
                   const WakeLockAndBrightnessEnhancer(brightness: 1),
-                  QrCodeImage(
-                    qrCode: claimantAddress,
-                    errorCorrectionLevel: QrErrorCorrectLevel.L,
+                  FutureBuilder<Uint8List>(
+                    future: claim,
+                    builder: (_, AsyncSnapshot<Uint8List> snapshot) {
+                      if (snapshot.hasData) {
+                        return QrCodeImage(
+                          qrCode: base64.encode(snapshot.data!),
+                          errorCorrectionLevel: QrErrorCorrectLevel.L,
+                        );
+                      } else {
+                        return const CupertinoActivityIndicator();
+                      }
+                    },
                   ),
                 ],
               ),
@@ -121,7 +133,7 @@ class CeremonyStep2Scan extends StatelessWidget {
             store.settings.developerMode
                 ? ElevatedButton(
                     child: const Text('DEV ONLY: attest all participants'),
-                    onPressed: () => attestAllParticipants(store, claimantAddress),
+                    onPressed: () => attestAllParticipants(store, store.account.currentAddress),
                   )
                 : Container(),
             const SizedBox(height: 12)

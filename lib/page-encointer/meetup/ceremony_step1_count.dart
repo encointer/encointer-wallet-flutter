@@ -1,9 +1,11 @@
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
+import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/meetup/ceremony_progress_bar.dart';
 import 'package:encointer_wallet/page-encointer/meetup/ceremony_step2_scan2.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/substrate_api/codec_api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
@@ -24,16 +26,36 @@ class CeremonyStep1Count extends StatelessWidget {
   final TextEditingController _attendeesCountController = TextEditingController();
 
   Future<void> _pushStep2ScanPage(BuildContext context, int count) async {
-    Navigator.of(context).push(
-      CupertinoPageRoute(
-        builder: (BuildContext context) => CeremonyStep2Scan(
-          store,
-          api,
-          claimantAddress: store.account.currentAddress,
-          confirmedParticipantsCount: count,
+    if (store.settings.cachedPin.isEmpty) {
+      await showCupertinoDialog(
+        context: context,
+        builder: (context) {
+          final Translations dic = I18n.of(context)!.translationsForLocale();
+          return showPasswordInputDialog(
+              context,
+              store.account.currentAccount,
+              Text(dic.home.unlockAccount
+                  .replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name.toString())), (password) {
+            store.settings.setPin(password);
+          });
+        },
+      );
+    }
+
+    if (store.settings.cachedPin.isNotEmpty) {
+      Navigator.of(context).push(
+        CupertinoPageRoute(
+          builder: (BuildContext context) => CeremonyStep2Scan(
+            store,
+            api,
+            claim: webApi.encointer
+                .signClaimOfAttendance(count, store.settings.cachedPin)
+                .then((claim) => webApi.codec.encodeToBytes(ClaimOfAttendanceJSRegistryName, claim)),
+            confirmedParticipantsCount: count,
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 
   @override
