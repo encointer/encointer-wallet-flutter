@@ -18,7 +18,7 @@ class CeremonyStep2Scan extends StatelessWidget {
   const CeremonyStep2Scan(
     this.store,
     this.api, {
-    required this.claimantPubKey,
+    required this.claimantAddress,
     required this.confirmedParticipantsCount,
     Key? key,
   }) : super(key: key);
@@ -26,7 +26,7 @@ class CeremonyStep2Scan extends StatelessWidget {
   final AppStore store;
   final Api api;
 
-  final String claimantPubKey;
+  final String claimantAddress;
   final int confirmedParticipantsCount;
 
   @override
@@ -70,7 +70,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                   // Enhance brightness for the QR-code
                   const WakeLockAndBrightnessEnhancer(brightness: 1),
                   QrCodeImage(
-                    qrCode: claimantPubKey,
+                    qrCode: claimantAddress,
                     errorCorrectionLevel: QrErrorCorrectLevel.L,
                   ),
                 ],
