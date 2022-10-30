@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -21,21 +22,21 @@ class ScanClaimQrCode extends StatelessWidget {
   final AppStore store;
   final int confirmedParticipantsCount;
 
-  void validateAndStoreClaim(BuildContext context, ClaimOfAttendance claim, Translations dic) {
+  void validateAndStoreParticipant(BuildContext context, String attendee, Translations dic) {
     List<String> registry = store.encointer.communityAccount!.meetup!.registry;
-    if (!registry.contains(claim.claimantPublic)) {
+    if (!registry.contains(attendee)) {
       // this is important because the runtime checks if there are too many claims trying to be registered.
       RootSnackBar.showMsg(dic.encointer.meetupClaimantInvalid);
       Log.d(
-        '[scanClaimQrCode] Claimant: ${claim.claimantPublic} is not part of registry: $registry',
+        '[scanClaimQrCode] Claimant: $attendee is not part of registry: $registry',
         'CeremonyProgressBar',
       );
     } else {
-      String msg = store.encointer.communityAccount!.containsClaim(claim)
+      String msg = store.encointer.communityAccount!.containsAttendee(attendee)
           ? dic.encointer.claimsScannedAlready
           : dic.encointer.claimsScannedNew;
 
-      store.encointer.communityAccount!.addParticipantClaim(claim);
+      store.encointer.communityAccount!.addAttendee(attendee);
       RootSnackBar.showMsg(msg);
     }
   }
@@ -44,20 +45,14 @@ class ScanClaimQrCode extends StatelessWidget {
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
 
-    Future _onScan(String base64Data) async {
+    Future _onScan(String claimOrAddress) async {
       // Show a cupertino activity indicator as long as we are decoding
       _showActivityIndicatorOverlay(context);
 
       try {
-        var data = base64.decode(base64Data);
+        var address = await addressFromClaimOrAddress(claimOrAddress);
 
-        // Todo: Not good to use the global webApi here, but I wanted to prevent big changes into the code for now.
-        // Fix this when #132 is tackled.
-        var claim = await webApi.codec
-            .decodeBytes(ClaimOfAttendanceJSRegistryName, data)
-            .then((c) => ClaimOfAttendance.fromJson(c));
-
-        validateAndStoreClaim(context, claim, dic);
+        validateAndStoreParticipant(context, address, dic);
       } catch (e, s) {
         Log.e('Error decoding claim: $e', 'CeremonyProgressBar', s);
         RootSnackBar.showMsg(dic.encointer.claimsScannedDecodeFailed);
@@ -115,7 +110,7 @@ class ScanClaimQrCode extends StatelessWidget {
                       Observer(builder: (_) {
                         final txt = dic.encointer.claimsScannedNOfM
                             .replaceAll(
-                                'SCANNED_COUNT', store.encointer.communityAccount!.scannedClaimsCount.toString())
+                                'SCANNED_COUNT', store.encointer.communityAccount!.scannedAttendeesCount.toString())
                             .replaceAll(
                               'TOTAL_COUNT',
                               (confirmedParticipantsCount - 1).toString(),
@@ -170,4 +165,18 @@ Widget permissionErrorDialog(BuildContext context) {
       ),
     ],
   );
+}
+
+/// For backwards compatibility wit phones pre-v1.8.9
+Future<String> addressFromClaimOrAddress(String claimOrAddress) async {
+  if (Fmt.isAddress(claimOrAddress)) {
+    return Future.value(claimOrAddress);
+  }
+
+  var data = base64.decode(claimOrAddress);
+
+  var claim =
+      await webApi.codec.decodeBytes(ClaimOfAttendanceJSRegistryName, data).then((c) => ClaimOfAttendance.fromJson(c));
+
+  return claim.claimantPublic!;
 }

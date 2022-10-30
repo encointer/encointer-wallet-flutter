@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
-import 'package:encointer_wallet/models/claim_of_attendance/claim_of_attendance.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -50,18 +49,16 @@ abstract class _CommunityAccountStore with Store {
   @observable
   Meetup? meetup;
 
-  /// `ClaimOfAttendances` that were scanned during a meetup.
-  ///
-  /// Map: claimantPublicKey -> ClaimOfAttendance
+  /// Meetup `attendees` scanned during a meetup.
   @observable
-  ObservableMap<String, ClaimOfAttendance>? participantsClaims = ObservableMap();
+  ObservableSet<String>? attendees = ObservableSet();
 
   /// This should be set to true once the attestations have been sent to chain.
   @observable
   bool? meetupCompleted = false;
 
   @computed
-  get scannedClaimsCount => participantsClaims?.length ?? 0;
+  get scannedAttendeesCount => attendees?.length ?? 0;
 
   @computed
   bool get isAssigned => meetup != null;
@@ -118,18 +115,25 @@ abstract class _CommunityAccountStore with Store {
   @action
   void purgeParticipantsClaims() {
     Log.d('Purging participantsClaims.', 'CommunityAccountStore');
-    participantsClaims!.clear();
+    attendees!.clear();
     writeToCache();
   }
 
-  bool containsClaim(ClaimOfAttendance claim) {
-    return participantsClaims![claim.claimantPublic] != null;
+  bool containsAttendee(String attendee) {
+    return attendees?.contains(attendee) ?? false;
   }
 
   @action
-  void addParticipantClaim(ClaimOfAttendance claim) {
+  void addAttendee(String attendee) {
     Log.d('adding participantsClaims.', 'CommunityAccountStore');
-    participantsClaims![claim.claimantPublic!] = claim;
+
+    if (attendees == null) {
+      attendees = ObservableSet();
+    }
+
+    // Is a noop if the attendee is already in the set.
+    attendees!.add(attendee);
+
     writeToCache();
   }
 
