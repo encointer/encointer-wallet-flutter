@@ -123,7 +123,8 @@ class CeremonyStep2Scan extends StatelessWidget {
                     child: const Text('DEV ONLY: attest all participants'),
                     onPressed: () => attestAllParticipants(store, claimantAddress),
                   )
-                : const SizedBox(height: 24),
+                : Container(),
+            const SizedBox(height: 12)
           ],
         ),
       ),
