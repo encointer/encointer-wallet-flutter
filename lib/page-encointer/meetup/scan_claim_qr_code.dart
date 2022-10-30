@@ -28,8 +28,8 @@ class ScanClaimQrCode extends StatelessWidget {
       // this is important because the runtime checks if there are too many claims trying to be registered.
       RootSnackBar.showMsg(dic.encointer.meetupClaimantInvalid);
       Log.d(
-        '[scanClaimQrCode] Claimant: $attendee is not part of registry: $registry',
-        'CeremonyProgressBar',
+        'Claimant: $attendee is not part of registry: $registry',
+        'ScanClaimQrCode',
       );
     } else {
       String msg = store.encointer.communityAccount!.containsAttendee(attendee)
@@ -54,7 +54,7 @@ class ScanClaimQrCode extends StatelessWidget {
 
         validateAndStoreParticipant(context, address, dic);
       } catch (e, s) {
-        Log.e('Error decoding claim: $e', 'CeremonyProgressBar', s);
+        Log.e('Error decoding claim: $e', 'ScanClaimQrCode', s);
         RootSnackBar.showMsg(dic.encointer.claimsScannedDecodeFailed);
       }
 
@@ -78,7 +78,7 @@ class ScanClaimQrCode extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<PermissionStatus> snapshot) {
           if (snapshot.hasData) {
             if (snapshot.data != PermissionStatus.granted) {
-              Log.d('[scanPage] Permission Status: ${snapshot.data}', 'CeremonyProgressBar');
+              Log.d('[scanPage] Permission Status: ${snapshot.data}', 'ScanClaimQrCode');
               return permissionErrorDialog(context);
             }
 
@@ -88,7 +88,7 @@ class ScanClaimQrCode extends StatelessWidget {
                     allowDuplicates: false,
                     onDetect: (barcode, args) {
                       if (barcode.rawValue == null) {
-                        Log.e('Failed to scan Barcode', 'CeremonyProgressBar');
+                        Log.e('Failed to scan Barcode', 'ScanClaimQrCode');
                       } else {
                         _onScan(barcode.rawValue!);
                       }
