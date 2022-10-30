@@ -197,6 +197,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   @override
   get meetupClaimantInvalid =>
       'Diese* Antragssteller*in gehört nicht zu deiner Versammlung. Antrag wurde nicht gespeichert.';
+  @override
   get meetupClaimantEqualToSelf => 'Fehler, Addresse ist aktueller account. Antrag wurde nicht gespeichert.';
   @override
   get meetupLocation => 'Treffpunkt';
