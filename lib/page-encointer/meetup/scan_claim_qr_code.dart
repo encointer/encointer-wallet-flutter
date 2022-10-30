@@ -31,6 +31,7 @@ class ScanClaimQrCode extends StatelessWidget {
         'Claimant: $attendee is equal to self',
         'ScanClaimQrCode',
       );
+      return;
     }
 
     if (!registry.contains(attendee)) {
