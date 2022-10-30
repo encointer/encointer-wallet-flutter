@@ -115,7 +115,7 @@ abstract class _CommunityAccountStore with Store {
   @action
   void purgeParticipantsClaims() {
     Log.d('Purging participantsClaims.', 'CommunityAccountStore');
-    attendees!.clear();
+    attendees = ObservableSet();
     writeToCache();
   }
 
