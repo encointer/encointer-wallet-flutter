@@ -48,7 +48,7 @@ Map<String, dynamic> attestAttendeesParams(
       'call': 'attestAttendees',
       'cid': chosenCid,
     },
-    'params': [numberOfParticipantsVote, attendees],
+    'params': [chosenCid, numberOfParticipantsVote, attendees],
   };
 }
 
