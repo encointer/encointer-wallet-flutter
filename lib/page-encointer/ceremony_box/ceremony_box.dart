@@ -105,7 +105,7 @@ class CeremonyBox extends StatelessWidget {
                           Text(
                             dic.encointer.claimsSubmitN.replaceAll(
                               'N_COUNT',
-                              store.encointer.communityAccount!.scannedClaimsCount.toString(),
+                              store.encointer.communityAccount!.scannedAttendeesCount.toString(),
                             ),
                           ),
                         ],
@@ -174,7 +174,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
           return CeremonyNotification(
             notificationIconData: Iconsax.tick_square,
             notification: dic.encointer.successfullySentNAttestations
-                .replaceAll('P_COUNT', store.encointer.communityAccount!.scannedClaimsCount.toString()),
+                .replaceAll('P_COUNT', store.encointer.communityAccount!.scannedAttendeesCount.toString()),
           );
         } else {
           var meetup = store.encointer.communityAccount!.meetup!;
