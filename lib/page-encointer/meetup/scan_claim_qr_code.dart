@@ -24,6 +24,15 @@ class ScanClaimQrCode extends StatelessWidget {
 
   void validateAndStoreParticipant(BuildContext context, String attendee, Translations dic) {
     List<String> registry = store.encointer.communityAccount!.meetup!.registry;
+
+    if (attendee == store.account.currentAddress) {
+      RootSnackBar.showMsg(dic.encointer.meetupClaimantEqualToSelf);
+      Log.d(
+        'Claimant: $attendee is equal to self',
+        'ScanClaimQrCode',
+      );
+    }
+
     if (!registry.contains(attendee)) {
       // this is important because the runtime checks if there are too many claims trying to be registered.
       RootSnackBar.showMsg(dic.encointer.meetupClaimantInvalid);
