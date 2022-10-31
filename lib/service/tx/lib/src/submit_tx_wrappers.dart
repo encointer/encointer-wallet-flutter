@@ -130,7 +130,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
       final registrationType = data.personal?.participantType;
       if (registrationType != null) {
         final texts = _getTitleEducate(registrationType, context);
-        await showCupertinoDialog(
+        await showCupertinoDialog<void>(
           barrierDismissible: true,
           context: context,
           builder: (context) {
