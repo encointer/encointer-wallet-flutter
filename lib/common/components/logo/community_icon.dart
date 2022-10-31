@@ -18,14 +18,13 @@ class CommunityIconObserver extends StatelessWidget {
           if (store.communityIcon != null) {
             return SvgPicture.string(store.communityIcon!);
           } else {
-            return FutureBuilder<SvgPicture>(
-              // future: store.getCommunityIcon(),
+            return FutureBuilder<String?>(
               future: context.read<AppStore>().getCommunityIcon(),
-              builder: (_, AsyncSnapshot<SvgPicture> snapshot) {
+              builder: (_, AsyncSnapshot<String?> snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CupertinoActivityIndicator();
-                } else if (snapshot.hasData) {
-                  return snapshot.data!;
+                } else if (snapshot.hasData && snapshot.data != null && snapshot.data!.isNotEmpty) {
+                  return SvgPicture.string(snapshot.data!);
                 } else {
                   return SvgPicture.asset(fall_back_community_icon);
                 }
