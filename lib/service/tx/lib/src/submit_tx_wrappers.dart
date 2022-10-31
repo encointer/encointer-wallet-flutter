@@ -8,6 +8,7 @@ import 'package:encointer_wallet/service/tx/lib/src/submit_to_js.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 /// Helpers to submit transactions.
 
@@ -108,6 +109,26 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
           store.account.currentAccount,
           Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
           (password) => store.settings.setPin(password),
+        );
+      },
+    );
+  }
+  final data = await webApi.encointer.getAggregatedAccountData(
+    store.encointer.chosenCid!,
+    store.account.currentAddress,
+  );
+  print(data);
+  final registrationType = data.personal?.participantType;
+  if (registrationType != null) {
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('registrationType $registrationType'),
+          content: Text(
+            '${registrationType}Deeee',
+            textAlign: TextAlign.center,
+          ),
         );
       },
     );
