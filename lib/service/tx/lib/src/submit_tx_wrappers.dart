@@ -1,7 +1,8 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:flutter/cupertino.dart';
-// import 'package:flutter/material.dart';
 
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
@@ -125,16 +126,18 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
         store.encointer.chosenCid!,
         store.account.currentAddress,
       );
-      print(data);
+      Log.d('$data', 'AggregatedAccountData from register participant');
       final registrationType = data.personal?.participantType;
       if (registrationType != null) {
+        final texts = _getTitleEducate(registrationType, context);
         await showCupertinoDialog(
+          barrierDismissible: true,
           context: context,
           builder: (context) {
             return CupertinoAlertDialog(
-              title: Text('registrationType $registrationType'),
+              title: Text('${texts['title']}'),
               content: Text(
-                '${registrationType}Deeee',
+                '${texts['content']}',
                 textAlign: TextAlign.center,
               ),
             );
@@ -175,4 +178,18 @@ Future<dynamic> submitReapVoucher(
   CommunityIdentifier cid,
 ) async {
   return api.js.evalJavascript('encointer.reapVoucher("$voucherUri","$recipientAddress", ${jsonEncode(cid)})');
+}
+
+Map<String, String> _getTitleEducate(ParticipantType type, BuildContext context) {
+  final dic = I18n.of(context)!.translationsForLocale().encointer;
+  switch (type) {
+    case ParticipantType.Newbie:
+      return {'title': dic.newbieTitle, 'content': dic.newbieContent};
+    case ParticipantType.Endorsee:
+      return {'title': dic.endorseeTitle, 'content': dic.endorseeContent};
+    case ParticipantType.Reputable:
+      return {'title': dic.reputableTitle, 'content': dic.reputableContent};
+    case ParticipantType.Bootstrapper:
+      return {'title': dic.bootstrapperTitle, 'content': dic.bootstrapperContent};
+  }
 }

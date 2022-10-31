@@ -51,6 +51,14 @@ abstract class TranslationsEncointer {
   String get thankYou;
   String get weHopeToSeeYouAtTheNextGathering;
   String get goToLeuZurich;
+  String get newbieTitle;
+  String get newbieContent;
+  String get endorseeTitle;
+  String get endorseeContent;
+  String get reputableTitle;
+  String get reputableContent;
+  String get bootstrapperTitle;
+  String get bootstrapperContent;
 }
 
 class TranslationsEnEncointer implements TranslationsEncointer {
@@ -155,6 +163,36 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   get weHopeToSeeYouAtTheNextGathering => 'We hope to see you at the next gathering.';
   @override
   get goToLeuZurich => 'Open leu.zuerich';
+
+  @override
+  String get bootstrapperContent =>
+      'You have endorsement tickets left. Please consider endorsing new people to accelerate the growth of';
+
+  @override
+  String get bootstrapperTitle =>
+      'You have bootstrapper status for community . Therefore, you are guaranteed to be assigned for the ceremony if you register. if unused endorsement tickets > 0';
+
+  @override
+  String get endorseeContent =>
+      'You have been endorsed by one of the bootstrappers of as a trustworthy community member. This means you are guaranteed to be assigned if you register for this ceremony. The endorsement is only valid for this ceremony';
+
+  @override
+  String get endorseeTitle => 'Educate that endorsement guarantees a seat but is valid for this ceremony only';
+
+  @override
+  String get newbieContent =>
+      'You are about to register as a newbie without previous reputation. We can not guarantee that you will get assigned for the next ceremony (link to FAQ:why have I not been assigned?). Please check your assignment status on the day before the ceremony to learn if and where your ceremony meetup will take place.';
+
+  @override
+  String get newbieTitle => 'Educate that seat is not guaranteed';
+
+  @override
+  String get reputableContent =>
+      'You have previously participated in a ceremony and therefore you are guaranteed to be assigned for this ceremony if you register. Caution: Should you register but not show up at the ceremony, your reputation will be reduced to newbie status.';
+
+  @override
+  String get reputableTitle =>
+      'Educate that a seat is guaranteed but a no show will cause a loss of reputation and may downgrade to newbie';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
@@ -260,6 +298,38 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get weHopeToSeeYouAtTheNextGathering => 'Wir hoffen dich an der nächsten Versammlung wiederzusehen.';
   @override
   get goToLeuZurich => 'leu.zuerich öffnen';
+
+  @override
+  // TODO: implement bootstrapperContent
+  String get bootstrapperContent => throw UnimplementedError();
+
+  @override
+  // TODO: implement bootstrapperTitle
+  String get bootstrapperTitle => throw UnimplementedError();
+
+  @override
+  // TODO: implement endorseeContent
+  String get endorseeContent => throw UnimplementedError();
+
+  @override
+  // TODO: implement endorseeTitle
+  String get endorseeTitle => throw UnimplementedError();
+
+  @override
+  // TODO: implement newbieContent
+  String get newbieContent => throw UnimplementedError();
+
+  @override
+  // TODO: implement newbieTitle
+  String get newbieTitle => throw UnimplementedError();
+
+  @override
+  // TODO: implement reputableContent
+  String get reputableContent => throw UnimplementedError();
+
+  @override
+  // TODO: implement reputableTitle
+  String get reputableTitle => throw UnimplementedError();
 }
 
 class TranslationsFrEncointer implements TranslationsEncointer {
@@ -364,4 +434,36 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   get weHopeToSeeYouAtTheNextGathering => throw UnimplementedError();
   @override
   get goToLeuZurich => throw UnimplementedError();
+
+  @override
+  // TODO: implement bootstrapperContent
+  String get bootstrapperContent => throw UnimplementedError();
+
+  @override
+  // TODO: implement bootstrapperTitle
+  String get bootstrapperTitle => throw UnimplementedError();
+
+  @override
+  // TODO: implement endorseeContent
+  String get endorseeContent => throw UnimplementedError();
+
+  @override
+  // TODO: implement endorseeTitle
+  String get endorseeTitle => throw UnimplementedError();
+
+  @override
+  // TODO: implement newbieContent
+  String get newbieContent => throw UnimplementedError();
+
+  @override
+  // TODO: implement newbieTitle
+  String get newbieTitle => throw UnimplementedError();
+
+  @override
+  // TODO: implement reputableContent
+  String get reputableContent => throw UnimplementedError();
+
+  @override
+  // TODO: implement reputableTitle
+  String get reputableTitle => throw UnimplementedError();
 }
