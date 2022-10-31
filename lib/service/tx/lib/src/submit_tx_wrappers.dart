@@ -113,33 +113,33 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
       },
     );
   }
-  final data = await webApi.encointer.getAggregatedAccountData(
-    store.encointer.chosenCid!,
-    store.account.currentAddress,
-  );
-  print(data);
-  final registrationType = data.personal?.participantType;
-  if (registrationType != null) {
-    await showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: Text('registrationType $registrationType'),
-          content: Text(
-            '${registrationType}Deeee',
-            textAlign: TextAlign.center,
-          ),
-        );
-      },
-    );
-  }
 
   return submitTx(
     context,
     store,
     api,
     registerParticipantParams(store.encointer.chosenCid!, proof: await api.encointer.getProofOfAttendance()),
-    onFinish: (BuildContext txPageContext, Map res) {
+    onFinish: (BuildContext txPageContext, Map res) async {
+      final data = await webApi.encointer.getAggregatedAccountData(
+        store.encointer.chosenCid!,
+        store.account.currentAddress,
+      );
+      print(data);
+      final registrationType = data.personal?.participantType;
+      if (registrationType != null) {
+        await showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              title: Text('registrationType $registrationType'),
+              content: Text(
+                '${registrationType}Deeee',
+                textAlign: TextAlign.center,
+              ),
+            );
+          },
+        );
+      }
       // Registering the participant burns the reputation.
       // Hence, we should fetch the new state afterwards.
       store.dataUpdate.setInvalidated();
