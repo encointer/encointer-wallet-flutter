@@ -546,7 +546,7 @@ abstract class _EncointerStore with Store {
   @computed
   bool get showSubmitClaimsButton {
     bool assigned = communityAccount?.isAssigned ?? false;
-    bool? hasClaims = (communityAccount?.scannedClaimsCount ?? 0) > 0;
+    bool? hasClaims = (communityAccount?.scannedAttendeesCount ?? 0) > 0;
     return (currentPhase == CeremonyPhase.Attesting && assigned && hasClaims!);
   }
 
