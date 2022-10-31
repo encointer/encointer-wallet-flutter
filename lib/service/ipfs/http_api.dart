@@ -46,14 +46,14 @@ class Ipfs {
     }
   }
 
-  Future<String?> getCommunityIcon(String? cid) async {
-    if (cid == null || cid.isEmpty) {
+  Future<String?> getCommunityIcon(String cid) async {
+    if (cid.isEmpty) {
       Log.d('[IPFS] return default encointer icon because ipfs-cid is not set', 'Ipfs');
       return null;
     }
 
     try {
-      var data = await getData(getIconsPath(cid));
+      final data = await getData(getIconsPath(cid));
       if (data == null) {
         Log.d('[Ipfs] could not find community icon', 'Ipfs');
         return null;

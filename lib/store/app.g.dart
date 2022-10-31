@@ -184,7 +184,7 @@ mixin _$AppStore on _AppStore, Store {
   late final _$getCommunityIconAsyncAction = AsyncAction('_AppStore.getCommunityIcon', context: context);
 
   @override
-  Future<String?> getCommunityIcon() {
+  Future<SvgPicture> getCommunityIcon() {
     return _$getCommunityIconAsyncAction.run(() => super.getCommunityIcon());
   }
 

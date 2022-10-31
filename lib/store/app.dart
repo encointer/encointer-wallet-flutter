@@ -1,7 +1,9 @@
+import 'package:flutter_svg/svg.dart';
 import 'package:mobx/mobx.dart';
 import 'package:upgrader/upgrader.dart';
 
 import 'package:encointer_wallet/config.dart';
+import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/account.dart';
@@ -123,11 +125,23 @@ abstract class _AppStore with Store {
   }
 
   @action
-  Future<String?> getCommunityIcon() async {
-    if (encointer.community?.assetsCid != null && communityIcon == null) {
-      communityIcon = await webApi.ipfs.getCommunityIcon(encointer.community?.assetsCid);
+  Future<SvgPicture> getCommunityIcon() async {
+    try {
+      if (encointer.community?.assetsCid == null) {
+        return SvgPicture.asset(fall_back_community_icon);
+      } else {
+        final data = await webApi.ipfs.getCommunityIcon(encointer.community!.assetsCid!);
+        if (data != null) {
+          communityIcon = data;
+          return SvgPicture.string(communityIcon!);
+        } else {
+          return SvgPicture.asset(fall_back_community_icon);
+        }
+      }
+    } catch (e) {
+      Log.e('getCommunityIcon $e', 'App Store getCommunityIcon');
+      return SvgPicture.asset(fall_back_community_icon);
     }
-    return communityIcon;
   }
 
   @action
