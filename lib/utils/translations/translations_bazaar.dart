@@ -501,3 +501,146 @@ class TranslationsFrBazaar implements TranslationsBazaar {
   @override
   get filter => throw UnimplementedError();
 }
+
+class TranslationsRuBazaar implements TranslationsBazaar {
+  @override
+  get address => 'Address';
+  @override
+  get apply => 'Apply';
+  @override
+  get bazaarNew => 'New in Bazaar';
+  @override
+  get bazaarTitle => 'The Bazaar';
+  @override
+  get businessAdd => '+ Add new business';
+  @override
+  get businessCreate => 'Create new business';
+  @override
+  get businessDescription => 'Business description';
+  @override
+  get businessDescriptionHint => 'Spark interest in your offering and provide a succinct description';
+  @override
+  get businesses => 'Businesses';
+  @override
+  get businessesFound => 'Businesses Found';
+  @override
+  get businessesMy => 'My Businesses';
+  @override
+  get businessesOffered => 'Offered in Businesses';
+  @override
+  get businessesResults => 'Results in Businesses';
+  @override
+  get businessesVicinity => 'Businesses in my Vicinity';
+  @override
+  get businessName => 'Business name';
+  @override
+  get businessNameHint => 'Use a descriptive name';
+  @override
+  get businessUrl => 'URL to business';
+  @override
+  get cameraDefault => 'Camera';
+  @override
+  get cancelDefault => 'Cancel';
+  @override
+  get categories => 'Categories';
+  @override
+  get city => 'City';
+  @override
+  get communityChoose => 'Choose community:';
+  @override
+  get communityLoad => 'Loading community..';
+  @override
+  get communityNotFound => 'No community found';
+  @override
+  get day => 'Day';
+  @override
+  get delete => 'Delete';
+  @override
+  get delivery => 'Delivery';
+  @override
+  get deliveryOptions => 'Delivery options';
+  @override
+  get description => 'Description';
+  @override
+  get favorites => 'Favorites';
+  @override
+  get found => 'Found';
+  @override
+  get galleryDefault => 'Gallery';
+  @override
+  get imageChoose => 'Choose an image';
+  @override
+  get imageNotPicked => 'You have not yet picked an image.';
+  @override
+  get imagesAdded => 'Images added';
+  @override
+  get imagesAddRemove => 'Add/remove images';
+  @override
+  get imagesMultiplePick => 'Pick Multiple Images from gallery';
+  @override
+  get imageVideoError => 'Pick image/video error';
+  @override
+  get lastVisited => 'Last visited';
+  @override
+  get lookingFor => 'What are you looking for?';
+  @override
+  get map => 'Map';
+  @override
+  get menu => 'Menu';
+  @override
+  get no => 'No.';
+  @override
+  get noItems => 'No items found';
+  @override
+  get notifications => 'Notifications';
+  @override
+  get offeringAdd => '+ Add an offering';
+  @override
+  get offeringNew => 'Featuring Newest';
+  @override
+  get offerings => 'Offerings';
+  @override
+  get offeringsFound => 'Businesses Found';
+  @override
+  get offeringsMy => 'My Offerings';
+  @override
+  get offeringsResults => 'Results in Offerings';
+  @override
+  get openningHours => 'Openning Hours';
+  @override
+  get openningHoursInputHint => 'eG. 8:15-14:45 or 9-5pm';
+  @override
+  get photoAdd => 'Add Photo';
+  @override
+  get photoTake => 'Take a Photo';
+  @override
+  get price => 'Price';
+  @override
+  get productNewness => 'Product Newness';
+  @override
+  get recentlyAdded => 'Recently added';
+  @override
+  get reset => 'Reset';
+  @override
+  get save => 'Save';
+  @override
+  get search => 'Search...';
+  @override
+  get showAll => '+ Show all';
+  @override
+  get state => 'State';
+  @override
+  get street => 'Street';
+  @override
+  get timeIntervalAdd => 'Add a time interval';
+  @override
+  get topResults => 'Top Results';
+  @override
+  get waiting => 'waiting...';
+  @override
+  get zipCode => 'Zip code';
+  @override
+  get useDescriptiveName => 'Please, use a descriptive name';
+  @override
+  get filter => 'Filter';
+}

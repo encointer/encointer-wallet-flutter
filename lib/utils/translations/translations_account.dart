@@ -232,3 +232,70 @@ class TranslationsFrAccount implements TranslationsAccount {
   @override
   get uosTitle => throw UnimplementedError();
 }
+
+class TranslationsRuAccount implements TranslationsAccount {
+  @override
+  get advanced => 'Дополнительные параметры';
+  @override
+  get backupError =>
+      'Это устройство не поддерживает тип ключа sr25519. Чтобы продолжить, выберите [Дополнительные параметры -> Тип шифрования -> ed25519].';
+  @override
+  get create => 'Создать аккаунт';
+  @override
+  get createError => 'При создании аккаунта произошла ошибка';
+  @override
+  get createHint => '(Пример: Алиса)';
+  @override
+  get createPassword => 'PIN-код';
+  @override
+  get createPassword2 => 'Подтвердите PIN-код';
+  @override
+  get createPassword2Error => 'Противоречивые PIN-коды';
+  @override
+  get createPasswordError => 'PIN должен содержать не менее 4 цифр и никаких других знаков';
+  @override
+  get importDuplicate => 'Учетная запись существует, вы хотите аннулировать существующий аккаунт?';
+  @override
+  get importEncrypt => 'Тип шифрования';
+  @override
+  get importInvalid => 'Недопустимый';
+  @override
+  get importInvalidRawSeed => 'Предоставлен недопустимый raw seed';
+  @override
+  get importInvalidMnemonic => 'Предоставлена недопустимая мнемоника';
+  @override
+  get importMustNotBeEmpty => 'Входные данные не должны быть пустыми';
+  @override
+  get importPrivateKeyUnsupported => 'Импорт аккаунта с помощью секретного ключа пока не поддерживается.';
+  @override
+  get keystore => 'Хранилище ключей (json)';
+  @override
+  get list => 'Выбрать аккаунт';
+  @override
+  get mnemonic => 'Мнемоническая фраза';
+  @override
+  get next => 'Следующий';
+  @override
+  get observe => 'Observation';
+  @override
+  get observeBrief =>
+      'Отметьте наблюдаемый адрес, позже вы можете выбрать этот адрес на странице выбора аккаунта, чтобы просматривать активы и действия';
+  @override
+  get observeProxyInvalid => 'Неверный прокси-аккаунт';
+  @override
+  get path => 'Секретный путь вывода';
+  @override
+  get qrScan => 'Сканируйте QR-код';
+  @override
+  get rawSeed => 'Raw Seed';
+  @override
+  get uosCanceled => 'Транзакция отменена';
+  @override
+  get uosPush => 'Сканировать для публикации';
+  @override
+  get uosScan => 'Сканируйте подписанное и отправьте';
+  @override
+  get uosSigner => 'Подписавший';
+  @override
+  get uosTitle => 'Оффлайн подпись';
+}

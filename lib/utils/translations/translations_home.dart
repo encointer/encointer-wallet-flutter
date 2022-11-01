@@ -10,6 +10,7 @@ abstract class TranslationsHome {
   String get detail;
   String get exitConfirm;
   String get errorOccurred;
+
   String get loading;
   String get next;
   String get notifySubmitted;
@@ -68,7 +69,7 @@ class TranslationsEnHome implements TranslationsHome {
   get exitConfirm => 'Do you want to exit the App?';
   @override
   get errorOccurred => 'An error occurred:';
-  get inputInvalid => 'Invalid input';
+
   @override
   get loading => 'Loading...';
   @override
@@ -164,6 +165,7 @@ class TranslationsDeHome implements TranslationsHome {
   get exitConfirm => 'Möchtest du die App verlassen?';
   @override
   get errorOccurred => 'Es is ein Fehler aufgetaucht:';
+
   @override
   get loading => 'Lädt...';
   @override
@@ -263,6 +265,7 @@ class TranslationsFrHome implements TranslationsHome {
   get exitConfirm => throw UnimplementedError();
   @override
   get errorOccurred => throw UnimplementedError();
+
   @override
   get loading => throw UnimplementedError();
   @override
@@ -337,4 +340,103 @@ class TranslationsFrHome implements TranslationsHome {
   get cameraPermissionError => throw UnimplementedError();
   @override
   get appSettings => throw UnimplementedError();
+}
+
+class TranslationsRuHome implements TranslationsHome {
+  @override
+  get cancel => 'Отмена';
+  @override
+  get scan => 'Сканировать';
+  @override
+  get contacts => 'Контакты';
+  @override
+  get closeApp => 'Закрыть приложение';
+  @override
+  get copy => 'Скопировать вв буфер обмена';
+  @override
+  get create => 'Создать аккаунт';
+  @override
+  get detail => 'Детали';
+  @override
+  get exitConfirm => 'Вы хотите выйти из приложения?';
+  @override
+  get errorOccurred => 'Возникла ошибка:';
+
+  @override
+  get loading => 'Загрузка...';
+  @override
+  get next => 'Следующий шаг';
+  @override
+  get notifySubmitted => 'Транзакция отправлена';
+  @override
+  get notifySubmittedQueued => 'Ожидающая транзакция отправлена';
+  @override
+  get ok => 'OK';
+  @override
+  get pinNeeded => 'для использования приложения необходим PIN-код';
+  @override
+  get settingNetwork => 'Выберите кошелек';
+  @override
+  get submit => 'Войти и отправить';
+  @override
+  get submitCall => 'Выполнить звонок';
+  @override
+  get submitFees => 'Платеж';
+  @override
+  get submitFeesOffline => 'Платеж недоступен (оффлайн)';
+  @override
+  get submitFrom => 'Вы подписываете транзакцию с ';
+  @override
+  get submitNoSign => 'Отправить (без подписи)';
+  @override
+  get submitQr => 'Подписать через QR';
+  @override
+  get submitTransaction => 'Отправить транзакцию';
+  @override
+  get success => 'Успешно';
+  @override
+  get switchAccount => 'Сменить аккаунт';
+  @override
+  get switchCommunity => 'Сменить сообщество';
+  @override
+  get transactionQueued => 'В очереди';
+  @override
+  get transactionQueuedOffline =>
+      'Приложение не подключено к блокчейну. Транзакция, которая в очереди (будет отправлена автоматически при подключении).';
+  @override
+  get unlock => 'Разблокируйте учетную запись с помощью PIN-кода';
+  @override
+  get unlockAccount => 'Разблокируйте учетную запись CURRENT_ACCOUNT_NAME с помощью PIN-кода';
+  @override
+  get updateDownload => 'Загружается...';
+  @override
+  get updateError => 'Не удалось загрузить обновление';
+  @override
+  get updateJsUp => 'Чтобы продолжить, необходимо обновить метаданные.';
+  @override
+  get updateLatest => 'Новейшая версия приложения установлена';
+  @override
+  get updateToNewerVersionQ => 'Доступна новая версия, обновить сейчас?';
+  @override
+  get accountImport => 'Импортировать учтеную запись';
+  @override
+  get txQueued => 'Транзакция поставлена в очередь';
+  @override
+  get txQueuedOffline =>
+      'Вы находитесь в оффлайн режиме. Транзакция будет отправлена, когда вы снова подключитесь к сети.';
+  @override
+  get txReady => 'Транзакция готова.';
+  @override
+  get txBroadcast => 'Транзакция передана в эфир';
+  @override
+  get txInBlock => 'Транзакция заблокирована';
+  @override
+  get txError => 'Ошибка транзакции';
+  @override
+  get updatingAppState => 'Обновление приложения';
+  @override
+  get cameraPermissionError =>
+      'Произошла ошибка при получении разрешения камеры. Вы можете предоставить разрешение в настройках приложения.';
+  @override
+  get appSettings => 'Настройки приложения';
 }

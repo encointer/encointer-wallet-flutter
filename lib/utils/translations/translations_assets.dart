@@ -388,3 +388,115 @@ class TranslationsFrAssets implements TranslationsAssets {
   @override
   get insufficientFundsExplanation => throw UnimplementedError();
 }
+
+class TranslationsRuAssets implements TranslationsAssets {
+  @override
+  get address => 'Отправить по адресу';
+  @override
+  get amountError => 'Недопустимая сумма';
+  @override
+  get insufficientBalance => 'Недостаточный баланс';
+  @override
+  get block => 'Блокировать';
+  @override
+  get communitiesNotFound => 'Сообщества не найдены';
+  @override
+  get communityChoose => 'Пожалуйста выберите сообщество';
+  @override
+  get communityNotSelected => 'Сообщество не выбрано, нажмите на иконку, чтобы выбрать одно из них';
+  @override
+  get copy => 'Копировать';
+  @override
+  get detail => 'Данные';
+  @override
+  get done => 'Выполнено';
+  @override
+  get event => 'ID события';
+  @override
+  get fail => 'Не удалось';
+  @override
+  get fee => 'Платеж';
+  @override
+  get from => 'Из';
+  @override
+  get hash => 'Хэш транзакции';
+  @override
+  get home => 'Домой';
+  @override
+  get issuanceClaimed => 'Нет ожидаемого дохода сообщества';
+  @override
+  get issuancePending => 'Требовать рассмотрения ожидаемого дохода сообщества';
+  @override
+  get receive => 'Получить';
+  @override
+  get scan => 'Сканировать';
+  @override
+  get success => 'Успешно';
+  @override
+  get tip => 'Чаевые';
+  @override
+  get tipHint => 'Добавить чаевые к этому переводу, при оплате автору блока для того, чтобы повысить приоритетность.';
+  @override
+  get to => 'в';
+  @override
+  get transfer => 'Отправить';
+  @override
+  get payment => 'Оплата';
+  @override
+  get value => 'Ценность';
+  @override
+  get amountToBeTransferred => 'Отправить сумму';
+  @override
+  get invoiceAmount => 'Сумма инвойса';
+  @override
+  get shareInvoice => 'Поделиться инвойсом';
+  @override
+  get yourBalanceFor => 'Ваш баланс, ACCOUNT_NAME';
+  @override
+  get balance => 'Баланс';
+  @override
+  get invoice => 'Инвойс';
+  @override
+  get incomingConfirmed => 'Поступающая сумма AMOUNT CID_SYMBOL для ACCOUNT_NAME подтверждена';
+  @override
+  get fundsReceived => 'Полученные средства';
+  @override
+  get paymentDoYouWantToProceed => 'Продолжить оплату?';
+  @override
+  get paymentSubmitting => 'Платеж в процессе отправки...';
+  @override
+  get paymentFinished => 'Оплата завершена';
+  @override
+  get paymentError => 'Ошибка оплаты';
+  @override
+  get voucher => 'Ваучер';
+  @override
+  get voucherBalance => 'Баланс ваучера';
+  @override
+  get voucherDifferentNetworkAndCommunity => 'Ваучер предназначен для другой сети. Вы хотите изменить '
+      'на NETWORK_PLACEHOLDER и COMMUNITY_PLACEHOLDER? Вы можете изменить сеть в разделе «Профиль»> «Режим разработчика».';
+
+  @override
+  get voucherDifferentCommunity => 'Ваучер предназначен для другого сообщества. Изменить на COMMUNITY_PLACEHOLDER?';
+  @override
+  get voucherContainsInexistentCommunity => 'Ваучер содержит несуществующее сообщество:';
+  @override
+  get doYouWantToRedeemThisVoucher => 'Вы хотите обменять этот ваучер на ACCOUNT_PLACEHOLDER?';
+  @override
+  get fundVoucher => 'Фонд ваучера';
+  @override
+  get redeemVoucher => 'Использовать ваучер';
+  @override
+  get redeemSuccess => 'Ваучер успешно погашен.';
+  @override
+  get redeemFailure => 'Возникла ошибка при использовании ваучера. Причина:';
+  @override
+  get invalidNetwork => 'Неправильная сеть';
+  @override
+  get invalidCommunity => 'Несоотвествующее сообщество';
+  @override
+  get transactionError => 'Ошибка транзакции';
+  @override
+  get insufficientFundsExplanation => 'У вас недостаточно средств на этом счете. Смотрите на сайте вашего'
+      ' местного сообщества, как получить вознаграждение';
+}

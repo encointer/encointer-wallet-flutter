@@ -358,3 +358,105 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   @override
   get goToLeuZurich => throw UnimplementedError();
 }
+
+class TranslationsRuEncointer implements TranslationsEncointer {
+  @override
+  get registerParticipant => 'Регистрация';
+  @override
+  get claimsSubmit => 'Подавать заявки';
+  @override
+  get claimsSubmitN => 'Подать N_COUNT заявки';
+  @override
+  get claimsPurge => 'Очистить ранее отсканированные заявки';
+  @override
+  get claimsPurgeConfirm => 'Вы уверены, что хотите удалить все ранее отсканированные заявки?';
+  @override
+  get keySigningCycle => 'Цикл подписания ключей';
+  @override
+  get nextCycleTimeLeft => 'Следующий цикл в';
+  @override
+  get nextCycleDateLabel => 'Next cycle is on';
+  @override
+  get claimQr => 'Моя заявка на участие';
+  @override
+  get claimsScanned => 'You have scanned AMOUNT_PLACEHOLDER claims';
+  @override
+  get claimsScannedAlready => 'Updated previously scanned claim';
+  @override
+  get claimsScannedDecodeFailed => 'Could not decode scanned claim.';
+  @override
+  get claimsScannedNew => 'Scanned new claim';
+  @override
+  get claimsScannedNOfM => 'Scanned SCANNED_COUNT / TOTAL_COUNT Claims';
+  @override
+  get claimsSubmitDetail => 'Submitting AMOUNT claims for the recent gathering';
+  @override
+  get communities => 'Communities';
+  @override
+  get noCommunitiesAreYouOffline => 'No communities were found. You can choose one later. Are you offline?.';
+  @override
+  get meetupAttended => 'Attended last meetup';
+  @override
+  get meetupClaimantInvalid => 'This claimant is not part of the meetup. Claim is not stored.';
+  @override
+  get meetupLocation => 'Meetup Location';
+  @override
+  get startGathering => 'Start gathering';
+  @override
+  get alreadyRegistered => 'Already Registered';
+  @override
+  get registerUntil => 'Register before';
+  @override
+  get meetingPoint => 'Meeting Point';
+  @override
+  get gatheringIsOver => 'The gathering is over';
+  @override
+  get today => 'Today';
+  @override
+  get tomorrow => 'Tomorrow';
+  @override
+  get calendarEntryDescription => 'Gathering to get your community income';
+  @override
+  get youAreNotRegistered => 'You are not registered for a gathering for the selected community on:';
+  @override
+  get howManyParticipantsShowedUp => 'How many attendees are present including yourself?';
+  @override
+  get cycleWillTakePlaceOn => 'The key-signing cycle will take place on';
+  @override
+  get gatheringSuccessfullyCompleted => 'Gathering successfully completed';
+  @override
+  get fetchingReputations => 'Checking if you have reputation';
+  @override
+  get youAreRegisteredAs => 'You have registered for the next gathering as PARTICIPANT_TYPE.';
+  @override
+  get youAreNotRegisteredPleaseRegisterNextTime =>
+      'You haven\'t been assigned for this key-signing cycle. Please join the next cycle to receive your community income.';
+  @override
+  get youAreAssignedToAGatheringWithNParticipants => 'You are assigned to a gathering with P_COUNT people.';
+  @override
+  get successfullySentNAttestations => 'You have successfully submitted attestations for P_COUNT other people.';
+  @override
+  get countParticipants => 'Count';
+  @override
+  get numberOfAttendees => 'Number of attendees';
+  @override
+  get next => 'Next';
+  @override
+  get closeGathering => 'Close meetup';
+  @override
+  get count => 'Count';
+  @override
+  get scan => 'Scan';
+  @override
+  get scanDescriptionForMeetup => 'Every attendee must scan and be scanned by everyone else.';
+  @override
+  get scanOthers => 'Scan others';
+  @override
+  get finish => 'Finish';
+  @override
+  get thankYou => 'Thank you';
+  @override
+  get weHopeToSeeYouAtTheNextGathering => 'We hope to see you at the next gathering.';
+  @override
+  get goToLeuZurich => 'Open leu.zuerich';
+}
