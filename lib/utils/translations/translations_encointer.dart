@@ -164,11 +164,10 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   @override
   get goToLeuZurich => 'Open leu.zuerich';
   @override
-  String get bootstrapperContent =>
-      'You have endorsement tickets left. Please consider endorsing new people to accelerate the growth of';
+  String get bootstrapperContent => 'If you have endorsement tickets left. Please consider endorsing new people.';
   @override
   String get bootstrapperTitle =>
-      'You have bootstrapper status for community . Therefore, you are guaranteed to be assigned for the ceremony if you register. if unused endorsement tickets > 0';
+      'You have bootstrapper status for your community . Therefore, you are guaranteed to be assigned for the cycle if you register';
   @override
   String get endorseeContent =>
       'You have been endorsed by one of the bootstrappers of as a trustworthy community member. This means you are guaranteed to be assigned if you register for this ceremony. The endorsement is only valid for this ceremony';
