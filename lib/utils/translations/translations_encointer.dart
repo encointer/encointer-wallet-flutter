@@ -290,11 +290,9 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   @override
   get goToLeuZurich => 'leu.zuerich öffnen';
   @override
-  // TODO: implement bootstrapperContent
   String get bootstrapperContent =>
       'Du hast den Bootstrapper-Status für Deine Community. Daher wirst Du garantiert für den Cycle zugewiesen, solltest Du Dich registrieren.';
   @override
-  // TODO: implement bootstrapperTitle
   String get bootstrapperTitle =>
       'Wenn Du noch Endorsement-Tickets übrig hast, vergiss nicht neue Personen zu bestätigen.';
   @override
