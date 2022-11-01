@@ -91,18 +91,23 @@ class _TransferPageState extends State<TransferPage> {
     _communitySymbol = params.communitySymbol ?? store.encointer.community!.symbol!;
     _cid = params.cid ?? store.encointer.chosenCid!;
     if (params.cid != store.encointer.chosenCid!) {
-      Log.d('====================> hheeeeeeeeey>>>>>>>>>>');
-    }
+      showCupertinoDialog<void>(
+        context: context,
+        builder: (context) {
+          return CupertinoAlertDialog();
+        },
+      );
+    } else {
+      if (params.amount != null) {
+        _amountCtrl.text = '${params.amount}';
+      }
 
-    if (params.amount != null) {
-      _amountCtrl.text = '${params.amount}';
-    }
-
-    if (params.recipient != null) {
-      final AccountData acc = AccountData();
-      acc.address = params.recipient!;
-      acc.name = params.label!;
-      _accountTo = acc;
+      if (params.recipient != null) {
+        final AccountData acc = AccountData();
+        acc.address = params.recipient!;
+        acc.name = params.label!;
+        _accountTo = acc;
+      }
     }
   }
 
@@ -163,17 +168,18 @@ class _TransferPageState extends State<TransferPage> {
                           iconSize: 48,
                           icon: const Icon(Iconsax.scan_barcode),
                           onPressed: () async {
-                            final invoiceData = await Navigator.of(context).pushNamed(
+                            final invoiceData = await Navigator.of(context).pushNamed<InvoiceData>(
                               ScanPage.route,
                               arguments: ScanPageParams(scannerContext: QrScannerContext.transferPage),
                             );
+                            if (invoiceData != null) {
+                              handleTransferPageParams(
+                                TransferPageParams.fromInvoiceData(invoiceData),
+                                _store,
+                              );
 
-                            handleTransferPageParams(
-                              TransferPageParams.fromInvoiceData(invoiceData as InvoiceData),
-                              _store,
-                            );
-
-                            setState(() {});
+                              setState(() {});
+                            }
                           },
                         ),
                         const SizedBox(height: 24),
