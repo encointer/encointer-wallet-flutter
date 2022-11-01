@@ -2,9 +2,9 @@ name: Fdroid test
 
 on:
   push:
-    branches: [ beta ]
+    branches: [ f-droid ]
   pull_request:
-    branches: [ beta ]
+    branches: [ f-droid ]
 
 jobs:
   setup-works:

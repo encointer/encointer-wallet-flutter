@@ -64,7 +64,7 @@ class CeremonyStep1Count extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: Text(dic.encointer.encointerCeremony),
+        title: Text(dic.encointer.keySigningCycle),
         leading: Container(),
         actions: [
           IconButton(

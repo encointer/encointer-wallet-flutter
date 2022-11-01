@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -17,6 +18,7 @@ import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Profile extends StatefulWidget {
   Profile({Key? key}) : super(key: key);
@@ -72,6 +74,23 @@ class _ProfileState extends State<Profile> {
   @override
   void initState() {
     super.initState();
+  }
+
+  Future<bool> _sendEmail() async {
+    final dic = I18n.of(context)!.translationsForLocale().profile;
+    final Uri _emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: 'bugreports@mail.encointer.org',
+    );
+    final _isSuccess = await launchUrl(_emailLaunchUri);
+    if (!_isSuccess) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(dic.checkEmailApp),
+        ),
+      );
+    }
+    return _isSuccess;
   }
 
   @override
@@ -163,6 +182,14 @@ class _ProfileState extends State<Profile> {
                 title: Text(dic.profile.about, style: Theme.of(context).textTheme.headline3),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.pushNamed(context, AboutPage.route),
+              ),
+              ListTile(
+                title: Text(dic.profile.appHints, style: h3Grey),
+                onTap: () => Navigator.pushNamed(context, Instruction.route),
+              ),
+              ListTile(
+                title: Text(dic.profile.contactUs, style: h3Grey),
+                onTap: _sendEmail,
               ),
               ListTile(
                 title: Text(dic.profile.developer, style: h3Grey),

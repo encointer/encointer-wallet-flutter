@@ -73,7 +73,6 @@ abstract class TranslationsProfile {
   String get pinSecure;
   String get personalKey;
   String get recoveryProxy;
-  String get ceremonies;
   String get tokenSend;
   String get reputation;
   String get addContact;
@@ -81,9 +80,20 @@ abstract class TranslationsProfile {
   String get exportAccount;
   String get errorUserNameIsRequired;
   String get observedPendingExtrinsic;
+  String get appHints;
+  String get meetUpNotifications;
+  String get meetUpListTileTitle;
+  String get openAppSettings;
+  String get enableAutoStart;
+  String get contactUs;
+  String get checkEmailApp;
 }
 
 class TranslationsEnProfile implements TranslationsProfile {
+  @override
+  get checkEmailApp => 'Check that you have downloaded the Email app';
+  @override
+  get contactUs => 'Contact Us';
   @override
   get about => 'About';
   @override
@@ -231,8 +241,6 @@ class TranslationsEnProfile implements TranslationsProfile {
   @override
   get recoveryProxy => 'recovery proxy';
   @override
-  get ceremonies => 'Ceremonies';
-  @override
   get reputation => 'Reputation';
   @override
   get shareLinkHint => 'Or you can share a link:';
@@ -248,9 +256,24 @@ class TranslationsEnProfile implements TranslationsProfile {
   get errorUserNameIsRequired => 'User name cannot be blank';
   @override
   get observedPendingExtrinsic => 'Pending transaction observed. Please wait for confirmation!';
+  @override
+  String get appHints => 'App-Hints';
+  @override
+  String get meetUpNotifications => 'Meetup notifications';
+  @override
+  String get meetUpListTileTitle => 'If your device is a Xiaomi or Honor phone, please enable autostart to '
+      'receive meetup notifications.';
+  @override
+  String get openAppSettings => 'Open App Settings';
+  @override
+  String get enableAutoStart => 'Enable autostart';
 }
 
 class TranslationsDeProfile implements TranslationsProfile {
+  @override
+  get checkEmailApp => 'Keine Email-App installiert';
+  @override
+  get contactUs => 'Kontaktiere Uns';
   @override
   get about => 'Über';
   @override
@@ -398,8 +421,6 @@ class TranslationsDeProfile implements TranslationsProfile {
   @override
   get recoveryProxy => 'Wiederherstellungsproxy';
   @override
-  get ceremonies => 'Zeremonien';
-  @override
   get reputation => 'Reputation';
   @override
   get tokenSend => 'SYMBOL senden';
@@ -413,123 +434,137 @@ class TranslationsDeProfile implements TranslationsProfile {
   get errorUserNameIsRequired => 'Benutzername darf nicht leer sein';
   @override
   get observedPendingExtrinsic => 'Es wurde eine unbestätigte Transaktion beobachtet. Bitte warte auf Bestätigung!';
+  @override
+  String get appHints => 'App-Tipps';
+  @override
+  String get meetUpNotifications => 'Meetup-Benachrichtigungen';
+  @override
+  String get meetUpListTileTitle =>
+      'Wenn Dein Gerät ein Xiaomi oder Honor Smartphone is, muss Autostart aktiviert sein um Meetup-Benachrichtigungen'
+      'zu erhalten.';
+  @override
+  String get openAppSettings => 'App-Einstellungen öffnen';
+  @override
+  String get enableAutoStart => 'Autostart aktivieren';
 }
 
-class TranslationsZhProfile implements TranslationsProfile {
+class TranslationsFrProfile implements TranslationsProfile {
   @override
-  get about => '关于';
+  get checkEmailApp => throw UnimplementedError();
   @override
-  get aboutBrief => 'Encointer 手机钱包';
+  get contactUs => throw UnimplementedError();
   @override
-  get aboutVersion => '版本';
+  get about => throw UnimplementedError();
   @override
-  get accounts => '帐户';
+  get aboutBrief => throw UnimplementedError();
   @override
-  get accountDelete => '您确定要删除该帐户吗？';
+  get aboutVersion => throw UnimplementedError();
   @override
-  get accountShare => '共享账户';
+  get accounts => throw UnimplementedError();
   @override
-  get addressBook => '地址簿';
+  get accountDelete => throw UnimplementedError();
+  @override
+  get accountShare => throw UnimplementedError();
+  @override
+  get addressBook => throw UnimplementedError();
   @override
   get cantEndorseBootstrapper => throw UnimplementedError();
   @override
   get canEndorseInRegisteringPhaseOnly => throw UnimplementedError();
   @override
-  get contactAddress => '地址';
+  get contactAddress => throw UnimplementedError();
   @override
-  get contactAddressError => '无效地址';
+  get contactAddressError => throw UnimplementedError();
   @override
-  get contactDelete => '删除';
+  get contactDelete => throw UnimplementedError();
   @override
-  get contactDeleteWarn => '确认删除该地址吗？';
+  get contactDeleteWarn => throw UnimplementedError();
   @override
   get contactEndorse => throw UnimplementedError();
   @override
-  get contactAlreadyExists => '地址已存在';
+  get contactAlreadyExists => throw UnimplementedError();
   @override
-  get contactMemo => '备注';
+  get contactMemo => throw UnimplementedError();
   @override
-  get contactName => '名称';
+  get contactName => throw UnimplementedError();
   @override
-  get contactNameError => '名称不能为空';
+  get contactNameError => throw UnimplementedError();
   @override
-  get contactNameAlreadyExists => '名称已存在';
+  get contactNameAlreadyExists => throw UnimplementedError();
   @override
-  get contactSave => '保存';
+  get contactSave => throw UnimplementedError();
   @override
-  get confirmPin => '输入密码确认操作';
+  get confirmPin => throw UnimplementedError();
   @override
-  get developer => '开发者模式';
+  get developer => throw UnimplementedError();
   @override
-  get export => '导出账户';
+  get export => throw UnimplementedError();
   @override
-  get exportMnemonicOk => 'Mnemonic 已经复制到剪切板';
+  get exportMnemonicOk => throw UnimplementedError();
   @override
-  get exportWarn => '请把以下文字抄写到纸条上并妥善保存，以下文字允许任何人恢复当前账户并获取其中的数字资产。';
+  get exportWarn => throw UnimplementedError();
   @override
-  get changeYourPin => '修改密码';
+  get changeYourPin => throw UnimplementedError();
   @override
-  get wrongPin => '密码错误';
+  get wrongPin => throw UnimplementedError();
   @override
-  get wrongPinHint => '解锁账户失败，请检查密码';
+  get wrongPinHint => throw UnimplementedError();
   @override
-  get yourNewPin => '新密码';
+  get yourNewPin => throw UnimplementedError();
   @override
-  get pleaseConfirmYourNewPin => '确认新密码';
+  get pleaseConfirmYourNewPin => throw UnimplementedError();
   @override
-  get passOld => '当前密码';
+  get passOld => throw UnimplementedError();
   @override
-  get passSuccess => '操作成功';
+  get passSuccess => throw UnimplementedError();
   @override
-  get passSuccessTxt => '密码已修改';
+  get passSuccessTxt => throw UnimplementedError();
   @override
-  get qrScanHint => '请输入您希望收到的金额并让发件人扫描二维码。';
+  get qrScanHint => throw UnimplementedError();
   @override
-  get setting => '设置';
+  get setting => throw UnimplementedError();
   @override
-  get settingLang => '语言';
+  get settingLang => throw UnimplementedError();
   @override
-  get settingLangAuto => '自动检测';
+  get settingLangAuto => throw UnimplementedError();
   @override
-  get settingNode => '远程节点';
+  get settingNode => throw UnimplementedError();
   @override
-  get settingNodeList => '可选节点';
+  get settingNodeList => throw UnimplementedError();
   @override
-  get settingPrefix => '地址前缀';
+  get settingPrefix => throw UnimplementedError();
   @override
-  get settingPrefixList => '可选格式';
+  get settingPrefixList => throw UnimplementedError();
   @override
-  get share => '分享';
+  get share => throw UnimplementedError();
   @override
-  get title => '设置';
+  get title => throw UnimplementedError();
   @override
-  get unlock => '您需要输入您的 PIN 才能添加新帐户';
+  get unlock => throw UnimplementedError();
   @override
-  get accountCreate => '创建帐户';
+  get accountCreate => throw UnimplementedError();
   @override
-  get doYouAlreadyHaveAnAccount => '已经有账户了？';
+  get doYouAlreadyHaveAnAccount => throw UnimplementedError();
   @override
-  get accountNameChooseHint => '您可以稍后在您的个人资料设置中更改它';
+  get accountNameChooseHint => throw UnimplementedError();
   @override
-  get accountNameChoose => '选择一个帐户名。';
+  get accountNameChoose => throw UnimplementedError();
   @override
-  get accountName => '账户名';
+  get accountName => throw UnimplementedError();
   @override
-  get import => '导入';
+  get import => throw UnimplementedError();
   @override
-  get pinHint => '您将需要此 PIN 进行交易和添加新帐户。';
+  get pinHint => throw UnimplementedError();
   @override
-  get pinInfo => 'PIN 应至少包含 4 位数字。 如果 PIN 码丢失，则无法恢复帐户，除非您通过个人资料页面进行了备份。';
+  get pinInfo => throw UnimplementedError();
   @override
-  get pinSecure => '使用 PIN 保护您的帐户。';
+  get pinSecure => throw UnimplementedError();
   @override
-  get addAccount => '添加帐户';
+  get addAccount => throw UnimplementedError();
   @override
   get addCommunity => throw UnimplementedError();
   @override
   get recoveryProxy => 'recovery proxy';
-  @override
-  get ceremonies => throw UnimplementedError();
   @override
   get reputation => throw UnimplementedError();
   @override
@@ -576,4 +611,14 @@ class TranslationsZhProfile implements TranslationsProfile {
   get errorUserNameIsRequired => throw UnimplementedError();
   @override
   get observedPendingExtrinsic => throw UnimplementedError();
+  @override
+  String get appHints => throw UnimplementedError();
+  @override
+  String get meetUpNotifications => throw UnimplementedError();
+  @override
+  String get meetUpListTileTitle => throw UnimplementedError();
+  @override
+  String get openAppSettings => throw UnimplementedError();
+  @override
+  String get enableAutoStart => throw UnimplementedError();
 }

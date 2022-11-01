@@ -1,24 +1,21 @@
 import 'package:json_annotation/json_annotation.dart';
 
 import 'package:encointer_wallet/modules/modules.dart';
-import 'package:encointer_wallet/store/app.dart';
 
 part 'config.g.dart';
 
 @JsonSerializable()
-class Config {
-  const Config({
+class AppConfig {
+  const AppConfig({
     this.initialRoute = SplashView.route,
-    this.mockLocalStorage = false,
     this.mockSubstrateApi = false,
-    this.appStoreConfig = StoreConfig.Normal,
+    this.isTest = false,
   });
 
   final String initialRoute;
-  final bool mockLocalStorage;
   final bool mockSubstrateApi;
-  final StoreConfig appStoreConfig;
+  final bool isTest;
 
-  factory Config.fromJson(Map<String, dynamic> json) => _$ConfigFromJson(json);
-  Map<String, dynamic> toJson() => _$ConfigToJson(this);
+  factory AppConfig.fromJson(Map<String, dynamic> json) => _$AppConfigFromJson(json);
+  Map<String, dynamic> toJson() => _$AppConfigToJson(this);
 }
