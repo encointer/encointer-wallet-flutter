@@ -291,10 +291,12 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get goToLeuZurich => 'leu.zuerich öffnen';
   @override
   // TODO: implement bootstrapperContent
-  String get bootstrapperContent => throw UnimplementedError();
+  String get bootstrapperContent =>
+      'Du hast den Bootstrapper-Status für Deine Community. Daher wirst Du garantiert für den Cycle zugewiesen, solltest Du Dich registrieren.';
   @override
   // TODO: implement bootstrapperTitle
-  String get bootstrapperTitle => throw UnimplementedError();
+  String get bootstrapperTitle =>
+      'Wenn Du noch Endorsement-Tickets übrig hast, vergiss nicht neue Personen zu bestätigen.';
   @override
   String get endorseeContent =>
       'Du wurdest von einem der Bootstrapper als vertrauenswürdiges Mitglied der Gemeinschaft empfohlen. Das bedeutet, dass Du garantiert zugewiesen wirst, wenn Du dich für diesen Cycle anmeldest. Die Empfehlung ist nur für diesen Cycle gültig.';
