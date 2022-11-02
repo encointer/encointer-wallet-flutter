@@ -73,11 +73,7 @@ linter:
     one_member_abstracts: false
     prefer_null_aware_method_calls: false
     avoid_final_parameters: false
-    unnecessary_await_in_return: false
-    # not link
-    inference_failure_on_function_return_type: false
-    strict_raw_type: false
-    
+    unnecessary_await_in_return: false 
 
 analyzer:
   language:
