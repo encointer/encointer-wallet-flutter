@@ -94,7 +94,10 @@ class _TransferPageState extends State<TransferPage> {
       showCupertinoDialog<void>(
         context: context,
         builder: (context) {
-          return CupertinoAlertDialog();
+          final dic = I18n.of(context)!.translationsForLocale().assets;
+          return CupertinoAlertDialog(
+            title: Text(dic.chosenRightCommunity),
+          );
         },
       );
     } else {

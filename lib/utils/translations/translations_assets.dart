@@ -54,6 +54,7 @@ abstract class TranslationsAssets {
   String get invalidCommunity;
   String get transactionError;
   String get insufficientFundsExplanation;
+  String get chosenRightCommunity;
 }
 
 class TranslationsEnAssets implements TranslationsAssets {
@@ -166,6 +167,8 @@ class TranslationsEnAssets implements TranslationsAssets {
   @override
   get insufficientFundsExplanation => 'You do not have sufficient funds on this account. See on the website of your'
       ' local community how to get some.';
+  @override
+  String get chosenRightCommunity => "Please make sure that you've chosen right community to send an amount.";
 }
 
 class TranslationsDeAssets implements TranslationsAssets {
@@ -278,6 +281,8 @@ class TranslationsDeAssets implements TranslationsAssets {
   @override
   get insufficientFundsExplanation => 'Du hast nicht genügend Geld auf diesem Konto. Schaue auf der Webseite'
       ' deiner lokalen gemeinschaft, wie du welches bekommen kannst.';
+  @override
+  String get chosenRightCommunity => 'Hast Du die richtige Community ausgewählt um den Betrag zu senden?';
 }
 
 class TranslationsFrAssets implements TranslationsAssets {
@@ -387,4 +392,6 @@ class TranslationsFrAssets implements TranslationsAssets {
   get transactionError => throw UnimplementedError();
   @override
   get insufficientFundsExplanation => throw UnimplementedError();
+  @override
+  String get chosenRightCommunity => throw UnimplementedError();
 }
