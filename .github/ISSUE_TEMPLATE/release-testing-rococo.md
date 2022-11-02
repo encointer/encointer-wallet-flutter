@@ -24,10 +24,11 @@ Tested on commit <enter-commit>
   - [ ] scanning invoice flow works:
       - [ ] with invoice amount
       - [ ] without invoice amount
-- [ ] Add contact flow:
+- [ ] Contact Page:
    - [ ] Adding contact manually works
    - [ ] Add contact with contact qr-code works
    - [ ] Add contact with invoice qr-code works
+   - [ ] Endorsing newcomer works
 - [ ] Profile Page
   - [ ] Add account works:
      - [ ] With import account flow

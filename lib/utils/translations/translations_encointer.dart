@@ -21,6 +21,7 @@ abstract class TranslationsEncointer {
   String get noCommunitiesAreYouOffline;
   String get meetupAttended;
   String get meetupClaimantInvalid;
+  String get meetupClaimantEqualToSelf;
   String get meetupLocation;
   String get startGathering;
   String get alreadyRegistered;
@@ -91,6 +92,8 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   get meetupAttended => 'Attended last meetup';
   @override
   get meetupClaimantInvalid => 'This claimant is not part of the meetup. Claim is not stored.';
+  @override
+  get meetupClaimantEqualToSelf => 'Error: Claimant is equal to self. Claim is not stored.';
   @override
   get meetupLocation => 'Meetup Location';
   @override
@@ -195,6 +198,8 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   get meetupClaimantInvalid =>
       'Diese* Antragssteller*in gehört nicht zu deiner Versammlung. Antrag wurde nicht gespeichert.';
   @override
+  get meetupClaimantEqualToSelf => 'Fehler, Addresse ist aktueller account. Antrag wurde nicht gespeichert.';
+  @override
   get meetupLocation => 'Treffpunkt';
   @override
   get startGathering => 'Versammlung starten';
@@ -293,6 +298,8 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   get meetupAttended => throw UnimplementedError();
   @override
   get meetupClaimantInvalid => throw UnimplementedError();
+  @override
+  get meetupClaimantEqualToSelf => throw UnimplementedError();
   @override
   get meetupLocation => throw UnimplementedError();
   @override
