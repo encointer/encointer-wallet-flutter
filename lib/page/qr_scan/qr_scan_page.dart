@@ -120,7 +120,7 @@ Widget mockQrDataRow(Translations dic, Function(String) onScan) {
     ElevatedButton(
       child: Text(dic.profile.addContact),
       onPressed: () => onScan(
-        'encointer-contact\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\nSara',
+        'encointer-contact\nv2.0\nHgTtJusFEn2gmMmB5wmJDnMRXKD6dzqCpNR7a99kkQ7BNvX\n\n\nSara',
       ),
     ),
     ElevatedButton(
@@ -132,6 +132,8 @@ Widget mockQrDataRow(Translations dic, Function(String) onScan) {
     ),
     ElevatedButton(
       child: const Text('voucher'),
+      // There is a unit test in `js_encointer_service/test/service/encointer.test
+      // that deposits some funds to this voucher on the local dev-network.
       onPressed: () => onScan(
         'encointer-voucher\nv2.0\n//VoucherUri\nsqm1v79dF6b'
         '\nnctr-gsl-dev\nAubrey',

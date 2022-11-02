@@ -35,11 +35,11 @@ class CeremonyBoxService {
 
   static Event createCalendarEvent(DateTime nextCeremonyDate, Translations dic) {
     return Event(
-      title: dic.encointer.encointerCeremony,
+      title: dic.encointer.keySigningCycle,
       description: dic.encointer.calendarEntryDescription,
       location: 'yet unknown',
-      startDate: DateTime.now(),
-      endDate: DateTime.now().add(const Duration(minutes: 30)),
+      startDate: nextCeremonyDate,
+      endDate: nextCeremonyDate.add(const Duration(minutes: 60)),
       allDay: false,
       iosParams: const IOSParams(
         reminder: Duration(minutes: 40),

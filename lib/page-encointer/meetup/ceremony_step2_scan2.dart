@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
@@ -38,7 +39,7 @@ class CeremonyStep2Scan extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: Text(dic.encointer.encointerCeremony),
+        title: Text(dic.encointer.keySigningCycle),
       ),
       body: SafeArea(
         child: Column(
@@ -97,7 +98,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                   children: [
                     const Icon(Iconsax.arrow_right_2),
                     const SizedBox(width: 12, height: 60),
-                    Text(dic.encointer.closeMeetup, style: Theme.of(context).textTheme.headline3),
+                    Text(dic.encointer.closeGathering, style: Theme.of(context).textTheme.headline3),
                   ],
                 ),
                 onPressed: () {
@@ -129,10 +130,28 @@ class CeremonyStep2Scan extends StatelessWidget {
                 },
               ),
             ),
-            const SizedBox(height: 24),
+            store.settings.developerMode
+                ? ElevatedButton(
+                    child: const Text('DEV ONLY: attest all participants'),
+                    onPressed: () => attestAllParticipants(store, store.account.currentAddress),
+                  )
+                : Container(),
+            const SizedBox(height: 12)
           ],
         ),
       ),
     );
   }
+}
+
+/// Attest all assigned meetup participants.
+///
+/// Only intended for development purposes.
+void attestAllParticipants(AppStore store, String claimantAddress) {
+  List<String> registry = store.encointer.communityAccount!.meetup!.registry;
+
+  registry.removeWhere((a) => a == claimantAddress);
+  registry.forEach((attendee) => store.encointer.communityAccount!.addAttendee(attendee));
+
+  RootSnackBar.showMsg('Added all meetup participants to attendees');
 }

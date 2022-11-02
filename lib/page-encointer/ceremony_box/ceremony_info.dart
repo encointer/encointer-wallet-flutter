@@ -1,3 +1,6 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/index.dart';
@@ -5,11 +8,9 @@ import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_progress_bar.dart';
 import 'package:encointer_wallet/page-encointer/ceremony_box/components/ceremony_schedule.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 class CeremonyInfo extends StatelessWidget {
-  CeremonyInfo({
+  const CeremonyInfo({
     Key? key,
     required this.currentTime,
     required this.assigningPhaseStart,
@@ -55,7 +56,7 @@ class CeremonyInfo extends StatelessWidget {
                             languageCode: languageCode,
                           )
                         : Text(
-                            dic.encointer.ceremonySuccessfullyCompleted,
+                            dic.encointer.gatheringSuccessfullyCompleted,
                             style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerBlack),
                           ),
                     CeremonyInfoAndCalendar(

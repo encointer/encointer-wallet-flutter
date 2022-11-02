@@ -27,7 +27,7 @@ class CeremonyStep3Finish extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: Text(dic.encointer.encointerCeremony),
+        title: Text(dic.encointer.keySigningCycle),
       ),
       body: SafeArea(
         child: Padding(
@@ -53,7 +53,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                     ),
                     Center(
                       child: Text(
-                        dic.encointer.weHopeToSeeYouAtTheNextMeetup,
+                        dic.encointer.weHopeToSeeYouAtTheNextGathering,
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.headline2!.copyWith(color: Colors.black, height: 1.5),
                       ),
@@ -90,7 +90,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                       Text(
                         dic.encointer.claimsSubmitN.replaceAll(
                           'N_COUNT',
-                          store.encointer.communityAccount!.scannedClaimsCount.toString(),
+                          store.encointer.communityAccount!.scannedAttendeesCount.toString(),
                         ),
                       ),
                     ],

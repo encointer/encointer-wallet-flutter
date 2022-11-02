@@ -32,7 +32,7 @@ class CeremonyLocationButton extends StatelessWidget {
         children: [
           const Icon(Iconsax.location),
           const SizedBox(width: 6),
-          Text(dic.encointer.showCeremonyLocation),
+          Text(dic.encointer.meetingPoint),
         ],
       ),
       onPressed: onPressed,

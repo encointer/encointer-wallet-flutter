@@ -1,96 +1,101 @@
 /// contains translations for Profile
 /// always add a new getter here in the abstract class first, then generate/implement the getters in the subclasses
 abstract class TranslationsProfile {
- String get about;
- String get aboutBrief;
- String get aboutVersion;
- String get accountDelete;
- String get accountsDelete;
- String get accountsDeleteAll;
- String get accounts;
- String get accountShare;
- String get addressBook;
- String get cantEndorseBootstrapper;
- String get canEndorseInRegisteringPhaseOnly;
- String get contactAddress;
- String get contactAddressError;
- String get contactDelete;
- String get contactDeleteWarn;
- String get contactEndorse;
- String get contactAlreadyExists;
- String get contactMemo;
- String get contactName;
- String get contactNameError;
- String get contactNameAlreadyExists;
- String get contactSave;
- String get detailsEnter;
- String get confirmPin;
- String get developer;
- String get enableBazaar;
- String get export;
- String get exportMnemonicOk;
- String get exportWarn;
- String get noMnemonicFound;
- String get importedWithRawSeedHenceNoMnemonic;
- String get changeYourPin;
- String get wrongPin;
- String get wrongPinHint;
- String get yourNewPin;
- String get pleaseConfirmYourNewPin;
- String get hintEnterCurrentPin;
- String get hintThenEnterANewPin;
- String get reputationHistory;
- String get reputationOverall;
- String get passOld;
- String get passSuccess;
- String get passSuccessTxt;
- String get qrScanHint;
- String get qrScanHintAccount;
- String get receiverAccount;
- String get sendLink;
- String get setting;
- String get settingLang;
- String get settingLangAuto;
- String get settingNode;
- String get settingNodeList;
- String get settingPrefix;
- String get settingPrefixList;
- String get share;
- String get shareLinkHint;
- String get title;
- String get unlock;
- String get addAccount;
- String get addCommunity;
- String get accountCreate;
- String get doYouAlreadyHaveAnAccount;
- String get accountNameChooseHint;
- String get accountNameChoose;
- String get accountName;
- String get import;
- String get personalKeyEnter;
- String get pinHint;
- String get pinInfo;
- String get pinSecure;
- String get personalKey;
- String get recoveryProxy;
- String get ceremonies;
- String get tokenSend;
- String get reputation;
- String get addContact;
- String get deleteAccount;
- String get exportAccount;
- String get errorUserNameIsRequired;
- String get observedPendingExtrinsic;
- String get appHints;
- String get meetUpNotifications;
- String get meetUpListTileTitle;
- String get openAppSettings;
- String get enableAutoStart;
+  String get about;
+  String get aboutBrief;
+  String get aboutVersion;
+  String get accountDelete;
+  String get accountsDelete;
+  String get accountsDeleteAll;
+  String get accounts;
+  String get accountShare;
+  String get addressBook;
+  String get cantEndorseBootstrapper;
+  String get canEndorseInRegisteringPhaseOnly;
+  String get contactAddress;
+  String get contactAddressError;
+  String get contactDelete;
+  String get contactDeleteWarn;
+  String get contactEndorse;
+  String get contactAlreadyExists;
+  String get contactMemo;
+  String get contactName;
+  String get contactNameError;
+  String get contactNameAlreadyExists;
+  String get contactSave;
+  String get detailsEnter;
+  String get confirmPin;
+  String get developer;
+  String get enableBazaar;
+  String get export;
+  String get exportMnemonicOk;
+  String get exportWarn;
+  String get noMnemonicFound;
+  String get importedWithRawSeedHenceNoMnemonic;
+  String get changeYourPin;
+  String get wrongPin;
+  String get wrongPinHint;
+  String get yourNewPin;
+  String get pleaseConfirmYourNewPin;
+  String get hintEnterCurrentPin;
+  String get hintThenEnterANewPin;
+  String get reputationHistory;
+  String get reputationOverall;
+  String get passOld;
+  String get passSuccess;
+  String get passSuccessTxt;
+  String get qrScanHint;
+  String get qrScanHintAccount;
+  String get receiverAccount;
+  String get sendLink;
+  String get setting;
+  String get settingLang;
+  String get settingLangAuto;
+  String get settingNode;
+  String get settingNodeList;
+  String get settingPrefix;
+  String get settingPrefixList;
+  String get share;
+  String get shareLinkHint;
+  String get title;
+  String get unlock;
+  String get addAccount;
+  String get addCommunity;
+  String get accountCreate;
+  String get doYouAlreadyHaveAnAccount;
+  String get accountNameChooseHint;
+  String get accountNameChoose;
+  String get accountName;
+  String get import;
+  String get personalKeyEnter;
+  String get pinHint;
+  String get pinInfo;
+  String get pinSecure;
+  String get personalKey;
+  String get recoveryProxy;
+  String get tokenSend;
+  String get reputation;
+  String get addContact;
+  String get deleteAccount;
+  String get exportAccount;
+  String get errorUserNameIsRequired;
+  String get observedPendingExtrinsic;
+  String get appHints;
+  String get meetUpNotifications;
+  String get meetUpListTileTitle;
+  String get openAppSettings;
+  String get enableAutoStart;
+  String get contactUs;
+  String get checkEmailApp;
 }
 
 class TranslationsEnProfile implements TranslationsProfile {
   @override
   String get about => 'About';
+  @override
+  String get checkEmailApp => 'Check that you have downloaded the Email app';
+  @override
+  String get contactUs => 'Contact Us';
   @override
   String get aboutBrief => 'Mobile Wallet for Encointer';
   @override
@@ -236,8 +241,6 @@ class TranslationsEnProfile implements TranslationsProfile {
   @override
   String get recoveryProxy => 'recovery proxy';
   @override
-  String get ceremonies => 'Ceremonies';
-  @override
   String get reputation => 'Reputation';
   @override
   String get shareLinkHint => 'Or you can share a link:';
@@ -267,6 +270,10 @@ class TranslationsEnProfile implements TranslationsProfile {
 }
 
 class TranslationsDeProfile implements TranslationsProfile {
+  @override
+  String get checkEmailApp => 'Keine Email-App installiert';
+  @override
+  String get contactUs => 'Kontaktiere Uns';
   @override
   String get about => 'Über';
   @override
@@ -416,8 +423,6 @@ class TranslationsDeProfile implements TranslationsProfile {
   @override
   String get recoveryProxy => 'Wiederherstellungsproxy';
   @override
-  String get ceremonies => 'Zeremonien';
-  @override
   String get reputation => 'Reputation';
   @override
   String get tokenSend => 'SYMBOL senden';
@@ -433,20 +438,24 @@ class TranslationsDeProfile implements TranslationsProfile {
   String get observedPendingExtrinsic =>
       'Es wurde eine unbestätigte Transaktion beobachtet. Bitte warte auf Bestätigung!';
   @override
- String get appHints => 'App-Tipps';
+  String get appHints => 'App-Tipps';
   @override
- String get meetUpNotifications => 'Meetup-Benachrichtigungen';
+  String get meetUpNotifications => 'Meetup-Benachrichtigungen';
   @override
- String get meetUpListTileTitle =>
+  String get meetUpListTileTitle =>
       'Wenn Dein Gerät ein Xiaomi oder Honor Smartphone is, muss Autostart aktiviert sein um Meetup-Benachrichtigungen'
       'zu erhalten.';
   @override
- String get openAppSettings => 'App-Einstellungen öffnen';
+  String get openAppSettings => 'App-Einstellungen öffnen';
   @override
- String get enableAutoStart => 'Autostart aktivieren';
+  String get enableAutoStart => 'Autostart aktivieren';
 }
 
 class TranslationsFrProfile implements TranslationsProfile {
+  @override
+  String get checkEmailApp => throw UnimplementedError();
+  @override
+  String get contactUs => throw UnimplementedError();
   @override
   String get about => throw UnimplementedError();
   @override
@@ -560,8 +569,6 @@ class TranslationsFrProfile implements TranslationsProfile {
   @override
   String get recoveryProxy => 'recovery proxy';
   @override
-  String get ceremonies => throw UnimplementedError();
-  @override
   String get reputation => throw UnimplementedError();
   @override
   String get sendLink => throw UnimplementedError();
@@ -608,13 +615,13 @@ class TranslationsFrProfile implements TranslationsProfile {
   @override
   String get observedPendingExtrinsic => throw UnimplementedError();
   @override
- String get appHints => throw UnimplementedError();
+  String get appHints => throw UnimplementedError();
   @override
- String get meetUpNotifications => throw UnimplementedError();
+  String get meetUpNotifications => throw UnimplementedError();
   @override
- String get meetUpListTileTitle => throw UnimplementedError();
+  String get meetUpListTileTitle => throw UnimplementedError();
   @override
- String get openAppSettings => throw UnimplementedError();
+  String get openAppSettings => throw UnimplementedError();
   @override
- String get enableAutoStart => throw UnimplementedError();
+  String get enableAutoStart => throw UnimplementedError();
 }

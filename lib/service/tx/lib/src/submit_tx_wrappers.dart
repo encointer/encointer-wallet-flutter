@@ -60,9 +60,9 @@ Future<void> submitClaimRewards(
   BuildContext context,
   AppStore store,
   Api api,
-  CommunityIdentifier? chosenCid,
+  CommunityIdentifier chosenCid,
 ) async {
-  var txParams = claimRewardsParams(chosenCid!);
+  var txParams = claimRewardsParams(chosenCid);
 
   return submitTx(
     context,
@@ -127,10 +127,10 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
 }
 
 Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) async {
-  final params = attestClaimsParams(
+  final params = attestAttendeesParams(
     store.encointer.chosenCid!,
-    store.encointer.communityAccount!.scannedClaimsCount,
-    store.encointer.communityAccount!.participantsClaims!.values.toList(),
+    store.encointer.communityAccount!.scannedAttendeesCount,
+    store.encointer.communityAccount!.attendees!.toList(),
   );
 
   return submitTx(
