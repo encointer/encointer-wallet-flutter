@@ -66,11 +66,26 @@ linter:
     avoid_escaping_inner_quotes: false
     use_setters_to_change_properties: false
     avoid_single_cascade_in_expression_statements: false
+    avoid_void_async: false
+    flutter_style_todos: false
+    use_colored_box: false
+    prefer_conditional_assignment: false
+    one_member_abstracts: false
+    prefer_null_aware_method_calls: false
+    avoid_final_parameters: false
+    unnecessary_await_in_return: false
+    # not link
+    inference_failure_on_function_return_type: false
+    strict_raw_type: false
+    
 
 analyzer:
+  language:
+    strict-casts: true
+    strict-inference: false
+    strict-raw-types: false
+    
   errors:
-    todo: false
-    fixme: false
     invalid_assignment: false
     argument_type_not_assignable: false
     return_of_invalid_type: false
@@ -82,3 +97,17 @@ analyzer:
     non_bool_condition: false
     prefer_iterable_wheretype: false
     prefer_for_elements_to_map_fromiterable: false
+    # todo and fixme
+    todo: false
+    fixme: false
+
+  exclude:
+    - test/
+    - test_driver/
+    - lib/generated_plugin_registrant.dart
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "bin/cache/**"
+    - "lib/generated_plugin_registrant.dart"
+    - test
+    - assets/translations
