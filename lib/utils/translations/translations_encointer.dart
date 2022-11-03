@@ -172,18 +172,17 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   String get endorseeContent =>
       'You have been endorsed by one of the bootstrappers of as a trustworthy community member. This means you are guaranteed to be assigned if you register for this ceremony. The endorsement is only valid for this ceremony';
   @override
-  String get endorseeTitle => 'Educate that endorsement guarantees a seat but is valid for this ceremony only';
+  String get endorseeTitle => 'Seat is guaranteed for this cycle';
   @override
   String get newbieContent =>
       "You are about to register as a newbie without previous reputation. We can not guarantee that you will get assigned for the next cycle (link to FAQ:why have I not been assigned?). Please check your assignment status on the day before the cycle to learn if and where your cycle meetup will take place.' endorseeStatus - 'You have been endorsed by one of the bootstrappers of as a trustworthy community member. This means you are guaranteed to be assigned if you register for this cycle. The endorsement is only valid for this cycle";
   @override
-  String get newbieTitle => 'Educate that seat is not guaranteed';
+  String get newbieTitle => 'Seat is not guaranteed';
   @override
   String get reputableContent =>
       "You have previously participated in a cycle and therefore you are guaranteed to be assigned for this cycle if you register. Caution: Should you register but not show up at the cycle, your reputation will be reduced to newbie status.' bootstrapperStatus- 'You have bootstrapper status for community . Therefore, you are guaranteed to be assigned for the cycle if you register. If unused endorsement tickets > 0. You have endorsement tickets left. Please consider endorsing new people to accelerate the growth of";
   @override
-  String get reputableTitle =>
-      'Educate that a seat is guaranteed but a no show will cause a loss of reputation and may downgrade to newbie';
+  String get reputableTitle => 'Seat is guaranteed ';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
@@ -302,19 +301,19 @@ class TranslationsDeEncointer implements TranslationsEncointer {
       'Du wurdest von einem der Bootstrapper als vertrauenswürdiges Mitglied der Gemeinschaft empfohlen. Das bedeutet, dass Du garantiert zugewiesen wirst, wenn Du dich für diesen Cycle anmeldest. Die Empfehlung ist nur für diesen Cycle gültig.';
   @override
   // TODO: implement endorseeTitle
-  String get endorseeTitle => throw UnimplementedError();
+  String get endorseeTitle => 'Teilnahme für diesen Cycle ist garanatiert';
   @override
   String get newbieContent =>
       'Du bist dabei, dich als Neuling ohne bisheriger Reputation zu registrieren. Wir können nicht garantieren, dass Du für den nächsten Cycle zugewiesen wirst (Link zu FAQ:Warum wurde ich nicht zugewiesen?). Bitte überprüfe deinen Zuweisungsstatus am Tag vor dem Cycle, um zu erfahren, ob und wo deine Versammlung stattfinden wird.';
   @override
   // TODO: implement newbieTitle
-  String get newbieTitle => throw UnimplementedError();
+  String get newbieTitle => 'Teilnahme ist nicht garantiert';
   @override
   String get reputableContent =>
       'Du hast bereits erfolgreich an einem Cycle teilgenommen und wirst daher garantiert für diesen Cycle eingeteilt, wenn Du dich anmeldest. Achtung! Solltest Du dich anmelden, aber nicht zur Versammlung erscheinen, wird die Reputation auf den Status eines Neulings zurückgesetzt.';
   @override
   // TODO: implement reputableTitle
-  String get reputableTitle => throw UnimplementedError();
+  String get reputableTitle => 'Teilnahme ist garantiert';
 }
 
 class TranslationsFrEncointer implements TranslationsEncointer {
