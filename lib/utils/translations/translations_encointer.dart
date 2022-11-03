@@ -393,7 +393,8 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   get communities => 'Сообщества';
   @override
-  get noCommunitiesAreYouOffline => 'No communities were found. You can choose one later. Are you offline?.';
+  get noCommunitiesAreYouOffline =>
+      'Сообщества не обнаружены. Позже вы можете выбрать одно из них. Вы в оффлайн режиме?.';
   @override
   get meetupAttended => 'Принимал участвие на последней встрече';
   @override
@@ -430,33 +431,33 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   get youAreRegisteredAs => 'На следующую встречу вы зарегистрированы в качестве PARTICIPANT_TYPE.';
   @override
   get youAreNotRegisteredPleaseRegisterNextTime =>
-      'Вас не назначили на этотYou haven\'t been assigned for this key-signing cycle. Please join the next cycle to receive your community income.';
+      'Вы не были записаны на этот цикл подписания ключей. Пожалуйста, присоединяйтесь к следующему циклу, для того, чтобы получить доход сообщества.';
   @override
-  get youAreAssignedToAGatheringWithNParticipants => 'You are assigned to a gathering with P_COUNT people.';
+  get youAreAssignedToAGatheringWithNParticipants => 'Вы записаны на встречу вместе с P_COUNT участниками.';
   @override
-  get successfullySentNAttestations => 'You have successfully submitted attestations for P_COUNT other people.';
+  get successfullySentNAttestations => 'Вы успешно отправили атесстации P_COUNT других людей.';
   @override
-  get countParticipants => 'Count';
+  get countParticipants => 'Считать';
   @override
-  get numberOfAttendees => 'Number of attendees';
+  get numberOfAttendees => 'Количество участников';
   @override
-  get next => 'Next';
+  get next => 'Следующий';
   @override
-  get closeGathering => 'Close meetup';
+  get closeGathering => 'Завершить всречу';
   @override
-  get count => 'Count';
+  get count => 'Считать';
   @override
-  get scan => 'Scan';
+  get scan => 'Сканировать';
   @override
-  get scanDescriptionForMeetup => 'Every attendee must scan and be scanned by everyone else.';
+  get scanDescriptionForMeetup => 'Каждый участник должен сканировать и быть отсканированным всеми остальными.';
   @override
-  get scanOthers => 'Scan others';
+  get scanOthers => 'Сканировать других';
   @override
-  get finish => 'Finish';
+  get finish => 'Завершить';
   @override
-  get thankYou => 'Thank you';
+  get thankYou => 'Спасибо';
   @override
-  get weHopeToSeeYouAtTheNextGathering => 'We hope to see you at the next gathering.';
+  get weHopeToSeeYouAtTheNextGathering => 'Мы надеемся увидить Вас на следующей встрече.';
   @override
-  get goToLeuZurich => 'Open leu.zuerich';
+  get goToLeuZurich => 'Открыть leu.zuerich';
 }

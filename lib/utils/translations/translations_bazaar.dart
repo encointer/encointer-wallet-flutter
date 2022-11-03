@@ -504,143 +504,143 @@ class TranslationsFrBazaar implements TranslationsBazaar {
 
 class TranslationsRuBazaar implements TranslationsBazaar {
   @override
-  get address => 'Address';
+  get address => 'Адрес';
   @override
-  get apply => 'Apply';
+  get apply => 'Применить';
   @override
-  get bazaarNew => 'New in Bazaar';
+  get bazaarNew => 'Новое в Bazaar';
   @override
-  get bazaarTitle => 'The Bazaar';
+  get bazaarTitle => 'Bazaar';
   @override
-  get businessAdd => '+ Add new business';
+  get businessAdd => '+ Добавить новую организацию';
   @override
-  get businessCreate => 'Create new business';
+  get businessCreate => 'Создать новую организацию';
   @override
-  get businessDescription => 'Business description';
+  get businessDescription => 'Описание  Организации';
   @override
-  get businessDescriptionHint => 'Spark interest in your offering and provide a succinct description';
+  get businessDescriptionHint => 'Вызовите интерес к вашему предложению и предоставьте краткое описание';
   @override
-  get businesses => 'Businesses';
+  get businesses => 'Предприятия (Бизнесы)';
   @override
-  get businessesFound => 'Businesses Found';
+  get businessesFound => 'Найденные предприятия';
   @override
-  get businessesMy => 'My Businesses';
+  get businessesMy => 'Мое Предприятие';
   @override
-  get businessesOffered => 'Offered in Businesses';
+  get businessesOffered => 'Предлагается в организациях';
   @override
-  get businessesResults => 'Results in Businesses';
+  get businessesResults => 'Результаты в бизнесе';
   @override
-  get businessesVicinity => 'Businesses in my Vicinity';
+  get businessesVicinity => 'Предприятия в моем районе';
   @override
-  get businessName => 'Business name';
+  get businessName => 'Название Организации';
   @override
-  get businessNameHint => 'Use a descriptive name';
+  get businessNameHint => 'Используйте информативное название';
   @override
-  get businessUrl => 'URL to business';
+  get businessUrl => 'Ссылка на организацию';
   @override
-  get cameraDefault => 'Camera';
+  get cameraDefault => 'Камера';
   @override
-  get cancelDefault => 'Cancel';
+  get cancelDefault => 'Отменить';
   @override
-  get categories => 'Categories';
+  get categories => 'Категории';
   @override
-  get city => 'City';
+  get city => 'Город';
   @override
-  get communityChoose => 'Choose community:';
+  get communityChoose => 'Выбрать сообщество:';
   @override
-  get communityLoad => 'Loading community..';
+  get communityLoad => 'Сообщество загружается..';
   @override
-  get communityNotFound => 'No community found';
+  get communityNotFound => 'Сообщество не найдено';
   @override
-  get day => 'Day';
+  get day => 'День';
   @override
-  get delete => 'Delete';
+  get delete => 'Удалить';
   @override
-  get delivery => 'Delivery';
+  get delivery => 'Доставка';
   @override
-  get deliveryOptions => 'Delivery options';
+  get deliveryOptions => 'Опции доставки';
   @override
-  get description => 'Description';
+  get description => 'Описание';
   @override
-  get favorites => 'Favorites';
+  get favorites => 'Избранное';
   @override
   get found => 'Found';
   @override
-  get galleryDefault => 'Gallery';
+  get galleryDefault => 'Галерея';
   @override
-  get imageChoose => 'Choose an image';
+  get imageChoose => 'Выберите изображение';
   @override
-  get imageNotPicked => 'You have not yet picked an image.';
+  get imageNotPicked => 'Вы не выбрали изображение.';
   @override
-  get imagesAdded => 'Images added';
+  get imagesAdded => 'Изображение добавлено';
   @override
-  get imagesAddRemove => 'Add/remove images';
+  get imagesAddRemove => 'Добавить/Удалить изображение';
   @override
-  get imagesMultiplePick => 'Pick Multiple Images from gallery';
+  get imagesMultiplePick => 'Выберите несколько изображений из галереи';
   @override
-  get imageVideoError => 'Pick image/video error';
+  get imageVideoError => 'Ошибка выбора Изображения/Видео';
   @override
-  get lastVisited => 'Last visited';
+  get lastVisited => 'Последнее посещение';
   @override
-  get lookingFor => 'What are you looking for?';
+  get lookingFor => 'Вы в поиске чего?';
   @override
-  get map => 'Map';
+  get map => 'Карта';
   @override
-  get menu => 'Menu';
+  get menu => 'Меню';
   @override
-  get no => 'No.';
+  get no => 'Нет.';
   @override
-  get noItems => 'No items found';
+  get noItems => 'Элементы не найдены';
   @override
-  get notifications => 'Notifications';
+  get notifications => 'Уведомления';
   @override
-  get offeringAdd => '+ Add an offering';
+  get offeringAdd => '+ Добавить предложение';
   @override
   get offeringNew => 'Featuring Newest';
   @override
-  get offerings => 'Offerings';
+  get offerings => 'Предложения';
   @override
-  get offeringsFound => 'Businesses Found';
+  get offeringsFound => 'Найденные предприятия';
   @override
-  get offeringsMy => 'My Offerings';
+  get offeringsMy => 'Мои предложения';
   @override
-  get offeringsResults => 'Results in Offerings';
+  get offeringsResults => 'Результаты по предложениям';
   @override
-  get openningHours => 'Openning Hours';
+  get openningHours => 'Часы работы';
   @override
-  get openningHoursInputHint => 'eG. 8:15-14:45 or 9-5pm';
+  get openningHoursInputHint => 'Например: 8:15-14:45 или 9-5pm';
   @override
-  get photoAdd => 'Add Photo';
+  get photoAdd => 'Добавить фотографию';
   @override
-  get photoTake => 'Take a Photo';
+  get photoTake => 'Сфотографировать';
   @override
-  get price => 'Price';
+  get price => 'Цена';
   @override
-  get productNewness => 'Product Newness';
+  get productNewness => 'Новизна продукта';
   @override
-  get recentlyAdded => 'Recently added';
+  get recentlyAdded => 'Недавно добавленные';
   @override
-  get reset => 'Reset';
+  get reset => 'Сброс';
   @override
-  get save => 'Save';
+  get save => 'Сохранить';
   @override
-  get search => 'Search...';
+  get search => 'Поиск...';
   @override
-  get showAll => '+ Show all';
+  get showAll => '+ Показать все';
   @override
-  get state => 'State';
+  get state => 'Страна';
   @override
-  get street => 'Street';
+  get street => 'Улица';
   @override
-  get timeIntervalAdd => 'Add a time interval';
+  get timeIntervalAdd => 'Добавьте временной интервал';
   @override
-  get topResults => 'Top Results';
+  get topResults => 'Лучшие результаты';
   @override
-  get waiting => 'waiting...';
+  get waiting => 'Ожидание...';
   @override
-  get zipCode => 'Zip code';
+  get zipCode => 'Почтовый индекс';
   @override
-  get useDescriptiveName => 'Please, use a descriptive name';
+  get useDescriptiveName => 'Пожалуйста используйте информативное название';
   @override
-  get filter => 'Filter';
+  get filter => 'Фильтр';
 }
