@@ -375,62 +375,62 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   get nextCycleTimeLeft => 'Следующий цикл в';
   @override
-  get nextCycleDateLabel => 'Next cycle is on';
+  get nextCycleDateLabel => 'Следующий цикл в процессе';
   @override
   get claimQr => 'Моя заявка на участие';
   @override
-  get claimsScanned => 'You have scanned AMOUNT_PLACEHOLDER claims';
+  get claimsScanned => 'Вы отсканировали заявки AMOUNT_PLACEHOLDER ';
   @override
-  get claimsScannedAlready => 'Updated previously scanned claim';
+  get claimsScannedAlready => 'Ранее отсканированные заявки обновлены';
   @override
-  get claimsScannedDecodeFailed => 'Could not decode scanned claim.';
+  get claimsScannedDecodeFailed => 'Отсканированные заявки не удалось расшифровать.';
   @override
-  get claimsScannedNew => 'Scanned new claim';
+  get claimsScannedNew => 'Отсканировать новую заявку';
   @override
-  get claimsScannedNOfM => 'Scanned SCANNED_COUNT / TOTAL_COUNT Claims';
+  get claimsScannedNOfM => 'Отсканированные заявки SCANNED_COUNT / TOTAL_COUNT';
   @override
-  get claimsSubmitDetail => 'Submitting AMOUNT claims for the recent gathering';
+  get claimsSubmitDetail => 'Подача заявок на сумму AMOUNT за недавнее собрание';
   @override
-  get communities => 'Communities';
+  get communities => 'Сообщества';
   @override
   get noCommunitiesAreYouOffline => 'No communities were found. You can choose one later. Are you offline?.';
   @override
-  get meetupAttended => 'Attended last meetup';
+  get meetupAttended => 'Принимал участвие на последней встрече';
   @override
-  get meetupClaimantInvalid => 'This claimant is not part of the meetup. Claim is not stored.';
+  get meetupClaimantInvalid => 'Этот заявитель не является участником встречи. Заявка не сохраняется.';
   @override
-  get meetupLocation => 'Meetup Location';
+  get meetupLocation => 'Локция встречи';
   @override
-  get startGathering => 'Start gathering';
+  get startGathering => 'Начинайте собираться';
   @override
-  get alreadyRegistered => 'Already Registered';
+  get alreadyRegistered => 'Уже зарегистрирован';
   @override
-  get registerUntil => 'Register before';
+  get registerUntil => 'Зарегистрируйтесь до';
   @override
-  get meetingPoint => 'Meeting Point';
+  get meetingPoint => 'Место встречи';
   @override
-  get gatheringIsOver => 'The gathering is over';
+  get gatheringIsOver => 'Встреча завершена';
   @override
-  get today => 'Today';
+  get today => 'Сегодня';
   @override
-  get tomorrow => 'Tomorrow';
+  get tomorrow => 'Завтра';
   @override
-  get calendarEntryDescription => 'Gathering to get your community income';
+  get calendarEntryDescription => 'Собрание для получения дохода сообщества';
   @override
-  get youAreNotRegistered => 'You are not registered for a gathering for the selected community on:';
+  get youAreNotRegistered => 'Вы не зарегистрированы для участия в собрании выбранного сообщества:';
   @override
-  get howManyParticipantsShowedUp => 'How many attendees are present including yourself?';
+  get howManyParticipantsShowedUp => 'Сколько участников присутствует, включая вас?';
   @override
-  get cycleWillTakePlaceOn => 'The key-signing cycle will take place on';
+  get cycleWillTakePlaceOn => 'Цикл подписания ключей будет проходить';
   @override
-  get gatheringSuccessfullyCompleted => 'Gathering successfully completed';
+  get gatheringSuccessfullyCompleted => 'Встреча успешно завершена';
   @override
-  get fetchingReputations => 'Checking if you have reputation';
+  get fetchingReputations => 'Идет проверка Вашей репутации';
   @override
-  get youAreRegisteredAs => 'You have registered for the next gathering as PARTICIPANT_TYPE.';
+  get youAreRegisteredAs => 'На следующую встречу вы зарегистрированы в качестве PARTICIPANT_TYPE.';
   @override
   get youAreNotRegisteredPleaseRegisterNextTime =>
-      'You haven\'t been assigned for this key-signing cycle. Please join the next cycle to receive your community income.';
+      'Вас не назначили на этотYou haven\'t been assigned for this key-signing cycle. Please join the next cycle to receive your community income.';
   @override
   get youAreAssignedToAGatheringWithNParticipants => 'You are assigned to a gathering with P_COUNT people.';
   @override
