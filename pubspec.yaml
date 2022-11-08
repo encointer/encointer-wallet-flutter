@@ -95,6 +95,8 @@ dev_dependencies:
   dependency_validator: any
   flutter_test:
     sdk: flutter
+  integration_test:
+    sdk: flutter  
   flutter_driver:
     sdk: flutter
   test: ^1.16.7
