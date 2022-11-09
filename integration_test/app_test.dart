@@ -1,31 +1,60 @@
-import 'package:encointer_wallet/main.dart' as app;
-import 'package:flutter_test/flutter_test.dart';
-import 'package:integration_test/integration_test.dart';
+// import 'package:encointer_wallet/main.dart' as app;
+// import 'package:flutter/material.dart';
+// import 'package:flutter_test/flutter_test.dart';
+// import 'package:integration_test/integration_test.dart';
+
+// import 'helpers/add_delay.dart';
+// import 'helpers/pump_app.dart';
 
 // flutter test integration_test/app_test.dart --flavor dev
 
-void main() {
-  IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+import 'package:flutter_driver/flutter_driver.dart';
+import 'package:test/test.dart';
 
-  group('end-to-end test', () {
-    testWidgets('tap on the floating action button, verify counter', (tester) async {
-      app.main();
-      await tester.pumpAndSettle();
+void main() async {
+  FlutterDriver? driver;
 
-      // Verify the counter starts at 0.
-      // expect(find.text('0'), findsOneWidget);
+  group('EncointerWallet App', () {
+    setUpAll(() async {
+      driver = await FlutterDriver.connect();
 
-      // // Finds the floating action button to tap on.
-      // final Finder fab = find.byTooltip('Increment');
-
-      // // Emulate a tap on the floating action button.
-      // await tester.tap(fab);
-
-      // // Trigger a frame.
-      // await tester.pumpAndSettle();
-
-      // // Verify the counter increments by 1.
-      // expect(find.text('1'), findsOneWidget);
+      // waits until the firs frame after ft startup stabilized
+      await driver!.waitUntilFirstFrameRasterized();
     });
+
+    tearDownAll(() async {
+      if (driver != null) {
+        driver!.close();
+      }
+    });
+    
   });
 }
+
+
+// void main() async {
+//   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
+
+//   setUpAll(() async {
+//     await app.main();
+//   });
+
+//   group('start projetct', () {
+//     testWidgets('metaApp and splash view', (tester) async {
+//       await tester.pumpApp();
+
+//       expect(find.byType(MaterialApp), findsOneWidget);
+
+//       expect(find.byKey(const Key('splashview')), findsOneWidget);
+//       await addDelay(2000);
+//       await tester.pumpAndSettle();
+//       await addDelay(2000);
+//     });
+
+//     testWidgets('import account', (tester) async {
+//       expect(find.byKey(const Key('import-account')), findsOneWidget);
+//       await tester.tap(find.byKey(const Key('import-account')));
+//       await tester.pumpAndSettle();
+//     });
+//   });
+// }
