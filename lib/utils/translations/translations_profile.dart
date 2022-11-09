@@ -91,171 +91,171 @@ abstract class TranslationsProfile {
 
 class TranslationsEnProfile implements TranslationsProfile {
   @override
-  get checkEmailApp => 'Check that you have downloaded the Email app';
+  String get about => 'About';
   @override
-  get contactUs => 'Contact Us';
+  String get checkEmailApp => 'Check that you have downloaded the Email app';
   @override
-  get about => 'About';
+  String get contactUs => 'Contact Us';
   @override
-  get aboutBrief => 'Mobile Wallet for Encointer';
+  String get aboutBrief => 'Mobile Wallet for Encointer';
   @override
-  get aboutVersion => 'Version';
-  get account => 'Manage Account';
+  String get aboutVersion => 'Version';
+  String get account => 'Manage Account';
   @override
-  get accounts => 'Accounts';
+  String get accounts => 'Accounts';
   @override
-  get accountDelete => 'Are you sure you want to delete the account?';
+  String get accountDelete => 'Are you sure you want to delete the account?';
   @override
-  get accountsDelete => 'Are you sure you want to delete all accounts?';
+  String get accountsDelete => 'Are you sure you want to delete all accounts?';
   @override
-  get accountsDeleteAll => 'Remove all Accounts';
+  String get accountsDeleteAll => 'Remove all Accounts';
   @override
-  get accountShare => 'Share Account';
+  String get accountShare => 'Share Account';
   @override
-  get addressBook => 'Address Book';
+  String get addressBook => 'Address Book';
   @override
-  get cantEndorseBootstrapper => 'Bootstrappers are already marked as trusted';
+  String get cantEndorseBootstrapper => 'Bootstrappers are already marked as trusted';
   @override
-  get canEndorseInRegisteringPhaseOnly => 'Can endorse in registering phase only';
+  String get canEndorseInRegisteringPhaseOnly => 'Can endorse in registering phase only';
   @override
-  get contactAddress => 'Address';
+  String get contactAddress => 'Address';
   @override
-  get contactAddressError => 'Invalid address';
+  String get contactAddressError => 'Invalid address';
   @override
-  get contactDelete => 'Delete';
+  String get contactDelete => 'Delete';
   @override
-  get contactDeleteWarn => 'Are you sure you want to delete this address?';
+  String get contactDeleteWarn => 'Are you sure you want to delete this address?';
   @override
-  get contactEndorse => 'Endorse as trusted contact';
+  String get contactEndorse => 'Endorse as trusted contact';
   @override
-  get contactAlreadyExists => 'Address exists already';
+  String get contactAlreadyExists => 'Address exists already';
   @override
-  get contactMemo => 'Memo';
+  String get contactMemo => 'Memo';
   @override
-  get contactName => 'Name';
+  String get contactName => 'Name';
   @override
-  get contactNameError => 'Name can not be empty';
+  String get contactNameError => 'Name can not be empty';
   @override
-  get contactNameAlreadyExists => 'Name exists already';
+  String get contactNameAlreadyExists => 'Name exists already';
   @override
-  get contactSave => 'Save';
+  String get contactSave => 'Save';
   @override
-  get confirmPin => 'Input your PIN to confirm';
+  String get confirmPin => 'Input your PIN to confirm';
   @override
-  get developer => 'Developer mode';
+  String get developer => 'Developer mode';
   @override
-  get enableBazaar => 'Enable Bazaar';
+  String get enableBazaar => 'Enable Bazaar';
   @override
-  get export => 'Export Account';
+  String get export => 'Export Account';
   @override
-  get exportMnemonicOk => 'Mnemonic was copied to clipboard.';
+  String get exportMnemonicOk => 'Mnemonic was copied to clipboard.';
   @override
-  get exportWarn =>
+  String get exportWarn =>
       'Write these words down on paper. Keep the backup paper safe. These words allows anyone to recover this account and access its funds.';
   @override
-  get noMnemonicFound => 'No Mnemonic found';
+  String get noMnemonicFound => 'No Mnemonic found';
   @override
-  get importedWithRawSeedHenceNoMnemonic =>
+  String get importedWithRawSeedHenceNoMnemonic =>
       'Account was imported with a raw seed and therefore does not have a mnemonic';
   @override
-  get changeYourPin => 'Change PIN';
+  String get changeYourPin => 'Change PIN';
   @override
-  get wrongPin => 'Wrong PIN';
+  String get wrongPin => 'Wrong PIN';
   @override
-  get wrongPinHint => 'Failed to unlock account, please check PIN.';
+  String get wrongPinHint => 'Failed to unlock account, please check PIN.';
   @override
-  get yourNewPin => 'New PIN';
+  String get yourNewPin => 'New PIN';
   @override
-  get pleaseConfirmYourNewPin => 'Confirm New PIN';
+  String get pleaseConfirmYourNewPin => 'Confirm New PIN';
   @override
-  get hintEnterCurrentPin => 'To change your PIN please enter the current one.';
+  String get hintEnterCurrentPin => 'To change your PIN please enter the current one.';
   @override
-  get hintThenEnterANewPin => 'Then you can choose a new one and you’re all set.';
+  String get hintThenEnterANewPin => 'Then you can choose a new one and you’re all set.';
   @override
-  get personalKey => 'Personal key';
+  String get personalKey => 'Personal key';
   @override
-  get detailsEnter => 'Enter your details.';
+  String get detailsEnter => 'Enter your details.';
   @override
-  get personalKeyEnter => 'Please enter your personal key (12 words) to import the new account.';
+  String get personalKeyEnter => 'Please enter your personal key (12 words) to import the new account.';
   @override
-  get reputationHistory => 'Reputation history';
+  String get reputationHistory => 'Reputation history';
   @override
-  get reputationOverall => 'Overall reputation';
+  String get reputationOverall => 'Overall reputation';
   @override
-  get passOld => 'Current PIN';
+  String get passOld => 'Current PIN';
   @override
-  get passSuccess => 'Success';
+  String get passSuccess => 'Success';
   @override
-  get passSuccessTxt => 'PIN changed successfully';
+  String get passSuccessTxt => 'PIN changed successfully';
   @override
-  get qrScanHint => 'Enter the amount you wish to receive and let the sender scan the QR code.';
+  String get qrScanHint => 'Enter the amount you wish to receive and let the sender scan the QR code.';
   @override
-  get qrScanHintAccount => 'Ask the recipient to scan the QR-code in the encointer app.';
+  String get qrScanHintAccount => 'Ask the recipient to scan the QR-code in the encointer app.';
   @override
-  get receiverAccount => 'Receiving account:';
+  String get receiverAccount => 'Receiving account:';
   @override
-  get sendLink => 'Send link';
+  String get sendLink => 'Send link';
   @override
-  get setting => 'Settings';
+  String get setting => 'Settings';
   @override
-  get settingLang => 'Language';
+  String get settingLang => 'Language';
   @override
-  get settingLangAuto => 'Auto Detect';
+  String get settingLangAuto => 'Auto Detect';
   @override
-  get settingNode => 'Remote Node';
+  String get settingNode => 'Remote Node';
   @override
-  get settingNodeList => 'Available Nodes';
+  String get settingNodeList => 'Available Nodes';
   @override
-  get settingPrefix => 'Address Prefix';
+  String get settingPrefix => 'Address Prefix';
   @override
-  get settingPrefixList => 'Available Prefixes';
+  String get settingPrefixList => 'Available Prefixes';
   @override
-  get share => 'Share';
+  String get share => 'Share';
   @override
-  get title => 'Profile';
+  String get title => 'Profile';
   @override
-  get unlock => 'You need to enter your PIN to add a new account';
+  String get unlock => 'You need to enter your PIN to add a new account';
   @override
-  get addAccount => 'Add account';
+  String get addAccount => 'Add account';
   @override
-  get addCommunity => 'Add community';
+  String get addCommunity => 'Add community';
   @override
-  get accountCreate => 'Create account';
+  String get accountCreate => 'Create account';
   @override
-  get doYouAlreadyHaveAnAccount => 'Do you already have an account?';
+  String get doYouAlreadyHaveAnAccount => 'Do you already have an account?';
   @override
-  get accountNameChooseHint => 'You can change it later in your profile settings.';
+  String get accountNameChooseHint => 'You can change it later in your profile settings.';
   @override
-  get accountNameChoose => 'Choose an account name.';
+  String get accountNameChoose => 'Choose an account name.';
   @override
-  get accountName => 'Account name';
+  String get accountName => 'Account name';
   @override
-  get import => 'Import';
+  String get import => 'Import';
   @override
-  get pinHint => 'You will need this PIN for transactions and adding a new account.';
+  String get pinHint => 'You will need this PIN for transactions and adding a new account.';
   @override
-  get pinInfo =>
+  String get pinInfo =>
       'PIN should consist of at least 4 digits. If the PIN is lost, there is no option to restore the account unless you made a backup via the profile page.';
   @override
-  get pinSecure => 'Secure your account with a PIN.';
+  String get pinSecure => 'Secure your account with a PIN.';
   @override
-  get recoveryProxy => 'recovery proxy';
+  String get recoveryProxy => 'recovery proxy';
   @override
-  get reputation => 'Reputation';
+  String get reputation => 'Reputation';
   @override
-  get shareLinkHint => 'Or you can share a link:';
+  String get shareLinkHint => 'Or you can share a link:';
   @override
-  get tokenSend => 'Send SYMBOL';
+  String get tokenSend => 'Send SYMBOL';
   @override
-  get addContact => 'Add contact';
+  String get addContact => 'Add contact';
   @override
-  get deleteAccount => 'delete';
+  String get deleteAccount => 'delete';
   @override
-  get exportAccount => 'export';
+  String get exportAccount => 'export';
   @override
-  get errorUserNameIsRequired => 'User name cannot be blank';
+  String get errorUserNameIsRequired => 'User name cannot be blank';
   @override
-  get observedPendingExtrinsic => 'Pending transaction observed. Please wait for confirmation!';
+  String get observedPendingExtrinsic => 'Pending transaction observed. Please wait for confirmation!';
   @override
   String get appHints => 'App-Hints';
   @override
@@ -271,169 +271,172 @@ class TranslationsEnProfile implements TranslationsProfile {
 
 class TranslationsDeProfile implements TranslationsProfile {
   @override
-  get checkEmailApp => 'Keine Email-App installiert';
+  String get checkEmailApp => 'Keine Email-App installiert';
   @override
-  get contactUs => 'Kontaktiere Uns';
+  String get contactUs => 'Kontaktiere Uns';
   @override
-  get about => 'Über';
+  String get about => 'Über';
   @override
-  get aboutBrief => 'Mobiles Wallet für Encointer';
+  String get aboutBrief => 'Mobiles Wallet für Encointer';
   @override
-  get aboutVersion => 'Version';
+  String get aboutVersion => 'Version';
   @override
-  get accounts => 'Konten';
+  String get accounts => 'Konten';
   @override
-  get accountDelete => 'Bist du sicher, dass du das Konto löschen möchtest?';
+  String get accountDelete => 'Bist du sicher, dass du das Konto löschen möchtest?';
   @override
-  get accountsDelete => 'Bist du sicher, dass du alle Konten löschen möchtest?';
+  String get accountsDelete => 'Bist du sicher, dass du alle Konten löschen möchtest?';
   @override
-  get accountsDeleteAll => 'Lösche alle Konten';
+  String get accountsDeleteAll => 'Lösche alle Konten';
   @override
-  get accountShare => 'Konto teilen';
+  String get accountShare => 'Konto teilen';
   @override
-  get addressBook => 'Adressbuch';
+  String get addressBook => 'Adressbuch';
   @override
-  get cantEndorseBootstrapper => 'Bootstrapper sind bereits als zuverlässig markiert';
+  String get cantEndorseBootstrapper => 'Bootstrapper sind bereits als zuverlässig markiert';
   @override
-  get canEndorseInRegisteringPhaseOnly => 'Du kannst nur in der Registrierungsphase jemanden als zuverlässig markieren';
+  String get canEndorseInRegisteringPhaseOnly =>
+      'Du kannst nur in der Registrierungsphase jemanden als zuverlässig markieren';
   @override
-  get contactAddress => 'Addresse';
+  String get contactAddress => 'Addresse';
   @override
-  get contactAddressError => 'Ungültige Adresse';
+  String get contactAddressError => 'Ungültige Adresse';
   @override
-  get contactDelete => 'Löschen';
+  String get contactDelete => 'Löschen';
   @override
-  get contactDeleteWarn => 'Bist du sicher, dass du diese Adresse löschen möchtest?';
+  String get contactDeleteWarn => 'Bist du sicher, dass du diese Adresse löschen möchtest?';
   @override
-  get contactEndorse => 'Als vertrauenswürdig bestätigen';
+  String get contactEndorse => 'Als vertrauenswürdig bestätigen';
   @override
-  get contactAlreadyExists => 'Adresse existiert bereits';
+  String get contactAlreadyExists => 'Adresse existiert bereits';
   @override
-  get contactMemo => 'Memo';
+  String get contactMemo => 'Memo';
   @override
-  get contactName => 'Name';
+  String get contactName => 'Name';
   @override
-  get contactNameError => 'Name muss ausgefüllt werden';
+  String get contactNameError => 'Name muss ausgefüllt werden';
   @override
-  get contactNameAlreadyExists => 'Name existiert bereits';
+  String get contactNameAlreadyExists => 'Name existiert bereits';
   @override
-  get contactSave => 'Speichere';
+  String get contactSave => 'Speichere';
   @override
-  get confirmPin => 'Bitte PIN bestätigen';
+  String get confirmPin => 'Bitte PIN bestätigen';
   @override
-  get developer => 'Entwickler-Modus';
+  String get developer => 'Entwickler-Modus';
   @override
-  get enableBazaar => 'Bazaar aktivieren';
+  String get enableBazaar => 'Bazaar aktivieren';
   @override
-  get export => 'Konto exportieren';
+  String get export => 'Konto exportieren';
   @override
-  get exportMnemonicOk => 'Mnemonik wurde in die Zwischenablage kopiert.';
+  String get exportMnemonicOk => 'Mnemonik wurde in die Zwischenablage kopiert.';
   @override
-  get exportWarn =>
+  String get exportWarn =>
       'Schreibe diese Wörter auf ein Papier. Behalte das Papier an einem sicheren Ort. Diese Wörter geben jedem Zugriff auf das Konto und das Vermögen';
   @override
-  get noMnemonicFound => 'Keine Mnemonik gefunden';
+  String get noMnemonicFound => 'Keine Mnemonik gefunden';
   @override
-  get importedWithRawSeedHenceNoMnemonic => 'Konto wurde mit einem Raw Seed importiert und hat deshalb keine Mnemonik';
+  String get importedWithRawSeedHenceNoMnemonic =>
+      'Konto wurde mit einem Raw Seed importiert und hat deshalb keine Mnemonik';
   @override
-  get changeYourPin => 'PIN ändern';
+  String get changeYourPin => 'PIN ändern';
   @override
-  get wrongPin => 'Falscher PIN';
+  String get wrongPin => 'Falscher PIN';
   @override
-  get wrongPinHint => 'Konto konnte nicht entsperrt werden. Bitte überprüfe die eingegebene PIN.';
+  String get wrongPinHint => 'Konto konnte nicht entsperrt werden. Bitte überprüfe die eingegebene PIN.';
   @override
-  get yourNewPin => 'Neue PIN';
+  String get yourNewPin => 'Neue PIN';
   @override
-  get pleaseConfirmYourNewPin => 'Bestätige neue PIN';
+  String get pleaseConfirmYourNewPin => 'Bestätige neue PIN';
   @override
-  get hintEnterCurrentPin => 'Gib deinen jetzigen PIN ein um den PIN zu ändern.';
+  String get hintEnterCurrentPin => 'Gib deinen jetzigen PIN ein um den PIN zu ändern.';
   @override
-  get hintThenEnterANewPin => 'Dann kannst du deinen neuen Pin eingeben.';
+  String get hintThenEnterANewPin => 'Dann kannst du deinen neuen Pin eingeben.';
   @override
-  get detailsEnter => 'Gib deine Details ein.';
+  String get detailsEnter => 'Gib deine Details ein.';
   @override
-  get personalKeyEnter => 'Gib deinen persönlichen Key ein (12 Wörter), um dein Konto zu importieren.';
+  String get personalKeyEnter => 'Gib deinen persönlichen Key ein (12 Wörter), um dein Konto zu importieren.';
   @override
-  get reputationHistory => 'Reputation History';
+  String get reputationHistory => 'Reputation History';
   @override
-  get reputationOverall => 'Allgemeine Reputation';
+  String get reputationOverall => 'Allgemeine Reputation';
   @override
-  get passOld => 'Aktuelle PIN';
+  String get passOld => 'Aktuelle PIN';
   @override
-  get passSuccess => 'Erfolgreich';
+  String get passSuccess => 'Erfolgreich';
   @override
-  get passSuccessTxt => 'PIN wurde erfolgreich geändert';
+  String get passSuccessTxt => 'PIN wurde erfolgreich geändert';
   @override
-  get receiverAccount => 'Empfangendes Konto:';
+  String get receiverAccount => 'Empfangendes Konto:';
   @override
-  get personalKey => 'Persönlicher Schlüssel';
+  String get personalKey => 'Persönlicher Schlüssel';
   @override
-  get qrScanHint => 'Gib den Betrag, den du erhalten möchtest ein und lasse den Sender den QR Code scannen.';
+  String get qrScanHint => 'Gib den Betrag, den du erhalten möchtest ein und lasse den Sender den QR Code scannen.';
   @override
-  get qrScanHintAccount => 'Bitte den Empfänger den QR-Code in der Encointer App zu scannen.';
+  String get qrScanHintAccount => 'Bitte den Empfänger den QR-Code in der Encointer App zu scannen.';
   @override
-  get sendLink => 'Link senden';
+  String get sendLink => 'Link senden';
   @override
-  get setting => 'Einstellungen';
+  String get setting => 'Einstellungen';
   @override
-  get settingLang => 'Sprache';
+  String get settingLang => 'Sprache';
   @override
-  get settingLangAuto => 'Automatisch';
+  String get settingLangAuto => 'Automatisch';
   @override
-  get settingNode => 'Entfernter Knoten';
+  String get settingNode => 'Entfernter Knoten';
   @override
-  get settingNodeList => 'Verfügbare Knoten';
+  String get settingNodeList => 'Verfügbare Knoten';
   @override
-  get settingPrefix => 'Adressenpräfix';
+  String get settingPrefix => 'Adressenpräfix';
   @override
-  get settingPrefixList => 'Verfügbare Präfix';
+  String get settingPrefixList => 'Verfügbare Präfix';
   @override
-  get share => 'Teilen';
+  String get share => 'Teilen';
   @override
-  get shareLinkHint => 'Oder über Link teilen:';
+  String get shareLinkHint => 'Oder über Link teilen:';
   @override
-  get title => 'Profil';
+  String get title => 'Profil';
   @override
-  get unlock => 'Du musst deinen PIN eingeben um einen neuen Account hinzuzufügen';
+  String get unlock => 'Du musst deinen PIN eingeben um einen neuen Account hinzuzufügen';
   @override
-  get addAccount => 'Konto hinzufügen';
+  String get addAccount => 'Konto hinzufügen';
   @override
-  get addCommunity => 'Gem. hinzufügen';
+  String get addCommunity => 'Gem. hinzufügen';
   @override
-  get accountCreate => 'Konto kreieren';
+  String get accountCreate => 'Konto kreieren';
   @override
-  get doYouAlreadyHaveAnAccount => 'Hast du bereits ein Konto?';
+  String get doYouAlreadyHaveAnAccount => 'Hast du bereits ein Konto?';
   @override
-  get accountNameChooseHint => 'Du kannst den Namen später ändern in den Profileinstellungen.';
+  String get accountNameChooseHint => 'Du kannst den Namen später ändern in den Profileinstellungen.';
   @override
-  get accountNameChoose => 'Wähle einen Kontonamen.';
+  String get accountNameChoose => 'Wähle einen Kontonamen.';
   @override
-  get accountName => 'Kontoname';
+  String get accountName => 'Kontoname';
   @override
-  get import => 'Importiere';
+  String get import => 'Importiere';
   @override
-  get pinHint => 'Du wirst diese PIN benötigen um Transaktionen zu tätigen oder neue Konten hinzufügen.';
+  String get pinHint => 'Du wirst diese PIN benötigen um Transaktionen zu tätigen oder neue Konten hinzufügen.';
   @override
-  get pinInfo =>
+  String get pinInfo =>
       'PIN muss mindestens 4 Ziffern enthalten. Bei PIN-Verlust ist der Account nicht wiederherstellbar, ausser man hat ein Backup auf der Profilseite gemacht.';
   @override
-  get pinSecure => 'Sichere dein Konto mit einem PIN.';
+  String get pinSecure => 'Sichere dein Konto mit einem PIN.';
   @override
-  get recoveryProxy => 'Wiederherstellungsproxy';
+  String get recoveryProxy => 'Wiederherstellungsproxy';
   @override
-  get reputation => 'Reputation';
+  String get reputation => 'Reputation';
   @override
-  get tokenSend => 'SYMBOL senden';
+  String get tokenSend => 'SYMBOL senden';
   @override
-  get addContact => 'Kontakt hinzufügen';
+  String get addContact => 'Kontakt hinzufügen';
   @override
-  get deleteAccount => 'löschen';
+  String get deleteAccount => 'löschen';
   @override
-  get exportAccount => 'exportieren';
+  String get exportAccount => 'exportieren';
   @override
-  get errorUserNameIsRequired => 'Benutzername darf nicht leer sein';
+  String get errorUserNameIsRequired => 'Benutzername darf nicht leer sein';
   @override
-  get observedPendingExtrinsic => 'Es wurde eine unbestätigte Transaktion beobachtet. Bitte warte auf Bestätigung!';
+  String get observedPendingExtrinsic =>
+      'Es wurde eine unbestätigte Transaktion beobachtet. Bitte warte auf Bestätigung!';
   @override
   String get appHints => 'App-Tipps';
   @override
@@ -450,167 +453,167 @@ class TranslationsDeProfile implements TranslationsProfile {
 
 class TranslationsFrProfile implements TranslationsProfile {
   @override
-  get checkEmailApp => throw UnimplementedError();
+  String get checkEmailApp => throw UnimplementedError();
   @override
-  get contactUs => throw UnimplementedError();
+  String get contactUs => throw UnimplementedError();
   @override
-  get about => throw UnimplementedError();
+  String get about => throw UnimplementedError();
   @override
-  get aboutBrief => throw UnimplementedError();
+  String get aboutBrief => throw UnimplementedError();
   @override
-  get aboutVersion => throw UnimplementedError();
+  String get aboutVersion => throw UnimplementedError();
   @override
-  get accounts => throw UnimplementedError();
+  String get accounts => throw UnimplementedError();
   @override
-  get accountDelete => throw UnimplementedError();
+  String get accountDelete => throw UnimplementedError();
   @override
-  get accountShare => throw UnimplementedError();
+  String get accountShare => throw UnimplementedError();
   @override
-  get addressBook => throw UnimplementedError();
+  String get addressBook => throw UnimplementedError();
   @override
-  get cantEndorseBootstrapper => throw UnimplementedError();
+  String get cantEndorseBootstrapper => throw UnimplementedError();
   @override
-  get canEndorseInRegisteringPhaseOnly => throw UnimplementedError();
+  String get canEndorseInRegisteringPhaseOnly => throw UnimplementedError();
   @override
-  get contactAddress => throw UnimplementedError();
+  String get contactAddress => throw UnimplementedError();
   @override
-  get contactAddressError => throw UnimplementedError();
+  String get contactAddressError => throw UnimplementedError();
   @override
-  get contactDelete => throw UnimplementedError();
+  String get contactDelete => throw UnimplementedError();
   @override
-  get contactDeleteWarn => throw UnimplementedError();
+  String get contactDeleteWarn => throw UnimplementedError();
   @override
-  get contactEndorse => throw UnimplementedError();
+  String get contactEndorse => throw UnimplementedError();
   @override
-  get contactAlreadyExists => throw UnimplementedError();
+  String get contactAlreadyExists => throw UnimplementedError();
   @override
-  get contactMemo => throw UnimplementedError();
+  String get contactMemo => throw UnimplementedError();
   @override
-  get contactName => throw UnimplementedError();
+  String get contactName => throw UnimplementedError();
   @override
-  get contactNameError => throw UnimplementedError();
+  String get contactNameError => throw UnimplementedError();
   @override
-  get contactNameAlreadyExists => throw UnimplementedError();
+  String get contactNameAlreadyExists => throw UnimplementedError();
   @override
-  get contactSave => throw UnimplementedError();
+  String get contactSave => throw UnimplementedError();
   @override
-  get confirmPin => throw UnimplementedError();
+  String get confirmPin => throw UnimplementedError();
   @override
-  get developer => throw UnimplementedError();
+  String get developer => throw UnimplementedError();
   @override
-  get export => throw UnimplementedError();
+  String get export => throw UnimplementedError();
   @override
-  get exportMnemonicOk => throw UnimplementedError();
+  String get exportMnemonicOk => throw UnimplementedError();
   @override
-  get exportWarn => throw UnimplementedError();
+  String get exportWarn => throw UnimplementedError();
   @override
-  get changeYourPin => throw UnimplementedError();
+  String get changeYourPin => throw UnimplementedError();
   @override
-  get wrongPin => throw UnimplementedError();
+  String get wrongPin => throw UnimplementedError();
   @override
-  get wrongPinHint => throw UnimplementedError();
+  String get wrongPinHint => throw UnimplementedError();
   @override
-  get yourNewPin => throw UnimplementedError();
+  String get yourNewPin => throw UnimplementedError();
   @override
-  get pleaseConfirmYourNewPin => throw UnimplementedError();
+  String get pleaseConfirmYourNewPin => throw UnimplementedError();
   @override
-  get passOld => throw UnimplementedError();
+  String get passOld => throw UnimplementedError();
   @override
-  get passSuccess => throw UnimplementedError();
+  String get passSuccess => throw UnimplementedError();
   @override
-  get passSuccessTxt => throw UnimplementedError();
+  String get passSuccessTxt => throw UnimplementedError();
   @override
-  get qrScanHint => throw UnimplementedError();
+  String get qrScanHint => throw UnimplementedError();
   @override
-  get setting => throw UnimplementedError();
+  String get setting => throw UnimplementedError();
   @override
-  get settingLang => throw UnimplementedError();
+  String get settingLang => throw UnimplementedError();
   @override
-  get settingLangAuto => throw UnimplementedError();
+  String get settingLangAuto => throw UnimplementedError();
   @override
-  get settingNode => throw UnimplementedError();
+  String get settingNode => throw UnimplementedError();
   @override
-  get settingNodeList => throw UnimplementedError();
+  String get settingNodeList => throw UnimplementedError();
   @override
-  get settingPrefix => throw UnimplementedError();
+  String get settingPrefix => throw UnimplementedError();
   @override
-  get settingPrefixList => throw UnimplementedError();
+  String get settingPrefixList => throw UnimplementedError();
   @override
-  get share => throw UnimplementedError();
+  String get share => throw UnimplementedError();
   @override
-  get title => throw UnimplementedError();
+  String get title => throw UnimplementedError();
   @override
-  get unlock => throw UnimplementedError();
+  String get unlock => throw UnimplementedError();
   @override
-  get accountCreate => throw UnimplementedError();
+  String get accountCreate => throw UnimplementedError();
   @override
-  get doYouAlreadyHaveAnAccount => throw UnimplementedError();
+  String get doYouAlreadyHaveAnAccount => throw UnimplementedError();
   @override
-  get accountNameChooseHint => throw UnimplementedError();
+  String get accountNameChooseHint => throw UnimplementedError();
   @override
-  get accountNameChoose => throw UnimplementedError();
+  String get accountNameChoose => throw UnimplementedError();
   @override
-  get accountName => throw UnimplementedError();
+  String get accountName => throw UnimplementedError();
   @override
-  get import => throw UnimplementedError();
+  String get import => throw UnimplementedError();
   @override
-  get pinHint => throw UnimplementedError();
+  String get pinHint => throw UnimplementedError();
   @override
-  get pinInfo => throw UnimplementedError();
+  String get pinInfo => throw UnimplementedError();
   @override
-  get pinSecure => throw UnimplementedError();
+  String get pinSecure => throw UnimplementedError();
   @override
-  get addAccount => throw UnimplementedError();
+  String get addAccount => throw UnimplementedError();
   @override
-  get addCommunity => throw UnimplementedError();
+  String get addCommunity => throw UnimplementedError();
   @override
-  get recoveryProxy => 'recovery proxy';
+  String get recoveryProxy => 'recovery proxy';
   @override
-  get reputation => throw UnimplementedError();
+  String get reputation => throw UnimplementedError();
   @override
-  get sendLink => throw UnimplementedError();
+  String get sendLink => throw UnimplementedError();
   @override
-  get tokenSend => throw UnimplementedError();
+  String get tokenSend => throw UnimplementedError();
   @override
-  get qrScanHintAccount => throw UnimplementedError();
+  String get qrScanHintAccount => throw UnimplementedError();
   @override
-  get receiverAccount => throw UnimplementedError();
+  String get receiverAccount => throw UnimplementedError();
   @override
-  get shareLinkHint => throw UnimplementedError();
+  String get shareLinkHint => throw UnimplementedError();
   @override
-  get hintEnterCurrentPin => throw UnimplementedError();
+  String get hintEnterCurrentPin => throw UnimplementedError();
   @override
-  get hintThenEnterANewPin => throw UnimplementedError();
+  String get hintThenEnterANewPin => throw UnimplementedError();
   @override
-  get reputationHistory => throw UnimplementedError();
+  String get reputationHistory => throw UnimplementedError();
   @override
-  get reputationOverall => throw UnimplementedError();
+  String get reputationOverall => throw UnimplementedError();
   @override
-  get accountsDelete => throw UnimplementedError();
+  String get accountsDelete => throw UnimplementedError();
   @override
-  get accountsDeleteAll => throw UnimplementedError();
+  String get accountsDeleteAll => throw UnimplementedError();
   @override
-  get personalKeyEnter => throw UnimplementedError();
+  String get personalKeyEnter => throw UnimplementedError();
   @override
-  get detailsEnter => throw UnimplementedError();
+  String get detailsEnter => throw UnimplementedError();
   @override
-  get personalKey => throw UnimplementedError();
+  String get personalKey => throw UnimplementedError();
   @override
-  get enableBazaar => throw UnimplementedError();
+  String get enableBazaar => throw UnimplementedError();
   @override
-  get noMnemonicFound => throw UnimplementedError();
+  String get noMnemonicFound => throw UnimplementedError();
   @override
-  get importedWithRawSeedHenceNoMnemonic => throw UnimplementedError();
+  String get importedWithRawSeedHenceNoMnemonic => throw UnimplementedError();
   @override
-  get addContact => throw UnimplementedError();
+  String get addContact => throw UnimplementedError();
   @override
-  get deleteAccount => throw UnimplementedError();
+  String get deleteAccount => throw UnimplementedError();
   @override
-  get exportAccount => throw UnimplementedError();
+  String get exportAccount => throw UnimplementedError();
   @override
-  get errorUserNameIsRequired => throw UnimplementedError();
+  String get errorUserNameIsRequired => throw UnimplementedError();
   @override
-  get observedPendingExtrinsic => throw UnimplementedError();
+  String get observedPendingExtrinsic => throw UnimplementedError();
   @override
   String get appHints => throw UnimplementedError();
   @override
