@@ -66,7 +66,8 @@ void main() {
         'communityAccountStores': Map<String, dynamic>.of({
           ALICE_ADDRESS: aliceCommunityAccountStore.toJson(),
           BOB_ADDRESS: bobCommunityAccountStore.toJson(),
-        })
+        }),
+        'communityIcon': null,
       };
 
       expect(communityStore.toJson(), targetJson);
