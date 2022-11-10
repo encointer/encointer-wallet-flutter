@@ -250,7 +250,7 @@ class TranslationsRuAccount implements TranslationsAccount {
   @override
   get createPassword2 => 'Подтвердите PIN-код';
   @override
-  get createPassword2Error => 'Противоречивые PIN-коды';
+  get createPassword2Error => 'PIN-коды не совпадают';
   @override
   get createPasswordError => 'PIN должен содержать не менее 4 цифр и никаких других знаков';
   @override
@@ -276,10 +276,10 @@ class TranslationsRuAccount implements TranslationsAccount {
   @override
   get next => 'Следующий';
   @override
-  get observe => 'Observation';
+  get observe => 'Мониторинг';
   @override
   get observeBrief =>
-      'Отметьте наблюдаемый адрес, позже вы можете выбрать этот адрес на странице выбора аккаунта, чтобы просматривать активы и действия';
+      'Отметьте это адрес как подлежащий мониторингу, позже вы сможете выбрать этот адрес на странице выбора аккаунта, для просмотра его активов и действий';
   @override
   get observeProxyInvalid => 'Неверный прокси-аккаунт';
   @override

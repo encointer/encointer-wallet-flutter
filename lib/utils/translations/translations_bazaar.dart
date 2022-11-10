@@ -508,17 +508,17 @@ class TranslationsRuBazaar implements TranslationsBazaar {
   @override
   get apply => 'Применить';
   @override
-  get bazaarNew => 'Новое в Bazaar';
+  get bazaarNew => 'Новое в Базаре';
   @override
-  get bazaarTitle => 'Bazaar';
+  get bazaarTitle => 'Базар';
   @override
   get businessAdd => '+ Добавить новую организацию';
   @override
   get businessCreate => 'Создать новую организацию';
   @override
-  get businessDescription => 'Описание  Организации';
+  get businessDescription => 'Описание деятельности';
   @override
-  get businessDescriptionHint => 'Вызовите интерес к вашему предложению и предоставьте краткое описание';
+  get businessDescriptionHint => 'Вызовите интерес к вашему предложению и дайте краткое описание';
   @override
   get businesses => 'Предприятия (Бизнесы)';
   @override
@@ -526,17 +526,17 @@ class TranslationsRuBazaar implements TranslationsBazaar {
   @override
   get businessesMy => 'Мое Предприятие';
   @override
-  get businessesOffered => 'Предлагается в организациях';
+  get businessesOffered => 'Предлагается в бизнесе';
   @override
   get businessesResults => 'Результаты в бизнесе';
   @override
-  get businessesVicinity => 'Предприятия в моем районе';
+  get businessesVicinity => 'Бизнес по соседству';
   @override
   get businessName => 'Название Организации';
   @override
   get businessNameHint => 'Используйте информативное название';
   @override
-  get businessUrl => 'Ссылка на организацию';
+  get businessUrl => 'Url-адрес организации';
   @override
   get cameraDefault => 'Камера';
   @override
@@ -546,11 +546,11 @@ class TranslationsRuBazaar implements TranslationsBazaar {
   @override
   get city => 'Город';
   @override
-  get communityChoose => 'Выбрать сообщество:';
+  get communityChoose => 'Выбрать общину:';
   @override
-  get communityLoad => 'Сообщество загружается..';
+  get communityLoad => 'Община загружается..';
   @override
-  get communityNotFound => 'Сообщество не найдено';
+  get communityNotFound => 'Община не найдена';
   @override
   get day => 'День';
   @override
@@ -558,13 +558,13 @@ class TranslationsRuBazaar implements TranslationsBazaar {
   @override
   get delivery => 'Доставка';
   @override
-  get deliveryOptions => 'Опции доставки';
+  get deliveryOptions => 'Параметры доставки';
   @override
   get description => 'Описание';
   @override
   get favorites => 'Избранное';
   @override
-  get found => 'Found';
+  get found => 'Найден';
   @override
   get galleryDefault => 'Галерея';
   @override
@@ -582,7 +582,7 @@ class TranslationsRuBazaar implements TranslationsBazaar {
   @override
   get lastVisited => 'Последнее посещение';
   @override
-  get lookingFor => 'Вы в поиске чего?';
+  get lookingFor => 'Что Вы ищете?';
   @override
   get map => 'Карта';
   @override
@@ -596,7 +596,7 @@ class TranslationsRuBazaar implements TranslationsBazaar {
   @override
   get offeringAdd => '+ Добавить предложение';
   @override
-  get offeringNew => 'Featuring Newest';
+  get offeringNew => 'Представляем вашему вниманию новейшее';
   @override
   get offerings => 'Предложения';
   @override

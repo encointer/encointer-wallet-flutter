@@ -399,11 +399,11 @@ class TranslationsRuAssets implements TranslationsAssets {
   @override
   get block => 'Блокировать';
   @override
-  get communitiesNotFound => 'Сообщества не найдены';
+  get communitiesNotFound => 'Общины не найдены';
   @override
-  get communityChoose => 'Пожалуйста выберите сообщество';
+  get communityChoose => 'Пожалуйста выберите общину';
   @override
-  get communityNotSelected => 'Сообщество не выбрано, нажмите на иконку, чтобы выбрать одно из них';
+  get communityNotSelected => 'Если община не выбрана, нажмите на иконку для выбора одной из них';
   @override
   get copy => 'Копировать';
   @override
@@ -423,9 +423,9 @@ class TranslationsRuAssets implements TranslationsAssets {
   @override
   get home => 'Домой';
   @override
-  get issuanceClaimed => 'Нет ожидаемого дохода сообщества';
+  get issuanceClaimed => 'Ожидаемого поступления общины нет';
   @override
-  get issuancePending => 'Требовать рассмотрения ожидаемого дохода сообщества';
+  get issuancePending => 'Требовать рассмотрения ожидаемого дохода общины';
   @override
   get receive => 'Получить';
   @override
@@ -435,7 +435,7 @@ class TranslationsRuAssets implements TranslationsAssets {
   @override
   get tip => 'Чаевые';
   @override
-  get tipHint => 'Добавить чаевые к этому переводу, при оплате автору блока для того, чтобы повысить приоритетность.';
+  get tipHint => 'Для повышения приоритетности добавить чаевые к этому переводу, при оплате автору блока.';
   @override
   get to => 'в';
   @override
@@ -443,7 +443,7 @@ class TranslationsRuAssets implements TranslationsAssets {
   @override
   get payment => 'Оплата';
   @override
-  get value => 'Ценность';
+  get value => 'Значимость';
   @override
   get amountToBeTransferred => 'Отправить сумму';
   @override
@@ -463,11 +463,11 @@ class TranslationsRuAssets implements TranslationsAssets {
   @override
   get paymentDoYouWantToProceed => 'Продолжить оплату?';
   @override
-  get paymentSubmitting => 'Платеж в процессе отправки...';
+  get paymentSubmitting => 'Производится оплата...';
   @override
-  get paymentFinished => 'Оплата завершена';
+  get paymentFinished => 'Оплата выполнена';
   @override
-  get paymentError => 'Ошибка оплаты';
+  get paymentError => 'Ошибка при совершении оплаты';
   @override
   get voucher => 'Ваучер';
   @override
@@ -483,7 +483,7 @@ class TranslationsRuAssets implements TranslationsAssets {
   @override
   get doYouWantToRedeemThisVoucher => 'Вы хотите обменять этот ваучер на ACCOUNT_PLACEHOLDER?';
   @override
-  get fundVoucher => 'Фонд ваучера';
+  get fundVoucher => 'Ваучер на средства';
   @override
   get redeemVoucher => 'Использовать ваучер';
   @override
@@ -493,10 +493,10 @@ class TranslationsRuAssets implements TranslationsAssets {
   @override
   get invalidNetwork => 'Неправильная сеть';
   @override
-  get invalidCommunity => 'Несоотвествующее сообщество';
+  get invalidCommunity => 'Несоотвествующая община';
   @override
   get transactionError => 'Ошибка транзакции';
   @override
-  get insufficientFundsExplanation => 'У вас недостаточно средств на этом счете. Смотрите на сайте вашего'
-      ' местного сообщества, как получить вознаграждение';
+  get insufficientFundsExplanation => 'У вас недостаточно средств на этом счете. Смотрите на сайте вашей'
+      ' местной общины, как получить вознаграждение';
 }

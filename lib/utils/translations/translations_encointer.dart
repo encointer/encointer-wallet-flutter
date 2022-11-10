@@ -363,13 +363,13 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   get registerParticipant => 'Регистрация';
   @override
-  get claimsSubmit => 'Подавать заявки';
+  get claimsSubmit => 'Подать заявление';
   @override
-  get claimsSubmitN => 'Подать N_COUNT заявки';
+  get claimsSubmitN => 'Подать N_COUNT заявление';
   @override
-  get claimsPurge => 'Очистить ранее отсканированные заявки';
+  get claimsPurge => 'Очистить ранее отсканированные заявления';
   @override
-  get claimsPurgeConfirm => 'Вы уверены, что хотите удалить все ранее отсканированные заявки?';
+  get claimsPurgeConfirm => 'Вы уверены, что хотите удалить все ранее отсканированные заявления?';
   @override
   get keySigningCycle => 'Цикл подписания ключей';
   @override
@@ -377,28 +377,27 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   get nextCycleDateLabel => 'Следующий цикл в процессе';
   @override
-  get claimQr => 'Моя заявка на участие';
+  get claimQr => 'Мое заявление на участие';
   @override
-  get claimsScanned => 'Вы отсканировали заявки AMOUNT_PLACEHOLDER ';
+  get claimsScanned => 'Вы отсканировали заявление AMOUNT_PLACEHOLDER ';
   @override
-  get claimsScannedAlready => 'Ранее отсканированные заявки обновлены';
+  get claimsScannedAlready => 'Ранее отсканированные заявления обновлены';
   @override
-  get claimsScannedDecodeFailed => 'Отсканированные заявки не удалось расшифровать.';
+  get claimsScannedDecodeFailed => 'Отсканированные заявления не удалось расшифровать.';
   @override
-  get claimsScannedNew => 'Отсканировать новую заявку';
+  get claimsScannedNew => 'Отсканировать новое заявление';
   @override
-  get claimsScannedNOfM => 'Отсканированные заявки SCANNED_COUNT / TOTAL_COUNT';
+  get claimsScannedNOfM => 'Отсканированные заявления SCANNED_COUNT / TOTAL_COUNT';
   @override
-  get claimsSubmitDetail => 'Подача заявок на сумму AMOUNT за недавнее собрание';
+  get claimsSubmitDetail => 'Подача заявлений на сумму AMOUNT за недавнее собрание';
   @override
-  get communities => 'Сообщества';
+  get communities => 'Общины';
   @override
-  get noCommunitiesAreYouOffline =>
-      'Сообщества не обнаружены. Позже вы можете выбрать одно из них. Вы в оффлайн режиме?.';
+  get noCommunitiesAreYouOffline => 'Общины не обнаружены. Позже вы можете выбрать одну из них. Вы в оффлайн режиме?.';
   @override
-  get meetupAttended => 'Принимал участвие на последней встрече';
+  get meetupAttended => 'Присутствовал на последней встрече';
   @override
-  get meetupClaimantInvalid => 'Этот заявитель не является участником встречи. Заявка не сохраняется.';
+  get meetupClaimantInvalid => 'Этот заявитель не является участником встречи. Заявление не сохраняется.';
   @override
   get meetupLocation => 'Локция встречи';
   @override
@@ -416,9 +415,9 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   get tomorrow => 'Завтра';
   @override
-  get calendarEntryDescription => 'Собрание для получения дохода сообщества';
+  get calendarEntryDescription => 'Принять участие в собрании для получения дохода общины';
   @override
-  get youAreNotRegistered => 'Вы не зарегистрированы для участия в собрании выбранного сообщества:';
+  get youAreNotRegistered => 'К сожалению Вы не зарегистрированы для участия в собрании:';
   @override
   get howManyParticipantsShowedUp => 'Сколько участников присутствует, включая вас?';
   @override
