@@ -53,10 +53,9 @@ class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
                           icon: const Icon(Icons.arrow_downward),
                           iconSize: 32,
                           elevation: 32,
-                          onChanged: (newValue) {
-                            setState(() {
-                              store.encointer.setChosenCid(newValue.cid);
-                            });
+                          onChanged: (newValue) async {
+                            await store.encointer.setChosenCid(newValue.cid);
+                            setState(() {});
                           },
                           items: store.encointer.communities!
                               .asMap()

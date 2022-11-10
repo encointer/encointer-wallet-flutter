@@ -279,6 +279,14 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
+  late final _$setCommunityIdentifiersAsyncAction =
+      AsyncAction('_EncointerStore.setCommunityIdentifiers', context: context);
+
+  @override
+  Future<void> setCommunityIdentifiers(List<CommunityIdentifier> cids) {
+    return _$setCommunityIdentifiersAsyncAction.run(() => super.setCommunityIdentifiers(cids));
+  }
+
   late final _$setChosenCidAsyncAction = AsyncAction('_EncointerStore.setChosenCid', context: context);
 
   @override
@@ -307,16 +315,6 @@ mixin _$EncointerStore on _EncointerStore, Store {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setPhaseDurations');
     try {
       return super.setPhaseDurations(phaseDurations);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunityIdentifiers');
-    try {
-      return super.setCommunityIdentifiers(cids);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }

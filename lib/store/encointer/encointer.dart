@@ -207,7 +207,7 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
+  Future<void> setCommunityIdentifiers(List<CommunityIdentifier> cids) async {
     Log.d('set communityIdentifiers to $cids', 'EncointerStore');
 
     communityIdentifiers = cids;
@@ -215,7 +215,7 @@ abstract class _EncointerStore with Store {
 
     if (communities != null && !communitiesContainsChosenCid) {
       // inconsistency found, reset state
-      setChosenCid();
+      await setChosenCid();
     }
   }
 
