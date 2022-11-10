@@ -12,6 +12,7 @@ import 'package:encointer_wallet/page/profile/contacts/contacts_page.dart';
 import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/service/background_service/background_service.dart';
+import 'package:encointer_wallet/service/deep_link/deep_link.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
@@ -40,6 +41,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       _notificationPlugin!.init(context);
     }
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await initialDeepLinks(context);
       if (Platform.isAndroid) {
         // meetup notification only for android system
         Log.d('Initializing Workmanager callback...', 'home_page');
@@ -55,7 +57,6 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         );
       }
     });
-
     super.initState();
   }
 
