@@ -122,7 +122,7 @@ const leu_zurich_link = 'https://leu.zuerich/$locale_place_holder';
 const meetup_notification_link = 'https://encointer.github.io/feed/community_messages/$locale_place_holder/cm.json';
 const encointerLink = 'https://wallet.encointer.org/app/';
 
-String setDeepLink([String? linkText]) => '$encointerLink${linkText?.replaceAll('\n', '_')}';
+String toDeepLink([String? linkText]) => '$encointerLink${linkText?.replaceAll('\n', '_')}';
 
 String ceremonyInfoLink(String locale) {
   return replaceLocalePlaceholder(ceremony_info_link_base, locale);

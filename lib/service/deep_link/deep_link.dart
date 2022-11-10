@@ -6,6 +6,7 @@ import 'package:encointer_wallet/page/assets/transfer/transfer_page.dart';
 import 'package:encointer_wallet/page/profile/contacts/contact_page.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_service.dart';
+import 'package:encointer_wallet/page/reap_voucher/reap_voucher_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 
 bool _initialURILinkHandled = false;
@@ -52,6 +53,13 @@ Future<void> _navigationWithWrScanContext(BuildContext context, QrCode<dynamic> 
       );
       break;
     case QrCodeContext.voucher:
+      await Navigator.of(context).pushNamed(
+        ReapVoucherPage.route,
+        arguments: ReapVoucherParams(
+          voucher: qrCode.data,
+          showFundVoucher: false,
+        ),
+      );
       break;
     default:
       break;
