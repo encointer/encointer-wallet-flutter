@@ -648,7 +648,7 @@ class TranslationsRuProfile implements TranslationsProfile {
   @override
   get addressBook => 'Адресная книга';
   @override
-  get cantEndorseBootstrapper => 'Бутсреперы уже помечены как доверенные';
+  get cantEndorseBootstrapper => 'Бутсреперы уже отмечены как надежные';
   @override
   get canEndorseInRegisteringPhaseOnly => 'Может быть одобрен только на этапе регистрации';
   @override
@@ -674,11 +674,11 @@ class TranslationsRuProfile implements TranslationsProfile {
   @override
   get contactSave => 'Сохранить';
   @override
-  get confirmPin => 'Введите свой PIN-код для подтверждения';
+  get confirmPin => 'Для подтверждения введите свой PIN-код';
   @override
   get developer => 'Режим разработчика';
   @override
-  get enableBazaar => 'Включить Bazaar';
+  get enableBazaar => 'Включить Базар';
   @override
   get export => 'Экпорт аккаунта';
   @override
@@ -706,13 +706,13 @@ class TranslationsRuProfile implements TranslationsProfile {
   @override
   get hintThenEnterANewPin => 'Вы можете выбрать новый, и все готово.';
   @override
-  get personalKey => 'Личный ключ';
+  get personalKey => 'Секретный ключ';
   @override
   get detailsEnter => 'Введите свои данные.';
   @override
-  get personalKeyEnter => 'Пожалуйста, введите личный ключ (из 12 слов), чтобы импортировать аккаунт.';
+  get personalKeyEnter => 'Пожалуйста, введите секретный ключ (из 12 слов), чтобы импортировать аккаунт.';
   @override
-  get reputationHistory => 'Reputation history';
+  get reputationHistory => 'История репутции';
   @override
   get reputationOverall => 'Общая репутация';
   @override
@@ -752,7 +752,7 @@ class TranslationsRuProfile implements TranslationsProfile {
   @override
   get addAccount => 'Добавить аккаунт';
   @override
-  get addCommunity => 'Добавить сообщество';
+  get addCommunity => 'Добавить общину';
   @override
   get accountCreate => 'Создать аккаунт';
   @override
@@ -769,29 +769,29 @@ class TranslationsRuProfile implements TranslationsProfile {
   get pinHint => 'Этот PIN-код понадобится вам для транзакций и добавления новой учетной записи.';
   @override
   get pinInfo =>
-      'PIN-код должен состоять как минимум из 4 цифр. При утере PIN-кода, восстановить аккаунт невозможно, если вы не сделали резервную копию посредством профиля.';
+      'PIN-код должен состоять как минимум из 4 цифр. При утере PIN-кода, восстановить аккаунт невозможно, если только вы не сделали резервную копию в профиле.';
   @override
   get pinSecure => 'Защитите свой аккаунт с помощью PIN-кода.';
   @override
-  get recoveryProxy => 'Восстановление прокси-сервер';
+  get recoveryProxy => 'Прокси-сервер для восстановления';
   @override
   get reputation => 'Репутация';
   @override
   get shareLinkHint => 'Или вы можете поделиться ссылкой:';
   @override
-  get tokenSend => 'Оотправить SYMBOL';
+  get tokenSend => 'Отправить SYMBOL';
   @override
   get addContact => 'Добавить контакт';
   @override
-  get deleteAccount => 'удалить';
+  get deleteAccount => 'Удалить';
   @override
-  get exportAccount => 'экспорт';
+  get exportAccount => 'Экспорт';
   @override
   get errorUserNameIsRequired => 'Имя пользователя не может быть пустым';
   @override
   get observedPendingExtrinsic => 'Наблюдается незавершенная транзакция. Пожалуйста, дождитесь подтверждения!';
   @override
-  String get appHints => 'Подсказки приложения';
+  String get appHints => 'Рекомендации по использованию приложения';
   @override
   String get meetUpNotifications => 'Meetup - уведомления';
   @override

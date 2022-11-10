@@ -352,40 +352,40 @@ class TranslationsRuHome implements TranslationsHome {
   @override
   get closeApp => 'Закрыть приложение';
   @override
-  get copy => 'Скопировать вв буфер обмена';
+  get copy => 'Скопировать в буфер обмена';
   @override
   get create => 'Создать аккаунт';
   @override
   get detail => 'Детали';
   @override
-  get exitConfirm => 'Вы хотите выйти из приложения?';
+  get exitConfirm => 'Вы хотите покинуть приложение?';
   @override
   get errorOccurred => 'Возникла ошибка:';
 
   @override
-  get loading => 'Загрузка...';
+  get loading => 'Загружается...';
   @override
   get next => 'Следующий шаг';
   @override
   get notifySubmitted => 'Транзакция отправлена';
   @override
-  get notifySubmittedQueued => 'Ожидающая транзакция отправлена';
+  get notifySubmittedQueued => 'Транзакция в очереди отправлена';
   @override
   get ok => 'OK';
   @override
-  get pinNeeded => 'для использования приложения необходим PIN-код';
+  get pinNeeded => 'Для использования приложения необходим PIN-код';
   @override
   get settingNetwork => 'Выберите кошелек';
   @override
   get submit => 'Войти и отправить';
   @override
-  get submitCall => 'Выполнить звонок';
+  get submitCall => 'Сделать звонок';
   @override
   get submitFees => 'Платеж';
   @override
   get submitFeesOffline => 'Платеж недоступен (оффлайн)';
   @override
-  get submitFrom => 'Вы подписываете транзакцию с ';
+  get submitFrom => 'Вы подписываете транзакцию от ';
   @override
   get submitNoSign => 'Отправить (без подписи)';
   @override
@@ -397,7 +397,7 @@ class TranslationsRuHome implements TranslationsHome {
   @override
   get switchAccount => 'Сменить аккаунт';
   @override
-  get switchCommunity => 'Сменить сообщество';
+  get switchCommunity => 'Сменить общину';
   @override
   get transactionQueued => 'В очереди';
   @override
@@ -414,11 +414,11 @@ class TranslationsRuHome implements TranslationsHome {
   @override
   get updateJsUp => 'Чтобы продолжить, необходимо обновить метаданные.';
   @override
-  get updateLatest => 'Новейшая версия приложения установлена';
+  get updateLatest => 'Установлена новейшая версия приложения ';
   @override
   get updateToNewerVersionQ => 'Доступна новая версия, обновить сейчас?';
   @override
-  get accountImport => 'Импортировать учтеную запись';
+  get accountImport => 'Импортировать учетную запись';
   @override
   get txQueued => 'Транзакция поставлена в очередь';
   @override
