@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +19,7 @@ class CeremonyStep2Scan extends StatelessWidget {
   const CeremonyStep2Scan(
     this.store,
     this.api, {
-    required this.claim,
+    required this.claimantAddress,
     required this.confirmedParticipantsCount,
     Key? key,
   }) : super(key: key);
@@ -30,7 +27,7 @@ class CeremonyStep2Scan extends StatelessWidget {
   final AppStore store;
   final Api api;
 
-  final Future<Uint8List> claim;
+  final String claimantAddress;
   final int confirmedParticipantsCount;
 
   @override
@@ -73,18 +70,9 @@ class CeremonyStep2Scan extends StatelessWidget {
                   const SizedBox(height: 12),
                   // Enhance brightness for the QR-code
                   const WakeLockAndBrightnessEnhancer(brightness: 1),
-                  FutureBuilder<Uint8List>(
-                    future: claim,
-                    builder: (_, AsyncSnapshot<Uint8List> snapshot) {
-                      if (snapshot.hasData) {
-                        return QrCodeImage(
-                          qrCode: base64.encode(snapshot.data!),
-                          errorCorrectionLevel: QrErrorCorrectLevel.L,
-                        );
-                      } else {
-                        return const CupertinoActivityIndicator();
-                      }
-                    },
+                  QrCodeImage(
+                    qrCode: claimantAddress,
+                    errorCorrectionLevel: QrErrorCorrectLevel.L,
                   ),
                 ],
               ),

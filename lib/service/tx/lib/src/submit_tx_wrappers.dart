@@ -129,7 +129,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
 Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) async {
   final params = attestAttendeesParams(
     store.encointer.chosenCid!,
-    store.encointer.communityAccount!.scannedAttendeesCount,
+    store.encointer.communityAccount!.participantCountVote!,
     store.encointer.communityAccount!.attendees!.toList(),
   );
 

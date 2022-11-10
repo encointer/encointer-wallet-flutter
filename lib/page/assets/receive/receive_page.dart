@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/config/consts.dart';
 import 'package:flutter/material.dart';
 import 'package:focus_detector/focus_detector.dart';
 import 'package:pausable_timer/pausable_timer.dart';
@@ -193,8 +194,7 @@ class _ReceivePageState extends State<ReceivePage> {
                       onTap: () => {
                         if (_formKey.currentState!.validate())
                           {
-                            // Todo: implement invoice.toUrl()
-                            Share.share(invoice.toQrPayload()),
+                            Share.share(toDeepLink(invoice.toQrPayload())),
                           }
                       },
                     ),
