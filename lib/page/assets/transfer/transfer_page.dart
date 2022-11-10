@@ -93,6 +93,7 @@ class _TransferPageState extends State<TransferPage> {
     if (params.cid != store.encointer.chosenCid!) {
       showCupertinoDialog<void>(
         context: context,
+        barrierDismissible: true,
         builder: (context) {
           final dic = I18n.of(context)!.translationsForLocale().assets;
           return CupertinoAlertDialog(
@@ -171,16 +172,15 @@ class _TransferPageState extends State<TransferPage> {
                           iconSize: 48,
                           icon: const Icon(Iconsax.scan_barcode),
                           onPressed: () async {
-                            final invoiceData = await Navigator.of(context).pushNamed<InvoiceData>(
+                            final invoiceData = await Navigator.of(context).pushNamed(
                               ScanPage.route,
                               arguments: ScanPageParams(scannerContext: QrScannerContext.transferPage),
                             );
-                            if (invoiceData != null) {
+                            if (invoiceData != null && invoiceData is InvoiceData) {
                               handleTransferPageParams(
                                 TransferPageParams.fromInvoiceData(invoiceData),
                                 _store,
                               );
-
                               setState(() {});
                             }
                           },
@@ -265,10 +265,11 @@ class _TransferPageState extends State<TransferPage> {
         context,
         PaymentConfirmationPage.route,
         arguments: PaymentConfirmationParams(
-            cid: cid,
-            communitySymbol: communitySymbol,
-            recipientAccount: _accountTo!,
-            amount: double.parse(_amountCtrl.text.trim())),
+          cid: cid,
+          communitySymbol: communitySymbol,
+          recipientAccount: _accountTo!,
+          amount: double.parse(_amountCtrl.text.trim()),
+        ),
       );
     }
   }
