@@ -169,7 +169,8 @@ class TranslationsEnAssets implements TranslationsAssets {
       'You do not have sufficient funds on this account. See on the website of your'
       ' local community how to get some.';
   @override
-  String get chosenRightCommunity => "Please make sure that you've chosen right community to send an amount.";
+  String get chosenRightCommunity =>
+      'The data is for a different community. Please change the community to send funds.';
 }
 
 class TranslationsDeAssets implements TranslationsAssets {
@@ -283,7 +284,8 @@ class TranslationsDeAssets implements TranslationsAssets {
   String get insufficientFundsExplanation => 'Du hast nicht genügend Geld auf diesem Konto. Schaue auf der Webseite'
       ' deiner lokalen gemeinschaft, wie du welches bekommen kannst.';
   @override
-  String get chosenRightCommunity => 'Hast Du die richtige Community ausgewählt um den Betrag zu senden?';
+  String get chosenRightCommunity =>
+      'Die Daten sind für eine andere Community. Bitte wechsle die Community um Geld zu senden.';
 }
 
 class TranslationsFrAssets implements TranslationsAssets {
