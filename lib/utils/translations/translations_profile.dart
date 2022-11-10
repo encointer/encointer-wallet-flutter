@@ -629,171 +629,171 @@ class TranslationsFrProfile implements TranslationsProfile {
 
 class TranslationsRuProfile implements TranslationsProfile {
   @override
-  get checkEmailApp => 'Убедитесь, что вы загрузили приложение электронной почты';
+  String get checkEmailApp => 'Убедитесь, что вы загрузили приложение электронной почты';
   @override
-  get contactUs => 'Связаться с нами';
+  String get contactUs => 'Связаться с нами';
   @override
-  get about => 'О';
+  String get about => 'О';
   @override
-  get aboutBrief => 'Мобильный кошелек Encointer';
+  String get aboutBrief => 'Мобильный кошелек Encointer';
   @override
-  get aboutVersion => 'Версия';
+  String get aboutVersion => 'Версия';
 
   @override
-  get accounts => 'Учетные записи';
+  String get accounts => 'Учетные записи';
   @override
-  get accountDelete => 'Вы уверены, что хотите удалить аккаунт?';
+  String get accountDelete => 'Вы уверены, что хотите удалить аккаунт?';
   @override
-  get accountsDelete => 'Вы уверены, что хотите удалить все аккаунты?';
+  String get accountsDelete => 'Вы уверены, что хотите удалить все аккаунты?';
   @override
-  get accountsDeleteAll => 'Удалить все аккаунты';
+  String get accountsDeleteAll => 'Удалить все аккаунты';
   @override
-  get accountShare => 'Поделиться аккаунтом';
+  String get accountShare => 'Поделиться аккаунтом';
   @override
-  get addressBook => 'Адресная книга';
+  String get addressBook => 'Адресная книга';
   @override
-  get cantEndorseBootstrapper => 'Бутсреперы уже отмечены как надежные';
+  String get cantEndorseBootstrapper => 'Бутсреперы уже отмечены как надежные';
   @override
-  get canEndorseInRegisteringPhaseOnly => 'Может быть одобрен только на этапе регистрации';
+  String get canEndorseInRegisteringPhaseOnly => 'Может быть одобрен только на этапе регистрации';
   @override
-  get contactAddress => 'Адрес';
+  String get contactAddress => 'Адрес';
   @override
-  get contactAddressError => 'Неправильный адрес';
+  String get contactAddressError => 'Неправильный адрес';
   @override
-  get contactDelete => 'Удалить';
+  String get contactDelete => 'Удалить';
   @override
-  get contactDeleteWarn => 'Вы уверены, что хотите удалить этот адрес?';
+  String get contactDeleteWarn => 'Вы уверены, что хотите удалить этот адрес?';
   @override
-  get contactEndorse => 'Утвердить в качестве доверенного контакта';
+  String get contactEndorse => 'Утвердить в качестве доверенного контакта';
   @override
-  get contactAlreadyExists => 'Адрес уже существует';
+  String get contactAlreadyExists => 'Адрес уже существует';
   @override
-  get contactMemo => 'Контактная информация';
+  String get contactMemo => 'Контактная информация';
   @override
-  get contactName => 'Имя';
+  String get contactName => 'Имя';
   @override
-  get contactNameError => 'Графа Имя не может быть пустой';
+  String get contactNameError => 'Графа Имя не может быть пустой';
   @override
-  get contactNameAlreadyExists => 'Имя уже существует';
+  String get contactNameAlreadyExists => 'Имя уже существует';
   @override
-  get contactSave => 'Сохранить';
+  String get contactSave => 'Сохранить';
   @override
-  get confirmPin => 'Для подтверждения введите свой PIN-код';
+  String get confirmPin => 'Для подтверждения введите свой PIN-код';
   @override
-  get developer => 'Режим разработчика';
+  String get developer => 'Режим разработчика';
   @override
-  get enableBazaar => 'Включить Базар';
+  String get enableBazaar => 'Включить Базар';
   @override
-  get export => 'Экпорт аккаунта';
+  String get export => 'Экпорт аккаунта';
   @override
-  get exportMnemonicOk => 'Мнемоника скопирована в буфер обмена.';
+  String get exportMnemonicOk => 'Мнемоника скопирована в буфер обмена.';
   @override
-  get exportWarn =>
+  String get exportWarn =>
       'Запишите эти слова на бумаге. Храните бумагу в безопасном месте. Эти слова позволят восстановить этот аккаунт и получить доступ к его средствам.';
   @override
-  get noMnemonicFound => 'Мнемоника не найдена';
+  String get noMnemonicFound => 'Мнемоника не найдена';
   @override
-  get importedWithRawSeedHenceNoMnemonic =>
+  String get importedWithRawSeedHenceNoMnemonic =>
       'Аккаунт был импортирован с необработанным исходным кодом и поэтому не имеет мнемоники';
   @override
-  get changeYourPin => 'Изменить PIN-код';
+  String get changeYourPin => 'Изменить PIN-код';
   @override
-  get wrongPin => 'Неправильный PIN-код';
+  String get wrongPin => 'Неправильный PIN-код';
   @override
-  get wrongPinHint => 'Не удалось разблокировать аккаунт, пожалуйста, проверьте PIN-код.';
+  String get wrongPinHint => 'Не удалось разблокировать аккаунт, пожалуйста, проверьте PIN-код.';
   @override
-  get yourNewPin => 'Новый PIN-код';
+  String get yourNewPin => 'Новый PIN-код';
   @override
-  get pleaseConfirmYourNewPin => 'Подтвердите PIN-код';
+  String get pleaseConfirmYourNewPin => 'Подтвердите PIN-код';
   @override
-  get hintEnterCurrentPin => 'Чтобы изменить PIN-код пожалуйста введите текущий.';
+  String get hintEnterCurrentPin => 'Чтобы изменить PIN-код пожалуйста введите текущий.';
   @override
-  get hintThenEnterANewPin => 'Вы можете выбрать новый, и все готово.';
+  String get hintThenEnterANewPin => 'Вы можете выбрать новый, и все готово.';
   @override
-  get personalKey => 'Секретный ключ';
+  String get personalKey => 'Секретный ключ';
   @override
-  get detailsEnter => 'Введите свои данные.';
+  String get detailsEnter => 'Введите свои данные.';
   @override
-  get personalKeyEnter => 'Пожалуйста, введите секретный ключ (из 12 слов), чтобы импортировать аккаунт.';
+  String get personalKeyEnter => 'Пожалуйста, введите секретный ключ (из 12 слов), чтобы импортировать аккаунт.';
   @override
-  get reputationHistory => 'История репутции';
+  String get reputationHistory => 'История репутции';
   @override
-  get reputationOverall => 'Общая репутация';
+  String get reputationOverall => 'Общая репутация';
   @override
-  get passOld => 'Текущий PIN-код';
+  String get passOld => 'Текущий PIN-код';
   @override
-  get passSuccess => 'Успешный';
+  String get passSuccess => 'Успешный';
   @override
-  get passSuccessTxt => 'PIN-код иземенен успешно';
+  String get passSuccessTxt => 'PIN-код иземенен успешно';
   @override
-  get qrScanHint => 'Введите сумму, которую хотите получить, и позвольте отправителю отсканировать QR-код.';
+  String get qrScanHint => 'Введите сумму, которую хотите получить, и позвольте отправителю отсканировать QR-код.';
   @override
-  get qrScanHintAccount => 'Попросите получателя отсканировать QR-код в приложении Еncointer.';
+  String get qrScanHintAccount => 'Попросите получателя отсканировать QR-код в приложении Еncointer.';
   @override
-  get receiverAccount => 'Аккаунт получателя:';
+  String get receiverAccount => 'Аккаунт получателя:';
   @override
-  get sendLink => 'Отправить ссылку';
+  String get sendLink => 'Отправить ссылку';
   @override
-  get setting => 'Настройки';
+  String get setting => 'Настройки';
   @override
-  get settingLang => 'Язык';
+  String get settingLang => 'Язык';
   @override
-  get settingLangAuto => 'Авто-определение';
+  String get settingLangAuto => 'Авто-определение';
   @override
-  get settingNode => 'Дистанционный режим';
+  String get settingNode => 'Дистанционный режим';
   @override
-  get settingNodeList => 'Доступные режимы';
+  String get settingNodeList => 'Доступные режимы';
   @override
-  get settingPrefix => 'Префикс адреса';
+  String get settingPrefix => 'Префикс адреса';
   @override
-  get settingPrefixList => 'Доступные префиксы';
+  String get settingPrefixList => 'Доступные префиксы';
   @override
-  get share => 'Поделиться';
+  String get share => 'Поделиться';
   @override
-  get title => 'Профиль';
+  String get title => 'Профиль';
   @override
-  get unlock => 'Вам необходимо ввести свой PIN-код, чтобы добавить новую учетную запись';
+  String get unlock => 'Вам необходимо ввести свой PIN-код, чтобы добавить новую учетную запись';
   @override
-  get addAccount => 'Добавить аккаунт';
+  String get addAccount => 'Добавить аккаунт';
   @override
-  get addCommunity => 'Добавить общину';
+  String get addCommunity => 'Добавить общину';
   @override
-  get accountCreate => 'Создать аккаунт';
+  String get accountCreate => 'Создать аккаунт';
   @override
-  get doYouAlreadyHaveAnAccount => 'У вас уже есть аккаунт?';
+  String get doYouAlreadyHaveAnAccount => 'У вас уже есть аккаунт?';
   @override
-  get accountNameChooseHint => 'Вы можете изменить его позже в настройках профиля.';
+  String get accountNameChooseHint => 'Вы можете изменить его позже в настройках профиля.';
   @override
-  get accountNameChoose => 'Выберите имя Аккаунта';
+  String get accountNameChoose => 'Выберите имя Аккаунта';
   @override
-  get accountName => 'Имя Аккаунта';
+  String get accountName => 'Имя Аккаунта';
   @override
-  get import => 'Импортировать';
+  String get import => 'Импортировать';
   @override
-  get pinHint => 'Этот PIN-код понадобится вам для транзакций и добавления новой учетной записи.';
+  String get pinHint => 'Этот PIN-код понадобится вам для транзакций и добавления новой учетной записи.';
   @override
-  get pinInfo =>
+  String get pinInfo =>
       'PIN-код должен состоять как минимум из 4 цифр. При утере PIN-кода, восстановить аккаунт невозможно, если только вы не сделали резервную копию в профиле.';
   @override
-  get pinSecure => 'Защитите свой аккаунт с помощью PIN-кода.';
+  String get pinSecure => 'Защитите свой аккаунт с помощью PIN-кода.';
   @override
-  get recoveryProxy => 'Прокси-сервер для восстановления';
+  String get recoveryProxy => 'Прокси-сервер для восстановления';
   @override
-  get reputation => 'Репутация';
+  String get reputation => 'Репутация';
   @override
-  get shareLinkHint => 'Или вы можете поделиться ссылкой:';
+  String get shareLinkHint => 'Или вы можете поделиться ссылкой:';
   @override
-  get tokenSend => 'Отправить SYMBOL';
+  String get tokenSend => 'Отправить SYMBOL';
   @override
-  get addContact => 'Добавить контакт';
+  String get addContact => 'Добавить контакт';
   @override
-  get deleteAccount => 'Удалить';
+  String get deleteAccount => 'Удалить';
   @override
-  get exportAccount => 'Экспорт';
+  String get exportAccount => 'Экспорт';
   @override
-  get errorUserNameIsRequired => 'Имя пользователя не может быть пустым';
+  String get errorUserNameIsRequired => 'Имя пользователя не может быть пустым';
   @override
-  get observedPendingExtrinsic => 'Наблюдается незавершенная транзакция. Пожалуйста, дождитесь подтверждения!';
+  String get observedPendingExtrinsic => 'Наблюдается незавершенная транзакция. Пожалуйста, дождитесь подтверждения!';
   @override
   String get appHints => 'Рекомендации по использованию приложения';
   @override

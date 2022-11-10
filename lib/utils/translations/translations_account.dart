@@ -235,67 +235,67 @@ class TranslationsFrAccount implements TranslationsAccount {
 
 class TranslationsRuAccount implements TranslationsAccount {
   @override
-  get advanced => 'Дополнительные параметры';
+  String get advanced => 'Дополнительные параметры';
   @override
-  get backupError =>
+  String get backupError =>
       'Это устройство не поддерживает тип ключа sr25519. Чтобы продолжить, выберите [Дополнительные параметры -> Тип шифрования -> ed25519].';
   @override
-  get create => 'Создать аккаунт';
+  String get create => 'Создать аккаунт';
   @override
-  get createError => 'При создании аккаунта произошла ошибка';
+  String get createError => 'При создании аккаунта произошла ошибка';
   @override
-  get createHint => '(Пример: Алиса)';
+  String get createHint => '(Пример: Алиса)';
   @override
-  get createPassword => 'PIN-код';
+  String get createPassword => 'PIN-код';
   @override
-  get createPassword2 => 'Подтвердите PIN-код';
+  String get createPassword2 => 'Подтвердите PIN-код';
   @override
-  get createPassword2Error => 'PIN-коды не совпадают';
+  String get createPassword2Error => 'PIN-коды не совпадают';
   @override
-  get createPasswordError => 'PIN должен содержать не менее 4 цифр и никаких других знаков';
+  String get createPasswordError => 'PIN должен содержать не менее 4 цифр и никаких других знаков';
   @override
-  get importDuplicate => 'Учетная запись существует, вы хотите аннулировать существующий аккаунт?';
+  String get importDuplicate => 'Учетная запись существует, вы хотите аннулировать существующий аккаунт?';
   @override
-  get importEncrypt => 'Тип шифрования';
+  String get importEncrypt => 'Тип шифрования';
   @override
-  get importInvalid => 'Недопустимый';
+  String get importInvalid => 'Недопустимый';
   @override
-  get importInvalidRawSeed => 'Предоставлен недопустимый raw seed';
+  String get importInvalidRawSeed => 'Предоставлен недопустимый raw seed';
   @override
-  get importInvalidMnemonic => 'Предоставлена недопустимая мнемоника';
+  String get importInvalidMnemonic => 'Предоставлена недопустимая мнемоника';
   @override
-  get importMustNotBeEmpty => 'Входные данные не должны быть пустыми';
+  String get importMustNotBeEmpty => 'Входные данные не должны быть пустыми';
   @override
-  get importPrivateKeyUnsupported => 'Импорт аккаунта с помощью секретного ключа пока не поддерживается.';
+  String get importPrivateKeyUnsupported => 'Импорт аккаунта с помощью секретного ключа пока не поддерживается.';
   @override
-  get keystore => 'Хранилище ключей (json)';
+  String get keystore => 'Хранилище ключей (json)';
   @override
-  get list => 'Выбрать аккаунт';
+  String get list => 'Выбрать аккаунт';
   @override
-  get mnemonic => 'Мнемоническая фраза';
+  String get mnemonic => 'Мнемоническая фраза';
   @override
-  get next => 'Следующий';
+  String get next => 'Следующий';
   @override
-  get observe => 'Мониторинг';
+  String get observe => 'Мониторинг';
   @override
-  get observeBrief =>
+  String get observeBrief =>
       'Отметьте это адрес как подлежащий мониторингу, позже вы сможете выбрать этот адрес на странице выбора аккаунта, для просмотра его активов и действий';
   @override
-  get observeProxyInvalid => 'Неверный прокси-аккаунт';
+  String get observeProxyInvalid => 'Неверный прокси-аккаунт';
   @override
-  get path => 'Секретный путь вывода';
+  String get path => 'Секретный путь вывода';
   @override
-  get qrScan => 'Сканируйте QR-код';
+  String get qrScan => 'Сканируйте QR-код';
   @override
-  get rawSeed => 'Raw Seed';
+  String get rawSeed => 'Raw Seed';
   @override
-  get uosCanceled => 'Транзакция отменена';
+  String get uosCanceled => 'Транзакция отменена';
   @override
-  get uosPush => 'Сканировать для публикации';
+  String get uosPush => 'Сканировать для публикации';
   @override
-  get uosScan => 'Сканируйте подписанное и отправьте';
+  String get uosScan => 'Сканируйте подписанное и отправьте';
   @override
-  get uosSigner => 'Подписавший';
+  String get uosSigner => 'Подписавший';
   @override
-  get uosTitle => 'Оффлайн подпись';
+  String get uosTitle => 'Оффлайн подпись';
 }

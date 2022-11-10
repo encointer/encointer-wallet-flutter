@@ -341,99 +341,99 @@ class TranslationsFrHome implements TranslationsHome {
 
 class TranslationsRuHome implements TranslationsHome {
   @override
-  get cancel => 'Отмена';
+  String get cancel => 'Отмена';
   @override
-  get scan => 'Сканировать';
+  String get scan => 'Сканировать';
   @override
-  get contacts => 'Контакты';
+  String get contacts => 'Контакты';
   @override
-  get closeApp => 'Закрыть приложение';
+  String get closeApp => 'Закрыть приложение';
   @override
-  get copy => 'Скопировать в буфер обмена';
+  String get copy => 'Скопировать в буфер обмена';
   @override
-  get create => 'Создать аккаунт';
+  String get create => 'Создать аккаунт';
   @override
-  get detail => 'Детали';
+  String get detail => 'Детали';
   @override
-  get exitConfirm => 'Вы хотите покинуть приложение?';
+  String get exitConfirm => 'Вы хотите покинуть приложение?';
   @override
-  get errorOccurred => 'Возникла ошибка:';
+  String get errorOccurred => 'Возникла ошибка:';
 
   @override
-  get loading => 'Загружается...';
+  String get loading => 'Загружается...';
   @override
-  get next => 'Следующий шаг';
+  String get next => 'Следующий шаг';
   @override
-  get notifySubmitted => 'Транзакция отправлена';
+  String get notifySubmitted => 'Транзакция отправлена';
   @override
-  get notifySubmittedQueued => 'Транзакция в очереди отправлена';
+  String get notifySubmittedQueued => 'Транзакция в очереди отправлена';
   @override
-  get ok => 'OK';
+  String get ok => 'OK';
   @override
-  get pinNeeded => 'Для использования приложения необходим PIN-код';
+  String get pinNeeded => 'Для использования приложения необходим PIN-код';
   @override
-  get settingNetwork => 'Выберите кошелек';
+  String get settingNetwork => 'Выберите кошелек';
   @override
-  get submit => 'Войти и отправить';
+  String get submit => 'Войти и отправить';
   @override
-  get submitCall => 'Сделать звонок';
+  String get submitCall => 'Сделать звонок';
   @override
-  get submitFees => 'Платеж';
+  String get submitFees => 'Платеж';
   @override
-  get submitFeesOffline => 'Платеж недоступен (оффлайн)';
+  String get submitFeesOffline => 'Платеж недоступен (оффлайн)';
   @override
-  get submitFrom => 'Вы подписываете транзакцию от ';
+  String get submitFrom => 'Вы подписываете транзакцию от ';
   @override
-  get submitNoSign => 'Отправить (без подписи)';
+  String get submitNoSign => 'Отправить (без подписи)';
   @override
-  get submitQr => 'Подписать через QR';
+  String get submitQr => 'Подписать через QR';
   @override
-  get submitTransaction => 'Отправить транзакцию';
+  String get submitTransaction => 'Отправить транзакцию';
   @override
-  get success => 'Успешно';
+  String get success => 'Успешно';
   @override
-  get switchAccount => 'Сменить аккаунт';
+  String get switchAccount => 'Сменить аккаунт';
   @override
-  get switchCommunity => 'Сменить общину';
+  String get switchCommunity => 'Сменить общину';
   @override
-  get transactionQueued => 'В очереди';
+  String get transactionQueued => 'В очереди';
   @override
-  get transactionQueuedOffline =>
+  String get transactionQueuedOffline =>
       'Приложение не подключено к блокчейну. Транзакция, которая в очереди (будет отправлена автоматически при подключении).';
   @override
-  get unlock => 'Разблокируйте учетную запись с помощью PIN-кода';
+  String get unlock => 'Разблокируйте учетную запись с помощью PIN-кода';
   @override
-  get unlockAccount => 'Разблокируйте учетную запись CURRENT_ACCOUNT_NAME с помощью PIN-кода';
+  String get unlockAccount => 'Разблокируйте учетную запись CURRENT_ACCOUNT_NAME с помощью PIN-кода';
   @override
-  get updateDownload => 'Загружается...';
+  String get updateDownload => 'Загружается...';
   @override
-  get updateError => 'Не удалось загрузить обновление';
+  String get updateError => 'Не удалось загрузить обновление';
   @override
-  get updateJsUp => 'Чтобы продолжить, необходимо обновить метаданные.';
+  String get updateJsUp => 'Чтобы продолжить, необходимо обновить метаданные.';
   @override
-  get updateLatest => 'Установлена новейшая версия приложения ';
+  String get updateLatest => 'Установлена новейшая версия приложения ';
   @override
-  get updateToNewerVersionQ => 'Доступна новая версия, обновить сейчас?';
+  String get updateToNewerVersionQ => 'Доступна новая версия, обновить сейчас?';
   @override
-  get accountImport => 'Импортировать учетную запись';
+  String get accountImport => 'Импортировать учетную запись';
   @override
-  get txQueued => 'Транзакция поставлена в очередь';
+  String get txQueued => 'Транзакция поставлена в очередь';
   @override
-  get txQueuedOffline =>
+  String get txQueuedOffline =>
       'Вы находитесь в оффлайн режиме. Транзакция будет отправлена, когда вы снова подключитесь к сети.';
   @override
-  get txReady => 'Транзакция готова.';
+  String get txReady => 'Транзакция готова.';
   @override
-  get txBroadcast => 'Транзакция передана в эфир';
+  String get txBroadcast => 'Транзакция передана в эфир';
   @override
-  get txInBlock => 'Транзакция заблокирована';
+  String get txInBlock => 'Транзакция заблокирована';
   @override
-  get txError => 'Ошибка транзакции';
+  String get txError => 'Ошибка транзакции';
   @override
-  get updatingAppState => 'Обновление приложения';
+  String get updatingAppState => 'Обновление приложения';
   @override
-  get cameraPermissionError =>
+  String get cameraPermissionError =>
       'Произошла ошибка при получении разрешения камеры. Вы можете предоставить разрешение в настройках приложения.';
   @override
-  get appSettings => 'Настройки приложения';
+  String get appSettings => 'Настройки приложения';
 }

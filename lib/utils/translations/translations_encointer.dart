@@ -368,104 +368,105 @@ class TranslationsFrEncointer implements TranslationsEncointer {
 
 class TranslationsRuEncointer implements TranslationsEncointer {
   @override
-  get registerParticipant => 'Регистрация';
+  String get registerParticipant => 'Регистрация';
   @override
-  get claimsSubmit => 'Подать заявление';
+  String get claimsSubmit => 'Подать заявление';
   @override
-  get claimsSubmitN => 'Подать N_COUNT заявление';
+  String get claimsSubmitN => 'Подать N_COUNT заявление';
   @override
-  get claimsPurge => 'Очистить ранее отсканированные заявления';
+  String get claimsPurge => 'Очистить ранее отсканированные заявления';
   @override
-  get claimsPurgeConfirm => 'Вы уверены, что хотите удалить все ранее отсканированные заявления?';
+  String get claimsPurgeConfirm => 'Вы уверены, что хотите удалить все ранее отсканированные заявления?';
   @override
-  get keySigningCycle => 'Цикл подписания ключей';
+  String get keySigningCycle => 'Цикл подписания ключей';
   @override
-  get nextCycleTimeLeft => 'Следующий цикл в';
+  String get nextCycleTimeLeft => 'Следующий цикл в';
   @override
-  get nextCycleDateLabel => 'Следующий цикл в процессе';
+  String get nextCycleDateLabel => 'Следующий цикл в процессе';
   @override
-  get claimQr => 'Мое заявление на участие';
+  String get claimQr => 'Мое заявление на участие';
   @override
-  get claimsScanned => 'Вы отсканировали заявление AMOUNT_PLACEHOLDER ';
+  String get claimsScanned => 'Вы отсканировали заявление AMOUNT_PLACEHOLDER ';
   @override
-  get claimsScannedAlready => 'Ранее отсканированные заявления обновлены';
+  String get claimsScannedAlready => 'Ранее отсканированные заявления обновлены';
   @override
-  get claimsScannedDecodeFailed => 'Отсканированные заявления не удалось расшифровать.';
+  String get claimsScannedDecodeFailed => 'Отсканированные заявления не удалось расшифровать.';
   @override
-  get claimsScannedNew => 'Отсканировать новое заявление';
+  String get claimsScannedNew => 'Отсканировать новое заявление';
   @override
-  get claimsScannedNOfM => 'Отсканированные заявления SCANNED_COUNT / TOTAL_COUNT';
+  String get claimsScannedNOfM => 'Отсканированные заявления SCANNED_COUNT / TOTAL_COUNT';
   @override
-  get claimsSubmitDetail => 'Подача заявлений на сумму AMOUNT за недавнее собрание';
+  String get claimsSubmitDetail => 'Подача заявлений на сумму AMOUNT за недавнее собрание';
   @override
-  get communities => 'Общины';
+  String get communities => 'Общины';
   @override
-  get noCommunitiesAreYouOffline => 'Общины не обнаружены. Позже вы можете выбрать одну из них. Вы в оффлайн режиме?.';
+  String get noCommunitiesAreYouOffline =>
+      'Общины не обнаружены. Позже вы можете выбрать одну из них. Вы в оффлайн режиме?.';
   @override
-  get meetupAttended => 'Присутствовал на последней встрече';
+  String get meetupAttended => 'Присутствовал на последней встрече';
   @override
-  get meetupClaimantInvalid => 'Этот заявитель не является участником встречи. Заявление не сохраняется.';
+  String get meetupClaimantInvalid => 'Этот заявитель не является участником встречи. Заявление не сохраняется.';
   @override
-  get meetupClaimantEqualToSelf => ' Ошибка, адресf расчетного счета. Запрос не был сохранен.';
+  String get meetupClaimantEqualToSelf => ' Ошибка, адресf расчетного счета. Запрос не был сохранен.';
   @override
-  get meetupLocation => 'Локция встречи';
+  String get meetupLocation => 'Локция встречи';
   @override
-  get startGathering => 'Начинайте собираться';
+  String get startGathering => 'Начинайте собираться';
   @override
-  get alreadyRegistered => 'Уже зарегистрирован';
+  String get alreadyRegistered => 'Уже зарегистрирован';
   @override
-  get registerUntil => 'Зарегистрируйтесь до';
+  String get registerUntil => 'Зарегистрируйтесь до';
   @override
-  get meetingPoint => 'Место встречи';
+  String get meetingPoint => 'Место встречи';
   @override
-  get gatheringIsOver => 'Встреча завершена';
+  String get gatheringIsOver => 'Встреча завершена';
   @override
-  get today => 'Сегодня';
+  String get today => 'Сегодня';
   @override
-  get tomorrow => 'Завтра';
+  String get tomorrow => 'Завтра';
   @override
-  get calendarEntryDescription => 'Принять участие в собрании для получения дохода общины';
+  String get calendarEntryDescription => 'Принять участие в собрании для получения дохода общины';
   @override
-  get youAreNotRegistered => 'К сожалению Вы не зарегистрированы для участия в собрании:';
+  String get youAreNotRegistered => 'К сожалению Вы не зарегистрированы для участия в собрании:';
   @override
-  get howManyParticipantsShowedUp => 'Сколько участников присутствует, включая вас?';
+  String get howManyParticipantsShowedUp => 'Сколько участников присутствует, включая вас?';
   @override
-  get cycleWillTakePlaceOn => 'Цикл подписания ключей будет проходить';
+  String get cycleWillTakePlaceOn => 'Цикл подписания ключей будет проходить';
   @override
-  get gatheringSuccessfullyCompleted => 'Встреча успешно завершена';
+  String get gatheringSuccessfullyCompleted => 'Встреча успешно завершена';
   @override
-  get fetchingReputations => 'Идет проверка Вашей репутации';
+  String get fetchingReputations => 'Идет проверка Вашей репутации';
   @override
-  get youAreRegisteredAs => 'На следующую встречу вы зарегистрированы в качестве PARTICIPANT_TYPE.';
+  String get youAreRegisteredAs => 'На следующую встречу вы зарегистрированы в качестве PARTICIPANT_TYPE.';
   @override
-  get youAreNotRegisteredPleaseRegisterNextTime =>
+  String get youAreNotRegisteredPleaseRegisterNextTime =>
       'Вы не были записаны на этот цикл подписания ключей. Пожалуйста, присоединяйтесь к следующему циклу, для того, чтобы получить доход сообщества.';
   @override
-  get youAreAssignedToAGatheringWithNParticipants => 'Вы записаны на встречу вместе с P_COUNT участниками.';
+  String get youAreAssignedToAGatheringWithNParticipants => 'Вы записаны на встречу вместе с P_COUNT участниками.';
   @override
-  get successfullySentNAttestations => 'Вы успешно отправили атесстации P_COUNT других людей.';
+  String get successfullySentNAttestations => 'Вы успешно отправили атесстации P_COUNT других людей.';
   @override
-  get countParticipants => 'Считать';
+  String get countParticipants => 'Считать';
   @override
-  get numberOfAttendees => 'Количество участников';
+  String get numberOfAttendees => 'Количество участников';
   @override
-  get next => 'Следующий';
+  String get next => 'Следующий';
   @override
-  get closeGathering => 'Завершить всречу';
+  String get closeGathering => 'Завершить всречу';
   @override
-  get count => 'Считать';
+  String get count => 'Считать';
   @override
-  get scan => 'Сканировать';
+  String get scan => 'Сканировать';
   @override
-  get scanDescriptionForMeetup => 'Каждый участник должен сканировать и быть отсканированным всеми остальными.';
+  String get scanDescriptionForMeetup => 'Каждый участник должен сканировать и быть отсканированным всеми остальными.';
   @override
-  get scanOthers => 'Сканировать других';
+  String get scanOthers => 'Сканировать других';
   @override
-  get finish => 'Завершить';
+  String get finish => 'Завершить';
   @override
-  get thankYou => 'Спасибо';
+  String get thankYou => 'Спасибо';
   @override
-  get weHopeToSeeYouAtTheNextGathering => 'Мы надеемся увидить Вас на следующей встрече.';
+  String get weHopeToSeeYouAtTheNextGathering => 'Мы надеемся увидить Вас на следующей встрече.';
   @override
-  get goToLeuZurich => 'Открыть leu.zuerich';
+  String get goToLeuZurich => 'Открыть leu.zuerich';
 }

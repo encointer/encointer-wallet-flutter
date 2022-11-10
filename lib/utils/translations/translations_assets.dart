@@ -392,112 +392,113 @@ class TranslationsFrAssets implements TranslationsAssets {
 
 class TranslationsRuAssets implements TranslationsAssets {
   @override
-  get address => 'Отправить по адресу';
+  String get address => 'Отправить по адресу';
   @override
-  get amountError => 'Недопустимая сумма';
+  String get amountError => 'Недопустимая сумма';
   @override
-  get insufficientBalance => 'Недостаточный баланс';
+  String get insufficientBalance => 'Недостаточный баланс';
   @override
-  get block => 'Блокировать';
+  String get block => 'Блокировать';
   @override
-  get communitiesNotFound => 'Общины не найдены';
+  String get communitiesNotFound => 'Общины не найдены';
   @override
-  get communityChoose => 'Пожалуйста выберите общину';
+  String get communityChoose => 'Пожалуйста выберите общину';
   @override
-  get communityNotSelected => 'Если община не выбрана, нажмите на иконку для выбора одной из них';
+  String get communityNotSelected => 'Если община не выбрана, нажмите на иконку для выбора одной из них';
   @override
-  get copy => 'Копировать';
+  String get copy => 'Копировать';
   @override
-  get detail => 'Данные';
+  String get detail => 'Данные';
   @override
-  get done => 'Выполнено';
+  String get done => 'Выполнено';
   @override
-  get event => 'ID события';
+  String get event => 'ID события';
   @override
-  get fail => 'Не удалось';
+  String get fail => 'Не удалось';
   @override
-  get fee => 'Платеж';
+  String get fee => 'Платеж';
   @override
-  get from => 'Из';
+  String get from => 'Из';
   @override
-  get hash => 'Хэш транзакции';
+  String get hash => 'Хэш транзакции';
   @override
-  get home => 'Домой';
+  String get home => 'Домой';
   @override
-  get issuanceClaimed => 'Ожидаемого поступления общины нет';
+  String get issuanceClaimed => 'Ожидаемого поступления общины нет';
   @override
-  get issuancePending => 'Требовать рассмотрения ожидаемого дохода общины';
+  String get issuancePending => 'Требовать рассмотрения ожидаемого дохода общины';
   @override
-  get receive => 'Получить';
+  String get receive => 'Получить';
   @override
-  get scan => 'Сканировать';
+  String get scan => 'Сканировать';
   @override
-  get success => 'Успешно';
+  String get success => 'Успешно';
   @override
-  get tip => 'Чаевые';
+  String get tip => 'Чаевые';
   @override
-  get tipHint => 'Для повышения приоритетности добавить чаевые к этому переводу, при оплате автору блока.';
+  String get tipHint => 'Для повышения приоритетности добавить чаевые к этому переводу, при оплате автору блока.';
   @override
-  get to => 'в';
+  String get to => 'в';
   @override
-  get transfer => 'Отправить';
+  String get transfer => 'Отправить';
   @override
-  get payment => 'Оплата';
+  String get payment => 'Оплата';
   @override
-  get value => 'Значимость';
+  String get value => 'Значимость';
   @override
-  get amountToBeTransferred => 'Отправить сумму';
+  String get amountToBeTransferred => 'Отправить сумму';
   @override
-  get invoiceAmount => 'Сумма инвойса';
+  String get invoiceAmount => 'Сумма инвойса';
   @override
-  get shareInvoice => 'Поделиться инвойсом';
+  String get shareInvoice => 'Поделиться инвойсом';
   @override
-  get yourBalanceFor => 'Ваш баланс, ACCOUNT_NAME';
+  String get yourBalanceFor => 'Ваш баланс, ACCOUNT_NAME';
   @override
-  get balance => 'Баланс';
+  String get balance => 'Баланс';
   @override
-  get invoice => 'Инвойс';
+  String get invoice => 'Инвойс';
   @override
-  get incomingConfirmed => 'Поступающая сумма AMOUNT CID_SYMBOL для ACCOUNT_NAME подтверждена';
+  String get incomingConfirmed => 'Поступающая сумма AMOUNT CID_SYMBOL для ACCOUNT_NAME подтверждена';
   @override
-  get fundsReceived => 'Полученные средства';
+  String get fundsReceived => 'Полученные средства';
   @override
-  get paymentDoYouWantToProceed => 'Продолжить оплату?';
+  String get paymentDoYouWantToProceed => 'Продолжить оплату?';
   @override
-  get paymentSubmitting => 'Производится оплата...';
+  String get paymentSubmitting => 'Производится оплата...';
   @override
-  get paymentFinished => 'Оплата выполнена';
+  String get paymentFinished => 'Оплата выполнена';
   @override
-  get paymentError => 'Ошибка при совершении оплаты';
+  String get paymentError => 'Ошибка при совершении оплаты';
   @override
-  get voucher => 'Ваучер';
+  String get voucher => 'Ваучер';
   @override
-  get voucherBalance => 'Баланс ваучера';
+  String get voucherBalance => 'Баланс ваучера';
   @override
-  get voucherDifferentNetworkAndCommunity => 'Ваучер предназначен для другой сети. Вы хотите изменить '
+  String get voucherDifferentNetworkAndCommunity => 'Ваучер предназначен для другой сети. Вы хотите изменить '
       'на NETWORK_PLACEHOLDER и COMMUNITY_PLACEHOLDER? Вы можете изменить сеть в разделе «Профиль»> «Режим разработчика».';
 
   @override
-  get voucherDifferentCommunity => 'Ваучер предназначен для другого сообщества. Изменить на COMMUNITY_PLACEHOLDER?';
+  String get voucherDifferentCommunity =>
+      'Ваучер предназначен для другого сообщества. Изменить на COMMUNITY_PLACEHOLDER?';
   @override
-  get voucherContainsInexistentCommunity => 'Ваучер содержит несуществующее сообщество:';
+  String get voucherContainsInexistentCommunity => 'Ваучер содержит несуществующее сообщество:';
   @override
-  get doYouWantToRedeemThisVoucher => 'Вы хотите обменять этот ваучер на ACCOUNT_PLACEHOLDER?';
+  String get doYouWantToRedeemThisVoucher => 'Вы хотите обменять этот ваучер на ACCOUNT_PLACEHOLDER?';
   @override
-  get fundVoucher => 'Ваучер на средства';
+  String get fundVoucher => 'Ваучер на средства';
   @override
-  get redeemVoucher => 'Использовать ваучер';
+  String get redeemVoucher => 'Использовать ваучер';
   @override
-  get redeemSuccess => 'Ваучер успешно погашен.';
+  String get redeemSuccess => 'Ваучер успешно погашен.';
   @override
-  get redeemFailure => 'Возникла ошибка при использовании ваучера. Причина:';
+  String get redeemFailure => 'Возникла ошибка при использовании ваучера. Причина:';
   @override
-  get invalidNetwork => 'Неправильная сеть';
+  String get invalidNetwork => 'Неправильная сеть';
   @override
-  get invalidCommunity => 'Несоотвествующая община';
+  String get invalidCommunity => 'Несоотвествующая община';
   @override
-  get transactionError => 'Ошибка транзакции';
+  String get transactionError => 'Ошибка транзакции';
   @override
-  get insufficientFundsExplanation => 'У вас недостаточно средств на этом счете. Смотрите на сайте вашей'
+  String get insufficientFundsExplanation => 'У вас недостаточно средств на этом счете. Смотрите на сайте вашей'
       ' местной общины, как получить вознаграждение';
 }

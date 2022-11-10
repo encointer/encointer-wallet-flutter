@@ -504,143 +504,143 @@ class TranslationsFrBazaar implements TranslationsBazaar {
 
 class TranslationsRuBazaar implements TranslationsBazaar {
   @override
-  get address => 'Адрес';
+  String get address => 'Адрес';
   @override
-  get apply => 'Применить';
+  String get apply => 'Применить';
   @override
-  get bazaarNew => 'Новое в Базаре';
+  String get bazaarNew => 'Новое в Базаре';
   @override
-  get bazaarTitle => 'Базар';
+  String get bazaarTitle => 'Базар';
   @override
-  get businessAdd => '+ Добавить новую организацию';
+  String get businessAdd => '+ Добавить новую организацию';
   @override
-  get businessCreate => 'Создать новую организацию';
+  String get businessCreate => 'Создать новую организацию';
   @override
-  get businessDescription => 'Описание деятельности';
+  String get businessDescription => 'Описание деятельности';
   @override
-  get businessDescriptionHint => 'Вызовите интерес к вашему предложению и дайте краткое описание';
+  String get businessDescriptionHint => 'Вызовите интерес к вашему предложению и дайте краткое описание';
   @override
-  get businesses => 'Предприятия (Бизнесы)';
+  String get businesses => 'Предприятия (Бизнесы)';
   @override
-  get businessesFound => 'Найденные предприятия';
+  String get businessesFound => 'Найденные предприятия';
   @override
-  get businessesMy => 'Мое Предприятие';
+  String get businessesMy => 'Мое Предприятие';
   @override
-  get businessesOffered => 'Предлагается в бизнесе';
+  String get businessesOffered => 'Предлагается в бизнесе';
   @override
-  get businessesResults => 'Результаты в бизнесе';
+  String get businessesResults => 'Результаты в бизнесе';
   @override
-  get businessesVicinity => 'Бизнес по соседству';
+  String get businessesVicinity => 'Бизнес по соседству';
   @override
-  get businessName => 'Название Организации';
+  String get businessName => 'Название Организации';
   @override
-  get businessNameHint => 'Используйте информативное название';
+  String get businessNameHint => 'Используйте информативное название';
   @override
-  get businessUrl => 'Url-адрес организации';
+  String get businessUrl => 'Url-адрес организации';
   @override
-  get cameraDefault => 'Камера';
+  String get cameraDefault => 'Камера';
   @override
-  get cancelDefault => 'Отменить';
+  String get cancelDefault => 'Отменить';
   @override
-  get categories => 'Категории';
+  String get categories => 'Категории';
   @override
-  get city => 'Город';
+  String get city => 'Город';
   @override
-  get communityChoose => 'Выбрать общину:';
+  String get communityChoose => 'Выбрать общину:';
   @override
-  get communityLoad => 'Община загружается..';
+  String get communityLoad => 'Община загружается..';
   @override
-  get communityNotFound => 'Община не найдена';
+  String get communityNotFound => 'Община не найдена';
   @override
-  get day => 'День';
+  String get day => 'День';
   @override
-  get delete => 'Удалить';
+  String get delete => 'Удалить';
   @override
-  get delivery => 'Доставка';
+  String get delivery => 'Доставка';
   @override
-  get deliveryOptions => 'Параметры доставки';
+  String get deliveryOptions => 'Параметры доставки';
   @override
-  get description => 'Описание';
+  String get description => 'Описание';
   @override
-  get favorites => 'Избранное';
+  String get favorites => 'Избранное';
   @override
-  get found => 'Найден';
+  String get found => 'Найден';
   @override
-  get galleryDefault => 'Галерея';
+  String get galleryDefault => 'Галерея';
   @override
-  get imageChoose => 'Выберите изображение';
+  String get imageChoose => 'Выберите изображение';
   @override
-  get imageNotPicked => 'Вы не выбрали изображение.';
+  String get imageNotPicked => 'Вы не выбрали изображение.';
   @override
-  get imagesAdded => 'Изображение добавлено';
+  String get imagesAdded => 'Изображение добавлено';
   @override
-  get imagesAddRemove => 'Добавить/Удалить изображение';
+  String get imagesAddRemove => 'Добавить/Удалить изображение';
   @override
-  get imagesMultiplePick => 'Выберите несколько изображений из галереи';
+  String get imagesMultiplePick => 'Выберите несколько изображений из галереи';
   @override
-  get imageVideoError => 'Ошибка выбора Изображения/Видео';
+  String get imageVideoError => 'Ошибка выбора Изображения/Видео';
   @override
-  get lastVisited => 'Последнее посещение';
+  String get lastVisited => 'Последнее посещение';
   @override
-  get lookingFor => 'Что Вы ищете?';
+  String get lookingFor => 'Что Вы ищете?';
   @override
-  get map => 'Карта';
+  String get map => 'Карта';
   @override
-  get menu => 'Меню';
+  String get menu => 'Меню';
   @override
-  get no => 'Нет.';
+  String get no => 'Нет.';
   @override
-  get noItems => 'Элементы не найдены';
+  String get noItems => 'Элементы не найдены';
   @override
-  get notifications => 'Уведомления';
+  String get notifications => 'Уведомления';
   @override
-  get offeringAdd => '+ Добавить предложение';
+  String get offeringAdd => '+ Добавить предложение';
   @override
-  get offeringNew => 'Представляем вашему вниманию новейшее';
+  String get offeringNew => 'Представляем вашему вниманию новейшее';
   @override
-  get offerings => 'Предложения';
+  String get offerings => 'Предложения';
   @override
-  get offeringsFound => 'Найденные предприятия';
+  String get offeringsFound => 'Найденные предприятия';
   @override
-  get offeringsMy => 'Мои предложения';
+  String get offeringsMy => 'Мои предложения';
   @override
-  get offeringsResults => 'Результаты по предложениям';
+  String get offeringsResults => 'Результаты по предложениям';
   @override
-  get openningHours => 'Часы работы';
+  String get openningHours => 'Часы работы';
   @override
-  get openningHoursInputHint => 'Например: 8:15-14:45 или 9-5pm';
+  String get openningHoursInputHint => 'Например: 8:15-14:45 или 9-5pm';
   @override
-  get photoAdd => 'Добавить фотографию';
+  String get photoAdd => 'Добавить фотографию';
   @override
-  get photoTake => 'Сфотографировать';
+  String get photoTake => 'Сфотографировать';
   @override
-  get price => 'Цена';
+  String get price => 'Цена';
   @override
-  get productNewness => 'Новизна продукта';
+  String get productNewness => 'Новизна продукта';
   @override
-  get recentlyAdded => 'Недавно добавленные';
+  String get recentlyAdded => 'Недавно добавленные';
   @override
-  get reset => 'Сброс';
+  String get reset => 'Сброс';
   @override
-  get save => 'Сохранить';
+  String get save => 'Сохранить';
   @override
-  get search => 'Поиск...';
+  String get search => 'Поиск...';
   @override
-  get showAll => '+ Показать все';
+  String get showAll => '+ Показать все';
   @override
-  get state => 'Страна';
+  String get state => 'Страна';
   @override
-  get street => 'Улица';
+  String get street => 'Улица';
   @override
-  get timeIntervalAdd => 'Добавьте временной интервал';
+  String get timeIntervalAdd => 'Добавьте временной интервал';
   @override
-  get topResults => 'Лучшие результаты';
+  String get topResults => 'Лучшие результаты';
   @override
-  get waiting => 'Ожидание...';
+  String get waiting => 'Ожидание...';
   @override
-  get zipCode => 'Почтовый индекс';
+  String get zipCode => 'Почтовый индекс';
   @override
-  get useDescriptiveName => 'Пожалуйста используйте информативное название';
+  String get useDescriptiveName => 'Пожалуйста используйте информативное название';
   @override
-  get filter => 'Фильтр';
+  String get filter => 'Фильтр';
 }
