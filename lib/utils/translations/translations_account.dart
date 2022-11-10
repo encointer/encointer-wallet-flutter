@@ -36,201 +36,201 @@ abstract class TranslationsAccount {
 
 class TranslationsEnAccount implements TranslationsAccount {
   @override
-  get advanced => 'Advanced Options';
+  String get advanced => 'Advanced Options';
   @override
-  get backupError =>
+  String get backupError =>
       'This device does not support key type sr25519, you can select [Advanced Options -> Encrypt Type -> ed25519] to continue.';
   @override
-  get create => 'Create Account';
+  String get create => 'Create Account';
   @override
-  get createError => 'There was an error creating your account';
+  String get createError => 'There was an error creating your account';
   @override
-  get createHint => '(Example: Alice)';
+  String get createHint => '(Example: Alice)';
   @override
-  get createPassword => 'PIN';
+  String get createPassword => 'PIN';
   @override
-  get createPassword2 => 'Confirm PIN';
+  String get createPassword2 => 'Confirm PIN';
   @override
-  get createPassword2Error => 'Inconsistent PINs';
+  String get createPassword2Error => 'Inconsistent PINs';
   @override
-  get createPasswordError => 'PIN must contain at least 4 digits and no other signs';
+  String get createPasswordError => 'PIN must contain at least 4 digits and no other signs';
   @override
-  get importDuplicate => 'Account exists, do you want to override the existing account?';
+  String get importDuplicate => 'Account exists, do you want to override the existing account?';
   @override
-  get importEncrypt => 'Encrypt Type';
+  String get importEncrypt => 'Encrypt Type';
   @override
-  get importInvalid => 'Invalid';
+  String get importInvalid => 'Invalid';
   @override
-  get importInvalidRawSeed => 'Invalid raw seed supplied';
+  String get importInvalidRawSeed => 'Invalid raw seed supplied';
   @override
-  get importInvalidMnemonic => 'Invalid mnemonic supplied';
+  String get importInvalidMnemonic => 'Invalid mnemonic supplied';
   @override
-  get importMustNotBeEmpty => 'Input must not be empty';
+  String get importMustNotBeEmpty => 'Input must not be empty';
   @override
-  get importPrivateKeyUnsupported => 'Private key account import is not yet supported.';
+  String get importPrivateKeyUnsupported => 'Private key account import is not yet supported.';
   @override
-  get keystore => 'Keystore (json)';
+  String get keystore => 'Keystore (json)';
   @override
-  get list => 'Account Select';
+  String get list => 'Account Select';
   @override
-  get mnemonic => 'Mnemonic';
+  String get mnemonic => 'Mnemonic';
   @override
-  get next => 'Next';
+  String get next => 'Next';
   @override
-  get observe => 'Observation';
+  String get observe => 'Observation';
   @override
-  get observeBrief =>
+  String get observeBrief =>
       'Mark this address as observation, then you can select this address in account select page, to watch it\'s assets and actions';
   @override
-  get observeProxyInvalid => 'Invalid proxy account';
+  String get observeProxyInvalid => 'Invalid proxy account';
   @override
-  get path => 'Secret derivation path';
+  String get path => 'Secret derivation path';
   @override
-  get qrScan => 'Scan QR code';
+  String get qrScan => 'Scan QR code';
   @override
-  get rawSeed => 'Raw Seed';
+  String get rawSeed => 'Raw Seed';
   @override
-  get uosCanceled => 'Transaction canceled';
+  String get uosCanceled => 'Transaction canceled';
   @override
-  get uosPush => 'Scan to publish';
+  String get uosPush => 'Scan to publish';
   @override
-  get uosScan => 'Scan signed and send';
+  String get uosScan => 'Scan signed and send';
   @override
-  get uosSigner => 'Signer';
+  String get uosSigner => 'Signer';
   @override
-  get uosTitle => 'Offline Signature';
+  String get uosTitle => 'Offline Signature';
 }
 
 class TranslationsDeAccount implements TranslationsAccount {
   @override
-  get advanced => 'Erweiterte Optionen';
+  String get advanced => 'Erweiterte Optionen';
   @override
-  get backupError =>
+  String get backupError =>
       'Dieses Gerät unterstützt den key Typ sr25519 nicht, wähle [Erweiterte Optionen -> Verschlüsselungstyp -> ed225519] für den nächsten Schritt.';
   @override
-  get create => 'Konto registrieren';
+  String get create => 'Konto registrieren';
   @override
-  get createError => 'Beim Erstellen deines Kontos ist ein Fehler aufgetreten';
+  String get createError => 'Beim Erstellen deines Kontos ist ein Fehler aufgetreten';
   @override
-  get createHint => '(Beispiel: Alice)';
+  String get createHint => '(Beispiel: Alice)';
   @override
-  get createPassword => 'PIN';
+  String get createPassword => 'PIN';
   @override
-  get createPassword2 => 'PIN Bestätigen';
+  String get createPassword2 => 'PIN Bestätigen';
   @override
-  get createPassword2Error => 'Die PINs stimmen nicht überein';
+  String get createPassword2Error => 'Die PINs stimmen nicht überein';
   @override
-  get createPasswordError => 'Der PIN muss aus mindestens 4 Ziffern bestehen und keinen anderen Zeichen';
+  String get createPasswordError => 'Der PIN muss aus mindestens 4 Ziffern bestehen und keinen anderen Zeichen';
   @override
-  get importDuplicate => 'Dieses Konto existiert bereits, möchtest du es überschreiben?';
+  String get importDuplicate => 'Dieses Konto existiert bereits, möchtest du es überschreiben?';
   @override
-  get importEncrypt => 'Verschlüsselungstyp';
+  String get importEncrypt => 'Verschlüsselungstyp';
   @override
-  get importInvalid => 'Ungültig';
+  String get importInvalid => 'Ungültig';
   @override
-  get importInvalidRawSeed => 'Ungültigen raw seed eingegeben.';
+  String get importInvalidRawSeed => 'Ungültigen raw seed eingegeben.';
   @override
-  get importInvalidMnemonic => 'Ungültige Mnemonik eingegeben.';
+  String get importInvalidMnemonic => 'Ungültige Mnemonik eingegeben.';
   @override
-  get importMustNotBeEmpty => 'Eingabe darf nicht leer sein.';
+  String get importMustNotBeEmpty => 'Eingabe darf nicht leer sein.';
   @override
-  get importPrivateKeyUnsupported => 'Konto importieren mit privatem Schlüssel wird noch nicht unterstützt.';
+  String get importPrivateKeyUnsupported => 'Konto importieren mit privatem Schlüssel wird noch nicht unterstützt.';
   @override
-  get keystore => 'Keystore (json)';
+  String get keystore => 'Keystore (json)';
   @override
-  get list => 'Kontoauswahl';
+  String get list => 'Kontoauswahl';
   @override
-  get mnemonic => 'Mnemonik';
+  String get mnemonic => 'Mnemonik';
   @override
-  get next => 'Nächster Schritt';
+  String get next => 'Nächster Schritt';
   @override
-  get observe => 'Überwachen';
+  String get observe => 'Überwachen';
   @override
-  get observeBrief =>
+  String get observeBrief =>
       'Markiere diese Adresse als zu überwachen, dann kann diese Adresse in der Kontoauswahlseite ausgewählt werden, um dessen Vermögen und Aktionen zu überwachen.';
   @override
-  get observeProxyInvalid => 'Ungültiges Proxy-Konto';
+  String get observeProxyInvalid => 'Ungültiges Proxy-Konto';
   @override
-  get path => 'Geheimer Derivationspfad';
+  String get path => 'Geheimer Derivationspfad';
   @override
-  get qrScan => 'Scanne QR Code';
+  String get qrScan => 'Scanne QR Code';
   @override
-  get rawSeed => 'Raw Seed';
+  String get rawSeed => 'Raw Seed';
   @override
-  get uosCanceled => 'Transaktion abgebrochen';
+  String get uosCanceled => 'Transaktion abgebrochen';
   @override
-  get uosPush => 'Scannen um zu veröffentlichen';
+  String get uosPush => 'Scannen um zu veröffentlichen';
   @override
-  get uosScan => 'Signierte Transaktion scannen und senden';
+  String get uosScan => 'Signierte Transaktion scannen und senden';
   @override
-  get uosSigner => 'Signierer';
+  String get uosSigner => 'Signierer';
   @override
-  get uosTitle => 'Offline Signatur';
+  String get uosTitle => 'Offline Signatur';
 }
 
 class TranslationsFrAccount implements TranslationsAccount {
   @override
-  get advanced => throw UnimplementedError();
+  String get advanced => throw UnimplementedError();
   @override
-  get backupError => throw UnimplementedError();
+  String get backupError => throw UnimplementedError();
   @override
-  get create => throw UnimplementedError();
+  String get create => throw UnimplementedError();
   @override
-  get createError => throw UnimplementedError();
+  String get createError => throw UnimplementedError();
   @override
-  get createHint => throw UnimplementedError();
+  String get createHint => throw UnimplementedError();
   @override
-  get createPassword => throw UnimplementedError();
+  String get createPassword => throw UnimplementedError();
   @override
-  get createPassword2 => throw UnimplementedError();
+  String get createPassword2 => throw UnimplementedError();
   @override
-  get createPassword2Error => throw UnimplementedError();
+  String get createPassword2Error => throw UnimplementedError();
   @override
-  get createPasswordError => throw UnimplementedError();
+  String get createPasswordError => throw UnimplementedError();
   @override
-  get importDuplicate => throw UnimplementedError();
+  String get importDuplicate => throw UnimplementedError();
   @override
-  get importEncrypt => throw UnimplementedError();
+  String get importEncrypt => throw UnimplementedError();
   @override
-  get importInvalid => throw UnimplementedError();
+  String get importInvalid => throw UnimplementedError();
   @override
-  get importInvalidRawSeed => throw UnimplementedError();
+  String get importInvalidRawSeed => throw UnimplementedError();
   @override
-  get importInvalidMnemonic => throw UnimplementedError();
+  String get importInvalidMnemonic => throw UnimplementedError();
   @override
-  get importMustNotBeEmpty => throw UnimplementedError();
+  String get importMustNotBeEmpty => throw UnimplementedError();
   @override
-  get importPrivateKeyUnsupported => throw UnimplementedError();
+  String get importPrivateKeyUnsupported => throw UnimplementedError();
   @override
-  get keystore => throw UnimplementedError();
+  String get keystore => throw UnimplementedError();
   @override
-  get list => throw UnimplementedError();
+  String get list => throw UnimplementedError();
   @override
-  get mnemonic => throw UnimplementedError();
+  String get mnemonic => throw UnimplementedError();
   @override
-  get next => throw UnimplementedError();
+  String get next => throw UnimplementedError();
   @override
-  get observe => throw UnimplementedError();
+  String get observe => throw UnimplementedError();
   @override
-  get observeBrief => throw UnimplementedError();
+  String get observeBrief => throw UnimplementedError();
   @override
-  get observeProxyInvalid => throw UnimplementedError();
+  String get observeProxyInvalid => throw UnimplementedError();
   @override
-  get path => throw UnimplementedError();
+  String get path => throw UnimplementedError();
   @override
-  get qrScan => throw UnimplementedError();
+  String get qrScan => throw UnimplementedError();
   @override
-  get rawSeed => throw UnimplementedError();
+  String get rawSeed => throw UnimplementedError();
   @override
-  get uosCanceled => throw UnimplementedError();
+  String get uosCanceled => throw UnimplementedError();
   @override
-  get uosPush => throw UnimplementedError();
+  String get uosPush => throw UnimplementedError();
   @override
-  get uosScan => throw UnimplementedError();
+  String get uosScan => throw UnimplementedError();
   @override
-  get uosSigner => throw UnimplementedError();
+  String get uosSigner => throw UnimplementedError();
   @override
-  get uosTitle => throw UnimplementedError();
+  String get uosTitle => throw UnimplementedError();
 }
 
 class TranslationsRuAccount implements TranslationsAccount {

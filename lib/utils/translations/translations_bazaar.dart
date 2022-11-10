@@ -75,431 +75,431 @@ abstract class TranslationsBazaar {
 
 class TranslationsEnBazaar implements TranslationsBazaar {
   @override
-  get address => 'Address';
+  String get address => 'Address';
   @override
-  get apply => 'Apply';
+  String get apply => 'Apply';
   @override
-  get bazaarNew => 'New in Bazaar';
+  String get bazaarNew => 'New in Bazaar';
   @override
-  get bazaarTitle => 'The Bazaar';
+  String get bazaarTitle => 'The Bazaar';
   @override
-  get businessAdd => '+ Add new business';
+  String get businessAdd => '+ Add new business';
   @override
-  get businessCreate => 'Create new business';
+  String get businessCreate => 'Create new business';
   @override
-  get businessDescription => 'Business description';
+  String get businessDescription => 'Business description';
   @override
-  get businessDescriptionHint => 'Spark interest in your offering and provide a succinct description';
+  String get businessDescriptionHint => 'Spark interest in your offering and provide a succinct description';
   @override
-  get businesses => 'Businesses';
+  String get businesses => 'Businesses';
   @override
-  get businessesFound => 'Businesses Found';
+  String get businessesFound => 'Businesses Found';
   @override
-  get businessesMy => 'My Businesses';
+  String get businessesMy => 'My Businesses';
   @override
-  get businessesOffered => 'Offered in Businesses';
+  String get businessesOffered => 'Offered in Businesses';
   @override
-  get businessesResults => 'Results in Businesses';
+  String get businessesResults => 'Results in Businesses';
   @override
-  get businessesVicinity => 'Businesses in my Vicinity';
+  String get businessesVicinity => 'Businesses in my Vicinity';
   @override
-  get businessName => 'Business name';
+  String get businessName => 'Business name';
   @override
-  get businessNameHint => 'Use a descriptive name';
+  String get businessNameHint => 'Use a descriptive name';
   @override
-  get businessUrl => 'URL to business';
+  String get businessUrl => 'URL to business';
   @override
-  get cameraDefault => 'Camera';
+  String get cameraDefault => 'Camera';
   @override
-  get cancelDefault => 'Cancel';
+  String get cancelDefault => 'Cancel';
   @override
-  get categories => 'Categories';
+  String get categories => 'Categories';
   @override
-  get city => 'City';
+  String get city => 'City';
   @override
-  get communityChoose => 'Choose community:';
+  String get communityChoose => 'Choose community:';
   @override
-  get communityLoad => 'Loading community..';
+  String get communityLoad => 'Loading community..';
   @override
-  get communityNotFound => 'No community found';
+  String get communityNotFound => 'No community found';
   @override
-  get day => 'Day';
+  String get day => 'Day';
   @override
-  get delete => 'Delete';
+  String get delete => 'Delete';
   @override
-  get delivery => 'Delivery';
+  String get delivery => 'Delivery';
   @override
-  get deliveryOptions => 'Delivery options';
+  String get deliveryOptions => 'Delivery options';
   @override
-  get description => 'Description';
+  String get description => 'Description';
   @override
-  get favorites => 'Favorites';
+  String get favorites => 'Favorites';
   @override
-  get found => 'Found';
+  String get found => 'Found';
   @override
-  get galleryDefault => 'Gallery';
+  String get galleryDefault => 'Gallery';
   @override
-  get imageChoose => 'Choose an image';
+  String get imageChoose => 'Choose an image';
   @override
-  get imageNotPicked => 'You have not yet picked an image.';
+  String get imageNotPicked => 'You have not yet picked an image.';
   @override
-  get imagesAdded => 'Images added';
+  String get imagesAdded => 'Images added';
   @override
-  get imagesAddRemove => 'Add/remove images';
+  String get imagesAddRemove => 'Add/remove images';
   @override
-  get imagesMultiplePick => 'Pick Multiple Images from gallery';
+  String get imagesMultiplePick => 'Pick Multiple Images from gallery';
   @override
-  get imageVideoError => 'Pick image/video error';
+  String get imageVideoError => 'Pick image/video error';
   @override
-  get lastVisited => 'Last visited';
+  String get lastVisited => 'Last visited';
   @override
-  get lookingFor => 'What are you looking for?';
+  String get lookingFor => 'What are you looking for?';
   @override
-  get map => 'Map';
+  String get map => 'Map';
   @override
-  get menu => 'Menu';
+  String get menu => 'Menu';
   @override
-  get no => 'No.';
+  String get no => 'No.';
   @override
-  get noItems => 'No items found';
+  String get noItems => 'No items found';
   @override
-  get notifications => 'Notifications';
+  String get notifications => 'Notifications';
   @override
-  get offeringAdd => '+ Add an offering';
+  String get offeringAdd => '+ Add an offering';
   @override
-  get offeringNew => 'Featuring Newest';
+  String get offeringNew => 'Featuring Newest';
   @override
-  get offerings => 'Offerings';
+  String get offerings => 'Offerings';
   @override
-  get offeringsFound => 'Businesses Found';
+  String get offeringsFound => 'Businesses Found';
   @override
-  get offeringsMy => 'My Offerings';
+  String get offeringsMy => 'My Offerings';
   @override
-  get offeringsResults => 'Results in Offerings';
+  String get offeringsResults => 'Results in Offerings';
   @override
-  get openningHours => 'Openning Hours';
+  String get openningHours => 'Openning Hours';
   @override
-  get openningHoursInputHint => 'eG. 8:15-14:45 or 9-5pm';
+  String get openningHoursInputHint => 'eG. 8:15-14:45 or 9-5pm';
   @override
-  get photoAdd => 'Add Photo';
+  String get photoAdd => 'Add Photo';
   @override
-  get photoTake => 'Take a Photo';
+  String get photoTake => 'Take a Photo';
   @override
-  get price => 'Price';
+  String get price => 'Price';
   @override
-  get productNewness => 'Product Newness';
+  String get productNewness => 'Product Newness';
   @override
-  get recentlyAdded => 'Recently added';
+  String get recentlyAdded => 'Recently added';
   @override
-  get reset => 'Reset';
+  String get reset => 'Reset';
   @override
-  get save => 'Save';
+  String get save => 'Save';
   @override
-  get search => 'Search...';
+  String get search => 'Search...';
   @override
-  get showAll => '+ Show all';
+  String get showAll => '+ Show all';
   @override
-  get state => 'State';
+  String get state => 'State';
   @override
-  get street => 'Street';
+  String get street => 'Street';
   @override
-  get timeIntervalAdd => 'Add a time interval';
+  String get timeIntervalAdd => 'Add a time interval';
   @override
-  get topResults => 'Top Results';
+  String get topResults => 'Top Results';
   @override
-  get waiting => 'waiting...';
+  String get waiting => 'waiting...';
   @override
-  get zipCode => 'Zip code';
+  String get zipCode => 'Zip code';
   @override
-  get useDescriptiveName => 'Please, use a descriptive name';
+  String get useDescriptiveName => 'Please, use a descriptive name';
   @override
-  get filter => 'Filter';
+  String get filter => 'Filter';
 }
 
 class TranslationsDeBazaar implements TranslationsBazaar {
   @override
-  get address => 'Adresse';
+  String get address => 'Adresse';
   @override
-  get apply => 'Anwenden';
+  String get apply => 'Anwenden';
   @override
-  get bazaarNew => 'Neu im Bazaar';
+  String get bazaarNew => 'Neu im Bazaar';
   @override
-  get bazaarTitle => 'Der Bazaar';
+  String get bazaarTitle => 'Der Bazaar';
   @override
-  get businessAdd => '+ Neues Geschäft hinzufügen';
+  String get businessAdd => '+ Neues Geschäft hinzufügen';
   @override
-  get businessCreate => 'Neues Geschäft erstellen';
+  String get businessCreate => 'Neues Geschäft erstellen';
   @override
-  get businessDescription => 'Geschäftsbeschreibung';
+  String get businessDescription => 'Geschäftsbeschreibung';
   @override
-  get businessDescriptionHint => 'Wecke Interesse an deinem Angebot mit einer kurzen Beschreibung';
+  String get businessDescriptionHint => 'Wecke Interesse an deinem Angebot mit einer kurzen Beschreibung';
   @override
-  get businesses => 'Geschäfte';
+  String get businesses => 'Geschäfte';
   @override
-  get businessesFound => 'Geschäfte gefunden';
+  String get businessesFound => 'Geschäfte gefunden';
   @override
-  get businessesMy => 'Meine Geschäfte';
+  String get businessesMy => 'Meine Geschäfte';
   @override
-  get businessesOffered => 'In Geschäften offeriert';
+  String get businessesOffered => 'In Geschäften offeriert';
   @override
-  get businessesResults => 'Gefundene Geschäfte';
+  String get businessesResults => 'Gefundene Geschäfte';
   @override
-  get businessesVicinity => 'Geschäfte in der Nähe';
+  String get businessesVicinity => 'Geschäfte in der Nähe';
   @override
-  get businessName => 'Geschäftsname';
+  String get businessName => 'Geschäftsname';
   @override
-  get businessNameHint => 'Benutze einen sinnvollen Namen';
+  String get businessNameHint => 'Benutze einen sinnvollen Namen';
   @override
-  get businessUrl => 'URL zum Geschäft';
+  String get businessUrl => 'URL zum Geschäft';
   @override
-  get cameraDefault => 'Kamera';
+  String get cameraDefault => 'Kamera';
   @override
-  get cancelDefault => 'Abbruch';
+  String get cancelDefault => 'Abbruch';
   @override
-  get categories => 'Kategorien';
+  String get categories => 'Kategorien';
   @override
-  get city => 'Stadt';
+  String get city => 'Stadt';
   @override
-  get communityChoose => 'Wähle eine Community:';
+  String get communityChoose => 'Wähle eine Community:';
   @override
-  get communityLoad => 'Ladet Community..';
+  String get communityLoad => 'Ladet Community..';
   @override
-  get communityNotFound => 'Keine Community gefunden';
+  String get communityNotFound => 'Keine Community gefunden';
   @override
-  get day => 'Tag';
+  String get day => 'Tag';
   @override
-  get delete => 'Löschen';
+  String get delete => 'Löschen';
   @override
-  get delivery => 'Lieferung';
+  String get delivery => 'Lieferung';
   @override
-  get deliveryOptions => 'Versandsoptionen';
+  String get deliveryOptions => 'Versandsoptionen';
   @override
-  get description => 'Beschreibung';
+  String get description => 'Beschreibung';
   @override
-  get favorites => 'Favoriten';
+  String get favorites => 'Favoriten';
   @override
-  get found => 'Gefunden wurden';
+  String get found => 'Gefunden wurden';
   @override
-  get galleryDefault => 'Galerie';
+  String get galleryDefault => 'Galerie';
   @override
-  get imageChoose => 'Wähle ein Bild';
+  String get imageChoose => 'Wähle ein Bild';
   @override
-  get imageNotPicked => 'Es wurde noch kein Bild ausgewählt.';
+  String get imageNotPicked => 'Es wurde noch kein Bild ausgewählt.';
   @override
-  get imagesAdded => 'Bilder wurden hinzugefügt';
+  String get imagesAdded => 'Bilder wurden hinzugefügt';
   @override
-  get imagesAddRemove => 'Füge hinzu/entferne Bilder';
+  String get imagesAddRemove => 'Füge hinzu/entferne Bilder';
   @override
-  get imagesMultiplePick => 'Mehrere Bilder aus der Gallerie auswählen';
+  String get imagesMultiplePick => 'Mehrere Bilder aus der Gallerie auswählen';
   @override
-  get imageVideoError => 'Pick image/video error';
+  String get imageVideoError => 'Pick image/video error';
   @override
-  get lastVisited => 'Zuletzt besucht';
+  String get lastVisited => 'Zuletzt besucht';
   @override
-  get lookingFor => 'Nach was suchst du?';
+  String get lookingFor => 'Nach was suchst du?';
   @override
-  get map => 'Karte';
+  String get map => 'Karte';
   @override
-  get menu => 'Menu';
+  String get menu => 'Menu';
   @override
-  get no => 'No.';
+  String get no => 'No.';
   @override
-  get noItems => 'Keine Items Gefunden';
+  String get noItems => 'Keine Items Gefunden';
   @override
-  get notifications => 'Benachrichtigungen';
+  String get notifications => 'Benachrichtigungen';
   @override
-  get offeringAdd => '+ Füge ein Angebot hinzu';
+  String get offeringAdd => '+ Füge ein Angebot hinzu';
   @override
-  get offeringNew => 'Mit Neuste';
+  String get offeringNew => 'Mit Neuste';
   @override
-  get offerings => 'Angebote';
+  String get offerings => 'Angebote';
   @override
-  get offeringsFound => 'Angebote gefunden';
+  String get offeringsFound => 'Angebote gefunden';
   @override
-  get offeringsMy => 'Meine Angebote';
+  String get offeringsMy => 'Meine Angebote';
   @override
-  get offeringsResults => 'Gefundene Angebote';
+  String get offeringsResults => 'Gefundene Angebote';
   @override
-  get openningHours => 'Öffnungszeiten';
+  String get openningHours => 'Öffnungszeiten';
   @override
-  get openningHoursInputHint => 'zB 8:15-14:45 oder 9-5pm';
+  String get openningHoursInputHint => 'zB 8:15-14:45 oder 9-5pm';
   @override
-  get photoAdd => 'Photo hinzufügen';
+  String get photoAdd => 'Photo hinzufügen';
   @override
-  get photoTake => 'Photo aufnehmen';
+  String get photoTake => 'Photo aufnehmen';
   @override
-  get price => 'Preis';
+  String get price => 'Preis';
   @override
-  get productNewness => 'Produkt Neuigkeit';
+  String get productNewness => 'Produkt Neuigkeit';
   @override
-  get recentlyAdded => 'Kürzlich hinzugefügt';
+  String get recentlyAdded => 'Kürzlich hinzugefügt';
   @override
-  get reset => 'Zurücksetzen';
+  String get reset => 'Zurücksetzen';
   @override
-  get save => 'Speichern';
+  String get save => 'Speichern';
   @override
-  get search => 'Suche...';
+  String get search => 'Suche...';
   @override
-  get showAll => '+ Zeige alle';
+  String get showAll => '+ Zeige alle';
   @override
-  get state => 'Stand';
+  String get state => 'Stand';
   @override
-  get street => 'Strasse';
+  String get street => 'Strasse';
   @override
-  get timeIntervalAdd => 'Füge Zeitinterval hinzu';
+  String get timeIntervalAdd => 'Füge Zeitinterval hinzu';
   @override
-  get topResults => 'Top Ergebnisse';
+  String get topResults => 'Top Ergebnisse';
   @override
-  get waiting => 'warte...';
+  String get waiting => 'warte...';
   @override
-  get zipCode => 'Postleitzahl';
+  String get zipCode => 'Postleitzahl';
   @override
-  get useDescriptiveName => 'Please, use a descriptive name';
+  String get useDescriptiveName => 'Please, use a descriptive name';
   @override
-  get filter => 'Filtern';
+  String get filter => 'Filtern';
 }
 
 class TranslationsFrBazaar implements TranslationsBazaar {
   @override
-  get address => throw UnimplementedError();
+  String get address => throw UnimplementedError();
   @override
-  get apply => throw UnimplementedError();
+  String get apply => throw UnimplementedError();
   @override
-  get bazaarNew => throw UnimplementedError();
+  String get bazaarNew => throw UnimplementedError();
   @override
-  get bazaarTitle => throw UnimplementedError();
+  String get bazaarTitle => throw UnimplementedError();
   @override
-  get businessAdd => throw UnimplementedError();
+  String get businessAdd => throw UnimplementedError();
   @override
-  get businessCreate => throw UnimplementedError();
+  String get businessCreate => throw UnimplementedError();
   @override
-  get businessDescription => throw UnimplementedError();
+  String get businessDescription => throw UnimplementedError();
   @override
-  get businessDescriptionHint => throw UnimplementedError();
+  String get businessDescriptionHint => throw UnimplementedError();
   @override
-  get businesses => throw UnimplementedError();
+  String get businesses => throw UnimplementedError();
   @override
-  get businessesFound => throw UnimplementedError();
+  String get businessesFound => throw UnimplementedError();
   @override
-  get businessesMy => throw UnimplementedError();
+  String get businessesMy => throw UnimplementedError();
   @override
-  get businessesOffered => throw UnimplementedError();
+  String get businessesOffered => throw UnimplementedError();
   @override
-  get businessesResults => throw UnimplementedError();
+  String get businessesResults => throw UnimplementedError();
   @override
-  get businessesVicinity => throw UnimplementedError();
+  String get businessesVicinity => throw UnimplementedError();
   @override
-  get businessName => throw UnimplementedError();
+  String get businessName => throw UnimplementedError();
   @override
-  get businessNameHint => throw UnimplementedError();
+  String get businessNameHint => throw UnimplementedError();
   @override
-  get businessUrl => throw UnimplementedError();
+  String get businessUrl => throw UnimplementedError();
   @override
-  get cameraDefault => throw UnimplementedError();
+  String get cameraDefault => throw UnimplementedError();
   @override
-  get cancelDefault => throw UnimplementedError();
+  String get cancelDefault => throw UnimplementedError();
   @override
-  get categories => throw UnimplementedError();
+  String get categories => throw UnimplementedError();
   @override
-  get city => throw UnimplementedError();
+  String get city => throw UnimplementedError();
   @override
-  get communityChoose => throw UnimplementedError();
+  String get communityChoose => throw UnimplementedError();
   @override
-  get communityLoad => throw UnimplementedError();
+  String get communityLoad => throw UnimplementedError();
   @override
-  get communityNotFound => throw UnimplementedError();
+  String get communityNotFound => throw UnimplementedError();
   @override
-  get day => throw UnimplementedError();
+  String get day => throw UnimplementedError();
   @override
-  get delete => throw UnimplementedError();
+  String get delete => throw UnimplementedError();
   @override
-  get delivery => throw UnimplementedError();
+  String get delivery => throw UnimplementedError();
   @override
-  get deliveryOptions => throw UnimplementedError();
+  String get deliveryOptions => throw UnimplementedError();
   @override
-  get description => throw UnimplementedError();
+  String get description => throw UnimplementedError();
   @override
-  get favorites => throw UnimplementedError();
+  String get favorites => throw UnimplementedError();
   @override
-  get found => throw UnimplementedError();
+  String get found => throw UnimplementedError();
   @override
-  get galleryDefault => throw UnimplementedError();
+  String get galleryDefault => throw UnimplementedError();
   @override
-  get imageChoose => throw UnimplementedError();
+  String get imageChoose => throw UnimplementedError();
   @override
-  get imageNotPicked => throw UnimplementedError();
+  String get imageNotPicked => throw UnimplementedError();
   @override
-  get imagesAdded => throw UnimplementedError();
+  String get imagesAdded => throw UnimplementedError();
   @override
-  get imagesAddRemove => throw UnimplementedError();
+  String get imagesAddRemove => throw UnimplementedError();
   @override
-  get imagesMultiplePick => throw UnimplementedError();
+  String get imagesMultiplePick => throw UnimplementedError();
   @override
-  get imageVideoError => throw UnimplementedError();
+  String get imageVideoError => throw UnimplementedError();
   @override
-  get lastVisited => throw UnimplementedError();
+  String get lastVisited => throw UnimplementedError();
   @override
-  get lookingFor => throw UnimplementedError();
+  String get lookingFor => throw UnimplementedError();
   @override
-  get map => throw UnimplementedError();
+  String get map => throw UnimplementedError();
   @override
-  get menu => throw UnimplementedError();
+  String get menu => throw UnimplementedError();
   @override
-  get no => throw UnimplementedError();
+  String get no => throw UnimplementedError();
   @override
-  get noItems => throw UnimplementedError();
+  String get noItems => throw UnimplementedError();
   @override
-  get notifications => throw UnimplementedError();
+  String get notifications => throw UnimplementedError();
   @override
-  get offeringAdd => throw UnimplementedError();
+  String get offeringAdd => throw UnimplementedError();
   @override
-  get offeringNew => throw UnimplementedError();
+  String get offeringNew => throw UnimplementedError();
   @override
-  get offerings => throw UnimplementedError();
+  String get offerings => throw UnimplementedError();
   @override
-  get offeringsFound => throw UnimplementedError();
+  String get offeringsFound => throw UnimplementedError();
   @override
-  get offeringsMy => throw UnimplementedError();
+  String get offeringsMy => throw UnimplementedError();
   @override
-  get offeringsResults => throw UnimplementedError();
+  String get offeringsResults => throw UnimplementedError();
   @override
-  get openningHours => throw UnimplementedError();
+  String get openningHours => throw UnimplementedError();
   @override
-  get openningHoursInputHint => throw UnimplementedError();
+  String get openningHoursInputHint => throw UnimplementedError();
   @override
-  get photoAdd => throw UnimplementedError();
+  String get photoAdd => throw UnimplementedError();
   @override
-  get photoTake => throw UnimplementedError();
+  String get photoTake => throw UnimplementedError();
   @override
-  get price => throw UnimplementedError();
+  String get price => throw UnimplementedError();
   @override
-  get productNewness => throw UnimplementedError();
+  String get productNewness => throw UnimplementedError();
   @override
-  get recentlyAdded => throw UnimplementedError();
+  String get recentlyAdded => throw UnimplementedError();
   @override
-  get reset => throw UnimplementedError();
+  String get reset => throw UnimplementedError();
   @override
-  get save => throw UnimplementedError();
+  String get save => throw UnimplementedError();
   @override
-  get search => throw UnimplementedError();
+  String get search => throw UnimplementedError();
   @override
-  get showAll => throw UnimplementedError();
+  String get showAll => throw UnimplementedError();
   @override
-  get state => throw UnimplementedError();
+  String get state => throw UnimplementedError();
   @override
-  get street => throw UnimplementedError();
+  String get street => throw UnimplementedError();
   @override
-  get timeIntervalAdd => throw UnimplementedError();
+  String get timeIntervalAdd => throw UnimplementedError();
   @override
-  get topResults => throw UnimplementedError();
+  String get topResults => throw UnimplementedError();
   @override
-  get waiting => throw UnimplementedError();
+  String get waiting => throw UnimplementedError();
   @override
-  get zipCode => throw UnimplementedError();
+  String get zipCode => throw UnimplementedError();
   @override
-  get useDescriptiveName => throw UnimplementedError();
+  String get useDescriptiveName => throw UnimplementedError();
   @override
-  get filter => throw UnimplementedError();
+  String get filter => throw UnimplementedError();
 }
 
 class TranslationsRuBazaar implements TranslationsBazaar {

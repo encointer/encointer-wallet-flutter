@@ -1,4 +1,3 @@
-import 'package:encointer_wallet/models/claim_of_attendance/claim_of_attendance.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/proof_of_attendance/proof_of_attendance.dart';
 
@@ -37,19 +36,19 @@ Map<String, dynamic> registerParticipantParams(
   };
 }
 
-Map<String, dynamic> attestClaimsParams(
+Map<String, dynamic> attestAttendeesParams(
   CommunityIdentifier chosenCid,
-  int scannedClaimsCount,
-  List<ClaimOfAttendance> claims,
+  int numberOfParticipantsVote,
+  List<String> attendees,
 ) {
   return {
     'title': 'attest_claims',
     'txInfo': {
       'module': 'encointerCeremonies',
-      'call': 'attestClaims',
+      'call': 'attestAttendees',
       'cid': chosenCid,
     },
-    'params': [claims],
+    'params': [chosenCid, numberOfParticipantsVote, attendees],
   };
 }
 

@@ -58,335 +58,336 @@ abstract class TranslationsAssets {
 
 class TranslationsEnAssets implements TranslationsAssets {
   @override
-  get address => 'Send to Address';
+  String get address => 'Send to Address';
   @override
-  get amountError => 'Invalid amount';
+  String get amountError => 'Invalid amount';
   @override
-  get insufficientBalance => 'Insufficient balance';
+  String get insufficientBalance => 'Insufficient balance';
   @override
-  get block => 'Block';
+  String get block => 'Block';
   @override
-  get communitiesNotFound => 'no communities found';
+  String get communitiesNotFound => 'no communities found';
   @override
-  get communityChoose => 'Please choose a community';
+  String get communityChoose => 'Please choose a community';
   @override
-  get communityNotSelected => 'No community selected, hit the icon to select one';
+  String get communityNotSelected => 'No community selected, hit the icon to select one';
   @override
-  get copy => 'Copy';
+  String get copy => 'Copy';
   @override
-  get detail => 'Detail';
+  String get detail => 'Detail';
   @override
-  get done => 'done';
+  String get done => 'done';
   @override
-  get event => 'Event ID';
+  String get event => 'Event ID';
   @override
-  get fail => 'Failed';
+  String get fail => 'Failed';
   @override
-  get fee => 'Fee';
+  String get fee => 'Fee';
   @override
-  get from => 'From';
+  String get from => 'From';
   @override
-  get hash => 'transaction hash';
+  String get hash => 'transaction hash';
   @override
-  get home => 'Home';
+  String get home => 'Home';
   @override
-  get issuanceClaimed => 'No pending community income';
+  String get issuanceClaimed => 'No pending community income';
   @override
-  get issuancePending => 'Claim pending community income';
+  String get issuancePending => 'Claim pending community income';
   @override
-  get receive => 'Receive';
+  String get receive => 'Receive';
   @override
-  get scan => 'Scan';
+  String get scan => 'Scan';
   @override
-  get success => 'Success';
+  String get success => 'Success';
   @override
-  get tip => 'Tip';
+  String get tip => 'Tip';
   @override
-  get tipHint => 'Adding a tip to this transfer, paying the block author for greater priority.';
+  String get tipHint => 'Adding a tip to this transfer, paying the block author for greater priority.';
   @override
-  get to => 'To';
+  String get to => 'To';
   @override
-  get transfer => 'Send';
+  String get transfer => 'Send';
   @override
-  get payment => 'Payment';
+  String get payment => 'Payment';
   @override
-  get value => 'Value';
+  String get value => 'Value';
   @override
-  get amountToBeTransferred => 'Send amount';
+  String get amountToBeTransferred => 'Send amount';
   @override
-  get invoiceAmount => 'Invoice amount';
+  String get invoiceAmount => 'Invoice amount';
   @override
-  get shareInvoice => 'Share Invoice';
+  String get shareInvoice => 'Share Invoice';
   @override
-  get yourBalanceFor => 'Your balance, ACCOUNT_NAME';
+  String get yourBalanceFor => 'Your balance, ACCOUNT_NAME';
   @override
-  get balance => 'Balance';
+  String get balance => 'Balance';
   @override
-  get invoice => 'Invoice';
+  String get invoice => 'Invoice';
   @override
-  get incomingConfirmed => 'incoming AMOUNT CID_SYMBOL for ACCOUNT_NAME confirmed';
+  String get incomingConfirmed => 'incoming AMOUNT CID_SYMBOL for ACCOUNT_NAME confirmed';
   @override
-  get fundsReceived => 'funds received';
+  String get fundsReceived => 'funds received';
   @override
-  get paymentDoYouWantToProceed => 'Proceed with payment?';
+  String get paymentDoYouWantToProceed => 'Proceed with payment?';
   @override
-  get paymentSubmitting => 'Payment is being submitted...';
+  String get paymentSubmitting => 'Payment is being submitted...';
   @override
-  get paymentFinished => 'Payment complete';
+  String get paymentFinished => 'Payment complete';
   @override
-  get paymentError => 'Payment error';
+  String get paymentError => 'Payment error';
   @override
-  get voucher => 'Voucher';
+  String get voucher => 'Voucher';
   @override
-  get voucherBalance => 'Voucher Balance';
+  String get voucherBalance => 'Voucher Balance';
   @override
-  get voucherDifferentNetworkAndCommunity => 'The voucher is for a different network. Do you want to change '
+  String get voucherDifferentNetworkAndCommunity => 'The voucher is for a different network. Do you want to change '
       'to NETWORK_PLACEHOLDER and COMMUNITY_PLACEHOLDER? You can change the network back under Profile > Developer mode';
   @override
-  get voucherDifferentCommunity =>
+  String get voucherDifferentCommunity =>
       'The voucher is for a different community. Do you want to change to COMMUNITY_PLACEHOLDER?';
   @override
-  get voucherContainsInexistentCommunity => 'The voucher contains an inexistent community:';
+  String get voucherContainsInexistentCommunity => 'The voucher contains an inexistent community:';
   @override
-  get doYouWantToRedeemThisVoucher => 'Do you want to redeem this voucher to ACCOUNT_PLACEHOLDER?';
+  String get doYouWantToRedeemThisVoucher => 'Do you want to redeem this voucher to ACCOUNT_PLACEHOLDER?';
   @override
-  get fundVoucher => 'Fund voucher';
+  String get fundVoucher => 'Fund voucher';
   @override
-  get redeemVoucher => 'Redeem voucher';
+  String get redeemVoucher => 'Redeem voucher';
   @override
-  get redeemSuccess => 'Successfully redeemed voucher.';
+  String get redeemSuccess => 'Successfully redeemed voucher.';
   @override
-  get redeemFailure => 'There was an error while redeeming the voucher. Cause:';
+  String get redeemFailure => 'There was an error while redeeming the voucher. Cause:';
   @override
-  get invalidNetwork => 'Invalid Network';
+  String get invalidNetwork => 'Invalid Network';
   @override
-  get invalidCommunity => 'Invalid Community';
+  String get invalidCommunity => 'Invalid Community';
   @override
-  get transactionError => 'Transaction error';
+  String get transactionError => 'Transaction error';
   @override
-  get insufficientFundsExplanation => 'You do not have sufficient funds on this account. See on the website of your'
+  String get insufficientFundsExplanation =>
+      'You do not have sufficient funds on this account. See on the website of your'
       ' local community how to get some.';
 }
 
 class TranslationsDeAssets implements TranslationsAssets {
   @override
-  get address => 'Sende an Adresse';
+  String get address => 'Sende an Adresse';
   @override
-  get amountError => 'Ungültiger Betrag';
+  String get amountError => 'Ungültiger Betrag';
   @override
-  get insufficientBalance => 'Ungenügender Saldo';
+  String get insufficientBalance => 'Ungenügender Saldo';
   @override
-  get block => 'Block';
+  String get block => 'Block';
   @override
-  get communitiesNotFound => 'Keine Community gefunden';
+  String get communitiesNotFound => 'Keine Community gefunden';
   @override
-  get communityChoose => 'Bitte wähle eine Community';
+  String get communityChoose => 'Bitte wähle eine Community';
   @override
-  get communityNotSelected => 'Keine Community ausgewählt, klicke auf das Icon';
+  String get communityNotSelected => 'Keine Community ausgewählt, klicke auf das Icon';
   @override
-  get copy => 'Kopiere';
+  String get copy => 'Kopiere';
   @override
-  get detail => 'Detail';
+  String get detail => 'Detail';
   @override
-  get done => 'Erledigt';
+  String get done => 'Erledigt';
   @override
-  get event => 'Event ID';
+  String get event => 'Event ID';
   @override
-  get fail => 'Fehlgeschlagen';
+  String get fail => 'Fehlgeschlagen';
   @override
-  get fee => 'Gebühr';
+  String get fee => 'Gebühr';
   @override
-  get from => 'Von';
+  String get from => 'Von';
   @override
-  get hash => 'Hash der Transaktion';
+  String get hash => 'Hash der Transaktion';
   @override
-  get home => 'Startbildschirm';
+  String get home => 'Startbildschirm';
   @override
-  get issuanceClaimed => 'Kein ausstehendes Gemeinschaftseinkommen';
+  String get issuanceClaimed => 'Kein ausstehendes Gemeinschaftseinkommen';
   @override
-  get issuancePending => 'Ausstehendes Gemeinschaftseinkommen einfordern';
+  String get issuancePending => 'Ausstehendes Gemeinschaftseinkommen einfordern';
   @override
-  get receive => 'Fordern';
+  String get receive => 'Fordern';
   @override
-  get scan => 'Scannen';
+  String get scan => 'Scannen';
   @override
-  get success => 'Erfolgreich';
+  String get success => 'Erfolgreich';
   @override
-  get tip => 'Trinkgeld';
+  String get tip => 'Trinkgeld';
   @override
-  get tipHint => 'Trinkgeld für diese Transaktion hinzufügen, bezahle dem Block Author für höhere Priorität.';
+  String get tipHint => 'Trinkgeld für diese Transaktion hinzufügen, bezahle dem Block Author für höhere Priorität.';
   @override
-  get to => 'Nach';
+  String get to => 'Nach';
   @override
-  get transfer => 'Senden';
+  String get transfer => 'Senden';
   @override
-  get payment => 'Zahlung';
+  String get payment => 'Zahlung';
   @override
-  get value => 'Wert';
+  String get value => 'Wert';
   @override
-  get amountToBeTransferred => 'Betrag';
+  String get amountToBeTransferred => 'Betrag';
   @override
-  get invoiceAmount => 'Rechnungsbetrag';
+  String get invoiceAmount => 'Rechnungsbetrag';
   @override
-  get shareInvoice => 'Teile als Rechnung';
+  String get shareInvoice => 'Teile als Rechnung';
   @override
-  get yourBalanceFor => 'Dein Kontostand, ACCOUNT_NAME';
+  String get yourBalanceFor => 'Dein Kontostand, ACCOUNT_NAME';
   @override
-  get balance => 'Kontostand';
+  String get balance => 'Kontostand';
   @override
-  get invoice => 'Rechnungsbetrag';
+  String get invoice => 'Rechnungsbetrag';
   @override
-  get incomingConfirmed => 'Empfang von AMOUNT CID_SYMBOL für ACCOUNT_NAME bestätigt';
+  String get incomingConfirmed => 'Empfang von AMOUNT CID_SYMBOL für ACCOUNT_NAME bestätigt';
   @override
-  get fundsReceived => 'Zahlungseingang';
+  String get fundsReceived => 'Zahlungseingang';
   @override
-  get paymentDoYouWantToProceed => 'Mit Zahlung fortfahren?';
+  String get paymentDoYouWantToProceed => 'Mit Zahlung fortfahren?';
   @override
-  get paymentSubmitting => 'Zahlung wird eingereicht...';
+  String get paymentSubmitting => 'Zahlung wird eingereicht...';
   @override
-  get paymentFinished => 'Zahlung erfolgt';
+  String get paymentFinished => 'Zahlung erfolgt';
   @override
-  get paymentError => 'Zahlungsfehler';
+  String get paymentError => 'Zahlungsfehler';
   @override
-  get voucher => 'Gutschein';
+  String get voucher => 'Gutschein';
   @override
-  get voucherBalance => 'Gutscheinwert';
+  String get voucherBalance => 'Gutscheinwert';
   @override
-  get voucherDifferentNetworkAndCommunity => 'Der Gutschein ist für ein anderes Netzwerk. Wills du zu '
+  String get voucherDifferentNetworkAndCommunity => 'Der Gutschein ist für ein anderes Netzwerk. Wills du zu '
       'NETWORK_PLACEHOLDER und COMMUNITY_PLACEHOLDER wechseln? Du kannst das Netzwerk zurückändern under Profil > Developer mode.';
   @override
-  get voucherDifferentCommunity =>
+  String get voucherDifferentCommunity =>
       'Der Gutschein ist für eine andere Community. Wills du zu COMMUNITY_PLACEHOLDER wechseln?';
   @override
-  get voucherContainsInexistentCommunity => 'Der Gutschein enthält eine nicht-existente community:';
+  String get voucherContainsInexistentCommunity => 'Der Gutschein enthält eine nicht-existente community:';
   @override
-  get doYouWantToRedeemThisVoucher => 'Willst du diesen Gutschein für ACCOUNT_PLACEHOLDER einlösen?';
+  String get doYouWantToRedeemThisVoucher => 'Willst du diesen Gutschein für ACCOUNT_PLACEHOLDER einlösen?';
   @override
-  get fundVoucher => 'Gutschein aufladen';
+  String get fundVoucher => 'Gutschein aufladen';
   @override
-  get redeemVoucher => 'Gutschein einlösen';
+  String get redeemVoucher => 'Gutschein einlösen';
   @override
-  get redeemSuccess => 'Gutschein erfolgreich eingelöst.';
+  String get redeemSuccess => 'Gutschein erfolgreich eingelöst.';
   @override
-  get redeemFailure => 'Es gab einen Fehler beim einlösen des Gutscheins. Ursache:';
+  String get redeemFailure => 'Es gab einen Fehler beim einlösen des Gutscheins. Ursache:';
   @override
-  get invalidNetwork => 'Ungültiges Netzwerk';
+  String get invalidNetwork => 'Ungültiges Netzwerk';
   @override
-  get invalidCommunity => 'Ungülige Gemeinschaft';
+  String get invalidCommunity => 'Ungülige Gemeinschaft';
   @override
-  get transactionError => 'Transaktionsfehler';
+  String get transactionError => 'Transaktionsfehler';
   @override
-  get insufficientFundsExplanation => 'Du hast nicht genügend Geld auf diesem Konto. Schaue auf der Webseite'
+  String get insufficientFundsExplanation => 'Du hast nicht genügend Geld auf diesem Konto. Schaue auf der Webseite'
       ' deiner lokalen gemeinschaft, wie du welches bekommen kannst.';
 }
 
 class TranslationsFrAssets implements TranslationsAssets {
   @override
-  get address => throw UnimplementedError();
+  String get address => throw UnimplementedError();
   @override
-  get amountError => throw UnimplementedError();
+  String get amountError => throw UnimplementedError();
   @override
-  get insufficientBalance => throw UnimplementedError();
+  String get insufficientBalance => throw UnimplementedError();
   @override
-  get block => throw UnimplementedError();
+  String get block => throw UnimplementedError();
   @override
-  get communitiesNotFound => throw UnimplementedError();
+  String get communitiesNotFound => throw UnimplementedError();
   @override
-  get communityChoose => throw UnimplementedError();
+  String get communityChoose => throw UnimplementedError();
   @override
-  get communityNotSelected => throw UnimplementedError();
+  String get communityNotSelected => throw UnimplementedError();
   @override
-  get copy => throw UnimplementedError();
+  String get copy => throw UnimplementedError();
   @override
-  get detail => throw UnimplementedError();
+  String get detail => throw UnimplementedError();
   @override
-  get done => throw UnimplementedError();
+  String get done => throw UnimplementedError();
   @override
-  get event => throw UnimplementedError();
+  String get event => throw UnimplementedError();
   @override
-  get fail => throw UnimplementedError();
+  String get fail => throw UnimplementedError();
   @override
-  get fee => throw UnimplementedError();
+  String get fee => throw UnimplementedError();
   @override
-  get from => throw UnimplementedError();
+  String get from => throw UnimplementedError();
   @override
-  get hash => throw UnimplementedError();
+  String get hash => throw UnimplementedError();
   @override
-  get home => throw UnimplementedError();
+  String get home => throw UnimplementedError();
   @override
-  get issuanceClaimed => throw UnimplementedError();
+  String get issuanceClaimed => throw UnimplementedError();
   @override
-  get issuancePending => throw UnimplementedError();
+  String get issuancePending => throw UnimplementedError();
   @override
-  get receive => throw UnimplementedError();
+  String get receive => throw UnimplementedError();
   @override
-  get scan => throw UnimplementedError();
+  String get scan => throw UnimplementedError();
   @override
-  get success => throw UnimplementedError();
+  String get success => throw UnimplementedError();
   @override
-  get tip => throw UnimplementedError();
+  String get tip => throw UnimplementedError();
   @override
-  get tipHint => throw UnimplementedError();
+  String get tipHint => throw UnimplementedError();
   @override
-  get to => throw UnimplementedError();
+  String get to => throw UnimplementedError();
   @override
-  get transfer => throw UnimplementedError();
+  String get transfer => throw UnimplementedError();
   @override
-  get payment => throw UnimplementedError();
+  String get payment => throw UnimplementedError();
   @override
-  get value => throw UnimplementedError();
+  String get value => throw UnimplementedError();
   @override
-  get amountToBeTransferred => throw UnimplementedError();
+  String get amountToBeTransferred => throw UnimplementedError();
   @override
-  get invoiceAmount => throw UnimplementedError();
+  String get invoiceAmount => throw UnimplementedError();
   @override
-  get shareInvoice => throw UnimplementedError();
+  String get shareInvoice => throw UnimplementedError();
   @override
-  get yourBalanceFor => throw UnimplementedError();
+  String get yourBalanceFor => throw UnimplementedError();
   @override
-  get balance => throw UnimplementedError();
+  String get balance => throw UnimplementedError();
   @override
-  get invoice => throw UnimplementedError();
+  String get invoice => throw UnimplementedError();
   @override
-  get incomingConfirmed => throw UnimplementedError();
+  String get incomingConfirmed => throw UnimplementedError();
   @override
-  get fundsReceived => throw UnimplementedError();
+  String get fundsReceived => throw UnimplementedError();
   @override
-  get paymentDoYouWantToProceed => throw UnimplementedError();
+  String get paymentDoYouWantToProceed => throw UnimplementedError();
   @override
-  get paymentSubmitting => throw UnimplementedError();
+  String get paymentSubmitting => throw UnimplementedError();
   @override
-  get paymentFinished => throw UnimplementedError();
+  String get paymentFinished => throw UnimplementedError();
   @override
-  get paymentError => throw UnimplementedError();
+  String get paymentError => throw UnimplementedError();
   @override
-  get voucher => throw UnimplementedError();
+  String get voucher => throw UnimplementedError();
   @override
-  get voucherBalance => throw UnimplementedError();
+  String get voucherBalance => throw UnimplementedError();
   @override
-  get voucherDifferentNetworkAndCommunity => throw UnimplementedError();
+  String get voucherDifferentNetworkAndCommunity => throw UnimplementedError();
   @override
-  get voucherDifferentCommunity => throw UnimplementedError();
+  String get voucherDifferentCommunity => throw UnimplementedError();
   @override
-  get voucherContainsInexistentCommunity => throw UnimplementedError();
+  String get voucherContainsInexistentCommunity => throw UnimplementedError();
   @override
-  get doYouWantToRedeemThisVoucher => throw UnimplementedError();
+  String get doYouWantToRedeemThisVoucher => throw UnimplementedError();
   @override
-  get fundVoucher => throw UnimplementedError();
+  String get fundVoucher => throw UnimplementedError();
   @override
-  get redeemVoucher => throw UnimplementedError();
+  String get redeemVoucher => throw UnimplementedError();
   @override
-  get redeemSuccess => throw UnimplementedError();
+  String get redeemSuccess => throw UnimplementedError();
   @override
-  get redeemFailure => throw UnimplementedError();
+  String get redeemFailure => throw UnimplementedError();
   @override
-  get invalidNetwork => throw UnimplementedError();
+  String get invalidNetwork => throw UnimplementedError();
   @override
-  get invalidCommunity => throw UnimplementedError();
+  String get invalidCommunity => throw UnimplementedError();
   @override
-  get transactionError => throw UnimplementedError();
+  String get transactionError => throw UnimplementedError();
   @override
-  get insufficientFundsExplanation => throw UnimplementedError();
+  String get insufficientFundsExplanation => throw UnimplementedError();
 }
 
 class TranslationsRuAssets implements TranslationsAssets {
