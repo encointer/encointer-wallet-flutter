@@ -1,15 +1,15 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+
 import 'package:encointer_wallet/common/components/address_icon.dart';
+import 'package:encointer_wallet/common/components/logo/community_icon.dart';
 import 'package:encointer_wallet/common/components/rounded_card.dart';
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class CommunityChooserPanel extends StatefulWidget {
   CommunityChooserPanel(this.store, {Key? key}) : super(key: key);
@@ -115,11 +115,7 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(widget.communityAvatarSize),
                     ),
-                    child: CommunityAvatar(
-                      store: store,
-                      avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.community?.assetsCid),
-                      avatarSize: widget.communityAvatarSize,
-                    ),
+                    child: CommunityAvatar(avatarSize: widget.communityAvatarSize),
                   ),
                   Positioned(
                     bottom: 0,
@@ -149,32 +145,16 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
 }
 
 class CommunityAvatar extends StatelessWidget {
-  const CommunityAvatar({
-    Key? key,
-    required this.store,
-    required this.avatarIcon,
-    this.avatarSize = 120,
-  }) : super(key: key);
+  const CommunityAvatar({Key? key, this.avatarSize = 120}) : super(key: key);
 
-  final AppStore store;
   final double avatarSize;
-  final Future<SvgPicture> avatarIcon;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: avatarSize,
       height: avatarSize,
-      child: FutureBuilder<SvgPicture>(
-        future: avatarIcon,
-        builder: (_, AsyncSnapshot<SvgPicture> snapshot) {
-          if (snapshot.hasData) {
-            return snapshot.data!;
-          } else {
-            return const CupertinoActivityIndicator();
-          }
-        },
-      ),
+      child: const CommunityIconObserver(),
     );
   }
 }
