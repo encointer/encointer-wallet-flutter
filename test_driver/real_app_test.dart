@@ -43,7 +43,7 @@ void main() async {
 
   test('home page', () async {
     await driver.scroll(find.byType('RefreshIndicator'), 20, 300, const Duration(seconds: 1));
-    await addDelay(2000);
+    await addDelay(1500);
   });
 
   test('qr-receive page', () async {
