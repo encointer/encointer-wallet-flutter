@@ -399,11 +399,7 @@ class _AssetsState extends State<Assets> {
     // For now show the selected community if available and let the user add a community from the world map community chooser
     allCommunities.add(
       AccountOrCommunityData(
-        avatar: CommunityAvatar(
-          store: store,
-          avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.community?.assetsCid),
-          avatarSize: avatarSize,
-        ),
+        avatar: const CommunityAvatar(avatarSize: avatarSize),
         name: store.encointer.community?.name ?? '...',
         isSelected: true, // TODO #507 this should later be a function applied on each community, cf. initAllAccounts
       ),

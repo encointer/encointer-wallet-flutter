@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
@@ -47,23 +46,23 @@ class Ipfs {
     }
   }
 
-  Future<SvgPicture> getCommunityIcon(String? cid) async {
-    if (cid == null || cid.isEmpty) {
+  Future<String?> getCommunityIcon(String cid) async {
+    if (cid.isEmpty) {
       Log.d('[IPFS] return default encointer icon because ipfs-cid is not set', 'Ipfs');
-      return SvgPicture.asset(fall_back_community_icon);
+      return null;
     }
 
     try {
-      var data = await getData(getIconsPath(cid));
+      final data = await getData(getIconsPath(cid));
       if (data == null) {
         Log.d('[Ipfs] could not find community icon', 'Ipfs');
-        return SvgPicture.asset(fall_back_community_icon);
+        return null;
       }
 
-      return SvgPicture.string(data);
+      return data;
     } catch (e, s) {
       Log.e('[Ipfs] error getting communityIcon: $e', 'Ipfs', s);
-      return SvgPicture.asset(fall_back_community_icon);
+      return null;
     }
   }
 
