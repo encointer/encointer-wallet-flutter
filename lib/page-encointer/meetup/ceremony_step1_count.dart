@@ -24,6 +24,7 @@ class CeremonyStep1Count extends StatelessWidget {
   final TextEditingController _attendeesCountController = TextEditingController();
 
   Future<void> _pushStep2ScanPage(BuildContext context, int count) async {
+    store.encointer.communityAccount!.setParticipantCountVote(count);
     Navigator.of(context).push(
       CupertinoPageRoute(
         builder: (BuildContext context) => CeremonyStep2Scan(
