@@ -77,7 +77,7 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   @override
   String get claimsScannedAlready => 'Updated previously scanned claim';
   @override
-  String get claimsScannedDecodeFailed => 'Could not decode scanned claim.';
+  String get claimsScannedDecodeFailed => 'Could not decode scanned claim. The other party needs to update the App.';
   @override
   String get claimsScannedNew => 'Scanned new claim';
   @override
@@ -181,7 +181,8 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   @override
   String get claimsScannedAlready => 'bereits gescannter Antrag wurde aktualisiert';
   @override
-  String get claimsScannedDecodeFailed => 'Gescannter Antrag konnte nicht dekodiert werden.';
+  String get claimsScannedDecodeFailed =>
+      'Gescannter Antrag konnte nicht dekodiert werden. Dein Gegenüber muss die App updaten.';
   @override
   String get claimsScannedNew => 'Neuer Antrag gescannt';
   @override

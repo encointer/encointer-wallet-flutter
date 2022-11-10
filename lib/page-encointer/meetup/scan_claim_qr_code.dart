@@ -55,21 +55,13 @@ class ScanClaimQrCode extends StatelessWidget {
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
 
-    Future _onScan(String claimOrAddress) async {
-      // Show a cupertino activity indicator as long as we are decoding
-      _showActivityIndicatorOverlay(context);
-
-      try {
-        var address = await addressFromClaimOrAddress(claimOrAddress);
-
+    Future _onScan(String address) async {
+      if (Fmt.isAddress(address)) {
         validateAndStoreParticipant(context, address, dic);
-      } catch (e, s) {
-        Log.e('Error decoding claim: $e', 'ScanClaimQrCode', s);
-        RootSnackBar.showMsg(dic.encointer.claimsScannedDecodeFailed);
+      } else {
+        Log.e('Claim is not an address: $address', 'ScanClaimQrCode');
+        RootSnackBar.showMsg(dic.encointer.claimsScannedDecodeFailed, durationMillis: 3000);
       }
-
-      // pops the cupertino activity indicator.
-      Navigator.of(context).pop();
     }
 
     return Scaffold(
@@ -175,18 +167,4 @@ Widget permissionErrorDialog(BuildContext context) {
       ),
     ],
   );
-}
-
-/// For backwards compatibility wit phones pre-v1.8.9
-Future<String> addressFromClaimOrAddress(String claimOrAddress) async {
-  if (Fmt.isAddress(claimOrAddress)) {
-    return Future.value(claimOrAddress);
-  }
-
-  var data = base64.decode(claimOrAddress);
-
-  var claim =
-      await webApi.codec.decodeBytes(ClaimOfAttendanceJSRegistryName, data).then((c) => ClaimOfAttendance.fromJson(c));
-
-  return claim.claimantPublic!;
 }
