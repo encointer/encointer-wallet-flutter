@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
 import 'package:encointer_wallet/common/components/address_icon.dart';
+import 'package:encointer_wallet/common/components/logo/community_icon.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
@@ -94,16 +94,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
       leading: CommunityIcon(
         store: _appStore,
         address: address,
-        icon: FutureBuilder<SvgPicture>(
-          future: webApi.ipfs.getCommunityIcon(community.assetsCid),
-          builder: (_, AsyncSnapshot<SvgPicture> snapshot) {
-            if (snapshot.hasData) {
-              return snapshot.data!;
-            } else {
-              return const CupertinoActivityIndicator();
-            }
-          },
-        ),
+        icon: const CommunityIconObserver(),
       ),
       title: Text(community.name!, style: h3),
       subtitle: Text(community.symbol!, style: h3),
