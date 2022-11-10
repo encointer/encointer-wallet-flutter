@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/config/consts.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:qr_flutter_fork/qr_flutter_fork.dart';
@@ -94,7 +95,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
                     Text(dic.profile.sendLink, style: textTheme.headline3),
                   ],
                 ),
-                onPressed: () => Share.share(contactQrCode.toQrPayload()),
+                onPressed: () => Share.share(toDeepLink(contactQrCode.toQrPayload())),
               ),
             ],
           ),
