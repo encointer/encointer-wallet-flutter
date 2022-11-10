@@ -48,7 +48,7 @@ yarn run build
 
 ### Requirements
 - Dart sdk: ">=2.12.0 <3.0.0"
-- Flutter: ">=3.3.5"
+- Flutter: "3.3.6"
 - Android: minSdkVersion 17
 - iOS: --ios-language swift, Xcode version >= 14.0.0
 
