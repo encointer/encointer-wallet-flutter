@@ -25,7 +25,8 @@ CommunityStore _$CommunityStoreFromJson(Map<String, dynamic> json) => CommunityS
               (json['communityAccountStores'] as Map<String, dynamic>).map(
               (k, e) => MapEntry(k, CommunityAccountStore.fromJson(e as Map<String, dynamic>)),
             ))
-          : null;
+          : null
+      ..communityIcon = json['communityIcon'] as String?;
 
 Map<String, dynamic> _$CommunityStoreToJson(CommunityStore instance) => <String, dynamic>{
       'network': instance.network,
@@ -37,6 +38,7 @@ Map<String, dynamic> _$CommunityStoreToJson(CommunityStore instance) => <String,
       'bootstrappers': instance.bootstrappers,
       'meetupLocations': instance.meetupLocations?.map((e) => e.toJson()).toList(),
       'communityAccountStores': instance.communityAccountStores?.map((k, e) => MapEntry(k, e.toJson())),
+      'communityIcon': instance.communityIcon,
     };
 
 // **************************************************************************
@@ -166,7 +168,39 @@ mixin _$CommunityStore on _CommunityStore, Store {
     });
   }
 
+  late final _$communityIconAtom = Atom(name: '_CommunityStore.communityIcon', context: context);
+
+  @override
+  String? get communityIcon {
+    _$communityIconAtom.reportRead();
+    return super.communityIcon;
+  }
+
+  @override
+  set communityIcon(String? value) {
+    _$communityIconAtom.reportWrite(value, super.communityIcon, () {
+      super.communityIcon = value;
+    });
+  }
+
+  late final _$getCommunityIconAsyncAction = AsyncAction('_CommunityStore.getCommunityIcon', context: context);
+
+  @override
+  Future<String?> getCommunityIcon() {
+    return _$getCommunityIconAsyncAction.run(() => super.getCommunityIcon());
+  }
+
   late final _$_CommunityStoreActionController = ActionController(name: '_CommunityStore', context: context);
+
+  @override
+  void clearCommunityIcon() {
+    final _$actionInfo = _$_CommunityStoreActionController.startAction(name: '_CommunityStore.clearCommunityIcon');
+    try {
+      return super.clearCommunityIcon();
+    } finally {
+      _$_CommunityStoreActionController.endAction(_$actionInfo);
+    }
+  }
 
   @override
   Future<void> initCommunityAccountStore(String address) {
@@ -260,6 +294,7 @@ meetupTimeOverride: ${meetupTimeOverride},
 bootstrappers: ${bootstrappers},
 meetupLocations: ${meetupLocations},
 communityAccountStores: ${communityAccountStores},
+communityIcon: ${communityIcon},
 name: ${name},
 symbol: ${symbol},
 assetsCid: ${assetsCid}

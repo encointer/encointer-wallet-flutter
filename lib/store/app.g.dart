@@ -159,21 +159,6 @@ mixin _$AppStore on _AppStore, Store {
     });
   }
 
-  late final _$communityIconAtom = Atom(name: '_AppStore.communityIcon', context: context);
-
-  @override
-  String? get communityIcon {
-    _$communityIconAtom.reportRead();
-    return super.communityIcon;
-  }
-
-  @override
-  set communityIcon(String? value) {
-    _$communityIconAtom.reportWrite(value, super.communityIcon, () {
-      super.communityIcon = value;
-    });
-  }
-
   late final _$initAsyncAction = AsyncAction('_AppStore.init', context: context);
 
   @override
@@ -181,24 +166,7 @@ mixin _$AppStore on _AppStore, Store {
     return _$initAsyncAction.run(() => super.init(sysLocaleCode));
   }
 
-  late final _$getCommunityIconAsyncAction = AsyncAction('_AppStore.getCommunityIcon', context: context);
-
-  @override
-  Future<String?> getCommunityIcon() {
-    return _$getCommunityIconAsyncAction.run(() => super.getCommunityIcon());
-  }
-
   late final _$_AppStoreActionController = ActionController(name: '_AppStore', context: context);
-
-  @override
-  void communityIconNull() {
-    final _$actionInfo = _$_AppStoreActionController.startAction(name: '_AppStore.communityIconNull');
-    try {
-      return super.communityIconNull();
-    } finally {
-      _$_AppStoreActionController.endAction(_$actionInfo);
-    }
-  }
 
   @override
   void setApiReady(bool value) {
@@ -215,7 +183,6 @@ mixin _$AppStore on _AppStore, Store {
     return '''
 storeIsReady: ${storeIsReady},
 webApiIsReady: ${webApiIsReady},
-communityIcon: ${communityIcon},
 dataUpdate: ${dataUpdate},
 account: ${account},
 assets: ${assets},

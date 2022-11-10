@@ -93,9 +93,6 @@ abstract class _AppStore with Store {
   @computed
   bool get appIsReady => storeIsReady && webApiIsReady;
 
-  @observable
-  String? communityIcon;
-
   LocalStorage localStorage;
 
   @action
@@ -121,29 +118,6 @@ abstract class _AppStore with Store {
 
     storeIsReady = true;
   }
-
-  @action
-  Future<String?> getCommunityIcon() async {
-    try {
-      if (encointer.community?.assetsCid == null) {
-        return null;
-      } else {
-        final data = await webApi.ipfs.getCommunityIcon(encointer.community!.assetsCid!);
-        if (data != null) {
-          communityIcon = data;
-          return communityIcon;
-        } else {
-          return null;
-        }
-      }
-    } catch (e) {
-      Log.e('getCommunityIcon $e', 'App Store getCommunityIcon');
-      return null;
-    }
-  }
-
-  @action
-  void communityIconNull() => communityIcon = null;
 
   @action
   void setApiReady(bool value) {
