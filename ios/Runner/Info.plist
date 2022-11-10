@@ -81,5 +81,22 @@
 	<string>YES</string>
 	<key>CADisableMinimumFrameDurationOnPhone</key>
 	<true/>
+	<!-- deep link-uni link -->
+	<key>FlutterDeepLinkingEnabled</key>
+	<true/>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+		<key>CFBundleTypeRole</key>
+		<string>Editor</string>
+		<key>CFBundleURLName</key>
+		<string>/</string>
+		<key>CFBundleURLSchemes</key>
+		<array>
+		<string>https</string>
+		</array>
+		</dict>
+	</array>
+	<!-- ... other tags -->
 </dict>
 </plist>
