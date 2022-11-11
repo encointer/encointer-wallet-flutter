@@ -154,3 +154,7 @@ Future<dynamic> submitReapVoucher(
 ) async {
   return api.js.evalJavascript('encointer.reapVoucher("$voucherUri","$recipientAddress", ${jsonEncode(cid)})');
 }
+
+Future<dynamic> submitNextPhase(Api api) async {
+  return await api.js.evalJavascript('encointer.sendNextPhaseTx()');
+}
