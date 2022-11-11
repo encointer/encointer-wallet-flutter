@@ -16,6 +16,7 @@ CommunityAccountStore _$CommunityAccountStoreFromJson(Map<String, dynamic> json)
       ..attendees = json['attendees'] != null
           ? ObservableSet<String>.of((json['attendees'] as List).map((e) => e as String))
           : null
+      ..participantCountVote = json['participantCountVote'] as int?
       ..meetupCompleted = json['meetupCompleted'] as bool?;
 
 Map<String, dynamic> _$CommunityAccountStoreToJson(CommunityAccountStore instance) => <String, dynamic>{
@@ -25,6 +26,7 @@ Map<String, dynamic> _$CommunityAccountStoreToJson(CommunityAccountStore instanc
       'participantType': _$ParticipantTypeEnumMap[instance.participantType],
       'meetup': instance.meetup?.toJson(),
       'attendees': instance.attendees?.toList(),
+      'participantCountVote': instance.participantCountVote,
       'meetupCompleted': instance.meetupCompleted,
     };
 
@@ -106,6 +108,21 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
     });
   }
 
+  late final _$participantCountVoteAtom = Atom(name: '_CommunityAccountStore.participantCountVote', context: context);
+
+  @override
+  int? get participantCountVote {
+    _$participantCountVoteAtom.reportRead();
+    return super.participantCountVote;
+  }
+
+  @override
+  set participantCountVote(int? value) {
+    _$participantCountVoteAtom.reportWrite(value, super.participantCountVote, () {
+      super.participantCountVote = value;
+    });
+  }
+
   late final _$meetupCompletedAtom = Atom(name: '_CommunityAccountStore.meetupCompleted', context: context);
 
   @override
@@ -130,6 +147,17 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
         _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.setParticipantType');
     try {
       return super.setParticipantType(type);
+    } finally {
+      _$_CommunityAccountStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setParticipantCountVote(int vote) {
+    final _$actionInfo =
+        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.setParticipantCountVote');
+    try {
+      return super.setParticipantCountVote(vote);
     } finally {
       _$_CommunityAccountStoreActionController.endAction(_$actionInfo);
     }
@@ -173,6 +201,17 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
         _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.clearMeetupCompleted');
     try {
       return super.clearMeetupCompleted();
+    } finally {
+      _$_CommunityAccountStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void purgeParticipantCountVote() {
+    final _$actionInfo =
+        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.purgeParticipantCountVote');
+    try {
+      return super.purgeParticipantCountVote();
     } finally {
       _$_CommunityAccountStoreActionController.endAction(_$actionInfo);
     }
@@ -228,6 +267,7 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
 participantType: ${participantType},
 meetup: ${meetup},
 attendees: ${attendees},
+participantCountVote: ${participantCountVote},
 meetupCompleted: ${meetupCompleted},
 scannedAttendeesCount: ${scannedAttendeesCount},
 isAssigned: ${isAssigned},
