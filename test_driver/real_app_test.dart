@@ -41,7 +41,7 @@ void main() async {
     await driver.tap(find.byValueKey('cid-1-marker-description'));
   }, timeout: const Timeout(Duration(seconds: 120)));
 
-  test('home page', () async {
+  test('home-page', () async {
     await driver.scroll(find.byType('RefreshIndicator'), 20, 300, const Duration(seconds: 1));
     await addDelay(1500);
   });
