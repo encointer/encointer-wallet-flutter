@@ -1,9 +1,8 @@
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:screen_brightness/screen_brightness.dart';
 import 'package:wakelock/wakelock.dart';
-
-import 'package:encointer_wallet/service/log/log_service.dart';
 
 /// Simple widget that sets the brightness and keeps the screen awake as long as the widget is alive.
 ///

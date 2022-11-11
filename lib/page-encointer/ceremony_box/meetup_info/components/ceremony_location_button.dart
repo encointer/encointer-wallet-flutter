@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 
 class CeremonyLocationButton extends StatelessWidget {
   const CeremonyLocationButton({

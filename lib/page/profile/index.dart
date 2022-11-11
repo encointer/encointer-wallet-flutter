@@ -1,12 +1,6 @@
-import 'package:encointer_wallet/modules/modules.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
-
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page/account/create/add_account_page.dart';
 import 'package:encointer_wallet/page/account/create_account_entry_page.dart';
 import 'package:encointer_wallet/page/profile/about_page.dart';
@@ -18,6 +12,11 @@ import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class Profile extends StatefulWidget {

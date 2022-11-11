@@ -1,9 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
-
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/logo/community_icon.dart';
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
@@ -21,6 +15,11 @@ import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/ui.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
 
 class AccountManagePage extends StatefulWidget {
   AccountManagePage({Key? key}) : super(key: key);

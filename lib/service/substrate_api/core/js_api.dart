@@ -1,9 +1,8 @@
 import 'dart:async';
 
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 
 const EncointerJsService = 'EncointerJsService';
 

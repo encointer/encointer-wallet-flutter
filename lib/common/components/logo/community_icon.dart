@@ -1,10 +1,9 @@
+import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/store/app.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-
-import 'package:encointer_wallet/config/consts.dart';
-import 'package:encointer_wallet/store/app.dart';
 
 class CommunityIconObserver extends StatelessWidget {
   const CommunityIconObserver({Key? key}) : super(key: key);

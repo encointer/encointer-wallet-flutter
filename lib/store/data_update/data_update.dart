@@ -1,6 +1,5 @@
-import 'package:mobx/mobx.dart';
-
 import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:mobx/mobx.dart';
 
 part 'data_update.g.dart';
 

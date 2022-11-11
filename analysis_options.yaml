@@ -5,7 +5,7 @@ linter:
     public_member_api_docs: false
     lines_longer_than_80_chars: false
     invalid_assignment: false
-    directives_ordering: false
+    directives_ordering: true
     sort_pub_dependencies: false
     omit_local_variable_types: false
     prefer_final_locals: false

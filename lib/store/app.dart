@@ -1,6 +1,3 @@
-import 'package:mobx/mobx.dart';
-import 'package:upgrader/upgrader.dart';
-
 import 'package:encointer_wallet/config.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -11,6 +8,8 @@ import 'package:encointer_wallet/store/data_update/data_update.dart';
 import 'package:encointer_wallet/store/encointer/encointer.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/local_storage.dart';
+import 'package:mobx/mobx.dart';
+import 'package:upgrader/upgrader.dart';
 
 part 'app.g.dart';
 

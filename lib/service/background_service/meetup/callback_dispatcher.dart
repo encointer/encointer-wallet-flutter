@@ -1,10 +1,9 @@
-import 'package:workmanager/workmanager.dart';
-
-import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/background_service/meetup/feed_model.dart';
 import 'package:encointer_wallet/service/background_service/meetup/feed_repo.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/utils/local_storage.dart';
+import 'package:workmanager/workmanager.dart';
 
 @pragma('vm:entry-point')
 Future<void> callbackDispatcher() async {

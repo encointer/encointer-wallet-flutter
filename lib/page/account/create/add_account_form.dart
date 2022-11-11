@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
-
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/common/theme.dart';
@@ -10,6 +7,8 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
 
 class AddAccountForm extends StatelessWidget {
   AddAccountForm({

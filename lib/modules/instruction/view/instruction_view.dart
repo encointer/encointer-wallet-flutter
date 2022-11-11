@@ -1,9 +1,8 @@
+import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-
-import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
 
 class Instruction extends StatelessWidget {
   const Instruction({Key? key}) : super(key: key);

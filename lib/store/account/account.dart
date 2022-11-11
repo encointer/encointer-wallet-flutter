@@ -1,8 +1,6 @@
 import 'dart:async';
 
 import 'package:aes_ecb_pkcs5_flutter/aes_ecb_pkcs5_flutter.dart';
-import 'package:mobx/mobx.dart';
-
 import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
@@ -11,6 +9,7 @@ import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/account/types/tx_status.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:mobx/mobx.dart';
 
 part 'account.g.dart';
 

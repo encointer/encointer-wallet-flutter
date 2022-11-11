@@ -1,10 +1,9 @@
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AddressFormItem extends StatelessWidget {
   AddressFormItem(this.account, {Key? key, this.label, this.onTap}) : super(key: key);

@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
 import 'package:encointer_wallet/page-encointer/home_page.dart';
@@ -29,6 +27,7 @@ import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dar
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/page/reap_voucher/reap_voucher_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:flutter/cupertino.dart';
 
 class AppRoute {
   const AppRoute._();
