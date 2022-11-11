@@ -64,16 +64,20 @@ void main() async {
     await addDelay(1000);
   });
 
-  // test('contact-page', () async {
-  //   // await driver.tap(find.byValueKey(TabKey.Contacts.toString()));
-  //   await addDelay(1000);
-  //   // await driver.tap(find.byValueKey('transfer-amount-input'));
+  test('contact-page', () async {
+    await driver.tap(find.byValueKey('Contacts'));
+    await driver.tap(find.byValueKey('add-contact'));
 
-  //   // await driver.enterText('3.4');
-  //   // await addDelay(1000);
-  //   // await driver.tap(find.byValueKey('close-transfer-page'));
-  //   await addDelay(5000);
-  // });
+    await driver.tap(find.byValueKey('contact-address'));
+    await driver.enterText('5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW');
+    await driver.tap(find.byValueKey('contact-name'));
+    await driver.enterText('Eldiar');
+    await driver.tap(find.byValueKey('contact-save'));
+    await addDelay(1500);
+    
+    await driver.tap(find.byValueKey('Wallet'));
+    await addDelay(5000);
+  });
 
   tearDownAll(() async {
     await driver.close();
