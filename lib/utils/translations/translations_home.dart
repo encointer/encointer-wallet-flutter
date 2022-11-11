@@ -10,7 +10,6 @@ abstract class TranslationsHome {
   String get detail;
   String get exitConfirm;
   String get errorOccurred;
-
   String get loading;
   String get next;
   String get notifySubmitted;
@@ -68,7 +67,7 @@ class TranslationsEnHome implements TranslationsHome {
   @override
   String get exitConfirm => 'Do you want to exit the App?';
   @override
-  get errorOccurred => 'An error occurred:';
+  String get errorOccurred => 'An error occurred:';
   @override
   String get loading => 'Loading...';
   @override
@@ -163,7 +162,7 @@ class TranslationsDeHome implements TranslationsHome {
   @override
   String get exitConfirm => 'Möchtest du die App verlassen?';
   @override
-  get errorOccurred => 'Es is ein Fehler aufgetaucht:';
+  String get errorOccurred => 'Es is ein Fehler aufgetaucht:';
   @override
   String get loading => 'Lädt...';
   @override
@@ -262,7 +261,7 @@ class TranslationsFrHome implements TranslationsHome {
   @override
   String get exitConfirm => throw UnimplementedError();
   @override
-  get errorOccurred => throw UnimplementedError();
+  String get errorOccurred => throw UnimplementedError();
   @override
   String get loading => throw UnimplementedError();
   @override
@@ -358,7 +357,6 @@ class TranslationsRuHome implements TranslationsHome {
   String get exitConfirm => 'Вы хотите покинуть приложение?';
   @override
   String get errorOccurred => 'Возникла ошибка:';
-
   @override
   String get loading => 'Загружается...';
   @override

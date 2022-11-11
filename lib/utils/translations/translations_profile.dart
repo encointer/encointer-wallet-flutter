@@ -130,7 +130,7 @@ class TranslationsEnProfile implements TranslationsProfile {
   @override
   String get contactAlreadyExists => 'Address exists already';
   @override
-  get contactMemo => 'Contact information';
+  String get contactMemo => 'Contact information';
   @override
   String get contactName => 'Name';
   @override
@@ -310,8 +310,7 @@ class TranslationsDeProfile implements TranslationsProfile {
   @override
   String get contactAlreadyExists => 'Adresse existiert bereits';
   @override
-  get contactMemo => 'Kontaktinformationen';
-
+  String get contactMemo => 'Kontaktinformationen';
   @override
   String get contactName => 'Name';
   @override
@@ -638,7 +637,6 @@ class TranslationsRuProfile implements TranslationsProfile {
   String get aboutBrief => 'Мобильный кошелек Encointer';
   @override
   String get aboutVersion => 'Версия';
-
   @override
   String get accounts => 'Учетные записи';
   @override
