@@ -21,7 +21,7 @@ class CeremonyStartButton extends StatelessWidget {
         children: [
           const Icon(Iconsax.login_1),
           const SizedBox(width: 6),
-          Text(dic.encointer.startCeremony),
+          Text(dic.encointer.startGathering),
         ],
       ),
       onPressed: onPressed,

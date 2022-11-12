@@ -109,13 +109,9 @@ class ContactDetailPage extends StatelessWidget {
                 ),
               ),
               Observer(builder: (_) {
-                if (context.select<AppStore, bool>((store) => store.encointer.community!.bootstrappers != null)) {
-                  return _store.encointer.community!.bootstrappers!.contains(_store.account.currentAddress)
-                      ? EndorseButton(_store, api, account)
-                      : Container();
-                } else {
-                  return const CupertinoActivityIndicator();
-                }
+                return _store.encointer.community!.bootstrappers!.contains(_store.account.currentAddress)
+                    ? EndorseButton(_store, api, account)
+                    : Container();
               }),
               const SizedBox(height: 16),
               SecondaryButtonWide(

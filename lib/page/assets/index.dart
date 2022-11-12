@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:encointer_wallet/models/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -271,9 +272,7 @@ class _AssetsState extends State<Assets> {
                                   ),
                                   key: const Key('transfer'),
                                   onPressed: store.encointer.communityBalance != null
-                                      ? () {
-                                          Navigator.pushNamed(context, TransferPage.route);
-                                        }
+                                      ? () => Navigator.pushNamed(context, TransferPage.route)
                                       : null,
                                 ),
                               ),
@@ -288,7 +287,10 @@ class _AssetsState extends State<Assets> {
                     Observer(builder: (_) {
                       final Translations dic = I18n.of(context)!.translationsForLocale();
 
-                      return store.settings.isConnected
+                      final shouldFetch = store.encointer.currentPhase == CeremonyPhase.Registering ||
+                          (store.encointer.communityAccount?.meetupCompleted ?? false);
+
+                      return store.settings.isConnected && shouldFetch
                           ? FutureBuilder<bool?>(
                               future: webApi.encointer.hasPendingIssuance(),
                               builder: (_, AsyncSnapshot<bool?> snapshot) {
@@ -302,7 +304,7 @@ class _AssetsState extends State<Assets> {
                                         context,
                                         store,
                                         webApi,
-                                        store.encointer.chosenCid,
+                                        store.encointer.chosenCid!,
                                       ),
                                     );
                                   } else {
@@ -397,11 +399,7 @@ class _AssetsState extends State<Assets> {
     // For now show the selected community if available and let the user add a community from the world map community chooser
     allCommunities.add(
       AccountOrCommunityData(
-        avatar: CommunityAvatar(
-          store: store,
-          avatarIcon: webApi.ipfs.getCommunityIcon(store.encointer.community?.assetsCid),
-          avatarSize: avatarSize,
-        ),
+        avatar: const CommunityAvatar(avatarSize: avatarSize),
         name: store.encointer.community?.name ?? '...',
         isSelected: true, // TODO #507 this should later be a function applied on each community, cf. initAllAccounts
       ),

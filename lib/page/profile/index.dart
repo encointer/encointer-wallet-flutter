@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -7,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/account/create/add_account_page.dart';
+import 'package:encointer_wallet/page/account/create_account_entry_page.dart';
 import 'package:encointer_wallet/page/profile/about_page.dart';
 import 'package:encointer_wallet/page/profile/account/account_manage_page.dart';
 import 'package:encointer_wallet/page/profile/account/change_password_page.dart';
@@ -16,6 +18,7 @@ import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class Profile extends StatefulWidget {
   Profile({Key? key}) : super(key: key);
@@ -73,6 +76,23 @@ class _ProfileState extends State<Profile> {
     super.initState();
   }
 
+  Future<bool> _sendEmail() async {
+    final dic = I18n.of(context)!.translationsForLocale().profile;
+    final Uri _emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: 'bugreports@mail.encointer.org',
+    );
+    final _isSuccess = await launchUrl(_emailLaunchUri);
+    if (!_isSuccess) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(dic.checkEmailApp),
+        ),
+      );
+    }
+    return _isSuccess;
+  }
+
   @override
   Widget build(BuildContext context) {
     var h3Grey = Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey);
@@ -83,7 +103,7 @@ class _ProfileState extends State<Profile> {
     if (_store.account.accountListAll.isEmpty) {
       _store.settings.setPin('');
       Future.delayed(Duration.zero, () {
-        Navigator.popUntil(context, ModalRoute.withName('/'));
+        Navigator.pop(context);
       });
     }
     final Translations dic = I18n.of(context)!.translationsForLocale();
@@ -164,6 +184,14 @@ class _ProfileState extends State<Profile> {
                 onTap: () => Navigator.pushNamed(context, AboutPage.route),
               ),
               ListTile(
+                title: Text(dic.profile.appHints, style: h3Grey),
+                onTap: () => Navigator.pushNamed(context, Instruction.route),
+              ),
+              ListTile(
+                title: Text(dic.profile.contactUs, style: h3Grey),
+                onTap: _sendEmail,
+              ),
+              ListTile(
                 title: Text(dic.profile.developer, style: h3Grey),
                 trailing: Checkbox(
                   value: _store.settings.developerMode,
@@ -216,24 +244,33 @@ Future<void> showRemoveAccountsDialog(BuildContext context, AppStore _store) {
   final dic = I18n.of(context)!.translationsForLocale();
 
   return showCupertinoDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return CupertinoAlertDialog(title: Text(dic.profile.accountsDelete), actions: <Widget>[
+    context: context,
+    builder: (BuildContext context) {
+      return CupertinoAlertDialog(
+        title: Text(dic.profile.accountsDelete),
+        actions: <Widget>[
           CupertinoButton(
             child: Text(dic.home.cancel),
             onPressed: () => Navigator.of(context).pop(),
           ),
           CupertinoButton(
-              child: Text(dic.home.ok),
-              onPressed: () async {
-                final accounts = _store.account.accountListAll;
+            child: Text(dic.home.ok),
+            onPressed: () async {
+              final accounts = _store.account.accountListAll;
 
-                for (var acc in accounts) {
-                  await _store.account.removeAccount(acc);
-                }
+              for (var acc in accounts) {
+                await _store.account.removeAccount(acc);
+              }
 
-                Navigator.of(context).pop();
-              }),
-        ]);
-      });
+              Navigator.pushAndRemoveUntil(
+                context,
+                CupertinoPageRoute(builder: (context) => CreateAccountEntryPage()),
+                (route) => false,
+              );
+            },
+          ),
+        ],
+      );
+    },
+  );
 }

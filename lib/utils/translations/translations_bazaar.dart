@@ -74,220 +74,430 @@ abstract class TranslationsBazaar {
 }
 
 class TranslationsEnBazaar implements TranslationsBazaar {
-  get address => 'Address';
-  get apply => 'Apply';
-  get bazaarNew => 'New in Bazaar';
-  get bazaarTitle => 'The Bazaar';
-  get businessAdd => '+ Add new business';
-  get businessCreate => 'Create new business';
-  get businessDescription => 'Business description';
-  get businessDescriptionHint => 'Spark interest in your offering and provide a succinct description';
-  get businesses => 'Businesses';
-  get businessesFound => 'Businesses Found';
-  get businessesMy => 'My Businesses';
-  get businessesOffered => 'Offered in Businesses';
-  get businessesResults => 'Results in Businesses';
-  get businessesVicinity => 'Businesses in my Vicinity';
-  get businessName => 'Business name';
-  get businessNameHint => 'Use a descriptive name';
-  get businessUrl => 'URL to business';
-  get cameraDefault => 'Camera';
-  get cancelDefault => 'Cancel';
-  get categories => 'Categories';
-  get city => 'City';
-  get communityChoose => 'Choose community:';
-  get communityLoad => 'Loading community..';
-  get communityNotFound => 'No community found';
-  get day => 'Day';
-  get delete => 'Delete';
-  get delivery => 'Delivery';
-  get deliveryOptions => 'Delivery options';
-  get description => 'Description';
-  get favorites => 'Favorites';
-  get found => 'Found';
-  get galleryDefault => 'Gallery';
-  get imageChoose => 'Choose an image';
-  get imageNotPicked => 'You have not yet picked an image.';
-  get imagesAdded => 'Images added';
-  get imagesAddRemove => 'Add/remove images';
-  get imagesMultiplePick => 'Pick Multiple Images from gallery';
-  get imageVideoError => 'Pick image/video error';
-  get lastVisited => 'Last visited';
-  get lookingFor => 'What are you looking for?';
-  get map => 'Map';
-  get menu => 'Menu';
-  get no => 'No.';
-  get noItems => 'No items found';
-  get notifications => 'Notifications';
-  get offeringAdd => '+ Add an offering';
-  get offeringNew => 'Featuring Newest';
-  get offerings => 'Offerings';
-  get offeringsFound => 'Businesses Found';
-  get offeringsMy => 'My Offerings';
-  get offeringsResults => 'Results in Offerings';
-  get openningHours => 'Openning Hours';
-  get openningHoursInputHint => 'eG. 8:15-14:45 or 9-5pm';
-  get photoAdd => 'Add Photo';
-  get photoTake => 'Take a Photo';
-  get price => 'Price';
-  get productNewness => 'Product Newness';
-  get recentlyAdded => 'Recently added';
-  get reset => 'Reset';
-  get save => 'Save';
-  get search => 'Search...';
-  get showAll => '+ Show all';
-  get state => 'State';
-  get street => 'Street';
-  get timeIntervalAdd => 'Add a time interval';
-  get topResults => 'Top Results';
-  get waiting => 'waiting...';
-  get zipCode => 'Zip code';
-  get useDescriptiveName => 'Please, use a descriptive name';
-  get filter => 'Filter';
+  @override
+  String get address => 'Address';
+  @override
+  String get apply => 'Apply';
+  @override
+  String get bazaarNew => 'New in Bazaar';
+  @override
+  String get bazaarTitle => 'The Bazaar';
+  @override
+  String get businessAdd => '+ Add new business';
+  @override
+  String get businessCreate => 'Create new business';
+  @override
+  String get businessDescription => 'Business description';
+  @override
+  String get businessDescriptionHint => 'Spark interest in your offering and provide a succinct description';
+  @override
+  String get businesses => 'Businesses';
+  @override
+  String get businessesFound => 'Businesses Found';
+  @override
+  String get businessesMy => 'My Businesses';
+  @override
+  String get businessesOffered => 'Offered in Businesses';
+  @override
+  String get businessesResults => 'Results in Businesses';
+  @override
+  String get businessesVicinity => 'Businesses in my Vicinity';
+  @override
+  String get businessName => 'Business name';
+  @override
+  String get businessNameHint => 'Use a descriptive name';
+  @override
+  String get businessUrl => 'URL to business';
+  @override
+  String get cameraDefault => 'Camera';
+  @override
+  String get cancelDefault => 'Cancel';
+  @override
+  String get categories => 'Categories';
+  @override
+  String get city => 'City';
+  @override
+  String get communityChoose => 'Choose community:';
+  @override
+  String get communityLoad => 'Loading community..';
+  @override
+  String get communityNotFound => 'No community found';
+  @override
+  String get day => 'Day';
+  @override
+  String get delete => 'Delete';
+  @override
+  String get delivery => 'Delivery';
+  @override
+  String get deliveryOptions => 'Delivery options';
+  @override
+  String get description => 'Description';
+  @override
+  String get favorites => 'Favorites';
+  @override
+  String get found => 'Found';
+  @override
+  String get galleryDefault => 'Gallery';
+  @override
+  String get imageChoose => 'Choose an image';
+  @override
+  String get imageNotPicked => 'You have not yet picked an image.';
+  @override
+  String get imagesAdded => 'Images added';
+  @override
+  String get imagesAddRemove => 'Add/remove images';
+  @override
+  String get imagesMultiplePick => 'Pick Multiple Images from gallery';
+  @override
+  String get imageVideoError => 'Pick image/video error';
+  @override
+  String get lastVisited => 'Last visited';
+  @override
+  String get lookingFor => 'What are you looking for?';
+  @override
+  String get map => 'Map';
+  @override
+  String get menu => 'Menu';
+  @override
+  String get no => 'No.';
+  @override
+  String get noItems => 'No items found';
+  @override
+  String get notifications => 'Notifications';
+  @override
+  String get offeringAdd => '+ Add an offering';
+  @override
+  String get offeringNew => 'Featuring Newest';
+  @override
+  String get offerings => 'Offerings';
+  @override
+  String get offeringsFound => 'Businesses Found';
+  @override
+  String get offeringsMy => 'My Offerings';
+  @override
+  String get offeringsResults => 'Results in Offerings';
+  @override
+  String get openningHours => 'Openning Hours';
+  @override
+  String get openningHoursInputHint => 'eG. 8:15-14:45 or 9-5pm';
+  @override
+  String get photoAdd => 'Add Photo';
+  @override
+  String get photoTake => 'Take a Photo';
+  @override
+  String get price => 'Price';
+  @override
+  String get productNewness => 'Product Newness';
+  @override
+  String get recentlyAdded => 'Recently added';
+  @override
+  String get reset => 'Reset';
+  @override
+  String get save => 'Save';
+  @override
+  String get search => 'Search...';
+  @override
+  String get showAll => '+ Show all';
+  @override
+  String get state => 'State';
+  @override
+  String get street => 'Street';
+  @override
+  String get timeIntervalAdd => 'Add a time interval';
+  @override
+  String get topResults => 'Top Results';
+  @override
+  String get waiting => 'waiting...';
+  @override
+  String get zipCode => 'Zip code';
+  @override
+  String get useDescriptiveName => 'Please, use a descriptive name';
+  @override
+  String get filter => 'Filter';
 }
 
 class TranslationsDeBazaar implements TranslationsBazaar {
-  get address => 'Adresse';
-  get apply => 'Anwenden';
-  get bazaarNew => 'Neu im Bazaar';
-  get bazaarTitle => 'Der Bazaar';
-  get businessAdd => '+ Neues Geschäft hinzufügen';
-  get businessCreate => 'Neues Geschäft erstellen';
-  get businessDescription => 'Geschäftsbeschreibung';
-  get businessDescriptionHint => 'Wecke Interesse an deinem Angebot mit einer kurzen Beschreibung';
-  get businesses => 'Geschäfte';
-  get businessesFound => 'Geschäfte gefunden';
-  get businessesMy => 'Meine Geschäfte';
-  get businessesOffered => 'In Geschäften offeriert';
-  get businessesResults => 'Gefundene Geschäfte';
-  get businessesVicinity => 'Geschäfte in der Nähe';
-  get businessName => 'Geschäftsname';
-  get businessNameHint => 'Benutze einen sinnvollen Namen';
-  get businessUrl => 'URL zum Geschäft';
-  get cameraDefault => 'Kamera';
-  get cancelDefault => 'Abbruch';
-  get categories => 'Kategorien';
-  get city => 'Stadt';
-  get communityChoose => 'Wähle eine Community:';
-  get communityLoad => 'Ladet Community..';
-  get communityNotFound => 'Keine Community gefunden';
-  get day => 'Tag';
-  get delete => 'Löschen';
-  get delivery => 'Lieferung';
-  get deliveryOptions => 'Versandsoptionen';
-  get description => 'Beschreibung';
-  get favorites => 'Favoriten';
-  get found => 'Gefunden wurden';
-  get galleryDefault => 'Galerie';
-  get imageChoose => 'Wähle ein Bild';
-  get imageNotPicked => 'Es wurde noch kein Bild ausgewählt.';
-  get imagesAdded => 'Bilder wurden hinzugefügt';
-  get imagesAddRemove => 'Füge hinzu/entferne Bilder';
-  get imagesMultiplePick => 'Mehrere Bilder aus der Gallerie auswählen';
-  get imageVideoError => 'Pick image/video error';
-  get lastVisited => 'Zuletzt besucht';
-  get lookingFor => 'Nach was suchst du?';
-  get map => 'Karte';
-  get menu => 'Menu';
-  get no => 'No.';
-  get noItems => 'Keine Items Gefunden';
-  get notifications => 'Benachrichtigungen';
-  get offeringAdd => '+ Füge ein Angebot hinzu';
-  get offeringNew => 'Mit Neuste';
-  get offerings => 'Angebote';
-  get offeringsFound => 'Angebote gefunden';
-  get offeringsMy => 'Meine Angebote';
-  get offeringsResults => 'Gefundene Angebote';
-  get openningHours => 'Öffnungszeiten';
-  get openningHoursInputHint => 'zB 8:15-14:45 oder 9-5pm';
-  get photoAdd => 'Photo hinzufügen';
-  get photoTake => 'Photo aufnehmen';
-  get price => 'Preis';
-  get productNewness => 'Produkt Neuigkeit';
-  get recentlyAdded => 'Kürzlich hinzugefügt';
-  get reset => 'Zurücksetzen';
-  get save => 'Speichern';
-  get search => 'Suche...';
-  get showAll => '+ Zeige alle';
-  get state => 'Stand';
-  get street => 'Strasse';
-  get timeIntervalAdd => 'Füge Zeitinterval hinzu';
-  get topResults => 'Top Ergebnisse';
-  get waiting => 'warte...';
-  get zipCode => 'Postleitzahl';
-  get useDescriptiveName => 'Please, use a descriptive name';
-  get filter => 'Filtern';
+  @override
+  String get address => 'Adresse';
+  @override
+  String get apply => 'Anwenden';
+  @override
+  String get bazaarNew => 'Neu im Bazaar';
+  @override
+  String get bazaarTitle => 'Der Bazaar';
+  @override
+  String get businessAdd => '+ Neues Geschäft hinzufügen';
+  @override
+  String get businessCreate => 'Neues Geschäft erstellen';
+  @override
+  String get businessDescription => 'Geschäftsbeschreibung';
+  @override
+  String get businessDescriptionHint => 'Wecke Interesse an deinem Angebot mit einer kurzen Beschreibung';
+  @override
+  String get businesses => 'Geschäfte';
+  @override
+  String get businessesFound => 'Geschäfte gefunden';
+  @override
+  String get businessesMy => 'Meine Geschäfte';
+  @override
+  String get businessesOffered => 'In Geschäften offeriert';
+  @override
+  String get businessesResults => 'Gefundene Geschäfte';
+  @override
+  String get businessesVicinity => 'Geschäfte in der Nähe';
+  @override
+  String get businessName => 'Geschäftsname';
+  @override
+  String get businessNameHint => 'Benutze einen sinnvollen Namen';
+  @override
+  String get businessUrl => 'URL zum Geschäft';
+  @override
+  String get cameraDefault => 'Kamera';
+  @override
+  String get cancelDefault => 'Abbruch';
+  @override
+  String get categories => 'Kategorien';
+  @override
+  String get city => 'Stadt';
+  @override
+  String get communityChoose => 'Wähle eine Community:';
+  @override
+  String get communityLoad => 'Ladet Community..';
+  @override
+  String get communityNotFound => 'Keine Community gefunden';
+  @override
+  String get day => 'Tag';
+  @override
+  String get delete => 'Löschen';
+  @override
+  String get delivery => 'Lieferung';
+  @override
+  String get deliveryOptions => 'Versandsoptionen';
+  @override
+  String get description => 'Beschreibung';
+  @override
+  String get favorites => 'Favoriten';
+  @override
+  String get found => 'Gefunden wurden';
+  @override
+  String get galleryDefault => 'Galerie';
+  @override
+  String get imageChoose => 'Wähle ein Bild';
+  @override
+  String get imageNotPicked => 'Es wurde noch kein Bild ausgewählt.';
+  @override
+  String get imagesAdded => 'Bilder wurden hinzugefügt';
+  @override
+  String get imagesAddRemove => 'Füge hinzu/entferne Bilder';
+  @override
+  String get imagesMultiplePick => 'Mehrere Bilder aus der Gallerie auswählen';
+  @override
+  String get imageVideoError => 'Pick image/video error';
+  @override
+  String get lastVisited => 'Zuletzt besucht';
+  @override
+  String get lookingFor => 'Nach was suchst du?';
+  @override
+  String get map => 'Karte';
+  @override
+  String get menu => 'Menu';
+  @override
+  String get no => 'No.';
+  @override
+  String get noItems => 'Keine Items Gefunden';
+  @override
+  String get notifications => 'Benachrichtigungen';
+  @override
+  String get offeringAdd => '+ Füge ein Angebot hinzu';
+  @override
+  String get offeringNew => 'Mit Neuste';
+  @override
+  String get offerings => 'Angebote';
+  @override
+  String get offeringsFound => 'Angebote gefunden';
+  @override
+  String get offeringsMy => 'Meine Angebote';
+  @override
+  String get offeringsResults => 'Gefundene Angebote';
+  @override
+  String get openningHours => 'Öffnungszeiten';
+  @override
+  String get openningHoursInputHint => 'zB 8:15-14:45 oder 9-5pm';
+  @override
+  String get photoAdd => 'Photo hinzufügen';
+  @override
+  String get photoTake => 'Photo aufnehmen';
+  @override
+  String get price => 'Preis';
+  @override
+  String get productNewness => 'Produkt Neuigkeit';
+  @override
+  String get recentlyAdded => 'Kürzlich hinzugefügt';
+  @override
+  String get reset => 'Zurücksetzen';
+  @override
+  String get save => 'Speichern';
+  @override
+  String get search => 'Suche...';
+  @override
+  String get showAll => '+ Zeige alle';
+  @override
+  String get state => 'Stand';
+  @override
+  String get street => 'Strasse';
+  @override
+  String get timeIntervalAdd => 'Füge Zeitinterval hinzu';
+  @override
+  String get topResults => 'Top Ergebnisse';
+  @override
+  String get waiting => 'warte...';
+  @override
+  String get zipCode => 'Postleitzahl';
+  @override
+  String get useDescriptiveName => 'Please, use a descriptive name';
+  @override
+  String get filter => 'Filtern';
 }
 
-class TranslationsZhBazaar implements TranslationsBazaar {
-  get address => '地址';
-  get apply => '应用';
-  get bazaarNew => '市集新品';
-  get bazaarTitle => '集市';
-  get businessAdd => '+ 添加新业务';
-  get businessCreate => '创建新业务';
-  get businessDescription => '业务描述';
-  get businessDescriptionHint => '激发对您的产品的兴趣并提供简洁的描述';
-  get businesses => '企业';
-  get businessesFound => '找到的企业';
-  get businessesMy => '我的企业';
-  get businessesOffered => '在企业中提供';
-  get businessesResults => '商业结果';
-  get businessesVicinity => '我附近的企业';
-  get businessName => '企业名称';
-  get businessNameHint => '使用描述性名称';
-  get businessUrl => '企业网址';
-  get cameraDefault => '相机';
-  get cancelDefault => '取消';
-  get categories => '类别';
-  get city => '城市';
-  get communityChoose => '选择社区：';
-  get communityLoad => '正在加载社区..';
-  get communityNotFound => '未找到社区';
-  get day => '日';
-  get delete => '删除';
-  get delivery => '交付';
-  get deliveryOptions => '送货选项';
-  get description => '描述';
-  get favorites => '收藏夹';
-  get found => '找到';
-  get galleryDefault => '画廊';
-  get imageChoose => '选择一张图片';
-  get imageNotPicked => '你还没有选择图像。';
-  get imagesAdded => '图片添加';
-  get imagesAddRemove => '添加/删除图像';
-  get imagesMultiplePick => '从图库中选择多个图像';
-  get imageVideoError => '选择图像/视频错误';
-  get lastVisited => '上次访问';
-  get lookingFor => '你在找什么？';
-  get map => '地图';
-  get menu => '菜单';
-  get no => '不。';
-  get noItems => '未找到任何物品';
-  get notifications => '通知';
-  get offeringAdd => '+ 添加一个产品';
-  get offeringNew => '精选最新';
-  get offerings => '产品';
-  get offeringsFound => '找到的企业';
-  get offeringsMy => '我的奉献';
-  get offeringsResults => '产品结果';
-  get openningHours => '营业时间';
-  get openningHoursInputHint => 'eG. 8:15-14:45 或 9-5pm';
-  get photoAdd => '添加照片';
-  get photoTake => '拍照';
-  get price => '价格';
-  get productNewness => '产品新度';
-  get recentlyAdded => '最近添加';
-  get reset => '重置';
-  get save => '保存';
-  get search => '搜索...';
-  get showAll => '+ 显示全部';
-  get state => '状态';
-  get street => '街道';
-  get timeIntervalAdd => '添加时间间隔';
-  get topResults => '热门结果';
-  get waiting => '等待...';
-  get zipCode => '邮政编码';
-  get useDescriptiveName => 'Please, use a descriptive name';
-  get filter => throw UnimplementedError();
+class TranslationsFrBazaar implements TranslationsBazaar {
+  @override
+  String get address => throw UnimplementedError();
+  @override
+  String get apply => throw UnimplementedError();
+  @override
+  String get bazaarNew => throw UnimplementedError();
+  @override
+  String get bazaarTitle => throw UnimplementedError();
+  @override
+  String get businessAdd => throw UnimplementedError();
+  @override
+  String get businessCreate => throw UnimplementedError();
+  @override
+  String get businessDescription => throw UnimplementedError();
+  @override
+  String get businessDescriptionHint => throw UnimplementedError();
+  @override
+  String get businesses => throw UnimplementedError();
+  @override
+  String get businessesFound => throw UnimplementedError();
+  @override
+  String get businessesMy => throw UnimplementedError();
+  @override
+  String get businessesOffered => throw UnimplementedError();
+  @override
+  String get businessesResults => throw UnimplementedError();
+  @override
+  String get businessesVicinity => throw UnimplementedError();
+  @override
+  String get businessName => throw UnimplementedError();
+  @override
+  String get businessNameHint => throw UnimplementedError();
+  @override
+  String get businessUrl => throw UnimplementedError();
+  @override
+  String get cameraDefault => throw UnimplementedError();
+  @override
+  String get cancelDefault => throw UnimplementedError();
+  @override
+  String get categories => throw UnimplementedError();
+  @override
+  String get city => throw UnimplementedError();
+  @override
+  String get communityChoose => throw UnimplementedError();
+  @override
+  String get communityLoad => throw UnimplementedError();
+  @override
+  String get communityNotFound => throw UnimplementedError();
+  @override
+  String get day => throw UnimplementedError();
+  @override
+  String get delete => throw UnimplementedError();
+  @override
+  String get delivery => throw UnimplementedError();
+  @override
+  String get deliveryOptions => throw UnimplementedError();
+  @override
+  String get description => throw UnimplementedError();
+  @override
+  String get favorites => throw UnimplementedError();
+  @override
+  String get found => throw UnimplementedError();
+  @override
+  String get galleryDefault => throw UnimplementedError();
+  @override
+  String get imageChoose => throw UnimplementedError();
+  @override
+  String get imageNotPicked => throw UnimplementedError();
+  @override
+  String get imagesAdded => throw UnimplementedError();
+  @override
+  String get imagesAddRemove => throw UnimplementedError();
+  @override
+  String get imagesMultiplePick => throw UnimplementedError();
+  @override
+  String get imageVideoError => throw UnimplementedError();
+  @override
+  String get lastVisited => throw UnimplementedError();
+  @override
+  String get lookingFor => throw UnimplementedError();
+  @override
+  String get map => throw UnimplementedError();
+  @override
+  String get menu => throw UnimplementedError();
+  @override
+  String get no => throw UnimplementedError();
+  @override
+  String get noItems => throw UnimplementedError();
+  @override
+  String get notifications => throw UnimplementedError();
+  @override
+  String get offeringAdd => throw UnimplementedError();
+  @override
+  String get offeringNew => throw UnimplementedError();
+  @override
+  String get offerings => throw UnimplementedError();
+  @override
+  String get offeringsFound => throw UnimplementedError();
+  @override
+  String get offeringsMy => throw UnimplementedError();
+  @override
+  String get offeringsResults => throw UnimplementedError();
+  @override
+  String get openningHours => throw UnimplementedError();
+  @override
+  String get openningHoursInputHint => throw UnimplementedError();
+  @override
+  String get photoAdd => throw UnimplementedError();
+  @override
+  String get photoTake => throw UnimplementedError();
+  @override
+  String get price => throw UnimplementedError();
+  @override
+  String get productNewness => throw UnimplementedError();
+  @override
+  String get recentlyAdded => throw UnimplementedError();
+  @override
+  String get reset => throw UnimplementedError();
+  @override
+  String get save => throw UnimplementedError();
+  @override
+  String get search => throw UnimplementedError();
+  @override
+  String get showAll => throw UnimplementedError();
+  @override
+  String get state => throw UnimplementedError();
+  @override
+  String get street => throw UnimplementedError();
+  @override
+  String get timeIntervalAdd => throw UnimplementedError();
+  @override
+  String get topResults => throw UnimplementedError();
+  @override
+  String get waiting => throw UnimplementedError();
+  @override
+  String get zipCode => throw UnimplementedError();
+  @override
+  String get useDescriptiveName => throw UnimplementedError();
+  @override
+  String get filter => throw UnimplementedError();
 }

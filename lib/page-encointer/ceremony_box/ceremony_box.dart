@@ -21,7 +21,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CeremonyBox extends StatelessWidget {
-  CeremonyBox(
+  const CeremonyBox(
     this.store,
     this.api, {
     Key? key,
@@ -52,9 +52,11 @@ class CeremonyBox extends StatelessWidget {
           Container(
             padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.vertical(
-                  top: const Radius.circular(15), bottom: Radius.circular(store.encointer.showMeetupInfo ? 0 : 15)),
               color: ZurichLion.shade50,
+              borderRadius: BorderRadius.vertical(
+                top: const Radius.circular(15),
+                bottom: Radius.circular(store.encointer.showMeetupInfo ? 0 : 15),
+              ),
             ),
             child: Column(
               children: [
@@ -103,7 +105,7 @@ class CeremonyBox extends StatelessWidget {
                           Text(
                             dic.encointer.claimsSubmitN.replaceAll(
                               'N_COUNT',
-                              store.encointer.communityAccount!.scannedClaimsCount,
+                              store.encointer.communityAccount!.scannedAttendeesCount.toString(),
                             ),
                           ),
                         ],
@@ -172,7 +174,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
           return CeremonyNotification(
             notificationIconData: Iconsax.tick_square,
             notification: dic.encointer.successfullySentNAttestations
-                .replaceAll('P_COUNT', store.encointer.communityAccount!.scannedClaimsCount.toString()),
+                .replaceAll('P_COUNT', store.encointer.communityAccount!.scannedAttendeesCount.toString()),
           );
         } else {
           var meetup = store.encointer.communityAccount!.meetup!;

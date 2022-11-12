@@ -13,11 +13,10 @@ CommunityAccountStore _$CommunityAccountStoreFromJson(Map<String, dynamic> json)
     )
       ..participantType = $enumDecodeNullable(_$ParticipantTypeEnumMap, json['participantType'])
       ..meetup = json['meetup'] == null ? null : Meetup.fromJson(json['meetup'] as Map<String, dynamic>)
-      ..participantsClaims = json['participantsClaims'] != null
-          ? ObservableMap<String, ClaimOfAttendance>.of((json['participantsClaims'] as Map<String, dynamic>).map(
-              (k, e) => MapEntry(k, ClaimOfAttendance.fromJson(e as Map<String, dynamic>)),
-            ))
+      ..attendees = json['attendees'] != null
+          ? ObservableSet<String>.of((json['attendees'] as List).map((e) => e as String))
           : null
+      ..participantCountVote = json['participantCountVote'] as int?
       ..meetupCompleted = json['meetupCompleted'] as bool?;
 
 Map<String, dynamic> _$CommunityAccountStoreToJson(CommunityAccountStore instance) => <String, dynamic>{
@@ -26,7 +25,8 @@ Map<String, dynamic> _$CommunityAccountStoreToJson(CommunityAccountStore instanc
       'address': instance.address,
       'participantType': _$ParticipantTypeEnumMap[instance.participantType],
       'meetup': instance.meetup?.toJson(),
-      'participantsClaims': instance.participantsClaims?.map((k, e) => MapEntry(k, e.toJson())),
+      'attendees': instance.attendees?.toList(),
+      'participantCountVote': instance.participantCountVote,
       'meetupCompleted': instance.meetupCompleted,
     };
 
@@ -44,11 +44,11 @@ const _$ParticipantTypeEnumMap = {
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
-  Computed<dynamic>? _$scannedClaimsCountComputed;
+  Computed<dynamic>? _$scannedAttendeesCountComputed;
 
   @override
-  dynamic get scannedClaimsCount => (_$scannedClaimsCountComputed ??=
-          Computed<dynamic>(() => super.scannedClaimsCount, name: '_CommunityAccountStore.scannedClaimsCount'))
+  dynamic get scannedAttendeesCount => (_$scannedAttendeesCountComputed ??=
+          Computed<dynamic>(() => super.scannedAttendeesCount, name: '_CommunityAccountStore.scannedAttendeesCount'))
       .value;
   Computed<bool>? _$isAssignedComputed;
 
@@ -93,18 +93,33 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
     });
   }
 
-  late final _$participantsClaimsAtom = Atom(name: '_CommunityAccountStore.participantsClaims', context: context);
+  late final _$attendeesAtom = Atom(name: '_CommunityAccountStore.attendees', context: context);
 
   @override
-  ObservableMap<String, ClaimOfAttendance>? get participantsClaims {
-    _$participantsClaimsAtom.reportRead();
-    return super.participantsClaims;
+  ObservableSet<String>? get attendees {
+    _$attendeesAtom.reportRead();
+    return super.attendees;
   }
 
   @override
-  set participantsClaims(ObservableMap<String, ClaimOfAttendance>? value) {
-    _$participantsClaimsAtom.reportWrite(value, super.participantsClaims, () {
-      super.participantsClaims = value;
+  set attendees(ObservableSet<String>? value) {
+    _$attendeesAtom.reportWrite(value, super.attendees, () {
+      super.attendees = value;
+    });
+  }
+
+  late final _$participantCountVoteAtom = Atom(name: '_CommunityAccountStore.participantCountVote', context: context);
+
+  @override
+  int? get participantCountVote {
+    _$participantCountVoteAtom.reportRead();
+    return super.participantCountVote;
+  }
+
+  @override
+  set participantCountVote(int? value) {
+    _$participantCountVoteAtom.reportWrite(value, super.participantCountVote, () {
+      super.participantCountVote = value;
     });
   }
 
@@ -132,6 +147,17 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
         _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.setParticipantType');
     try {
       return super.setParticipantType(type);
+    } finally {
+      _$_CommunityAccountStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void setParticipantCountVote(int vote) {
+    final _$actionInfo =
+        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.setParticipantCountVote');
+    try {
+      return super.setParticipantCountVote(vote);
     } finally {
       _$_CommunityAccountStoreActionController.endAction(_$actionInfo);
     }
@@ -181,6 +207,17 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
   }
 
   @override
+  void purgeParticipantCountVote() {
+    final _$actionInfo =
+        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.purgeParticipantCountVote');
+    try {
+      return super.purgeParticipantCountVote();
+    } finally {
+      _$_CommunityAccountStoreActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   void purgeMeetup() {
     final _$actionInfo =
         _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.purgeMeetup');
@@ -203,11 +240,11 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
   }
 
   @override
-  void addParticipantClaim(ClaimOfAttendance claim) {
+  void addAttendee(String attendee) {
     final _$actionInfo =
-        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.addParticipantClaim');
+        _$_CommunityAccountStoreActionController.startAction(name: '_CommunityAccountStore.addAttendee');
     try {
-      return super.addParticipantClaim(claim);
+      return super.addAttendee(attendee);
     } finally {
       _$_CommunityAccountStoreActionController.endAction(_$actionInfo);
     }
@@ -229,9 +266,10 @@ mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
     return '''
 participantType: ${participantType},
 meetup: ${meetup},
-participantsClaims: ${participantsClaims},
+attendees: ${attendees},
+participantCountVote: ${participantCountVote},
 meetupCompleted: ${meetupCompleted},
-scannedClaimsCount: ${scannedClaimsCount},
+scannedAttendeesCount: ${scannedAttendeesCount},
 isAssigned: ${isAssigned},
 isRegistered: ${isRegistered}
     ''';
