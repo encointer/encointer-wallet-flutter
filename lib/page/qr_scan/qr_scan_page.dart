@@ -73,7 +73,7 @@ class ScanPage extends StatelessWidget {
                   text: I18n.of(context)!.translationsForLocale().account.qrScan,
                   onScan: (barcode, args) async {
                     if (barcode == null) {
-                      Log.e('Failed to scan Barcode', 'CeremonyProgressBar');
+                      Log.e('Failed to scan Barcode', 'ScanPage');
                     } else {
                       onScan(barcode);
                     }

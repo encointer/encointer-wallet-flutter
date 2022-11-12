@@ -84,14 +84,14 @@ class ScanClaimQrCode extends StatelessWidget {
                 QrcodeReaderView(
                   onScan: (barcode, args) async {
                     if (barcode == null) {
-                      Log.e('Failed to scan Barcode', 'CeremonyProgressBar');
+                      Log.e('Failed to scan Barcode', 'ScanClaimQrCode');
                     } else {
                       _onScan(barcode);
                     }
                   },
                   helpWidget: Observer(builder: (_) {
                     final txt = dic.encointer.claimsScannedNOfM
-                        .replaceAll('SCANNED_COUNT', store.encointer.communityAccount!.scannedClaimsCount.toString())
+                        .replaceAll('SCANNED_COUNT', store.encointer.communityAccount!.scannedAttendeesCount.toString())
                         .replaceAll(
                           'TOTAL_COUNT',
                           (confirmedParticipantsCount - 1).toString(),
@@ -100,34 +100,6 @@ class ScanClaimQrCode extends StatelessWidget {
                         style: const TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16));
                   }),
                 ),
-                //overlays a semi-transparent rounded square border that is 90% of screen width
-                // Center(
-                //   child: Column(
-                //     mainAxisAlignment: MainAxisAlignment.center,
-                //     children: [
-                //       Container(
-                //         width: MediaQuery.of(context).size.width * 0.7,
-                //         height: MediaQuery.of(context).size.width * 0.7,
-                //         decoration: BoxDecoration(
-                //           color: Colors.transparent,
-                //           border: Border.all(color: Colors.white38, width: 2.0),
-                //           borderRadius: const BorderRadius.all(Radius.circular(24.0)),
-                //         ),
-                //       ),
-                //       Observer(builder: (_) {
-                //         final txt = dic.encointer.claimsScannedNOfM
-                //             .replaceAll(
-                //                 'SCANNED_COUNT', store.encointer.communityAccount!.scannedClaimsCount.toString())
-                //             .replaceAll(
-                //               'TOTAL_COUNT',
-                //               (confirmedParticipantsCount - 1).toString(),
-                //             );
-                //         return Text(txt,
-                //             style: const TextStyle(color: Colors.white, backgroundColor: Colors.black38, fontSize: 16));
-                //       }),
-                //     ],
-                //   ),
-                // ),
               ],
             );
           } else {
