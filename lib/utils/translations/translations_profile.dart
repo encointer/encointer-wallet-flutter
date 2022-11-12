@@ -73,7 +73,6 @@ abstract class TranslationsProfile {
   String get pinSecure;
   String get personalKey;
   String get recoveryProxy;
-  String get ceremonies;
   String get tokenSend;
   String get reputation;
   String get addContact;
@@ -81,259 +80,548 @@ abstract class TranslationsProfile {
   String get exportAccount;
   String get errorUserNameIsRequired;
   String get observedPendingExtrinsic;
+  String get appHints;
+  String get meetUpNotifications;
+  String get meetUpListTileTitle;
+  String get openAppSettings;
+  String get enableAutoStart;
+  String get contactUs;
+  String get checkEmailApp;
 }
 
 class TranslationsEnProfile implements TranslationsProfile {
-  get about => 'About';
-  get aboutBrief => 'Mobile Wallet for Encointer';
-  get aboutVersion => 'Version';
-  get account => 'Manage Account';
-  get accounts => 'Accounts';
-  get accountDelete => 'Are you sure you want to delete the account?';
-  get accountsDelete => 'Are you sure you want to delete all accounts?';
-  get accountsDeleteAll => 'Remove all Accounts';
-  get accountShare => 'Share Account';
-  get addressBook => 'Address Book';
-  get cantEndorseBootstrapper => 'Bootstrappers are already marked as trusted';
-  get canEndorseInRegisteringPhaseOnly => 'Can endorse in registering phase only';
-  get contactAddress => 'Address';
-  get contactAddressError => 'Invalid address';
-  get contactDelete => 'Delete';
-  get contactDeleteWarn => 'Are you sure you want to delete this address?';
-  get contactEndorse => 'Endorse as trusted contact';
-  get contactAlreadyExists => 'Address exists already';
-  get contactMemo => 'Memo';
-  get contactName => 'Name';
-  get contactNameError => 'Name can not be empty';
-  get contactNameAlreadyExists => 'Name exists already';
-  get contactSave => 'Save';
-  get confirmPin => 'Input your PIN to confirm';
-  get developer => 'Developer mode';
-  get enableBazaar => 'Enable Bazaar';
-  get export => 'Export Account';
-  get exportMnemonicOk => 'Mnemonic was copied to clipboard.';
-  get exportWarn =>
+  @override
+  String get about => 'About';
+  @override
+  String get checkEmailApp => 'Check that you have downloaded the Email app';
+  @override
+  String get contactUs => 'Contact Us';
+  @override
+  String get aboutBrief => 'Mobile Wallet for Encointer';
+  @override
+  String get aboutVersion => 'Version';
+  String get account => 'Manage Account';
+  @override
+  String get accounts => 'Accounts';
+  @override
+  String get accountDelete => 'Are you sure you want to delete the account?';
+  @override
+  String get accountsDelete => 'Are you sure you want to delete all accounts?';
+  @override
+  String get accountsDeleteAll => 'Remove all Accounts';
+  @override
+  String get accountShare => 'Share Account';
+  @override
+  String get addressBook => 'Address Book';
+  @override
+  String get cantEndorseBootstrapper => 'Bootstrappers are already marked as trusted';
+  @override
+  String get canEndorseInRegisteringPhaseOnly => 'Can endorse in registering phase only';
+  @override
+  String get contactAddress => 'Address';
+  @override
+  String get contactAddressError => 'Invalid address';
+  @override
+  String get contactDelete => 'Delete';
+  @override
+  String get contactDeleteWarn => 'Are you sure you want to delete this address?';
+  @override
+  String get contactEndorse => 'Endorse as trusted contact';
+  @override
+  String get contactAlreadyExists => 'Address exists already';
+  @override
+  String get contactMemo => 'Memo';
+  @override
+  String get contactName => 'Name';
+  @override
+  String get contactNameError => 'Name can not be empty';
+  @override
+  String get contactNameAlreadyExists => 'Name exists already';
+  @override
+  String get contactSave => 'Save';
+  @override
+  String get confirmPin => 'Input your PIN to confirm';
+  @override
+  String get developer => 'Developer mode';
+  @override
+  String get enableBazaar => 'Enable Bazaar';
+  @override
+  String get export => 'Export Account';
+  @override
+  String get exportMnemonicOk => 'Mnemonic was copied to clipboard.';
+  @override
+  String get exportWarn =>
       'Write these words down on paper. Keep the backup paper safe. These words allows anyone to recover this account and access its funds.';
-  get noMnemonicFound => 'No Mnemonic found';
-  get importedWithRawSeedHenceNoMnemonic =>
+  @override
+  String get noMnemonicFound => 'No Mnemonic found';
+  @override
+  String get importedWithRawSeedHenceNoMnemonic =>
       'Account was imported with a raw seed and therefore does not have a mnemonic';
-  get changeYourPin => 'Change PIN';
-  get wrongPin => 'Wrong PIN';
-  get wrongPinHint => 'Failed to unlock account, please check PIN.';
-  get yourNewPin => 'New PIN';
-  get pleaseConfirmYourNewPin => 'Confirm New PIN';
-  get hintEnterCurrentPin => 'To change your PIN please enter the current one.';
-  get hintThenEnterANewPin => 'Then you can choose a new one and you’re all set.';
-  get personalKey => 'Personal key';
-  get detailsEnter => 'Enter your details.';
-  get personalKeyEnter => 'Please enter your personal key (12 words) to import the new account.';
-  get reputationHistory => 'Reputation history';
-  get reputationOverall => 'Overall reputation';
-  get passOld => 'Current PIN';
-  get passSuccess => 'Success';
-  get passSuccessTxt => 'PIN changed successfully';
-  get qrScanHint => 'Enter the amount you wish to receive and let the sender scan the QR code.';
-  get qrScanHintAccount => 'Ask the recipient to scan the QR-code in the encointer app.';
-  get receiverAccount => 'Receiving account:';
-  get sendLink => 'Send link';
-  get setting => 'Settings';
-  get settingLang => 'Language';
-  get settingLangAuto => 'Auto Detect';
-  get settingNode => 'Remote Node';
-  get settingNodeList => 'Available Nodes';
-  get settingPrefix => 'Address Prefix';
-  get settingPrefixList => 'Available Prefixes';
-  get share => 'Share';
-  get title => 'Profile';
-  get unlock => 'You need to enter your PIN to add a new account';
-  get addAccount => 'Add account';
-  get addCommunity => 'Add community';
-  get accountCreate => 'Create account';
-  get doYouAlreadyHaveAnAccount => 'Do you already have an account?';
-  get accountNameChooseHint => 'You can change it later in your profile settings.';
-  get accountNameChoose => 'Choose an account name.';
-  get accountName => 'Account name';
-  get import => 'Import';
-  get pinHint => 'You will need this PIN for transactions and adding a new account.';
-  get pinInfo =>
+  @override
+  String get changeYourPin => 'Change PIN';
+  @override
+  String get wrongPin => 'Wrong PIN';
+  @override
+  String get wrongPinHint => 'Failed to unlock account, please check PIN.';
+  @override
+  String get yourNewPin => 'New PIN';
+  @override
+  String get pleaseConfirmYourNewPin => 'Confirm New PIN';
+  @override
+  String get hintEnterCurrentPin => 'To change your PIN please enter the current one.';
+  @override
+  String get hintThenEnterANewPin => 'Then you can choose a new one and you’re all set.';
+  @override
+  String get personalKey => 'Personal key';
+  @override
+  String get detailsEnter => 'Enter your details.';
+  @override
+  String get personalKeyEnter => 'Please enter your personal key (12 words) to import the new account.';
+  @override
+  String get reputationHistory => 'Reputation history';
+  @override
+  String get reputationOverall => 'Overall reputation';
+  @override
+  String get passOld => 'Current PIN';
+  @override
+  String get passSuccess => 'Success';
+  @override
+  String get passSuccessTxt => 'PIN changed successfully';
+  @override
+  String get qrScanHint => 'Enter the amount you wish to receive and let the sender scan the QR code.';
+  @override
+  String get qrScanHintAccount => 'Ask the recipient to scan the QR-code in the encointer app.';
+  @override
+  String get receiverAccount => 'Receiving account:';
+  @override
+  String get sendLink => 'Send link';
+  @override
+  String get setting => 'Settings';
+  @override
+  String get settingLang => 'Language';
+  @override
+  String get settingLangAuto => 'Auto Detect';
+  @override
+  String get settingNode => 'Remote Node';
+  @override
+  String get settingNodeList => 'Available Nodes';
+  @override
+  String get settingPrefix => 'Address Prefix';
+  @override
+  String get settingPrefixList => 'Available Prefixes';
+  @override
+  String get share => 'Share';
+  @override
+  String get title => 'Profile';
+  @override
+  String get unlock => 'You need to enter your PIN to add a new account';
+  @override
+  String get addAccount => 'Add account';
+  @override
+  String get addCommunity => 'Add community';
+  @override
+  String get accountCreate => 'Create account';
+  @override
+  String get doYouAlreadyHaveAnAccount => 'Do you already have an account?';
+  @override
+  String get accountNameChooseHint => 'You can change it later in your profile settings.';
+  @override
+  String get accountNameChoose => 'Choose an account name.';
+  @override
+  String get accountName => 'Account name';
+  @override
+  String get import => 'Import';
+  @override
+  String get pinHint => 'You will need this PIN for transactions and adding a new account.';
+  @override
+  String get pinInfo =>
       'PIN should consist of at least 4 digits. If the PIN is lost, there is no option to restore the account unless you made a backup via the profile page.';
-  get pinSecure => 'Secure your account with a PIN.';
-  get recoveryProxy => 'recovery proxy';
-  get ceremonies => 'Ceremonies';
-  get reputation => 'Reputation';
-  get shareLinkHint => 'Or you can share a link:';
-  get tokenSend => 'Send SYMBOL';
-  get addContact => 'Add contact';
-  get deleteAccount => 'delete';
-  get exportAccount => 'export';
-  get errorUserNameIsRequired => 'User name cannot be blank';
-  get observedPendingExtrinsic => 'Pending transaction observed. Please wait for confirmation!';
+  @override
+  String get pinSecure => 'Secure your account with a PIN.';
+  @override
+  String get recoveryProxy => 'recovery proxy';
+  @override
+  String get reputation => 'Reputation';
+  @override
+  String get shareLinkHint => 'Or you can share a link:';
+  @override
+  String get tokenSend => 'Send SYMBOL';
+  @override
+  String get addContact => 'Add contact';
+  @override
+  String get deleteAccount => 'delete';
+  @override
+  String get exportAccount => 'export';
+  @override
+  String get errorUserNameIsRequired => 'User name cannot be blank';
+  @override
+  String get observedPendingExtrinsic => 'Pending transaction observed. Please wait for confirmation!';
+  @override
+  String get appHints => 'App-Hints';
+  @override
+  String get meetUpNotifications => 'Meetup notifications';
+  @override
+  String get meetUpListTileTitle => 'If your device is a Xiaomi or Honor phone, please enable autostart to '
+      'receive meetup notifications.';
+  @override
+  String get openAppSettings => 'Open App Settings';
+  @override
+  String get enableAutoStart => 'Enable autostart';
 }
 
 class TranslationsDeProfile implements TranslationsProfile {
-  get about => 'Über';
-  get aboutBrief => 'Mobiles Wallet für Encointer';
-  get aboutVersion => 'Version';
-  get accounts => 'Konten';
-  get accountDelete => 'Bist du sicher, dass du das Konto löschen möchtest?';
-  get accountsDelete => 'Bist du sicher, dass du alle Konten löschen möchtest?';
-  get accountsDeleteAll => 'Lösche alle Konten';
-  get accountShare => 'Konto teilen';
-  get addressBook => 'Adressbuch';
-  get cantEndorseBootstrapper => 'Bootstrapper sind bereits als zuverlässig markiert';
-  get canEndorseInRegisteringPhaseOnly => 'Du kannst nur in der Registrierungsphase jemanden als zuverlässig markieren';
-  get contactAddress => 'Addresse';
-  get contactAddressError => 'Ungültige Adresse';
-  get contactDelete => 'Löschen';
-  get contactDeleteWarn => 'Bist du sicher, dass du diese Adresse löschen möchtest?';
-  get contactEndorse => 'Als vertrauenswürdig bestätigen';
-  get contactAlreadyExists => 'Adresse existiert bereits';
-  get contactMemo => 'Memo';
-  get contactName => 'Name';
-  get contactNameError => 'Name muss ausgefüllt werden';
-  get contactNameAlreadyExists => 'Name existiert bereits';
-  get contactSave => 'Speichere';
-  get confirmPin => 'Bitte PIN bestätigen';
-  get developer => 'Entwickler-Modus';
-  get enableBazaar => 'Bazaar aktivieren';
-  get export => 'Konto exportieren';
-  get exportMnemonicOk => 'Mnemonik wurde in die Zwischenablage kopiert.';
-  get exportWarn =>
+  @override
+  String get checkEmailApp => 'Keine Email-App installiert';
+  @override
+  String get contactUs => 'Kontaktiere Uns';
+  @override
+  String get about => 'Über';
+  @override
+  String get aboutBrief => 'Mobiles Wallet für Encointer';
+  @override
+  String get aboutVersion => 'Version';
+  @override
+  String get accounts => 'Konten';
+  @override
+  String get accountDelete => 'Bist du sicher, dass du das Konto löschen möchtest?';
+  @override
+  String get accountsDelete => 'Bist du sicher, dass du alle Konten löschen möchtest?';
+  @override
+  String get accountsDeleteAll => 'Lösche alle Konten';
+  @override
+  String get accountShare => 'Konto teilen';
+  @override
+  String get addressBook => 'Adressbuch';
+  @override
+  String get cantEndorseBootstrapper => 'Bootstrapper sind bereits als zuverlässig markiert';
+  @override
+  String get canEndorseInRegisteringPhaseOnly =>
+      'Du kannst nur in der Registrierungsphase jemanden als zuverlässig markieren';
+  @override
+  String get contactAddress => 'Addresse';
+  @override
+  String get contactAddressError => 'Ungültige Adresse';
+  @override
+  String get contactDelete => 'Löschen';
+  @override
+  String get contactDeleteWarn => 'Bist du sicher, dass du diese Adresse löschen möchtest?';
+  @override
+  String get contactEndorse => 'Als vertrauenswürdig bestätigen';
+  @override
+  String get contactAlreadyExists => 'Adresse existiert bereits';
+  @override
+  String get contactMemo => 'Memo';
+  @override
+  String get contactName => 'Name';
+  @override
+  String get contactNameError => 'Name muss ausgefüllt werden';
+  @override
+  String get contactNameAlreadyExists => 'Name existiert bereits';
+  @override
+  String get contactSave => 'Speichere';
+  @override
+  String get confirmPin => 'Bitte PIN bestätigen';
+  @override
+  String get developer => 'Entwickler-Modus';
+  @override
+  String get enableBazaar => 'Bazaar aktivieren';
+  @override
+  String get export => 'Konto exportieren';
+  @override
+  String get exportMnemonicOk => 'Mnemonik wurde in die Zwischenablage kopiert.';
+  @override
+  String get exportWarn =>
       'Schreibe diese Wörter auf ein Papier. Behalte das Papier an einem sicheren Ort. Diese Wörter geben jedem Zugriff auf das Konto und das Vermögen';
-  get noMnemonicFound => 'Keine Mnemonik gefunden';
-  get importedWithRawSeedHenceNoMnemonic => 'Konto wurde mit einem Raw Seed importiert und hat deshalb keine Mnemonik';
-  get changeYourPin => 'PIN ändern';
-  get wrongPin => 'Falscher PIN';
-  get wrongPinHint => 'Konto konnte nicht entsperrt werden. Bitte überprüfe die eingegebene PIN.';
-  get yourNewPin => 'Neue PIN';
-  get pleaseConfirmYourNewPin => 'Bestätige neue PIN';
-  get hintEnterCurrentPin => 'Gib deinen jetzigen PIN ein um den PIN zu ändern.';
-  get hintThenEnterANewPin => 'Dann kannst du deinen neuen Pin eingeben.';
-  get detailsEnter => 'Gib deine Details ein.';
-  get personalKeyEnter => 'Gib deinen persönlichen Key ein (12 Wörter), um dein Konto zu importieren.';
-  get reputationHistory => 'Reputation History';
-  get reputationOverall => 'Allgemeine Reputation';
-  get passOld => 'Aktuelle PIN';
-  get passSuccess => 'Erfolgreich';
-  get passSuccessTxt => 'PIN wurde erfolgreich geändert';
-  get receiverAccount => 'Empfangendes Konto:';
-  get personalKey => 'Persönlicher Schlüssel';
-  get qrScanHint => 'Gib den Betrag, den du erhalten möchtest ein und lasse den Sender den QR Code scannen.';
-  get qrScanHintAccount => 'Bitte den Empfänger den QR-Code in der Encointer App zu scannen.';
-  get sendLink => 'Link senden';
-  get setting => 'Einstellungen';
-  get settingLang => 'Sprache';
-  get settingLangAuto => 'Automatisch';
-  get settingNode => 'Entfernter Knoten';
-  get settingNodeList => 'Verfügbare Knoten';
-  get settingPrefix => 'Adressenpräfix';
-  get settingPrefixList => 'Verfügbare Präfix';
-  get share => 'Teilen';
-  get shareLinkHint => 'Oder über Link teilen:';
-  get title => 'Profil';
-  get unlock => 'Du musst deinen PIN eingeben um einen neuen Account hinzuzufügen';
-  get addAccount => 'Konto hinzufügen';
-  get addCommunity => 'Gem. hinzufügen';
-  get accountCreate => 'Konto kreieren';
-  get doYouAlreadyHaveAnAccount => 'Hast du bereits ein Konto?';
-  get accountNameChooseHint => 'Du kannst den Namen später ändern in den Profileinstellungen.';
-  get accountNameChoose => 'Wähle einen Kontonamen.';
-  get accountName => 'Kontoname';
-  get import => 'Importiere';
-  get pinHint => 'Du wirst diese PIN benötigen um Transaktionen zu tätigen oder neue Konten hinzufügen.';
-  get pinInfo =>
+  @override
+  String get noMnemonicFound => 'Keine Mnemonik gefunden';
+  @override
+  String get importedWithRawSeedHenceNoMnemonic =>
+      'Konto wurde mit einem Raw Seed importiert und hat deshalb keine Mnemonik';
+  @override
+  String get changeYourPin => 'PIN ändern';
+  @override
+  String get wrongPin => 'Falscher PIN';
+  @override
+  String get wrongPinHint => 'Konto konnte nicht entsperrt werden. Bitte überprüfe die eingegebene PIN.';
+  @override
+  String get yourNewPin => 'Neue PIN';
+  @override
+  String get pleaseConfirmYourNewPin => 'Bestätige neue PIN';
+  @override
+  String get hintEnterCurrentPin => 'Gib deinen jetzigen PIN ein um den PIN zu ändern.';
+  @override
+  String get hintThenEnterANewPin => 'Dann kannst du deinen neuen Pin eingeben.';
+  @override
+  String get detailsEnter => 'Gib deine Details ein.';
+  @override
+  String get personalKeyEnter => 'Gib deinen persönlichen Key ein (12 Wörter), um dein Konto zu importieren.';
+  @override
+  String get reputationHistory => 'Reputation History';
+  @override
+  String get reputationOverall => 'Allgemeine Reputation';
+  @override
+  String get passOld => 'Aktuelle PIN';
+  @override
+  String get passSuccess => 'Erfolgreich';
+  @override
+  String get passSuccessTxt => 'PIN wurde erfolgreich geändert';
+  @override
+  String get receiverAccount => 'Empfangendes Konto:';
+  @override
+  String get personalKey => 'Persönlicher Schlüssel';
+  @override
+  String get qrScanHint => 'Gib den Betrag, den du erhalten möchtest ein und lasse den Sender den QR Code scannen.';
+  @override
+  String get qrScanHintAccount => 'Bitte den Empfänger den QR-Code in der Encointer App zu scannen.';
+  @override
+  String get sendLink => 'Link senden';
+  @override
+  String get setting => 'Einstellungen';
+  @override
+  String get settingLang => 'Sprache';
+  @override
+  String get settingLangAuto => 'Automatisch';
+  @override
+  String get settingNode => 'Entfernter Knoten';
+  @override
+  String get settingNodeList => 'Verfügbare Knoten';
+  @override
+  String get settingPrefix => 'Adressenpräfix';
+  @override
+  String get settingPrefixList => 'Verfügbare Präfix';
+  @override
+  String get share => 'Teilen';
+  @override
+  String get shareLinkHint => 'Oder über Link teilen:';
+  @override
+  String get title => 'Profil';
+  @override
+  String get unlock => 'Du musst deinen PIN eingeben um einen neuen Account hinzuzufügen';
+  @override
+  String get addAccount => 'Konto hinzufügen';
+  @override
+  String get addCommunity => 'Gem. hinzufügen';
+  @override
+  String get accountCreate => 'Konto kreieren';
+  @override
+  String get doYouAlreadyHaveAnAccount => 'Hast du bereits ein Konto?';
+  @override
+  String get accountNameChooseHint => 'Du kannst den Namen später ändern in den Profileinstellungen.';
+  @override
+  String get accountNameChoose => 'Wähle einen Kontonamen.';
+  @override
+  String get accountName => 'Kontoname';
+  @override
+  String get import => 'Importiere';
+  @override
+  String get pinHint => 'Du wirst diese PIN benötigen um Transaktionen zu tätigen oder neue Konten hinzufügen.';
+  @override
+  String get pinInfo =>
       'PIN muss mindestens 4 Ziffern enthalten. Bei PIN-Verlust ist der Account nicht wiederherstellbar, ausser man hat ein Backup auf der Profilseite gemacht.';
-  get pinSecure => 'Sichere dein Konto mit einem PIN.';
-  get recoveryProxy => 'Wiederherstellungsproxy';
-  get ceremonies => 'Zeremonien';
-  get reputation => 'Reputation';
-  get tokenSend => 'SYMBOL senden';
-  get addContact => 'Kontakt hinzufügen';
-  get deleteAccount => 'löschen';
-  get exportAccount => 'exportieren';
-  get errorUserNameIsRequired => 'Benutzername darf nicht leer sein';
-  get observedPendingExtrinsic => 'Es wurde eine unbestätigte Transaktion beobachtet. Bitte warte auf Bestätigung!';
+  @override
+  String get pinSecure => 'Sichere dein Konto mit einem PIN.';
+  @override
+  String get recoveryProxy => 'Wiederherstellungsproxy';
+  @override
+  String get reputation => 'Reputation';
+  @override
+  String get tokenSend => 'SYMBOL senden';
+  @override
+  String get addContact => 'Kontakt hinzufügen';
+  @override
+  String get deleteAccount => 'löschen';
+  @override
+  String get exportAccount => 'exportieren';
+  @override
+  String get errorUserNameIsRequired => 'Benutzername darf nicht leer sein';
+  @override
+  String get observedPendingExtrinsic =>
+      'Es wurde eine unbestätigte Transaktion beobachtet. Bitte warte auf Bestätigung!';
+  @override
+  String get appHints => 'App-Tipps';
+  @override
+  String get meetUpNotifications => 'Meetup-Benachrichtigungen';
+  @override
+  String get meetUpListTileTitle =>
+      'Wenn Dein Gerät ein Xiaomi oder Honor Smartphone is, muss Autostart aktiviert sein um Meetup-Benachrichtigungen'
+      'zu erhalten.';
+  @override
+  String get openAppSettings => 'App-Einstellungen öffnen';
+  @override
+  String get enableAutoStart => 'Autostart aktivieren';
 }
 
-class TranslationsZhProfile implements TranslationsProfile {
-  get about => '关于';
-  get aboutBrief => 'Encointer 手机钱包';
-  get aboutVersion => '版本';
-  get accounts => '帐户';
-  get accountDelete => '您确定要删除该帐户吗？';
-  get accountShare => '共享账户';
-  get addressBook => '地址簿';
-  get cantEndorseBootstrapper => throw UnimplementedError();
-  get canEndorseInRegisteringPhaseOnly => throw UnimplementedError();
-  get contactAddress => '地址';
-  get contactAddressError => '无效地址';
-  get contactDelete => '删除';
-  get contactDeleteWarn => '确认删除该地址吗？';
-  get contactEndorse => throw UnimplementedError();
-  get contactAlreadyExists => '地址已存在';
-  get contactMemo => '备注';
-  get contactName => '名称';
-  get contactNameError => '名称不能为空';
-  get contactNameAlreadyExists => '名称已存在';
-  get contactSave => '保存';
-  get confirmPin => '输入密码确认操作';
-  get developer => '开发者模式';
-  get export => '导出账户';
-  get exportMnemonicOk => 'Mnemonic 已经复制到剪切板';
-  get exportWarn => '请把以下文字抄写到纸条上并妥善保存，以下文字允许任何人恢复当前账户并获取其中的数字资产。';
-  get changeYourPin => '修改密码';
-  get wrongPin => '密码错误';
-  get wrongPinHint => '解锁账户失败，请检查密码';
-  get yourNewPin => '新密码';
-  get pleaseConfirmYourNewPin => '确认新密码';
-  get passOld => '当前密码';
-  get passSuccess => '操作成功';
-  get passSuccessTxt => '密码已修改';
-  get qrScanHint => '请输入您希望收到的金额并让发件人扫描二维码。';
-  get setting => '设置';
-  get settingLang => '语言';
-  get settingLangAuto => '自动检测';
-  get settingNode => '远程节点';
-  get settingNodeList => '可选节点';
-  get settingPrefix => '地址前缀';
-  get settingPrefixList => '可选格式';
-  get share => '分享';
-  get title => '设置';
-  get unlock => '您需要输入您的 PIN 才能添加新帐户';
-  get accountCreate => '创建帐户';
-  get doYouAlreadyHaveAnAccount => '已经有账户了？';
-  get accountNameChooseHint => '您可以稍后在您的个人资料设置中更改它';
-  get accountNameChoose => '选择一个帐户名。';
-  get accountName => '账户名';
-  get import => '导入';
-  get pinHint => '您将需要此 PIN 进行交易和添加新帐户。';
-  get pinInfo => 'PIN 应至少包含 4 位数字。 如果 PIN 码丢失，则无法恢复帐户，除非您通过个人资料页面进行了备份。';
-  get pinSecure => '使用 PIN 保护您的帐户。';
-  get addAccount => '添加帐户';
-  get addCommunity => throw UnimplementedError();
-  get recoveryProxy => 'recovery proxy';
-  get ceremonies => throw UnimplementedError();
-  get reputation => throw UnimplementedError();
-  get sendLink => throw UnimplementedError();
-  get tokenSend => throw UnimplementedError();
-  get qrScanHintAccount => throw UnimplementedError();
-  get receiverAccount => throw UnimplementedError();
-  get shareLinkHint => throw UnimplementedError();
-  get hintEnterCurrentPin => throw UnimplementedError();
-  get hintThenEnterANewPin => throw UnimplementedError();
-  get reputationHistory => throw UnimplementedError();
-  get reputationOverall => throw UnimplementedError();
-  get accountsDelete => throw UnimplementedError();
-  get accountsDeleteAll => throw UnimplementedError();
-  get personalKeyEnter => throw UnimplementedError();
-  get detailsEnter => throw UnimplementedError();
-  get personalKey => throw UnimplementedError();
-  get enableBazaar => throw UnimplementedError();
-  get noMnemonicFound => throw UnimplementedError();
-  get importedWithRawSeedHenceNoMnemonic => throw UnimplementedError();
-  get addContact => throw UnimplementedError();
-  get deleteAccount => throw UnimplementedError();
-  get exportAccount => throw UnimplementedError();
-  get errorUserNameIsRequired => throw UnimplementedError();
-  get observedPendingExtrinsic => throw UnimplementedError();
+class TranslationsFrProfile implements TranslationsProfile {
+  @override
+  String get checkEmailApp => throw UnimplementedError();
+  @override
+  String get contactUs => throw UnimplementedError();
+  @override
+  String get about => throw UnimplementedError();
+  @override
+  String get aboutBrief => throw UnimplementedError();
+  @override
+  String get aboutVersion => throw UnimplementedError();
+  @override
+  String get accounts => throw UnimplementedError();
+  @override
+  String get accountDelete => throw UnimplementedError();
+  @override
+  String get accountShare => throw UnimplementedError();
+  @override
+  String get addressBook => throw UnimplementedError();
+  @override
+  String get cantEndorseBootstrapper => throw UnimplementedError();
+  @override
+  String get canEndorseInRegisteringPhaseOnly => throw UnimplementedError();
+  @override
+  String get contactAddress => throw UnimplementedError();
+  @override
+  String get contactAddressError => throw UnimplementedError();
+  @override
+  String get contactDelete => throw UnimplementedError();
+  @override
+  String get contactDeleteWarn => throw UnimplementedError();
+  @override
+  String get contactEndorse => throw UnimplementedError();
+  @override
+  String get contactAlreadyExists => throw UnimplementedError();
+  @override
+  String get contactMemo => throw UnimplementedError();
+  @override
+  String get contactName => throw UnimplementedError();
+  @override
+  String get contactNameError => throw UnimplementedError();
+  @override
+  String get contactNameAlreadyExists => throw UnimplementedError();
+  @override
+  String get contactSave => throw UnimplementedError();
+  @override
+  String get confirmPin => throw UnimplementedError();
+  @override
+  String get developer => throw UnimplementedError();
+  @override
+  String get export => throw UnimplementedError();
+  @override
+  String get exportMnemonicOk => throw UnimplementedError();
+  @override
+  String get exportWarn => throw UnimplementedError();
+  @override
+  String get changeYourPin => throw UnimplementedError();
+  @override
+  String get wrongPin => throw UnimplementedError();
+  @override
+  String get wrongPinHint => throw UnimplementedError();
+  @override
+  String get yourNewPin => throw UnimplementedError();
+  @override
+  String get pleaseConfirmYourNewPin => throw UnimplementedError();
+  @override
+  String get passOld => throw UnimplementedError();
+  @override
+  String get passSuccess => throw UnimplementedError();
+  @override
+  String get passSuccessTxt => throw UnimplementedError();
+  @override
+  String get qrScanHint => throw UnimplementedError();
+  @override
+  String get setting => throw UnimplementedError();
+  @override
+  String get settingLang => throw UnimplementedError();
+  @override
+  String get settingLangAuto => throw UnimplementedError();
+  @override
+  String get settingNode => throw UnimplementedError();
+  @override
+  String get settingNodeList => throw UnimplementedError();
+  @override
+  String get settingPrefix => throw UnimplementedError();
+  @override
+  String get settingPrefixList => throw UnimplementedError();
+  @override
+  String get share => throw UnimplementedError();
+  @override
+  String get title => throw UnimplementedError();
+  @override
+  String get unlock => throw UnimplementedError();
+  @override
+  String get accountCreate => throw UnimplementedError();
+  @override
+  String get doYouAlreadyHaveAnAccount => throw UnimplementedError();
+  @override
+  String get accountNameChooseHint => throw UnimplementedError();
+  @override
+  String get accountNameChoose => throw UnimplementedError();
+  @override
+  String get accountName => throw UnimplementedError();
+  @override
+  String get import => throw UnimplementedError();
+  @override
+  String get pinHint => throw UnimplementedError();
+  @override
+  String get pinInfo => throw UnimplementedError();
+  @override
+  String get pinSecure => throw UnimplementedError();
+  @override
+  String get addAccount => throw UnimplementedError();
+  @override
+  String get addCommunity => throw UnimplementedError();
+  @override
+  String get recoveryProxy => 'recovery proxy';
+  @override
+  String get reputation => throw UnimplementedError();
+  @override
+  String get sendLink => throw UnimplementedError();
+  @override
+  String get tokenSend => throw UnimplementedError();
+  @override
+  String get qrScanHintAccount => throw UnimplementedError();
+  @override
+  String get receiverAccount => throw UnimplementedError();
+  @override
+  String get shareLinkHint => throw UnimplementedError();
+  @override
+  String get hintEnterCurrentPin => throw UnimplementedError();
+  @override
+  String get hintThenEnterANewPin => throw UnimplementedError();
+  @override
+  String get reputationHistory => throw UnimplementedError();
+  @override
+  String get reputationOverall => throw UnimplementedError();
+  @override
+  String get accountsDelete => throw UnimplementedError();
+  @override
+  String get accountsDeleteAll => throw UnimplementedError();
+  @override
+  String get personalKeyEnter => throw UnimplementedError();
+  @override
+  String get detailsEnter => throw UnimplementedError();
+  @override
+  String get personalKey => throw UnimplementedError();
+  @override
+  String get enableBazaar => throw UnimplementedError();
+  @override
+  String get noMnemonicFound => throw UnimplementedError();
+  @override
+  String get importedWithRawSeedHenceNoMnemonic => throw UnimplementedError();
+  @override
+  String get addContact => throw UnimplementedError();
+  @override
+  String get deleteAccount => throw UnimplementedError();
+  @override
+  String get exportAccount => throw UnimplementedError();
+  @override
+  String get errorUserNameIsRequired => throw UnimplementedError();
+  @override
+  String get observedPendingExtrinsic => throw UnimplementedError();
+  @override
+  String get appHints => throw UnimplementedError();
+  @override
+  String get meetUpNotifications => throw UnimplementedError();
+  @override
+  String get meetUpListTileTitle => throw UnimplementedError();
+  @override
+  String get openAppSettings => throw UnimplementedError();
+  @override
+  String get enableAutoStart => throw UnimplementedError();
 }

@@ -4,5 +4,11 @@
 <dict>
 	<key>aps-environment</key>
 	<string>development</string>
+	<!-- ... other keys -->
+	<key>com.apple.developer.associated-domains</key>
+	<array>
+		<string>applinks:wallet.encointer.org</string>
+	</array>
+	<!-- ... other keys -->
 </dict>
 </plist>

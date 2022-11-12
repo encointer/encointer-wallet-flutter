@@ -18,30 +18,48 @@ abstract class Translations {
 
 /// for english translations
 class TranslationsEn implements Translations {
+  @override
   TranslationsHome get home => TranslationsEnHome();
+  @override
   TranslationsAccount get account => TranslationsEnAccount();
+  @override
   TranslationsAssets get assets => TranslationsEnAssets();
+  @override
   TranslationsProfile get profile => TranslationsEnProfile();
+  @override
   TranslationsEncointer get encointer => TranslationsEnEncointer();
+  @override
   TranslationsBazaar get bazaar => TranslationsEnBazaar();
 }
 
 /// for german translations
 class TranslationsDe implements Translations {
+  @override
   TranslationsHome get home => TranslationsDeHome();
+  @override
   TranslationsAccount get account => TranslationsDeAccount();
+  @override
   TranslationsAssets get assets => TranslationsDeAssets();
+  @override
   TranslationsProfile get profile => TranslationsDeProfile();
+  @override
   TranslationsEncointer get encointer => TranslationsDeEncointer();
+  @override
   TranslationsBazaar get bazaar => TranslationsDeBazaar();
 }
 
-/// for chinese translations
-class TranslationsZh implements Translations {
-  TranslationsHome get home => TranslationsZhHome();
-  TranslationsAccount get account => TranslationsZhAccount();
-  TranslationsAssets get assets => TranslationsZhAssets();
-  TranslationsProfile get profile => TranslationsZhProfile();
-  TranslationsEncointer get encointer => TranslationsZhEncointer();
-  TranslationsBazaar get bazaar => TranslationsZhBazaar();
+/// for french translations
+class TranslationsFr implements Translations {
+  @override
+  TranslationsHome get home => TranslationsFrHome();
+  @override
+  TranslationsAccount get account => TranslationsFrAccount();
+  @override
+  TranslationsAssets get assets => TranslationsFrAssets();
+  @override
+  TranslationsProfile get profile => TranslationsFrProfile();
+  @override
+  TranslationsEncointer get encointer => TranslationsFrEncointer();
+  @override
+  TranslationsBazaar get bazaar => TranslationsFrBazaar();
 }

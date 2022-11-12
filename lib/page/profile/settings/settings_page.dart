@@ -1,17 +1,17 @@
-import 'package:encointer_wallet/page/profile/settings/remote_node_list_page.dart';
-import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
+import 'package:encointer_wallet/page/profile/settings/remote_node_list_page.dart';
+import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:encointer_wallet/utils/translations/translations.dart';
+
 class SettingsPage extends StatefulWidget {
-  SettingsPage(this.changeLang, {Key? key}) : super(key: key);
+  SettingsPage({Key? key}) : super(key: key);
   static const String route = '/profile/settings';
-  final Function changeLang;
 
   @override
   State<SettingsPage> createState() => _Settings();
@@ -63,7 +63,7 @@ class _Settings extends State<SettingsPage> {
               String code = _langOptions[_selected];
               if (code != context.read<AppStore>().settings.localeCode) {
                 context.read<AppStore>().settings.setLocalCode(code);
-                widget.changeLang(context, code);
+                context.read<AppStore>().settings.changeLang(context, code);
               }
               return true;
             },

@@ -27,7 +27,8 @@ void main() {
           'time': 10,
           'registry': [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]
         },
-        'participantsClaims': {},
+        'attendees': [],
+        'participantCountVote': null,
         'meetupCompleted': false
       };
 
@@ -46,7 +47,7 @@ void main() {
           'time': 10,
           'registry': [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]
         },
-        'participantsClaims': Map<String, dynamic>.of({})
+        'attendees': []
       };
 
       var store = CommunityAccountStore.fromJson(sourceJson);
@@ -86,7 +87,8 @@ void main() {
           'time': 10,
           'registry': [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]
         },
-        'participantsClaims': Map<String, dynamic>.of({}),
+        'attendees': [],
+        'participantCountVote': null,
         'meetupCompleted': false
       };
 

@@ -76,7 +76,33 @@ abstract class _CommunityStore with Store {
   @observable
   ObservableMap<String, CommunityAccountStore>? communityAccountStores = ObservableMap();
 
+  @observable
+  String? communityIcon;
+
   get applyDemurrage => _applyDemurrage;
+
+  @action
+  Future<String?> getCommunityIcon() async {
+    try {
+      if (assetsCid == null) {
+        return null;
+      } else {
+        final data = await webApi.ipfs.getCommunityIcon(assetsCid!);
+        if (data != null) {
+          communityIcon = data;
+          return communityIcon;
+        } else {
+          return null;
+        }
+      }
+    } catch (e) {
+      Log.e('getCommunityIcon $e', 'App Store getCommunityIcon');
+      return null;
+    }
+  }
+
+  @action
+  void clearCommunityIcon() => communityIcon = null;
 
   @action
   Future<void> initCommunityAccountStore(String address) {

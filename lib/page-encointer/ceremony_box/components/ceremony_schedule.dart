@@ -49,6 +49,7 @@ class CeremonyDateLabelAbsolute extends StatelessWidget {
   final DateTime nextCeremonyDate;
   final String? languageCode;
 
+  @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
 
@@ -57,7 +58,7 @@ class CeremonyDateLabelAbsolute extends StatelessWidget {
 
     return RichText(
       text: TextSpan(
-        text: '${dic.encointer.nextCeremonyDateLabel} ',
+        text: '${dic.encointer.nextCycleDateLabel} ',
         style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
         children: [
           TextSpan(
@@ -80,6 +81,7 @@ class CeremonyDateLabelRelative extends StatelessWidget {
   final DateTime nextCeremonyDate;
   final String? languageCode;
 
+  @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
 
@@ -88,7 +90,7 @@ class CeremonyDateLabelRelative extends StatelessWidget {
 
     return RichText(
       text: TextSpan(
-        text: '${dic.encointer.nextCeremonyTimeLeft} ',
+        text: '${dic.encointer.nextCycleTimeLeft} ',
         style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
         children: [
           TextSpan(
@@ -111,6 +113,7 @@ class CeremonyDate extends StatelessWidget {
   final DateTime? nextCeremonyDate;
   final String? languageCode;
 
+  @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final h2BlackTheme = Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack);

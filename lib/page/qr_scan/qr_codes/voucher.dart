@@ -11,8 +11,10 @@ class VoucherQrCode extends QrCode<VoucherData> {
     required String issuer,
   }) : super(VoucherData(voucherUri: voucherUri, cid: cid, network: network, issuer: issuer));
 
+  @override
   QrCodeContext? context = QrCodeContext.voucher;
 
+  @override
   QrCodeVersion? version = QrCodeVersion.v2_0;
 
   static VoucherQrCode fromPayload(String payload) {
@@ -45,6 +47,7 @@ class VoucherData implements ToQrFields {
   /// Name of issuer.
   final String issuer;
 
+  @override
   List<String> toQrFields() {
     return [
       voucherUri,

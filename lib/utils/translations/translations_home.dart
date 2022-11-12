@@ -50,153 +50,291 @@ abstract class TranslationsHome {
 }
 
 class TranslationsEnHome implements TranslationsHome {
-  get cancel => 'Cancel';
-  get scan => 'Scan';
-  get contacts => 'Contacts';
-  get closeApp => 'Close app';
-  get copy => 'Copy to clipboard';
-  get create => 'Create Account';
-  get detail => 'Detail';
-  get exitConfirm => 'Do you want to exit the App?';
-  get errorOccurred => 'An error occurred:';
-  get inputInvalid => 'Invalid input';
-  get loading => 'Loading...';
-  get next => 'Next Step';
-  get notifySubmitted => 'transaction Submitted';
-  get notifySubmittedQueued => 'Queued transaction Submitted';
-  get ok => 'OK';
-  get pinNeeded => 'PIN is needed to use the app';
-  get settingNetwork => 'Select Wallet';
-  get submit => 'Sign and Submit';
-  get submitCall => 'Calling ';
-  get submitFees => 'Fees';
-  get submitFeesOffline => 'Fees unavailable (offline)';
-  get submitFrom => 'You are about to sign a transaction from ';
-  get submitNoSign => 'Submit (no sign)';
-  get submitQr => 'Sign via QR';
-  get submitTransaction => 'Submit Transaction';
-  get success => 'Success';
-  get switchAccount => 'Switch Account';
-  get switchCommunity => 'Switch Community';
-  get transactionQueued => 'Queued';
-  get transactionQueuedOffline =>
+  @override
+  String get cancel => 'Cancel';
+  @override
+  String get scan => 'Scan';
+  @override
+  String get contacts => 'Contacts';
+  @override
+  String get closeApp => 'Close app';
+  @override
+  String get copy => 'Copy to clipboard';
+  @override
+  String get create => 'Create Account';
+  @override
+  String get detail => 'Detail';
+  @override
+  String get exitConfirm => 'Do you want to exit the App?';
+  @override
+  String get errorOccurred => 'An error occurred:';
+  String get inputInvalid => 'Invalid input';
+  @override
+  String get loading => 'Loading...';
+  @override
+  String get next => 'Next Step';
+  @override
+  String get notifySubmitted => 'transaction Submitted';
+  @override
+  String get notifySubmittedQueued => 'Queued transaction Submitted';
+  @override
+  String get ok => 'OK';
+  @override
+  String get pinNeeded => 'PIN is needed to use the app';
+  @override
+  String get settingNetwork => 'Select Wallet';
+  @override
+  String get submit => 'Sign and Submit';
+  @override
+  String get submitCall => 'Calling ';
+  @override
+  String get submitFees => 'Fees';
+  @override
+  String get submitFeesOffline => 'Fees unavailable (offline)';
+  @override
+  String get submitFrom => 'You are about to sign a transaction from ';
+  @override
+  String get submitNoSign => 'Submit (no sign)';
+  @override
+  String get submitQr => 'Sign via QR';
+  @override
+  String get submitTransaction => 'Submit Transaction';
+  @override
+  String get success => 'Success';
+  @override
+  String get switchAccount => 'Switch Account';
+  @override
+  String get switchCommunity => 'Switch Community';
+  @override
+  String get transactionQueued => 'Queued';
+  @override
+  String get transactionQueuedOffline =>
       'App is not connected to the blockchain. Queued transaction (will be sent automatically upon reconnection).';
-  get unlock => 'Unlock Account with PIN';
-  get unlockAccount => 'Unlock account CURRENT_ACCOUNT_NAME with PIN';
-  get updateDownload => 'Downloading...';
-  get updateError => 'Update Failed';
-  get updateJsUp => 'Metadata needs to be updated to continue.';
-  get updateLatest => 'Your App is the newest version.';
-  get updateToNewerVersionQ => 'New version found, update now?';
-  get accountImport => 'Import account';
-  get txQueued => 'Queued Transaction';
-  get txQueuedOffline => 'You are offline. Transaction will be sent when you are back online.';
-  get txReady => 'Transaction is ready.';
-  get txBroadcast => 'Transaction has been broadcast.';
-  get txInBlock => 'Transaction is in a block.';
-  get txError => 'Transaction error';
-  get updatingAppState => 'Updating the app state...';
-  get cameraPermissionError => 'There was an error getting the camera permission. '
+  @override
+  String get unlock => 'Unlock Account with PIN';
+  @override
+  String get unlockAccount => 'Unlock account CURRENT_ACCOUNT_NAME with PIN';
+  @override
+  String get updateDownload => 'Downloading...';
+  @override
+  String get updateError => 'Update Failed';
+  @override
+  String get updateJsUp => 'Metadata needs to be updated to continue.';
+  @override
+  String get updateLatest => 'Your App is the newest version.';
+  @override
+  String get updateToNewerVersionQ => 'New version found, update now?';
+  @override
+  String get accountImport => 'Import account';
+  @override
+  String get txQueued => 'Queued Transaction';
+  @override
+  String get txQueuedOffline => 'You are offline. Transaction will be sent when you are back online.';
+  @override
+  String get txReady => 'Transaction is ready.';
+  @override
+  String get txBroadcast => 'Transaction has been broadcast.';
+  @override
+  String get txInBlock => 'Transaction is in a block.';
+  @override
+  String get txError => 'Transaction error';
+  @override
+  String get updatingAppState => 'Updating the app state...';
+  @override
+  String get cameraPermissionError => 'There was an error String getting the camera permission. '
       'Alternatively, you can grant permission in the app settings.';
-  get appSettings => 'App settings';
+  @override
+  String get appSettings => 'App settings';
 }
 
 class TranslationsDeHome implements TranslationsHome {
-  get cancel => 'Abbruch';
-  get closeApp => 'App schliessen';
-  get contacts => 'Kontakte';
-  get copy => 'In die Zwischenablage kopieren';
-  get create => 'Konto erstellen';
-  get detail => 'Detail';
-  get exitConfirm => 'Möchtest du die App verlassen?';
-  get errorOccurred => 'Es is ein Fehler aufgetaucht:';
-  get loading => 'Lädt...';
-  get next => 'Nächster Schritt';
-  get notifySubmitted => 'Transaktion eingereicht';
-  get notifySubmittedQueued => 'Die Transaktion in der Warteschlange wurde eingereicht';
-  get ok => 'OK';
-  get pinNeeded => 'PIN ist notwendig um die App zu benutzen';
-  get scan => 'Scannen';
-  get settingNetwork => 'Wähle ein Portemonnaie';
-  get submit => 'Signieren und senden';
-  get submitCall => 'Wird ausgeführt';
-  get submitFees => 'Gebühren';
-  get submitFeesOffline => 'Gebühren nicht verfügbar (offline)';
-  get submitFrom => 'Transaktion wird signiert von ';
-  get submitNoSign => 'Senden (ohne Signatur)';
-  get submitQr => 'Signieren via QR';
-  get submitTransaction => 'Transaktion senden';
-  get success => 'Erfolgreich';
-  get switchAccount => 'Konto wechseln';
-  get switchCommunity => 'Gemeinschaft wechseln';
-  get transactionQueued => 'In der Warteschlange';
-  get transactionQueuedOffline =>
+  @override
+  String get cancel => 'Abbruch';
+  @override
+  String get closeApp => 'App schliessen';
+  @override
+  String get contacts => 'Kontakte';
+  @override
+  String get copy => 'In die Zwischenablage kopieren';
+  @override
+  String get create => 'Konto erstellen';
+  @override
+  String get detail => 'Detail';
+  @override
+  String get exitConfirm => 'Möchtest du die App verlassen?';
+  @override
+  String get errorOccurred => 'Es is ein Fehler aufString getaucht:';
+  @override
+  String get loading => 'Lädt...';
+  @override
+  String get next => 'Nächster Schritt';
+  @override
+  String get notifySubmitted => 'Transaktion eingereicht';
+  @override
+  String get notifySubmittedQueued => 'Die Transaktion in der Warteschlange wurde eingereicht';
+  @override
+  String get ok => 'OK';
+  @override
+  String get pinNeeded => 'PIN ist notwendig um die App zu benutzen';
+  @override
+  String get scan => 'Scannen';
+  @override
+  String get settingNetwork => 'Wähle ein Portemonnaie';
+  @override
+  String get submit => 'Signieren und senden';
+  @override
+  String get submitCall => 'Wird ausgeführt';
+  @override
+  String get submitFees => 'Gebühren';
+  @override
+  String get submitFeesOffline => 'Gebühren nicht verfügbar (offline)';
+  @override
+  String get submitFrom => 'Transaktion wird signiert von ';
+  @override
+  String get submitNoSign => 'Senden (ohne Signatur)';
+  @override
+  String get submitQr => 'Signieren via QR';
+  @override
+  String get submitTransaction => 'Transaktion senden';
+  @override
+  String get success => 'Erfolgreich';
+  @override
+  String get switchAccount => 'Konto wechseln';
+  @override
+  String get switchCommunity => 'Gemeinschaft wechseln';
+  @override
+  String get transactionQueued => 'In der Warteschlange';
+  @override
+  String get transactionQueuedOffline =>
       'Die App ist nicht mit der Blockchain verbunden. Die Transaktionen in der Warteschlange werden automatisch bei erfolgreicher Verbindung versendet.';
-  get unlock => 'Konto entsperren mit PIN';
-  get unlockAccount => 'Entsperre Konto CURRENT_ACCOUNT_NAME mit PIN';
-  get updateDownload => 'Herunterladen...';
-  get updateError => 'Update fehlgeschlagen';
-  get updateJsUp => 'Metadaten müssen aktualisiert werden um fortzusetzen.';
-  get updateLatest => 'Die App ist auf dem neusten Stand.';
-  get updateToNewerVersionQ => 'Neue Version gefunden, jetzt aktualisieren?';
-  get accountImport => 'Konto importieren';
-  get txQueued => 'Transaktion is in der Warteschlange';
-  get txQueuedOffline => 'Du bist offline. Die Transaktion wird geschickt, wenn du wieder online bist.';
-  get txReady => 'Transaktion bereit.';
-  get txBroadcast => 'Transaktion wurde im Netzwerk';
-  get txInBlock => 'Transaction ist in einem Block';
-  get txError => 'Transaktionsfehler';
-  get updatingAppState => 'App-Zustand wird aktualisiert...';
-  get cameraPermissionError => 'Es gab einen Fehler beim überprüfen der Kameraerlaubnis.'
+  @override
+  String get unlock => 'Konto entsperren mit PIN';
+  @override
+  String get unlockAccount => 'Entsperre Konto CURRENT_ACCOUNT_NAME mit PIN';
+  @override
+  String get updateDownload => 'Herunterladen...';
+  @override
+  String get updateError => 'Update fehlgeschlagen';
+  @override
+  String get updateJsUp => 'Metadaten müssen aktualisiert werden um fortzusetzen.';
+  @override
+  String get updateLatest => 'Die App ist auf dem neusten Stand.';
+  @override
+  String get updateToNewerVersionQ => 'Neue Version gefunden, jetzt aktualisieren?';
+  @override
+  String get accountImport => 'Konto importieren';
+  @override
+  String get txQueued => 'Transaktion is in der Warteschlange';
+  @override
+  String get txQueuedOffline => 'Du bist offline. Die Transaktion wird geschickt, wenn du wieder online bist.';
+  @override
+  String get txReady => 'Transaktion bereit.';
+  @override
+  String get txBroadcast => 'Transaktion wurde im Netzwerk';
+  @override
+  String get txInBlock => 'Transaction ist in einem Block';
+  @override
+  String get txError => 'Transaktionsfehler';
+  @override
+  String get updatingAppState => 'App-Zustand wird aktualisiert...';
+  @override
+  String get cameraPermissionError => 'Es gab einen Fehler beim überprüfen der Kameraerlaubnis.'
       'Du kannst die Erlaubnis für die Kamera auch über die App-Einstellungen erteilen.';
-  get appSettings => 'App-Einstellungen';
+  @override
+  String get appSettings => 'App-Einstellungen';
 }
 
-class TranslationsZhHome implements TranslationsHome {
-  get cancel => '取消';
-  get scan => '扫描';
-  get contacts => '联系人';
-  get closeApp => '关闭应用程序';
-  get copy => '复制到剪贴板';
-  get create => '新建账户';
-  get detail => '详情';
-  get exitConfirm => '确定要退出 App 吗？';
-  get errorOccurred => throw UnimplementedError();
-  get loading => '载入中。。。';
-  get next => '下一步';
-  get notifySubmitted => '交易已打包完成';
-  get notifySubmittedQueued => '已提交排队传输';
-  get ok => '确认';
-  get pinNeeded => '需要一个密码才能使用该应用程序';
-  get settingNetwork => '选择钱包';
-  get submit => '签名并发送';
-  get submitCall => '调用 ';
-  get submitFees => '交易费';
-  get submitFeesOffline => '费用不可用（该应用程序处于离线状态）';
-  get submitFrom => '你将使用以下账户发送交易：';
-  get submitNoSign => '发送(不签名)';
-  get submitQr => '二维码签名';
-  get submitTransaction => '发送交易';
-  get success => '操作成功';
-  get switchAccount => '切换帐号';
-  get switchCommunity => throw UnimplementedError();
-  get transactionQueued => '已加入队列';
-  get transactionQueuedOffline => '该应用程序未连接到区块链。 排队交易（将在重新连接时自动发送）';
-  get unlock => '使用密码解锁账户';
-  get unlockAccount => '使用 PIN 解锁帐户 CURRENT_ACCOUNT_NAME';
-  get updateDownload => '正在下载...';
-  get updateError => '更新失败';
-  get updateJsUp => '发现网络 Metadata 更新，需要下载才能继续使用。';
-  get updateLatest => '您的应用已是最新版本。';
-  get updateToNewerVersionQ => '发现新版本，立即更新吗？';
-  get accountImport => '导入账户';
-  get txQueued => throw UnimplementedError();
-  get txQueuedOffline => throw UnimplementedError();
-  get txReady => throw UnimplementedError();
-  get txBroadcast => throw UnimplementedError();
-  get txInBlock => throw UnimplementedError();
-  get txError => throw UnimplementedError();
-  get updatingAppState => throw UnimplementedError();
-  get cameraPermissionError => throw UnimplementedError();
-  get appSettings => throw UnimplementedError();
+class TranslationsFrHome implements TranslationsHome {
+  @override
+  String get cancel => throw UnimplementedError();
+  @override
+  String get scan => throw UnimplementedError();
+  @override
+  String get contacts => throw UnimplementedError();
+  @override
+  String get closeApp => throw UnimplementedError();
+  @override
+  String get copy => throw UnimplementedError();
+  @override
+  String get create => throw UnimplementedError();
+  @override
+  String get detail => throw UnimplementedError();
+  @override
+  String get exitConfirm => throw UnimplementedError();
+  @override
+  String get errorOccurred => throw UnimplementedError();
+  @override
+  String get loading => throw UnimplementedError();
+  @override
+  String get next => throw UnimplementedError();
+  @override
+  String get notifySubmitted => throw UnimplementedError();
+  @override
+  String get notifySubmittedQueued => throw UnimplementedError();
+  @override
+  String get ok => throw UnimplementedError();
+  @override
+  String get pinNeeded => throw UnimplementedError();
+  @override
+  String get settingNetwork => throw UnimplementedError();
+  @override
+  String get submit => throw UnimplementedError();
+  @override
+  String get submitCall => throw UnimplementedError();
+  @override
+  String get submitFees => throw UnimplementedError();
+  @override
+  String get submitFeesOffline => throw UnimplementedError();
+  @override
+  String get submitFrom => throw UnimplementedError();
+  @override
+  String get submitNoSign => throw UnimplementedError();
+  @override
+  String get submitQr => throw UnimplementedError();
+  @override
+  String get submitTransaction => throw UnimplementedError();
+  @override
+  String get success => throw UnimplementedError();
+  @override
+  String get switchAccount => throw UnimplementedError();
+  @override
+  String get switchCommunity => throw UnimplementedError();
+  @override
+  String get transactionQueued => throw UnimplementedError();
+  @override
+  String get transactionQueuedOffline => throw UnimplementedError();
+  @override
+  String get unlock => throw UnimplementedError();
+  @override
+  String get unlockAccount => throw UnimplementedError();
+  @override
+  String get updateDownload => throw UnimplementedError();
+  @override
+  String get updateError => throw UnimplementedError();
+  @override
+  String get updateJsUp => throw UnimplementedError();
+  @override
+  String get updateLatest => throw UnimplementedError();
+  @override
+  String get updateToNewerVersionQ => throw UnimplementedError();
+  @override
+  String get accountImport => throw UnimplementedError();
+  @override
+  String get txQueued => throw UnimplementedError();
+  @override
+  String get txQueuedOffline => throw UnimplementedError();
+  @override
+  String get txReady => throw UnimplementedError();
+  @override
+  String get txBroadcast => throw UnimplementedError();
+  @override
+  String get txInBlock => throw UnimplementedError();
+  @override
+  String get txError => throw UnimplementedError();
+  @override
+  String get updatingAppState => throw UnimplementedError();
+  @override
+  String get cameraPermissionError => throw UnimplementedError();
+  @override
+  String get appSettings => throw UnimplementedError();
 }

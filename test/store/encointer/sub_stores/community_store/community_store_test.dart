@@ -1,3 +1,4 @@
+import 'package:encointer_wallet/config.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:encointer_wallet/mocks/data/mock_encointer_data.dart';
@@ -16,7 +17,10 @@ void main() {
       var communityStoreCacheKey = 'communityStore-test-cache';
 
       // Only to not get null errors in tests
-      webApi = getMockApi(AppStore(MockLocalStorage()), withUI: false);
+      webApi = getMockApi(
+        AppStore(MockLocalStorage(), config: const AppConfig()),
+        withUI: false,
+      );
       webApi.init();
 
       var communityStore = CommunityStore(
@@ -62,7 +66,8 @@ void main() {
         'communityAccountStores': Map<String, dynamic>.of({
           ALICE_ADDRESS: aliceCommunityAccountStore.toJson(),
           BOB_ADDRESS: bobCommunityAccountStore.toJson(),
-        })
+        }),
+        'communityIcon': null,
       };
 
       expect(communityStore.toJson(), targetJson);
