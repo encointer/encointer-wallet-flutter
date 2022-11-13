@@ -16,7 +16,7 @@ source ./scripts/init_env.sh
 
 DISTRO="linux-x64"
 NODE_VERSION="16.13.1" # should match the value from the CI.
-SHA_SUM="a3721f87cecc0b52b0be8587c20776ac7305db413751db02c55aa2bffac15198"
+SHA_SUM="04379ec7651db61bb0023f151b49c4ddbb1de4ff"
 NODE="node-v${NODE_VERSION}-${DISTRO}"
 
 curl -Lo node.tar.gz "https://nodejs.org/dist/v${NODE_VERSION}/${NODE}.tar.gz"
