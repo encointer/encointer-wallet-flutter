@@ -19,10 +19,10 @@ NODE_VERSION="16.13.1" # should match the value from the CI.
 SHA_SUM="a3721f87cecc0b52b0be8587c20776ac7305db413751db02c55aa2bffac15198"
 NODE="node-v${NODE_VERSION}-${DISTRO}"
 
-curl -Lo node.tar.xz "https://nodejs.org/dist/v${NODE_VERSION}/${NODE}.tar.xz"
-echo "${SHA_SUM} node.tar.xz" | sha256sum -c -
+curl -Lo node.tar.gz "https://nodejs.org/dist/v${NODE_VERSION}/${NODE}.tar.gz"
+echo "${SHA_SUM} node.tar.gz" | sha256sum -c -
 
-tar -vxf node.tar.xz && rm node.tar.xz
+tar -vxf node.tar.gz && rm node.tar.gz
 
 export PATH=$PATH:$PWD/${NODE}/bin
 
