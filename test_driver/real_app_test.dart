@@ -112,22 +112,22 @@ void main() async {
 
     await driver.waitFor(find.byValueKey('profile-list-view'));
     await addDelay(1000);
+
     await driver.tap(find.byValueKey('Wallet'));
+    await addDelay(1000);
   });
 
   test('change-community', () async {
-    await driver.tap(find.byValueKey('Contacts'));
-    // print('wait panel-controller');
+    await driver.runUnsynchronized(() async {
+      await driver.tap(find.byValueKey('panel-controller'));
+      await driver.tap(find.byValueKey('add-community'));
 
-    // await driver.tap(find.byValueKey('panel-controller'));
-    // print('tap panel-controller');
-    // await driver.tap(find.byValueKey('add-community'));
+      // await driver.tap(find.byValueKey('cid-1-marker-icon'));
+      // await driver.tap(find.byValueKey('cid-1-marker-description'));
+      // await driver.waitFor(find.byValueKey('add-community'));
+    });
 
-    // await driver.tap(find.byValueKey('cid-1-marker-icon'));
-    // await driver.tap(find.byValueKey('cid-1-marker-description'));
-    // await driver.waitFor(find.byValueKey('add-community'));
-
-    // await addDelay(5000);
+    await addDelay(5000);
   }, timeout: const Timeout(Duration(seconds: 95)));
 
   tearDownAll(() async {
