@@ -172,17 +172,14 @@ class _AssetsState extends State<Assets> {
 
                       return Column(
                         children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              InkWell(
-                                  child: CombinedCommunityAndAccountAvatar(store),
-                                  onTap: () {
-                                    if (panelController != null && panelController!.isAttached) {
-                                      panelController!.open();
-                                    }
-                                  }),
-                            ],
+                          InkWell(
+                            key: const Key('panel-controller'),
+                            child: CombinedCommunityAndAccountAvatar(store),
+                            onTap: () {
+                              if (panelController != null && panelController!.isAttached) {
+                                panelController!.open();
+                              }
+                            },
                           ),
                           Observer(
                             builder: (_) {
@@ -339,9 +336,7 @@ class _AssetsState extends State<Assets> {
               child: ListView(
                 controller: scrollController,
                 children: <Widget>[
-                  const SizedBox(
-                    height: 12.0,
-                  ),
+                  const SizedBox(height: 12.0),
                   const DragHandle(),
                   Column(children: [
                     Observer(
@@ -417,7 +412,11 @@ class _AssetsState extends State<Assets> {
             color: ZurichLion.shade50,
             shape: BoxShape.circle,
           ),
-          child: const Icon(Icons.add, size: 36),
+          child: const Icon(
+            Icons.add,
+            key: Key('add-community'),
+            size: 36,
+          ),
         ),
         name: dic!.profile.addCommunity,
       ),

@@ -11,6 +11,7 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/page/account/create/add_account_page.dart';
 import 'package:encointer_wallet/page/account/create_account_entry_page.dart';
+import 'package:encointer_wallet/page/network_select_page.dart';
 import 'package:encointer_wallet/page/profile/about_page.dart';
 import 'package:encointer_wallet/page/profile/account/account_manage_page.dart';
 import 'package:encointer_wallet/page/profile/account/change_password_page.dart';
@@ -217,7 +218,7 @@ class _ProfileState extends State<Profile> {
                             style: Theme.of(context).textTheme.headline4,
                           ),
                         ),
-                        onTap: () => Navigator.of(context).pushNamed('/network'),
+                        onTap: () => Navigator.of(context).pushNamed(NetworkSelectPage.route),
                       ),
                       trailing: Padding(
                         padding: const EdgeInsets.only(right: 13), // align with developer checkbox above

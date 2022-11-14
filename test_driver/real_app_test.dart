@@ -100,8 +100,35 @@ void main() async {
       dyScroll: -300.0,
     );
 
-    await addDelay(5000);
+    await addDelay(1000);
   });
+
+  test('change-network', () async {
+    await driver.tap(find.byValueKey('choose-network'));
+    await addDelay(1000);
+
+    await driver.tap(find.byValueKey('nctr-gsl-dev'));
+    await driver.tap(find.text('Alice'));
+
+    await driver.waitFor(find.byValueKey('profile-list-view'));
+    await addDelay(1000);
+    await driver.tap(find.byValueKey('Wallet'));
+  });
+
+  test('change-community', () async {
+    await driver.tap(find.byValueKey('Contacts'));
+    // print('wait panel-controller');
+
+    // await driver.tap(find.byValueKey('panel-controller'));
+    // print('tap panel-controller');
+    // await driver.tap(find.byValueKey('add-community'));
+
+    // await driver.tap(find.byValueKey('cid-1-marker-icon'));
+    // await driver.tap(find.byValueKey('cid-1-marker-description'));
+    // await driver.waitFor(find.byValueKey('add-community'));
+
+    // await addDelay(5000);
+  }, timeout: const Timeout(Duration(seconds: 95)));
 
   tearDownAll(() async {
     await driver.close();
