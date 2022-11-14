@@ -43,6 +43,9 @@ void main() async {
 
   test('home-page', () async {
     await driver.scroll(find.byType('RefreshIndicator'), 20, 300, const Duration(seconds: 1));
+    final findDialog = find.byType('AlertDialog').serialize();
+    if (findDialog['type'] == 'AlertDialog') await driver.tap(find.text('IGNORE'));
+
     await addDelay(1500);
   });
 
@@ -74,8 +77,29 @@ void main() async {
     await driver.enterText('Eldiar');
     await driver.tap(find.byValueKey('contact-save'));
     await addDelay(1500);
-    
+
     await driver.tap(find.byValueKey('Wallet'));
+    await addDelay(1000);
+  });
+
+  test('turn on dev-mode', () async {
+    await driver.tap(find.byValueKey('Profile'));
+
+    await driver.scrollUntilVisible(
+      find.byValueKey('profile-list-view'),
+      find.byValueKey('dev-mode'),
+      dyScroll: -300.0,
+    );
+
+    await driver.tap(find.byValueKey('dev-mode'));
+    await addDelay(1000);
+
+    await driver.scrollUntilVisible(
+      find.byValueKey('profile-list-view'),
+      find.byValueKey('next-phase-button'),
+      dyScroll: -300.0,
+    );
+
     await addDelay(5000);
   });
 

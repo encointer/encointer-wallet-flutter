@@ -111,7 +111,10 @@ class _AssetsState extends State<Assets> {
       },
     )..start();
 
-    final appBar = AppBar(title: Text(dic!.assets.home));
+    final appBar = AppBar(
+      key: const Key('assets-index-appbar'),
+      title: Text(dic!.assets.home),
+    );
 
     return FocusDetector(
       onFocusLost: () {
@@ -132,6 +135,7 @@ class _AssetsState extends State<Assets> {
           upgrader: Upgrader(
             appcastConfig: context.watch<AppStore>().appcastConfiguration,
             debugLogging: context.select<AppStore, bool>((e) => e.appcastConfiguration != null),
+            shouldPopScope: () => true,
             canDismissDialog: true,
           ),
           child: SlidingUpPanel(

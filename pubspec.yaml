@@ -67,7 +67,7 @@ dependencies:
   aes_ecb_pkcs5_flutter: ^0.1.2
   permission_handler: ^10.1.0
   flutter_svg: ^1.1.1+1
-  url_launcher: ^6.1.6
+  url_launcher: ^6.1.5
   dropdown_search: ^5.0.3
   material_floating_search_bar: ^0.3.7
   provider: ^6.0.4
@@ -81,7 +81,7 @@ dependencies:
   focus_detector: ^2.0.1
   jdenticon_dart: ^2.0.0
   photo_view: ^0.14.0
-  upgrader: ^4.7.0
+  upgrader: ^4.11.1
   workmanager: ^0.5.0
   uni_links: ^0.5.1
 
