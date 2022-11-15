@@ -120,15 +120,24 @@ void main() async {
   test('change-community', () async {
     await driver.runUnsynchronized(() async {
       await driver.tap(find.byValueKey('panel-controller'));
+      await addDelay(1000);
       await driver.tap(find.byValueKey('add-community'));
 
-      // await driver.tap(find.byValueKey('cid-1-marker-icon'));
-      // await driver.tap(find.byValueKey('cid-1-marker-description'));
-      // await driver.waitFor(find.byValueKey('add-community'));
+      await driver.tap(find.byValueKey('cid-0-marker-icon'));
+      await addDelay(1000);
+      await driver.tap(find.byValueKey('cid-0-marker-description'));
+      await addDelay(1000);
+
+      await driver.waitFor(find.byValueKey('add-community'));
+      await addDelay(1000);
+      await driver.scroll(find.byValueKey('drag-handle-panel'), 0, 300, const Duration(seconds: 1));
+      await addDelay(1000);
+      await driver.scroll(find.byType('RefreshIndicator'), 20, 300, const Duration(seconds: 1));
+      await addDelay(5000);
     });
 
     await addDelay(5000);
-  }, timeout: const Timeout(Duration(seconds: 95)));
+  });
 
   tearDownAll(() async {
     await driver.close();
