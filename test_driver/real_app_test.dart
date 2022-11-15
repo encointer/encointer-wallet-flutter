@@ -132,6 +132,7 @@ void main() async {
       await addDelay(1000);
       await driver.scroll(find.byValueKey('drag-handle-panel'), 0, 300, const Duration(seconds: 1));
       await addDelay(1000);
+      
       await driver.scroll(find.byType('RefreshIndicator'), 20, 300, const Duration(seconds: 1));
       await addDelay(5000);
     });
