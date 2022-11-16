@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_driver/flutter_driver.dart';
 
 import 'add_delay.dart';
@@ -50,6 +52,14 @@ Future<void> tapAndWaitNextPhase(FlutterDriver driver) async {
 Future<void> registerAndWait(FlutterDriver driver) async {
   await driver.tap(find.byValueKey('registration-meetup-button'));
   await driver.waitFor(find.byValueKey('is-registered-info'));
+  await addDelay(1000);
+}
+
+Future<void> changeAccountFromPanel(FlutterDriver driver, String account) async {
+  await driver.tap(find.byValueKey('panel-controller'));
+  await driver.tap(find.byValueKey(account));
+  await closePanel(driver);
+  await addDelay(1000);
 }
 
 Future<void> importAccountAndRegisterMeetup(FlutterDriver driver, String account) async {
@@ -106,4 +116,23 @@ Future<void> startMeetupTest(FlutterDriver driver) async {
   await driver.waitFor(find.byValueKey('panel-controller'));
   await scrollToPanelController(driver);
   await addDelay(1000);
+}
+
+Future<void> dismissUpgradeDialogOnAndroid(FlutterDriver driver) async {
+  final operationSystem = await driver.requestData('getPlatform');
+  log('operationSystem ==================> $operationSystem');
+
+  if (operationSystem != 'android') {
+    // driver.('mobile: alert', {'action': 'accept', 'buttonLabel': 'Allow'});
+  }
+
+  try {
+    log('Waiting for upgrader alert dialog');
+    await driver.waitFor(find.byType('AlertDialog'));
+
+    log('Tapping ignore button');
+    await driver.tap(find.text('IGNORE'));
+  } catch (e) {
+    log(e.toString());
+  }
 }

@@ -4,7 +4,8 @@ import 'package:test/test.dart';
 import 'helpers/add_delay.dart';
 import 'helpers/real_app_helper.dart';
 
-// flutter drive --target=test_driver/real_app.dart --flavor dev
+// [ANDROID] flutter drive --target=test_driver/real_app.dart --flavor dev
+// [IOS] flutter drive --target=test_driver/real_app.dart
 
 void main() async {
   late FlutterDriver driver;
@@ -44,8 +45,7 @@ void main() async {
 
   test('home-page', () async {
     await refreshWalletPage(driver);
-    final findDialog = find.byType('AlertDialog').serialize();
-    if (findDialog['type'] == 'AlertDialog') await driver.tap(find.text('IGNORE'));
+    await dismissUpgradeDialogOnAndroid(driver);
 
     await addDelay(1000);
   });
@@ -128,6 +128,7 @@ void main() async {
   });
 
   test('register-Alice', () async {
+    await addDelay(1500);
     await scrollToCeremonyBox(driver);
 
     await registerAndWait(driver);
@@ -158,13 +159,25 @@ void main() async {
   });
 
   test('start meetup-Cahrlie', () async {
+    await addDelay(1000);
     await startMeetupTest(driver);
   });
 
-  // test('start meetup-Bob', () async {
-  //   await driver.tap(find.byValueKey('panel-controller'));
-  //   await startMeetupTest(driver);
-  // });
+  test('start meetup-Bob', () async {
+    await addDelay(1000);
+    await changeAccountFromPanel(driver, 'Bob');
+    await startMeetupTest(driver);
+    await addDelay(1000);
+  });
+
+  test('start meetup-Alice', () async {
+    await addDelay(1000);
+    await changeAccountFromPanel(driver, 'Alice');
+    await startMeetupTest(driver);
+    await driver.waitFor(find.byValueKey('claim-pending-dev'));
+    await driver.tap(find.byValueKey('claim-pending-dev'));
+    await addDelay(20000);
+  }, timeout: const Timeout(Duration(seconds: 100)));
 
   tearDownAll(() async {
     await driver.close();

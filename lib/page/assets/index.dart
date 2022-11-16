@@ -300,6 +300,7 @@ class _AssetsState extends State<Assets> {
 
                                   if (hasPendingIssuance) {
                                     return SubmitButton(
+                                      key: const Key('claim-pending-dev'),
                                       child: Text(dic.assets.issuancePending),
                                       onPressed: (context) => submitClaimRewards(
                                         context,
@@ -429,7 +430,7 @@ class _AssetsState extends State<Assets> {
     List<AccountOrCommunityData> allAccounts = [];
     allAccounts.addAll(store.account.accountListAll.map(
       (account) => AccountOrCommunityData(
-        avatar: AddressIcon('', account.pubKey, size: avatarSize, tapToCopy: false),
+        avatar: AddressIcon('', account.pubKey, key: Key(account.name), size: avatarSize, tapToCopy: false),
         name: account.name,
         isSelected: account.pubKey == store.account.currentAccountPubKey,
       ),
