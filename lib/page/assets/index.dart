@@ -324,7 +324,7 @@ class _AssetsState extends State<Assets> {
                           : Container();
                     }),
                     const SizedBox(height: 24),
-                    CeremonyBox(store, webApi),
+                    CeremonyBox(store, webApi, key: const Key('ceremony-box-wallet')),
                   ],
                 ),
               ),
@@ -437,6 +437,7 @@ class _AssetsState extends State<Assets> {
     allAccounts.add(
       AccountOrCommunityData(
         avatar: Container(
+          key: const Key('add-account-panel'),
           height: avatarSize,
           width: avatarSize,
           decoration: BoxDecoration(

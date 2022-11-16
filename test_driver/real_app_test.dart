@@ -74,7 +74,7 @@ void main() async {
     await driver.enterText('5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW');
     await driver.tap(find.byValueKey('contact-name'));
     await driver.enterText('Eldiar');
-    
+
     await driver.tap(find.byValueKey('contact-save'));
     await addDelay(1000);
 
@@ -134,17 +134,91 @@ void main() async {
     });
   });
 
-  // test('register-Alice', () async {
-  //   await driver.scrollUntilVisible(
-  //     find.byValueKey('list-view-wallet'),
-  //     find.byValueKey('registration-meetup-button'),
-  //     dyScroll: -300.0,
-  //   );
+  test('register-Alice', () async {
+    await driver.scrollUntilVisible(
+      find.byValueKey('list-view-wallet'),
+      find.byValueKey('ceremony-box-wallet'),
+      dyScroll: -300.0,
+    );
 
-  //   await driver.tap(find.byValueKey('registration-meetup-button'));
-  //   await driver.waitFor(find.byValueKey('is-registered-info'));
-  //   await addDelay(1000);
-  // });
+    await driver.tap(find.byValueKey('registration-meetup-button'));
+    await driver.waitFor(find.byValueKey('is-registered-info'));
+
+    await driver.scrollUntilVisible(
+      find.byValueKey('list-view-wallet'),
+      find.byValueKey('panel-controller'),
+      dyScroll: 300.0,
+    );
+    await addDelay(1000);
+  });
+
+  test('import and register-Bob', () async {
+    await driver.tap(find.byValueKey('panel-controller'));
+    await driver.tap(find.byValueKey('add-account-panel'));
+
+    await driver.waitFor(find.byValueKey('import-account'));
+    await driver.tap(find.byValueKey('import-account'));
+
+    await driver.waitFor(find.byValueKey('create-account-name'));
+    await driver.tap(find.byValueKey('create-account-name'));
+    await driver.enterText('Bob');
+
+    await driver.tap(find.byValueKey('account-source'));
+    await driver.enterText('//Bob');
+
+    await driver.tap(find.byValueKey('account-import-next'));
+    await driver.waitFor(find.byValueKey('panel-controller'));
+
+    await driver.scrollUntilVisible(
+      find.byValueKey('list-view-wallet'),
+      find.byValueKey('ceremony-box-wallet'),
+      dyScroll: -300.0,
+    );
+
+    await driver.tap(find.byValueKey('registration-meetup-button'));
+    await driver.waitFor(find.byValueKey('is-registered-info'));
+
+    await driver.scrollUntilVisible(
+      find.byValueKey('list-view-wallet'),
+      find.byValueKey('panel-controller'),
+      dyScroll: 300.0,
+    );
+    await addDelay(1000);
+  });
+
+  test('import and register-Charlie', () async {
+    await driver.tap(find.byValueKey('panel-controller'));
+    await driver.tap(find.byValueKey('add-account-panel'));
+
+    await driver.waitFor(find.byValueKey('import-account'));
+    await driver.tap(find.byValueKey('import-account'));
+
+    await driver.waitFor(find.byValueKey('create-account-name'));
+    await driver.tap(find.byValueKey('create-account-name'));
+    await driver.enterText('Charlie');
+
+    await driver.tap(find.byValueKey('account-source'));
+    await driver.enterText('//Charlie');
+
+    await driver.tap(find.byValueKey('account-import-next'));
+    await driver.waitFor(find.byValueKey('panel-controller'));
+
+    await driver.scrollUntilVisible(
+      find.byValueKey('list-view-wallet'),
+      find.byValueKey('ceremony-box-wallet'),
+      dyScroll: -300.0,
+    );
+
+    await driver.tap(find.byValueKey('registration-meetup-button'));
+    await driver.waitFor(find.byValueKey('is-registered-info'));
+
+    await driver.scrollUntilVisible(
+      find.byValueKey('list-view-wallet'),
+      find.byValueKey('panel-controller'),
+      dyScroll: 300.0,
+    );
+    await addDelay(1000);
+  });
 
   tearDownAll(() async {
     await driver.close();
