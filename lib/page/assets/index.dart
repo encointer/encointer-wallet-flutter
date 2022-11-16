@@ -334,6 +334,7 @@ class _AssetsState extends State<Assets> {
               context: context,
               removeTop: true,
               child: ListView(
+                key: const Key('list-view-wallet'),
                 controller: scrollController,
                 children: <Widget>[
                   const SizedBox(height: 12.0),

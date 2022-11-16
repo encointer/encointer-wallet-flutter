@@ -46,7 +46,7 @@ void main() async {
     final findDialog = find.byType('AlertDialog').serialize();
     if (findDialog['type'] == 'AlertDialog') await driver.tap(find.text('IGNORE'));
 
-    await addDelay(1500);
+    await addDelay(1000);
   });
 
   test('qr-receive page', () async {
@@ -58,7 +58,6 @@ void main() async {
 
   test('transfer-page', () async {
     await driver.tap(find.byValueKey('transfer'));
-    await addDelay(1000);
     await driver.tap(find.byValueKey('transfer-amount-input'));
 
     await driver.enterText('3.4');
@@ -75,8 +74,9 @@ void main() async {
     await driver.enterText('5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW');
     await driver.tap(find.byValueKey('contact-name'));
     await driver.enterText('Eldiar');
+    
     await driver.tap(find.byValueKey('contact-save'));
-    await addDelay(1500);
+    await addDelay(1000);
 
     await driver.tap(find.byValueKey('Wallet'));
     await addDelay(1000);
@@ -92,7 +92,6 @@ void main() async {
     );
 
     await driver.tap(find.byValueKey('dev-mode'));
-    await addDelay(1000);
 
     await driver.scrollUntilVisible(
       find.byValueKey('profile-list-view'),
@@ -105,13 +104,11 @@ void main() async {
 
   test('change-network', () async {
     await driver.tap(find.byValueKey('choose-network'));
-    await addDelay(1000);
 
     await driver.tap(find.byValueKey('nctr-gsl-dev'));
     await driver.tap(find.text('Alice'));
 
     await driver.waitFor(find.byValueKey('profile-list-view'));
-    await addDelay(1000);
 
     await driver.tap(find.byValueKey('Wallet'));
     await addDelay(1000);
@@ -120,11 +117,10 @@ void main() async {
   test('change-community', () async {
     await driver.runUnsynchronized(() async {
       await driver.tap(find.byValueKey('panel-controller'));
-      await addDelay(1000);
       await driver.tap(find.byValueKey('add-community'));
+      await addDelay(1000);
 
       await driver.tap(find.byValueKey('cid-0-marker-icon'));
-      await addDelay(1000);
       await driver.tap(find.byValueKey('cid-0-marker-description'));
       await addDelay(1000);
 
@@ -132,13 +128,23 @@ void main() async {
       await addDelay(1000);
       await driver.scroll(find.byValueKey('drag-handle-panel'), 0, 300, const Duration(seconds: 1));
       await addDelay(1000);
-      
-      await driver.scroll(find.byType('RefreshIndicator'), 20, 300, const Duration(seconds: 1));
-      await addDelay(5000);
-    });
 
-    await addDelay(5000);
+      await driver.scroll(find.byType('RefreshIndicator'), 20, 300, const Duration(seconds: 1));
+      await addDelay(1000);
+    });
   });
+
+  // test('register-Alice', () async {
+  //   await driver.scrollUntilVisible(
+  //     find.byValueKey('list-view-wallet'),
+  //     find.byValueKey('registration-meetup-button'),
+  //     dyScroll: -300.0,
+  //   );
+
+  //   await driver.tap(find.byValueKey('registration-meetup-button'));
+  //   await driver.waitFor(find.byValueKey('is-registered-info'));
+  //   await addDelay(1000);
+  // });
 
   tearDownAll(() async {
     await driver.close();
