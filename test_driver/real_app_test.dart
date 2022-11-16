@@ -236,6 +236,41 @@ void main() async {
     await driver.waitFor(find.byType('SnackBar'));
 
     await driver.tap(find.byValueKey('Wallet'));
+    await addDelay(1000);
+  });
+
+  test('start meetup-Cahrlie', () async {
+    await driver.scrollUntilVisible(
+      find.byValueKey('profile-list-view'),
+      find.byValueKey('start-meetup'),
+      dyScroll: -300.0,
+    );
+
+    await driver.tap(find.byValueKey('start-meetup'));
+    await addDelay(500);
+
+    await driver.waitFor(find.byValueKey('attendees-count'));
+    await driver.tap(find.byValueKey('attendees-count'));
+    await driver.enterText('3');
+    await addDelay(500);
+    await driver.tap(find.byValueKey('ceremony-step-1-next'));
+
+    await driver.waitFor(find.byValueKey('attest-all-participants-dev'));
+    await driver.tap(find.byValueKey('attest-all-participants-dev'));
+    await addDelay(500);
+    await driver.waitFor(find.byType('SnackBar'));
+    await driver.tap(find.byValueKey('close-meetup'));
+
+    await driver.waitFor(find.byValueKey('submit-claims'));
+    await driver.tap(find.byValueKey('submit-claims'));
+    await addDelay(500);
+
+    await driver.waitFor(find.byValueKey('panel-controller'));
+    await driver.scrollUntilVisible(
+      find.byValueKey('profile-list-view'),
+      find.byValueKey('panel-controller'),
+      dyScroll: 300.0,
+    );
     await addDelay(5000);
   });
 
