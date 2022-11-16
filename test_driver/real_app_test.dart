@@ -220,6 +220,25 @@ void main() async {
     await addDelay(1000);
   });
 
+  test('get attesting-phase', () async {
+    await driver.tap(find.byValueKey('Profile'));
+
+    await driver.scrollUntilVisible(
+      find.byValueKey('profile-list-view'),
+      find.byValueKey('next-phase-button'),
+      dyScroll: -300.0,
+    );
+
+    await driver.tap(find.byValueKey('next-phase-button'));
+    await driver.waitFor(find.byType('SnackBar'));
+
+    await driver.tap(find.byValueKey('next-phase-button'));
+    await driver.waitFor(find.byType('SnackBar'));
+
+    await driver.tap(find.byValueKey('Wallet'));
+    await addDelay(5000);
+  });
+
   tearDownAll(() async {
     await driver.close();
   });
