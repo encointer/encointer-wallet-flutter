@@ -2,6 +2,7 @@ import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
 import 'helpers/add_delay.dart';
+import 'helpers/real_app_helper.dart';
 
 // flutter drive --target=test_driver/real_app.dart --flavor dev
 
@@ -42,7 +43,7 @@ void main() async {
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('home-page', () async {
-    await driver.scroll(find.byType('RefreshIndicator'), 20, 300, const Duration(seconds: 1));
+    await refreshWalletPage(driver);
     final findDialog = find.byType('AlertDialog').serialize();
     if (findDialog['type'] == 'AlertDialog') await driver.tap(find.text('IGNORE'));
 
@@ -85,19 +86,11 @@ void main() async {
   test('turn on dev-mode', () async {
     await driver.tap(find.byValueKey('Profile'));
 
-    await driver.scrollUntilVisible(
-      find.byValueKey('profile-list-view'),
-      find.byValueKey('dev-mode'),
-      dyScroll: -300.0,
-    );
+    await scrollToDevMode(driver);
 
     await driver.tap(find.byValueKey('dev-mode'));
 
-    await driver.scrollUntilVisible(
-      find.byValueKey('profile-list-view'),
-      find.byValueKey('next-phase-button'),
-      dyScroll: -300.0,
-    );
+    await scrollToNextPhaseButton(driver);
 
     await addDelay(1000);
   });
@@ -126,153 +119,52 @@ void main() async {
 
       await driver.waitFor(find.byValueKey('add-community'));
       await addDelay(1000);
-      await driver.scroll(find.byValueKey('drag-handle-panel'), 0, 300, const Duration(seconds: 1));
+      await closePanel(driver);
       await addDelay(1000);
 
-      await driver.scroll(find.byType('RefreshIndicator'), 20, 300, const Duration(seconds: 1));
+      await refreshWalletPage(driver);
       await addDelay(1000);
     });
   });
 
   test('register-Alice', () async {
-    await driver.scrollUntilVisible(
-      find.byValueKey('list-view-wallet'),
-      find.byValueKey('ceremony-box-wallet'),
-      dyScroll: -300.0,
-    );
+    await scrollToCeremonyBox(driver);
 
-    await driver.tap(find.byValueKey('registration-meetup-button'));
-    await driver.waitFor(find.byValueKey('is-registered-info'));
+    await registerAndWait(driver);
 
-    await driver.scrollUntilVisible(
-      find.byValueKey('list-view-wallet'),
-      find.byValueKey('panel-controller'),
-      dyScroll: 300.0,
-    );
+    await scrollToPanelController(driver);
     await addDelay(1000);
   });
 
   test('import and register-Bob', () async {
-    await driver.tap(find.byValueKey('panel-controller'));
-    await driver.tap(find.byValueKey('add-account-panel'));
-
-    await driver.waitFor(find.byValueKey('import-account'));
-    await driver.tap(find.byValueKey('import-account'));
-
-    await driver.waitFor(find.byValueKey('create-account-name'));
-    await driver.tap(find.byValueKey('create-account-name'));
-    await driver.enterText('Bob');
-
-    await driver.tap(find.byValueKey('account-source'));
-    await driver.enterText('//Bob');
-
-    await driver.tap(find.byValueKey('account-import-next'));
-    await driver.waitFor(find.byValueKey('panel-controller'));
-
-    await driver.scrollUntilVisible(
-      find.byValueKey('list-view-wallet'),
-      find.byValueKey('ceremony-box-wallet'),
-      dyScroll: -300.0,
-    );
-
-    await driver.tap(find.byValueKey('registration-meetup-button'));
-    await driver.waitFor(find.byValueKey('is-registered-info'));
-
-    await driver.scrollUntilVisible(
-      find.byValueKey('list-view-wallet'),
-      find.byValueKey('panel-controller'),
-      dyScroll: 300.0,
-    );
-    await addDelay(1000);
+    await importAccountAndRegisterMeetup(driver, 'Bob');
   });
 
   test('import and register-Charlie', () async {
-    await driver.tap(find.byValueKey('panel-controller'));
-    await driver.tap(find.byValueKey('add-account-panel'));
-
-    await driver.waitFor(find.byValueKey('import-account'));
-    await driver.tap(find.byValueKey('import-account'));
-
-    await driver.waitFor(find.byValueKey('create-account-name'));
-    await driver.tap(find.byValueKey('create-account-name'));
-    await driver.enterText('Charlie');
-
-    await driver.tap(find.byValueKey('account-source'));
-    await driver.enterText('//Charlie');
-
-    await driver.tap(find.byValueKey('account-import-next'));
-    await driver.waitFor(find.byValueKey('panel-controller'));
-
-    await driver.scrollUntilVisible(
-      find.byValueKey('list-view-wallet'),
-      find.byValueKey('ceremony-box-wallet'),
-      dyScroll: -300.0,
-    );
-
-    await driver.tap(find.byValueKey('registration-meetup-button'));
-    await driver.waitFor(find.byValueKey('is-registered-info'));
-
-    await driver.scrollUntilVisible(
-      find.byValueKey('list-view-wallet'),
-      find.byValueKey('panel-controller'),
-      dyScroll: 300.0,
-    );
-    await addDelay(1000);
+    await importAccountAndRegisterMeetup(driver, 'Charlie');
   });
 
   test('get attesting-phase', () async {
     await driver.tap(find.byValueKey('Profile'));
 
-    await driver.scrollUntilVisible(
-      find.byValueKey('profile-list-view'),
-      find.byValueKey('next-phase-button'),
-      dyScroll: -300.0,
-    );
+    await scrollToNextPhaseButton(driver);
 
-    await driver.tap(find.byValueKey('next-phase-button'));
-    await driver.waitFor(find.byType('SnackBar'));
+    await tapAndWaitNextPhase(driver);
 
-    await driver.tap(find.byValueKey('next-phase-button'));
-    await driver.waitFor(find.byType('SnackBar'));
+    await tapAndWaitNextPhase(driver);
 
     await driver.tap(find.byValueKey('Wallet'));
     await addDelay(1000);
   });
 
   test('start meetup-Cahrlie', () async {
-    await driver.scrollUntilVisible(
-      find.byValueKey('profile-list-view'),
-      find.byValueKey('start-meetup'),
-      dyScroll: -300.0,
-    );
-
-    await driver.tap(find.byValueKey('start-meetup'));
-    await addDelay(500);
-
-    await driver.waitFor(find.byValueKey('attendees-count'));
-    await driver.tap(find.byValueKey('attendees-count'));
-    await driver.enterText('3');
-    await addDelay(500);
-    await driver.tap(find.byValueKey('ceremony-step-1-next'));
-
-    await driver.waitFor(find.byValueKey('attest-all-participants-dev'));
-    await driver.tap(find.byValueKey('attest-all-participants-dev'));
-    await addDelay(500);
-    await driver.waitFor(find.byType('SnackBar'));
-    await driver.tap(find.byValueKey('close-meetup'));
-
-    await driver.waitFor(find.byValueKey('submit-claims'));
-    await driver.tap(find.byValueKey('submit-claims'));
-    await addDelay(500);
-
-    await driver.waitFor(find.byValueKey('panel-controller'));
-    await driver.scrollUntilVisible(
-      find.byValueKey('profile-list-view'),
-      find.byValueKey('panel-controller'),
-      dyScroll: 300.0,
-    );
-    await addDelay(5000);
+    await startMeetupTest(driver);
   });
+
+  // test('start meetup-Bob', () async {
+  //   await driver.tap(find.byValueKey('panel-controller'));
+  //   await startMeetupTest(driver);
+  // });
 
   tearDownAll(() async {
     await driver.close();
