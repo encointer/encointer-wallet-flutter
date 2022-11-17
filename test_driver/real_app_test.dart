@@ -143,7 +143,7 @@ void main() async {
 
   test('import and register-Charlie', () async {
     await importAccountAndRegisterMeetup(driver, 'Charlie');
-  });
+  }, timeout: const Timeout(Duration(seconds: 40)));
 
   test('get attesting-phase', () async {
     await driver.tap(find.byValueKey('Profile'));
@@ -156,7 +156,7 @@ void main() async {
 
     await driver.tap(find.byValueKey('Wallet'));
     await addDelay(1000);
-  });
+  }, timeout: const Timeout(Duration(seconds: 40)));
 
   test('start meetup-Cahrlie', () async {
     await addDelay(1000);
