@@ -133,8 +133,8 @@ class _AssetsState extends State<Assets> {
         appBar: appBar,
         body: UpgradeAlert(
           upgrader: Upgrader(
-            appcastConfig: context.watch<AppStore>().appcastConfiguration,
-            debugLogging: context.select<AppStore, bool>((e) => e.appcastConfiguration != null),
+            appcastConfig: context.watch<AppStore>().appCast,
+            debugLogging: context.select<AppStore, bool>((e) => e.appCast != null),
             shouldPopScope: () => true,
             canDismissDialog: true,
           ),
