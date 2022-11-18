@@ -36,7 +36,8 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   @override
   void initState() {
-    if (_notificationPlugin == null) {
+    // Todo: write comment context.read<AppStore>().appCast == null
+    if (_notificationPlugin == null && context.read<AppStore>().appCast == null) {
       _notificationPlugin = NotificationPlugin();
       _notificationPlugin!.init(context);
     }
