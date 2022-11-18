@@ -105,7 +105,7 @@ class MockEncointerApi extends EncointerApi {
 
   @override
   Future<DateTime?> getMeetupTime() async {
-    return DateTime.fromMillisecondsSinceEpoch(claim['timestamp']);
+    return DateTime.fromMillisecondsSinceEpoch(claim['timestamp'] as int);
   }
 
   @override
