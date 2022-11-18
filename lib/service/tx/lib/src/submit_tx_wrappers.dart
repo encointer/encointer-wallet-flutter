@@ -154,3 +154,10 @@ Future<dynamic> submitReapVoucher(
 ) async {
   return api.js.evalJavascript('encointer.reapVoucher("$voucherUri","$recipientAddress", ${jsonEncode(cid)})');
 }
+
+/// Calls `encointerScheduler.nextPhase()` with Alice.
+///
+/// This will only work on the local dev-setup.
+Future<dynamic> submitNextPhase(Api api) async {
+  return await api.js.evalJavascript('encointer.sendNextPhaseTx()');
+}
