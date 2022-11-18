@@ -63,32 +63,32 @@ abstract class _BusinessFormState with Store {
 
   // ************** ACTIONS ****************************************************
   @action
-  void validateName(value) {
+  void validateName(String? value) {
     return validateIsNotBlank(value, (errorText) => errors.name = errorText);
   }
 
   @action
-  void validateDescription(value) {
+  void validateDescription(String? value) {
     return validateIsNotBlank(value, (errorText) => errors.description = errorText);
   }
 
   @action
-  void validateStreet(value) {
+  void validateStreet(String? value) {
     return validateIsNotBlank(value, (errorText) => errors.street = errorText);
   }
 
   @action
-  void validateStreetAddendum(value) {
+  void validateStreetAddendum(String? value) {
     return validateIsNotBlank(value, (errorText) => errors.streetAddendum = errorText);
   }
 
   @action
-  void validateZipCode(value) {
+  void validateZipCode(String? value) {
     return validateIsNotBlank(value, (errorText) => errors.zipCode = errorText);
   }
 
   @action
-  void validateCity(value) {
+  void validateCity(String? value) {
     return validateIsNotBlank(value, (errorText) => errors.city = errorText);
   }
 
