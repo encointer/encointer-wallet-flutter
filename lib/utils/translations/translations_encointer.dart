@@ -77,7 +77,7 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   @override
   String get claimsScannedAlready => 'Updated previously scanned claim';
   @override
-  String get claimsScannedDecodeFailed => 'Could not decode scanned claim.';
+  String get claimsScannedDecodeFailed => 'Could not decode scanned claim. The other party needs to update the App.';
   @override
   String get claimsScannedNew => 'Scanned new claim';
   @override
@@ -181,7 +181,8 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   @override
   String get claimsScannedAlready => 'bereits gescannter Antrag wurde aktualisiert';
   @override
-  String get claimsScannedDecodeFailed => 'Gescannter Antrag konnte nicht dekodiert werden.';
+  String get claimsScannedDecodeFailed =>
+      'Gescannter Antrag konnte nicht dekodiert werden. Dein Gegenüber muss die App updaten.';
   @override
   String get claimsScannedNew => 'Neuer Antrag gescannt';
   @override
@@ -364,4 +365,109 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   String get weHopeToSeeYouAtTheNextGathering => throw UnimplementedError();
   @override
   String get goToLeuZurich => throw UnimplementedError();
+}
+
+class TranslationsRuEncointer implements TranslationsEncointer {
+  @override
+  String get registerParticipant => 'Регистрация';
+  @override
+  String get claimsSubmit => 'Подать заявление';
+  @override
+  String get claimsSubmitN => 'Подать N_COUNT заявление';
+  @override
+  String get claimsPurge => 'Очистить ранее отсканированные заявления';
+  @override
+  String get claimsPurgeConfirm => 'Вы уверены, что хотите удалить все ранее отсканированные заявления?';
+  @override
+  String get keySigningCycle => 'Цикл подписания ключей';
+  @override
+  String get nextCycleTimeLeft => 'Следующий цикл в';
+  @override
+  String get nextCycleDateLabel => 'Следующий цикл в процессе';
+  @override
+  String get claimQr => 'Мое заявление на участие';
+  @override
+  String get claimsScanned => 'Вы отсканировали заявление AMOUNT_PLACEHOLDER ';
+  @override
+  String get claimsScannedAlready => 'Ранее отсканированные заявления обновлены';
+  @override
+  String get claimsScannedDecodeFailed => 'Отсканированные заявления не удалось расшифровать.';
+  @override
+  String get claimsScannedNew => 'Отсканировать новое заявление';
+  @override
+  String get claimsScannedNOfM => 'Отсканированные заявления SCANNED_COUNT / TOTAL_COUNT';
+  @override
+  String get claimsSubmitDetail => 'Подача заявлений на сумму AMOUNT за недавнее собрание';
+  @override
+  String get communities => 'Общины';
+  @override
+  String get noCommunitiesAreYouOffline =>
+      'Общины не обнаружены. Позже вы можете выбрать одну из них. Вы в оффлайн режиме?.';
+  @override
+  String get meetupAttended => 'Присутствовал на последней встрече';
+  @override
+  String get meetupClaimantInvalid => 'Этот заявитель не является участником встречи. Заявление не сохраняется.';
+  @override
+  String get meetupClaimantEqualToSelf => ' Ошибка, адресf расчетного счета. Запрос не был сохранен.';
+  @override
+  String get meetupLocation => 'Локция встречи';
+  @override
+  String get startGathering => 'Начинайте собираться';
+  @override
+  String get alreadyRegistered => 'Уже зарегистрирован';
+  @override
+  String get registerUntil => 'Зарегистрируйтесь до';
+  @override
+  String get meetingPoint => 'Место встречи';
+  @override
+  String get gatheringIsOver => 'Встреча завершена';
+  @override
+  String get today => 'Сегодня';
+  @override
+  String get tomorrow => 'Завтра';
+  @override
+  String get calendarEntryDescription => 'Принять участие в собрании для получения дохода общины';
+  @override
+  String get youAreNotRegistered => 'К сожалению Вы не зарегистрированы для участия в собрании:';
+  @override
+  String get howManyParticipantsShowedUp => 'Сколько участников присутствует, включая вас?';
+  @override
+  String get cycleWillTakePlaceOn => 'Цикл подписания ключей будет проходить';
+  @override
+  String get gatheringSuccessfullyCompleted => 'Встреча успешно завершена';
+  @override
+  String get fetchingReputations => 'Идет проверка Вашей репутации';
+  @override
+  String get youAreRegisteredAs => 'На следующую встречу вы зарегистрированы в качестве PARTICIPANT_TYPE.';
+  @override
+  String get youAreNotRegisteredPleaseRegisterNextTime =>
+      'Вы не были записаны на этот цикл подписания ключей. Пожалуйста, присоединяйтесь к следующему циклу, для того, чтобы получить доход сообщества.';
+  @override
+  String get youAreAssignedToAGatheringWithNParticipants => 'Вы записаны на встречу вместе с P_COUNT участниками.';
+  @override
+  String get successfullySentNAttestations => 'Вы успешно отправили атесстации P_COUNT других людей.';
+  @override
+  String get countParticipants => 'Считать';
+  @override
+  String get numberOfAttendees => 'Количество участников';
+  @override
+  String get next => 'Следующий';
+  @override
+  String get closeGathering => 'Завершить всречу';
+  @override
+  String get count => 'Считать';
+  @override
+  String get scan => 'Сканировать';
+  @override
+  String get scanDescriptionForMeetup => 'Каждый участник должен сканировать и быть отсканированным всеми остальными.';
+  @override
+  String get scanOthers => 'Сканировать других';
+  @override
+  String get finish => 'Завершить';
+  @override
+  String get thankYou => 'Спасибо';
+  @override
+  String get weHopeToSeeYouAtTheNextGathering => 'Мы надеемся увидить Вас на следующей встрече.';
+  @override
+  String get goToLeuZurich => 'Открыть leu.zuerich';
 }
