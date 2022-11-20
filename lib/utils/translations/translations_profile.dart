@@ -100,7 +100,6 @@ class TranslationsEnProfile implements TranslationsProfile {
   String get aboutBrief => 'Mobile Wallet for Encointer';
   @override
   String get aboutVersion => 'Version';
-
   @override
   String get accounts => 'Accounts';
   @override
