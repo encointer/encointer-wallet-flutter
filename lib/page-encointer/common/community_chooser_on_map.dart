@@ -62,11 +62,10 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
     return Card(
       child: InkWell(
         key: Key('${widget.marker.key.toString().substring(3, widget.marker.key.toString().length - 3)}-description'),
-        onTap: () {
+        onTap: () async {
           store.encointer.community?.clearCommunityIcon();
-          setState(() {
-            store.encointer.setChosenCid(widget.dataForThisMarker!.cid);
-          });
+          setState(() {});
+          await store.encointer.setChosenCid(widget.dataForThisMarker!.cid);
           Navigator.pop(context);
         },
         child: Container(
