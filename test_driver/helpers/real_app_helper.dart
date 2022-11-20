@@ -4,6 +4,8 @@ import 'package:flutter_driver/flutter_driver.dart';
 
 import 'add_delay.dart';
 
+const String getPlatformCommand = 'getPlatform';
+
 Future<void> scrollToDevMode(FlutterDriver driver) async {
   await driver.scrollUntilVisible(
     find.byValueKey('profile-list-view'),
@@ -120,20 +122,18 @@ Future<void> startMeetupTest(FlutterDriver driver) async {
 
 Future<void> dismissUpgradeDialogOnAndroid(FlutterDriver driver) async {
   await addDelay(2000);
-  final operationSystem = await driver.requestData('getPlatform');
+  final operationSystem = await driver.requestData(getPlatformCommand);
   print('operationSystem ==================> $operationSystem');
 
-  if (operationSystem != 'android') {
-    // driver.('mobile: alert', {'action': 'accept', 'buttonLabel': 'Allow'});
-  }
+  if (operationSystem == 'android') {
+    try {
+      log('Waiting for upgrader alert dialog');
+      await driver.waitFor(find.byType('AlertDialog'));
 
-  try {
-    log('Waiting for upgrader alert dialog');
-    await driver.waitFor(find.byType('AlertDialog'));
-
-    log('Tapping ignore button');
-    await driver.tap(find.text('IGNORE'));
-  } catch (e) {
-    log(e.toString());
+      log('Tapping ignore button');
+      await driver.tap(find.text('IGNORE'));
+    } catch (e) {
+      log(e.toString());
+    }
   }
 }
