@@ -1,4 +1,8 @@
+import 'package:encointer_wallet/common/components/submit_button.dart';
 import 'package:encointer_wallet/modules/modules.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/service/tx/lib/tx.dart';
+import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -228,6 +232,23 @@ class _ProfileState extends State<Profile> {
                         // temporary, and a developer option. It is unnecessary to include the complexity to update
                         // the parent widget from here.
                         onChanged: (_) => _store.settings.toggleEnableBazaar(),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SubmitButton(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Icon(Iconsax.login_1),
+                            const SizedBox(width: 6),
+                            const Text('Next-Phase (only works for local dev-network)'),
+                          ],
+                        ),
+                        onPressed: (_) async {
+                          var res = await submitNextPhase(webApi);
+                          RootSnackBar.showMsg(res.toString());
+                        },
                       ),
                     ),
                   ],
