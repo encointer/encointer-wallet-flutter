@@ -64,8 +64,8 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
         key: Key('${widget.marker.key.toString().substring(3, widget.marker.key.toString().length - 3)}-description'),
         onTap: () async {
           store.encointer.community?.clearCommunityIcon();
-          await store.encointer.setChosenCid(widget.dataForThisMarker!.cid);
           setState(() {});
+          await store.encointer.setChosenCid(widget.dataForThisMarker!.cid);
           Navigator.pop(context);
         },
         child: Container(
