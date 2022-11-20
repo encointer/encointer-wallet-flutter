@@ -154,7 +154,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
 Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) async {
   final params = attestAttendeesParams(
     store.encointer.chosenCid!,
-    store.encointer.communityAccount!.scannedAttendeesCount,
+    store.encointer.communityAccount!.participantCountVote!,
     store.encointer.communityAccount!.attendees!.toList(),
   );
 
@@ -192,4 +192,11 @@ Map<String, String> _getTitleEducate(ParticipantType type, BuildContext context)
     case ParticipantType.Bootstrapper:
       return {'title': dic.bootstrapperTitle, 'content': dic.bootstrapperContent};
   }
+}
+
+/// Calls `encointerScheduler.nextPhase()` with Alice.
+///
+/// This will only work on the local dev-setup.
+Future<dynamic> submitNextPhase(Api api) async {
+  return await api.js.evalJavascript('encointer.sendNextPhaseTx()');
 }
