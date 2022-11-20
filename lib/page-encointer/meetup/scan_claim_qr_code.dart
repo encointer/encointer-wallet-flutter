@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,10 +5,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-import 'package:encointer_wallet/models/claim_of_attendance/claim_of_attendance.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
-import 'package:encointer_wallet/service/substrate_api/api.dart';
-import 'package:encointer_wallet/service/substrate_api/codec_api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
@@ -55,21 +50,13 @@ class ScanClaimQrCode extends StatelessWidget {
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
 
-    Future _onScan(String claimOrAddress) async {
-      // Show a cupertino activity indicator as long as we are decoding
-      _showActivityIndicatorOverlay(context);
-
-      try {
-        var address = await addressFromClaimOrAddress(claimOrAddress);
-
+    Future _onScan(String address) async {
+      if (Fmt.isAddress(address)) {
         validateAndStoreParticipant(context, address, dic);
-      } catch (e, s) {
-        Log.e('Error decoding claim: $e', 'ScanClaimQrCode', s);
-        RootSnackBar.showMsg(dic.encointer.claimsScannedDecodeFailed);
+      } else {
+        Log.e('Claim is not an address: $address', 'ScanClaimQrCode');
+        RootSnackBar.showMsg(dic.encointer.claimsScannedDecodeFailed, durationMillis: 3000);
       }
-
-      // pops the cupertino activity indicator.
-      Navigator.of(context).pop();
     }
 
     return Scaffold(
@@ -142,17 +129,6 @@ class ScanClaimQrCode extends StatelessWidget {
   }
 }
 
-void _showActivityIndicatorOverlay(BuildContext context) {
-  showCupertinoDialog(
-    context: context,
-    builder: (_) => Container(
-        height: Size.infinite.height,
-        width: Size.infinite.width,
-        color: Colors.grey.withOpacity(0.5),
-        child: const CupertinoActivityIndicator()),
-  );
-}
-
 Future<PermissionStatus> canOpenCamera() async {
   // will do nothing if already granted
   return Permission.camera.request();
@@ -175,18 +151,4 @@ Widget permissionErrorDialog(BuildContext context) {
       ),
     ],
   );
-}
-
-/// For backwards compatibility wit phones pre-v1.8.9
-Future<String> addressFromClaimOrAddress(String claimOrAddress) async {
-  if (Fmt.isAddress(claimOrAddress)) {
-    return Future.value(claimOrAddress);
-  }
-
-  var data = base64.decode(claimOrAddress);
-
-  var claim =
-      await webApi.codec.decodeBytes(ClaimOfAttendanceJSRegistryName, data).then((c) => ClaimOfAttendance.fromJson(c));
-
-  return claim.claimantPublic!;
 }

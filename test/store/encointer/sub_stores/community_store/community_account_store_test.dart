@@ -28,6 +28,7 @@ void main() {
           'registry': [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]
         },
         'attendees': [],
+        'participantCountVote': null,
         'meetupCompleted': false
       };
 
@@ -87,6 +88,7 @@ void main() {
           'registry': [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS]
         },
         'attendees': [],
+        'participantCountVote': null,
         'meetupCompleted': false
       };
 
