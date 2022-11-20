@@ -510,5 +510,6 @@ class TranslationsRuAssets implements TranslationsAssets {
   String get insufficientFundsExplanation => 'У вас недостаточно средств на этом счете. Смотрите на сайте вашей'
       ' местной общины, как получить вознаграждение';
   @override
-  String get chosenRightCommunity => throw UnimplementedError();
+  String get chosenRightCommunity =>
+      'Данные относятся к другой общине. Пожалуйста, измените сообщество, чтобы отправить средства.';
 }
