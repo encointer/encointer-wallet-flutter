@@ -35,6 +35,7 @@ class I18n {
     const Locale('en', ''): TranslationsEn(),
     const Locale('de', ''): TranslationsDe(),
     const Locale('fr', ''): TranslationsFr(),
+    const Locale('ru', ''): TranslationsRu(),
   };
 
   Translations translationsForLocale() {
