@@ -63,3 +63,19 @@ class TranslationsFr implements Translations {
   @override
   TranslationsBazaar get bazaar => TranslationsFrBazaar();
 }
+
+/// for russian translations
+class TranslationsRu implements Translations {
+  @override
+  TranslationsHome get home => TranslationsRuHome();
+  @override
+  TranslationsAccount get account => TranslationsRuAccount();
+  @override
+  TranslationsAssets get assets => TranslationsRuAssets();
+  @override
+  TranslationsProfile get profile => TranslationsRuProfile();
+  @override
+  TranslationsEncointer get encointer => TranslationsRuEncointer();
+  @override
+  TranslationsBazaar get bazaar => TranslationsRuBazaar();
+}
