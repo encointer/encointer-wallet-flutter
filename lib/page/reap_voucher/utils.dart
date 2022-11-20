@@ -65,7 +65,7 @@ Future<ChangeResult> changeCommunity(
   var cids = await api.encointer.getCommunityIdentifiers();
 
   if (cids.contains(cid)) {
-    store.encointer.setChosenCid(cid);
+    await store.encointer.setChosenCid(cid);
     return ChangeResult.ok;
   } else {
     return ChangeResult.invalidCommunity;

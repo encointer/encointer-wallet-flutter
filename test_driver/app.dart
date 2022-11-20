@@ -32,7 +32,7 @@ void main() async {
       case TestCommands.WAIT_UNTIL_APP_IS_READY:
         return PrepareMockStorage.wait(_globalAppStore);
       case TestCommands.INIT:
-        PrepareMockStorage.init(_globalAppStore);
+        await PrepareMockStorage.init(_globalAppStore);
         break;
       case TestCommands.HOME_PAGE:
         PrepareMockStorage.homePage(_globalAppStore);

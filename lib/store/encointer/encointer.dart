@@ -207,7 +207,7 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
+  Future<void> setCommunityIdentifiers(List<CommunityIdentifier> cids) async {
     Log.d('set communityIdentifiers to $cids', 'EncointerStore');
 
     communityIdentifiers = cids;
@@ -215,7 +215,7 @@ abstract class _EncointerStore with Store {
 
     if (communities != null && !communitiesContainsChosenCid) {
       // inconsistency found, reset state
-      setChosenCid();
+      await setChosenCid();
     }
   }
 
@@ -228,15 +228,15 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setChosenCid([CommunityIdentifier? cid]) {
+  Future<void> setChosenCid([CommunityIdentifier? cid]) async {
     if (chosenCid != cid) {
       chosenCid = cid;
       writeToCache();
 
       if (cid != null) {
         _rootStore.localStorage.setObject(chosenCidCacheKey(network), cid.toJson());
-        initCommunityStore(cid, _rootStore.account.currentAddress);
         initBazaarStore(cid);
+        await initCommunityStore(cid, _rootStore.account.currentAddress);
       } else {
         _rootStore.localStorage.removeKey(chosenCidCacheKey(network));
       }
