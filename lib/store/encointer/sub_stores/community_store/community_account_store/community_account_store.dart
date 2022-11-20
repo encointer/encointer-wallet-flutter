@@ -53,6 +53,10 @@ abstract class _CommunityAccountStore with Store {
   @observable
   ObservableSet<String>? attendees = ObservableSet();
 
+  /// Our vote on the number of meetup attendees
+  @observable
+  int? participantCountVote;
+
   /// This should be set to true once the attestations have been sent to chain.
   @observable
   bool? meetupCompleted = false;
@@ -68,8 +72,15 @@ abstract class _CommunityAccountStore with Store {
 
   @action
   void setParticipantType([ParticipantType? type]) {
-    Log.d('Set participant type: $participantType', 'CommunityAccountStore');
+    Log.d('Set participant type: $type', 'CommunityAccountStore');
     participantType = type;
+    writeToCache();
+  }
+
+  @action
+  void setParticipantCountVote(int vote) {
+    Log.d('Set participantCountVote: $vote', 'CommunityAccountStore');
+    participantCountVote = vote;
     writeToCache();
   }
 
@@ -101,6 +112,15 @@ abstract class _CommunityAccountStore with Store {
     Log.d('clearing meetupCompleted', 'CommunityAccountStore');
     meetupCompleted = false;
     writeToCache();
+  }
+
+  @action
+  void purgeParticipantCountVote() {
+    if (participantCountVote != null) {
+      Log.d('Purging participantCountVote.', 'CommunityAccountStore');
+      participantCountVote = null;
+      writeToCache();
+    }
   }
 
   @action
