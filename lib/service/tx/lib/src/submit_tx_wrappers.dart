@@ -129,7 +129,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
 Future<void> submitAttestClaims(BuildContext context, AppStore store, Api api) async {
   final params = attestAttendeesParams(
     store.encointer.chosenCid!,
-    store.encointer.communityAccount!.scannedAttendeesCount,
+    store.encointer.communityAccount!.participantCountVote!,
     store.encointer.communityAccount!.attendees!.toList(),
   );
 
@@ -153,4 +153,11 @@ Future<dynamic> submitReapVoucher(
   CommunityIdentifier cid,
 ) async {
   return api.js.evalJavascript('encointer.reapVoucher("$voucherUri","$recipientAddress", ${jsonEncode(cid)})');
+}
+
+/// Calls `encointerScheduler.nextPhase()` with Alice.
+///
+/// This will only work on the local dev-setup.
+Future<dynamic> submitNextPhase(Api api) async {
+  return await api.js.evalJavascript('encointer.sendNextPhaseTx()');
 }
