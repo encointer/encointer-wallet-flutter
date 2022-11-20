@@ -4,9 +4,6 @@ import 'package:test/test.dart';
 import 'helpers/add_delay.dart';
 import 'helpers/real_app_helper.dart';
 
-// [ANDROID] flutter drive --target=test_driver/real_app.dart --flavor dev
-// [IOS] flutter drive --target=test_driver/real_app.dart
-
 void main() async {
   late FlutterDriver driver;
 
