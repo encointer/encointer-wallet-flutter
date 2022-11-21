@@ -47,7 +47,7 @@ class CommunityIdentifier {
 
   // JS-passes these values as hex-strings, but this would be more complicated to handle in dart.
   factory CommunityIdentifier.fromJson(Map<String, dynamic> json) =>
-      CommunityIdentifier(Fmt.hexToBytes(json['geohash']), Fmt.hexToBytes(json['digest']));
+      CommunityIdentifier(Fmt.hexToBytes(json['geohash'] as String), Fmt.hexToBytes(json['digest'] as String));
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'geohash': Fmt.bytesToHex(geohash),
