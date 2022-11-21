@@ -180,7 +180,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
     if (res['hash'] == null) {
       Log.d('Error redeeming voucher: ${res['error']}', 'ReapVoucherPage');
-      showRedeemFailedDialog(context, res['error']);
+      showRedeemFailedDialog(context, res['error'] as String?);
     } else {
       showRedeemSuccessDialog(context);
     }
