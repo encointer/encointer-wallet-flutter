@@ -20,7 +20,6 @@ void main() async {
           result = Platform.operatingSystem;
           break;
       }
-
       return Future.value(result);
     },
   );

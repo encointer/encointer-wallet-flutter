@@ -36,7 +36,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   @override
   void initState() {
-    // Todo: write comment context.read<AppStore>().appCast == null
+    // if appCast == null the integration test doesn't show request notification permission.
     if (_notificationPlugin == null && context.read<AppStore>().appCast == null) {
       _notificationPlugin = NotificationPlugin();
       _notificationPlugin!.init(context);
