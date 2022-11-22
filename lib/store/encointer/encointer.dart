@@ -172,7 +172,7 @@ abstract class _EncointerStore with Store {
         entry != null &&
         community != null &&
         community!.demurrage != null) {
-      return entry.applyDemurrage(_rootStore.chain.latestHeaderNumber, community!.demurrage!);
+      return entry.applyDemurrage(_rootStore.chain.latestHeaderNumber!, community!.demurrage!);
     }
     return null;
   }
