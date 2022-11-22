@@ -42,5 +42,4 @@ class I18n {
     var translations = supportedLocales[locale];
     return translations ?? TranslationsEn();
   }
-  
 }
