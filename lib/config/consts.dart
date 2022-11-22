@@ -10,7 +10,7 @@ const String network_name_encointer_mainnet = 'nctr-k';
 const String network_name_encointer_cantillon = 'nctr-ctln';
 
 const String androidLocalHost = '10.0.2.2';
-const String iosLocalHost = 'IOS Local Host';
+const String iosLocalHost = 'localhost';
 
 EndpointData networkEndpointEncointerGesell = EndpointData.fromJson({
   'info': 'nctr-gsl',

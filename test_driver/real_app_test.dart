@@ -102,7 +102,7 @@ void main() async {
 
     await driver.tap(find.byValueKey('Wallet'));
     await addDelay(1000);
-  });
+  }, timeout: const Timeout(Duration(seconds: 90)));
 
   test('change-community', () async {
     await driver.runUnsynchronized(() async {
@@ -132,15 +132,15 @@ void main() async {
 
     await scrollToPanelController(driver);
     await addDelay(1000);
-  });
+  }, timeout: const Timeout(Duration(seconds: 60)));
 
   test('import and register-Bob', () async {
     await importAccountAndRegisterMeetup(driver, 'Bob');
-  });
+  }, timeout: const Timeout(Duration(seconds: 60)));
 
   test('import and register-Charlie', () async {
     await importAccountAndRegisterMeetup(driver, 'Charlie');
-  }, timeout: const Timeout(Duration(seconds: 40)));
+  }, timeout: const Timeout(Duration(seconds: 60)));
 
   test('get attesting-phase', () async {
     await driver.tap(find.byValueKey('Profile'));
@@ -158,14 +158,14 @@ void main() async {
   test('start meetup-Cahrlie', () async {
     await addDelay(1000);
     await startMeetupTest(driver);
-  });
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('start meetup-Bob', () async {
     await addDelay(1000);
     await changeAccountFromPanel(driver, 'Bob');
     await startMeetupTest(driver);
     await addDelay(1000);
-  });
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('start meetup-Alice', () async {
     await addDelay(1000);
@@ -174,7 +174,7 @@ void main() async {
     await driver.waitFor(find.byValueKey('claim-pending-dev'));
     await driver.tap(find.byValueKey('claim-pending-dev'));
     await addDelay(20000);
-  }, timeout: const Timeout(Duration(seconds: 100)));
+  }, timeout: const Timeout(Duration(seconds: 120)));
 
   tearDownAll(() async {
     await driver.close();
