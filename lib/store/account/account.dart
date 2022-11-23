@@ -178,18 +178,18 @@ abstract class _AccountStore with Store {
       if (await webApi.isConnected()) {
         queuedTxs.forEach((args) async {
           Map res = await webApi.account.sendTxAndShowNotification(
-            args['txInfo'],
-            args['params'],
-            args['title'],
-            args['notificationTitle'],
-            rawParam: args['rawParam'],
+            args['txInfo'] as Map<dynamic, dynamic>?,
+            args['params'] as List<dynamic>?,
+            args['title'] as String?,
+            args['notificationTitle'] as String?,
+            rawParam: args['rawParam'] as String?,
           );
 
           Log.d('Queued tx result: $res', 'AccountStore');
           if (res['hash'] == null) {
             NotificationPlugin.showNotification(
               0,
-              args['notificationTitle'],
+              args['notificationTitle'] as String?,
               'Failed to sendTx: ${args['title']} - ${args['txInfo']['module']}.${args['txInfo']['call']}',
             );
           } else {
@@ -245,7 +245,7 @@ abstract class _AccountStore with Store {
     void saveSeed(String seedType) {
       String? seed = acc[seedType];
       if (seed != null && seed.isNotEmpty) {
-        encryptSeed(pubKey, acc[seedType], seedType, password);
+        encryptSeed(pubKey, acc[seedType] as String, seedType, password);
         acc.remove(seedType);
       }
     }
@@ -281,7 +281,7 @@ abstract class _AccountStore with Store {
     if (acc.pubKey == currentAccountPubKey) {
       // set new currentAccount after currentAccount was removed
       List<Map<String, dynamic>> accounts = await rootStore.localStorage.getAccountList();
-      var newCurrentAccountPubKey = accounts.length > 0 ? accounts[0]['pubKey'] : '';
+      String? newCurrentAccountPubKey = accounts.length > 0 ? accounts[0]['pubKey'] : '';
       Log.d('removeAccount: newCurrentAccountPubKey $newCurrentAccountPubKey', 'AccountStore');
       await rootStore.setCurrentAccount(newCurrentAccountPubKey);
     } else {
@@ -366,7 +366,7 @@ abstract class _AccountStore with Store {
       Map<String, String> addresses = Map.of(pubKeyAddressMap[int.parse(ss58)] ?? {});
       // set new data
       Map.of(data[ss58]!).forEach((k, v) {
-        addresses[k] = v;
+        addresses[k as String] = v;
       });
       // update state
       pubKeyAddressMap[int.parse(ss58)] = addresses;
