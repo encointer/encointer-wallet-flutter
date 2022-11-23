@@ -54,8 +54,8 @@ jobs:
       # - name: Setup Android SDK and accept licences
       #   uses: android-actions/setup-android@v2
 
-      - name: List android images
-        run: sdkmanager --list | grep system-images
+      # - name: List android images
+      #   run: sdkmanager --list | grep system-images
 
       # JS Stuff
       - uses: actions/setup-node@v2
