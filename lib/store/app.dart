@@ -126,7 +126,7 @@ abstract class _AppStore with Store {
     Log.d('Is App Ready?: $appIsReady', '_AppStore');
   }
 
-  Future<void> cacheObject(String key, value) {
+  Future<void> cacheObject(String key, Object value) {
     return localStorage.setObject(getCacheKey(key), value);
   }
 
