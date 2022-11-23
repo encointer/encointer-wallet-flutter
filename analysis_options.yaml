@@ -83,7 +83,7 @@ analyzer:
     
   errors:
     invalid_assignment: false
-    argument_type_not_assignable: false
+    argument_type_not_assignable: true
     return_of_invalid_type: false
     map_key_type_not_assignable: false
     non_bool_operand: false
