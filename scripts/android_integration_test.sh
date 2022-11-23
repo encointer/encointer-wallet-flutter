@@ -16,7 +16,7 @@ fi
 
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/passsy/flutter_wrapper/master/install.sh)"
 
-./flutter doctor
+./flutterw doctor
 
 ./flutterw drive --target=test_driver/app.dart --flavor dev
 ./flutterw drive --target=test_driver/scan_page.dart --flavor dev
