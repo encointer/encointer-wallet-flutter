@@ -62,7 +62,7 @@ Future<void> submitToJS(
     final Map res = await _sendTx(context, api, args) as Map;
 
     if (res['hash'] == null) {
-      _onTxError(context, store, res['error'], showStatusSnackBar);
+      _onTxError(context, store, res['error'] as String, showStatusSnackBar);
     } else {
       _onTxFinish(context, store, res, onTxFinishFn!, showStatusSnackBar);
     }
@@ -88,7 +88,7 @@ Future<Map> getTxFee(
     txInfo = proxyAccount.pubKey;
   }
 
-  return api.account.estimateTxFees(txInfo, args['params'], rawParam: args['rawParam']);
+  return api.account.estimateTxFees(txInfo, args['params'] as List<dynamic>?, rawParam: args['rawParam'] as String?);
 }
 
 void _onTxError(BuildContext context, AppStore store, String errorMsg, bool mounted) {
@@ -106,11 +106,11 @@ void _onTxError(BuildContext context, AppStore store, String errorMsg, bool moun
 
 Future<dynamic> _sendTx(BuildContext context, Api api, Map args) async {
   return api.account.sendTxAndShowNotification(
-    args['txInfo'],
-    args['params'],
-    args['title'],
+    args['txInfo'] as Map<dynamic, dynamic>?,
+    args['params'] as List<dynamic>?,
+    args['title'] as String?,
     I18n.of(context)!.translationsForLocale().home.notifySubmitted,
-    rawParam: args['rawParam'],
+    rawParam: args['rawParam'] as String?,
   );
 }
 
