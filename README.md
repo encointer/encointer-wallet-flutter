@@ -53,7 +53,7 @@ yarn run build
 - iOS: --ios-language swift, Xcode version >= 14.0.0
 
 ### Notes (do not miss)!!!
-- If the .flutter folder is not found in encointer-wallet-flutter folders, please download [flutter_wrapper] (https://github.com/passsy/flutter_wrapper)
+- If the `.flutter` folder is not found in `encointer-wallet-flutter`, please download [flutter_wrapper](https://github.com/passsy/flutter_wrapper)
 run in encointer-wallet-flutter:
 ```
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/passsy/flutter_wrapper/master/install.sh)"
