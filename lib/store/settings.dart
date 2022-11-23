@@ -226,13 +226,13 @@ abstract class _SettingsStore with Store {
       rootStore.localStorage.getObject(_getCacheKeyOfNetwork(cacheNetworkConstKey)),
     ]);
     if (data[0] != null) {
-      setNetworkState(Map<String, dynamic>.of(data[0]), needCache: false);
+      setNetworkState(Map<String, dynamic>.of(data[0] as Map<String, dynamic>), needCache: false);
     } else {
       setNetworkState({}, needCache: false);
     }
 
     if (data[1] != null) {
-      setNetworkConst(Map<String, dynamic>.of(data[1]), needCache: false);
+      setNetworkConst(Map<String, dynamic>.of(data[1] as Map<String, dynamic>), needCache: false);
     } else {
       setNetworkConst({}, needCache: false);
     }
@@ -342,7 +342,7 @@ class NetworkState extends _NetworkState {
     int? decimals = (json['tokenDecimals'] is List) ? json['tokenDecimals'][0] : json['tokenDecimals'];
     String? symbol = (json['tokenSymbol'] is List) ? json['tokenSymbol'][0] : json['tokenSymbol'];
 
-    NetworkState ns = NetworkState(json['endpoint'], json['ss58Format'], decimals, symbol);
+    NetworkState ns = NetworkState(json['endpoint'] as String?, json['ss58Format'] as int?, decimals, symbol);
     // --dev chain doesn't specify token symbol -> will break things if not specified
     if (((ns.tokenSymbol?.length ?? 0) < 1)) {
       ns.tokenSymbol = 'ERT';

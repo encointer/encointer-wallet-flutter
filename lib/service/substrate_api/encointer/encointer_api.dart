@@ -330,7 +330,7 @@ class EncointerApi {
   Future<void> subscribeCurrentPhase() async {
     jsApi.subscribeMessage(
         'encointer.subscribeCurrentPhase("$_currentPhaseSubscribeChannel")', _currentPhaseSubscribeChannel,
-        (data) async {
+        (String data) async {
       var phase = ceremonyPhaseFromString(data.toUpperCase())!;
 
       var cid = store.encointer.chosenCid;
@@ -377,7 +377,7 @@ class EncointerApi {
   Future<void> subscribeCommunityIdentifiers() async {
     jsApi.subscribeMessage(
         'encointer.subscribeCommunityIdentifiers("$_communityIdentifiersChannel")', _communityIdentifiersChannel,
-        (data) async {
+        (Iterable<dynamic> data) async {
       List<CommunityIdentifier> cids = List.from(data).map((cn) => CommunityIdentifier.fromJson(cn)).toList();
       store.encointer.setCommunityIdentifiers(cids);
 
@@ -402,7 +402,7 @@ class EncointerApi {
     jsApi.subscribeMessage(
       'encointer.subscribeBalance("$_encointerBalanceChannel", ${jsonEncode(cid)}, "$account")',
       _encointerBalanceChannel,
-      (data) {
+      (Map<String, dynamic> data) {
         BalanceEntry balance = BalanceEntry.fromJson(data);
         store.encointer.account?.addBalanceEntry(cid, balance);
       },
@@ -501,7 +501,7 @@ class EncointerApi {
     var cid = store.encointer.account?.reputations[cIndex]?.communityIdentifier;
     var pin = store.settings.cachedPin;
     Log.d('getProofOfAttendance: cachedPin: $pin', 'EncointerApi');
-    var proofJs =
+    Map<String, dynamic> proofJs =
         await jsApi.evalJavascript('encointer.getProofOfAttendance("$pubKey", ${jsonEncode(cid)}, "$cIndex", "$pin")');
     ProofOfAttendance proof = ProofOfAttendance.fromJson(proofJs);
     Log.d('Proof: $proof', 'EncointerApi');
