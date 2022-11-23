@@ -10,9 +10,6 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/passsy/flutter_wrapper/mas
 # cd flutter
 
 # `precache` ensures that the correct Dart SDK and binaries for IOS and android exist.
-#
-# Version should match the version from the CI.
-# git checkout 3.3.8 && flutter precache
 
 ./flutterw doctor
 ./flutterw pub get
