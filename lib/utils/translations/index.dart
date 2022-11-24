@@ -10,7 +10,7 @@ class AppLocalizationsDelegate extends LocalizationsDelegate<I18n> {
   final Locale overriddenLocale;
 
   @override
-  bool isSupported(Locale locale) => ['en', 'de', 'fr'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => ['en', 'de', 'fr', 'ru'].contains(locale.languageCode);
 
   @override
   Future<I18n> load(Locale locale) {
