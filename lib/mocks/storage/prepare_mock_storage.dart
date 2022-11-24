@@ -11,9 +11,9 @@ abstract class PrepareMockStorage {
     return store.appIsReady.toString();
   }
 
-  static void init(AppStore store) {
+  static Future<void> init(AppStore store) async {
     store.encointer.setCurrentPhase(initialPhase);
-    store.encointer.setCommunityIdentifiers(testCommunityIdentifiers);
+    await store.encointer.setCommunityIdentifiers(testCommunityIdentifiers);
     store.encointer.setCommunities(testCommunities);
     store.chain.setLatestHeader(Header.fromJson(header));
   }

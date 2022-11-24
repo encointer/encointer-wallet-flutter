@@ -40,7 +40,7 @@ void main() {
       encointerStore.setCurrentPhase(CeremonyPhase.Registering);
       encointerStore.setCurrentCeremonyIndex(2);
       encointerStore.setNextPhaseTimestamp(3);
-      encointerStore.setCommunityIdentifiers(testCommunityIdentifiers);
+      await encointerStore.setCommunityIdentifiers(testCommunityIdentifiers);
       encointerStore.setCommunities(testCommunities);
 
       // this should initialize the following sub-stores:
@@ -48,7 +48,7 @@ void main() {
       // - BazaarStore(network, testCid)
       // - CommunityStore(network, testCid)
       // - CommunityAccountStore(network, testCid, store.account.currentAddress)
-      encointerStore.setChosenCid(testCid);
+      await encointerStore.setChosenCid(testCid);
 
       var testCommunityStore = CommunityStore(testNetwork, testCid);
       await testCommunityStore.initCommunityAccountStore(root.account.currentAddress);

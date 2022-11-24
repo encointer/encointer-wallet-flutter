@@ -1,4 +1,3 @@
-import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -13,6 +12,7 @@ import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page-encointer/common/community_chooser_panel.dart';
 import 'package:encointer_wallet/page/assets/transfer/payment_confirmation_page/index.dart';
+import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -90,16 +90,28 @@ class _TransferPageState extends State<TransferPage> {
   void handleTransferPageParams(TransferPageParams params, AppStore store) {
     _communitySymbol = params.communitySymbol ?? store.encointer.community!.symbol!;
     _cid = params.cid ?? store.encointer.chosenCid!;
+    if (params.cid != store.encointer.chosenCid!) {
+      showCupertinoDialog<void>(
+        context: context,
+        barrierDismissible: true,
+        builder: (context) {
+          final dic = I18n.of(context)!.translationsForLocale().assets;
+          return CupertinoAlertDialog(
+            title: Text(dic.chosenRightCommunity),
+          );
+        },
+      );
+    } else {
+      if (params.amount != null) {
+        _amountCtrl.text = '${params.amount}';
+      }
 
-    if (params.amount != null) {
-      _amountCtrl.text = '${params.amount}';
-    }
-
-    if (params.recipient != null) {
-      final AccountData acc = AccountData();
-      acc.address = params.recipient!;
-      acc.name = params.label!;
-      _accountTo = acc;
+      if (params.recipient != null) {
+        final AccountData acc = AccountData();
+        acc.address = params.recipient!;
+        acc.name = params.label!;
+        _accountTo = acc;
+      }
     }
   }
 
@@ -164,13 +176,13 @@ class _TransferPageState extends State<TransferPage> {
                               ScanPage.route,
                               arguments: ScanPageParams(scannerContext: QrScannerContext.transferPage),
                             );
-
-                            handleTransferPageParams(
-                              TransferPageParams.fromInvoiceData(invoiceData as InvoiceData),
-                              _store,
-                            );
-
-                            setState(() {});
+                            if (invoiceData != null && invoiceData is InvoiceData) {
+                              handleTransferPageParams(
+                                TransferPageParams.fromInvoiceData(invoiceData),
+                                _store,
+                              );
+                              setState(() {});
+                            }
                           },
                         ),
                         const SizedBox(height: 24),
@@ -253,10 +265,11 @@ class _TransferPageState extends State<TransferPage> {
         context,
         PaymentConfirmationPage.route,
         arguments: PaymentConfirmationParams(
-            cid: cid,
-            communitySymbol: communitySymbol,
-            recipientAccount: _accountTo!,
-            amount: double.parse(_amountCtrl.text.trim())),
+          cid: cid,
+          communitySymbol: communitySymbol,
+          recipientAccount: _accountTo!,
+          amount: double.parse(_amountCtrl.text.trim()),
+        ),
       );
     }
   }

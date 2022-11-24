@@ -54,6 +54,7 @@ abstract class TranslationsAssets {
   String get invalidCommunity;
   String get transactionError;
   String get insufficientFundsExplanation;
+  String get chosenRightCommunity;
 }
 
 class TranslationsEnAssets implements TranslationsAssets {
@@ -167,6 +168,9 @@ class TranslationsEnAssets implements TranslationsAssets {
   String get insufficientFundsExplanation =>
       'You do not have sufficient funds on this account. See on the website of your'
       ' local community how to get some.';
+  @override
+  String get chosenRightCommunity =>
+      'The data is for a different community. Please change the community to send funds.';
 }
 
 class TranslationsDeAssets implements TranslationsAssets {
@@ -279,6 +283,9 @@ class TranslationsDeAssets implements TranslationsAssets {
   @override
   String get insufficientFundsExplanation => 'Du hast nicht genügend Geld auf diesem Konto. Schaue auf der Webseite'
       ' deiner lokalen gemeinschaft, wie du welches bekommen kannst.';
+  @override
+  String get chosenRightCommunity =>
+      'Die Daten sind für eine andere Community. Bitte wechsle die Community um Geld zu senden.';
 }
 
 class TranslationsFrAssets implements TranslationsAssets {
@@ -388,6 +395,8 @@ class TranslationsFrAssets implements TranslationsAssets {
   String get transactionError => throw UnimplementedError();
   @override
   String get insufficientFundsExplanation => throw UnimplementedError();
+  @override
+  String get chosenRightCommunity => throw UnimplementedError();
 }
 
 class TranslationsRuAssets implements TranslationsAssets {
@@ -476,7 +485,6 @@ class TranslationsRuAssets implements TranslationsAssets {
   @override
   String get voucherDifferentNetworkAndCommunity => 'Ваучер предназначен для другой сети. Вы хотите изменить '
       'на NETWORK_PLACEHOLDER и COMMUNITY_PLACEHOLDER? Вы можете изменить сеть в разделе «Профиль»> «Режим разработчика».';
-
   @override
   String get voucherDifferentCommunity =>
       'Ваучер предназначен для другого сообщества. Изменить на COMMUNITY_PLACEHOLDER?';
@@ -501,4 +509,7 @@ class TranslationsRuAssets implements TranslationsAssets {
   @override
   String get insufficientFundsExplanation => 'У вас недостаточно средств на этом счете. Смотрите на сайте вашей'
       ' местной общины, как получить вознаграждение';
+  @override
+  String get chosenRightCommunity =>
+      'Данные относятся к другой общине. Пожалуйста, измените сообщество, чтобы отправить средства.';
 }
