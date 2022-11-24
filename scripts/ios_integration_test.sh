@@ -1,7 +1,6 @@
 #!/bin/bash
 set -euxo pipefail
 
-cd ../
 ./flutterw doctor -v
 
 if [ "$RECORD" == "true" ]

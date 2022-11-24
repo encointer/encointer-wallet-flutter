@@ -43,8 +43,7 @@ jobs:
           config_files: ./.github/action-config.json
 
       - name: "Prepare environment for ios"
-        working-directory: ./scripts
-        run: ./ios_init_env.sh
+        run: ./scripts/ios_init_env.sh
 
       - uses: actions/setup-java@v1
         with:
