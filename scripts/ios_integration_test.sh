@@ -1,6 +1,7 @@
 #!/bin/bash
 set -euxo pipefail
 
+cd ../
 ls
 ./flutterw doctor -v
 
