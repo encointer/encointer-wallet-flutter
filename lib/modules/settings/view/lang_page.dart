@@ -18,7 +18,7 @@ class _LangPageState extends State<LangPage> {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale().profile;
-    final settings = context.watch<SettingsStore2>();
+    final settings = context.watch<AppSettings>();
     return Scaffold(
       appBar: AppBar(title: Text(dic.settingLang)),
       body: Observer(builder: (_) {
@@ -31,7 +31,7 @@ class _LangPageState extends State<LangPage> {
               value: settings.locales[index],
               groupValue: settings.locale,
               onChanged: (v) async {
-                await context.read<SettingsStore2>().setLocale(index);
+                await context.read<AppSettings>().setLocale(index);
               },
             );
           },

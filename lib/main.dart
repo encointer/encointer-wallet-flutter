@@ -56,8 +56,8 @@ Future<void> main() async {
   runApp(
     MultiProvider(
       providers: [
-        Provider<SettingsStore2>(
-          create: (context) => SettingsStore2(localService)..init(),
+        Provider<AppSettings>(
+          create: (context) => AppSettings(localService)..init(),
         ),
         Provider<AppStore>(
           // On test mode instead of LocalStorage() must be use MockLocalStorage()

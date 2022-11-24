@@ -6,12 +6,12 @@ import 'package:mobx/mobx.dart';
 
 import 'package:encointer_wallet/modules/settings/settings.dart';
 
-part 'settings_store.g.dart';
+part 'app_settings_store.g.dart';
 
-class SettingsStore2 = _SettingsStore2Base with _$SettingsStore2;
+class AppSettings = _AppSettingsBase with _$AppSettings;
 
-abstract class _SettingsStore2Base with Store {
-  _SettingsStore2Base(this._service);
+abstract class _AppSettingsBase with Store {
+  _AppSettingsBase(this._service);
 
   final LangService _service;
 
