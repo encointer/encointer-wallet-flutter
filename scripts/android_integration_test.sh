@@ -14,8 +14,6 @@ then
   echo "Recording process up with pid: ${RECORDING_PID}"
 fi
 
-# sh -c "$(curl -fsSL https://raw.githubusercontent.com/passsy/flutter_wrapper/master/install.sh)"
-# ./flutterw doctor
 ./flutterw drive --target=test_driver/app.dart --flavor dev
 ./flutterw drive --target=test_driver/scan_page.dart --flavor dev
 
