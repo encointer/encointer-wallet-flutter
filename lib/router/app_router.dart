@@ -193,6 +193,11 @@ class AppRoute {
           builder: (_) => const Instruction(),
           settings: settings,
         );
+      case LangPage.route:
+        return CupertinoPageRoute(
+          builder: (_) => const LangPage(),
+          settings: settings,
+        );
       default:
         throw Exception(
           'no builder specified for route named: [${settings.name}]',
