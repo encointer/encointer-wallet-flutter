@@ -19,6 +19,9 @@ jobs:
         with:
           config_files: ./.github/action-config.json
 
+      - name: Install flutter wrapper
+        run: ./scripts/install_flutter.sh    
+
       # Analyzer throws an error if an asset is missing
       - name: "Make mock-main.js"
         run: |

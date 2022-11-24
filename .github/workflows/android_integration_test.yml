@@ -2,9 +2,9 @@ name: Android CI
 
 on:
   push:
-    branches: [ master, f-droid ]
+    branches: [master, f-droid]
   pull_request:
-    branches: [ master, f-droid ]
+    branches: [master, f-droid]
 
 jobs:
   cancel_previous_runs:
@@ -46,6 +46,15 @@ jobs:
       - uses: actions/setup-java@v1
         with:
           java-version: ${{ steps.config.outputs.java-version }}
+
+      - name: Install flutter wrapper
+        run: ./scripts/install_flutter.sh
+
+      - name: Setup Android SDK and accept licences
+        uses: android-actions/setup-android@v2
+
+      - name: List android images
+        run: sdkmanager --list | grep system-images
 
       # JS Stuff
       - uses: actions/setup-node@v2
@@ -89,7 +98,7 @@ jobs:
         env:
           ANDROID_DEBUG: "true"
           RECORD: ${{ matrix.record_video }}
-          TEMP_DIR:  ${{ steps.config.outputs.temp-screenshots }}
+          TEMP_DIR: ${{ steps.config.outputs.temp-screenshots }}
         with:
           api-level: ${{ matrix.api-level }}
           profile: ${{ matrix.device }}
@@ -103,5 +112,5 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name:  ${{ matrix.device }}
-          path:  ${{ steps.config.outputs.temp-screenshots }}
+          name: ${{ matrix.device }}
+          path: ${{ steps.config.outputs.temp-screenshots }}

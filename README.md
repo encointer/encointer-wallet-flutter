@@ -52,11 +52,23 @@ yarn run build
 - Android: minSdkVersion 17
 - iOS: --ios-language swift, Xcode version >= 14.0.0
 
-### Notes (do not miss)!!!
-- If the `.flutter` folder is not found in `encointer-wallet-flutter`, please download [flutter_wrapper](https://github.com/passsy/flutter_wrapper)\
-run in encointer-wallet-flutter:
+### Flutter wrapper
+This project uses [flutter_wrapper](https://github.com/passsy/flutter_wrapper). Flutter wrapper is a tool that enables having the same flutter version across multiple developers. It installs automatically the flutter version form the pubspec.yml into the `.flutter` submodule.
+
+Please refer to the [Medium Article](https://passsy.medium.com/flutter-wrapper-bind-your-project-to-an-explicit-flutter-release-4062cfe6dcaf) to see how you can set up your IDE to use the flutter versions from the git submodule.
+
+#### Linux and MacOs
+Linux and MacOs users can simply replace all `flutter` CLI commands with `./flutterw` and it will just work.
+
+#### Windows
+In windows, this does unfortunately not work, but you can still set up your IDE to use the flutter version in from the `.flutter` git submodule. And you can do the following workaround:
+
 ```
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/passsy/flutter_wrapper/master/install.sh)"
+// initialize .flutter git submodule (also works on windows)
+./scripts/install_flutter.sh
+
+// refer to the flutter installation in your git submodule
+./.flutter/bin/flutter doctor
 ```
 
 ### Run App
