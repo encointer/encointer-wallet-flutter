@@ -2,7 +2,6 @@
 set -euxo pipefail
 
 cd ../
-ls
 ./flutterw doctor -v
 
 if [ "$RECORD" == "true" ]
