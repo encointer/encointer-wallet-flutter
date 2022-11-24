@@ -8,7 +8,6 @@ import 'package:encointer_wallet/main.dart' as app;
 import 'helpers/real_app_helper.dart';
 
 // [ANDROID] flutter drive --target=test_driver/real_app.dart --flavor dev
-// [Get IP addess and change local host for IOS] bash scripts/replace_localhost_with_local_network_address.sh
 // [IOS] flutter drive --target=test_driver/real_app.dart
 
 void main() async {

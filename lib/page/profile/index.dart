@@ -194,6 +194,10 @@ class _ProfileState extends State<Profile> {
                 onTap: () => Navigator.pushNamed(context, Instruction.route),
               ),
               ListTile(
+                title: Text(dic.profile.settingLang, style: h3Grey),
+                onTap: () => Navigator.pushNamed(context, LangPage.route),
+              ),
+              ListTile(
                 title: Text(dic.profile.contactUs, style: h3Grey),
                 onTap: _sendEmail,
               ),
