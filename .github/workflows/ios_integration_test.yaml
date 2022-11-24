@@ -2,9 +2,9 @@ name: IOS CI
 
 on:
   push:
-    branches: [ master, f-droid ]
+    branches: [master, f-droid]
   pull_request:
-    branches: [ master, f-droid ]
+    branches: [master, f-droid]
 
 jobs:
   cancel_previous_runs:
@@ -31,7 +31,7 @@ jobs:
             record_video: false
       fail-fast: false
     steps:
-        # Setup Environment
+      # Setup Environment
       - uses: actions/checkout@v2
         with:
           # 2 to compare the last two revisions to check if JS changed
@@ -43,14 +43,15 @@ jobs:
           config_files: ./.github/action-config.json
 
       - name: "Prepare environment for ios"
-        run: ./scripts/ios_init_env.sh
+        working-directory: ./scripts
+        run: ./ios_init_env.sh
 
       - uses: actions/setup-java@v1
         with:
           java-version: ${{ steps.config.outputs.java-version }}
 
       - name: Install flutter wrapper
-        run: ./scripts/install_flutter.sh    
+        run: ./scripts/install_flutter.sh
 
       - name: "Create Simulator if iPad Pro 2nd gen"
         if: ${{ matrix.device == 'iPad Pro (12.9-inch) (2nd generation)' }}
@@ -77,15 +78,14 @@ jobs:
 
         # Run Tests
       - name: "Flutter driver test and record video"
-        working-directory: ./scripts
-        run: ./ios_integration_test.sh
+        run: ./scripts/ios_integration_test.sh
         env:
-          TEMP_DIR:  ${{ steps.config.outputs.temp-screenshots }}
+          TEMP_DIR: ${{ steps.config.outputs.temp-screenshots }}
           RECORD: ${{ matrix.record_video }}
 
       - name: "Upload screenshots and recording"
         if: always()
         uses: actions/upload-artifact@v2
         with:
-          name:  ${{ matrix.device }}
-          path:  ${{ steps.config.outputs.temp-screenshots }}
+          name: ${{ matrix.device }}
+          path: ${{ steps.config.outputs.temp-screenshots }}
