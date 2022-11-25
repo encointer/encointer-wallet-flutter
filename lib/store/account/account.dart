@@ -376,7 +376,7 @@ abstract class _AccountStore with Store {
   @action
   void setPubKeyIconsMap(List list) {
     list.forEach((i) {
-      pubKeyIconsMap[i[0]] = i[1];
+      pubKeyIconsMap[i[0] as String] = i[1];
     });
   }
 
@@ -385,7 +385,7 @@ abstract class _AccountStore with Store {
     Log.d('Address Icons', 'AccountStore');
     Log.d('$list', 'AccountStore');
     list.forEach((i) {
-      addressIconsMap[i[0]] = i[1];
+      addressIconsMap[i[0] as String] = i[1];
     });
   }
 
@@ -393,7 +393,7 @@ abstract class _AccountStore with Store {
   void setAccountsIndex(List list) {
     final Map<String?, Map> data = {};
     list.forEach((i) {
-      data[i['accountId']] = i;
+      data[i['accountId'] as String] = i;
     });
     accountIndexMap = data;
   }
@@ -401,7 +401,7 @@ abstract class _AccountStore with Store {
   @action
   void setAddressIndex(List list) {
     list.forEach((i) {
-      addressIndexMap[i['accountId']] = i;
+      addressIndexMap[i['accountId'] as String] = i;
     });
   }
 }

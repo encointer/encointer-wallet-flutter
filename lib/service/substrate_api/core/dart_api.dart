@@ -23,13 +23,13 @@ class SubstrateDartApi {
   }
 
   /// Gets address of the node we connect to including ws(s).
-  get endpoint => _endpoint;
+  String? get endpoint => _endpoint;
 
   Future<void> connect(String endpoint) async {
     _connectAndListen(endpoint);
 
     try {
-      _rpc = await rpc('rpc_methods').then((m) => RpcMethods.fromJson(m));
+      _rpc = await rpc('rpc_methods').then((m) => RpcMethods.fromJson(m as Map<String, dynamic>));
 
       // Sanity check that we are running against valid node with offchain indexing enabled
       if (!_rpc!.methods!.contains('encointer_getReputations')) {
@@ -70,8 +70,8 @@ class SubstrateDartApi {
   }
 
   /// Reconnect to the same endpoint if the connection was closed.
-  Future<void> reconnect() {
-    return _connectAndListen(endpoint);
+  Future<void> reconnect() async {
+    if (endpoint != null) await _connectAndListen(endpoint!);
   }
 
   /// Connects to and endpoint and starts listening on the input stream.

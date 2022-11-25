@@ -61,8 +61,8 @@ class _TransferPageState extends State<TransferPage> {
 
   final TextEditingController _amountCtrl = TextEditingController();
 
-  var _communitySymbol;
-  var _cid;
+  String? _communitySymbol;
+  CommunityIdentifier? _cid;
 
   AccountData? _accountTo;
 
@@ -248,7 +248,13 @@ class _TransferPageState extends State<TransferPage> {
                         ],
                       ),
                     ),
-                    onPressed: _accountTo != null ? () => _pushPaymentConfirmationPage(_cid, _communitySymbol) : null,
+                    onPressed: _accountTo != null
+                        ? () {
+                            if (_cid != null && _communitySymbol != null) {
+                              _pushPaymentConfirmationPage(_cid!, _communitySymbol!);
+                            }
+                          }
+                        : null,
                   ),
                 ],
               ),

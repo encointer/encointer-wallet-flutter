@@ -299,7 +299,7 @@ abstract class _EncointerStore with Store {
     }
 
     accountData.personal?.meetup != null
-        ? encointerAccountStore.setMeetup(accountData.personal!.meetup)
+        ? encointerAccountStore.setMeetup(accountData.personal!.meetup!)
         : encointerAccountStore.purgeMeetup();
 
     accountData.personal?.participantType != null
@@ -331,7 +331,7 @@ abstract class _EncointerStore with Store {
       webApi.encointer.getMeetupTimeOverride(),
       updateAggregatedAccountData(),
     ]).timeout(const Duration(seconds: 15)).catchError((e, s) {
-      Log.e('Error executing update state: $e', 'EncointerStore', s);
+      Log.e('Error executing update state: $e', 'EncointerStore');
       return Future.value([]);
     }).whenComplete(() {
       Log.d('[updateState] finished', 'EncointerStore');
