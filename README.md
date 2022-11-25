@@ -53,9 +53,14 @@ yarn run build
 - iOS: --ios-language swift, Xcode version >= 14.0.0
 
 ### Flutter wrapper
-This project uses [flutter_wrapper](https://github.com/passsy/flutter_wrapper). Flutter wrapper is a tool that enables having the same flutter version across multiple developers. It installs automatically the flutter version form the pubspec.yml into the `.flutter` submodule.
+This project uses [flutter_wrapper](https://github.com/passsy/flutter_wrapper). Flutter wrapper is a tool that enables
+having the same flutter version across multiple developers. It installs automatically the flutter version form the
+pubspec.yml into the `.flutter` submodule.
 
-Please refer to the [Medium Article](https://passsy.medium.com/flutter-wrapper-bind-your-project-to-an-explicit-flutter-release-4062cfe6dcaf) to see how you can set up your IDE to use the flutter versions from the git submodule.
+Vscode automatically uses the `.flutter` as we have checked in the `.vscode` folder. For setting up the Android Studio, 
+please refer to the [documentation](https://github.com/passsy/flutter_wrapper#ide-setup).
+
+Further info can be found in the [Medium Article](https://passsy.medium.com/flutter-wrapper-bind-your-project-to-an-explicit-flutter-release-4062cfe6dcaf).
 
 #### Linux and MacOs
 Linux and MacOs users can simply replace all `flutter` CLI commands with `./flutterw` and it will just work.
