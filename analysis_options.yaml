@@ -78,7 +78,7 @@ linter:
 analyzer:
   language:
     strict-casts: true
-    strict-inference: false
+    strict-inference: true
     strict-raw-types: false
     
   errors:
