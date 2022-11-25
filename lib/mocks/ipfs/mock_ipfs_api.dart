@@ -5,7 +5,7 @@ import 'package:encointer_wallet/service/ipfs/http_api.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 
 class MockIpfs extends Ipfs {
-  MockIpfs({gateway = ipfs_gateway_local}) : super(gateway: gateway);
+  MockIpfs() : super(gateway: ipfs_gateway_local);
 
   @override
   Future getJson(String cid) async {

@@ -78,6 +78,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 6),
                 child: SubmitButton(
                   // todo: this will be removed because we do it automatically
+                  key: const Key('submit-claims'),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

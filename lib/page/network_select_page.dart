@@ -223,6 +223,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
                             )
                           : null,
                       child: IconButton(
+                        key: Key(i.info ?? '$i'),
                         padding: const EdgeInsets.all(8),
                         icon: Image.asset(img),
                         onPressed: () {
