@@ -111,7 +111,10 @@ class _AssetsState extends State<Assets> {
       },
     )..start();
 
-    final appBar = AppBar(title: Text(dic!.assets.home));
+    final appBar = AppBar(
+      key: const Key('assets-index-appbar'),
+      title: Text(dic!.assets.home),
+    );
 
     return FocusDetector(
       onFocusLost: () {
@@ -130,8 +133,9 @@ class _AssetsState extends State<Assets> {
         appBar: appBar,
         body: UpgradeAlert(
           upgrader: Upgrader(
-            appcastConfig: context.watch<AppStore>().appcastConfiguration,
-            debugLogging: context.select<AppStore, bool>((e) => e.appcastConfiguration != null),
+            appcastConfig: context.watch<AppStore>().appCast,
+            debugLogging: context.select<AppStore, bool>((e) => e.appCast != null),
+            shouldPopScope: () => true,
             canDismissDialog: true,
           ),
           child: SlidingUpPanel(
@@ -168,17 +172,14 @@ class _AssetsState extends State<Assets> {
 
                       return Column(
                         children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              InkWell(
-                                  child: CombinedCommunityAndAccountAvatar(store),
-                                  onTap: () {
-                                    if (panelController != null && panelController!.isAttached) {
-                                      panelController!.open();
-                                    }
-                                  }),
-                            ],
+                          InkWell(
+                            key: const Key('panel-controller'),
+                            child: CombinedCommunityAndAccountAvatar(store),
+                            onTap: () {
+                              if (panelController != null && panelController!.isAttached) {
+                                panelController!.open();
+                              }
+                            },
                           ),
                           Observer(
                             builder: (_) {
@@ -299,6 +300,7 @@ class _AssetsState extends State<Assets> {
 
                                   if (hasPendingIssuance) {
                                     return SubmitButton(
+                                      key: const Key('claim-pending-dev'),
                                       child: Text(dic.assets.issuancePending),
                                       onPressed: (context) => submitClaimRewards(
                                         context,
@@ -323,7 +325,7 @@ class _AssetsState extends State<Assets> {
                           : Container();
                     }),
                     const SizedBox(height: 24),
-                    CeremonyBox(store, webApi),
+                    CeremonyBox(store, webApi, key: const Key('ceremony-box-wallet')),
                   ],
                 ),
               ),
@@ -333,11 +335,10 @@ class _AssetsState extends State<Assets> {
               context: context,
               removeTop: true,
               child: ListView(
+                key: const Key('list-view-wallet'),
                 controller: scrollController,
                 children: <Widget>[
-                  const SizedBox(
-                    height: 12.0,
-                  ),
+                  const SizedBox(height: 12.0),
                   const DragHandle(),
                   Column(children: [
                     Observer(
@@ -413,7 +414,11 @@ class _AssetsState extends State<Assets> {
             color: ZurichLion.shade50,
             shape: BoxShape.circle,
           ),
-          child: const Icon(Icons.add, size: 36),
+          child: const Icon(
+            Icons.add,
+            key: Key('add-community'),
+            size: 36,
+          ),
         ),
         name: dic!.profile.addCommunity,
       ),
@@ -425,7 +430,7 @@ class _AssetsState extends State<Assets> {
     List<AccountOrCommunityData> allAccounts = [];
     allAccounts.addAll(store.account.accountListAll.map(
       (account) => AccountOrCommunityData(
-        avatar: AddressIcon('', account.pubKey, size: avatarSize, tapToCopy: false),
+        avatar: AddressIcon('', account.pubKey, key: Key(account.name), size: avatarSize, tapToCopy: false),
         name: account.name,
         isSelected: account.pubKey == store.account.currentAccountPubKey,
       ),
@@ -433,6 +438,7 @@ class _AssetsState extends State<Assets> {
     allAccounts.add(
       AccountOrCommunityData(
         avatar: Container(
+          key: const Key('add-account-panel'),
           height: avatarSize,
           width: avatarSize,
           decoration: BoxDecoration(

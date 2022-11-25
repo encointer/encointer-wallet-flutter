@@ -16,6 +16,7 @@ class WalletApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+      key: const Key('metaApp'),
       behavior: HitTestBehavior.opaque,
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);

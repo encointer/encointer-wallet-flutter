@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:encointer_wallet/config/node.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/store/settings.dart';
@@ -6,6 +8,9 @@ const String network_name_encointer_gesell = 'nctr-gsl';
 const String network_name_encointer_lietaer = 'nctr-r';
 const String network_name_encointer_mainnet = 'nctr-k';
 const String network_name_encointer_cantillon = 'nctr-ctln';
+
+const String androidLocalHost = '10.0.2.2';
+const String iosLocalHost = 'localhost';
 
 EndpointData networkEndpointEncointerGesell = EndpointData.fromJson({
   'info': 'nctr-gsl',
@@ -38,7 +43,8 @@ EndpointData networkEndpointEncointerGesellDev = EndpointData.fromJson({
   'info': 'nctr-gsl-dev',
   'ss58': 42,
   'text': 'Encointer Gesell Local Devnet',
-  'value': 'ws://10.0.2.2:9944', // do not use the docker's address, use the host's
+  'value':
+      'ws://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:9944', // do not use the docker's address, use the host's
   'overrideConfig': MasterBranchConfig.toJson(),
   'ipfsGateway': ipfs_gateway_local
 });
@@ -89,8 +95,10 @@ const network_ss58_map = {
 const fall_back_community_icon = 'assets/nctr_logo_faces_only_thick.svg';
 const community_icon_name = 'community_icon.svg';
 
-const String ipfs_gateway_encointer = 'http://ipfs.encointer.org:8080'; // AVD: 10.0.2.2 = 127.0.0.1
-const String ipfs_gateway_local = 'http://10.0.2.2:8080';
+// AVD: ${Platform.isAndroid ? androidLocalHost : iosLocalHost} = 127.0.0.1
+const String ipfs_gateway_encointer = 'http://ipfs.encointer.org:8080';
+// ignore: non_constant_identifier_names
+final String ipfs_gateway_local = 'http://${Platform.isAndroid ? androidLocalHost : iosLocalHost}:8080';
 
 const String encointer_feed = 'https://encointer.github.io/feed';
 const String encointer_feed_overrides = '$encointer_feed/overrides.json';
