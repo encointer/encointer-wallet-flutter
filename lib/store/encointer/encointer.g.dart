@@ -279,6 +279,21 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
+  late final _$setCommunityIdentifiersAsyncAction =
+      AsyncAction('_EncointerStore.setCommunityIdentifiers', context: context);
+
+  @override
+  Future<void> setCommunityIdentifiers(List<CommunityIdentifier> cids) {
+    return _$setCommunityIdentifiersAsyncAction.run(() => super.setCommunityIdentifiers(cids));
+  }
+
+  late final _$setChosenCidAsyncAction = AsyncAction('_EncointerStore.setChosenCid', context: context);
+
+  @override
+  Future<void> setChosenCid([CommunityIdentifier? cid]) {
+    return _$setChosenCidAsyncAction.run(() => super.setChosenCid(cid));
+  }
+
   late final _$updateStateAsyncAction = AsyncAction('_EncointerStore.updateState', context: context);
 
   @override
@@ -306,30 +321,10 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setCommunityIdentifiers(List<CommunityIdentifier> cids) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunityIdentifiers');
-    try {
-      return super.setCommunityIdentifiers(cids);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
   void setCommunities(List<CidName> c) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCommunities');
     try {
       return super.setCommunities(c);
-    } finally {
-      _$_EncointerStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setChosenCid([CommunityIdentifier? cid]) {
-    final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setChosenCid');
-    try {
-      return super.setChosenCid(cid);
     } finally {
       _$_EncointerStoreActionController.endAction(_$actionInfo);
     }

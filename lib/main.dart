@@ -6,9 +6,11 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:encointer_wallet/app.dart';
 import 'package:encointer_wallet/config.dart';
+import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/service/subscan.dart';
@@ -49,10 +51,19 @@ Future<void> main() async {
 
   HttpOverrides.global = MyHttpOverrides();
 
+  final localService = LangService(await SharedPreferences.getInstance());
+
   runApp(
-    Provider(
-      // On test mode instead of LocalStorage() must be use MockLocalStorage()
-      create: (context) => AppStore(util.LocalStorage(), config: const AppConfig()),
+    MultiProvider(
+      providers: [
+        Provider<AppSettings>(
+          create: (context) => AppSettings(localService)..init(),
+        ),
+        Provider<AppStore>(
+          // On test mode instead of LocalStorage() must be use MockLocalStorage()
+          create: (context) => AppStore(util.LocalStorage(), config: const AppConfig()),
+        )
+      ],
       child: const WalletApp(),
     ),
   );
