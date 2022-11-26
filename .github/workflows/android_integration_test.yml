@@ -58,7 +58,8 @@ jobs:
           ls -alt
           chmod +x encointer-node-notee
           chmod +x encointer-client-notee
-          ./node/encointer-node-notee --tmp --dev --enable-offchain-indexing true --rpc-methods unsafe &
+          chmod +x ./client/bootstrap_demo_community.py
+          ./encointer-node-notee --tmp --dev --enable-offchain-indexing true --rpc-methods unsafe &
           sleep 10
           cd client
           ./bootstrap_demo_community.py --client ../encointer-client-notee
