@@ -105,14 +105,14 @@ abstract class _EncointerAccountStore with Store {
         'success': true,
         'from': address,
         'to': i['params'][0],
-        'token': CommunityIdentifier.fromJson(i['params'][1]).toFmtString(),
-        'amount': Fmt.numberFormat(i['params'][2]),
+        'token': CommunityIdentifier.fromJson(i['params'][1] as Map<String, dynamic>).toFmtString(),
+        'amount': Fmt.numberFormat(i['params'][2] as String?),
       };
     }).toList();
     if (reset) {
-      txsTransfer = ObservableList.of(transfers.map((i) => TransferData.fromJson(Map<String, dynamic>.from(i))));
+      txsTransfer = ObservableList.of(transfers.map((i) => TransferData.fromJson(Map<String, dynamic>.from(i as Map))));
     } else {
-      txsTransfer.addAll(transfers.map((i) => TransferData.fromJson(Map<String, dynamic>.from(i))));
+      txsTransfer.addAll(transfers.map((i) => TransferData.fromJson(Map<String, dynamic>.from(i as Map))));
     }
 
     if (needCache && txsTransfer.length > 0) {

@@ -159,7 +159,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
         _transferState = TransferState.failed;
       } else {
         _transferState = TransferState.finished;
-        _blockTimestamp = DateTime.fromMillisecondsSinceEpoch(res['time']);
+        _blockTimestamp = DateTime.fromMillisecondsSinceEpoch(res['time'] as int);
       }
     };
 

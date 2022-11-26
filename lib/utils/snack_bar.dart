@@ -14,7 +14,7 @@ class RootSnackBar {
   static void show(
     Widget content, {
     int durationMillis = 1500,
-    backgroundColor = Colors.white,
+    Color backgroundColor = Colors.white,
   }) {
     showSnackBar(
       content,
@@ -26,8 +26,8 @@ class RootSnackBar {
   static void showMsg(
     String msg, {
     int durationMillis = 1500,
-    textColor = Colors.black54,
-    backgroundColor = Colors.white,
+    Color textColor = Colors.black54,
+    Color backgroundColor = Colors.white,
   }) {
     showSnackBar(
       Text(msg, style: TextStyle(color: textColor)),
@@ -40,7 +40,7 @@ class RootSnackBar {
 void showSnackBar(
   Widget content, {
   int durationMillis = 1500,
-  backgroundColor = Colors.white,
+  Color backgroundColor = Colors.white,
 }) {
   rootScaffoldMessengerKey.currentState!.hideCurrentSnackBar();
   rootScaffoldMessengerKey.currentState!.removeCurrentSnackBar();

@@ -471,7 +471,7 @@ class _AssetsState extends State<Assets> {
             context,
             store.account.currentAccount,
             Text(I18n.of(context)!.translationsForLocale().home.unlock),
-            (password) {
+            (String password) {
               setState(() {
                 store.settings.setPin(password);
               });
@@ -554,7 +554,7 @@ class _AssetsState extends State<Assets> {
         widget.store.encointer.accountStores![widget.store.account.currentAddress]
             ?.addBalanceEntry(widget.store.encointer.chosenCid!, BalanceEntry(0, 0));
       }
-    }).catchError((e, s) {
+    }).catchError((e, StackTrace? s) {
       Log.e('[home:refreshBalanceAndNotify] WARNING: could not update balance: $e', 'Assets', s);
     });
   }

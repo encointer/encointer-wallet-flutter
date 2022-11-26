@@ -110,7 +110,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
             context,
             store.account.currentAccount,
             Text(I18n.of(context)!.translationsForLocale().profile.unlock),
-            (password) {
+            (String password) {
               setState(() {
                 store.settings.setPin(password);
               });

@@ -99,7 +99,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
       title: Text(community.name!, style: h3),
       subtitle: Text(community.symbol!, style: h3),
       trailing: Text(
-        '${Fmt.doubleFormat(community.applyDemurrage(entry))} ⵐ',
+        '${Fmt.doubleFormat(community.applyDemurrage(entry) as double?)} ⵐ',
         style: h3.copyWith(color: encointerGrey),
       ),
     );
@@ -110,7 +110,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
     showCupertinoDialog(
       context: context,
       builder: (BuildContext context) {
-        return showPasswordInputDialog(context, accountToBeEdited, Text(dic.profile.confirmPin), (password) async {
+        return showPasswordInputDialog(context, accountToBeEdited, Text(dic.profile.confirmPin),
+            (String password) async {
           Log.d('password is: $password', 'AccountManagePage');
           setState(() {
             _appStore.settings.setPin(password);

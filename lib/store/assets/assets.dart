@@ -101,7 +101,7 @@ abstract class _AssetsStore with Store {
     if (rootStore.account.currentAccount.pubKey != pubKey) return;
 
     amt!.forEach((k, v) {
-      balances[k] = BalancesInfo.fromJson(v);
+      balances[k as String] = BalancesInfo.fromJson(v as Map<String, dynamic>);
     });
 
     if (!needCache) return;
@@ -161,7 +161,7 @@ abstract class _AssetsStore with Store {
     if (ls == null) return;
 
     ls.forEach((i) {
-      TransferData tx = TransferData.fromJson(i);
+      TransferData tx = TransferData.fromJson(i as Map<String, dynamic>);
       txs.add(tx);
     });
 
@@ -209,10 +209,11 @@ abstract class _AssetsStore with Store {
       rootStore.localStorage.getAccountCache(pubKey, _getCacheKey(cacheTokenBalanceKey)),
     ]);
     if (cache[0] != null) {
-      setAccountBalances(pubKey, cache[0], needCache: false);
+      setAccountBalances(pubKey, cache[0] as Map<String, dynamic>, needCache: false);
     }
     if (cache[1] != null) {
-      txs = ObservableList.of(List.of(cache[1]).map((i) => TransferData.fromJson(i)).toList());
+      txs = ObservableList.of(
+          List.of(cache[1] as Iterable).map((i) => TransferData.fromJson(i as Map<String, dynamic>)).toList());
     } else {
       txs = ObservableList();
     }
@@ -220,7 +221,7 @@ abstract class _AssetsStore with Store {
       cacheTxsTimestamp = cache[2];
     }
     if (cache[3] != null) {
-      setAccountTokenBalances(pubKey, cache[3], needCache: false);
+      setAccountTokenBalances(pubKey, cache[3] as Map<String, dynamic>, needCache: false);
     } else {
       setAccountTokenBalances(pubKey, {}, needCache: false);
     }
@@ -232,7 +233,7 @@ abstract class _AssetsStore with Store {
     if (ls != null) {
       ls.forEach((i) {
         if (blockMap[i['id']] == null) {
-          blockMap[i['id']] = BlockData.fromJson(i);
+          blockMap[i['id'] as int] = BlockData.fromJson(i as Map<String, dynamic>);
         }
       });
     }
@@ -246,7 +247,7 @@ class BlockData extends _BlockData {
     BlockData block = BlockData();
     block.id = json['id'];
     block.hash = json['hash'];
-    block.time = DateTime.fromMillisecondsSinceEpoch(json['timestamp']);
+    block.time = DateTime.fromMillisecondsSinceEpoch(json['timestamp'] as int);
     return block;
   }
 

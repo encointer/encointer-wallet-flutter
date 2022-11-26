@@ -150,7 +150,7 @@ class AccountApi {
 
   Future<void> generateAccount() async {
     Map<String, dynamic> acc = await jsApi.evalJavascript('account.gen()');
-    store.account.setNewAccountKey(acc['mnemonic']);
+    store.account.setNewAccountKey(acc['mnemonic'] as String?);
   }
 
   Future<Map<String, dynamic>> importAccount({
@@ -184,7 +184,7 @@ class AccountApi {
       return [];
     }
 
-    var res = await jsApi.evalJavascript(
+    List<dynamic> res = await jsApi.evalJavascript(
       'account.getAccountIndex(${jsonEncode(addresses)})',
       allowRepeat: true,
     );
@@ -198,7 +198,7 @@ class AccountApi {
       return [];
     }
 
-    var res = await jsApi.evalJavascript(
+    List<dynamic> res = await jsApi.evalJavascript(
       'account.getAccountIndex(${jsonEncode(addresses)})',
       allowRepeat: true,
     );

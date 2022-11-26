@@ -97,7 +97,7 @@ class _Settings extends State<SettingsPage> {
                   child: Image.asset('assets/images/public/${_store.settings.customSS58Format['info']}.png'),
                 ),
                 title: Text(dic.profile.settingPrefix),
-                subtitle: Text(_store.settings.customSS58Format['text'] ?? ''),
+                subtitle: Text(_store.settings.customSS58Format['text'] as String? ?? ''),
                 trailing: const Icon(Icons.arrow_forward_ios, size: 18),
                 onTap: () => Navigator.of(context).pushNamed(SS58PrefixListPage.route),
               ),

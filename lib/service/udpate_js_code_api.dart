@@ -41,7 +41,7 @@ class UpdateJSCodeApi {
   static Future<int?> fetchPolkadotJSVersion(String networkName) async {
     try {
       Response res = await get(Uri.parse('$_endpoint/jsCodeVersions.json'));
-      return Map.of(jsonDecode(res.body))[networkName];
+      return Map.of(jsonDecode(res.body) as Map)[networkName];
     } catch (e, s) {
       Log.e('$e', 'UpdateJSCodeApi', s);
       return Future.value(null);

@@ -58,10 +58,12 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
     setState(() {});
 
     var voucherBalanceEntry = await api.encointer.getEncointerBalance(_voucherAddress!, cid);
-    _voucherBalance = voucherBalanceEntry.applyDemurrage(
-      context.read<AppStore>().chain.latestHeaderNumber,
-      context.read<AppStore>().encointer.community!.demurrage!,
-    );
+    if (context.read<AppStore>().chain.latestHeaderNumber != null) {
+      _voucherBalance = voucherBalanceEntry.applyDemurrage(
+        context.read<AppStore>().chain.latestHeaderNumber!,
+        context.read<AppStore>().encointer.community!.demurrage!,
+      );
+    }
 
     _isReady = true;
 
@@ -180,7 +182,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
 
     if (res['hash'] == null) {
       Log.d('Error redeeming voucher: ${res['error']}', 'ReapVoucherPage');
-      showRedeemFailedDialog(context, res['error']);
+      showRedeemFailedDialog(context, res['error'] as String?);
     } else {
       showRedeemSuccessDialog(context);
     }

@@ -81,7 +81,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
             Map<String, dynamic> localAcc = AccountData.toJson(accountData);
             // make metadata the same as the polkadot-js/api's
             acc['meta']['name'] = localAcc['name'];
-            store.account.updateAccount(acc);
+            store.account.updateAccount(acc as Map<String, dynamic>);
             store.account.updateSeed(accountData.pubKey, _passOldCtrl.text, _passCtrl.text);
           });
         });

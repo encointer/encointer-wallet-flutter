@@ -13,7 +13,7 @@ class ExportResultPage extends StatelessWidget {
   void _showExportDialog(BuildContext context, Map args) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
     Clipboard.setData(ClipboardData(
-      text: args['key'],
+      text: args['key'] as String,
     ));
     showCupertinoDialog(
       context: context,
@@ -73,7 +73,7 @@ class ExportResultPage extends StatelessWidget {
                         borderRadius: const BorderRadius.all(Radius.circular(4))),
                     padding: const EdgeInsets.all(16),
                     child: Text(
-                      args['key'],
+                      args['key'] as String,
                       style: Theme.of(context).textTheme.headline4,
                     ),
                   ),

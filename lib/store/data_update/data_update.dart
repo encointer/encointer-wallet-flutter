@@ -9,7 +9,7 @@ part 'data_update.g.dart';
 ///
 class DataUpdateStore extends _DataUpdateStore with _$DataUpdateStore {
   DataUpdateStore({
-    refreshPeriod = const Duration(seconds: 30),
+    Duration refreshPeriod = const Duration(seconds: 30),
   }) : super(refreshPeriod);
 }
 
@@ -121,7 +121,7 @@ abstract class _DataUpdateStore with Store {
       // Data is valid and up-to-date again
       invalidated = false;
       lastUpdate = DateTime.now();
-    }).catchError((e, s) {
+    }).catchError((e, StackTrace? s) {
       Log.e('Error while executing `updateFn`: $e', 'DataUpdateStore', s);
     }).whenComplete(() {
       _updateFuture = null;

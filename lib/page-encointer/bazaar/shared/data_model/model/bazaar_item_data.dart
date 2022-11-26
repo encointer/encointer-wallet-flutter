@@ -20,7 +20,12 @@ abstract class BazaarItemData {
 class BazaarOfferingData extends BazaarItemData {
   final double price;
 
-  BazaarOfferingData(title, description, this.price, image) : super(title, description, image);
+  BazaarOfferingData(
+    String title,
+    String description,
+    this.price,
+    Image image,
+  ) : super(title, description, image);
 
   @override
   String get info => price.toString();
@@ -40,8 +45,14 @@ class BazaarBusinessData extends BazaarItemData {
   // for now:
   final LatLng turbinenplatz = LatLng(47.389712, 8.517076); // TODO use coordinates of the respective community
 
-  BazaarBusinessData(title, description, this.coordinates, image, this.openingHours, this.offerings)
-      : super(title, description, image);
+  BazaarBusinessData(
+    String title,
+    String description,
+    this.coordinates,
+    Image image,
+    this.openingHours,
+    this.offerings,
+  ) : super(title, description, image);
 
   @override
   String get info {
