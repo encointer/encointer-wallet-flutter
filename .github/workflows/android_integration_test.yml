@@ -40,6 +40,28 @@ jobs:
         with:
           config_files: ./.github/action-config.json
 
+      - name: Download encointer-node
+        uses: dawidd6/action-download-artifact@v2
+        with:
+          github_token: ${{secrets.GITHUB_TOKEN}}
+          workflow: build-and-test.yml
+          name: demo_package
+          # in fact this action should download the latest artifact, but sometimes fails. Then we need to
+          # set the `run_id` to force a download of an updated binary.
+          run_id: 3553681091
+          repo: encointer/encointer-node
+
+      - name: Run encointer-node
+        run: |
+          cd demo_package
+          ls -alt
+          chmod +x encointer-node-notee
+          chmod +x encointer-client-notee
+          ./node/encointer-node-notee --tmp --dev --enable-offchain-indexing true --rpc-methods unsafe &
+          sleep 10
+          cd client
+          ./bootstrap_demo_community.py --client ../encointer-client-notee
+
 #      - uses: actions/setup-java@v1
 #        with:
 #          java-version: ${{ steps.config.outputs.java-version }}
