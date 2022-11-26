@@ -13,10 +13,13 @@ class DragHandle extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
+          key: const Key('drag-handle-panel'),
           width: 40,
           height: 4,
-          decoration:
-              BoxDecoration(color: ZurichLion.shade50, borderRadius: const BorderRadius.all(Radius.circular(2))),
+          decoration: BoxDecoration(
+            color: ZurichLion.shade50,
+            borderRadius: const BorderRadius.all(Radius.circular(2)),
+          ),
         ),
       ],
     );

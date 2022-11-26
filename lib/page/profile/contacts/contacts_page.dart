@@ -33,6 +33,7 @@ class ContactsPage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(right: 8),
                   child: IconButton(
+                    key: const Key('add-contact'),
                     icon: const Icon(Icons.add, size: 28),
                     onPressed: () => Navigator.of(context).pushNamed(ContactPage.route),
                   ),

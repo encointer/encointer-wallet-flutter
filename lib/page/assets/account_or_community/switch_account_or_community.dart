@@ -68,13 +68,14 @@ class _SwitchAccountOrCommunityState extends State<SwitchAccountOrCommunity> {
                     height: identiconPlusTextHeight,
                     width: fadeWidth),
                 Container(
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [whiteTransparent, Colors.white],
-                      ),
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [whiteTransparent, Colors.white],
                     ),
-                    height: identiconPlusTextHeight,
-                    width: fadeWidth),
+                  ),
+                  height: identiconPlusTextHeight,
+                  width: fadeWidth,
+                ),
               ],
             ),
           ],
