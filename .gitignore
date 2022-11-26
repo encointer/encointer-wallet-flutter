@@ -18,7 +18,8 @@
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
 # is commented out by default.
-.vscode/
+# We want to share it because it configures vscode to use the `.flutter` git submodule as the Flutter SDK.
+#.vscode
 
 # Flutter/Dart/Pub related
 **/doc/api/
