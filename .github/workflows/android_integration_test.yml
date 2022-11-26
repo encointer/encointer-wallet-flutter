@@ -34,9 +34,6 @@ jobs:
     steps:
       # Setup Environment
       - uses: actions/checkout@v2
-        with:
-          # 2 to compare the last two revisions to check if JS changed
-          fetch-depth: 2
 
       - uses: monorepo-actions/config-for-actions@main
         id: config
