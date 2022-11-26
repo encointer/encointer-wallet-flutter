@@ -34,55 +34,55 @@ jobs:
       # Setup Environment
       - uses: actions/checkout@v2
 
-      - uses: monorepo-actions/config-for-actions@main
-        id: config
-        with:
-          config_files: ./.github/action-config.json
-
-      - name: "Prepare environment for ios"
-        working-directory: ./scripts
-        run: ./ios_init_env.sh
-
-      - uses: actions/setup-java@v1
-        with:
-          java-version: ${{ steps.config.outputs.java-version }}
-
-      - name: Install flutter wrapper
-        run: ./scripts/install_flutter.sh
-
-      - name: "Create Simulator if iPad Pro 2nd gen"
-        if: ${{ matrix.device == 'iPad Pro (12.9-inch) (2nd generation)' }}
-        run: xcrun simctl create "iPad Pro (12.9-inch) (2nd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---2nd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-16-0"
-
-      - name: "Create Simulator if iPad Pro 3rd gen"
-        if: ${{ matrix.device == 'iPad Pro (12.9-inch) (3rd generation)' }}
-        run: xcrun simctl create "iPad Pro (12.9-inch) (3rd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---3rd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-16-0"
-
-      - name: "Start Simulator"
-        working-directory: ./scripts
-        env:
-          DEVICE_ID: ${{ matrix.device }}
-        run: source ./ios_emulator.sh
-
-        # JS Stuff
-      - uses: actions/setup-node@v2
-        with:
-          node-version: ${{ steps.config.outputs.node-version }}
-
-      - name: "Build JS"
-        working-directory: ./scripts
-        run: source ./init_env.sh && ./build_js.sh
-
-        # Run Tests
-      - name: "Flutter driver test and record video"
-        run: ./scripts/ios_integration_test.sh
-        env:
-          TEMP_DIR: ${{ steps.config.outputs.temp-screenshots }}
-          RECORD: ${{ matrix.record_video }}
-
-      - name: "Upload screenshots and recording"
-        if: always()
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ matrix.device }}
-          path: ${{ steps.config.outputs.temp-screenshots }}
+#      - uses: monorepo-actions/config-for-actions@main
+#        id: config
+#        with:
+#          config_files: ./.github/action-config.json
+#
+#      - name: "Prepare environment for ios"
+#        working-directory: ./scripts
+#        run: ./ios_init_env.sh
+#
+#      - uses: actions/setup-java@v1
+#        with:
+#          java-version: ${{ steps.config.outputs.java-version }}
+#
+#      - name: Install flutter wrapper
+#        run: ./scripts/install_flutter.sh
+#
+#      - name: "Create Simulator if iPad Pro 2nd gen"
+#        if: ${{ matrix.device == 'iPad Pro (12.9-inch) (2nd generation)' }}
+#        run: xcrun simctl create "iPad Pro (12.9-inch) (2nd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---2nd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-16-0"
+#
+#      - name: "Create Simulator if iPad Pro 3rd gen"
+#        if: ${{ matrix.device == 'iPad Pro (12.9-inch) (3rd generation)' }}
+#        run: xcrun simctl create "iPad Pro (12.9-inch) (3rd generation)" "com.apple.CoreSimulator.SimDeviceType.iPad-Pro--12-9-inch---3rd-generation-" "com.apple.CoreSimulator.SimRuntime.iOS-16-0"
+#
+#      - name: "Start Simulator"
+#        working-directory: ./scripts
+#        env:
+#          DEVICE_ID: ${{ matrix.device }}
+#        run: source ./ios_emulator.sh
+#
+#        # JS Stuff
+#      - uses: actions/setup-node@v2
+#        with:
+#          node-version: ${{ steps.config.outputs.node-version }}
+#
+#      - name: "Build JS"
+#        working-directory: ./scripts
+#        run: source ./init_env.sh && ./build_js.sh
+#
+#        # Run Tests
+#      - name: "Flutter driver test and record video"
+#        run: ./scripts/ios_integration_test.sh
+#        env:
+#          TEMP_DIR: ${{ steps.config.outputs.temp-screenshots }}
+#          RECORD: ${{ matrix.record_video }}
+#
+#      - name: "Upload screenshots and recording"
+#        if: always()
+#        uses: actions/upload-artifact@v2
+#        with:
+#          name: ${{ matrix.device }}
+#          path: ${{ steps.config.outputs.temp-screenshots }}
