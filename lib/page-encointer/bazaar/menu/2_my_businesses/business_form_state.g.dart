@@ -102,7 +102,7 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
   late final _$_BusinessFormStateActionController = ActionController(name: '_BusinessFormState', context: context);
 
   @override
-  void validateName(dynamic value) {
+  void validateName(String? value) {
     final _$actionInfo = _$_BusinessFormStateActionController.startAction(name: '_BusinessFormState.validateName');
     try {
       return super.validateName(value);
@@ -112,7 +112,7 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
   }
 
   @override
-  void validateDescription(dynamic value) {
+  void validateDescription(String? value) {
     final _$actionInfo =
         _$_BusinessFormStateActionController.startAction(name: '_BusinessFormState.validateDescription');
     try {
@@ -123,7 +123,7 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
   }
 
   @override
-  void validateStreet(dynamic value) {
+  void validateStreet(String? value) {
     final _$actionInfo = _$_BusinessFormStateActionController.startAction(name: '_BusinessFormState.validateStreet');
     try {
       return super.validateStreet(value);
@@ -133,7 +133,7 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
   }
 
   @override
-  void validateStreetAddendum(dynamic value) {
+  void validateStreetAddendum(String? value) {
     final _$actionInfo =
         _$_BusinessFormStateActionController.startAction(name: '_BusinessFormState.validateStreetAddendum');
     try {
@@ -144,7 +144,7 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
   }
 
   @override
-  void validateZipCode(dynamic value) {
+  void validateZipCode(String? value) {
     final _$actionInfo = _$_BusinessFormStateActionController.startAction(name: '_BusinessFormState.validateZipCode');
     try {
       return super.validateZipCode(value);
@@ -154,7 +154,7 @@ mixin _$BusinessFormState on _BusinessFormState, Store {
   }
 
   @override
-  void validateCity(dynamic value) {
+  void validateCity(String? value) {
     final _$actionInfo = _$_BusinessFormStateActionController.startAction(name: '_BusinessFormState.validateCity');
     try {
       return super.validateCity(value);

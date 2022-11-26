@@ -13,7 +13,7 @@ Future<List<MeetupOverrides>> getMeetupOverrides() async {
 
   if (response.statusCode == 200) {
     List<dynamic> list = jsonDecode(response.body);
-    return list.map((e) => MeetupOverrides.fromJson(e)).toList();
+    return list.map((e) => MeetupOverrides.fromJson(e as Map<String, dynamic>)).toList();
   } else {
     throw Exception('Failed to get meetup overrides.');
   }

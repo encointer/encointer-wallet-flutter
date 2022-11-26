@@ -7,7 +7,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-showPasswordInputDialog(context, account, title, onOk) {
+Widget showPasswordInputDialog(
+  BuildContext context,
+  AccountData account,
+  Widget? title,
+  Function onOk,
+) {
   return PasswordInputDialog(
     account: account,
     title: title,

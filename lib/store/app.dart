@@ -34,19 +34,19 @@ class AppStore extends _AppStore with _$AppStore {
   AppStore(
     LocalStorage localStorage, {
     required AppConfig config,
-    AppcastConfiguration? appcastConfiguration,
-  }) : super(localStorage, config: config, appcastConfiguration: appcastConfiguration);
+    AppcastConfiguration? appCast,
+  }) : super(localStorage, config: config, appCast: appCast);
 }
 
 abstract class _AppStore with Store {
   _AppStore(
     this.localStorage, {
     required this.config,
-    this.appcastConfiguration,
+    this.appCast,
   });
 
   final AppConfig config;
-  final AppcastConfiguration? appcastConfiguration;
+  final AppcastConfiguration? appCast;
 
   // Note, following pattern of a nullable field with a non-nullable getter
   // is here because mobx can't handle `late` initialization:
@@ -126,7 +126,7 @@ abstract class _AppStore with Store {
     Log.d('Is App Ready?: $appIsReady', '_AppStore');
   }
 
-  Future<void> cacheObject(String key, value) {
+  Future<void> cacheObject(String key, Object value) {
     return localStorage.setObject(getCacheKey(key), value);
   }
 

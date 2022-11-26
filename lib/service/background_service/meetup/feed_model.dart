@@ -3,7 +3,9 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'feed_model.g.dart';
 
-List<Feed> feedFromJson(String str) => List<Feed>.from(json.decode(str).map((x) => Feed.fromJson(x)));
+List<Feed> feedFromJson(String str) => List<Feed>.from(
+      (json.decode(str) as List).map<dynamic>((x) => Feed.fromJson(x as Map<String, dynamic>)),
+    );
 
 @JsonSerializable()
 class Feed {

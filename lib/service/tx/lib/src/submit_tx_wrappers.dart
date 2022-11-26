@@ -35,7 +35,7 @@ Future<void> submitTx(
           context,
           store.account.currentAccount,
           Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
-          (password) => store.settings.setPin(password),
+          (String password) => store.settings.setPin(password),
         );
       },
     );
@@ -110,7 +110,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
           context,
           store.account.currentAccount,
           Text(unlockText.replaceAll('CURRENT_ACCOUNT_NAME', store.account.currentAccount.name)),
-          (password) => store.settings.setPin(password),
+          (String password) => store.settings.setPin(password),
         );
       },
     );

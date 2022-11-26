@@ -17,7 +17,7 @@ class Ipfs {
       final dio = IpfsDio(BaseOptions(baseUrl: gateway));
 
       final response = await dio.get(cid);
-      var object = Object.fromJson(response.data);
+      var object = Object.fromJson(response.data as Map<String, dynamic>);
 
       // TODO: Better solution available to remove preceding and trailing characters of json?
       // loop through data string until actual json file begins
@@ -71,7 +71,7 @@ class Ipfs {
 
     try {
       final response = await dio.get(src);
-      var object = Object.fromJson(response.data);
+      var object = Object.fromJson(response.data as Map<String, dynamic>);
 
       return object.data;
     } catch (e, s) {
@@ -166,7 +166,7 @@ class Object {
   }
 
   factory Object.fromJson(Map<String, dynamic> json) {
-    return Object(data: json['Data'], links: json['Links']);
+    return Object(data: json['Data'] as String, links: json['Links'] as List<dynamic>);
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{'links': links, 'data': data};

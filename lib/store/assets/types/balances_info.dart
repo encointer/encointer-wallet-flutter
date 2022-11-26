@@ -7,8 +7,8 @@ class BalancesInfo extends _BalancesInfo {
     data.reserved = BigInt.parse(json['reservedBalance'].toString());
     data.lockedBalance = BigInt.parse(json['lockedBalance'].toString());
     data.total = data.freeBalance + data.reserved;
-    data.lockedBreakdown = List.of(json['lockedBreakdown']).map((i) {
-      return BalanceLockedItemData.fromJson(i);
+    data.lockedBreakdown = List.of(json['lockedBreakdown'] as Iterable).map((i) {
+      return BalanceLockedItemData.fromJson(i as Map<String, dynamic>);
     }).toList();
     return data;
   }

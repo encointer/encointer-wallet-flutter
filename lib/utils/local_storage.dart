@@ -60,7 +60,7 @@ class LocalStorage {
   }
 
   Future<void> updateContact(Map<String, dynamic> con) async {
-    return storage.updateItemInList(contactsKey, 'address', con['address'], con);
+    return storage.updateItemInList(contactsKey, 'address', con['address'] as String?, con);
   }
 
   Future<List<Map<String, dynamic>>> getContactList() async {
@@ -157,7 +157,7 @@ class _LocalStorage {
 
   Future<bool> setKV(String key, value) async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.setString(key, value);
+    return prefs.setString(key, value as String);
   }
 
   Future<bool> removeKey(String key) async {
@@ -191,7 +191,7 @@ class _LocalStorage {
     String? str = await getKV(storeKey);
     if (str != null) {
       Iterable l = jsonDecode(str);
-      res = l.map((i) => Map<String, dynamic>.from(i)).toList();
+      res = l.map((i) => Map<String, dynamic>.from(i as Map<String, dynamic>)).toList();
     }
     return res;
   }

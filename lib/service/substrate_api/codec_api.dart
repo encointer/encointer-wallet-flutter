@@ -47,7 +47,7 @@ class CodecApi {
   Future<Uint8List> encodeToBytes(String type, dynamic obj) {
     return jsApi
         .evalJavascript('codec.encode("$type", ${jsonEncode(obj)})', allowRepeat: true)
-        .then((res) => List<int>.from(res.values))
+        .then((res) => List<int>.from(res.values as Iterable))
         .then((l) => Uint8List.fromList(l));
   }
 }

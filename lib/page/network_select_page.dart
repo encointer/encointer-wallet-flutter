@@ -101,7 +101,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
             context,
             context.read<AppStore>().account.currentAccount,
             Text(I18n.of(context)!.translationsForLocale().profile.unlock),
-            (password) {
+            (String password) {
               setState(() {
                 context.read<AppStore>().settings.setPin(password);
               });
@@ -223,6 +223,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
                             )
                           : null,
                       child: IconButton(
+                        key: Key(i.info ?? '$i'),
                         padding: const EdgeInsets.all(8),
                         icon: Image.asset(img),
                         onPressed: () {
