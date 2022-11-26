@@ -62,6 +62,8 @@ jobs:
           ./encointer-node-notee --tmp --dev --enable-offchain-indexing true --rpc-methods unsafe &
           sleep 10
           cd client
+          # taken from https://github.com/encointer/encointer-node/blob/master/scripts/install_python_deps.sh
+          pip install geojson pyproj RandomWords wonderwords requests flask substrate-interface click
           ./bootstrap_demo_community.py --client ../encointer-client-notee
 
 #      - uses: actions/setup-java@v1
