@@ -53,6 +53,7 @@ jobs:
 
       - name: Run encointer-node
         run: |
+          ls -alt
           cd demo_package
           ls -alt
           chmod +x encointer-node-notee
