@@ -52,7 +52,10 @@ jobs:
           repo: encointer/encointer-node
           path: demo_package
 
-      - name: Run encointer-node
+      - name: Run encointer-node & bootstrap demo community
+        # This whole thing should be heavily simplified, but we should refactor the stuff in the encointer-node
+        # repository to achieve that. Here, we just live with it for now. See
+        # https://github.com/encointer/encointer-node/issues/271
         run: |
           cd demo_package
           ls -alt
@@ -63,7 +66,7 @@ jobs:
           sleep 10
           cd client
           # taken from https://github.com/encointer/encointer-node/blob/master/scripts/install_python_deps.sh
-          pip install geojson pyproj RandomWords wonderwords requests flask substrate-interface click
+          pip install geojson requests click
           ./bootstrap_demo_community.py --client ../encointer-client-notee
 
 #      - uses: actions/setup-java@v1
