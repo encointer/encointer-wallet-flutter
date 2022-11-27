@@ -131,35 +131,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
       Log.d('$data', 'AggregatedAccountData from register participant');
       final registrationType = data.personal?.participantType;
       if (registrationType != null) {
-        final dic = I18n.of(context)!.translationsForLocale();
-        final texts = _getTitleEducate(registrationType, context);
-        String languageCode = Localizations.localeOf(context).languageCode;
-
-        await showCupertinoDialog<void>(
-          barrierDismissible: true,
-          context: context,
-          builder: (context) {
-            return CupertinoAlertDialog(
-              title: Text('${texts['title']}'),
-              content: Text(
-                '${texts['content']}',
-                textAlign: TextAlign.center,
-              ),
-              actions: <Widget>[
-                Container(),
-                CupertinoButton(
-                  child: Text(dic.encointer.leuZurichFAQ),
-                  onPressed: () => UI.launchURL(leuZurichCycleAssignmentFAQLink(languageCode)),
-                ),
-                if (registrationType == ParticipantType.Newbie)
-                  CupertinoButton(
-                    child: Text(dic.home.ok),
-                    onPressed: () => Navigator.of(context).pop(),
-                  )
-              ],
-            );
-          },
-        );
+        await _showEducationalDialog(registrationType, context);
       }
       // Registering the participant burns the reputation.
       // Hence, we should fetch the new state afterwards.
@@ -197,7 +169,39 @@ Future<dynamic> submitReapVoucher(
   return api.js.evalJavascript('encointer.reapVoucher("$voucherUri","$recipientAddress", ${jsonEncode(cid)})');
 }
 
-Map<String, String> _getTitleEducate(ParticipantType type, BuildContext context) {
+Future<void> _showEducationalDialog(ParticipantType registrationType, BuildContext context) async {
+  final dic = I18n.of(context)!.translationsForLocale();
+  final texts = _getEducationalDialogTexts(registrationType, context);
+  String languageCode = Localizations.localeOf(context).languageCode;
+
+  return showCupertinoDialog<void>(
+    barrierDismissible: true,
+    context: context,
+    builder: (context) {
+      return CupertinoAlertDialog(
+        title: Text('${texts['title']}'),
+        content: Text(
+          '${texts['content']}',
+          textAlign: TextAlign.center,
+        ),
+        actions: <Widget>[
+          Container(),
+          CupertinoButton(
+            child: Text(dic.encointer.leuZurichFAQ),
+            onPressed: () => UI.launchURL(leuZurichCycleAssignmentFAQLink(languageCode)),
+          ),
+          if (registrationType == ParticipantType.Newbie)
+            CupertinoButton(
+              child: Text(dic.home.ok),
+              onPressed: () => Navigator.of(context).pop(),
+            )
+        ],
+      );
+    },
+  );
+}
+
+Map<String, String> _getEducationalDialogTexts(ParticipantType type, BuildContext context) {
   final dic = I18n.of(context)!.translationsForLocale().encointer;
   switch (type) {
     case ParticipantType.Newbie:
