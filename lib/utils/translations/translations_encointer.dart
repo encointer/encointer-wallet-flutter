@@ -164,24 +164,29 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   @override
   String get goToLeuZurich => 'Open leu.zuerich';
   @override
-  String get bootstrapperContent => 'If you have endorsement tickets left, please consider endorsing new people.';
+  String get bootstrapperContent =>
+      'If you have endorsement tickets left, please consider endorsing newbies to help the community grow.';
   @override
-  String get bootstrapperTitle => 'Registered as bootstrapper. Seat is guaranteed.';
+  String get bootstrapperTitle => 'Registered as bootstrapper - your seat is guaranteed.';
   @override
   String get endorseeContent =>
-      'You have been endorsed as a trustworthy community member. Hence, you are guaranteed to be assigned to a gathering this this cycle.';
+      'You have been endorsed as a trustworthy community member. Hence, you are guaranteed to be assigned to a '
+      'gathering this cycle.';
   @override
-  String get endorseeTitle => 'Registered as endorsee. Seat is guaranteed';
+  String get endorseeTitle => 'Registered as endorsee - your seat is guaranteed';
   @override
   String get newbieContent =>
-      'You registered as a newbie without previous reputation. We can\'t guarantee assigned to a gathering this cycle (link to FAQ:why have I not been assigned?). Please check your assignment status on the day before the cycle to learn if and where your gathering will take place.';
+      'You registered as a newbie without previous reputation. We can\'t guarantee that you will be assigned to a '
+      'gathering this cycle. Please check your assignment status on the day before the cycle to learn if and where '
+      'your gathering will take place.';
   @override
-  String get newbieTitle => 'Registered as newbie. Seat is not guaranteed';
+  String get newbieTitle => 'Registered as newbie - your seat is not definite';
   @override
   String get reputableContent =>
-      'You used your reputation to get a guaranteed seat. Caution: Should you register but not show up at the cycle, you become a newbie again.';
+      'You used your reputation to get a guaranteed seat. Caution: Should you register, but not show up at the cycle,'
+      ' you become a newbie again.';
   @override
-  String get reputableTitle => 'Registered as reputable. Seat is guaranteed';
+  String get reputableTitle => 'Registered as reputable - your seat is guaranteed';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
@@ -293,20 +298,23 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   String get bootstrapperContent =>
       'Wenn Du noch Endorsement-Tickets übrig hast, vergiss nicht neue Personen zu bestätigen';
   @override
-  String get bootstrapperTitle => 'Als bootstrapper registriert. Sitz ist garantiert.';
+  String get bootstrapperTitle => 'Als bootstrapper registriert - Dein Platz ist garantiert.';
   @override
   String get endorseeContent =>
-      'Du wurdest von einem Bootstrapper als vertrauenswürdiges Mitglied bestätigt. Deswegen ist dein sitz garantiert.';
+      'Du wurdest von einem Bootstrapper als vertrauenswürdiges Mitglied bestätigt. Deswegen ist dein Sitz garantiert.';
   @override
-  String get endorseeTitle => 'Als Endorsee registriert. Sitz is garantiert.';
+  String get endorseeTitle => 'Als Endorsee registriert. Dein Platz is garantiert.';
   @override
   String get newbieContent =>
-      'Du hast dich als Newbie ohne bisherige Reputation registriert. Es ist nicht garantiert, dass du in diesem Cycle zugewiesen wirst. (Link zu FAQ:Warum wurde ich nicht zugewiesen?). Bitte überprüfe deinen Zuweisungsstatus am Tag vor dem Cycle, um zu erfahren, ob und wo deine Versammlung stattfinden wird.';
+      'Du hast dich als Newbie ohne bisherige Reputation registriert. Es ist nicht garantiert, dass du in diesem Cycle '
+      'zugewiesen wirst. Bitte überprüfe deinen Zuweisungsstatus am Tag vor dem Cycle, um zu erfahren, ob und wo deine '
+      'Versammlung stattfinden wird.';
   @override
-  String get newbieTitle => 'Als Newbie Registriert. Teilnahme ist nicht garantiert';
+  String get newbieTitle => 'Als Newbie Registriert. Dein Platz ist noch nicht sicher.';
   @override
   String get reputableContent =>
-      'Du hast deine Reputation genutzt um einen garantierten Platz zu erhalten. Achtung! Solltest Du dich anmelden, aber nicht zur Versammlung erscheinen, wirst du wieder ein Newbie.';
+      'Du hast deine Reputation genutzt um einen garantierten Platz zu erhalten. Achtung! Solltest Du dich anmelden,'
+      ' aber nicht zur Versammlung erscheinen, wirst du wieder ein Newbie.';
   @override
   String get reputableTitle => 'Als Reputable registriert. Teilnahme ist garantiert';
 }
