@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/utils/ui.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
@@ -129,7 +131,10 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
       Log.d('$data', 'AggregatedAccountData from register participant');
       final registrationType = data.personal?.participantType;
       if (registrationType != null) {
+        final dic = I18n.of(context)!.translationsForLocale();
         final texts = _getTitleEducate(registrationType, context);
+        String languageCode = Localizations.localeOf(context).languageCode;
+
         await showCupertinoDialog<void>(
           barrierDismissible: true,
           context: context,
@@ -140,6 +145,18 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
                 '${texts['content']}',
                 textAlign: TextAlign.center,
               ),
+              actions: <Widget>[
+                Container(),
+                CupertinoButton(
+                  child: Text(dic.encointer.leuZurichFAQ),
+                  onPressed: () => UI.launchURL(leuZurichCycleAssignmentFAQLink(languageCode)),
+                ),
+                if (registrationType == ParticipantType.Newbie)
+                  CupertinoButton(
+                    child: Text(dic.home.ok),
+                    onPressed: () => Navigator.of(context).pop(),
+                  )
+              ],
             );
           },
         );

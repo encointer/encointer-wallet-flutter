@@ -140,6 +140,21 @@ String leuZurichLink(String locale) {
   return replaceLocalePlaceholder(leu_zurich_link, locale);
 }
 
+const AssignmentFAQLinkEN = 'https://leu.zuerich/en/#why-have-i-not-been-assigned-to-a-cycle';
+const AssignmentFAQLinkDE = 'https://leu.zuerich/#warum-wurde-ich-keinem-cycle-zugewiesen';
+
+String leuZurichCycleAssignmentFAQLink(String locale) {
+  switch (locale) {
+    case 'en':
+      return AssignmentFAQLinkEN;
+    case 'de':
+      return AssignmentFAQLinkDE;
+    default:
+      Log.d('[replaceLocale] unsupported locale, defaulting to english', 'consts.dart');
+      return AssignmentFAQLinkEN;
+  }
+}
+
 String replaceLocalePlaceholder(String link, String locale) {
   switch (locale) {
     case 'en':

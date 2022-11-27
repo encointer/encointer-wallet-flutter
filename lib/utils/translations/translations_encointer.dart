@@ -51,6 +51,7 @@ abstract class TranslationsEncointer {
   String get thankYou;
   String get weHopeToSeeYouAtTheNextGathering;
   String get goToLeuZurich;
+  String get leuZurichFAQ;
   String get newbieTitle;
   String get newbieContent;
   String get endorseeTitle;
@@ -163,6 +164,8 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   String get weHopeToSeeYouAtTheNextGathering => 'We hope to see you at the next gathering.';
   @override
   String get goToLeuZurich => 'Open leu.zuerich';
+  @override
+  String get leuZurichFAQ => 'leu.zuerich FAQ';
   @override
   String get bootstrapperContent =>
       'If you have endorsement tickets left, please consider endorsing newbies to help the community grow.';
@@ -295,6 +298,8 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   @override
   String get goToLeuZurich => 'leu.zuerich öffnen';
   @override
+  String get leuZurichFAQ => 'leu.zuerich FAQ';
+  @override
   String get bootstrapperContent =>
       'Wenn Du noch Endorsement-Tickets übrig hast, vergiss nicht Newbies zu als vertrauenswürdig zu bestätigen.';
   @override
@@ -421,6 +426,8 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   @override
   String get goToLeuZurich => throw UnimplementedError();
   @override
+  String get leuZurichFAQ => throw UnimplementedError();
+  @override
   String get bootstrapperContent => throw UnimplementedError();
   @override
   String get bootstrapperTitle => throw UnimplementedError();
@@ -541,7 +548,8 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   String get weHopeToSeeYouAtTheNextGathering => 'Мы надеемся увидить Вас на следующей встрече.';
   @override
   String get goToLeuZurich => 'Открыть leu.zuerich';
-
+  @override
+  String get leuZurichFAQ => 'leu.zuerich FAQ';
   @override
   String get bootstrapperContent =>
       'Если у вас в наличии имеются индоссамент билеты, пожалуйста, рассмотрите возможность утверждения новых людей.';
