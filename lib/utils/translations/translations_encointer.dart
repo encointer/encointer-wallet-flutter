@@ -180,7 +180,7 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   @override
   String get newbieContent =>
       'You registered as a newbie without previous reputation. We can\'t guarantee that you will be assigned to a '
-      'gathering this cycle if there are many Newbies. Please check your assignment status on the day before the cycle '
+      'gathering this cycle if there are many newbies. Please check your assignment status on the day before the cycle '
       'to learn if and where your gathering will take place.';
   @override
   String get newbieTitle => 'Registered as newbie - your seat is not definite';
@@ -303,7 +303,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   String get bootstrapperContent =>
       'Wenn Du noch Endorsement-Tickets übrig hast, vergiss nicht Newbies zu als vertrauenswürdig zu bestätigen.';
   @override
-  String get bootstrapperTitle => 'Als bootstrapper registriert - Dein Platz ist garantiert.';
+  String get bootstrapperTitle => 'Als Bootstrapper registriert - Dein Platz ist garantiert.';
   @override
   String get endorseeContent =>
       'Du wurdest von einem Bootstrapper als vertrauenswürdiges Mitglied bestätigt. Deswegen ist dein Sitz garantiert.';
@@ -318,7 +318,7 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   String get newbieTitle => 'Als Newbie Registriert - Dein Platz ist noch nicht sicher.';
   @override
   String get reputableContent =>
-      'Du hast deine Reputation genutzt um einen garantierten Platz zu erhalten. Achtung! Solltest Du dich anmelden,'
+      'Du hast deine Reputation genutzt um einen garantierten Platz zu erhalten. Achtung: Solltest Du dich anmelden,'
       ' aber nicht zur Versammlung erscheinen, wirst du wieder ein Newbie.';
   @override
   String get reputableTitle => 'Als Reputable registriert. Dein Platz ist garantiert';
