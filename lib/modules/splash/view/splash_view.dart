@@ -56,6 +56,7 @@ class _SplashViewState extends State<SplashView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: const Key('splashview'),
       body: FutureBuilder(
         future: _initPage(),
         builder: (context, s) {

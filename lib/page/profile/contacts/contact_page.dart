@@ -129,6 +129,7 @@ class _Contact extends State<ContactPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 16, right: 16),
                       child: TextFormField(
+                        key: const Key('contact-address'),
                         decoration: InputDecoration(
                           hintText: dic.profile.contactAddress,
                           labelText: dic.profile.contactAddress,
@@ -146,6 +147,7 @@ class _Contact extends State<ContactPage> {
                     Padding(
                       padding: const EdgeInsets.only(left: 16, right: 16),
                       child: TextFormField(
+                        key: const Key('contact-name'),
                         decoration: InputDecoration(
                           hintText: dic.profile.contactName,
                           labelText: dic.profile.contactName,
@@ -212,6 +214,7 @@ class _Contact extends State<ContactPage> {
             Container(
               margin: const EdgeInsets.all(16),
               child: RoundedButton(
+                key: const Key('contact-save'),
                 submitting: _submitting,
                 text: dic.profile.contactSave,
                 onPressed: () => _onSave(),

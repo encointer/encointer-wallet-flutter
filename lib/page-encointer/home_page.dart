@@ -36,7 +36,8 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   @override
   void initState() {
-    if (_notificationPlugin == null) {
+    // if appCast == null the integration test doesn't show request notification permission.
+    if (_notificationPlugin == null && context.read<AppStore>().appCast == null) {
       _notificationPlugin = NotificationPlugin();
       _notificationPlugin!.init(context);
     }
@@ -73,7 +74,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
                     child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                       Icon(
                         i.iconData,
-                        key: Key(i.key.toString()),
+                        key: Key(i.key.name),
                       ),
                       Container(
                         height: 4,
@@ -88,7 +89,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
                   )
                 : Icon(
                     i.iconData,
-                    key: Key(i.key.toString()),
+                    key: Key(i.key.name),
                     color: i.key == TabKey.Scan ? ZurichLion.shade900 : encointerGrey,
                   ),
             label: '',

@@ -72,6 +72,7 @@ class CeremonyBox extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(top: 12),
                     child: CeremonyRegisterButton(
+                        key: const Key('registration-meetup-button'),
                         registerUntil: assigningPhaseStart,
                         onPressed: (context) async {
                           if (store.dataUpdate.expired) {
@@ -134,6 +135,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
     case CeremonyPhase.Registering:
       if (communityAccount?.isRegistered ?? false) {
         return CeremonyNotification(
+          key: const Key('is-registered-info'),
           notificationIconData: Iconsax.tick_square,
           notification: dic.encointer.youAreRegisteredAs.replaceAll(
             'PARTICIPANT_TYPE',

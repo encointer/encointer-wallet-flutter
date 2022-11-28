@@ -15,7 +15,6 @@ class Ipfs {
   Future<dynamic> getJson(String cid) async {
     try {
       final dio = IpfsDio(BaseOptions(baseUrl: gateway));
-
       final response = await dio.get<dynamic>(cid);
       var object = Object.fromJson(response.data as Map<String, dynamic>);
 
@@ -72,7 +71,6 @@ class Ipfs {
     try {
       final response = await dio.get<dynamic>(src);
       var object = Object.fromJson(response.data as Map<String, dynamic>);
-
       return object.data;
     } catch (e, s) {
       // otherwise we would have to adjust the return type.

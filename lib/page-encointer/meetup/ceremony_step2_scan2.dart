@@ -81,6 +81,7 @@ class CeremonyStep2Scan extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: ElevatedButton(
+                key: const Key('close-meetup'),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -120,6 +121,7 @@ class CeremonyStep2Scan extends StatelessWidget {
             ),
             store.settings.developerMode
                 ? ElevatedButton(
+                    key: const Key('attest-all-participants-dev'),
                     child: const Text('DEV ONLY: attest all participants'),
                     onPressed: () => attestAllParticipants(store, store.account.currentAddress),
                   )

@@ -179,9 +179,8 @@ class EncointerApi {
     }
 
     List<Location> locs = await jsApi.evalJavascript('encointer.getAllMeetupLocations(${jsonEncode(cid)})').then(
-          (list) =>
-              List<dynamic>.from(list as Iterable).map((l) => Location.fromJson(l as Map<String, dynamic>)).toList(),
-        );
+        (list) =>
+            List<dynamic>.from(list as Iterable).map((l) => Location.fromJson(l as Map<String, dynamic>)).toList());
 
     Log.d('api: getAllMeetupLocations: $locs ' 'EncointerApi');
     if (store.encointer.community != null) {
@@ -385,6 +384,7 @@ class EncointerApi {
         (Iterable<dynamic> data) async {
       List<CommunityIdentifier> cids =
           List<dynamic>.from(data).map((cn) => CommunityIdentifier.fromJson(cn as Map<String, dynamic>)).toList();
+
       await store.encointer.setCommunityIdentifiers(cids);
 
       await communitiesGetAll();

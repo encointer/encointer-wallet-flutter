@@ -48,4 +48,4 @@ jobs:
         run: source ./init_env.sh && ./build_js.sh
 
       - name: "Build apk"
-        run: flutter build apk --flavor fdroid
+        run: ./flutterw build apk --flavor fdroid
