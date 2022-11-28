@@ -79,7 +79,7 @@ class LocalStorage {
   Future<Map<String, dynamic>> getSeeds(String seedType) async {
     String? value = await storage.getKV('${seedKey}_$seedType');
     if (value != null) {
-      return jsonDecode(value);
+      return jsonDecode(value) as Map<String, dynamic>;
     }
     return {};
   }
@@ -111,7 +111,7 @@ class LocalStorage {
     if (value != null) {
       // String to `Map<String, dynamic>` conversion
       var data = await compute(jsonDecode, value);
-      return data;
+      return data as Map<String, dynamic>?;
     }
     return Future.value(null);
   }

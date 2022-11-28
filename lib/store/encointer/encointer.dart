@@ -213,7 +213,7 @@ abstract class _EncointerStore with Store {
     communityIdentifiers = cids;
     writeToCache();
 
-    if (communities != null && !communitiesContainsChosenCid) {
+    if (communities != null && communitiesContainsChosenCid && !communitiesContainsChosenCid) {
       // inconsistency found, reset state
       await setChosenCid();
     }
