@@ -44,11 +44,11 @@ const _$ParticipantTypeEnumMap = {
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$CommunityAccountStore on _CommunityAccountStore, Store {
-  Computed<dynamic>? _$scannedAttendeesCountComputed;
+  Computed<int>? _$scannedAttendeesCountComputed;
 
   @override
-  dynamic get scannedAttendeesCount => (_$scannedAttendeesCountComputed ??=
-          Computed<dynamic>(() => super.scannedAttendeesCount, name: '_CommunityAccountStore.scannedAttendeesCount'))
+  int get scannedAttendeesCount => (_$scannedAttendeesCountComputed ??=
+          Computed<int>(() => super.scannedAttendeesCount, name: '_CommunityAccountStore.scannedAttendeesCount'))
       .value;
   Computed<bool>? _$isAssignedComputed;
 

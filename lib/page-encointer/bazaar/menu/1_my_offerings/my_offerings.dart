@@ -34,7 +34,7 @@ class MyOfferings extends StatelessWidget {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(
+              MaterialPageRoute<void>(
                 builder: (context) => const OfferingForm(),
               ),
             );

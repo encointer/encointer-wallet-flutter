@@ -44,7 +44,7 @@ class AssetsApi {
       jsApi.subscribeMessage(
         'account.subscribeBalance("$_balanceSubscribeChannel","$address")',
         _balanceSubscribeChannel,
-        (data) => {
+        (dynamic data) => {
           store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol: data})),
         },
       );

@@ -14,7 +14,7 @@ class CeremonyInfoAndCalendar extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  final devMode;
+  final bool devMode;
 
   /// date for the next ceremony
   final DateTime nextCeremonyDate;

@@ -21,11 +21,11 @@ Future<void> submitTx(
   AppStore store,
   Api api,
   Map txParams, {
-  Function(BuildContext txPageContext, Map res)? onFinish,
+  dynamic Function(BuildContext txPageContext, Map res)? onFinish,
 }) async {
   if (store.settings.cachedPin.isEmpty) {
     var unlockText = I18n.of(context)!.translationsForLocale().home.unlockAccount;
-    await showCupertinoDialog(
+    await showCupertinoDialog<void>(
       context: context,
       builder: (context) {
         return showPasswordInputDialog(
@@ -100,7 +100,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
   // this is called inside submitTx too, but we need to unlock the key for the proof of attendance.
   if (store.settings.cachedPin.isEmpty) {
     var unlockText = I18n.of(context)!.translationsForLocale().home.unlockAccount;
-    await showCupertinoDialog(
+    await showCupertinoDialog<void>(
       context: context,
       builder: (context) {
         return showPasswordInputDialog(

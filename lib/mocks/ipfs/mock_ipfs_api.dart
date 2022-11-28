@@ -8,7 +8,7 @@ class MockIpfs extends Ipfs {
   MockIpfs({String gateway = ipfs_gateway_local}) : super(gateway: gateway);
 
   @override
-  Future getJson(String cid) async {
+  Future<void> getJson(String cid) async {
     Log.d('unimplemented getJson', 'MockIpfs');
   }
 

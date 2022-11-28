@@ -89,7 +89,7 @@ class BusinessDetailsPopup extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
+            MaterialPageRoute<void>(
               builder: (context) => BusinessDetail(dataForThisMarker),
             ),
           );

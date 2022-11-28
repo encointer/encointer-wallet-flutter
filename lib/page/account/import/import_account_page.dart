@@ -38,7 +38,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     setState(() {
       _submitting = true;
     });
-    showCupertinoDialog(
+    showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
@@ -64,7 +64,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
         msg = '${I18n.of(context)!.translationsForLocale().account.importInvalid}: $_keyType';
       }
 
-      showCupertinoDialog(
+      showCupertinoDialog<void>(
         context: context,
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
@@ -98,7 +98,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
           context.read<AppStore>().account.pubKeyAddressMap[context.read<AppStore>().settings.endpoint.ss58]!;
       String? address = pubKeyMap[acc['pubKey']];
       if (address != null) {
-        showCupertinoDialog(
+        showCupertinoDialog<void>(
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(

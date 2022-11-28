@@ -39,7 +39,7 @@ class _Settings extends State<SettingsPage> {
     }
 
     void _onLanguageTap() {
-      showCupertinoModalPopup(
+      showCupertinoModalPopup<void>(
         context: context,
         builder: (_) => SizedBox(
           height: MediaQuery.of(context).copyWith().size.height / 3,

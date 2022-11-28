@@ -120,8 +120,8 @@ class EncointerApi {
   /// This is on-chain in Cantillon.
   Future<void> getPhaseDurations() async {
     Map<CeremonyPhase, int> phaseDurations =
-        await jsApi.evalJavascript('encointer.getPhaseDurations()').then((m) => Map.from(m as Map).map(
-              (key, value) => MapEntry(ceremonyPhaseFromString(key as String)!, int.parse(value as String)),
+        await jsApi.evalJavascript('encointer.getPhaseDurations()').then((m) => Map<String, dynamic>.from(m as Map).map(
+              (key, value) => MapEntry(ceremonyPhaseFromString(key)!, int.parse(value as String)),
             ));
 
     store.encointer.setPhaseDurations(phaseDurations);
@@ -179,7 +179,8 @@ class EncointerApi {
     }
 
     List<Location> locs = await jsApi.evalJavascript('encointer.getAllMeetupLocations(${jsonEncode(cid)})').then(
-          (list) => List.from(list as Iterable).map((l) => Location.fromJson(l as Map<String, dynamic>)).toList(),
+          (list) =>
+              List<dynamic>.from(list as Iterable).map((l) => Location.fromJson(l as Map<String, dynamic>)).toList(),
         );
 
     Log.d('api: getAllMeetupLocations: $locs ' 'EncointerApi');
@@ -231,7 +232,8 @@ class EncointerApi {
   /// Calls the custom rpc: api.rpc.communities.communitiesGetAll()
   Future<void> communitiesGetAll() async {
     List<CidName> cn = await jsApi.evalJavascript('encointer.communitiesGetAll()').then(
-          (list) => List.from(list as Iterable).map((cn) => CidName.fromJson(cn as Map<String, dynamic>)).toList(),
+          (list) =>
+              List<dynamic>.from(list as Iterable).map((cn) => CidName.fromJson(cn as Map<String, dynamic>)).toList(),
         );
 
     Log.d('api: CidNames: $cn', 'EncointerApi');
@@ -382,7 +384,7 @@ class EncointerApi {
         'encointer.subscribeCommunityIdentifiers("$_communityIdentifiersChannel")', _communityIdentifiersChannel,
         (Iterable<dynamic> data) async {
       List<CommunityIdentifier> cids =
-          List.from(data).map((cn) => CommunityIdentifier.fromJson(cn as Map<String, dynamic>)).toList();
+          List<dynamic>.from(data).map((cn) => CommunityIdentifier.fromJson(cn as Map<String, dynamic>)).toList();
       await store.encointer.setCommunityIdentifiers(cids);
 
       await communitiesGetAll();
@@ -422,7 +424,7 @@ class EncointerApi {
   /// This is on-chain in Cantillon.
   Future<List<CommunityIdentifier>> getCommunityIdentifiers() async {
     List<CommunityIdentifier> cids = await jsApi.evalJavascript('encointer.getCommunityIdentifiers()').then(
-          (res) => List.from(res['cids'] as Iterable)
+          (res) => List<dynamic>.from(res['cids'] as Iterable)
               .map((cn) => CommunityIdentifier.fromJson(cn as Map<String, dynamic>))
               .toList(),
         );

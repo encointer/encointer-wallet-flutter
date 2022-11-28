@@ -19,7 +19,7 @@ class UI {
   static void copyAndNotify(BuildContext context, String? text) {
     Clipboard.setData(ClipboardData(text: text ?? ''));
 
-    showCupertinoDialog(
+    showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         final Translations dic = I18n.of(context)!.translationsForLocale();
@@ -90,7 +90,7 @@ class UI {
     int version,
   ) async {
     final Translations dic = I18n.of(context)!.translationsForLocale();
-    showCupertinoDialog(
+    showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
@@ -101,7 +101,7 @@ class UI {
     );
     final code = await UpdateJSCodeApi.fetchPolkadotJSCode(network);
     Navigator.of(context).pop();
-    showCupertinoDialog(
+    showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
@@ -125,7 +125,7 @@ class UI {
   }
 
   static Future<void> alertWASM(BuildContext context, Function onCancel) async {
-    showCupertinoDialog(
+    showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
@@ -148,7 +148,7 @@ class UI {
   static bool checkBalanceAndAlert(BuildContext context, AppStore store, BigInt amountNeeded) {
     String? symbol = store.settings.networkState!.tokenSymbol;
     if (store.assets.balances[symbol]!.transferable <= amountNeeded) {
-      showCupertinoDialog(
+      showCupertinoDialog<void>(
         context: context,
         builder: (BuildContext context) {
           return CupertinoAlertDialog(

@@ -90,7 +90,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                   ],
                 ),
                 onPressed: () {
-                  Navigator.push(context, CupertinoPageRoute(builder: (_) => CeremonyStep3Finish(store, api)));
+                  Navigator.push(context, CupertinoPageRoute<void>(builder: (_) => CeremonyStep3Finish(store, api)));
                 },
               ),
             ),
@@ -111,7 +111,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                 ),
                 onPressed: () {
                   Navigator.of(context).push(
-                    MaterialPageRoute(
+                    MaterialPageRoute<void>(
                       builder: (_) => ScanClaimQrCode(store, confirmedParticipantsCount),
                     ),
                   );

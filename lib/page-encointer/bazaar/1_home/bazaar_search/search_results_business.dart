@@ -27,7 +27,7 @@ class SearchResultsBusiness extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SearchResultsBusinessFiltered(results)),
+                  MaterialPageRoute<void>(builder: (context) => SearchResultsBusinessFiltered(results)),
                 );
               }, // TODO state management
             ),

@@ -16,7 +16,7 @@ class AddressInputField extends StatefulWidget {
   final AppStore store;
   final String? label;
   final AccountData? initialValue;
-  final Function(AccountData)? onChanged;
+  final void Function(AccountData)? onChanged;
   final bool hideIdenticon;
 
   @override

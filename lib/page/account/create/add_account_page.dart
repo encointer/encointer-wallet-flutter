@@ -82,7 +82,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
   }
 
   static Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
-    showCupertinoDialog(
+    showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
@@ -102,7 +102,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
   }
 
   Future<void> _showEnterPinDialog(AppStore store) async {
-    await showCupertinoDialog(
+    await showCupertinoDialog<void>(
       context: context,
       builder: (_) {
         return Container(

@@ -44,7 +44,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     setState(() {
       _networkChanging = true;
     });
-    showCupertinoDialog(
+    showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
@@ -93,7 +93,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   }
 
   Future<void> _showPasswordDialog(BuildContext context) async {
-    await showCupertinoDialog(
+    await showCupertinoDialog<void>(
       context: context,
       builder: (_) {
         return Container(
