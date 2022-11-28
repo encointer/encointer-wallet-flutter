@@ -71,11 +71,11 @@ mixin _$EncointerStore on _EncointerStore, Store {
   dynamic get currentPhaseDuration => (_$currentPhaseDurationComputed ??=
           Computed<dynamic>(() => super.currentPhaseDuration, name: '_EncointerStore.currentPhaseDuration'))
       .value;
-  Computed<bool?>? _$communitiesContainsChosenCidComputed;
+  Computed<bool>? _$communitiesContainsChosenCidComputed;
 
   @override
-  bool? get communitiesContainsChosenCid =>
-      (_$communitiesContainsChosenCidComputed ??= Computed<bool?>(() => super.communitiesContainsChosenCid,
+  bool get communitiesContainsChosenCid =>
+      (_$communitiesContainsChosenCidComputed ??= Computed<bool>(() => super.communitiesContainsChosenCid,
               name: '_EncointerStore.communitiesContainsChosenCid'))
           .value;
   Computed<BazaarStore?>? _$bazaarComputed;

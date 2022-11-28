@@ -103,7 +103,7 @@ abstract class _EncointerStore with Store {
   /// This is only relevant for edge-cases, where the chain does no longer contain a community. E.g. a dev-chain was
   /// purged or a community as been marked as inactive and was removed.
   @computed
-  bool? get communitiesContainsChosenCid {
+  bool get communitiesContainsChosenCid {
     return chosenCid != null && communities!.isNotEmpty && communities!.where((cn) => cn.cid == chosenCid).isNotEmpty;
   }
 
