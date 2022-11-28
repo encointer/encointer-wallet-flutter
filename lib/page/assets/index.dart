@@ -523,9 +523,9 @@ class _AssetsState extends State<Assets> {
         if (widget.store.encointer.communityStores!.containsKey(cidStr)) {
           var community = widget.store.encointer.communityStores![cidStr]!;
           double demurrageRate = community.demurrage!;
-          double newBalance = community.applyDemurrage(balanceEntry);
-          double oldBalance = community.applyDemurrage(
-                  widget.store.encointer.accountStores![widget.store.account.currentAddress]!.balanceEntries[cidStr]) ??
+          double newBalance = community.applyDemurrage(balanceEntry) as double;
+          double oldBalance = community.applyDemurrage(widget.store.encointer
+                  .accountStores![widget.store.account.currentAddress]!.balanceEntries[cidStr]) as double? ??
               0;
           double delta = newBalance - oldBalance;
           Log.d('[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta', 'Assets');

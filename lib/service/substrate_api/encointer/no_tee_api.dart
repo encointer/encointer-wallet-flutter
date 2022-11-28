@@ -44,7 +44,7 @@ class Balances {
   final JSApi jsApi;
 
   Future<BalanceEntry> balance(CommunityIdentifier cid, String? pubKey) async {
-    Map<String, dynamic> balance = await jsApi.evalJavascript('encointer.getBalance(${jsonEncode(cid)}, "$pubKey")');
-    return BalanceEntry.fromJson(balance);
+    final balance = await jsApi.evalJavascript('encointer.getBalance(${jsonEncode(cid)}, "$pubKey")');
+    return BalanceEntry.fromJson(balance as Map<String, dynamic>);
   }
 }

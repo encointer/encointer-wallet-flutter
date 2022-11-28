@@ -41,7 +41,7 @@ class BalanceLockedItemData extends _BalanceLockedItemData {
   static BalanceLockedItemData fromJson(Map<String, dynamic> json) {
     BalanceLockedItemData data = BalanceLockedItemData();
     data.amount = BigInt.parse(json['amount'].toString());
-    data.reasons = json['reasons'];
+    data.reasons = json['reasons'] as String?;
     data.use = json['use'].toString().trim();
     return data;
   }

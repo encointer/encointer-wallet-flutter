@@ -155,9 +155,9 @@ abstract class _AssetsStore with Store {
   Future<void> addTxs(Map res, String address, {bool shouldCache = false}) async {
     if (rootStore.account.currentAddress != address) return;
 
-    txsCount = res['count'];
+    txsCount = res['count'] as int?;
 
-    List? ls = res['transfers'];
+    List? ls = res['transfers'] as List?;
     if (ls == null) return;
 
     ls.forEach((i) {
@@ -218,7 +218,7 @@ abstract class _AssetsStore with Store {
       txs = ObservableList();
     }
     if (cache[2] != null) {
-      cacheTxsTimestamp = cache[2];
+      cacheTxsTimestamp = cache[2] as int?;
     }
     if (cache[3] != null) {
       setAccountTokenBalances(pubKey, cache[3] as Map<String, dynamic>, needCache: false);
@@ -245,8 +245,8 @@ abstract class _AssetsStore with Store {
 class BlockData extends _BlockData {
   static BlockData fromJson(Map<String, dynamic> json) {
     BlockData block = BlockData();
-    block.id = json['id'];
-    block.hash = json['hash'];
+    block.id = json['id'] as int?;
+    block.hash = json['hash'] as String?;
     block.time = DateTime.fromMillisecondsSinceEpoch(json['timestamp'] as int);
     return block;
   }

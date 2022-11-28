@@ -129,7 +129,7 @@ class Api {
     String? node = store.settings.endpoint.value;
     NodeConfig? config = store.settings.endpoint.overrideConfig;
     // do connect
-    String? res = await evalJavascript('settings.connect("$node", "${jsonEncode(config)}")');
+    final res = await evalJavascript('settings.connect("$node", "${jsonEncode(config)}")');
     if (res == null) {
       Log.d('connecting to node failed', 'Api');
       store.settings.setNetworkName(null);
@@ -151,7 +151,7 @@ class Api {
     Log.d('configs: $configs', 'Api');
 
     // do connect
-    String? res = await evalJavascript('settings.connectAll(${jsonEncode(nodes)}, ${jsonEncode(configs)})');
+    final res = await evalJavascript('settings.connectAll(${jsonEncode(nodes)}, ${jsonEncode(configs)})');
     if (res == null) {
       Log.d('connect failed', 'Api');
       store.settings.setNetworkName(null);
@@ -218,10 +218,10 @@ class Api {
   }
 
   Future<bool> isConnected() async {
-    bool connected = await evalJavascript('settings.isConnected()');
+    final connected = await evalJavascript('settings.isConnected()');
     Log.d('Api is connected: $connected', 'Api');
 
-    return connected;
+    return connected as bool;
   }
 
   Future<void> closeWebView() async {
@@ -230,10 +230,10 @@ class Api {
   }
 
   Future<List?> getExternalLinks(GenExternalLinksParams params) async {
-    final List? res = await evalJavascript(
+    final res = await evalJavascript(
       'settings.genLinks(${jsonEncode(GenExternalLinksParams.toJson(params))})',
       allowRepeat: true,
     );
-    return res;
+    return res as List?;
   }
 }

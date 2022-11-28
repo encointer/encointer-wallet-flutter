@@ -275,7 +275,7 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  void setCurrentCeremonyIndex(index) {
+  void setCurrentCeremonyIndex(int? index) {
     Log.d('store: set currentCeremonyIndex to $index', 'EncointerStore');
 
     if (currentCeremonyIndex != index) {
@@ -546,8 +546,8 @@ abstract class _EncointerStore with Store {
   @computed
   bool get showSubmitClaimsButton {
     bool assigned = communityAccount?.isAssigned ?? false;
-    bool? hasClaims = (communityAccount?.scannedAttendeesCount ?? 0) > 0;
-    return (currentPhase == CeremonyPhase.Attesting && assigned && hasClaims!);
+    bool hasClaims = (communityAccount?.scannedAttendeesCount as num? ?? 0) > 0;
+    return (currentPhase == CeremonyPhase.Attesting && assigned && hasClaims);
   }
 
   @computed

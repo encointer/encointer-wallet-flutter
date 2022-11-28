@@ -43,7 +43,7 @@ class _Contact extends State<ContactPage> {
       final Translations dic = I18n.of(context)!.translationsForLocale();
       String addr = _addressCtrl.text.replaceAll(' ', '');
       Map pubKeyAddress = await webApi.account.decodeAddress([addr]);
-      String pubKey = pubKeyAddress.keys.toList()[0];
+      String pubKey = pubKeyAddress.keys.toList()[0] as String;
       Map<String, dynamic> con = {
         'address': addr,
         'name': _nameCtrl.text,
