@@ -312,7 +312,7 @@ class EncointerApi {
         await jsApi.evalJavascript('encointer.hasPendingIssuance(${jsonEncode(cid)}, "$issuanceCIndex","$pubKey")');
 
     Log.d('api:has pending issuance $hasPendingIssuance', 'EncointerApi');
-    return hasPendingIssuance;
+    return hasPendingIssuance as bool?;
   }
 
   /// Queries the EncointerBalances pallet: encointer.encointerBalances.balance(cid, address).
@@ -453,15 +453,13 @@ class EncointerApi {
     final reputationsList = await jsApi.evalJavascript('encointer.getReputations("$address")');
 
     Log.d('api: getReputations: $reputationsList', 'EncointerApi');
-    if (reputationsList.isEmpty) {
+    if (reputationsList is List && reputationsList.isEmpty) {
       return Future.value(null);
     }
 
-    Map<int, CommunityReputation> reputations = Map.fromIterable(
-      reputationsList as List<dynamic>,
-      key: (cr) => cr[0],
-      value: (cr) => CommunityReputation.fromJson(cr[1] as Map<String, dynamic>),
-    );
+    Map<int, CommunityReputation> reputations = {
+      for (var cr in reputationsList as List) cr[0] as int: CommunityReputation.fromJson(cr[1] as Map<String, dynamic>)
+    };
 
     store.encointer.account?.setReputations(reputations);
   }

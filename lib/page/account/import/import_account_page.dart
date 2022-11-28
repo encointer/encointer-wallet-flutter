@@ -134,7 +134,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
 
   Future<void> _saveAccount(Map<String, dynamic> acc) async {
     Log.d("Saving account: ${acc["pubKey"]}", 'ImportAccountPage');
-    var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
+    var addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
     await context.read<AppStore>().addAccount(acc, context.read<AppStore>().account.newAccount.password, addresses[0]);
 
     String? pubKey = acc['pubKey'] as String?;

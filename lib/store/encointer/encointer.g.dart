@@ -71,11 +71,11 @@ mixin _$EncointerStore on _EncointerStore, Store {
   dynamic get currentPhaseDuration => (_$currentPhaseDurationComputed ??=
           Computed<dynamic>(() => super.currentPhaseDuration, name: '_EncointerStore.currentPhaseDuration'))
       .value;
-  Computed<dynamic>? _$communitiesContainsChosenCidComputed;
+  Computed<bool>? _$communitiesContainsChosenCidComputed;
 
   @override
-  dynamic get communitiesContainsChosenCid =>
-      (_$communitiesContainsChosenCidComputed ??= Computed<dynamic>(() => super.communitiesContainsChosenCid,
+  bool get communitiesContainsChosenCid =>
+      (_$communitiesContainsChosenCidComputed ??= Computed<bool>(() => super.communitiesContainsChosenCid,
               name: '_EncointerStore.communitiesContainsChosenCid'))
           .value;
   Computed<BazaarStore?>? _$bazaarComputed;
@@ -304,7 +304,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   late final _$initCommunityStoreAsyncAction = AsyncAction('_EncointerStore.initCommunityStore', context: context);
 
   @override
-  Future<void> initCommunityStore(CommunityIdentifier cid, String address, {dynamic shouldCache = true}) {
+  Future<void> initCommunityStore(CommunityIdentifier cid, String address, {bool shouldCache = true}) {
     return _$initCommunityStoreAsyncAction.run(() => super.initCommunityStore(cid, address, shouldCache: shouldCache));
   }
 
@@ -383,7 +383,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  Future<void> initEncointerAccountStore(String address, {dynamic shouldCache = true}) {
+  Future<void> initEncointerAccountStore(String address, {bool shouldCache = true}) {
     final _$actionInfo =
         _$_EncointerStoreActionController.startAction(name: '_EncointerStore.initEncointerAccountStore');
     try {
@@ -394,7 +394,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  Future<void> initBazaarStore(CommunityIdentifier cid, {dynamic shouldCache = true}) {
+  Future<void> initBazaarStore(CommunityIdentifier cid, {bool shouldCache = true}) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.initBazaarStore');
     try {
       return super.initBazaarStore(cid, shouldCache: shouldCache);

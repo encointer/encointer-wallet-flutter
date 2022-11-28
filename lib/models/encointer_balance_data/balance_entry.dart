@@ -26,8 +26,10 @@ class BalanceEntry {
       return double.parse(principalField);
     } else if (principalField is int) {
       return principalField.toDouble();
-    } else {
+    } else if (principalField is double) {
       return principalField;
+    } else {
+      return principalField as double;
     }
   }
 

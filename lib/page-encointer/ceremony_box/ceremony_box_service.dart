@@ -73,7 +73,7 @@ class CeremonyBoxService {
       throw Exception('[CeremonyProgressBar] Current time was smaller than ceremony start');
     }
 
-    var progressUnormalized;
+    double? progressUnormalized;
 
     if (currentTime < assigningStart) {
       progressUnormalized =
