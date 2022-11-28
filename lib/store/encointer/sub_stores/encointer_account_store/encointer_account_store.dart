@@ -92,7 +92,7 @@ abstract class _EncointerAccountStore with Store {
   }
 
   @action
-  Future<void> setTransferTxs(List list, String address, {bool reset = false, needCache = true}) async {
+  Future<void> setTransferTxs(List list, String address, {bool reset = false, bool needCache = true}) async {
     if (this.address != address) {
       Log.d("Tried to cached transfer tx's for wrong account. This is a bug.", 'EncointerAccountStore');
       return Future.value(null);

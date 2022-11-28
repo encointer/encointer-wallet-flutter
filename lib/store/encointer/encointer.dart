@@ -103,7 +103,7 @@ abstract class _EncointerStore with Store {
   /// This is only relevant for edge-cases, where the chain does no longer contain a community. E.g. a dev-chain was
   /// purged or a community as been marked as inactive and was removed.
   @computed
-  get communitiesContainsChosenCid {
+  bool? get communitiesContainsChosenCid {
     return chosenCid != null && communities!.isNotEmpty && communities!.where((cn) => cn.cid == chosenCid).isNotEmpty;
   }
 
@@ -213,7 +213,7 @@ abstract class _EncointerStore with Store {
     communityIdentifiers = cids;
     writeToCache();
 
-    if (communities != null && !communitiesContainsChosenCid) {
+    if (communities != null && communitiesContainsChosenCid != null && !communitiesContainsChosenCid!) {
       // inconsistency found, reset state
       await setChosenCid();
     }
@@ -402,7 +402,7 @@ abstract class _EncointerStore with Store {
   /// Init community sub-stores for all cids and the given address.
   ///
   /// Todo: Integrate used when #582 is tackled.
-  Future<void> initCommunityStores(List<CommunityIdentifier> cids, String address, {shouldCache = true}) {
+  Future<void> initCommunityStores(List<CommunityIdentifier> cids, String address, {bool shouldCache = true}) {
     List<Future<void>> futures = [];
 
     cids.forEach((cid) {
@@ -413,7 +413,7 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  Future<void> initCommunityStore(CommunityIdentifier cid, String address, {shouldCache = true}) async {
+  Future<void> initCommunityStore(CommunityIdentifier cid, String address, {bool shouldCache = true}) async {
     var cidFmt = cid.toFmtString();
     if (!communityStores!.containsKey(cidFmt)) {
       Log.d('Adding new communityStore for cid: ${cid.toFmtString()}', 'EncointerStore');
@@ -432,7 +432,7 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  Future<void> initEncointerAccountStore(String address, {shouldCache = true}) {
+  Future<void> initEncointerAccountStore(String address, {bool shouldCache = true}) {
     if (!accountStores!.containsKey(address)) {
       Log.d('Adding new encointerAccountStore for: $address', 'EncointerStore');
 
@@ -448,7 +448,7 @@ abstract class _EncointerStore with Store {
   }
 
   @action
-  Future<void> initBazaarStore(CommunityIdentifier cid, {shouldCache = true}) {
+  Future<void> initBazaarStore(CommunityIdentifier cid, {bool shouldCache = true}) {
     var cidFmt = cid.toFmtString();
     if (!bazaarStores!.containsKey(cidFmt)) {
       Log.d('Adding new bazaarStore for cid: ${cid.toFmtString()}', 'EncointerStore');

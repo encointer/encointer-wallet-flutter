@@ -90,7 +90,7 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
   late final _$setTransferTxsAsyncAction = AsyncAction('_EncointerAccountStore.setTransferTxs', context: context);
 
   @override
-  Future<void> setTransferTxs(List<dynamic> list, String address, {bool reset = false, dynamic needCache = true}) {
+  Future<void> setTransferTxs(List<dynamic> list, String address, {bool reset = false, bool needCache = true}) {
     return _$setTransferTxsAsyncAction
         .run(() => super.setTransferTxs(list, address, reset: reset, needCache: needCache));
   }

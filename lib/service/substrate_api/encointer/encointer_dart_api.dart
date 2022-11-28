@@ -29,11 +29,11 @@ class EncointerDartApi {
 
   Future<Map<CommunityIdentifier, BalanceEntry>> getAllBalances(String account) {
     return _dartApi.rpc('encointer_getAllBalances', [account]).then((data) {
-      return Map.fromIterable(
-        data as Iterable,
-        key: (bal) => CommunityIdentifier.fromJson(bal[0] as Map<String, dynamic>),
-        value: (bal) => BalanceEntry.fromJson(bal[1] as Map<String, dynamic>),
-      );
+      return {
+        for (var bal in data as Iterable)
+          CommunityIdentifier.fromJson(bal[0] as Map<String, dynamic>):
+              BalanceEntry.fromJson(bal[1] as Map<String, dynamic>)
+      };
     });
   }
 }

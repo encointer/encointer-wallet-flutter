@@ -457,11 +457,9 @@ class EncointerApi {
       return Future.value(null);
     }
 
-    Map<int, CommunityReputation> reputations = Map.fromIterable(
-      reputationsList,
-      key: (cr) => cr[0],
-      value: (cr) => CommunityReputation.fromJson(cr[1] as Map<String, dynamic>),
-    );
+    Map<int, CommunityReputation> reputations = {
+      for (var cr in reputationsList) cr[0] as int: CommunityReputation.fromJson(cr[1] as Map<String, dynamic>)
+    };
 
     store.encointer.account?.setReputations(reputations);
   }

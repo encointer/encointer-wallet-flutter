@@ -74,13 +74,13 @@ class AccountApi {
   }
 
   Future<String> addressFromUri(String uri) async {
-    dynamic address = await jsApi.evalJavascript(
+    final address = await jsApi.evalJavascript(
       'account.addressFromUri("$uri")',
       allowRepeat: true,
     );
 
     Log.d('addressFromUri: $address', 'AccountApi');
-    return address;
+    return address as String;
   }
 
   /// query address with account index
@@ -89,7 +89,7 @@ class AccountApi {
       'account.queryAddressWithAccountIndex("$index", ${store.settings.endpoint.ss58})',
       allowRepeat: true,
     );
-    return res;
+    return res as List?;
   }
 
   Future<void> changeCurrentAccount({

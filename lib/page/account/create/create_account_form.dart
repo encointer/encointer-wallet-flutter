@@ -44,7 +44,7 @@ class CreateAccountForm extends StatelessWidget {
         return;
       }
 
-      var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
+      var addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
       await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
 
       String? pubKey = acc['pubKey'];

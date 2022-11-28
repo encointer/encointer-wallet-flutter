@@ -206,7 +206,7 @@ class Fmt {
       if (accInfo != null) {
         accName = accInfo['identity']['display'] ?? '';
       }
-      return i[0].toLowerCase().contains(value) || accName.toLowerCase().contains(value);
+      return (i[0] as String).toLowerCase().contains(value) || accName.toLowerCase().contains(value);
     });
     return ls;
   }
@@ -260,7 +260,7 @@ class Fmt {
   static Widget accountDisplayName(String address, Map accInfo) {
     return Row(
       children: <Widget>[
-        accInfo['identity']['judgements'].length > 0
+        (accInfo['identity']['judgements'] as List).length > 0
             ? Container(
                 width: 14,
                 margin: const EdgeInsets.only(right: 4),
