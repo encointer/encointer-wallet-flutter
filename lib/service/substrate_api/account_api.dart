@@ -21,8 +21,8 @@ class AccountApi {
       String accounts = jsonEncode(store.account.accountList.map((i) => AccountData.toJson(i)).toList());
 
       String ss58 = jsonEncode(network_ss58_map.values.toSet().toList());
-      Map keys = await jsApi.evalJavascript('account.initKeys($accounts, $ss58)');
-      store.account.setPubKeyAddressMap(Map<String, Map>.from(keys));
+      final keys = await jsApi.evalJavascript('account.initKeys($accounts, $ss58)');
+      store.account.setPubKeyAddressMap(Map<String, Map>.from(keys as Map));
     }
 
     // and contacts icons
@@ -42,12 +42,12 @@ class AccountApi {
   /// Encodes publicKeys to SS58-addresses
   Future<List<String?>> encodeAddress(List<String?> pubKeys) async {
     String ss58 = jsonEncode(network_ss58_map.values.toSet().toList());
-    Map res = await jsApi.evalJavascript(
+    final res = await jsApi.evalJavascript(
       'account.encodeAddress(${jsonEncode(pubKeys)}, $ss58)',
       allowRepeat: true,
     );
 
-    store.account.setPubKeyAddressMap(Map<String, Map>.from(res));
+    store.account.setPubKeyAddressMap(Map<String, Map>.from(res as Map));
     var addresses = <String?>[];
 
     for (var pubKey in pubKeys) {
@@ -63,12 +63,12 @@ class AccountApi {
     if (addresses.length == 0) {
       return {};
     }
-    Map? res = await jsApi.evalJavascript(
+    final res = await jsApi.evalJavascript(
       'account.decodeAddress(${jsonEncode(addresses)})',
       allowRepeat: true,
     );
     if (res != null) {
-      store.account.setPubKeyAddressMap(Map<String, Map>.from({store.settings.endpoint.ss58.toString(): res}));
+      store.account.setPubKeyAddressMap(Map<String, Map>.from({store.settings.endpoint.ss58.toString(): res as Map}));
     }
     return res ?? {};
   }
@@ -117,21 +117,21 @@ class AccountApi {
   Future<Map> estimateTxFees(Map txInfo, List? params, {String? rawParam}) async {
     String param = rawParam ?? jsonEncode(params);
     Log.d('$txInfo', 'AccountApi');
-    Map res = await jsApi.evalJavascript('account.txFeeEstimate(${jsonEncode(txInfo)}, $param)', allowRepeat: true);
-    return res;
+    final res = await jsApi.evalJavascript('account.txFeeEstimate(${jsonEncode(txInfo)}, $param)', allowRepeat: true);
+    return res as Map;
   }
 
-  Future<dynamic> sendTxAndShowNotification(
+  Future<Map<dynamic, dynamic>> sendTxAndShowNotification(
     Map? txInfo,
     List? params,
     String? pageTile,
     String? notificationTitle, {
     String? rawParam,
   }) async {
-    Map res = await sendTx(txInfo, params, rawParam: rawParam);
+    Map res = await sendTx(txInfo, params, rawParam: rawParam) as Map;
 
     if (res['hash'] != null) {
-      String hash = res['hash'];
+      String hash = res['hash'] as String;
       NotificationPlugin.showNotification(
         int.parse(hash.substring(0, 6)),
         notificationTitle,
@@ -149,7 +149,7 @@ class AccountApi {
   }
 
   Future<void> generateAccount() async {
-    Map<String, dynamic> acc = await jsApi.evalJavascript('account.gen()');
+    Map<String, dynamic> acc = await jsApi.evalJavascript('account.gen()') as Map<String, dynamic>;
     store.account.setNewAccountKey(acc['mnemonic'] as String?);
   }
 
@@ -162,8 +162,8 @@ class AccountApi {
     String pass = store.account.newAccount.password;
     String code = 'account.recover("$keyType", "$cryptoType", \'$key$derivePath\', "$pass")';
     code = code.replaceAll(RegExp(r'\t|\n|\r'), '');
-    Map<String, dynamic> acc = await jsApi.evalJavascript(code, allowRepeat: true);
-    return acc;
+    final acc = await jsApi.evalJavascript(code, allowRepeat: true);
+    return acc as Map<String, dynamic>;
   }
 
   Future<dynamic> checkAccountPassword(AccountData account, String pass) async {
@@ -184,11 +184,11 @@ class AccountApi {
       return [];
     }
 
-    List<dynamic> res = await jsApi.evalJavascript(
+    final res = await jsApi.evalJavascript(
       'account.getAccountIndex(${jsonEncode(addresses)})',
       allowRepeat: true,
     );
-    store.account.setAddressIndex(res);
+    store.account.setAddressIndex(res as List<dynamic>);
     return res;
   }
 
@@ -198,11 +198,11 @@ class AccountApi {
       return [];
     }
 
-    List<dynamic> res = await jsApi.evalJavascript(
+    final res = await jsApi.evalJavascript(
       'account.getAccountIndex(${jsonEncode(addresses)})',
       allowRepeat: true,
     );
-    store.account.setAccountsIndex(res);
+    store.account.setAccountsIndex(res as List<dynamic>);
     return res;
   }
 }

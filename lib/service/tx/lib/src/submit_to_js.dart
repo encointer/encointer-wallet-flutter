@@ -37,7 +37,7 @@ Future<void> submitToJS(
   store.assets.setSubmitting(true);
   store.account.setTxStatus(TxStatus.Queued);
 
-  Map txInfo = args['txInfo'];
+  Map txInfo = args['txInfo'] as Map;
   txInfo['pubKey'] = store.account.currentAccount.pubKey;
   txInfo['address'] = store.account.currentAddress;
   txInfo['password'] = password;
@@ -73,23 +73,23 @@ Future<void> submitToJS(
   }
 }
 
-Future<Map> getTxFee(
-  AppStore store,
-  Api api,
-  Map args, {
-  proxyAccount,
-  bool reload = false,
-}) async {
-  Map txInfo = args['txInfo'];
-  txInfo['pubKey'] = store.account.currentAccount.pubKey;
-  txInfo['address'] = store.account.currentAddress;
+// Future<Map> getTxFee(
+//   AppStore store,
+//   Api api,
+//   Map args, {
+//   proxyAccount,
+//   bool reload = false,
+// }) async {
+//   Map txInfo = args['txInfo'] as Map;
+//   txInfo['pubKey'] = store.account.currentAccount.pubKey;
+//   txInfo['address'] = store.account.currentAddress;
 
-  if (proxyAccount != null) {
-    txInfo = proxyAccount.pubKey;
-  }
+//   if (proxyAccount != null) {
+//     txInfo = proxyAccount.pubKey as Map;
+//   }
 
-  return api.account.estimateTxFees(txInfo, args['params'] as List<dynamic>?, rawParam: args['rawParam'] as String?);
-}
+//   return api.account.estimateTxFees(txInfo, args['params'] as List<dynamic>?, rawParam: args['rawParam'] as String?);
+// }
 
 void _onTxError(BuildContext context, AppStore store, String errorMsg, bool mounted) {
   store.assets.setSubmitting(false);

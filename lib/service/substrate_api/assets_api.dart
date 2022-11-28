@@ -25,11 +25,11 @@ class AssetsApi {
     String? currentAddress = store.account.currentAddress;
     if (pubKey != null && pubKey.isNotEmpty) {
       String address = currentAddress;
-      Map res = await jsApi.evalJavascript(
+      final res = await jsApi.evalJavascript(
         'account.getBalance("$address")',
         allowRepeat: true,
       );
-      store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol: res}));
+      store.assets.setAccountBalances(pubKey, Map.of({store.settings.networkState!.tokenSymbol: res as Map}));
     }
     _fetchMarketPrice();
   }
