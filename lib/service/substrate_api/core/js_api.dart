@@ -39,7 +39,7 @@ class JSApi {
 
               var res = args[0];
 
-              final String? path = res['path'];
+              final String? path = res['path'] as String?;
               if (_msgCompleters[path!] != null) {
                 Completer handler = _msgCompleters[path]!;
                 handler.complete(res['data']);
@@ -99,7 +99,7 @@ class JSApi {
     }
 
     if (!wrapPromise) {
-      String res = await _web!.webViewController.evaluateJavascript(source: code);
+      final res = await _web!.webViewController.evaluateJavascript(source: code);
       return res;
     }
 

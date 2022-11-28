@@ -125,7 +125,7 @@ abstract class _AccountStore with Store {
     // _log("currentAddress: AddressMap 42: ${pubKeyAddressMap[42].toString()}");
     // _log("currentAddress: AddressMap 2: ${pubKeyAddressMap[2].toString()}");
 
-    int? ss58 = rootStore.settings.customSS58Format['value'];
+    int? ss58 = rootStore.settings.customSS58Format['value'] as int?;
     if (rootStore.settings.customSS58Format['info'] == default_ss58_prefix['info']) {
       ss58 = rootStore.settings.endpoint.ss58;
     }
@@ -240,10 +240,10 @@ abstract class _AccountStore with Store {
 
   @action
   Future<void> addAccount(Map<String, dynamic> acc, String password) async {
-    String pubKey = acc['pubKey'];
+    String pubKey = acc['pubKey'] as String;
     // save seed and remove it before add account
     void saveSeed(String seedType) {
-      String? seed = acc[seedType];
+      String? seed = acc[seedType] as String?;
       if (seed != null && seed.isNotEmpty) {
         encryptSeed(pubKey, acc[seedType] as String, seedType, password);
         acc.remove(seedType);
@@ -281,7 +281,7 @@ abstract class _AccountStore with Store {
     if (acc.pubKey == currentAccountPubKey) {
       // set new currentAccount after currentAccount was removed
       List<Map<String, dynamic>> accounts = await rootStore.localStorage.getAccountList();
-      String? newCurrentAccountPubKey = accounts.length > 0 ? accounts[0]['pubKey'] : '';
+      String? newCurrentAccountPubKey = accounts.length > 0 ? accounts[0]['pubKey'] as String? : '';
       Log.d('removeAccount: newCurrentAccountPubKey $newCurrentAccountPubKey', 'AccountStore');
       await rootStore.setCurrentAccount(newCurrentAccountPubKey);
     } else {
@@ -316,7 +316,7 @@ abstract class _AccountStore with Store {
   @action
   Future<String?> decryptSeed(String pubKey, String seedType, String password) async {
     Map stored = await rootStore.localStorage.getSeeds(seedType);
-    String? encrypted = stored[pubKey];
+    String? encrypted = stored[pubKey] as String?;
     if (encrypted == null) {
       return Future.value(null);
     }
@@ -326,7 +326,7 @@ abstract class _AccountStore with Store {
   @action
   Future<bool> checkSeedExist(String seedType, String? pubKey) async {
     Map stored = await rootStore.localStorage.getSeeds(seedType);
-    String? encrypted = stored[pubKey];
+    String? encrypted = stored[pubKey] as String?;
     return encrypted != null;
   }
 
@@ -337,10 +337,10 @@ abstract class _AccountStore with Store {
     String? encryptedSeed = '';
     String seedType = '';
     if (storedMnemonics[pubKey] != null) {
-      encryptedSeed = storedMnemonics[pubKey];
+      encryptedSeed = storedMnemonics[pubKey] as String?;
       seedType = AccountStore.seedTypeMnemonic;
     } else if (storedMnemonics[pubKey] != null) {
-      encryptedSeed = storedRawSeeds[pubKey];
+      encryptedSeed = storedRawSeeds[pubKey] as String?;
       seedType = AccountStore.seedTypeRawSeed;
     } else {
       return;
@@ -366,7 +366,7 @@ abstract class _AccountStore with Store {
       Map<String, String> addresses = Map.of(pubKeyAddressMap[int.parse(ss58)] ?? {});
       // set new data
       Map.of(data[ss58]!).forEach((k, v) {
-        addresses[k as String] = v;
+        addresses[k as String] = v as String;
       });
       // update state
       pubKeyAddressMap[int.parse(ss58)] = addresses;
@@ -376,7 +376,7 @@ abstract class _AccountStore with Store {
   @action
   void setPubKeyIconsMap(List list) {
     list.forEach((i) {
-      pubKeyIconsMap[i[0] as String] = i[1];
+      pubKeyIconsMap[i[0] as String] = i[1] as String?;
     });
   }
 
@@ -385,7 +385,7 @@ abstract class _AccountStore with Store {
     Log.d('Address Icons', 'AccountStore');
     Log.d('$list', 'AccountStore');
     list.forEach((i) {
-      addressIconsMap[i[0] as String] = i[1];
+      addressIconsMap[i[0] as String] = i[1] as String?;
     });
   }
 
@@ -393,7 +393,7 @@ abstract class _AccountStore with Store {
   void setAccountsIndex(List list) {
     final Map<String?, Map> data = {};
     list.forEach((i) {
-      data[i['accountId'] as String] = i;
+      data[i['accountId'] as String] = i as Map;
     });
     accountIndexMap = data;
   }
@@ -401,7 +401,7 @@ abstract class _AccountStore with Store {
   @action
   void setAddressIndex(List list) {
     list.forEach((i) {
-      addressIndexMap[i['accountId'] as String] = i;
+      addressIndexMap[i['accountId'] as String] = i as Map;
     });
   }
 }

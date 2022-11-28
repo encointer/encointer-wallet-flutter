@@ -191,8 +191,8 @@ class _LocalStorage {
 
     String? str = await getKV(storeKey);
     if (str != null) {
-      Iterable l = jsonDecode(str);
-      res = l.map((i) => Map<String, dynamic>.from(i as Map<String, dynamic>)).toList();
+      final l = jsonDecode(str);
+      res = (l as List).map((i) => Map<String, dynamic>.from(i as Map<String, dynamic>)).toList();
     }
     return res;
   }

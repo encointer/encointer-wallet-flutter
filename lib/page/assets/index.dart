@@ -532,6 +532,12 @@ class _AssetsState extends State<Assets> {
               ? community.applyDemurrage!(oldBalanceEntry) ?? 0
               : 0;
 
+// =======
+//           double newBalance = community.applyDemurrage(balanceEntry) as double;
+//           double oldBalance = community.applyDemurrage(widget.store.encointer
+//                   .accountStores![widget.store.account.currentAddress]!.balanceEntries[cidStr]) as double? ??
+//               0;
+// >>>>>>> 9d4143d3262181f3ad0429032d40bcd3c94c1b9f
           double delta = newBalance - oldBalance;
           Log.d('[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta', 'Assets');
           if (delta.abs() > demurrageRate) {

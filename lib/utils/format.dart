@@ -202,9 +202,9 @@ class Fmt {
     ls.retainWhere((i) {
       String value = filter.trim().toLowerCase();
       String accName = '';
-      Map? accInfo = accIndexMap[i[0]];
+      Map? accInfo = accIndexMap[i[0]] as Map?;
       if (accInfo != null) {
-        accName = accInfo['identity']['display'] ?? '';
+        accName = accInfo['identity']['display'] as String? ?? '';
       }
       return i[0].toLowerCase().contains(value) || accName.toLowerCase().contains(value);
     });
@@ -240,12 +240,12 @@ class Fmt {
     String? display = Fmt.address(address, pad: 6);
     if (accInfo != null) {
       if (accInfo['identity']['display'] != null) {
-        display = accInfo['identity']['display'];
+        display = accInfo['identity']['display'] as String?;
         if (accInfo['identity']['displayParent'] != null) {
           display = '${accInfo['identity']['displayParent']}/$display';
         }
       } else if (accInfo['accountIndex'] != null) {
-        display = accInfo['accountIndex'];
+        display = accInfo['accountIndex'] as String?;
       }
       display = display!.toUpperCase();
     }

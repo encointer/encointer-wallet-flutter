@@ -351,7 +351,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
   }
 
   @override
-  void setCurrentCeremonyIndex(int index) {
+  void setCurrentCeremonyIndex(int? index) {
     final _$actionInfo = _$_EncointerStoreActionController.startAction(name: '_EncointerStore.setCurrentCeremonyIndex');
     try {
       return super.setCurrentCeremonyIndex(index);

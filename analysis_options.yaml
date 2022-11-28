@@ -82,7 +82,7 @@ analyzer:
     strict-raw-types: false
     
   errors:
-    invalid_assignment: false
+    invalid_assignment: true
     argument_type_not_assignable: true
     return_of_invalid_type: false
     map_key_type_not_assignable: false

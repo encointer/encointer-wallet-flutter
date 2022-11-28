@@ -1,8 +1,12 @@
 import 'dart:core';
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
+import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/account/types/tx_status.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
@@ -10,8 +14,6 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/translations/translations_home.dart';
 import 'package:encointer_wallet/utils/ui.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 
 /// Contains most of the logic from the `txConfirmPage.dart`, which was removed.
 
@@ -37,7 +39,7 @@ Future<void> submitToJS(
   store.assets.setSubmitting(true);
   store.account.setTxStatus(TxStatus.Queued);
 
-  Map txInfo = args['txInfo'];
+  Map txInfo = args['txInfo'] as Map;
   txInfo['pubKey'] = store.account.currentAccount.pubKey;
   txInfo['address'] = store.account.currentAddress;
   txInfo['password'] = password;
@@ -77,15 +79,15 @@ Future<Map> getTxFee(
   AppStore store,
   Api api,
   Map args, {
-  dynamic proxyAccount,
+  AccountData? proxyAccount,
   bool reload = false,
 }) async {
-  Map txInfo = args['txInfo'];
+  Map txInfo = args['txInfo'] as Map;
   txInfo['pubKey'] = store.account.currentAccount.pubKey;
   txInfo['address'] = store.account.currentAddress;
 
   if (proxyAccount != null) {
-    txInfo = proxyAccount.pubKey;
+    txInfo = proxyAccount.pubKey as Map;
   }
 
   return api.account.estimateTxFees(txInfo, args['params'] as List<dynamic>?, rawParam: args['rawParam'] as String?);
