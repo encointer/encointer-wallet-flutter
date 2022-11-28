@@ -92,9 +92,9 @@ class EncointerApi {
   /// This is on-chain in Cantillon.
   Future<CeremonyPhase?> getCurrentPhase() async {
     Log.d('api: getCurrentPhase', 'EncointerApi');
-    String res = await jsApi.evalJavascript('encointer.getCurrentPhase()');
+    final res = await jsApi.evalJavascript('encointer.getCurrentPhase()');
 
-    var phase = ceremonyPhaseFromString(res)!;
+    var phase = ceremonyPhaseFromString(res as String)!;
     Log.d('api: Phase enum: $phase', 'EncointerApi');
     store.encointer.setCurrentPhase(phase);
     return phase;
@@ -221,10 +221,10 @@ class EncointerApi {
       return;
     }
 
-    double dem = await jsApi.evalJavascript('encointer.getDemurrage(${jsonEncode(cid)})');
+    final dem = await jsApi.evalJavascript('encointer.getDemurrage(${jsonEncode(cid)})');
     Log.d('api: fetched demurrage: $dem', 'EncointerApi');
     if (store.encointer.community != null) {
-      store.encointer.community!.setDemurrage(dem);
+      store.encointer.community!.setDemurrage(dem as double?);
     }
   }
 
@@ -308,11 +308,11 @@ class EncointerApi {
       issuanceCIndex = cIndex;
     }
 
-    bool hasPendingIssuance =
+    final hasPendingIssuance =
         await jsApi.evalJavascript('encointer.hasPendingIssuance(${jsonEncode(cid)}, "$issuanceCIndex","$pubKey")');
 
     Log.d('api:has pending issuance $hasPendingIssuance', 'EncointerApi');
-    return hasPendingIssuance;
+    return hasPendingIssuance as bool?;
   }
 
   /// Queries the EncointerBalances pallet: encointer.encointerBalances.balance(cid, address).
@@ -450,15 +450,15 @@ class EncointerApi {
   Future<void> getReputations() async {
     var address = store.account.currentAddress;
 
-    List<dynamic> reputationsList = await jsApi.evalJavascript('encointer.getReputations("$address")');
+    final reputationsList = await jsApi.evalJavascript('encointer.getReputations("$address")');
 
     Log.d('api: getReputations: $reputationsList', 'EncointerApi');
-    if (reputationsList.isEmpty) {
+    if (reputationsList is List && reputationsList.isEmpty) {
       return Future.value(null);
     }
 
     Map<int, CommunityReputation> reputations = {
-      for (var cr in reputationsList) cr[0] as int: CommunityReputation.fromJson(cr[1] as Map<String, dynamic>)
+      for (var cr in reputationsList as List) cr[0] as int: CommunityReputation.fromJson(cr[1] as Map<String, dynamic>)
     };
 
     store.encointer.account?.setReputations(reputations);
@@ -508,9 +508,9 @@ class EncointerApi {
     var cid = store.encointer.account?.reputations[cIndex]?.communityIdentifier;
     var pin = store.settings.cachedPin;
     Log.d('getProofOfAttendance: cachedPin: $pin', 'EncointerApi');
-    Map<String, dynamic> proofJs =
+    final proofJs =
         await jsApi.evalJavascript('encointer.getProofOfAttendance("$pubKey", ${jsonEncode(cid)}, "$cIndex", "$pin")');
-    ProofOfAttendance proof = ProofOfAttendance.fromJson(proofJs);
+    ProofOfAttendance proof = ProofOfAttendance.fromJson(proofJs as Map<String, dynamic>);
     Log.d('Proof: $proof', 'EncointerApi');
     return proof;
   }

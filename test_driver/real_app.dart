@@ -7,8 +7,8 @@ import 'package:encointer_wallet/main.dart' as app;
 
 import 'helpers/real_app_helper.dart';
 
-// [ANDROID] flutter drive --target=test_driver/real_app.dart --flavor dev
-// [IOS] flutter drive --target=test_driver/real_app.dart
+// [ANDROID] ./flutterw drive --target=test_driver/real_app.dart --flavor dev
+// [IOS] ./flutterw drive --target=test_driver/real_app.dart
 
 void main() async {
   enableFlutterDriverExtension(

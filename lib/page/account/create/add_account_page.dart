@@ -66,7 +66,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
     await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
     Log.d('added new account with address: ${addresses[0]}', 'AddAccountPage');
 
-    String? pubKey = acc['pubKey'];
+    String? pubKey = acc['pubKey'] as String?;
     await store.setCurrentAccount(pubKey);
 
     await store.loadAccountCache();

@@ -137,7 +137,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     var addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
     await context.read<AppStore>().addAccount(acc, context.read<AppStore>().account.newAccount.password, addresses[0]);
 
-    String? pubKey = acc['pubKey'];
+    String? pubKey = acc['pubKey'] as String?;
     await context.read<AppStore>().setCurrentAccount(pubKey);
 
     await context.read<AppStore>().loadAccountCache();
@@ -163,9 +163,9 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   Widget _getImportForm() {
     return ImportAccountForm(context.read<AppStore>(), (Map<String, dynamic> data) async {
       setState(() {
-        _keyType = data['keyType'];
-        _cryptoType = data['cryptoType'];
-        _derivePath = data['derivePath'];
+        _keyType = data['keyType'] as String?;
+        _cryptoType = data['cryptoType'] as String?;
+        _derivePath = data['derivePath'] as String?;
       });
 
       if (context.read<AppStore>().account.isFirstAccount) {
