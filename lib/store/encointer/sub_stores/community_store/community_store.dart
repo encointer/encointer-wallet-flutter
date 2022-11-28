@@ -79,7 +79,7 @@ abstract class _CommunityStore with Store {
   @observable
   String? communityIcon;
 
-  get applyDemurrage => _applyDemurrage;
+  double? Function(BalanceEntry)? get applyDemurrage => _applyDemurrage;
 
   @action
   Future<String?> getCommunityIcon() async {

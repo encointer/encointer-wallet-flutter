@@ -58,7 +58,7 @@ class _Contact extends State<ContactPage> {
         // create new contact
         int exist = context.read<AppStore>().settings.contactList.indexWhere((i) => i.address == addr);
         if (exist > -1) {
-          showCupertinoDialog(
+          showCupertinoDialog<void>(
             context: context,
             builder: (BuildContext context) {
               return CupertinoAlertDialog(

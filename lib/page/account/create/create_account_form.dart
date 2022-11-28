@@ -129,7 +129,7 @@ class CreateAccountForm extends StatelessWidget {
 }
 
 Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
-  showCupertinoDialog(
+  showCupertinoDialog<void>(
     context: context,
     builder: (BuildContext context) {
       return CupertinoAlertDialog(

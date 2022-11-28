@@ -33,7 +33,7 @@ abstract class _OpeningHoursState with Store {
   int? dayToCopyFrom;
 
   @action
-  copyFrom(int day) {
+  void copyFrom(int day) {
     if (day == dayToCopyFrom) {
       // tapping the same button again turns copying off and clears clipboard
       dayToCopyFrom = null;
@@ -45,7 +45,7 @@ abstract class _OpeningHoursState with Store {
   }
 
   @action
-  setDayOnFocus(int day) {
+  void setDayOnFocus(int day) {
     if (day == dayOnFocus) {
       // turn editing off again
       dayOnFocus = null;
@@ -55,7 +55,7 @@ abstract class _OpeningHoursState with Store {
   }
 
   @action
-  pasteOpeningHoursTo(int day) {
+  void pasteOpeningHoursTo(int day) {
     var target = getOpeningHoursFor(day);
     if (copiedOpeningHours == null) return;
 
@@ -111,7 +111,7 @@ abstract class _OpeningHoursForDayState with Store {
   String? timeFormatError;
 
   @action
-  addParsedIntervalIfValid(String startEnd) {
+  void addParsedIntervalIfValid(String startEnd) {
     try {
       OpeningIntervalState openingIntervalState =
           _OpeningIntervalState.parseOpeningIntervalState(startEnd) as OpeningIntervalState;
@@ -123,12 +123,12 @@ abstract class _OpeningHoursForDayState with Store {
   }
 
   @action
-  addInterval(OpeningIntervalState interval) {
+  void addInterval(OpeningIntervalState interval) {
     openingIntervals.add(interval);
   }
 
   @action
-  removeInterval(int index) {
+  void removeInterval(int index) {
     openingIntervals.removeAt(index);
   }
 

@@ -51,7 +51,7 @@ Future<void> submitToJS(
   Log.d('$txInfo', 'submitToJS');
   Log.d('${args['params']}', 'submitToJS');
 
-  var onTxFinishFn = (args['onFinish'] as Function(BuildContext, Map)?);
+  var onTxFinishFn = (args['onFinish'] as dynamic Function(BuildContext, Map)?);
 
   if (await api.isConnected()) {
     if (showStatusSnackBar) {
@@ -129,7 +129,13 @@ void _showTxStatusSnackBar(String status, Widget? leading) {
   );
 }
 
-void _onTxFinish(BuildContext context, AppStore store, Map res, Function(BuildContext, Map) onTxFinish, bool mounted) {
+void _onTxFinish(
+  BuildContext context,
+  AppStore store,
+  Map res,
+  void Function(BuildContext, Map) onTxFinish,
+  bool mounted,
+) {
   Log.d('callback triggered, blockHash: ${res['hash']}', '_onTxFinish');
   store.assets.setSubmitting(false);
 

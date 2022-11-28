@@ -18,8 +18,8 @@ class SubstrateDartApi {
   String? _endpoint;
 
   /// Returns the rpc nodes of the connected node or an empty list otherwise.
-  get rpcMethods {
-    return _rpc != null ? _rpc!.methods : [];
+  List<String>? get rpcMethods {
+    return _rpc != null ? _rpc!.methods : <String>[];
   }
 
   /// Gets address of the node we connect to including ws(s).
@@ -57,7 +57,7 @@ class SubstrateDartApi {
   ///
   /// Hints:
   /// * account ids must be passed as SS58.
-  Future rpc(String method, [params]) {
+  Future rpc(String method, [dynamic params]) {
     if (_client == null) {
       throw ("[dartApi] Can't call an rpc method because we are not connected to an endpoint");
     }

@@ -134,7 +134,7 @@ class SmallLeaflet extends StatelessWidget {
             onTap: () => {
               Navigator.push(
                   context,
-                  MaterialPageRoute(
+                  MaterialPageRoute<void>(
                     builder: (context) => BusinessesOnMap(),
                   ))
             },

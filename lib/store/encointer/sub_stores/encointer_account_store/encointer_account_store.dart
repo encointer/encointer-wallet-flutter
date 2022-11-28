@@ -56,7 +56,7 @@ abstract class _EncointerAccountStore with Store {
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
 
   @computed
-  get ceremonyIndexForProofOfAttendance {
+  int? get ceremonyIndexForProofOfAttendance {
     if (reputations.isNotEmpty) {
       try {
         return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
@@ -64,6 +64,8 @@ abstract class _EncointerAccountStore with Store {
         Log.e('$address has reputation, but none that has not been linked yet', 'EncointerAccountStore', s);
         return 0;
       }
+    } else {
+      return 0;
     }
   }
 

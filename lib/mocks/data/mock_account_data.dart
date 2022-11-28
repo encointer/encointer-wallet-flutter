@@ -83,7 +83,7 @@ Map<String, dynamic> balancesInfo = {
   'votingBalance': '0x00000000000000000000000000000000',
   'availableBalance': '0x00000000000000000000000000000000',
   'lockedBalance': '0x00000000000000000000000000000000',
-  'lockedBreakdown': [],
+  'lockedBreakdown': <dynamic>[],
   'vestingLocked': '0x00000000000000000000000000000000',
   'isVesting': false,
   'vestedBalance': '0x00000000000000000000000000000000',

@@ -84,7 +84,7 @@ abstract class _EncointerStore with Store {
   Map<CeremonyPhase, int> phaseDurations = {};
 
   @computed
-  get currentPhaseDuration => phaseDurations[currentPhase];
+  int? get currentPhaseDuration => phaseDurations[currentPhase];
 
   @observable
   int? currentCeremonyIndex;
@@ -330,7 +330,7 @@ abstract class _EncointerStore with Store {
       webApi.encointer.getMeetupTime(),
       webApi.encointer.getMeetupTimeOverride(),
       updateAggregatedAccountData(),
-    ]).timeout(const Duration(seconds: 15)).catchError((e, s) {
+    ]).timeout(const Duration(seconds: 15)).catchError((Object? e, s) {
       Log.e('Error executing update state: $e', 'EncointerStore');
       return Future.value([]);
     }).whenComplete(() {
@@ -546,7 +546,8 @@ abstract class _EncointerStore with Store {
   @computed
   bool get showSubmitClaimsButton {
     bool assigned = communityAccount?.isAssigned ?? false;
-    bool hasClaims = (communityAccount?.scannedAttendeesCount as num? ?? 0) > 0;
+    bool? hasClaims = (communityAccount?.scannedAttendeesCount ?? 0) > 0;
+
     return (currentPhase == CeremonyPhase.Attesting && assigned && hasClaims);
   }
 

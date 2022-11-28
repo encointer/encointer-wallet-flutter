@@ -24,7 +24,7 @@ class EncointerDartApi {
 
   ///
   Future<List<String>> pendingExtrinsics() {
-    return _dartApi.rpc('author_pendingExtrinsics', []).then((data) => List.from(data as Iterable));
+    return _dartApi.rpc('author_pendingExtrinsics', <dynamic>[]).then((data) => List.from(data as Iterable));
   }
 
   Future<Map<CommunityIdentifier, BalanceEntry>> getAllBalances(String account) {

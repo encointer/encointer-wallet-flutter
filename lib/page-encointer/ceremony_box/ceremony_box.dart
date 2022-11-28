@@ -87,7 +87,7 @@ class CeremonyBox extends StatelessWidget {
                     child: CeremonyStartButton(
                       key: const Key('start-meetup'),
                       onPressed: () => Navigator.of(context).push(
-                        MaterialPageRoute(
+                        MaterialPageRoute<void>(
                           builder: (context) => CeremonyStep1Count(store, api),
                         ),
                       ),
@@ -195,7 +195,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
 }
 
 Future<void> awaitDataUpdateWithDialog(BuildContext context, AppStore store) async {
-  showCupertinoDialog(
+  showCupertinoDialog<void>(
     context: context,
     builder: (_) => CupertinoAlertDialog(
       title: Text(I18n.of(context)!.translationsForLocale().home.updatingAppState),

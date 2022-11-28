@@ -76,7 +76,7 @@ class ResultSummaryListTile extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
+          MaterialPageRoute<void>(
             builder: (context) =>
                 (results[0] is BazaarBusinessData) ? SearchResultsBusiness(results) : SearchResultsOffering(results),
           ),

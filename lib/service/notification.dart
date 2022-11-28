@@ -49,7 +49,7 @@ class NotificationPlugin {
     didReceiveLocalNotificationSubject.stream.listen((ReceivedNotification receivedNotification) async {
       Log.d('${receivedNotification.title}', 'NotificationPlugin');
       Log.d('${receivedNotification.body}', 'NotificationPlugin');
-      await showDialog(
+      await showDialog<void>(
         context: context,
         builder: (BuildContext context) => CupertinoAlertDialog(
           title: receivedNotification.title != null ? Text(receivedNotification.title!) : null,

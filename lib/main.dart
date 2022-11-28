@@ -62,7 +62,7 @@ Future<void> main({AppcastConfiguration? appCast}) async {
         ),
         Provider<AppStore>(
           // On test mode instead of LocalStorage() must be use MockLocalStorage()
-          create: (context) => AppStore(util.LocalStorage(), config: const AppConfig()),
+          create: (context) => AppStore(util.LocalStorage(), config: const AppConfig(), appCast: appCast),
         )
       ],
       child: const WalletApp(),

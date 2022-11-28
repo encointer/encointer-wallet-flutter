@@ -27,7 +27,7 @@ class ContactDetailPage extends StatelessWidget {
 
   void _removeItem(BuildContext context, AccountData account, AppStore store) {
     var dic = I18n.of(context)!.translationsForLocale();
-    showCupertinoDialog(
+    showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
@@ -188,7 +188,7 @@ class EndorseButton extends StatelessWidget {
 }
 
 Future<void> _popupDialog(BuildContext context, String content) async {
-  showCupertinoDialog(
+  showCupertinoDialog<void>(
     context: context,
     builder: (BuildContext context) {
       return CupertinoAlertDialog(

@@ -56,7 +56,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
       });
     }
     if (res == null) {
-      showCupertinoDialog(
+      showCupertinoDialog<void>(
         context: context,
         builder: (BuildContext context) {
           final Translations dic = I18n.of(context)!.translationsForLocale();
