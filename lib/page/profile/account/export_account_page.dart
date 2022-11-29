@@ -30,7 +30,7 @@ class ExportAccountPage extends StatelessWidget {
         _passCtrl.text,
       );
       if (res == null) {
-        showCupertinoDialog(
+        showCupertinoDialog<void>(
           context: context,
           builder: (BuildContext context) {
             return CupertinoAlertDialog(
@@ -56,7 +56,7 @@ class ExportAccountPage extends StatelessWidget {
       }
     }
 
-    showCupertinoDialog(
+    showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(

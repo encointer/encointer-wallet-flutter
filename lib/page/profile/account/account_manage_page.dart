@@ -52,7 +52,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 
   void _onDeleteAccount(BuildContext context, AccountData accountToBeEdited) {
-    showCupertinoDialog(
+    showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
@@ -99,7 +99,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
       title: Text(community.name!, style: h3),
       subtitle: Text(community.symbol!, style: h3),
       trailing: Text(
-        '${Fmt.doubleFormat(community.applyDemurrage(entry) as double?)} ⵐ',
+        '${entry != null && community.applyDemurrage != null ? Fmt.doubleFormat(community.applyDemurrage!(entry)) : 0} ⵐ',
         style: h3.copyWith(color: encointerGrey),
       ),
     );
@@ -107,7 +107,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
   void _showPasswordDialog(BuildContext context, AccountData accountToBeEdited) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
-    showCupertinoDialog(
+    showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return showPasswordInputDialog(context, accountToBeEdited, Text(dic.profile.confirmPin),
@@ -130,7 +130,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
             });
           } else {
             // Assume that the account was imported via `RawSeed` if mnemonic does not exist.
-            showCupertinoDialog(
+            showCupertinoDialog<void>(
               context: context,
               builder: (BuildContext context) {
                 return CupertinoAlertDialog(

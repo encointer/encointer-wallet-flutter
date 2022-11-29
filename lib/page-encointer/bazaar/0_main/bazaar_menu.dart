@@ -31,7 +31,7 @@ class BazaarMenu extends StatelessWidget {
               Navigator.pop(context);
               Navigator.push(
                 context,
-                MaterialPageRoute(
+                MaterialPageRoute<void>(
                   builder: (context) => MyOfferings(),
                 ),
               );
@@ -43,7 +43,7 @@ class BazaarMenu extends StatelessWidget {
               Navigator.pop(context);
               Navigator.push(
                 context,
-                MaterialPageRoute(
+                MaterialPageRoute<void>(
                   builder: (context) => MyBusinesses(),
                 ),
               );

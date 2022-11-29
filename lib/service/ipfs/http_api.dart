@@ -12,11 +12,10 @@ class Ipfs {
 
   final String gateway;
 
-  Future getJson(String cid) async {
+  Future<dynamic> getJson(String cid) async {
     try {
       final dio = IpfsDio(BaseOptions(baseUrl: gateway));
-
-      final response = await dio.get(cid);
+      final response = await dio.get<dynamic>(cid);
       var object = Object.fromJson(response.data as Map<String, dynamic>);
 
       // TODO: Better solution available to remove preceding and trailing characters of json?
@@ -70,9 +69,8 @@ class Ipfs {
     final dio = IpfsDio(BaseOptions(baseUrl: gateway, connectTimeout: 5000, receiveTimeout: 3000));
 
     try {
-      final response = await dio.get(src);
+      final response = await dio.get<dynamic>(src);
       var object = Object.fromJson(response.data as Map<String, dynamic>);
-
       return object.data;
     } catch (e, s) {
       // otherwise we would have to adjust the return type.
@@ -92,7 +90,7 @@ class Ipfs {
       _dio.options.connectTimeout = 5000; //5s
       _dio.options.receiveTimeout = 3000;
 
-      final response = await _dio.post('/ipfs/', data: image.openRead());
+      final response = await _dio.post<dynamic>('/ipfs/', data: image.openRead());
       String imageHash = response.headers.map['ipfs-hash'].toString(); // [ipfs_hash]
 
       // TODO: Nicer solution
@@ -117,7 +115,7 @@ class Ipfs {
       _dio.options.connectTimeout = 5000; //5s
       _dio.options.receiveTimeout = 3000;
 
-      final response = await _dio.post('/ipfs/', data: json);
+      final response = await _dio.post<dynamic>('/ipfs/', data: json);
       String jsonHash = response.headers.map['ipfs-hash'].toString(); // [ipfs_hash]
 
       // TODO: Nicer solution

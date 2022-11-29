@@ -32,7 +32,7 @@ class MyBusinesses extends StatelessWidget {
           onPressed: () {
             Navigator.push(
                 context,
-                MaterialPageRoute(
+                MaterialPageRoute<void>(
                   builder: (context) => BusinessFormScaffold(),
                 ));
           }),

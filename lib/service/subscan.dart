@@ -148,7 +148,7 @@ class SubScanApi {
     if (params.sendPort != null) {
       params.sendPort!.send(obj['data']);
     }
-    return obj['data'];
+    return obj['data'] as Map?;
   }
 
   static Future<Map?> fetchTxs(SubScanRequestParams para) async {
@@ -171,7 +171,7 @@ class SubScanApi {
     if (para.sendPort != null) {
       para.sendPort!.send(obj['data']);
     }
-    return obj['data'];
+    return obj['data'] as Map?;
   }
 
   static Future<Map?> fetchRewardTxs(SubScanRequestParams para) async {
@@ -188,7 +188,7 @@ class SubScanApi {
     if (para.sendPort != null) {
       para.sendPort!.send(obj['data']);
     }
-    return obj['data'];
+    return obj['data'] as Map?;
   }
 
   Future<Map> fetchTokenPriceAsync(String network) async {
@@ -218,7 +218,7 @@ class SubScanApi {
       if (para.sendPort != null) {
         para.sendPort!.send(obj['data']);
       }
-      return obj['data'];
+      return obj['data'] as Map?;
     } catch (err) {
       // ignore error
     }

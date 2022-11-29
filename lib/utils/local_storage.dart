@@ -1,8 +1,9 @@
 import 'dart:convert';
 
-import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'package:encointer_wallet/models/communities/community_identifier.dart';
 
 class LocalStorage {
   final accountsKey = 'wallet_account_list';
@@ -44,7 +45,7 @@ class LocalStorage {
   }
 
   Future<bool> setChosenCid(CommunityIdentifier cid) async {
-    return storage.setKV(encointerCommunityKey, cid);
+    return storage.setKV(encointerCommunityKey, cid.toString());
   }
 
   Future<String?> getChosenCid() async {
@@ -78,7 +79,7 @@ class LocalStorage {
   Future<Map<String, dynamic>> getSeeds(String seedType) async {
     String? value = await storage.getKV('${seedKey}_$seedType');
     if (value != null) {
-      return jsonDecode(value);
+      return jsonDecode(value) as Map<String, dynamic>;
     }
     return {};
   }
@@ -110,7 +111,7 @@ class LocalStorage {
     if (value != null) {
       // String to `Map<String, dynamic>` conversion
       var data = await compute(jsonDecode, value);
-      return data;
+      return data as Map<String, dynamic>?;
     }
     return Future.value(null);
   }
@@ -155,9 +156,9 @@ class _LocalStorage {
     return prefs.getString(key);
   }
 
-  Future<bool> setKV(String key, value) async {
+  Future<bool> setKV(String key, String value) async {
     final prefs = await SharedPreferences.getInstance();
-    return prefs.setString(key, value as String);
+    return prefs.setString(key, value);
   }
 
   Future<bool> removeKey(String key) async {
@@ -190,8 +191,8 @@ class _LocalStorage {
 
     String? str = await getKV(storeKey);
     if (str != null) {
-      Iterable l = jsonDecode(str);
-      res = l.map((i) => Map<String, dynamic>.from(i as Map<String, dynamic>)).toList();
+      final l = jsonDecode(str);
+      res = (l as List).map((i) => Map<String, dynamic>.from(i as Map<String, dynamic>)).toList();
     }
     return res;
   }

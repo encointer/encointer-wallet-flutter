@@ -15,7 +15,7 @@ class ExportResultPage extends StatelessWidget {
     Clipboard.setData(ClipboardData(
       text: args['key'] as String,
     ));
-    showCupertinoDialog(
+    showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(

@@ -162,7 +162,7 @@ abstract class _AppStore with Store {
 
     String encointerFinalCacheKey = encointerCacheKey(networkInfo);
 
-    var maybeStore;
+    EncointerStore? maybeStore;
 
     if (cacheVersion == encointerCacheVersion) {
       try {

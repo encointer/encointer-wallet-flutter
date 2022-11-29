@@ -60,13 +60,13 @@ class _AddAccountPageState extends State<AddAccountPage> {
       return;
     }
 
-    var addresses = await webApi.account.encodeAddress([acc['pubKey']]);
+    var addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
     Log.d('Created new account with address: ${addresses[0]}', 'AddAccountPage');
 
     await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
     Log.d('added new account with address: ${addresses[0]}', 'AddAccountPage');
 
-    String? pubKey = acc['pubKey'];
+    String? pubKey = acc['pubKey'] as String?;
     await store.setCurrentAccount(pubKey);
 
     await store.loadAccountCache();
@@ -82,7 +82,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
   }
 
   static Future<void> _showErrorCreatingAccountDialog(BuildContext context) async {
-    showCupertinoDialog(
+    showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
@@ -102,7 +102,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
   }
 
   Future<void> _showEnterPinDialog(AppStore store) async {
-    await showCupertinoDialog(
+    await showCupertinoDialog<void>(
       context: context,
       builder: (_) {
         return Container(

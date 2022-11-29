@@ -67,10 +67,10 @@ class MockLocalStorage extends LocalStorage {
   @override
   Future<Object?> getObject(String key) async {
     // Log.d("getObject: $storage", 'MockLocalStorage');
-    String? value = storage[key];
+    String? value = storage[key] as String?;
 
     if (value != null) {
-      Object data = jsonDecode(value);
+      var data = jsonDecode(value);
       return data;
     }
     return Future.value(null);
@@ -92,12 +92,12 @@ class MockLocalStorage extends LocalStorage {
   @override
   Future<Map<String, dynamic>?> getMap(String key) async {
     // Log.d("getMap: $storage", 'MockLocalStorage');
-    String? value = storage[key];
+    String? value = storage[key] as String?;
 
     if (value != null) {
       // String to `Map<String, dynamic>` conversion
-      var data = jsonDecode(value);
-      return data;
+      final data = jsonDecode(value);
+      if (data is Map<String, dynamic>?) return data;
     }
     return Future.value(null);
   }

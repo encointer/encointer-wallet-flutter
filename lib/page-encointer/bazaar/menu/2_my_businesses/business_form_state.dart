@@ -93,7 +93,7 @@ abstract class _BusinessFormState with Store {
   }
 
   // ************** OTHER METHODS **********************************************
-  validateIsNotBlank(String? value, Function(String?) errorTarget) {
+  void validateIsNotBlank(String? value, void Function(String?) errorTarget) {
     String? errorText = value == null || value.trim().isEmpty ? 'Cannot be blank' : null;
     errorTarget(errorText);
   }
@@ -107,7 +107,7 @@ abstract class _BusinessFormState with Store {
   /// if the user leaves everything blank the validators would not be triggered
   /// (only on change of the value),
   /// hence upon tapping submit this method should be called
-  validateAll() {
+  void validateAll() {
     validateName(name);
     validateDescription(description);
     validateStreet(street);

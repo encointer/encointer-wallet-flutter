@@ -90,7 +90,7 @@ mixin _$DataUpdateStore on _DataUpdateStore, Store {
   }
 
   @override
-  dynamic setInvalidated() {
+  void setInvalidated() {
     final _$actionInfo = _$_DataUpdateStoreActionController.startAction(name: '_DataUpdateStore.setInvalidated');
     try {
       return super.setInvalidated();

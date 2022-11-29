@@ -27,7 +27,7 @@ class SearchResultsOffering extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(
+                  MaterialPageRoute<void>(
                     builder: (context) => SearchResultsOfferingFiltered(results),
                   ),
                 );

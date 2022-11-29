@@ -116,11 +116,11 @@ class OpeningHoursForDay {
 
   OpeningHoursForDay(this.openingIntervals);
 
-  addInterval(OpeningInterval interval) {
+  void addInterval(OpeningInterval interval) {
     openingIntervals.add(interval);
   }
 
-  removeInterval(int index) {
+  void removeInterval(int index) {
     openingIntervals.removeAt(index);
   }
 

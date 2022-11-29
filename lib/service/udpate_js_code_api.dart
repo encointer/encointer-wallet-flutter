@@ -30,8 +30,8 @@ class UpdateJSCodeApi {
 
   static Future<Map?> getRecommended() async {
     try {
-      Response res = await get(Uri.parse('$_endpoint/recommended.json'));
-      return jsonDecode(res.body);
+      final res = await get(Uri.parse('$_endpoint/recommended.json'));
+      return jsonDecode(res.body) as Map;
     } catch (e, s) {
       Log.e('$e', 'UpdateJSCodeApi', s);
       return Future.value(null);
@@ -40,8 +40,8 @@ class UpdateJSCodeApi {
 
   static Future<int?> fetchPolkadotJSVersion(String networkName) async {
     try {
-      Response res = await get(Uri.parse('$_endpoint/jsCodeVersions.json'));
-      return Map.of(jsonDecode(res.body) as Map)[networkName];
+      final res = await get(Uri.parse('$_endpoint/jsCodeVersions.json'));
+      return Map.of(jsonDecode(res.body) as Map)[networkName] as int?;
     } catch (e, s) {
       Log.e('$e', 'UpdateJSCodeApi', s);
       return Future.value(null);
@@ -90,8 +90,8 @@ class UpdateJSCodeApi {
 
   static Future<List?> getAnnouncements() async {
     try {
-      Response res = await get(Uri.parse('$_endpoint/announce.json'));
-      return jsonDecode(utf8.decode(res.bodyBytes));
+      final res = await get(Uri.parse('$_endpoint/announce.json'));
+      return jsonDecode(utf8.decode(res.bodyBytes)) as List?;
     } catch (e, s) {
       Log.e('$e', 'UpdateJSCodeApi', s);
       return Future.value(null);

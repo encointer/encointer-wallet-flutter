@@ -46,10 +46,10 @@ class _SplashViewState extends State<SplashView> {
 
     if (store.account.accountListAll.length > 0) {
       await Navigator.pushAndRemoveUntil(
-          context, CupertinoPageRoute(builder: (context) => const EncointerHomePage()), (route) => false);
+          context, CupertinoPageRoute<void>(builder: (context) => const EncointerHomePage()), (route) => false);
     } else {
       await Navigator.pushAndRemoveUntil(
-          context, CupertinoPageRoute(builder: (context) => CreateAccountEntryPage()), (route) => false);
+          context, CupertinoPageRoute<void>(builder: (context) => CreateAccountEntryPage()), (route) => false);
     }
   }
 

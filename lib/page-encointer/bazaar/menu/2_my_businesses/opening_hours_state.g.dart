@@ -162,7 +162,7 @@ mixin _$OpeningHoursState on _OpeningHoursState, Store {
   late final _$_OpeningHoursStateActionController = ActionController(name: '_OpeningHoursState', context: context);
 
   @override
-  dynamic copyFrom(int day) {
+  void copyFrom(int day) {
     final _$actionInfo = _$_OpeningHoursStateActionController.startAction(name: '_OpeningHoursState.copyFrom');
     try {
       return super.copyFrom(day);
@@ -172,7 +172,7 @@ mixin _$OpeningHoursState on _OpeningHoursState, Store {
   }
 
   @override
-  dynamic setDayOnFocus(int day) {
+  void setDayOnFocus(int day) {
     final _$actionInfo = _$_OpeningHoursStateActionController.startAction(name: '_OpeningHoursState.setDayOnFocus');
     try {
       return super.setDayOnFocus(day);
@@ -182,7 +182,7 @@ mixin _$OpeningHoursState on _OpeningHoursState, Store {
   }
 
   @override
-  dynamic pasteOpeningHoursTo(int day) {
+  void pasteOpeningHoursTo(int day) {
     final _$actionInfo =
         _$_OpeningHoursStateActionController.startAction(name: '_OpeningHoursState.pasteOpeningHoursTo');
     try {
@@ -244,7 +244,7 @@ mixin _$OpeningHoursForDayState on _OpeningHoursForDayState, Store {
       ActionController(name: '_OpeningHoursForDayState', context: context);
 
   @override
-  dynamic addParsedIntervalIfValid(String startEnd) {
+  void addParsedIntervalIfValid(String startEnd) {
     final _$actionInfo = _$_OpeningHoursForDayStateActionController.startAction(
         name: '_OpeningHoursForDayState.addParsedIntervalIfValid');
     try {
@@ -255,7 +255,7 @@ mixin _$OpeningHoursForDayState on _OpeningHoursForDayState, Store {
   }
 
   @override
-  dynamic addInterval(OpeningIntervalState interval) {
+  void addInterval(OpeningIntervalState interval) {
     final _$actionInfo =
         _$_OpeningHoursForDayStateActionController.startAction(name: '_OpeningHoursForDayState.addInterval');
     try {
@@ -266,7 +266,7 @@ mixin _$OpeningHoursForDayState on _OpeningHoursForDayState, Store {
   }
 
   @override
-  dynamic removeInterval(int index) {
+  void removeInterval(int index) {
     final _$actionInfo =
         _$_OpeningHoursForDayStateActionController.startAction(name: '_OpeningHoursForDayState.removeInterval');
     try {

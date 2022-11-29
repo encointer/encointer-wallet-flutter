@@ -125,7 +125,7 @@ Future<ChangeResult> changeWithLoadingDialog(
   BuildContext context,
   Future<ChangeResult> Function() changeFn,
 ) async {
-  showCupertinoDialog(
+  showCupertinoDialog<void>(
     context: context,
     builder: (BuildContext context) {
       return CupertinoAlertDialog(

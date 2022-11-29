@@ -16,7 +16,7 @@ class AddressInputField extends StatefulWidget {
   final AppStore store;
   final String? label;
   final AccountData? initialValue;
-  final Function(AccountData)? onChanged;
+  final void Function(AccountData)? onChanged;
   final bool hideIdenticon;
 
   @override
@@ -52,7 +52,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
       // query account address with account indices
       final queryRes = await webApi.account.queryAddressWithAccountIndex(input);
       if (queryRes != null) {
-        accountData.address = queryRes[0];
+        accountData.address = queryRes[0] as String;
         accountData.name = input;
       }
     } else {
@@ -73,7 +73,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
     final Map? accInfo = widget.store.account.addressIndexMap[item.address];
     String? idx = '';
     if (accInfo != null && accInfo['accountIndex'] != null) {
-      idx = accInfo['accountIndex'];
+      idx = accInfo['accountIndex'] as String?;
     }
     return '${item.name} $idx $address ${item.address}';
   }

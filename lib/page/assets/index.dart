@@ -349,8 +349,10 @@ class _AssetsState extends State<Assets> {
                           data: allCommunities,
                           onTap: (int index) {
                             if (index == allCommunities.length - 1) {
-                              Navigator.push(context, MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)))
-                                  .then((_) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute<void>(builder: (_) => CommunityChooserOnMap(store)),
+                              ).then((_) {
                                 _refreshBalanceAndNotify(dic);
                               });
                             } else {
@@ -463,7 +465,7 @@ class _AssetsState extends State<Assets> {
   }
 
   Future<void> _showPasswordDialog(BuildContext context) async {
-    await showCupertinoDialog(
+    await showCupertinoDialog<void>(
       context: context,
       builder: (_) {
         return WillPopScope(
@@ -490,7 +492,7 @@ class _AssetsState extends State<Assets> {
   }
 
   Future<void> _showPasswordNotEnteredDialog(BuildContext context) async {
-    await showCupertinoDialog(
+    await showCupertinoDialog<void>(
       context: context,
       builder: (_) {
         return CupertinoAlertDialog(
@@ -522,11 +524,20 @@ class _AssetsState extends State<Assets> {
         String cidStr = cid.toFmtString();
         if (widget.store.encointer.communityStores!.containsKey(cidStr)) {
           var community = widget.store.encointer.communityStores![cidStr]!;
+          var oldBalanceEntry =
+              widget.store.encointer.accountStores?[widget.store.account.currentAddress]?.balanceEntries[cidStr];
           double demurrageRate = community.demurrage!;
-          double newBalance = community.applyDemurrage(balanceEntry);
-          double oldBalance = community.applyDemurrage(
-                  widget.store.encointer.accountStores![widget.store.account.currentAddress]!.balanceEntries[cidStr]) ??
-              0;
+          double newBalance = community.applyDemurrage != null ? community.applyDemurrage!(balanceEntry) ?? 0 : 0;
+          double oldBalance = (community.applyDemurrage != null && oldBalanceEntry != null)
+              ? community.applyDemurrage!(oldBalanceEntry) ?? 0
+              : 0;
+
+// =======
+//           double newBalance = community.applyDemurrage(balanceEntry) as double;
+//           double oldBalance = community.applyDemurrage(widget.store.encointer
+//                   .accountStores![widget.store.account.currentAddress]!.balanceEntries[cidStr]) as double? ??
+//               0;
+// >>>>>>> 9d4143d3262181f3ad0429032d40bcd3c94c1b9f
           double delta = newBalance - oldBalance;
           Log.d('[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta', 'Assets');
           if (delta.abs() > demurrageRate) {
@@ -554,7 +565,7 @@ class _AssetsState extends State<Assets> {
         widget.store.encointer.accountStores![widget.store.account.currentAddress]
             ?.addBalanceEntry(widget.store.encointer.chosenCid!, BalanceEntry(0, 0));
       }
-    }).catchError((e, StackTrace? s) {
+    }).catchError((Object? e, StackTrace? s) {
       Log.e('[home:refreshBalanceAndNotify] WARNING: could not update balance: $e', 'Assets', s);
     });
   }

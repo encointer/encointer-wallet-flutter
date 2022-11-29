@@ -78,21 +78,21 @@ linter:
 analyzer:
   language:
     strict-casts: true
-    strict-inference: false
+    strict-inference: true
     strict-raw-types: false
     
   errors:
-    invalid_assignment: false
+    invalid_assignment: true
     argument_type_not_assignable: true
-    return_of_invalid_type: false
-    map_key_type_not_assignable: false
-    non_bool_operand: false
-    return_of_invalid_type_from_closure: false
-    list_element_type_not_assignable: false
-    non_bool_negation_expression: false
-    non_bool_condition: false
-    prefer_iterable_wheretype: false
-    prefer_for_elements_to_map_fromiterable: false
+    return_of_invalid_type: true
+    map_key_type_not_assignable: true
+    non_bool_operand: true
+    return_of_invalid_type_from_closure: true
+    list_element_type_not_assignable: true
+    non_bool_negation_expression: true
+    non_bool_condition: true
+    prefer_iterable_wheretype: true
+    prefer_for_elements_to_map_fromiterable: true
     # todo and fixme
     todo: false
     fixme: false

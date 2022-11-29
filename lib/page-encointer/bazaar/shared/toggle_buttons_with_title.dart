@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class ToggleButtonsWithTitle extends StatelessWidget {
   final List<String> items;
   final List<bool> isSelected;
-  final Function(int)? onPressed;
+  final void Function(int)? onPressed;
   final String title;
   final allSelected = false;
 

@@ -202,11 +202,11 @@ class Fmt {
     ls.retainWhere((i) {
       String value = filter.trim().toLowerCase();
       String accName = '';
-      Map? accInfo = accIndexMap[i[0]];
+      Map? accInfo = accIndexMap[i[0]] as Map?;
       if (accInfo != null) {
-        accName = accInfo['identity']['display'] ?? '';
+        accName = accInfo['identity']['display'] as String? ?? '';
       }
-      return i[0].toLowerCase().contains(value) || accName.toLowerCase().contains(value);
+      return (i[0] as String).toLowerCase().contains(value) || accName.toLowerCase().contains(value);
     });
     return ls;
   }
@@ -240,12 +240,12 @@ class Fmt {
     String? display = Fmt.address(address, pad: 6);
     if (accInfo != null) {
       if (accInfo['identity']['display'] != null) {
-        display = accInfo['identity']['display'];
+        display = accInfo['identity']['display'] as String?;
         if (accInfo['identity']['displayParent'] != null) {
           display = '${accInfo['identity']['displayParent']}/$display';
         }
       } else if (accInfo['accountIndex'] != null) {
-        display = accInfo['accountIndex'];
+        display = accInfo['accountIndex'] as String?;
       }
       display = display!.toUpperCase();
     }
@@ -260,7 +260,7 @@ class Fmt {
   static Widget accountDisplayName(String address, Map accInfo) {
     return Row(
       children: <Widget>[
-        accInfo['identity']['judgements'].length > 0
+        (accInfo['identity']['judgements'] as List).length > 0
             ? Container(
                 width: 14,
                 margin: const EdgeInsets.only(right: 4),
