@@ -283,7 +283,7 @@ abstract class _EncointerStore with Store {
     }
 
     currentCeremonyIndex = index;
-    writeToCache();// 01 refresh 03 new
+    writeToCache(); // 01 refresh 03 new
 
     // update depending values without awaiting
     updateState();
