@@ -172,29 +172,33 @@ Future<dynamic> submitReapVoucher(
 Future<void> _showEducationalDialog(ParticipantType registrationType, BuildContext context) async {
   final dic = I18n.of(context)!.translationsForLocale();
   final texts = _getEducationalDialogTexts(registrationType, context);
-  String languageCode = Localizations.localeOf(context).languageCode;
+  final languageCode = Localizations.localeOf(context).languageCode;
 
   return showCupertinoDialog<void>(
     barrierDismissible: true,
     context: context,
     builder: (context) {
       return CupertinoAlertDialog(
+        key: const Key('educate-dialog'),
         title: Text('${texts['title']}'),
         content: Text(
           '${texts['content']}',
           textAlign: TextAlign.center,
         ),
         actions: <Widget>[
-          Container(),
-          CupertinoButton(
-            child: Text(dic.encointer.leuZurichFAQ),
-            onPressed: () => UI.launchURL(leuZurichCycleAssignmentFAQLink(languageCode)),
-          ),
           if (registrationType == ParticipantType.Newbie)
             CupertinoButton(
-              child: Text(dic.home.ok),
-              onPressed: () => Navigator.of(context).pop(),
-            )
+              child: Text(
+                dic.encointer.leuZurichFAQ,
+                textAlign: TextAlign.center,
+              ),
+              onPressed: () => UI.launchURL(leuZurichCycleAssignmentFAQLink(languageCode)),
+            ),
+          CupertinoButton(
+            key: const Key('close-educate-dialog'),
+            child: Text(dic.home.ok),
+            onPressed: () => Navigator.of(context).pop(),
+          )
         ],
       );
     },
