@@ -203,7 +203,7 @@ abstract class _EncointerStore with Store {
     Log.d('set phase duration to $phaseDurations', 'EncointerStore');
 
     this.phaseDurations = phaseDurations;
-    writeToCache();
+    // writeToCache(); //01 init
   }
 
   @action
@@ -211,7 +211,7 @@ abstract class _EncointerStore with Store {
     Log.d('set communityIdentifiers to $cids', 'EncointerStore');
 
     communityIdentifiers = cids;
-    writeToCache();
+    // writeToCache(); //02 init
 
     if (communities != null && communitiesContainsChosenCid && !communitiesContainsChosenCid) {
       // inconsistency found, reset state
@@ -224,14 +224,13 @@ abstract class _EncointerStore with Store {
     Log.d('set communities to $c', 'EncointerStore');
 
     communities = c;
-    writeToCache();
+    //  writeToCache(); //03 init
   }
 
   @action
   Future<void> setChosenCid([CommunityIdentifier? cid]) async {
     if (chosenCid != cid) {
       chosenCid = cid;
-      writeToCache();
 
       if (cid != null) {
         _rootStore.localStorage.setObject(chosenCidCacheKey(network), cid.toJson());
@@ -240,6 +239,7 @@ abstract class _EncointerStore with Store {
       } else {
         _rootStore.localStorage.removeKey(chosenCidCacheKey(network));
       }
+      writeToCache();
     }
 
     if (_rootStore.settings.endpointIsNoTee) {
@@ -258,7 +258,7 @@ abstract class _EncointerStore with Store {
 
     if (currentPhase != phase) {
       currentPhase = phase;
-      writeToCache();
+      // writeToCache(); // 02 new
     }
     // update depending values without awaiting
     webApi.encointer.getCurrentCeremonyIndex();
@@ -270,7 +270,7 @@ abstract class _EncointerStore with Store {
 
     if (nextPhaseTimestamp != timestamp) {
       nextPhaseTimestamp = timestamp;
-      writeToCache();
+      // writeToCache(); // 04 new
     }
   }
 
@@ -283,7 +283,7 @@ abstract class _EncointerStore with Store {
     }
 
     currentCeremonyIndex = index;
-    writeToCache();
+    writeToCache();// 01 refresh 03 new
 
     // update depending values without awaiting
     updateState();
