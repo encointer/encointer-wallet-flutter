@@ -1,4 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -7,8 +10,6 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 
 class AddressInputField extends StatefulWidget {
   AddressInputField(this.store, {Key? key, this.label, this.initialValue, this.onChanged, this.hideIdenticon = false})
@@ -122,24 +123,27 @@ class _AddressInputFieldState extends State<AddressInputField> {
       builder: (_) {
         final Map? accInfo = widget.store.account.addressIndexMap[item.pubKey];
         final String address = Fmt.addressOfAccount(item, widget.store);
-        return Container(
-          margin: const EdgeInsets.symmetric(horizontal: 8),
-          decoration: !isSelected
-              ? null
-              : BoxDecoration(
-                  border: Border.all(color: Theme.of(context).primaryColor),
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.white,
-                ),
-          child: ListTile(
-            selected: isSelected,
-            dense: true,
-            title: Text(Fmt.address(address)!),
-            subtitle: Text(
-              item.name.isNotEmpty ? item.name : Fmt.accountDisplayNameString(item.address, accInfo)!,
-            ),
-            leading: CircleAvatar(
-              child: AddressIcon(item.address, item.pubKey),
+        return InkWell(
+          key: Key(item.name),
+          child: Container(
+            margin: const EdgeInsets.symmetric(horizontal: 8),
+            decoration: !isSelected
+                ? null
+                : BoxDecoration(
+                    border: Border.all(color: Theme.of(context).primaryColor),
+                    borderRadius: BorderRadius.circular(5),
+                    color: Colors.white,
+                  ),
+            child: ListTile(
+              selected: isSelected,
+              dense: true,
+              title: Text(Fmt.address(address)!),
+              subtitle: Text(
+                item.name.isNotEmpty ? item.name : Fmt.accountDisplayNameString(item.address, accInfo)!,
+              ),
+              leading: CircleAvatar(
+                child: AddressIcon(item.address, item.pubKey),
+              ),
             ),
           ),
         );
@@ -151,6 +155,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
     return Container(
+      key: const Key('send-to-address'),
       decoration: BoxDecoration(
         color: ZurichLion.shade50,
         borderRadius: BorderRadius.circular(15),
@@ -161,6 +166,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
           showSearchBox: true,
           showSelectedItems: true,
           itemBuilder: _listItemBuilder,
+          // modalBottomSheetProps: ModalBottomSheetProps()
         ),
         dropdownDecoratorProps: DropDownDecoratorProps(
           dropdownSearchDecoration: InputDecoration(

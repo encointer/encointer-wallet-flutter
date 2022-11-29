@@ -2,6 +2,7 @@ import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
 import 'helpers/add_delay.dart';
+import 'helpers/other_test.dart';
 import 'helpers/real_app_helper.dart';
 
 void main() async {
@@ -51,16 +52,6 @@ void main() async {
     await driver.tap(find.byValueKey('qr-receive'));
     await addDelay(1000);
     await driver.tap(find.byValueKey('close-receive-page'));
-    await addDelay(1000);
-  });
-
-  test('transfer-page', () async {
-    await driver.tap(find.byValueKey('transfer'));
-    await driver.tap(find.byValueKey('transfer-amount-input'));
-
-    await driver.enterText('3.4');
-    await addDelay(1000);
-    await driver.tap(find.byValueKey('close-transfer-page'));
     await addDelay(1000);
   });
 
@@ -174,6 +165,10 @@ void main() async {
     await driver.waitFor(find.byValueKey('claim-pending-dev'));
     await driver.tap(find.byValueKey('claim-pending-dev'));
     await addDelay(20000);
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('create newbie account', () async {
+    await createNewbieAccountAndSendMoney(driver, 'Eldi');
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   tearDownAll(() async {
