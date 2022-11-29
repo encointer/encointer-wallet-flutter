@@ -4,13 +4,23 @@ linter:
   rules:
     public_member_api_docs: false
     lines_longer_than_80_chars: false
-    invalid_assignment: false
     directives_ordering: false
     sort_pub_dependencies: false
+    flutter_style_todos: false
+    no_default_cases: false
+
+    invalid_assignment: false
     omit_local_variable_types: false
     prefer_final_locals: false
+    avoid_final_parameters: false
+    type_annotate_public_apis: false
+
     prefer_const_literals_to_create_immutables: false
     prefer_const_constructors_in_immutables: false
+    prefer_const_declarations: false
+    unnecessary_const: false
+    constant_identifier_names: false
+
     prefer_if_elements_to_conditional_expressions: false
     require_trailing_commas: false
     sort_child_properties_last: false
@@ -20,21 +30,17 @@ linter:
     unnecessary_lambdas: false
     use_named_constants: false
     always_declare_return_types: false
-    type_annotate_public_apis: false
     unawaited_futures: false
     avoid_dynamic_calls: false
     use_build_context_synchronously: false
-    unnecessary_const: false
     prefer_int_literals: false
     comment_references: false
     avoid_redundant_argument_values: false
     cast_nullable_to_non_nullable: false
     prefer_asserts_with_message: false
-    constant_identifier_names: false
     only_throw_errors: false
     prefer_final_in_for_each: false
     unnecessary_null_checks: false
-    prefer_const_declarations: false
     overridden_fields: false
     prefer_constructors_over_static_methods: false
     no_leading_underscores_for_local_identifiers: false
@@ -59,7 +65,6 @@ linter:
     join_return_with_assignment: false
     use_if_null_to_convert_nulls_to_bools: false
     avoid_field_initializers_in_const_classes: false
-    no_default_cases: false
     prefer_function_declarations_over_variables: false
     unnecessary_raw_strings: false
     no_logic_in_create_state: false
@@ -67,20 +72,18 @@ linter:
     use_setters_to_change_properties: false
     avoid_single_cascade_in_expression_statements: false
     avoid_void_async: false
-    flutter_style_todos: false
     use_colored_box: false
     prefer_conditional_assignment: false
     one_member_abstracts: false
     prefer_null_aware_method_calls: false
-    avoid_final_parameters: false
-    unnecessary_await_in_return: false 
+    unnecessary_await_in_return: false
 
 analyzer:
   language:
     strict-casts: true
     strict-inference: true
     strict-raw-types: false
-    
+
   errors:
     invalid_assignment: true
     argument_type_not_assignable: true
