@@ -11,7 +11,6 @@ abstract class TranslationsAccount {
   String get createPassword2Error;
   String get createPasswordError;
   String get importDuplicate;
-  String get importEncrypt;
   String get importInvalid;
   String get importInvalidRawSeed;
   String get importInvalidMnemonic;
@@ -56,8 +55,6 @@ class TranslationsEnAccount implements TranslationsAccount {
   String get createPasswordError => 'PIN must contain at least 4 digits and no other signs';
   @override
   String get importDuplicate => 'Account exists, do you want to override the existing account?';
-  @override
-  String get importEncrypt => 'Encrypt Type';
   @override
   String get importInvalid => 'Invalid';
   @override
@@ -124,8 +121,6 @@ class TranslationsDeAccount implements TranslationsAccount {
   @override
   String get importDuplicate => 'Dieses Konto existiert bereits, möchtest du es überschreiben?';
   @override
-  String get importEncrypt => 'Verschlüsselungstyp';
-  @override
   String get importInvalid => 'Ungültig';
   @override
   String get importInvalidRawSeed => 'Ungültigen raw seed eingegeben.';
@@ -170,67 +165,66 @@ class TranslationsDeAccount implements TranslationsAccount {
 
 class TranslationsFrAccount implements TranslationsAccount {
   @override
-  String get advanced => throw UnimplementedError();
+  String get advanced => 'Options étendues';
   @override
   String get backupError => throw UnimplementedError();
   @override
-  String get create => throw UnimplementedError();
+  String get create => 'Créer un compte';
   @override
-  String get createError => throw UnimplementedError();
+  String get createError => 'Une erreur s\'est produite lors de la création de ton compte';
   @override
-  String get createHint => throw UnimplementedError();
+  String get createHint => '(Exemple Alice)';
   @override
-  String get createPassword => throw UnimplementedError();
+  String get createPassword => 'NIP';
   @override
-  String get createPassword2 => throw UnimplementedError();
+  String get createPassword2 => 'Confirmer le NIP';
   @override
-  String get createPassword2Error => throw UnimplementedError();
+  String get createPassword2Error => 'Les codes NIP ne correspondent pas';
   @override
-  String get createPasswordError => throw UnimplementedError();
+  String get createPasswordError => 'Le code NIP doit être composé d\'au moins 4 chiffres et d\'aucun autre caractère';
   @override
-  String get importDuplicate => throw UnimplementedError();
+  String get importDuplicate => 'Ce compte existe déjà, veux-tu le remplacer?';
   @override
-  String get importEncrypt => throw UnimplementedError();
+  String get importInvalid => 'Non valide';
   @override
-  String get importInvalid => throw UnimplementedError();
+  String get importInvalidRawSeed => 'Raw seed invalide entré.';
   @override
-  String get importInvalidRawSeed => throw UnimplementedError();
+  String get importInvalidMnemonic => 'Mnémonique invalide entré.';
   @override
-  String get importInvalidMnemonic => throw UnimplementedError();
+  String get importMustNotBeEmpty => 'L\'entrée ne peut pas être vide';
   @override
-  String get importMustNotBeEmpty => throw UnimplementedError();
+  String get importPrivateKeyUnsupported => 'Le compte d\'importation avec clé privée n\'est pas encore pris en charge';
   @override
-  String get importPrivateKeyUnsupported => throw UnimplementedError();
+  String get keystore => 'Keystore (json)';
   @override
-  String get keystore => throw UnimplementedError();
+  String get list => 'Sélection de compte';
   @override
-  String get list => throw UnimplementedError();
+  String get mnemonic => 'Mnémonique';
   @override
-  String get mnemonic => throw UnimplementedError();
+  String get next => 'Prochain';
   @override
-  String get next => throw UnimplementedError();
+  String get observe => 'Moniteur';
   @override
-  String get observe => throw UnimplementedError();
+  String get observeBrief =>
+      'Marquez cette adresse comme étant à moniteur, puis cette adresse peut être sélectionnée dans la page de sélection de compte pour surveiller ses actifs et ses actions';
   @override
-  String get observeBrief => throw UnimplementedError();
+  String get observeProxyInvalid => 'Compte proxy invalide';
   @override
-  String get observeProxyInvalid => throw UnimplementedError();
+  String get path => 'Chemin de dérivation secret';
   @override
-  String get path => throw UnimplementedError();
+  String get qrScan => 'Scannez le code QR';
   @override
-  String get qrScan => throw UnimplementedError();
+  String get rawSeed => 'Scannes le code QR';
   @override
-  String get rawSeed => throw UnimplementedError();
+  String get uosCanceled => 'Transaction est annulée';
   @override
-  String get uosCanceled => throw UnimplementedError();
+  String get uosPush => 'Scanner pour publier';
   @override
-  String get uosPush => throw UnimplementedError();
+  String get uosScan => 'Scanner et envoyer la transaction signée';
   @override
-  String get uosScan => throw UnimplementedError();
+  String get uosSigner => 'Signataire';
   @override
-  String get uosSigner => throw UnimplementedError();
-  @override
-  String get uosTitle => throw UnimplementedError();
+  String get uosTitle => 'Signature hors ligne';
 }
 
 class TranslationsRuAccount implements TranslationsAccount {
@@ -255,8 +249,6 @@ class TranslationsRuAccount implements TranslationsAccount {
   String get createPasswordError => 'PIN должен содержать не менее 4 цифр и никаких других знаков';
   @override
   String get importDuplicate => 'Учетная запись существует, вы хотите аннулировать существующий аккаунт?';
-  @override
-  String get importEncrypt => 'Тип шифрования';
   @override
   String get importInvalid => 'Недопустимый';
   @override
