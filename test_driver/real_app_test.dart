@@ -55,22 +55,6 @@ void main() async {
     await addDelay(1000);
   });
 
-  test('contact-page', () async {
-    await driver.tap(find.byValueKey('Contacts'));
-    await driver.tap(find.byValueKey('add-contact'));
-
-    await driver.tap(find.byValueKey('contact-address'));
-    await driver.enterText('5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW');
-    await driver.tap(find.byValueKey('contact-name'));
-    await driver.enterText('Eldiar');
-
-    await driver.tap(find.byValueKey('contact-save'));
-    await addDelay(1000);
-
-    await driver.tap(find.byValueKey('Wallet'));
-    await addDelay(1000);
-  });
-
   test('turn on dev-mode', () async {
     await driver.tap(find.byValueKey('Profile'));
 
@@ -171,6 +155,38 @@ void main() async {
     await driver.tap(find.byValueKey('Profile'));
     await driver.waitFor(find.text('2'));
     await addDelay(1000);
+    await scrollToNextPhaseButton(driver);
+    await tapAndWaitNextPhase(driver);
+    await driver.tap(find.byValueKey('Wallet'));
+  });
+
+  test('contact-page add account', () async {
+    await driver.tap(find.byValueKey('Contacts'));
+    await driver.tap(find.byValueKey('add-contact'));
+
+    await driver.tap(find.byValueKey('contact-address'));
+    await driver.enterText('5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW');
+    await driver.tap(find.byValueKey('contact-name'));
+    await driver.enterText('Sezar');
+
+    await driver.tap(find.byValueKey('contact-save'));
+    await addDelay(1000);
+  });
+
+  test('send endorse to account', () async {
+    await driver.waitFor(find.byValueKey('Sezar'));
+    await driver.tap(find.byValueKey('Sezar'));
+
+    await driver.waitFor(find.byValueKey('tap-endorse-button'));
+    await driver.tap(find.byValueKey('tap-endorse-button'));
+    await addDelay(1000);
+  });
+
+  test('send money to account', () async {
+    await driver.waitFor(find.byValueKey('send-money-to-account'));
+    await driver.tap(find.byValueKey('send-money-to-account'));
+
+    await sendMonayToAccount(driver);
     await driver.tap(find.byValueKey('Wallet'));
   });
 

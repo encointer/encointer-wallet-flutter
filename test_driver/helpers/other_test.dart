@@ -23,28 +23,32 @@ Future<void> createNewbieAccountAndSendMoney(FlutterDriver driver, String accoun
   await closePanel(driver);
 
   // await driver.tap(find.byValueKey('transfer'));
-  // await driver.tap(find.byValueKey('transfer-amount-input'));
-  // await driver.enterText('0.2');
+}
 
-  // await driver.runUnsynchronized(() async {
-  //   await scrollToSendAddress(driver);
-  //   await driver.tap(find.byValueKey('send-to-address'));
-  //   await driver.waitFor(find.byValueKey(account));
-  //   // await driver.(find.byValueKey(account));
+Future<void> sendMonayToAccount(FlutterDriver driver) async {
+  await driver.waitFor(find.byValueKey('transfer-amount-input'));
+  await driver.tap(find.byValueKey('transfer-amount-input'));
+  await driver.enterText('0.2');
 
-  //   await driver.waitFor(find.byValueKey('make-transfer'));
-  //   await driver.tap(find.byValueKey('make-transfer'));
+  await driver.runUnsynchronized(() async {
+    // await scrollToSendAddress(driver);
+    // await driver.tap(find.byValueKey('send-to-address'));
+    // await driver.waitFor(find.byValueKey(account));
+    // await driver.(find.byValueKey(account));
 
-  //   await driver.waitFor(find.byValueKey('make-transfer-send'));
-  //   await driver.tap(find.byValueKey('make-transfer-send'));
-  //   await driver.waitFor(find.byValueKey('transfer-done'));
-  //   await driver.tap(find.byValueKey('transfer-done'));
-  //   await addDelay(1000);
-  //   await driver.tap(find.byValueKey('panel-controller'));
-  //   await driver.tap(find.byValueKey(account));
-  //   await closePanel(driver);
-  //   await addDelay(1000);
-  // });
+    await driver.waitFor(find.byValueKey('make-transfer'));
+    await driver.tap(find.byValueKey('make-transfer'));
+
+    await driver.waitFor(find.byValueKey('make-transfer-send'));
+    await driver.tap(find.byValueKey('make-transfer-send'));
+    await driver.waitFor(find.byValueKey('transfer-done'));
+    await driver.tap(find.byValueKey('transfer-done'));
+    // await addDelay(1000);
+    // await driver.tap(find.byValueKey('panel-controller'));
+    // await driver.tap(find.byValueKey(account));
+    // await closePanel(driver);
+    await addDelay(1000);
+  });
 }
 
 Future<void> shareAccountAndCahngeNameTest(FlutterDriver driver, String account, String changedName) async {
