@@ -123,27 +123,24 @@ class _AddressInputFieldState extends State<AddressInputField> {
       builder: (_) {
         final Map? accInfo = widget.store.account.addressIndexMap[item.pubKey];
         final String address = Fmt.addressOfAccount(item, widget.store);
-        return InkWell(
-          key: Key(item.name),
-          child: Container(
-            margin: const EdgeInsets.symmetric(horizontal: 8),
-            decoration: !isSelected
-                ? null
-                : BoxDecoration(
-                    border: Border.all(color: Theme.of(context).primaryColor),
-                    borderRadius: BorderRadius.circular(5),
-                    color: Colors.white,
-                  ),
-            child: ListTile(
-              selected: isSelected,
-              dense: true,
-              title: Text(Fmt.address(address)!),
-              subtitle: Text(
-                item.name.isNotEmpty ? item.name : Fmt.accountDisplayNameString(item.address, accInfo)!,
-              ),
-              leading: CircleAvatar(
-                child: AddressIcon(item.address, item.pubKey),
-              ),
+        return Container(
+          margin: const EdgeInsets.symmetric(horizontal: 8),
+          decoration: !isSelected
+              ? null
+              : BoxDecoration(
+                  border: Border.all(color: Theme.of(context).primaryColor),
+                  borderRadius: BorderRadius.circular(5),
+                  color: Colors.white,
+                ),
+          child: ListTile(
+            selected: isSelected,
+            dense: true,
+            title: Text(Fmt.address(address)!),
+            subtitle: Text(
+              item.name.isNotEmpty ? item.name : Fmt.accountDisplayNameString(item.address, accInfo)!,
+            ),
+            leading: CircleAvatar(
+              child: AddressIcon(item.address, item.pubKey),
             ),
           ),
         );
