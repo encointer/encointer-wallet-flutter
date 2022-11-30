@@ -152,7 +152,6 @@ class _AddressInputFieldState extends State<AddressInputField> {
   Widget build(BuildContext context) {
     final Translations dic = I18n.of(context)!.translationsForLocale();
     return Container(
-      key: const Key('send-to-address'),
       decoration: BoxDecoration(
         color: ZurichLion.shade50,
         borderRadius: BorderRadius.circular(15),
@@ -163,7 +162,6 @@ class _AddressInputFieldState extends State<AddressInputField> {
           showSearchBox: true,
           showSelectedItems: true,
           itemBuilder: _listItemBuilder,
-          // modalBottomSheetProps: ModalBottomSheetProps()
         ),
         dropdownDecoratorProps: DropDownDecoratorProps(
           dropdownSearchDecoration: InputDecoration(
