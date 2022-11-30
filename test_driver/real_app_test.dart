@@ -167,9 +167,26 @@ void main() async {
     await addDelay(20000);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
+  test('Go to Profile Page and Check reputation count', () async {
+    await driver.tap(find.byValueKey('Profile'));
+    await driver.waitFor(find.text('2'));
+    await addDelay(1000);
+    await driver.tap(find.byValueKey('Wallet'));
+  });
+
   test('create newbie account', () async {
-    await createNewbieAccountAndSendMoney(driver, 'Eldi');
+    await createNewbieAccountAndSendMoney(driver, 'Tom');
   }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('account share and change name', () async {
+    await shareAccountAndCahngeNameTest(driver, 'Tom', 'Jerry');
+    await addDelay(2500);
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('delete all account ad show create account page', () async {
+    await rmAllAccounsFromProfilePage(driver);
+    await addDelay(2000);
+  });
 
   tearDownAll(() async {
     await driver.close();

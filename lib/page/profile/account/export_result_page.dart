@@ -74,6 +74,7 @@ class ExportResultPage extends StatelessWidget {
                     padding: const EdgeInsets.all(16),
                     child: Text(
                       args['key'] as String,
+                      key: const Key('account-mnemonic-key'),
                       style: Theme.of(context).textTheme.headline4,
                     ),
                   ),

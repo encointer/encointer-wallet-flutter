@@ -63,6 +63,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
               onPressed: () => Navigator.of(context).pop(),
             ),
             CupertinoButton(
+              key: const Key('delete-account'),
               child: Text(I18n.of(context)!.translationsForLocale().home.ok),
               onPressed: () => {
                 _appStore.account.removeAccount(accountToBeEdited).then(
@@ -170,6 +171,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
         appBar: AppBar(
           title: _isEditingText
               ? TextFormField(
+                  key: const Key('account-name-field'),
                   controller: _nameCtrl,
                   validator: (v) =>
                       InputValidation.validateAccountName(context, v!, _appStore.account.optionalAccounts),
@@ -178,9 +180,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
           actions: <Widget>[
             !_isEditingText
                 ? IconButton(
-                    icon: const Icon(
-                      Iconsax.edit,
-                    ),
+                    key: const Key('account-name-edit'),
+                    icon: const Icon(Iconsax.edit),
                     onPressed: () {
                       setState(() {
                         _isEditingText = true;
@@ -188,9 +189,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     },
                   )
                 : IconButton(
-                    icon: const Icon(
-                      Icons.check,
-                    ),
+                    key: const Key('account-name-edit-check'),
+                    icon: const Icon(Icons.check),
                     onPressed: () {
                       _appStore.account.updateAccountName(accountToBeEdited, _nameCtrl!.text.trim());
                       setState(() {
@@ -267,6 +267,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                   child: Row(
                     children: [
                       ElevatedButton(
+                        key: const Key('go-to-account-share'),
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.all(16), // make splash animation as high as the container
                           backgroundColor: Colors.transparent,
@@ -288,7 +289,11 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       Container(
                         child: PopupMenuButton<AccountAction>(
                             offset: const Offset(-10, -150),
-                            icon: const Icon(Iconsax.more, color: Colors.white),
+                            icon: const Icon(
+                              Iconsax.more,
+                              key: const Key('popup-menu-account-trash-export'),
+                              color: Colors.white,
+                            ),
                             color: ZurichLion.shade50,
                             padding: const EdgeInsets.all(20),
                             shape: RoundedRectangleBorder(
@@ -309,6 +314,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                                   AccountActionItemData(dic.profile.exportAccount, AccountAction.export),
                                 ]
                                     .map((AccountActionItemData data) => PopupMenuItem<AccountAction>(
+                                          key: Key(data.accountAction.name),
                                           value: data.accountAction,
                                           // https://github.com/flutter/flutter/issues/31247 as soon as we use a newer flutter version we might be able to add this to our theme.dart
                                           child: ListTileTheme(
