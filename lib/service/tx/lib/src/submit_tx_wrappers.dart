@@ -186,19 +186,21 @@ Future<void> _showEducationalDialog(ParticipantType registrationType, BuildConte
           textAlign: TextAlign.center,
         ),
         actions: <Widget>[
-          if (registrationType == ParticipantType.Newbie)
-            CupertinoButton(
-              child: Text(
-                dic.encointer.leuZurichFAQ,
-                textAlign: TextAlign.center,
-              ),
-              onPressed: () => UI.launchURL(leuZurichCycleAssignmentFAQLink(languageCode)),
-            ),
+          const SizedBox(),
           CupertinoButton(
             key: const Key('close-educate-dialog'),
             child: Text(dic.home.ok),
             onPressed: () => Navigator.of(context).pop(),
-          )
+          ),
+          registrationType == ParticipantType.Newbie
+              ? CupertinoButton(
+                  child: Text(
+                    dic.encointer.leuZurichFAQ,
+                    textAlign: TextAlign.center,
+                  ),
+                  onPressed: () => UI.launchURL(leuZurichCycleAssignmentFAQLink(languageCode)),
+                )
+              : const SizedBox(),
         ],
       );
     },
