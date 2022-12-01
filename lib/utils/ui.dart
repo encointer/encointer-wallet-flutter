@@ -42,7 +42,7 @@ class UI {
     }
   }
 
-  static Future checkJSCodeUpdate(
+  static Future<bool?> checkJSCodeUpdate(
     BuildContext context,
     int jsVersion,
     String network,
@@ -53,7 +53,7 @@ class UI {
     )!;
     if (jsVersion > currentVersion) {
       final dic = I18n.of(context)!.translationsForLocale();
-      final isOk = await showCupertinoDialog(
+      final isOk = await showCupertinoDialog<bool>(
         context: context,
         builder: (BuildContext context) {
           return CupertinoAlertDialog(

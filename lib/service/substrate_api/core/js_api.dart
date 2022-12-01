@@ -103,7 +103,7 @@ class JSApi {
       return res;
     }
 
-    final c = Completer();
+    final c = Completer<dynamic>();
 
     final method = 'uid=${_getEvalJavascriptUID()};${code.split('(')[0]}';
     _msgCompleters[method] = c;

@@ -62,9 +62,9 @@ class UpdateJSCodeApi {
     GetStorage jsStorage,
     String networkName,
   ) {
-    final version = jsStorage.read('$_jsCodeStorageVersionKey$networkName');
+    final version = jsStorage.read<String>('$_jsCodeStorageVersionKey$networkName');
     if (version != null) {
-      return int.parse(version as String);
+      return int.parse(version);
     }
     // default version
     return js_code_version_map[networkName];
@@ -74,8 +74,8 @@ class UpdateJSCodeApi {
     GetStorage jsStorage,
     String networkName,
   ) {
-    final jsCode = jsStorage.read('$_jsCodeStorageKey$networkName');
-    return jsCode as String?;
+    final jsCode = jsStorage.read<String?>('$_jsCodeStorageKey$networkName');
+    return jsCode;
   }
 
   static void setPolkadotJSCode(
