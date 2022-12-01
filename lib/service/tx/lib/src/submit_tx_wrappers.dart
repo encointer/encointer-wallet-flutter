@@ -1,13 +1,18 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/config/consts.dart';
+import 'package:encointer_wallet/utils/ui.dart';
+import 'package:flutter/cupertino.dart';
+
 import 'package:encointer_wallet/common/components/password_input_dialog.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
+import 'package:encointer_wallet/models/index.dart';
+import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/src/params.dart';
 import 'package:encointer_wallet/service/tx/lib/src/submit_to_js.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/cupertino.dart';
 
 /// Helpers to submit transactions.
 
@@ -118,7 +123,16 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
     store,
     api,
     registerParticipantParams(store.encointer.chosenCid!, proof: await api.encointer.getProofOfAttendance()),
-    onFinish: (BuildContext txPageContext, Map res) {
+    onFinish: (BuildContext txPageContext, Map res) async {
+      final data = await webApi.encointer.getAggregatedAccountData(
+        store.encointer.chosenCid!,
+        store.account.currentAddress,
+      );
+      Log.d('$data', 'AggregatedAccountData from register participant');
+      final registrationType = data.personal?.participantType;
+      if (registrationType != null) {
+        await _showEducationalDialog(registrationType, context);
+      }
       // Registering the participant burns the reputation.
       // Hence, we should fetch the new state afterwards.
       store.dataUpdate.setInvalidated();
@@ -153,6 +167,58 @@ Future<dynamic> submitReapVoucher(
   CommunityIdentifier cid,
 ) async {
   return api.js.evalJavascript('encointer.reapVoucher("$voucherUri","$recipientAddress", ${jsonEncode(cid)})');
+}
+
+Future<void> _showEducationalDialog(ParticipantType registrationType, BuildContext context) async {
+  final dic = I18n.of(context)!.translationsForLocale();
+  final texts = _getEducationalDialogTexts(registrationType, context);
+  final languageCode = Localizations.localeOf(context).languageCode;
+
+  return showCupertinoDialog<void>(
+    barrierDismissible: true,
+    context: context,
+    builder: (context) {
+      return CupertinoAlertDialog(
+        key: const Key('educate-dialog'),
+        title: Text('${texts['title']}'),
+        content: Text(
+          '${texts['content']}',
+          textAlign: TextAlign.center,
+        ),
+        actions: <Widget>[
+          const SizedBox(),
+          CupertinoButton(
+            key: const Key('close-educate-dialog'),
+            child: Text(dic.home.ok),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          registrationType == ParticipantType.Newbie
+              ? CupertinoButton(
+                  child: Text(
+                    dic.encointer.leuZurichFAQ,
+                    textAlign: TextAlign.center,
+                  ),
+                  onPressed: () => UI.launchURL(leuZurichCycleAssignmentFAQLink(languageCode)),
+                )
+              : const SizedBox(),
+        ],
+      );
+    },
+  );
+}
+
+Map<String, String> _getEducationalDialogTexts(ParticipantType type, BuildContext context) {
+  final dic = I18n.of(context)!.translationsForLocale().encointer;
+  switch (type) {
+    case ParticipantType.Newbie:
+      return {'title': dic.newbieTitle, 'content': dic.newbieContent};
+    case ParticipantType.Endorsee:
+      return {'title': dic.endorseeTitle, 'content': dic.endorseeContent};
+    case ParticipantType.Reputable:
+      return {'title': dic.reputableTitle, 'content': dic.reputableContent};
+    case ParticipantType.Bootstrapper:
+      return {'title': dic.bootstrapperTitle, 'content': dic.bootstrapperContent};
+  }
 }
 
 /// Calls `encointerScheduler.nextPhase()` with Alice.
