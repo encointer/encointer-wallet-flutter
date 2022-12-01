@@ -51,6 +51,15 @@ abstract class TranslationsEncointer {
   String get thankYou;
   String get weHopeToSeeYouAtTheNextGathering;
   String get goToLeuZurich;
+  String get leuZurichFAQ;
+  String get newbieTitle;
+  String get newbieContent;
+  String get endorseeTitle;
+  String get endorseeContent;
+  String get reputableTitle;
+  String get reputableContent;
+  String get bootstrapperTitle;
+  String get bootstrapperContent;
 }
 
 class TranslationsEnEncointer implements TranslationsEncointer {
@@ -155,6 +164,32 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   String get weHopeToSeeYouAtTheNextGathering => 'We hope to see you at the next gathering.';
   @override
   String get goToLeuZurich => 'Open leu.zuerich';
+  @override
+  String get leuZurichFAQ => 'leu.zuerich FAQ';
+  @override
+  String get bootstrapperContent =>
+      'If you have endorsement tickets left, please consider endorsing newbies to help the community grow.';
+  @override
+  String get bootstrapperTitle => 'Registered as bootstrapper - your seat is guaranteed.';
+  @override
+  String get endorseeContent =>
+      'You have been endorsed as a trustworthy community member. Hence, you are guaranteed to be assigned to a '
+      'gathering this cycle.';
+  @override
+  String get endorseeTitle => 'Registered as endorsee - your seat is guaranteed';
+  @override
+  String get newbieContent =>
+      'You registered as a newbie without previous reputation. We can\'t guarantee that you will be assigned to a '
+      'gathering this cycle if there are many newbies. Please check your assignment status on the day before the cycle '
+      'to learn if and where your gathering will take place.';
+  @override
+  String get newbieTitle => 'Registered as newbie - your seat is not definite';
+  @override
+  String get reputableContent =>
+      'You used your reputation to get a guaranteed seat. Caution: Should you register, but not show up at the cycle,'
+      ' you become a newbie again.';
+  @override
+  String get reputableTitle => 'Registered as reputable - your seat is guaranteed';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
@@ -262,6 +297,31 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   String get weHopeToSeeYouAtTheNextGathering => 'Wir hoffen dich an der nächsten Versammlung wiederzusehen.';
   @override
   String get goToLeuZurich => 'leu.zuerich öffnen';
+  @override
+  String get leuZurichFAQ => 'leu.zuerich FAQ';
+  @override
+  String get bootstrapperContent =>
+      'Wenn Du noch Endorsement-Tickets übrig hast, vergiss nicht Newbies zu als vertrauenswürdig zu bestätigen.';
+  @override
+  String get bootstrapperTitle => 'Als Bootstrapper registriert - Dein Platz ist garantiert.';
+  @override
+  String get endorseeContent =>
+      'Du wurdest von einem Bootstrapper als vertrauenswürdiges Mitglied bestätigt. Deswegen ist dein Sitz garantiert.';
+  @override
+  String get endorseeTitle => 'Als Endorsee registriert - Dein Platz is garantiert.';
+  @override
+  String get newbieContent =>
+      'Du hast dich als Newbie ohne bisherige Reputation registriert. Es ist nicht garantiert, dass du in diesem Cycle '
+      'zugewiesen wirst, falls es viele Newbies hat. Bitte überprüfe deinen Zuweisungsstatus am Tag vor dem Cycle, um zu'
+      ' erfahren, ob und wo deine Versammlung stattfinden wird.';
+  @override
+  String get newbieTitle => 'Als Newbie Registriert - Dein Platz ist noch nicht sicher.';
+  @override
+  String get reputableContent =>
+      'Du hast deine Reputation genutzt um einen garantierten Platz zu erhalten. Achtung: Solltest Du dich anmelden,'
+      ' aber nicht zur Versammlung erscheinen, wirst du wieder ein Newbie.';
+  @override
+  String get reputableTitle => 'Als Reputable registriert. Dein Platz ist garantiert';
 }
 
 class TranslationsFrEncointer implements TranslationsEncointer {
@@ -365,6 +425,24 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   String get weHopeToSeeYouAtTheNextGathering => throw UnimplementedError();
   @override
   String get goToLeuZurich => throw UnimplementedError();
+  @override
+  String get leuZurichFAQ => throw UnimplementedError();
+  @override
+  String get bootstrapperContent => throw UnimplementedError();
+  @override
+  String get bootstrapperTitle => throw UnimplementedError();
+  @override
+  String get endorseeContent => throw UnimplementedError();
+  @override
+  String get endorseeTitle => throw UnimplementedError();
+  @override
+  String get newbieContent => throw UnimplementedError();
+  @override
+  String get newbieTitle => throw UnimplementedError();
+  @override
+  String get reputableContent => throw UnimplementedError();
+  @override
+  String get reputableTitle => throw UnimplementedError();
 }
 
 class TranslationsRuEncointer implements TranslationsEncointer {
@@ -402,7 +480,7 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   String get communities => 'Общины';
   @override
   String get noCommunitiesAreYouOffline =>
-      'Общины не обнаружены. Позже вы можете выбрать одну из них. Вы в оффлайн режиме?.';
+      'Общины не обнаружены. Позже вы можете выбрать одну из них. Вы в оффлайн режиме?';
   @override
   String get meetupAttended => 'Присутствовал на последней встрече';
   @override
@@ -445,7 +523,7 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   String get youAreAssignedToAGatheringWithNParticipants => 'Вы записаны на встречу вместе с P_COUNT участниками.';
   @override
-  String get successfullySentNAttestations => 'Вы успешно отправили атесстации P_COUNT других людей.';
+  String get successfullySentNAttestations => 'Вы успешно отправили атестации P_COUNT других людей.';
   @override
   String get countParticipants => 'Считать';
   @override
@@ -470,4 +548,37 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   String get weHopeToSeeYouAtTheNextGathering => 'Мы надеемся увидить Вас на следующей встрече.';
   @override
   String get goToLeuZurich => 'Открыть leu.zuerich';
+  @override
+  String get leuZurichFAQ => 'Часто заваемые вопросы leu.zuerich';
+  @override
+  String get bootstrapperContent =>
+      'Рассмотрите возможность одобрения новичков, если у вас есть билеты на одобрение,это поможет общине расти.';
+
+  @override
+  String get bootstrapperTitle => 'Зарегистрирован в качестве бутсреппера - место гарантировано.';
+
+  @override
+  String get endorseeContent =>
+      'Вы былы одобрены, как заслуживающий доверия член общины. Следовательно, Вы гарантированно будете назначены '
+      'на этот цикл.';
+
+  @override
+  String get endorseeTitle => 'Зарегистрирован в качестве индоссанта - ваше место гарантировано';
+
+  @override
+  String get newbieContent =>
+      'Вы зарегистрировались в качестве новичка без репутации. Нет гарантии, что Вас назначат на '
+      'это собрание цикла, если в нем будет участвовать большое количество новичков. Пожалуйста, проверьте статус вашего назначения за день до цикла'
+      'чтобы узнать, состоится ли ваше собрание и где оно будет проходить.';
+
+  @override
+  String get newbieTitle => 'Зарегистрирован в качестве новичка - место не гарантировано.';
+
+  @override
+  String get reputableContent =>
+      'Вы воспользовались своей репутаций для получения гарантированного места. Внимание: Если вы зарегистрируетесь, но не явитесь на цикл,'
+      ' вы снова станете новичком.';
+
+  @override
+  String get reputableTitle => 'Зарегистрирован в качестве уважаемого - ваше место гарантировано.';
 }
