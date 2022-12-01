@@ -16,11 +16,15 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<!-- localization -->
 	<key>CFBundleLocalizations</key>
 	<array>
 		<string>en</string>
-		<string>zh_CN</string>
+		<string>de</string>
+		<string>fr</string>
+		<string>ru</string>		
 	</array>
+	<!-- localization -->
 	<key>CFBundleName</key>
 	<string>Encointerwallet</string>
 	<key>CFBundlePackageType</key>
