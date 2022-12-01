@@ -42,7 +42,7 @@ class _CeremonyRegisterButtonState extends State<CeremonyRegisterButton> {
     return PrimaryButton(
       child: !_submitting
           ? FittedBox(
-            child: Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Icon(Iconsax.login_1),
@@ -51,7 +51,7 @@ class _CeremonyRegisterButtonState extends State<CeremonyRegisterButton> {
                   MaybeDateTime(widget.registerUntil, dateFormat: DateFormat.yMd(languageCode).add_Hm())
                 ],
               ),
-          )
+            )
           : Theme(
               // change theme locally to dark such that the activity indicator appears bright
               data: ThemeData(cupertinoOverrideTheme: const CupertinoThemeData(brightness: Brightness.dark)),
