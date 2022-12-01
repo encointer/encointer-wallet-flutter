@@ -22,7 +22,7 @@ class CeremonySchedule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bool showCountDown = CeremonyBoxService.shouldShowCountdown(nextCeremonyDate);
+    final showCountDown = CeremonyBoxService.shouldShowCountdown(nextCeremonyDate);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -53,8 +53,8 @@ class CeremonyDateLabelAbsolute extends StatelessWidget {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
 
-    String nextCeremonyHourMinute = DateFormat.Hm(languageCode).format(nextCeremonyDate);
-    String nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate, dic, languageCode);
+    final nextCeremonyHourMinute = DateFormat.Hm(languageCode).format(nextCeremonyDate);
+    final nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate, dic, languageCode);
 
     return RichText(
       text: TextSpan(
@@ -85,7 +85,7 @@ class CeremonyDateLabelRelative extends StatelessWidget {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
 
-    String timeLeftUntilCeremonyStartsDaysHours =
+    final timeLeftUntilCeremonyStartsDaysHours =
         CeremonyBoxService.getTimeLeftUntilCeremonyStartsDaysHours(nextCeremonyDate);
 
     return RichText(
@@ -117,8 +117,8 @@ class CeremonyDate extends StatelessWidget {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     final h2BlackTheme = Theme.of(context).textTheme.headline2!.copyWith(color: encointerBlack);
-    String nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate!, dic, languageCode);
-    String nextCeremonyHourMinute = DateFormat.Hm(languageCode).format(nextCeremonyDate!);
+    final nextCeremonyYearMonthDay = CeremonyBoxService.formatYearMonthDay(nextCeremonyDate!, dic, languageCode);
+    final nextCeremonyHourMinute = DateFormat.Hm(languageCode).format(nextCeremonyDate!);
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,

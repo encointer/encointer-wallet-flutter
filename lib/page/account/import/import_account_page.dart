@@ -49,7 +49,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
     );
 
     /// import account
-    var acc = await webApi.account.importAccount(
+    final acc = await webApi.account.importAccount(
       keyType: _keyType,
       cryptoType: _cryptoType,
       derivePath: _derivePath,
@@ -92,11 +92,11 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
   }
 
   Future<void> _checkAccountDuplicate(Map<String, dynamic> acc) async {
-    int index = context.read<AppStore>().account.accountList.indexWhere((i) => i.pubKey == acc['pubKey']);
+    final index = context.read<AppStore>().account.accountList.indexWhere((i) => i.pubKey == acc['pubKey']);
     if (index > -1) {
-      Map<String, String> pubKeyMap =
+      final pubKeyMap =
           context.read<AppStore>().account.pubKeyAddressMap[context.read<AppStore>().settings.endpoint.ss58]!;
-      String? address = pubKeyMap[acc['pubKey']];
+      final address = pubKeyMap[acc['pubKey']];
       if (address != null) {
         showCupertinoDialog<void>(
           context: context,
@@ -134,10 +134,10 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
 
   Future<void> _saveAccount(Map<String, dynamic> acc) async {
     Log.d("Saving account: ${acc["pubKey"]}", 'ImportAccountPage');
-    var addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
+    final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
     await context.read<AppStore>().addAccount(acc, context.read<AppStore>().account.newAccount.password, addresses[0]);
 
-    String? pubKey = acc['pubKey'] as String?;
+    final pubKey = acc['pubKey'] as String?;
     await context.read<AppStore>().setCurrentAccount(pubKey);
 
     await context.read<AppStore>().loadAccountCache();

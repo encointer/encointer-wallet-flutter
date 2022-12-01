@@ -14,11 +14,11 @@ class AddressFormItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color grey = Theme.of(context).unselectedWidgetColor;
+    final grey = Theme.of(context).unselectedWidgetColor;
 
-    String address = Fmt.addressOfAccount(account, context.watch<AppStore>());
+    final address = Fmt.addressOfAccount(account, context.watch<AppStore>());
 
-    Column content = Column(
+    final content = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         label != null

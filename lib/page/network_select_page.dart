@@ -14,7 +14,6 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class NetworkSelectPage extends StatefulWidget {
   NetworkSelectPage({Key? key}) : super(key: key);
@@ -67,7 +66,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   }
 
   Future<void> _onSelect(AccountData i, String? address) async {
-    bool isCurrentNetwork = _selectedNetwork!.info == context.read<AppStore>().settings.endpoint.info;
+    final isCurrentNetwork = _selectedNetwork!.info == context.read<AppStore>().settings.endpoint.info;
     if (address != context.read<AppStore>().account.currentAddress || !isCurrentNetwork) {
       /// set current account
       context.read<AppStore>().setCurrentAccount(i.pubKey);
@@ -85,7 +84,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   }
 
   Future<void> _onCreateAccount() async {
-    bool isCurrentNetwork = _selectedNetwork!.info == context.read<AppStore>().settings.endpoint.info;
+    final isCurrentNetwork = _selectedNetwork!.info == context.read<AppStore>().settings.endpoint.info;
     if (!isCurrentNetwork) {
       await _reloadNetwork();
     }
@@ -113,8 +112,8 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
   }
 
   List<Widget> _buildAccountList() {
-    Color primaryColor = Theme.of(context).primaryColor;
-    List<Widget> res = [
+    final primaryColor = Theme.of(context).primaryColor;
+    final res = <Widget>[
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
@@ -140,7 +139,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
     ];
 
     /// first item is current account
-    List<AccountData> accounts = [context.read<AppStore>().account.currentAccount];
+    final accounts = <AccountData>[context.read<AppStore>().account.currentAccount];
 
     /// add optional accounts
     accounts.addAll(context.read<AppStore>().account.optionalAccounts);
@@ -150,17 +149,17 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       if (context.read<AppStore>().account.pubKeyAddressMap[_selectedNetwork!.ss58] != null) {
         address = context.read<AppStore>().account.pubKeyAddressMap[_selectedNetwork!.ss58]![i.pubKey];
       }
-      final bool isCurrentNetwork = _selectedNetwork!.info == context.read<AppStore>().settings.endpoint.info;
+      final isCurrentNetwork = _selectedNetwork!.info == context.read<AppStore>().settings.endpoint.info;
       final accInfo = context.read<AppStore>().account.accountIndexMap[i.address];
-      final String accIndex =
+      final accIndex =
           isCurrentNetwork && accInfo != null && accInfo['accountIndex'] != null ? '${accInfo['accountIndex']}\n' : '';
-      final double padding = accIndex.isEmpty ? 0 : 7;
+      final padding = accIndex.isEmpty ? 0 : 7;
       return RoundedCard(
         border: address == context.read<AppStore>().account.currentAddress
             ? Border.all(color: Theme.of(context).primaryColorLight)
             : Border.all(color: Theme.of(context).cardColor),
         margin: const EdgeInsets.only(bottom: 16),
-        padding: EdgeInsets.only(top: padding, bottom: padding),
+        padding: EdgeInsets.only(top: padding as double, bottom: padding as double),
         child: ListTile(
           leading: AddressIcon(address!, i.pubKey),
           title: Text(Fmt.accountName(context, i)),
@@ -185,7 +184,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         title: Text(dic.home.settingNetwork),
@@ -211,9 +210,9 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
                 ),
                 child: Column(
                   children: networks.map((i) {
-                    String? network = i.info;
-                    bool isCurrent = network == _selectedNetwork!.info;
-                    String img = 'assets/images/public/$network${isCurrent ? '' : '_gray'}.png';
+                    final network = i.info;
+                    final isCurrent = network == _selectedNetwork!.info;
+                    final img = 'assets/images/public/$network${isCurrent ? '' : '_gray'}.png';
                     return Container(
                       margin: const EdgeInsets.only(bottom: 8),
                       padding: const EdgeInsets.only(right: 8),

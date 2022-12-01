@@ -27,8 +27,8 @@ Future<void> main({AppcastConfiguration? appCast}) async {
     await InAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
 
-  var initializationSettingsAndroid = const AndroidInitializationSettings('app_icon');
-  var initializationSettingsIOS = IOSInitializationSettings(
+  final initializationSettingsAndroid = const AndroidInitializationSettings('app_icon');
+  final initializationSettingsIOS = IOSInitializationSettings(
       requestAlertPermission: false,
       requestBadgePermission: false,
       requestSoundPermission: false,
@@ -36,9 +36,9 @@ Future<void> main({AppcastConfiguration? appCast}) async {
         didReceiveLocalNotificationSubject
             .add(ReceivedNotification(id: id, title: title, body: body, payload: payload));
       });
-  var initializationSettings =
+  final initializationSettings =
       InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
-  var initialised = await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+  final initialised = await flutterLocalNotificationsPlugin.initialize(initializationSettings,
       onSelectNotification: (String? payload) async {
     if (payload != null) {
       Log.d('notification payload: $payload', 'main.dart');

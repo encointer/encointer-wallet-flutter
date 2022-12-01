@@ -14,7 +14,7 @@ class CeremonyStartButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     return PrimaryButton(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,

@@ -18,18 +18,18 @@ class AccountApi {
 
   Future<void> initAccounts() async {
     if (store.account.accountList.length > 0) {
-      String accounts = jsonEncode(store.account.accountList.map((i) => AccountData.toJson(i)).toList());
+      final accounts = jsonEncode(store.account.accountList.map((i) => AccountData.toJson(i)).toList());
 
-      String ss58 = jsonEncode(network_ss58_map.values.toSet().toList());
+      final ss58 = jsonEncode(network_ss58_map.values.toSet().toList());
       final keys = await jsApi.evalJavascript('account.initKeys($accounts, $ss58)');
       store.account.setPubKeyAddressMap(Map<String, Map>.from(keys as Map));
     }
 
     // and contacts icons
-    List<AccountData> contacts = List<AccountData>.of(store.settings.contactList);
+    final contacts = List<AccountData>.of(store.settings.contactList);
     // set pubKeyAddressMap for observation accounts
     contacts.retainWhere((i) => i.observation ?? false);
-    List<String?> observations = contacts.map((i) => i.pubKey).toList();
+    final observations = contacts.map((i) => i.pubKey).toList();
     if (observations.length > 0) {
       encodeAddress(observations);
     }
@@ -41,14 +41,14 @@ class AccountApi {
 
   /// Encodes publicKeys to SS58-addresses
   Future<List<String?>> encodeAddress(List<String?> pubKeys) async {
-    String ss58 = jsonEncode(network_ss58_map.values.toSet().toList());
+    final ss58 = jsonEncode(network_ss58_map.values.toSet().toList());
     final res = await jsApi.evalJavascript(
       'account.encodeAddress(${jsonEncode(pubKeys)}, $ss58)',
       allowRepeat: true,
     );
 
     store.account.setPubKeyAddressMap(Map<String, Map>.from(res as Map));
-    var addresses = <String?>[];
+    final addresses = <String?>[];
 
     for (var pubKey in pubKeys) {
       Log.d('New entry for pubKeyAddressMap: Key: $pubKey, address: ${res[store.settings]}', 'AccountApi');
@@ -96,7 +96,7 @@ class AccountApi {
     String? pubKey,
     bool fetchData = false,
   }) async {
-    String? current = pubKey;
+    var current = pubKey;
     if (pubKey == null) {
       if (store.account.accountListAll.length > 0) {
         current = store.account.accountListAll[0].pubKey;
@@ -115,7 +115,7 @@ class AccountApi {
   }
 
   Future<Map> estimateTxFees(Map txInfo, List? params, {String? rawParam}) async {
-    String param = rawParam ?? jsonEncode(params);
+    final param = rawParam ?? jsonEncode(params);
     Log.d('$txInfo', 'AccountApi');
     final res = await jsApi.evalJavascript('account.txFeeEstimate(${jsonEncode(txInfo)}, $param)', allowRepeat: true);
     return res as Map;
@@ -128,10 +128,10 @@ class AccountApi {
     String? notificationTitle, {
     String? rawParam,
   }) async {
-    Map res = await sendTx(txInfo, params, rawParam: rawParam) as Map;
+    final res = await sendTx(txInfo, params, rawParam: rawParam) as Map;
 
     if (res['hash'] != null) {
-      String hash = res['hash'] as String;
+      final hash = res['hash'] as String;
       NotificationPlugin.showNotification(
         int.parse(hash.substring(0, 6)),
         notificationTitle,
@@ -142,14 +142,14 @@ class AccountApi {
   }
 
   Future<dynamic> sendTx(Map? txInfo, List? params, {String? rawParam}) async {
-    String param = rawParam ?? jsonEncode(params);
-    String call = 'account.sendTx(${jsonEncode(txInfo)}, $param)';
+    final param = rawParam ?? jsonEncode(params);
+    final call = 'account.sendTx(${jsonEncode(txInfo)}, $param)';
     Log.d('sendTx call: $call', 'AccountApi');
     return jsApi.evalJavascript(call, allowRepeat: true);
   }
 
   Future<void> generateAccount() async {
-    Map<String, dynamic> acc = await jsApi.evalJavascript('account.gen()') as Map<String, dynamic>;
+    final acc = await jsApi.evalJavascript('account.gen()') as Map<String, dynamic>;
     store.account.setNewAccountKey(acc['mnemonic'] as String?);
   }
 
@@ -158,16 +158,16 @@ class AccountApi {
     String? cryptoType = 'sr25519',
     String? derivePath = '',
   }) async {
-    String? key = store.account.newAccount.key;
-    String pass = store.account.newAccount.password;
-    String code = 'account.recover("$keyType", "$cryptoType", \'$key$derivePath\', "$pass")';
+    final key = store.account.newAccount.key;
+    final pass = store.account.newAccount.password;
+    var code = 'account.recover("$keyType", "$cryptoType", \'$key$derivePath\', "$pass")';
     code = code.replaceAll(RegExp(r'\t|\n|\r'), '');
     final acc = await jsApi.evalJavascript(code, allowRepeat: true);
     return acc as Map<String, dynamic>;
   }
 
   Future<dynamic> checkAccountPassword(AccountData account, String pass) async {
-    String? pubKey = account.pubKey;
+    final pubKey = account.pubKey;
     Log.d('checkpass: $pubKey, $pass', 'AccountApi');
     return jsApi.evalJavascript(
       'account.checkPassword("$pubKey", "$pass")',

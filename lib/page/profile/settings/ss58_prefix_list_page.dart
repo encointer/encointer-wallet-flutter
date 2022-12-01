@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 const default_ss58_prefix = {
   'info': 'default',
@@ -26,8 +25,8 @@ class SS58PrefixListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
-    List<Widget> list = prefixList
+    final dic = I18n.of(context)!.translationsForLocale();
+    final list = prefixList
         .map((i) => ListTile(
               leading: SizedBox(
                 width: 36,

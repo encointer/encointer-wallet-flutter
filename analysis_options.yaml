@@ -9,11 +9,11 @@ linter:
     flutter_style_todos: false
     no_default_cases: false
 
-    invalid_assignment: false
-    omit_local_variable_types: false
-    prefer_final_locals: false
-    avoid_final_parameters: false
-    type_annotate_public_apis: false
+    invalid_assignment: true
+    omit_local_variable_types: true
+    prefer_final_locals: true
+    avoid_final_parameters: true
+    type_annotate_public_apis: true
 
     prefer_const_literals_to_create_immutables: false
     prefer_const_constructors_in_immutables: false
