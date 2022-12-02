@@ -40,15 +40,7 @@ Future<void> main({AppcastConfiguration? appCast}) async {
   final initializationSettings =
       InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
 
-  var initialised = await flutterLocalNotificationsPlugin.initialize(
-    initializationSettings,
-    //     onSelectNotification: (String? payload) async {
-    //   if (payload != null) {
-    //     Log.d('notification payload: $payload', 'main.dart');
-    //   }
-    //   selectNotificationSubject.add(payload);
-    // }
-  );
+  final initialised = await flutterLocalNotificationsPlugin.initialize(initializationSettings);
   Log.d('notification_plugin initialised: $initialised', 'main.dart');
 
   // get_storage dependency
