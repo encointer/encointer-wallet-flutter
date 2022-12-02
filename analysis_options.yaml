@@ -108,5 +108,4 @@ analyzer:
     - "**/*.freezed.dart"
     - "bin/cache/**"
     - "lib/generated_plugin_registrant.dart"
-    - test
     - assets/translations
