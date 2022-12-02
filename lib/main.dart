@@ -27,24 +27,28 @@ Future<void> main({AppcastConfiguration? appCast}) async {
     await InAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
 
-  var initializationSettingsAndroid = const AndroidInitializationSettings('app_icon');
-  var initializationSettingsIOS = IOSInitializationSettings(
-      requestAlertPermission: false,
-      requestBadgePermission: false,
-      requestSoundPermission: false,
-      onDidReceiveLocalNotification: (int id, String? title, String? body, String? payload) async {
-        didReceiveLocalNotificationSubject
-            .add(ReceivedNotification(id: id, title: title, body: body, payload: payload));
-      });
-  var initializationSettings =
+  const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
+  final initializationSettingsIOS = DarwinInitializationSettings(
+    requestAlertPermission: false,
+    requestBadgePermission: false,
+    requestSoundPermission: false,
+    onDidReceiveLocalNotification: (int id, String? title, String? body, String? payload) async {
+      didReceiveLocalNotificationSubject.add(ReceivedNotification(id: id, title: title, body: body, payload: payload));
+    },
+  );
+
+  final initializationSettings =
       InitializationSettings(android: initializationSettingsAndroid, iOS: initializationSettingsIOS);
-  var initialised = await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-      onSelectNotification: (String? payload) async {
-    if (payload != null) {
-      Log.d('notification payload: $payload', 'main.dart');
-    }
-    selectNotificationSubject.add(payload);
-  });
+
+  var initialised = await flutterLocalNotificationsPlugin.initialize(
+    initializationSettings,
+    //     onSelectNotification: (String? payload) async {
+    //   if (payload != null) {
+    //     Log.d('notification payload: $payload', 'main.dart');
+    //   }
+    //   selectNotificationSubject.add(payload);
+    // }
+  );
   Log.d('notification_plugin initialised: $initialised', 'main.dart');
 
   // get_storage dependency
