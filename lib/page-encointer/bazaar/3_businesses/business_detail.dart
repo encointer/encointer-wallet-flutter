@@ -90,9 +90,7 @@ class BusinessDetail extends StatelessWidget {
 }
 
 class SmallLeaflet extends StatelessWidget {
-  const SmallLeaflet({
-    Key? key,
-  }) : super(key: key);
+  const SmallLeaflet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -106,12 +104,12 @@ class SmallLeaflet extends StatelessWidget {
               zoom: 15.0,
               maxZoom: 18.4,
             ),
-            layers: [
-              TileLayerOptions(
+            children: [
+              TileLayer(
                 urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
                 subdomains: ['a', 'b', 'c'],
               ),
-              MarkerLayerOptions(
+              MarkerLayer(
                 markers: [
                   Marker(
                     width: 20.0,
@@ -132,10 +130,11 @@ class SmallLeaflet extends StatelessWidget {
           child: GestureDetector(
             onTap: () => {
               Navigator.push(
-                  context,
-                  MaterialPageRoute<void>(
-                    builder: (context) => BusinessesOnMap(),
-                  ))
+                context,
+                MaterialPageRoute<void>(
+                  builder: (context) => BusinessesOnMap(),
+                ),
+              )
             },
             child: const Icon(Icons.fullscreen, size: 40),
           ),

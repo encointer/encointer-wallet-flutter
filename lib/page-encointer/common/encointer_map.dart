@@ -1,12 +1,13 @@
-import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/models/location/location.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:latlong2/latlong.dart';
+
+import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/models/location/location.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 class EncointerMap extends StatelessWidget {
   EncointerMap(this.store, {Key? key, this.popupBuilder, this.markers, this.title, this.center, this.initialZoom = 0})
@@ -47,12 +48,10 @@ class EncointerMap extends StatelessWidget {
                 onTap: (_, __) => _popupLayerController.hideAllPopups(), // Hide popup when the map is tapped.
               ),
               children: [
-                TileLayerWidget(
-                  options: TileLayerOptions(
-                    backgroundColor: Colors.white,
-                    urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                    subdomains: ['a', 'b', 'c'],
-                  ),
+                TileLayer(
+                  backgroundColor: Colors.white,
+                  urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+                  subdomains: ['a', 'b', 'c'],
                 ),
                 PopupMarkerLayerWidget(
                   options: PopupMarkerLayerOptions(
