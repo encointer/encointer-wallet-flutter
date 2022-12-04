@@ -27,7 +27,7 @@ Future<void> main({AppcastConfiguration? appCast}) async {
     await InAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
 
-  const AndroidInitializationSettings initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
+  const initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
   final initializationSettingsIOS = DarwinInitializationSettings(
     requestAlertPermission: false,
     requestBadgePermission: false,
