@@ -56,8 +56,8 @@ class BazaarBusinessData extends BazaarItemData {
 
   @override
   String get info {
-    final Distance distance = const Distance();
-    final double distanceInMeters = distance(turbinenplatz, coordinates);
+    final distance = const Distance();
+    final distanceInMeters = distance(turbinenplatz, coordinates);
     return '${distanceInMeters.toStringAsFixed(0)}m';
   }
 
@@ -127,7 +127,7 @@ class OpeningHoursForDay {
   /// where 0 -> Mon, 1 -> Tue, ...
   @override
   String toString() {
-    String asString = '';
+    var asString = '';
     if (openingIntervals.length == 0) {
       asString += '(closed)';
     } else {
@@ -153,12 +153,12 @@ class OpeningInterval {
   OpeningInterval(this.start, this.end);
 
   static int _parseTime(String startEndTime, int part) {
-    var startEnd = startEndTime.split('-');
-    var time = startEnd[part].trim();
-    var minutes = int.parse(
+    final startEnd = startEndTime.split('-');
+    final time = startEnd[part].trim();
+    final minutes = int.parse(
       time.substring(time.length - 2),
     );
-    var hours = int.parse(
+    final hours = int.parse(
       time.substring(0, time.length - 3),
     );
     return (hours * 60 + minutes) % (24 * 60);

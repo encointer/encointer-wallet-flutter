@@ -72,7 +72,7 @@ class EncointerMap extends StatelessWidget {
 }
 
 Widget noCommunityDialog(BuildContext context) {
-  var translations = I18n.of(context)!.translationsForLocale();
+  final translations = I18n.of(context)!.translationsForLocale();
 
   return CupertinoAlertDialog(
     title: Container(),
@@ -94,7 +94,7 @@ Future<void> showOnEncointerMap(
   Location location, {
   double initialZoom = 14,
 }) {
-  var dic = I18n.of(context)!.translationsForLocale();
+  final dic = I18n.of(context)!.translationsForLocale();
 
   return Navigator.push(
     context,
@@ -114,7 +114,7 @@ Future<void> showOnEncointerMap(
 }
 
 List<Marker> buildMarkers(Location meetupLocation) {
-  List<Marker> markers = <Marker>[];
+  final markers = <Marker>[];
   markers.add(
     Marker(
       // marker is not a widget, hence test_driver cannot find it (it can find it in the Icon inside, though).

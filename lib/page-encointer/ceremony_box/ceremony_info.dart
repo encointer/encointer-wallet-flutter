@@ -29,10 +29,10 @@ class CeremonyInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String languageCode = Localizations.localeOf(context).languageCode;
-    var dic = I18n.of(context)!.translationsForLocale();
+    final languageCode = Localizations.localeOf(context).languageCode;
+    final dic = I18n.of(context)!.translationsForLocale();
 
-    final String infoLink = ceremonyInfoLink(languageCode);
+    final infoLink = ceremonyInfoLink(languageCode);
 
     return Container(
       child: meetupTime != null

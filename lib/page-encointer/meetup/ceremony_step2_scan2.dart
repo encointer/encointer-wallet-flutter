@@ -138,7 +138,7 @@ class CeremonyStep2Scan extends StatelessWidget {
 ///
 /// Only intended for development purposes.
 void attestAllParticipants(AppStore store, String claimantAddress) {
-  List<String> registry = store.encointer.communityAccount!.meetup!.registry;
+  final registry = store.encointer.communityAccount!.meetup!.registry;
 
   registry.removeWhere((a) => a == claimantAddress);
   registry.forEach((attendee) => store.encointer.communityAccount!.addAttendee(attendee));

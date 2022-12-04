@@ -117,9 +117,9 @@ class MockEncointerApi extends EncointerApi {
 
   @override
   Future<ClaimOfAttendance> signClaimOfAttendance(int participants, String password) async {
-    Meetup meetup = store.encointer.communityAccount!.meetup!;
+    final meetup = store.encointer.communityAccount!.meetup!;
 
-    var claim = ClaimOfAttendance(
+    final claim = ClaimOfAttendance(
       store.account.currentAccountPubKey,
       store.encointer.currentCeremonyIndex,
       store.encointer.chosenCid,

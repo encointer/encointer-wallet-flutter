@@ -102,7 +102,7 @@ class ImagePickerScaffold extends StatelessWidget {
   }
 
   Future<void> retrieveLostData(ImagePickerState imagePickerState) async {
-    final LostDataResponse response = await _picker.retrieveLostData();
+    final response = await _picker.retrieveLostData();
     if (response.isEmpty) {
       return;
     }

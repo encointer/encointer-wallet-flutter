@@ -13,7 +13,6 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class CreateAccountForm extends StatelessWidget {
   CreateAccountForm({
@@ -29,12 +28,12 @@ class CreateAccountForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
 
     Future<void> _createAndImportAccount() async {
       await webApi.account.generateAccount();
 
-      var acc = await webApi.account.importAccount(
+      final acc = await webApi.account.importAccount(
         cryptoType: AccountAdvanceOptionParams.encryptTypeSR,
         derivePath: '',
       );
@@ -44,10 +43,10 @@ class CreateAccountForm extends StatelessWidget {
         return;
       }
 
-      var addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
+      final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
       await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
 
-      String? pubKey = acc['pubKey'] as String?;
+      final pubKey = acc['pubKey'] as String?;
       store.setCurrentAccount(pubKey);
 
       await store.loadAccountCache();

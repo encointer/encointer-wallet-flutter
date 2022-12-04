@@ -21,13 +21,13 @@ class CommunityIdentifier {
   }
 
   static CommunityIdentifier fromFmtString(String cid) {
-    Base58Codec codec = const Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
+    final codec = const Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
 
     return CommunityIdentifier(utf8.encode(cid.substring(0, 5)), codec.decode(cid.substring(5)));
   }
 
   String toFmtString() {
-    Base58Codec codec = const Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
+    final codec = const Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
 
     return utf8.decode(geohash) + codec.encode(digest);
   }

@@ -13,7 +13,6 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/udpate_js_code_api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class UI {
   static void copyAndNotify(BuildContext context, String? text) {
@@ -22,7 +21,7 @@ class UI {
     showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        final Translations dic = I18n.of(context)!.translationsForLocale();
+        final dic = I18n.of(context)!.translationsForLocale();
         return CupertinoAlertDialog(
           title: Container(),
           content: Text('${dic.assets.copy} ${dic.assets.success}'),
@@ -53,8 +52,8 @@ class UI {
       network,
     )!;
     if (jsVersion > currentVersion) {
-      final Translations dic = I18n.of(context)!.translationsForLocale();
-      final bool? isOk = await showCupertinoDialog(
+      final dic = I18n.of(context)!.translationsForLocale();
+      final isOk = await showCupertinoDialog<bool>(
         context: context,
         builder: (BuildContext context) {
           return CupertinoAlertDialog(
@@ -89,7 +88,7 @@ class UI {
     String network,
     int version,
   ) async {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -146,7 +145,7 @@ class UI {
   }
 
   static bool checkBalanceAndAlert(BuildContext context, AppStore store, BigInt amountNeeded) {
-    String? symbol = store.settings.networkState!.tokenSymbol;
+    final symbol = store.settings.networkState!.tokenSymbol;
     if (store.assets.balances[symbol]!.transferable <= amountNeeded) {
       showCupertinoDialog<void>(
         context: context,
