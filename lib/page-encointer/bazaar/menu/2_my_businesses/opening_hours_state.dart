@@ -56,7 +56,7 @@ abstract class _OpeningHoursState with Store {
 
   @action
   void pasteOpeningHoursTo(int day) {
-    var target = getOpeningHoursFor(day);
+    final target = getOpeningHoursFor(day);
     if (copiedOpeningHours == null) return;
 
     copiedOpeningHours!.openingIntervals.forEach(
@@ -113,8 +113,7 @@ abstract class _OpeningHoursForDayState with Store {
   @action
   void addParsedIntervalIfValid(String startEnd) {
     try {
-      OpeningIntervalState openingIntervalState =
-          _OpeningIntervalState.parseOpeningIntervalState(startEnd) as OpeningIntervalState;
+      final openingIntervalState = _OpeningIntervalState.parseOpeningIntervalState(startEnd) as OpeningIntervalState;
       timeFormatError = null;
       openingIntervals.add(openingIntervalState);
     } catch (e) {
@@ -137,7 +136,7 @@ abstract class _OpeningHoursForDayState with Store {
   /// not not be wise, as it will not be called, but instead the toString of the
   /// actually used class with a similar name will be called.)
   String humanReadable() {
-    String asString = '';
+    var asString = '';
     if (openingIntervals.length == 0) {
       asString += '(closed)';
     } else {
@@ -168,8 +167,8 @@ abstract class _OpeningIntervalState with Store {
   _OpeningIntervalState(this.start, this.end);
 
   static int _parseTimeInterval(String startEndTime, int part) {
-    var startEnd = startEndTime.split('-');
-    List<int> parsed = [];
+    final startEnd = startEndTime.split('-');
+    final parsed = <int>[];
     for (var value in startEnd) {
       parsed.add(_parseTime(value.trim()));
     }
@@ -177,16 +176,16 @@ abstract class _OpeningIntervalState with Store {
   }
 
   static int _parseTime(String time) {
-    var timeLowerCase = time.toLowerCase();
-    var pm = timeLowerCase.contains('p') ? 12 * 60 : 0;
-    var indexOfMeridiem = timeLowerCase.indexOf(RegExp(r'a|p'));
-    var timeClean = indexOfMeridiem > 0 ? timeLowerCase.substring(0, indexOfMeridiem) : timeLowerCase;
-    var hoursMinutes = timeClean.split(':');
+    final timeLowerCase = time.toLowerCase();
+    final pm = timeLowerCase.contains('p') ? 12 * 60 : 0;
+    final indexOfMeridiem = timeLowerCase.indexOf(RegExp(r'a|p'));
+    final timeClean = indexOfMeridiem > 0 ? timeLowerCase.substring(0, indexOfMeridiem) : timeLowerCase;
+    final hoursMinutes = timeClean.split(':');
     var hours = int.parse(hoursMinutes[0].trim());
 
     // 12am is midnight, 12pm is noon.
     hours = (hours == 12 && timeLowerCase.contains('m') ? 0 : hours);
-    var minutes = hoursMinutes.length > 1 ? int.parse(hoursMinutes[1].trim()) : 0;
+    final minutes = hoursMinutes.length > 1 ? int.parse(hoursMinutes[1].trim()) : 0;
     return (hours * 60 + minutes + pm) % (24 * 60);
   }
 

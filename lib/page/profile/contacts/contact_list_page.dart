@@ -15,7 +15,7 @@ class ContactListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final List<AccountData>? args = ModalRoute.of(context)!.settings.arguments as List<AccountData>?;
+    final args = ModalRoute.of(context)!.settings.arguments as List<AccountData>?;
     final _store = context.watch<AppStore>();
     return Scaffold(
       appBar: AppBar(

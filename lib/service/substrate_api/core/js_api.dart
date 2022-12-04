@@ -37,18 +37,18 @@ class JSApi {
             callback: (args) {
               Log.d('[JavaScripHandler/callback]: $args', 'JSApi');
 
-              var res = args[0];
+              final res = args[0];
 
-              final String? path = res['path'] as String?;
+              final path = res['path'] as String?;
               if (_msgCompleters[path!] != null) {
-                Completer handler = _msgCompleters[path]!;
+                final handler = _msgCompleters[path]!;
                 handler.complete(res['data']);
                 if (path.contains('uid=')) {
                   _msgCompleters.remove(path);
                 }
               }
               if (_msgHandlers[path] != null) {
-                Function handler = _msgHandlers[path]!;
+                final handler = _msgHandlers[path]!;
                 handler(res['data']);
               }
             });
@@ -89,8 +89,8 @@ class JSApi {
   }) async {
     // check if there's a same request loading
     if (!allowRepeat) {
-      for (String i in _msgCompleters.keys) {
-        String call = code.split('(')[0];
+      for (var i in _msgCompleters.keys) {
+        final call = code.split('(')[0];
         if (i.compareTo(call) == 0) {
           Log.d('request $call loading', 'JSApi');
           return _msgCompleters[i]!.future;
@@ -103,13 +103,13 @@ class JSApi {
       return res;
     }
 
-    Completer c = Completer();
+    final c = Completer<dynamic>();
 
-    String method = 'uid=${_getEvalJavascriptUID()};${code.split('(')[0]}';
+    final method = 'uid=${_getEvalJavascriptUID()};${code.split('(')[0]}';
     _msgCompleters[method] = c;
 
     // Send the result from JS to dart after `code` completed.
-    String script = '''
+    final script = '''
         $code.then(function(res) {
           window.flutter_inappwebview
             .callHandler("$EncointerJsService", { path: "$method", data: res });

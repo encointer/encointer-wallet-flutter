@@ -6,7 +6,6 @@ import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/busi
 import 'package:encointer_wallet/page-encointer/bazaar/shared/bazaar_item_horizontal.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class BusinessDetail extends StatelessWidget {
   BusinessDetail(this.business, {Key? key}) : super(key: key);
@@ -16,7 +15,7 @@ class BusinessDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         title: Row(

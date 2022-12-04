@@ -31,7 +31,7 @@ Future<void> callbackDispatcher() async {
     // todo: Fix #788. This it removes all the alreadyShownNotifications even if it should not.
     // _alreadyShownNotifications.removeWhere((id) => !feedMap.containsKey(id));
 
-    var shownNotifications = await showAllNotificationsFromFeed(
+    final shownNotifications = await showAllNotificationsFromFeed(
       _feeds,
       _alreadyShownNotifications,
       NotificationPlugin.showNotification,
@@ -53,9 +53,9 @@ Future<List<String>> showAllNotificationsFromFeed(
   List<String> alreadyShownNotifications,
   Future<bool> Function(int id, String title, String body) showNotification,
 ) async {
-  var shownNotifications = <String>[];
+  final shownNotifications = <String>[];
 
-  for (int i = 0; i < feeds.length; i++) {
+  for (var i = 0; i < feeds.length; i++) {
     if (!(alreadyShownNotifications.contains(feeds[i].id))) {
       if (feeds[i].showAt.isBefore(DateTime.now())) {
         shownNotifications.add(feeds[i].id);

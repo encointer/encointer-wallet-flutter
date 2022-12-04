@@ -13,7 +13,6 @@ import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class ChangePasswordPage extends StatefulWidget {
   ChangePasswordPage({Key? key}) : super(key: key);
@@ -39,9 +38,9 @@ class _ChangePassword extends State<ChangePasswordPage> {
         _submitting = true;
       });
 
-      final Translations dic = I18n.of(context)!.translationsForLocale();
-      final String passOld = _passOldCtrl.text.trim();
-      final String passNew = _passCtrl.text.trim();
+      final dic = I18n.of(context)!.translationsForLocale();
+      final passOld = _passOldCtrl.text.trim();
+      final passNew = _passCtrl.text.trim();
       // check password
       final passChecked = await webApi.account.checkAccountPassword(
         store.account.currentAccount,
@@ -78,7 +77,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
           // update encrypted seed after password updated
           store.account.accountListAll.map((accountData) {
             // use local name, not webApi returned name
-            Map<String, dynamic> localAcc = AccountData.toJson(accountData);
+            final localAcc = AccountData.toJson(accountData);
             // make metadata the same as the polkadot-js/api's
             acc['meta']['name'] = localAcc['name'];
             store.account.updateAccount(acc as Map<String, dynamic>);
@@ -108,7 +107,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         title: Text(dic.profile.changeYourPin),

@@ -32,10 +32,10 @@ class CeremonyBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
 
     return Observer(builder: (BuildContext context) {
-      int? meetupTime = store.encointer.community?.meetupTimeOverride ??
+      final meetupTime = store.encointer.community?.meetupTimeOverride ??
           store.encointer.community?.meetupTime ??
           store.encointer.attestingPhaseStart;
 
@@ -43,7 +43,7 @@ class CeremonyBox extends StatelessWidget {
       // we want to do too much again. So I hardcode the assigning phase duration to 30 minutes
       // if we have meetup time overrides. Before we do something more complex here, I want to
       // think some more, of what we want to do with the feed in the future.
-      int? assigningPhaseStart = store.encointer.community?.meetupTimeOverride != null
+      final assigningPhaseStart = store.encointer.community?.meetupTimeOverride != null
           ? store.encointer.community!.meetupTimeOverride! - const Duration(minutes: 30).inMilliseconds
           : store.encointer.assigningPhaseStart;
 
@@ -152,8 +152,8 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
       }
     case CeremonyPhase.Assigning:
       if (store.encointer.communityAccount?.isAssigned ?? false) {
-        var meetup = store.encointer.communityAccount!.meetup!;
-        var location = store.encointer.community!.meetupLocations![meetup.locationIndex];
+        final meetup = store.encointer.communityAccount!.meetup!;
+        final location = store.encointer.community!.meetupLocations![meetup.locationIndex];
         return MeetupInfo(
           meetup,
           location,
@@ -179,8 +179,8 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
                 .replaceAll('P_COUNT', store.encointer.communityAccount!.scannedAttendeesCount.toString()),
           );
         } else {
-          var meetup = store.encointer.communityAccount!.meetup!;
-          var location = store.encointer.community!.meetupLocations![meetup.locationIndex];
+          final meetup = store.encointer.communityAccount!.meetup!;
+          final location = store.encointer.community!.meetupLocations![meetup.locationIndex];
           return MeetupInfo(
             meetup,
             location,

@@ -16,28 +16,28 @@ class Ipfs {
     try {
       final dio = IpfsDio(BaseOptions(baseUrl: gateway));
       final response = await dio.get<dynamic>(cid);
-      var object = Object.fromJson(response.data as Map<String, dynamic>);
+      final object = Object.fromJson(response.data as Map<String, dynamic>);
 
       // TODO: Better solution available to remove preceding and trailing characters of json?
       // loop through data string until actual json file begins
-      int indexJsonBegin = 0;
-      for (int i = 0; i < object.data.length; i++) {
-        String currentCharacter = object.data[i];
+      var indexJsonBegin = 0;
+      for (var i = 0; i < object.data.length; i++) {
+        final currentCharacter = object.data[i];
         if (currentCharacter.compareTo('{') == 0) {
           indexJsonBegin = i;
           break;
         }
       }
       // loop through data string until actual json file ends, beginning at end of string
-      int indexJsonEnd = 0;
-      for (int i = object.data.length - 1; i >= indexJsonBegin; i--) {
-        String currentCharacter = object.data[i];
+      var indexJsonEnd = 0;
+      for (var i = object.data.length - 1; i >= indexJsonBegin; i--) {
+        final currentCharacter = object.data[i];
         if (currentCharacter.compareTo('}') == 0) {
           indexJsonEnd = i;
           break;
         }
       }
-      var objectData = object.data.substring(indexJsonBegin, indexJsonEnd + 1);
+      final objectData = object.data.substring(indexJsonBegin, indexJsonEnd + 1);
       return objectData;
     } catch (e, s) {
       Log.e('$e', 'Ipfs', s);
@@ -70,7 +70,7 @@ class Ipfs {
 
     try {
       final response = await dio.get<dynamic>(src);
-      var object = Object.fromJson(response.data as Map<String, dynamic>);
+      final object = Object.fromJson(response.data as Map<String, dynamic>);
       return object.data;
     } catch (e, s) {
       // otherwise we would have to adjust the return type.
@@ -85,18 +85,18 @@ class Ipfs {
 
   Future<String> uploadImage(File image) async {
     try {
-      Dio _dio = Dio();
+      final _dio = Dio();
       _dio.options.baseUrl = gateway;
       _dio.options.connectTimeout = 5000; //5s
       _dio.options.receiveTimeout = 3000;
 
       final response = await _dio.post<dynamic>('/ipfs/', data: image.openRead());
-      String imageHash = response.headers.map['ipfs-hash'].toString(); // [ipfs_hash]
+      var imageHash = response.headers.map['ipfs-hash'].toString(); // [ipfs_hash]
 
       // TODO: Nicer solution
       // remove surrounding []
-      int imageHashBegin = 0;
-      int imageHashEnd = imageHash.length - 1;
+      var imageHashBegin = 0;
+      var imageHashEnd = imageHash.length - 1;
       if (imageHash[imageHashBegin].compareTo('[') == 0) imageHashBegin++;
       if (imageHash[imageHashEnd].compareTo(']') == 0) imageHashEnd--;
       imageHash = imageHash.substring(imageHashBegin, imageHashEnd + 1);
@@ -110,18 +110,18 @@ class Ipfs {
 
   Future<String> uploadJson(Map<String, dynamic> json) async {
     try {
-      Dio _dio = Dio();
+      final _dio = Dio();
       _dio.options.baseUrl = gateway;
       _dio.options.connectTimeout = 5000; //5s
       _dio.options.receiveTimeout = 3000;
 
       final response = await _dio.post<dynamic>('/ipfs/', data: json);
-      String jsonHash = response.headers.map['ipfs-hash'].toString(); // [ipfs_hash]
+      var jsonHash = response.headers.map['ipfs-hash'].toString(); // [ipfs_hash]
 
       // TODO: Nicer solution
       // remove surrounding []
-      int jsonHashBegin = 0;
-      int jsonHashEnd = jsonHash.length - 1;
+      var jsonHashBegin = 0;
+      var jsonHashEnd = jsonHash.length - 1;
       if (jsonHash[jsonHashBegin].compareTo('[') == 0) jsonHashBegin++;
       if (jsonHash[jsonHashEnd].compareTo(']') == 0) jsonHashEnd--;
       jsonHash = jsonHash.substring(jsonHashBegin, jsonHashEnd + 1);

@@ -14,7 +14,7 @@ class CeremonyLocationButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(vertical: 16),

@@ -5,7 +5,6 @@ import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/page-encointer/common/encointer_map.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -27,7 +26,7 @@ class CommunityChooserOnMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
 
     return EncointerMap(
       store,
@@ -104,10 +103,10 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
 }
 
 List<Marker> getMarkers(AppStore store) {
-  List<Marker> markers = [];
+  final markers = <Marker>[];
   if (store.encointer.communities != null) {
     for (num index = 0; index < store.encointer.communities!.length; index++) {
-      CidName community = store.encointer.communities![index as int];
+      final community = store.encointer.communities![index as int];
       markers.add(
         Marker(
           // marker is not a widget, hence test_driver cannot find it (it can find it in the Icon inside, though).
@@ -132,6 +131,6 @@ List<Marker> getMarkers(AppStore store) {
 }
 
 LatLng coordinatesOf(CidName community) {
-  GeoHash coordinates = GeoHash(utf8.decode(community.cid.geohash));
+  final coordinates = GeoHash(utf8.decode(community.cid.geohash));
   return LatLng(coordinates.latitude(), coordinates.longitude());
 }
