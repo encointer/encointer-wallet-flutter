@@ -8,12 +8,17 @@ linter:
     sort_pub_dependencies: false
     flutter_style_todos: false
     no_default_cases: false
+    use_named_constants: false
+    avoid_positional_boolean_parameters: false
+    comment_references: false
 
     invalid_assignment: true
     omit_local_variable_types: true
     prefer_final_locals: true
     avoid_final_parameters: true
     type_annotate_public_apis: true
+    always_declare_return_types: true
+    prefer_asserts_with_message: true
 
     prefer_const_literals_to_create_immutables: false
     prefer_const_constructors_in_immutables: false
@@ -21,31 +26,37 @@ linter:
     unnecessary_const: false
     constant_identifier_names: false
 
-    prefer_if_elements_to_conditional_expressions: false
-    require_trailing_commas: false
     sort_child_properties_last: false
-    cascade_invocations: false
-    use_decorated_box: false
     sort_constructors_first: false
+    prefer_constructors_over_static_methods: false
+    sort_unnamed_constructors_first: false
+
+    use_decorated_box: false
+    sized_box_shrink_expand: false
+    use_colored_box: false
+
+    prefer_if_elements_to_conditional_expressions: false
+    prefer_is_empty: false
+
+    require_trailing_commas: false
+
+    cascade_invocations: false
+
     unnecessary_lambdas: false
-    use_named_constants: false
-    always_declare_return_types: false
+
     unawaited_futures: false
+
     avoid_dynamic_calls: false
     use_build_context_synchronously: false
     prefer_int_literals: false
-    comment_references: false
     avoid_redundant_argument_values: false
     cast_nullable_to_non_nullable: false
-    prefer_asserts_with_message: false
     only_throw_errors: false
     prefer_final_in_for_each: false
     unnecessary_null_checks: false
     overridden_fields: false
-    prefer_constructors_over_static_methods: false
     no_leading_underscores_for_local_identifiers: false
     avoid_print: false
-    avoid_positional_boolean_parameters: false
     avoid_function_literals_in_foreach_calls: false
     avoid_renaming_method_parameters: false
     void_checks: false
@@ -55,10 +66,7 @@ linter:
     noop_primitive_operations: false
     depend_on_referenced_packages: false
     unnecessary_parenthesis: false
-    prefer_is_empty: false
     avoid_unnecessary_containers: false
-    sized_box_shrink_expand: false
-    sort_unnamed_constructors_first: false
     avoid_equals_and_hash_code_on_mutable_classes: false
     prefer_typing_uninitialized_variables: false
     use_string_buffers: false
@@ -72,7 +80,6 @@ linter:
     use_setters_to_change_properties: false
     avoid_single_cascade_in_expression_statements: false
     avoid_void_async: false
-    use_colored_box: false
     prefer_conditional_assignment: false
     one_member_abstracts: false
     prefer_null_aware_method_calls: false
