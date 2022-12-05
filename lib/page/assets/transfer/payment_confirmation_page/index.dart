@@ -111,7 +111,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                 ),
                 !_transferState.isFinishedOrFailed()
                     ? PrimaryButton(
-                        key: const Key('make-transfer'),
+                        key: const Key('make-transfer-send'),
                         child: SizedBox(
                           height: 24,
                           child: !_transferState.isSubmitting()

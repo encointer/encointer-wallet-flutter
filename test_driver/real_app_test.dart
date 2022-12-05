@@ -2,6 +2,7 @@ import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
 import 'helpers/add_delay.dart';
+import 'helpers/other_test.dart';
 import 'helpers/real_app_helper.dart';
 
 void main() async {
@@ -51,32 +52,6 @@ void main() async {
     await driver.tap(find.byValueKey('qr-receive'));
     await addDelay(1000);
     await driver.tap(find.byValueKey('close-receive-page'));
-    await addDelay(1000);
-  });
-
-  test('transfer-page', () async {
-    await driver.tap(find.byValueKey('transfer'));
-    await driver.tap(find.byValueKey('transfer-amount-input'));
-
-    await driver.enterText('3.4');
-    await addDelay(1000);
-    await driver.tap(find.byValueKey('close-transfer-page'));
-    await addDelay(1000);
-  });
-
-  test('contact-page', () async {
-    await driver.tap(find.byValueKey('Contacts'));
-    await driver.tap(find.byValueKey('add-contact'));
-
-    await driver.tap(find.byValueKey('contact-address'));
-    await driver.enterText('5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW');
-    await driver.tap(find.byValueKey('contact-name'));
-    await driver.enterText('Eldiar');
-
-    await driver.tap(find.byValueKey('contact-save'));
-    await addDelay(1000);
-
-    await driver.tap(find.byValueKey('Wallet'));
     await addDelay(1000);
   });
 
@@ -175,6 +150,59 @@ void main() async {
     await driver.tap(find.byValueKey('claim-pending-dev'));
     await addDelay(20000);
   }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('Go to Profile Page and Check reputation count', () async {
+    await driver.tap(find.byValueKey('Profile'));
+    await driver.waitFor(find.text('2'));
+    await addDelay(1000);
+    await scrollToNextPhaseButton(driver);
+    await tapAndWaitNextPhase(driver);
+    await driver.tap(find.byValueKey('Wallet'));
+  });
+
+  test('contact-page add account', () async {
+    await driver.tap(find.byValueKey('Contacts'));
+    await driver.tap(find.byValueKey('add-contact'));
+
+    await driver.tap(find.byValueKey('contact-address'));
+    await driver.enterText('5Gjvca5pwQXENZeLz3LPWsbBXRCKGeALNj1ho13EFmK1FMWW');
+    await driver.tap(find.byValueKey('contact-name'));
+    await driver.enterText('Sezar');
+
+    await driver.tap(find.byValueKey('contact-save'));
+    await addDelay(1000);
+  });
+
+  test('send endorse to account', () async {
+    await driver.waitFor(find.byValueKey('Sezar'));
+    await driver.tap(find.byValueKey('Sezar'));
+
+    await driver.waitFor(find.byValueKey('tap-endorse-button'));
+    await driver.tap(find.byValueKey('tap-endorse-button'));
+    await addDelay(1000);
+  });
+
+  test('send money to account', () async {
+    await driver.waitFor(find.byValueKey('send-money-to-account'));
+    await driver.tap(find.byValueKey('send-money-to-account'));
+
+    await sendMoneyToAccount(driver);
+    await driver.tap(find.byValueKey('Wallet'));
+  });
+
+  test('create newbie account', () async {
+    await createNewbieAccountAndSendMoney(driver, 'Tom');
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('account share and change name', () async {
+    await shareAccountAndChangeNameTest(driver, 'Tom', 'Jerry');
+    await addDelay(2500);
+  }, timeout: const Timeout(Duration(seconds: 120)));
+
+  test('delete all account ad show create account page', () async {
+    await rmAllAccountsFromProfilePage(driver);
+    await addDelay(2000);
+  });
 
   tearDownAll(() async {
     await driver.close();
