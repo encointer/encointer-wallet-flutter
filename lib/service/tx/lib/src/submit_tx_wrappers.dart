@@ -29,7 +29,7 @@ Future<void> submitTx(
   dynamic Function(BuildContext txPageContext, Map res)? onFinish,
 }) async {
   if (store.settings.cachedPin.isEmpty) {
-    var unlockText = I18n.of(context)!.translationsForLocale().home.unlockAccount;
+    final unlockText = I18n.of(context)!.translationsForLocale().home.unlockAccount;
     await showCupertinoDialog<void>(
       context: context,
       builder: (context) {
@@ -67,7 +67,7 @@ Future<void> submitClaimRewards(
   Api api,
   CommunityIdentifier chosenCid,
 ) async {
-  var txParams = claimRewardsParams(chosenCid);
+  final txParams = claimRewardsParams(chosenCid);
 
   return submitTx(
     context,
@@ -90,7 +90,7 @@ Future<void> submitEndorseNewcomer(
   CommunityIdentifier? chosenCid,
   String? newbie,
 ) async {
-  var txParams = endorseNewcomerParams(chosenCid!, newbie!);
+  final txParams = endorseNewcomerParams(chosenCid!, newbie!);
 
   return submitTx(
     context,
@@ -104,7 +104,7 @@ Future<void> submitEndorseNewcomer(
 Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api api) async {
   // this is called inside submitTx too, but we need to unlock the key for the proof of attendance.
   if (store.settings.cachedPin.isEmpty) {
-    var unlockText = I18n.of(context)!.translationsForLocale().home.unlockAccount;
+    final unlockText = I18n.of(context)!.translationsForLocale().home.unlockAccount;
     await showCupertinoDialog<void>(
       context: context,
       builder: (context) {

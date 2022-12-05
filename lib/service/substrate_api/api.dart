@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:encointer_wallet/config/node.dart';
 import 'package:encointer_wallet/service/ipfs/http_api.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/subscan.dart';
@@ -93,7 +92,7 @@ class Api {
   Future<void> launchWebview({
     bool customNode = false,
   }) async {
-    var connectFunc = customNode ? connectNode : connectNodeAll;
+    final connectFunc = customNode ? connectNode : connectNodeAll;
 
     Future<void> postInitCallback() async {
       // load keyPairs from local data
@@ -126,8 +125,8 @@ class Api {
   }
 
   Future<void> connectNode() async {
-    String? node = store.settings.endpoint.value;
-    NodeConfig? config = store.settings.endpoint.overrideConfig;
+    final node = store.settings.endpoint.value;
+    final config = store.settings.endpoint.overrideConfig;
     // do connect
     final res = await evalJavascript('settings.connect("$node", "${jsonEncode(config)}")');
     if (res == null) {
@@ -137,8 +136,8 @@ class Api {
     }
 
     if (store.settings.endpointIsTeeProxy) {
-      var worker = store.settings.endpoint.worker;
-      var mrenclave = store.settings.endpoint.mrenclave;
+      final worker = store.settings.endpoint.worker;
+      final mrenclave = store.settings.endpoint.mrenclave;
       await evalJavascript('settings.setWorkerEndpoint("$worker", "$mrenclave")');
     }
 
@@ -146,8 +145,8 @@ class Api {
   }
 
   Future<void> connectNodeAll() async {
-    List<String?> nodes = store.settings.endpointList.map((e) => e.value).toList();
-    List<NodeConfig?> configs = store.settings.endpointList.map((e) => e.overrideConfig).toList();
+    final nodes = store.settings.endpointList.map((e) => e.value).toList();
+    final configs = store.settings.endpointList.map((e) => e.overrideConfig).toList();
     Log.d('configs: $configs', 'Api');
 
     // do connect
@@ -160,12 +159,12 @@ class Api {
 
     // setWorker endpoint on js side
     if (store.settings.endpointIsTeeProxy) {
-      var worker = store.settings.endpoint.worker;
-      var mrenclave = store.settings.endpoint.mrenclave;
+      final worker = store.settings.endpoint.worker;
+      final mrenclave = store.settings.endpoint.mrenclave;
       await evalJavascript('settings.setWorkerEndpoint("$worker", "$mrenclave")');
     }
 
-    int index = store.settings.endpointList.indexWhere((i) => i.value == res);
+    final index = store.settings.endpointList.indexWhere((i) => i.value == res);
     if (index < 0) return;
     store.settings.setEndpoint(store.settings.endpointList[index]);
     await fetchNetworkProps();
@@ -181,7 +180,7 @@ class Api {
 
   Future<void> fetchNetworkProps() async {
     // fetch network info
-    List<dynamic> info = await Future.wait([
+    final info = await Future.wait([
       evalJavascript('settings.getNetworkConst()'),
       evalJavascript('api.rpc.system.properties()'),
       evalJavascript('api.rpc.system.chain()'), // "Development" or "Encointer Testnet Gesell" or whatever

@@ -19,7 +19,6 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class AccountManagePage extends StatefulWidget {
@@ -84,9 +83,9 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 
   Widget _getBalanceEntryListTile(String cidFmt, BalanceEntry? entry, String? address) {
-    final TextStyle h3 = Theme.of(context).textTheme.headline3!;
+    final h3 = Theme.of(context).textTheme.headline3!;
 
-    var community = _appStore.encointer.communityStores![cidFmt]!;
+    final community = _appStore.encointer.communityStores![cidFmt]!;
 
     Log.d('_getBalanceEntryListTile: $community', 'AccountManagePage');
 
@@ -107,7 +106,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 
   void _showPasswordDialog(BuildContext context, AccountData accountToBeEdited) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -118,11 +117,11 @@ class _AccountManagePageState extends State<AccountManagePage> {
             _appStore.settings.setPin(password);
           });
 
-          bool isMnemonic =
+          final isMnemonic =
               await _appStore.account.checkSeedExist(AccountStore.seedTypeMnemonic, accountToBeEdited.pubKey);
 
           if (isMnemonic) {
-            String? seed =
+            final seed =
                 await _appStore.account.decryptSeed(accountToBeEdited.pubKey, AccountStore.seedTypeMnemonic, password);
 
             Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
@@ -154,13 +153,13 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
-    final TextStyle? h3 = Theme.of(context).textTheme.headline3;
+    final dic = I18n.of(context)!.translationsForLocale();
+    final h3 = Theme.of(context).textTheme.headline3;
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     final _store = context.watch<AppStore>();
 
-    String? accountToBeEditedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
-    AccountData accountToBeEdited = _store.account.getAccountData(accountToBeEditedPubKey);
+    final accountToBeEditedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
+    final accountToBeEdited = _store.account.getAccountData(accountToBeEditedPubKey);
     final addressSS58 = _store.account.getNetworkAddress(accountToBeEditedPubKey);
 
     _nameCtrl = TextEditingController(text: accountToBeEdited.name);
@@ -239,7 +238,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                                 ? _store.encointer.accountStores![addressSS58]?.balanceEntries.length ?? 0
                                 : 0,
                             itemBuilder: (BuildContext context, int index) {
-                              String community = _store.encointer.account!.balanceEntries.keys.elementAt(index);
+                              final community = _store.encointer.account!.balanceEntries.keys.elementAt(index);
                               return _getBalanceEntryListTile(
                                 community,
                                 _store.encointer.accountStores![addressSS58]!.balanceEntries[community],

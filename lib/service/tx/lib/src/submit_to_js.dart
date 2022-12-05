@@ -11,7 +11,6 @@ import 'package:encointer_wallet/store/account/types/tx_status.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/translations/translations_home.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
@@ -32,14 +31,14 @@ Future<void> submitToJS(
   String? password,
   BigInt? tip,
 }) async {
-  final Translations dic = I18n.of(context)!.translationsForLocale();
+  final dic = I18n.of(context)!.translationsForLocale();
 
-  Map args = txParams;
+  final args = txParams;
 
   store.assets.setSubmitting(true);
   store.account.setTxStatus(TxStatus.Queued);
 
-  Map txInfo = args['txInfo'] as Map;
+  final txInfo = args['txInfo'] as Map;
   txInfo['pubKey'] = store.account.currentAccount.pubKey;
   txInfo['address'] = store.account.currentAddress;
   txInfo['password'] = password;
@@ -51,7 +50,7 @@ Future<void> submitToJS(
   Log.d('$txInfo', 'submitToJS');
   Log.d('${args['params']}', 'submitToJS');
 
-  var onTxFinishFn = (args['onFinish'] as dynamic Function(BuildContext, Map)?);
+  final onTxFinishFn = (args['onFinish'] as dynamic Function(BuildContext, Map)?);
 
   if (await api.isConnected()) {
     if (showStatusSnackBar) {
@@ -61,7 +60,7 @@ Future<void> submitToJS(
       );
     }
 
-    final Map res = await _sendTx(context, api, args) as Map;
+    final res = await _sendTx(context, api, args) as Map;
 
     if (res['hash'] == null) {
       _onTxError(context, store, res['error'] as String, showStatusSnackBar);
@@ -82,7 +81,7 @@ Future<Map> getTxFee(
   AccountData? proxyAccount,
   bool reload = false,
 }) async {
-  Map txInfo = args['txInfo'] as Map;
+  var txInfo = args['txInfo'] as Map;
   txInfo['pubKey'] = store.account.currentAccount.pubKey;
   txInfo['address'] = store.account.currentAddress;
 
@@ -176,7 +175,7 @@ String getTxStatusTranslation(TranslationsHome dic, TxStatus? status) {
 }
 
 Future<void> showErrorDialog(BuildContext context, String errorMsg) {
-  final Translations dic = I18n.of(context)!.translationsForLocale();
+  final dic = I18n.of(context)!.translationsForLocale();
 
   return showCupertinoDialog(
     context: context,
@@ -196,8 +195,8 @@ Future<void> showErrorDialog(BuildContext context, String errorMsg) {
 }
 
 Future<void> showInsufficientFundsDialog(BuildContext context) {
-  final Translations dic = I18n.of(context)!.translationsForLocale();
-  String languageCode = Localizations.localeOf(context).languageCode;
+  final dic = I18n.of(context)!.translationsForLocale();
+  final languageCode = Localizations.localeOf(context).languageCode;
 
   return showCupertinoDialog(
     context: context,

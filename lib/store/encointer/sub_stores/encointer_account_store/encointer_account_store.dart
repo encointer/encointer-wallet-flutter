@@ -100,7 +100,7 @@ abstract class _EncointerAccountStore with Store {
       return Future.value(null);
     }
 
-    List transfers = list.map((i) {
+    final transfers = list.map((i) {
       return {
         'block_timestamp': i['time'],
         'hash': i['hash'],
@@ -112,9 +112,9 @@ abstract class _EncointerAccountStore with Store {
       };
     }).toList();
     if (reset) {
-      txsTransfer = ObservableList.of(transfers.map((i) => TransferData.fromJson(Map<String, dynamic>.from(i as Map))));
+      txsTransfer = ObservableList.of(transfers.map((i) => TransferData.fromJson(Map<String, dynamic>.from(i))));
     } else {
-      txsTransfer.addAll(transfers.map((i) => TransferData.fromJson(Map<String, dynamic>.from(i as Map))));
+      txsTransfer.addAll(transfers.map((i) => TransferData.fromJson(Map<String, dynamic>.from(i))));
     }
 
     if (needCache && txsTransfer.length > 0) {

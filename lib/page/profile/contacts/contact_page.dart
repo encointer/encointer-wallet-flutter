@@ -11,7 +11,6 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class ContactPage extends StatefulWidget {
   const ContactPage({Key? key}) : super(key: key);
@@ -40,11 +39,11 @@ class _Contact extends State<ContactPage> {
       setState(() {
         _submitting = true;
       });
-      final Translations dic = I18n.of(context)!.translationsForLocale();
-      String addr = _addressCtrl.text.replaceAll(' ', '');
-      Map pubKeyAddress = await webApi.account.decodeAddress([addr]);
-      String pubKey = pubKeyAddress.keys.toList()[0] as String;
-      Map<String, dynamic> con = {
+      final dic = I18n.of(context)!.translationsForLocale();
+      final addr = _addressCtrl.text.replaceAll(' ', '');
+      final pubKeyAddress = await webApi.account.decodeAddress([addr]);
+      final pubKey = pubKeyAddress.keys.toList()[0] as String;
+      final con = {
         'address': addr,
         'name': _nameCtrl.text,
         'memo': _memoCtrl.text,
@@ -56,7 +55,7 @@ class _Contact extends State<ContactPage> {
       });
       if (qrScanData == null) {
         // create new contact
-        int exist = context.read<AppStore>().settings.contactList.indexWhere((i) => i.address == addr);
+        final exist = context.read<AppStore>().settings.contactList.indexWhere((i) => i.address == addr);
         if (exist > -1) {
           showCupertinoDialog<void>(
             context: context,
@@ -106,8 +105,8 @@ class _Contact extends State<ContactPage> {
 
   @override
   Widget build(BuildContext context) {
-    ContactData? qrScanData = ModalRoute.of(context)!.settings.arguments as ContactData?;
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final qrScanData = ModalRoute.of(context)!.settings.arguments as ContactData?;
+    final dic = I18n.of(context)!.translationsForLocale();
     if (qrScanData != null) {
       _addressCtrl.text = qrScanData.account;
       _nameCtrl.text = qrScanData.label;

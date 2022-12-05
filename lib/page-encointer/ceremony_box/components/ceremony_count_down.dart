@@ -41,7 +41,7 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
   void resetTimer() {
     _cancelTimer();
 
-    CountdownTimer countDownTimer = CountdownTimer(
+    final countDownTimer = CountdownTimer(
       Duration(seconds: timeToMeetup),
       const Duration(seconds: 1),
     );
@@ -79,7 +79,7 @@ class _CeremonyCountDownState extends State<CeremonyCountDown> {
       resetTimer();
     }
 
-    Duration timeLeftUntilCeremonyStarts = Duration(seconds: timeToMeetup);
+    final timeLeftUntilCeremonyStarts = Duration(seconds: timeToMeetup);
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,

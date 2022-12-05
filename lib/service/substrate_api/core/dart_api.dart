@@ -77,7 +77,7 @@ class SubstrateDartApi {
   /// Connects to and endpoint and starts listening on the input stream.
   Future<void> _connectAndListen(String endpoint) {
     _endpoint = endpoint;
-    var socket = WebSocketChannel.connect(Uri.parse(endpoint));
+    final socket = WebSocketChannel.connect(Uri.parse(endpoint));
     _client = Client(socket.cast<String>());
 
     // The client won't subscribe to the input stream until `listen` is called.
