@@ -186,7 +186,7 @@ void main() async {
     await driver.waitFor(find.byValueKey('send-money-to-account'));
     await driver.tap(find.byValueKey('send-money-to-account'));
 
-    await sendMonayToAccount(driver);
+    await sendMoneyToAccount(driver);
     await driver.tap(find.byValueKey('Wallet'));
   });
 
@@ -195,12 +195,12 @@ void main() async {
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('account share and change name', () async {
-    await shareAccountAndCahngeNameTest(driver, 'Tom', 'Jerry');
+    await shareAccountAndChangeNameTest(driver, 'Tom', 'Jerry');
     await addDelay(2500);
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('delete all account ad show create account page', () async {
-    await rmAllAccounsFromProfilePage(driver);
+    await rmAllAccountsFromProfilePage(driver);
     await addDelay(2000);
   });
 

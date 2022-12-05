@@ -22,7 +22,7 @@ Future<void> createNewbieAccountAndSendMoney(FlutterDriver driver, String accoun
   await closePanel(driver);
 }
 
-Future<void> sendMonayToAccount(FlutterDriver driver) async {
+Future<void> sendMoneyToAccount(FlutterDriver driver) async {
   await driver.waitFor(find.byValueKey('transfer-amount-input'));
   await driver.tap(find.byValueKey('transfer-amount-input'));
   await driver.enterText('0.2');
@@ -39,7 +39,7 @@ Future<void> sendMonayToAccount(FlutterDriver driver) async {
   });
 }
 
-Future<void> shareAccountAndCahngeNameTest(FlutterDriver driver, String account, String changedName) async {
+Future<void> shareAccountAndChangeNameTest(FlutterDriver driver, String account, String changedName) async {
   await driver.tap(find.byValueKey('Profile'));
 
   await driver.waitFor(find.byValueKey(account));
@@ -64,7 +64,7 @@ Future<void> shareAccountAndCahngeNameTest(FlutterDriver driver, String account,
 
   await driver.tap(find.byValueKey('popup-menu-account-trash-export'));
   await driver.tap(find.byValueKey('export'));
-  await driver.tap(find.byValueKey('input-passworf-dialod'));
+  await driver.tap(find.byValueKey('input-password-dialog'));
   await driver.enterText('0001');
   await driver.tap(find.byValueKey('password-ok'));
 
@@ -78,7 +78,7 @@ Future<void> shareAccountAndCahngeNameTest(FlutterDriver driver, String account,
   await driver.tap(find.byValueKey('delete-account'));
 }
 
-Future<void> rmAllAccounsFromProfilePage(FlutterDriver driver) async {
+Future<void> rmAllAccountsFromProfilePage(FlutterDriver driver) async {
   await driver.tap(find.byValueKey('remove-all-accounts'));
   await driver.waitFor(find.byValueKey('remove-all-accounts-check'));
   await driver.tap(find.byValueKey('remove-all-accounts-check'));
