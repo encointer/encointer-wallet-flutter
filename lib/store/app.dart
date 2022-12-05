@@ -113,7 +113,7 @@ abstract class _AppStore with Store {
     chain.loadCache();
 
     // need to call this after settings was initialized
-    String? networkInfo = settings.endpoint.info;
+    final networkInfo = settings.endpoint.info;
     await loadOrInitEncointerCache(networkInfo!);
 
     storeIsReady = true;
@@ -139,7 +139,7 @@ abstract class _AppStore with Store {
   /// Prefixes the key with `test-` if we are in test-mode to prevent overwriting of
   /// the real cache with (unit-)test runs.
   String getCacheKey(String key) {
-    var cacheKey = '${settings.endpoint.info}_$key';
+    final cacheKey = '${settings.endpoint.info}_$key';
     return config.isTest ? 'test-$cacheKey' : cacheKey;
   }
 
@@ -148,7 +148,7 @@ abstract class _AppStore with Store {
   /// Prefixes the key with `test-` if we are in test-mode to prevent overwriting of
   /// the real cache with (unit-)test runs.
   String encointerCacheKey(String networkInfo) {
-    var key = '$encointerCachePrefix-$networkInfo';
+    final key = '$encointerCachePrefix-$networkInfo';
     return config.isTest ? 'test-$key' : key;
   }
 
@@ -158,9 +158,9 @@ abstract class _AppStore with Store {
 
   Future<void> loadOrInitEncointerCache(String networkInfo) async {
     final cacheVersionFinalKey = getCacheKey(encointerCacheVersionPrefix);
-    var cacheVersion = await localStorage.getKV(cacheVersionFinalKey);
+    final cacheVersion = await localStorage.getKV(cacheVersionFinalKey);
 
-    String encointerFinalCacheKey = encointerCacheKey(networkInfo);
+    final encointerFinalCacheKey = encointerCacheKey(networkInfo);
 
     EncointerStore? maybeStore;
 
@@ -192,12 +192,12 @@ abstract class _AppStore with Store {
   }
 
   Future<EncointerStore?> loadEncointerCache(String encointerFinalCacheKey) async {
-    var cachedEncointerStore = await localStorage.getMap(encointerFinalCacheKey);
+    final cachedEncointerStore = await localStorage.getMap(encointerFinalCacheKey);
 
     if (cachedEncointerStore != null) {
       Log.d('Found cached encointer store $cachedEncointerStore', '_AppStore');
 
-      var encointerStore = EncointerStore.fromJson(cachedEncointerStore);
+      final encointerStore = EncointerStore.fromJson(cachedEncointerStore);
 
       // Cache the entire encointer store at once: Check if this is too expensive,
       // when many accounts/cids exist in store. But as the caching future is in general not awaited,

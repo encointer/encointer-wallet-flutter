@@ -105,7 +105,7 @@ abstract class _AssetsStore with Store {
     });
 
     if (!needCache) return;
-    Map? cache = await rootStore.localStorage.getAccountCache(
+    var cache = await rootStore.localStorage.getAccountCache(
       rootStore.account.currentAccount.pubKey,
       cacheBalanceKey,
     ) as Map?;
@@ -157,11 +157,11 @@ abstract class _AssetsStore with Store {
 
     txsCount = res['count'] as int?;
 
-    List? ls = res['transfers'] as List?;
+    final ls = res['transfers'] as List?;
     if (ls == null) return;
 
     ls.forEach((i) {
-      TransferData tx = TransferData.fromJson(i as Map<String, dynamic>);
+      final tx = TransferData.fromJson(i as Map<String, dynamic>);
       txs.add(tx);
     });
 
@@ -197,12 +197,12 @@ abstract class _AssetsStore with Store {
   @action
   Future<void> loadAccountCache() async {
     // return if currentAccount not exist
-    String? pubKey = rootStore.account.currentAccountPubKey;
+    final pubKey = rootStore.account.currentAccountPubKey;
     if (pubKey == null || pubKey.isEmpty) {
       return;
     }
 
-    List cache = await Future.wait([
+    final cache = await Future.wait([
       rootStore.localStorage.getAccountCache(pubKey, cacheBalanceKey),
       rootStore.localStorage.getAccountCache(pubKey, _getCacheKey(cacheTxsKey)),
       rootStore.localStorage.getAccountCache(pubKey, _getCacheKey(cacheTimeKey)),
@@ -229,7 +229,7 @@ abstract class _AssetsStore with Store {
 
   @action
   Future<void> loadCache() async {
-    List? ls = await rootStore.localStorage.getObject(localStorageBlocksKey) as List?;
+    final ls = await rootStore.localStorage.getObject(localStorageBlocksKey) as List?;
     if (ls != null) {
       ls.forEach((i) {
         if (blockMap[i['id']] == null) {
@@ -244,7 +244,7 @@ abstract class _AssetsStore with Store {
 
 class BlockData extends _BlockData {
   static BlockData fromJson(Map<String, dynamic> json) {
-    BlockData block = BlockData();
+    final block = BlockData();
     block.id = json['id'] as int?;
     block.hash = json['hash'] as String?;
     block.time = DateTime.fromMillisecondsSinceEpoch(json['timestamp'] as int);

@@ -213,7 +213,7 @@ class _TooltipState extends State<TapTooltip> with SingleTickerProviderStateMixi
     if (!mounted) {
       return;
     }
-    final bool mouseIsConnected = RendererBinding.instance.mouseTracker.mouseIsConnected;
+    final mouseIsConnected = RendererBinding.instance.mouseTracker.mouseIsConnected;
     if (mouseIsConnected != _mouseIsConnected) {
       setState(() {
         _mouseIsConnected = mouseIsConnected;
@@ -274,8 +274,8 @@ class _TooltipState extends State<TapTooltip> with SingleTickerProviderStateMixi
   }
 
   void _createNewEntry() {
-    final RenderBox box = context.findRenderObject() as RenderBox;
-    final Offset target = box.localToGlobal(box.size.center(Offset.zero));
+    final box = context.findRenderObject() as RenderBox;
+    final target = box.localToGlobal(box.size.center(Offset.zero));
 
     // We create this widget outside of the overlay entry's builder to prevent
     // updated values from happening to leak into the overlay when the overlay
@@ -342,15 +342,15 @@ class _TooltipState extends State<TapTooltip> with SingleTickerProviderStateMixi
 
   void _handleLongPress() {
     _longPressActivated = true;
-    final bool tooltipCreated = ensureTooltipVisible();
+    final tooltipCreated = ensureTooltipVisible();
     if (tooltipCreated) Feedback.forLongPress(context);
   }
 
   @override
   Widget build(BuildContext context) {
     assert(Overlay.of(context, debugRequiredFor: widget) != null);
-    final ThemeData theme = Theme.of(context);
-    final TooltipThemeData tooltipTheme = TooltipTheme.of(context);
+    final theme = Theme.of(context);
+    final tooltipTheme = TooltipTheme.of(context);
     TextStyle defaultTextStyle;
     BoxDecoration defaultDecoration;
     if (theme.brightness == Brightness.dark) {

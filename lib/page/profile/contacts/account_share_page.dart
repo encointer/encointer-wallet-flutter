@@ -7,7 +7,6 @@ import 'package:share_plus/share_plus.dart';
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
-import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
@@ -22,15 +21,15 @@ class AccountSharePage extends StatefulWidget {
 class _AccountSharePageState extends State<AccountSharePage> {
   @override
   Widget build(BuildContext context) {
-    var dic = I18n.of(context)!.translationsForLocale();
-    var textTheme = Theme.of(context).textTheme;
+    final dic = I18n.of(context)!.translationsForLocale();
+    final textTheme = Theme.of(context).textTheme;
     final _store = context.watch<AppStore>();
 
-    String? accountToBeSharedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
-    AccountData accountToBeShared = _store.account.getAccountData(accountToBeSharedPubKey);
+    final accountToBeSharedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
+    final accountToBeShared = _store.account.getAccountData(accountToBeSharedPubKey);
     final addressSS58 = _store.account.getNetworkAddress(accountToBeSharedPubKey);
 
-    var contactQrCode = ContactQrCode(
+    final contactQrCode = ContactQrCode(
       account: addressSS58,
       label: accountToBeShared.name,
     );

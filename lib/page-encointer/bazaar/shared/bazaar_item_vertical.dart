@@ -19,7 +19,7 @@ class BazaarItemVertical extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    BazaarItemVerticalState tempState = BazaarItemVerticalState(); // TODO make it a descendant of BazaarMainState
+    final tempState = BazaarItemVerticalState(); // TODO make it a descendant of BazaarMainState
     return Card(
       child: InkWell(
         onTap: () {

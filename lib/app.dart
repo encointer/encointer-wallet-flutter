@@ -19,7 +19,7 @@ class WalletApp extends StatelessWidget {
       key: const Key('metaApp'),
       behavior: HitTestBehavior.opaque,
       onTap: () {
-        FocusScopeNode currentFocus = FocusScope.of(context);
+        final currentFocus = FocusScope.of(context);
 
         if (!currentFocus.hasPrimaryFocus && currentFocus.focusedChild != null) {
           FocusManager.instance.primaryFocus!.unfocus();
