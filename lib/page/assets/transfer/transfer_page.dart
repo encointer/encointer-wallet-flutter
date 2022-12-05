@@ -107,7 +107,7 @@ class _TransferPageState extends State<TransferPage> {
       }
 
       if (params.recipient != null) {
-        final AccountData acc = AccountData();
+        final acc = AccountData();
         acc.address = params.recipient!;
         acc.name = params.label!;
         _accountTo = acc;
@@ -120,8 +120,8 @@ class _TransferPageState extends State<TransferPage> {
     final dic = I18n.of(context)!.translationsForLocale();
     final _store = context.watch<AppStore>();
 
-    int decimals = encointer_currencies_decimals;
-    double? available = _store.encointer.applyDemurrage(_store.encointer.communityBalanceEntry);
+    final decimals = encointer_currencies_decimals;
+    final available = _store.encointer.applyDemurrage(_store.encointer.communityBalanceEntry);
 
     Log.d('[transferPage]: available: $available', 'TransferPage');
 

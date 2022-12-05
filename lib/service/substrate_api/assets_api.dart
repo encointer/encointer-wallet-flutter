@@ -21,10 +21,10 @@ class AssetsApi {
   }
 
   Future<void> fetchBalance() async {
-    String? pubKey = store.account.currentAccountPubKey;
-    String? currentAddress = store.account.currentAddress;
+    final pubKey = store.account.currentAccountPubKey;
+    final currentAddress = store.account.currentAddress;
     if (pubKey != null && pubKey.isNotEmpty) {
-      String address = currentAddress;
+      final address = currentAddress;
       final res = await jsApi.evalJavascript(
         'account.getBalance("$address")',
         allowRepeat: true,
@@ -37,9 +37,9 @@ class AssetsApi {
   Future<void> subscribeBalance() async {
     jsApi.unsubscribeMessage(_balanceSubscribeChannel);
 
-    String? pubKey = store.account.currentAccountPubKey;
+    final pubKey = store.account.currentAccountPubKey;
     if (pubKey != null && pubKey.isNotEmpty) {
-      String address = store.account.currentAddress;
+      final address = store.account.currentAddress;
 
       jsApi.subscribeMessage(
         'account.subscribeBalance("$_balanceSubscribeChannel","$address")',

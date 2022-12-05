@@ -35,8 +35,8 @@ class _CeremonyRegisterButtonState extends State<CeremonyRegisterButton> {
 
   @override
   Widget build(BuildContext context) {
-    String languageCode = Localizations.localeOf(context).languageCode;
-    var dic = I18n.of(context)!.translationsForLocale();
+    final languageCode = Localizations.localeOf(context).languageCode;
+    final dic = I18n.of(context)!.translationsForLocale();
 
     return PrimaryButton(
       child: !_submitting

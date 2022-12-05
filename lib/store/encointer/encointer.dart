@@ -155,7 +155,7 @@ abstract class _EncointerStore with Store {
   @computed
   BalanceEntry? get communityBalanceEntry {
     if (chosenCid != null) {
-      bool containsBalance = account?.balanceEntries.containsKey(chosenCid!.toFmtString()) ?? false;
+      final containsBalance = account?.balanceEntries.containsKey(chosenCid!.toFmtString()) ?? false;
       return containsBalance ? account!.balanceEntries[chosenCid!.toFmtString()] : null;
     } else {
       return null;
@@ -291,7 +291,7 @@ abstract class _EncointerStore with Store {
 
   @action
   void setAggregatedAccountData(CommunityIdentifier cid, String address, AggregatedAccountData accountData) {
-    var encointerAccountStore = communityStores![cid.toFmtString()]!.communityAccountStores![address];
+    final encointerAccountStore = communityStores![cid.toFmtString()]!.communityAccountStores![address];
 
     if (encointerAccountStore == null) {
       Log.d('setAggregatedAccountData: encointerAccountStore was null', 'EncointerStore');
@@ -344,7 +344,7 @@ abstract class _EncointerStore with Store {
   Future<void> updateAggregatedAccountData() async {
     try {
       if (chosenCid != null) {
-        var data = await webApi.encointer.getAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress);
+        final data = await webApi.encointer.getAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress);
         setAggregatedAccountData(chosenCid!, _rootStore.account.currentAddress, data);
       } else {
         Log.d('chosenCid is null', 'Encointer updateAggregatedAccountData');
@@ -403,7 +403,7 @@ abstract class _EncointerStore with Store {
   ///
   /// Todo: Integrate used when #582 is tackled.
   Future<void> initCommunityStores(List<CommunityIdentifier> cids, String address, {bool shouldCache = true}) {
-    List<Future<void>> futures = [];
+    final futures = <Future<void>>[];
 
     cids.forEach((cid) {
       futures.add(initCommunityStore(cid, address, shouldCache: shouldCache));
@@ -414,11 +414,11 @@ abstract class _EncointerStore with Store {
 
   @action
   Future<void> initCommunityStore(CommunityIdentifier cid, String address, {bool shouldCache = true}) async {
-    var cidFmt = cid.toFmtString();
+    final cidFmt = cid.toFmtString();
     if (!communityStores!.containsKey(cidFmt)) {
       Log.d('Adding new communityStore for cid: ${cid.toFmtString()}', 'EncointerStore');
 
-      var communityStore = CommunityStore(network, cid);
+      final communityStore = CommunityStore(network, cid);
       communityStore.initStore(_cacheFn, applyDemurrage);
       await communityStore.initCommunityAccountStore(address);
 
@@ -436,7 +436,7 @@ abstract class _EncointerStore with Store {
     if (!accountStores!.containsKey(address)) {
       Log.d('Adding new encointerAccountStore for: $address', 'EncointerStore');
 
-      var encointerAccountStore = EncointerAccountStore(network, address);
+      final encointerAccountStore = EncointerAccountStore(network, address);
       encointerAccountStore.initStore(_cacheFn);
 
       accountStores![address] = encointerAccountStore;
@@ -449,10 +449,10 @@ abstract class _EncointerStore with Store {
 
   @action
   Future<void> initBazaarStore(CommunityIdentifier cid, {bool shouldCache = true}) {
-    var cidFmt = cid.toFmtString();
+    final cidFmt = cid.toFmtString();
     if (!bazaarStores!.containsKey(cidFmt)) {
       Log.d('Adding new bazaarStore for cid: ${cid.toFmtString()}', 'EncointerStore');
-      var bazaarStore = BazaarStore(network, cid);
+      final bazaarStore = BazaarStore(network, cid);
       bazaarStore.initStore(_cacheFn);
 
       bazaarStores![cidFmt] = bazaarStore;
@@ -467,7 +467,7 @@ abstract class _EncointerStore with Store {
   ///
   /// This should be called upon changing the current account mainly, or after loading the store from cache.
   Future<void> initializeUninitializedStores(String address) {
-    var futures = [initEncointerAccountStore(address, shouldCache: false)];
+    final futures = [initEncointerAccountStore(address, shouldCache: false)];
 
     if (chosenCid != null) {
       futures.addAll([
@@ -486,16 +486,16 @@ abstract class _EncointerStore with Store {
   ///
   /// Todo: not yet integrated, need to cache this first, and properly think through. Solve in #582.
   Future<void> loadPreviouslyTrackedCommunitiesFromCache(String network) async {
-    List<Map<String, dynamic>> maybeCids = await _rootStore.localStorage.getList(trackedCidsCacheKey(network));
+    final maybeCids = await _rootStore.localStorage.getList(trackedCidsCacheKey(network));
     Log.d('Initializing previously tracked communities: $maybeCids', 'EncointerStore');
     if (maybeCids.isNotEmpty) {
-      List<CommunityIdentifier> cids = maybeCids.map((cid) => CommunityIdentifier.fromJson(cid)).toList();
+      final cids = maybeCids.map((cid) => CommunityIdentifier.fromJson(cid)).toList();
       communityIdentifiers = cids;
     }
   }
 
   Future<void> loadChosenCid(String network) async {
-    Map<String, dynamic>? maybeChosenCid = await _rootStore.localStorage.getMap(chosenCidCacheKey(network));
+    final maybeChosenCid = await _rootStore.localStorage.getMap(chosenCidCacheKey(network));
     Log.d('Setting previously tracked chosenCid: $maybeChosenCid', 'EncointerStore');
     if (maybeChosenCid != null) {
       // Do not use the setter here. We don't want to trigger reactions here.
@@ -533,20 +533,20 @@ abstract class _EncointerStore with Store {
   }
 
   bool get showRegisterButton {
-    bool registered = communityAccount?.isRegistered ?? false;
+    final registered = communityAccount?.isRegistered ?? false;
     return (currentPhase == CeremonyPhase.Registering && !registered);
   }
 
   @computed
   bool get showStartCeremonyButton {
-    bool assigned = communityAccount?.isAssigned ?? false;
+    final assigned = communityAccount?.isAssigned ?? false;
     return (currentPhase == CeremonyPhase.Attesting && assigned);
   }
 
   @computed
   bool get showSubmitClaimsButton {
-    bool assigned = communityAccount?.isAssigned ?? false;
-    bool? hasClaims = (communityAccount?.scannedAttendeesCount ?? 0) > 0;
+    final assigned = communityAccount?.isAssigned ?? false;
+    final hasClaims = (communityAccount?.scannedAttendeesCount ?? 0) > 0;
 
     return (currentPhase == CeremonyPhase.Attesting && assigned && hasClaims);
   }

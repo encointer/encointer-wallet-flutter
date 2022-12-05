@@ -12,7 +12,6 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class AddAccountPage extends StatefulWidget {
   const AddAccountPage({Key? key}) : super(key: key);
@@ -47,7 +46,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
 
     await webApi.account.generateAccount();
 
-    var acc = await webApi.account.importAccount(
+    final acc = await webApi.account.importAccount(
       cryptoType: AccountAdvanceOptionParams.encryptTypeSR,
       derivePath: '',
     );
@@ -60,13 +59,13 @@ class _AddAccountPageState extends State<AddAccountPage> {
       return;
     }
 
-    var addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
+    final addresses = await webApi.account.encodeAddress([acc['pubKey'] as String]);
     Log.d('Created new account with address: ${addresses[0]}', 'AddAccountPage');
 
     await store.addAccount(acc, store.account.newAccount.password, addresses[0]);
     Log.d('added new account with address: ${addresses[0]}', 'AddAccountPage');
 
-    String? pubKey = acc['pubKey'] as String?;
+    final pubKey = acc['pubKey'] as String?;
     await store.setCurrentAccount(pubKey);
 
     await store.loadAccountCache();
@@ -123,7 +122,7 @@ class _AddAccountPageState extends State<AddAccountPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
 
     return Scaffold(
       appBar: AppBar(

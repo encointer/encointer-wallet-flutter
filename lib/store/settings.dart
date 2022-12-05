@@ -117,14 +117,14 @@ abstract class _SettingsStore with Store {
 
   @computed
   List<EndpointData> get endpointList {
-    List<EndpointData> ls = List<EndpointData>.of(networkEndpoints);
+    final ls = List<EndpointData>.of(networkEndpoints);
     ls.retainWhere((i) => i.info == endpoint.info);
     return ls;
   }
 
   @computed
   List<AccountData> get contactListAll {
-    List<AccountData> ls = List<AccountData>.of(rootStore.account.accountList);
+    final ls = List<AccountData>.of(rootStore.account.accountList);
     ls.addAll(contactList);
     return ls;
   }
@@ -177,7 +177,7 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadLocalCode() async {
-    String? stored = await rootStore.localStorage.getObject(localStorageLocaleKey) as String?;
+    final stored = await rootStore.localStorage.getObject(localStorageLocaleKey) as String?;
     if (stored != null) {
       localeCode = stored;
     }
@@ -221,7 +221,7 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadNetworkStateCache() async {
-    final List data = await Future.wait([
+    final data = await Future.wait([
       rootStore.localStorage.getObject(_getCacheKeyOfNetwork(cacheNetworkStateKey)),
       rootStore.localStorage.getObject(_getCacheKeyOfNetwork(cacheNetworkConstKey)),
     ]);
@@ -255,7 +255,7 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadContacts() async {
-    List<Map<String, dynamic>> ls = await rootStore.localStorage.getContactList();
+    final ls = await rootStore.localStorage.getContactList();
     contactList = ObservableList.of(ls.map((i) => AccountData.fromJson(i)));
   }
 
@@ -285,8 +285,7 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadEndpoint(String sysLocaleCode) async {
-    Map<String, dynamic>? value =
-        await rootStore.localStorage.getObject(localStorageEndpointKey) as Map<String, dynamic>?;
+    final value = await rootStore.localStorage.getObject(localStorageEndpointKey) as Map<String, dynamic>?;
     if (value == null) {
       endpoint = networkEndpointEncointerMainnet;
     } else {
@@ -302,7 +301,7 @@ abstract class _SettingsStore with Store {
 
   @action
   Future<void> loadCustomSS58Format() async {
-    Map<String, dynamic>? ss58 = await rootStore.localStorage.getObject(localStorageSS58Key) as Map<String, dynamic>?;
+    final ss58 = await rootStore.localStorage.getObject(localStorageSS58Key) as Map<String, dynamic>?;
 
     customSS58Format = ss58 ?? default_ss58_prefix;
   }
@@ -339,10 +338,10 @@ class NetworkState extends _NetworkState {
     // js-api changed the return type of 'api.rpc.system.properties()', such that multiple balances are supported.
     // Hence, tokenDecimals/-symbols are returned as a List. However, encointer currently only has one token, thus the
     // `NetworkState` should use the first token.
-    int? decimals = (json['tokenDecimals'] is List) ? json['tokenDecimals'][0] as int? : json['tokenDecimals'] as int?;
-    String? symbol = (json['tokenSymbol'] is List) ? json['tokenSymbol'][0] as String? : json['tokenSymbol'] as String?;
+    final decimals = (json['tokenDecimals'] is List) ? json['tokenDecimals'][0] as int? : json['tokenDecimals'] as int?;
+    final symbol = (json['tokenSymbol'] is List) ? json['tokenSymbol'][0] as String? : json['tokenSymbol'] as String?;
 
-    NetworkState ns = NetworkState(json['endpoint'] as String?, json['ss58Format'] as int?, decimals, symbol);
+    final ns = NetworkState(json['endpoint'] as String?, json['ss58Format'] as int?, decimals, symbol);
     // --dev chain doesn't specify token symbol -> will break things if not specified
     if (((ns.tokenSymbol?.length ?? 0) < 1)) {
       ns.tokenSymbol = 'ERT';

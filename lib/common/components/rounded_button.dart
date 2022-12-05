@@ -21,7 +21,7 @@ class RoundedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> row = <Widget>[];
+    final row = <Widget>[];
     if (submitting) {
       row.add(const CupertinoActivityIndicator());
     }

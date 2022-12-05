@@ -23,7 +23,7 @@ class MeetupInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    var info = dic.encointer.youAreAssignedToAGatheringWithNParticipants.replaceAll(
+    final info = dic.encointer.youAreAssignedToAGatheringWithNParticipants.replaceAll(
       'P_COUNT',
       meetup.registry.length.toString(),
     );

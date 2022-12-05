@@ -4,7 +4,6 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_da
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/toggle_buttons_with_title.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class SearchResultsBusinessFiltered extends StatelessWidget {
   final List<BazaarItemData> results;
@@ -18,8 +17,8 @@ class SearchResultsBusinessFiltered extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Translations dic = I18n.of(context)!.translationsForLocale();
-    var titleStyle = const TextStyle(fontWeight: FontWeight.bold);
+    final dic = I18n.of(context)!.translationsForLocale();
+    final titleStyle = const TextStyle(fontWeight: FontWeight.bold);
 
     return Scaffold(
         appBar: AppBar(

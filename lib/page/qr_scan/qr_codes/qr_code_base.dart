@@ -41,7 +41,7 @@ enum QrCodeVersion { v1_0, v2_0 }
 extension QrCodeContextExt on QrCodeContext? {
   /// Parses `encointer-<context>` into a `QrCodeContext`.
   static QrCodeContext fromQrField(String value) {
-    var context = value.toString().split('-').last.toLowerCase();
+    final context = value.toString().split('-').last.toLowerCase();
     return QrCodeContext.values.firstWhere(
       (type) => type.toString().split('.').last.toLowerCase() == context,
       orElse: () {
@@ -52,7 +52,7 @@ extension QrCodeContextExt on QrCodeContext? {
   }
 
   String toQrField() {
-    var variant = toString().split('.').last.toLowerCase();
+    final variant = toString().split('.').last.toLowerCase();
     return '$ENCOINTER_PREFIX-$variant';
   }
 }

@@ -148,7 +148,7 @@ class AddOpeningIntervalForDay extends StatelessWidget {
   Widget build(BuildContext context) {
     final businessFormState = Provider.of<BusinessFormState>(context);
     final openingHours = businessFormState.openingHours;
-    var openingHoursForDay = openingHours.getOpeningHoursFor(day);
+    final openingHoursForDay = openingHours.getOpeningHoursFor(day);
 
     return Observer(
       builder: (_) => TextField(

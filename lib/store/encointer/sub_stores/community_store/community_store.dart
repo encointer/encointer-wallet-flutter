@@ -109,7 +109,7 @@ abstract class _CommunityStore with Store {
     if (!communityAccountStores!.containsKey(address)) {
       Log.d('Adding new communityAccountStore for cid: ${cid.toFmtString()} and account: $address', 'CommunityStore');
 
-      var store = CommunityAccountStore(network, cid, address);
+      final store = CommunityAccountStore(network, cid, address);
       store.initStore(_cacheFn);
 
       communityAccountStores![address] = store;

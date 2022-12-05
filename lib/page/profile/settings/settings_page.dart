@@ -7,7 +7,6 @@ import 'package:encointer_wallet/page/profile/settings/remote_node_list_page.dar
 import 'package:encointer_wallet/page/profile/settings/ss58_prefix_list_page.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class SettingsPage extends StatefulWidget {
   SettingsPage({Key? key}) : super(key: key);
@@ -24,7 +23,7 @@ class _Settings extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     final _store = context.watch<AppStore>();
 
     String getLang(String code) {
@@ -60,7 +59,7 @@ class _Settings extends State<SettingsPage> {
               },
             ),
             onWillPop: () async {
-              String code = _langOptions[_selected];
+              final code = _langOptions[_selected];
               if (code != context.read<AppStore>().settings.localeCode) {
                 context.read<AppStore>().settings.setLocalCode(code);
                 context.read<AppStore>().settings.changeLang(context, code);

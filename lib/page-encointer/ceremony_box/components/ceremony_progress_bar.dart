@@ -56,7 +56,7 @@ class CeremonyProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double progressElapsed = _getCeremonyProgress()!;
+    final progressElapsed = _getCeremonyProgress()!;
     Log.d('ceremony progress: $progressElapsed', 'CeremonyProgressBar');
 
     return Container(
