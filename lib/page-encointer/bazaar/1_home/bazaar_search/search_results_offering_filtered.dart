@@ -4,7 +4,6 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_da
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/shared/toggle_buttons_with_title.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class SearchResultsOfferingFiltered extends StatelessWidget {
   final List<BazaarItemData> results;
@@ -19,8 +18,8 @@ class SearchResultsOfferingFiltered extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var titleStyle = const TextStyle(fontWeight: FontWeight.bold, height: 2.5);
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final titleStyle = const TextStyle(fontWeight: FontWeight.bold, height: 2.5);
+    final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         title: Text('Filter ${dic.bazaar.found} ${dic.bazaar.offerings}'),

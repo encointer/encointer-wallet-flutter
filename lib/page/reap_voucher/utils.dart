@@ -17,7 +17,7 @@ Future<ChangeResult> changeNetworkAndCommunity(
   String? networkInfo,
   CommunityIdentifier cid,
 ) async {
-  var result = await changeNetwork(store, api, networkInfo, cid);
+  final result = await changeNetwork(store, api, networkInfo, cid);
 
   if (result != ChangeResult.ok) {
     return result;
@@ -63,7 +63,7 @@ Future<ChangeResult> changeCommunity(
   String? networkInfo,
   CommunityIdentifier cid,
 ) async {
-  var cids = await api.encointer.getCommunityIdentifiers();
+  final cids = await api.encointer.getCommunityIdentifiers();
 
   if (cids.contains(cid)) {
     await store.encointer.setChosenCid(cid);

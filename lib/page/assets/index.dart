@@ -96,8 +96,8 @@ class _AssetsState extends State<Assets> {
     _panelHeightOpen = min(MediaQuery.of(context).size.height * fractionOfScreenHeight,
         panelHeight); // should typically not be higher than panelHeight, but on really small devices it should not exceed fractionOfScreenHeight x the screen height.
 
-    List<AccountOrCommunityData> allCommunities = [];
-    List<AccountOrCommunityData> allAccounts = [];
+    var allCommunities = <AccountOrCommunityData>[];
+    var allAccounts = <AccountOrCommunityData>[];
 
     balanceWatchdog = PausableTimer(
       const Duration(seconds: 12),
@@ -168,7 +168,7 @@ class _AssetsState extends State<Assets> {
                         );
                       }
 
-                      AccountData accountData = store.account.currentAccount;
+                      final accountData = store.account.currentAccount;
 
                       return Column(
                         children: <Widget>[
@@ -286,7 +286,7 @@ class _AssetsState extends State<Assets> {
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 0),
                     ),
                     Observer(builder: (_) {
-                      final Translations dic = I18n.of(context)!.translationsForLocale();
+                      final dic = I18n.of(context)!.translationsForLocale();
 
                       final shouldFetch = store.encointer.currentPhase == CeremonyPhase.Registering ||
                           (store.encointer.communityAccount?.meetupCompleted ?? false);
@@ -296,7 +296,7 @@ class _AssetsState extends State<Assets> {
                               future: webApi.encointer.hasPendingIssuance(),
                               builder: (_, AsyncSnapshot<bool?> snapshot) {
                                 if (snapshot.hasData) {
-                                  var hasPendingIssuance = snapshot.data!;
+                                  final hasPendingIssuance = snapshot.data!;
 
                                   if (hasPendingIssuance) {
                                     return SubmitButton(
@@ -393,7 +393,7 @@ class _AssetsState extends State<Assets> {
   }
 
   List<AccountOrCommunityData> initAllCommunities() {
-    List<AccountOrCommunityData> allCommunities = [];
+    final allCommunities = <AccountOrCommunityData>[];
     // TODO #507 add back end code so we can initialize the list of communities similar to the commented out code
     // allCommunities.addAll(store.communities.communitiesList.map((community) => AccountOrCommunityData(
     //     avatar: webApi.ipfs.getCommunityIcon(community),
@@ -429,7 +429,7 @@ class _AssetsState extends State<Assets> {
   }
 
   List<AccountOrCommunityData> initAllAccounts(Translations dic) {
-    List<AccountOrCommunityData> allAccounts = [];
+    final allAccounts = <AccountOrCommunityData>[];
     allAccounts.addAll(store.account.accountListAll.map(
       (account) => AccountOrCommunityData(
         avatar: AddressIcon('', account.pubKey, key: Key(account.name), size: avatarSize, tapToCopy: false),
@@ -519,16 +519,16 @@ class _AssetsState extends State<Assets> {
         Log.d('[home:refreshBalanceAndNotify] no community selected', 'Assets');
         return;
       }
-      bool activeAccountHasBalance = false;
+      var activeAccountHasBalance = false;
       balances.forEach((cid, balanceEntry) {
-        String cidStr = cid.toFmtString();
+        final cidStr = cid.toFmtString();
         if (widget.store.encointer.communityStores!.containsKey(cidStr)) {
-          var community = widget.store.encointer.communityStores![cidStr]!;
-          var oldBalanceEntry =
+          final community = widget.store.encointer.communityStores![cidStr]!;
+          final oldBalanceEntry =
               widget.store.encointer.accountStores?[widget.store.account.currentAddress]?.balanceEntries[cidStr];
-          double demurrageRate = community.demurrage!;
-          double newBalance = community.applyDemurrage != null ? community.applyDemurrage!(balanceEntry) ?? 0 : 0;
-          double oldBalance = (community.applyDemurrage != null && oldBalanceEntry != null)
+          final demurrageRate = community.demurrage!;
+          final newBalance = community.applyDemurrage != null ? community.applyDemurrage!(balanceEntry) ?? 0 : 0;
+          final oldBalance = (community.applyDemurrage != null && oldBalanceEntry != null)
               ? community.applyDemurrage!(oldBalanceEntry) ?? 0
               : 0;
 
@@ -538,13 +538,13 @@ class _AssetsState extends State<Assets> {
 //                   .accountStores![widget.store.account.currentAddress]!.balanceEntries[cidStr]) as double? ??
 //               0;
 // >>>>>>> 9d4143d3262181f3ad0429032d40bcd3c94c1b9f
-          double delta = newBalance - oldBalance;
+          final delta = newBalance - oldBalance;
           Log.d('[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta', 'Assets');
           if (delta.abs() > demurrageRate) {
             widget.store.encointer.accountStores![widget.store.account.currentAddress]
                 ?.addBalanceEntry(cid, balances[cid]!);
             if (delta > demurrageRate) {
-              var msg = dic!.assets.incomingConfirmed
+              final msg = dic!.assets.incomingConfirmed
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
                   .replaceAll('CID_SYMBOL', community.metadata!.symbol)
                   .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);

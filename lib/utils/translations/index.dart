@@ -39,7 +39,7 @@ class I18n {
   };
 
   Translations translationsForLocale() {
-    var translations = supportedLocales[locale];
+    final translations = supportedLocales[locale];
     return translations ?? TranslationsEn();
   }
 }
