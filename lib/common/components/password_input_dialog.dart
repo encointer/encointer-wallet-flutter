@@ -93,6 +93,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
       content: Padding(
         padding: const EdgeInsets.only(top: 16),
         child: CupertinoTextFormFieldRow(
+          key: const Key('input-password-dialog'),
           decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
           padding: EdgeInsets.zero,
           autofocus: true,
