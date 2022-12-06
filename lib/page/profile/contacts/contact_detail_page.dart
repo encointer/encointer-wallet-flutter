@@ -18,12 +18,27 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
-class ContactDetailPage extends StatelessWidget {
+class ContactDetailPage extends StatefulWidget {
   ContactDetailPage(this.api, {Key? key}) : super(key: key);
 
   static const String route = '/profile/contactDetail';
 
   final Api api;
+
+  @override
+  State<ContactDetailPage> createState() => _ContactDetailPageState();
+}
+
+class _ContactDetailPageState extends State<ContactDetailPage> {
+  int _tikketNumber = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      _tikketNumber = await webApi.encointer.getNumberOfNewbieTicketsForReputable();
+    });
+  }
 
   void _removeItem(BuildContext context, AccountData account, AppStore store) {
     final dic = I18n.of(context)!.translationsForLocale();
@@ -109,8 +124,9 @@ class ContactDetailPage extends StatelessWidget {
                 ),
               ),
               Observer(builder: (_) {
-                return _store.encointer.community!.bootstrappers!.contains(_store.account.currentAddress)
-                    ? EndorseButton(_store, api, account)
+                return _store.encointer.community!.bootstrappers!.contains(_store.account.currentAddress) ||
+                        _tikketNumber > 0
+                    ? EndorseButton(_store, widget.api, account)
                     : Container();
               }),
               const SizedBox(height: 16),
