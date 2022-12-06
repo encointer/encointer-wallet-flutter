@@ -38,6 +38,8 @@ installed on your computer to compile the project. check [Flutter Documentation]
 Encointer wallet connects to the chains with [polkadot-js/api](https://polkadot.js.org/api/), running in a hidden webview.
 You'll need `Nodejs` and `yarn` installed to build the bundled `main.js` file:
 
+See the js_service_encointer [Readme](lib/js_service_encointer/README.md) for more documentation.
+
 ```shell script
 cd lib/js_service_encointer/
 # install nodejs dependencies
