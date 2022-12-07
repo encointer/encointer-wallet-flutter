@@ -520,15 +520,13 @@ class EncointerApi {
     var _remainingTickets = 0;
     final address = store.account.currentAddress;
     final reputations = store.encointer.account?.reputations;
-
-    for (var ceremonyIndex = 0; ceremonyIndex <= 3; ceremonyIndex++) {
-      final reputation = reputations?[ceremonyIndex];
-      // note: this is only the simplest approach. I think we should not call `evaluateJavascript` directly here, but rather
-      // wrap the JS call in the encointer_api.dart.
-      if (reputation != null) {
+    if (reputations != null) {
+      for (var reputation in reputations.entries) {
+        print('==========> key -> ${reputation.key}');
+        print('==========> value -> ${reputation.value}');
         try {
           final v = await jsApi.evalJavascript(
-            'encointer.remainingNewbieTickes($address, $ceremonyIndex, ${reputation.communityIdentifier})',
+            'encointer.remainingNewbieTickets($address, ${reputation.key}, ${reputation.value.communityIdentifier})',
           );
           print('==========> v -> $v');
           _remainingTickets += v as int;
@@ -536,8 +534,6 @@ class EncointerApi {
           print('==========> v -> $e');
         }
       }
-
-      print(_remainingTickets);
     }
     return _remainingTickets;
   }
