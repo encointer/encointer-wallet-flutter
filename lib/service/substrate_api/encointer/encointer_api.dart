@@ -522,11 +522,10 @@ class EncointerApi {
     final reputations = store.encointer.account?.reputations;
     if (reputations != null) {
       for (var reputation in reputations.entries) {
-        print('==========> key -> ${reputation.key}');
-        print('==========> value -> ${reputation.value}');
+        print('==========> value -> $address');
         try {
           final v = await jsApi.evalJavascript(
-            'encointer.remainingNewbieTickets($address, ${reputation.key}, ${reputation.value.communityIdentifier})',
+            'encointer.remainingNewbieTickets("$address", ${reputation.key}, ${reputation.value.communityIdentifier})',
           );
           print('==========> v -> $v');
           _remainingTickets += v as int;
