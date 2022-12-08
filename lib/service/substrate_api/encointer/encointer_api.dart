@@ -525,7 +525,7 @@ class EncointerApi {
         print('==========> value -> $address');
         try {
           final v = await jsApi.evalJavascript(
-            'encointer.remainingNewbieTickets("$address", ${reputation.key}, ${reputation.value.communityIdentifier})',
+            'encointer.remainingNewbieTickets(${jsonEncode(reputation.value.communityIdentifier)}, "${reputation.key}","$address")',
           );
           print('==========> v -> $v');
           _remainingTickets += v as int;
