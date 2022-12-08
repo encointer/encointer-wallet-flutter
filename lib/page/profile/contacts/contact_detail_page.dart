@@ -100,7 +100,7 @@ class ContactDetailPage extends StatelessWidget {
                         Text(Fmt.address(account.address)!, style: const TextStyle(fontSize: 20)),
                         IconButton(
                           icon: const Icon(Iconsax.copy),
-                          color: ZurichLion.shade500,
+                          color: zurichLion.shade500,
                           onPressed: () => UI.copyAndNotify(context, account.address),
                         ),
                       ],
@@ -181,7 +181,7 @@ class EndorseButton extends StatelessWidget {
       ),
       onPressed: store.encointer.community!.bootstrappers!.contains(contact.address)
           ? (BuildContext context) => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
-          : store.encointer.currentPhase != CeremonyPhase.Registering
+          : store.encointer.currentPhase != CeremonyPhase.registering
               ? (BuildContext context) => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)
               : (BuildContext context) =>
                   submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, contact.address),

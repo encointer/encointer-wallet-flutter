@@ -20,7 +20,7 @@ class AccountApi {
     if (store.account.accountList.length > 0) {
       final accounts = jsonEncode(store.account.accountList.map((i) => AccountData.toJson(i)).toList());
 
-      final ss58 = jsonEncode(network_ss58_map.values.toSet().toList());
+      final ss58 = jsonEncode(networkSs58Map.values.toSet().toList());
       final keys = await jsApi.evalJavascript('account.initKeys($accounts, $ss58)');
       store.account.setPubKeyAddressMap(Map<String, Map>.from(keys as Map));
     }
@@ -41,7 +41,7 @@ class AccountApi {
 
   /// Encodes publicKeys to SS58-addresses
   Future<List<String?>> encodeAddress(List<String?> pubKeys) async {
-    final ss58 = jsonEncode(network_ss58_map.values.toSet().toList());
+    final ss58 = jsonEncode(networkSs58Map.values.toSet().toList());
     final res = await jsApi.evalJavascript(
       'account.encodeAddress(${jsonEncode(pubKeys)}, $ss58)',
       allowRepeat: true,

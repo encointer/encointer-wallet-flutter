@@ -4,7 +4,7 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/location/location.dart';
 import 'package:encointer_wallet/store/settings.dart';
 
-const String LeuZurich = 'Leu Zurich';
+const String leuZurich = 'Leu Zurich';
 const String bernBaer = 'Bern Bär';
 const String buendnerBock = 'Bündner Bock';
 const String zul = 'ZUL';
@@ -19,13 +19,13 @@ List<CommunityIdentifier> testCommunityIdentifiers = [
 ];
 
 List<CidName> testCommunities = [
-  CidName(cid, LeuZurich),
+  CidName(cid, leuZurich),
   CidName(cid2, bernBaer),
   CidName(cid3, buendnerBock),
 ];
 
 Map<int, CommunityReputation> testReputations = {
-  1: CommunityReputation(cid, Reputation.VerifiedUnlinked),
+  1: CommunityReputation(cid, Reputation.verifiedUnlinked),
 };
 
 const Map<String, dynamic> communityMetadata = {
@@ -55,12 +55,12 @@ const List<String> testMeetupRegistry = [
 ];
 
 const Map<CeremonyPhase, int> testPhaseDurations = {
-  CeremonyPhase.Registering: 57600000,
-  CeremonyPhase.Attesting: 172800000,
-  CeremonyPhase.Assigning: 28800000,
+  CeremonyPhase.registering: 57600000,
+  CeremonyPhase.attesting: 172800000,
+  CeremonyPhase.assigning: 28800000,
 };
 
-const CeremonyPhase initialPhase = CeremonyPhase.Registering;
+const CeremonyPhase initialPhase = CeremonyPhase.registering;
 
 const Map<String, dynamic> testBalanceEntry = {'principal': 23.4, 'lastUpdate': 4};
 

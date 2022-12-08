@@ -67,7 +67,7 @@ class CeremonyBoxService {
     double attestingFlex,
   ) {
     final totalFlex = registerFlex + assigningFlex + attestingFlex;
-    final ceremonyStart = assigningStart - ceremonyPhaseDurations[CeremonyPhase.Registering]!;
+    final ceremonyStart = assigningStart - ceremonyPhaseDurations[CeremonyPhase.registering]!;
 
     if (currentTime < ceremonyStart) {
       throw Exception('[CeremonyProgressBar] Current time was smaller than ceremony start');
@@ -77,14 +77,14 @@ class CeremonyBoxService {
 
     if (currentTime < assigningStart) {
       progressUnormalized =
-          (currentTime - ceremonyStart) / ceremonyPhaseDurations[CeremonyPhase.Registering]! * registerFlex;
+          (currentTime - ceremonyStart) / ceremonyPhaseDurations[CeremonyPhase.registering]! * registerFlex;
     } else if (currentTime < meetupTime!) {
       progressUnormalized = registerFlex +
-          (currentTime - assigningStart) / ceremonyPhaseDurations[CeremonyPhase.Assigning]! * assigningFlex;
+          (currentTime - assigningStart) / ceremonyPhaseDurations[CeremonyPhase.assigning]! * assigningFlex;
     } else {
       progressUnormalized = registerFlex +
           assigningFlex +
-          (currentTime - meetupTime) / ceremonyPhaseDurations[CeremonyPhase.Attesting]! * attestingFlex;
+          (currentTime - meetupTime) / ceremonyPhaseDurations[CeremonyPhase.attesting]! * attestingFlex;
     }
 
     return progressUnormalized / totalFlex;

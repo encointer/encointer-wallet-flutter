@@ -65,7 +65,7 @@ class CeremonyStep1Count extends StatelessWidget {
                     Center(
                       child: Text(
                         dic.encointer.count,
-                        style: Theme.of(context).textTheme.headline2!.copyWith(color: ZurichLion.shade600),
+                        style: Theme.of(context).textTheme.headline2!.copyWith(color: zurichLion.shade600),
                       ),
                     ),
                     Center(
@@ -95,7 +95,7 @@ class CeremonyStep1Count extends StatelessWidget {
                     const SizedBox(width: 12),
                     Text(
                       dic.encointer.next,
-                      style: Theme.of(context).textTheme.headline3!.copyWith(color: ZurichLion.shade50),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(color: zurichLion.shade50),
                     ),
                   ],
                 ),

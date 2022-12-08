@@ -64,7 +64,7 @@ class AggregatedAccountDataGlobal {
   Map<String, dynamic> toJson() => _$AggregatedAccountDataGlobalToJson(this);
 }
 
-enum ParticipantType { Bootstrapper, Reputable, Endorsee, Newbie }
+enum ParticipantType { bootstrapper, reputable, endorsee, newbie }
 
 @JsonSerializable()
 class CommunityReputation {
@@ -101,9 +101,9 @@ class Meetup {
   Map<String, dynamic> toJson() => _$MeetupToJson(this);
 }
 
-enum CeremonyPhase { Registering, Assigning, Attesting }
+enum CeremonyPhase { registering, assigning, attesting }
 
-enum Reputation { Unverified, UnverifiedReputable, VerifiedUnlinked, VerifiedLinked }
+enum Reputation { unverified, unverifiedReputable, verifiedUnlinked, verifiedLinked }
 
 // -- Helper functions for above types
 

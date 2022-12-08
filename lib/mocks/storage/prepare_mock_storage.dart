@@ -20,7 +20,7 @@ abstract class PrepareMockStorage {
 
   static void homePage(AppStore store) {
     final now = DateTime.now().millisecondsSinceEpoch;
-    store.encointer.setCurrentPhase(CeremonyPhase.Assigning);
+    store.encointer.setCurrentPhase(CeremonyPhase.assigning);
     store.encointer.setPhaseDurations(testPhaseDurations);
     store.encointer.setNextPhaseTimestamp(now + const Duration(hours: 8).inMilliseconds);
     store.encointer.community!.setCommunityMetadata(CommunityMetadata.fromJson(communityMetadata));
@@ -32,7 +32,7 @@ abstract class PrepareMockStorage {
   static void readyForMeetup(AppStore store) {
     final now = DateTime.now().millisecondsSinceEpoch;
 
-    store.encointer.setCurrentPhase(CeremonyPhase.Attesting);
+    store.encointer.setCurrentPhase(CeremonyPhase.attesting);
     store.encointer.community!.setMeetupLocations([testLocation1, testLocation2, testLocation3]);
     store.encointer.communityAccount!.setMeetup(
       Meetup(

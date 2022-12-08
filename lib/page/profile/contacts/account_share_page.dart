@@ -89,7 +89,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.share, color: ZurichLion.shade500),
+                    Icon(Icons.share, color: zurichLion.shade500),
                     const SizedBox(width: 12),
                     Text(dic.profile.sendLink, style: textTheme.headline3),
                   ],

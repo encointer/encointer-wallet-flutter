@@ -16,7 +16,7 @@ import 'package:encointer_wallet/utils/ui.dart';
 
 /// Contains most of the logic from the `txConfirmPage.dart`, which was removed.
 
-const INSUFFICIENT_FUNDS_ERROR = '1010';
+const insufficientFundsError = '1010';
 
 /// Inner function to submit a tx via the JS interface.
 ///
@@ -36,7 +36,7 @@ Future<void> submitToJS(
   final args = txParams;
 
   store.assets.setSubmitting(true);
-  store.account.setTxStatus(TxStatus.Queued);
+  store.account.setTxStatus(TxStatus.queued);
 
   final txInfo = args['txInfo'] as Map;
   txInfo['pubKey'] = store.account.currentAccount.pubKey;
@@ -98,7 +98,7 @@ void _onTxError(BuildContext context, AppStore store, String errorMsg, bool moun
     RootSnackBar.removeCurrent();
   }
 
-  if (errorMsg.startsWith(INSUFFICIENT_FUNDS_ERROR)) {
+  if (errorMsg.startsWith(insufficientFundsError)) {
     showInsufficientFundsDialog(context);
   } else {
     showErrorDialog(context, errorMsg);
@@ -156,17 +156,17 @@ void _onTxFinish(
 
 String getTxStatusTranslation(TranslationsHome dic, TxStatus? status) {
   switch (status) {
-    case TxStatus.Queued:
+    case TxStatus.queued:
       return dic.txQueued;
-    case TxStatus.QueuedOffline:
+    case TxStatus.queuedOffline:
       return dic.txQueuedOffline;
-    case TxStatus.Ready:
+    case TxStatus.ready:
       return dic.txReady;
-    case TxStatus.Broadcast:
+    case TxStatus.broadcast:
       return dic.txBroadcast;
-    case TxStatus.InBlock:
+    case TxStatus.inBlock:
       return dic.txInBlock;
-    case TxStatus.Error:
+    case TxStatus.error:
       return dic.txError;
     default:
       Log.d('Illegal TxStatus supplied to translation: $status', 'getTxStatusTranslation');

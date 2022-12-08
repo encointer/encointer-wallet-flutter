@@ -126,7 +126,7 @@ abstract class _AccountStore with Store {
     // _log("currentAddress: AddressMap 2: ${pubKeyAddressMap[2].toString()}");
 
     var ss58 = rootStore.settings.customSS58Format['value'] as int?;
-    if (rootStore.settings.customSS58Format['info'] == default_ss58_prefix['info']) {
+    if (rootStore.settings.customSS58Format['info'] == defaultSs58Prefix['info']) {
       ss58 = rootStore.settings.endpoint.ss58;
     }
 

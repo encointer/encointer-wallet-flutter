@@ -302,7 +302,7 @@ class EncointerApi {
     // -1 as we get the pending issuance for the last ceremony
     var issuanceCIndex = cIndex - 1;
 
-    if (store.encointer.currentPhase == CeremonyPhase.Attesting) {
+    if (store.encointer.currentPhase == CeremonyPhase.attesting) {
       // If we are in the attesting phase we want to payout the current meetup
       // aka early payout directly after the key-signing gathering.
       issuanceCIndex = cIndex;
@@ -467,7 +467,7 @@ class EncointerApi {
 
   Future<dynamic> sendFaucetTx() async {
     final address = store.account.currentAddress;
-    final amount = Fmt.tokenInt(faucetAmount.toString(), ert_decimals);
+    final amount = Fmt.tokenInt(faucetAmount.toString(), ertDecimals);
     final res = await jsApi.evalJavascript('account.sendFaucetTx("$address", "$amount")');
     // Log.d("Faucet Result : $res", 'EncointerApi');
     return res;

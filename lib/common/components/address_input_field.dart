@@ -153,7 +153,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
     final dic = I18n.of(context)!.translationsForLocale();
     return Container(
       decoration: BoxDecoration(
-        color: ZurichLion.shade50,
+        color: zurichLion.shade50,
         borderRadius: BorderRadius.circular(15),
       ),
       child: DropdownSearch<AccountData>(

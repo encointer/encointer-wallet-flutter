@@ -1,1 +1,1 @@
-enum TxStatus { Queued, QueuedOffline, Ready, Broadcast, InBlock, Error }
+enum TxStatus { queued, queuedOffline, ready, broadcast, inBlock, error }

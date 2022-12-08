@@ -220,7 +220,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           Text(Fmt.address(addressSS58)!, style: const TextStyle(fontSize: 20)),
                           IconButton(
                             icon: const Icon(Iconsax.copy),
-                            color: ZurichLion.shade500,
+                            color: zurichLion.shade500,
                             onPressed: () => UI.copyAndNotify(context, addressSS58),
                           ),
                         ],
@@ -293,7 +293,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                               key: Key('popup-menu-account-trash-export'),
                               color: Colors.white,
                             ),
-                            color: ZurichLion.shade50,
+                            color: zurichLion.shade50,
                             padding: const EdgeInsets.all(20),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
@@ -317,8 +317,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
                                           value: data.accountAction,
                                           // https://github.com/flutter/flutter/issues/31247 as soon as we use a newer flutter version we might be able to add this to our theme.dart
                                           child: ListTileTheme(
-                                            textColor: ZurichLion.shade500,
-                                            iconColor: ZurichLion.shade500,
+                                            textColor: zurichLion.shade500,
+                                            iconColor: zurichLion.shade500,
                                             child: ListTile(
                                               minLeadingWidth: 0,
                                               title: Text(data.title),

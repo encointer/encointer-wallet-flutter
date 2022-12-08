@@ -52,7 +52,7 @@ class CeremonyBox extends StatelessWidget {
           Container(
             padding: const EdgeInsets.fromLTRB(24, 24, 24, 24),
             decoration: BoxDecoration(
-              color: ZurichLion.shade50,
+              color: zurichLion.shade50,
               borderRadius: BorderRadius.vertical(
                 top: const Radius.circular(15),
                 bottom: Radius.circular(store.encointer.showMeetupInfo ? 0 : 15),
@@ -132,7 +132,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
   final communityAccount = store.encointer.communityAccount;
 
   switch (store.encointer.currentPhase) {
-    case CeremonyPhase.Registering:
+    case CeremonyPhase.registering:
       if (communityAccount?.isRegistered ?? false) {
         return CeremonyNotification(
           key: const Key('is-registered-info'),
@@ -150,7 +150,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
         );
         return Container();
       }
-    case CeremonyPhase.Assigning:
+    case CeremonyPhase.assigning:
       if (store.encointer.communityAccount?.isAssigned ?? false) {
         final meetup = store.encointer.communityAccount!.meetup!;
         final location = store.encointer.community!.meetupLocations![meetup.locationIndex];
@@ -165,7 +165,7 @@ Widget getMeetupInfoWidget(BuildContext context, AppStore store) {
           notification: dic.encointer.youAreNotRegisteredPleaseRegisterNextTime,
         );
       }
-    case CeremonyPhase.Attesting:
+    case CeremonyPhase.attesting:
       if (!(store.encointer.communityAccount?.isAssigned ?? false)) {
         return CeremonyNotification(
           notificationIconData: Iconsax.close_square,

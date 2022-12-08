@@ -90,7 +90,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
                 : Icon(
                     i.iconData,
                     key: Key(i.key.name),
-                    color: i.key == TabKey.Scan ? ZurichLion.shade900 : encointerGrey,
+                    color: i.key == TabKey.scan ? zurichLion.shade900 : encointerGrey,
                   ),
             label: '',
           ),
@@ -103,24 +103,24 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
     final _store = context.watch<AppStore>();
     _tabList = <TabData>[
       TabData(
-        TabKey.Wallet,
+        TabKey.wallet,
         Iconsax.home_2,
       ),
       if (context.select<AppStore, bool>((store) => store.settings.enableBazaar))
         TabData(
-          TabKey.Bazaar,
+          TabKey.bazaar,
           Iconsax.shop,
         ), // dart collection if
       TabData(
-        TabKey.Scan,
+        TabKey.scan,
         Iconsax.scan_barcode,
       ),
       TabData(
-        TabKey.Contacts,
+        TabKey.contacts,
         Iconsax.profile_2user,
       ),
       TabData(
-        TabKey.Profile,
+        TabKey.profile,
         Iconsax.profile_circle,
       ),
     ];
@@ -142,7 +142,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         currentIndex: _tabIndex,
         iconSize: 22.0,
         onTap: (index) async {
-          if (_tabList[index].key == TabKey.Scan) {
+          if (_tabList[index].key == TabKey.scan) {
             // Push `ScanPage.Route`instead of changing the Page.
             Navigator.of(context).pushNamed(
               ScanPage.route,
@@ -175,9 +175,9 @@ class TabData {
 }
 
 enum TabKey {
-  Wallet,
-  Bazaar,
-  Scan,
-  Contacts,
-  Profile,
+  wallet,
+  bazaar,
+  scan,
+  contacts,
+  profile,
 }
