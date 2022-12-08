@@ -29,10 +29,10 @@ jobs:
         with:
           github_token: ${{secrets.GITHUB_TOKEN}}
           workflow: build-and-test.yml
-          name: encointer-node-notee-82d2d27e85930a41c402ac213be26335a792b6d9
+          name: encointer-node-notee-54cec8518e1213370c01bb58af0336508ef92ba1
           # in fact this action should download the latest artifact, but sometimes fails. Then we need to
           # set the `run_id` to force a download of an updated binary.
-          run_id: 3016606926
+          run_id: 3641963611
           path: node
           repo: encointer/encointer-node
 
@@ -54,7 +54,7 @@ jobs:
     timeout-minutes: 30
     strategy:
       matrix:
-        network: [gesell] # Todo: add cantillon once we support it again.
+        network: [ gesell ] # Todo: add cantillon once we support it again.
     steps:
       # Setup Environment
       - uses: actions/checkout@v2
