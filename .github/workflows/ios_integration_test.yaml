@@ -51,7 +51,7 @@ jobs:
           java-version: ${{ steps.config.outputs.java-version }}
 
       - name: Install flutter wrapper
-        run: ./scripts/install_flutter.sh
+        run: ./scripts/install_flutter_wrapper.sh
 
       - name: "Create Simulator if iPad Pro 2nd gen"
         if: ${{ matrix.device == 'iPad Pro (12.9-inch) (2nd generation)' }}
