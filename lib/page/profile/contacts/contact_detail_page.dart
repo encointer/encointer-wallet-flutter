@@ -19,7 +19,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class ContactDetailPage extends StatelessWidget {
-  ContactDetailPage(this.api, {Key? key}) : super(key: key);
+  const ContactDetailPage(this.api, {Key? key}) : super(key: key);
 
   static const String route = '/profile/contactDetail';
 
@@ -159,7 +159,7 @@ class ContactDetailPage extends StatelessWidget {
 }
 
 class EndorseButton extends StatelessWidget {
-  EndorseButton(this.store, this.api, this.contact, {Key? key}) : super(key: key);
+  const EndorseButton(this.store, this.api, this.contact, {Key? key}) : super(key: key);
 
   final AppStore store;
   final Api api;

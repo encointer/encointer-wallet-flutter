@@ -5,18 +5,18 @@ import 'package:json_annotation/json_annotation.dart';
 part 'node.g.dart';
 
 /// Overrides for the Gesell test network
-const NodeConfig GesellConfig = const NodeConfig(GesellTypeOverrides, GesellPalletOverrides);
+const NodeConfig GesellConfig = NodeConfig(GesellTypeOverrides, GesellPalletOverrides);
 
 /// Overrides for the Cantillon test network
-const NodeConfig CantillonConfig = const NodeConfig(GesellTypeOverrides, GesellPalletOverrides);
+const NodeConfig CantillonConfig = NodeConfig(GesellTypeOverrides, GesellPalletOverrides);
 
 /// Overrides for the master branch of the `encointer-node`, which is usually used in a local
 /// no-tee-dev-setup
-const NodeConfig MasterBranchConfig = const NodeConfig(TypeOverridesDev, PalletOverridesDev);
+const NodeConfig MasterBranchConfig = NodeConfig(TypeOverridesDev, PalletOverridesDev);
 
 /// Overrides for the sgx-master branch of the `encointer-node`, which is usually used in a local
 /// tee-dev-setup
-const NodeConfig SgxBranchConfig = const NodeConfig(GesellTypeOverrides, GesellPalletOverrides);
+const NodeConfig SgxBranchConfig = NodeConfig(GesellTypeOverrides, GesellPalletOverrides);
 
 /// Config to handle different versions of our nodes by supplying type overwrites
 /// and pallet names and methods overwrites.

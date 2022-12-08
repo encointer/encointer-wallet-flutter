@@ -135,7 +135,7 @@ class CeremonyDate extends StatelessWidget {
         ),
         const SizedBox(width: 12),
         const Padding(
-          padding: const EdgeInsets.only(bottom: 2),
+          padding: EdgeInsets.only(bottom: 2),
           child: Icon(
             Iconsax.clock,
             color: encointerGrey,

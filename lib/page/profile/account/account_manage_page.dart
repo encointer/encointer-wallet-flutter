@@ -22,7 +22,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class AccountManagePage extends StatefulWidget {
-  AccountManagePage({Key? key}) : super(key: key);
+  const AccountManagePage({Key? key}) : super(key: key);
 
   static const String route = '/profile/account';
 
@@ -290,7 +290,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                             offset: const Offset(-10, -150),
                             icon: const Icon(
                               Iconsax.more,
-                              key: const Key('popup-menu-account-trash-export'),
+                              key: Key('popup-menu-account-trash-export'),
                               color: Colors.white,
                             ),
                             color: ZurichLion.shade50,

@@ -2,7 +2,7 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:flutter/material.dart';
 
 class LowerCeremonyBoxContainer extends StatelessWidget {
-  LowerCeremonyBoxContainer({
+  const LowerCeremonyBoxContainer({
     required this.child,
     Key? key,
   }) : super(key: key);

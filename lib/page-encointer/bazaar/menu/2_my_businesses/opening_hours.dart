@@ -21,7 +21,7 @@ class OpeningHours extends StatelessWidget {
 }
 
 class OpeningHoursViewForDay extends StatelessWidget {
-  OpeningHoursViewForDay(this.day, {Key? key}) : super(key: key);
+  const OpeningHoursViewForDay(this.day, {Key? key}) : super(key: key);
   final int day;
 
   @override
