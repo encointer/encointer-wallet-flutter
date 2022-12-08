@@ -10,7 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 
 class AddressInputField extends StatefulWidget {
-  AddressInputField(this.store, {Key? key, this.label, this.initialValue, this.onChanged, this.hideIdenticon = false})
+  const AddressInputField(this.store,
+      {Key? key, this.label, this.initialValue, this.onChanged, this.hideIdenticon = false})
       : super(key: key);
   final AppStore store;
   final String? label;

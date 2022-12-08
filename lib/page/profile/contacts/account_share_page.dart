@@ -11,7 +11,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class AccountSharePage extends StatefulWidget {
-  AccountSharePage({Key? key}) : super(key: key);
+  const AccountSharePage({Key? key}) : super(key: key);
   static const String route = '/profile/share';
 
   @override

@@ -22,7 +22,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class AccountManagePage extends StatefulWidget {
-  AccountManagePage({Key? key}) : super(key: key);
+  const AccountManagePage({Key? key}) : super(key: key);
 
   static const String route = '/profile/account';
 

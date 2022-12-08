@@ -15,7 +15,7 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class ChangePasswordPage extends StatefulWidget {
-  ChangePasswordPage({Key? key}) : super(key: key);
+  const ChangePasswordPage({Key? key}) : super(key: key);
 
   static const String route = '/profile/password';
 

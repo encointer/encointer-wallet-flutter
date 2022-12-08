@@ -21,7 +21,7 @@ Widget showPasswordInputDialog(
 }
 
 class PasswordInputDialog extends StatefulWidget {
-  PasswordInputDialog({
+  const PasswordInputDialog({
     Key? key,
     required this.account,
     required this.onOk,

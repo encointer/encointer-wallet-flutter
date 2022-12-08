@@ -45,7 +45,7 @@ class AboutPage extends StatelessWidget {
               },
             ),
             const SizedBox(height: 16),
-            JumpToBrowserLink('https://encointer.org'),
+            const JumpToBrowserLink('https://encointer.org'),
           ],
         ),
       ),

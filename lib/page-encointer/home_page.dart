@@ -132,10 +132,10 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
         controller: _pageController,
         children: [
           Assets(_store),
-          if (context.select<AppStore, bool>((store) => store.settings.enableBazaar)) BazaarMain(),
+          if (context.select<AppStore, bool>((store) => store.settings.enableBazaar)) const BazaarMain(),
           ScanPage(),
-          ContactsPage(),
-          Profile(),
+          const ContactsPage(),
+          const Profile(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

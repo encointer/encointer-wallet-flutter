@@ -70,8 +70,8 @@ class CeremonyInfo extends StatelessWidget {
             )
           : Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const CupertinoActivityIndicator(),
+              children: const [
+                CupertinoActivityIndicator(),
               ],
             ),
     );

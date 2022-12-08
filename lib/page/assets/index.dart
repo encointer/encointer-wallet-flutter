@@ -38,7 +38,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class Assets extends StatefulWidget {
-  Assets(this.store, {Key? key}) : super(key: key);
+  const Assets(this.store, {Key? key}) : super(key: key);
 
   final AppStore store;
 
@@ -206,7 +206,7 @@ class _AssetsState extends State<Assets> {
                                                   Text(dic!.assets.communityNotSelected, textAlign: TextAlign.center))
                                           : const SizedBox(
                                               width: double.infinity,
-                                              child: const CupertinoActivityIndicator(),
+                                              child: CupertinoActivityIndicator(),
                                             ),
                                     );
                             },

@@ -8,12 +8,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 class CreateAccountEntryPage extends StatelessWidget {
   static const String route = '/account/entry';
 
-  CreateAccountEntryPage({Key? key}) : super(key: key);
+  const CreateAccountEntryPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final nctrLogo = 'assets/nctr_logo.svg';
-    final mosaicBackground = 'assets/nctr_mosaic_background.svg';
+    const nctrLogo = 'assets/nctr_logo.svg';
+    const mosaicBackground = 'assets/nctr_mosaic_background.svg';
     final dic = I18n.of(context)!.translationsForLocale();
 
     return Scaffold(

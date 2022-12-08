@@ -205,7 +205,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
         return Container(
           decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.red),
           child: const Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(10.0),
             child: Icon(
               Icons.highlight_remove,
               size: 80.0,
