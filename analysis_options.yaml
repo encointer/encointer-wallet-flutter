@@ -20,11 +20,11 @@ linter:
     always_declare_return_types: true
     prefer_asserts_with_message: true
 
-    prefer_const_literals_to_create_immutables: false
-    prefer_const_constructors_in_immutables: false
-    prefer_const_declarations: false
-    unnecessary_const: false
-    constant_identifier_names: false
+    prefer_const_literals_to_create_immutables: true
+    prefer_const_constructors_in_immutables: true
+    prefer_const_declarations: true
+    unnecessary_const: true
+    constant_identifier_names: true
 
     sort_child_properties_last: false
     sort_constructors_first: false
