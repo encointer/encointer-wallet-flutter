@@ -72,7 +72,7 @@ In windows, this does unfortunately not work, but you can still set up your IDE 
 
 ```
 // initialize .flutter git submodule (also works on windows)
-./scripts/install_flutter.sh
+./scripts/install_flutter_wrapper.sh
 
 // refer to the flutter installation in your git submodule
 ./.flutter/bin/flutter doctor
@@ -108,7 +108,7 @@ and find the output in `build/app/outputs/bundle/release/app-release.aab`
 The following two files contain the supported flutter version:
 
 * [GitHub Action Config](./.github/action-config.json)
-* [install_flutter.sh](./scripts/install_flutter.sh)
+* [install_flutter_wrapper.sh](./scripts/install_flutter_wrapper.sh)
 
 These versions must always be aligned!
 
