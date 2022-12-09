@@ -65,6 +65,7 @@ class AggregatedAccountDataGlobal {
   Map<String, dynamic> toJson() => _$AggregatedAccountDataGlobalToJson(this);
 }
 
+// For compatibility with substrate's naming convention.
 // ignore: constant_identifier_names
 enum ParticipantType { Bootstrapper, Reputable, Endorsee, Newbie }
 
@@ -103,9 +104,11 @@ class Meetup {
   Map<String, dynamic> toJson() => _$MeetupToJson(this);
 }
 
+// For compatibility with substrate's naming convention.
 // ignore: constant_identifier_names
 enum CeremonyPhase { Registering, Assigning, Attesting }
 
+// For compatibility with substrate's naming convention.
 // ignore: constant_identifier_names
 enum Reputation { Unverified, UnverifiedReputable, VerifiedUnlinked, VerifiedLinked }
 
