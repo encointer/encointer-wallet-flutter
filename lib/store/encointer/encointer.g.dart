@@ -11,6 +11,7 @@ EncointerStore _$EncointerStoreFromJson(Map<String, dynamic> json) => EncointerS
     )
       ..currentPhase = $enumDecode(_$CeremonyPhaseEnumMap, json['currentPhase'])
       ..nextPhaseTimestamp = json['nextPhaseTimestamp'] as int?
+      ..numberOfNewbieTicketsForReputable = json['numberOfNewbieTicketsForReputable'] as int
       ..phaseDurations = (json['phaseDurations'] as Map<String, dynamic>).map(
         (k, e) => MapEntry($enumDecode(_$CeremonyPhaseEnumMap, k), e as int),
       )
@@ -42,6 +43,7 @@ Map<String, dynamic> _$EncointerStoreToJson(EncointerStore instance) => <String,
       'network': instance.network,
       'currentPhase': _$CeremonyPhaseEnumMap[instance.currentPhase]!,
       'nextPhaseTimestamp': instance.nextPhaseTimestamp,
+      'numberOfNewbieTicketsForReputable': instance.numberOfNewbieTicketsForReputable,
       'phaseDurations': instance.phaseDurations.map((k, e) => MapEntry(_$CeremonyPhaseEnumMap[k]!, e)),
       'currentCeremonyIndex': instance.currentCeremonyIndex,
       'communityIdentifiers': instance.communityIdentifiers.map((e) => e.toJson()).toList(),
@@ -174,6 +176,22 @@ mixin _$EncointerStore on _EncointerStore, Store {
     });
   }
 
+  late final _$numberOfNewbieTicketsForReputableAtom =
+      Atom(name: '_EncointerStore.numberOfNewbieTicketsForReputable', context: context);
+
+  @override
+  int get numberOfNewbieTicketsForReputable {
+    _$numberOfNewbieTicketsForReputableAtom.reportRead();
+    return super.numberOfNewbieTicketsForReputable;
+  }
+
+  @override
+  set numberOfNewbieTicketsForReputable(int value) {
+    _$numberOfNewbieTicketsForReputableAtom.reportWrite(value, super.numberOfNewbieTicketsForReputable, () {
+      super.numberOfNewbieTicketsForReputable = value;
+    });
+  }
+
   late final _$phaseDurationsAtom = Atom(name: '_EncointerStore.phaseDurations', context: context);
 
   @override
@@ -277,6 +295,14 @@ mixin _$EncointerStore on _EncointerStore, Store {
     _$accountStoresAtom.reportWrite(value, super.accountStores, () {
       super.accountStores = value;
     });
+  }
+
+  late final _$getNumberOfNewbieTicketsForReputableAsyncAction =
+      AsyncAction('_EncointerStore.getNumberOfNewbieTicketsForReputable', context: context);
+
+  @override
+  Future<void> getNumberOfNewbieTicketsForReputable() {
+    return _$getNumberOfNewbieTicketsForReputableAsyncAction.run(() => super.getNumberOfNewbieTicketsForReputable());
   }
 
   late final _$setCommunityIdentifiersAsyncAction =
@@ -408,6 +434,7 @@ mixin _$EncointerStore on _EncointerStore, Store {
     return '''
 currentPhase: ${currentPhase},
 nextPhaseTimestamp: ${nextPhaseTimestamp},
+numberOfNewbieTicketsForReputable: ${numberOfNewbieTicketsForReputable},
 phaseDurations: ${phaseDurations},
 currentCeremonyIndex: ${currentCeremonyIndex},
 communityIdentifiers: ${communityIdentifiers},

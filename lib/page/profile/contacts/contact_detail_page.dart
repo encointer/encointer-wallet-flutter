@@ -19,7 +19,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class ContactDetailPage extends StatefulWidget {
-  ContactDetailPage(this.api, {Key? key}) : super(key: key);
+  const ContactDetailPage(this.api, {Key? key}) : super(key: key);
 
   static const String route = '/profile/contactDetail';
 
@@ -30,13 +30,11 @@ class ContactDetailPage extends StatefulWidget {
 }
 
 class _ContactDetailPageState extends State<ContactDetailPage> {
-  int _tikketNumber = 0;
-
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      _tikketNumber = await webApi.encointer.getNumberOfNewbieTicketsForReputable();
+      await context.read<AppStore>().encointer.getNumberOfNewbieTicketsForReputable();
     });
   }
 
@@ -125,7 +123,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
               ),
               Observer(builder: (_) {
                 return _store.encointer.community!.bootstrappers!.contains(_store.account.currentAddress) ||
-                        _tikketNumber > 0
+                        _store.encointer.numberOfNewbieTicketsForReputable > 0
                     ? EndorseButton(_store, widget.api, account)
                     : Container();
               }),

@@ -81,6 +81,9 @@ abstract class _EncointerStore with Store {
   int? nextPhaseTimestamp;
 
   @observable
+  int numberOfNewbieTicketsForReputable = 0;
+
+  @observable
   Map<CeremonyPhase, int> phaseDurations = {};
 
   @computed
@@ -204,6 +207,11 @@ abstract class _EncointerStore with Store {
 
     this.phaseDurations = phaseDurations;
     writeToCache();
+  }
+
+  @action
+  Future<void> getNumberOfNewbieTicketsForReputable() async {
+    numberOfNewbieTicketsForReputable = await webApi.encointer.getNumberOfNewbieTicketsForReputable();
   }
 
   @action
