@@ -522,15 +522,14 @@ class EncointerApi {
     final reputations = store.encointer.account?.reputations;
     if (reputations != null) {
       for (var reputation in reputations.entries) {
-        print('==========> value -> $address');
         try {
-          final v = await jsApi.evalJavascript(
+          final numberTikkets = await jsApi.evalJavascript(
             'encointer.remainingNewbieTickets(${jsonEncode(reputation.value.communityIdentifier)}, "${reputation.key}","$address")',
           );
-          print('==========> v -> $v');
-          _remainingTickets += v as int;
-        } catch (e) {
-          print('==========> v -> $e');
+          Log.d('Encointer Api', 'numberTikkets: $numberTikkets');
+          _remainingTickets += numberTikkets as int;
+        } catch (e, s) {
+          Log.e('Encointer Api', '$e', s);
         }
       }
     }
