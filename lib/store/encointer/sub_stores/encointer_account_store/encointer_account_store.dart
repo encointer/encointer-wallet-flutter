@@ -59,7 +59,7 @@ abstract class _EncointerAccountStore with Store {
   int? get ceremonyIndexForProofOfAttendance {
     if (reputations.isNotEmpty) {
       try {
-        return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.verifiedUnlinked).key;
+        return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
       } catch (_e, s) {
         Log.e('$address has reputation, but none that has not been linked yet', 'EncointerAccountStore', s);
         return 0;

@@ -32,7 +32,7 @@ class MeetupOverrides {
   DateTime? getNextMeetupTime(DateTime time, CeremonyPhase? phase) {
     meetupTimes!.sort();
 
-    if (phase != CeremonyPhase.attesting) {
+    if (phase != CeremonyPhase.Attesting) {
       return meetupTimes!.firstWhereOrNull((mt) => time.isBefore(mt));
     } else {
       return meetupTimes!.reversed.firstWhereOrNull((mt) => time.isAfter(mt));

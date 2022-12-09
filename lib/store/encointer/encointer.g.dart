@@ -53,9 +53,9 @@ Map<String, dynamic> _$EncointerStoreToJson(EncointerStore instance) => <String,
     };
 
 const _$CeremonyPhaseEnumMap = {
-  CeremonyPhase.registering: 'registering',
-  CeremonyPhase.assigning: 'assigning',
-  CeremonyPhase.attesting: 'attesting',
+  CeremonyPhase.Registering: 'Registering',
+  CeremonyPhase.Assigning: 'Assigning',
+  CeremonyPhase.Attesting: 'Attesting',
 };
 
 // **************************************************************************

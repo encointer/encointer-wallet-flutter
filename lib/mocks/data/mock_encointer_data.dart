@@ -25,7 +25,7 @@ List<CidName> testCommunities = [
 ];
 
 Map<int, CommunityReputation> testReputations = {
-  1: CommunityReputation(cid, Reputation.verifiedUnlinked),
+  1: CommunityReputation(cid, Reputation.VerifiedUnlinked),
 };
 
 const Map<String, dynamic> communityMetadata = {
@@ -55,12 +55,12 @@ const List<String> testMeetupRegistry = [
 ];
 
 const Map<CeremonyPhase, int> testPhaseDurations = {
-  CeremonyPhase.registering: 57600000,
-  CeremonyPhase.attesting: 172800000,
-  CeremonyPhase.assigning: 28800000,
+  CeremonyPhase.Registering: 57600000,
+  CeremonyPhase.Attesting: 172800000,
+  CeremonyPhase.Assigning: 28800000,
 };
 
-const CeremonyPhase initialPhase = CeremonyPhase.registering;
+const CeremonyPhase initialPhase = CeremonyPhase.Registering;
 
 const Map<String, dynamic> testBalanceEntry = {'principal': 23.4, 'lastUpdate': 4};
 

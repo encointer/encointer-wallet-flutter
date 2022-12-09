@@ -36,10 +36,10 @@ Map<String, dynamic> _$AggregatedAccountDataPersonalToJson(AggregatedAccountData
     };
 
 const _$ParticipantTypeEnumMap = {
-  ParticipantType.bootstrapper: 'bootstrapper',
-  ParticipantType.reputable: 'reputable',
-  ParticipantType.endorsee: 'endorsee',
-  ParticipantType.newbie: 'newbie',
+  ParticipantType.Bootstrapper: 'Bootstrapper',
+  ParticipantType.Reputable: 'Reputable',
+  ParticipantType.Endorsee: 'Endorsee',
+  ParticipantType.Newbie: 'Newbie',
 };
 
 AggregatedAccountDataGlobal _$AggregatedAccountDataGlobalFromJson(Map<String, dynamic> json) =>
@@ -54,9 +54,9 @@ Map<String, dynamic> _$AggregatedAccountDataGlobalToJson(AggregatedAccountDataGl
     };
 
 const _$CeremonyPhaseEnumMap = {
-  CeremonyPhase.registering: 'registering',
-  CeremonyPhase.assigning: 'assigning',
-  CeremonyPhase.attesting: 'attesting',
+  CeremonyPhase.Registering: 'Registering',
+  CeremonyPhase.Assigning: 'Assigning',
+  CeremonyPhase.Attesting: 'Attesting',
 };
 
 CommunityReputation _$CommunityReputationFromJson(Map<String, dynamic> json) => CommunityReputation(
@@ -72,10 +72,10 @@ Map<String, dynamic> _$CommunityReputationToJson(CommunityReputation instance) =
     };
 
 const _$ReputationEnumMap = {
-  Reputation.unverified: 'unverified',
-  Reputation.unverifiedReputable: 'unverifiedReputable',
-  Reputation.verifiedUnlinked: 'verifiedUnlinked',
-  Reputation.verifiedLinked: 'verifiedLinked',
+  Reputation.Unverified: 'Unverified',
+  Reputation.UnverifiedReputable: 'UnverifiedReputable',
+  Reputation.VerifiedUnlinked: 'VerifiedUnlinked',
+  Reputation.VerifiedLinked: 'VerifiedLinked',
 };
 
 Meetup _$MeetupFromJson(Map<String, dynamic> json) => Meetup(

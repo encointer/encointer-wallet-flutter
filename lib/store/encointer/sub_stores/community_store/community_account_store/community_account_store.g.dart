@@ -31,10 +31,10 @@ Map<String, dynamic> _$CommunityAccountStoreToJson(CommunityAccountStore instanc
     };
 
 const _$ParticipantTypeEnumMap = {
-  ParticipantType.bootstrapper: 'bootstrapper',
-  ParticipantType.reputable: 'reputable',
-  ParticipantType.endorsee: 'endorsee',
-  ParticipantType.newbie: 'newbie',
+  ParticipantType.Bootstrapper: 'Bootstrapper',
+  ParticipantType.Reputable: 'Reputable',
+  ParticipantType.Endorsee: 'Endorsee',
+  ParticipantType.Newbie: 'Newbie',
 };
 
 // **************************************************************************

@@ -13,14 +13,14 @@ void main() {
         mediterraneanTestCommunity,
         aliceAddress,
       );
-      communityAccountStore.participantType = ParticipantType.bootstrapper;
+      communityAccountStore.participantType = ParticipantType.Bootstrapper;
       communityAccountStore.setMeetup(Meetup(2, 3, 10, [aliceAddress, bobAddress, charlieAddress]));
 
       final Map targetJson = <String, dynamic>{
         'network': 'My Test Network',
         'cid': mediterraneanTestCommunity.toJson(),
         'address': aliceAddress,
-        'participantType': 'bootstrapper',
+        'participantType': 'Bootstrapper',
         'meetup': {
           'index': 2,
           'locationIndex': 3,
@@ -40,7 +40,7 @@ void main() {
         'network': 'My Test Network',
         'cid': mediterraneanTestCommunity.toJson(),
         'address': aliceAddress,
-        'participantType': 'bootstrapper',
+        'participantType': 'Bootstrapper',
         'meetup': {
           'index': 2,
           'locationIndex': 3,
@@ -55,7 +55,7 @@ void main() {
       expect(store.network, 'My Test Network');
       expect(store.cid, mediterraneanTestCommunity);
       expect(store.address, aliceAddress);
-      expect(store.participantType, ParticipantType.bootstrapper);
+      expect(store.participantType, ParticipantType.Bootstrapper);
       expect(store.meetup!.index, 2);
       expect(store.meetup!.locationIndex, 3);
       expect(store.meetup!.time, 10);
@@ -70,7 +70,7 @@ void main() {
         mediterraneanTestCommunity,
         aliceAddress,
       );
-      communityAccountStore.participantType = ParticipantType.bootstrapper;
+      communityAccountStore.participantType = ParticipantType.Bootstrapper;
 
       communityAccountStore.initStore(() => localStorage.setObject('hello', communityAccountStore.toJson()));
 
@@ -80,7 +80,7 @@ void main() {
         'network': 'My Test Network',
         'cid': mediterraneanTestCommunity.toJson(),
         'address': aliceAddress,
-        'participantType': 'bootstrapper',
+        'participantType': 'Bootstrapper',
         'meetup': {
           'index': 2,
           'locationIndex': 3,

@@ -38,7 +38,7 @@ void main() {
       final testCidFmt = testCid.toFmtString();
       final testNetwork = unitTestEndpoint.info!;
 
-      encointerStore.setCurrentPhase(CeremonyPhase.registering);
+      encointerStore.setCurrentPhase(CeremonyPhase.Registering);
       encointerStore.setCurrentCeremonyIndex(2);
       encointerStore.setNextPhaseTimestamp(3);
       await encointerStore.setCommunityIdentifiers(testCommunityIdentifiers);

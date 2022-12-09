@@ -75,7 +75,7 @@ abstract class _EncointerStore with Store {
   Future<void>? _updateStateFuture;
 
   @observable
-  CeremonyPhase currentPhase = CeremonyPhase.registering;
+  CeremonyPhase currentPhase = CeremonyPhase.Registering;
 
   @observable
   int? nextPhaseTimestamp;
@@ -511,14 +511,14 @@ abstract class _EncointerStore with Store {
       return null;
     }
     switch (currentPhase) {
-      case CeremonyPhase.registering:
+      case CeremonyPhase.Registering:
         return nextPhaseTimestamp;
-      case CeremonyPhase.assigning:
-        return nextPhaseTimestamp! - phaseDurations[CeremonyPhase.assigning]!;
-      case CeremonyPhase.attesting:
+      case CeremonyPhase.Assigning:
+        return nextPhaseTimestamp! - phaseDurations[CeremonyPhase.Assigning]!;
+      case CeremonyPhase.Attesting:
         return nextPhaseTimestamp! -
-            phaseDurations[CeremonyPhase.attesting]! -
-            phaseDurations[CeremonyPhase.assigning]!;
+            phaseDurations[CeremonyPhase.Attesting]! -
+            phaseDurations[CeremonyPhase.Assigning]!;
       default:
         return null;
     }
@@ -529,18 +529,18 @@ abstract class _EncointerStore with Store {
     if (assigningPhaseStart == null) {
       return null;
     }
-    return assigningPhaseStart! + phaseDurations[CeremonyPhase.assigning]!;
+    return assigningPhaseStart! + phaseDurations[CeremonyPhase.Assigning]!;
   }
 
   bool get showRegisterButton {
     final registered = communityAccount?.isRegistered ?? false;
-    return (currentPhase == CeremonyPhase.registering && !registered);
+    return (currentPhase == CeremonyPhase.Registering && !registered);
   }
 
   @computed
   bool get showStartCeremonyButton {
     final assigned = communityAccount?.isAssigned ?? false;
-    return (currentPhase == CeremonyPhase.attesting && assigned);
+    return (currentPhase == CeremonyPhase.Attesting && assigned);
   }
 
   @computed
@@ -548,12 +548,12 @@ abstract class _EncointerStore with Store {
     final assigned = communityAccount?.isAssigned ?? false;
     final hasClaims = (communityAccount?.scannedAttendeesCount ?? 0) > 0;
 
-    return (currentPhase == CeremonyPhase.attesting && assigned && hasClaims);
+    return (currentPhase == CeremonyPhase.Attesting && assigned && hasClaims);
   }
 
   @computed
   bool get showMeetupInfo {
-    return !showRegisterButton && !showStartCeremonyButton || (currentPhase == CeremonyPhase.attesting);
+    return !showRegisterButton && !showStartCeremonyButton || (currentPhase == CeremonyPhase.Attesting);
   }
 }
 

@@ -36,7 +36,7 @@ Future<void> submitToJS(
   final args = txParams;
 
   store.assets.setSubmitting(true);
-  store.account.setTxStatus(TxStatus.queued);
+  store.account.setTxStatus(TxStatus.Queued);
 
   final txInfo = args['txInfo'] as Map;
   txInfo['pubKey'] = store.account.currentAccount.pubKey;
@@ -156,17 +156,17 @@ void _onTxFinish(
 
 String getTxStatusTranslation(TranslationsHome dic, TxStatus? status) {
   switch (status) {
-    case TxStatus.queued:
+    case TxStatus.Queued:
       return dic.txQueued;
-    case TxStatus.queuedOffline:
+    case TxStatus.QueuedOffline:
       return dic.txQueuedOffline;
-    case TxStatus.ready:
+    case TxStatus.Ready:
       return dic.txReady;
-    case TxStatus.broadcast:
+    case TxStatus.Broadcast:
       return dic.txBroadcast;
-    case TxStatus.inBlock:
+    case TxStatus.InBlock:
       return dic.txInBlock;
-    case TxStatus.error:
+    case TxStatus.Error:
       return dic.txError;
     default:
       Log.d('Illegal TxStatus supplied to translation: $status', 'getTxStatusTranslation');

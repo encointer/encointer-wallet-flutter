@@ -1,8 +1,9 @@
 import 'dart:convert';
 
+import 'package:json_annotation/json_annotation.dart';
+
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/utils/enum.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 // Run: `flutter pub run build_runner build` in order to create/update the *.g.dart
 part 'ceremonies.g.dart';
@@ -64,7 +65,8 @@ class AggregatedAccountDataGlobal {
   Map<String, dynamic> toJson() => _$AggregatedAccountDataGlobalToJson(this);
 }
 
-enum ParticipantType { bootstrapper, reputable, endorsee, newbie }
+// ignore: constant_identifier_names
+enum ParticipantType { Bootstrapper, Reputable, Endorsee, Newbie }
 
 @JsonSerializable()
 class CommunityReputation {
@@ -101,9 +103,11 @@ class Meetup {
   Map<String, dynamic> toJson() => _$MeetupToJson(this);
 }
 
-enum CeremonyPhase { registering, assigning, attesting }
+// ignore: constant_identifier_names
+enum CeremonyPhase { Registering, Assigning, Attesting }
 
-enum Reputation { unverified, unverifiedReputable, verifiedUnlinked, verifiedLinked }
+// ignore: constant_identifier_names
+enum Reputation { Unverified, UnverifiedReputable, VerifiedUnlinked, VerifiedLinked }
 
 // -- Helper functions for above types
 

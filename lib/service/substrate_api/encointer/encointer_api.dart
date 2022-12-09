@@ -302,7 +302,7 @@ class EncointerApi {
     // -1 as we get the pending issuance for the last ceremony
     var issuanceCIndex = cIndex - 1;
 
-    if (store.encointer.currentPhase == CeremonyPhase.attesting) {
+    if (store.encointer.currentPhase == CeremonyPhase.Attesting) {
       // If we are in the attesting phase we want to payout the current meetup
       // aka early payout directly after the key-signing gathering.
       issuanceCIndex = cIndex;

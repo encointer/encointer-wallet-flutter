@@ -288,7 +288,7 @@ class _AssetsState extends State<Assets> {
                     Observer(builder: (_) {
                       final dic = I18n.of(context)!.translationsForLocale();
 
-                      final shouldFetch = store.encointer.currentPhase == CeremonyPhase.registering ||
+                      final shouldFetch = store.encointer.currentPhase == CeremonyPhase.Registering ||
                           (store.encointer.communityAccount?.meetupCompleted ?? false);
 
                       return store.settings.isConnected && shouldFetch

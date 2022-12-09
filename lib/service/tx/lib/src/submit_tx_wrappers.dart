@@ -192,7 +192,7 @@ Future<void> _showEducationalDialog(ParticipantType registrationType, BuildConte
             child: Text(dic.home.ok),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          registrationType == ParticipantType.newbie
+          registrationType == ParticipantType.Newbie
               ? CupertinoButton(
                   child: Text(
                     dic.encointer.leuZurichFAQ,
@@ -210,13 +210,13 @@ Future<void> _showEducationalDialog(ParticipantType registrationType, BuildConte
 Map<String, String> _getEducationalDialogTexts(ParticipantType type, BuildContext context) {
   final dic = I18n.of(context)!.translationsForLocale().encointer;
   switch (type) {
-    case ParticipantType.newbie:
+    case ParticipantType.Newbie:
       return {'title': dic.newbieTitle, 'content': dic.newbieContent};
-    case ParticipantType.endorsee:
+    case ParticipantType.Endorsee:
       return {'title': dic.endorseeTitle, 'content': dic.endorseeContent};
-    case ParticipantType.reputable:
+    case ParticipantType.Reputable:
       return {'title': dic.reputableTitle, 'content': dic.reputableContent};
-    case ParticipantType.bootstrapper:
+    case ParticipantType.Bootstrapper:
       return {'title': dic.bootstrapperTitle, 'content': dic.bootstrapperContent};
   }
 }
