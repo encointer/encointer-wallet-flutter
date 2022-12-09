@@ -43,8 +43,8 @@ class SearchResults extends StatelessWidget {
 }
 
 class ResultSummaryListTile extends StatelessWidget {
-  final results;
-  final title;
+  final List<BazaarItemData> results;
+  final String title;
 
   const ResultSummaryListTile(
     this.results,
@@ -76,7 +76,7 @@ class ResultSummaryListTile extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
+          MaterialPageRoute<void>(
             builder: (context) =>
                 (results[0] is BazaarBusinessData) ? SearchResultsBusiness(results) : SearchResultsOffering(results),
           ),

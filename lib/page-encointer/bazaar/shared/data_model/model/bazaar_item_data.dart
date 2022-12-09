@@ -20,7 +20,12 @@ abstract class BazaarItemData {
 class BazaarOfferingData extends BazaarItemData {
   final double price;
 
-  BazaarOfferingData(title, description, this.price, image) : super(title, description, image);
+  BazaarOfferingData(
+    String title,
+    String description,
+    this.price,
+    Image image,
+  ) : super(title, description, image);
 
   @override
   String get info => price.toString();
@@ -40,13 +45,19 @@ class BazaarBusinessData extends BazaarItemData {
   // for now:
   final LatLng turbinenplatz = LatLng(47.389712, 8.517076); // TODO use coordinates of the respective community
 
-  BazaarBusinessData(title, description, this.coordinates, image, this.openingHours, this.offerings)
-      : super(title, description, image);
+  BazaarBusinessData(
+    String title,
+    String description,
+    this.coordinates,
+    Image image,
+    this.openingHours,
+    this.offerings,
+  ) : super(title, description, image);
 
   @override
   String get info {
-    final Distance distance = const Distance();
-    final double distanceInMeters = distance(turbinenplatz, coordinates);
+    final distance = const Distance();
+    final distanceInMeters = distance(turbinenplatz, coordinates);
     return '${distanceInMeters.toStringAsFixed(0)}m';
   }
 
@@ -105,18 +116,18 @@ class OpeningHoursForDay {
 
   OpeningHoursForDay(this.openingIntervals);
 
-  addInterval(OpeningInterval interval) {
+  void addInterval(OpeningInterval interval) {
     openingIntervals.add(interval);
   }
 
-  removeInterval(int index) {
+  void removeInterval(int index) {
     openingIntervals.removeAt(index);
   }
 
   /// where 0 -> Mon, 1 -> Tue, ...
   @override
   String toString() {
-    String asString = '';
+    var asString = '';
     if (openingIntervals.length == 0) {
       asString += '(closed)';
     } else {
@@ -142,12 +153,12 @@ class OpeningInterval {
   OpeningInterval(this.start, this.end);
 
   static int _parseTime(String startEndTime, int part) {
-    var startEnd = startEndTime.split('-');
-    var time = startEnd[part].trim();
-    var minutes = int.parse(
+    final startEnd = startEndTime.split('-');
+    final time = startEnd[part].trim();
+    final minutes = int.parse(
       time.substring(time.length - 2),
     );
-    var hours = int.parse(
+    final hours = int.parse(
       time.substring(0, time.length - 3),
     );
     return (hours * 60 + minutes) % (24 * 60);

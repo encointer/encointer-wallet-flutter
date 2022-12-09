@@ -54,7 +54,7 @@ class BazaarItemHorizontal extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
+            MaterialPageRoute<void>(
               builder: (context) => (data[index] is BazaarBusinessData)
                   ? BusinessDetail(data[index] as BazaarBusinessData?)
                   : OfferingDetail(data[index] as BazaarOfferingData),

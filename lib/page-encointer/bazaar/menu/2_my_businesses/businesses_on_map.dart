@@ -1,11 +1,12 @@
-import 'package:encointer_wallet/page-encointer/bazaar/3_businesses/business_detail.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
-import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map_marker_popup/flutter_map_marker_popup.dart';
 import 'package:latlong2/latlong.dart';
+
+import 'package:encointer_wallet/page-encointer/bazaar/3_businesses/business_detail.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_data/demo_data.dart';
+import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
 
 class BusinessesOnMap extends StatelessWidget {
   BusinessesOnMap({Key? key}) : super(key: key);
@@ -30,8 +31,7 @@ class BMap extends StatelessWidget {
 
   BMap(List<BazaarItemData> data, {Key? key})
       // initializer (only use businesses, offerings do not have coordinates)
-      : businessData =
-            data.where((item) => item is BazaarBusinessData).map((item) => item as BazaarBusinessData).toList(),
+      : businessData = data.whereType<BazaarBusinessData>().map((item) => item).toList(),
         super(key: key) {
     // construct a map using "collection for"
     bazaarBusinessDataFor.addAll({for (var business in businessData) business.coordinates: business});
@@ -47,11 +47,9 @@ class BMap extends StatelessWidget {
         onTap: (_, __) => _popupLayerController.hideAllPopups(), // Hide popup when the map is tapped.
       ),
       children: [
-        TileLayerWidget(
-          options: TileLayerOptions(
-            urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            subdomains: ['a', 'b', 'c'],
-          ),
+        TileLayer(
+          urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          subdomains: ['a', 'b', 'c'],
         ),
         PopupMarkerLayerWidget(
           options: PopupMarkerLayerOptions(
@@ -89,7 +87,7 @@ class BusinessDetailsPopup extends StatelessWidget {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(
+            MaterialPageRoute<void>(
               builder: (context) => BusinessDetail(dataForThisMarker),
             ),
           );

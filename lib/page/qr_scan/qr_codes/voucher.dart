@@ -7,7 +7,7 @@ class VoucherQrCode extends QrCode<VoucherData> {
   VoucherQrCode({
     required String voucherUri,
     required CommunityIdentifier cid,
-    required network,
+    required String network,
     required String issuer,
   }) : super(VoucherData(voucherUri: voucherUri, cid: cid, network: network, issuer: issuer));
 

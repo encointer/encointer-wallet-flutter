@@ -81,6 +81,7 @@ class CeremonyStep2Scan extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30),
               child: ElevatedButton(
+                key: const Key('close-meetup'),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -90,7 +91,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                   ],
                 ),
                 onPressed: () {
-                  Navigator.push(context, CupertinoPageRoute(builder: (_) => CeremonyStep3Finish(store, api)));
+                  Navigator.push(context, CupertinoPageRoute<void>(builder: (_) => CeremonyStep3Finish(store, api)));
                 },
               ),
             ),
@@ -111,7 +112,7 @@ class CeremonyStep2Scan extends StatelessWidget {
                 ),
                 onPressed: () {
                   Navigator.of(context).push(
-                    MaterialPageRoute(
+                    MaterialPageRoute<void>(
                       builder: (_) => ScanClaimQrCode(store, confirmedParticipantsCount),
                     ),
                   );
@@ -120,6 +121,7 @@ class CeremonyStep2Scan extends StatelessWidget {
             ),
             store.settings.developerMode
                 ? ElevatedButton(
+                    key: const Key('attest-all-participants-dev'),
                     child: const Text('DEV ONLY: attest all participants'),
                     onPressed: () => attestAllParticipants(store, store.account.currentAddress),
                   )
@@ -136,7 +138,7 @@ class CeremonyStep2Scan extends StatelessWidget {
 ///
 /// Only intended for development purposes.
 void attestAllParticipants(AppStore store, String claimantAddress) {
-  List<String> registry = store.encointer.communityAccount!.meetup!.registry;
+  final registry = store.encointer.communityAccount!.meetup!.registry;
 
   registry.removeWhere((a) => a == claimantAddress);
   registry.forEach((attendee) => store.encointer.communityAccount!.addAttendee(attendee));

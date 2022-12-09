@@ -56,7 +56,7 @@ abstract class _EncointerAccountStore with Store {
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
 
   @computed
-  get ceremonyIndexForProofOfAttendance {
+  int? get ceremonyIndexForProofOfAttendance {
     if (reputations.isNotEmpty) {
       try {
         return reputations.entries.firstWhere((e) => e.value.reputation == Reputation.VerifiedUnlinked).key;
@@ -64,6 +64,8 @@ abstract class _EncointerAccountStore with Store {
         Log.e('$address has reputation, but none that has not been linked yet', 'EncointerAccountStore', s);
         return 0;
       }
+    } else {
+      return 0;
     }
   }
 
@@ -92,21 +94,21 @@ abstract class _EncointerAccountStore with Store {
   }
 
   @action
-  Future<void> setTransferTxs(List list, String address, {bool reset = false, needCache = true}) async {
+  Future<void> setTransferTxs(List list, String address, {bool reset = false, bool needCache = true}) async {
     if (this.address != address) {
       Log.d("Tried to cached transfer tx's for wrong account. This is a bug.", 'EncointerAccountStore');
       return Future.value(null);
     }
 
-    List transfers = list.map((i) {
+    final transfers = list.map((i) {
       return {
         'block_timestamp': i['time'],
         'hash': i['hash'],
         'success': true,
         'from': address,
         'to': i['params'][0],
-        'token': CommunityIdentifier.fromJson(i['params'][1]).toFmtString(),
-        'amount': Fmt.numberFormat(i['params'][2]),
+        'token': CommunityIdentifier.fromJson(i['params'][1] as Map<String, dynamic>).toFmtString(),
+        'amount': Fmt.numberFormat(i['params'][2] as String?),
       };
     }).toList();
     if (reset) {

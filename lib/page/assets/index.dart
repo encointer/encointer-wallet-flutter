@@ -96,8 +96,8 @@ class _AssetsState extends State<Assets> {
     _panelHeightOpen = min(MediaQuery.of(context).size.height * fractionOfScreenHeight,
         panelHeight); // should typically not be higher than panelHeight, but on really small devices it should not exceed fractionOfScreenHeight x the screen height.
 
-    List<AccountOrCommunityData> allCommunities = [];
-    List<AccountOrCommunityData> allAccounts = [];
+    var allCommunities = <AccountOrCommunityData>[];
+    var allAccounts = <AccountOrCommunityData>[];
 
     balanceWatchdog = PausableTimer(
       const Duration(seconds: 12),
@@ -111,7 +111,10 @@ class _AssetsState extends State<Assets> {
       },
     )..start();
 
-    final appBar = AppBar(title: Text(dic!.assets.home));
+    final appBar = AppBar(
+      key: const Key('assets-index-appbar'),
+      title: Text(dic!.assets.home),
+    );
 
     return FocusDetector(
       onFocusLost: () {
@@ -130,8 +133,9 @@ class _AssetsState extends State<Assets> {
         appBar: appBar,
         body: UpgradeAlert(
           upgrader: Upgrader(
-            appcastConfig: context.watch<AppStore>().appcastConfiguration,
-            debugLogging: context.select<AppStore, bool>((e) => e.appcastConfiguration != null),
+            appcastConfig: context.watch<AppStore>().appCast,
+            debugLogging: context.select<AppStore, bool>((e) => e.appCast != null),
+            shouldPopScope: () => true,
             canDismissDialog: true,
           ),
           child: SlidingUpPanel(
@@ -164,21 +168,18 @@ class _AssetsState extends State<Assets> {
                         );
                       }
 
-                      AccountData accountData = store.account.currentAccount;
+                      final accountData = store.account.currentAccount;
 
                       return Column(
                         children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              InkWell(
-                                  child: CombinedCommunityAndAccountAvatar(store),
-                                  onTap: () {
-                                    if (panelController != null && panelController!.isAttached) {
-                                      panelController!.open();
-                                    }
-                                  }),
-                            ],
+                          InkWell(
+                            key: const Key('panel-controller'),
+                            child: CombinedCommunityAndAccountAvatar(store),
+                            onTap: () {
+                              if (panelController != null && panelController!.isAttached) {
+                                panelController!.open();
+                              }
+                            },
                           ),
                           Observer(
                             builder: (_) {
@@ -285,7 +286,7 @@ class _AssetsState extends State<Assets> {
                       padding: EdgeInsets.symmetric(vertical: 6, horizontal: 0),
                     ),
                     Observer(builder: (_) {
-                      final Translations dic = I18n.of(context)!.translationsForLocale();
+                      final dic = I18n.of(context)!.translationsForLocale();
 
                       final shouldFetch = store.encointer.currentPhase == CeremonyPhase.Registering ||
                           (store.encointer.communityAccount?.meetupCompleted ?? false);
@@ -295,10 +296,11 @@ class _AssetsState extends State<Assets> {
                               future: webApi.encointer.hasPendingIssuance(),
                               builder: (_, AsyncSnapshot<bool?> snapshot) {
                                 if (snapshot.hasData) {
-                                  var hasPendingIssuance = snapshot.data!;
+                                  final hasPendingIssuance = snapshot.data!;
 
                                   if (hasPendingIssuance) {
                                     return SubmitButton(
+                                      key: const Key('claim-pending-dev'),
                                       child: Text(dic.assets.issuancePending),
                                       onPressed: (context) => submitClaimRewards(
                                         context,
@@ -323,7 +325,7 @@ class _AssetsState extends State<Assets> {
                           : Container();
                     }),
                     const SizedBox(height: 24),
-                    CeremonyBox(store, webApi),
+                    CeremonyBox(store, webApi, key: const Key('ceremony-box-wallet')),
                   ],
                 ),
               ),
@@ -333,11 +335,10 @@ class _AssetsState extends State<Assets> {
               context: context,
               removeTop: true,
               child: ListView(
+                key: const Key('list-view-wallet'),
                 controller: scrollController,
                 children: <Widget>[
-                  const SizedBox(
-                    height: 12.0,
-                  ),
+                  const SizedBox(height: 12.0),
                   const DragHandle(),
                   Column(children: [
                     Observer(
@@ -348,8 +349,10 @@ class _AssetsState extends State<Assets> {
                           data: allCommunities,
                           onTap: (int index) {
                             if (index == allCommunities.length - 1) {
-                              Navigator.push(context, MaterialPageRoute(builder: (_) => CommunityChooserOnMap(store)))
-                                  .then((_) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute<void>(builder: (_) => CommunityChooserOnMap(store)),
+                              ).then((_) {
                                 _refreshBalanceAndNotify(dic);
                               });
                             } else {
@@ -390,7 +393,7 @@ class _AssetsState extends State<Assets> {
   }
 
   List<AccountOrCommunityData> initAllCommunities() {
-    List<AccountOrCommunityData> allCommunities = [];
+    final allCommunities = <AccountOrCommunityData>[];
     // TODO #507 add back end code so we can initialize the list of communities similar to the commented out code
     // allCommunities.addAll(store.communities.communitiesList.map((community) => AccountOrCommunityData(
     //     avatar: webApi.ipfs.getCommunityIcon(community),
@@ -413,7 +416,11 @@ class _AssetsState extends State<Assets> {
             color: ZurichLion.shade50,
             shape: BoxShape.circle,
           ),
-          child: const Icon(Icons.add, size: 36),
+          child: const Icon(
+            Icons.add,
+            key: Key('add-community'),
+            size: 36,
+          ),
         ),
         name: dic!.profile.addCommunity,
       ),
@@ -422,10 +429,10 @@ class _AssetsState extends State<Assets> {
   }
 
   List<AccountOrCommunityData> initAllAccounts(Translations dic) {
-    List<AccountOrCommunityData> allAccounts = [];
+    final allAccounts = <AccountOrCommunityData>[];
     allAccounts.addAll(store.account.accountListAll.map(
       (account) => AccountOrCommunityData(
-        avatar: AddressIcon('', account.pubKey, size: avatarSize, tapToCopy: false),
+        avatar: AddressIcon('', account.pubKey, key: Key(account.name), size: avatarSize, tapToCopy: false),
         name: account.name,
         isSelected: account.pubKey == store.account.currentAccountPubKey,
       ),
@@ -433,6 +440,7 @@ class _AssetsState extends State<Assets> {
     allAccounts.add(
       AccountOrCommunityData(
         avatar: Container(
+          key: const Key('add-account-panel'),
           height: avatarSize,
           width: avatarSize,
           decoration: BoxDecoration(
@@ -457,7 +465,7 @@ class _AssetsState extends State<Assets> {
   }
 
   Future<void> _showPasswordDialog(BuildContext context) async {
-    await showCupertinoDialog(
+    await showCupertinoDialog<void>(
       context: context,
       builder: (_) {
         return WillPopScope(
@@ -465,7 +473,7 @@ class _AssetsState extends State<Assets> {
             context,
             store.account.currentAccount,
             Text(I18n.of(context)!.translationsForLocale().home.unlock),
-            (password) {
+            (String password) {
               setState(() {
                 store.settings.setPin(password);
               });
@@ -484,7 +492,7 @@ class _AssetsState extends State<Assets> {
   }
 
   Future<void> _showPasswordNotEnteredDialog(BuildContext context) async {
-    await showCupertinoDialog(
+    await showCupertinoDialog<void>(
       context: context,
       builder: (_) {
         return CupertinoAlertDialog(
@@ -511,23 +519,32 @@ class _AssetsState extends State<Assets> {
         Log.d('[home:refreshBalanceAndNotify] no community selected', 'Assets');
         return;
       }
-      bool activeAccountHasBalance = false;
+      var activeAccountHasBalance = false;
       balances.forEach((cid, balanceEntry) {
-        String cidStr = cid.toFmtString();
+        final cidStr = cid.toFmtString();
         if (widget.store.encointer.communityStores!.containsKey(cidStr)) {
-          var community = widget.store.encointer.communityStores![cidStr]!;
-          double demurrageRate = community.demurrage!;
-          double newBalance = community.applyDemurrage(balanceEntry);
-          double oldBalance = community.applyDemurrage(
-                  widget.store.encointer.accountStores![widget.store.account.currentAddress]!.balanceEntries[cidStr]) ??
-              0;
-          double delta = newBalance - oldBalance;
+          final community = widget.store.encointer.communityStores![cidStr]!;
+          final oldBalanceEntry =
+              widget.store.encointer.accountStores?[widget.store.account.currentAddress]?.balanceEntries[cidStr];
+          final demurrageRate = community.demurrage!;
+          final newBalance = community.applyDemurrage != null ? community.applyDemurrage!(balanceEntry) ?? 0 : 0;
+          final oldBalance = (community.applyDemurrage != null && oldBalanceEntry != null)
+              ? community.applyDemurrage!(oldBalanceEntry) ?? 0
+              : 0;
+
+// =======
+//           double newBalance = community.applyDemurrage(balanceEntry) as double;
+//           double oldBalance = community.applyDemurrage(widget.store.encointer
+//                   .accountStores![widget.store.account.currentAddress]!.balanceEntries[cidStr]) as double? ??
+//               0;
+// >>>>>>> 9d4143d3262181f3ad0429032d40bcd3c94c1b9f
+          final delta = newBalance - oldBalance;
           Log.d('[home:refreshBalanceAndNotify] balance for $cidStr was $oldBalance, changed by $delta', 'Assets');
           if (delta.abs() > demurrageRate) {
             widget.store.encointer.accountStores![widget.store.account.currentAddress]
                 ?.addBalanceEntry(cid, balances[cid]!);
             if (delta > demurrageRate) {
-              var msg = dic!.assets.incomingConfirmed
+              final msg = dic!.assets.incomingConfirmed
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
                   .replaceAll('CID_SYMBOL', community.metadata!.symbol)
                   .replaceAll('ACCOUNT_NAME', widget.store.account.currentAccount.name);
@@ -548,7 +565,7 @@ class _AssetsState extends State<Assets> {
         widget.store.encointer.accountStores![widget.store.account.currentAddress]
             ?.addBalanceEntry(widget.store.encointer.chosenCid!, BalanceEntry(0, 0));
       }
-    }).catchError((e, s) {
+    }).catchError((Object? e, StackTrace? s) {
       Log.e('[home:refreshBalanceAndNotify] WARNING: could not update balance: $e', 'Assets', s);
     });
   }

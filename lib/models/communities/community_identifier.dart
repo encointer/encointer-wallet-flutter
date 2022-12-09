@@ -21,13 +21,13 @@ class CommunityIdentifier {
   }
 
   static CommunityIdentifier fromFmtString(String cid) {
-    Base58Codec codec = const Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
+    final codec = const Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
 
     return CommunityIdentifier(utf8.encode(cid.substring(0, 5)), codec.decode(cid.substring(5)));
   }
 
   String toFmtString() {
-    Base58Codec codec = const Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
+    final codec = const Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
 
     return utf8.decode(geohash) + codec.encode(digest);
   }
@@ -47,7 +47,7 @@ class CommunityIdentifier {
 
   // JS-passes these values as hex-strings, but this would be more complicated to handle in dart.
   factory CommunityIdentifier.fromJson(Map<String, dynamic> json) =>
-      CommunityIdentifier(Fmt.hexToBytes(json['geohash']), Fmt.hexToBytes(json['digest']));
+      CommunityIdentifier(Fmt.hexToBytes(json['geohash'] as String), Fmt.hexToBytes(json['digest'] as String));
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'geohash': Fmt.bytesToHex(geohash),

@@ -63,38 +63,38 @@ abstract class _BusinessFormState with Store {
 
   // ************** ACTIONS ****************************************************
   @action
-  void validateName(value) {
+  void validateName(String? value) {
     return validateIsNotBlank(value, (errorText) => errors.name = errorText);
   }
 
   @action
-  void validateDescription(value) {
+  void validateDescription(String? value) {
     return validateIsNotBlank(value, (errorText) => errors.description = errorText);
   }
 
   @action
-  void validateStreet(value) {
+  void validateStreet(String? value) {
     return validateIsNotBlank(value, (errorText) => errors.street = errorText);
   }
 
   @action
-  void validateStreetAddendum(value) {
+  void validateStreetAddendum(String? value) {
     return validateIsNotBlank(value, (errorText) => errors.streetAddendum = errorText);
   }
 
   @action
-  void validateZipCode(value) {
+  void validateZipCode(String? value) {
     return validateIsNotBlank(value, (errorText) => errors.zipCode = errorText);
   }
 
   @action
-  void validateCity(value) {
+  void validateCity(String? value) {
     return validateIsNotBlank(value, (errorText) => errors.city = errorText);
   }
 
   // ************** OTHER METHODS **********************************************
-  validateIsNotBlank(String? value, Function(String?) errorTarget) {
-    String? errorText = value == null || value.trim().isEmpty ? 'Cannot be blank' : null;
+  void validateIsNotBlank(String? value, void Function(String?) errorTarget) {
+    final errorText = value == null || value.trim().isEmpty ? 'Cannot be blank' : null;
     errorTarget(errorText);
   }
 
@@ -107,7 +107,7 @@ abstract class _BusinessFormState with Store {
   /// if the user leaves everything blank the validators would not be triggered
   /// (only on change of the value),
   /// hence upon tapping submit this method should be called
-  validateAll() {
+  void validateAll() {
     validateName(name);
     validateDescription(description);
     validateStreet(street);

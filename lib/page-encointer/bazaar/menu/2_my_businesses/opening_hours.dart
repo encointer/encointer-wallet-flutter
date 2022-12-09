@@ -22,7 +22,7 @@ class OpeningHours extends StatelessWidget {
 
 class OpeningHoursViewForDay extends StatelessWidget {
   OpeningHoursViewForDay(this.day, {Key? key}) : super(key: key);
-  final day;
+  final int day;
 
   @override
   Widget build(BuildContext context) {
@@ -140,7 +140,7 @@ class OpeningHoursViewForDay extends StatelessWidget {
 
 class AddOpeningIntervalForDay extends StatelessWidget {
   final _textController = TextEditingController(text: '');
-  final day;
+  final int day;
 
   AddOpeningIntervalForDay(this.day, {Key? key}) : super(key: key);
 
@@ -148,7 +148,7 @@ class AddOpeningIntervalForDay extends StatelessWidget {
   Widget build(BuildContext context) {
     final businessFormState = Provider.of<BusinessFormState>(context);
     final openingHours = businessFormState.openingHours;
-    var openingHoursForDay = openingHours.getOpeningHoursFor(day);
+    final openingHoursForDay = openingHours.getOpeningHoursFor(day);
 
     return Observer(
       builder: (_) => TextField(

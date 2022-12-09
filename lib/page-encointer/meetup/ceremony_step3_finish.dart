@@ -9,7 +9,6 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class CeremonyStep3Finish extends StatelessWidget {
   const CeremonyStep3Finish(
@@ -23,7 +22,7 @@ class CeremonyStep3Finish extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -78,6 +77,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 6),
                 child: SubmitButton(
                   // todo: this will be removed because we do it automatically
+                  key: const Key('submit-claims'),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

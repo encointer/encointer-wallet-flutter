@@ -18,22 +18,22 @@ class EncointerDartApi {
   ///
   Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String account) {
     return _dartApi.rpc('encointer_getAggregatedAccountData', [cid.toJson(), account]).then(
-      (data) => AggregatedAccountData.fromJson(data),
+      (data) => AggregatedAccountData.fromJson(data as Map<String, dynamic>),
     );
   }
 
   ///
   Future<List<String>> pendingExtrinsics() {
-    return _dartApi.rpc('author_pendingExtrinsics', []).then((data) => List.from(data));
+    return _dartApi.rpc('author_pendingExtrinsics', <dynamic>[]).then((data) => List.from(data as Iterable));
   }
 
   Future<Map<CommunityIdentifier, BalanceEntry>> getAllBalances(String account) {
     return _dartApi.rpc('encointer_getAllBalances', [account]).then((data) {
-      return Map.fromIterable(
-        data,
-        key: (bal) => CommunityIdentifier.fromJson(bal[0]),
-        value: (bal) => BalanceEntry.fromJson(bal[1]),
-      );
+      return {
+        for (var bal in data as Iterable)
+          CommunityIdentifier.fromJson(bal[0] as Map<String, dynamic>):
+              BalanceEntry.fromJson(bal[1] as Map<String, dynamic>)
+      };
     });
   }
 }

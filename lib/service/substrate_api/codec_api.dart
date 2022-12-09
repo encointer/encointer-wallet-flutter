@@ -21,7 +21,7 @@ class CodecApi {
   ///
   /// [type] must exist in the polkadot-js/api's type registry.
   Future<dynamic> decodeBytes(String type, Uint8List bytes) async {
-    var res = await jsApi.evalJavascript('codec.decode("$type", $bytes)', allowRepeat: true);
+    final res = await jsApi.evalJavascript('codec.decode("$type", $bytes)', allowRepeat: true);
 
     if (res['error'] != null) {
       throw Exception("Could not decode bytes into $type. Error: ${res["error"]}");
@@ -47,7 +47,7 @@ class CodecApi {
   Future<Uint8List> encodeToBytes(String type, dynamic obj) {
     return jsApi
         .evalJavascript('codec.encode("$type", ${jsonEncode(obj)})', allowRepeat: true)
-        .then((res) => List<int>.from(res.values))
+        .then((res) => List<int>.from(res.values as Iterable))
         .then((l) => Uint8List.fromList(l));
   }
 }

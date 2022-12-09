@@ -20,7 +20,7 @@ class UpdateJSCodeApi {
 
   static Future<Map?> getLatestVersion() async {
     try {
-      Response res = await get(Uri.parse('$_endpoint/versions.json'));
+      final res = await get(Uri.parse('$_endpoint/versions.json'));
       return jsonDecode(utf8.decode(res.bodyBytes)) as Map?;
     } catch (e, s) {
       Log.e('$e', 'UpdateJSCodeApi', s);
@@ -30,8 +30,8 @@ class UpdateJSCodeApi {
 
   static Future<Map?> getRecommended() async {
     try {
-      Response res = await get(Uri.parse('$_endpoint/recommended.json'));
-      return jsonDecode(res.body);
+      final res = await get(Uri.parse('$_endpoint/recommended.json'));
+      return jsonDecode(res.body) as Map;
     } catch (e, s) {
       Log.e('$e', 'UpdateJSCodeApi', s);
       return Future.value(null);
@@ -40,8 +40,8 @@ class UpdateJSCodeApi {
 
   static Future<int?> fetchPolkadotJSVersion(String networkName) async {
     try {
-      Response res = await get(Uri.parse('$_endpoint/jsCodeVersions.json'));
-      return Map.of(jsonDecode(res.body))[networkName];
+      final res = await get(Uri.parse('$_endpoint/jsCodeVersions.json'));
+      return Map.of(jsonDecode(res.body) as Map)[networkName] as int?;
     } catch (e, s) {
       Log.e('$e', 'UpdateJSCodeApi', s);
       return Future.value(null);
@@ -50,7 +50,7 @@ class UpdateJSCodeApi {
 
   static Future<String?> fetchPolkadotJSCode(String networkName) async {
     try {
-      Response res = await get(Uri.parse('$_endpoint/js_service/$networkName.js'));
+      final res = await get(Uri.parse('$_endpoint/js_service/$networkName.js'));
       return utf8.decode(res.bodyBytes);
     } catch (e, s) {
       Log.e('$e', 'UpdateJSCodeApi', s);
@@ -62,7 +62,7 @@ class UpdateJSCodeApi {
     GetStorage jsStorage,
     String networkName,
   ) {
-    String? version = jsStorage.read('$_jsCodeStorageVersionKey$networkName');
+    final version = jsStorage.read<String>('$_jsCodeStorageVersionKey$networkName');
     if (version != null) {
       return int.parse(version);
     }
@@ -74,7 +74,7 @@ class UpdateJSCodeApi {
     GetStorage jsStorage,
     String networkName,
   ) {
-    String? jsCode = jsStorage.read('$_jsCodeStorageKey$networkName');
+    final jsCode = jsStorage.read<String?>('$_jsCodeStorageKey$networkName');
     return jsCode;
   }
 
@@ -90,8 +90,8 @@ class UpdateJSCodeApi {
 
   static Future<List?> getAnnouncements() async {
     try {
-      Response res = await get(Uri.parse('$_endpoint/announce.json'));
-      return jsonDecode(utf8.decode(res.bodyBytes));
+      final res = await get(Uri.parse('$_endpoint/announce.json'));
+      return jsonDecode(utf8.decode(res.bodyBytes)) as List?;
     } catch (e, s) {
       Log.e('$e', 'UpdateJSCodeApi', s);
       return Future.value(null);

@@ -1,14 +1,13 @@
 import 'dart:io';
 
-import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/service/ipfs/http_api.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 
 class MockIpfs extends Ipfs {
-  MockIpfs({gateway = ipfs_gateway_local}) : super(gateway: gateway);
+  MockIpfs(String gateway) : super(gateway: gateway);
 
   @override
-  Future getJson(String cid) async {
+  Future<void> getJson(String cid) async {
     Log.d('unimplemented getJson', 'MockIpfs');
   }
 

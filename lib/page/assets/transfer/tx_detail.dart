@@ -4,7 +4,6 @@ import 'package:encointer_wallet/common/components/jump_to_browser_link.dart';
 import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class TxDetail extends StatelessWidget {
@@ -30,7 +29,7 @@ class TxDetail extends StatelessWidget {
   final List<DetailInfoItem>? info;
 
   List<Widget> _buildListView(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     Widget buildLabel(String name) {
       return Container(
           padding: const EdgeInsets.only(left: 8),
@@ -42,7 +41,7 @@ class TxDetail extends StatelessWidget {
               )));
     }
 
-    var list = <Widget>[
+    final list = <Widget>[
       Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[

@@ -9,7 +9,6 @@ import 'package:encointer_wallet/common/components/encointer_text_form_field.dar
 import 'package:encointer_wallet/common/components/gr_code_view/gr_code_image_view.dart';
 import 'package:encointer_wallet/common/components/wake_lock_and_brightness_enhancer.dart';
 import 'package:encointer_wallet/common/theme.dart';
-import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/index.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
@@ -60,7 +59,7 @@ class _ReceivePageState extends State<ReceivePage> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     final _store = context.watch<AppStore>();
     paymentWatchdog = PausableTimer(
       const Duration(seconds: 1),
@@ -78,21 +77,21 @@ class _ReceivePageState extends State<ReceivePage> {
         }
 
         webApi.encointer.getAllBalances(_store.account.currentAddress).then((balances) {
-          CommunityIdentifier? cid = _store.encointer.chosenCid;
+          final cid = _store.encointer.chosenCid;
 
           if (cid == null) {
             return;
           }
 
-          double? demurrageRate = _store.encointer.community!.demurrage;
-          double? newBalance = _store.encointer.applyDemurrage(balances[cid]);
-          double oldBalance = _store.encointer.applyDemurrage(_store.encointer.communityBalanceEntry) ?? 0;
+          final demurrageRate = _store.encointer.community!.demurrage;
+          final newBalance = _store.encointer.applyDemurrage(balances[cid]);
+          final oldBalance = _store.encointer.applyDemurrage(_store.encointer.communityBalanceEntry) ?? 0;
 
           if (newBalance != null) {
-            double delta = newBalance - oldBalance;
+            final delta = newBalance - oldBalance;
             Log.d('[receivePage] balance was $oldBalance, changed by $delta', 'ReceivePage');
             if (delta > demurrageRate!) {
-              var msg = dic.assets.incomingConfirmed
+              final msg = dic.assets.incomingConfirmed
                   .replaceAll('AMOUNT', delta.toStringAsPrecision(5))
                   .replaceAll('CID_SYMBOL', _store.encointer.community?.metadata?.symbol ?? 'null')
                   .replaceAll('ACCOUNT_NAME', _store.account.currentAccount.name);
@@ -160,7 +159,7 @@ class _ReceivePageState extends State<ReceivePage> {
                         textFormFieldKey: const Key('invoice-amount-input'),
                         onChanged: (value) {
                           setState(() {
-                            var trimmed = _amountController.text.trim();
+                            final trimmed = _amountController.text.trim();
                             if (trimmed.isNotEmpty) {
                               invoice.data.amount = double.parse(trimmed);
                             }
@@ -216,7 +215,7 @@ Future<bool> showSnackBarUponPendingExtrinsics(AppStore store, Api api, Translat
   var observedExtrinsics = false;
 
   try {
-    var extrinsics = await api.encointer.pendingExtrinsics();
+    final extrinsics = await api.encointer.pendingExtrinsics();
 
     Log.d('[receivePage] pendingExtrinsics $extrinsics', 'ReceivePage');
     if (extrinsics.length > 0) {

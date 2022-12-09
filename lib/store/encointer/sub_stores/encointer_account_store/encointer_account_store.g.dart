@@ -34,11 +34,11 @@ Map<String, dynamic> _$EncointerAccountStoreToJson(EncointerAccountStore instanc
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
-  Computed<dynamic>? _$ceremonyIndexForProofOfAttendanceComputed;
+  Computed<int?>? _$ceremonyIndexForProofOfAttendanceComputed;
 
   @override
-  dynamic get ceremonyIndexForProofOfAttendance =>
-      (_$ceremonyIndexForProofOfAttendanceComputed ??= Computed<dynamic>(() => super.ceremonyIndexForProofOfAttendance,
+  int? get ceremonyIndexForProofOfAttendance =>
+      (_$ceremonyIndexForProofOfAttendanceComputed ??= Computed<int?>(() => super.ceremonyIndexForProofOfAttendance,
               name: '_EncointerAccountStore.ceremonyIndexForProofOfAttendance'))
           .value;
 
@@ -90,7 +90,7 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
   late final _$setTransferTxsAsyncAction = AsyncAction('_EncointerAccountStore.setTransferTxs', context: context);
 
   @override
-  Future<void> setTransferTxs(List<dynamic> list, String address, {bool reset = false, dynamic needCache = true}) {
+  Future<void> setTransferTxs(List<dynamic> list, String address, {bool reset = false, bool needCache = true}) {
     return _$setTransferTxsAsyncAction
         .run(() => super.setTransferTxs(list, address, reset: reset, needCache: needCache));
   }

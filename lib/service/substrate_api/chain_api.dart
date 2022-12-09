@@ -28,15 +28,15 @@ class ChainApi {
     jsApi.subscribeMessage(
       'chain.subscribeTimestamp("$_timeStampSubscribeChannel")',
       _timeStampSubscribeChannel,
-      (data) => {Log.d('timestamp: $data', 'ChainApi')},
+      (dynamic data) => {Log.d('timestamp: $data', 'ChainApi')},
     );
   }
 
   /// Subscribes to the latest headers
   Future<void> subscribeNewHeads() async {
     jsApi.subscribeMessage('chain.subscribeNewHeads("$_newHeadsSubscribeChannel")', _newHeadsSubscribeChannel,
-        (header) {
-      store.chain.setLatestHeader(Header.fromJson(header));
+        (dynamic header) {
+      store.chain.setLatestHeader(Header.fromJson(header as Map<String, dynamic>));
     });
   }
 }

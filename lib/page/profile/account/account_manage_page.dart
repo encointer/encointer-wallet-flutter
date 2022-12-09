@@ -19,7 +19,6 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class AccountManagePage extends StatefulWidget {
@@ -52,7 +51,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 
   void _onDeleteAccount(BuildContext context, AccountData accountToBeEdited) {
-    showCupertinoDialog(
+    showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
@@ -63,6 +62,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
               onPressed: () => Navigator.of(context).pop(),
             ),
             CupertinoButton(
+              key: const Key('delete-account'),
               child: Text(I18n.of(context)!.translationsForLocale().home.ok),
               onPressed: () => {
                 _appStore.account.removeAccount(accountToBeEdited).then(
@@ -83,9 +83,9 @@ class _AccountManagePageState extends State<AccountManagePage> {
   }
 
   Widget _getBalanceEntryListTile(String cidFmt, BalanceEntry? entry, String? address) {
-    final TextStyle h3 = Theme.of(context).textTheme.headline3!;
+    final h3 = Theme.of(context).textTheme.headline3!;
 
-    var community = _appStore.encointer.communityStores![cidFmt]!;
+    final community = _appStore.encointer.communityStores![cidFmt]!;
 
     Log.d('_getBalanceEntryListTile: $community', 'AccountManagePage');
 
@@ -99,28 +99,29 @@ class _AccountManagePageState extends State<AccountManagePage> {
       title: Text(community.name!, style: h3),
       subtitle: Text(community.symbol!, style: h3),
       trailing: Text(
-        '${Fmt.doubleFormat(community.applyDemurrage(entry))} ⵐ',
+        '${entry != null && community.applyDemurrage != null ? Fmt.doubleFormat(community.applyDemurrage!(entry)) : 0} ⵐ',
         style: h3.copyWith(color: encointerGrey),
       ),
     );
   }
 
   void _showPasswordDialog(BuildContext context, AccountData accountToBeEdited) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
-    showCupertinoDialog(
+    final dic = I18n.of(context)!.translationsForLocale();
+    showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
-        return showPasswordInputDialog(context, accountToBeEdited, Text(dic.profile.confirmPin), (password) async {
+        return showPasswordInputDialog(context, accountToBeEdited, Text(dic.profile.confirmPin),
+            (String password) async {
           Log.d('password is: $password', 'AccountManagePage');
           setState(() {
             _appStore.settings.setPin(password);
           });
 
-          bool isMnemonic =
+          final isMnemonic =
               await _appStore.account.checkSeedExist(AccountStore.seedTypeMnemonic, accountToBeEdited.pubKey);
 
           if (isMnemonic) {
-            String? seed =
+            final seed =
                 await _appStore.account.decryptSeed(accountToBeEdited.pubKey, AccountStore.seedTypeMnemonic, password);
 
             Navigator.of(context).pushNamed(ExportResultPage.route, arguments: {
@@ -129,7 +130,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
             });
           } else {
             // Assume that the account was imported via `RawSeed` if mnemonic does not exist.
-            showCupertinoDialog(
+            showCupertinoDialog<void>(
               context: context,
               builder: (BuildContext context) {
                 return CupertinoAlertDialog(
@@ -152,13 +153,13 @@ class _AccountManagePageState extends State<AccountManagePage> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
-    final TextStyle? h3 = Theme.of(context).textTheme.headline3;
+    final dic = I18n.of(context)!.translationsForLocale();
+    final h3 = Theme.of(context).textTheme.headline3;
     final isKeyboard = MediaQuery.of(context).viewInsets.bottom != 0;
     final _store = context.watch<AppStore>();
 
-    String? accountToBeEditedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
-    AccountData accountToBeEdited = _store.account.getAccountData(accountToBeEditedPubKey);
+    final accountToBeEditedPubKey = ModalRoute.of(context)!.settings.arguments as String?;
+    final accountToBeEdited = _store.account.getAccountData(accountToBeEditedPubKey);
     final addressSS58 = _store.account.getNetworkAddress(accountToBeEditedPubKey);
 
     _nameCtrl = TextEditingController(text: accountToBeEdited.name);
@@ -169,6 +170,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
         appBar: AppBar(
           title: _isEditingText
               ? TextFormField(
+                  key: const Key('account-name-field'),
                   controller: _nameCtrl,
                   validator: (v) =>
                       InputValidation.validateAccountName(context, v!, _appStore.account.optionalAccounts),
@@ -177,9 +179,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
           actions: <Widget>[
             !_isEditingText
                 ? IconButton(
-                    icon: const Icon(
-                      Iconsax.edit,
-                    ),
+                    key: const Key('account-name-edit'),
+                    icon: const Icon(Iconsax.edit),
                     onPressed: () {
                       setState(() {
                         _isEditingText = true;
@@ -187,9 +188,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
                     },
                   )
                 : IconButton(
-                    icon: const Icon(
-                      Icons.check,
-                    ),
+                    key: const Key('account-name-edit-check'),
+                    icon: const Icon(Icons.check),
                     onPressed: () {
                       _appStore.account.updateAccountName(accountToBeEdited, _nameCtrl!.text.trim());
                       setState(() {
@@ -238,7 +238,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                                 ? _store.encointer.accountStores![addressSS58]?.balanceEntries.length ?? 0
                                 : 0,
                             itemBuilder: (BuildContext context, int index) {
-                              String community = _store.encointer.account!.balanceEntries.keys.elementAt(index);
+                              final community = _store.encointer.account!.balanceEntries.keys.elementAt(index);
                               return _getBalanceEntryListTile(
                                 community,
                                 _store.encointer.accountStores![addressSS58]!.balanceEntries[community],
@@ -266,6 +266,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                   child: Row(
                     children: [
                       ElevatedButton(
+                        key: const Key('go-to-account-share'),
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.all(16), // make splash animation as high as the container
                           backgroundColor: Colors.transparent,
@@ -287,7 +288,11 @@ class _AccountManagePageState extends State<AccountManagePage> {
                       Container(
                         child: PopupMenuButton<AccountAction>(
                             offset: const Offset(-10, -150),
-                            icon: const Icon(Iconsax.more, color: Colors.white),
+                            icon: const Icon(
+                              Iconsax.more,
+                              key: const Key('popup-menu-account-trash-export'),
+                              color: Colors.white,
+                            ),
                             color: ZurichLion.shade50,
                             padding: const EdgeInsets.all(20),
                             shape: RoundedRectangleBorder(
@@ -308,6 +313,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                                   AccountActionItemData(dic.profile.exportAccount, AccountAction.export),
                                 ]
                                     .map((AccountActionItemData data) => PopupMenuItem<AccountAction>(
+                                          key: Key(data.accountAction.name),
                                           value: data.accountAction,
                                           // https://github.com/flutter/flutter/issues/31247 as soon as we use a newer flutter version we might be able to add this to our theme.dart
                                           child: ListTileTheme(

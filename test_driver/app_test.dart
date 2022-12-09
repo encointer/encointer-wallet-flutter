@@ -1,8 +1,9 @@
+import 'package:flutter_driver/flutter_driver.dart';
+import 'package:test/test.dart';
+
 import 'package:encointer_wallet/mocks/data/mock_account_data.dart';
 import 'package:encointer_wallet/mocks/storage/mock_storage_setup.dart';
 import 'package:encointer_wallet/utils/screenshot.dart';
-import 'package:flutter_driver/flutter_driver.dart';
-import 'package:test/test.dart';
 
 void main() {
   FlutterDriver? driver;
@@ -21,7 +22,7 @@ void main() {
       var ready = await driver!.requestData(TestCommands.WAIT_UNTIL_APP_IS_READY);
       while (ready == false.toString()) {
         print('Waiting for app to be ready: $ready');
-        await Future.delayed(const Duration(seconds: 1));
+        await Future<void>.delayed(const Duration(seconds: 1));
         ready = await driver!.requestData(TestCommands.WAIT_UNTIL_APP_IS_READY);
         log('app is ready ready $ready');
       }
@@ -40,10 +41,10 @@ void main() {
 
       // put focus on text field
       await driver!.tap(find.byValueKey('account-source'));
-      await driver!.enterText(endoEncointer['mnemonic']);
+      await driver!.enterText(endoEncointer['mnemonic'] as String);
 
       await driver!.tap(find.byValueKey('create-account-name'));
-      await driver!.enterText(endoEncointer['name']);
+      await driver!.enterText(endoEncointer['name'] as String);
 
       await driver!.tap(find.byValueKey('account-import-next'));
 

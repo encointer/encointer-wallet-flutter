@@ -12,8 +12,8 @@ Future<List<MeetupOverrides>> getMeetupOverrides() async {
   final response = await http.get(Uri.parse(encointer_feed_overrides));
 
   if (response.statusCode == 200) {
-    List<dynamic> list = jsonDecode(response.body);
-    return list.map((e) => MeetupOverrides.fromJson(e)).toList();
+    final list = jsonDecode(response.body);
+    return (list as List).map((e) => MeetupOverrides.fromJson(e as Map<String, dynamic>)).toList();
   } else {
     throw Exception('Failed to get meetup overrides.');
   }

@@ -54,6 +54,7 @@ abstract class TranslationsAssets {
   String get invalidCommunity;
   String get transactionError;
   String get insufficientFundsExplanation;
+  String get chosenRightCommunity;
 }
 
 class TranslationsEnAssets implements TranslationsAssets {
@@ -167,6 +168,9 @@ class TranslationsEnAssets implements TranslationsAssets {
   String get insufficientFundsExplanation =>
       'You do not have sufficient funds on this account. See on the website of your'
       ' local community how to get some.';
+  @override
+  String get chosenRightCommunity =>
+      'The data is for a different community. Please change the community to send funds.';
 }
 
 class TranslationsDeAssets implements TranslationsAssets {
@@ -279,6 +283,9 @@ class TranslationsDeAssets implements TranslationsAssets {
   @override
   String get insufficientFundsExplanation => 'Du hast nicht genügend Geld auf diesem Konto. Schaue auf der Webseite'
       ' deiner lokalen gemeinschaft, wie du welches bekommen kannst.';
+  @override
+  String get chosenRightCommunity =>
+      'Die Daten sind für eine andere Community. Bitte wechsle die Community um Geld zu senden.';
 }
 
 class TranslationsFrAssets implements TranslationsAssets {
@@ -388,4 +395,121 @@ class TranslationsFrAssets implements TranslationsAssets {
   String get transactionError => throw UnimplementedError();
   @override
   String get insufficientFundsExplanation => throw UnimplementedError();
+  @override
+  String get chosenRightCommunity => throw UnimplementedError();
+}
+
+class TranslationsRuAssets implements TranslationsAssets {
+  @override
+  String get address => 'Отправить по адресу';
+  @override
+  String get amountError => 'Недопустимая сумма';
+  @override
+  String get insufficientBalance => 'Недостаточный баланс';
+  @override
+  String get block => 'Блокировать';
+  @override
+  String get communitiesNotFound => 'Общины не найдены';
+  @override
+  String get communityChoose => 'Пожалуйста выберите общину';
+  @override
+  String get communityNotSelected => 'Если община не выбрана, нажмите на иконку для выбора одной из них';
+  @override
+  String get copy => 'Копировать';
+  @override
+  String get detail => 'Данные';
+  @override
+  String get done => 'Выполнено';
+  @override
+  String get event => 'ID события';
+  @override
+  String get fail => 'Не удалось';
+  @override
+  String get fee => 'Платеж';
+  @override
+  String get from => 'Из';
+  @override
+  String get hash => 'Хэш транзакции';
+  @override
+  String get home => 'Домой';
+  @override
+  String get issuanceClaimed => 'Ожидаемого поступления общины нет';
+  @override
+  String get issuancePending => 'Требовать рассмотрения ожидаемого дохода общины';
+  @override
+  String get receive => 'Получить';
+  @override
+  String get scan => 'Сканировать';
+  @override
+  String get success => 'Успешно';
+  @override
+  String get tip => 'Чаевые';
+  @override
+  String get tipHint => 'Для повышения приоритетности добавить чаевые к этому переводу, при оплате автору блока.';
+  @override
+  String get to => 'в';
+  @override
+  String get transfer => 'Отправить';
+  @override
+  String get payment => 'Оплата';
+  @override
+  String get value => 'Значимость';
+  @override
+  String get amountToBeTransferred => 'Отправить сумму';
+  @override
+  String get invoiceAmount => 'Сумма инвойса';
+  @override
+  String get shareInvoice => 'Поделиться инвойсом';
+  @override
+  String get yourBalanceFor => 'Ваш баланс, ACCOUNT_NAME';
+  @override
+  String get balance => 'Баланс';
+  @override
+  String get invoice => 'Инвойс';
+  @override
+  String get incomingConfirmed => 'Поступающая сумма AMOUNT CID_SYMBOL для ACCOUNT_NAME подтверждена';
+  @override
+  String get fundsReceived => 'Полученные средства';
+  @override
+  String get paymentDoYouWantToProceed => 'Продолжить оплату?';
+  @override
+  String get paymentSubmitting => 'Производится оплата...';
+  @override
+  String get paymentFinished => 'Оплата выполнена';
+  @override
+  String get paymentError => 'Ошибка при совершении оплаты';
+  @override
+  String get voucher => 'Ваучер';
+  @override
+  String get voucherBalance => 'Баланс ваучера';
+  @override
+  String get voucherDifferentNetworkAndCommunity => 'Ваучер предназначен для другой сети. Вы хотите изменить '
+      'на NETWORK_PLACEHOLDER и COMMUNITY_PLACEHOLDER? Вы можете изменить сеть в разделе «Профиль»> «Режим разработчика».';
+  @override
+  String get voucherDifferentCommunity =>
+      'Ваучер предназначен для другого сообщества. Изменить на COMMUNITY_PLACEHOLDER?';
+  @override
+  String get voucherContainsInexistentCommunity => 'Ваучер содержит несуществующее сообщество:';
+  @override
+  String get doYouWantToRedeemThisVoucher => 'Вы хотите обменять этот ваучер на ACCOUNT_PLACEHOLDER?';
+  @override
+  String get fundVoucher => 'Ваучер на средства';
+  @override
+  String get redeemVoucher => 'Использовать ваучер';
+  @override
+  String get redeemSuccess => 'Ваучер успешно погашен.';
+  @override
+  String get redeemFailure => 'Возникла ошибка при использовании ваучера. Причина:';
+  @override
+  String get invalidNetwork => 'Неправильная сеть';
+  @override
+  String get invalidCommunity => 'Несоотвествующая община';
+  @override
+  String get transactionError => 'Ошибка транзакции';
+  @override
+  String get insufficientFundsExplanation => 'У вас недостаточно средств на этом счете. Смотрите на сайте вашей'
+      ' местной общины, как получить вознаграждение';
+  @override
+  String get chosenRightCommunity =>
+      'Данные относятся к другой общине. Пожалуйста, измените сообщество, чтобы отправить средства.';
 }

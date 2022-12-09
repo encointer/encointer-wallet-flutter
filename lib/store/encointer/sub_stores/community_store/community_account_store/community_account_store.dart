@@ -62,7 +62,7 @@ abstract class _CommunityAccountStore with Store {
   bool? meetupCompleted = false;
 
   @computed
-  get scannedAttendeesCount => attendees?.length ?? 0;
+  int get scannedAttendeesCount => attendees?.length ?? 0;
 
   @computed
   bool get isAssigned => meetup != null;

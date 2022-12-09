@@ -6,10 +6,10 @@ import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/components/logo/community_icon.dart';
 import 'package:encointer_wallet/common/components/rounded_card.dart';
 import 'package:encointer_wallet/common/theme.dart';
+import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class CommunityChooserPanel extends StatefulWidget {
   CommunityChooserPanel(this.store, {Key? key}) : super(key: key);
@@ -27,7 +27,7 @@ class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     return SizedBox(
       width: double.infinity,
       child: RoundedCard(
@@ -40,7 +40,7 @@ class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
                   ? const CupertinoActivityIndicator()
                   : (store.encointer.communities!.isEmpty)
                       ? Text(dic.assets.communitiesNotFound)
-                      : DropdownButton<dynamic>(
+                      : DropdownButton<CidName>(
                           key: const Key('cid-dropdown'),
                           // todo find out, why adding the hint breaks the integration test walkthrough when choosing community #225
                           // hint: Text(dic.assets.communityChoose),
@@ -53,15 +53,14 @@ class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
                           icon: const Icon(Icons.arrow_downward),
                           iconSize: 32,
                           elevation: 32,
-                          onChanged: (newValue) {
-                            setState(() {
-                              store.encointer.setChosenCid(newValue.cid);
-                            });
+                          onChanged: (newValue) async {
+                            await store.encointer.setChosenCid(newValue?.cid);
+                            setState(() {});
                           },
                           items: store.encointer.communities!
                               .asMap()
                               .entries
-                              .map((entry) => DropdownMenuItem<dynamic>(
+                              .map((entry) => DropdownMenuItem<CidName>(
                                     key: Key('cid-${entry.key}'),
                                     value: entry.value,
                                     child: Text(entry.value.name),

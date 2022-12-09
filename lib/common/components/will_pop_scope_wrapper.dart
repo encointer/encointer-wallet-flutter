@@ -16,7 +16,7 @@ class WillPopScopeWrapper extends StatelessWidget {
       child: child,
       onWillPop: () {
         return Platform.isAndroid
-            ? showCupertinoDialog(
+            ? showCupertinoDialog<void>(
                 context: context,
                 builder: (context) => CupertinoAlertDialog(
                   title: Text(dic.home.exitConfirm),
