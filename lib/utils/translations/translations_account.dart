@@ -2,7 +2,6 @@
 /// always add a new getter here in the abstract class first, then generate/implement the getters in the subclasses
 abstract class TranslationsAccount {
   String get advanced;
-  String get backupError;
   String get create;
   String get createError;
   String get createHint;
@@ -36,9 +35,6 @@ abstract class TranslationsAccount {
 class TranslationsEnAccount implements TranslationsAccount {
   @override
   String get advanced => 'Advanced Options';
-  @override
-  String get backupError =>
-      'This device does not support key type sr25519, you can select [Advanced Options -> Encrypt Type -> ed25519] to continue.';
   @override
   String get create => 'Create Account';
   @override
@@ -102,9 +98,6 @@ class TranslationsDeAccount implements TranslationsAccount {
   @override
   String get advanced => 'Erweiterte Optionen';
   @override
-  String get backupError =>
-      'Dieses Gerät unterstützt den key Typ sr25519 nicht, wähle [Erweiterte Optionen -> Verschlüsselungstyp -> ed225519] für den nächsten Schritt.';
-  @override
   String get create => 'Konto registrieren';
   @override
   String get createError => 'Beim Erstellen deines Kontos ist ein Fehler aufgetreten';
@@ -167,8 +160,6 @@ class TranslationsFrAccount implements TranslationsAccount {
   @override
   String get advanced => 'Options étendues';
   @override
-  String get backupError => throw UnimplementedError();
-  @override
   String get create => 'Créer un compte';
   @override
   String get createError => 'Une erreur s\'est produite lors de la création de ton compte';
@@ -230,9 +221,6 @@ class TranslationsFrAccount implements TranslationsAccount {
 class TranslationsRuAccount implements TranslationsAccount {
   @override
   String get advanced => 'Дополнительные параметры';
-  @override
-  String get backupError =>
-      'Это устройство не поддерживает тип ключа sr25519. Чтобы продолжить, выберите [Дополнительные параметры -> Тип шифрования -> ed25519].';
   @override
   String get create => 'Создать аккаунт';
   @override

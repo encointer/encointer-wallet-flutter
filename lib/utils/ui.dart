@@ -129,7 +129,6 @@ class UI {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Container(),
-          content: Text(I18n.of(context)!.translationsForLocale().account.backupError),
           actions: <Widget>[
             CupertinoButton(
               child: Text(I18n.of(context)!.translationsForLocale().home.ok),
