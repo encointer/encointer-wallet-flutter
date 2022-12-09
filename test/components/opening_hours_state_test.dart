@@ -11,7 +11,7 @@ import 'package:mobx/mobx.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/menu/2_my_businesses/opening_hours_state.dart';
 
 void main() {
-  List<List<String>> testCases = [
+  final testCases = <List<String>>[
     ['8:10-13:40', '8:10 - 13:40', 'base case'],
     ['  8 :  10 - 13: 40', '8:10 - 13:40', 'with spaces'],
     ['12:00-8:00', '8:00 - 12:00', 'sort'],
