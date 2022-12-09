@@ -23,4 +23,4 @@ cd ..
 
 source ./scripts/app_center_post_clone_setup.sh
 
-flutter build ios --release --no-codesign
+./flutterw build ios --release --no-codesign
