@@ -17,13 +17,11 @@ import 'package:encointer_wallet/page/profile/account/account_manage_page.dart';
 import 'package:encointer_wallet/page/profile/account/change_password_page.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/service/tx/lib/tx.dart';
-import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/settings.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class Profile extends StatefulWidget {
   Profile({Key? key}) : super(key: key);
@@ -36,12 +34,13 @@ class _ProfileState extends State<Profile> {
   EndpointData? _selectedNetwork;
 
   List<Widget> _buildAccountList() {
-    List<Widget> allAccountsAsWidgets = [];
+    final allAccountsAsWidgets = <Widget>[];
 
-    List<AccountData> accounts = context.read<AppStore>().account.accountListAll;
+    final accounts = context.read<AppStore>().account.accountListAll;
 
     allAccountsAsWidgets.addAll(accounts.map((account) {
       return InkWell(
+        key: Key(account.name),
         child: Column(
           children: [
             Stack(
@@ -83,7 +82,7 @@ class _ProfileState extends State<Profile> {
 
   Future<bool> _sendEmail() async {
     final dic = I18n.of(context)!.translationsForLocale().profile;
-    final Uri _emailLaunchUri = Uri(
+    final _emailLaunchUri = Uri(
       scheme: 'mailto',
       path: 'bugreports@mail.encointer.org',
     );
@@ -100,7 +99,7 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
-    var h3Grey = Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey);
+    final h3Grey = Theme.of(context).textTheme.headline3!.copyWith(color: encointerGrey);
     final _store = context.watch<AppStore>();
     _selectedNetwork = _store.settings.endpoint;
 
@@ -111,7 +110,7 @@ class _ProfileState extends State<Profile> {
         Navigator.pop(context);
       });
     }
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
 
     return Scaffold(
       appBar: AppBar(
@@ -176,6 +175,7 @@ class _ProfileState extends State<Profile> {
                 onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
               ),
               ListTile(
+                key: const Key('remove-all-accounts'),
                 title: Text(dic.profile.accountsDeleteAll, style: h3Grey),
                 onTap: () => showRemoveAccountsDialog(context, _store),
               ),
@@ -254,7 +254,7 @@ class _ProfileState extends State<Profile> {
                           ],
                         ),
                         onPressed: (_) async {
-                          var res = await submitNextPhase(webApi);
+                          final res = await submitNextPhase(webApi);
                           RootSnackBar.showMsg(res.toString());
                         },
                       ),
@@ -283,6 +283,7 @@ Future<void> showRemoveAccountsDialog(BuildContext context, AppStore _store) {
             onPressed: () => Navigator.of(context).pop(),
           ),
           CupertinoButton(
+            key: const Key('remove-all-accounts-check'),
             child: Text(dic.home.ok),
             onPressed: () async {
               final accounts = _store.account.accountListAll;

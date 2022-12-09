@@ -94,7 +94,7 @@ class EncointerApi {
     Log.d('api: getCurrentPhase', 'EncointerApi');
     final res = await jsApi.evalJavascript('encointer.getCurrentPhase()');
 
-    var phase = ceremonyPhaseFromString(res as String)!;
+    final phase = ceremonyPhaseFromString(res as String)!;
     Log.d('api: Phase enum: $phase', 'EncointerApi');
     store.encointer.setCurrentPhase(phase);
     return phase;
@@ -105,7 +105,7 @@ class EncointerApi {
   /// This is on-chain in Cantillon.
   Future<int> getNextPhaseTimestamp() async {
     Log.d('api: getNextPhaseTimestamp', 'EncointerApi');
-    int timestamp =
+    final timestamp =
         await jsApi.evalJavascript('encointer.getNextPhaseTimestamp()').then((time) => int.parse(time as String));
 
     Log.d('api: next phase timestamp: $timestamp', 'EncointerApi');
@@ -119,7 +119,7 @@ class EncointerApi {
   ///
   /// This is on-chain in Cantillon.
   Future<void> getPhaseDurations() async {
-    Map<CeremonyPhase, int> phaseDurations =
+    final phaseDurations =
         await jsApi.evalJavascript('encointer.getPhaseDurations()').then((m) => Map<String, dynamic>.from(m as Map).map(
               (key, value) => MapEntry(ceremonyPhaseFromString(key)!, int.parse(value as String)),
             ));
@@ -131,7 +131,7 @@ class EncointerApi {
   ///
   Future<AggregatedAccountData> getAggregatedAccountData(CommunityIdentifier cid, String address) async {
     try {
-      AggregatedAccountData accountData = await _dartApi.getAggregatedAccountData(cid, address);
+      final accountData = await _dartApi.getAggregatedAccountData(cid, address);
       Log.d(
         '[EncointerApi]: AggregatedAccountData for ${cid.toFmtString()} and ${address.substring(0, 7)}...: $accountData'
         'EncointerApi',
@@ -144,7 +144,7 @@ class EncointerApi {
 
   Future<List<String>> pendingExtrinsics() async {
     try {
-      var extrinsics = await _dartApi.pendingExtrinsics();
+      final extrinsics = await _dartApi.pendingExtrinsics();
       return List.from(extrinsics);
     } catch (e) {
       throw Exception('[EncointerApi]: Error getting pending extrinsics: $e');
@@ -160,7 +160,7 @@ class EncointerApi {
   /// This is on-chain in Cantillon.
   Future<int?> getCurrentCeremonyIndex() async {
     Log.d('api: getCurrentCeremonyIndex', 'EncointerApi');
-    int cIndex =
+    final cIndex =
         await jsApi.evalJavascript('encointer.getCurrentCeremonyIndex()').then((index) => int.parse(index as String));
     Log.d('api: Current Ceremony index: $cIndex', 'EncointerApi');
     store.encointer.setCurrentCeremonyIndex(cIndex);
@@ -172,15 +172,14 @@ class EncointerApi {
   /// This is on-chain in Cantillon
   Future<void> getAllMeetupLocations() async {
     Log.d('api: getAllMeetupLocations', 'EncointerApi');
-    CommunityIdentifier? cid = store.encointer.chosenCid;
+    final cid = store.encointer.chosenCid;
 
     if (cid == null) {
       return;
     }
 
-    List<Location> locs = await jsApi.evalJavascript('encointer.getAllMeetupLocations(${jsonEncode(cid)})').then(
-        (list) =>
-            List<dynamic>.from(list as Iterable).map((l) => Location.fromJson(l as Map<String, dynamic>)).toList());
+    final locs = await jsApi.evalJavascript('encointer.getAllMeetupLocations(${jsonEncode(cid)})').then((list) =>
+        List<dynamic>.from(list as Iterable).map((l) => Location.fromJson(l as Map<String, dynamic>)).toList());
 
     Log.d('api: getAllMeetupLocations: $locs ' 'EncointerApi');
     if (store.encointer.community != null) {
@@ -193,12 +192,12 @@ class EncointerApi {
   /// This is on-chain in Cantillon
   Future<void> getCommunityMetadata() async {
     Log.d('api: getCommunityMetadata', 'EncointerApi');
-    CommunityIdentifier? cid = store.encointer.chosenCid;
+    final cid = store.encointer.chosenCid;
     if (cid == null) {
       return;
     }
 
-    CommunityMetadata meta = await jsApi
+    final meta = await jsApi
         .evalJavascript('encointer.getCommunityMetadata(${jsonEncode(cid)})')
         .then((m) => CommunityMetadata.fromJson(m as Map<String, dynamic>));
 
@@ -216,7 +215,7 @@ class EncointerApi {
   ///
   /// This is on-chain in Cantillon
   Future<void> getDemurrage() async {
-    CommunityIdentifier? cid = store.encointer.chosenCid;
+    final cid = store.encointer.chosenCid;
     if (cid == null) {
       return;
     }
@@ -230,7 +229,7 @@ class EncointerApi {
 
   /// Calls the custom rpc: api.rpc.communities.communitiesGetAll()
   Future<void> communitiesGetAll() async {
-    List<CidName> cn = await jsApi.evalJavascript('encointer.communitiesGetAll()').then(
+    final cn = await jsApi.evalJavascript('encointer.communitiesGetAll()').then(
           (list) =>
               List<dynamic>.from(list as Iterable).map((cn) => CidName.fromJson(cn as Map<String, dynamic>)).toList(),
         );
@@ -248,9 +247,9 @@ class EncointerApi {
 
     // I we are not assigned to a meetup, we just get any location to get an estimate of the chosen community's meetup
     // times.
-    int? locationIndex = store.encointer.communityAccount?.meetup?.locationIndex;
+    final locationIndex = store.encointer.communityAccount?.meetup?.locationIndex;
 
-    Location? mLocation = locationIndex != null && store.encointer.community?.meetupLocations != null
+    final mLocation = locationIndex != null && store.encointer.community?.meetupLocations != null
         ? store.encointer.community?.meetupLocations![locationIndex]
         : (store.encointer.community?.meetupLocations?.first);
 
@@ -259,7 +258,7 @@ class EncointerApi {
       return Future.value(null);
     }
 
-    int time = await jsApi
+    final time = await jsApi
         .evalJavascript('encointer.getNextMeetupTime(${jsonEncode(mLocation)})')
         .then((value) => int.parse(value as String));
 
@@ -270,7 +269,7 @@ class EncointerApi {
 
   Future<void> getMeetupTimeOverride() async {
     Log.d('api: Check if there are meetup time overrides', 'EncointerApi');
-    CommunityIdentifier? cid = store.encointer.chosenCid;
+    final cid = store.encointer.chosenCid;
     if (cid == null) {
       return;
     }
@@ -290,10 +289,10 @@ class EncointerApi {
   }
 
   Future<bool?> hasPendingIssuance() async {
-    CommunityIdentifier? cid = store.encointer.chosenCid;
+    final cid = store.encointer.chosenCid;
 
-    int? cIndex = store.encointer.currentCeremonyIndex;
-    String? pubKey = store.account.currentAccountPubKey;
+    final cIndex = store.encointer.currentCeremonyIndex;
+    final pubKey = store.account.currentAccountPubKey;
     Log.d('api: Getting pendingIssuance for $pubKey', 'EncointerApi');
 
     if (pubKey == null || pubKey.isEmpty || cid == null || cIndex == null || cIndex <= 1) {
@@ -301,7 +300,7 @@ class EncointerApi {
     }
 
     // -1 as we get the pending issuance for the last ceremony
-    int issuanceCIndex = cIndex - 1;
+    var issuanceCIndex = cIndex - 1;
 
     if (store.encointer.currentPhase == CeremonyPhase.Attesting) {
       // If we are in the attesting phase we want to payout the current meetup
@@ -322,7 +321,7 @@ class EncointerApi {
   Future<BalanceEntry> getEncointerBalance(String pubKeyOrAddress, CommunityIdentifier cid) async {
     Log.d('Getting encointer balance for $pubKeyOrAddress and ${cid.toFmtString()}', 'EncointerApi');
 
-    BalanceEntry balanceEntry = store.settings.endpointIsNoTee
+    final balanceEntry = store.settings.endpointIsNoTee
         ? await _noTee.balances.balance(cid, pubKeyOrAddress)
         : await _teeProxy.balances.balance(cid, pubKeyOrAddress, store.settings.cachedPin);
 
@@ -335,13 +334,13 @@ class EncointerApi {
     jsApi.subscribeMessage(
         'encointer.subscribeCurrentPhase("$_currentPhaseSubscribeChannel")', _currentPhaseSubscribeChannel,
         (String data) async {
-      var phase = ceremonyPhaseFromString(data.toUpperCase())!;
+      final phase = ceremonyPhaseFromString(data.toUpperCase())!;
 
-      var cid = store.encointer.chosenCid;
-      var address = store.account.currentAddress;
+      final cid = store.encointer.chosenCid;
+      final address = store.account.currentAddress;
 
       if (cid != null) {
-        var data = await pollAggregatedAccountDataUntilNextPhase(phase, cid, address);
+        final data = await pollAggregatedAccountDataUntilNextPhase(phase, cid, address);
         store.encointer.setAggregatedAccountData(cid, address, data);
       }
 
@@ -382,7 +381,7 @@ class EncointerApi {
     jsApi.subscribeMessage(
         'encointer.subscribeCommunityIdentifiers("$_communityIdentifiersChannel")', _communityIdentifiersChannel,
         (Iterable<dynamic> data) async {
-      List<CommunityIdentifier> cids =
+      final cids =
           List<dynamic>.from(data).map((cn) => CommunityIdentifier.fromJson(cn as Map<String, dynamic>)).toList();
 
       await store.encointer.setCommunityIdentifiers(cids);
@@ -399,8 +398,8 @@ class EncointerApi {
     Log.d('Subscribe encointer balance', 'EncointerApi');
     jsApi.unsubscribeMessage(_encointerBalanceChannel);
 
-    String? account = store.account.currentAccountPubKey;
-    CommunityIdentifier? cid = store.encointer.chosenCid;
+    final account = store.account.currentAccountPubKey;
+    final cid = store.encointer.chosenCid;
     if (cid == null) {
       return;
     }
@@ -409,7 +408,7 @@ class EncointerApi {
       'encointer.subscribeBalance("$_encointerBalanceChannel", ${jsonEncode(cid)}, "$account")',
       _encointerBalanceChannel,
       (Map<String, dynamic> data) {
-        BalanceEntry balance = BalanceEntry.fromJson(data);
+        final balance = BalanceEntry.fromJson(data);
         store.encointer.account?.addBalanceEntry(cid, balance);
       },
     );
@@ -423,7 +422,7 @@ class EncointerApi {
   ///
   /// This is on-chain in Cantillon.
   Future<List<CommunityIdentifier>> getCommunityIdentifiers() async {
-    List<CommunityIdentifier> cids = await jsApi.evalJavascript('encointer.getCommunityIdentifiers()').then(
+    final cids = await jsApi.evalJavascript('encointer.getCommunityIdentifiers()').then(
           (res) => List<dynamic>.from(res['cids'] as Iterable)
               .map((cn) => CommunityIdentifier.fromJson(cn as Map<String, dynamic>))
               .toList(),
@@ -436,11 +435,11 @@ class EncointerApi {
   /// Queries the EncointerCommunities pallet: encointerCommunities.bootstrappers(cid).
   ///
   Future<void> getBootstrappers() async {
-    var cid = store.encointer.chosenCid;
+    final cid = store.encointer.chosenCid;
 
     if (cid == null) return;
 
-    List<String> bootstrappers =
+    final bootstrappers =
         await jsApi.evalJavascript('encointer.getBootstrappers($cid)').then((bs) => List<String>.from(bs as Iterable));
 
     Log.d('api: bootstrappers $bootstrappers', 'EncointerApi');
@@ -450,7 +449,7 @@ class EncointerApi {
   }
 
   Future<void> getReputations() async {
-    var address = store.account.currentAddress;
+    final address = store.account.currentAddress;
 
     final reputationsList = await jsApi.evalJavascript('encointer.getReputations("$address")');
 
@@ -459,7 +458,7 @@ class EncointerApi {
       return Future.value(null);
     }
 
-    Map<int, CommunityReputation> reputations = {
+    final reputations = {
       for (var cr in reputationsList as List) cr[0] as int: CommunityReputation.fromJson(cr[1] as Map<String, dynamic>)
     };
 
@@ -467,9 +466,9 @@ class EncointerApi {
   }
 
   Future<dynamic> sendFaucetTx() async {
-    var address = store.account.currentAddress;
-    var amount = Fmt.tokenInt(faucetAmount.toString(), ert_decimals);
-    var res = await jsApi.evalJavascript('account.sendFaucetTx("$address", "$amount")');
+    final address = store.account.currentAddress;
+    final amount = Fmt.tokenInt(faucetAmount.toString(), ert_decimals);
+    final res = await jsApi.evalJavascript('account.sendFaucetTx("$address", "$amount")');
     // Log.d("Faucet Result : $res", 'EncointerApi');
     return res;
   }
@@ -477,9 +476,9 @@ class EncointerApi {
   // Below are functions that simply use the Scale-codec already implemented in polkadot-js/api such that we do not
   // have to implement the codec ourselves.
   Future<ClaimOfAttendance> signClaimOfAttendance(int participants, String password) async {
-    Meetup meetup = store.encointer.communityAccount!.meetup!;
+    final meetup = store.encointer.communityAccount!.meetup!;
 
-    var claim = ClaimOfAttendance(
+    final claim = ClaimOfAttendance(
       store.account.currentAccountPubKey,
       store.encointer.currentCeremonyIndex,
       store.encointer.chosenCid,
@@ -489,7 +488,7 @@ class EncointerApi {
       participants,
     );
 
-    var claimSigned = await jsApi
+    final claimSigned = await jsApi
         .evalJavascript('encointer.signClaimOfAttendance(${jsonEncode(claim)}, "$password")')
         .then((c) => ClaimOfAttendance.fromJson(c as Map<String, dynamic>));
 
@@ -500,19 +499,19 @@ class EncointerApi {
   ///
   /// returns null, if none available.
   Future<ProofOfAttendance?> getProofOfAttendance() async {
-    var pubKey = store.account.currentAccountPubKey;
-    var cIndex = store.encointer.account?.ceremonyIndexForProofOfAttendance;
+    final pubKey = store.account.currentAccountPubKey;
+    final cIndex = store.encointer.account?.ceremonyIndexForProofOfAttendance;
 
     if (cIndex == null || cIndex == 0) {
       return Future.value(null);
     }
 
-    var cid = store.encointer.account?.reputations[cIndex]?.communityIdentifier;
-    var pin = store.settings.cachedPin;
+    final cid = store.encointer.account?.reputations[cIndex]?.communityIdentifier;
+    final pin = store.settings.cachedPin;
     Log.d('getProofOfAttendance: cachedPin: $pin', 'EncointerApi');
     final proofJs =
         await jsApi.evalJavascript('encointer.getProofOfAttendance("$pubKey", ${jsonEncode(cid)}, "$cIndex", "$pin")');
-    ProofOfAttendance proof = ProofOfAttendance.fromJson(proofJs as Map<String, dynamic>);
+    final proof = ProofOfAttendance.fromJson(proofJs as Map<String, dynamic>);
     Log.d('Proof: $proof', 'EncointerApi');
     return proof;
   }

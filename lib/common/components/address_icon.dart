@@ -20,7 +20,7 @@ class AddressIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String rawSvg = Jdenticon.toSvg(pubKey,
+    final rawSvg = Jdenticon.toSvg(pubKey,
         colorSaturation: 0.78,
         grayscaleSaturation: 0.48,
         colorLightnessMinValue: 0.33,

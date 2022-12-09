@@ -20,7 +20,6 @@ import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 
 class PaymentConfirmationParams {
   PaymentConfirmationParams({
@@ -62,13 +61,13 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
-    PaymentConfirmationParams params = ModalRoute.of(context)!.settings.arguments as PaymentConfirmationParams;
+    final dic = I18n.of(context)!.translationsForLocale();
+    final params = ModalRoute.of(context)!.settings.arguments as PaymentConfirmationParams;
 
-    var cid = params.cid;
-    var recipientAccount = params.recipientAccount;
+    final cid = params.cid;
+    final recipientAccount = params.recipientAccount;
     final recipientAddress = Fmt.addressOfAccount(recipientAccount, context.read<AppStore>());
-    var amount = params.amount;
+    final amount = params.amount;
 
     return Observer(
       builder: (_) {
@@ -112,7 +111,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                 ),
                 !_transferState.isFinishedOrFailed()
                     ? PrimaryButton(
-                        key: const Key('make-transfer'),
+                        key: const Key('make-transfer-send'),
                         child: SizedBox(
                           height: 24,
                           child: !_transferState.isSubmitting()
@@ -145,13 +144,13 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
   }
 
   Future<void> _submit(BuildContext context, CommunityIdentifier cid, String recipientAddress, double? amount) async {
-    var params = encointerBalanceTransferParams(cid, recipientAddress, amount);
+    final params = encointerBalanceTransferParams(cid, recipientAddress, amount);
 
     setState(() {
       _transferState = TransferState.submitting;
     });
 
-    var onFinish = (BuildContext txPageContext, Map res) {
+    final onFinish = (BuildContext txPageContext, Map res) {
       Log.d('Transfer result $res', 'PaymentConfirmationPage');
 
       if (res['hash'] == null) {
@@ -223,7 +222,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
     final h1Grey = Theme.of(context).textTheme.headline1!.copyWith(color: encointerGrey);
     final h2Grey = Theme.of(context).textTheme.headline2!.copyWith(color: encointerGrey);
 
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     switch (state) {
       case TransferState.notStarted:
         {
@@ -235,8 +234,8 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
         }
       case TransferState.finished:
         {
-          var date = DateFormat.yMd().format(_blockTimestamp);
-          var time = DateFormat.Hms().format(_blockTimestamp);
+          final date = DateFormat.yMd().format(_blockTimestamp);
+          final time = DateFormat.Hms().format(_blockTimestamp);
 
           return RichText(
             textAlign: TextAlign.center,

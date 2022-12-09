@@ -5,8 +5,6 @@ import 'package:encointer_wallet/store/account/account.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
-import 'package:encointer_wallet/utils/translations/translations_account.dart';
 import 'package:encointer_wallet/utils/validate_keys.dart';
 import 'package:flutter/material.dart';
 
@@ -43,9 +41,9 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
   }
 
   String? _validateAccountSource(BuildContext context, String v) {
-    final TranslationsAccount dic = I18n.of(context)!.translationsForLocale().account;
+    final dic = I18n.of(context)!.translationsForLocale().account;
 
-    String input = v.trim();
+    final input = v.trim();
 
     if (input.isEmpty) {
       return dic.importMustNotBeEmpty;
@@ -70,7 +68,7 @@ class _ImportAccountFormState extends State<ImportAccountForm> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
 
     return Padding(
       padding: const EdgeInsets.fromLTRB(32, 0, 16, 32),

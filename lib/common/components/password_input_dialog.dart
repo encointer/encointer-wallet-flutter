@@ -2,7 +2,6 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:encointer_wallet/utils/translations/translations.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -49,7 +48,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
     setState(() {
       _submitting = true;
     });
-    var res = await webApi.account.checkAccountPassword(widget.account, password);
+    final res = await webApi.account.checkAccountPassword(widget.account, password);
     if (mounted) {
       setState(() {
         _submitting = false;
@@ -59,7 +58,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
       showCupertinoDialog<void>(
         context: context,
         builder: (BuildContext context) {
-          final Translations dic = I18n.of(context)!.translationsForLocale();
+          final dic = I18n.of(context)!.translationsForLocale();
           return CupertinoAlertDialog(
             title: Text(dic.profile.wrongPin),
             content: Text(dic.profile.wrongPinHint),
@@ -87,13 +86,14 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
 
   @override
   Widget build(BuildContext context) {
-    final Translations dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
 
     return CupertinoAlertDialog(
       title: widget.title ?? Container(),
       content: Padding(
         padding: const EdgeInsets.only(top: 16),
         child: CupertinoTextFormFieldRow(
+          key: const Key('input-password-dialog'),
           decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(8)),
           padding: EdgeInsets.zero,
           autofocus: true,

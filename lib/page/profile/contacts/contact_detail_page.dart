@@ -26,7 +26,7 @@ class ContactDetailPage extends StatelessWidget {
   final Api api;
 
   void _removeItem(BuildContext context, AccountData account, AppStore store) {
-    var dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
     showCupertinoDialog<void>(
       context: context,
       builder: (BuildContext context) {
@@ -57,8 +57,8 @@ class ContactDetailPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    AccountData account = ModalRoute.of(context)!.settings.arguments as AccountData;
-    var dic = I18n.of(context)!.translationsForLocale();
+    final account = ModalRoute.of(context)!.settings.arguments as AccountData;
+    final dic = I18n.of(context)!.translationsForLocale();
     final _store = context.watch<AppStore>();
 
     return Scaffold(
@@ -115,6 +115,7 @@ class ContactDetailPage extends StatelessWidget {
               }),
               const SizedBox(height: 16),
               SecondaryButtonWide(
+                key: const Key('send-money-to-account'),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -166,9 +167,10 @@ class EndorseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var dic = I18n.of(context)!.translationsForLocale();
+    final dic = I18n.of(context)!.translationsForLocale();
 
     return SubmitButtonSecondary(
+      key: const Key('tap-endorse-button'),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

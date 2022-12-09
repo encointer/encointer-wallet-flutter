@@ -94,7 +94,7 @@ abstract class _BusinessFormState with Store {
 
   // ************** OTHER METHODS **********************************************
   void validateIsNotBlank(String? value, void Function(String?) errorTarget) {
-    String? errorText = value == null || value.trim().isEmpty ? 'Cannot be blank' : null;
+    final errorText = value == null || value.trim().isEmpty ? 'Cannot be blank' : null;
     errorTarget(errorText);
   }
 
