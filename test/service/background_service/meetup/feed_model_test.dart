@@ -1,7 +1,8 @@
 import 'dart:convert';
 
-import 'package:encointer_wallet/service/background_service/meetup/feed_model.dart';
 import 'package:flutter_test/flutter_test.dart';
+
+import 'package:encointer_wallet/service/background_service/meetup/feed_model.dart';
 
 import '../../../fixtures/fixture_reader.dart';
 

@@ -11,7 +11,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class AccountSharePage extends StatefulWidget {
-  AccountSharePage({Key? key}) : super(key: key);
+  const AccountSharePage({Key? key}) : super(key: key);
   static const String route = '/profile/share';
 
   @override
@@ -89,7 +89,7 @@ class _AccountSharePageState extends State<AccountSharePage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.share, color: ZurichLion.shade500),
+                    Icon(Icons.share, color: zurichLion.shade500),
                     const SizedBox(width: 12),
                     Text(dic.profile.sendLink, style: textTheme.headline3),
                   ],

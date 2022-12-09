@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import 'package:encointer_wallet/common/components/account_advance_option_params.dart';
 import 'package:encointer_wallet/common/components/encointer_text_form_field.dart';
 import 'package:encointer_wallet/common/components/gradient_elements.dart';
@@ -6,7 +8,6 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/input_validation.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/validate_keys.dart';
-import 'package:flutter/material.dart';
 
 class ImportAccountForm extends StatefulWidget {
   const ImportAccountForm(this.store, this.onSubmit, {Key? key}) : super(key: key);

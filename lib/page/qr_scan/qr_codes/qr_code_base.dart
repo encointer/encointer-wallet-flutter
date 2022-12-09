@@ -1,7 +1,7 @@
 //! Basic definitions for encointer-qr codes.
 
-const ENCOINTER_PREFIX = 'encointer';
-const String QR_CODE_FIELD_SEPARATOR = '\n';
+const encointerPrefix = 'encointer';
+const String qrCodeFieldSeparator = '\n';
 
 abstract class QrCode<QrCodeData extends ToQrFields> {
   QrCode(this.data);
@@ -15,7 +15,7 @@ abstract class QrCode<QrCodeData extends ToQrFields> {
   String toQrPayload() {
     final qrFields = [context.toQrField(), version.toVersionNumber()];
     qrFields.addAll(data.toQrFields());
-    return qrFields.join(QR_CODE_FIELD_SEPARATOR);
+    return qrFields.join(qrCodeFieldSeparator);
   }
 }
 
@@ -53,7 +53,7 @@ extension QrCodeContextExt on QrCodeContext? {
 
   String toQrField() {
     final variant = toString().split('.').last.toLowerCase();
-    return '$ENCOINTER_PREFIX-$variant';
+    return '$encointerPrefix-$variant';
   }
 }
 

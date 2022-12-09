@@ -49,7 +49,7 @@ class _SplashViewState extends State<SplashView> {
           context, CupertinoPageRoute<void>(builder: (context) => const EncointerHomePage()), (route) => false);
     } else {
       await Navigator.pushAndRemoveUntil(
-          context, CupertinoPageRoute<void>(builder: (context) => CreateAccountEntryPage()), (route) => false);
+          context, CupertinoPageRoute<void>(builder: (context) => const CreateAccountEntryPage()), (route) => false);
     }
   }
 

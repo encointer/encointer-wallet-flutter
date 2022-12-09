@@ -26,7 +26,7 @@ class CommunityIconObserver extends StatelessWidget {
                 } else if (snapshot.hasData && snapshot.data != null && snapshot.data!.isNotEmpty) {
                   return SvgPicture.string(snapshot.data!);
                 } else {
-                  return SvgPicture.asset(fall_back_community_icon);
+                  return SvgPicture.asset(fallBackCommunityIcon);
                 }
               },
             );

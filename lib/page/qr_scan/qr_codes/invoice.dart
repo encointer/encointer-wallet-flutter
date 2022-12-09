@@ -30,7 +30,7 @@ class InvoiceQrCode extends QrCode<InvoiceData> {
     } else {
       qrFields.addAll(data.toQrFieldsV2());
     }
-    return qrFields.join(QR_CODE_FIELD_SEPARATOR);
+    return qrFields.join(qrCodeFieldSeparator);
   }
 
   static InvoiceQrCode fromPayload(String payload) {

@@ -90,7 +90,7 @@ class NotificationPlugin {
       styleInformation: BigTextStyleInformation(body),
     );
 
-    final iOSPlatformChannelSpecifics = const DarwinNotificationDetails(
+    const iOSPlatformChannelSpecifics = DarwinNotificationDetails(
       sound: 'lions_growl.wav',
       presentSound: true,
     );

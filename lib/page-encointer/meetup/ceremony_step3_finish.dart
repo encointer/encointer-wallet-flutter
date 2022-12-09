@@ -43,7 +43,7 @@ class CeremonyStep3Finish extends StatelessWidget {
                     Center(
                       child: Text(
                         dic.encointer.thankYou,
-                        style: Theme.of(context).textTheme.headline2!.copyWith(color: ZurichLion.shade600),
+                        style: Theme.of(context).textTheme.headline2!.copyWith(color: zurichLion.shade600),
                       ),
                     ),
                     Center(

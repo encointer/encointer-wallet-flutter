@@ -9,7 +9,7 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class TransferDetailPage extends StatelessWidget {
-  TransferDetailPage({Key? key}) : super(key: key);
+  const TransferDetailPage({Key? key}) : super(key: key);
 
   static const String route = '/assets/tx';
 

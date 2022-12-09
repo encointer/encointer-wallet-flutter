@@ -7,7 +7,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class TxDetail extends StatelessWidget {
-  TxDetail({
+  const TxDetail({
     Key? key,
     this.success,
     this.networkName,
