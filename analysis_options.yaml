@@ -101,11 +101,8 @@ analyzer:
     fixme: false
 
   exclude:
-    - test/
-    - test_driver/
     - lib/generated_plugin_registrant.dart
     - "**/*.g.dart"
     - "**/*.freezed.dart"
     - "bin/cache/**"
-    - "lib/generated_plugin_registrant.dart"
     - assets/translations
