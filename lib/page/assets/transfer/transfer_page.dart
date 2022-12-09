@@ -149,6 +149,7 @@ class _TransferPageState extends State<TransferPage> {
                 children: [
                   Expanded(
                     child: ListView(
+                      key: const Key('transfer-listview'),
                       children: [
                         CombinedCommunityAndAccountAvatar(_store, showCommunityNameAndAccountName: false),
                         const SizedBox(height: 12),

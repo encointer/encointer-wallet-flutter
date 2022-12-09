@@ -40,6 +40,7 @@ class _ProfileState extends State<Profile> {
 
     allAccountsAsWidgets.addAll(accounts.map((account) {
       return InkWell(
+        key: Key(account.name),
         child: Column(
           children: [
             Stack(
@@ -174,6 +175,7 @@ class _ProfileState extends State<Profile> {
                 onTap: () => Navigator.pushNamed(context, ChangePasswordPage.route),
               ),
               ListTile(
+                key: const Key('remove-all-accounts'),
                 title: Text(dic.profile.accountsDeleteAll, style: h3Grey),
                 onTap: () => showRemoveAccountsDialog(context, _store),
               ),
@@ -281,6 +283,7 @@ Future<void> showRemoveAccountsDialog(BuildContext context, AppStore _store) {
             onPressed: () => Navigator.of(context).pop(),
           ),
           CupertinoButton(
+            key: const Key('remove-all-accounts-check'),
             child: Text(dic.home.ok),
             onPressed: () async {
               final accounts = _store.account.accountListAll;
