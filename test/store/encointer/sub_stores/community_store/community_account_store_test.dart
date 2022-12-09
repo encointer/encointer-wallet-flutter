@@ -20,7 +20,7 @@ void main() {
         'network': 'My Test Network',
         'cid': mediterraneanTestCommunity.toJson(),
         'address': aliceAddress,
-        'participantType': 'Bootstrapper',
+        'participantType': 'bootstrapper',
         'meetup': {
           'index': 2,
           'locationIndex': 3,
@@ -40,7 +40,7 @@ void main() {
         'network': 'My Test Network',
         'cid': mediterraneanTestCommunity.toJson(),
         'address': aliceAddress,
-        'participantType': 'Bootstrapper',
+        'participantType': 'bootstrapper',
         'meetup': {
           'index': 2,
           'locationIndex': 3,
@@ -80,7 +80,7 @@ void main() {
         'network': 'My Test Network',
         'cid': mediterraneanTestCommunity.toJson(),
         'address': aliceAddress,
-        'participantType': 'Bootstrapper',
+        'participantType': 'bootstrapper',
         'meetup': {
           'index': 2,
           'locationIndex': 3,
