@@ -19,12 +19,13 @@ part 'encointer_account_store.g.dart';
 class EncointerAccountStore extends _EncointerAccountStore with _$EncointerAccountStore {
   EncointerAccountStore(String network, String address) : super(network, address);
 
+  factory EncointerAccountStore.fromJson(Map<String, dynamic> json) => _$EncointerAccountStoreFromJson(json);
+
   @override
   String toString() {
     return jsonEncode(this);
   }
 
-  factory EncointerAccountStore.fromJson(Map<String, dynamic> json) => _$EncointerAccountStoreFromJson(json);
   Map<String, dynamic> toJson() => _$EncointerAccountStoreToJson(this);
 }
 

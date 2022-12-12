@@ -12,6 +12,8 @@ part 'ceremonies.g.dart';
 class AggregatedAccountData {
   AggregatedAccountData(this.global, this.personal);
 
+  factory AggregatedAccountData.fromJson(Map<String, dynamic> json) => _$AggregatedAccountDataFromJson(json);
+
   AggregatedAccountDataGlobal? global;
   AggregatedAccountDataPersonal? personal;
 
@@ -20,7 +22,6 @@ class AggregatedAccountData {
     return jsonEncode(this);
   }
 
-  factory AggregatedAccountData.fromJson(Map<String, dynamic> json) => _$AggregatedAccountDataFromJson(json);
   Map<String, dynamic> toJson() => _$AggregatedAccountDataToJson(this);
 }
 
@@ -28,6 +29,9 @@ class AggregatedAccountData {
 class AggregatedAccountDataPersonal {
   AggregatedAccountDataPersonal(
       this.participantType, this.meetupIndex, this.meetupLocationIndex, this.meetupTime, this.meetupRegistry);
+
+  factory AggregatedAccountDataPersonal.fromJson(Map<String, dynamic> json) =>
+      _$AggregatedAccountDataPersonalFromJson(json);
 
   ParticipantType? participantType;
   int? meetupIndex;
@@ -43,14 +47,15 @@ class AggregatedAccountDataPersonal {
     return jsonEncode(this);
   }
 
-  factory AggregatedAccountDataPersonal.fromJson(Map<String, dynamic> json) =>
-      _$AggregatedAccountDataPersonalFromJson(json);
   Map<String, dynamic> toJson() => _$AggregatedAccountDataPersonalToJson(this);
 }
 
 @JsonSerializable()
 class AggregatedAccountDataGlobal {
   AggregatedAccountDataGlobal(this.ceremonyPhase, this.ceremonyIndex);
+
+  factory AggregatedAccountDataGlobal.fromJson(Map<String, dynamic> json) =>
+      _$AggregatedAccountDataGlobalFromJson(json);
 
   CeremonyPhase ceremonyPhase;
   int ceremonyIndex;
@@ -60,8 +65,6 @@ class AggregatedAccountDataGlobal {
     return jsonEncode(this);
   }
 
-  factory AggregatedAccountDataGlobal.fromJson(Map<String, dynamic> json) =>
-      _$AggregatedAccountDataGlobalFromJson(json);
   Map<String, dynamic> toJson() => _$AggregatedAccountDataGlobalToJson(this);
 }
 
@@ -73,6 +76,8 @@ enum ParticipantType { Bootstrapper, Reputable, Endorsee, Newbie }
 class CommunityReputation {
   CommunityReputation(this.communityIdentifier, this.reputation);
 
+  factory CommunityReputation.fromJson(Map<String, dynamic> json) => _$CommunityReputationFromJson(json);
+
   CommunityIdentifier? communityIdentifier;
   Reputation? reputation;
 
@@ -81,13 +86,14 @@ class CommunityReputation {
     return jsonEncode(this);
   }
 
-  factory CommunityReputation.fromJson(Map<String, dynamic> json) => _$CommunityReputationFromJson(json);
   Map<String, dynamic> toJson() => _$CommunityReputationToJson(this);
 }
 
 @JsonSerializable()
 class Meetup {
   Meetup(this.index, this.locationIndex, this.time, this.registry);
+
+  factory Meetup.fromJson(Map<String, dynamic> json) => _$MeetupFromJson(json);
 
   int index;
   int locationIndex;
@@ -100,7 +106,6 @@ class Meetup {
     return jsonEncode(this);
   }
 
-  factory Meetup.fromJson(Map<String, dynamic> json) => _$MeetupFromJson(json);
   Map<String, dynamic> toJson() => _$MeetupToJson(this);
 }
 

@@ -14,6 +14,8 @@ part 'account_business_tuple.g.dart';
 class AccountBusinessTuple {
   AccountBusinessTuple(this.controller, this.businessData);
 
+  factory AccountBusinessTuple.fromJson(Map<String, dynamic> json) => _$AccountBusinessTupleFromJson(json);
+
   /// accountId of the business's controller
   final String? controller;
 
@@ -24,8 +26,6 @@ class AccountBusinessTuple {
   String toString() {
     return jsonEncode(this);
   }
-
-  factory AccountBusinessTuple.fromJson(Map<String, dynamic> json) => _$AccountBusinessTupleFromJson(json);
 
   Map<String, dynamic> toJson() => _$AccountBusinessTupleToJson(this);
 }

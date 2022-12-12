@@ -9,6 +9,8 @@ part 'commons.g.dart';
 class RpcMethods {
   RpcMethods(this.methods);
 
+  factory RpcMethods.fromJson(Map<String, dynamic> json) => _$RpcMethodsFromJson(json);
+
   final List<String>? methods;
 
   @override
@@ -16,6 +18,5 @@ class RpcMethods {
     return jsonEncode(this);
   }
 
-  factory RpcMethods.fromJson(Map<String, dynamic> json) => _$RpcMethodsFromJson(json);
   Map<String, dynamic> toJson() => _$RpcMethodsToJson(this);
 }

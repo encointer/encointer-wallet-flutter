@@ -10,6 +10,8 @@ part 'balance_entry.g.dart';
 class BalanceEntry {
   BalanceEntry(this.principal, this.lastUpdate);
 
+  factory BalanceEntry.fromJson(Map<String, dynamic> json) => _$BalanceEntryFromJson(json);
+
   @observable
   @JsonKey(name: 'principal', fromJson: _principalFromMaybeString, toJson: _principalToString)
   final double principal;
@@ -34,8 +36,6 @@ class BalanceEntry {
   }
 
   static String _principalToString(double principal) => principal.toString();
-
-  factory BalanceEntry.fromJson(Map<String, dynamic> json) => _$BalanceEntryFromJson(json);
   Map<String, dynamic> toJson() => _$BalanceEntryToJson(this);
 
   double applyDemurrage(int latestBlockNumber, double demurrageRate) {

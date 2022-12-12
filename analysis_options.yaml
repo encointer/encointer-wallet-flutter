@@ -26,10 +26,10 @@ linter:
     unnecessary_const: true
     constant_identifier_names: true
 
-    sort_child_properties_last: false
-    sort_constructors_first: false
-    prefer_constructors_over_static_methods: false
-    sort_unnamed_constructors_first: false
+    sort_child_properties_last: true
+    sort_constructors_first: true
+    prefer_constructors_over_static_methods: true
+    sort_unnamed_constructors_first: true
 
     use_decorated_box: false
     sized_box_shrink_expand: false

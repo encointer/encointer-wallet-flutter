@@ -11,11 +11,10 @@ class AppConfig {
     this.mockSubstrateApi = false,
     this.isTest = false,
   });
+  factory AppConfig.fromJson(Map<String, dynamic> json) => _$AppConfigFromJson(json);
 
   final String initialRoute;
   final bool mockSubstrateApi;
   final bool isTest;
-
-  factory AppConfig.fromJson(Map<String, dynamic> json) => _$AppConfigFromJson(json);
   Map<String, dynamic> toJson() => _$AppConfigToJson(this);
 }

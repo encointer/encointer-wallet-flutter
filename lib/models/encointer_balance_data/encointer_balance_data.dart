@@ -11,6 +11,8 @@ part 'encointer_balance_data.g.dart';
 class EncointerBalanceData {
   EncointerBalanceData(this.cid, this.balanceEntry);
 
+  factory EncointerBalanceData.fromJson(Map<String, dynamic> json) => _$EncointerBalanceDataFromJson(json);
+
   @observable
   final CommunityIdentifier cid;
   @observable
@@ -21,6 +23,5 @@ class EncointerBalanceData {
     return jsonEncode(this);
   }
 
-  factory EncointerBalanceData.fromJson(Map<String, dynamic> json) => _$EncointerBalanceDataFromJson(json);
   Map<String, dynamic> toJson() => _$EncointerBalanceDataToJson(this);
 }

@@ -15,6 +15,7 @@ class Feed {
     required this.content,
     required this.showAt,
   });
+  factory Feed.fromJson(Map<String, dynamic> json) => _$FeedFromJson(json);
 
   final String id;
   final String title;
@@ -26,6 +27,5 @@ class Feed {
     return jsonEncode(this);
   }
 
-  factory Feed.fromJson(Map<String, dynamic> json) => _$FeedFromJson(json);
   Map<String, dynamic> toJson() => _$FeedToJson(this);
 }

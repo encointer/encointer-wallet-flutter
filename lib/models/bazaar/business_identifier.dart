@@ -10,6 +10,8 @@ part 'business_identifier.g.dart';
 class BusinessIdentifier {
   BusinessIdentifier(this.cid, this.controller);
 
+  factory BusinessIdentifier.fromJson(Map<String, dynamic> json) => _$BusinessIdentifierFromJson(json);
+
   /// community identifier of the community the business belongs to
   final CommunityIdentifier? cid;
 
@@ -21,6 +23,5 @@ class BusinessIdentifier {
     return jsonEncode(this);
   }
 
-  factory BusinessIdentifier.fromJson(Map<String, dynamic> json) => _$BusinessIdentifierFromJson(json);
   Map<String, dynamic> toJson() => _$BusinessIdentifierToJson(this);
 }

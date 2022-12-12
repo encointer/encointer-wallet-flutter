@@ -9,6 +9,8 @@ part 'worker_api.g.dart';
 class PubKeyPinPair {
   PubKeyPinPair(this.pubKey, this.pin);
 
+  factory PubKeyPinPair.fromJson(Map<String, dynamic> json) => _$PubKeyPinPairFromJson(json);
+
   String? pubKey;
   String? pin;
 
@@ -17,6 +19,5 @@ class PubKeyPinPair {
     return jsonEncode(this);
   }
 
-  factory PubKeyPinPair.fromJson(Map<String, dynamic> json) => _$PubKeyPinPairFromJson(json);
   Map<String, dynamic> toJson() => _$PubKeyPinPairToJson(this);
 }

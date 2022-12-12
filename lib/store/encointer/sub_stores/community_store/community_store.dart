@@ -20,12 +20,13 @@ part 'community_store.g.dart';
 class CommunityStore extends _CommunityStore with _$CommunityStore {
   CommunityStore(String network, CommunityIdentifier cid) : super(network, cid);
 
+  factory CommunityStore.fromJson(Map<String, dynamic> json) => _$CommunityStoreFromJson(json);
+
   @override
   String toString() {
     return jsonEncode(this);
   }
 
-  factory CommunityStore.fromJson(Map<String, dynamic> json) => _$CommunityStoreFromJson(json);
   Map<String, dynamic> toJson() => _$CommunityStoreToJson(this);
 }
 

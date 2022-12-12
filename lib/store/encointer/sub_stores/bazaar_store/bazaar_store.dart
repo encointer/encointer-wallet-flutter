@@ -13,12 +13,13 @@ part 'bazaar_store.g.dart';
 class BazaarStore extends _BazaarStore with _$BazaarStore {
   BazaarStore(String? network, CommunityIdentifier? cid) : super(network, cid);
 
+  factory BazaarStore.fromJson(Map<String, dynamic> json) => _$BazaarStoreFromJson(json);
+
   @override
   String toString() {
     return jsonEncode(this);
   }
 
-  factory BazaarStore.fromJson(Map<String, dynamic> json) => _$BazaarStoreFromJson(json);
   Map<String, dynamic> toJson() => _$BazaarStoreToJson(this);
 }
 

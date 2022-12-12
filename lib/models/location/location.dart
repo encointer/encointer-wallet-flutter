@@ -10,6 +10,12 @@ part 'location.g.dart';
 class Location {
   Location(this.lat, this.lon);
 
+  // explicitly use `toString()`, which works for the old `Degree` type `i64` and the new one `i128`
+  factory Location.fromJson(Map<String, dynamic> json) => Location(
+        json['lat'].toString(),
+        json['lon'].toString(),
+      );
+
   final String lat;
   final String lon;
 
@@ -21,12 +27,6 @@ class Location {
   LatLng toLatLng() {
     return LatLng(double.parse(lat), double.parse(lon));
   }
-
-  // explicitly use `toString()`, which works for the old `Degree` type `i64` and the new one `i128`
-  factory Location.fromJson(Map<String, dynamic> json) => Location(
-        json['lat'].toString(),
-        json['lon'].toString(),
-      );
 
   Map<String, dynamic> toJson() => _$LocationToJson(this);
 }

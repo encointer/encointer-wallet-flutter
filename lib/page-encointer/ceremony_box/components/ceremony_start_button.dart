@@ -16,6 +16,7 @@ class CeremonyStartButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
     return PrimaryButton(
+      onPressed: onPressed,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -24,7 +25,6 @@ class CeremonyStartButton extends StatelessWidget {
           Text(dic.encointer.startGathering),
         ],
       ),
-      onPressed: onPressed,
     );
   }
 }

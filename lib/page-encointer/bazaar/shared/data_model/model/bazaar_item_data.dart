@@ -18,14 +18,13 @@ abstract class BazaarItemData {
 }
 
 class BazaarOfferingData extends BazaarItemData {
-  final double price;
-
   BazaarOfferingData(
     String title,
     String description,
     this.price,
     Image image,
   ) : super(title, description, image);
+  final double price;
 
   @override
   String get info => price.toString();
@@ -38,12 +37,7 @@ class BazaarOfferingData extends BazaarItemData {
 }
 
 class BazaarBusinessData extends BazaarItemData {
-  final LatLng coordinates;
-  final OpeningHours openingHours;
-  final List<BazaarOfferingData> offerings;
-
-  // for now:
-  final LatLng turbinenplatz = LatLng(47.389712, 8.517076); // TODO use coordinates of the respective community
+  // TODO use coordinates of the respective community
 
   BazaarBusinessData(
     String title,
@@ -53,6 +47,12 @@ class BazaarBusinessData extends BazaarItemData {
     this.openingHours,
     this.offerings,
   ) : super(title, description, image);
+  final LatLng coordinates;
+  final OpeningHours openingHours;
+  final List<BazaarOfferingData> offerings;
+
+  // for now:
+  final LatLng turbinenplatz = LatLng(47.389712, 8.517076);
 
   @override
   String get info {
@@ -69,6 +69,8 @@ class BazaarBusinessData extends BazaarItemData {
 }
 
 class OpeningHours {
+  OpeningHours(this.mon, this.tue, this.wed, this.thu, this.fri, this.sat, this.sun);
+
   /// 0 -> Mon, 1 -> Tue, ... 6 -> Sun
   final OpeningHoursForDay mon;
   final OpeningHoursForDay tue;
@@ -77,8 +79,6 @@ class OpeningHours {
   final OpeningHoursForDay fri;
   final OpeningHoursForDay sat;
   final OpeningHoursForDay sun;
-
-  OpeningHours(this.mon, this.tue, this.wed, this.thu, this.fri, this.sat, this.sun);
 
   OpeningHoursForDay? getOpeningHoursFor(int day) {
     switch (day) {
@@ -112,9 +112,8 @@ class OpeningHours {
 /// EmptyList means closed
 /// You can have as many (disjoint) OpeningIntervals per day as you please.
 class OpeningHoursForDay {
-  final List<OpeningInterval> openingIntervals;
-
   OpeningHoursForDay(this.openingIntervals);
+  final List<OpeningInterval> openingIntervals;
 
   void addInterval(OpeningInterval interval) {
     openingIntervals.add(interval);
@@ -142,15 +141,14 @@ class OpeningHoursForDay {
 
 /// start and end in minutes since midnight of that day
 class OpeningInterval {
-  final int start;
-  final int end;
+  OpeningInterval(this.start, this.end);
 
   /// example "8:00-12:00" or "8:00 - 12:00"
   OpeningInterval.fromString(String startEndTime)
       : start = _parseTime(startEndTime, 0),
         end = _parseTime(startEndTime, 1);
-
-  OpeningInterval(this.start, this.end);
+  final int start;
+  final int end;
 
   static int _parseTime(String startEndTime, int part) {
     final startEnd = startEndTime.split('-');
