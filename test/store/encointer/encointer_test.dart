@@ -58,7 +58,6 @@ void main() {
         'network': testNetwork,
         'currentPhase': 'Registering',
         'nextPhaseTimestamp': 3,
-        'numberOfNewbieTicketsForReputable': 0,
         'phaseDurations': Map<String, dynamic>.of({}),
         'currentCeremonyIndex': 2,
         'communityIdentifiers': testCommunityIdentifiers.map((c) => c.toJson()).toList(),
