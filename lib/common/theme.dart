@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
 
 final appThemeEncointer = ThemeData(
-  primarySwatch: ZurichLion,
+  primarySwatch: zurichLion,
   textTheme: TextTheme(
     headline1: TextStyle(
       fontSize: 66,
-      color: ZurichLion.shade500,
+      color: zurichLion.shade500,
     ),
     headline2: TextStyle(
       fontSize: 22,
-      color: ZurichLion.shade500,
+      color: zurichLion.shade500,
     ),
     headline3: TextStyle(
       fontSize: 19,
-      color: ZurichLion.shade500,
+      color: zurichLion.shade500,
     ),
     headline4: TextStyle(
       fontSize: 14,
-      color: ZurichLion.shade500,
+      color: zurichLion.shade500,
     ),
   ),
   elevatedButtonTheme: ElevatedButtonThemeData(
     style: ElevatedButton.styleFrom(
       elevation: 0,
-      backgroundColor: ZurichLion.shade50,
-      foregroundColor: ZurichLion.shade500,
+      backgroundColor: zurichLion.shade50,
+      foregroundColor: zurichLion.shade500,
       shadowColor: Colors.transparent,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -32,14 +32,14 @@ final appThemeEncointer = ThemeData(
     ),
   ),
   iconTheme: IconThemeData(
-    color: ZurichLion.shade500,
+    color: zurichLion.shade500,
   ),
   appBarTheme: AppBarTheme(
     elevation: 0,
     // foregroundColor: Colors.orange, // this gets for some reason ignored and we have to define iconTheme and textTheme
     backgroundColor: Colors.white,
     iconTheme: IconThemeData(
-      color: ZurichLion.shade500,
+      color: zurichLion.shade500,
     ),
     shadowColor: Colors.transparent,
     centerTitle: true,
@@ -47,21 +47,21 @@ final appThemeEncointer = ThemeData(
       headline6: TextStyle(
         // it's not obvious but appBar uses headline6
         fontSize: 19,
-        color: ZurichLion.shade500,
+        color: zurichLion.shade500,
       ),
     ).bodyText2,
     titleTextStyle: TextTheme(
       headline6: TextStyle(
         // it's not obvious but appBar uses headline6
         fontSize: 19,
-        color: ZurichLion.shade500,
+        color: zurichLion.shade500,
       ),
     ).headline6,
   ),
   scaffoldBackgroundColor: Colors.white,
 );
 
-const MaterialColor ZurichLion = MaterialColor(
+const MaterialColor zurichLion = MaterialColor(
   0xff4374A3,
   <int, Color>{
     50: Color(0xffF4F8F9), // <--- used for light blue buttons (i.e. secondary buttons)
@@ -84,5 +84,5 @@ const Color encointerLightBlue = Color(0xffF4F8F9); // TODO issue #334
 final primaryGradient = LinearGradient(
   begin: const Alignment(-.9, 0),
   end: const Alignment(0.1, -.1),
-  colors: <Color>[ZurichLion.shade400, ZurichLion.shade600],
+  colors: <Color>[zurichLion.shade400, zurichLion.shade600],
 );

@@ -15,7 +15,7 @@ import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 void main() async {
-  final _appcastURL = 'https://encointer.github.io/feed/app_cast/testappcast.xml';
+  const _appcastURL = 'https://encointer.github.io/feed/app_cast/testappcast.xml';
   final _cfg = AppcastConfiguration(url: _appcastURL, supportedOS: ['android']);
   final _globalAppStore = AppStore(
     MockLocalStorage(),
@@ -31,18 +31,18 @@ void main() async {
   Future<String> dataHandler(String? msg) async {
     var result = '';
     switch (msg) {
-      case TestCommands.WAIT_UNTIL_APP_IS_READY:
+      case TestCommands.waitUntilAppIsReady:
         return PrepareMockStorage.wait(_globalAppStore);
-      case TestCommands.INIT:
+      case TestCommands.init:
         await PrepareMockStorage.init(_globalAppStore);
         break;
-      case TestCommands.HOME_PAGE:
+      case TestCommands.homePage:
         PrepareMockStorage.homePage(_globalAppStore);
         break;
-      case TestCommands.READY_FOR_MEETUP:
+      case TestCommands.readyForMeetup:
         PrepareMockStorage.readyForMeetup(_globalAppStore);
         break;
-      case TestCommands.GET_PLATFORM:
+      case TestCommands.getPlatform:
         result = Platform.operatingSystem;
         break;
       default:

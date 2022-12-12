@@ -9,7 +9,7 @@ import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 
 Future<List<MeetupOverrides>> getMeetupOverrides() async {
-  final response = await http.get(Uri.parse(encointer_feed_overrides));
+  final response = await http.get(Uri.parse(encointerFeedOverrides));
 
   if (response.statusCode == 200) {
     final list = jsonDecode(response.body);

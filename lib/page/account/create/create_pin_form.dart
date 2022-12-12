@@ -76,7 +76,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
                       borderRadius: BorderRadius.horizontal(left: Radius.circular(15), right: Radius.circular(15)),
                     ),
                     filled: true,
-                    fillColor: ZurichLion.shade50,
+                    fillColor: zurichLion.shade50,
                     hintText: dic.account.createPassword,
                     labelText: dic.account.createPassword,
                   ),
@@ -139,7 +139,7 @@ class _CreatePinFormState extends State<CreatePinForm> {
               child: Text(
                 I18n.of(context)!.translationsForLocale().account.create,
                 style: Theme.of(context).textTheme.headline3!.copyWith(
-                      color: ZurichLion.shade50,
+                      color: zurichLion.shade50,
                     ),
               ),
               onPressed: () {

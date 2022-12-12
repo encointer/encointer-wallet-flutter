@@ -50,6 +50,7 @@ class ContactsPage extends StatelessWidget {
                     trailing: SizedBox(
                       width: 36,
                       child: IconButton(
+                        key: Key(i.name),
                         icon: const Icon(Icons.arrow_forward_ios, size: 18),
                         onPressed: () => Navigator.of(context).pushNamed(ContactDetailPage.route, arguments: i),
                       ),

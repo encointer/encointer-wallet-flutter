@@ -12,7 +12,7 @@ class FeedRepo {
   final http.Client _client;
 
   Future<List<Feed>?> fetchData([String langCode = 'en']) async {
-    final uri = Uri.parse(replaceLocalePlaceholder(meetup_notification_link, langCode));
+    final uri = Uri.parse(replaceLocalePlaceholder(meetupNotificationLink, langCode));
     try {
       final response = await _client.get(uri);
       try {

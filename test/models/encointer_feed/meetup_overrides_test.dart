@@ -8,7 +8,7 @@ import 'package:encointer_wallet/models/encointer_feed/meetup_overrides.dart';
 void main() {
   group('meetupOverrides', () {
     test('Parses Response', () async {
-      String response = '''
+      const response = '''
       [
         {
           "override-name": "Polkadot Decoded Demo 2022",
@@ -32,11 +32,6 @@ void main() {
 
       final meetupOverrides = list.map((e) => MeetupOverrides.fromJson(e as Map<String, dynamic>)).toList();
       final override = meetupOverrides[0];
-
-      // List<dynamic> list = jsonDecode(response);
-
-      // List<MeetupOverrides> meetupOverrides = list.map((e) => MeetupOverrides.fromJson(e)).toList();
-      // var override = meetupOverrides[0];
 
       expect(override.overrideName, 'Polkadot Decoded Demo 2022');
       expect(override.communities, ['u33e0719fDB', '69y7j4ZEXmy']);

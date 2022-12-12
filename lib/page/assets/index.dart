@@ -413,7 +413,7 @@ class _AssetsState extends State<Assets> {
           height: avatarSize,
           width: avatarSize,
           decoration: BoxDecoration(
-            color: ZurichLion.shade50,
+            color: zurichLion.shade50,
             shape: BoxShape.circle,
           ),
           child: const Icon(
@@ -444,7 +444,7 @@ class _AssetsState extends State<Assets> {
           height: avatarSize,
           width: avatarSize,
           decoration: BoxDecoration(
-            color: ZurichLion.shade50,
+            color: zurichLion.shade50,
             shape: BoxShape.circle,
           ),
           child: const Icon(Icons.add, size: 36),

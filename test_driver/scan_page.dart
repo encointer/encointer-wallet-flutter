@@ -15,7 +15,7 @@ import 'package:encointer_wallet/mocks/restart_widget.dart';
 ///
 void main() async {
   // ignore: close_sinks
-  final PublishSubject<ImageProvider> stream = PublishSubject();
+  final stream = PublishSubject<ImageProvider>();
 
   Future<String> dataHandler(String? msg) async {
     final img = MemoryImage(base64Decode(msg!));
@@ -36,7 +36,7 @@ void main() async {
         MockQRScanPage.route: (_) => RestartWidget(
               initialData: MemoryImage(base64Decode('hell')),
               stream: stream,
-              builder: (_, dynamic img) => MockQRScanPage(img),
+              builder: (_, ImageProvider<Object>? img) => MockQRScanPage(img!),
             )
       },
     ),

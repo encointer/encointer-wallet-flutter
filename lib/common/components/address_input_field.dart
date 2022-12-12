@@ -1,4 +1,7 @@
 import 'package:dropdown_search/dropdown_search.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
+
 import 'package:encointer_wallet/common/components/address_icon.dart';
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
@@ -6,8 +9,6 @@ import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_mobx/flutter_mobx.dart';
 
 class AddressInputField extends StatefulWidget {
   const AddressInputField(this.store,
@@ -152,7 +153,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
     final dic = I18n.of(context)!.translationsForLocale();
     return Container(
       decoration: BoxDecoration(
-        color: ZurichLion.shade50,
+        color: zurichLion.shade50,
         borderRadius: BorderRadius.circular(15),
       ),
       child: DropdownSearch<AccountData>(

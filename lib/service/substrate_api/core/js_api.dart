@@ -5,7 +5,7 @@ import 'package:flutter_inappwebview/flutter_inappwebview.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 
-const EncointerJsService = 'EncointerJsService';
+const encointerJsService = 'EncointerJsService';
 
 /// Core interface to talk with our JS-service
 class JSApi {
@@ -33,7 +33,7 @@ class JSApi {
       onWebViewCreated: (controller) async {
         Log.d('Adding the PolkaWallet javascript handler', 'JSApi');
         controller.addJavaScriptHandler(
-            handlerName: EncointerJsService,
+            handlerName: encointerJsService,
             callback: (args) {
               Log.d('[JavaScripHandler/callback]: $args', 'JSApi');
 
@@ -112,10 +112,10 @@ class JSApi {
     final script = '''
         $code.then(function(res) {
           window.flutter_inappwebview
-            .callHandler("$EncointerJsService", { path: "$method", data: res });
+            .callHandler("$encointerJsService", { path: "$method", data: res });
         }).catch(function(err) {
           window.flutter_inappwebview
-            .callHandler("$EncointerJsService", { path: "$method:error", data: err.message  });
+            .callHandler("$encointerJsService", { path: "$method:error", data: err.message  });
         })''';
 
     try {

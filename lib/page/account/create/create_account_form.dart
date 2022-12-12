@@ -104,7 +104,7 @@ class CreateAccountForm extends StatelessWidget {
                   Text(
                     dic.account.next,
                     style: Theme.of(context).textTheme.headline3!.copyWith(
-                          color: ZurichLion.shade50,
+                          color: zurichLion.shade50,
                         ),
                   ),
                 ],

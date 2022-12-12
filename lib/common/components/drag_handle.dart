@@ -17,7 +17,7 @@ class DragHandle extends StatelessWidget {
           width: 40,
           height: 4,
           decoration: BoxDecoration(
-            color: ZurichLion.shade50,
+            color: zurichLion.shade50,
             borderRadius: const BorderRadius.all(Radius.circular(2)),
           ),
         ),

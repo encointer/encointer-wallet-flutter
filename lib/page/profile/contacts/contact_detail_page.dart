@@ -100,7 +100,7 @@ class ContactDetailPage extends StatelessWidget {
                         Text(Fmt.address(account.address)!, style: const TextStyle(fontSize: 20)),
                         IconButton(
                           icon: const Icon(Iconsax.copy),
-                          color: ZurichLion.shade500,
+                          color: zurichLion.shade500,
                           onPressed: () => UI.copyAndNotify(context, account.address),
                         ),
                       ],
@@ -115,6 +115,7 @@ class ContactDetailPage extends StatelessWidget {
               }),
               const SizedBox(height: 16),
               SecondaryButtonWide(
+                key: const Key('send-money-to-account'),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -169,6 +170,7 @@ class EndorseButton extends StatelessWidget {
     final dic = I18n.of(context)!.translationsForLocale();
 
     return SubmitButtonSecondary(
+      key: const Key('tap-endorse-button'),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [

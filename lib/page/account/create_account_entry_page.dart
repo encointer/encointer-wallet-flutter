@@ -57,7 +57,7 @@ class CreateAccountEntryPage extends StatelessWidget {
                       Text(
                         '${dic.profile.doYouAlreadyHaveAnAccount} ',
                         style: TextStyle(
-                          color: ZurichLion.shade50,
+                          color: zurichLion.shade50,
                         ),
                       ),
                       GestureDetector(
@@ -65,7 +65,7 @@ class CreateAccountEntryPage extends StatelessWidget {
                         child: Text(
                           I18n.of(context)!.translationsForLocale().profile.import,
                           style: TextStyle(
-                            color: ZurichLion.shade50,
+                            color: zurichLion.shade50,
                             decoration: TextDecoration.underline,
                           ),
                         ),

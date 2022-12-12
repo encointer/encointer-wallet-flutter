@@ -20,8 +20,8 @@ class CeremonyLocationButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 16),
         // make splash animation as high as the container
         backgroundColor: Colors.white,
-        foregroundColor: ZurichLion.shade500,
-        shadowColor: ZurichLion.shade500,
+        foregroundColor: zurichLion.shade500,
+        shadowColor: zurichLion.shade500,
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(20),

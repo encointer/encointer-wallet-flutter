@@ -120,7 +120,7 @@ class _TransferPageState extends State<TransferPage> {
     final dic = I18n.of(context)!.translationsForLocale();
     final _store = context.watch<AppStore>();
 
-    const decimals = encointer_currencies_decimals;
+    const decimals = encointerCurrenciesDecimals;
     final available = _store.encointer.applyDemurrage(_store.encointer.communityBalanceEntry);
 
     Log.d('[transferPage]: available: $available', 'TransferPage');
@@ -149,6 +149,7 @@ class _TransferPageState extends State<TransferPage> {
                 children: [
                   Expanded(
                     child: ListView(
+                      key: const Key('transfer-listview'),
                       children: [
                         CombinedCommunityAndAccountAvatar(_store, showCommunityNameAndAccountName: false),
                         const SizedBox(height: 12),

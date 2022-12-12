@@ -38,6 +38,8 @@ installed on your computer to compile the project. check [Flutter Documentation]
 Encointer wallet connects to the chains with [polkadot-js/api](https://polkadot.js.org/api/), running in a hidden webview.
 You'll need `Nodejs` and `yarn` installed to build the bundled `main.js` file:
 
+See the js_service_encointer [Readme](lib/js_service_encointer/README.md) for more documentation.
+
 ```shell script
 cd lib/js_service_encointer/
 # install nodejs dependencies
@@ -70,7 +72,7 @@ In windows, this does unfortunately not work, but you can still set up your IDE 
 
 ```
 // initialize .flutter git submodule (also works on windows)
-./scripts/install_flutter.sh
+./scripts/install_flutter_wrapper.sh
 
 // refer to the flutter installation in your git submodule
 ./.flutter/bin/flutter doctor
@@ -106,7 +108,7 @@ and find the output in `build/app/outputs/bundle/release/app-release.aab`
 The following two files contain the supported flutter version:
 
 * [GitHub Action Config](./.github/action-config.json)
-* [install_flutter.sh](./scripts/install_flutter.sh)
+* [install_flutter_wrapper.sh](./scripts/install_flutter_wrapper.sh)
 
 These versions must always be aligned!
 
