@@ -523,11 +523,11 @@ class EncointerApi {
     if (reputations != null) {
       for (var reputation in reputations.entries) {
         try {
-          final numberTikkets = await jsApi.evalJavascript(
+          final numberOfTickets = await jsApi.evalJavascript(
             'encointer.remainingNewbieTickets(${jsonEncode(reputation.value.communityIdentifier)}, "${reputation.key}","$address")',
           );
-          Log.d('Encointer Api', 'numberTikkets: $numberTikkets');
-          _remainingTickets += numberTikkets as int;
+          Log.d('Encointer Api', 'numberTikkets: $numberOfTickets');
+          _remainingTickets += numberOfTickets as int;
         } catch (e, s) {
           Log.e('Encointer Api', '$e', s);
         }
