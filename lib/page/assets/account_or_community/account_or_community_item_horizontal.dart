@@ -34,7 +34,7 @@ class _AccountOrCommunityItemHorizontalState extends State<AccountOrCommunityIte
               shape: BoxShape.circle,
               border: Border.all(
                 width: 2,
-                color: widget.itemData.isSelected ? ZurichLion.shade500 : Colors.transparent,
+                color: widget.itemData.isSelected ? zurichLion.shade500 : Colors.transparent,
               ),
             ),
             child: widget.itemData.avatar,

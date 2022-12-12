@@ -303,7 +303,7 @@ abstract class _SettingsStore with Store {
   Future<void> loadCustomSS58Format() async {
     final ss58 = await rootStore.localStorage.getObject(localStorageSS58Key) as Map<String, dynamic>?;
 
-    customSS58Format = ss58 ?? default_ss58_prefix;
+    customSS58Format = ss58 ?? defaultSs58Prefix;
   }
 
   String getCacheKey(String key) {

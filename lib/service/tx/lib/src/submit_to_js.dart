@@ -16,7 +16,7 @@ import 'package:encointer_wallet/utils/ui.dart';
 
 /// Contains most of the logic from the `txConfirmPage.dart`, which was removed.
 
-const INSUFFICIENT_FUNDS_ERROR = '1010';
+const insufficientFundsError = '1010';
 
 /// Inner function to submit a tx via the JS interface.
 ///
@@ -98,7 +98,7 @@ void _onTxError(BuildContext context, AppStore store, String errorMsg, bool moun
     RootSnackBar.removeCurrent();
   }
 
-  if (errorMsg.startsWith(INSUFFICIENT_FUNDS_ERROR)) {
+  if (errorMsg.startsWith(insufficientFundsError)) {
     showInsufficientFundsDialog(context);
   } else {
     showErrorDialog(context, errorMsg);

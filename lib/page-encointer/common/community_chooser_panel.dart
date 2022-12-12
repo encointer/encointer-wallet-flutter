@@ -12,7 +12,7 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CommunityChooserPanel extends StatefulWidget {
-  CommunityChooserPanel(this.store, {Key? key}) : super(key: key);
+  const CommunityChooserPanel(this.store, {Key? key}) : super(key: key);
 
   final AppStore store;
 

@@ -13,7 +13,7 @@ class MockIpfs extends Ipfs {
 
   @override
   Future<String?> getCommunityIcon(String? cid) {
-    final mockIcon = '<svg viewBox="0 0 132.09 131.85" '
+    const mockIcon = '<svg viewBox="0 0 132.09 131.85" '
         'xmlns="http://www.w3.org/2000/svg"><circle cx="65.4" '
         'cy="66.45" fill="#67c4e7" r="65.4" transform='
         '"matrix(.37233994 -.92809642 .92809642 .37233994 -20.62 102.4)"/>'

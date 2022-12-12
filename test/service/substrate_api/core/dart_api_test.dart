@@ -6,7 +6,7 @@ import 'package:encointer_wallet/service/substrate_api/core/dart_api.dart';
 void main() {
   group('can connect', () {
     test('rpc methods contains getAggregatedAccountData', () async {
-      var encointerApi = SubstrateDartApi();
+      final encointerApi = SubstrateDartApi();
 
       await encointerApi.connect('ws://localhost:9944');
 

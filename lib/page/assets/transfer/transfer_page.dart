@@ -48,7 +48,7 @@ class TransferPageParams {
 }
 
 class TransferPage extends StatefulWidget {
-  TransferPage({Key? key}) : super(key: key);
+  const TransferPage({Key? key}) : super(key: key);
 
   static const String route = '/assets/transfer';
 
@@ -120,7 +120,7 @@ class _TransferPageState extends State<TransferPage> {
     final dic = I18n.of(context)!.translationsForLocale();
     final _store = context.watch<AppStore>();
 
-    final decimals = encointer_currencies_decimals;
+    const decimals = encointerCurrenciesDecimals;
     final available = _store.encointer.applyDemurrage(_store.encointer.communityBalanceEntry);
 
     Log.d('[transferPage]: available: $available', 'TransferPage');

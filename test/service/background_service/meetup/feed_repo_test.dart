@@ -20,7 +20,7 @@ void main() async {
   }
 
   Uri getUri([String langCode = 'en']) {
-    return Uri.parse(replaceLocalePlaceholder(meetup_notification_link, langCode));
+    return Uri.parse(replaceLocalePlaceholder(meetupNotificationLink, langCode));
   }
 
   test('Object is FeedRepo model', () {

@@ -5,13 +5,13 @@ import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
-const default_ss58_prefix = {
+const defaultSs58Prefix = {
   'info': 'default',
   'text': 'Default for the connected node',
   'value': 42,
 };
 const prefixList = [
-  default_ss58_prefix,
+  defaultSs58Prefix,
   {'info': 'substrate', 'text': 'Substrate (development)', 'value': 42},
   {'info': 'kusama', 'text': 'Kusama (canary)', 'value': 2},
   {'info': 'polkadot', 'text': 'Polkadot (live)', 'value': 0}

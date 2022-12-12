@@ -18,7 +18,7 @@ class SearchResultsBusinessFiltered extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    final titleStyle = const TextStyle(fontWeight: FontWeight.bold);
+    const titleStyle = TextStyle(fontWeight: FontWeight.bold);
 
     return Scaffold(
         appBar: AppBar(

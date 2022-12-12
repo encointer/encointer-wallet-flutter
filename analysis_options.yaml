@@ -15,11 +15,11 @@ linter:
     avoid_final_parameters: true
     type_annotate_public_apis: true
 
-    prefer_const_literals_to_create_immutables: false
-    prefer_const_constructors_in_immutables: false
-    prefer_const_declarations: false
-    unnecessary_const: false
-    constant_identifier_names: false
+    prefer_const_literals_to_create_immutables: true
+    prefer_const_constructors_in_immutables: true
+    prefer_const_declarations: true
+    unnecessary_const: true
+    constant_identifier_names: true
 
     prefer_if_elements_to_conditional_expressions: false
     require_trailing_commas: false
@@ -101,11 +101,8 @@ analyzer:
     fixme: false
 
   exclude:
-    - test/
-    - test_driver/
     - lib/generated_plugin_registrant.dart
     - "**/*.g.dart"
     - "**/*.freezed.dart"
     - "bin/cache/**"
-    - "lib/generated_plugin_registrant.dart"
     - assets/translations

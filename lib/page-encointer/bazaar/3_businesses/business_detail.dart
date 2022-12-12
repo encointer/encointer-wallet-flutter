@@ -8,7 +8,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/b
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class BusinessDetail extends StatelessWidget {
-  BusinessDetail(this.business, {Key? key}) : super(key: key);
+  const BusinessDetail(this.business, {Key? key}) : super(key: key);
   final BazaarBusinessData? business;
   final double cardHeight = 200;
   final double cardWidth = 160;
@@ -107,7 +107,7 @@ class SmallLeaflet extends StatelessWidget {
             children: [
               TileLayer(
                 urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                subdomains: ['a', 'b', 'c'],
+                subdomains: const ['a', 'b', 'c'],
               ),
               MarkerLayer(
                 markers: [

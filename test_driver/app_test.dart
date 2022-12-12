@@ -19,15 +19,15 @@ void main() {
       // waits until the firs frame after ft startup stabilized
       await driver!.waitUntilFirstFrameRasterized();
 
-      var ready = await driver!.requestData(TestCommands.WAIT_UNTIL_APP_IS_READY);
+      var ready = await driver!.requestData(TestCommands.waitUntilAppIsReady);
       while (ready == false.toString()) {
         print('Waiting for app to be ready: $ready');
         await Future<void>.delayed(const Duration(seconds: 1));
-        ready = await driver!.requestData(TestCommands.WAIT_UNTIL_APP_IS_READY);
+        ready = await driver!.requestData(TestCommands.waitUntilAppIsReady);
         log('app is ready ready $ready');
       }
 
-      await driver!.requestData(TestCommands.INIT);
+      await driver!.requestData(TestCommands.init);
     });
 
     tearDownAll(() async {
@@ -66,7 +66,7 @@ void main() {
     test('print-screen of homepage', () async {
       // Here we get the metadata because it is reset to null in
       // the setChosenCid() method which is called, when a community is chosen
-      await driver!.requestData(TestCommands.HOME_PAGE);
+      await driver!.requestData(TestCommands.homePage);
 
       await dismissUpgradeDialogOnAndroid(driver!);
 
@@ -106,7 +106,7 @@ void main() {
 
     test('meetupPage', () async {
       // attesting phase
-      await driver!.requestData(TestCommands.READY_FOR_MEETUP);
+      await driver!.requestData(TestCommands.readyForMeetup);
 
       log('tapping startMeetup');
       await screenshot(driver!, config, 'debug-meetup-start');

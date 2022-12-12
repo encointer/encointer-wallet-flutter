@@ -6,7 +6,7 @@ import 'dart:isolate';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 
-const int tx_list_page_size = 10;
+const int txListPageSize = 10;
 
 class MyHttpOverrides extends HttpOverrides {
   @override
@@ -70,7 +70,7 @@ class SubScanApi {
           network: network,
           address: address,
           page: page,
-          row: tx_list_page_size,
+          row: txListPageSize,
         ));
     receivePort.listen((msg) {
       receivePort.close();
@@ -84,7 +84,7 @@ class SubScanApi {
     String module, {
     String? call,
     int page = 0,
-    int size = tx_list_page_size,
+    int size = txListPageSize,
     String? sender,
     String network = 'kusama',
   }) async {
@@ -99,7 +99,7 @@ class SubScanApi {
           module: module,
           address: sender,
           page: page,
-          row: tx_list_page_size,
+          row: txListPageSize,
         ));
     receivePort.listen((msg) {
       receivePort.close();
@@ -111,7 +111,7 @@ class SubScanApi {
 
   Future<Map> fetchRewardTxsAsync({
     int page = 0,
-    int size = tx_list_page_size,
+    int size = txListPageSize,
     String? sender,
     String network = 'kusama',
   }) async {
@@ -125,7 +125,7 @@ class SubScanApi {
           network: network,
           address: sender,
           page: page,
-          row: tx_list_page_size,
+          row: txListPageSize,
         ));
     receivePort.listen((msg) {
       receivePort.close();

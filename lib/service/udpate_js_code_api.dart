@@ -67,7 +67,7 @@ class UpdateJSCodeApi {
       return int.parse(version);
     }
     // default version
-    return js_code_version_map[networkName];
+    return jsCodeVersionMap[networkName];
   }
 
   static String? getPolkadotJSCode(

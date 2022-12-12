@@ -10,7 +10,7 @@ void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
 
   group('SettingsStore test', () {
-    final AppStore root = AppStore(
+    final root = AppStore(
       MockLocalStorage(),
       config: const AppConfig(isTest: true, mockSubstrateApi: true),
     );
