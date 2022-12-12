@@ -18,25 +18,12 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
-class ContactDetailPage extends StatefulWidget {
+class ContactDetailPage extends StatelessWidget {
   const ContactDetailPage(this.api, {Key? key}) : super(key: key);
 
   static const String route = '/profile/contactDetail';
 
   final Api api;
-
-  @override
-  State<ContactDetailPage> createState() => _ContactDetailPageState();
-}
-
-class _ContactDetailPageState extends State<ContactDetailPage> {
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      await context.read<AppStore>().encointer.getNumberOfNewbieTicketsForReputable();
-    });
-  }
 
   void _removeItem(BuildContext context, AccountData account, AppStore store) {
     final dic = I18n.of(context)!.translationsForLocale();
@@ -123,7 +110,8 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
               ),
               Observer(builder: (_) {
                 return _store.encointer.community!.bootstrappers!.contains(_store.account.currentAddress) ||
-                        _store.encointer.numberOfNewbieTicketsForReputable > 0
+                        _store.encointer.account != null &&
+                            _store.encointer.account!.numberOfNewbieTicketsForReputable > 0
                     ? Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -133,13 +121,13 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                               child: Row(children: [
                                 Text(dic.encointer.remainingNewbieTickets),
                                 Text(
-                                  ' ${_store.encointer.numberOfNewbieTicketsForReputable}',
+                                  ' ${_store.encointer.account?.numberOfNewbieTicketsForReputable}',
                                   style: TextStyle(color: zurichLion.shade800, fontSize: 15),
                                 )
                               ]),
                             ),
                           ),
-                          EndorseButton(_store, widget.api, account),
+                          EndorseButton(_store, api, account),
                         ],
                       )
                     : Container();

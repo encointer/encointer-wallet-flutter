@@ -462,7 +462,7 @@ class EncointerApi {
       for (var cr in reputationsList as List) cr[0] as int: CommunityReputation.fromJson(cr[1] as Map<String, dynamic>)
     };
 
-    store.encointer.account?.setReputations(reputations);
+    await store.encointer.account?.setReputations(reputations);
   }
 
   Future<dynamic> sendFaucetTx() async {
