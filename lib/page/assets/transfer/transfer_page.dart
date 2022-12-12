@@ -31,7 +31,7 @@ class TransferPageParams {
     this.amount,
   });
 
-  static TransferPageParams fromInvoiceData(InvoiceData data) {
+  factory TransferPageParams.fromInvoiceData(InvoiceData data) {
     return TransferPageParams(
       cid: data.cid,
       recipient: data.account,

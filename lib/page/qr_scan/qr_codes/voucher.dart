@@ -8,6 +8,15 @@ class VoucherQrCode extends QrCode<VoucherData> {
     required String network,
     required String issuer,
   }) : super(VoucherData(voucherUri: voucherUri, cid: cid, network: network, issuer: issuer));
+
+  factory VoucherQrCode.fromQrFields(List<String> fields) {
+    // todo verify context and version
+    return VoucherQrCode.withData(VoucherData.fromQrFields(fields.sublist(2)));
+  }
+
+  factory VoucherQrCode.fromPayload(String payload) {
+    return VoucherQrCode.fromQrFields(payload.split('\n'));
+  }
   VoucherQrCode.withData(VoucherData data) : super(data);
 
   @override
@@ -15,15 +24,6 @@ class VoucherQrCode extends QrCode<VoucherData> {
 
   @override
   QrCodeVersion? version = QrCodeVersion.v2_0;
-
-  static VoucherQrCode fromPayload(String payload) {
-    return fromQrFields(payload.split('\n'));
-  }
-
-  static VoucherQrCode fromQrFields(List<String> fields) {
-    // todo verify context and version
-    return VoucherQrCode.withData(VoucherData.fromQrFields(fields.sublist(2)));
-  }
 }
 
 class VoucherData implements ToQrFields {
@@ -33,6 +33,15 @@ class VoucherData implements ToQrFields {
     required this.network,
     required this.issuer,
   });
+
+  factory VoucherData.fromQrFields(List<String> fields) {
+    return VoucherData(
+      voucherUri: fields[0],
+      cid: CommunityIdentifier.fromFmtString(fields[1]),
+      network: fields[2],
+      issuer: fields[3],
+    );
+  }
 
   /// Uri seed of the voucher account, e.g. //adf456.
   final String voucherUri;
@@ -54,14 +63,5 @@ class VoucherData implements ToQrFields {
       network,
       issuer,
     ];
-  }
-
-  static VoucherData fromQrFields(List<String> fields) {
-    return VoucherData(
-      voucherUri: fields[0],
-      cid: CommunityIdentifier.fromFmtString(fields[1]),
-      network: fields[2],
-      issuer: fields[3],
-    );
   }
 }

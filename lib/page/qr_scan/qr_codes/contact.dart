@@ -9,6 +9,24 @@ class ContactQrCode extends QrCode<ContactData> {
     required String label,
     this.version = QrCodeVersion.v1_0,
   }) : super(ContactData(account: account, cid: cid, network: network, label: label));
+
+  factory ContactQrCode.fromQrFields(List<String> fields) {
+    if (QrCodeVersionExt.fromQrField(fields[1]) == QrCodeVersion.v1_0) {
+      return ContactQrCode.withData(
+        ContactData.fromQrFieldsV1(fields.sublist(2)),
+        version: QrCodeVersion.v1_0,
+      );
+    } else {
+      return ContactQrCode.withData(
+        ContactData.fromQrFieldsV2(fields.sublist(2)),
+        version: QrCodeVersion.v2_0,
+      );
+    }
+  }
+
+  factory ContactQrCode.fromPayload(String payload) {
+    return ContactQrCode.fromQrFields(payload.split('\n'));
+  }
   ContactQrCode.withData(
     ContactData data, {
     this.version = QrCodeVersion.v1_0,
@@ -30,24 +48,6 @@ class ContactQrCode extends QrCode<ContactData> {
     }
     return qrFields.join(qrCodeFieldSeparator);
   }
-
-  static ContactQrCode fromPayload(String payload) {
-    return fromQrFields(payload.split('\n'));
-  }
-
-  static ContactQrCode fromQrFields(List<String> fields) {
-    if (QrCodeVersionExt.fromQrField(fields[1]) == QrCodeVersion.v1_0) {
-      return ContactQrCode.withData(
-        ContactData.fromQrFieldsV1(fields.sublist(2)),
-        version: QrCodeVersion.v1_0,
-      );
-    } else {
-      return ContactQrCode.withData(
-        ContactData.fromQrFieldsV2(fields.sublist(2)),
-        version: QrCodeVersion.v2_0,
-      );
-    }
-  }
 }
 
 class ContactData implements ToQrFields {
@@ -57,6 +57,19 @@ class ContactData implements ToQrFields {
     this.network,
     required this.label,
   });
+  
+  factory ContactData.fromQrFieldsV2(List<String> fields) {
+    return ContactData(
+      account: fields[0],
+      cid: fields[1].isNotEmpty ? CommunityIdentifier.fromFmtString(fields[1]) : null,
+      network: fields[2],
+      label: fields[3],
+    );
+  }
+
+  factory ContactData.fromQrFieldsV1(List<String> fields) {
+    return ContactData(account: fields[0], label: fields[3]);
+  }
 
   /// ss58 encoded public key of the account address.
   final String account;
@@ -78,18 +91,5 @@ class ContactData implements ToQrFields {
 
   List<String> toQrFieldsV2() {
     return [account, cid?.toFmtString() ?? '', network ?? '', label];
-  }
-
-  static ContactData fromQrFieldsV1(List<String> fields) {
-    return ContactData(account: fields[0], label: fields[3]);
-  }
-
-  static ContactData fromQrFieldsV2(List<String> fields) {
-    return ContactData(
-      account: fields[0],
-      cid: fields[1].isNotEmpty ? CommunityIdentifier.fromFmtString(fields[1]) : null,
-      network: fields[2],
-      label: fields[3],
-    );
   }
 }
