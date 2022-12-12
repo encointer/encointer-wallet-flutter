@@ -59,7 +59,7 @@ class InvoiceData implements ToQrFields {
     this.amount,
     required this.label,
   });
-  
+
   factory InvoiceData.fromQrFieldsV2(List<String> fields) {
     return InvoiceData(
       account: fields[0],

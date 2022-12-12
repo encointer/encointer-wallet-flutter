@@ -57,7 +57,7 @@ class ContactData implements ToQrFields {
     this.network,
     required this.label,
   });
-  
+
   factory ContactData.fromQrFieldsV2(List<String> fields) {
     return ContactData(
       account: fields[0],
