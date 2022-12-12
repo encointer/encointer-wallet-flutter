@@ -129,13 +129,15 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: Row(children: [
-                              const Text('Remaining newbie tickets as reputable: '),
-                              Text(
-                                '${_store.encointer.numberOfNewbieTicketsForReputable}',
-                                style: TextStyle(color: zurichLion.shade800, fontSize: 15),
-                              )
-                            ]),
+                            child: FittedBox(
+                              child: Row(children: [
+                                Text(dic.encointer.remainingNewbieTickets),
+                                Text(
+                                  ' ${_store.encointer.numberOfNewbieTicketsForReputable}',
+                                  style: TextStyle(color: zurichLion.shade800, fontSize: 15),
+                                )
+                              ]),
+                            ),
                           ),
                           EndorseButton(_store, widget.api, account),
                         ],
@@ -200,13 +202,15 @@ class EndorseButton extends StatelessWidget {
 
     return SubmitButtonSecondary(
       key: const Key('tap-endorse-button'),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Iconsax.verify),
-          const SizedBox(width: 12),
-          Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
-        ],
+      child: FittedBox(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Iconsax.verify),
+            const SizedBox(width: 12),
+            Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
+          ],
+        ),
       ),
       onPressed: store.encointer.community!.bootstrappers!.contains(contact.address)
           ? (BuildContext context) => _popupDialog(context, dic.profile.cantEndorseBootstrapper)

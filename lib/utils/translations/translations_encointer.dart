@@ -60,6 +60,7 @@ abstract class TranslationsEncointer {
   String get reputableContent;
   String get bootstrapperTitle;
   String get bootstrapperContent;
+  String get remainingNewbieTickets;
 }
 
 class TranslationsEnEncointer implements TranslationsEncointer {
@@ -190,6 +191,8 @@ class TranslationsEnEncointer implements TranslationsEncointer {
       ' you become a newbie again.';
   @override
   String get reputableTitle => 'Registered as reputable - your seat is guaranteed';
+  @override
+  String get remainingNewbieTickets => 'Remaining newbie tickets as reputable:';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
@@ -322,6 +325,8 @@ class TranslationsDeEncointer implements TranslationsEncointer {
       ' aber nicht zur Versammlung erscheinen, wirst du wieder ein Newbie.';
   @override
   String get reputableTitle => 'Als Reputable registriert. Dein Platz ist garantiert';
+  @override
+  String get remainingNewbieTickets => 'Verbleibende Newbie Tickets als Reputable:';
 }
 
 class TranslationsFrEncointer implements TranslationsEncointer {
@@ -443,6 +448,8 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   String get reputableContent => throw UnimplementedError();
   @override
   String get reputableTitle => throw UnimplementedError();
+  @override
+  String get remainingNewbieTickets => throw UnimplementedError();
 }
 
 class TranslationsRuEncointer implements TranslationsEncointer {
@@ -553,18 +560,14 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   String get bootstrapperContent =>
       'Рассмотрите возможность одобрения новичков, если у вас есть билеты на одобрение,это поможет общине расти.';
-
   @override
   String get bootstrapperTitle => 'Зарегистрирован в качестве бутсреппера - место гарантировано.';
-
   @override
   String get endorseeContent =>
       'Вы былы одобрены, как заслуживающий доверия член общины. Следовательно, Вы гарантированно будете назначены '
       'на этот цикл.';
-
   @override
   String get endorseeTitle => 'Зарегистрирован в качестве индоссанта - ваше место гарантировано';
-
   @override
   String get newbieContent =>
       'Вы зарегистрировались в качестве новичка без репутации. Нет гарантии, что Вас назначат на '
@@ -573,12 +576,12 @@ class TranslationsRuEncointer implements TranslationsEncointer {
 
   @override
   String get newbieTitle => 'Зарегистрирован в качестве новичка - место не гарантировано.';
-
   @override
   String get reputableContent =>
       'Вы воспользовались своей репутаций для получения гарантированного места. Внимание: Если вы зарегистрируетесь, но не явитесь на цикл,'
       ' вы снова станете новичком.';
-
   @override
   String get reputableTitle => 'Зарегистрирован в качестве уважаемого - ваше место гарантировано.';
+  @override
+  String get remainingNewbieTickets => 'Оставшиеся билеты для новичков заслуживающие доверие:';
 }
