@@ -526,7 +526,7 @@ class EncointerApi {
           final numberOfTickets = await jsApi.evalJavascript(
             'encointer.remainingNewbieTickets(${jsonEncode(reputation.value.communityIdentifier)}, "${reputation.key}","$address")',
           );
-          Log.d('Encointer Api', 'numberTikkets: $numberOfTickets');
+          Log.d('Encointer Api', 'numberOfTickets: $numberOfTickets');
           _remainingTickets += numberOfTickets as int;
         } catch (e, s) {
           Log.e('Encointer Api', '$e', s);

@@ -124,7 +124,22 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
               Observer(builder: (_) {
                 return _store.encointer.community!.bootstrappers!.contains(_store.account.currentAddress) ||
                         _store.encointer.numberOfNewbieTicketsForReputable > 0
-                    ? EndorseButton(_store, widget.api, account)
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(children: [
+                              const Text('Remaining newbie tickets as reputable: '),
+                              Text(
+                                '${_store.encointer.numberOfNewbieTicketsForReputable}',
+                                style: TextStyle(color: zurichLion.shade800, fontSize: 15),
+                              )
+                            ]),
+                          ),
+                          EndorseButton(_store, widget.api, account),
+                        ],
+                      )
                     : Container();
               }),
               const SizedBox(height: 16),
