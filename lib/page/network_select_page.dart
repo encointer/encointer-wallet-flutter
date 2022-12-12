@@ -201,36 +201,34 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
                 )
               ],
             ),
-            child: Observer(builder: (_) {
-              return Column(
-                children: networks.map((i) {
-                  final network = i.info;
-                  final isCurrent = network == _selectedNetwork.info;
-                  final img = 'assets/images/public/$network${isCurrent ? '' : '_gray'}.png';
-                  return Container(
-                    margin: const EdgeInsets.only(bottom: 8),
-                    padding: const EdgeInsets.only(right: 8),
-                    decoration: isCurrent
-                        ? BoxDecoration(
-                            border: Border(right: BorderSide(width: 2, color: Theme.of(context).primaryColor)),
-                          )
-                        : null,
-                    child: IconButton(
-                      key: Key(i.info ?? '$i'),
-                      padding: const EdgeInsets.all(8),
-                      icon: Image.asset(img),
-                      onPressed: () {
-                        if (!isCurrent) {
-                          setState(() {
-                            _selectedNetwork = i;
-                          });
-                        }
-                      },
-                    ),
-                  );
-                }).toList(),
-              );
-            }),
+            child: Column(
+              children: networks.map((i) {
+                final network = i.info;
+                final isCurrent = network == _selectedNetwork.info;
+                final img = 'assets/images/public/$network${isCurrent ? '' : '_gray'}.png';
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 8),
+                  padding: const EdgeInsets.only(right: 8),
+                  decoration: isCurrent
+                      ? BoxDecoration(
+                          border: Border(right: BorderSide(width: 2, color: Theme.of(context).primaryColor)),
+                        )
+                      : null,
+                  child: IconButton(
+                    key: Key(i.info ?? '$i'),
+                    padding: const EdgeInsets.all(8),
+                    icon: Image.asset(img),
+                    onPressed: () {
+                      if (!isCurrent) {
+                        setState(() {
+                          _selectedNetwork = i;
+                        });
+                      }
+                    },
+                  ),
+                );
+              }).toList(),
+            ),
           ),
           Expanded(
             child: Observer(builder: (_) {
