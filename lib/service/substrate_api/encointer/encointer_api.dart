@@ -462,7 +462,7 @@ class EncointerApi {
       for (var cr in reputationsList as List) cr[0] as int: CommunityReputation.fromJson(cr[1] as Map<String, dynamic>)
     };
 
-    store.encointer.account?.setReputations(reputations);
+    await store.encointer.account?.setReputations(reputations);
   }
 
   Future<dynamic> sendFaucetTx() async {
@@ -514,6 +514,26 @@ class EncointerApi {
     final proof = ProofOfAttendance.fromJson(proofJs as Map<String, dynamic>);
     Log.d('Proof: $proof', 'EncointerApi');
     return proof;
+  }
+
+  Future<int> getNumberOfNewbieTicketsForReputable() async {
+    var _remainingTickets = 0;
+    final address = store.account.currentAddress;
+    final reputations = store.encointer.account?.reputations;
+    if (reputations != null) {
+      for (var reputation in reputations.entries) {
+        try {
+          final numberOfTickets = await jsApi.evalJavascript(
+            'encointer.remainingNewbieTickets(${jsonEncode(reputation.value.communityIdentifier)}, "${reputation.key}","$address")',
+          );
+          Log.d('Encointer Api', 'numberOfTickets: $numberOfTickets');
+          _remainingTickets += numberOfTickets as int;
+        } catch (e, s) {
+          Log.e('Encointer Api', '$e', s);
+        }
+      }
+    }
+    return _remainingTickets;
   }
 
   /// Get all the registered businesses for the current `chosenCid`

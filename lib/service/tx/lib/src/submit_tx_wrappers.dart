@@ -97,7 +97,9 @@ Future<void> submitEndorseNewcomer(
     store,
     api,
     txParams,
-    onFinish: (BuildContext txPageContext, Map res) => (res),
+    onFinish: (BuildContext txPageContext, Map res) {
+      store.encointer.account!.getNumberOfNewbieTicketsForReputable();
+    },
   );
 }
 
