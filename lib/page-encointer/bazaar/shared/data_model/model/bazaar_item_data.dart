@@ -56,7 +56,7 @@ class BazaarBusinessData extends BazaarItemData {
 
   @override
   String get info {
-    final distance = const Distance();
+    const distance = Distance();
     final distanceInMeters = distance(turbinenplatz, coordinates);
     return '${distanceInMeters.toStringAsFixed(0)}m';
   }

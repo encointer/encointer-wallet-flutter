@@ -6,7 +6,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:jdenticon_dart/jdenticon_dart.dart';
 
 class AddressIcon extends StatelessWidget {
-  AddressIcon(
+  const AddressIcon(
     this.address,
     this.pubKey, {
     Key? key,
@@ -51,7 +51,7 @@ class AddressIcon extends StatelessWidget {
 }
 
 class AddressIconWithLabel extends StatelessWidget {
-  AddressIconWithLabel(
+  const AddressIconWithLabel(
     this.address,
     this.pubKey, {
     Key? key,

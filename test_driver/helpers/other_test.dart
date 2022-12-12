@@ -40,7 +40,7 @@ Future<void> sendMoneyToAccount(FlutterDriver driver) async {
 }
 
 Future<void> shareAccountAndChangeNameTest(FlutterDriver driver, String account, String changedName) async {
-  await driver.tap(find.byValueKey('Profile'));
+  await driver.tap(find.byValueKey('profile'));
 
   await driver.waitFor(find.byValueKey(account));
   await driver.tap(find.byValueKey(account));

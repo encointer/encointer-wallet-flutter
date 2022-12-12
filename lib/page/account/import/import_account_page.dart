@@ -43,7 +43,7 @@ class _ImportAccountPageState extends State<ImportAccountPage> {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Text(I18n.of(context)!.translationsForLocale().home.loading),
-          content: const SizedBox(height: 64, child: const CupertinoActivityIndicator()),
+          content: const SizedBox(height: 64, child: CupertinoActivityIndicator()),
         );
       },
     );

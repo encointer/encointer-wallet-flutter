@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 class ExportResultPage extends StatelessWidget {
   static const String route = '/account/key';
 
-  ExportResultPage({Key? key}) : super(key: key);
+  const ExportResultPage({Key? key}) : super(key: key);
 
   void _showExportDialog(BuildContext context, Map args) {
     final dic = I18n.of(context)!.translationsForLocale();

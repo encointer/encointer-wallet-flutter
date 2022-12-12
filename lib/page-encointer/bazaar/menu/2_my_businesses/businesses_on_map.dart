@@ -49,7 +49,7 @@ class BMap extends StatelessWidget {
       children: [
         TileLayer(
           urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-          subdomains: ['a', 'b', 'c'],
+          subdomains: const ['a', 'b', 'c'],
         ),
         PopupMarkerLayerWidget(
           options: PopupMarkerLayerOptions(
@@ -126,5 +126,5 @@ class BusinessDetailsPopup extends StatelessWidget {
     );
   }
 
-  BusinessDetailsPopup(this.marker, this.dataForThisMarker, {Key? key}) : super(key: key);
+  const BusinessDetailsPopup(this.marker, this.dataForThisMarker, {Key? key}) : super(key: key);
 }

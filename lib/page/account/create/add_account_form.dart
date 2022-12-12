@@ -87,7 +87,7 @@ class AddAccountForm extends StatelessWidget {
                   const SizedBox(width: 12),
                   Text(
                     I18n.of(context)!.translationsForLocale().profile.accountCreate,
-                    style: Theme.of(context).textTheme.headline3!.copyWith(color: ZurichLion.shade50),
+                    style: Theme.of(context).textTheme.headline3!.copyWith(color: zurichLion.shade50),
                   ),
                 ],
               ),

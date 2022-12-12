@@ -13,8 +13,8 @@ import 'package:encointer_wallet/store/encointer/sub_stores/community_store/comm
 void main() {
   group('communityStore', () {
     test('json serialization and caching works', () async {
-      var localStorage = MockLocalStorage();
-      var communityStoreCacheKey = 'communityStore-test-cache';
+      final localStorage = MockLocalStorage();
+      const communityStoreCacheKey = 'communityStore-test-cache';
 
       // Only to not get null errors in tests
       webApi = getMockApi(
@@ -23,7 +23,7 @@ void main() {
       );
       webApi.init();
 
-      var communityStore = CommunityStore(
+      final communityStore = CommunityStore(
         'My Test Network',
         mediterraneanTestCommunity,
       );
@@ -33,7 +33,7 @@ void main() {
         null,
       );
 
-      var testMetadata = CommunityMetadata(
+      final testMetadata = CommunityMetadata(
         'Test-Community',
         'TCM',
         'AssetsCid',
@@ -41,20 +41,20 @@ void main() {
         'Theme-String',
       );
 
-      var bootstrappers = [ALICE_ADDRESS, BOB_ADDRESS, CHARLIE_ADDRESS];
-      var testLocations = [testLocation1, testLocation2, testLocation3];
+      final bootstrappers = [aliceAddress, bobAddress, charlieAddress];
+      final testLocations = [testLocation1, testLocation2, testLocation3];
 
       communityStore.setCommunityMetadata(testMetadata);
       communityStore.setDemurrage(1.1);
       communityStore.setMeetupTime(10);
       communityStore.setBootstrappers(bootstrappers);
       communityStore.setMeetupLocations(testLocations);
-      communityStore.initCommunityAccountStore(ALICE_ADDRESS);
-      communityStore.initCommunityAccountStore(BOB_ADDRESS);
-      var aliceCommunityAccountStore = communityStore.communityAccountStores![ALICE_ADDRESS]!;
-      var bobCommunityAccountStore = communityStore.communityAccountStores![BOB_ADDRESS]!;
+      communityStore.initCommunityAccountStore(aliceAddress);
+      communityStore.initCommunityAccountStore(bobAddress);
+      final aliceCommunityAccountStore = communityStore.communityAccountStores![aliceAddress]!;
+      final bobCommunityAccountStore = communityStore.communityAccountStores![bobAddress]!;
 
-      Map<String, dynamic> targetJson = {
+      final targetJson = <String, dynamic>{
         'network': 'My Test Network',
         'cid': mediterraneanTestCommunity.toJson(),
         'metadata': testMetadata.toJson(),
@@ -64,18 +64,18 @@ void main() {
         'bootstrappers': bootstrappers,
         'meetupLocations': testLocations.map((l) => l.toJson()).toList(),
         'communityAccountStores': Map<String, dynamic>.of({
-          ALICE_ADDRESS: aliceCommunityAccountStore.toJson(),
-          BOB_ADDRESS: bobCommunityAccountStore.toJson(),
+          aliceAddress: aliceCommunityAccountStore.toJson(),
+          bobAddress: bobCommunityAccountStore.toJson(),
         }),
         'communityIcon': null,
       };
 
       expect(communityStore.toJson(), targetJson);
 
-      var communityStoreDeserialized = CommunityStore.fromJson(targetJson);
+      final communityStoreDeserialized = CommunityStore.fromJson(targetJson);
       expect(communityStoreDeserialized.toJson(), targetJson);
 
-      var cachedValue = await localStorage.getObject(communityStoreCacheKey);
+      final cachedValue = await localStorage.getObject(communityStoreCacheKey);
       expect(cachedValue, targetJson);
     });
   });

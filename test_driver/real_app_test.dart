@@ -56,7 +56,7 @@ void main() async {
   });
 
   test('turn on dev-mode', () async {
-    await driver.tap(find.byValueKey('Profile'));
+    await driver.tap(find.byValueKey('profile'));
 
     await scrollToDevMode(driver);
 
@@ -75,7 +75,7 @@ void main() async {
 
     await driver.waitFor(find.byValueKey('profile-list-view'));
 
-    await driver.tap(find.byValueKey('Wallet'));
+    await driver.tap(find.byValueKey('wallet'));
     await addDelay(1000);
   }, timeout: const Timeout(Duration(seconds: 90)));
 
@@ -118,7 +118,7 @@ void main() async {
   }, timeout: const Timeout(Duration(seconds: 60)));
 
   test('get attesting-phase', () async {
-    await driver.tap(find.byValueKey('Profile'));
+    await driver.tap(find.byValueKey('profile'));
 
     await scrollToNextPhaseButton(driver);
 
@@ -126,7 +126,7 @@ void main() async {
 
     await tapAndWaitNextPhase(driver);
 
-    await driver.tap(find.byValueKey('Wallet'));
+    await driver.tap(find.byValueKey('wallet'));
     await addDelay(1000);
   }, timeout: const Timeout(Duration(seconds: 40)));
 
@@ -152,16 +152,16 @@ void main() async {
   }, timeout: const Timeout(Duration(seconds: 120)));
 
   test('Go to Profile Page and Check reputation count', () async {
-    await driver.tap(find.byValueKey('Profile'));
+    await driver.tap(find.byValueKey('profile'));
     await driver.waitFor(find.text('2'));
     await addDelay(1000);
     await scrollToNextPhaseButton(driver);
     await tapAndWaitNextPhase(driver);
-    await driver.tap(find.byValueKey('Wallet'));
+    await driver.tap(find.byValueKey('wallet'));
   });
 
   test('contact-page add account', () async {
-    await driver.tap(find.byValueKey('Contacts'));
+    await driver.tap(find.byValueKey('contacts'));
     await driver.tap(find.byValueKey('add-contact'));
 
     await driver.tap(find.byValueKey('contact-address'));
@@ -187,7 +187,7 @@ void main() async {
     await driver.tap(find.byValueKey('send-money-to-account'));
 
     await sendMoneyToAccount(driver);
-    await driver.tap(find.byValueKey('Wallet'));
+    await driver.tap(find.byValueKey('wallet'));
   });
 
   test('create newbie account', () async {
