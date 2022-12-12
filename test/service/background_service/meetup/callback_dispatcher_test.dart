@@ -40,7 +40,7 @@ void main() async {
     _responseTrueShowNotification(1);
     _responseTrueShowNotification(2);
 
-    var shownNotifications = await showAllNotificationsFromFeed(feeds, list, functions.showNotification);
+    final shownNotifications = await showAllNotificationsFromFeed(feeds, list, functions.showNotification);
 
     _verifyShowNotification(0);
     _verifyShowNotification(1);
@@ -55,7 +55,7 @@ void main() async {
     _responseTrueShowNotification(1);
     _responseTrueShowNotification(2);
 
-    var shownNotifications = await showAllNotificationsFromFeed(feeds, list, functions.showNotification);
+    final shownNotifications = await showAllNotificationsFromFeed(feeds, list, functions.showNotification);
 
     _verifyNeverShowNotification(0);
     _verifyShowNotification(1);
@@ -70,7 +70,7 @@ void main() async {
 
     _responseTrueShowNotification(2);
 
-    var shownNotifications = await showAllNotificationsFromFeed(feeds, list, functions.showNotification);
+    final shownNotifications = await showAllNotificationsFromFeed(feeds, list, functions.showNotification);
 
     _verifyNeverShowNotification(0);
     _verifyNeverShowNotification(1);
@@ -83,13 +83,13 @@ void main() async {
   test('notificationForLoop show notification 0, cache list=["msg-1", "msg-2", "msg-3"]', () async {
     final list = <String>['msg-1', 'msg-2', 'msg-3'];
 
-    var shownNotifications = await showAllNotificationsFromFeed(feeds, list, functions.showNotification);
+    final shownNotifications = await showAllNotificationsFromFeed(feeds, list, functions.showNotification);
 
     _verifyNeverShowNotification(0);
     _verifyNeverShowNotification(1);
     _verifyNeverShowNotification(2);
     _verifyNeverShowNotification(3);
 
-    expect(shownNotifications, []);
+    expect(shownNotifications, <String>[]);
   });
 }

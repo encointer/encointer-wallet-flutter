@@ -7,7 +7,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/format.dart';
 
 class AddressFormItem extends StatelessWidget {
-  AddressFormItem(this.account, {Key? key, this.label, this.onTap}) : super(key: key);
+  const AddressFormItem(this.account, {Key? key, this.label, this.onTap}) : super(key: key);
   final String? label;
   final AccountData account;
   final Future<void> Function()? onTap;

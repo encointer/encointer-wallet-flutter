@@ -29,7 +29,7 @@ class ContactQrCode extends QrCode<ContactData> {
     } else {
       qrFields.addAll(data.toQrFieldsV2());
     }
-    return qrFields.join(QR_CODE_FIELD_SEPARATOR);
+    return qrFields.join(qrCodeFieldSeparator);
   }
 
   static ContactQrCode fromPayload(String payload) {

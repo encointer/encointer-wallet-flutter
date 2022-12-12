@@ -5,18 +5,18 @@ import 'package:json_annotation/json_annotation.dart';
 part 'node.g.dart';
 
 /// Overrides for the Gesell test network
-const NodeConfig GesellConfig = const NodeConfig(GesellTypeOverrides, GesellPalletOverrides);
+const NodeConfig gesellConfig = NodeConfig(gesellTypeOverrides, gesellPalletOverrides);
 
 /// Overrides for the Cantillon test network
-const NodeConfig CantillonConfig = const NodeConfig(GesellTypeOverrides, GesellPalletOverrides);
+const NodeConfig cantillonConfig = NodeConfig(gesellTypeOverrides, gesellPalletOverrides);
 
 /// Overrides for the master branch of the `encointer-node`, which is usually used in a local
 /// no-tee-dev-setup
-const NodeConfig MasterBranchConfig = const NodeConfig(TypeOverridesDev, PalletOverridesDev);
+const NodeConfig masterBranchConfig = NodeConfig(typeOverridesDev, palletOverridesDev);
 
 /// Overrides for the sgx-master branch of the `encointer-node`, which is usually used in a local
 /// tee-dev-setup
-const NodeConfig SgxBranchConfig = const NodeConfig(GesellTypeOverrides, GesellPalletOverrides);
+const NodeConfig sgxBranchConfig = NodeConfig(gesellTypeOverrides, gesellPalletOverrides);
 
 /// Config to handle different versions of our nodes by supplying type overwrites
 /// and pallet names and methods overwrites.
@@ -57,11 +57,11 @@ class Pallet {
   Map<String, dynamic> toJson() => _$PalletToJson(this);
 }
 
-const Map<String, dynamic> TypeOverridesDev = {};
-const Map<String, Pallet> PalletOverridesDev = {};
+const Map<String, dynamic> typeOverridesDev = {};
+const Map<String, Pallet> palletOverridesDev = {};
 
 /// Type overrides needed for Gesell
-const Map<String, dynamic> GesellTypeOverrides = {};
+const Map<String, dynamic> gesellTypeOverrides = {};
 
 /// Pallet overrides needed for Gesell
-const Map<String, Pallet> GesellPalletOverrides = {};
+const Map<String, Pallet> gesellPalletOverrides = {};

@@ -10,7 +10,7 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class ContactsPage extends StatelessWidget {
-  ContactsPage({Key? key}) : super(key: key);
+  const ContactsPage({Key? key}) : super(key: key);
 
   static const String route = '/profile/contacts';
 

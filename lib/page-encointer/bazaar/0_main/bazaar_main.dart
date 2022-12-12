@@ -11,7 +11,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/4_favorites/favorites.dar
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class BazaarMain extends StatelessWidget {
-  BazaarMain({Key? key}) : super(key: key);
+  const BazaarMain({Key? key}) : super(key: key);
   static const String route = '/bazaar';
 
   @override

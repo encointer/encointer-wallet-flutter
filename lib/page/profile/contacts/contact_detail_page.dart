@@ -113,7 +113,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
                         Text(Fmt.address(account.address)!, style: const TextStyle(fontSize: 20)),
                         IconButton(
                           icon: const Icon(Iconsax.copy),
-                          color: ZurichLion.shade500,
+                          color: zurichLion.shade500,
                           onPressed: () => UI.copyAndNotify(context, account.address),
                         ),
                       ],
@@ -173,7 +173,7 @@ class _ContactDetailPageState extends State<ContactDetailPage> {
 }
 
 class EndorseButton extends StatelessWidget {
-  EndorseButton(this.store, this.api, this.contact, {Key? key}) : super(key: key);
+  const EndorseButton(this.store, this.api, this.contact, {Key? key}) : super(key: key);
 
   final AppStore store;
   final Api api;

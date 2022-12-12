@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class RoundedCard extends StatelessWidget {
-  RoundedCard({Key? key, this.border, this.margin, this.padding, this.child}) : super(key: key);
+  const RoundedCard({Key? key, this.border, this.margin, this.padding, this.child}) : super(key: key);
 
   final BoxBorder? border;
   final EdgeInsetsGeometry? margin;
@@ -16,10 +16,10 @@ class RoundedCard extends StatelessWidget {
       child: child,
       decoration: BoxDecoration(
         border: border,
-        borderRadius: const BorderRadius.all(const Radius.circular(8)),
+        borderRadius: const BorderRadius.all(Radius.circular(8)),
         color: Theme.of(context).cardColor,
-        boxShadow: [
-          const BoxShadow(
+        boxShadow: const [
+          BoxShadow(
             color: Colors.black12,
             blurRadius: 16.0, // has the effect of softening the shadow
             spreadRadius: 4.0, // has the effect of extending the shadow

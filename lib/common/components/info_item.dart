@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class InfoItem extends StatelessWidget {
-  InfoItem({Key? key, required this.title, this.content, this.crossAxisAlignment}) : super(key: key);
+  const InfoItem({Key? key, required this.title, this.content, this.crossAxisAlignment}) : super(key: key);
   final String title;
   final String? content;
   final CrossAxisAlignment? crossAxisAlignment;

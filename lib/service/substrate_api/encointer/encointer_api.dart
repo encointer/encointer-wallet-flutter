@@ -467,7 +467,7 @@ class EncointerApi {
 
   Future<dynamic> sendFaucetTx() async {
     final address = store.account.currentAddress;
-    final amount = Fmt.tokenInt(faucetAmount.toString(), ert_decimals);
+    final amount = Fmt.tokenInt(faucetAmount.toString(), ertDecimals);
     final res = await jsApi.evalJavascript('account.sendFaucetTx("$address", "$amount")');
     // Log.d("Faucet Result : $res", 'EncointerApi');
     return res;
