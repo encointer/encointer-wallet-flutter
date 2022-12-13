@@ -11,6 +11,7 @@ class BalanceEntry {
   BalanceEntry(this.principal, this.lastUpdate);
 
   factory BalanceEntry.fromJson(Map<String, dynamic> json) => _$BalanceEntryFromJson(json);
+  Map<String, dynamic> toJson() => _$BalanceEntryToJson(this);
 
   @observable
   @JsonKey(name: 'principal', fromJson: _principalFromMaybeString, toJson: _principalToString)
@@ -36,7 +37,6 @@ class BalanceEntry {
   }
 
   static String _principalToString(double principal) => principal.toString();
-  Map<String, dynamic> toJson() => _$BalanceEntryToJson(this);
 
   double applyDemurrage(int latestBlockNumber, double demurrageRate) {
     final elapsed = latestBlockNumber - lastUpdate;

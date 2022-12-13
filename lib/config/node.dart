@@ -25,6 +25,7 @@ class NodeConfig {
   const NodeConfig(this.types, this.pallets);
 
   factory NodeConfig.fromJson(Map<String, dynamic> json) => _$NodeConfigFromJson(json);
+  Map<String, dynamic> toJson() => _$NodeConfigToJson(this);
 
   /// type overwrites passed to the JS Api type-registry
   final Map<String, dynamic>? types;
@@ -37,8 +38,6 @@ class NodeConfig {
   String toString() {
     return jsonEncode(this);
   }
-
-  Map<String, dynamic> toJson() => _$NodeConfigToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
@@ -46,6 +45,8 @@ class Pallet {
   const Pallet(this.name, this.calls);
 
   factory Pallet.fromJson(Map<String, dynamic> json) => _$PalletFromJson(json);
+  Map<String, dynamic> toJson() => _$PalletToJson(this);
+
   final String? name;
   final Map<String, String>? calls;
 
@@ -53,8 +54,6 @@ class Pallet {
   String toString() {
     return jsonEncode(this);
   }
-
-  Map<String, dynamic> toJson() => _$PalletToJson(this);
 }
 
 const Map<String, dynamic> typeOverridesDev = {};

@@ -13,6 +13,7 @@ class AggregatedAccountData {
   AggregatedAccountData(this.global, this.personal);
 
   factory AggregatedAccountData.fromJson(Map<String, dynamic> json) => _$AggregatedAccountDataFromJson(json);
+  Map<String, dynamic> toJson() => _$AggregatedAccountDataToJson(this);
 
   AggregatedAccountDataGlobal? global;
   AggregatedAccountDataPersonal? personal;
@@ -21,8 +22,6 @@ class AggregatedAccountData {
   String toString() {
     return jsonEncode(this);
   }
-
-  Map<String, dynamic> toJson() => _$AggregatedAccountDataToJson(this);
 }
 
 @JsonSerializable()
@@ -32,6 +31,7 @@ class AggregatedAccountDataPersonal {
 
   factory AggregatedAccountDataPersonal.fromJson(Map<String, dynamic> json) =>
       _$AggregatedAccountDataPersonalFromJson(json);
+  Map<String, dynamic> toJson() => _$AggregatedAccountDataPersonalToJson(this);
 
   ParticipantType? participantType;
   int? meetupIndex;
@@ -46,8 +46,6 @@ class AggregatedAccountDataPersonal {
   String toString() {
     return jsonEncode(this);
   }
-
-  Map<String, dynamic> toJson() => _$AggregatedAccountDataPersonalToJson(this);
 }
 
 @JsonSerializable()
@@ -56,6 +54,7 @@ class AggregatedAccountDataGlobal {
 
   factory AggregatedAccountDataGlobal.fromJson(Map<String, dynamic> json) =>
       _$AggregatedAccountDataGlobalFromJson(json);
+  Map<String, dynamic> toJson() => _$AggregatedAccountDataGlobalToJson(this);
 
   CeremonyPhase ceremonyPhase;
   int ceremonyIndex;
@@ -64,8 +63,6 @@ class AggregatedAccountDataGlobal {
   String toString() {
     return jsonEncode(this);
   }
-
-  Map<String, dynamic> toJson() => _$AggregatedAccountDataGlobalToJson(this);
 }
 
 // For compatibility with substrate's naming convention.
@@ -77,6 +74,7 @@ class CommunityReputation {
   CommunityReputation(this.communityIdentifier, this.reputation);
 
   factory CommunityReputation.fromJson(Map<String, dynamic> json) => _$CommunityReputationFromJson(json);
+  Map<String, dynamic> toJson() => _$CommunityReputationToJson(this);
 
   CommunityIdentifier? communityIdentifier;
   Reputation? reputation;
@@ -85,8 +83,6 @@ class CommunityReputation {
   String toString() {
     return jsonEncode(this);
   }
-
-  Map<String, dynamic> toJson() => _$CommunityReputationToJson(this);
 }
 
 @JsonSerializable()
@@ -94,6 +90,7 @@ class Meetup {
   Meetup(this.index, this.locationIndex, this.time, this.registry);
 
   factory Meetup.fromJson(Map<String, dynamic> json) => _$MeetupFromJson(json);
+  Map<String, dynamic> toJson() => _$MeetupToJson(this);
 
   int index;
   int locationIndex;
@@ -105,8 +102,6 @@ class Meetup {
   String toString() {
     return jsonEncode(this);
   }
-
-  Map<String, dynamic> toJson() => _$MeetupToJson(this);
 }
 
 // For compatibility with substrate's naming convention.

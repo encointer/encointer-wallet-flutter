@@ -21,13 +21,12 @@ class EncointerAccountStore extends _EncointerAccountStore with _$EncointerAccou
   EncointerAccountStore(String network, String address) : super(network, address);
 
   factory EncointerAccountStore.fromJson(Map<String, dynamic> json) => _$EncointerAccountStoreFromJson(json);
+  Map<String, dynamic> toJson() => _$EncointerAccountStoreToJson(this);
 
   @override
   String toString() {
     return jsonEncode(this);
   }
-
-  Map<String, dynamic> toJson() => _$EncointerAccountStoreToJson(this);
 }
 
 abstract class _EncointerAccountStore with Store {

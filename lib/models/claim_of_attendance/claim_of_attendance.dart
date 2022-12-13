@@ -13,6 +13,7 @@ class ClaimOfAttendance {
       this.timestamp, this.numberOfParticipantsConfirmed);
 
   factory ClaimOfAttendance.fromJson(Map<String, dynamic> json) => _$ClaimOfAttendanceFromJson(json);
+  Map<String, dynamic> toJson() => _$ClaimOfAttendanceToJson(this);
 
   String? claimantPublic;
   int? ceremonyIndex;
@@ -27,6 +28,4 @@ class ClaimOfAttendance {
   String toString() {
     return jsonEncode(this);
   }
-
-  Map<String, dynamic> toJson() => _$ClaimOfAttendanceToJson(this);
 }

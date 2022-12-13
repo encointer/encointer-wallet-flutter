@@ -17,13 +17,12 @@ class CommunityAccountStore extends _CommunityAccountStore with _$CommunityAccou
   CommunityAccountStore(String network, CommunityIdentifier cid, String address) : super(network, cid, address);
 
   factory CommunityAccountStore.fromJson(Map<String, dynamic> json) => _$CommunityAccountStoreFromJson(json);
+  Map<String, dynamic> toJson() => _$CommunityAccountStoreToJson(this);
 
   @override
   String toString() {
     return jsonEncode(this);
   }
-
-  Map<String, dynamic> toJson() => _$CommunityAccountStoreToJson(this);
 }
 
 abstract class _CommunityAccountStore with Store {

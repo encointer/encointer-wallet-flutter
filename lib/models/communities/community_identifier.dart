@@ -19,6 +19,11 @@ class CommunityIdentifier {
   factory CommunityIdentifier.fromJson(Map<String, dynamic> json) =>
       CommunityIdentifier(Fmt.hexToBytes(json['geohash'] as String), Fmt.hexToBytes(json['digest'] as String));
 
+  Map<String, dynamic> toJson() => <String, dynamic>{
+        'geohash': Fmt.bytesToHex(geohash),
+        'digest': Fmt.bytesToHex(digest),
+      };
+
   // [u8; 5]
   final List<int> geohash;
 
@@ -48,9 +53,4 @@ class CommunityIdentifier {
 
   @override
   int get hashCode => toFmtString().hashCode;
-
-  Map<String, dynamic> toJson() => <String, dynamic>{
-        'geohash': Fmt.bytesToHex(geohash),
-        'digest': Fmt.bytesToHex(digest),
-      };
 }

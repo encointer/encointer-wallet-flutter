@@ -18,6 +18,7 @@ class ProofOfAttendance {
   );
 
   factory ProofOfAttendance.fromJson(Map<String, dynamic> json) => _$ProofOfAttendanceFromJson(json);
+  Map<String, dynamic> toJson() => _$ProofOfAttendanceToJson(this);
 
   String proverPublic;
   int ceremonyIndex;
@@ -29,6 +30,4 @@ class ProofOfAttendance {
   String toString() {
     return jsonEncode(this);
   }
-
-  Map<String, dynamic> toJson() => _$ProofOfAttendanceToJson(this);
 }

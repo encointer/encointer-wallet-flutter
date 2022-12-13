@@ -10,6 +10,7 @@ class IpfsOffering {
   IpfsOffering(this.name, this.price, this.description, this.contactInfo, this.imagesCid);
 
   factory IpfsOffering.fromJson(Map<String, dynamic> json) => _$IpfsOfferingFromJson(json);
+  Map<String, dynamic> toJson() => _$IpfsOfferingToJson(this);
 
   /// name of the offering
   final String? name;
@@ -30,6 +31,4 @@ class IpfsOffering {
   String toString() {
     return jsonEncode(this);
   }
-
-  Map<String, dynamic> toJson() => _$IpfsOfferingToJson(this);
 }

@@ -12,6 +12,7 @@ class EncointerBalanceData {
   EncointerBalanceData(this.cid, this.balanceEntry);
 
   factory EncointerBalanceData.fromJson(Map<String, dynamic> json) => _$EncointerBalanceDataFromJson(json);
+  Map<String, dynamic> toJson() => _$EncointerBalanceDataToJson(this);
 
   @observable
   final CommunityIdentifier cid;
@@ -22,6 +23,4 @@ class EncointerBalanceData {
   String toString() {
     return jsonEncode(this);
   }
-
-  Map<String, dynamic> toJson() => _$EncointerBalanceDataToJson(this);
 }

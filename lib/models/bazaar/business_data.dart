@@ -10,6 +10,7 @@ class BusinessData {
   BusinessData(this.url, this.lastOid);
 
   factory BusinessData.fromJson(Map<String, dynamic> json) => _$BusinessDataFromJson(json);
+  Map<String, dynamic> toJson() => _$BusinessDataToJson(this);
 
   /// ipfs-cid of the corresponding [IpfsBusiness]
   final String? url;
@@ -21,6 +22,4 @@ class BusinessData {
   String toString() {
     return jsonEncode(this);
   }
-
-  Map<String, dynamic> toJson() => _$BusinessDataToJson(this);
 }

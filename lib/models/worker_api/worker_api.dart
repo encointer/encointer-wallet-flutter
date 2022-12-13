@@ -10,6 +10,7 @@ class PubKeyPinPair {
   PubKeyPinPair(this.pubKey, this.pin);
 
   factory PubKeyPinPair.fromJson(Map<String, dynamic> json) => _$PubKeyPinPairFromJson(json);
+  Map<String, dynamic> toJson() => _$PubKeyPinPairToJson(this);
 
   String? pubKey;
   String? pin;
@@ -18,6 +19,4 @@ class PubKeyPinPair {
   String toString() {
     return jsonEncode(this);
   }
-
-  Map<String, dynamic> toJson() => _$PubKeyPinPairToJson(this);
 }

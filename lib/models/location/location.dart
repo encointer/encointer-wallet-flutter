@@ -15,6 +15,7 @@ class Location {
         json['lat'].toString(),
         json['lon'].toString(),
       );
+  Map<String, dynamic> toJson() => _$LocationToJson(this);
 
   final String lat;
   final String lon;
@@ -27,6 +28,4 @@ class Location {
   LatLng toLatLng() {
     return LatLng(double.parse(lat), double.parse(lon));
   }
-
-  Map<String, dynamic> toJson() => _$LocationToJson(this);
 }

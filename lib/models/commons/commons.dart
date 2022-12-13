@@ -10,6 +10,7 @@ class RpcMethods {
   RpcMethods(this.methods);
 
   factory RpcMethods.fromJson(Map<String, dynamic> json) => _$RpcMethodsFromJson(json);
+  Map<String, dynamic> toJson() => _$RpcMethodsToJson(this);
 
   final List<String>? methods;
 
@@ -17,6 +18,4 @@ class RpcMethods {
   String toString() {
     return jsonEncode(this);
   }
-
-  Map<String, dynamic> toJson() => _$RpcMethodsToJson(this);
 }

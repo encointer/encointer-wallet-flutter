@@ -154,9 +154,13 @@ class Object {
     required this.links,
     required this.data,
   });
+
   factory Object.fromJson(Map<String, dynamic> json) {
     return Object(data: json['Data'] as String, links: json['Links'] as List<dynamic>);
   }
+
+  Map<String, dynamic> toJson() => <String, dynamic>{'links': links, 'data': data};
+
   List links;
   String data;
 
@@ -164,6 +168,4 @@ class Object {
   String toString() {
     return jsonEncode(this);
   }
-
-  Map<String, dynamic> toJson() => <String, dynamic>{'links': links, 'data': data};
 }
