@@ -88,7 +88,6 @@ class JSApi {
     bool allowRepeat = true,
   }) async {
     // check if there's a same request loading
-    print(code);
     if (!allowRepeat) {
       for (var i in _msgCompleters.keys) {
         final call = code.split('(')[0];

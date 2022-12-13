@@ -60,7 +60,8 @@ abstract class TranslationsEncointer {
   String get reputableContent;
   String get bootstrapperTitle;
   String get bootstrapperContent;
-  String get remainingNewbieTickets;
+  String get remainingNewbieTicketsAsReputable;
+  String get remainingNewbieTicketsAsBootStrapper;
 }
 
 class TranslationsEnEncointer implements TranslationsEncointer {
@@ -192,7 +193,9 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   @override
   String get reputableTitle => 'Registered as reputable - your seat is guaranteed';
   @override
-  String get remainingNewbieTickets => 'Remaining newbie tickets as reputable:';
+  String get remainingNewbieTicketsAsReputable => 'Remaining newbie tickets as reputable:';
+  @override
+  String get remainingNewbieTicketsAsBootStrapper => 'Remaining newbie tickets as bootsrapper:';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
@@ -326,7 +329,9 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   @override
   String get reputableTitle => 'Als Reputable registriert. Dein Platz ist garantiert';
   @override
-  String get remainingNewbieTickets => 'Verbleibende Newbie Tickets als Reputable:';
+  String get remainingNewbieTicketsAsReputable => 'Verbleibende Newbie Tickets als Reputable:';
+  @override
+  String get remainingNewbieTicketsAsBootStrapper => 'Verbleibende Newbie Tickets als Bootstrapper:';
 }
 
 class TranslationsFrEncointer implements TranslationsEncointer {
@@ -449,7 +454,9 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   @override
   String get reputableTitle => throw UnimplementedError();
   @override
-  String get remainingNewbieTickets => throw UnimplementedError();
+  String get remainingNewbieTicketsAsReputable => throw UnimplementedError();
+  @override
+  String get remainingNewbieTicketsAsBootStrapper => throw UnimplementedError();
 }
 
 class TranslationsRuEncointer implements TranslationsEncointer {
@@ -583,5 +590,7 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   String get reputableTitle => 'Зарегистрирован в качестве уважаемого - ваше место гарантировано.';
   @override
-  String get remainingNewbieTickets => 'Оставшиеся билеты для новичков заслуживающие доверие:';
+  String get remainingNewbieTicketsAsReputable => 'Оставшиеся билеты для новичков заслуживающие доверие:';
+  @override
+  String get remainingNewbieTicketsAsBootStrapper => 'Оставшиеся билеты для новичков заслуживающие доверие:';
 }

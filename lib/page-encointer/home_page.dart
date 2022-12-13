@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
@@ -128,9 +127,6 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButton: FloatingActionButton(onPressed: () async {
-        await webApi.encointer.getNumberOfNewbieTickets(true);
-      }),
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,

@@ -61,6 +61,9 @@ abstract class _CommunityStore with Store {
   String? get assetsCid => metadata?.assets;
 
   @observable
+  int numberOfNewbieTicketsForBootstrapper = 0;
+
+  @observable
   int? meetupTime;
 
   /// Override set by the encointer feed.
@@ -130,10 +133,16 @@ abstract class _CommunityStore with Store {
   }
 
   @action
-  void setBootstrappers(List<String> bs) {
+  Future<void> setBootstrappers(List<String> bs) async {
     Log.d('set bootstrappers to $bs', 'CommunityStore');
     bootstrappers = bs;
+    await getNumberOfNewbieTicketsForBootstrapper();
     writeToCache();
+  }
+
+  @action
+  Future<void> getNumberOfNewbieTicketsForBootstrapper() async {
+    numberOfNewbieTicketsForBootstrapper = await webApi.encointer.getNumberOfNewbieTickets(true);
   }
 
   @action
