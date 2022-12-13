@@ -40,6 +40,7 @@ class _CeremonyRegisterButtonState extends State<CeremonyRegisterButton> {
     final dic = I18n.of(context)!.translationsForLocale();
 
     return PrimaryButton(
+      onPressed: !_submitting && widget.registerUntil != null ? () => _onPressed() : null,
       child: !_submitting
           ? FittedBox(
               child: Row(
@@ -56,7 +57,6 @@ class _CeremonyRegisterButtonState extends State<CeremonyRegisterButton> {
               // change theme locally to dark such that the activity indicator appears bright
               data: ThemeData(cupertinoOverrideTheme: const CupertinoThemeData(brightness: Brightness.dark)),
               child: const CupertinoActivityIndicator()),
-      onPressed: !_submitting && widget.registerUntil != null ? () => _onPressed() : null,
     );
   }
 }

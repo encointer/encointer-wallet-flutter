@@ -194,12 +194,18 @@ class EndorseButton extends StatelessWidget {
                 )
               : const SizedBox();
         }),
-        const SizedBox(
-          height: 5,
-        ),
+        const SizedBox(height: 5),
         Observer(builder: (_) {
           return SubmitButtonSecondary(
             key: const Key('tap-endorse-button'),
+            onPressed: store.encointer.account!.numberOfNewbieTicketsForReputable == 0
+                ? null
+                : store.encointer.community!.bootstrappers!.contains(contact.address)
+                    ? (BuildContext context) => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
+                    : store.encointer.currentPhase != CeremonyPhase.Registering
+                        ? (BuildContext context) => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)
+                        : (BuildContext context) =>
+                            submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, contact.address),
             child: FittedBox(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -210,14 +216,6 @@ class EndorseButton extends StatelessWidget {
                 ],
               ),
             ),
-            onPressed: store.encointer.account!.numberOfNewbieTicketsForReputable == 0
-                ? null
-                : store.encointer.community!.bootstrappers!.contains(contact.address)
-                    ? (BuildContext context) => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
-                    : store.encointer.currentPhase != CeremonyPhase.Registering
-                        ? (BuildContext context) => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)
-                        : (BuildContext context) =>
-                            submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, contact.address),
           );
         }),
       ],

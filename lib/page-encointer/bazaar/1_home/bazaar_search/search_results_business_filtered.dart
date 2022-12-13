@@ -6,14 +6,13 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/toggle_buttons_wit
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class SearchResultsBusinessFiltered extends StatelessWidget {
+  SearchResultsBusinessFiltered(this.results, {Key? key}) : super(key: key);
   final List<BazaarItemData> results;
   final categories = allCategories;
   final deliveryOptions = allDeliveryOptions;
   final productNewnessOptions = allProductNewnessOptions;
   final selectedDeliveryOptions = <bool>[];
   final selectedProductNewnessOptions = <bool>[];
-
-  SearchResultsBusinessFiltered(this.results, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

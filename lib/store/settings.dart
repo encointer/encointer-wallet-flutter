@@ -334,7 +334,7 @@ class NetworkState extends _NetworkState {
   NetworkState(String? endpoint, int? ss58Format, int? tokenDecimals, String? tokenSymbol)
       : super(endpoint, ss58Format, tokenDecimals, tokenSymbol);
 
-  static NetworkState fromJson(Map<String, dynamic> json) {
+  factory NetworkState.fromJson(Map<String, dynamic> json) {
     // js-api changed the return type of 'api.rpc.system.properties()', such that multiple balances are supported.
     // Hence, tokenDecimals/-symbols are returned as a List. However, encointer currently only has one token, thus the
     // `NetworkState` should use the first token.

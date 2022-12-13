@@ -231,6 +231,12 @@ class _AssetsState extends State<Assets> {
                                           BorderRadius.horizontal(left: Radius.circular(15), right: Radius.zero),
                                     ),
                                   ),
+                                  key: const Key('qr-receive'),
+                                  onPressed: () {
+                                    if (accountData.address != '') {
+                                      Navigator.pushNamed(context, ReceivePage.route);
+                                    }
+                                  },
                                   child: Padding(
                                     padding: const EdgeInsets.all(16.0),
                                     child: Row(
@@ -242,12 +248,6 @@ class _AssetsState extends State<Assets> {
                                       ],
                                     ),
                                   ),
-                                  key: const Key('qr-receive'),
-                                  onPressed: () {
-                                    if (accountData.address != '') {
-                                      Navigator.pushNamed(context, ReceivePage.route);
-                                    }
-                                  },
                                 ),
                               ),
                               const SizedBox(width: 2),
@@ -260,6 +260,10 @@ class _AssetsState extends State<Assets> {
                                           BorderRadius.horizontal(left: Radius.zero, right: Radius.circular(15)),
                                     ),
                                   ),
+                                  key: const Key('transfer'),
+                                  onPressed: store.encointer.communityBalance != null
+                                      ? () => Navigator.pushNamed(context, TransferPage.route)
+                                      : null,
                                   child: Padding(
                                     padding: const EdgeInsets.all(16.0),
                                     child: Row(
@@ -271,10 +275,6 @@ class _AssetsState extends State<Assets> {
                                       ],
                                     ),
                                   ),
-                                  key: const Key('transfer'),
-                                  onPressed: store.encointer.communityBalance != null
-                                      ? () => Navigator.pushNamed(context, TransferPage.route)
-                                      : null,
                                 ),
                               ),
                             ],
@@ -312,8 +312,8 @@ class _AssetsState extends State<Assets> {
                                   } else {
                                     return store.settings.developerMode
                                         ? ElevatedButton(
-                                            child: Text(dic.assets.issuanceClaimed),
                                             onPressed: null,
+                                            child: Text(dic.assets.issuanceClaimed),
                                           )
                                         : Container();
                                   }
