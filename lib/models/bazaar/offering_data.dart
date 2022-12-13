@@ -9,6 +9,9 @@ part 'offering_data.g.dart';
 class OfferingData {
   OfferingData(this.url);
 
+  factory OfferingData.fromJson(Map<String, dynamic> json) => _$OfferingDataFromJson(json);
+  Map<String, dynamic> toJson() => _$OfferingDataToJson(this);
+
   /// ipfs-cid of the corresponding [IpfsOffering]
   final String? url;
 
@@ -16,7 +19,4 @@ class OfferingData {
   String toString() {
     return jsonEncode(this);
   }
-
-  factory OfferingData.fromJson(Map<String, dynamic> json) => _$OfferingDataFromJson(json);
-  Map<String, dynamic> toJson() => _$OfferingDataToJson(this);
 }

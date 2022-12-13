@@ -13,7 +13,6 @@ class RoundedCard extends StatelessWidget {
     return Container(
       margin: margin,
       padding: padding,
-      child: child,
       decoration: BoxDecoration(
         border: border,
         borderRadius: const BorderRadius.all(Radius.circular(8)),
@@ -30,6 +29,7 @@ class RoundedCard extends StatelessWidget {
           )
         ],
       ),
+      child: child,
     );
   }
 }

@@ -98,7 +98,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                   child: AnimatedSwitcher(
                     duration: const Duration(milliseconds: 500),
                     transitionBuilder: (Widget child, Animation<double> animation) {
-                      return RotationTransition(child: child, turns: animation);
+                      return RotationTransition(turns: animation, child: child);
                       // return ScaleTransition(child: child, scale: animation);
                     },
                     child: _getTransferStateWidget(_transferState),

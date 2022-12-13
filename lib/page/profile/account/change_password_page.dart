@@ -184,6 +184,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                 ),
               ),
               PrimaryButton(
+                onPressed: _submitting ? null : () => _onSave(context.read<AppStore>()),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -194,7 +195,6 @@ class _ChangePassword extends State<ChangePasswordPage> {
                     ),
                   ],
                 ),
-                onPressed: _submitting ? null : () => _onSave(context.read<AppStore>()),
               ),
             ],
           ),

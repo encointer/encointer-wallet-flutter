@@ -190,6 +190,12 @@ class EndorseButton extends StatelessWidget {
 
     return SubmitButtonSecondary(
       key: const Key('tap-endorse-button'),
+      onPressed: store.encointer.community!.bootstrappers!.contains(contact.address)
+          ? (BuildContext context) => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
+          : store.encointer.currentPhase != CeremonyPhase.Registering
+              ? (BuildContext context) => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)
+              : (BuildContext context) =>
+                  submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, contact.address),
       child: FittedBox(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -200,12 +206,6 @@ class EndorseButton extends StatelessWidget {
           ],
         ),
       ),
-      onPressed: store.encointer.community!.bootstrappers!.contains(contact.address)
-          ? (BuildContext context) => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
-          : store.encointer.currentPhase != CeremonyPhase.Registering
-              ? (BuildContext context) => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)
-              : (BuildContext context) =>
-                  submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, contact.address),
     );
   }
 }

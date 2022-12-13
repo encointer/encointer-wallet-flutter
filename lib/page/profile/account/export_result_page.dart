@@ -5,9 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class ExportResultPage extends StatelessWidget {
-  static const String route = '/account/key';
-
   const ExportResultPage({Key? key}) : super(key: key);
+  static const String route = '/account/key';
 
   void _showExportDialog(BuildContext context, Map args) {
     final dic = I18n.of(context)!.translationsForLocale();

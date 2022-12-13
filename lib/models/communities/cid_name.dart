@@ -10,6 +10,9 @@ part 'cid_name.g.dart';
 class CidName {
   CidName(this.cid, this.name);
 
+  factory CidName.fromJson(Map<String, dynamic> json) => _$CidNameFromJson(json);
+  Map<String, dynamic> toJson() => _$CidNameToJson(this);
+
   CommunityIdentifier cid;
   String name;
 
@@ -17,8 +20,4 @@ class CidName {
   String toString() {
     return jsonEncode(this);
   }
-
-  factory CidName.fromJson(Map<String, dynamic> json) => _$CidNameFromJson(json);
-
-  Map<String, dynamic> toJson() => _$CidNameToJson(this);
 }
