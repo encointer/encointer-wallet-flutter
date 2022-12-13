@@ -109,8 +109,27 @@ class ContactDetailPage extends StatelessWidget {
                 ),
               ),
               Observer(builder: (_) {
-                return _store.encointer.community!.bootstrappers!.contains(_store.account.currentAddress)
-                    ? EndorseButton(_store, api, account)
+                return _store.encointer.community!.bootstrappers!.contains(_store.account.currentAddress) ||
+                        _store.encointer.account != null &&
+                            _store.encointer.account!.numberOfNewbieTicketsForReputable > 0
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: FittedBox(
+                              child: Row(children: [
+                                Text(dic.encointer.remainingNewbieTickets),
+                                Text(
+                                  ' ${_store.encointer.account?.numberOfNewbieTicketsForReputable}',
+                                  style: TextStyle(color: zurichLion.shade800, fontSize: 15),
+                                )
+                              ]),
+                            ),
+                          ),
+                          EndorseButton(_store, api, account),
+                        ],
+                      )
                     : Container();
               }),
               const SizedBox(height: 16),
@@ -177,13 +196,15 @@ class EndorseButton extends StatelessWidget {
               ? (BuildContext context) => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)
               : (BuildContext context) =>
                   submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, contact.address),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Iconsax.verify),
-          const SizedBox(width: 12),
-          Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
-        ],
+      child: FittedBox(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Iconsax.verify),
+            const SizedBox(width: 12),
+            Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
+          ],
+        ),
       ),
     );
   }
