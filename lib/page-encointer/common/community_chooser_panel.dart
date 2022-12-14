@@ -95,9 +95,8 @@ class CombinedCommunityAndAccountAvatar extends StatefulWidget {
 }
 
 class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAndAccountAvatar> {
-  final AppStore store;
-
   _CombinedCommunityAndAccountAvatarState(this.store);
+  final AppStore store;
 
   @override
   Widget build(BuildContext context) {

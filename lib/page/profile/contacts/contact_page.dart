@@ -189,11 +189,11 @@ class _Contact extends State<ContactPage> {
                                 },
                               ),
                               TapTooltip(
+                                message: I18n.of(context)!.translationsForLocale().account.observeBrief,
                                 child: const Padding(
                                   padding: EdgeInsets.only(left: 8),
                                   child: Icon(Icons.info_outline, size: 16),
                                 ),
-                                message: I18n.of(context)!.translationsForLocale().account.observeBrief,
                               ),
                             ],
                           )

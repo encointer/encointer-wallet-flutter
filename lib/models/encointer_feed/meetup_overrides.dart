@@ -16,6 +16,9 @@ class MeetupOverrides {
     this.meetupTimes,
   );
 
+  factory MeetupOverrides.fromJson(Map<String, dynamic> json) => _$MeetupOverridesFromJson(json);
+  Map<String, dynamic> toJson() => _$MeetupOverridesToJson(this);
+
   String? overrideName;
   String? network;
   List<String>? communities;
@@ -38,7 +41,4 @@ class MeetupOverrides {
       return meetupTimes!.reversed.firstWhereOrNull((mt) => time.isAfter(mt));
     }
   }
-
-  factory MeetupOverrides.fromJson(Map<String, dynamic> json) => _$MeetupOverridesFromJson(json);
-  Map<String, dynamic> toJson() => _$MeetupOverridesToJson(this);
 }

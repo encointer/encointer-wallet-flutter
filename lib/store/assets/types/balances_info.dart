@@ -1,6 +1,6 @@
 class BalancesInfo extends _BalancesInfo {
-  static BalancesInfo fromJson(Map<String, dynamic> json) {
-    final data = BalancesInfo();
+  factory BalancesInfo.fromJson(Map<String, dynamic> json) {
+    final data = BalancesInfo.fromJson(json);
     data.freeBalance = BigInt.parse(json['freeBalance'].toString());
     data.transferable = BigInt.parse(json['availableBalance'].toString());
     data.bonded = BigInt.parse(json['frozenFee'].toString());
@@ -38,8 +38,8 @@ class _BalancesInfo {
 }
 
 class BalanceLockedItemData extends _BalanceLockedItemData {
-  static BalanceLockedItemData fromJson(Map<String, dynamic> json) {
-    final data = BalanceLockedItemData();
+  factory BalanceLockedItemData.fromJson(Map<String, dynamic> json) {
+    final data = BalanceLockedItemData.fromJson(json);
     data.amount = BigInt.parse(json['amount'].toString());
     data.reasons = json['reasons'] as String?;
     data.use = json['use'].toString().trim();

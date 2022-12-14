@@ -160,8 +160,8 @@ class _ProfileState extends State<Profile> {
                     ).createShader(bounds);
                   },
                   child: ListView(
-                    children: _buildAccountList(),
                     scrollDirection: Axis.horizontal,
+                    children: _buildAccountList(),
                   ),
                   // blendMode: BlendMode.dstATop,
                 ),

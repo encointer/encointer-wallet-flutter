@@ -6,6 +6,8 @@ part 'opening_hours_state.g.dart';
 class OpeningHoursState = _OpeningHoursState with _$OpeningHoursState;
 
 abstract class _OpeningHoursState with Store {
+  _OpeningHoursState(this.mon, this.tue, this.wed, this.thu, this.fri, this.sat, this.sun);
+
   /// 0 -> Mon, 1 -> Tue, ... 6 -> Sun
 
   @observable
@@ -64,8 +66,6 @@ abstract class _OpeningHoursState with Store {
     );
   }
 
-  _OpeningHoursState(this.mon, this.tue, this.wed, this.thu, this.fri, this.sat, this.sun);
-
   // generic getter
   OpeningHoursForDayState? getOpeningHoursFor(int day) {
     switch (day) {
@@ -102,10 +102,9 @@ class OpeningHoursForDayState = _OpeningHoursForDayState with _$OpeningHoursForD
 /// EmptyList means closed
 /// You can have as many (disjoint) OpeningIntervals per day as you please.
 abstract class _OpeningHoursForDayState with Store {
+  _OpeningHoursForDayState(this.openingIntervals);
   @observable
   ObservableList<OpeningIntervalState> openingIntervals;
-
-  _OpeningHoursForDayState(this.openingIntervals);
 
   @observable
   String? timeFormatError;
@@ -154,6 +153,7 @@ class OpeningIntervalState = _OpeningIntervalState with _$OpeningIntervalState;
 
 /// start and end in minutes since midnight of that day
 abstract class _OpeningIntervalState with Store {
+  _OpeningIntervalState(this.start, this.end);
   @observable
   int start;
   @observable
@@ -163,8 +163,6 @@ abstract class _OpeningIntervalState with Store {
   static _OpeningIntervalState parseOpeningIntervalState(String startEndTime) {
     return OpeningIntervalState(_parseTimeInterval(startEndTime, 0), _parseTimeInterval(startEndTime, 1));
   }
-
-  _OpeningIntervalState(this.start, this.end);
 
   static int _parseTimeInterval(String startEndTime, int part) {
     final startEnd = startEndTime.split('-');

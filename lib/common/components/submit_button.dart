@@ -35,13 +35,13 @@ class _SubmitButtonState extends State<SubmitButton> {
   @override
   Widget build(BuildContext context) {
     return PrimaryButton(
+      onPressed: (!_submitting && widget.onPressed != null) ? _onPressed : null,
       child: !_submitting
           ? widget.child
           : Theme(
               // change theme locally to dark such that the activity indicator appears bright
               data: ThemeData(cupertinoOverrideTheme: const CupertinoThemeData(brightness: Brightness.dark)),
               child: const CupertinoActivityIndicator()),
-      onPressed: (!_submitting && widget.onPressed != null) ? _onPressed : null,
     );
   }
 }

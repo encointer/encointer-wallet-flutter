@@ -12,6 +12,9 @@ class ClaimOfAttendance {
   ClaimOfAttendance(this.claimantPublic, this.ceremonyIndex, this.communityIdentifier, this.meetupIndex, this.location,
       this.timestamp, this.numberOfParticipantsConfirmed);
 
+  factory ClaimOfAttendance.fromJson(Map<String, dynamic> json) => _$ClaimOfAttendanceFromJson(json);
+  Map<String, dynamic> toJson() => _$ClaimOfAttendanceToJson(this);
+
   String? claimantPublic;
   int? ceremonyIndex;
   CommunityIdentifier? communityIdentifier;
@@ -25,7 +28,4 @@ class ClaimOfAttendance {
   String toString() {
     return jsonEncode(this);
   }
-
-  factory ClaimOfAttendance.fromJson(Map<String, dynamic> json) => _$ClaimOfAttendanceFromJson(json);
-  Map<String, dynamic> toJson() => _$ClaimOfAttendanceToJson(this);
 }

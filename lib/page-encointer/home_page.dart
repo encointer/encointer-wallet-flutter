@@ -167,13 +167,13 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 }
 
 class TabData {
+  TabData(this.key, this.iconData);
+
   /// used for our integration tests to click on a UI element
   final TabKey key;
 
   /// used for our integration tests to click on a UI element
   final IconData iconData;
-
-  TabData(this.key, this.iconData);
 }
 
 enum TabKey {

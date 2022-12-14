@@ -6,6 +6,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/toggle_buttons_wit
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class SearchResultsOfferingFiltered extends StatelessWidget {
+  SearchResultsOfferingFiltered(this.results, {Key? key}) : super(key: key);
   final List<BazaarItemData> results;
   final categories = allCategories;
   final deliveryOptions = allDeliveryOptions;
@@ -13,8 +14,6 @@ class SearchResultsOfferingFiltered extends StatelessWidget {
   final selectedDeliveryOptions = <bool>[];
   final selectedProductNewnessOptions = <bool>[];
   final _currentRangeValues = const RangeValues(40, 80);
-
-  SearchResultsOfferingFiltered(this.results, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -48,14 +47,14 @@ class SearchResultsOfferingFiltered extends StatelessWidget {
           style: titleStyle,
         ),
         ToggleButtons(
-            children: deliveryOptions.map((option) => Text(option)).toList(), isSelected: selectedDeliveryOptions),
+            isSelected: selectedDeliveryOptions, children: deliveryOptions.map((option) => Text(option)).toList()),
         Text(
           dic.bazaar.productNewness,
           style: titleStyle,
         ),
         ToggleButtons(
-            children: productNewnessOptions.map((option) => Text(option)).toList(),
-            isSelected: selectedProductNewnessOptions),
+            isSelected: selectedProductNewnessOptions,
+            children: productNewnessOptions.map((option) => Text(option)).toList()),
       ]),
       floatingActionButton: ButtonBar(
         children: [
