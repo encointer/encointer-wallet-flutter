@@ -39,7 +39,7 @@ class LightShadedBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(color: zurichLion.shade50, borderRadius: const BorderRadius.all(Radius.circular(10.0))),
       child: const SizedBox(
         height: 5,
@@ -55,7 +55,7 @@ class GradientBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(5)),
         gradient: primaryGradient,

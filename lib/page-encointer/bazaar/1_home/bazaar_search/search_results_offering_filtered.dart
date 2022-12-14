@@ -59,10 +59,14 @@ class SearchResultsOfferingFiltered extends StatelessWidget {
       floatingActionButton: ButtonBar(
         children: [
           ElevatedButton(
-              onPressed: () => null, // TODO state management
+              onPressed: () {
+                return;
+              }, // TODO state management
               child: Text(dic.bazaar.reset)),
           ElevatedButton(
-              onPressed: () => null, //TODO state management
+              onPressed: () {
+                return;
+              }, //TODO state management
               child: Text(dic.bazaar.apply)),
         ],
       ),

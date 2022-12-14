@@ -122,7 +122,7 @@ abstract class _EncointerAccountStore with Store {
       txsTransfer.addAll(transfers.map((i) => TransferData.fromJson(Map<String, dynamic>.from(i))));
     }
 
-    if (needCache && txsTransfer.length > 0) {
+    if (needCache && txsTransfer.isNotEmpty) {
       writeToCache();
     }
   }

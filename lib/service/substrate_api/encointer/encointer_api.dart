@@ -521,7 +521,7 @@ class EncointerApi {
     final address = store.account.currentAddress;
     final reputations = store.encointer.account?.reputations;
     if (reputations != null) {
-      for (var reputation in reputations.entries) {
+      for (final reputation in reputations.entries) {
         try {
           final numberOfTickets = await jsApi.evalJavascript(
             'encointer.remainingNewbieTickets(${jsonEncode(reputation.value.communityIdentifier)}, "${reputation.key}","$address")',

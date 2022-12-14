@@ -24,7 +24,11 @@ class BazaarMain extends StatelessWidget {
               title: Text(I18n.of(context)!.translationsForLocale().bazaar.bazaarTitle),
               centerTitle: true,
               // leading: IconButton(icon: Image.asset('assets/images/assets/ERT.png'), onPressed: () => _chooseCommunity()), // TODO
-              leading: IconButton(icon: Image.asset('assets/images/assets/ERT.png'), onPressed: () => null),
+              leading: IconButton(
+                  icon: Image.asset('assets/images/assets/ERT.png'),
+                  onPressed: () {
+                    return;
+                  }),
               bottom: TabBar(
                 tabs: <Widget>[
                   const Tab(icon: Icon(Icons.home), text: 'Home'),

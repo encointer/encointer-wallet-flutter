@@ -70,7 +70,7 @@ class BazaarItemVertical extends StatelessWidget {
                   child: _ItemDescription(
                     title: data![index!].title,
                     description: data![index!].description,
-                    info: data![index!].info.toString(),
+                    info: data![index!].info,
                   ),
                 ),
               )

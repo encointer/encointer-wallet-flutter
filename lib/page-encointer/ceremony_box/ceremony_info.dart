@@ -50,15 +50,16 @@ class CeremonyInfo extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    !meetupCompleted
-                        ? CeremonySchedule(
-                            nextCeremonyDate: DateTime.fromMillisecondsSinceEpoch(meetupTime!),
-                            languageCode: languageCode,
-                          )
-                        : Text(
-                            dic.encointer.gatheringSuccessfullyCompleted,
-                            style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerBlack),
-                          ),
+                    if (!meetupCompleted)
+                      CeremonySchedule(
+                        nextCeremonyDate: DateTime.fromMillisecondsSinceEpoch(meetupTime!),
+                        languageCode: languageCode,
+                      )
+                    else
+                      Text(
+                        dic.encointer.gatheringSuccessfullyCompleted,
+                        style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerBlack),
+                      ),
                     CeremonyInfoAndCalendar(
                       nextCeremonyDate: DateTime.fromMillisecondsSinceEpoch(meetupTime!),
                       infoLink: infoLink,

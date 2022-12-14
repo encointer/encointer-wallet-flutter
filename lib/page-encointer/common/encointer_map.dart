@@ -63,7 +63,7 @@ class EncointerMap extends StatelessWidget {
                 ),
               ],
             )
-          : Container(
+          : ColoredBox(
               color: Colors.white,
               child: noCommunityDialog(context),
             ),

@@ -56,7 +56,7 @@ Future<List<String>> showAllNotificationsFromFeed(
   final shownNotifications = <String>[];
 
   for (var i = 0; i < feeds.length; i++) {
-    if (!(alreadyShownNotifications.contains(feeds[i].id))) {
+    if (!alreadyShownNotifications.contains(feeds[i].id)) {
       if (feeds[i].showAt.isBefore(DateTime.now())) {
         shownNotifications.add(feeds[i].id);
         Log.d('showing new notification ${feeds[i]}', 'callbackDispatcher');

@@ -17,7 +17,7 @@ class AccountApi {
   Function? fetchAccountData;
 
   Future<void> initAccounts() async {
-    if (store.account.accountList.length > 0) {
+    if (store.account.accountList.isNotEmpty) {
       final accounts = jsonEncode(store.account.accountList.map((i) => AccountData.toJson(i)).toList());
 
       final ss58 = jsonEncode(networkSs58Map.values.toSet().toList());
@@ -30,7 +30,7 @@ class AccountApi {
     // set pubKeyAddressMap for observation accounts
     contacts.retainWhere((i) => i.observation ?? false);
     final observations = contacts.map((i) => i.pubKey).toList();
-    if (observations.length > 0) {
+    if (observations.isNotEmpty) {
       encodeAddress(observations);
     }
   }
@@ -50,7 +50,7 @@ class AccountApi {
     store.account.setPubKeyAddressMap(Map<String, Map>.from(res as Map));
     final addresses = <String?>[];
 
-    for (var pubKey in pubKeys) {
+    for (final pubKey in pubKeys) {
       Log.d('New entry for pubKeyAddressMap: Key: $pubKey, address: ${res[store.settings]}', 'AccountApi');
       addresses.add(store.account.pubKeyAddressMap[store.settings.endpoint.ss58]![pubKey!]);
     }
@@ -60,7 +60,7 @@ class AccountApi {
 
   /// decode addresses to publicKeys
   Future<Map> decodeAddress(List<String> addresses) async {
-    if (addresses.length == 0) {
+    if (addresses.isEmpty) {
       return {};
     }
     final res = await jsApi.evalJavascript(
@@ -98,7 +98,7 @@ class AccountApi {
   }) async {
     var current = pubKey;
     if (pubKey == null) {
-      if (store.account.accountListAll.length > 0) {
+      if (store.account.accountListAll.isNotEmpty) {
         current = store.account.accountListAll[0].pubKey;
       } else {
         current = '';
@@ -176,11 +176,11 @@ class AccountApi {
   }
 
   Future<List> fetchAddressIndex(List addresses) async {
-    if (addresses.length == 0) {
+    if (addresses.isEmpty) {
       return [];
     }
     addresses.retainWhere((i) => !store.account.addressIndexMap.keys.contains(i));
-    if (addresses.length == 0) {
+    if (addresses.isEmpty) {
       return [];
     }
 
@@ -194,7 +194,7 @@ class AccountApi {
 
   Future<List> fetchAccountsIndex() async {
     final addresses = store.account.accountListAll.map((e) => e.address).toList();
-    if (addresses.length == 0) {
+    if (addresses.isEmpty) {
       return [];
     }
 

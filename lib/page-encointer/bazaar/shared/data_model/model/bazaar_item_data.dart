@@ -127,7 +127,7 @@ class OpeningHoursForDay {
   @override
   String toString() {
     var asString = '';
-    if (openingIntervals.length == 0) {
+    if (openingIntervals.isEmpty) {
       asString += '(closed)';
     } else {
       for (var i = 0; i < openingIntervals.length; i++) {

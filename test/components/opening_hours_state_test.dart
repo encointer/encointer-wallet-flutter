@@ -32,7 +32,7 @@ void main() {
     ['0:10-3pm', '0:10 - 15:00', 'afternoon 12:10'],
     ['12:10am-3pm', '0:10 - 15:00', 'afternoon 12:10pm'],
   ];
-  testCases.forEach((testCase) {
+  for (final testCase in testCases) {
     test('Should correctly parse time interval: ${testCase[2]}', () {
       final state = OpeningHoursForDayState(ObservableList<OpeningIntervalState>());
 
@@ -40,5 +40,5 @@ void main() {
 
       expect(state.humanReadable(), testCase[1]);
     });
-  });
+  }
 }

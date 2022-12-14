@@ -112,22 +112,24 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
         ),
       ),
       actions: <Widget>[
-        widget.onAccountSwitch != null
-            ? CupertinoButton(
-                child: Text(dic.home.switchAccount),
-                onPressed: () {
-                  widget.onAccountSwitch!();
-                },
-              )
-            : Container(),
-        widget.onCancel != null
-            ? CupertinoButton(
-                child: Text(dic.home.cancel),
-                onPressed: () {
-                  widget.onCancel!();
-                },
-              )
-            : Container(),
+        if (widget.onAccountSwitch != null)
+          CupertinoButton(
+            child: Text(dic.home.switchAccount),
+            onPressed: () {
+              widget.onAccountSwitch!();
+            },
+          )
+        else
+          Container(),
+        if (widget.onCancel != null)
+          CupertinoButton(
+            child: Text(dic.home.cancel),
+            onPressed: () {
+              widget.onCancel!();
+            },
+          )
+        else
+          Container(),
         CupertinoButton(
           key: const Key('password-ok'),
           onPressed: _submitting
@@ -137,7 +139,10 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
                 },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [_submitting ? const CupertinoActivityIndicator() : Container(), Text(dic.home.ok)],
+            children: [
+              if (_submitting) const CupertinoActivityIndicator() else Container(),
+              Text(dic.home.ok),
+            ],
           ),
         ),
       ],

@@ -24,15 +24,16 @@ class ContactListPage extends StatelessWidget {
             : I18n.of(context)!.translationsForLocale().account.list),
         centerTitle: true,
         actions: <Widget>[
-          args == null
-              ? Padding(
-                  padding: const EdgeInsets.only(right: 8),
-                  child: IconButton(
-                    icon: const Icon(Icons.add, size: 28),
-                    onPressed: () => Navigator.of(context).pushNamed(ContactPage.route),
-                  ),
-                )
-              : Container()
+          if (args == null)
+            Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: IconButton(
+                icon: const Icon(Icons.add, size: 28),
+                onPressed: () => Navigator.of(context).pushNamed(ContactPage.route),
+              ),
+            )
+          else
+            Container()
         ],
       ),
       body: SafeArea(

@@ -61,9 +61,9 @@ abstract class _OpeningHoursState with Store {
     final target = getOpeningHoursFor(day);
     if (copiedOpeningHours == null) return;
 
-    copiedOpeningHours!.openingIntervals.forEach(
-      (OpeningIntervalState interval) => target!.addInterval(interval),
-    );
+    for (final interval in copiedOpeningHours!.openingIntervals) {
+      target!.addInterval(interval);
+    }
   }
 
   // generic getter
@@ -136,7 +136,7 @@ abstract class _OpeningHoursForDayState with Store {
   /// actually used class with a similar name will be called.)
   String humanReadable() {
     var asString = '';
-    if (openingIntervals.length == 0) {
+    if (openingIntervals.isEmpty) {
       asString += '(closed)';
     } else {
       for (var i = 0; i < openingIntervals.length; i++) {
@@ -167,7 +167,7 @@ abstract class _OpeningIntervalState with Store {
   static int _parseTimeInterval(String startEndTime, int part) {
     final startEnd = startEndTime.split('-');
     final parsed = <int>[];
-    for (var value in startEnd) {
+    for (final value in startEnd) {
       parsed.add(_parseTime(value.trim()));
     }
     return (parsed[0] < parsed[1]) ? parsed[part % 2] : parsed[(part + 1) % 2];
@@ -176,13 +176,13 @@ abstract class _OpeningIntervalState with Store {
   static int _parseTime(String time) {
     final timeLowerCase = time.toLowerCase();
     final pm = timeLowerCase.contains('p') ? 12 * 60 : 0;
-    final indexOfMeridiem = timeLowerCase.indexOf(RegExp(r'a|p'));
+    final indexOfMeridiem = timeLowerCase.indexOf(RegExp('a|p'));
     final timeClean = indexOfMeridiem > 0 ? timeLowerCase.substring(0, indexOfMeridiem) : timeLowerCase;
     final hoursMinutes = timeClean.split(':');
     var hours = int.parse(hoursMinutes[0].trim());
 
     // 12am is midnight, 12pm is noon.
-    hours = (hours == 12 && timeLowerCase.contains('m') ? 0 : hours);
+    hours = hours == 12 && timeLowerCase.contains('m') ? 0 : hours;
     final minutes = hoursMinutes.length > 1 ? int.parse(hoursMinutes[1].trim()) : 0;
     return (hours * 60 + minutes + pm) % (24 * 60);
   }

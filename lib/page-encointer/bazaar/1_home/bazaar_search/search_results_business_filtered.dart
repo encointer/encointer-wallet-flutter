@@ -32,11 +32,11 @@ class SearchResultsBusinessFiltered extends StatelessWidget {
         floatingActionButton: ButtonBar(
           children: [
             ElevatedButton(
-              onPressed: () => null, // TODO state management
+              onPressed: () {}, // TODO state management
               child: Text(I18n.of(context)!.translationsForLocale().bazaar.reset),
             ),
             ElevatedButton(
-              onPressed: () => null, //TODO state management
+              onPressed: () {}, //TODO state management
               child: Text(I18n.of(context)!.translationsForLocale().bazaar.apply),
             ),
           ],

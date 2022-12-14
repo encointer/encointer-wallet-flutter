@@ -118,10 +118,12 @@ class _AssetsState extends State<Assets> {
 
     return FocusDetector(
       onFocusLost: () {
+        // ignore: avoid_print
         print('[home:FocusDetector] Focus Lost.');
         balanceWatchdog!.pause();
       },
       onFocusGained: () {
+        // ignore: avoid_print
         print('[home:FocusDetector] Focus Gained.');
         if (!store.settings.loading) {
           _refreshBalanceAndNotify(dic);

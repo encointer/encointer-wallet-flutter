@@ -24,24 +24,22 @@ class ToggleButtonsWithTitle extends StatelessWidget {
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
       ),
-      Container(
-        child: SizedBox(
-          height: 60,
-          child: ListView(scrollDirection: Axis.horizontal, children: [
-            ToggleButtons(
-              onPressed: (int index) => onPressed!(index),
-              isSelected: isSelected,
-              children: items
-                  .map(
-                    (cat) => Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-                      child: Text(cat),
-                    ),
-                  )
-                  .toList(),
-            ),
-          ]),
-        ),
+      SizedBox(
+        height: 60,
+        child: ListView(scrollDirection: Axis.horizontal, children: [
+          ToggleButtons(
+            onPressed: (int index) => onPressed!(index),
+            isSelected: isSelected,
+            children: items
+                .map(
+                  (cat) => Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+                    child: Text(cat),
+                  ),
+                )
+                .toList(),
+          ),
+        ]),
       ),
     ]);
   }
