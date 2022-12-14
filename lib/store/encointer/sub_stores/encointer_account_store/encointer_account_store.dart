@@ -83,8 +83,8 @@ abstract class _EncointerAccountStore with Store {
   @action
   Future<void> setReputations(Map<int, CommunityReputation> reps) async {
     reputations = reps;
-    await getNumberOfNewbieTicketsForReputable();
     writeToCache();
+    await getNumberOfNewbieTicketsForReputable();
   }
 
   @action

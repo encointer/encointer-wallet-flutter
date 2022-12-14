@@ -446,7 +446,6 @@ class EncointerApi {
     if (store.encointer.community != null) {
       store.encointer.community!.setBootstrappers(bootstrappers);
     }
-    // await getNumberOfNewbieTicketsForBootstrapper();
   }
 
   Future<void> getReputations() async {

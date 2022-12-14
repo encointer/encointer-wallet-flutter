@@ -182,30 +182,27 @@ class EndorseButton extends StatelessWidget {
               : const SizedBox();
         }),
         Observer(builder: (_) {
-          return store.encointer.account != null && store.encointer.account!.numberOfNewbieTicketsForReputable > 0
-              ? FittedBox(
-                  child: Row(children: [
-                    Text(dic.encointer.remainingNewbieTicketsAsReputable),
-                    Text(
-                      ' ${store.encointer.account?.numberOfNewbieTicketsForReputable}',
-                      style: TextStyle(color: zurichLion.shade800, fontSize: 15),
-                    ),
-                  ]),
-                )
-              : const SizedBox();
+          return FittedBox(
+            child: Row(
+              children: store.encointer.account != null && store.encointer.account!.reputations.length > 0
+                  ? [
+                      Text(dic.encointer.remainingNewbieTicketsAsReputable),
+                      Text(
+                        ' ${store.encointer.account?.numberOfNewbieTicketsForReputable}',
+                        style: TextStyle(color: zurichLion.shade800, fontSize: 15),
+                      ),
+                    ]
+                  : [
+                      Text(dic.encointer.endorseButtonTextForNewbie),
+                    ],
+            ),
+          );
         }),
         const SizedBox(height: 5),
         Observer(builder: (_) {
           return SubmitButtonSecondary(
             key: const Key('tap-endorse-button'),
-            onPressed: store.encointer.account!.numberOfNewbieTicketsForReputable == 0
-                ? null
-                : store.encointer.community!.bootstrappers!.contains(contact.address)
-                    ? (BuildContext context) => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
-                    : store.encointer.currentPhase != CeremonyPhase.Registering
-                        ? (BuildContext context) => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)
-                        : (BuildContext context) =>
-                            submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, contact.address),
+            onPressed: isActive() ? onPressed : null,
             child: FittedBox(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -220,6 +217,32 @@ class EndorseButton extends StatelessWidget {
         }),
       ],
     );
+  }
+
+  bool isActive() {
+    final community = store.encointer.community;
+    final bootstrappers = community?.bootstrappers;
+    final account = store.encointer.account;
+    if (bootstrappers != null && bootstrappers.contains(store.account.currentAddress)) {
+      return community!.numberOfNewbieTicketsForBootstrapper > 0;
+    } else if (account != null && account.reputations.length > 0) {
+      return account.numberOfNewbieTicketsForReputable > 0;
+    } else {
+      return false;
+    }
+  }
+
+  Future<void> onPressed(BuildContext context) async {
+    final community = store.encointer.community;
+    final bootstrappers = community?.bootstrappers;
+    final dic = I18n.of(context)!.translationsForLocale();
+    if (bootstrappers != null && bootstrappers.contains(contact.address)) {
+      _popupDialog(context, dic.profile.cantEndorseBootstrapper);
+    } else if (store.encointer.currentPhase != CeremonyPhase.Registering) {
+      _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly);
+    } else {
+      submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, contact.address);
+    }
   }
 }
 

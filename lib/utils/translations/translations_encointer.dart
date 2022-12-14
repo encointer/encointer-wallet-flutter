@@ -62,6 +62,7 @@ abstract class TranslationsEncointer {
   String get bootstrapperContent;
   String get remainingNewbieTicketsAsReputable;
   String get remainingNewbieTicketsAsBootStrapper;
+  String get endorseButtonTextForNewbie;
 }
 
 class TranslationsEnEncointer implements TranslationsEncointer {
@@ -196,6 +197,8 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   String get remainingNewbieTicketsAsReputable => 'Remaining newbie tickets as reputable:';
   @override
   String get remainingNewbieTicketsAsBootStrapper => 'Remaining newbie tickets as bootsrapper:';
+  @override
+  String get endorseButtonTextForNewbie => 'Only reputables can endorse. Attend a gathering to become one';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
@@ -332,6 +335,8 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   String get remainingNewbieTicketsAsReputable => 'Verbleibende Newbie Tickets als Reputable:';
   @override
   String get remainingNewbieTicketsAsBootStrapper => 'Verbleibende Newbie Tickets als Bootstrapper:';
+  @override
+  String get endorseButtonTextForNewbie => 'Only reputables can endorse. Attend a gathering to become one';
 }
 
 class TranslationsFrEncointer implements TranslationsEncointer {
@@ -457,6 +462,8 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   String get remainingNewbieTicketsAsReputable => throw UnimplementedError();
   @override
   String get remainingNewbieTicketsAsBootStrapper => throw UnimplementedError();
+  @override
+  String get endorseButtonTextForNewbie => throw UnimplementedError();
 }
 
 class TranslationsRuEncointer implements TranslationsEncointer {
@@ -580,7 +587,6 @@ class TranslationsRuEncointer implements TranslationsEncointer {
       'Вы зарегистрировались в качестве новичка без репутации. Нет гарантии, что Вас назначат на '
       'это собрание цикла, если в нем будет участвовать большое количество новичков. Пожалуйста, проверьте статус вашего назначения за день до цикла'
       'чтобы узнать, состоится ли ваше собрание и где оно будет проходить.';
-
   @override
   String get newbieTitle => 'Зарегистрирован в качестве новичка - место не гарантировано.';
   @override
@@ -593,4 +599,6 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   String get remainingNewbieTicketsAsReputable => 'Оставшиеся билеты для новичков заслуживающие доверие:';
   @override
   String get remainingNewbieTicketsAsBootStrapper => 'Оставшиеся билеты для новичков заслуживающие доверие:';
+  @override
+  String get endorseButtonTextForNewbie => 'Only reputables can endorse. Attend a gathering to become one';
 }
