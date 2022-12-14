@@ -1,40 +1,54 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:rxdart/rxdart.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
-final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
-
-// Streams are created so that app can respond to notification-related events since the plugin is initialised in the `main` function
-final BehaviorSubject<ReceivedNotification> didReceiveLocalNotificationSubject =
-    BehaviorSubject<ReceivedNotification>();
-
-final BehaviorSubject<String?> selectNotificationSubject = BehaviorSubject<String?>();
-
-class ReceivedNotification {
-  ReceivedNotification({
-    required this.id,
-    required this.title,
-    required this.body,
-    required this.payload,
-  });
-  final int id;
-  final String? title;
-  final String? body;
-  final String? payload;
-}
+final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+final didReceiveLocalNotificationSubject = BehaviorSubject<ReceivedNotification>();
+final selectNotificationSubject = BehaviorSubject<String?>();
 
 class NotificationPlugin {
-  void init(BuildContext context) {
+  static Future<void> setup() async {
+    _configureLocalTimeZone();
+
+    const initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
+
+    final initializationSettingsIOS = DarwinInitializationSettings(
+      requestAlertPermission: false,
+      requestBadgePermission: false,
+      requestSoundPermission: false,
+      onDidReceiveLocalNotification: (int id, String? title, String? body, String? payload) async {
+        didReceiveLocalNotificationSubject.add(
+          ReceivedNotification(id: id, title: title, body: body, payload: payload),
+        );
+      },
+    );
+
+    final initializationSettings = InitializationSettings(
+      android: initializationSettingsAndroid,
+      iOS: initializationSettingsIOS,
+    );
+
+    final initialised = await flutterLocalNotificationsPlugin.initialize(initializationSettings);
+    Log.d('notification_plugin initialised: $initialised', 'main.dart');
+  }
+
+  static void init(BuildContext context) {
     _requestIOSPermissions();
     _configureDidReceiveLocalNotificationSubject(context);
     _configureSelectNotificationSubject(context);
   }
 
-  void _requestIOSPermissions() {
+  static void _requestIOSPermissions() {
     flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<IOSFlutterLocalNotificationsPlugin>()
         ?.requestPermissions(
@@ -44,7 +58,7 @@ class NotificationPlugin {
         );
   }
 
-  void _configureDidReceiveLocalNotificationSubject(BuildContext context) {
+  static void _configureDidReceiveLocalNotificationSubject(BuildContext context) {
     didReceiveLocalNotificationSubject.stream.listen((ReceivedNotification receivedNotification) async {
       Log.d('${receivedNotification.title}', 'NotificationPlugin');
       Log.d('${receivedNotification.body}', 'NotificationPlugin');
@@ -67,13 +81,13 @@ class NotificationPlugin {
     });
   }
 
-  void _configureSelectNotificationSubject(BuildContext context) {
+  static void _configureSelectNotificationSubject(BuildContext context) {
     selectNotificationSubject.stream.listen((String? payload) async {
-//      await Navigator.pushNamed(
-//        context,
-//        '/',
-//        arguments: payload,
-//      );
+      //  await Navigator.pushNamed(
+      //    context,
+      //    '/',
+      //    arguments: payload,
+      //  );
     });
   }
 
@@ -93,8 +107,10 @@ class NotificationPlugin {
       sound: 'lions_growl.wav',
       presentSound: true,
     );
-    final platformChannelSpecifics =
-        NotificationDetails(android: androidPlatformChannelSpecifics, iOS: iOSPlatformChannelSpecifics);
+    final platformChannelSpecifics = NotificationDetails(
+      android: androidPlatformChannelSpecifics,
+      iOS: iOSPlatformChannelSpecifics,
+    );
     await flutterLocalNotificationsPlugin.show(
       0,
       title,
@@ -104,4 +120,25 @@ class NotificationPlugin {
     );
     return Future.value(true);
   }
+}
+
+class ReceivedNotification {
+  ReceivedNotification({
+    required this.id,
+    required this.title,
+    required this.body,
+    required this.payload,
+  });
+
+  final int id;
+  final String? title;
+  final String? body;
+  final String? payload;
+}
+
+void _configureLocalTimeZone() async {
+  if (kIsWeb || Platform.isLinux) return;
+  tz.initializeTimeZones();
+  final timeZoneName = await FlutterTimezone.getLocalTimezone();
+  tz.setLocalLocation(tz.getLocation(timeZoneName));
 }

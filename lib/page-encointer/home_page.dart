@@ -29,7 +29,7 @@ class EncointerHomePage extends StatefulWidget {
 class _EncointerHomePageState extends State<EncointerHomePage> {
   final PageController _pageController = PageController();
 
-  NotificationPlugin? _notificationPlugin;
+  // NotificationPlugin? _notificationPlugin;
 
   late List<TabData> _tabList;
   int _tabIndex = 0;
@@ -37,9 +37,8 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
   @override
   void initState() {
     // if appCast == null the integration test doesn't show request notification permission.
-    if (_notificationPlugin == null && context.read<AppStore>().appCast == null) {
-      _notificationPlugin = NotificationPlugin();
-      _notificationPlugin!.init(context);
+    if (context.read<AppStore>().appCast == null) {
+      NotificationPlugin.init(context);
     }
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await initialDeepLinks(context);
