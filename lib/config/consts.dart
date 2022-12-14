@@ -127,7 +127,7 @@ const Map<String, int> jsCodeVersionMap = {
 const localePlaceHolder = 'LOCALE_PLACEHOLDER';
 const ceremonyInfoLinkBase = 'https://leu.zuerich/$localePlaceHolder/#zeremonien';
 const _leuZurichLink = 'https://leu.zuerich/$localePlaceHolder';
-const meetupNotificationLink = 'https://encointer.github.io/feed/community_messages/$localePlaceHolder/cm.json';
+const meetupNotificationLink = 'https://encointer.github.io/feed/community_messages/$localePlaceHolder/test/cm.json';
 const encointerLink = 'https://wallet.encointer.org/app/';
 
 String toDeepLink([String? linkText]) => '$encointerLink${linkText?.replaceAll('\n', '_')}';

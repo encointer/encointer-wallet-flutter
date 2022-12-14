@@ -57,13 +57,12 @@ Future<List<String>> showAllNotificationsFromFeed(
 
   for (var i = 0; i < feeds.length; i++) {
     if (!(alreadyShownNotifications.contains(feeds[i].id))) {
-      if (feeds[i].showAt.isBefore(DateTime.now())) {
+      if (feeds[i].showAt.isAfter(DateTime.now())) {
         shownNotifications.add(feeds[i].id);
         Log.d('showing new notification ${feeds[i]}', 'callbackDispatcher');
         await showNotification(i, feeds[i].title, feeds[i].content);
       } else {
-        
-        // Log.d('${feeds[i].id} is new, but it should not be shown yet', 'callbackDispatcher');
+        Log.d('${feeds[i].id} is new, but it should not be shown yet', 'callbackDispatcher');
       }
     } else {
       Log.d('${feeds[i].id} has already been shown', 'callbackDispatcher');

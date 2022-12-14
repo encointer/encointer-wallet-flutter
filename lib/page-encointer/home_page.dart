@@ -53,7 +53,7 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
           // Find a window where the app is in background because of #819.
           // initialDelay: const Duration(hours: 8),
           // frequency: const Duration(hours: 12),
-          initialDelay: const Duration(seconds: 120),
+          initialDelay: const Duration(seconds: 10),
           frequency: const Duration(minutes: 12),
           inputData: {'langCode': Localizations.localeOf(context).languageCode},
           existingWorkPolicy: ExistingWorkPolicy.replace,
