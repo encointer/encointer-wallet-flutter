@@ -143,4 +143,9 @@ class MockEncointerApi extends EncointerApi {
     Log.d('calling mock `pendingExtrinsics', 'MockEncointerApi');
     return Future.value([]);
   }
+
+  @override
+  Future<int> getNumberOfNewbieTickets(bool forBootstrapper) {
+    return Future.value(0);
+  }
 }

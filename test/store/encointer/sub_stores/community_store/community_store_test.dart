@@ -59,6 +59,7 @@ void main() {
         'cid': mediterraneanTestCommunity.toJson(),
         'metadata': testMetadata.toJson(),
         'demurrage': 1.1,
+        'numberOfNewbieTicketsForBootstrapper': 0,
         'meetupTime': 10,
         'meetupTimeOverride': null,
         'bootstrappers': bootstrappers,
