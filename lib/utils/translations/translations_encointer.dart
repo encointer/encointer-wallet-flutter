@@ -62,7 +62,7 @@ abstract class TranslationsEncointer {
   String get bootstrapperContent;
   String get remainingNewbieTicketsAsReputable;
   String get remainingNewbieTicketsAsBootStrapper;
-  String get endorseButtonTextForNewbie;
+  String get onlyReputablesCanEndorseAttendGatheringToBecomeOne;
 }
 
 class TranslationsEnEncointer implements TranslationsEncointer {
@@ -198,7 +198,8 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   @override
   String get remainingNewbieTicketsAsBootStrapper => 'Remaining newbie tickets as bootsrapper:';
   @override
-  String get endorseButtonTextForNewbie => 'Only reputables can endorse. Attend a gathering to become one';
+  String get onlyReputablesCanEndorseAttendGatheringToBecomeOne =>
+      'Only reputables can endorse. Attend a gathering to get reputation!';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
@@ -336,7 +337,8 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   @override
   String get remainingNewbieTicketsAsBootStrapper => 'Verbleibende Newbie Tickets als Bootstrapper:';
   @override
-  String get endorseButtonTextForNewbie => 'Only reputables can endorse. Attend a gathering to become one';
+  String get onlyReputablesCanEndorseAttendGatheringToBecomeOne =>
+      'Nur Reputables können endorsen. Nimm an einem Treffen teil, um Reputation zu erhalten!';
 }
 
 class TranslationsFrEncointer implements TranslationsEncointer {
@@ -463,7 +465,7 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   @override
   String get remainingNewbieTicketsAsBootStrapper => throw UnimplementedError();
   @override
-  String get endorseButtonTextForNewbie => throw UnimplementedError();
+  String get onlyReputablesCanEndorseAttendGatheringToBecomeOne => throw UnimplementedError();
 }
 
 class TranslationsRuEncointer implements TranslationsEncointer {
@@ -507,7 +509,7 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   String get meetupClaimantInvalid => 'Этот заявитель не является участником встречи. Заявление не сохраняется.';
   @override
-  String get meetupClaimantEqualToSelf => ' Ошибка, адресf расчетного счета. Запрос не был сохранен.';
+  String get meetupClaimantEqualToSelf => ' Ошибка, адрес расчетного счета. Запрос не был сохранен.';
   @override
   String get meetupLocation => 'Локция встречи';
   @override
@@ -600,5 +602,6 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   String get remainingNewbieTicketsAsBootStrapper => 'Оставшиеся билеты для новичков заслуживающие доверие:';
   @override
-  String get endorseButtonTextForNewbie => 'Only reputables can endorse. Attend a gathering to become one';
+  String get onlyReputablesCanEndorseAttendGatheringToBecomeOne =>
+      'Одобрять могут только люди со статусом уважаемого. Для получения репутации, посетите собрание!';
 }

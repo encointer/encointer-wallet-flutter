@@ -142,7 +142,7 @@ abstract class _CommunityStore with Store {
 
   @action
   Future<void> getNumberOfNewbieTicketsForBootstrapper() async {
-    numberOfNewbieTicketsForBootstrapper = await webApi.encointer.getNumberOfNewbieTickets(true);
+    numberOfNewbieTicketsForBootstrapper = await webApi.encointer.getNumberOfNewbieTicketsForBootstrapper();
   }
 
   @action

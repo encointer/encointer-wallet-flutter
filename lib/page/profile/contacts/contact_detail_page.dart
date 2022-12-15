@@ -193,7 +193,7 @@ class EndorseButton extends StatelessWidget {
                       ),
                     ]
                   : [
-                      Text(dic.encointer.endorseButtonTextForNewbie),
+                      Text(dic.encointer.onlyReputablesCanEndorseAttendGatheringToBecomeOne),
                     ],
             ),
           );
@@ -224,7 +224,13 @@ class EndorseButton extends StatelessWidget {
     final bootstrappers = community?.bootstrappers;
     final account = store.encointer.account;
     if (bootstrappers != null && bootstrappers.contains(store.account.currentAddress)) {
-      return community!.numberOfNewbieTicketsForBootstrapper > 0;
+      if (community!.numberOfNewbieTicketsForBootstrapper > 0) {
+        return true;
+      } else if (account != null && account.numberOfNewbieTicketsForReputable > 0) {
+        return true;
+      } else {
+        return false;
+      }
     } else if (account != null && account.reputations.length > 0) {
       return account.numberOfNewbieTicketsForReputable > 0;
     } else {

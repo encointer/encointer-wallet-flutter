@@ -516,37 +516,39 @@ class EncointerApi {
     return proof;
   }
 
-  Future<int> getNumberOfNewbieTickets(bool forBootstrapper) async {
+  Future<int> getNumberOfNewbieTicketsForReputable() async {
     var _remainingTickets = 0;
     final address = store.account.currentAddress;
-    if (forBootstrapper) {
-      final cid = store.encointer.chosenCid;
-      try {
-        final numberOfTickets = await jsApi.evalJavascript(
-          'encointer.remainingNewbieTicketsBootstrapper(${jsonEncode(cid)},"$address")',
-        );
-        Log.d('Encointer Api', 'numberOfTickets: $numberOfTickets');
-        _remainingTickets += numberOfTickets as int;
-      } catch (e, s) {
-        Log.e('Encointer Api', '$e', s);
-      }
-    } else {
-      final reputations = store.encointer.account?.reputations;
-      if (reputations != null) {
-        for (var reputation in reputations.entries) {
-          try {
-            final numberOfTickets = await jsApi.evalJavascript(
-              'encointer.remainingNewbieTickets(${jsonEncode(reputation.value.communityIdentifier)}, "${reputation.key}","$address")',
-            );
-            Log.d('Encointer Api', 'numberOfTickets: $numberOfTickets');
-            _remainingTickets += numberOfTickets as int;
-          } catch (e, s) {
-            Log.e('Encointer Api', '$e', s);
-          }
+    final reputations = store.encointer.account?.reputations;
+    if (reputations != null) {
+      for (var reputation in reputations.entries) {
+        try {
+          final numberOfTickets = await jsApi.evalJavascript(
+            'encointer.remainingNewbieTicketsReputable(${jsonEncode(reputation.value.communityIdentifier)}, "${reputation.key}","$address")',
+          );
+          Log.d('Encointer Api', 'numberOfTickets: $numberOfTickets');
+          _remainingTickets += numberOfTickets as int;
+        } catch (e, s) {
+          Log.e('Encointer Api', '$e', s);
         }
       }
     }
+    return _remainingTickets;
+  }
 
+  Future<int> getNumberOfNewbieTicketsForBootstrapper() async {
+    var _remainingTickets = 0;
+    final address = store.account.currentAddress;
+    final cid = store.encointer.chosenCid;
+    try {
+      final numberOfTickets = await jsApi.evalJavascript(
+        'encointer.remainingNewbieTicketsBootstrapper(${jsonEncode(cid)},"$address")',
+      );
+      Log.d('Encointer Api', 'numberOfTickets: $numberOfTickets');
+      _remainingTickets += numberOfTickets as int;
+    } catch (e, s) {
+      Log.e('Encointer Api', '$e', s);
+    }
     return _remainingTickets;
   }
 

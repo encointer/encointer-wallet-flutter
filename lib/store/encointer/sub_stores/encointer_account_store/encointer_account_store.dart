@@ -129,7 +129,7 @@ abstract class _EncointerAccountStore with Store {
 
   @action
   Future<void> getNumberOfNewbieTicketsForReputable() async {
-    numberOfNewbieTicketsForReputable = await webApi.encointer.getNumberOfNewbieTickets(false);
+    numberOfNewbieTicketsForReputable = await webApi.encointer.getNumberOfNewbieTicketsForReputable();
   }
 
   void initStore(Function? cacheFn) {

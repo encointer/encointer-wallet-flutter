@@ -145,7 +145,12 @@ class MockEncointerApi extends EncointerApi {
   }
 
   @override
-  Future<int> getNumberOfNewbieTickets(bool forBootstrapper) {
+  Future<int> getNumberOfNewbieTicketsForBootstrapper() {
+    return Future.value(0);
+  }
+
+  @override
+  Future<int> getNumberOfNewbieTicketsForReputable() {
     return Future.value(0);
   }
 }
