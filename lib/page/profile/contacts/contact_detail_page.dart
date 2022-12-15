@@ -224,9 +224,8 @@ class EndorseButton extends StatelessWidget {
     final bootstrappers = community?.bootstrappers;
     final account = store.encointer.account;
     if (bootstrappers != null && bootstrappers.contains(store.account.currentAddress)) {
-      if (community!.numberOfNewbieTicketsForBootstrapper > 0) {
-        return true;
-      } else if (account != null && account.numberOfNewbieTicketsForReputable > 0) {
+      if (community!.numberOfNewbieTicketsForBootstrapper > 0 ||
+          account != null && account.numberOfNewbieTicketsForReputable > 0) {
         return true;
       } else {
         return false;
