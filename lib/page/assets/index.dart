@@ -115,16 +115,13 @@ class _AssetsState extends State<Assets> {
       key: const Key('assets-index-appbar'),
       title: Text(dic!.assets.home),
     );
-
     return FocusDetector(
       onFocusLost: () {
-        // ignore: avoid_print
-        print('[home:FocusDetector] Focus Lost.');
+        Log.d('[home:FocusDetector] Focus Lost.');
         balanceWatchdog!.pause();
       },
       onFocusGained: () {
-        // ignore: avoid_print
-        print('[home:FocusDetector] Focus Gained.');
+        Log.d('[home:FocusDetector] Focus Gained.');
         if (!store.settings.loading) {
           _refreshBalanceAndNotify(dic);
         }
