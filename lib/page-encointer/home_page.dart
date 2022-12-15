@@ -29,8 +29,6 @@ class EncointerHomePage extends StatefulWidget {
 class _EncointerHomePageState extends State<EncointerHomePage> {
   final PageController _pageController = PageController();
 
-  // NotificationPlugin? _notificationPlugin;
-
   late List<TabData> _tabList;
   int _tabIndex = 0;
 

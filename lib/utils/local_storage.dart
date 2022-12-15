@@ -141,7 +141,7 @@ class LocalStorage {
   }
 
   Future<bool> setShownMessages(List<String> value) async {
-    // await storage.setListString(meetUpNotificationKey, value);
+    await storage.setListString(meetUpNotificationKey, value);
     return Future.value(true);
   }
 
