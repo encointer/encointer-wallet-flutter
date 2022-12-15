@@ -135,16 +135,16 @@ abstract class _OpeningHoursForDayState with Store {
   /// not not be wise, as it will not be called, but instead the toString of the
   /// actually used class with a similar name will be called.)
   String humanReadable() {
-    var asString = '';
+    final asString = StringBuffer();
     if (openingIntervals.isEmpty) {
-      asString += '(closed)';
+      asString.write('(closed)');
     } else {
       for (var i = 0; i < openingIntervals.length; i++) {
-        asString += openingIntervals[i].humanReadable();
-        asString += i < openingIntervals.length - 1 ? ', ' : '';
+        asString.write(openingIntervals[i].humanReadable());
+        asString.write(i < openingIntervals.length - 1 ? ', ' : '');
       }
     }
-    return asString;
+    return asString.toString();
   }
 }
 

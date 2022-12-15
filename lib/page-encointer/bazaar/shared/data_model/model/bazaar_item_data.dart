@@ -126,16 +126,16 @@ class OpeningHoursForDay {
   /// where 0 -> Mon, 1 -> Tue, ...
   @override
   String toString() {
-    var asString = '';
+    final asString = StringBuffer();
     if (openingIntervals.isEmpty) {
-      asString += '(closed)';
+      asString.write('(closed)');
     } else {
       for (var i = 0; i < openingIntervals.length; i++) {
-        asString += openingIntervals[i].toString();
-        asString += i < openingIntervals.length - 1 ? ', ' : '';
+        asString.write(openingIntervals[i].toString());
+        asString.write(i < openingIntervals.length - 1 ? ', ' : '');
       }
     }
-    return asString;
+    return asString.toString();
   }
 }
 

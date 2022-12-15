@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:flutter_driver/flutter_driver.dart';
 import 'package:test/test.dart';
 
@@ -21,8 +23,6 @@ void main() {
 
       var ready = await driver!.requestData(TestCommands.waitUntilAppIsReady);
       while (ready == false.toString()) {
-        // all prints in this file ignored because they are needed in test
-        // ignore: avoid_print
         print('Waiting for app to be ready: $ready');
         await Future<void>.delayed(const Duration(seconds: 1));
         ready = await driver!.requestData(TestCommands.waitUntilAppIsReady);
@@ -88,25 +88,20 @@ void main() {
       // go to transfer page
       // await driver.tap(find.byValueKey('cid-asset'));
 
-      // ignore: avoid_print
       print('---find transfer');
       await driver!.tap(find.byValueKey('transfer'));
 
-      // ignore: avoid_print
       print('---find transfer-amount-input');
       await driver!.tap(find.byValueKey('transfer-amount-input'));
 
-      // ignore: avoid_print
       print('---enter 3.4');
       await driver!.enterText('3.4');
 
-      // ignore: avoid_print
       print('---screenshot transfer-page');
       await screenshot(driver!, config, 'transfer-page');
 
       // go back to homepage
 
-      // ignore: avoid_print
       print('---close-transfer-page');
       await driver!.tap(find.byValueKey('close-transfer-page'));
     });
@@ -128,7 +123,6 @@ void main() {
 }
 
 void log(String msg) {
-  // ignore: avoid_print
   print('[test_driver] $msg');
 }
 

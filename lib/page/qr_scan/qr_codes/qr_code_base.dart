@@ -19,6 +19,8 @@ abstract class QrCode<QrCodeData extends ToQrFields> {
   }
 }
 
+// to use abstract class for only one method is not good.
+// ignore: one_member_abstracts
 abstract class ToQrFields {
   List<String> toQrFields();
 }
