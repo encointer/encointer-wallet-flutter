@@ -18,7 +18,7 @@ final selectNotificationSubject = BehaviorSubject<String?>();
 
 class NotificationPlugin {
   static Future<void> setup() async {
-    _configureLocalTimeZone();
+    await _configureLocalTimeZone();
 
     const initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
 
@@ -91,34 +91,49 @@ class NotificationPlugin {
     });
   }
 
-  static Future<bool> showNotification(int id, String? title, String body, {String? payload, String? cid}) async {
-    final androidPlatformChannelSpecifics = AndroidNotificationDetails(
-      'transaction_submitted',
-      'Tx Submitted',
-      channelDescription: 'transaction submitted to blockchain network',
-      importance: Importance.max,
-      priority: Priority.high,
-      ticker: 'ticker',
-      sound: const RawResourceAndroidNotificationSound('lions_growl'),
-      styleInformation: BigTextStyleInformation(body),
-    );
+  static AndroidNotificationDetails androidPlatformChannelSpecifics(String body) => AndroidNotificationDetails(
+        'transaction_submitted',
+        'Tx Submitted',
+        channelDescription: 'transaction submitted to blockchain network',
+        importance: Importance.max,
+        priority: Priority.high,
+        ticker: 'ticker',
+        sound: const RawResourceAndroidNotificationSound('lions_growl'),
+        styleInformation: BigTextStyleInformation(body),
+      );
 
-    const iOSPlatformChannelSpecifics = DarwinNotificationDetails(
-      sound: 'lions_growl.wav',
-      presentSound: true,
-    );
-    final platformChannelSpecifics = NotificationDetails(
-      android: androidPlatformChannelSpecifics,
-      iOS: iOSPlatformChannelSpecifics,
-    );
+  static const iOSPlatformChannelSpecifics = DarwinNotificationDetails(
+    sound: 'lions_growl.wav',
+    presentSound: true,
+  );
+
+  static NotificationDetails platformChannelSpecifics(String body) => NotificationDetails(
+        android: androidPlatformChannelSpecifics(body),
+        iOS: iOSPlatformChannelSpecifics,
+      );
+
+  static Future<bool> showNotification(int id, String? title, String body, {String? payload, String? cid}) async {
     await flutterLocalNotificationsPlugin.show(
       0,
       title,
       body,
-      platformChannelSpecifics,
+      platformChannelSpecifics(body),
       payload: payload ?? 'undefined',
     );
     return Future.value(true);
+  }
+
+  static Future<void> showNotificationSchedule(int id, String? title, String body, tz.TZDateTime scheduledDate,
+      {String? payload, String? cid}) async {
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      id,
+      title,
+      body,
+      scheduledDate,
+      platformChannelSpecifics(body),
+      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+      androidAllowWhileIdle: true,
+    );
   }
 }
 
@@ -136,7 +151,7 @@ class ReceivedNotification {
   final String? payload;
 }
 
-void _configureLocalTimeZone() async {
+Future<void> _configureLocalTimeZone() async {
   if (kIsWeb || Platform.isLinux) return;
   tz.initializeTimeZones();
   final timeZoneName = await FlutterTimezone.getLocalTimezone();

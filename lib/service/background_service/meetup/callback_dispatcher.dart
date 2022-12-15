@@ -1,4 +1,5 @@
 import 'package:workmanager/workmanager.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
@@ -35,6 +36,7 @@ Future<void> callbackDispatcher() async {
       _feeds,
       _alreadyShownNotifications,
       NotificationPlugin.showNotification,
+      showNotificationSchedule: NotificationPlugin.showNotificationSchedule,
     );
 
     _alreadyShownNotifications.addAll(shownNotifications);
@@ -51,8 +53,9 @@ Future<void> callbackDispatcher() async {
 Future<List<String>> showAllNotificationsFromFeed(
   List<Feed> feeds,
   List<String> alreadyShownNotifications,
-  Future<bool> Function(int id, String title, String body) showNotification,
-) async {
+  Future<bool> Function(int id, String title, String body) showNotification, {
+  Future<void> Function(int id, String title, String body, tz.TZDateTime scheduledDate)? showNotificationSchedule,
+}) async {
   final shownNotifications = <String>[];
 
   for (var i = 0; i < feeds.length; i++) {
@@ -61,6 +64,14 @@ Future<List<String>> showAllNotificationsFromFeed(
         shownNotifications.add(feeds[i].id);
         Log.d('showing new notification ${feeds[i]}', 'callbackDispatcher');
         await showNotification(i, feeds[i].title, feeds[i].content);
+        if (showNotificationSchedule != null) {
+          await showNotificationSchedule(
+            i,
+            feeds[i].title,
+            '${feeds[i].content} ${tz.TZDateTime.from(feeds[i].showAt, tz.local)}',
+            tz.TZDateTime.from(feeds[i].showAt, tz.local),
+          );
+        }
       } else {
         Log.d('${feeds[i].id} is new, but it should not be shown yet', 'callbackDispatcher');
       }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 import 'package:workmanager/workmanager.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/page-encointer/bazaar/0_main/bazaar_main.dart';
@@ -128,6 +129,16 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
     return Scaffold(
       backgroundColor: Colors.white,
+      floatingActionButton: FloatingActionButton(
+        onPressed: () async {
+          await NotificationPlugin.showNotificationSchedule(
+            1,
+            'Test',
+            'scheduledDate Date',
+            tz.TZDateTime.now(tz.local).add(const Duration(seconds: 3)),
+          );
+        },
+      ),
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,

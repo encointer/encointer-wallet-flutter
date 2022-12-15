@@ -25,7 +25,7 @@ Future<void> main({AppcastConfiguration? appCast}) async {
     await InAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
 
-  NotificationPlugin.setup();
+  await NotificationPlugin.setup();
 
   // get_storage dependency
   await GetStorage.init();
