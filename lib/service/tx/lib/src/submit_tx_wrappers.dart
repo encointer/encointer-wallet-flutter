@@ -133,7 +133,7 @@ Future<void> submitRegisterParticipant(BuildContext context, AppStore store, Api
       Log.d('$data', 'AggregatedAccountData from register participant');
       final registrationType = data.personal?.participantType;
       if (registrationType != null) {
-        await _showEducationalDialog(registrationType, context);
+        _showEducationalDialog(registrationType, context);
       }
       // Registering the participant burns the reputation.
       // Hence, we should fetch the new state afterwards.
@@ -171,12 +171,12 @@ Future<dynamic> submitReapVoucher(
   return api.js.evalJavascript('encointer.reapVoucher("$voucherUri","$recipientAddress", ${jsonEncode(cid)})');
 }
 
-Future<void> _showEducationalDialog(ParticipantType registrationType, BuildContext context) async {
+void _showEducationalDialog(ParticipantType registrationType, BuildContext context) {
   final dic = I18n.of(context)!.translationsForLocale();
   final texts = _getEducationalDialogTexts(registrationType, context);
   final languageCode = Localizations.localeOf(context).languageCode;
 
-  return showCupertinoDialog<void>(
+  showCupertinoDialog<void>(
     barrierDismissible: true,
     context: context,
     builder: (context) {
