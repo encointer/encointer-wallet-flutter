@@ -98,7 +98,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                   child: AnimatedSwitcher(
                     duration: const Duration(milliseconds: 500),
                     transitionBuilder: (Widget child, Animation<double> animation) {
-                      return RotationTransition(child: child, turns: animation);
+                      return RotationTransition(turns: animation, child: child);
                       // return ScaleTransition(child: child, scale: animation);
                     },
                     child: _getTransferStateWidget(_transferState),
@@ -205,7 +205,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
         return Container(
           decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.red),
           child: const Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(10.0),
             child: Icon(
               Icons.highlight_remove,
               size: 80.0,

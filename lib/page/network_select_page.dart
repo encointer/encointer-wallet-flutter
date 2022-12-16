@@ -16,7 +16,7 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class NetworkSelectPage extends StatefulWidget {
-  NetworkSelectPage({Key? key}) : super(key: key);
+  const NetworkSelectPage({Key? key}) : super(key: key);
 
   static const String route = '/network';
 
@@ -48,7 +48,7 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
       builder: (BuildContext context) {
         return CupertinoAlertDialog(
           title: Text(I18n.of(context)!.translationsForLocale().home.loading),
-          content: const SizedBox(height: 64, child: const CupertinoActivityIndicator()),
+          content: const SizedBox(height: 64, child: CupertinoActivityIndicator()),
         );
       },
     );
@@ -193,44 +193,42 @@ class _NetworkSelectPageState extends State<NetworkSelectPage> {
             padding: const EdgeInsets.fromLTRB(16, 16, 0, 0),
             decoration: BoxDecoration(
               color: Theme.of(context).cardColor,
-              boxShadow: [
-                const BoxShadow(
+              boxShadow: const [
+                BoxShadow(
                   color: Colors.black12,
                   blurRadius: 8.0, // has the effect of softening the shadow
                   spreadRadius: 2.0, // ha
                 )
               ],
             ),
-            child: Observer(builder: (_) {
-              return Column(
-                children: networks.map((i) {
-                  final network = i.info;
-                  final isCurrent = network == _selectedNetwork.info;
-                  final img = 'assets/images/public/$network${isCurrent ? '' : '_gray'}.png';
-                  return Container(
-                    margin: const EdgeInsets.only(bottom: 8),
-                    padding: const EdgeInsets.only(right: 8),
-                    decoration: isCurrent
-                        ? BoxDecoration(
-                            border: Border(right: BorderSide(width: 2, color: Theme.of(context).primaryColor)),
-                          )
-                        : null,
-                    child: IconButton(
-                      key: Key(i.info ?? '$i'),
-                      padding: const EdgeInsets.all(8),
-                      icon: Image.asset(img),
-                      onPressed: () {
-                        if (!isCurrent) {
-                          setState(() {
-                            _selectedNetwork = i;
-                          });
-                        }
-                      },
-                    ),
-                  );
-                }).toList(),
-              );
-            }),
+            child: Column(
+              children: networks.map((i) {
+                final network = i.info;
+                final isCurrent = network == _selectedNetwork.info;
+                final img = 'assets/images/public/$network${isCurrent ? '' : '_gray'}.png';
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 8),
+                  padding: const EdgeInsets.only(right: 8),
+                  decoration: isCurrent
+                      ? BoxDecoration(
+                          border: Border(right: BorderSide(width: 2, color: Theme.of(context).primaryColor)),
+                        )
+                      : null,
+                  child: IconButton(
+                    key: Key(i.info ?? '$i'),
+                    padding: const EdgeInsets.all(8),
+                    icon: Image.asset(img),
+                    onPressed: () {
+                      if (!isCurrent) {
+                        setState(() {
+                          _selectedNetwork = i;
+                        });
+                      }
+                    },
+                  ),
+                );
+              }).toList(),
+            ),
           ),
           Expanded(
             child: Observer(builder: (_) {

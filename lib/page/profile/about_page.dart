@@ -7,9 +7,8 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class AboutPage extends StatelessWidget {
-  static const String route = '/profile/about';
-
   const AboutPage({Key? key}) : super(key: key);
+  static const String route = '/profile/about';
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +44,7 @@ class AboutPage extends StatelessWidget {
               },
             ),
             const SizedBox(height: 16),
-            JumpToBrowserLink('https://encointer.org'),
+            const JumpToBrowserLink('https://encointer.org'),
           ],
         ),
       ),

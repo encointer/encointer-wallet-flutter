@@ -7,6 +7,7 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
 import 'package:encointer_wallet/models/index.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/assets/types/transfer_data.dart';
 import 'package:encointer_wallet/utils/format.dart';
 
@@ -19,13 +20,13 @@ part 'encointer_account_store.g.dart';
 class EncointerAccountStore extends _EncointerAccountStore with _$EncointerAccountStore {
   EncointerAccountStore(String network, String address) : super(network, address);
 
+  factory EncointerAccountStore.fromJson(Map<String, dynamic> json) => _$EncointerAccountStoreFromJson(json);
+  Map<String, dynamic> toJson() => _$EncointerAccountStoreToJson(this);
+
   @override
   String toString() {
     return jsonEncode(this);
   }
-
-  factory EncointerAccountStore.fromJson(Map<String, dynamic> json) => _$EncointerAccountStoreFromJson(json);
-  Map<String, dynamic> toJson() => _$EncointerAccountStoreToJson(this);
 }
 
 abstract class _EncointerAccountStore with Store {
@@ -55,6 +56,9 @@ abstract class _EncointerAccountStore with Store {
   @observable
   ObservableList<TransferData> txsTransfer = ObservableList<TransferData>();
 
+  @observable
+  int numberOfNewbieTicketsForReputable = 0;
+
   @computed
   int? get ceremonyIndexForProofOfAttendance {
     if (reputations.isNotEmpty) {
@@ -77,8 +81,9 @@ abstract class _EncointerAccountStore with Store {
   }
 
   @action
-  void setReputations(Map<int, CommunityReputation> reps) {
+  Future<void> setReputations(Map<int, CommunityReputation> reps) async {
     reputations = reps;
+    await getNumberOfNewbieTicketsForReputable();
     writeToCache();
   }
 
@@ -120,6 +125,11 @@ abstract class _EncointerAccountStore with Store {
     if (needCache && txsTransfer.length > 0) {
       writeToCache();
     }
+  }
+
+  @action
+  Future<void> getNumberOfNewbieTicketsForReputable() async {
+    numberOfNewbieTicketsForReputable = await webApi.encointer.getNumberOfNewbieTicketsForReputable();
   }
 
   void initStore(Function? cacheFn) {

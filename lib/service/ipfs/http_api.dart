@@ -8,7 +8,7 @@ import 'package:encointer_wallet/service/log/log_service.dart';
 
 class Ipfs {
   // Todo: remove default -> migrate bazaar to use ipfs field from webApi instance
-  Ipfs({this.gateway = ipfs_gateway_encointer});
+  Ipfs({this.gateway = ipfsGatewayEncointer});
 
   final String gateway;
 
@@ -80,7 +80,7 @@ class Ipfs {
   }
 
   String getIconsPath(String cid) {
-    return '$cid/$community_icon_name';
+    return '$cid/$communityIconName';
   }
 
   Future<String> uploadImage(File image) async {
@@ -150,22 +150,22 @@ class IpfsDio {
 }
 
 class Object {
-  List links;
-  String data;
-
   Object({
     required this.links,
     required this.data,
   });
-
-  @override
-  String toString() {
-    return jsonEncode(this);
-  }
 
   factory Object.fromJson(Map<String, dynamic> json) {
     return Object(data: json['Data'] as String, links: json['Links'] as List<dynamic>);
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{'links': links, 'data': data};
+
+  List links;
+  String data;
+
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 }

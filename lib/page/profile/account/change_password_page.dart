@@ -15,7 +15,7 @@ import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class ChangePasswordPage extends StatefulWidget {
-  ChangePasswordPage({Key? key}) : super(key: key);
+  const ChangePasswordPage({Key? key}) : super(key: key);
 
   static const String route = '/profile/password';
 
@@ -184,17 +184,17 @@ class _ChangePassword extends State<ChangePasswordPage> {
                 ),
               ),
               PrimaryButton(
+                onPressed: _submitting ? null : () => _onSave(context.read<AppStore>()),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     _submitting ? const CupertinoActivityIndicator() : Container(),
                     Text(
                       dic.profile.contactSave,
-                      style: Theme.of(context).textTheme.headline3!.copyWith(color: ZurichLion.shade50),
+                      style: Theme.of(context).textTheme.headline3!.copyWith(color: zurichLion.shade50),
                     ),
                   ],
                 ),
-                onPressed: _submitting ? null : () => _onSave(context.read<AppStore>()),
               ),
             ],
           ),

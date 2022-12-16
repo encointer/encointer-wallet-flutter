@@ -24,7 +24,7 @@ import 'package:encointer_wallet/utils/snack_bar.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class Profile extends StatefulWidget {
-  Profile({Key? key}) : super(key: key);
+  const Profile({Key? key}) : super(key: key);
 
   @override
   State<Profile> createState() => _ProfileState();
@@ -54,7 +54,7 @@ class _ProfileState extends State<Profile> {
                 Positioned(
                   bottom: 0,
                   right: 0, //give the values according to your requirement
-                  child: Icon(Iconsax.edit, color: ZurichLion.shade800),
+                  child: Icon(Iconsax.edit, color: zurichLion.shade800),
                 ),
               ],
             ),
@@ -137,7 +137,7 @@ class _ProfileState extends State<Profile> {
                     ),
                     IconButton(
                       icon: const Icon(Iconsax.add_square),
-                      color: ZurichLion.shade500,
+                      color: zurichLion.shade500,
                       onPressed: () => Navigator.of(context).pushNamed(AddAccountPage.route),
                     ),
                   ],
@@ -156,12 +156,12 @@ class _ProfileState extends State<Profile> {
                         Theme.of(context).scaffoldBackgroundColor,
                         Theme.of(context).scaffoldBackgroundColor.withOpacity(0.0),
                       ],
-                      stops: [0.0, 0.1, 0.9, 1.0],
+                      stops: const [0.0, 0.1, 0.9, 1.0],
                     ).createShader(bounds);
                   },
                   child: ListView(
-                    children: _buildAccountList(),
                     scrollDirection: Axis.horizontal,
+                    children: _buildAccountList(),
                   ),
                   // blendMode: BlendMode.dstATop,
                 ),
@@ -247,10 +247,10 @@ class _ProfileState extends State<Profile> {
                         key: const Key('next-phase-button'),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Icon(Iconsax.login_1),
-                            const SizedBox(width: 6),
-                            const Text('Next-Phase (only works for local dev-network)'),
+                          children: const [
+                            Icon(Iconsax.login_1),
+                            SizedBox(width: 6),
+                            Text('Next-Phase (only works for local dev-network)'),
                           ],
                         ),
                         onPressed: (_) async {
@@ -294,7 +294,7 @@ Future<void> showRemoveAccountsDialog(BuildContext context, AppStore _store) {
 
               Navigator.pushAndRemoveUntil(
                 context,
-                CupertinoPageRoute<void>(builder: (context) => CreateAccountEntryPage()),
+                CupertinoPageRoute<void>(builder: (context) => const CreateAccountEntryPage()),
                 (route) => false,
               );
             },

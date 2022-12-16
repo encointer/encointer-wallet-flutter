@@ -10,12 +10,6 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
 class CommunityChooserOnMap extends StatelessWidget {
-  final AppStore store;
-
-  final communityDataAt = <LatLng, CidName>{};
-
-  List<Marker> get _markers => getMarkers(store);
-
   CommunityChooserOnMap(this.store, {Key? key}) : super(key: key) {
     if (store.encointer.communities != null) {
       for (var community in store.encointer.communities!) {
@@ -23,6 +17,11 @@ class CommunityChooserOnMap extends StatelessWidget {
       }
     }
   }
+  final AppStore store;
+
+  final communityDataAt = <LatLng, CidName>{};
+
+  List<Marker> get _markers => getMarkers(store);
 
   @override
   Widget build(BuildContext context) {
@@ -41,20 +40,18 @@ class CommunityChooserOnMap extends StatelessWidget {
 }
 
 class CommunityDetailsPopup extends StatefulWidget {
+  const CommunityDetailsPopup(this.store, this.marker, this.dataForThisMarker, {Key? key}) : super(key: key);
   final AppStore store;
   final Marker marker;
   final CidName? dataForThisMarker;
-
-  CommunityDetailsPopup(this.store, this.marker, this.dataForThisMarker, {Key? key}) : super(key: key);
 
   @override
   State<CommunityDetailsPopup> createState() => _CommunityDetailsPopupState(store);
 }
 
 class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
-  final AppStore store;
-
   _CommunityDetailsPopupState(this.store);
+  final AppStore store;
 
   @override
   Widget build(BuildContext context) {

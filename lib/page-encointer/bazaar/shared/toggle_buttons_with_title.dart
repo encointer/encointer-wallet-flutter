@@ -1,12 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ToggleButtonsWithTitle extends StatelessWidget {
-  final List<String> items;
-  final List<bool> isSelected;
-  final void Function(int)? onPressed;
-  final String title;
-  final allSelected = false;
-
   ToggleButtonsWithTitle(
     this.title,
     this.items,
@@ -14,6 +8,11 @@ class ToggleButtonsWithTitle extends StatelessWidget {
     Key? key,
   })  : isSelected = List.filled(items.length, false),
         super(key: key);
+  final List<String> items;
+  final List<bool> isSelected;
+  final void Function(int)? onPressed;
+  final String title;
+  final allSelected = false;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +29,8 @@ class ToggleButtonsWithTitle extends StatelessWidget {
           height: 60,
           child: ListView(scrollDirection: Axis.horizontal, children: [
             ToggleButtons(
+              onPressed: (int index) => onPressed!(index),
+              isSelected: isSelected,
               children: items
                   .map(
                     (cat) => Padding(
@@ -38,9 +39,6 @@ class ToggleButtonsWithTitle extends StatelessWidget {
                     ),
                   )
                   .toList(),
-              // TODO add proper state management, add logic for "all" and other categories
-              onPressed: (int index) => onPressed!(index),
-              isSelected: isSelected,
             ),
           ]),
         ),

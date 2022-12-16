@@ -31,7 +31,7 @@ class TransferPageParams {
     this.amount,
   });
 
-  static TransferPageParams fromInvoiceData(InvoiceData data) {
+  factory TransferPageParams.fromInvoiceData(InvoiceData data) {
     return TransferPageParams(
       cid: data.cid,
       recipient: data.account,
@@ -48,7 +48,7 @@ class TransferPageParams {
 }
 
 class TransferPage extends StatefulWidget {
-  TransferPage({Key? key}) : super(key: key);
+  const TransferPage({Key? key}) : super(key: key);
 
   static const String route = '/assets/transfer';
 
@@ -120,7 +120,7 @@ class _TransferPageState extends State<TransferPage> {
     final dic = I18n.of(context)!.translationsForLocale();
     final _store = context.watch<AppStore>();
 
-    final decimals = encointer_currencies_decimals;
+    const decimals = encointerCurrenciesDecimals;
     final available = _store.encointer.applyDemurrage(_store.encointer.communityBalanceEntry);
 
     Log.d('[transferPage]: available: $available', 'TransferPage');
@@ -238,6 +238,13 @@ class _TransferPageState extends State<TransferPage> {
                   const SizedBox(height: 8),
                   PrimaryButton(
                     key: const Key('make-transfer'),
+                    onPressed: _accountTo != null
+                        ? () {
+                            if (_cid != null && _communitySymbol != null) {
+                              _pushPaymentConfirmationPage(_cid!, _communitySymbol!);
+                            }
+                          }
+                        : null,
                     child: SizedBox(
                       height: 24,
                       child: Row(
@@ -249,13 +256,6 @@ class _TransferPageState extends State<TransferPage> {
                         ],
                       ),
                     ),
-                    onPressed: _accountTo != null
-                        ? () {
-                            if (_cid != null && _communitySymbol != null) {
-                              _pushPaymentConfirmationPage(_cid!, _communitySymbol!);
-                            }
-                          }
-                        : null,
                   ),
                 ],
               ),

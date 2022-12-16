@@ -22,7 +22,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class AccountManagePage extends StatefulWidget {
-  AccountManagePage({Key? key}) : super(key: key);
+  const AccountManagePage({Key? key}) : super(key: key);
 
   static const String route = '/profile/account';
 
@@ -220,7 +220,7 @@ class _AccountManagePageState extends State<AccountManagePage> {
                           Text(Fmt.address(addressSS58)!, style: const TextStyle(fontSize: 20)),
                           IconButton(
                             icon: const Icon(Iconsax.copy),
-                            color: ZurichLion.shade500,
+                            color: zurichLion.shade500,
                             onPressed: () => UI.copyAndNotify(context, addressSS58),
                           ),
                         ],
@@ -290,10 +290,10 @@ class _AccountManagePageState extends State<AccountManagePage> {
                             offset: const Offset(-10, -150),
                             icon: const Icon(
                               Iconsax.more,
-                              key: const Key('popup-menu-account-trash-export'),
+                              key: Key('popup-menu-account-trash-export'),
                               color: Colors.white,
                             ),
-                            color: ZurichLion.shade50,
+                            color: zurichLion.shade50,
                             padding: const EdgeInsets.all(20),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
@@ -317,8 +317,8 @@ class _AccountManagePageState extends State<AccountManagePage> {
                                           value: data.accountAction,
                                           // https://github.com/flutter/flutter/issues/31247 as soon as we use a newer flutter version we might be able to add this to our theme.dart
                                           child: ListTileTheme(
-                                            textColor: ZurichLion.shade500,
-                                            iconColor: ZurichLion.shade500,
+                                            textColor: zurichLion.shade500,
+                                            iconColor: zurichLion.shade500,
                                             child: ListTile(
                                               minLeadingWidth: 0,
                                               title: Text(data.title),
@@ -342,11 +342,10 @@ class _AccountManagePageState extends State<AccountManagePage> {
 }
 
 class AccountActionItemData {
+  AccountActionItemData(this.title, this.accountAction);
   // in newer flutter versions you can put that stuff into the AccountAction enum and do not need an extra class
   final String title;
   final AccountAction accountAction;
-
-  AccountActionItemData(this.title, this.accountAction);
 }
 
 class CommunityIcon extends StatelessWidget {

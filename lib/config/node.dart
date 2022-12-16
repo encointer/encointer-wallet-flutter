@@ -5,23 +5,28 @@ import 'package:json_annotation/json_annotation.dart';
 part 'node.g.dart';
 
 /// Overrides for the Gesell test network
-const NodeConfig GesellConfig = const NodeConfig(GesellTypeOverrides, GesellPalletOverrides);
+const NodeConfig gesellConfig = NodeConfig(gesellTypeOverrides, gesellPalletOverrides);
 
 /// Overrides for the Cantillon test network
-const NodeConfig CantillonConfig = const NodeConfig(GesellTypeOverrides, GesellPalletOverrides);
+const NodeConfig cantillonConfig = NodeConfig(gesellTypeOverrides, gesellPalletOverrides);
 
 /// Overrides for the master branch of the `encointer-node`, which is usually used in a local
 /// no-tee-dev-setup
-const NodeConfig MasterBranchConfig = const NodeConfig(TypeOverridesDev, PalletOverridesDev);
+const NodeConfig masterBranchConfig = NodeConfig(typeOverridesDev, palletOverridesDev);
 
 /// Overrides for the sgx-master branch of the `encointer-node`, which is usually used in a local
 /// tee-dev-setup
-const NodeConfig SgxBranchConfig = const NodeConfig(GesellTypeOverrides, GesellPalletOverrides);
+const NodeConfig sgxBranchConfig = NodeConfig(gesellTypeOverrides, gesellPalletOverrides);
 
 /// Config to handle different versions of our nodes by supplying type overwrites
 /// and pallet names and methods overwrites.
 @JsonSerializable(explicitToJson: true)
 class NodeConfig {
+  const NodeConfig(this.types, this.pallets);
+
+  factory NodeConfig.fromJson(Map<String, dynamic> json) => _$NodeConfigFromJson(json);
+  Map<String, dynamic> toJson() => _$NodeConfigToJson(this);
+
   /// type overwrites passed to the JS Api type-registry
   final Map<String, dynamic>? types;
 
@@ -29,39 +34,33 @@ class NodeConfig {
   /// holds the overwrite data
   final Map<String, Pallet>? pallets;
 
-  const NodeConfig(this.types, this.pallets);
-
   @override
   String toString() {
     return jsonEncode(this);
   }
-
-  factory NodeConfig.fromJson(Map<String, dynamic> json) => _$NodeConfigFromJson(json);
-
-  Map<String, dynamic> toJson() => _$NodeConfigToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
 class Pallet {
+  const Pallet(this.name, this.calls);
+
+  factory Pallet.fromJson(Map<String, dynamic> json) => _$PalletFromJson(json);
+  Map<String, dynamic> toJson() => _$PalletToJson(this);
+
   final String? name;
   final Map<String, String>? calls;
-
-  const Pallet(this.name, this.calls);
 
   @override
   String toString() {
     return jsonEncode(this);
   }
-
-  factory Pallet.fromJson(Map<String, dynamic> json) => _$PalletFromJson(json);
-  Map<String, dynamic> toJson() => _$PalletToJson(this);
 }
 
-const Map<String, dynamic> TypeOverridesDev = {};
-const Map<String, Pallet> PalletOverridesDev = {};
+const Map<String, dynamic> typeOverridesDev = {};
+const Map<String, Pallet> palletOverridesDev = {};
 
 /// Type overrides needed for Gesell
-const Map<String, dynamic> GesellTypeOverrides = {};
+const Map<String, dynamic> gesellTypeOverrides = {};
 
 /// Pallet overrides needed for Gesell
-const Map<String, Pallet> GesellPalletOverrides = {};
+const Map<String, Pallet> gesellPalletOverrides = {};

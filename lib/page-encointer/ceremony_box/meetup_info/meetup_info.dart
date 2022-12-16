@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 class MeetupInfo extends StatelessWidget {
-  MeetupInfo(
+  const MeetupInfo(
     this.meetup,
     this.meetupLocation, {
     this.onLocationPressed,

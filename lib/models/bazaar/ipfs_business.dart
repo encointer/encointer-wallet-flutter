@@ -9,6 +9,9 @@ part 'ipfs_business.g.dart';
 class IpfsBusiness {
   IpfsBusiness(this.name, this.description, this.contactInfo, this.imagesCid, this.openingHours);
 
+  factory IpfsBusiness.fromJson(Map<String, dynamic> json) => _$IpfsBusinessFromJson(json);
+  Map<String, dynamic> toJson() => _$IpfsBusinessToJson(this);
+
   /// name of the business
   final String? name;
 
@@ -29,7 +32,4 @@ class IpfsBusiness {
   String toString() {
     return jsonEncode(this);
   }
-
-  factory IpfsBusiness.fromJson(Map<String, dynamic> json) => _$IpfsBusinessFromJson(json);
-  Map<String, dynamic> toJson() => _$IpfsBusinessToJson(this);
 }

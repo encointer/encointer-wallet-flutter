@@ -5,10 +5,9 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
+  const Home({Key? key}) : super(key: key);
   final double cardHeight = 200;
   final double cardWidth = 160;
-
-  const Home({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

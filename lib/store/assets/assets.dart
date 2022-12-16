@@ -243,8 +243,8 @@ abstract class _AssetsStore with Store {
 }
 
 class BlockData extends _BlockData {
-  static BlockData fromJson(Map<String, dynamic> json) {
-    final block = BlockData();
+  factory BlockData.fromJson(Map<String, dynamic> json) {
+    final block = BlockData.fromJson(json);
     block.id = json['id'] as int?;
     block.hash = json['hash'] as String?;
     block.time = DateTime.fromMillisecondsSinceEpoch(json['timestamp'] as int);

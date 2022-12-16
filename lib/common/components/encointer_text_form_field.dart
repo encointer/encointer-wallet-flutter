@@ -4,18 +4,6 @@ import 'package:flutter/services.dart';
 
 /// TextFormField styled for the encointer app
 class EncointerTextFormField extends StatelessWidget {
-  final String? labelText;
-  final String? hintText;
-  final TextStyle? textStyle;
-  final List<TextInputFormatter>? inputFormatters;
-  final TextEditingController? controller;
-  final Key? textFormFieldKey;
-  final TextInputType? keyboardType;
-  final String? Function(String?)? validator;
-  final Widget? suffixIcon;
-  final ValueChanged<String>? onChanged;
-  final bool obscureText;
-
   const EncointerTextFormField({
     Key? key,
     this.labelText,
@@ -30,12 +18,23 @@ class EncointerTextFormField extends StatelessWidget {
     this.keyboardType,
     this.obscureText = false,
   }) : super(key: key);
+  final String? labelText;
+  final String? hintText;
+  final TextStyle? textStyle;
+  final List<TextInputFormatter>? inputFormatters;
+  final TextEditingController? controller;
+  final Key? textFormFieldKey;
+  final TextInputType? keyboardType;
+  final String? Function(String?)? validator;
+  final Widget? suffixIcon;
+  final ValueChanged<String>? onChanged;
+  final bool obscureText;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: ZurichLion.shade50,
+        color: zurichLion.shade50,
         borderRadius: BorderRadius.circular(15),
       ),
       child: TextFormField(

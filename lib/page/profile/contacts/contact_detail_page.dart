@@ -19,7 +19,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class ContactDetailPage extends StatelessWidget {
-  ContactDetailPage(this.api, {Key? key}) : super(key: key);
+  const ContactDetailPage(this.api, {Key? key}) : super(key: key);
 
   static const String route = '/profile/contactDetail';
 
@@ -100,7 +100,7 @@ class ContactDetailPage extends StatelessWidget {
                         Text(Fmt.address(account.address)!, style: const TextStyle(fontSize: 20)),
                         IconButton(
                           icon: const Icon(Iconsax.copy),
-                          color: ZurichLion.shade500,
+                          color: zurichLion.shade500,
                           onPressed: () => UI.copyAndNotify(context, account.address),
                         ),
                       ],
@@ -109,8 +109,27 @@ class ContactDetailPage extends StatelessWidget {
                 ),
               ),
               Observer(builder: (_) {
-                return _store.encointer.community!.bootstrappers!.contains(_store.account.currentAddress)
-                    ? EndorseButton(_store, api, account)
+                return _store.encointer.community!.bootstrappers!.contains(_store.account.currentAddress) ||
+                        _store.encointer.account != null &&
+                            _store.encointer.account!.numberOfNewbieTicketsForReputable > 0
+                    ? Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: FittedBox(
+                              child: Row(children: [
+                                Text(dic.encointer.remainingNewbieTickets),
+                                Text(
+                                  ' ${_store.encointer.account?.numberOfNewbieTicketsForReputable}',
+                                  style: TextStyle(color: zurichLion.shade800, fontSize: 15),
+                                )
+                              ]),
+                            ),
+                          ),
+                          EndorseButton(_store, api, account),
+                        ],
+                      )
                     : Container();
               }),
               const SizedBox(height: 16),
@@ -159,7 +178,7 @@ class ContactDetailPage extends StatelessWidget {
 }
 
 class EndorseButton extends StatelessWidget {
-  EndorseButton(this.store, this.api, this.contact, {Key? key}) : super(key: key);
+  const EndorseButton(this.store, this.api, this.contact, {Key? key}) : super(key: key);
 
   final AppStore store;
   final Api api;
@@ -171,20 +190,22 @@ class EndorseButton extends StatelessWidget {
 
     return SubmitButtonSecondary(
       key: const Key('tap-endorse-button'),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          const Icon(Iconsax.verify),
-          const SizedBox(width: 12),
-          Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
-        ],
-      ),
       onPressed: store.encointer.community!.bootstrappers!.contains(contact.address)
           ? (BuildContext context) => _popupDialog(context, dic.profile.cantEndorseBootstrapper)
           : store.encointer.currentPhase != CeremonyPhase.Registering
               ? (BuildContext context) => _popupDialog(context, dic.profile.canEndorseInRegisteringPhaseOnly)
               : (BuildContext context) =>
                   submitEndorseNewcomer(context, store, api, store.encointer.chosenCid, contact.address),
+      child: FittedBox(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Iconsax.verify),
+            const SizedBox(width: 12),
+            Text(dic.profile.contactEndorse, style: Theme.of(context).textTheme.headline3)
+          ],
+        ),
+      ),
     );
   }
 }
