@@ -52,7 +52,8 @@ class BazaarBusinessData extends BazaarItemData {
   final List<BazaarOfferingData> offerings;
 
   // for now:
-  final LatLng turbinenplatz = LatLng(47.389712, 8.517076); // TODO use coordinates of the respective community
+  final LatLng turbinenplatz = LatLng(47.389712, 8.517076);
+  // TODO use coordinates of the respective community
 
   @override
   String get info {

@@ -43,7 +43,10 @@ class NodeConfig {
 @JsonSerializable(explicitToJson: true)
 class Pallet {
   const Pallet(this.name, this.calls);
+
   factory Pallet.fromJson(Map<String, dynamic> json) => _$PalletFromJson(json);
+  Map<String, dynamic> toJson() => _$PalletToJson(this);
+
   final String? name;
   final Map<String, String>? calls;
 
@@ -51,8 +54,6 @@ class Pallet {
   String toString() {
     return jsonEncode(this);
   }
-
-  Map<String, dynamic> toJson() => _$PalletToJson(this);
 }
 
 const Map<String, dynamic> typeOverridesDev = {};

@@ -8,17 +8,17 @@ import 'package:encointer_wallet/utils/format.dart';
 
 /// CommunityIdentifier consisting of a geohash and a 4-bytes crc code.
 class CommunityIdentifier {
-  CommunityIdentifier(this.geohash, this.digest);
-
-  // JS-passes these values as hex-strings, but this would be more complicated to handle in dart.
-  factory CommunityIdentifier.fromJson(Map<String, dynamic> json) =>
-      CommunityIdentifier(Fmt.hexToBytes(json['geohash'] as String), Fmt.hexToBytes(json['digest'] as String));
+  const CommunityIdentifier(this.geohash, this.digest);
 
   factory CommunityIdentifier.fromFmtString(String cid) {
     const codec = Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
 
     return CommunityIdentifier(utf8.encode(cid.substring(0, 5)), codec.decode(cid.substring(5)));
   }
+
+  // JS-passes these values as hex-strings, but this would be more complicated to handle in dart.
+  factory CommunityIdentifier.fromJson(Map<String, dynamic> json) =>
+      CommunityIdentifier(Fmt.hexToBytes(json['geohash'] as String), Fmt.hexToBytes(json['digest'] as String));
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'geohash': Fmt.bytesToHex(geohash),

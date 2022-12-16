@@ -11,7 +11,6 @@ class CidName {
   CidName(this.cid, this.name);
 
   factory CidName.fromJson(Map<String, dynamic> json) => _$CidNameFromJson(json);
-
   Map<String, dynamic> toJson() => _$CidNameToJson(this);
 
   CommunityIdentifier cid;
