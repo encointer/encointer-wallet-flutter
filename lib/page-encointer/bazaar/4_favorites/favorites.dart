@@ -3,9 +3,9 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_da
 import 'package:flutter/material.dart';
 
 class Favorites extends StatelessWidget {
-  final data = favorites;
-
   Favorites({Key? key}) : super(key: key);
+
+  final data = favorites;
 
   @override
   Widget build(BuildContext context) {

@@ -238,6 +238,13 @@ class _TransferPageState extends State<TransferPage> {
                   const SizedBox(height: 8),
                   PrimaryButton(
                     key: const Key('make-transfer'),
+                    onPressed: _accountTo != null
+                        ? () {
+                            if (_cid != null && _communitySymbol != null) {
+                              _pushPaymentConfirmationPage(_cid!, _communitySymbol!);
+                            }
+                          }
+                        : null,
                     child: SizedBox(
                       height: 24,
                       child: Row(
@@ -249,13 +256,6 @@ class _TransferPageState extends State<TransferPage> {
                         ],
                       ),
                     ),
-                    onPressed: _accountTo != null
-                        ? () {
-                            if (_cid != null && _communitySymbol != null) {
-                              _pushPaymentConfirmationPage(_cid!, _communitySymbol!);
-                            }
-                          }
-                        : null,
                   ),
                 ],
               ),

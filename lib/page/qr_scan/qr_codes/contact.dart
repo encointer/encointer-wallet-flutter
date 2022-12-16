@@ -2,11 +2,6 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/qr_code_base.dart';
 
 class ContactQrCode extends QrCode<ContactData> {
-  ContactQrCode.withData(
-    ContactData data, {
-    this.version = QrCodeVersion.v1_0,
-  }) : super(data);
-
   ContactQrCode({
     required String account,
     CommunityIdentifier? cid,
@@ -14,6 +9,11 @@ class ContactQrCode extends QrCode<ContactData> {
     required String label,
     this.version = QrCodeVersion.v1_0,
   }) : super(ContactData(account: account, cid: cid, network: network, label: label));
+
+  ContactQrCode.withData(
+    ContactData data, {
+    this.version = QrCodeVersion.v1_0,
+  }) : super(data);
 
   @override
   QrCodeContext? context = QrCodeContext.contact;

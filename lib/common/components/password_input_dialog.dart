@@ -130,15 +130,11 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
             : Container(),
         CupertinoButton(
           key: const Key('password-ok'),
+          onPressed: _submitting ? null : () => _onOk(_passCtrl.text.trim()),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [_submitting ? const CupertinoActivityIndicator() : Container(), Text(dic.home.ok)],
           ),
-          onPressed: _submitting
-              ? null
-              : () {
-                  _onOk(_passCtrl.text.trim());
-                },
         ),
       ],
     );

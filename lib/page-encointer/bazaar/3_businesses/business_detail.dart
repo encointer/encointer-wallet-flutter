@@ -9,6 +9,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 
 class BusinessDetail extends StatelessWidget {
   const BusinessDetail(this.business, {Key? key}) : super(key: key);
+
   final BazaarBusinessData? business;
   final double cardHeight = 200;
   final double cardWidth = 160;

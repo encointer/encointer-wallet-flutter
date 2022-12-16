@@ -5,9 +5,9 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 
 class SearchResultsOffering extends StatelessWidget {
-  final List<BazaarItemData> results;
-
   const SearchResultsOffering(this.results, {Key? key}) : super(key: key);
+
+  final List<BazaarItemData> results;
 
   @override
   Widget build(BuildContext context) {

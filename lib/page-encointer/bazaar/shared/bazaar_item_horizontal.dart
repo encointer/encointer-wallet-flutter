@@ -101,19 +101,20 @@ class _ImageWithOverlaidIcon extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(children: [
       ClipRRect(
-          child: data[index].image,
           borderRadius: const BorderRadius.vertical(
             top: Radius.circular(15),
             bottom: Radius.circular(0),
-          )),
+          ),
+          child: data[index].image),
       Positioned(
+          // opaque background to icon
+          right: 0,
           // opaque background to icon
           child: Opacity(
             opacity: .4,
             child: Container(height: 24, width: 24, color: Colors.white),
-          ),
-          right: 0),
-      Positioned(child: data[index].icon, right: 0),
+          )),
+      Positioned(right: 0, child: data[index].icon),
     ]);
   }
 }

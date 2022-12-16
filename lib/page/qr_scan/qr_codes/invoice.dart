@@ -2,11 +2,6 @@ import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_codes/qr_code_base.dart';
 
 class InvoiceQrCode extends QrCode<InvoiceData> {
-  InvoiceQrCode.withData(
-    InvoiceData data, {
-    this.version = QrCodeVersion.v1_0,
-  }) : super(data);
-
   InvoiceQrCode({
     required String account,
     CommunityIdentifier? cid,
@@ -15,6 +10,11 @@ class InvoiceQrCode extends QrCode<InvoiceData> {
     required String label,
     this.version = QrCodeVersion.v1_0,
   }) : super(InvoiceData(account: account, cid: cid, network: network, amount: amount, label: label));
+
+  InvoiceQrCode.withData(
+    InvoiceData data, {
+    this.version = QrCodeVersion.v1_0,
+  }) : super(data);
 
   @override
   QrCodeContext? context = QrCodeContext.invoice;

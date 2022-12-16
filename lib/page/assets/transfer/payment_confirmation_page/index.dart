@@ -98,7 +98,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
                   child: AnimatedSwitcher(
                     duration: const Duration(milliseconds: 500),
                     transitionBuilder: (Widget child, Animation<double> animation) {
-                      return RotationTransition(child: child, turns: animation);
+                      return RotationTransition(turns: animation, child: child);
                       // return ScaleTransition(child: child, scale: animation);
                     },
                     child: _getTransferStateWidget(_transferState),
@@ -150,7 +150,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
       _transferState = TransferState.submitting;
     });
 
-    final onFinish = (BuildContext txPageContext, Map res) {
+    void onFinish(BuildContext txPageContext, Map res) {
       Log.d('Transfer result $res', 'PaymentConfirmationPage');
 
       if (res['hash'] == null) {
@@ -160,7 +160,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
         _transferState = TransferState.finished;
         _blockTimestamp = DateTime.fromMillisecondsSinceEpoch(res['time'] as int);
       }
-    };
+    }
 
     await submitTx(context, context.read<AppStore>(), widget.api, params, onFinish: onFinish);
 

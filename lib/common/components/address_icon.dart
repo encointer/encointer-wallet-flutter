@@ -30,6 +30,7 @@ class AddressIcon extends StatelessWidget {
         backColor: '#d4edf8ff',
         hues: [199]);
     return GestureDetector(
+      onTap: tapToCopy ? () => UI.copyAndNotify(context, address) : null,
       child: SizedBox(
         width: size,
         height: size,
@@ -45,7 +46,6 @@ class AddressIcon extends StatelessWidget {
           ),
         ),
       ),
-      onTap: tapToCopy ? () => UI.copyAndNotify(context, address) : null,
     );
   }
 }

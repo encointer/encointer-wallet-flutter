@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CreateAccountEntryPage extends StatelessWidget {
-  static const String route = '/account/entry';
-
   const CreateAccountEntryPage({Key? key}) : super(key: key);
+
+  static const String route = '/account/entry';
 
   @override
   Widget build(BuildContext context) {

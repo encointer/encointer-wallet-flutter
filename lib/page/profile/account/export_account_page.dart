@@ -88,8 +88,8 @@ class ExportAccountPage extends StatelessWidget {
               },
             ),
             CupertinoButton(
-              child: Text(I18n.of(context)!.translationsForLocale().home.ok),
               onPressed: onOk,
+              child: Text(I18n.of(context)!.translationsForLocale().home.ok),
             ),
           ],
         );

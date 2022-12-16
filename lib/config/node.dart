@@ -22,6 +22,11 @@ const NodeConfig sgxBranchConfig = NodeConfig(gesellTypeOverrides, gesellPalletO
 /// and pallet names and methods overwrites.
 @JsonSerializable(explicitToJson: true)
 class NodeConfig {
+  const NodeConfig(this.types, this.pallets);
+
+  factory NodeConfig.fromJson(Map<String, dynamic> json) => _$NodeConfigFromJson(json);
+  Map<String, dynamic> toJson() => _$NodeConfigToJson(this);
+
   /// type overwrites passed to the JS Api type-registry
   final Map<String, dynamic>? types;
 
@@ -29,31 +34,24 @@ class NodeConfig {
   /// holds the overwrite data
   final Map<String, Pallet>? pallets;
 
-  const NodeConfig(this.types, this.pallets);
-
   @override
   String toString() {
     return jsonEncode(this);
   }
-
-  factory NodeConfig.fromJson(Map<String, dynamic> json) => _$NodeConfigFromJson(json);
-
-  Map<String, dynamic> toJson() => _$NodeConfigToJson(this);
 }
 
 @JsonSerializable(explicitToJson: true)
 class Pallet {
+  const Pallet(this.name, this.calls);
+  factory Pallet.fromJson(Map<String, dynamic> json) => _$PalletFromJson(json);
   final String? name;
   final Map<String, String>? calls;
-
-  const Pallet(this.name, this.calls);
 
   @override
   String toString() {
     return jsonEncode(this);
   }
 
-  factory Pallet.fromJson(Map<String, dynamic> json) => _$PalletFromJson(json);
   Map<String, dynamic> toJson() => _$PalletToJson(this);
 }
 

@@ -45,11 +45,11 @@ class RoundedButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(8),
         ),
       ),
+      onPressed: submitting ? null : onPressed,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: row,
       ),
-      onPressed: submitting ? null : onPressed,
     );
   }
 }

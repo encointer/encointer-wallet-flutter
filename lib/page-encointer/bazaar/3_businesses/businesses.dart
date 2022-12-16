@@ -6,9 +6,9 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 
 class Businesses extends StatelessWidget {
-  final data = allBusinesses;
-
   Businesses({Key? key}) : super(key: key);
+
+  final data = allBusinesses;
 
   @override
   Widget build(BuildContext context) {

@@ -342,11 +342,10 @@ class _AccountManagePageState extends State<AccountManagePage> {
 }
 
 class AccountActionItemData {
+  AccountActionItemData(this.title, this.accountAction);
   // in newer flutter versions you can put that stuff into the AccountAction enum and do not need an extra class
   final String title;
   final AccountAction accountAction;
-
-  AccountActionItemData(this.title, this.accountAction);
 }
 
 class CommunityIcon extends StatelessWidget {

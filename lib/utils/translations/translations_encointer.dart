@@ -136,7 +136,7 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   String get youAreRegisteredAs => 'You have registered for the next gathering as PARTICIPANT_TYPE.';
   @override
   String get youAreNotRegisteredPleaseRegisterNextTime =>
-      'You haven\'t been assigned for this key-signing cycle. Please join the next cycle to receive your community income.';
+      "You haven't been assigned for this key-signing cycle. Please join the next cycle to receive your community income.";
   @override
   String get youAreAssignedToAGatheringWithNParticipants => 'You are assigned to a gathering with P_COUNT people.';
   @override
@@ -180,7 +180,7 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   String get endorseeTitle => 'Registered as endorsee - your seat is guaranteed';
   @override
   String get newbieContent =>
-      'You registered as a newbie without previous reputation. We can\'t guarantee that you will be assigned to a '
+      "You registered as a newbie without previous reputation. We can't guarantee that you will be assigned to a "
       'gathering this cycle if there are many newbies. Please check your assignment status on the day before the cycle '
       'to learn if and where your gathering will take place.';
   @override
@@ -571,9 +571,8 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   String get newbieContent =>
       'Вы зарегистрировались в качестве новичка без репутации. Нет гарантии, что Вас назначат на '
-      'это собрание цикла, если в нем будет участвовать большое количество новичков. Пожалуйста, проверьте статус вашего назначения за день до цикла'
+      'это собрание цикла, если в нем будет участвовать большое количество новичков. Пожалуйста, проверьте статус вашего назначения за день до цикла '
       'чтобы узнать, состоится ли ваше собрание и где оно будет проходить.';
-
   @override
   String get newbieTitle => 'Зарегистрирован в качестве новичка - место не гарантировано.';
   @override

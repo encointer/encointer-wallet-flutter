@@ -27,6 +27,7 @@ class CeremonyLocationButton extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
         ),
       ),
+      onPressed: onPressed,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -35,7 +36,6 @@ class CeremonyLocationButton extends StatelessWidget {
           Text(dic.encointer.meetingPoint),
         ],
       ),
-      onPressed: onPressed,
     );
   }
 }

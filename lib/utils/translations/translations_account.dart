@@ -80,7 +80,7 @@ class TranslationsEnAccount implements TranslationsAccount {
   String get observe => 'Observation';
   @override
   String get observeBrief =>
-      'Mark this address as observation, then you can select this address in account select page, to watch it\'s assets and actions';
+      "Mark this address as observation, then you can select this address in account select page, to watch it's assets and actions";
   @override
   String get observeProxyInvalid => 'Invalid proxy account';
   @override
