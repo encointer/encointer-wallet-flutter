@@ -16,6 +16,9 @@ class CeremonyProgressBar extends StatelessWidget {
     required this.meetupTime,
     required this.ceremonyPhaseDurations,
     required this.width,
+    this.assigningPhaseFractionalWidth = 0.15,
+    this.attestingPhaseFractionalWidth = 0.15,
+    this.registeringPhaseFractionalWidth = 0.70,
     Key? key,
   }) : super(key: key);
 
@@ -28,13 +31,13 @@ class CeremonyProgressBar extends StatelessWidget {
   final double width;
 
   /// Fractional width of the registering phase segment of the progress bar.
-  final double registeringPhaseFractionalWidth = 0.70;
+  final double registeringPhaseFractionalWidth;
 
   /// Fractional width of the assigning segment of the progress bar.
-  final double assigningPhaseFractionalWidth = 0.15;
+  final double assigningPhaseFractionalWidth;
 
   /// Fractional width of the attesting segment of the progress bar.
-  final double attestingPhaseFractionalWidth = 0.15;
+  final double attestingPhaseFractionalWidth;
 
   double? _getCeremonyProgress() {
     try {

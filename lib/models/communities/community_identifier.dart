@@ -2,8 +2,9 @@ import 'dart:convert';
 
 import 'package:base58check/base58.dart';
 import 'package:base58check/base58check.dart';
-import 'package:encointer_wallet/utils/format.dart';
 import 'package:flutter/foundation.dart';
+
+import 'package:encointer_wallet/utils/format.dart';
 
 /// CommunityIdentifier consisting of a geohash and a 4-bytes crc code.
 class CommunityIdentifier {
@@ -12,6 +13,12 @@ class CommunityIdentifier {
   // JS-passes these values as hex-strings, but this would be more complicated to handle in dart.
   factory CommunityIdentifier.fromJson(Map<String, dynamic> json) =>
       CommunityIdentifier(Fmt.hexToBytes(json['geohash'] as String), Fmt.hexToBytes(json['digest'] as String));
+
+  factory CommunityIdentifier.fromFmtString(String cid) {
+    const codec = Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
+
+    return CommunityIdentifier(utf8.encode(cid.substring(0, 5)), codec.decode(cid.substring(5)));
+  }
 
   Map<String, dynamic> toJson() => <String, dynamic>{
         'geohash': Fmt.bytesToHex(geohash),
@@ -27,12 +34,6 @@ class CommunityIdentifier {
   @override
   String toString() {
     return jsonEncode(this);
-  }
-
-  static CommunityIdentifier fromFmtString(String cid) {
-    const codec = Base58Codec(Base58CheckCodec.BITCOIN_ALPHABET);
-
-    return CommunityIdentifier(utf8.encode(cid.substring(0, 5)), codec.decode(cid.substring(5)));
   }
 
   String toFmtString() {

@@ -8,11 +8,16 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/b
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class BusinessDetail extends StatelessWidget {
-  const BusinessDetail(this.business, {Key? key}) : super(key: key);
+  const BusinessDetail(
+    this.business, {
+    Key? key,
+    this.cardHeight = 200,
+    this.cardWidth = 160,
+  }) : super(key: key);
 
   final BazaarBusinessData? business;
-  final double cardHeight = 200;
-  final double cardWidth = 160;
+  final double cardHeight;
+  final double cardWidth;
 
   @override
   Widget build(BuildContext context) {

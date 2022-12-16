@@ -144,13 +144,13 @@ class OpeningHoursForDay {
 class OpeningInterval {
   OpeningInterval(this.start, this.end);
 
-  final int start;
-  final int end;
-
   /// example "8:00-12:00" or "8:00 - 12:00"
   OpeningInterval.fromString(String startEndTime)
       : start = _parseTime(startEndTime, 0),
         end = _parseTime(startEndTime, 1);
+
+  final int start;
+  final int end;
 
   static int _parseTime(String startEndTime, int part) {
     final startEnd = startEndTime.split('-');

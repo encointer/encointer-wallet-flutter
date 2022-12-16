@@ -348,7 +348,7 @@ class _TooltipState extends State<TapTooltip> with SingleTickerProviderStateMixi
 
   @override
   Widget build(BuildContext context) {
-    assert(Overlay.of(context, debugRequiredFor: widget) != null);
+    assert(Overlay.of(context, debugRequiredFor: widget) != null, 'widget != null');
     final theme = Theme.of(context);
     final tooltipTheme = TooltipTheme.of(context);
     TextStyle defaultTextStyle;
