@@ -202,7 +202,7 @@ class EndorseButton extends StatelessWidget {
         Observer(builder: (_) {
           return SubmitButtonSecondary(
             key: const Key('tap-endorse-button'),
-            onPressed: isActive() ? onPressed : null,
+            onPressed: hasNewbieTickets() ? onPressed : null,
             child: FittedBox(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -219,7 +219,7 @@ class EndorseButton extends StatelessWidget {
     );
   }
 
-  bool isActive() {
+  bool hasNewbieTickets() {
     return store.encointer.account?.hasNewbieTickets ?? false;
   }
 
