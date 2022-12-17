@@ -518,23 +518,25 @@ class EncointerApi {
   }
 
   Future<int> getNumberOfNewbieTicketsForReputable() async {
-    var _remainingTickets = 0;
+    var remainingTickets = 0;
     final address = store.account.currentAddress;
     final reputations = store.encointer.account?.reputations;
-    if (reputations != null) {
-      for (var reputation in reputations.entries) {
-        try {
-          final numberOfTickets = await jsApi.evalJavascript(
-            'encointer.remainingNewbieTicketsReputable(${jsonEncode(reputation.value.communityIdentifier)}, "${reputation.key}","$address")',
-          );
-          Log.d('Encointer Api', 'numberOfNewbieTickets: $numberOfTickets');
-          _remainingTickets += numberOfTickets as int;
-        } catch (e, s) {
-          Log.e('Encointer Api', '$e', s);
-        }
+    final cid = store.encointer.chosenCid;
+    final cIndex = store.encointer.currentCeremonyIndex;
+
+    if ((reputations?.length ?? 0) > 0) {
+      try {
+        remainingTickets = await jsApi.evalJavascript(
+          'encointer.remainingNewbieTicketsReputable(${jsonEncode(cid)}, "$cIndex","$address")',
+        ) as int;
+
+        Log.d('EncointerApi', 'numberOfNewbieTickets: $remainingTickets');
+      } catch (e, s) {
+        Log.e('EncointerApi', '$e', s);
       }
     }
-    return _remainingTickets;
+
+    return remainingTickets;
   }
 
   Future<int> getNumberOfNewbieTicketsForBootstrapper() async {
