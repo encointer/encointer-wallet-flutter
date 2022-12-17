@@ -59,9 +59,11 @@ abstract class _EncointerAccountStore with Store {
   @observable
   int numberOfNewbieTicketsForReputable = 0;
 
-  /// Number of newbie tickets a bootstrapper can use.
+  /// Number of remaining newbie tickets a bootstrapper can use.
   ///
   /// This will always be 0 if this store's account is not a bootstrapper.
+  ///
+  /// Todo: Should this be in `CommunityAccountStore`? It is different per community...
   @observable
   int numberOfNewbieTicketsForBootstrapper = 0;
 
