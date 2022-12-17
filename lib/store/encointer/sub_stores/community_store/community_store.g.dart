@@ -13,7 +13,6 @@ CommunityStore _$CommunityStoreFromJson(Map<String, dynamic> json) => CommunityS
       ..metadata =
           json['metadata'] == null ? null : CommunityMetadata.fromJson(json['metadata'] as Map<String, dynamic>)
       ..demurrage = (json['demurrage'] as num?)?.toDouble()
-      ..numberOfNewbieTicketsForBootstrapper = json['numberOfNewbieTicketsForBootstrapper'] as int
       ..meetupTime = json['meetupTime'] as int?
       ..meetupTimeOverride = json['meetupTimeOverride'] as int?
       ..bootstrappers = (json['bootstrappers'] as List<dynamic>?)?.map((e) => e as String).toList()
@@ -34,7 +33,6 @@ Map<String, dynamic> _$CommunityStoreToJson(CommunityStore instance) => <String,
       'cid': instance.cid.toJson(),
       'metadata': instance.metadata?.toJson(),
       'demurrage': instance.demurrage,
-      'numberOfNewbieTicketsForBootstrapper': instance.numberOfNewbieTicketsForBootstrapper,
       'meetupTime': instance.meetupTime,
       'meetupTimeOverride': instance.meetupTimeOverride,
       'bootstrappers': instance.bootstrappers,
@@ -92,22 +90,6 @@ mixin _$CommunityStore on _CommunityStore, Store {
   set demurrage(double? value) {
     _$demurrageAtom.reportWrite(value, super.demurrage, () {
       super.demurrage = value;
-    });
-  }
-
-  late final _$numberOfNewbieTicketsForBootstrapperAtom =
-      Atom(name: '_CommunityStore.numberOfNewbieTicketsForBootstrapper', context: context);
-
-  @override
-  int get numberOfNewbieTicketsForBootstrapper {
-    _$numberOfNewbieTicketsForBootstrapperAtom.reportRead();
-    return super.numberOfNewbieTicketsForBootstrapper;
-  }
-
-  @override
-  set numberOfNewbieTicketsForBootstrapper(int value) {
-    _$numberOfNewbieTicketsForBootstrapperAtom.reportWrite(value, super.numberOfNewbieTicketsForBootstrapper, () {
-      super.numberOfNewbieTicketsForBootstrapper = value;
     });
   }
 
@@ -215,15 +197,6 @@ mixin _$CommunityStore on _CommunityStore, Store {
     return _$setBootstrappersAsyncAction.run(() => super.setBootstrappers(bs));
   }
 
-  late final _$getNumberOfNewbieTicketsForBootstrapperAsyncAction =
-      AsyncAction('_CommunityStore.getNumberOfNewbieTicketsForBootstrapper', context: context);
-
-  @override
-  Future<void> getNumberOfNewbieTicketsForBootstrapper() {
-    return _$getNumberOfNewbieTicketsForBootstrapperAsyncAction
-        .run(() => super.getNumberOfNewbieTicketsForBootstrapper());
-  }
-
   late final _$_CommunityStoreActionController = ActionController(name: '_CommunityStore', context: context);
 
   @override
@@ -313,7 +286,6 @@ mixin _$CommunityStore on _CommunityStore, Store {
     return '''
 metadata: ${metadata},
 demurrage: ${demurrage},
-numberOfNewbieTicketsForBootstrapper: ${numberOfNewbieTicketsForBootstrapper},
 meetupTime: ${meetupTime},
 meetupTimeOverride: ${meetupTimeOverride},
 bootstrappers: ${bootstrappers},

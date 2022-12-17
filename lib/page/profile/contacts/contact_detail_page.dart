@@ -174,7 +174,7 @@ class EndorseButton extends StatelessWidget {
                   child: Row(children: [
                     Text(dic.encointer.remainingNewbieTicketsAsBootStrapper),
                     Text(
-                      ' ${store.encointer.community?.numberOfNewbieTicketsForBootstrapper}',
+                      ' ${store.encointer.account?.numberOfNewbieTicketsForBootstrapper}',
                       style: TextStyle(color: zurichLion.shade800, fontSize: 15),
                     ),
                   ]),
@@ -220,21 +220,7 @@ class EndorseButton extends StatelessWidget {
   }
 
   bool isActive() {
-    final community = store.encointer.community;
-    final bootstrappers = community?.bootstrappers;
-    final account = store.encointer.account;
-    if (bootstrappers != null && bootstrappers.contains(store.account.currentAddress)) {
-      if (community!.numberOfNewbieTicketsForBootstrapper > 0 ||
-          account != null && account.numberOfNewbieTicketsForReputable > 0) {
-        return true;
-      } else {
-        return false;
-      }
-    } else if (account != null && account.reputations.length > 0) {
-      return account.numberOfNewbieTicketsForReputable > 0;
-    } else {
-      return false;
-    }
+    return store.encointer.account?.hasNewbieTickets ?? false;
   }
 
   Future<void> onPressed(BuildContext context) async {
