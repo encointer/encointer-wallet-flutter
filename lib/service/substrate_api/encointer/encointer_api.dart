@@ -85,6 +85,7 @@ class EncointerApi {
     getBootstrappers();
     getReputations();
     getMeetupTimeOverride();
+    getNumberOfNewbieTicketsForBootstrapper();
   }
 
   /// Queries the Scheduler pallet: encointerScheduler.currentPhase().
