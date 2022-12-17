@@ -85,7 +85,7 @@ class EncointerApi {
     getBootstrappers();
     getReputations();
     getMeetupTimeOverride();
-    getNumberOfNewbieTicketsForBootstrapper();
+    store.encointer.account?.getNumberOfNewbieTicketsForBootstrapper();
   }
 
   /// Queries the Scheduler pallet: encointerScheduler.currentPhase().
@@ -527,7 +527,7 @@ class EncointerApi {
           final numberOfTickets = await jsApi.evalJavascript(
             'encointer.remainingNewbieTicketsReputable(${jsonEncode(reputation.value.communityIdentifier)}, "${reputation.key}","$address")',
           );
-          Log.d('Encointer Api', 'numberOfTickets: $numberOfTickets');
+          Log.d('Encointer Api', 'numberOfNewbieTickets: $numberOfTickets');
           _remainingTickets += numberOfTickets as int;
         } catch (e, s) {
           Log.e('Encointer Api', '$e', s);
@@ -545,7 +545,7 @@ class EncointerApi {
       final numberOfTickets = await jsApi.evalJavascript(
         'encointer.remainingNewbieTicketsBootstrapper(${jsonEncode(cid)},"$address")',
       );
-      Log.d('Encointer Api', 'numberOfTickets: $numberOfTickets');
+      Log.d('Encointer Api', 'numberOfBootstrapperTickets: $numberOfTickets');
       _remainingTickets += numberOfTickets as int;
     } catch (e, s) {
       Log.e('Encointer Api', '$e', s);
