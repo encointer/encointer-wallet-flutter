@@ -354,152 +354,152 @@ class TranslationsDeBazaar implements TranslationsBazaar {
   @override
   String get zipCode => 'Postleitzahl';
   @override
-  String get useDescriptiveName => 'Please, use a descriptive name';
+  String get useDescriptiveName => 'Bitte wähle einen beschreibenden Name';
   @override
   String get filter => 'Filtern';
 }
 
 class TranslationsFrBazaar implements TranslationsBazaar {
   @override
-  String get address => throw UnimplementedError();
+  String get address => 'Adresse';
   @override
-  String get apply => throw UnimplementedError();
+  String get apply => 'Appliquer';
   @override
-  String get bazaarNew => throw UnimplementedError();
+  String get bazaarNew => 'Nouveau au Bazaar';
   @override
-  String get bazaarTitle => throw UnimplementedError();
+  String get bazaarTitle => 'Le Bazaar';
   @override
-  String get businessAdd => throw UnimplementedError();
+  String get businessAdd => ' + Ajouter un nouveau magasin';
   @override
-  String get businessCreate => throw UnimplementedError();
+  String get businessCreate => 'Créer un nouveau magasin';
   @override
-  String get businessDescription => throw UnimplementedError();
+  String get businessDescription => 'Description du magasin\'.';
   @override
-  String get businessDescriptionHint => throw UnimplementedError();
+  String get businessDescriptionHint => 'Éveille l\'intérêt pour ton offre avec une courte description.';
   @override
-  String get businesses => throw UnimplementedError();
+  String get businesses => 'Magasins';
   @override
-  String get businessesFound => throw UnimplementedError();
+  String get businessesFound => 'Magasins trouvés';
   @override
-  String get businessesMy => throw UnimplementedError();
+  String get businessesMy => 'Mes magasins';
   @override
-  String get businessesOffered => throw UnimplementedError();
+  String get businessesOffered => 'Offert dans les magasins';
   @override
-  String get businessesResults => throw UnimplementedError();
+  String get businessesResults => 'Magasins trouvés';
   @override
-  String get businessesVicinity => throw UnimplementedError();
+  String get businessesVicinity => 'Magasins à proximité';
   @override
-  String get businessName => throw UnimplementedError();
+  String get businessName => 'Nom du magasin';
   @override
-  String get businessNameHint => throw UnimplementedError();
+  String get businessNameHint => 'Utilise un nom qui a du sens';
   @override
-  String get businessUrl => throw UnimplementedError();
+  String get businessUrl => 'URL du magasin';
   @override
-  String get cameraDefault => throw UnimplementedError();
+  String get cameraDefault => 'Appareil photo\'.';
   @override
-  String get cancelDefault => throw UnimplementedError();
+  String get cancelDefault => 'Abandon';
   @override
-  String get categories => throw UnimplementedError();
+  String get categories => 'Catégories';
   @override
-  String get city => throw UnimplementedError();
+  String get city => 'Ville';
   @override
   String get communityChoose => throw UnimplementedError();
   @override
-  String get communityLoad => throw UnimplementedError();
+  String get communityLoad => 'Choisis une communauté:';
   @override
-  String get communityNotFound => throw UnimplementedError();
+  String get communityNotFound => 'Aucune communauté trouvée';
   @override
-  String get day => throw UnimplementedError();
+  String get day => 'Jour';
   @override
-  String get delete => throw UnimplementedError();
+  String get delete => 'Supprimer';
   @override
-  String get delivery => throw UnimplementedError();
+  String get delivery => 'Livraison';
   @override
-  String get deliveryOptions => throw UnimplementedError();
+  String get deliveryOptions => 'Options d\'expédition';
   @override
-  String get description => throw UnimplementedError();
+  String get description => 'Description';
   @override
-  String get favorites => throw UnimplementedError();
+  String get favorites => 'Favoris';
   @override
-  String get found => throw UnimplementedError();
+  String get found => 'Ont été trouvés';
   @override
-  String get galleryDefault => throw UnimplementedError();
+  String get galleryDefault => 'Galerie';
   @override
-  String get imageChoose => throw UnimplementedError();
+  String get imageChoose => 'Choisir une image';
   @override
-  String get imageNotPicked => throw UnimplementedError();
+  String get imageNotPicked => 'Aucune image n\'a encore été sélectionnée.';
   @override
-  String get imagesAdded => throw UnimplementedError();
+  String get imagesAdded => 'Des images ont été ajoutées';
   @override
-  String get imagesAddRemove => throw UnimplementedError();
+  String get imagesAddRemove => 'Ajouter/supprimer des images\'.';
   @override
-  String get imagesMultiplePick => throw UnimplementedError();
+  String get imagesMultiplePick => 'Sélectionner plusieurs images dans la galerie';
   @override
-  String get imageVideoError => throw UnimplementedError();
+  String get imageVideoError => 'Erreur de sélection d\'image/vidéo';
   @override
-  String get lastVisited => throw UnimplementedError();
+  String get lastVisited => 'Dernière visite';
   @override
-  String get lookingFor => throw UnimplementedError();
+  String get lookingFor => 'Qu\'est-ce que tu cherches?';
   @override
-  String get map => throw UnimplementedError();
+  String get map => 'Carte';
   @override
-  String get menu => throw UnimplementedError();
+  String get menu => 'Menu';
   @override
-  String get no => throw UnimplementedError();
+  String get no => 'Non';
   @override
-  String get noItems => throw UnimplementedError();
+  String get noItems => 'Aucun objet trouvé\'.';
   @override
-  String get notifications => throw UnimplementedError();
+  String get notifications => 'Notifications';
   @override
-  String get offeringAdd => throw UnimplementedError();
+  String get offeringAdd => ' + Ajouter une offre';
   @override
-  String get offeringNew => throw UnimplementedError();
+  String get offeringNew => 'Avec les plus récentes';
   @override
-  String get offerings => throw UnimplementedError();
+  String get offerings => 'Offres';
   @override
-  String get offeringsFound => throw UnimplementedError();
+  String get offeringsFound => 'Offres trouvées';
   @override
-  String get offeringsMy => throw UnimplementedError();
+  String get offeringsMy => 'Mes offres';
   @override
-  String get offeringsResults => throw UnimplementedError();
+  String get offeringsResults => 'Offres trouvées';
   @override
-  String get openningHours => throw UnimplementedError();
+  String get openningHours => 'Heures d\'ouverture\'';
   @override
-  String get openningHoursInputHint => throw UnimplementedError();
+  String get openningHoursInputHint => 'par exemple 8:15-14:45 ou 9-5pm';
   @override
-  String get photoAdd => throw UnimplementedError();
+  String get photoAdd => 'Ajouter une photo';
   @override
-  String get photoTake => throw UnimplementedError();
+  String get photoTake => 'Prendre une photo';
   @override
-  String get price => throw UnimplementedError();
+  String get price => 'Prix';
   @override
-  String get productNewness => throw UnimplementedError();
+  String get productNewness => 'Nouveauté des Produits';
   @override
-  String get recentlyAdded => throw UnimplementedError();
+  String get recentlyAdded => 'Récemment ajouté';
   @override
-  String get reset => throw UnimplementedError();
+  String get reset => 'Réinitialiser';
   @override
-  String get save => throw UnimplementedError();
+  String get save => 'Enregistrer';
   @override
-  String get search => throw UnimplementedError();
+  String get search => 'Recherche...';
   @override
-  String get showAll => throw UnimplementedError();
+  String get showAll => ' + Afficher tout';
   @override
-  String get state => throw UnimplementedError();
+  String get state => 'Etat';
   @override
-  String get street => throw UnimplementedError();
+  String get street => 'Rue';
   @override
-  String get timeIntervalAdd => throw UnimplementedError();
+  String get timeIntervalAdd => 'Ajouter un intervalle de temps';
   @override
-  String get topResults => throw UnimplementedError();
+  String get topResults => 'Top résultats';
   @override
-  String get waiting => throw UnimplementedError();
+  String get waiting => 'attendre ...';
   @override
-  String get zipCode => throw UnimplementedError();
+  String get zipCode => 'Code postal';
   @override
-  String get useDescriptiveName => throw UnimplementedError();
+  String get useDescriptiveName => 'Veuillez choisir un nom descriptif';
   @override
-  String get filter => throw UnimplementedError();
+  String get filter => 'Filtrer';
 }
 
 class TranslationsRuBazaar implements TranslationsBazaar {
@@ -508,7 +508,7 @@ class TranslationsRuBazaar implements TranslationsBazaar {
   @override
   String get apply => 'Применить';
   @override
-  String get bazaarNew => 'Новое в Базаре';
+  String get bazaarNew => 'Новое на Базаре';
   @override
   String get bazaarTitle => 'Базар';
   @override

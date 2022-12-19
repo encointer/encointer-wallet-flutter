@@ -400,7 +400,8 @@ class TranslationsFrAssets implements TranslationsAssets {
   String get insufficientFundsExplanation =>
       'Tu n\'as pas assez d\'argent sur ce compte. Regarde sur le site web de ta communauté locale pour savoir comment en obtenir.';
   @override
-  String get chosenRightCommunity => throw UnimplementedError();
+  String get chosenRightCommunity =>
+      'Les données sont destinées à une autre communauté. S\'il te plaît, change la communauté pour envoyer le payment.';
 }
 
 class TranslationsRuAssets implements TranslationsAssets {
