@@ -186,8 +186,8 @@ mixin _$CommunityStore on _CommunityStore, Store {
   late final _$getCommunityIconAsyncAction = AsyncAction('_CommunityStore.getCommunityIcon', context: context);
 
   @override
-  Future<String?> getCommunityIcon() {
-    return _$getCommunityIconAsyncAction.run(() => super.getCommunityIcon());
+  Future<String?> getCommunityIcon([BuildContext? context]) {
+    return _$getCommunityIconAsyncAction.run(() => super.getCommunityIcon(context));
   }
 
   late final _$_CommunityStoreActionController = ActionController(name: '_CommunityStore', context: context);

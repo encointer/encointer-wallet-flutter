@@ -22,7 +22,7 @@ class CommunityIconObserver extends StatelessWidget {
               return SvgPicture.string(store.encointer.community!.communityIcon!);
             } else {
               return FutureBuilder<String?>(
-                future: context.read<AppStore>().encointer.community!.getCommunityIcon(),
+                future: context.read<AppStore>().encointer.community!.getCommunityIcon(context),
                 builder: (_, AsyncSnapshot<String?> snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const CupertinoActivityIndicator();

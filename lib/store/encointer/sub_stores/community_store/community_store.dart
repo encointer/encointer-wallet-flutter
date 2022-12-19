@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
+import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/models/communities/community_identifier.dart';
 import 'package:encointer_wallet/models/communities/community_metadata.dart';
 import 'package:encointer_wallet/models/encointer_balance_data/balance_entry.dart';
@@ -82,18 +84,15 @@ abstract class _CommunityStore with Store {
   double? Function(BalanceEntry)? get applyDemurrage => _applyDemurrage;
 
   @action
-  Future<String?> getCommunityIcon() async {
+  Future<String?> getCommunityIcon([BuildContext? context]) async {
     try {
       if (assetsCid == null) {
         return null;
       } else {
         final data = await webApi.ipfs.getCommunityIcon(assetsCid!);
-        if (data != null) {
-          communityIcon = data;
-          return communityIcon;
-        } else {
-          return null;
-        }
+        communityIcon =
+            data ?? (context != null ? await DefaultAssetBundle.of(context).loadString(fallBackCommunityIcon) : null);
+        return communityIcon;
       }
     } catch (e) {
       Log.e('getCommunityIcon $e', 'App Store getCommunityIcon');
