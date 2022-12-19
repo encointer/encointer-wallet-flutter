@@ -18,8 +18,7 @@ EncointerAccountStore _$EncointerAccountStoreFromJson(Map<String, dynamic> json)
       )
       ..txsTransfer = ObservableList<TransferData>.of(
           (json['txsTransfer'] as List).map((e) => TransferData.fromJson(e as Map<String, dynamic>)))
-      ..numberOfNewbieTicketsForReputable = json['numberOfNewbieTicketsForReputable'] as int
-      ..numberOfNewbieTicketsForBootstrapper = json['numberOfNewbieTicketsForBootstrapper'] as int;
+      ..numberOfNewbieTicketsForReputable = json['numberOfNewbieTicketsForReputable'] as int;
 
 Map<String, dynamic> _$EncointerAccountStoreToJson(EncointerAccountStore instance) => <String, dynamic>{
       'network': instance.network,
@@ -28,7 +27,6 @@ Map<String, dynamic> _$EncointerAccountStoreToJson(EncointerAccountStore instanc
       'reputations': instance.reputations.map((k, e) => MapEntry(k.toString(), e.toJson())),
       'txsTransfer': instance.txsTransfer.map((e) => e.toJson()).toList(),
       'numberOfNewbieTicketsForReputable': instance.numberOfNewbieTicketsForReputable,
-      'numberOfNewbieTicketsForBootstrapper': instance.numberOfNewbieTicketsForBootstrapper,
     };
 
 // **************************************************************************
@@ -38,12 +36,6 @@ Map<String, dynamic> _$EncointerAccountStoreToJson(EncointerAccountStore instanc
 // ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
-  Computed<bool>? _$hasNewbieTicketsComputed;
-
-  @override
-  bool get hasNewbieTickets => (_$hasNewbieTicketsComputed ??=
-          Computed<bool>(() => super.hasNewbieTickets, name: '_EncointerAccountStore.hasNewbieTickets'))
-      .value;
   Computed<int?>? _$ceremonyIndexForProofOfAttendanceComputed;
 
   @override
@@ -113,22 +105,6 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
     });
   }
 
-  late final _$numberOfNewbieTicketsForBootstrapperAtom =
-      Atom(name: '_EncointerAccountStore.numberOfNewbieTicketsForBootstrapper', context: context);
-
-  @override
-  int get numberOfNewbieTicketsForBootstrapper {
-    _$numberOfNewbieTicketsForBootstrapperAtom.reportRead();
-    return super.numberOfNewbieTicketsForBootstrapper;
-  }
-
-  @override
-  set numberOfNewbieTicketsForBootstrapper(int value) {
-    _$numberOfNewbieTicketsForBootstrapperAtom.reportWrite(value, super.numberOfNewbieTicketsForBootstrapper, () {
-      super.numberOfNewbieTicketsForBootstrapper = value;
-    });
-  }
-
   late final _$setReputationsAsyncAction = AsyncAction('_EncointerAccountStore.setReputations', context: context);
 
   @override
@@ -150,15 +126,6 @@ mixin _$EncointerAccountStore on _EncointerAccountStore, Store {
   @override
   Future<void> getNumberOfNewbieTicketsForReputable() {
     return _$getNumberOfNewbieTicketsForReputableAsyncAction.run(() => super.getNumberOfNewbieTicketsForReputable());
-  }
-
-  late final _$getNumberOfNewbieTicketsForBootstrapperAsyncAction =
-      AsyncAction('_EncointerAccountStore.getNumberOfNewbieTicketsForBootstrapper', context: context);
-
-  @override
-  Future<void> getNumberOfNewbieTicketsForBootstrapper() {
-    return _$getNumberOfNewbieTicketsForBootstrapperAsyncAction
-        .run(() => super.getNumberOfNewbieTicketsForBootstrapper());
   }
 
   late final _$_EncointerAccountStoreActionController =
@@ -204,8 +171,6 @@ balanceEntries: ${balanceEntries},
 reputations: ${reputations},
 txsTransfer: ${txsTransfer},
 numberOfNewbieTicketsForReputable: ${numberOfNewbieTicketsForReputable},
-numberOfNewbieTicketsForBootstrapper: ${numberOfNewbieTicketsForBootstrapper},
-hasNewbieTickets: ${hasNewbieTickets},
 ceremonyIndexForProofOfAttendance: ${ceremonyIndexForProofOfAttendance}
     ''';
   }

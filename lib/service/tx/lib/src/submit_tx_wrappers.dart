@@ -99,7 +99,7 @@ Future<void> submitEndorseNewcomer(
     txParams,
     onFinish: (BuildContext txPageContext, Map res) {
       store.encointer.account!.getNumberOfNewbieTicketsForReputable();
-      store.encointer.account!.getNumberOfNewbieTicketsForBootstrapper();
+      store.encointer.communityAccount!.getNumberOfNewbieTicketsForBootstrapper();
     },
   );
 }

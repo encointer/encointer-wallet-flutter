@@ -59,17 +59,6 @@ abstract class _EncointerAccountStore with Store {
   @observable
   int numberOfNewbieTicketsForReputable = 0;
 
-  /// Number of remaining newbie tickets a bootstrapper can use.
-  ///
-  /// This will always be 0 if this store's account is not a bootstrapper.
-  ///
-  /// Todo: Should this be in `CommunityAccountStore`? It is different per community...
-  @observable
-  int numberOfNewbieTicketsForBootstrapper = 0;
-
-  @computed
-  bool get hasNewbieTickets => (numberOfNewbieTicketsForReputable > 0 || numberOfNewbieTicketsForBootstrapper > 0);
-
   @computed
   int? get ceremonyIndexForProofOfAttendance {
     if (reputations.isNotEmpty) {
@@ -141,11 +130,6 @@ abstract class _EncointerAccountStore with Store {
   @action
   Future<void> getNumberOfNewbieTicketsForReputable() async {
     numberOfNewbieTicketsForReputable = await webApi.encointer.getNumberOfNewbieTicketsForReputable();
-  }
-
-  @action
-  Future<void> getNumberOfNewbieTicketsForBootstrapper() async {
-    numberOfNewbieTicketsForBootstrapper = await webApi.encointer.getNumberOfNewbieTicketsForBootstrapper();
   }
 
   void initStore(Function? cacheFn) {
