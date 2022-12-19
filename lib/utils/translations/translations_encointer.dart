@@ -331,123 +331,136 @@ class TranslationsDeEncointer implements TranslationsEncointer {
 
 class TranslationsFrEncointer implements TranslationsEncointer {
   @override
-  String get registerParticipant => throw UnimplementedError();
+  String get registerParticipant => 'S\'inscrire';
   @override
-  String get claimsSubmit => throw UnimplementedError();
+  String get claimsSubmit => 'Déposer une demande';
   @override
-  String get claimsSubmitN => throw UnimplementedError();
+  String get claimsSubmitN => 'Déposer N_COUNT des demandes.';
   @override
-  String get claimsPurge => throw UnimplementedError();
+  String get claimsPurge => 'Supprimer les demandes déjà scannées.';
   @override
-  String get claimsPurgeConfirm => throw UnimplementedError();
+  String get claimsPurgeConfirm => 'Es-tu sûr de vouloir supprimer toutes les demandes scannées?';
   @override
-  String get keySigningCycle => throw UnimplementedError();
+  String get keySigningCycle => 'Cycle de signature de clé';
   @override
-  String get nextCycleTimeLeft => throw UnimplementedError();
+  String get nextCycleTimeLeft => 'Prochain cycle: dans';
   @override
-  String get nextCycleDateLabel => throw UnimplementedError();
+  String get nextCycleDateLabel => 'Prochain cycle:';
   @override
-  String get claimQr => throw UnimplementedError();
+  String get claimQr => 'Ma demande d\'attestation de présence';
   @override
-  String get claimsScanned => throw UnimplementedError();
+  String get claimsScanned => 'Tu as scanné AMOUNT_PLACEHOLDER demandes.';
   @override
-  String get claimsScannedAlready => throw UnimplementedError();
+  String get claimsScannedAlready => 'La demande déjà scannée a été mise à jour';
   @override
-  String get claimsScannedDecodeFailed => throw UnimplementedError();
+  String get claimsScannedDecodeFailed =>
+      'La demande scannée n\'a pas pu être décodée. Ton vis-à-vis doit mettre à jour l\'application.';
   @override
-  String get claimsScannedNew => throw UnimplementedError();
+  String get claimsScannedNew => 'Nouvelle demande scannée';
   @override
-  String get claimsScannedNOfM => throw UnimplementedError();
+  String get claimsScannedNOfM => 'SCANNED_COUNT / TOTAL_COUNT demandes scannées';
   @override
-  String get claimsSubmitDetail => throw UnimplementedError();
+  String get claimsSubmitDetail => 'Dépose AMOUNT affirmations pour cette assemblée';
   @override
-  String get meetupAttended => throw UnimplementedError();
+  String get meetupAttended => 'A participé à la dernière rencontre';
   @override
-  String get meetupClaimantInvalid => throw UnimplementedError();
+  String get meetupClaimantInvalid =>
+      'L\'auteur de la demande ne fait pas partie de ton rencontre. La demande n\'a pas été enregistrée.';
   @override
-  String get meetupClaimantEqualToSelf => throw UnimplementedError();
+  String get meetupClaimantEqualToSelf =>
+      'Erreur, l\'adresse est le compte actuel. La demande n\'a pas été enregistrée.';
   @override
-  String get meetupLocation => throw UnimplementedError();
+  String get meetupLocation => 'Point de rencontre';
   @override
-  String get startGathering => throw UnimplementedError();
+  String get startGathering => 'Démarrer la rencontre';
   @override
-  String get alreadyRegistered => throw UnimplementedError();
+  String get alreadyRegistered => 'Déjà inscrit';
   @override
-  String get communities => throw UnimplementedError();
+  String get communities => 'Communautés';
   @override
-  String get noCommunitiesAreYouOffline => throw UnimplementedError();
+  String get noCommunitiesAreYouOffline =>
+      'Aucune communauté n\'a été trouvée. Tu pourras en choisir une plus tard. Tu es hors ligne ?';
   @override
-  String get registerUntil => throw UnimplementedError();
+  String get registerUntil => 'Inscrive-toi avant le';
   @override
-  String get meetingPoint => throw UnimplementedError();
+  String get meetingPoint => 'Point de rencontre';
   @override
-  String get gatheringIsOver => throw UnimplementedError();
+  String get gatheringIsOver => 'La rencontre est terminée';
   @override
-  String get today => throw UnimplementedError();
+  String get today => 'Aujourd\'hui';
   @override
-  String get tomorrow => throw UnimplementedError();
+  String get tomorrow => 'Demain';
   @override
-  String get calendarEntryDescription => throw UnimplementedError();
+  String get calendarEntryDescription => 'Participe à la rencontre pour recevoir ton paiement.';
   @override
-  String get youAreNotRegistered => throw UnimplementedError();
+  String get youAreNotRegistered => 'Tu n\'as malheureusement pas été attribué à une rencontre le';
   @override
-  String get howManyParticipantsShowedUp => throw UnimplementedError();
+  String get howManyParticipantsShowedUp => 'Combien de participants y a-t-il, toi y compris ';
   @override
-  String get cycleWillTakePlaceOn => throw UnimplementedError();
+  String get cycleWillTakePlaceOn => 'Le cycle de signature des clés aura lieu le';
   @override
-  String get gatheringSuccessfullyCompleted => throw UnimplementedError();
+  String get gatheringSuccessfullyCompleted => 'La rencontre a été un succès';
   @override
-  String get fetchingReputations => throw UnimplementedError();
+  String get fetchingReputations => 'Vérifier si tu as une réputation';
   @override
-  String get youAreRegisteredAs => throw UnimplementedError();
+  String get youAreRegisteredAs => 'Tu t\'es inscrit comme PARTICIPANT_TYPE a la prochain rencontre.';
   @override
-  String get youAreNotRegisteredPleaseRegisterNextTime => throw UnimplementedError();
+  String get youAreNotRegisteredPleaseRegisterNextTime => 'Tu n\'as pas été assigné à ce cycle de signature de clé.'
+      'Si\'il te plaît, inscris-toi pour le prochain cycle pour recevoir ton paiement de communauté.';
   @override
-  String get youAreAssignedToAGatheringWithNParticipants => throw UnimplementedError();
+  String get youAreAssignedToAGatheringWithNParticipants =>
+      'Tu es assigné à une rencontre avec des personnes de P_COUNT.';
   @override
-  String get successfullySentNAttestations => throw UnimplementedError();
+  String get successfullySentNAttestations =>
+      'Tu as soumis avec succès des attestations pour P_COUNT autres personnes.';
   @override
-  String get countParticipants => throw UnimplementedError();
+  String get countParticipants => 'Compte';
   @override
-  String get numberOfAttendees => throw UnimplementedError();
+  String get numberOfAttendees => 'Nombre de participants';
   @override
-  String get next => throw UnimplementedError();
+  String get next => 'Continuer';
   @override
-  String get closeGathering => throw UnimplementedError();
+  String get closeGathering => 'Fermer la rencontre.';
   @override
-  String get count => throw UnimplementedError();
+  String get count => 'Compter';
   @override
-  String get scan => throw UnimplementedError();
+  String get scan => 'Scanner';
   @override
-  String get scanDescriptionForMeetup => throw UnimplementedError();
+  String get scanDescriptionForMeetup =>
+      'Chaque personne présente doit scanner toutes les autres, et être scannée par toutes.';
   @override
-  String get scanOthers => throw UnimplementedError();
+  String get scanOthers => 'Scanner les autres';
   @override
-  String get finish => throw UnimplementedError();
+  String get finish => 'Terminer';
   @override
-  String get thankYou => throw UnimplementedError();
+  String get thankYou => 'Merci';
   @override
-  String get weHopeToSeeYouAtTheNextGathering => throw UnimplementedError();
+  String get weHopeToSeeYouAtTheNextGathering => 'Nous espérons te revoir à la prochaine rencontre';
   @override
-  String get goToLeuZurich => throw UnimplementedError();
+  String get goToLeuZurich => 'Ouvrir leu.zuerich';
   @override
   String get leuZurichFAQ => throw UnimplementedError();
   @override
-  String get bootstrapperContent => throw UnimplementedError();
+  String get bootstrapperContent =>
+      'S\'il te reste des tickets d\'endossement, n\'oublie pas de confirmer Novice comme digne de confiance.';
   @override
-  String get bootstrapperTitle => throw UnimplementedError();
+  String get bootstrapperTitle => 'Enregistré comme Bootstrapper - ta place est garantie.';
   @override
-  String get endorseeContent => throw UnimplementedError();
+  String get endorseeContent =>
+      'Tu as été confirmé comme membre de confiance par un Bootstrapper. Ta place est donc garantie.';
   @override
-  String get endorseeTitle => throw UnimplementedError();
+  String get endorseeTitle => 'Enregistré comme Endosser - Ta place est garantie.';
   @override
-  String get newbieContent => throw UnimplementedError();
+  String get newbieContent => 'Tu t\'es enregistré en tant que Novice Il n\'est pas garanti que tu sois dans ce cycle'
+      'Si le nombre de Novices est élevé, tu ne seras pas assigné. S’il te plaît, vérifie ton statut d\'assignation le jour précédant le cycle pour savoir'
+      'pour savoir si et où ta réunion aura lieu.';
   @override
-  String get newbieTitle => throw UnimplementedError();
+  String get newbieTitle => 'Enregistré comme Novice - Ta place n\'est pas encore garantie';
   @override
-  String get reputableContent => throw UnimplementedError();
+  String get reputableContent =>
+      'Tu as utilisé ta réputation pour obtenir une place garantie. Attention : si tu t\'enregistres,';
   @override
-  String get reputableTitle => throw UnimplementedError();
+  String get reputableTitle => 'Enregistré en tant que Reputable. Ta place est garantie';
   @override
   String get remainingNewbieTickets => throw UnimplementedError();
 }
