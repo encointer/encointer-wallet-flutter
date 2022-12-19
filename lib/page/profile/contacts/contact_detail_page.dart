@@ -220,7 +220,12 @@ class EndorseButton extends StatelessWidget {
   }
 
   bool hasNewbieTickets() {
-    return store.encointer.account?.hasNewbieTickets ?? false;
+    if (store.encointer.account!.reputations.isNotEmpty ||
+        store.encointer.community!.bootstrappers!.contains(store.account.currentAddress)) {
+      return store.encointer.account?.hasNewbieTickets ?? false;
+    } else {
+      return false;
+    }
   }
 
   Future<void> onPressed(BuildContext context) async {
