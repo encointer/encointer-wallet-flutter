@@ -123,7 +123,7 @@ class NotificationPlugin {
     return Future.value(true);
   }
 
-  static Future<void> showNotificationSchedule(int id, String? title, String body, tz.TZDateTime scheduledDate,
+  static Future<void> scheduleNotification(int id, String? title, String body, tz.TZDateTime scheduledDate,
       {String? payload, String? cid}) async {
     await flutterLocalNotificationsPlugin.zonedSchedule(
       id,

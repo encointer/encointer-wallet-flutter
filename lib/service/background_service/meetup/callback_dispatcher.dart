@@ -36,7 +36,7 @@ Future<void> callbackDispatcher() async {
       _feeds,
       _alreadyShownNotifications,
       NotificationPlugin.showNotification,
-      showNotificationSchedule: NotificationPlugin.showNotificationSchedule,
+      scheduleNotification: NotificationPlugin.scheduleNotification,
     );
 
     _alreadyShownNotifications.addAll(shownNotifications);
@@ -54,7 +54,7 @@ Future<List<String>> showAllNotificationsFromFeed(
   List<Feed> feeds,
   List<String> alreadyShownNotifications,
   Future<bool> Function(int id, String title, String body) showNotification, {
-  Future<void> Function(int id, String title, String body, tz.TZDateTime scheduledDate)? showNotificationSchedule,
+  Future<void> Function(int id, String title, String body, tz.TZDateTime scheduledDate)? scheduleNotification,
 }) async {
   final shownNotifications = <String>[];
 
@@ -64,11 +64,11 @@ Future<List<String>> showAllNotificationsFromFeed(
         shownNotifications.add(feeds[i].id);
         Log.d('showing new notification ${feeds[i]}', 'callbackDispatcher');
         await showNotification(i, feeds[i].title, feeds[i].content);
-        if (showNotificationSchedule != null) {
-          await showNotificationSchedule(
+        if (scheduleNotification != null) {
+          await scheduleNotification(
             i,
             feeds[i].title,
-            '${feeds[i].content} ${tz.TZDateTime.from(feeds[i].showAt, tz.local)}',
+            feeds[i].content,
             tz.TZDateTime.from(feeds[i].showAt, tz.local),
           );
         }
