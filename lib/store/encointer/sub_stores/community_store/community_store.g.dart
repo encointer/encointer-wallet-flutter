@@ -190,6 +190,13 @@ mixin _$CommunityStore on _CommunityStore, Store {
     return _$getCommunityIconAsyncAction.run(() => super.getCommunityIcon());
   }
 
+  late final _$setBootstrappersAsyncAction = AsyncAction('_CommunityStore.setBootstrappers', context: context);
+
+  @override
+  Future<void> setBootstrappers(List<String> bs) {
+    return _$setBootstrappersAsyncAction.run(() => super.setBootstrappers(bs));
+  }
+
   late final _$_CommunityStoreActionController = ActionController(name: '_CommunityStore', context: context);
 
   @override
@@ -218,16 +225,6 @@ mixin _$CommunityStore on _CommunityStore, Store {
     final _$actionInfo = _$_CommunityStoreActionController.startAction(name: '_CommunityStore.setDemurrage');
     try {
       return super.setDemurrage(d);
-    } finally {
-      _$_CommunityStoreActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void setBootstrappers(List<String> bs) {
-    final _$actionInfo = _$_CommunityStoreActionController.startAction(name: '_CommunityStore.setBootstrappers');
-    try {
-      return super.setBootstrappers(bs);
     } finally {
       _$_CommunityStoreActionController.endAction(_$actionInfo);
     }

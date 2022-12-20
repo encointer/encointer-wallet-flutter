@@ -60,7 +60,9 @@ abstract class TranslationsEncointer {
   String get reputableContent;
   String get bootstrapperTitle;
   String get bootstrapperContent;
-  String get remainingNewbieTickets;
+  String get remainingNewbieTicketsAsReputable;
+  String get remainingNewbieTicketsAsBootStrapper;
+  String get onlyReputablesCanEndorseAttendGatheringToBecomeOne;
 }
 
 class TranslationsEnEncointer implements TranslationsEncointer {
@@ -192,7 +194,12 @@ class TranslationsEnEncointer implements TranslationsEncointer {
   @override
   String get reputableTitle => 'Registered as reputable - your seat is guaranteed';
   @override
-  String get remainingNewbieTickets => 'Remaining newbie tickets as reputable:';
+  String get remainingNewbieTicketsAsReputable => 'Remaining newbie tickets as reputable:';
+  @override
+  String get remainingNewbieTicketsAsBootStrapper => 'Remaining newbie tickets as bootsrapper:';
+  @override
+  String get onlyReputablesCanEndorseAttendGatheringToBecomeOne =>
+      'Only reputables can endorse. Attend a gathering to get reputation!';
 }
 
 class TranslationsDeEncointer implements TranslationsEncointer {
@@ -326,7 +333,12 @@ class TranslationsDeEncointer implements TranslationsEncointer {
   @override
   String get reputableTitle => 'Als Reputable registriert. Dein Platz ist garantiert';
   @override
-  String get remainingNewbieTickets => 'Verbleibende Newbie Tickets als Reputable:';
+  String get remainingNewbieTicketsAsReputable => 'Verbleibende Newbie Tickets als Reputable:';
+  @override
+  String get remainingNewbieTicketsAsBootStrapper => 'Verbleibende Newbie Tickets als Bootstrapper:';
+  @override
+  String get onlyReputablesCanEndorseAttendGatheringToBecomeOne =>
+      'Nur Reputables können endorsen. Nimm an einem Treffen teil, um Reputation zu erhalten!';
 }
 
 class TranslationsFrEncointer implements TranslationsEncointer {
@@ -449,7 +461,11 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   @override
   String get reputableTitle => throw UnimplementedError();
   @override
-  String get remainingNewbieTickets => throw UnimplementedError();
+  String get remainingNewbieTicketsAsReputable => throw UnimplementedError();
+  @override
+  String get remainingNewbieTicketsAsBootStrapper => throw UnimplementedError();
+  @override
+  String get onlyReputablesCanEndorseAttendGatheringToBecomeOne => throw UnimplementedError();
 }
 
 class TranslationsRuEncointer implements TranslationsEncointer {
@@ -493,7 +509,7 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   String get meetupClaimantInvalid => 'Этот заявитель не является участником встречи. Заявление не сохраняется.';
   @override
-  String get meetupClaimantEqualToSelf => ' Ошибка, адресf расчетного счета. Запрос не был сохранен.';
+  String get meetupClaimantEqualToSelf => ' Ошибка, адрес расчетного счета. Запрос не был сохранен.';
   @override
   String get meetupLocation => 'Локция встречи';
   @override
@@ -573,7 +589,6 @@ class TranslationsRuEncointer implements TranslationsEncointer {
       'Вы зарегистрировались в качестве новичка без репутации. Нет гарантии, что Вас назначат на '
       'это собрание цикла, если в нем будет участвовать большое количество новичков. Пожалуйста, проверьте статус вашего назначения за день до цикла'
       'чтобы узнать, состоится ли ваше собрание и где оно будет проходить.';
-
   @override
   String get newbieTitle => 'Зарегистрирован в качестве новичка - место не гарантировано.';
   @override
@@ -583,5 +598,10 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   String get reputableTitle => 'Зарегистрирован в качестве уважаемого - ваше место гарантировано.';
   @override
-  String get remainingNewbieTickets => 'Оставшиеся билеты для новичков заслуживающие доверие:';
+  String get remainingNewbieTicketsAsReputable => 'Оставшиеся билеты для новичков заслуживающие доверие:';
+  @override
+  String get remainingNewbieTicketsAsBootStrapper => 'Оставшиеся билеты для новичков заслуживающие доверие:';
+  @override
+  String get onlyReputablesCanEndorseAttendGatheringToBecomeOne =>
+      'Одобрять могут только люди со статусом уважаемого. Для получения репутации, посетите собрание!';
 }
