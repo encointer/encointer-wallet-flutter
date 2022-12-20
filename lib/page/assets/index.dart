@@ -91,9 +91,6 @@ class _AssetsState extends State<Assets> {
   Translations? dic;
 
   Future<void> _refreshEncointerState() async {
-    if (context.read<AppStore>().encointer.community?.communityIcon == null) {
-      await context.read<AppStore>().encointer.community?.getCommunityIcon();
-    }
     // getCurrentPhase is the root of all state updates.
     await webApi.encointer.getCurrentPhase();
   }
