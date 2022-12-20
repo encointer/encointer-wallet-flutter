@@ -9,6 +9,9 @@ import 'package:encointer_wallet/models/communities/cid_name.dart';
 import 'package:encointer_wallet/page-encointer/common/encointer_map.dart';
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 
 class CommunityChooserOnMap extends StatelessWidget {
   CommunityChooserOnMap(this.store, {Key? key}) : super(key: key) {
@@ -59,7 +62,6 @@ class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
       child: InkWell(
         key: Key('${widget.marker.key.toString().substring(3, widget.marker.key.toString().length - 3)}-description'),
         onTap: () async {
-          widget.store.encointer.community?.clearCommunityIcon();
           setState(() {});
           await widget.store.encointer.setChosenCid(widget.dataForThisMarker!.cid);
           Navigator.pop(context);

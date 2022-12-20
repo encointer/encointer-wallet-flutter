@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:mobx/mobx.dart';
 
@@ -69,6 +70,9 @@ abstract class _CommunityAccountStore with Store {
 
   @computed
   bool get isRegistered => participantType != null;
+
+  @observable
+  int numberOfNewbieTicketsForBootstrapper = 0;
 
   @action
   void setParticipantType([ParticipantType? type]) {
@@ -166,6 +170,13 @@ abstract class _CommunityAccountStore with Store {
     purgeParticipantType();
     purgeMeetup();
     clearMeetupCompleted();
+  }
+
+  @action
+  Future<void> getNumberOfNewbieTicketsForBootstrapper() async {
+    // Todo: #923 This returns 5 for non-bootstrappers as it naively calculates the amount of tickes based on
+    // the amount of burned tickets. This is essentially wrong and leads to workarounds that we need to do on dart side.
+    numberOfNewbieTicketsForBootstrapper = await webApi.encointer.getNumberOfNewbieTicketsForBootstrapper();
   }
 
   void initStore(Function? cacheFn) {
