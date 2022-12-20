@@ -73,6 +73,11 @@ class _AssetsState extends State<Assets> {
     }
 
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      if (context.read<AppStore>().encointer.community?.communityIcon == null) {
+        await context.read<AppStore>().encointer.community?.getCommunityIcon();
+      }
+    });
   }
 
   @override
