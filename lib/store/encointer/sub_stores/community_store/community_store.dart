@@ -119,7 +119,7 @@ abstract class _CommunityStore with Store {
   }
 
   @action
-  void setBootstrappers(List<String> bs) {
+  Future<void> setBootstrappers(List<String> bs) async {
     Log.d('set bootstrappers to $bs', 'CommunityStore');
     bootstrappers = bs;
     writeToCache();
