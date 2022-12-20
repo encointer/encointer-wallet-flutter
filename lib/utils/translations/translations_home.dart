@@ -237,7 +237,7 @@ class TranslationsDeHome implements TranslationsHome {
   @override
   String get updatingAppState => 'App-Zustand wird aktualisiert...';
   @override
-  String get cameraPermissionError => 'Es gab einen Fehler beim überprüfen der Kameraerlaubnis.'
+  String get cameraPermissionError => 'Es gab einen Fehler beim überprüfen der Kameraerlaubnis. '
       'Du kannst die Erlaubnis für die Kamera auch über die App-Einstellungen erteilen.';
   @override
   String get appSettings => 'App-Einstellungen';

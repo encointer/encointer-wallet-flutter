@@ -34,18 +34,12 @@ linter:
     use_decorated_box: false
     sized_box_shrink_expand: false
     use_colored_box: false
-
     prefer_if_elements_to_conditional_expressions: false
     prefer_is_empty: false
-
     require_trailing_commas: false
-
     cascade_invocations: false
-
     unnecessary_lambdas: false
-
     unawaited_futures: false
-
     avoid_dynamic_calls: false
     use_build_context_synchronously: false
     prefer_int_literals: false

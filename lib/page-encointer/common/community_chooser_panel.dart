@@ -17,14 +17,10 @@ class CommunityChooserPanel extends StatefulWidget {
   final AppStore store;
 
   @override
-  State<CommunityChooserPanel> createState() => _CommunityChooserPanelState(store);
+  State<CommunityChooserPanel> createState() => _CommunityChooserPanelState();
 }
 
 class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
-  _CommunityChooserPanelState(this.store);
-
-  final AppStore store;
-
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
@@ -36,28 +32,30 @@ class _CommunityChooserPanelState extends State<CommunityChooserPanel> {
           children: <Widget>[
             Text(dic.assets.communityChoose),
             Observer(
-              builder: (_) => (store.encointer.communities == null)
+              builder: (_) => (widget.store.encointer.communities == null)
                   ? const CupertinoActivityIndicator()
-                  : (store.encointer.communities!.isEmpty)
+                  : (widget.store.encointer.communities!.isEmpty)
                       ? Text(dic.assets.communitiesNotFound)
                       : DropdownButton<CidName>(
                           key: const Key('cid-dropdown'),
                           // todo find out, why adding the hint breaks the integration test walkthrough when choosing community #225
                           // hint: Text(dic.assets.communityChoose),
-                          value: (store.encointer.chosenCid == null ||
-                                  store.encointer.communities!
-                                      .where((cn) => cn.cid == store.encointer.chosenCid)
+                          value: (widget.store.encointer.chosenCid == null ||
+                                  widget.store.encointer.communities!
+                                      .where((cn) => cn.cid == widget.store.encointer.chosenCid)
                                       .isEmpty)
                               ? null
-                              : store.encointer.communities!.where((cn) => cn.cid == store.encointer.chosenCid).first,
+                              : widget.store.encointer.communities!
+                                  .where((cn) => cn.cid == widget.store.encointer.chosenCid)
+                                  .first,
                           icon: const Icon(Icons.arrow_downward),
                           iconSize: 32,
                           elevation: 32,
                           onChanged: (newValue) async {
-                            await store.encointer.setChosenCid(newValue?.cid);
+                            await widget.store.encointer.setChosenCid(newValue?.cid);
                             setState(() {});
                           },
-                          items: store.encointer.communities!
+                          items: widget.store.encointer.communities!
                               .asMap()
                               .entries
                               .map((entry) => DropdownMenuItem<CidName>(
@@ -91,13 +89,10 @@ class CombinedCommunityAndAccountAvatar extends StatefulWidget {
   final bool showCommunityNameAndAccountName;
 
   @override
-  State<CombinedCommunityAndAccountAvatar> createState() => _CombinedCommunityAndAccountAvatarState(store);
+  State<CombinedCommunityAndAccountAvatar> createState() => _CombinedCommunityAndAccountAvatarState();
 }
 
 class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAndAccountAvatar> {
-  _CombinedCommunityAndAccountAvatarState(this.store);
-  final AppStore store;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -120,7 +115,7 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
                     right: 0,
                     child: AddressIcon(
                       '',
-                      store.account.currentAccount.pubKey,
+                      widget.store.account.currentAccount.pubKey,
                       size: widget.accountAvatarSize,
                       tapToCopy: false,
                     ),
@@ -130,7 +125,7 @@ class _CombinedCommunityAndAccountAvatarState extends State<CombinedCommunityAnd
               const SizedBox(height: 4),
               if (widget.showCommunityNameAndAccountName)
                 Text(
-                  '${store.encointer.community?.name ?? "..."}\n${Fmt.accountName(context, store.account.currentAccount)}',
+                  '${widget.store.encointer.community?.name ?? "..."}\n${Fmt.accountName(context, widget.store.account.currentAccount)}',
                   style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey, height: 1.5),
                   textAlign: TextAlign.center,
                 ),

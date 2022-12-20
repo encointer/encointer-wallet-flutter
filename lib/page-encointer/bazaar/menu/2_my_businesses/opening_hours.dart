@@ -140,6 +140,7 @@ class OpeningHoursViewForDay extends StatelessWidget {
 
 class AddOpeningIntervalForDay extends StatelessWidget {
   AddOpeningIntervalForDay(this.day, {Key? key}) : super(key: key);
+
   final _textController = TextEditingController(text: '');
   final int day;
 

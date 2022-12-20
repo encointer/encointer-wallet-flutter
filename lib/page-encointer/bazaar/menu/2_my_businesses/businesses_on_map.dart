@@ -78,6 +78,7 @@ class BMap extends StatelessWidget {
 
 class BusinessDetailsPopup extends StatelessWidget {
   const BusinessDetailsPopup(this.marker, this.dataForThisMarker, {Key? key}) : super(key: key);
+
   final Marker marker;
   final BazaarBusinessData? dataForThisMarker;
 

@@ -43,13 +43,10 @@ class Assets extends StatefulWidget {
   final AppStore store;
 
   @override
-  State<Assets> createState() => _AssetsState(store);
+  State<Assets> createState() => _AssetsState();
 }
 
 class _AssetsState extends State<Assets> {
-  _AssetsState(this.store);
-
-  final AppStore store;
   static const double panelHeight = 396;
   static const double fractionOfScreenHeight = .7;
   static const double avatarSize = 70;
@@ -63,8 +60,8 @@ class _AssetsState extends State<Assets> {
   @override
   void initState() {
     // if network connected failed, reconnect
-    if (!store.settings.loading && store.settings.networkName == null) {
-      store.settings.setNetworkLoading(true);
+    if (!widget.store.settings.loading && widget.store.settings.networkName == null) {
+      widget.store.settings.setNetworkLoading(true);
       webApi.connectNodeAll();
     }
 
@@ -128,7 +125,7 @@ class _AssetsState extends State<Assets> {
       },
       onFocusGained: () {
         print('[home:FocusDetector] Focus Gained.');
-        if (!store.settings.loading) {
+        if (!widget.store.settings.loading) {
           _refreshBalanceAndNotify(dic);
         }
         balanceWatchdog!.reset();
@@ -163,7 +160,9 @@ class _AssetsState extends State<Assets> {
                   children: [
                     Observer(builder: (_) {
                       if (ModalRoute.of(context)!.isCurrent &&
-                          !_enteredPin & store.settings.cachedPin.isEmpty & !store.settings.endpointIsNoTee) {
+                          !_enteredPin &
+                              widget.store.settings.cachedPin.isEmpty &
+                              !widget.store.settings.endpointIsNoTee) {
                         // The pin is not immediately propagated to the store, hence we track if the pin has been entered to prevent
                         // showing the dialog multiple times.
                         WidgetsBinding.instance.addPostFrameCallback(
@@ -173,13 +172,13 @@ class _AssetsState extends State<Assets> {
                         );
                       }
 
-                      final accountData = store.account.currentAccount;
+                      final accountData = widget.store.account.currentAccount;
 
                       return Column(
                         children: <Widget>[
                           InkWell(
                             key: const Key('panel-controller'),
-                            child: CombinedCommunityAndAccountAvatar(store),
+                            child: CombinedCommunityAndAccountAvatar(widget.store),
                             onTap: () {
                               if (panelController != null && panelController!.isAttached) {
                                 panelController!.open();
@@ -188,15 +187,16 @@ class _AssetsState extends State<Assets> {
                           ),
                           Observer(
                             builder: (_) {
-                              return (store.encointer.community?.name != null) & (store.encointer.chosenCid != null)
+                              return (widget.store.encointer.community?.name != null) &
+                                      (widget.store.encointer.chosenCid != null)
                                   ? Column(
                                       children: [
                                         TextGradient(
-                                          text: '${Fmt.doubleFormat(store.encointer.communityBalance)} ⵐ',
+                                          text: '${Fmt.doubleFormat(widget.store.encointer.communityBalance)} ⵐ',
                                           style: const TextStyle(fontSize: 60),
                                         ),
                                         Text(
-                                          '${dic!.assets.balance}, ${store.encointer.community?.symbol}',
+                                          '${dic!.assets.balance}, ${widget.store.encointer.community?.symbol}',
                                           style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                                         ),
                                       ],
@@ -204,7 +204,7 @@ class _AssetsState extends State<Assets> {
                                   : Container(
                                       margin: const EdgeInsets.only(top: 16),
                                       padding: const EdgeInsets.symmetric(vertical: 8),
-                                      child: (store.encointer.chosenCid == null)
+                                      child: (widget.store.encointer.chosenCid == null)
                                           ? SizedBox(
                                               width: double.infinity,
                                               child:
@@ -216,9 +216,9 @@ class _AssetsState extends State<Assets> {
                                     );
                             },
                           ),
-                          if (store.settings.developerMode)
+                          if (widget.store.settings.developerMode)
                             ElevatedButton(
-                              onPressed: store.dataUpdate.setInvalidated,
+                              onPressed: widget.store.dataUpdate.setInvalidated,
                               child: const Text('Invalidate data to trigger state update'),
                             ),
                           const SizedBox(
@@ -266,7 +266,7 @@ class _AssetsState extends State<Assets> {
                                     ),
                                   ),
                                   key: const Key('transfer'),
-                                  onPressed: store.encointer.communityBalance != null
+                                  onPressed: widget.store.encointer.communityBalance != null
                                       ? () => Navigator.pushNamed(context, TransferPage.route)
                                       : null,
                                   child: Padding(
@@ -293,10 +293,10 @@ class _AssetsState extends State<Assets> {
                     Observer(builder: (_) {
                       final dic = I18n.of(context)!.translationsForLocale();
 
-                      final shouldFetch = store.encointer.currentPhase == CeremonyPhase.Registering ||
-                          (store.encointer.communityAccount?.meetupCompleted ?? false);
+                      final shouldFetch = widget.store.encointer.currentPhase == CeremonyPhase.Registering ||
+                          (widget.store.encointer.communityAccount?.meetupCompleted ?? false);
 
-                      return store.settings.isConnected && shouldFetch
+                      return widget.store.settings.isConnected && shouldFetch
                           ? FutureBuilder<bool?>(
                               future: webApi.encointer.hasPendingIssuance(),
                               builder: (_, AsyncSnapshot<bool?> snapshot) {
@@ -309,13 +309,13 @@ class _AssetsState extends State<Assets> {
                                       child: Text(dic.assets.issuancePending),
                                       onPressed: (context) => submitClaimRewards(
                                         context,
-                                        store,
+                                        widget.store,
                                         webApi,
-                                        store.encointer.chosenCid!,
+                                        widget.store.encointer.chosenCid!,
                                       ),
                                     );
                                   } else {
-                                    return store.settings.developerMode
+                                    return widget.store.settings.developerMode
                                         ? ElevatedButton(
                                             onPressed: null,
                                             child: Text(dic.assets.issuanceClaimed),
@@ -330,7 +330,7 @@ class _AssetsState extends State<Assets> {
                           : Container();
                     }),
                     const SizedBox(height: 24),
-                    CeremonyBox(store, webApi, key: const Key('ceremony-box-wallet')),
+                    CeremonyBox(widget.store, webApi, key: const Key('ceremony-box-wallet')),
                   ],
                 ),
               ),
@@ -356,7 +356,7 @@ class _AssetsState extends State<Assets> {
                             if (index == allCommunities.length - 1) {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute<void>(builder: (_) => CommunityChooserOnMap(store)),
+                                MaterialPageRoute<void>(builder: (_) => CommunityChooserOnMap(widget.store)),
                               ).then((_) {
                                 _refreshBalanceAndNotify(dic);
                               });
@@ -379,7 +379,7 @@ class _AssetsState extends State<Assets> {
                             Navigator.of(context).pushNamed(AddAccountPage.route);
                           } else {
                             setState(() {
-                              switchAccount(store.account.accountListAll[index]);
+                              switchAccount(widget.store.account.accountListAll[index]);
                               _refreshBalanceAndNotify(dic);
                             });
                           }
@@ -408,7 +408,7 @@ class _AssetsState extends State<Assets> {
     allCommunities.add(
       AccountOrCommunityData(
         avatar: const CommunityAvatar(avatarSize: avatarSize),
-        name: store.encointer.community?.name ?? '...',
+        name: widget.store.encointer.community?.name ?? '...',
         isSelected: true, // TODO #507 this should later be a function applied on each community, cf. initAllAccounts
       ),
     );
@@ -435,11 +435,11 @@ class _AssetsState extends State<Assets> {
 
   List<AccountOrCommunityData> initAllAccounts(Translations dic) {
     final allAccounts = <AccountOrCommunityData>[];
-    allAccounts.addAll(store.account.accountListAll.map(
+    allAccounts.addAll(widget.store.account.accountListAll.map(
       (account) => AccountOrCommunityData(
         avatar: AddressIcon('', account.pubKey, key: Key(account.name), size: avatarSize, tapToCopy: false),
         name: account.name,
-        isSelected: account.pubKey == store.account.currentAccountPubKey,
+        isSelected: account.pubKey == widget.store.account.currentAccountPubKey,
       ),
     ));
     allAccounts.add(
@@ -461,9 +461,9 @@ class _AssetsState extends State<Assets> {
   }
 
   Future<void> switchAccount(AccountData account) async {
-    if (account.pubKey != store.account.currentAccountPubKey) {
-      store.setCurrentAccount(account.pubKey);
-      await store.loadAccountCache();
+    if (account.pubKey != widget.store.account.currentAccountPubKey) {
+      widget.store.setCurrentAccount(account.pubKey);
+      await widget.store.loadAccountCache();
 
       webApi.fetchAccountData();
     }
@@ -476,11 +476,11 @@ class _AssetsState extends State<Assets> {
         return WillPopScope(
           child: showPasswordInputDialog(
             context,
-            store.account.currentAccount,
+            widget.store.account.currentAccount,
             Text(I18n.of(context)!.translationsForLocale().home.unlock),
             (String password) {
               setState(() {
-                store.settings.setPin(password);
+                widget.store.settings.setPin(password);
               });
             },
           ),
@@ -564,7 +564,7 @@ class _AssetsState extends State<Assets> {
       });
       if (!activeAccountHasBalance) {
         Log.d(
-          '[home:refreshBalanceAndNotify] didn\'t get any balance for active account. initialize store balance to zero',
+          "[home:refreshBalanceAndNotify] didn't get any balance for active account. initialize store balance to zero",
           'Assets',
         );
         widget.store.encointer.accountStores![widget.store.account.currentAddress]

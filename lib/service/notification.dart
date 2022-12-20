@@ -21,6 +21,7 @@ class ReceivedNotification {
     required this.body,
     required this.payload,
   });
+
   final int id;
   final String? title;
   final String? body;
