@@ -9,14 +9,15 @@ class VoucherQrCode extends QrCode<VoucherData> {
     required String issuer,
   }) : super(VoucherData(voucherUri: voucherUri, cid: cid, network: network, issuer: issuer));
 
+  factory VoucherQrCode.fromPayload(String payload) {
+    return VoucherQrCode.fromQrFields(payload.split('\n'));
+  }
+
   factory VoucherQrCode.fromQrFields(List<String> fields) {
     // todo verify context and version
     return VoucherQrCode.withData(VoucherData.fromQrFields(fields.sublist(2)));
   }
 
-  factory VoucherQrCode.fromPayload(String payload) {
-    return VoucherQrCode.fromQrFields(payload.split('\n'));
-  }
   VoucherQrCode.withData(VoucherData data) : super(data);
 
   @override

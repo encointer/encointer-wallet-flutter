@@ -8,6 +8,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({Key? key}) : super(key: key);
+
   static const String route = '/profile/about';
 
   @override

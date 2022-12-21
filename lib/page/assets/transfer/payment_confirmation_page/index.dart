@@ -150,7 +150,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
       _transferState = TransferState.submitting;
     });
 
-    final onFinish = (BuildContext txPageContext, Map res) {
+    void onFinish(BuildContext txPageContext, Map res) {
       Log.d('Transfer result $res', 'PaymentConfirmationPage');
 
       if (res['hash'] == null) {
@@ -160,7 +160,7 @@ class _PaymentConfirmationPageState extends State<PaymentConfirmationPage> with 
         _transferState = TransferState.finished;
         _blockTimestamp = DateTime.fromMillisecondsSinceEpoch(res['time'] as int);
       }
-    };
+    }
 
     await submitTx(context, context.read<AppStore>(), widget.api, params, onFinish: onFinish);
 

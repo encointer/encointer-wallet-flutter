@@ -24,6 +24,7 @@ class BazaarOfferingData extends BazaarItemData {
     this.price,
     Image image,
   ) : super(title, description, image);
+
   final double price;
 
   @override
@@ -37,8 +38,6 @@ class BazaarOfferingData extends BazaarItemData {
 }
 
 class BazaarBusinessData extends BazaarItemData {
-  // TODO use coordinates of the respective community
-
   BazaarBusinessData(
     String title,
     String description,
@@ -47,12 +46,14 @@ class BazaarBusinessData extends BazaarItemData {
     this.openingHours,
     this.offerings,
   ) : super(title, description, image);
+
   final LatLng coordinates;
   final OpeningHours openingHours;
   final List<BazaarOfferingData> offerings;
 
   // for now:
   final LatLng turbinenplatz = LatLng(47.389712, 8.517076);
+  // TODO use coordinates of the respective community
 
   @override
   String get info {
@@ -113,6 +114,7 @@ class OpeningHours {
 /// You can have as many (disjoint) OpeningIntervals per day as you please.
 class OpeningHoursForDay {
   OpeningHoursForDay(this.openingIntervals);
+
   final List<OpeningInterval> openingIntervals;
 
   void addInterval(OpeningInterval interval) {
@@ -147,6 +149,7 @@ class OpeningInterval {
   OpeningInterval.fromString(String startEndTime)
       : start = _parseTime(startEndTime, 0),
         end = _parseTime(startEndTime, 1);
+
   final int start;
   final int end;
 

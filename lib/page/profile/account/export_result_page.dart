@@ -1,11 +1,13 @@
-import 'package:encointer_wallet/store/account/account.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:encointer_wallet/store/account/account.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+
 class ExportResultPage extends StatelessWidget {
   const ExportResultPage({Key? key}) : super(key: key);
+
   static const String route = '/account/key';
 
   void _showExportDialog(BuildContext context, Map args) {

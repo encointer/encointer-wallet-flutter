@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 class SearchResultsOffering extends StatelessWidget {
   const SearchResultsOffering(this.results, {Key? key}) : super(key: key);
+
   final List<BazaarItemData> results;
 
   @override

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 
 class Offerings extends StatelessWidget {
   Offerings({Key? key}) : super(key: key);
+
   final data = allOfferings;
 
   @override

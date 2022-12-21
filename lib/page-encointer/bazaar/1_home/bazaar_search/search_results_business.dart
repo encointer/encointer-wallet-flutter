@@ -7,6 +7,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 
 class SearchResultsBusiness extends StatelessWidget {
   const SearchResultsBusiness(this.results, {Key? key}) : super(key: key);
+
   final List<BazaarItemData> results;
 
   @override
