@@ -18,14 +18,13 @@ import 'package:encointer_wallet/utils/local_storage.dart' as util;
 
 Future<void> main({AppcastConfiguration? appCast}) async {
   WidgetsFlutterBinding.ensureInitialized();
+  await NotificationPlugin.setup();
   // var notificationAppLaunchDetails =
   //     await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
   if (Platform.isAndroid) {
     // this is enabled by default in IOS dev-builds.
     await InAppWebViewController.setWebContentsDebuggingEnabled(true);
   }
-
-  await NotificationPlugin.setup();
 
   // get_storage dependency
   await GetStorage.init();

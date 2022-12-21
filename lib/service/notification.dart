@@ -1,7 +1,7 @@
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/foundation.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
@@ -135,6 +135,19 @@ class NotificationPlugin {
       androidAllowWhileIdle: true,
     );
   }
+
+  // static Future<void> showDailyAtTime(int id, String? title, String body, tz.TZDateTime scheduledDate,
+  //     {String? payload, String? cid}) async {
+  //   await flutterLocalNotificationsPlugin.showDailyAtTime(
+  //     id,
+  //     title,
+  //     body,
+  //     scheduledDate,
+  //     platformChannelSpecifics(body),
+  //     uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+  //     androidAllowWhileIdle: true,
+  //   );
+  // }
 }
 
 class ReceivedNotification {
@@ -152,7 +165,6 @@ class ReceivedNotification {
 }
 
 Future<void> _configureLocalTimeZone() async {
-  if (kIsWeb || Platform.isLinux) return;
   tz.initializeTimeZones();
   final timeZoneName = await FlutterTimezone.getLocalTimezone();
   tz.setLocalLocation(tz.getLocation(timeZoneName));
