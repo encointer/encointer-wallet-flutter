@@ -1,11 +1,7 @@
-// import 'dart:io';
-// import 'dart:isolate';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
-// import 'package:workmanager/workmanager.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 import 'package:encointer_wallet/common/theme.dart';
@@ -16,7 +12,6 @@ import 'package:encointer_wallet/page/profile/index.dart';
 import 'package:encointer_wallet/page/qr_scan/qr_scan_page.dart';
 import 'package:encointer_wallet/service/background_service/background_service.dart';
 import 'package:encointer_wallet/service/deep_link/deep_link.dart';
-// import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/notification.dart';
 import 'package:encointer_wallet/store/app.dart';
 
@@ -37,30 +32,14 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   @override
   void initState() {
-    // if appCast == null the integration test doesn't show request notification permission.
     if (context.read<AppStore>().appCast == null) {
       NotificationPlugin.init(context);
     }
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await initialDeepLinks(context);
-      await executeTaskIsolate({'langCode': 'en'});
-      // final isolate = await Isolate.spawn(executeTaskIsolate, {'langCode': 'en'});
-      // if (Platform.isAndroid) {
-      //   // meetup notification only for android system
-      //   Log.d('Initializing Workmanager callback...', 'home_page');
-      //   await Workmanager().initialize(callbackDispatcher);
-      //   await Workmanager().registerPeriodicTask(
-      //     'background-service',
-      //     'pull-notification',
-      //     // Find a window where the app is in background because of #819.
-      //     // initialDelay: const Duration(hours: 8),
-      //     // frequency: const Duration(hours: 24),
-      //     initialDelay: const Duration(seconds: 5),
-      //     frequency: const Duration(minutes: 15),
-      //     inputData: {'langCode': Localizations.localeOf(context).languageCode},
-      //     existingWorkPolicy: ExistingWorkPolicy.replace,
-      //   );
-      // }
+      await executeTaskIsolate(
+        {'langCode': 'en', 'local': tz.local, 'scheduleNotification': NotificationPlugin.scheduleNotification},
+      );
     });
     super.initState();
   }
@@ -133,7 +112,10 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          final isolate = await compute(executeTaskIsolate, {'langCode': 'en'});
+          await compute(
+            executeTaskIsolate,
+            {'langCode': 'en', 'local': tz.local, 'scheduleNotification': NotificationPlugin.scheduleNotification},
+          );
           print(tz.TZDateTime.from(DateTime.parse('2022-12-12T11:30:00.00+00:00'), tz.local));
         },
       ),
