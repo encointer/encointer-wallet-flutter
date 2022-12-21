@@ -442,7 +442,7 @@ class TranslationsDeProfile implements TranslationsProfile {
   String get meetUpNotifications => 'Meetup-Benachrichtigungen';
   @override
   String get meetUpListTileTitle =>
-      'Wenn Dein Gerät ein Xiaomi oder Honor Smartphone is, muss Autostart aktiviert sein um Meetup-Benachrichtigungen'
+      'Wenn Dein Gerät ein Xiaomi oder Honor Smartphone is, muss Autostart aktiviert sein um Meetup-Benachrichtigungen '
       'zu erhalten.';
   @override
   String get openAppSettings => 'App-Einstellungen öffnen';

@@ -7,16 +7,16 @@ import 'package:encointer_wallet/common/theme.dart';
 /// offers further options.
 ///
 class PrimaryButton extends StatelessWidget {
-  final void Function()? onPressed;
-  final Widget child;
-  final BorderRadiusGeometry borderRadius;
-
   const PrimaryButton({
     required this.child,
     this.onPressed,
     this.borderRadius = const BorderRadius.all(Radius.circular(20)),
     Key? key,
   }) : super(key: key);
+
+  final void Function()? onPressed;
+  final Widget child;
+  final BorderRadiusGeometry borderRadius;
 
   @override
   Widget build(BuildContext context) {

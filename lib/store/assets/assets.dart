@@ -1,7 +1,8 @@
+import 'package:mobx/mobx.dart';
+
 import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/store/assets/types/balances_info.dart';
 import 'package:encointer_wallet/store/assets/types/transfer_data.dart';
-import 'package:mobx/mobx.dart';
 
 part 'assets.g.dart';
 
@@ -242,28 +243,30 @@ abstract class _AssetsStore with Store {
   }
 }
 
-class BlockData extends _BlockData {
-  static BlockData fromJson(Map<String, dynamic> json) {
-    final block = BlockData();
-    block.id = json['id'] as int?;
-    block.hash = json['hash'] as String?;
-    block.time = DateTime.fromMillisecondsSinceEpoch(json['timestamp'] as int);
-    return block;
+class BlockData {
+  const BlockData({
+    this.id = 0,
+    this.hash = '',
+    this.time,
+  });
+
+  factory BlockData.fromJson(Map<String, dynamic> json) {
+    return BlockData(
+      id: json['id'] as int?,
+      hash: json['hash'] as String?,
+      time: DateTime.fromMillisecondsSinceEpoch(json['timestamp'] as int),
+    );
   }
 
-  static Map<String, dynamic> toJson(BlockData block) {
+  final int? id;
+  final String? hash;
+  final DateTime? time;
+
+  Map<String, dynamic> toJson(BlockData block) {
     return {
       'id': block.id,
       'hash': block.hash,
-      'timestamp': block.time.millisecondsSinceEpoch,
+      'timestamp': block.time?.millisecondsSinceEpoch ?? DateTime.now(),
     };
   }
-}
-
-abstract class _BlockData {
-  int? id = 0;
-
-  String? hash = '';
-
-  DateTime time = DateTime.now();
 }

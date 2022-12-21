@@ -10,9 +10,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 class BusinessFormScaffold extends StatelessWidget {
-  final categories = allCategories;
-
   BusinessFormScaffold({Key? key}) : super(key: key); // TODO state management
+
+  final categories = allCategories;
 
   @override
   Widget build(BuildContext context) => Provider<BusinessFormState>(
@@ -41,8 +41,8 @@ class BusinessForm extends StatelessWidget {
           children: <Widget>[
             const PhotoTiles(),
             LimitedBox(
-              child: ImagePickerScaffold(),
               maxHeight: 250,
+              child: ImagePickerScaffold(),
             ),
             Observer(
               builder: (_) => TextField(

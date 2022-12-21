@@ -1,21 +1,16 @@
 import 'dart:convert';
 
 import 'package:dart_geohash/dart_geohash.dart';
-import 'package:encointer_wallet/models/communities/cid_name.dart';
-import 'package:encointer_wallet/page-encointer/common/encointer_map.dart';
-import 'package:encointer_wallet/store/app.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
+import 'package:encointer_wallet/models/communities/cid_name.dart';
+import 'package:encointer_wallet/page-encointer/common/encointer_map.dart';
+import 'package:encointer_wallet/store/app.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+
 class CommunityChooserOnMap extends StatelessWidget {
-  final AppStore store;
-
-  final communityDataAt = <LatLng, CidName>{};
-
-  List<Marker> get _markers => getMarkers(store);
-
   CommunityChooserOnMap(this.store, {Key? key}) : super(key: key) {
     if (store.encointer.communities != null) {
       for (var community in store.encointer.communities!) {
@@ -23,6 +18,12 @@ class CommunityChooserOnMap extends StatelessWidget {
       }
     }
   }
+
+  final AppStore store;
+
+  final communityDataAt = <LatLng, CidName>{};
+
+  List<Marker> get _markers => getMarkers(store);
 
   @override
   Widget build(BuildContext context) {
@@ -41,30 +42,25 @@ class CommunityChooserOnMap extends StatelessWidget {
 }
 
 class CommunityDetailsPopup extends StatefulWidget {
+  const CommunityDetailsPopup(this.store, this.marker, this.dataForThisMarker, {Key? key}) : super(key: key);
+
   final AppStore store;
   final Marker marker;
   final CidName? dataForThisMarker;
 
-  const CommunityDetailsPopup(this.store, this.marker, this.dataForThisMarker, {Key? key}) : super(key: key);
-
   @override
-  State<CommunityDetailsPopup> createState() => _CommunityDetailsPopupState(store);
+  State<CommunityDetailsPopup> createState() => _CommunityDetailsPopupState();
 }
 
 class _CommunityDetailsPopupState extends State<CommunityDetailsPopup> {
-  final AppStore store;
-
-  _CommunityDetailsPopupState(this.store);
-
   @override
   Widget build(BuildContext context) {
     return Card(
       child: InkWell(
         key: Key('${widget.marker.key.toString().substring(3, widget.marker.key.toString().length - 3)}-description'),
         onTap: () async {
-          store.encointer.community?.clearCommunityIcon();
           setState(() {});
-          await store.encointer.setChosenCid(widget.dataForThisMarker!.cid);
+          await widget.store.encointer.setChosenCid(widget.dataForThisMarker!.cid);
           Navigator.pop(context);
         },
         child: Container(

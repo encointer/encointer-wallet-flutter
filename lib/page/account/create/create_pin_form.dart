@@ -16,14 +16,10 @@ class CreatePinForm extends StatefulWidget {
   final AppStore store;
 
   @override
-  State<CreatePinForm> createState() => _CreatePinFormState(store);
+  State<CreatePinForm> createState() => _CreatePinFormState();
 }
 
 class _CreatePinFormState extends State<CreatePinForm> {
-  _CreatePinFormState(this.store);
-
-  final AppStore store;
-
   final _formKey = GlobalKey<FormState>();
 
   final TextEditingController _passCtrl = TextEditingController();
@@ -144,9 +140,9 @@ class _CreatePinFormState extends State<CreatePinForm> {
               ),
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
-                  store.account.setNewAccountPin(_passCtrl.text);
+                  widget.store.account.setNewAccountPin(_passCtrl.text);
 
-                  store.settings.setPin(_passCtrl.text);
+                  widget.store.settings.setPin(_passCtrl.text);
 
                   widget.onSubmit();
                 }

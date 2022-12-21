@@ -29,7 +29,8 @@ void main() {
         },
         'attendees': <String>[],
         'participantCountVote': null,
-        'meetupCompleted': false
+        'meetupCompleted': false,
+        'numberOfNewbieTicketsForBootstrapper': 0,
       };
 
       expect(communityAccountStore.toJson(), targetJson);
@@ -47,7 +48,8 @@ void main() {
           'time': 10,
           'registry': [aliceAddress, bobAddress, charlieAddress]
         },
-        'attendees': <String>[]
+        'attendees': <String>[],
+        'numberOfNewbieTicketsForBootstrapper': 0,
       };
 
       final store = CommunityAccountStore.fromJson(sourceJson);
@@ -60,6 +62,7 @@ void main() {
       expect(store.meetup!.locationIndex, 3);
       expect(store.meetup!.time, 10);
       expect(store.meetup!.registry, [aliceAddress, bobAddress, charlieAddress]);
+      expect(store.numberOfNewbieTicketsForBootstrapper, 0);
     });
 
     test('cacheFn injection works', () async {
@@ -89,7 +92,8 @@ void main() {
         },
         'attendees': <String>[],
         'participantCountVote': null,
-        'meetupCompleted': false
+        'meetupCompleted': false,
+        'numberOfNewbieTicketsForBootstrapper': 0,
       };
 
       final cachedValue = await localStorage.getObject('hello');

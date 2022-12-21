@@ -150,22 +150,22 @@ class IpfsDio {
 }
 
 class Object {
-  List links;
-  String data;
-
-  Object({
+  const Object({
     required this.links,
     required this.data,
   });
-
-  @override
-  String toString() {
-    return jsonEncode(this);
-  }
 
   factory Object.fromJson(Map<String, dynamic> json) {
     return Object(data: json['Data'] as String, links: json['Links'] as List<dynamic>);
   }
 
   Map<String, dynamic> toJson() => <String, dynamic>{'links': links, 'data': data};
+
+  final List links;
+  final String data;
+
+  @override
+  String toString() {
+    return jsonEncode(this);
+  }
 }

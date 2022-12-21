@@ -85,6 +85,7 @@ class EncointerApi {
     getBootstrappers();
     getReputations();
     getMeetupTimeOverride();
+    store.encointer.communityAccount?.getNumberOfNewbieTicketsForBootstrapper();
   }
 
   /// Queries the Scheduler pallet: encointerScheduler.currentPhase().
@@ -462,7 +463,7 @@ class EncointerApi {
       for (var cr in reputationsList as List) cr[0] as int: CommunityReputation.fromJson(cr[1] as Map<String, dynamic>)
     };
 
-    store.encointer.account?.setReputations(reputations);
+    await store.encointer.account?.setReputations(reputations);
   }
 
   Future<dynamic> sendFaucetTx() async {
@@ -514,6 +515,44 @@ class EncointerApi {
     final proof = ProofOfAttendance.fromJson(proofJs as Map<String, dynamic>);
     Log.d('Proof: $proof', 'EncointerApi');
     return proof;
+  }
+
+  Future<int> getNumberOfNewbieTicketsForReputable() async {
+    var remainingTickets = 0;
+    final address = store.account.currentAddress;
+    final reputations = store.encointer.account?.reputations;
+    final cid = store.encointer.chosenCid;
+    final cIndex = store.encointer.currentCeremonyIndex;
+
+    if ((reputations?.length ?? 0) > 0) {
+      try {
+        remainingTickets = await jsApi.evalJavascript(
+          'encointer.remainingNewbieTicketsReputable(${jsonEncode(cid)}, "$cIndex","$address")',
+        ) as int;
+
+        Log.d('EncointerApi', 'numberOfNewbieTickets: $remainingTickets');
+      } catch (e, s) {
+        Log.e('EncointerApi', '$e', s);
+      }
+    }
+
+    return remainingTickets;
+  }
+
+  Future<int> getNumberOfNewbieTicketsForBootstrapper() async {
+    var _remainingTickets = 0;
+    final address = store.account.currentAddress;
+    final cid = store.encointer.chosenCid;
+    try {
+      final numberOfTickets = await jsApi.evalJavascript(
+        'encointer.remainingNewbieTicketsBootstrapper(${jsonEncode(cid)},"$address")',
+      );
+      Log.d('Encointer Api', 'numberOfBootstrapperTickets: $numberOfTickets');
+      _remainingTickets += numberOfTickets as int;
+    } catch (e, s) {
+      Log.e('Encointer Api', '$e', s);
+    }
+    return _remainingTickets;
   }
 
   /// Get all the registered businesses for the current `chosenCid`

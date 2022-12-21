@@ -143,6 +143,7 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 8),
                 child: SecondaryButtonWide(
+                  onPressed: _isReady ? () => _pushTransferPage(context, voucher, _voucherAddress!) : null,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -151,10 +152,10 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                       Text(dic.assets.fundVoucher),
                     ],
                   ),
-                  onPressed: _isReady ? () => _pushTransferPage(context, voucher, _voucherAddress!) : null,
                 ),
               ),
             SubmitButton(
+              onPressed: _isReady ? (context) => _submitReapVoucher(context, voucherUri, cid, recipient) : null,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -163,7 +164,6 @@ class _ReapVoucherPageState extends State<ReapVoucherPage> {
                   Text(dic.assets.redeemVoucher),
                 ],
               ),
-              onPressed: _isReady ? (context) => _submitReapVoucher(context, voucherUri, cid, recipient) : null,
             ),
           ],
         ),

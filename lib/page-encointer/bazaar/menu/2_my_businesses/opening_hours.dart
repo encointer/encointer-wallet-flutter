@@ -126,8 +126,8 @@ class OpeningHoursViewForDay extends StatelessWidget {
 
             Observer(
               builder: (_) => Visibility(
-                child: AddOpeningIntervalForDay(day),
                 visible: day == openingHours.dayOnFocus,
+                child: AddOpeningIntervalForDay(day),
               ),
             ),
             // Text(openingHoursForThisDay.showTextField.toString()),
@@ -139,10 +139,10 @@ class OpeningHoursViewForDay extends StatelessWidget {
 }
 
 class AddOpeningIntervalForDay extends StatelessWidget {
+  AddOpeningIntervalForDay(this.day, {Key? key}) : super(key: key);
+
   final _textController = TextEditingController(text: '');
   final int day;
-
-  AddOpeningIntervalForDay(this.day, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

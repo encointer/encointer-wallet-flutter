@@ -24,11 +24,6 @@ class BusinessesOnMap extends StatelessWidget {
 }
 
 class BMap extends StatelessWidget {
-  /// Used to trigger showing/hiding of popups.
-  final PopupController _popupLayerController = PopupController();
-  final List<BazaarBusinessData> businessData;
-  final bazaarBusinessDataFor = <LatLng, BazaarBusinessData>{};
-
   BMap(List<BazaarItemData> data, {Key? key})
       // initializer (only use businesses, offerings do not have coordinates)
       : businessData = data.whereType<BazaarBusinessData>().map((item) => item).toList(),
@@ -36,6 +31,11 @@ class BMap extends StatelessWidget {
     // construct a map using "collection for"
     bazaarBusinessDataFor.addAll({for (var business in businessData) business.coordinates: business});
   }
+
+  /// Used to trigger showing/hiding of popups.
+  final PopupController _popupLayerController = PopupController();
+  final List<BazaarBusinessData> businessData;
+  final bazaarBusinessDataFor = <LatLng, BazaarBusinessData>{};
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +77,8 @@ class BMap extends StatelessWidget {
 }
 
 class BusinessDetailsPopup extends StatelessWidget {
+  const BusinessDetailsPopup(this.marker, this.dataForThisMarker, {Key? key}) : super(key: key);
+
   final Marker marker;
   final BazaarBusinessData? dataForThisMarker;
 
@@ -125,6 +127,4 @@ class BusinessDetailsPopup extends StatelessWidget {
       ),
     );
   }
-
-  const BusinessDetailsPopup(this.marker, this.dataForThisMarker, {Key? key}) : super(key: key);
 }
