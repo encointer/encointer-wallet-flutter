@@ -451,7 +451,7 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   @override
   String get goToLeuZurich => 'Ouvrir leu.zuerich';
   @override
-  String get leuZurichFAQ => throw UnimplementedError();
+  String get leuZurichFAQ => 'leu.zuerich FAQ';
   @override
   String get bootstrapperContent =>
       'S\'il te reste des tickets d\'endossement, n\'oublie pas de confirmer Novice comme digne de confiance.';
@@ -464,7 +464,7 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   String get endorseeTitle => 'Enregistré comme Endosser - Ta place est garantie.';
   @override
   String get newbieContent => 'Tu t\'es enregistré en tant que Novice Il n\'est pas garanti que tu sois dans ce cycle'
-      'Si le nombre de Novices est élevé, tu ne seras pas assigné. S’il te plaît, vérifie ton statut d\'assignation le jour précédant le cycle pour savoir'
+      'Si le nombre de Novices est élevé, tu ne seras pas assigné. S\'il te plaît, vérifie ton statut d\'assignation le jour précédant le cycle pour savoir'
       'pour savoir si et où ta réunion aura lieu.';
   @override
   String get newbieTitle => 'Enregistré comme Novice - Ta place n\'est pas encore garantie';
@@ -474,7 +474,7 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   @override
   String get reputableTitle => 'Enregistré en tant que Reputable. Ta place est garantie';
   @override
-  String get remainingNewbieTicketsAsReputable => throw UnimplementedError();
+  String get remainingNewbieTicketsAsReputable => 'Comme Reputable les billets pour Newbie restants:';
   @override
   String get remainingNewbieTicketsAsBootStrapper => throw UnimplementedError();
   @override
