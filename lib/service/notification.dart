@@ -138,7 +138,7 @@ class NotificationPlugin {
 }
 
 class ReceivedNotification {
-  ReceivedNotification({
+  const ReceivedNotification({
     required this.id,
     required this.title,
     required this.body,
