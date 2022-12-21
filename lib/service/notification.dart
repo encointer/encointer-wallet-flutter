@@ -1,7 +1,4 @@
-// import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
-// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_timezone/flutter_timezone.dart';
@@ -125,29 +122,22 @@ class NotificationPlugin {
 
   static Future<void> scheduleNotification(int id, String? title, String body, tz.TZDateTime scheduledDate,
       {String? payload, String? cid}) async {
-    await flutterLocalNotificationsPlugin.zonedSchedule(
-      id,
-      title,
-      body,
-      scheduledDate,
-      platformChannelSpecifics(body),
-      uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-      androidAllowWhileIdle: true,
-    );
+    final pendingNotificationRequests = await flutterLocalNotificationsPlugin.pendingNotificationRequests();
+    // Check if a notification with the specified id has already been scheduled
+    final notificationAlreadyScheduled = pendingNotificationRequests.any((request) => request.id == id);
+    if (!notificationAlreadyScheduled) {
+      // Schedule the notification if it has not been scheduled already
+      await flutterLocalNotificationsPlugin.zonedSchedule(
+        id,
+        title,
+        body,
+        scheduledDate,
+        platformChannelSpecifics(body),
+        uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
+        androidAllowWhileIdle: true,
+      );
+    }
   }
-
-  // static Future<void> showDailyAtTime(int id, String? title, String body, tz.TZDateTime scheduledDate,
-  //     {String? payload, String? cid}) async {
-  //   await flutterLocalNotificationsPlugin.showDailyAtTime(
-  //     id,
-  //     title,
-  //     body,
-  //     scheduledDate,
-  //     platformChannelSpecifics(body),
-  //     uiLocalNotificationDateInterpretation: UILocalNotificationDateInterpretation.absoluteTime,
-  //     androidAllowWhileIdle: true,
-  //   );
-  // }
 }
 
 class ReceivedNotification {
