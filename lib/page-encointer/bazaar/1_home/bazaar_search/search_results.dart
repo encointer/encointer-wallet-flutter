@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 class SearchResults extends StatelessWidget {
   SearchResults({Key? key}) : super(key: key);
+
   // TODO implement state management with logic that takes the first of each list of search results
   final businessResults = searchResultsInBusinesses;
   final offeringsResults = searchResultsInOfferings;
@@ -47,6 +48,7 @@ class ResultSummaryListTile extends StatelessWidget {
     this.title, {
     Key? key,
   }) : super(key: key);
+
   final List<BazaarItemData> results;
   final String title;
 

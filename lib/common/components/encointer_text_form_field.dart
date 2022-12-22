@@ -18,6 +18,7 @@ class EncointerTextFormField extends StatelessWidget {
     this.keyboardType,
     this.obscureText = false,
   }) : super(key: key);
+
   final String? labelText;
   final String? hintText;
   final TextStyle? textStyle;

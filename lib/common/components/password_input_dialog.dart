@@ -1,10 +1,11 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 import 'package:encointer_wallet/service/substrate_api/api.dart';
 import 'package:encointer_wallet/store/account/types/account_data.dart';
 import 'package:encointer_wallet/utils/format.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 Widget showPasswordInputDialog(
   BuildContext context,
@@ -132,11 +133,7 @@ class _PasswordInputDialogState extends State<PasswordInputDialog> {
           Container(),
         CupertinoButton(
           key: const Key('password-ok'),
-          onPressed: _submitting
-              ? null
-              : () {
-                  _onOk(_passCtrl.text.trim());
-                },
+          onPressed: _submitting ? null : () => _onOk(_passCtrl.text.trim()),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

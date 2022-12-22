@@ -10,8 +10,9 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 class BusinessFormScaffold extends StatelessWidget {
-  BusinessFormScaffold({Key? key}) : super(key: key);
-  final categories = allCategories; // TODO state management
+  BusinessFormScaffold({Key? key}) : super(key: key); // TODO state management
+
+  final categories = allCategories;
 
   @override
   Widget build(BuildContext context) => Provider<BusinessFormState>(

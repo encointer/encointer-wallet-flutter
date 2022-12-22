@@ -2,10 +2,8 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:flutter/material.dart';
 
 class CeremonyProgressBar extends StatelessWidget {
-  const CeremonyProgressBar({
-    required this.progress,
-    Key? key,
-  }) : super(key: key);
+  const CeremonyProgressBar({required this.progress, Key? key}) : super(key: key);
+
   final int progress;
 
   @override

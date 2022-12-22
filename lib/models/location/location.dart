@@ -15,6 +15,7 @@ class Location {
         json['lat'].toString(),
         json['lon'].toString(),
       );
+
   Map<String, dynamic> toJson() => _$LocationToJson(this);
 
   final String lat;

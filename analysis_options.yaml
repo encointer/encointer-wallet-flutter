@@ -31,30 +31,16 @@ linter:
     prefer_constructors_over_static_methods: true
     sort_unnamed_constructors_first: true
 
-    use_decorated_box: true
-    sized_box_shrink_expand: true
-    use_colored_box: true
-    prefer_if_elements_to_conditional_expressions: true
-    avoid_print: true
-    prefer_is_empty: true
-    unnecessary_raw_strings: true
-    one_member_abstracts: true
-    use_string_buffers: true
-    unnecessary_parenthesis: true
-    unnecessary_null_checks: true
-    unnecessary_await_in_return: true
-    prefer_final_in_for_each: true
-    void_checks: true
-    avoid_returning_null_for_void: true
-    avoid_function_literals_in_foreach_calls: true
-    avoid_unnecessary_containers: true
-    noop_primitive_operations: true
-    
-    avoid_dynamic_calls: false
+    use_decorated_box: false
+    sized_box_shrink_expand: false
+    use_colored_box: false
+    prefer_if_elements_to_conditional_expressions: false
+    prefer_is_empty: false
     require_trailing_commas: false
     cascade_invocations: false
     unnecessary_lambdas: false
     unawaited_futures: false
+    avoid_dynamic_calls: false
     use_build_context_synchronously: false
     prefer_int_literals: false
     avoid_redundant_argument_values: false

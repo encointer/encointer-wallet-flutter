@@ -7,6 +7,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 
 class SearchResultsOfferingFiltered extends StatelessWidget {
   SearchResultsOfferingFiltered(this.results, {Key? key}) : super(key: key);
+
   final List<BazaarItemData> results;
   final categories = allCategories;
   final deliveryOptions = allDeliveryOptions;
@@ -47,26 +48,25 @@ class SearchResultsOfferingFiltered extends StatelessWidget {
           style: titleStyle,
         ),
         ToggleButtons(
-            isSelected: selectedDeliveryOptions, children: deliveryOptions.map((option) => Text(option)).toList()),
+          isSelected: selectedDeliveryOptions,
+          children: deliveryOptions.map((option) => Text(option)).toList(),
+        ),
         Text(
           dic.bazaar.productNewness,
           style: titleStyle,
         ),
         ToggleButtons(
-            isSelected: selectedProductNewnessOptions,
-            children: productNewnessOptions.map((option) => Text(option)).toList()),
+          isSelected: selectedProductNewnessOptions,
+          children: productNewnessOptions.map((option) => Text(option)).toList(),
+        ),
       ]),
       floatingActionButton: ButtonBar(
         children: [
           ElevatedButton(
-              onPressed: () {
-                return;
-              }, // TODO state management
+              onPressed: () {}, // TODO state management
               child: Text(dic.bazaar.reset)),
           ElevatedButton(
-              onPressed: () {
-                return;
-              }, //TODO state management
+              onPressed: () {}, //TODO state management
               child: Text(dic.bazaar.apply)),
         ],
       ),

@@ -103,6 +103,7 @@ class OpeningHoursForDayState = _OpeningHoursForDayState with _$OpeningHoursForD
 /// You can have as many (disjoint) OpeningIntervals per day as you please.
 abstract class _OpeningHoursForDayState with Store {
   _OpeningHoursForDayState(this.openingIntervals);
+
   @observable
   ObservableList<OpeningIntervalState> openingIntervals;
 
@@ -154,6 +155,7 @@ class OpeningIntervalState = _OpeningIntervalState with _$OpeningIntervalState;
 /// start and end in minutes since midnight of that day
 abstract class _OpeningIntervalState with Store {
   _OpeningIntervalState(this.start, this.end);
+
   @observable
   int start;
   @observable

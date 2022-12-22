@@ -13,6 +13,7 @@ class PrimaryButton extends StatelessWidget {
     this.borderRadius = const BorderRadius.all(Radius.circular(20)),
     Key? key,
   }) : super(key: key);
+
   final void Function()? onPressed;
   final Widget child;
   final BorderRadiusGeometry borderRadius;
