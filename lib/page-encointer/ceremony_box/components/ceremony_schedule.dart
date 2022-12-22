@@ -27,13 +27,15 @@ class CeremonySchedule extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        showCountDown
-            ? CeremonyDateLabelAbsolute(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode)
-            : CeremonyDateLabelRelative(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode),
+        if (showCountDown)
+          CeremonyDateLabelAbsolute(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode)
+        else
+          CeremonyDateLabelRelative(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode),
         const SizedBox(height: 8),
-        showCountDown
-            ? CeremonyCountDown(nextCeremonyDate)
-            : CeremonyDate(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode)
+        if (showCountDown)
+          CeremonyCountDown(nextCeremonyDate)
+        else
+          CeremonyDate(nextCeremonyDate: nextCeremonyDate, languageCode: languageCode)
       ],
     );
   }

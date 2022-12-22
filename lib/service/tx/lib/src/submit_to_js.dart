@@ -50,7 +50,7 @@ Future<void> submitToJS(
   Log.d('$txInfo', 'submitToJS');
   Log.d('${args['params']}', 'submitToJS');
 
-  final onTxFinishFn = (args['onFinish'] as dynamic Function(BuildContext, Map)?);
+  final onTxFinishFn = args['onFinish'] as dynamic Function(BuildContext, Map)?;
 
   if (await api.isConnected()) {
     if (showStatusSnackBar) {

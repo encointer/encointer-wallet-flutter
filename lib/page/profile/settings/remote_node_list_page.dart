@@ -31,12 +31,11 @@ class RemoteNodeListPage extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    context.select<AppStore, bool>((store) => store.settings.endpoint.value == i.value)
-                        ? Image.asset(
-                            'assets/images/assets/success.png',
-                            width: 16,
-                          )
-                        : Container(),
+                    if (context.select<AppStore, bool>((store) => store.settings.endpoint.value == i.value))
+                      Image.asset(
+                        'assets/images/assets/success.png',
+                        width: 16,
+                      ),
                     const Icon(Icons.arrow_forward_ios, size: 18)
                   ],
                 ),

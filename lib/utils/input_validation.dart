@@ -11,7 +11,7 @@ class InputValidation {
     }
 
     final name = input.trim();
-    if (name.length == 0) {
+    if (name.isEmpty) {
       return dic.profile.contactNameError;
     }
     final exist = existingAccounts.indexWhere((i) => i.name == name);

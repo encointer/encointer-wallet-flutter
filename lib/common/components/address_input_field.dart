@@ -151,7 +151,7 @@ class _AddressInputFieldState extends State<AddressInputField> {
   @override
   Widget build(BuildContext context) {
     final dic = I18n.of(context)!.translationsForLocale();
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: zurichLion.shade50,
         borderRadius: BorderRadius.circular(15),

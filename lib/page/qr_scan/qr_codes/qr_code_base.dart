@@ -19,6 +19,8 @@ abstract class QrCode<QrCodeData extends ToQrFields> {
   }
 }
 
+// to use abstract class for only one method is not good.
+// ignore: one_member_abstracts
 abstract class ToQrFields {
   List<String> toQrFields();
 }
@@ -41,7 +43,7 @@ enum QrCodeVersion { v1_0, v2_0 }
 extension QrCodeContextExt on QrCodeContext? {
   /// Parses `encointer-<context>` into a `QrCodeContext`.
   static QrCodeContext fromQrField(String value) {
-    final context = value.toString().split('-').last.toLowerCase();
+    final context = value.split('-').last.toLowerCase();
     return QrCodeContext.values.firstWhere(
       (type) => type.toString().split('.').last.toLowerCase() == context,
       orElse: () {
@@ -62,7 +64,7 @@ extension QrCodeVersionExt on QrCodeVersion? {
   static QrCodeVersion fromQrField(String value) {
     return QrCodeVersion.values.firstWhere(
       (type) => type.toVersionNumber().toLowerCase() == value.toLowerCase(),
-      orElse: (() => throw FormatException('Unsupported QrCode version [$value]')),
+      orElse: () => throw FormatException('Unsupported QrCode version [$value]'),
     );
   }
 
