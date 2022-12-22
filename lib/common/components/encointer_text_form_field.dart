@@ -33,7 +33,7 @@ class EncointerTextFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: zurichLion.shade50,
         borderRadius: BorderRadius.circular(15),

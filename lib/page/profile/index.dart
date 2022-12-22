@@ -288,7 +288,7 @@ Future<void> showRemoveAccountsDialog(BuildContext context, AppStore _store) {
             onPressed: () async {
               final accounts = _store.account.accountListAll;
 
-              for (var acc in accounts) {
+              for (final acc in accounts) {
                 await _store.account.removeAccount(acc);
               }
 

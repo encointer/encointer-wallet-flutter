@@ -13,7 +13,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 class CommunityChooserOnMap extends StatelessWidget {
   CommunityChooserOnMap(this.store, {Key? key}) : super(key: key) {
     if (store.encointer.communities != null) {
-      for (var community in store.encointer.communities!) {
+      for (final community in store.encointer.communities!) {
         communityDataAt[coordinatesOf(community)] = community;
       }
     }

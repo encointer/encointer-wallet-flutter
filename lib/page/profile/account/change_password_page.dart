@@ -71,7 +71,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
       } else {
         // we need to iterate over all active accounts and update there password
         store.settings.setPin(passNew);
-        store.account.accountListAll.forEach((account) async {
+        for (final account in store.account.accountListAll) {
           final acc = await api.evalJavascript('account.changePassword("${account.pubKey}", "$passOld", "$passNew")');
 
           // update encrypted seed after password updated
@@ -83,7 +83,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
             store.account.updateAccount(acc as Map<String, dynamic>);
             store.account.updateSeed(accountData.pubKey, _passOldCtrl.text, _passCtrl.text);
           });
-        });
+        }
         showCupertinoDialog<void>(
           context: context,
           builder: (BuildContext context) {
@@ -188,7 +188,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    _submitting ? const CupertinoActivityIndicator() : Container(),
+                    if (_submitting) const CupertinoActivityIndicator(),
                     Text(
                       dic.profile.contactSave,
                       style: Theme.of(context).textTheme.headline3!.copyWith(color: zurichLion.shade50),

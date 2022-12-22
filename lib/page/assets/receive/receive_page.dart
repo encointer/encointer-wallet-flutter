@@ -218,8 +218,8 @@ Future<bool> showSnackBarUponPendingExtrinsics(AppStore store, Api api, Translat
     final extrinsics = await api.encointer.pendingExtrinsics();
 
     Log.d('[receivePage] pendingExtrinsics $extrinsics', 'ReceivePage');
-    if (extrinsics.length > 0) {
-      for (var xt in extrinsics) {
+    if (extrinsics.isNotEmpty) {
+      for (final xt in extrinsics) {
         if (xt.contains(store.account.currentAccountPubKey!.substring(2))) {
           RootSnackBar.showMsg(
             dic.profile.observedPendingExtrinsic,

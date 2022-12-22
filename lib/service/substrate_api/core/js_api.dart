@@ -89,7 +89,7 @@ class JSApi {
   }) async {
     // check if there's a same request loading
     if (!allowRepeat) {
-      for (var i in _msgCompleters.keys) {
+      for (final i in _msgCompleters.keys) {
         final call = code.split('(')[0];
         if (i.compareTo(call) == 0) {
           Log.d('request $call loading', 'JSApi');

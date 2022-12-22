@@ -61,9 +61,9 @@ abstract class _OpeningHoursState with Store {
     final target = getOpeningHoursFor(day);
     if (copiedOpeningHours == null) return;
 
-    copiedOpeningHours!.openingIntervals.forEach(
-      (OpeningIntervalState interval) => target!.addInterval(interval),
-    );
+    for (final interval in copiedOpeningHours!.openingIntervals) {
+      target!.addInterval(interval);
+    }
   }
 
   // generic getter
@@ -136,16 +136,16 @@ abstract class _OpeningHoursForDayState with Store {
   /// not not be wise, as it will not be called, but instead the toString of the
   /// actually used class with a similar name will be called.)
   String humanReadable() {
-    var asString = '';
-    if (openingIntervals.length == 0) {
-      asString += '(closed)';
+    final asString = StringBuffer();
+    if (openingIntervals.isEmpty) {
+      asString.write('(closed)');
     } else {
       for (var i = 0; i < openingIntervals.length; i++) {
-        asString += openingIntervals[i].humanReadable();
-        asString += i < openingIntervals.length - 1 ? ', ' : '';
+        asString.write(openingIntervals[i].humanReadable());
+        asString.write(i < openingIntervals.length - 1 ? ', ' : '');
       }
     }
-    return asString;
+    return asString.toString();
   }
 }
 
@@ -169,7 +169,7 @@ abstract class _OpeningIntervalState with Store {
   static int _parseTimeInterval(String startEndTime, int part) {
     final startEnd = startEndTime.split('-');
     final parsed = <int>[];
-    for (var value in startEnd) {
+    for (final value in startEnd) {
       parsed.add(_parseTime(value.trim()));
     }
     return (parsed[0] < parsed[1]) ? parsed[part % 2] : parsed[(part + 1) % 2];
@@ -184,7 +184,7 @@ abstract class _OpeningIntervalState with Store {
     var hours = int.parse(hoursMinutes[0].trim());
 
     // 12am is midnight, 12pm is noon.
-    hours = (hours == 12 && timeLowerCase.contains('m') ? 0 : hours);
+    hours = hours == 12 && timeLowerCase.contains('m') ? 0 : hours;
     final minutes = hoursMinutes.length > 1 ? int.parse(hoursMinutes[1].trim()) : 0;
     return (hours * 60 + minutes + pm) % (24 * 60);
   }

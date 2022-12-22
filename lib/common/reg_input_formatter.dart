@@ -22,7 +22,7 @@ class RegExInputFormatter implements TextInputFormatter {
   bool _isValid(String value) {
     try {
       final matches = _regExp.allMatches(value);
-      for (Match match in matches) {
+      for (final Match match in matches) {
         if (match.start == 0 && match.end == value.length) {
           return true;
         }
