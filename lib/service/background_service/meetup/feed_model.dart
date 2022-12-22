@@ -25,9 +25,4 @@ class Feed {
   final String content;
   final DateTime showAt;
   final DateTime meetupAt;
-
-  @override
-  String toString() {
-    return jsonEncode(this);
-  }
 }

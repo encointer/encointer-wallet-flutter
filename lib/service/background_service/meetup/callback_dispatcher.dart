@@ -1,41 +1,32 @@
 import 'package:timezone/timezone.dart' as tz;
 
-import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/background_service/meetup/feed_model.dart';
 import 'package:encointer_wallet/service/background_service/meetup/feed_repo.dart';
 
-Future<void> executeTaskIsolate(dynamic message) async {
-  final inputData = message as Map<String, dynamic>;
+typedef ScheduleNotificationFunction = Future<void> Function(
+    int id, String title, String body, tz.TZDateTime scheduledDate);
+
+Future<void> executeTaskIsolate(Map<String, dynamic> inputData) async {
   await _executeTask(inputData);
 }
 
 Future<bool> _executeTask(Map<String, dynamic> inputData) async {
   final langCode = inputData['langCode'] as String;
   final local = inputData['local'] as tz.Location;
+  final scheduleNotification = inputData['scheduleNotification'] as ScheduleNotificationFunction;
 
-  final scheduleNotification = inputData['scheduleNotification'] as Future<void> Function(
-      int id, String title, String body, tz.TZDateTime scheduledDate);
-  final repository = FeedRepo();
+  final _feeds = await FeedRepo().fetchData(langCode);
 
-  final _feeds = await repository.fetchData(langCode);
-
-  if (_feeds == null) {
-    Log.d('The result of the feed is null', 'callbackDispatcher');
-    return Future.value(true);
-  }
-
-  await showAllNotificationsFromFeed(_feeds, local: local, scheduleNotification: scheduleNotification);
+  if (_feeds != null) await showAllNotificationsFromFeed(_feeds, local, scheduleNotification);
 
   return Future.value(true);
 }
 
-Future<List<String>> showAllNotificationsFromFeed(
-  List<Feed> feeds, {
-  required tz.Location local,
-  required Future<void> Function(int id, String title, String body, tz.TZDateTime scheduledDate) scheduleNotification,
-}) async {
-  final shownNotifications = <String>[];
-
+Future<void> showAllNotificationsFromFeed(
+  List<Feed> feeds,
+  tz.Location local,
+  ScheduleNotificationFunction scheduleNotification,
+) async {
   for (var i = 0; i < feeds.length; i++) {
     if (tz.TZDateTime.from(feeds[i].showAt, local).isAfter(DateTime.now())) {
       await scheduleNotification(
@@ -54,5 +45,4 @@ Future<List<String>> showAllNotificationsFromFeed(
       );
     }
   }
-  return shownNotifications;
 }

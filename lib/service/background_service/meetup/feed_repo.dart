@@ -16,13 +16,7 @@ class FeedRepo {
     final uri = Uri.parse('https://eldar2021.github.io/test/cm.json');
     try {
       final response = await _client.get(uri);
-      try {
-        final feed = feedFromJson(response.body);
-        return feed;
-      } catch (e) {
-        Log.e('error transforming ${response.toString()}. ${e.toString()}', 'feed_repo.dart');
-        return null;
-      }
+      return feedFromJson(response.body);
     } catch (e) {
       Log.e(e.toString(), 'FeedRepo feed_repo.dart');
       return null;

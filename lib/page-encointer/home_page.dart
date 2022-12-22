@@ -112,10 +112,10 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
       backgroundColor: Colors.white,
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await compute(
-            executeTaskIsolate,
-            {'langCode': 'en', 'local': tz.local, 'scheduleNotification': NotificationPlugin.scheduleNotification},
-          );
+          // await compute(
+          //   executeTaskIsolate,
+          //   {'langCode': 'en', 'local': tz.local, 'scheduleNotification': NotificationPlugin.scheduleNotification},
+          // );
           print(tz.TZDateTime.from(DateTime.parse('2022-12-12T11:30:00.00+00:00'), tz.local));
         },
       ),
