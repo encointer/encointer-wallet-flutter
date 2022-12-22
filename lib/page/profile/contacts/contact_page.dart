@@ -167,9 +167,7 @@ class _Contact extends State<ContactPage> {
                           ),
                           controller: _memoCtrl,
                         ),
-                      )
-                    else
-                      Container(),
+                      ),
                     if (context.select<AppStore, bool>((store) => store.settings.developerMode))
                       Row(
                         children: <Widget>[
@@ -197,9 +195,7 @@ class _Contact extends State<ContactPage> {
                             ),
                           ),
                         ],
-                      )
-                    else
-                      Container(),
+                      ),
                     const SizedBox(height: 24),
                     IconButton(
                       iconSize: 48,

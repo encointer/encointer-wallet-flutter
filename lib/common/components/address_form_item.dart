@@ -28,9 +28,7 @@ class AddressFormItem extends StatelessWidget {
               label!,
               style: TextStyle(color: grey),
             ),
-          )
-        else
-          Container(),
+          ),
         Container(
           margin: const EdgeInsets.only(top: 4, bottom: 4),
           padding: const EdgeInsets.all(8),
@@ -61,14 +59,12 @@ class AddressFormItem extends StatelessWidget {
                   ],
                 ),
               ),
-              if (onTap == null)
-                Container()
-              else
+              if (onTap != null)
                 Icon(
                   Icons.arrow_forward_ios,
                   size: 18,
                   color: grey,
-                )
+                ),
             ],
           ),
         )

@@ -35,9 +35,7 @@ class RemoteNodeListPage extends StatelessWidget {
                       Image.asset(
                         'assets/images/assets/success.png',
                         width: 16,
-                      )
-                    else
-                      Container(),
+                      ),
                     const Icon(Icons.arrow_forward_ios, size: 18)
                   ],
                 ),

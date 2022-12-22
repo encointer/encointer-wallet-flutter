@@ -319,7 +319,7 @@ class _AssetsState extends State<Assets> {
                                             onPressed: null,
                                             child: Text(dic.assets.issuanceClaimed),
                                           )
-                                        : Container();
+                                        : const SizedBox.shrink();
                                   }
                                 } else {
                                   return const CupertinoActivityIndicator();

@@ -267,7 +267,7 @@ class Fmt {
             child: Image.asset('assets/images/assets/success.png'),
           )
         else
-          Container(height: 16),
+          const SizedBox(height: 16),
         Expanded(
           child: Text(accountDisplayNameString(address, accInfo)!),
         )

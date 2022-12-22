@@ -188,7 +188,7 @@ class _ChangePassword extends State<ChangePasswordPage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    if (_submitting) const CupertinoActivityIndicator() else Container(),
+                    if (_submitting) const CupertinoActivityIndicator(),
                     Text(
                       dic.profile.contactSave,
                       style: Theme.of(context).textTheme.headline3!.copyWith(color: zurichLion.shade50),

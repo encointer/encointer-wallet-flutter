@@ -202,9 +202,7 @@ void _showEducationalDialog(ParticipantType registrationType, BuildContext conte
                 textAlign: TextAlign.center,
               ),
               onPressed: () => UI.launchURL(leuZurichCycleAssignmentFAQLink(languageCode)),
-            )
-          else
-            const SizedBox(),
+            ),
         ],
       );
     },

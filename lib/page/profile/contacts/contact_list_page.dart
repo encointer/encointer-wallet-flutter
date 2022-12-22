@@ -31,9 +31,7 @@ class ContactListPage extends StatelessWidget {
                 icon: const Icon(Icons.add, size: 28),
                 onPressed: () => Navigator.of(context).pushNamed(ContactPage.route),
               ),
-            )
-          else
-            Container()
+            ),
         ],
       ),
       body: SafeArea(

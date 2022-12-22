@@ -234,9 +234,7 @@ class _TransferPageState extends State<TransferPage> {
                         '${dic.assets.fee}: TODO compute Fee', // TODO compute fee #589
                         style: Theme.of(context).textTheme.headline4!.copyWith(color: encointerGrey),
                       ),
-                    )
-                  else
-                    Container(),
+                    ),
                   const SizedBox(height: 8),
                   PrimaryButton(
                     key: const Key('make-transfer'),

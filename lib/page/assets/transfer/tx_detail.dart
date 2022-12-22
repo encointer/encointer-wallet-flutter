@@ -110,9 +110,7 @@ class TxDetail extends StatelessWidget {
                 JumpToBrowserLink(
                   snLink,
                   text: 'Subscan',
-                )
-              else
-                Container(),
+                ),
             ],
           ),
         ),
