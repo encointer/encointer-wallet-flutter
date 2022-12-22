@@ -474,7 +474,7 @@ class TranslationsFrEncointer implements TranslationsEncointer {
   @override
   String get reputableTitle => 'Enregistré en tant que Reputable. Ta place est garantie';
   @override
-  String get remainingNewbieTicketsAsReputable => 'Comme Reputable les billets pour Newbie restants:';
+  String get remainingNewbieTicketsAsReputable => 'Comme Reputable les billets pour Novice restants:';
   @override
   String get remainingNewbieTicketsAsBootStrapper => throw UnimplementedError();
   @override
@@ -524,7 +524,7 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   String get meetupClaimantEqualToSelf => ' Ошибка, адрес расчетного счета. Запрос не был сохранен.';
   @override
-  String get meetupLocation => 'Локция встречи';
+  String get meetupLocation => 'Локация встречи';
   @override
   String get startGathering => 'Начинайте собираться';
   @override
@@ -567,7 +567,7 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   String get next => 'Следующий';
   @override
-  String get closeGathering => 'Завершить всречу';
+  String get closeGathering => 'Завершить встречу';
   @override
   String get count => 'Считать';
   @override
@@ -585,35 +585,35 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   String get goToLeuZurich => 'Открыть leu.zuerich';
   @override
-  String get leuZurichFAQ => 'Часто заваемые вопросы leu.zuerich';
+  String get leuZurichFAQ => 'ЧЗВ leu.zuerich';
   @override
   String get bootstrapperContent =>
       'Рассмотрите возможность одобрения новичков, если у вас есть билеты на одобрение,это поможет общине расти.';
   @override
-  String get bootstrapperTitle => 'Зарегистрирован в качестве бутсреппера - место гарантировано.';
+  String get bootstrapperTitle => 'Зарегистрирован в качестве Бутсреппера - место гарантировано.';
   @override
   String get endorseeContent =>
       'Вы былы одобрены, как заслуживающий доверия член общины. Следовательно, Вы гарантированно будете назначены '
       'на этот цикл.';
   @override
-  String get endorseeTitle => 'Зарегистрирован в качестве индоссанта - ваше место гарантировано';
+  String get endorseeTitle => 'Зарегистрирован в качестве Индоссанта - ваше место гарантировано';
   @override
   String get newbieContent =>
       'Вы зарегистрировались в качестве новичка без репутации. Нет гарантии, что Вас назначат на '
-      'это собрание цикла, если в нем будет участвовать большое количество новичков. Пожалуйста, проверьте статус вашего назначения за день до цикла'
+      'это собрание цикла, если в нем будет участвовать большое количество новичков. Пожалуйста,'
+      'проверьте статус вашего назначения за день до цикла'
       'чтобы узнать, состоится ли ваше собрание и где оно будет проходить.';
   @override
-  String get newbieTitle => 'Зарегистрирован в качестве новичка - место не гарантировано.';
+  String get newbieTitle => 'Зарегистрирован в качестве Новичка - место не гарантировано.';
   @override
-  String get reputableContent =>
-      'Вы воспользовались своей репутаций для получения гарантированного места. Внимание: Если вы зарегистрируетесь, но не явитесь на цикл,'
-      ' вы снова станете новичком.';
+  String get reputableContent => 'Вы воспользовались своей репутаций для получения гарантированного места. Внимание:'
+      'Если вы зарегистрируетесь, но не явитесь на цикл, вы снова станете новичком.';
   @override
-  String get reputableTitle => 'Зарегистрирован в качестве уважаемого - ваше место гарантировано.';
+  String get reputableTitle => 'Зарегистрирован в качестве Уважаемого - ваше место гарантировано.';
   @override
-  String get remainingNewbieTicketsAsReputable => 'Оставшиеся билеты для новичков заслуживающие доверие:';
+  String get remainingNewbieTicketsAsReputable => 'Оставшиеся билеты для новичков Уважаемого:';
   @override
-  String get remainingNewbieTicketsAsBootStrapper => 'Оставшиеся билеты для новичков заслуживающие доверие:';
+  String get remainingNewbieTicketsAsBootStrapper => 'Оставшиеся билеты для новичков Бутстреппера:';
   @override
   String get onlyReputablesCanEndorseAttendGatheringToBecomeOne =>
       'Одобрять могут только люди со статусом уважаемого. Для получения репутации, посетите собрание!';
