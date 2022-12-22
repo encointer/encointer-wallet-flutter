@@ -522,7 +522,7 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   String get meetupClaimantInvalid => 'Этот заявитель не является участником встречи. Заявление не сохраняется.';
   @override
-  String get meetupClaimantEqualToSelf => ' Ошибка, адрес расчетного счета. Запрос не был сохранен.';
+  String get meetupClaimantEqualToSelf => 'Ошибка, адреса расчетного счета. Запрос не был сохранен.';
   @override
   String get meetupLocation => 'Локация встречи';
   @override
@@ -559,7 +559,7 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   String get youAreAssignedToAGatheringWithNParticipants => 'Вы записаны на встречу вместе с P_COUNT участниками.';
   @override
-  String get successfullySentNAttestations => 'Вы успешно отправили атестации P_COUNT других людей.';
+  String get successfullySentNAttestations => 'Вы успешно отправили аттестации P_COUNT других людей.';
   @override
   String get countParticipants => 'Считать';
   @override
