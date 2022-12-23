@@ -495,7 +495,7 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   String get keySigningCycle => 'Цикл подписания ключей';
   @override
-  String get nextCycleTimeLeft => 'Следующий цикл в';
+  String get nextCycleTimeLeft => 'Следующий цикл через ';
   @override
   String get nextCycleDateLabel => 'Следующий цикл в процессе';
   @override
@@ -526,7 +526,7 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   String get meetupLocation => 'Локация встречи';
   @override
-  String get startGathering => 'Начинайте собираться';
+  String get startGathering => 'Начинайте собрание';
   @override
   String get alreadyRegistered => 'Уже зарегистрирован';
   @override
@@ -581,7 +581,7 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   String get thankYou => 'Спасибо';
   @override
-  String get weHopeToSeeYouAtTheNextGathering => 'Мы надеемся увидить Вас на следующей встрече.';
+  String get weHopeToSeeYouAtTheNextGathering => 'Мы надеемся увидеть Вас на следующей встрече.';
   @override
   String get goToLeuZurich => 'Открыть leu.zuerich';
   @override
@@ -592,15 +592,14 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   @override
   String get bootstrapperTitle => 'Зарегистрирован в качестве Бутсреппера - место гарантировано.';
   @override
-  String get endorseeContent =>
-      'Вы былы одобрены, как заслуживающий доверия член общины. Следовательно, Вы гарантированно будете назначены '
-      'на этот цикл.';
+  String get endorseeContent => 'Вы былы одобрены, как заслуживающий доверия член общины.'
+      'Следовательно, Вы гарантированно будете назначены на этот цикл.';
   @override
   String get endorseeTitle => 'Зарегистрирован в качестве Индоссанта - ваше место гарантировано';
   @override
   String get newbieContent =>
       'Вы зарегистрировались в качестве новичка без репутации. Нет гарантии, что Вас назначат на '
-      'это собрание цикла, если в нем будет участвовать большое количество новичков. Пожалуйста,'
+      'этот цикл, если в нем будет участвовать большое количество новичков. Пожалуйста,'
       'проверьте статус вашего назначения за день до цикла'
       'чтобы узнать, состоится ли ваше собрание и где оно будет проходить.';
   @override
@@ -616,5 +615,5 @@ class TranslationsRuEncointer implements TranslationsEncointer {
   String get remainingNewbieTicketsAsBootStrapper => 'Оставшиеся билеты для новичков Бутстреппера:';
   @override
   String get onlyReputablesCanEndorseAttendGatheringToBecomeOne =>
-      'Одобрять могут только люди со статусом уважаемого. Для получения репутации, посетите собрание!';
+      'Одобрять могут только люди со статусом Уважаемого. Для получения репутации, посетите собрание!';
 }

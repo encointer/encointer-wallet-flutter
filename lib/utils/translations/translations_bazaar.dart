@@ -512,27 +512,27 @@ class TranslationsRuBazaar implements TranslationsBazaar {
   @override
   String get bazaarTitle => 'Базар';
   @override
-  String get businessAdd => '+ Добавить новую организацию';
+  String get businessAdd => '+ Добавить новый магазин';
   @override
-  String get businessCreate => 'Создать новую организацию';
+  String get businessCreate => 'Создать новый магазин';
   @override
   String get businessDescription => 'Описание деятельности';
   @override
-  String get businessDescriptionHint => 'Вызовите интерес к вашему предложению и дайте краткое описание';
+  String get businessDescriptionHint => 'Вызовите интерес к вашему предложению с помощью краткого описания';
   @override
   String get businesses => 'Предприятия (Бизнесы)';
   @override
-  String get businessesFound => 'Найденные предприятия';
+  String get businessesFound => 'Найденные магазины';
   @override
-  String get businessesMy => 'Мое Предприятие';
+  String get businessesMy => 'Мой магазин';
   @override
-  String get businessesOffered => 'Предлагается в бизнесе';
+  String get businessesOffered => 'В магазине предлагается';
   @override
-  String get businessesResults => 'Результаты в бизнесе';
+  String get businessesResults => 'Найдено магазинов';
   @override
-  String get businessesVicinity => 'Бизнес по соседству';
+  String get businessesVicinity => 'Магазины поблизости';
   @override
-  String get businessName => 'Название Организации';
+  String get businessName => 'Название магазина';
   @override
   String get businessNameHint => 'Используйте информативное название';
   @override
@@ -596,15 +596,15 @@ class TranslationsRuBazaar implements TranslationsBazaar {
   @override
   String get offeringAdd => '+ Добавить предложение';
   @override
-  String get offeringNew => 'Представляем вашему вниманию новейшее';
+  String get offeringNew => 'Представляем новейшее';
   @override
   String get offerings => 'Предложения';
   @override
-  String get offeringsFound => 'Найденные предприятия';
+  String get offeringsFound => 'Найденные предложения';
   @override
   String get offeringsMy => 'Мои предложения';
   @override
-  String get offeringsResults => 'Результаты по предложениям';
+  String get offeringsResults => 'Найдены предложения';
   @override
   String get openningHours => 'Часы работы';
   @override
@@ -616,7 +616,7 @@ class TranslationsRuBazaar implements TranslationsBazaar {
   @override
   String get price => 'Цена';
   @override
-  String get productNewness => 'Новизна продукта';
+  String get productNewness => 'Новые продукты';
   @override
   String get recentlyAdded => 'Недавно добавленные';
   @override
