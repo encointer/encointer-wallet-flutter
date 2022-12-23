@@ -6,11 +6,11 @@ import 'package:flutter/widgets.dart';
 /// the driver to restart the widget with new data.
 class RestartWidget<T> extends StatelessWidget {
   const RestartWidget({
-    Key? key,
+    super.key,
     required this.stream,
     required this.builder,
     required this.initialData,
-  }) : super(key: key);
+  });
 
   final T initialData;
   final Stream<T> stream;

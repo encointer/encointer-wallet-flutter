@@ -5,9 +5,8 @@ class ToggleButtonsWithTitle extends StatelessWidget {
     this.title,
     this.items,
     this.onPressed, {
-    Key? key,
-  })  : isSelected = List.filled(items.length, false),
-        super(key: key);
+    super.key,
+  }) : isSelected = List.filled(items.length, false);
 
   final List<String> items;
   final List<bool> isSelected;

@@ -11,14 +11,14 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CeremonyInfo extends StatelessWidget {
   const CeremonyInfo({
-    Key? key,
+    super.key,
     required this.currentTime,
     required this.assigningPhaseStart,
     required this.meetupTime,
     required this.ceremonyPhaseDurations,
     required this.meetupCompleted,
     this.devMode = false,
-  }) : super(key: key);
+  });
 
   final int currentTime;
   final int? assigningPhaseStart;

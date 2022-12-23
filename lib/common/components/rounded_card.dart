@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class RoundedCard extends StatelessWidget {
-  const RoundedCard({Key? key, this.border, this.margin, this.padding, this.child}) : super(key: key);
+  const RoundedCard({super.key, this.border, this.margin, this.padding, this.child});
 
   final BoxBorder? border;
   final EdgeInsetsGeometry? margin;

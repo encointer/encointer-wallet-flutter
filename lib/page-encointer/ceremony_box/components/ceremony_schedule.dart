@@ -11,11 +11,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 ///
 /// If the current time is close to the meetup time, a countdown is shown.
 class CeremonySchedule extends StatelessWidget {
-  const CeremonySchedule({
-    required this.nextCeremonyDate,
-    this.languageCode,
-    Key? key,
-  }) : super(key: key);
+  const CeremonySchedule({required this.nextCeremonyDate, this.languageCode, super.key});
 
   final DateTime nextCeremonyDate;
   final String? languageCode;
@@ -42,11 +38,7 @@ class CeremonySchedule extends StatelessWidget {
 }
 
 class CeremonyDateLabelAbsolute extends StatelessWidget {
-  const CeremonyDateLabelAbsolute({
-    required this.nextCeremonyDate,
-    this.languageCode,
-    Key? key,
-  }) : super(key: key);
+  const CeremonyDateLabelAbsolute({required this.nextCeremonyDate, this.languageCode, super.key});
 
   final DateTime nextCeremonyDate;
   final String? languageCode;
@@ -74,11 +66,7 @@ class CeremonyDateLabelAbsolute extends StatelessWidget {
 }
 
 class CeremonyDateLabelRelative extends StatelessWidget {
-  const CeremonyDateLabelRelative({
-    required this.nextCeremonyDate,
-    this.languageCode,
-    Key? key,
-  }) : super(key: key);
+  const CeremonyDateLabelRelative({required this.nextCeremonyDate, this.languageCode, super.key});
 
   final DateTime nextCeremonyDate;
   final String? languageCode;
@@ -106,11 +94,7 @@ class CeremonyDateLabelRelative extends StatelessWidget {
 }
 
 class CeremonyDate extends StatelessWidget {
-  const CeremonyDate({
-    this.nextCeremonyDate,
-    this.languageCode,
-    Key? key,
-  }) : super(key: key);
+  const CeremonyDate({this.nextCeremonyDate, this.languageCode, super.key});
 
   final DateTime? nextCeremonyDate;
   final String? languageCode;

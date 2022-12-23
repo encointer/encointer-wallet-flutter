@@ -18,7 +18,7 @@ part 'community_store.g.dart';
 /// It also contains sub-stores for account and community specific data.
 @JsonSerializable(explicitToJson: true)
 class CommunityStore extends _CommunityStore with _$CommunityStore {
-  CommunityStore(String network, CommunityIdentifier cid) : super(network, cid);
+  CommunityStore(super.network, super.cid);
 
   factory CommunityStore.fromJson(Map<String, dynamic> json) => _$CommunityStoreFromJson(json);
   Map<String, dynamic> toJson() => _$CommunityStoreToJson(this);

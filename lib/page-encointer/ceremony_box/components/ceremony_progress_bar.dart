@@ -19,8 +19,8 @@ class CeremonyProgressBar extends StatelessWidget {
     this.assigningPhaseFractionalWidth = 0.15,
     this.attestingPhaseFractionalWidth = 0.15,
     this.registeringPhaseFractionalWidth = 0.70,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final int? currentTime;
   final int? assigningPhaseStart;

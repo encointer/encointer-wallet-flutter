@@ -41,7 +41,7 @@ class TapTooltip extends StatefulWidget {
   /// All parameters that are defined in the constructor will
   /// override the default values _and_ the values in [TooltipTheme.of].
   const TapTooltip({
-    Key? key,
+    super.key,
     required this.message,
     this.height,
     this.padding,
@@ -54,7 +54,7 @@ class TapTooltip extends StatefulWidget {
     this.waitDuration,
     this.showDuration,
     this.child,
-  }) : super(key: key);
+  });
 
   /// The text to display in the tooltip.
   final String message;
@@ -457,7 +457,6 @@ class _TooltipPositionDelegate extends SingleChildLayoutDelegate {
 
 class _TooltipOverlay extends StatelessWidget {
   const _TooltipOverlay({
-    Key? key,
     this.message,
     this.height,
     this.padding,
@@ -468,7 +467,7 @@ class _TooltipOverlay extends StatelessWidget {
     this.target,
     this.verticalOffset,
     this.preferBelow,
-  }) : super(key: key);
+  });
 
   final String? message;
   final double? height;

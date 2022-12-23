@@ -22,7 +22,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/ui.dart';
 
 class AccountManagePage extends StatefulWidget {
-  const AccountManagePage({Key? key}) : super(key: key);
+  const AccountManagePage({super.key});
 
   static const String route = '/profile/account';
 
@@ -349,11 +349,11 @@ class AccountActionItemData {
 
 class CommunityIcon extends StatelessWidget {
   const CommunityIcon({
-    Key? key,
+    super.key,
     required this.store,
     required this.icon,
     required this.address,
-  }) : super(key: key);
+  });
 
   final AppStore store;
   final Widget icon;

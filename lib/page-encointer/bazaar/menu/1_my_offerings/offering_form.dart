@@ -4,7 +4,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 
 class OfferingForm extends StatefulWidget {
-  const OfferingForm({Key? key}) : super(key: key);
+  const OfferingForm({super.key});
 
   @override
   State<OfferingForm> createState() => _OfferingFormState();

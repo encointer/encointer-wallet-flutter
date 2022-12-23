@@ -6,7 +6,7 @@ import 'package:encointer_wallet/modules/modules.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class LangPage extends StatefulWidget {
-  const LangPage({Key? key}) : super(key: key);
+  const LangPage({super.key});
 
   static const route = '/lang-page';
 

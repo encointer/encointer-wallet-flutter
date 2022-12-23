@@ -15,7 +15,7 @@ part 'community_account_store.g.dart';
 ///
 @JsonSerializable(explicitToJson: true)
 class CommunityAccountStore extends _CommunityAccountStore with _$CommunityAccountStore {
-  CommunityAccountStore(String network, CommunityIdentifier cid, String address) : super(network, cid, address);
+  CommunityAccountStore(super.network, super.cid, super.address);
 
   factory CommunityAccountStore.fromJson(Map<String, dynamic> json) => _$CommunityAccountStoreFromJson(json);
   Map<String, dynamic> toJson() => _$CommunityAccountStoreToJson(this);

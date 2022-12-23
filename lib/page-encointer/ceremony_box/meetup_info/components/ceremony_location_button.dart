@@ -5,10 +5,7 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CeremonyLocationButton extends StatelessWidget {
-  const CeremonyLocationButton({
-    this.onPressed,
-    Key? key,
-  }) : super(key: key);
+  const CeremonyLocationButton({this.onPressed, super.key});
 
   final Future<void> Function()? onPressed;
 

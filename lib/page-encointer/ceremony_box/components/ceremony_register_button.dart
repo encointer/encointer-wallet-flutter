@@ -8,11 +8,7 @@ import 'package:encointer_wallet/common/components/maybe_date_time.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CeremonyRegisterButton extends StatefulWidget {
-  const CeremonyRegisterButton({
-    Key? key,
-    this.registerUntil,
-    this.onPressed,
-  }) : super(key: key);
+  const CeremonyRegisterButton({super.key, this.registerUntil, this.onPressed});
 
   final int? registerUntil;
   final Future<void> Function(BuildContext)? onPressed;

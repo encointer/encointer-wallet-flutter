@@ -5,10 +5,7 @@ import 'package:encointer_wallet/common/components/gradient_elements.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CeremonyStartButton extends StatelessWidget {
-  const CeremonyStartButton({
-    Key? key,
-    this.onPressed,
-  }) : super(key: key);
+  const CeremonyStartButton({super.key, this.onPressed});
 
   final void Function()? onPressed;
 

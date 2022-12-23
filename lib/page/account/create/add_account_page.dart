@@ -14,7 +14,7 @@ import 'package:encointer_wallet/store/app.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class AddAccountPage extends StatefulWidget {
-  const AddAccountPage({Key? key}) : super(key: key);
+  const AddAccountPage({super.key});
 
   static const String route = '/account/addAccount';
 
