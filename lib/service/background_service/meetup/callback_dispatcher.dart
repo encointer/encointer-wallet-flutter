@@ -13,10 +13,10 @@ class MeetupNotification {
     String langCode,
   ) async {
     final _feeds = await compute(FeedRepo().fetchData, langCode);
-    if (_feeds != null) await registerScheduleNotifications(_feeds, local, scheduleNotification);
+    if (_feeds != null) await _registerScheduleNotifications(_feeds, local, scheduleNotification);
   }
 
-  static Future<void> registerScheduleNotifications(
+  static Future<void> _registerScheduleNotifications(
     List<Feed> feeds,
     tz.Location local,
     ScheduleNotification scheduleNotification,
@@ -26,7 +26,7 @@ class MeetupNotification {
         await scheduleNotification(
           i + 100,
           feeds[i].title,
-          '${feeds[i].content} showAt ${tz.TZDateTime.from(feeds[i].showAt, local)}',
+          feeds[i].content,
           tz.TZDateTime.from(feeds[i].showAt, local),
         );
       }
