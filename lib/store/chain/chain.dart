@@ -5,7 +5,7 @@ import 'package:mobx/mobx.dart';
 part 'chain.g.dart';
 
 class ChainStore extends _ChainStore with _$ChainStore {
-  ChainStore(AppStore store) : super(store);
+  ChainStore(super.store);
 }
 
 abstract class _ChainStore with Store {

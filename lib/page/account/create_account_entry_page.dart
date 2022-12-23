@@ -7,7 +7,7 @@ import 'package:encointer_wallet/page/account/import/import_account_page.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class CreateAccountEntryPage extends StatelessWidget {
-  const CreateAccountEntryPage({Key? key}) : super(key: key);
+  const CreateAccountEntryPage({super.key});
 
   static const String route = '/account/entry';
 

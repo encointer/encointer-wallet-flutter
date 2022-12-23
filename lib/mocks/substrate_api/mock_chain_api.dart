@@ -1,10 +1,9 @@
 import 'package:encointer_wallet/mocks/substrate_api/mock_js_api.dart';
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/service/substrate_api/chain_api.dart';
-import 'package:encointer_wallet/store/app.dart';
 
 class MockChainApi extends ChainApi {
-  MockChainApi(AppStore store, MockJSApi js) : super(store, js);
+  MockChainApi(super.store, MockJSApi super.js);
 
   @override
   Future<void> startSubscriptions() async {

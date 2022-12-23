@@ -21,8 +21,8 @@ class CeremonyStep2Scan extends StatelessWidget {
     this.api, {
     required this.claimantAddress,
     required this.confirmedParticipantsCount,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final AppStore store;
   final Api api;

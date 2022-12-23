@@ -6,7 +6,7 @@ import 'package:encointer_wallet/common/theme.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class Instruction extends StatelessWidget {
-  const Instruction({Key? key}) : super(key: key);
+  const Instruction({super.key});
 
   static const String route = '/instruction';
 

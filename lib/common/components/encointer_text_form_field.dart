@@ -5,7 +5,7 @@ import 'package:flutter/services.dart';
 /// TextFormField styled for the encointer app
 class EncointerTextFormField extends StatelessWidget {
   const EncointerTextFormField({
-    Key? key,
+    super.key,
     this.labelText,
     this.hintText,
     this.textStyle,
@@ -17,7 +17,7 @@ class EncointerTextFormField extends StatelessWidget {
     this.onChanged,
     this.keyboardType,
     this.obscureText = false,
-  }) : super(key: key);
+  });
 
   final String? labelText;
   final String? hintText;

@@ -5,8 +5,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/3_businesses/business_det
 import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/model/bazaar_item_data.dart';
 
 class HorizontalBazaarItemList extends StatelessWidget {
-  const HorizontalBazaarItemList(this.data, this.rowTitle, this.cardHeight, this.cardWidth, {Key? key})
-      : super(key: key);
+  const HorizontalBazaarItemList(this.data, this.rowTitle, this.cardHeight, this.cardWidth, {super.key});
 
   final List<BazaarItemData> data;
   final double cardHeight;
@@ -34,11 +33,7 @@ class HorizontalBazaarItemList extends StatelessWidget {
 }
 
 class BazaarItemHorizontal extends StatelessWidget {
-  const BazaarItemHorizontal({
-    Key? key,
-    required this.data,
-    required this.index,
-  }) : super(key: key);
+  const BazaarItemHorizontal({super.key, required this.data, required this.index});
 
   final List<BazaarItemData> data;
   final int index;
@@ -88,11 +83,7 @@ class BazaarItemHorizontal extends StatelessWidget {
 }
 
 class _ImageWithOverlaidIcon extends StatelessWidget {
-  const _ImageWithOverlaidIcon({
-    Key? key,
-    required this.data,
-    required this.index,
-  }) : super(key: key);
+  const _ImageWithOverlaidIcon({required this.data, required this.index});
 
   final List<BazaarItemData> data;
   final int index;

@@ -6,7 +6,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/toggle_buttons_wit
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class SearchResultsOfferingFiltered extends StatelessWidget {
-  SearchResultsOfferingFiltered(this.results, {Key? key}) : super(key: key);
+  SearchResultsOfferingFiltered(this.results, {super.key});
 
   final List<BazaarItemData> results;
   final categories = allCategories;

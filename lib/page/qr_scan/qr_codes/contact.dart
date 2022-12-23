@@ -28,7 +28,7 @@ class ContactQrCode extends QrCode<ContactData> {
     }
   }
 
-  ContactQrCode.withData(ContactData data, {this.version = QrCodeVersion.v1_0}) : super(data);
+  ContactQrCode.withData(super.data, {this.version = QrCodeVersion.v1_0});
 
   @override
   QrCodeContext? context = QrCodeContext.contact;

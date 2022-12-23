@@ -3,9 +3,7 @@ import 'package:flutter/material.dart';
 
 /// handle for sliding up panel, for it look good
 class DragHandle extends StatelessWidget {
-  const DragHandle({
-    Key? key,
-  }) : super(key: key);
+  const DragHandle({super.key});
 
   @override
   Widget build(BuildContext context) {
