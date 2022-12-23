@@ -31,13 +31,13 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
   @override
   void initState() {
-    if (context.read<AppStore>().appCast == null) {
-      NotificationPlugin.init(context);
-    }
+    if (context.read<AppStore>().appCast == null) NotificationPlugin.init(context);
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       await initialDeepLinks(context);
-      await executeTaskIsolate(
-        {'langCode': 'en', 'local': tz.local, 'scheduleNotification': NotificationPlugin.scheduleNotification},
+      await MeetupNotification.executeTaskIsolate(
+        tz.local,
+        NotificationPlugin.scheduleNotification,
+        Localizations.localeOf(context).languageCode,
       );
     });
     super.initState();
@@ -109,14 +109,6 @@ class _EncointerHomePageState extends State<EncointerHomePage> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          // await compute(
-          //   executeTaskIsolate,
-          //   {'langCode': 'en', 'local': tz.local, 'scheduleNotification': NotificationPlugin.scheduleNotification},
-          // );
-        },
-      ),
       body: PageView(
         physics: const NeverScrollableScrollPhysics(),
         controller: _pageController,

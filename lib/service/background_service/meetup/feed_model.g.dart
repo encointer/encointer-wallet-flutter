@@ -11,7 +11,6 @@ Feed _$FeedFromJson(Map<String, dynamic> json) => Feed(
       title: json['title'] as String,
       content: json['content'] as String,
       showAt: DateTime.parse(json['showAt'] as String),
-      meetupAt: DateTime.parse(json['meetupAt'] as String),
     );
 
 Map<String, dynamic> _$FeedToJson(Feed instance) => <String, dynamic>{
@@ -19,5 +18,4 @@ Map<String, dynamic> _$FeedToJson(Feed instance) => <String, dynamic>{
       'title': instance.title,
       'content': instance.content,
       'showAt': instance.showAt.toIso8601String(),
-      'meetupAt': instance.meetupAt.toIso8601String(),
     };

@@ -9,6 +9,8 @@ import 'package:timezone/timezone.dart' as tz;
 import 'package:encointer_wallet/service/log/log_service.dart';
 import 'package:encointer_wallet/utils/translations/index.dart';
 
+typedef ScheduleNotification = Future<void> Function(int id, String title, String body, tz.TZDateTime scheduledDate);
+
 final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 final didReceiveLocalNotificationSubject = BehaviorSubject<ReceivedNotification>();
 final selectNotificationSubject = BehaviorSubject<String?>();
@@ -120,8 +122,14 @@ class NotificationPlugin {
     return Future.value(true);
   }
 
-  static Future<void> scheduleNotification(int id, String? title, String body, tz.TZDateTime scheduledDate,
-      {String? payload, String? cid}) async {
+  static Future<void> scheduleNotification(
+    int id,
+    String? title,
+    String body,
+    tz.TZDateTime scheduledDate, {
+    String? payload,
+    String? cid,
+  }) async {
     final pendingNotificationRequests = await flutterLocalNotificationsPlugin.pendingNotificationRequests();
     // Check if a notification with the specified id has already been scheduled
     final notificationAlreadyScheduled = pendingNotificationRequests.any((request) => request.id == id);

@@ -14,7 +14,6 @@ class Feed {
     required this.title,
     required this.content,
     required this.showAt,
-    required this.meetupAt,
   });
 
   factory Feed.fromJson(Map<String, dynamic> json) => _$FeedFromJson(json);
@@ -24,5 +23,4 @@ class Feed {
   final String title;
   final String content;
   final DateTime showAt;
-  final DateTime meetupAt;
 }
