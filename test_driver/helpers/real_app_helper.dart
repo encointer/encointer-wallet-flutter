@@ -124,6 +124,7 @@ Future<void> startMeetupTest(FlutterDriver driver) async {
 
 Future<void> dismissUpgradeDialogOnAndroid(FlutterDriver driver) async {
   final operationSystem = await driver.requestData(getPlatformCommand);
+  // ignore: avoid_print
   print('operationSystem ==================> $operationSystem');
 
   if (operationSystem == 'android') {

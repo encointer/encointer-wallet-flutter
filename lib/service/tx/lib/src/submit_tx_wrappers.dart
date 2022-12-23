@@ -195,15 +195,14 @@ void _showEducationalDialog(ParticipantType registrationType, BuildContext conte
             child: Text(dic.home.ok),
             onPressed: () => Navigator.of(context).pop(),
           ),
-          registrationType == ParticipantType.Newbie
-              ? CupertinoButton(
-                  child: Text(
-                    dic.encointer.leuZurichFAQ,
-                    textAlign: TextAlign.center,
-                  ),
-                  onPressed: () => UI.launchURL(leuZurichCycleAssignmentFAQLink(languageCode)),
-                )
-              : const SizedBox(),
+          if (registrationType == ParticipantType.Newbie)
+            CupertinoButton(
+              child: Text(
+                dic.encointer.leuZurichFAQ,
+                textAlign: TextAlign.center,
+              ),
+              onPressed: () => UI.launchURL(leuZurichCycleAssignmentFAQLink(languageCode)),
+            ),
         ],
       );
     },
@@ -228,5 +227,5 @@ Map<String, String> _getEducationalDialogTexts(ParticipantType type, BuildContex
 ///
 /// This will only work on the local dev-setup.
 Future<dynamic> submitNextPhase(Api api) async {
-  return await api.js.evalJavascript('encointer.sendNextPhaseTx()');
+  return api.js.evalJavascript('encointer.sendNextPhaseTx()');
 }

@@ -117,14 +117,13 @@ class _AssetsState extends State<Assets> {
       key: const Key('assets-index-appbar'),
       title: Text(dic!.assets.home),
     );
-
     return FocusDetector(
       onFocusLost: () {
-        print('[home:FocusDetector] Focus Lost.');
+        Log.d('[home:FocusDetector] Focus Lost.');
         balanceWatchdog!.pause();
       },
       onFocusGained: () {
-        print('[home:FocusDetector] Focus Gained.');
+        Log.d('[home:FocusDetector] Focus Gained.');
         if (!widget.store.settings.loading) {
           _refreshBalanceAndNotify(dic);
         }
@@ -320,7 +319,7 @@ class _AssetsState extends State<Assets> {
                                             onPressed: null,
                                             child: Text(dic.assets.issuanceClaimed),
                                           )
-                                        : Container();
+                                        : const SizedBox.shrink();
                                   }
                                 } else {
                                   return const CupertinoActivityIndicator();

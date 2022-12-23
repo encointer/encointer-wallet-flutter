@@ -184,7 +184,7 @@ class EndorseButton extends StatelessWidget {
         Observer(builder: (_) {
           return FittedBox(
             child: Row(
-              children: store.encointer.account != null && store.encointer.account!.reputations.length > 0
+              children: store.encointer.account != null && store.encointer.account!.reputations.isNotEmpty
                   ? [
                       Text(dic.encointer.remainingNewbieTicketsAsReputable),
                       Text(

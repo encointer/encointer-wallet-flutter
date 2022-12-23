@@ -73,7 +73,7 @@ class CeremonyProgressBar extends StatelessWidget {
         children: [
           SizedBox(
             width: width * progressElapsed,
-            child: Container(
+            child: DecoratedBox(
               decoration: BoxDecoration(
                 borderRadius: const BorderRadius.all(Radius.circular(5)),
                 gradient: primaryGradient,

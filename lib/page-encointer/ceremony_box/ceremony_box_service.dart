@@ -11,7 +11,7 @@ class CeremonyBoxService {
     var formatted = DateFormat.yMd(languageCode).format(input);
     final todayYearMonthDay = DateFormat.yMd(languageCode).format(DateTime.now());
     final tomorrowYearMonthDay = DateFormat.yMd(languageCode).format(DateTime.now().add(const Duration(days: 1)));
-    final ceremonyIsToday = (formatted == todayYearMonthDay);
+    final ceremonyIsToday = formatted == todayYearMonthDay;
     if (ceremonyIsToday) {
       formatted = dic.encointer.today;
     }
@@ -30,7 +30,7 @@ class CeremonyBoxService {
   /// If it is close to the ceremony show a countdown
   static bool shouldShowCountdown(DateTime nextCeremonyDate) {
     final timeLeftUntilCeremonyStarts = nextCeremonyDate.difference(DateTime.now());
-    return (timeLeftUntilCeremonyStarts.compareTo(const Duration(days: 2)) < 0);
+    return timeLeftUntilCeremonyStarts.compareTo(const Duration(days: 2)) < 0;
   }
 
   static Event createCalendarEvent(DateTime nextCeremonyDate, Translations dic) {
