@@ -6,7 +6,7 @@ import 'package:encointer_wallet/page-encointer/bazaar/shared/data_model/demo_da
 import 'package:encointer_wallet/utils/translations/index.dart';
 
 class Home extends StatelessWidget {
-  const Home({Key? key, this.cardHeight = 200, this.cardWidth = 160}) : super(key: key);
+  const Home({super.key, this.cardHeight = 200, this.cardWidth = 160});
 
   final double cardHeight;
   final double cardWidth;

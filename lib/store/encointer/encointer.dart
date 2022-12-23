@@ -41,7 +41,7 @@ part 'encointer.g.dart';
 /// later to the store.
 @JsonSerializable(explicitToJson: true)
 class EncointerStore extends _EncointerStore with _$EncointerStore {
-  EncointerStore(String network) : super(network);
+  EncointerStore(super.network);
 
   factory EncointerStore.fromJson(Map<String, dynamic> json) => _$EncointerStoreFromJson(json);
   Map<String, dynamic> toJson() => _$EncointerStoreToJson(this);

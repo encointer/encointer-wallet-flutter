@@ -1,10 +1,11 @@
-import 'package:encointer_wallet/page-encointer/bazaar/1_home/bazaar_search/search_results.dart';
-import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 import 'package:material_floating_search_bar/material_floating_search_bar.dart';
 
+import 'package:encointer_wallet/page-encointer/bazaar/1_home/bazaar_search/search_results.dart';
+import 'package:encointer_wallet/utils/translations/index.dart';
+
 class BazaarSearch extends StatelessWidget {
-  const BazaarSearch({Key? key}) : super(key: key);
+  const BazaarSearch({super.key});
 
   @override
   Widget build(BuildContext context) {

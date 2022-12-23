@@ -8,7 +8,7 @@ import 'package:encointer_wallet/config/consts.dart';
 import 'package:encointer_wallet/store/app.dart';
 
 class CommunityIconObserver extends StatelessWidget {
-  const CommunityIconObserver({Key? key}) : super(key: key);
+  const CommunityIconObserver({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -8,7 +8,7 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:provider/provider.dart';
 
 class ImagePreview extends StatelessWidget {
-  const ImagePreview({Key? key}) : super(key: key);
+  const ImagePreview({super.key});
 
   @override
   Widget build(BuildContext context) {

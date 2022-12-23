@@ -31,11 +31,7 @@ const encointerCacheVersion = 'v1.0';
 ///
 /// the sub-storages are marked as `late final` as they will be initialized exactly once at startup in `lib/app.dart`.
 class AppStore extends _AppStore with _$AppStore {
-  AppStore(
-    LocalStorage localStorage, {
-    required AppConfig config,
-    AppcastConfiguration? appCast,
-  }) : super(localStorage, config: config, appCast: appCast);
+  AppStore(super.localStorage, {required super.config, super.appCast});
 }
 
 abstract class _AppStore with Store {

@@ -10,7 +10,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:encointer_wallet/utils/validate_keys.dart';
 
 class ImportAccountForm extends StatefulWidget {
-  const ImportAccountForm(this.store, this.onSubmit, {Key? key}) : super(key: key);
+  const ImportAccountForm(this.store, this.onSubmit, {super.key});
 
   final AppStore store;
   final Function onSubmit;

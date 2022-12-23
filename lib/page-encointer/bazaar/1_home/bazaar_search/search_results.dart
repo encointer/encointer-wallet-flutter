@@ -7,7 +7,7 @@ import 'package:encointer_wallet/utils/translations/index.dart';
 import 'package:flutter/material.dart';
 
 class SearchResults extends StatelessWidget {
-  SearchResults({Key? key}) : super(key: key);
+  SearchResults({super.key});
 
   // TODO implement state management with logic that takes the first of each list of search results
   final businessResults = searchResultsInBusinesses;
@@ -43,11 +43,7 @@ class SearchResults extends StatelessWidget {
 }
 
 class ResultSummaryListTile extends StatelessWidget {
-  const ResultSummaryListTile(
-    this.results,
-    this.title, {
-    Key? key,
-  }) : super(key: key);
+  const ResultSummaryListTile(this.results, this.title, {super.key});
 
   final List<BazaarItemData> results;
   final String title;
